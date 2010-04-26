@@ -3,7 +3,7 @@
   <id>org.recentlyadded.script</id>
   <type>script-library</type>
   <title>Recently Added script</title>
-  <version>1.scrip
+  <version>1.0.0</version>
   <library>default.py</library>
   <platforms>
     <platform>all</platform>
