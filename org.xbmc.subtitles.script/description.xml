@@ -3,7 +3,8 @@
   <id>org.xbmc.subtitles.script</id>
   <type>script</type>
   <title>XBMC Subtitles</title>
-  <version>1.60b</version>
+  <version>1.6.0</version>
+  <library>default.py</library>
   <platforms>
     <platform>all</platform>
   </platforms>
