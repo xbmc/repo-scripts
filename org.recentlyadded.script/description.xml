@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addoninfo>
   <id>org.recentlyadded.script</id>
-  <type>script</type>
+  <type>script-library</type>
   <title>Recently Added script</title>
-  <version>1.0</version>
+  <version>1.scrip
+  <library>default.py</library>
   <platforms>
     <platform>all</platform>
   </platforms>
