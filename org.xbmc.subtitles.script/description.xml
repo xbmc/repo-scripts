@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addoninfo>
+  <id>org.xbmc.subtitles.script</id>
+  <type>script</type>
+  <title>XBMC Subtitles</title>
+  <version>1.60b</version>
+  <platforms>
+    <platform>all</platform>
+  </platforms>
+  <minversion>
+    <xbmc>28764</xbmc>
+  </minversion>
+  <summary>XBMC Subtitles</summary>
+  <description>Search and download subtitles via OSD</description>
+  <author>Amet</author>
+</addoninfo>
