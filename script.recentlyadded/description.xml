@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addoninfo>
-  <id>org.recentlyadded.script</id>
+  <id>script.recentlyadded</id>
   <type>script-library</type>
   <title>Recently Added script</title>
   <version>1.0.0</version>
