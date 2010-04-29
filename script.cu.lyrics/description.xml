@@ -4,6 +4,7 @@
   <type>script</type>
   <title>CU Lyrics</title>
   <version>0.8.2</version>
+  <library>default.py</library>
   <platforms>
     <platform>all</platform>
   </platforms>
