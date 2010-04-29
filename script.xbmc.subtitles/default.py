@@ -4,7 +4,7 @@ import xbmc
 import string
 
 __scriptname__ = "XBMC Subtitles"
-__scriptid__ = "org.xbmc.subtitles.script"
+__scriptid__ = "script.xbmc.subtitles"
 __author__ = "Amet"
 __url__ = "http://code.google.com/p/xbmc-subtitles/"
 __credits__ = ""
