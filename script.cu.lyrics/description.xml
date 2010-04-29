@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addoninfo>
+  <id>script.cu.lyrics</id>
+  <type>script</type>
+  <title>CU Lyrics</title>
+  <version>0.8.2</version>
+  <platforms>
+    <platform>all</platform>
+  </platforms>
+  <minversion>
+    <xbmc>29565</xbmc>
+  </minversion>
+  <summary>CU Lyrics</summary>
+  <description>Search, download and display lyrics</description>
+  <author>Amet</author>
+</addoninfo>
