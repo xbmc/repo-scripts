@@ -3,7 +3,7 @@
   <id>script.xbmc.subtitles</id>
   <type>script</type>
   <title>XBMC Subtitles</title>
-  <version>1.6.1</version>
+  <version>1.6.2</version>
   <library>default.py</library>
   <platforms>
     <platform>all</platform>
@@ -12,6 +12,6 @@
     <xbmc>28764</xbmc>
   </minversion>
   <summary>XBMC Subtitles</summary>
-  <description>Search and download subtitles via OSD</description>
+  <description>Search and download subtitles from OpenSubtitles.org, Podnapisi.net and Sublight.si. Subtitle button on OSD needs to be activated and path set to XBMC Subtitles under Settings-> Skin-> Scripts</description>
   <author>Amet</author>
 </addoninfo>

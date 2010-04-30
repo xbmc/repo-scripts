@@ -1,0 +1,204 @@
+1.6.2
+- changed thumbnail to icon.png
+- added changelog.txt
+
+1.6.0
+- Name changed rom OpenSubtitles_OSD to XBMC Subtitles
+
+1.5.2
+
+- Fixed: Sublight.si search and download due to the changes to their API.
+
+1.5.0
+
+- Fixed: works on XBOX now - thanks arnova
+
+- Fixed: simplified onClick - thanks mr_blobby
+
+- Added: setting for displaying file name on search page
+
+- Added: Alaska skin support - thanks psike
+
+- Various code cleanup
+
+
+1.4.7
+
+- Fixed: podnapisi.net download change due to their website redesign.
+
+1.4.6
+
+- Fixed: script error when it cant save to a desired location.
+
+1.4.5
+
+- Fixed: Bosnian subtitle search
+
+1.4.4
+
+- Fixed: Podnapisi would hang with Greek language,thanks xalaros for pointing it out
+- Fixed: Brazilian == PortugueseBrazil, Thanks ecsousa
+
+1.4.3
+
+- Third Language search option and Russian translation, thanks to hentar
+
+1.4.2
+
+- Confluence support
+
+1.4.1
+
+- Minor fix for Win users
+
+1.4.0
+
+- Ability to download subs for RAR movies to the movie folder.Thanks Crayonman for testing on Linux.Works on RARs over SMB as well.
+
+1.3.9
+
+- Script can save subtitles to SMB drive, you have to set SMB permissions correctly.
+
+- resolved search error caused by OpenSubtitles and Podnapisi hash search.
+
+- Automatically check for newer version, off by default.
+
+- if installed via SVN repo installer, it will not install on incompatible XBMC version(< 22240)
+
+1.3.7
+
+- Fixed script error on newer SVN builds
+
+
+1.3.6
+
+- Search and Subtitle renaming on XBOX is now fixed, if you having trouble with subtitle not activating try disabling "Search for subtitles in RAR" under XBMC -->settings -->Video --> Subtitles. --- Thanks Bram77 for testing and the solution for disabling RARs
+
+- German translation
+
+
+1.3.5
+
+- Changed OpenSubtitles.org to new server, the response is much faster
+
+- Finnish Translation
+
+- Added Debug log toggle button in settings, if you are having trouble with the script you will need to enable this before posting the xbmc debug log.
+
+- Added support for accented characters in file names.If you are using accented characters please let me know that everything is working correctly.
+
+- Few visual fixes
+
+
+1.3.3
+
+
+- Fixed "sync" icon, added rating and release names on Podnapisi service.Thanks to Gregor Kališnik from Podnapisi.net for all the help while adding their service.
+
+ 
+
+- Polish Translation
+
+
+1.3.2
+
+- Podnapisi.net password hashing issue fixed, its now calculates the whole hash within the script.
+
+- Set default search service
+
+
+1.3.0
+
+- New Settings menu
+
+- Podnapisi.net new service, You will need to register at www.podnapisi.net and enter username and password under script settings
+
+- More Language translations
+
+- General Bug fixes
+
+ 
+1.2.8
+
+- Fixed(improved) OpenSubtitles search
+
+- Swedish Translation
+
+ 
+
+1.2.7
+
+- Works with XBOX and smb:// drives, but it will skip the Hash search for those files.
+
+- Thanks to Jonas, Bram77 and iLLiac4 for testing
+
+- Localization for Dutch, Serbian and Slovenian
+
+ 
+
+1.2.5
+
+- supports Sublight.si in addition to OpenSubtitles.org
+
+
+1.1.1
+
+
+- v1.1.0 crashing on Windows, fixed in v1.1.1 - Sorry Win users
+
+
+1.1.0
+ 
+
+- Subtitles for movies stored on smb:// drives will now download in a temp folder. Thanks to Justcop and johoja for testing
+
+- Aeon Stark, MiniMeedia, MediaStream_Redux_Mod is now supported
+
+- Note: I couldnt find a suitable subtitle button for MiniMeedia, I just used the DVD one. If you dont like it please contact the skin developers as there is not much I can do.
+
+ 
+
+1.0.9
+
+
+- subtitles for internet streams are now supported - Thanks Nixa for the idea and testing
+
+- confirmed working on XBOX, AppleTv,Mac, Linux and win
+
+- PMIII PAL is now supported
+
+
+1.0.7
+
+- The script now pauses video while downloading the subtitles.
+
+
+1.0.4
+
+- Fix for some issues on PMIII skin support -- Thanks Meez
+
+- PMIII PAL support is still not confirmed. PAL16x9 works by me.
+
+
+1.0.3
+
+Added support for Aeon skin
+
+
+1.0.2
+
+- Added support for Project Mayhem III skin
+
+
+1.0.1
+
+- Visual improvements
+
+- Better search for TV Shows and Movies.
+
+- You will now see "Sync" icon for all the subtitles that are found by Hash   search. In theory those subtitles should work 100%
+
+ 
+1.0.0
+
+- Support for MediaStream,MediaStream_Redux and PM3.HD
