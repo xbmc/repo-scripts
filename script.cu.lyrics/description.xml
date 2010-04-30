@@ -3,7 +3,7 @@
   <id>script.cu.lyrics</id>
   <type>script</type>
   <title>CU Lyrics</title>
-  <version>0.8.2</version>
+  <version>0.8.3</version>
   <library>default.py</library>
   <platforms>
     <platform>all</platform>
@@ -12,6 +12,6 @@
     <xbmc>29565</xbmc>
   </minversion>
   <summary>CU Lyrics</summary>
-  <description>Search, download and display lyrics</description>
+  <description>Search, download and display lyrics from LyricWIKI.org. Downloaded lyrics will be saved in userdata/addon_data.Lyrics button on OSD needs to be activated and path set to CU Lyrics under Settings-> Skin-> Scripts </description>
   <author>Amet</author>
 </addoninfo>

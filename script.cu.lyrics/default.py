@@ -10,7 +10,7 @@ __url__ = "http://xbmc.org/forum/showthread.php?p=449687"
 __scriptid__ = "script.cu.lyrics"
 __svn_url__ = ""
 __credits__ = "EnderW,Nuka1195"
-__version__ = "0.8.2"
+__version__ = "0.8.3"
 __XBMC_Revision__ = "29565"
 __svn_revision__ = 0
 
