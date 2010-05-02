@@ -69,8 +69,8 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     
     if ticket_id != "" :
         print "Download Wait " + str(download_wait)
-#        if download_wait > 0 :
-#            time.sleep(float(download_wait))
+        if download_wait > 0 :
+            time.sleep(float(download_wait))
 
         subtitle_b64_data = sublightWebService.DownloadByID(session_id, subtitle_id, ticket_id)
         base64_file_path = os.path.join(tmp_sub_dir, "tmp_su.b64")

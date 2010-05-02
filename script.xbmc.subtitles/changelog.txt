@@ -1,3 +1,6 @@
+1.6.3
+- enabled Sublight download wait
+
 1.6.2
 - changed thumbnail to icon.png
 - added changelog.txt
