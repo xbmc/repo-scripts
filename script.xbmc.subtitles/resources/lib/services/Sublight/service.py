@@ -18,8 +18,7 @@ import gui
 
 _ = sys.modules[ "__main__" ].__language__
 __settings__ = sys.modules[ "__main__" ].__settings__
-
-
+__scriptname__ = sys.modules[ "__main__" ].__scriptname__
 
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, debug, set_temp, rar, lang1, lang2, lang3 ): #standard input
@@ -70,7 +69,13 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     if ticket_id != "" :
         print "Download Wait " + str(download_wait)
         if download_wait > 0 :
-            time.sleep(float(download_wait))
+            delay = int(download_wait)
+            for i in range (int(download_wait)):
+              line2 = "download will start in %i seconds" % (delay,)
+              xbmc.executebuiltin("XBMC.Notification(%s,%s,1000)" % (__scriptname__,line2,) )
+              print delay
+              delay -= 1
+              time.sleep(1)
 
         subtitle_b64_data = sublightWebService.DownloadByID(session_id, subtitle_id, ticket_id)
         base64_file_path = os.path.join(tmp_sub_dir, "tmp_su.b64")
