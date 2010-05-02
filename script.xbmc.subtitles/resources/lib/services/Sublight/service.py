@@ -68,11 +68,12 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     
     if ticket_id != "" :
         print "Download Wait " + str(download_wait)
+        icon =  os.path.join(os.getcwd(),"icon.png")
         if download_wait > 0 :
             delay = int(download_wait)
             for i in range (int(download_wait)):
               line2 = "download will start in %i seconds" % (delay,)
-              xbmc.executebuiltin("XBMC.Notification(%s,%s,1000)" % (__scriptname__,line2,) )
+              xbmc.executebuiltin("XBMC.Notification(%s,%s,1000,%s)" % (__scriptname__,line2,icon))
               print delay
               delay -= 1
               time.sleep(1)
