@@ -18,7 +18,7 @@
         <posy>0</posy>
         <width>690</width>
         <height>520</height>
-        <texture border="20,20,20,2">InfoMessagePanel.png</texture>
+        <texture border="20,20,20,2">DialogBack.png</texture>
         <colordiffuse>EEFFFFFF</colordiffuse>
       </control>
 
