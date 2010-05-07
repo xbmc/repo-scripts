@@ -92,13 +92,13 @@ class Main:
             fields = re.findall( "<field>(.*?)</field>", record, re.DOTALL )
             movies_totals[ 0 ] += int( fields[ 0 ] )
             movies_totals[ 1 ] += int( fields[ 1 ] )
-            if ( fields[ 28 ] ):
+            if ( fields[ 29 ] ):
                 movies_totals[ 2 ] = fields[ 3 ] # title
                 movies_totals[ 3 ] = fields[ 10 ] # year
                 movies_totals[ 4 ] = fields[ 14 ] # runningtime
                 movies_totals[ 5 ] = fields[ 17 ] # genre
                 movies_totals[ 6 ] = "" # last watched
-                date = fields[ 28 ].split( " " )[ 0 ].split( "-" )
+                date = fields[ 29 ].split( " " )[ 0 ].split( "-" )
                 movies_totals[ 6 ] = datetime.date( int( date[ 0 ] ), int( date[ 1 ] ), int( date[ 2 ] ) ).strftime( date_format ) # last played
         # sql statement for music videos totals
         sql_totals = "select count(1), count(playCount) from musicvideoview"
