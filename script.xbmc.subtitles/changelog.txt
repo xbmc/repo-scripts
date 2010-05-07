@@ -1,5 +1,6 @@
 1.6.3
 - enabled Sublight download wait
+- added download delay notification for sublight service
 
 1.6.2
 - changed thumbnail to icon.png
