@@ -201,6 +201,8 @@ class Main:
             self.WINDOW.setProperty( "LatestEpisode.%d.Rating" % ( count + 1, ), fields[ 5 ] )
             # get cache names of path to use for thumbnail/fanart and play path
             thumb_cache, fanart_cache, play_path = self._get_media( fields[ 24 ], fields[ 23 ] )
+            if ( not os.path.isfile( xbmc.translatePath( "special://profile/Thumbnails/Video/%s/%s" % ( "Fanart", fanart_cache, ) ) ) ):
+                fanart_cache = xbmc.getCacheThumbName(os.path.join(os.path.split(os.path.split(fields[ 24 ])[0])[0], ""))
             self.WINDOW.setProperty( "LatestEpisode.%d.Path" % ( count + 1, ), play_path )
             self.WINDOW.setProperty( "LatestEpisode.%d.Fanart" % ( count + 1, ), "special://profile/Thumbnails/Video/%s/%s" % ( "Fanart", fanart_cache, ) )
             # initial thumb path

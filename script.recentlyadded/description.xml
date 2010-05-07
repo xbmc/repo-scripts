@@ -3,7 +3,7 @@
   <id>script.recentlyadded</id>
   <type>script-library</type>
   <title>Recently Added script</title>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <library>default.py</library>
   <platforms>
     <platform>all</platform>
@@ -13,5 +13,5 @@
   </minversion>
   <summary>Recently Added script</summary>
   <description>Recently Added script</description>
-  <author></author>
+  <author>Nuka1195</author>
 </addoninfo>
