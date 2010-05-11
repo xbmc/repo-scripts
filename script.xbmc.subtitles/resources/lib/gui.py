@@ -8,6 +8,7 @@ import unzip
 import unicodedata
 from os.path import join
 import shutil
+import glob
 
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
@@ -129,7 +130,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if not self.tmp_sub_dir.endswith(':') and not os.path.exists(self.tmp_sub_dir):
           os.mkdir(self.tmp_sub_dir)
         else:
-          self.rem_files(self.tmp_sub_dir)   
+          self.rem_files(self.tmp_sub_dir)
+        
+        if not glob.glob ("%s.*.*" %(os.path.join(self.sub_folder,os.path.splitext(os.path.basename( movieFullPath ))[0],))):
+           self.getControl( 111 ).setVisible( False )
 
 #### ---------------------------- Set Service ----------------------------###     
 

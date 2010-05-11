@@ -30,24 +30,23 @@ if not xbmc.getCondVisibility('videoplayer.isfullscreen') :
     if xbmc.getCondVisibility('Player.Paused'): xbmc.Player().pause() # if Paused, un-pause
 else:
     skin = "main"
-    skin1 = str(xbmc.getSkinDir().lower())
-    skin1 = skin1.replace("-"," ")
-    skin1 = skin1.replace("."," ")
-    skin1 = skin1.replace("_"," ")
-    if ( skin1.find( "eedia" ) > -1 ):
-        skin = "MiniMeedia"
-    elif ( skin1.find( "tream" ) > -1 ):
-        skin = "MediaStream"
-    elif ( skin1.find( "edux" ) > -1 ):
-        skin = "MediaStream_Redux"
-    elif ( skin1.find( "aeon" ) > -1 ):
-        skin = "Aeon"
-    elif ( skin1.find( "alaska" ) > -1 ):
-        skin = "Alaska"
-    elif ( skin1.find( "confluence" ) > -1 ):
-        skin = "confluence"     
+#    skin1 = str(xbmc.getSkinDir().lower())
+#    skin1 = skin1.replace("-"," ")
+#    skin1 = skin1.replace("."," ")
+#    skin1 = skin1.replace("_"," ")
+#    if ( skin1.find( "eedia" ) > -1 ):
+#        skin = "MiniMeedia"
+#    elif ( skin1.find( "tream" ) > -1 ):
+#        skin = "MediaStream"
+#    elif ( skin1.find( "edux" ) > -1 ):
+#        skin = "MediaStream_Redux"
+#    elif ( skin1.find( "aeon" ) > -1 ):
+#        skin = "Aeon"
+#    elif ( skin1.find( "alaska" ) > -1 ):
+#        skin = "Alaska"
   
-    print " XBMC Subtitles version [ %s ]\nSkin Folder: [ %s ]\nXBMC Subtitles skin XML: [ %s ]" % (__version__,skin1,skin,)
+  
+#    print " XBMC Subtitles version [ %s ]\nSkin Folder: [ %s ]\nXBMC Subtitles skin XML: [ %s ]" % (__version__,skin1,skin,)
 
 
 

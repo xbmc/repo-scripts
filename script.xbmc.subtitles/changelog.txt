@@ -1,6 +1,9 @@
 1.6.3
 - enabled Sublight download wait
 - added download delay notification for sublight service
+- new main xml, thanks ronie. 
+- removed all other skin specific windows, will be added if the skins are made compatible with 10.05
+- check if subtitle already exists and notify the user if it does.
 
 1.6.2
 - changed thumbnail to icon.png

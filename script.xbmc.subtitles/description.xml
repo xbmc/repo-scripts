@@ -11,7 +11,9 @@
   <minversion>
     <xbmc>28764</xbmc>
   </minversion>
-  <summary>XBMC Subtitles</summary>
-  <description>Search and download subtitles from OpenSubtitles.org, Podnapisi.net and Sublight.si. Subtitle button on OSD needs to be activated and path set to XBMC Subtitles under Settings-> Skin-> Scripts</description>
+  <summary lang="en">XBMC Subtitles</summary>
+  <description lang="en">Search and download subtitles from OpenSubtitles.org, Podnapisi.net and Sublight.si. Subtitle button on OSD needs to be activated and path set to XBMC Subtitles under Settings-> Skin-> Scripts</description>
+  <description lang="sr">Претражи и скини преводе са OpenSubtitles.org, Podnapisi.net and Sublight.si. Дугме за преводе на OSD треба да се активира и изабере XBMC Subtitles у Settings-> Skin-> Scripts</description>
+
   <author>Amet</author>
 </addoninfo>
