@@ -1,3 +1,6 @@
+1.6.4
+- fixed: script would fail if 0 subtitles are found
+
 1.6.3
 - enabled Sublight download wait
 - added download delay notification for sublight service
