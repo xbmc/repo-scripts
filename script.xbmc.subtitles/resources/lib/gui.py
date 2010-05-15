@@ -220,10 +220,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.subtitles_list, self.session_id = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.debug, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3 )
         self.getControl( STATUS_LABEL ).setLabel( _( 642 ) % ( "...", ) )
 
-        if len(self.subtitles_list) <= 0 : self.getControl( STATUS_LABEL ).setLabel( _( 634 ) % ( "No Subtitles Found" ) )
-        self.list_services()
+        if not self.subtitles_list: 
+        
+            self.getControl( STATUS_LABEL ).setLabel( "No Subtitles Found!" )
+            self.list_services()
     
-        if self.subtitles_list:
+        else:
+            self.list_services()
             subscounter = 0
             for item in self.subtitles_list:
                 listitem = xbmcgui.ListItem( label=item["language_name"], label2=item["filename"], iconImage=item["rating"], thumbnailImage=item["language_flag"] )
@@ -235,7 +238,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 subscounter = subscounter + 1                                    
                 self.getControl( SUBTITLES_LIST ).addItem( listitem )
     
-        self.getControl( STATUS_LABEL ).setLabel( '%i %s '"' %s '"'' % (len ( self.subtitles_list ), _( 744 ), self.file_name,) ) 
+            self.getControl( STATUS_LABEL ).setLabel( '%i %s '"' %s '"'' % (len ( self.subtitles_list ), _( 744 ), self.file_name,) ) 
         
         self.setFocus( self.getControl( SUBTITLES_LIST ) )
         self.getControl( SUBTITLES_LIST ).selectItem( 0 )

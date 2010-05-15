@@ -8,7 +8,7 @@ __scriptid__ = "script.xbmc.subtitles"
 __author__ = "Amet"
 __url__ = "http://code.google.com/p/xbmc-subtitles/"
 __credits__ = ""
-__version__ = "1.6.3"
+__version__ = "1.6.4"
 __XBMC_Revision__ = "29565"
 
 if not xbmc.getCondVisibility('Player.Paused') : xbmc.Player().pause() #Pause if not paused

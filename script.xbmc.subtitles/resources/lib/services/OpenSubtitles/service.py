@@ -61,6 +61,8 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     
     if set_temp : 
         hash_search = False
+        file_size = "000000000"
+        hashTry = "000000000000"
     else:
         hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
         try: file_size = os.path.getsize( file_original_path ) 
