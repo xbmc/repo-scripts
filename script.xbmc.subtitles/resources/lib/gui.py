@@ -8,7 +8,7 @@ import unzip
 import unicodedata
 from os.path import join
 import shutil
-import glob
+import fnmatch
 
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
@@ -131,9 +131,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
           os.mkdir(self.tmp_sub_dir)
         else:
           self.rem_files(self.tmp_sub_dir)
-        
-        if not glob.glob ("%s.*.*" %(os.path.join(self.sub_folder,os.path.splitext(os.path.basename( movieFullPath ))[0],))):
-           self.getControl( 111 ).setVisible( False )
+        sub_ext = ["srt","sub","txt"]
+        self.getControl( 111 ).setVisible( False )
+        for file in os.listdir(self.sub_folder):
+          for ext in sub_ext:
+            if fnmatch.fnmatch(file, "*.??.%s" % (ext,)):
+              self.getControl( 111 ).setVisible( True )
+              break
 
 #### ---------------------------- Set Service ----------------------------###     
 

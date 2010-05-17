@@ -1,3 +1,6 @@
+1.6.5
+- fixed: check for existing subtitles
+
 1.6.4
 - fixed: script would fail if 0 subtitles are found
 
