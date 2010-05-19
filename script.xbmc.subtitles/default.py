@@ -8,7 +8,7 @@ __scriptid__ = "script.xbmc.subtitles"
 __author__ = "Amet"
 __url__ = "http://code.google.com/p/xbmc-subtitles/"
 __credits__ = ""
-__version__ = "1.6.5"
+__version__ = "1.6.6"
 __XBMC_Revision__ = "29565"
 
 if not xbmc.getCondVisibility('Player.Paused') : xbmc.Player().pause() #Pause if not paused
@@ -21,7 +21,6 @@ __language__ = xbmc.Language( os.getcwd() ).getLocalizedString
 _ = sys.modules[ "__main__" ].__language__
 __settings__ = xbmc.Settings( id=__scriptid__ )
 
-  
 #############-----------------Is script runing from OSD? -------------------------------###############
 
 if not xbmc.getCondVisibility('videoplayer.isfullscreen') :
@@ -46,7 +45,7 @@ else:
 #        skin = "Alaska"
   
   
-#    print " XBMC Subtitles version [ %s ]\nSkin Folder: [ %s ]\nXBMC Subtitles skin XML: [ %s ]" % (__version__,skin1,skin,)
+    xbmc.output("XBMC Subtitles version [ %s ]\nXBMC Subtitles skin XML: [ %s ]" % (__version__,skin,),level=xbmc.LOGDEBUG) 
 
 
 

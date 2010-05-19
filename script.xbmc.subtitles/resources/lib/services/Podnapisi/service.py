@@ -1,8 +1,8 @@
 import sys
 import os
-from utilities import hashFile, LOG, LOG_INFO, twotoone, toOpenSubtitles_two
+from utilities import hashFile, twotoone, toOpenSubtitles_two
 from pn_utilities import OSDBServer
-#import xbmc
+import xbmc
 
 
 _ = sys.modules[ "__main__" ].__language__
@@ -37,7 +37,7 @@ def set_filehash(path,rar):
     return file_hash        
 
 
-def search_subtitles( file_original_path, title, tvshow, year, season, episode, debug, set_temp, rar, lang1, lang2, lang3 ): #standard input
+def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
        
     ok = False
     msg = ""
@@ -49,6 +49,8 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     language3 = twotoone(toOpenSubtitles_two(lang3))  
     if set_temp : 
         hash_search = False
+        file_size = "000000000"
+        hashTry = "000000000000"       
     else:
         hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
         try: file_size = os.path.getsize( file_original_path ) 
@@ -56,19 +58,17 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         if file_size != "" and hashTry != "":
           hash_search = True
     
-    if debug :
-        print "File Size [%s]" % file_size
-        print "File Hash [%s]" % hashTry
+    xbmc.output("File Size [%s]\nFile Hash [%s]" % (file_size,hashTry,),level=xbmc.LOGDEBUG)
     try:
 
         if not set_temp :
-            if debug : LOG( LOG_INFO, "Search by hash_pod [%s]" % os.path.basename( file_original_path ) )
-            subtitles_list, session_id = osdb_server.searchsubtitles_pod( hashTry ,language1, language2, language3, debug)
+            xbmc.output("Search by hash_pod [%s]" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
+            subtitles_list, session_id = osdb_server.searchsubtitles_pod( hashTry ,language1, language2, language3)
                     
         if (len ( subtitles_list )) < 1:
-            if debug : LOG( LOG_INFO,"Search by name_pod [%s]" % os.path.basename( file_original_path ) )
+            xbmc.output("Search by name_pod [%s]" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
             
-            subtitles_list = osdb_server.searchsubtitlesbyname_pod( title, tvshow, season, episode, language1, language2, language3, year, debug )
+            subtitles_list = osdb_server.searchsubtitlesbyname_pod( title, tvshow, season, episode, language1, language2, language3, year )
         
         return subtitles_list, "" #standard output
     except :

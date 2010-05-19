@@ -62,7 +62,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         
         
         self.list = []
-        self.debug = ( __settings__.getSetting( "debug" ) == "true" ) # debug?
         
         self.year      = xbmc.getInfoLabel("VideoPlayer.Year")        # Year
         self.season    = str(xbmc.getInfoLabel("VideoPlayer.Season")) # Season
@@ -131,13 +130,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
           os.mkdir(self.tmp_sub_dir)
         else:
           self.rem_files(self.tmp_sub_dir)
-        sub_ext = ["srt","sub","txt"]
-        self.getControl( 111 ).setVisible( False )
-        for file in os.listdir(self.sub_folder):
-          for ext in sub_ext:
-            if fnmatch.fnmatch(file, "*.??.%s" % (ext,)):
-              self.getControl( 111 ).setVisible( True )
-              break
+        
+        self.getControl( 111 ).setVisible( False ) #TO-DO check for existing subtitles and set to "True" if found
 
 #### ---------------------------- Set Service ----------------------------###     
 
@@ -167,30 +161,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
               self.service = service  
               
             self.service_list = service_list
-        
-
-
-            if self.debug : ## Debug?
-    
-                LOG( LOG_INFO, "%s" ,"""
                         
-                Manual Search : [%s]
-                Default Service : [%s] 
-                Services : %s
-                Temp?: [%s]
-                File Path: [%s]
-                Year: [%s]
-                Tv Show Title: [%s]
-                Tv Show Season: [%s]
-                Tv Show Episode: [%s]
-                Movie/Episode Title: [%s]
-                Subtitle Folder: [%s]
-                Languages: [%s] [%s] [%s]
-                Parent Folder Search: [%s]""" 
-                
-                % (self.mansearch, self.service, service_list, 
-                self.set_temp, self.file_original_path, str(self.year), self.tvshow, self.season, self.episode, 
-                self.title, self.sub_folder, self.language_1, self.language_2, self.language_3,self.parent_folder_search ) )
+            xbmc.output("Manual Search : [%s]\nDefault Service : [%s]\nServices : %s\nTemp?: [%s]\nFile Path: [%s]\nYear: [%s]\nTv Show Title: [%s]\nTv Show Season: [%s]\nTv Show Episode: [%s]\nMovie/Episode Title: [%s]\nSubtitle Folder: [%s]\nLanguages: [%s] [%s] [%s]\nParent Folder Search: [%s]"
+            
+            % (self.mansearch, self.service, service_list, 
+            self.set_temp, self.file_original_path, str(self.year), self.tvshow, self.season, self.episode, 
+            self.title, self.sub_folder, self.language_1, self.language_2, self.language_3,self.parent_folder_search ),level=xbmc.LOGDEBUG )
               
         
  
@@ -221,7 +197,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         exec ( "from services.%s import service as Service" % (self.service))
         self.Service = Service
         self.getControl( STATUS_LABEL ).setLabel( _( 646 ) )
-        self.subtitles_list, self.session_id = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.debug, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3 )
+        self.subtitles_list, self.session_id = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3 )
         self.getControl( STATUS_LABEL ).setLabel( _( 642 ) % ( "...", ) )
 
         if not self.subtitles_list: 
@@ -362,7 +338,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         else:
             self.title = dir   
         
-        if self.debug : LOG( LOG_INFO, "Manual/Keyboard Entry: Title:[%s], Year: [%s]" ,  self.title, self.year )
+        xbmc.output("Manual/Keyboard Entry: Title:[%s], Year: [%s]" % (self.title, self.year,), level=xbmc.LOGDEBUG )
         if self.year != "" :
             self.file_name = "%s (%s)" % (self.file_name, str(self.year),)
         else:
@@ -382,9 +358,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def onClick( self, controlId ):
         selection = str(self.list[self.getControl( SUBTITLES_LIST ).getSelectedPosition()])
-        if self.debug : LOG( LOG_INFO, "In 'On click' selected : [%s]" , ( selection ) )
+        xbmc.output("In 'On click' selected : [%s]" % (selection, ),level=xbmc.LOGDEBUG )
         if selection.isdigit():
-            if self.debug : LOG( LOG_INFO, "Selected : [%s]" , ( selection ) )                                
+            xbmc.output( "Selected : [%s]" % (selection, ),level=xbmc.LOGDEBUG )                               
             self.Download_Subtitles( int(selection) )
         else:
             if selection == "Man":

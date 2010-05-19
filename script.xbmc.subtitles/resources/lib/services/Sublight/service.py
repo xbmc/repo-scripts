@@ -5,7 +5,7 @@
 import sys
 import os
 import xmlrpclib
-from utilities import LOG, LOG_INFO, toOpenSubtitles_two
+from utilities import  toOpenSubtitles_two
 import md5
 import time
 import array
@@ -21,7 +21,7 @@ __settings__ = sys.modules[ "__main__" ].__settings__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 
 
-def search_subtitles( file_original_path, title, tvshow, year, season, episode, debug, set_temp, rar, lang1, lang2, lang3 ): #standard input
+def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
        
 
     subtitles_list = []    
@@ -48,10 +48,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 
     year = str(year)
             
-    if debug :         
-        LOG( LOG_INFO, "Sublight Hash [%s]" , str(video_hash) )
-        LOG( LOG_INFO, "Sublight Language 1: [%s], Language 2: [%s], Language 3: [%s]" % (language1 ,language2 , language3,))
-        LOG( LOG_INFO, "Sublight Search Title:[%s] , Season:[%s] , Episode:[%s] Year:[%s]" % (movie_title,season,episode,year,))
+    xbmc.output("Sublight Hash [%s]\nSublight Language 1: [%s], Language 2: [%s], Language 3: [%s]\nSublight Search Title:[%s] , Season:[%s] , Episode:[%s] Year:[%s]" % (str(video_hash),language1 ,language2 , language3,movie_title,season,episode,year,), level=xbmc.LOGDEBUG )
     subtitles_list = sublightWebService.SearchSubtitles(session_id, video_hash, movie_title, year,season, episode, language2, language1, language3 )
 
     return subtitles_list, session_id  #standard output

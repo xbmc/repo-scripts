@@ -2,7 +2,7 @@ import sys
 import os
 import xmlrpclib
 from utilities import *
-
+import xbmc
 
 
 _ = sys.modules[ "__main__" ].__language__
@@ -34,7 +34,7 @@ class OSDBServer:
 ###-------------------------- Opensubtitles Search -------------################
         
 
-    def searchsubtitles( self, srch_string , lang1,lang2,lang3,hash_search, debug, _hash = "000000000", size = "000000000"):
+    def searchsubtitles( self, srch_string , lang1,lang2,lang3,hash_search, _hash = "000000000", size = "000000000"):
         
         self.subtitles_hash_list = []
         self.subtitles_list =[]
@@ -44,7 +44,7 @@ class OSDBServer:
         login = server.LogIn("", "", "en", "OpenSubtitles_OSD")
     
         osdb_token  = login[ "token" ]
-        if debug : LOG( LOG_INFO, "Token:[%s]" % str(osdb_token) )
+        xbmc.output( "Token:[%s]" % (str(osdb_token),),level=xbmc.LOGDEBUG )
     
                         
         language = toOpenSubtitlesId(lang1)

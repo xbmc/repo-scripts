@@ -1,16 +1,11 @@
 import sys
 import os
-from utilities import hashFile, LOG, LOG_INFO
+from utilities import hashFile
 from os_utilities import OSDBServer
-
 
 
 _ = sys.modules[ "__main__" ].__language__
 __settings__ = sys.modules[ "__main__" ].__settings__
-
-STATUS_LABEL = 100
-LOADING_IMAGE = 110
-SUBTITLES_LIST = 120
 
 def timeout(func, args=(), kwargs={}, timeout_duration=10, default=None):
 
@@ -37,8 +32,8 @@ def set_filehash(path,rar):
     return file_hash        
 
 
-def search_subtitles( file_original_path, title, tvshow, year, season, episode, debug, set_temp, rar, lang1, lang2, lang3 ): #standard input
-       
+def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
+    import xbmc
     ok = False
     msg = ""
     hash_search = False
@@ -57,7 +52,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                 title = title
         OS_search_string = title.replace(" ","+")
     
-    if debug : LOG( LOG_INFO, "OpenSubtitles Search String [ %s ]" % OS_search_string )     
+    xbmc.output( "OpenSubtitles Search String [ %s ]" % (OS_search_string,),level=xbmc.LOGDEBUG )     
     
     if set_temp : 
         hash_search = False
@@ -70,15 +65,14 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         if file_size != "" and hashTry != "":
           hash_search = True
     
-    if debug :
-        print "File Size [%s]" % file_size
-        print "File Hash [%s]" % hashTry
+    
+    xbmc.output("File Size [%s]\nFile Hash [%s]" % (file_size,hashTry,), level=xbmc.LOGDEBUG)
     try:
 
-        if debug : LOG( LOG_INFO, "Search by hash and name %s" % os.path.basename( file_original_path ) )
+        xbmc.output("Search by hash and name %s" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
         
 
-        subtitles_list = osdb_server.searchsubtitles( OS_search_string, lang1, lang2, lang3, hash_search, debug, hashTry, file_size  )
+        subtitles_list = osdb_server.searchsubtitles( OS_search_string, lang1, lang2, lang3, hash_search, hashTry, file_size  )
 
         return subtitles_list, "" #standard output
         

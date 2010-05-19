@@ -2,7 +2,7 @@ import sys
 import os
 import xmlrpclib
 from utilities import *
-
+import xbmc
 
 
 _ = sys.modules[ "__main__" ].__language__
@@ -42,7 +42,7 @@ class OSDBServer:
 ###-------------------------- Podnapisi Hash -------------################
 
 
-    def searchsubtitles_pod( self, movie_hash, lang1,lang2,lang3, debug):
+    def searchsubtitles_pod( self, movie_hash, lang1,lang2,lang3):
         self.subtitles_hash_list = []
         pod_session = ""
         self.subtitles_list = []
@@ -59,9 +59,7 @@ class OSDBServer:
             lang.append(lang33)
         hash_pod =[]
         hash_pod.append(movie_hash)
-        if debug : 
-            LOG( LOG_INFO, "Languages : [%s]", str(lang)  )
-            LOG( LOG_INFO, "Hash : [%s]", str(hash_pod)  )
+        xbmc.output("Languages : [%s]\nHash : [%s]" % (str(lang),str(hash_pod),), level=xbmc.LOGDEBUG )
         try:
     
             init = podserver.initiate("OpenSubtitles_OSD")
@@ -87,9 +85,7 @@ class OSDBServer:
                 auth = podserver.authenticate(pod_session, username, password256)
                 filt = podserver.setFilters(pod_session, True, lang , False)
                 
-                if debug : 
-                    LOG( LOG_INFO, "Filter : [%s]", str(filt)  )
-                    LOG( LOG_INFO, "Auth : [%s]", str(auth)  )                                              
+                xbmc.output("Filter : [%s]\nAuth : [%s]" % (str(filt),str(auth),),level=xbmc.LOGDEBUG  )                                              
                 
                 search = podserver.search(pod_session , hash_pod)
     
@@ -139,7 +135,7 @@ class OSDBServer:
 
 ###-------------------------- Podnapisi By Name -------------################
 
-    def searchsubtitlesbyname_pod( self, name, tvshow, season, episode, lang1, lang2, lang3, year, debug ):
+    def searchsubtitlesbyname_pod( self, name, tvshow, season, episode, lang1, lang2, lang3, year ):
         from xml.dom import minidom
         import urllib
         self.subtitles_name_list = []
@@ -162,9 +158,7 @@ class OSDBServer:
         try:
     
             search_url.replace( " ", "+" )
-            if debug : 
-                LOG( LOG_INFO, search_url )
-                LOG( LOG_INFO, "Searching subtitles by name_pod [%s]" % name )
+            xbmc.output("%s\nSearching subtitles by name_pod [%s]" % (search_url,name,),level=xbmc.LOGDEBUG )
     
             socket = urllib.urlopen( search_url )
             result = socket.read()

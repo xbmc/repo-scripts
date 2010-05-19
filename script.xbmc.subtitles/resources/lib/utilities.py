@@ -4,15 +4,6 @@ import xbmc
 import re
 import struct
 
-DEBUG_MODE = 10
-
-# Log status codes
-LOG_INFO, LOG_ERROR, LOG_NOTICE, LOG_DEBUG = range( 1, 5 )
-
-
-def LOG( status, format, *args ):
-    if ( DEBUG_MODE >= status ):
-        xbmc.output( "%s: %s\n" % ( ( "INFO", "ERROR", "NOTICE", "DEBUG", )[ status - 1 ], format % args, ) )
 
 def hashFile(name): 
     try: 
