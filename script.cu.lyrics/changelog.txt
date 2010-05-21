@@ -1,5 +1,0 @@
-0.8.3
-Changed save lyrics folder to "userdata/addon_data/lyrics"
-
-0.8.2 
-Initial Commit
