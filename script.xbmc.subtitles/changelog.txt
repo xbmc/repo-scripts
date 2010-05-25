@@ -1,3 +1,6 @@
+1.6.7
+- added fourth service, Bierdopje, only works for TV Shows and English and Dutch language. Thanks mr_blobby for this
+
 1.6.6
 - removed scripts debug logging, it uses XBMC debug log setting now
 - removed check for existing subtitles, need to do it properly
