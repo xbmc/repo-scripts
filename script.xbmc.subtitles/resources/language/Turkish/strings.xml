@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30300">OpenSubtitles_OSD</string>
+    <string id="30301"></string>
+    <string id="30302">Amet</string>
+
+
+    
+    <!-- Labels -->
+
+    <string id="630">Subtitle file downloaded and extracted as %s</string>
+    <string id="631">Extracting %s to %s</string>
+    <string id="632">Downloading %s from %s</string>
+    <string id="634">Error! %s</string>
+    <string id="636">Connecting anonymously...</string>
+    <string id="637">Connecting as %s...</string>
+    <string id="641">%s Settings</string>
+    <string id="644">Extracted to %s</string>
+    <string id="645">Download cancelled</string>
+    <string id="647">by hash...</string>
+    <string id="648">by name...</string>
+
+
+    <!-- OSDB Messages -->
+    <string id="730">OSDB server name missing</string>
+    <string id="731">XMLRPC %s: %s</string>
+    <string id="732">LogIn</string>
+    <string id="733">LogOut</string>
+    <string id="734">GetSubLanguages</string>
+    <string id="735">CheckMovieHash</string>
+    <string id="736">SearchSubtitles</string>
+    <string id="737">Not connected to osdb server</string>
+    <string id="738">Hashing %s not found</string>
+    <string id="739">Hashing %s %s</string>
+    <string id="740">File found on share, remote files not supported</string>
+    <string id="743">HTTP %s: %s</string>
+    
+    
+    <!-- tarnslate below this line -->
+    <!-- Türkçe -->
+    <string id="500">Geçerli bir dil seçmediniz.</string>
+    <string id="501">Özel bir alt yazý dosyasý oluþturmak ister misiniz?</string>
+    <string id="502">Dil seçimi</string>
+    <string id="503">Varsayýlan dili seçiniz</string>
+    <string id="504">Lütfen altyazý dosyasý seçiniz</string>
+    <string id="505">Lütfen tercih edilen sistemi seçiniz</string>
+    <string id="506">Yeni ayarlarý belirtmek ister misiniz?</string>
+    <string id="601">Öðeler seçildi</string>
+    <string id="602">daha iyi çalýþ</string>
+    <string id="610">Ara </string>
+    <string id="611">Sublight.si'de ara</string>
+    <string id="612">Elle arama dizisi düzenleme</string>
+    <string id="633">Dosya indiriliyor</string>
+    <string id="635">Baðlandý</string>
+    <string id="642">%s Altyazý aranýyor</string>
+    <string id="646">Baðlanýyor...</string>
+    <string id="649">Altyazýlar indiriliyor...</string>
+    <string id="650">Altyazýlar açýlýyor...</string>
+    <string id="651">Altyazýlar açýldý</string>
+    <string id="652">Alt yazý dosyasý indirildi ve açýldý</string>
+    <string id="653">Baðlantý hatasý</string>
+    <string id="654">Altyazý açma hatasý</string>
+    <string id="741">Altyazý bulunamadý</string>
+    <string id="742"> altyazýlar bulundu</string>
+    <string id="744"> için altyazýlar bulundu </string>
+    
+      <!-- 
+   * Diller
+   -->
+  <string id="30100">Dilleri Seçiniz</string>
+  <string id="30101">Tercih Edilen Dil</string>
+  <string id="30102">Ýkincil Dil</string>
+  <string id="30103">Servisleri Seçiniz</string>
+  <string id="30104">Podnapisi.net Kullanýcý Adý</string>
+  <string id="30105">Podnapisi.net Þifresi</string>
+  <string id="30106">Altyazý Ýndirme Klasörü</string>
+  <string id="30107">Film Klasörü</string>
+  <string id="30108">Özel Dosya Seçiniz</string>
+  <string id="30109">Arama Dizisi</string>
+  <string id="30110">Elle Arama Dizisi Girme</string>
+    
+    
+    <!-- Seçmeli  -->
+  <string id="30201">Arnavutça</string>
+  <string id="30202">Arapça</string>
+  <string id="30203">Beyaz Rusyaca</string>
+  <string id="30204">Boþnakça (Latin)</string>
+  <string id="30205">Bulgarca</string>
+  <string id="30206">Katalanca</string>
+  <string id="30207">Çince</string>
+  <string id="30208">Hýrvatça</string>
+  <string id="30209">Çekçe</string>
+  <string id="30210">Danca</string>
+  <string id="30211">Hollandaca</string>
+  <string id="30212">Ýngilizce</string>
+  <string id="30213">Estce</string>
+  <string id="30214">Fince</string>
+  <string id="30215">Fransýzca</string>
+  <string id="30216">Almanca</string>
+  <string id="30217">Yunanca</string>
+  <string id="30218">Ýbranice</string>
+  <string id="30219">Hintçe</string>
+  <string id="30220">Macarca</string>
+  <string id="30221">Ýzlandaca</string>
+  <string id="30222">Endonezca</string>
+  <string id="30224">Ýtalyanca</string>
+  <string id="30225">Japonca</string>
+  <string id="30226">Korece</string>
+  <string id="30227">Letonca</string>
+  <string id="30228">Litvanca</string>
+  <string id="30229">Makedonca</string>
+  <string id="30230">Norveççe</string>
+  <string id="30232">Lehçe</string>
+  <string id="30233">Portekizce</string>
+  <string id="30234">Portekizce (Brazilya)</string>
+  <string id="30235">Rumence</string>
+  <string id="30236">Rusça</string>
+  <string id="30237">Sýrpça</string>
+  <string id="30238">Slovakça</string>
+  <string id="30239">Slovenyaca</string>
+  <string id="30240">Ýspanyolca</string>
+  <string id="30242">Ýsveççe</string>
+  <string id="30243">Taice</string>
+  <string id="30244">Türkçe</string>
+  <string id="30245">Ukraynaca</string>
+  <string id="30246">Vietnemca</string>
+  <string id="30301">Sublight</string>
+  <string id="30302">Podnapisi</string>
+  <string id="30303">OpenSubtitles</string>
+  
+    
+</strings>
