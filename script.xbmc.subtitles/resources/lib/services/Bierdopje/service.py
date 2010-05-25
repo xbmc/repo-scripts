@@ -100,6 +100,7 @@ def getallsubs(showid, file_original_path, tvshow, season, episode, languageshor
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
     subtitles_list = []
+    msg = ""
     if len(tvshow) > 0:
         tvshow_id= getshowid(tvshow)
         dutch = 0
@@ -127,14 +128,10 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
             getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "nl", "Dutch", subtitles_list)
 
         if ((dutch == 0) and (english == 0)):
-            okdialog = xbmcgui.Dialog()
-            ok = okdialog.ok("Won't work", "Bierdopje is only for Dutch and English subtitles.")
-
+            msg = "Won't work, Bierdopje is only for Dutch and English subtitles."
     else:
-        okdialog = xbmcgui.Dialog()
-        ok = okdialog.ok("Won't work", "Bierdopje is only for tv shows.")
-
-    return subtitles_list, "" #standard output
+        msg = "Won't work, Bierdopje is only for tv shows."
+    return subtitles_list, "", msg #standard output
 
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input

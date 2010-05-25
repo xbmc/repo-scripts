@@ -1,3 +1,6 @@
+1.6.8
+- services can now return message to display after failed search
+
 1.6.7
 - added fourth service, Bierdopje, only works for TV Shows and English and Dutch language. Thanks mr_blobby for this
 
