@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.cu.lyrics"
        name="CU Lyrics"
-       version="0.8.3"
+       version="0.8.4"
        provider-name="Amet">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
   </requires>
-  <extension point="xbmc.python.script"
+  <extension point="xbmc.python.lyrics"
              library="default.py" />
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>

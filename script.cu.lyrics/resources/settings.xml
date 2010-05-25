@@ -2,7 +2,7 @@
 <settings>
 
     <setting type="lsep" label="Info" />
-    <setting id="version"   type="text" label="Version" default="0.8.2" enable="false" />
+    <setting id="version"   type="text" label="Version" default="0.8.4" enable="false" />
     <setting id="author"    type="text" label="Author" default="Amet" enable="false" />
     <setting id="origauthor"    type="text" label="Original authors" default="EnderW,Nuka1195" enable="false" />
     <setting type="lsep" label="Settings" />
