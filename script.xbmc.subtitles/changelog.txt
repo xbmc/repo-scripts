@@ -23,7 +23,7 @@
 - added changelog.txt
 
 1.6.0
-- Name changed rom OpenSubtitles_OSD to XBMC Subtitles
+- Name changed from OpenSubtitles_OSD to XBMC Subtitles
 
 1.5.2
 
