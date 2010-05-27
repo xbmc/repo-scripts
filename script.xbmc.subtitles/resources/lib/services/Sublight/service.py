@@ -51,7 +51,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     xbmc.output("Sublight Hash [%s]\nSublight Language 1: [%s], Language 2: [%s], Language 3: [%s]\nSublight Search Title:[%s] , Season:[%s] , Episode:[%s] Year:[%s]" % (str(video_hash),language1 ,language2 , language3,movie_title,season,episode,year,), level=xbmc.LOGDEBUG )
     subtitles_list = sublightWebService.SearchSubtitles(session_id, video_hash, movie_title, year,season, episode, language2, language1, language3 )
 
-    return subtitles_list, session_id  #standard output
+    return subtitles_list, session_id, ""  #standard output
 
 
 

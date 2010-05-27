@@ -197,12 +197,15 @@ class GUI( xbmcgui.WindowXMLDialog ):
         exec ( "from services.%s import service as Service" % (self.service))
         self.Service = Service
         self.getControl( STATUS_LABEL ).setLabel( _( 646 ) )
-        self.subtitles_list, self.session_id = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3 )
+        msg = ""
+        self.subtitles_list, self.session_id, msg = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3 )
         self.getControl( STATUS_LABEL ).setLabel( _( 642 ) % ( "...", ) )
 
         if not self.subtitles_list: 
-        
-            self.getControl( STATUS_LABEL ).setLabel( "No Subtitles Found!" )
+            if msg != "":
+              self.getControl( STATUS_LABEL ).setLabel( msg )
+            else:
+              self.getControl( STATUS_LABEL ).setLabel( "No Subtitles Found!" )
             self.list_services()
     
         else:
@@ -226,7 +229,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
 ###-------------------------- Download Subtitles  -------------################
 
     def Download_Subtitles( self, pos ):
-        
         self.getControl( STATUS_LABEL ).setLabel(  _( 649 ) )
         zip_subs = "special://temp/sub_tmp/zipsubs.zip"
         zipped, language, file = self.Service.download_subtitles(self.subtitles_list, pos, zip_subs, self.tmp_sub_dir, self.sub_folder,self.session_id)

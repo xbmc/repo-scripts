@@ -1,3 +1,5 @@
+0.8.4
+- version change , works with r30548
 0.8.3
 Changed save lyrics folder to "userdata/addon_data/lyrics"
 

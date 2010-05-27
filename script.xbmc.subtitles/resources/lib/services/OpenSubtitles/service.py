@@ -74,10 +74,10 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 
         subtitles_list = osdb_server.searchsubtitles( OS_search_string, lang1, lang2, lang3, hash_search, hashTry, file_size  )
 
-        return subtitles_list, "" #standard output
+        return subtitles_list, "", "" #standard output
         
     except :
-        return subtitles_list, "" #standard output
+        return subtitles_list, "", "" #standard output
 
 
 
