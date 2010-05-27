@@ -9,9 +9,8 @@
   <extension point="xbmc.python.library"
              library="default.py" />
   <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <minversion>28764</minversion>
     <summary>Recently Added script</summary>
     <description>Recently Added script</description>
+    <platform>all</platform>
   </extension>
 </addon>
