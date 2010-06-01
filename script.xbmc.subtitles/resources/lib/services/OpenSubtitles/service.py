@@ -5,7 +5,7 @@ from os_utilities import OSDBServer
 
 
 _ = sys.modules[ "__main__" ].__language__
-__settings__ = sys.modules[ "__main__" ].__settings__
+
 
 def timeout(func, args=(), kwargs={}, timeout_duration=10, default=None):
 

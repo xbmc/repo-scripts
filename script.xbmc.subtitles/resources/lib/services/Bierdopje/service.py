@@ -1,7 +1,6 @@
 import os, sys, re, xbmc, xbmcgui, string, urllib, ElementTree as XMLTree
 
 _ = sys.modules[ "__main__" ].__language__
-__settings__ = sys.modules[ "__main__" ].__settings__
 
 apiurl   = "http://api.bierdopje.com/"
 apikey   = "369C2ED4261DE9C3"

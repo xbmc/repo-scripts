@@ -10,7 +10,6 @@ DEBUG_MODE = 0
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__ = sys.modules[ "__main__" ].__version__
-__svn_revision__ = sys.modules[ "__main__" ].__svn_revision__
 
 # comapatble versions
 SETTINGS_VERSIONS = ( "1.7", )

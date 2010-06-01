@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-
-    <setting type="lsep" label="Info" />
-    <setting id="version"   type="text" label="Version" default="0.8.4" enable="false" />
-    <setting id="author"    type="text" label="Author" default="Amet" enable="false" />
-    <setting id="origauthor"    type="text" label="Original authors" default="EnderW,Nuka1195" enable="false" />
-    <setting type="lsep" label="Settings" />
-    <setting id="smooth_scrolling" type="bool" label="Smooth Scrolling" default="false"/>
-    <setting id="save_lyrics" type="bool" label="Save Lyrics" default="true"/>
+<settings>   
+    <category label="Settings">
+        <setting id="smooth_scrolling" type="bool" label="Smooth Scrolling" default="false"/>
+        <setting id="save_lyrics" type="bool" label="Save Lyrics" default="true"/>
+    </category>
+    <category label="Info">
+        <setting id="version"   type="text" label="Version" default="0.8.5" enable="false" />
+        <setting id="author"    type="text" label="Author" default="Amet" enable="false" />
+        <setting id="origauthor"    type="text" label="Original authors" default="EnderW,Nuka1195" enable="false" />
+    </category>    
 </settings>

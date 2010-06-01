@@ -6,7 +6,6 @@ import xbmc
 
 
 _ = sys.modules[ "__main__" ].__language__
-__settings__ = sys.modules[ "__main__" ].__settings__
 
 BASE_URL_XMLRPC = u"http://api.opensubtitles.org/xml-rpc"
 

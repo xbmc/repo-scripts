@@ -12,7 +12,6 @@ import fnmatch
 
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
-__version__ = sys.modules[ "__main__" ].__version__
 __settings__ = sys.modules[ "__main__" ].__settings__
 
 STATUS_LABEL = 100

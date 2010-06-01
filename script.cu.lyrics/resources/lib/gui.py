@@ -20,7 +20,6 @@ current_win_id = xbmcgui.getCurrentWindowId()
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__ = sys.modules[ "__main__" ].__version__
-__svn_revision__ = sys.modules[ "__main__" ].__svn_revision__
 __settings__ = sys.modules[ "__main__" ].__settings__
 
 SELECT_ITEM = ( 11, 256, 61453, )
@@ -46,7 +45,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.get_settings()
         self.get_scraper()
         self.getMyPlayer()
-#        self.show_viz_window()
 
     def get_settings( self ):
         self.settings = Settings().get_settings()
@@ -141,7 +139,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 lyrics_file.close()
                 return True
             except IOError:
-                LOG( LOG_ERROR, "%s (rev: %s) %s::%s (%d) [%s]", __scriptname__, __svn_revision__, self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
+                LOG( LOG_ERROR, "%s (rev: %s) %s::%s (%d) [%s]", __scriptname__, self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
                 return False
     
     def focus_lyrics(self):
@@ -246,7 +244,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     song = os.path.splitext( basename )[ 0 ].split( " ", 1 )[ 1 ]
         except:
             # invalid format selected
-            LOG( LOG_ERROR, "%s (rev: %s) %s::%s (%d) [%s]", __scriptname__, __svn_revision__, self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
+            LOG( LOG_ERROR, "%s (rev: %s) %s::%s (%d) [%s]", __scriptname__, self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
         return artist, song
 
     def getMyPlayer( self ):
@@ -256,7 +254,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def myPlayerChanged( self, event, force_update=False ):
         try:
             print "GUI-DEBUG: myPlayerChanged event:%s, force_update:%s" % (event, force_update)
-            LOG( LOG_DEBUG, "%s (rev: %s) GUI::myPlayerChanged [%s]", __scriptname__, __svn_revision__, [ "stopped","ended","started" ][ event ] )
+            LOG( LOG_DEBUG, "%s (rev: %s) GUI::myPlayerChanged [%s]", __scriptname__, [ "stopped","ended","started" ][ event ] )
             if ( event < 2 ):
                 self.exit_script()
             else:

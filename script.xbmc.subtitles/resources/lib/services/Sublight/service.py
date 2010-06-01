@@ -17,7 +17,6 @@ import base64
 import gui
 
 _ = sys.modules[ "__main__" ].__language__
-__settings__ = sys.modules[ "__main__" ].__settings__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 
 

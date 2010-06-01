@@ -76,10 +76,10 @@
       <!-- 
    * Script Settings
    -->
-  <string id="30100">Select Languages</string>
+  <string id="30100">Languages</string>
   <string id="30101">- Primary Language</string>
   <string id="30102">- Secondary Language</string>
-  <string id="30103">Select Services</string>
+  <string id="30103">Services</string>
   <string id="30104"> - Podnapisi.net Username</string>
   <string id="30105"> - Podnapisi.net Password</string>
   <string id="30106">Advanced Options</string>
