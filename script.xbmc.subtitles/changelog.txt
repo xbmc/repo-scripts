@@ -1,3 +1,7 @@
+1.7.0
+- Updated Polish strings, thanks piotr
+- cosmetics
+
 1.6.9
 - using xbmcaddon for languages and settings
 - new settings layout includes categories

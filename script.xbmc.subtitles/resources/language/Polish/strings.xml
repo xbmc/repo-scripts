@@ -38,31 +38,31 @@
     
     <!-- tarnslate below this line -->
     <!-- Polish -->
-    <string id="500">Nie wybra≥eú jÍzyka.</string>
-    <string id="501">Chcesz utworzyc katalog dla napisÛw?</string>
-    <string id="502">WybÛr jÍzyka</string>
-    <string id="503">Wybierz domyúlny jÍzyk</string>
-    <string id="504">Wskarz katalog z napisami</string>
-    <string id="505">Wybierz ürÛd≥o napisÛw</string>
-    <string id="506">Chcesz wybraÊ nowe ustawienia?</string>
-    <string id="601">Pozycja zanaczona</string>
+    <string id="500">Nie wybrano języka.</string>
+    <string id="501">Chcesz utworzyć katalog dla napisów?</string>
+    <string id="502">Wybór języka</string>
+    <string id="503">Wybierz domyślny język</string>
+    <string id="504">Wskaż katalog z napisami</string>
+    <string id="505">Wybierz źródło napisów</string>
+    <string id="506">Chcesz wybrać nowe ustawienia?</string>
+    <string id="601">Pozycja zaznaczona</string>
     <string id="602">lepsza praca</string>
-    <string id="610">PrzeszukujÍ </string>
-    <string id="611">PrzeszukujÍ Sublight.si</string>
-    <string id="612">Wprowadü nazwÍ</string>
-    <string id="633">åciπgam pliki</string>
-    <string id="635">Po≥πczono</string>
-    <string id="642">Szukam napisÛw %s</string>
-    <string id="646">£πczenie ...</string>
-    <string id="649">åciπgam pliki...</string>
+    <string id="610">Przeszukuję </string>
+    <string id="611">Przeszukuję Sublight.si</string>
+    <string id="612">Wprowadź nazwę</string>
+    <string id="633">Ściągam pliki</string>
+    <string id="635">Połączono</string>
+    <string id="642">Szukam napisów %s</string>
+    <string id="646">Łączenie ...</string>
+    <string id="649">Ściągam pliki...</string>
     <string id="650">Wypakowuje napisy...</string>
     <string id="651">Napisy wypakowane</string>
-    <string id="652">Napisy úciπgniÍte i wypakowane</string>
-    <string id="653">B≥πd po≥aczenia</string>
-    <string id="654">B≥πd przy wypakowywaniu napisÛw</string>
-    <string id="741">Nie znaleziono napisÛw</string>
-    <string id="742"> napisÛw znalezionych</string>
-    <string id="744"> napisÛw znalezionych dla </string>
+    <string id="652">Napisy ściągnięte i wypakowane</string>
+    <string id="653">Błąd połączenia</string>
+    <string id="654">Błąd przy wypakowywaniu napisów</string>
+    <string id="741">Nie znaleziono napisów</string>
+    <string id="742"> napisów znalezionych</string>
+    <string id="744"> napisów znalezionych dla </string>
     
       <!-- 
    * Languages

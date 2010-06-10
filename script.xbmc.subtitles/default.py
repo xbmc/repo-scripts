@@ -6,7 +6,7 @@ import xbmcaddon
 __scriptname__ = "XBMC Subtitles"
 __scriptid__ = "script.xbmc.subtitles"
 __author__ = "Amet"
-__version__ = "1.6.8"
+__version__ = "1.7.0"
 __XBMC_Revision__ = "29565"
 
 if not xbmc.getCondVisibility('Player.Paused') : xbmc.Player().pause() #Pause if not paused
@@ -18,7 +18,6 @@ sys.path.append (BASE_RESOURCE_PATH)
 __settings__ = xbmcaddon.Addon(id='script.xbmc.subtitles')
 
 __language__ = __settings__.getLocalizedString
-#############-----------------Is script runing from OSD? -------------------------------###############
 
 if not xbmc.getCondVisibility('videoplayer.isfullscreen') :
     __settings__.openSettings()
