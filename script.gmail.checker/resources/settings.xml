@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="Settings">
+    <setting id="user" type="text"  label="Gmail Username" default=""/>
+    <setting id="pass" type="text" option = "hidden" label="Gmail Password" default=""/>
+    </category>
+</settings>
