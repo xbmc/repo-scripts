@@ -1,3 +1,6 @@
+1.7.1
+- fixed: Bierdopje was showing even if disabled
+
 1.7.0
 - Updated Polish strings, thanks piotr
 - cosmetics
