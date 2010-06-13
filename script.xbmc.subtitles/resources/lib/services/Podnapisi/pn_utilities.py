@@ -139,6 +139,7 @@ class OSDBServer:
         from xml.dom import minidom
         import urllib
         self.subtitles_name_list = []
+        self.subtitles_list = []
         tbsl = "1"
         if len(tvshow) > 1:
             name = tvshow                
@@ -147,19 +148,16 @@ class OSDBServer:
         search_url2 = None
         
         name = name.replace(" ","+")
-        search_url = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=" + name + "&sJ=" +str(lang1)+ "&sY=" + str(year)+ "&sTS=" + str(season) + "&sTE=" + str(episode) + "&sXML=1"
-        
+        search_url = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=" + name + "&sJ=" +str(lang1)+ "&sY=" + str(year)+ "&sTS=" + str(season) + "&sTE=" + str(episode) + "&sXML=1&lang=0"
+        xbmc.output("%s\nSearching for [%s] by name - podnapisi. Language 1" % (search_url,name,),level=xbmc.LOGDEBUG )        
         if lang2!=lang1:
-            search_url1 = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=" + name + "&sJ=" +str(lang2)+ "&sY=" + str(year)+ "&sTS=" + str(season) + "&sTE=" + str(episode) + "&sXML=1"
-        
+            search_url1 = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=" + name + "&sJ=" +str(lang2)+ "&sY=" + str(year)+ "&sTS=" + str(season) + "&sTE=" + str(episode) + "&sXML=1&lang=0"
+            xbmc.output("%s\nSearching for [%s] by name - podnapisi. Language 2" % (search_url1,name,),level=xbmc.LOGDEBUG )             
         if lang3!=lang1 and lang3!=lang2:
-            search_url2 = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=" + name + "&sJ=" +str(lang3)+ "&sY=" + str(year)+ "&sTS=" + str(season) + "&sTE=" + str(episode) + "&sXML=1"
-    
+            search_url2 = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=" + name + "&sJ=" +str(lang3)+ "&sY=" + str(year)+ "&sTS=" + str(season) + "&sTE=" + str(episode) + "&sXML=1&lang=0"
+            xbmc.output("%s\nSearching for [%s] by name - podnapisi. Language 3" % (search_url2,name,),level=xbmc.LOGDEBUG )         
         try:
-    
-            search_url.replace( " ", "+" )
-            xbmc.output("%s\nSearching subtitles by name_pod [%s]" % (search_url,name,),level=xbmc.LOGDEBUG )
-    
+
             socket = urllib.urlopen( search_url )
             result = socket.read()
             socket.close()

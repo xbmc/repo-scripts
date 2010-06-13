@@ -1,3 +1,6 @@
+1.7.2
+- return podnapisi results in english, thanks zipleen for finding this and helping debug
+
 1.7.1
 - fixed: Bierdopje was showing even if disabled
 

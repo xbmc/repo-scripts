@@ -61,14 +61,11 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     try:
 
         if not set_temp :
-            xbmc.output("Search by hash_pod [%s]" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
+            xbmc.output("Search for [%s] by hash - podnapisi" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
             subtitles_list, session_id = osdb_server.searchsubtitles_pod( hashTry ,language1, language2, language3)
-                    
         if (len ( subtitles_list )) < 1:
-            xbmc.output("Search by name_pod [%s]" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
-            
+            xbmc.output("Search for [%s] by name - podnapisi" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
             subtitles_list = osdb_server.searchsubtitlesbyname_pod( title, tvshow, season, episode, language1, language2, language3, year )
-        
         return subtitles_list, "", "" #standard output
     except :
         return subtitles_list, "", "" #standard output
