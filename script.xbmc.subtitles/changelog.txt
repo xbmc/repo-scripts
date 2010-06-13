@@ -1,3 +1,6 @@
+1.7.3
+- added: Subscene service, Thanks mr_blobby
+
 1.7.2
 - return podnapisi results in english, thanks zipleen for finding this and helping debug
 

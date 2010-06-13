@@ -136,7 +136,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
         def_service = __settings__.getSetting( "defservice")
         service_list = []
-        standard_service_list  = ['OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje']
+        standard_service_list  = ['OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene']
         service = ""
         
         for name in os.listdir(SERVICE_DIR):
