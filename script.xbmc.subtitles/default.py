@@ -6,8 +6,8 @@ import xbmcaddon
 __scriptname__ = "XBMC Subtitles"
 __scriptid__ = "script.xbmc.subtitles"
 __author__ = "Amet"
-__version__ = "1.7.3"
-__XBMC_Revision__ = "29565"
+__version__ = "1.7.4"
+__XBMC_Revision__ = "30001"
 
 if not xbmc.getCondVisibility('Player.Paused') : xbmc.Player().pause() #Pause if not paused
 
