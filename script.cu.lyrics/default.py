@@ -9,7 +9,7 @@ __author__ = "Amet, ZorMonkey"
 __url__ = "http://xbmc.org/forum/showthread.php?p=449687"
 __scriptid__ = "script.cu.lyrics"
 __credits__ = "EnderW,Nuka1195"
-__version__ = "0.8.5"
+__version__ = "0.8.6"
 __XBMC_Revision__ = "29565"
 
 # Shared resources 
@@ -17,7 +17,7 @@ BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources',
 
 sys.path.append (BASE_RESOURCE_PATH)
 
-__settings__ = xbmcaddon.Addon(id='script.xbmc.subtitles')
+__settings__ = xbmcaddon.Addon(id=__scriptid__)
 __language__ = __settings__.getLocalizedString
 if ( __name__ == "__main__" ):
     if ( xbmc.Player().isPlayingAudio() ):
