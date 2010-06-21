@@ -1,3 +1,6 @@
+0.8.7
+- fixed: displaying lyrics for next song
+
 0.8.6
 - fixed: do not c/p script IDs
 
@@ -9,7 +12,7 @@
 - version change , works with r30548
 
 0.8.3
-Changed save lyrics folder to "userdata/addon_data/lyrics"
+- fixed: lyrics folder should be "userdata/addon_data/lyrics"
 
 0.8.2 
-Initial Commit
+- Initial Commit

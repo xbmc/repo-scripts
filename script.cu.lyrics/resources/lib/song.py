@@ -2,11 +2,16 @@ import os
 import utilities
 import xbmc
 
+BASE_DATA_PATH = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( os.getcwd() ) )
+lyrics_path = os.path.join( BASE_DATA_PATH, "lyrics")
+
 class Song:
     def __init__( self ):
         self.artist = ""
         self.title = ""
-        self.settings = utilities.Settings().get_settings()
+
+        
+
     
     def __str__(self):
         return "Artist: %s, Title: %s" % ( self.artist, self.title)
@@ -21,9 +26,7 @@ class Song:
         return str.replace( "\\", "_" ).replace( "/", "_" )
     
     def path(self):
-        extension = ( "", ".txt", )[ self.settings[ "use_extension" ] ]
-        path = unicode( os.path.join( self.settings[ "lyrics_path" ], self.sanitize(self.artist), self.sanitize(self.title) + extension ), "utf-8" )
-        return utilities.make_legal_filepath( path, self.settings[ "compatible" ], self.settings[ "use_extension" ] )
+        return unicode( os.path.join( lyrics_path, self.sanitize(self.artist), self.sanitize(self.title) + ".txt" ), "utf-8" )
     
     @staticmethod
     def current():

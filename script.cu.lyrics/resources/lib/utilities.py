@@ -80,34 +80,6 @@ def LOG( status, format, *args ):
         xbmc.output( "%s: %s\n" % ( ( "INFO", "ERROR", "NOTICE", "DEBUG", )[ status - 1 ], format % args, ) )
 
 
-def make_legal_filepath( path, compatible=False, extension=True ):
-    environment = os.environ.get( "OS", "xbox" )
-    path = path.replace( "\\", "/" )
-    drive = os.path.splitdrive( path )[ 0 ]
-    parts = os.path.splitdrive( path )[ 1 ].split( "/" )
-    if ( not drive and parts[ 0 ].endswith( ":" ) and len( parts[ 0 ] ) == 2 and compatible ):
-        drive = parts[ 0 ]
-        parts[ 0 ] = ""
-    if ( environment == "xbox" or environment == "win32" or compatible ):
-        illegal_characters = """,*=|<>?;:"+"""
-        for count, part in enumerate( parts ):
-            tmp_name = ""
-            for char in part:
-                if ( char in illegal_characters ): char = ""
-                tmp_name += char
-            if ( environment == "xbox" or compatible ):
-                if ( len( tmp_name ) > 42 ):
-                    if ( count == len( parts ) - 1 and extension == True ):
-                        ext = os.path.splitext( tmp_name )[ 1 ]
-                        tmp_name = "%s%s" % ( os.path.splitext( tmp_name )[ 0 ][ : 42 - len( ext ) ].strip(), ext, )
-                    else:
-                        tmp_name = tmp_name[ : 42 ].strip()
-            parts[ count ] = tmp_name
-    filepath = drive + "/".join( parts )
-    if ( environment == "win32" ):
-        return filepath.encode( "utf-8" )
-    else:
-        return filepath
 
 def unescape(s):
     s = s.replace("&lt;", "<")
@@ -120,54 +92,3 @@ def unescape(s):
 def deAccent(str):
     return unicodedata.normalize('NFKD', unicode(unicode(str, 'utf-8'))).encode('ascii','ignore')
 
-class Settings:
-    """ Settings class """
-    def get_settings( self, defaults=False ):
-        """ read settings """
-        try:
-            settings = {}
-            if ( defaults ): raise
-            settings_file = open( BASE_SETTINGS_PATH, "r" )
-            settings = eval( settings_file.read() )
-            settings_file.close()
-            if ( settings[ "version" ] not in SETTINGS_VERSIONS ):
-                raise
-        except:
-            settings = self._use_defaults( settings, save=( defaults == False ) )
-        return settings
-
-    def _use_defaults( self, current_settings=None, save=True ):
-        """ setup default values if none obtained """
-        LOG( LOG_NOTICE, "%s (ver: %s) used default settings", __scriptname__, __version__ )
-        settings = {}
-        defaults = {  
-            "scraper": "lyricwikiapi",
-            "save_lyrics": True,
-            "lyrics_path": os.path.join( BASE_DATA_PATH, "lyrics" ),
-            "smooth_scrolling": False,
-            "show_viz": True,
-            "use_filename": False,
-            "filename_format": 0,
-            "music_path": "",
-            "shuffle": True,
-            "compatible": False,
-            "use_extension": True,
-            }
-        for key, value in defaults.items():
-            # add default values for missing settings
-            settings[ key ] = current_settings.get( key, defaults[ key ] )
-        settings[ "version" ] = __version__
-        if ( save ):
-            ok = self.save_settings( settings )
-        return settings
-
-    def save_settings( self, settings ):
-        """ save settings """
-        try:
-            settings_file = open( BASE_SETTINGS_PATH, "w" )
-            settings_file.write( repr( settings ) )
-            settings_file.close()
-            return True
-        except:
-            LOG( LOG_ERROR, "%s (rev: %s) %s::%s (%d) [%s]", __scriptname__, __svn_revision__, self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
-            return False
