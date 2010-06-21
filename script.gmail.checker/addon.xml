@@ -10,7 +10,9 @@
              library="default.py" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Gmail Checker</summary>
+    <summary lang="hu">Gmail ellenörző</summary> 
     <description lang="en">View Gmail e-mails</description>
+    <description lang="hu">Gmail leveleid olvasása</description>
     <platform>all</platform>
   </extension>
 </addon>

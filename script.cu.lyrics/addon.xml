@@ -9,8 +9,10 @@
   <extension point="xbmc.python.lyrics"
              library="default.py" />
   <extension point="xbmc.addon.metadata">
-    <summary>CU Lyrics</summary>
-    <description>Search, download and display lyrics from LyricWIKI.org. Downloaded lyrics will be saved in userdata/addon_data.Lyrics button on OSD needs to be activated and path set to CU Lyrics under Settings-> Skin-> Scripts </description>
+    <summary lang="en">CU Lyrics</summary>
+    <summary lang="hu">CU Lyrics dalszöveg</summary> 
+    <description lang="en">Search, download and display lyrics from LyricWIKI.org. Downloaded lyrics will be saved in userdata/addon_data.Lyrics button on OSD needs to be activated and path set to CU Lyrics under Settings-> Skin-> Scripts </description>
+    <description lang="hu">Dalszövegek keresése letöltése, megjelenítése a LyricWIKI.org webhelyről. A letöltött dalszövegek a userdata/addon_data mappába kerülnek. A dalszöveg OSD gombot aktiválni kell az elérési út megadásával a Beállítások -> Skin -> Szkriptek alatt.</description>
     <platform>all</platform>
   </extension>
 </addon>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30300">XBMC Feliratok</string>
+    <string id="30301"></string>
+    <string id="30302">Amet</string>
+
+
+    
+    <!-- Labels -->
+
+    <string id="630">A felirat file letöltése és kibontása mint %s</string>
+    <string id="631">Kibontás %s to %s</string>
+    <string id="632">Letöltve %s a %s -ból</string>
+    <string id="634">Hiba! %s</string>
+    <string id="636">Név nélküli bejelentkezés...</string>
+    <string id="637">Bejelentkezés mint %s...</string>
+    <string id="641">%s Beállítások</string>
+    <string id="644">Kibontva ide %s</string>
+    <string id="645">Letöltés megszakítva</string>
+    <string id="647">hash kód alapján...</string>
+    <string id="648">név alapján...</string>
+    <string id="655">Helyi felirat elérhető</string>
+
+    <!-- OSDB Messages -->
+    <string id="730">OSDB szerver név hiányzik</string>
+    <string id="731">XMLRPC %s: %s</string>
+    <string id="732">Belépés</string>
+    <string id="733">Kilépés</string>
+    <string id="734">Feliratnyelv bekérés</string>
+    <string id="735">Film hashkód generálás</string>
+    <string id="736">Felirat keresés</string>
+    <string id="737">Nincs csatlakozás az osdb szerverhez</string>
+    <string id="738">Hashkód %s nem található</string>
+    <string id="739">Hashkód számítás %s %s</string>
+    <string id="740">A file megosztáson található, távoli fájlok nem támogatottak</string>
+    <string id="743">HTTP %s: %s</string>
+    
+    
+    <!-- tarnslate below this line -->
+    <!-- English -->
+    <string id="500">Nem választottál egy érvényes nyelvet.</string>
+    <string id="501">Akarsz beállítani egy egyedi feliratkönyvtárat?</string>
+    <string id="502">Nyelvválasztás</string>
+    <string id="503">Alapértelmezett nyelv választása</string>
+    <string id="504">Kérlek válassz felirat mappát</string>
+    <string id="505">Kérlek válassz preferált szolgáltatást</string>
+    <string id="506">Akarsz megadni új beállításokat?</string>
+    <string id="601">Elemek megjelölve</string>
+    <string id="602">jobban működik</string>
+    <string id="610">Keres </string>
+    <string id="611">Keresés itt: Sublight.si</string>
+    <string id="612">Manuális keresési szöveg</string>
+    <string id="633">Fájl letöltése</string>
+    <string id="635">Kapcsolódva</string>
+    <string id="642">Feliratok keresése %s</string>
+    <string id="646">Kapcsolódás...</string>
+    <string id="649">Feliratok letöltése...</string>
+    <string id="650">Feliratok kibontása...</string>
+    <string id="651">Feliratok kibontva</string>
+    <string id="652">Felirat fájl letöltve és kibontva</string>
+    <string id="653">A kapcsolat meghíusúlt</string>
+    <string id="654">Hiba a kibontás közben</string>
+    <string id="741">Nem található felirat</string>
+    <string id="742"> felirat találat</string>
+    <string id="744"> felirat található ehhez </string>
+    <string id="745">Podnapisi szolgáltatáshoz felhasználónév és jelszó kell</string>
+    <string id="746">Kérlek regisztrálj a www.podnapisi.net-en</string>
+    <string id="747">Keresés a szülőmappa használatával</string>
+    <string id="748">Nem mentheted el a feliratot a kiválasztott célhelyre</string>
+    <string id="749">Kérlek válassz egy eltérő feliratmappát a beállításoknál.</string>
+    <string id="750">Akarod a beállításokat megváltoztatni?</string>
+    <string id="751">Add meg a film címét (év)</string>
+    <string id="752">Verzió %s a %s-ból elérhető</string>
+    <string id="753">Rev%s,vagy magasabb szükséges ehhez a szkripthez</string>
+    <string id="754">Az XBMC verziód: rev%i</string>
+      <!-- 
+   * Script Settings
+   -->
+  <string id="30100">Nyelvek</string>
+  <string id="30101">- Elsődleges nyelv</string>
+  <string id="30102">- Másodlagos nyelv</string>
+  <string id="30103">Szolgáltastások</string>
+  <string id="30104"> - Podnapisi.net felhasználónév</string>
+  <string id="30105"> - Podnapisi.net jelszó</string>
+  <string id="30106">Különleges beállítások</string>
+  <string id="30107">- Feliratmappa megeggyezik a film mappájával</string>
+  <string id="30108">  - Egyedi feliratmappa megadása</string>
+  <string id="30110">- Keresési szöveg manuális megadása</string>
+  <string id="30111">- Harmadik nyelv</string>  
+  <string id="30112">- Alapértelmezett szolgáltatás választása</string>
+  <string id="30118">- Fájlnév megjelenítése a találatok között</string>
+  <string id="30119">- Keresés a szülőmappa használatával</string> 
+    <!-- Optional  -->
+  <string id="30201">Albán</string>
+  <string id="30202">Arab</string>
+  <string id="30203">Fehérorosz</string>
+  <string id="30204">Boszniai (Latin)</string>
+  <string id="30205">Bulgár</string>
+  <string id="30206">Katalán</string>
+  <string id="30207">Kínai</string>
+  <string id="30208">Horvát</string>
+  <string id="30209">Cseh</string>
+  <string id="30210">Dán</string>
+  <string id="30211">Holland</string>
+  <string id="30212">Angol</string>
+  <string id="30213">Észt</string>
+  <string id="30214">Finn</string>
+  <string id="30215">Francia</string>
+  <string id="30216">Német</string>
+  <string id="30217">Görög</string>
+  <string id="30218">Héber</string>
+  <string id="30219">Hindi</string>
+  <string id="30220">Magyar</string>
+  <string id="30221">Izlandi</string>
+  <string id="30222">Indonéz</string>
+  <string id="30224">Olasz</string>
+  <string id="30225">Japán</string>
+  <string id="30226">Koreai</string>
+  <string id="30227">Lettország</string>
+  <string id="30228">Litvánia</string>
+  <string id="30229">Makedónia</string>
+  <string id="30230">Norvégia</string>
+  <string id="30232">Lengyel</string>
+  <string id="30233">Portugál</string>
+  <string id="30234">Portugál (Brazil)</string>
+  <string id="30235">Román</string>
+  <string id="30236">Orosz</string>
+  <string id="30237">Szerb (Latin)</string>
+  <string id="30238">Szlovák</string>
+  <string id="30239">Szlovén</string>
+  <string id="30240">Spanyol</string>
+  <string id="30242">Svéd</string>
+  <string id="30243">Thai</string>
+  <string id="30244">Török</string>
+  <string id="30245">Ukrán</string>
+  <string id="30246">Vietnámi</string>
+  <string id="30301">Sublight</string>
+  <string id="30302">Podnapisi</string>
+  <string id="30303">OpenSubtitles</string>
+  
+    
+</strings>

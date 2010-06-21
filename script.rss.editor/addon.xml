@@ -12,6 +12,8 @@
     <platform>all</platform>
     <minversion>28764</minversion>
     <summary lang="en">A Script for editing XBMC's built in RSS Ticker</summary>
+    <summary lang="hu">RSS forrás szerkesztő</summary> 
     <description lang="en">A Script for editing XBMC's built in RSS Ticker</description>
+    <description lang="hu">A szkript képes szerkeszteni az XBMC beépített RSS forrás készletét</description>
   </extension>
 </addon>
