@@ -130,8 +130,18 @@ class GUI( xbmcgui.WindowXMLDialog ):
         else:
           self.rem_files(self.tmp_sub_dir)
         
-        self.getControl( 111 ).setVisible( False ) #TO-DO check for existing subtitles and set to "True" if found
-
+        self.getControl( 111 ).setVisible( False ) # check for existing subtitles and set to "True" if found
+        sub_exts = ["srt", "sub", "txt"]
+        br = 0
+        for i in range(3):
+          for sub_ext in sub_exts:
+            if br == 0:
+              exec("lang = toOpenSubtitles_two(self.language_%s)" % (str(i+1)) )
+              xbmc.output("Existing Subtitle Notification [%s.%s.%s]" % (os.path.join(sub_folder,os.path.splitext( os.path.basename( self.file_original_path ) )[0]),lang ,sub_ext,),level=xbmc.LOGDEBUG )
+              if os.path.isfile ("%s.%s.%s" % (os.path.join(sub_folder,os.path.splitext( os.path.basename( self.file_original_path ) )[0]),lang ,sub_ext,)):
+                self.getControl( 111 ).setVisible( True )
+                br = 1
+                break
 #### ---------------------------- Set Service ----------------------------###     
 
         def_service = __settings__.getSetting( "defservice")

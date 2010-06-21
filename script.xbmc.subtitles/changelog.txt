@@ -1,3 +1,6 @@
+1.7.4
+- added: check and notify for existing subtitles, again
+
 1.7.3
 - added: Subscene service, Thanks mr_blobby
 
