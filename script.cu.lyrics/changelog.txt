@@ -1,5 +1,5 @@
 0.8.8
-- revered previously deleted Hungarian translation
+- reverted previously deleted Hungarian translation
 
 0.8.7
 - fixed: displaying lyrics for next song
