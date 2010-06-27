@@ -6,9 +6,7 @@ from utilities import *
 import urllib
 import unzip
 import unicodedata
-from os.path import join
 import shutil
-import fnmatch
 
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
@@ -386,9 +384,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def rem_files( self, directory):
       for root, dirs, files in os.walk(directory, topdown=False):
           for items in dirs:
-              shutil.rmtree(join(root, items), ignore_errors=True, onerror=None)      
+              shutil.rmtree(os.path.join(root, items), ignore_errors=True, onerror=None)      
           for name in files:
-              os.remove(join(root, name))
+              os.remove(os.path.join(root, name))
 
 
 ###-------------------------- On Focus  -------------################
