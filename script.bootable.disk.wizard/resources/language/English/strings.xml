@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<strings>
+<!--Common-->
+  <string id="11">Exit</string>
+  <string id="12">Next</string>
+<!--Page 1-->
+  <string id="101">Step: 1/7</string>
+  <string id="102">Bootable Disk Wizard</string>
+  <string id="103">Welcome to XBMC Live</string>
+  <string id="104">bootable disk wizard</string>
+  <string id="105">The procedure will create a XBMC Live bootable disk</string>
+  <string id="106">The disk must have at least %iMB of capacity</string>
+  <string id="107">CAUTION:</string>
+  <string id="108">The process will erase all data on the specified disk drive! This is an experimental tool, use at your own risk!</string>
+<!--Page 2-->
+  <string id="201">Step: 2/7</string>
+  <string id="202">Locate System Files</string>
+  <string id="203">This wizard needs the XBMCLive system files to proceed.You can let it find the for you or specify a custom location via a plugin setting.</string>
+<!--Page 3-->
+  <string id="301">Step: 3/7</string>
+  <string id="302">Choose Destination Disk</string>
+  <string id="303">This wizard needs to know which removable disk to use. Please select one from the list below.</string>
+<!--Page 4-->
+  <string id="401">Step: 4/7</string>
+  <string id="402">Choose Persistent Storage Size</string>
+  <string id="403">XBMC Live saves all system changes into a file, if available. If such a file, called 'permanent storage file' does not exist, changes to system configuration are lost when rebooting.</string>
+  <string id="404">Choose size (MB):</string>
+  <string id="405">0MB</string>
+  <string id="406">%sMB</string>
+<!--Page 5-->
+  <string id="501">Step: 5/7</string>
+  <string id="502">Start Installer</string>
+  <string id="503">This wizard will completely erase the following disk:</string>
+  <string id="504">Please select this check box to start installation</string>
+  <string id="505">Enter your password:</string>
+  <string id="506">Confirm your password:</string>
+<!--Page 6-->
+  <string id="601">Step: 6/7</string>
+  <string id="602">Creating Disk</string>
+  <string id="603">Partitioning and formatting disk</string>
+  <string id="604">Copying system files</string>
+  <string id="605">Installing GRUB</string>
+  <string id="606">The process can take several minutes, please wait...</string>
+  <string id="607">Error formatting disk</string>
+  <string id="608">Pls check your removable disk and try again. You can turn on debug log and try again, detailed info will be provided into xbmc.log</string>
+  <string id="609">Error copying XBMC Live system files</string>
+  <string id="610">Pls check your boot disk and try again. You can turn on debug log and try again, detailed info will be provided into xbmc.log</string>
+  <string id="611">Error installing bootloader</string>
+  <string id="612">Pls turn on debug log and try again, detailed info will be provided into xbmc.log</string>
+  <string id="613">Error mounting removable disk</string>
+  <string id="614">Pls turn on debug log and try again, detailed info will be provided into xbmc.log</string>
+  <string id="615">Error unmounting removable disk</string>
+  <string id="616">Pls turn on debug log and try again, detailed info will be provided into xbmc.log</string>
+  <string id="617">%s Complete</string>
+  <string id="618">Creating Permanent Storage</string>
+  <string id="619">Error creating permanent storage</string>
+  <string id="620">Pls turn on debug log and try again, detailed info will be provided into xbmc.log</string>
+<!--Page 7-->
+  <string id="701">Step: 7/7</string>
+<!--Page 9-->
+  <string id="901">End of Operations</string>
+  <string id="902">Success</string>
+  <string id="903">Failure</string>
+  <string id="904">The wizard has created a bootable disk successfully.</string>
+  <string id="905">Reboot your system and be sure to set BIOS to use the removable disk as boot media.</string>
+  <string id="906">An error occured!</string>
+  <string id="907">Please report this issue!</string>
+  <string id="908">Cannot find any suitable removable disks</string>
+  <string id="909">This wizard is not able to find any suitable removable disks and cannot continue.</string>
+  <string id="910">This script is supposed to be run only from within XBMCLive.</string>
+  <string id="911">Cannot find Live Directory</string>
+  <string id="912">This wizard is not able to find the XBMCLive system files and cannot continue.</string>
+</strings>
+

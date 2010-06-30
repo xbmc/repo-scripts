@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<strings>
+<!--Common-->
+  <string id="11">Afsluiten</string>
+  <string id="12">Volgende</string>
+<!--Pagina 1-->
+  <string id="101">Stap: 1/7</string>
+  <string id="102">Bootable Disk Wizard</string>
+  <string id="103">Welkom bij de XBMC Live</string>
+  <string id="104">bootable disk wizard</string>
+  <string id="105">Deze installatie-procedure maakt een XBMC Live opstartschijf</string>
+  <string id="106">De schijf moet minimaal %iMB ruimte bevatten</string>
+  <string id="107">LET OP:</string>
+  <string id="108">De installatie procedure zal alle gegevens op de gekozen schijf wissen! Dit programma is nog in de experimentele fase, gebruik is op eigen risico!</string>
+<!--Pagina 2-->
+  <string id="201">Stap: 2/7</string>
+  <string id="202">Systeem Bestanden Zoeken</string>
+  <string id="203">De wizard heeft de XBMC Live systeem bestanden nodig om verder te kunnen gaan. Deze kunnen automatisch gevonden worden of via de plugin instellingen gespecificeerd worden.</string>
+<!--Pagina 3-->
+  <string id="301">Stap: 3/7</string>
+  <string id="302">Kies Doel Schijf</string>
+  <string id="303">De wizard moet weten welke verwisselbare schijf hij kan gebruiken. Kies er een uit de onderstaande lijst.</string>
+<!--Pagina 4-->
+  <string id="401">Stap: 4/7</string>
+  <string id="402">Kies Permanente Opslagruimte</string>
+  <string id="403">XBMC Live slaat alle systeemveranderingen op in een bestand, indien beschikbaar. Als zo'n bestand, 'permanente opslag' genaamd niet bestaat, dan zullen veranderingen in het systeem verloren gaan na een herstart.</string>
+  <string id="404">Kies grootte (MB):</string>
+  <string id="405">100</string>
+  <string id="406">Opslagruimte kan niet groter zijn dan %iMB</string>
+<!--Pagina 5-->
+  <string id="501">Stap: 5/7</string>
+  <string id="502">Start De Installatie</string>
+  <string id="503">De wizard zal de volgende schijf wissen:</string>
+  <string id="504">Klik "Volgende" om te beginnen.</string>
+  <string id="505">Wachtwoord ingeven:</string>
+  <string id="506">Bevestig wachtwoord:</string>
+<!--Pagina 6-->
+  <string id="601">Stap: 6/7</string>
+  <string id="602">Aanmaken Schijf</string>
+  <string id="603">Partitioneren and formateren schijf</string>
+  <string id="604">Kopiëren systeem bestanden</string>
+  <string id="605">Installatie GRUB</string>
+  <string id="606">Deze procedure kan enkele minuten duren, geduld aub...</string>
+  <string id="607">Probleem met formateren van schijf</string>
+  <string id="608">Controleer de verwisselbare schijf en probeer opnieuw. Activeer eventueel het registreren van fouten, gedetailleerde info komt vervolgens in xbmc.log</string>
+  <string id="609">Probleem met het copiëren van de XBMC Live systeem bestanden</string>
+  <string id="610">Controleer de opstartschijf en probeer opnieuw. Activeer eventueel het registreren van fouten, gedetailleerde info komt vervolgens in xbmc.log</string>
+  <string id="611">Probleem met het installeren van de bootloader</string>
+  <string id="612">Activeer het registreren van fouten, gedetailleerde info komt in xbmc.log</string>
+  <string id="613">Probleem met het koppelen van de verwisselbare schijf</string>
+  <string id="614">Activeer het registreren van fouten, gedetailleerde info komt in xbmc.log</string>
+  <string id="615">Probleem met het ontkoppelen van de verwisselbare schijf</string>
+  <string id="616">Activeer het registreren van fouten, gedetailleerde info komt in xbmc.log</string>
+  <string id="617">%s Voltooid</string>
+  <string id="618">Permanente Opslag Creëren</string>
+  <string id="619">Probleem met het creëren van een permanente opslag.</string>
+  <string id="620">Activeer het registreren van fouten en probeer het opnieuw, gedetailleerde info komt vervolgens in xbmc.log</string>
+<!--Pagina 7-->
+  <string id="701">Stap: 7/7</string>
+<!--Page 9-->
+  <string id="901">Einde Installatie</string>
+  <string id="902">Voltooid</string>
+  <string id="903">Fout</string>
+  <string id="904">De wizard heeft succesvol een opstartschijf gemaakt.</string>
+  <string id="905">Herstart het systeem en vergeet niet in de BIOS deze schijf te selecteren als opstartschijf.</string>
+  <string id="906">Er is een fout opgetreden!</string>
+  <string id="907">Graag dit probleem rapporteren!</string>
+</strings>
+

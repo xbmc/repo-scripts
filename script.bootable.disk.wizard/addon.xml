@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.bootable.disk.wizard"
+       name="Bootable Disk Wizard"
+       version="0.9.1"
+       provider-name="Team XBMC">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>linux</platform>
+    <minversion>30702</minversion>
+    <summary>Bootable Disk Wizard</summary>
+    <description></description>
+  </extension>
+</addon>

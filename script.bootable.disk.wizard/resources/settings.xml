@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="Settings">
+    <setting id="cust_liveDirectory" type="bool" label="Custom Live Directory" default="false"/>
+    <setting id="liveDirectory" type="folder" source="files" label="Select Custom Live Directory" default="" />
+    <setting id="enable_custom_password" type="bool" label="Custom Password" default="false"/>
+    <setting id="debug" type="bool" label="Enable Debug Logging" default="false"/>
+  </category>
+</settings>

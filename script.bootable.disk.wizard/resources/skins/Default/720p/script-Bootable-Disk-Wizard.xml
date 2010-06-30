@@ -1,0 +1,941 @@
+<window>
+	<defaultcontrol always="true">1099</defaultcontrol>
+	<allowoverlays>false</allowoverlays>
+	<controls>
+	<!-- static content -->
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>bdw-background.jpg</texture>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>592</posy>
+			<width>1280</width>
+			<height>128</height>
+			<texture>bdw-floor.png</texture>
+		</control>
+		<control type="image">
+			<posx>1096</posx>
+			<posy>0</posy>
+			<width>184</width>
+			<height>28</height>
+			<texture>bdw-breadcrumb.png</texture>
+		</control>
+		<control type="group">
+			<animation type="WindowOpen" reversible="false">
+				<effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="500" delay="300" />
+				<effect type="fade" start="0" end="100" time="500" delay="300" />
+			</animation>
+			<animation type="WindowClose" reversible="false">
+				<effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="500" />
+				<effect type="fade" start="100" end="0" time="500" />
+			</animation>
+			<control type="image">
+				<posx>132</posx>
+				<posy>54</posy>
+				<width>1016</width>
+				<height>588</height>
+				<texture>bdw-panel.png</texture>
+			</control>
+			<control type="image">
+				<posx>148</posx>
+				<posy>158</posy>
+				<width>254</width>
+				<height>50</height>
+				<texture>bdw-logo.png</texture>
+			</control>
+			<control type="image">
+				<posx>150</posx>
+				<posy>250</posy>
+				<width>238</width>
+				<height>298</height>
+				<texture>bdw-wizard.png</texture>
+			</control>
+			<control type="group" id="9000">
+				<animation effect="fade" time="300">Visible</animation>
+				<animation effect="fade" time="300">Hidden</animation>
+				<visible>!Control.IsVisible(1600)</visible>
+				<control type="button" id="1099">
+					<description>next</description>
+					<posx>818</posx>
+					<posy>562</posy>
+					<width>150</width>
+					<height>34</height>
+					<texturefocus border="5">bdw-button-focus.png</texturefocus>
+					<texturenofocus border="5">bdw-button-nofocus.png</texturenofocus>
+					<label>[B]$LOCALIZE[SCRIPT12][/B]</label>
+					<font>font12_title</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<align>center</align>
+					<aligny>center</aligny>
+					<pulseonselect>true</pulseonselect>
+					<onup>9001</onup>
+					<ondown>9001</ondown>
+					<onleft>1098</onleft>
+					<onright>1599</onright>
+					<enable>!Control.Isvisible(1700) + !Control.Isvisible(1900)</enable>
+				</control>
+				<control type="button" id="1098">
+					<description>exit</description>
+					<posx>574</posx>
+					<posy>562</posy>
+					<width>150</width>
+					<height>34</height>
+					<texturefocus border="5">bdw-button-focus.png</texturefocus>
+					<texturenofocus border="5">bdw-button-nofocus.png</texturenofocus>
+					<label>[B]$LOCALIZE[SCRIPT11][/B]</label>
+					<font>font12_title</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<align>center</align>
+					<aligny>center</aligny>
+					<pulseonselect>true</pulseonselect>
+					<onup>9001</onup>
+					<ondown>9001</ondown>
+					<onleft>1599</onleft>
+					<onright>1099</onright>
+				</control>
+			</control>
+			<control type="group" id="9001">
+			<!-- page 1 -->
+				<control type="group" id="1100">
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<control type="label">
+						<description>page count</description>
+						<posx>1126</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT101]</label>
+						<font>font12</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>top</aligny>
+					</control>
+					<control type="label">
+						<description>header</description>
+						<posx>420</posx>
+						<posy>102</posy>
+						<width>700</width>
+						<height>20</height>
+						<label>[B]$LOCALIZE[SCRIPT102][/B]</label>
+						<font>font30</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label">
+						<description>line 1</description>
+						<posx>420</posx>
+						<posy>200</posy>
+						<width>700</width>
+						<height>20</height>
+						<label>[B]$LOCALIZE[SCRIPT103][/B]</label>
+						<font>font16</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label">
+						<description>line 2</description>
+						<posx>420</posx>
+						<posy>230</posy>
+						<width>700</width>
+						<height>20</height>
+						<label>[B]$LOCALIZE[SCRIPT104][/B]</label>
+						<font>font16</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label" id="1006">
+						<description>line 3</description>
+						<posx>460</posx>
+						<posy>300</posy>
+						<width>660</width>
+						<height>100</height>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label">
+						<description>line 4</description>
+						<posx>460</posx>
+						<posy>440</posy>
+						<width>660</width>
+						<height>20</height>
+						<label>[B][I]$LOCALIZE[SCRIPT107] [/I][/B]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label">
+						<description>line 5</description>
+						<posx>460</posx>
+						<posy>466</posy>
+						<width>660</width>
+						<height>60</height>
+						<label>$LOCALIZE[SCRIPT108]</label>
+						<font>font13</font>
+						<textcolor>FFFEAF33</textcolor>
+						<align>left</align>
+						<aligny>top</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+				</control>
+			<!-- page 2 -->
+				<control type="group" id="1200">
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<defaultcontrol always="true">1098</defaultcontrol>
+					<control type="label">
+						<description>page count</description>
+						<posx>1126</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT201]</label>
+						<font>font12</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>top</aligny>
+					</control>
+					<control type="label">
+						<description>header</description>
+						<posx>420</posx>
+						<posy>102</posy>
+						<width>700</width>
+						<height>20</height>
+						<label>[B]$LOCALIZE[SCRIPT202][/B]</label>
+						<font>font30</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label">
+						<description>line 1</description>
+						<posx>460</posx>
+						<posy>200</posy>
+						<width>620</width>
+						<height>120</height>
+						<label>$LOCALIZE[SCRIPT203]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label" id="1297">
+						<description>step 2 Warning Label</description>
+						<posx>460</posx>
+						<posy>500</posy>
+						<width>620</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>FFFEAF33</textcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+				</control>
+			<!-- page 3 -->
+				<control type="group" id="1300">
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<control type="label">
+						<description>page count</description>
+						<posx>1126</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT301]</label>
+						<font>font12</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>top</aligny>
+					</control>
+					<control type="label">
+						<description>header</description>
+						<posx>420</posx>
+						<posy>102</posy>
+						<width>700</width>
+						<height>20</height>
+						<label>[B]$LOCALIZE[SCRIPT302][/B]</label>
+						<font>font30</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label">
+						<description>line 1</description>
+						<posx>460</posx>
+						<posy>200</posy>
+						<width>620</width>
+						<height>120</height>
+						<label>$LOCALIZE[SCRIPT303]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="list" id="1301">
+						<description>disk list</description>
+						<posx>460</posx>
+						<posy>320</posy>
+						<width>630</width>
+						<height>211</height>
+						<onleft>1301</onleft>
+						<onright>1302</onright>
+						<onup>9000</onup>
+						<ondown>9000</ondown>
+						<pagecontrol>1302</pagecontrol>
+						<scrolltime>200</scrolltime>
+						<itemlayout height="30" width="660">
+							<control type="image">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>660</width>
+								<height>31</height>
+								<texture border="0,2,0,2">bdw-list-nofocus.png</texture>
+							</control>
+							<control type="image">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>bdw-radiobutton-nofocus.png</texture>
+							</control>
+							<control type="label">
+								<posx>50</posx>
+								<posy>0</posy>
+								<width>500</width>
+								<height>30</height>
+								<label>$INFO[ListItem.Label]</label>
+								<font>font13</font>
+								<textcolor>88FFFFFF</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<align>left</align>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>650</posx>
+								<posy>0</posy>
+								<width>500</width>
+								<height>30</height>
+								<label>$INFO[ListItem.Label2]</label>
+								<font>font13</font>
+								<textcolor>88FFFFFF</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<align>right</align>
+								<aligny>center</aligny>
+							</control>
+						</itemlayout>
+						<focusedlayout height="30" width="660">
+							<control type="image">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>660</width>
+								<height>31</height>
+								<texture border="0,2,0,2">bdw-list-nofocus.png</texture>
+								<visible>!Control.HasFocus(1301)</visible>
+							</control>
+							<control type="image">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>660</width>
+								<height>31</height>
+								<texture border="0,2,0,2">bdw-list-focus.png</texture>
+								<visible>Control.HasFocus(1301)</visible>
+							</control>
+							<control type="image">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>bdw-radiobutton-focus.png</texture>
+							</control>
+							<control type="label">
+								<posx>50</posx>
+								<posy>0</posy>
+								<width>500</width>
+								<height>30</height>
+								<label>$INFO[ListItem.Label]</label>
+								<font>font13</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<align>left</align>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>650</posx>
+								<posy>0</posy>
+								<width>500</width>
+								<height>30</height>
+								<label>$INFO[ListItem.Label2]</label>
+								<font>font13</font>
+								<textcolor>88FFFFFF</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<align>right</align>
+								<aligny>center</aligny>
+							</control>
+						</focusedlayout>
+					</control>
+					<control type="scrollbar" id="1302">
+						<description>disk list scrollbar</description>
+						<posx>1094</posx>
+						<posy>320</posy>
+						<width>25</width>
+						<height>210</height>
+						<texturesliderbackground border="0,14,0,14">bdw-scrollbar-background.png</texturesliderbackground>
+						<texturesliderbar border="0,14,0,14">bdw-scrollbar-nofocus.png</texturesliderbar>
+						<texturesliderbarfocus border="0,14,0,14">bdw-scrollbar-focus.png</texturesliderbarfocus>
+						<textureslidernib>bdw-scrollbar-nib.png</textureslidernib>
+						<textureslidernibfocus>bdw-scrollbar-nib.png</textureslidernibfocus>
+						<onleft>1301</onleft>
+						<onright>1099</onright>
+						<showonepage>false</showonepage>
+						<orientation>vertical</orientation>
+					</control>
+				</control>
+			<!-- page 4 -->
+				<control type="group" id="1400">
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<control type="label">
+						<description>page count</description>
+						<posx>1126</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT401]</label>
+						<font>font12</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>top</aligny>
+					</control>
+					<control type="label">
+						<description>header</description>
+						<posx>420</posx>
+						<posy>102</posy>
+						<width>700</width>
+						<height>20</height>
+						<label>[B]$LOCALIZE[SCRIPT402][/B]</label>
+						<font>font30</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label">
+						<description>line 1</description>
+						<posx>460</posx>
+						<posy>200</posy>
+						<width>620</width>
+						<height>120</height>
+						<label>$LOCALIZE[SCRIPT403]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label">
+						<description>line 2</description>
+						<posx>500</posx>
+						<posy>320</posy>
+						<width>480</width>
+						<height>120</height>
+						<label>[B]$LOCALIZE[SCRIPT404][/B]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="slider" id="1401">
+						<description>Slider</description>
+						<posx>500</posx>
+						<posy>410</posy>
+						<width>528</width>
+						<height>32</height>
+						<aligny>center</aligny>
+						<texturefocus>-</texturefocus>
+						<texturenofocus>-</texturenofocus>
+						<texturesliderbar border="2">bdw-slider-background.png</texturesliderbar>
+						<textureslidernib>bdw-slider-nib-nofocus.png</textureslidernib>
+						<textureslidernibfocus>bdw-slider-nib-focus.png</textureslidernibfocus>
+						<onup>9000</onup>
+						<ondown>9000</ondown>
+						<onleft>1501</onleft>
+						<onright>1501</onright>
+					</control>
+					<control type="label">
+						<description>line 3</description>
+						<posx>500</posx>
+						<posy>406</posy>
+						<width>100</width>
+						<height>120</height>
+						<label>$LOCALIZE[SCRIPT405]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label" id="1403">
+						<description>Storage Size</description>
+						<posx>780</posx>
+						<posy>362</posy>
+						<width>70</width>
+						<height>34</height>
+						<label>$LOCALIZE[SCRIPT405]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>right</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label" id="1402">
+						<description>line 4</description>
+						<posx>1040</posx>
+						<posy>406</posy>
+						<width>100</width>
+						<height>120</height>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>right</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+				</control>
+			<!-- page 5 -->
+				<control type="group" id="1500">
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<control type="label">
+						<description>page count</description>
+						<posx>1126</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT501]</label>
+						<font>font12</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>top</aligny>
+					</control>
+					<control type="label">
+						<description>header</description>
+						<posx>420</posx>
+						<posy>102</posy>
+						<width>700</width>
+						<height>20</height>
+						<label>[B]$LOCALIZE[SCRIPT502][/B]</label>
+						<font>font30</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label">
+						<description>line 1</description>
+						<posx>460</posx>
+						<posy>240</posy>
+						<width>620</width>
+						<height>40</height>
+						<label>$LOCALIZE[SCRIPT503]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label" id="1501">
+						<description>line 2</description>
+						<posx>460</posx>
+						<posy>280</posy>
+						<width>620</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>FFFEAF33</textcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+				</control>
+				<control type="radiobutton" id="1502">
+					<description>Instalation Confirmation</description>
+					<posx>460</posx>
+					<posy>480</posy>
+					<width>620</width>
+					<height>34</height>
+					<texturefocus border="0,2,0,2">bdw-list-focus.png</texturefocus>
+					<texturenofocus border="0,2,0,2">bdw-list-nofocus.png</texturenofocus>
+					<textureradioon>bdw-radiobutton-focus.png</textureradioon>
+					<textureradiooff>bdw-radiobutton-nofocus.png</textureradiooff>
+					<label>[B]$LOCALIZE[SCRIPT504][/B]</label>
+					<font>font13</font>
+					<textcolor>88FFFFFF</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
+					<align>left</align>
+					<aligny>center</aligny>
+					<textoffsetx>50</textoffsetx>
+					<radioposx>10</radioposx>
+					<pulseonselect>true</pulseonselect>
+					<onup>1503</onup>
+					<ondown>9000</ondown>
+					<onleft>1502</onleft>
+					<onright>1502</onright>
+				</control>
+				<control type="group" id="1510">
+					<control type="label">
+						<description>line 3</description>
+						<posx>460</posx>
+						<posy>360</posy>
+						<width>300</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT505]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="button" id="1503">
+						<description>enter password</description>
+						<posx>780</posx>
+						<posy>360</posy>
+						<width>300</width>
+						<height>34</height>
+						<texturefocus border="4">bdw-button-focus.png</texturefocus>
+						<texturenofocus border="4">bdw-button-nofocus_w.png</texturenofocus>
+						<font>font13</font>
+						<textcolor>FF000000</textcolor>
+						<focusedcolor>FFFFFFFF</focusedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<pulseonselect>true</pulseonselect>
+						<onup>9000</onup>
+						<ondown>1504</ondown>
+						<onleft>1503</onleft>
+						<onright>1503</onright>
+					</control>
+					<control type="label">
+						<description>line 4</description>
+						<posx>460</posx>
+						<posy>400</posy>
+						<width>300</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT506]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="button" id="1504">
+						<description>confirm password</description>
+						<posx>780</posx>
+						<posy>400</posy>
+						<width>300</width>
+						<height>34</height>
+						<texturefocus border="4">bdw-button-focus.png</texturefocus>
+						<texturenofocus border="4">bdw-button-nofocus_w.png</texturenofocus>
+						<font>font13</font>
+						<textcolor>FF000000</textcolor>
+						<focusedcolor>FFFFFFFF</focusedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<pulseonselect>true</pulseonselect>
+						<onup>1503</onup>
+						<ondown>1502</ondown>
+						<onleft>1504</onleft>
+						<onright>1504</onright>
+					</control>
+				</control>
+			<!-- page 6 -->
+				<control type="group" id="1600">
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<control type="label">
+						<description>header</description>
+						<posx>420</posx>
+						<posy>102</posy>
+						<width>700</width>
+						<height>20</height>
+						<label>[B]$LOCALIZE[SCRIPT602][/B]</label>
+						<font>font30</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label">
+						<description>page count</description>
+						<posx>1126</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT601]</label>
+						<font>font12</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>top</aligny>
+					</control>
+					<control type="image" id="1601">
+						<description>partitioning nofocus</description>
+						<posx>460</posx>
+						<posy>200</posy>
+						<width>26</width>
+						<height>26</height>
+						<texture>bdw-radiobutton-nofocus.png</texture>
+					</control>
+					<control type="image" id="1602">
+						<description>partitioning focus</description>
+						<posx>460</posx>
+						<posy>200</posy>
+						<width>26</width>
+						<height>26</height>
+						<texture>bdw-radiobutton-focus.png</texture>
+					</control>
+					<control type="label">
+						<description>line 1</description>
+						<posx>500</posx>
+						<posy>202</posy>
+						<width>580</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT603]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="image" id="1603">
+						<description>copying nofocus</description>
+						<posx>460</posx>
+						<posy>260</posy>
+						<width>26</width>
+						<height>26</height>
+						<texture>bdw-radiobutton-nofocus.png</texture>
+					</control>
+					<control type="image" id="1604">
+						<description>copying focus</description>
+						<posx>460</posx>
+						<posy>260</posy>
+						<width>26</width>
+						<height>26</height>
+						<texture>bdw-radiobutton-focus.png</texture>
+					</control>
+					<control type="label">
+						<description>line 2</description>
+						<posx>500</posx>
+						<posy>262</posy>
+						<width>580</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT604]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="image" id="1605">
+						<description>installing nofocus</description>
+						<posx>460</posx>
+						<posy>320</posy>
+						<width>26</width>
+						<height>26</height>
+						<texture>bdw-radiobutton-nofocus.png</texture>
+					</control>
+					<control type="image" id="1606">
+						<description>installing focus</description>
+						<posx>460</posx>
+						<posy>320</posy>
+						<width>26</width>
+						<height>26</height>
+						<texture>bdw-radiobutton-focus.png</texture>
+					</control>
+					<control type="label">
+						<description>line 3</description>
+						<posx>500</posx>
+						<posy>322</posy>
+						<width>580</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT605]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="image" id="1607">
+						<description>copying nofocus</description>
+						<posx>460</posx>
+						<posy>380</posy>
+						<width>26</width>
+						<height>26</height>
+						<texture>bdw-radiobutton-nofocus.png</texture>
+					</control>
+					<control type="image" id="1608">
+						<description>copying focus</description>
+						<posx>460</posx>
+						<posy>380</posy>
+						<width>26</width>
+						<height>26</height>
+						<texture>bdw-radiobutton-focus.png</texture>
+					</control>
+					<control type="label">
+						<description>line 2</description>
+						<posx>500</posx>
+						<posy>382</posy>
+						<width>580</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT618]</label>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label">
+						<description>line 4</description>
+						<posx>1080</posx>
+						<posy>490</posy>
+						<width>620</width>
+						<height>40</height>
+						<label>$LOCALIZE[SCRIPT606]</label>
+						<font>font13</font>
+						<textcolor>FFFEAF33</textcolor>
+						<align>right</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+				</control>
+			<!-- page 7 -->
+				<control type="group" id="1700">
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<control type="label">
+						<description>page count</description>
+						<posx>1126</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT701]</label>
+						<font>font12</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>top</aligny>
+					</control>
+					<control type="label" id="1701">
+						<description>header</description>
+						<posx>420</posx>
+						<posy>102</posy>
+						<width>700</width>
+						<height>20</height>
+						<font>font30</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label" id="1702">
+						<description>line 1</description>
+						<posx>460</posx>
+						<posy>240</posy>
+						<width>620</width>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label" id="1703">
+						<description>line 2</description>
+						<posx>460</posx>
+						<posy>340</posy>
+						<width>620</width>
+						<height>60</height>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+				</control>
+			<!-- page 9 -->
+				<control type="group" id="1900">
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<control type="label">
+						<description>page count</description>
+						<posx>1126</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>20</height>
+						<label>$LOCALIZE[SCRIPT901]</label>
+						<font>font12</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>top</aligny>
+					</control>
+					<control type="label" id="1901">
+						<description>header</description>
+						<posx>420</posx>
+						<posy>102</posy>
+						<width>700</width>
+						<height>20</height>
+						<font>font30</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="label" id="1902">
+						<description>line 1</description>
+						<posx>460</posx>
+						<posy>240</posy>
+						<width>620</width>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label" id="1903">
+						<description>line 2</description>
+						<posx>460</posx>
+						<posy>340</posy>
+						<width>620</width>
+						<height>60</height>
+						<font>font13</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+				</control>		
+			</control>
+			<control type="progress" id="2000">
+				<description>Progress Bar</description>
+				<posx>454</posx>
+				<posy>562</posy>
+				<width>632</width>
+				<height>30</height>
+				<visible>true</visible>
+				<reveal>true</reveal>
+				<info></info>
+				<texturebg border="14,0,14,0">bdw-progress-background.png</texturebg>
+				<lefttexture>-</lefttexture>
+				<midtexture border="14,0,14,0">bdw-progress-center.png</midtexture>
+				<righttexture>-</righttexture>
+				<overlaytexture>-</overlaytexture>
+			</control>
+		</control>
+	</controls>
+</window>
