@@ -1,0 +1,158 @@
+import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
+
+_ = sys.modules[ "__main__" ].__language__
+
+main_url = "http://www.undertexter.se/"
+eng_download_url = "http://eng.undertexter.se/"
+debug_pretext = "[Undertexter subtitle service]:"
+
+#====================================================================================================================
+# Regular expression patterns
+#====================================================================================================================
+
+# subtitle pattern example:
+"""
+                                            <a href="http://www.undertexter.se/?p=undertext&id=20093" alt="Julie & Julia (Julie and Julia)" title="Julie & Julia (Julie and Julia)"><b>
+                                            Julie & Julia (Julie and Julia)</b>
+                                            </a></td>
+                                        </tr>
+                                        <tr>
+                                          <td colspan="2" align="left" valign="top" bgColor="#f2f2f2"  style="padding-top: 0px; padding-left: 4px; padding-right: 0px; padding-bottom: 0px; border-bottom: 1px solid rgb(153, 153, 153); border-color: #E1E1E1" >
+                                            (1 cd)
+                                                                                        <br> <img src="bilder/spacer.gif" height="2"><br>
+
+                                            Nedladdningar: 316<br>
+                                            <img src="bilder/spacer.gif" height="3"><br>
+                                            Julie.&.Julia.2009.720p.BluRay.DTS.x264-EbP</td>
+                                        </tr>
+
+"""
+subtitle_pattern = "<a href=\"http://www.undertexter.se/\?p=[^ \r\n\t]*?&id=(\d{1,10})\" alt=\"[^\r\n\t]*?\" title=\"[^\r\n\t]*?\"><b>\
+[ \r\n]*?[^\r\n\t]*?</b>.{400,500}?\(1 cd\).{250,550}?[ \r\n]*([^\r\n\t]*?)</td>[ \r\n]*?[^\r\n\t]*?</tr>"
+
+
+# group(1) = id, group(2) = filename
+
+
+#====================================================================================================================
+# Functions
+#====================================================================================================================
+
+
+def getallsubs(searchstring, languageshort, languagelong, subtitles_list):
+    if languageshort == "sv":
+        url = main_url + "?group1=on&p=soek&add=arkiv&submit=S%F6k&select2=&select3=&select=&str=" + urllib.quote_plus(searchstring)
+    if languageshort == "en":
+        url = main_url + "?group1=on&p=eng_search&add=arkiv&submit=S%F6k&select2=&select3=&select=&str=" + urllib.quote_plus(searchstring)
+    content = geturl(url)
+    if content is not None:
+        xbmc.output("%s Getting '%s' subs ..." % (debug_pretext, languageshort), level=xbmc.LOGDEBUG )
+        for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
+            id = matches.group(1)
+            filename = string.strip(matches.group(2))
+            xbmc.output("%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, id), level=xbmc.LOGDEBUG )
+            subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': filename, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+
+
+def geturl(url):
+    class MyOpener(urllib.FancyURLopener):
+        version = ''
+    my_urlopener = MyOpener()
+    xbmc.output("%s Getting url: %s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+    try:
+        response = my_urlopener.open(url)
+        content    = response.read()
+    except:
+        xbmc.output("%s Failed to get url:%s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+        content    = None
+    return content
+
+
+def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
+    subtitles_list = []
+    msg = ""
+    if len(tvshow) == 0:
+        searchstring = title
+    if len(tvshow) > 0:
+        searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
+    xbmc.output("%s Search string = %s" % (debug_pretext, searchstring), level=xbmc.LOGDEBUG )
+
+    swedish = 0
+    if string.lower(lang1) == "swedish": swedish = 1
+    elif string.lower(lang2) == "swedish": swedish = 2
+    elif string.lower(lang3) == "swedish": swedish = 3
+
+    english = 0
+    if string.lower(lang1) == "english": english = 1
+    elif string.lower(lang2) == "english": english = 2
+    elif string.lower(lang3) == "english": english = 3
+
+    if ((swedish > 0) and (english == 0)):
+        getallsubs(searchstring, "sv", "Swedish", subtitles_list)
+
+    if ((english > 0) and (swedish == 0)):
+        getallsubs(searchstring, "en", "English", subtitles_list)
+
+    if ((swedish > 0) and (english > 0) and (swedish < english)):
+        getallsubs(searchstring, "sv", "Swedish", subtitles_list)
+        getallsubs(searchstring, "en", "English", subtitles_list)
+
+    if ((swedish > 0) and (english > 0) and (swedish > english)):
+        getallsubs(searchstring, "en", "English", subtitles_list)
+        getallsubs(searchstring, "sv", "Swedish", subtitles_list)
+
+    if ((swedish == 0) and (english == 0)):
+        msg = "Won't work, Undertexter.se is only for Swedish and English subtitles."
+
+    return subtitles_list, "", msg #standard output
+
+
+def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
+    id = subtitles_list[pos][ "id" ]
+    language = subtitles_list[pos][ "language_name" ]
+    if string.lower(language) == "swedish":
+        url = main_url + "utext.php?id=" + id
+    if string.lower(language) == "english":
+        url = eng_download_url + "download.php?id=" + id
+    xbmc.output("%s Fetching subtitles using url %s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+    content = geturl(url)
+    if content is not None:
+        header = content[:4]
+        if header == 'Rar!':
+            local_tmp_file = os.path.join(tmp_sub_dir, "undertexter.rar")
+            packed = True
+        elif header == 'PK':
+            local_tmp_file = os.path.join(tmp_sub_dir, "undertexter.zip")
+            packed = True                   
+        else: # never found/downloaded an unpacked subtitles file, but just to be sure ...
+            local_tmp_file = os.path.join(tmp_sub_dir, "undertexter.srt") # assume unpacked subtitels file is an '.srt'
+            subs_file = local_tmp_file
+            packed = False
+        xbmc.output("%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+        try:
+            local_file_handle = open(local_tmp_file, "wb")
+            local_file_handle.write(content)
+            local_file_handle.close()
+        except:
+            xbmc.output("%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+        if packed:
+            files = os.listdir(tmp_sub_dir)
+            init_filecount = len(files)
+            filecount = init_filecount
+            xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
+            waittime  = 0
+            while (filecount == init_filecount) and (waittime < 20): # nothing yet extracted
+                time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
+                files = os.listdir(tmp_sub_dir)
+                filecount = len(files)
+                waittime  = waittime + 1
+            if waittime == 20:
+                xbmc.output("%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )
+            else:
+                xbmc.output("%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )        
+                for file in files:
+                    if string.split(file, '.')[-1] in ['srt', 'sub', 'txt']: # unpacked file is a subtitle file
+                        xbmc.output("%s Unpacked subtitles file '%s'" % (debug_pretext, file), level=xbmc.LOGDEBUG )        
+                        subs_file = os.path.join(tmp_sub_dir, file)
+        return False, language, subs_file #standard output
+            

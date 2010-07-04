@@ -1,3 +1,7 @@
+1.7.5
+- added Ondertitel and Undertexter services, thanks to mr_blobby for both services 
+- added support for rare archives for Subscene. again, thanks mr_blobby
+
 1.7.4
 - added: check and notify for existing subtitles, again
 
