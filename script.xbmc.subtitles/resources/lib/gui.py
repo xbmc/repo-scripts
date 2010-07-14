@@ -91,7 +91,23 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.language_1 = toScriptLang(__settings__.getSetting( "Language1" ))  # Full language 1
         self.language_2 = toScriptLang(__settings__.getSetting( "Language2" ))  # Full language 2  
         self.language_3 = toScriptLang(__settings__.getSetting( "Language3" ))  # Full language 2
-                
+        
+        label_colour = __settings__.getSetting( "label_colour" )                # Service Label Colour 
+        if label_colour == "Blue":
+          self.label_colour = "0084ff"
+        elif label_colour == "White":
+          self.label_colour = "FFFFFF"          
+        elif label_colour == "Red":
+          self.label_colour = "FF0000"
+        elif label_colour == "Green":
+          self.label_colour = "097054"
+        elif label_colour == "Yellow":
+          self.label_colour = "FFDE00"
+        elif label_colour == "Orange":
+          self.label_colour = "FF9900"
+        elif label_colour == "Grey":
+          self.label_colour = "777B88"          
+                                       
         self.sub_folder = sub_folder                                            # Subtitle download folder
 
         self.file_original_path = urllib.unquote ( movieFullPath )              # Movie Path
@@ -103,15 +119,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.rar = rar                                                          # rar archive?
 
         if (__settings__.getSetting( "fil_name" ) == "true"):                   # Display Movie name or search string
-            self.file_name = os.path.basename( movieFullPath )
+          self.file_name = os.path.basename( movieFullPath )
         else:
-            if (len(str(self.year)) < 1 ) :
-                print self.year
-                self.file_name = self.title
-                if (len(self.tvshow) > 0):
-                    self.file_name = "%s S%.2dE%.2d" % (self.tvshow, int(self.season), int(self.episode) )
-            else:
-                self.file_name = "%s (%s)" % (self.title, str(self.year),)    
+          if (len(str(self.year)) < 1 ) :
+            self.file_name = self.title
+            if (len(self.tvshow) > 0):
+              self.file_name = "%s S%.2dE%.2d" % (self.tvshow, int(self.season), int(self.episode) )
+          else:
+            self.file_name = "%s (%s)" % (self.title, str(self.year),)    
           
         if (__settings__.getSetting( "par_folder" ) == "true"):
           self.man_search_label = _( 747 )
@@ -317,7 +332,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
         for serv in service_list:
             if serv != self.service:
-              label2 = "[COLOR=FFFF0000]%s%s[/COLOR]"  %(_( 610 ), serv,) 
+              label2 = "[COLOR=FF%s]%s%s[/COLOR]"  %(self.label_colour,_( 610 ), serv,) 
               listitem = xbmcgui.ListItem( label,label2 )
               self.list.append(serv)
               self.getControl( SUBTITLES_LIST ).addItem( listitem )

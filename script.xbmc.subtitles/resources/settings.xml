@@ -23,5 +23,6 @@
       <setting id="searchstr" type="bool" label="30110" default="false"/>
       <setting id="fil_name" type="bool" label="30118" default="false"/>
       <setting id="par_folder" type="bool" label="30119" default="false"/>
+      <setting id="label_colour" type="labelenum" label="30120" default="Blue" values="Blue|Red|Green|Grey|White|Yellow|Orange" />
     </category>
 </settings>
