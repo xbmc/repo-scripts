@@ -1,3 +1,9 @@
+1.7.7
+- fixed: 'Ondertitel' and 'Undertexter' services couldn't be turned off
+
+1.7.6
+- cosmetics: user can set the colour of the service label. Default is Blue.
+
 1.7.5
 - added Ondertitel and Undertexter services, thanks to mr_blobby for both services 
 - added support for rare archives for Subscene. again, thanks mr_blobby
