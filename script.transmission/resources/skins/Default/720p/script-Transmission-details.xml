@@ -1,0 +1,20 @@
+<window>
+	<defaultcontrol>20</defaultcontrol>
+	<allowoverlay>yes</allowoverlay>
+	<controls>
+		<control type="label">
+			<description>textarea</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>720</width>
+			<height>40</height>
+			<visible>true</visible>
+			<label>Transmission XBMC - Details</label>
+			<font>font11</font>
+			<textcolor>white</textcolor>
+			<align>center</align>
+		</control>
+		<control type="group">
+		</control>
+	</controls>
+</window>

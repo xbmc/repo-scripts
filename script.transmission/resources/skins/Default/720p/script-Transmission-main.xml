@@ -1,0 +1,219 @@
+<window>
+	<defaultcontrol>20</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>120</posx>
+		<posy>70</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<description>backdrop</description>
+			<posx>-20</posx>
+			<posy>-20</posy>
+			<width>1000</width>
+			<height>576</height>
+			<texture>black.png</texture>
+		</control>
+		<control type="image">
+			<posx>-10</posx>
+			<posy>-8</posy>
+			<width>980</width>
+			<height>560</height>
+			<texture>transmission-main.png</texture>
+            <animation effect="fade" time="200">WindowOpen</animation>
+            <animation effect="fade" time="200">WindowClose</animation>
+		</control>
+
+		<control type="label">
+			<description>textarea</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>980</width>
+			<visible>true</visible>
+			<label>Transmission</label>
+			<font>font11</font>
+			<textcolor>white</textcolor>
+			<align>center</align>
+		</control>
+		<control type="group">
+			<posx>0</posx>
+			<posy>10</posy>
+			<!-- Button Group -->
+			<control type="button" id="11">
+				<description>Add torrent</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<height>70</height>
+				<width>110</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>SCRIPT101</label>
+				<onright>20</onright>
+				<ondown>12</ondown>
+                <onup>17</onup>
+			</control>
+			<control type="button" id="12">
+				<description>Remove torrent</description>
+				<posx>0</posx>
+				<posy>70</posy>
+				<height>70</height>
+				<width>110</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>SCRIPT102</label>
+				<onright>20</onright>
+				<onup>11</onup>
+				<ondown>13</ondown>
+			</control>
+			<control type="button" id="13">
+				<description>Stop torrent</description>
+				<posx>0</posx>
+				<posy>150</posy>
+				<height>70</height>
+				<width>110</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>SCRIPT103</label>
+				<onright>20</onright>
+				<onup>12</onup>
+				<ondown>14</ondown>
+			</control>
+			<control type="button" id="14">
+				<description>Start torrent</description>
+				<posx>0</posx>
+				<posy>220</posy>
+				<height>70</height>
+				<width>110</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>SCRIPT104</label>
+				<onright>20</onright>
+				<onup>13</onup>
+				<ondown>15</ondown>
+			</control>
+			<control type="button" id="15">
+				<description>Stop all torrents</description>
+				<posx>0</posx>
+				<posy>300</posy>
+				<height>70</height>
+				<width>110</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>SCRIPT105</label>
+				<onright>20</onright>
+				<onup>14</onup>
+				<ondown>16</ondown>
+			</control>
+			<control type="button" id="16">
+				<description>Start all torrents</description>
+				<posx>0</posx>
+				<posy>370</posy>
+				<height>70</height>
+				<width>110</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>SCRIPT106</label>
+				<onright>20</onright>
+				<onup>15</onup>
+				<ondown>17</ondown>
+			</control>
+			<control type="button" id="17">
+				<description>Exit</description>
+				<posx>0</posx>
+				<posy>450</posy>
+				<height>70</height>
+				<width>110</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>SCRIPT107</label>
+				<onright>20</onright>
+				<onup>16</onup>
+                <ondown>11</ondown>
+			</control>
+		</control>
+		<!--
+		<control type="image">
+			<posx>90</posx>
+			<posy>35</posy>
+			<width>560</width>
+			<height>500</height>
+			<texture>blue.png</texture>
+		</control>
+		-->
+		<control type="list" id="20">
+			<description>Torrent list</description>
+			<posx>135</posx>
+			<posy>35</posy>
+			<width>800</width>
+			<height>500</height>
+			<viewtype label="Torrent List">list</viewtype>
+			<orientation>vertical</orientation>
+			<visible>true</visible>
+			<onleft>11</onleft>
+            <onright>17</onright>
+			<itemlayout width="560" height="70">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>70</height>
+					<texture>list-bg.png</texture>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>0</posy>
+					<width>790</width>
+					<height>20</height>
+					<info>ListItem.label</info>
+				</control>
+				<control type="label">
+					<posx>15</posx>
+					<posy>20</posy>
+					<width>785</width>
+					<height>20</height>
+					<info>ListItem.label2</info>
+				</control>
+			</itemlayout>
+			<focusedlayout width="560" height="70">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>70</height>
+					<visible>Control.HasFocus(20)</visible>
+					<texture border="5">list-bg-selected.png</texture>
+				</control>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>70</height>
+					<visible>!Control.HasFocus(20)</visible>
+					<texture border="5">list-bg-selected-nofocus.png</texture>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>0</posy>
+					<width>870</width>
+					<height>20</height>
+					<info>ListItem.label</info>
+					<scroll>true</scroll>
+				</control>
+				<control type="label">
+					<posx>15</posx>
+					<posy>20</posy>
+					<width>885</width>
+					<height>20</height>
+					<info>ListItem.label2</info>
+				</control>
+			</focusedlayout>
+		</control>
+	</controls>
+</window>

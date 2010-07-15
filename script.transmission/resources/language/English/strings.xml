@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="0">Transmission</string>
+    
+    <!-- Buttons -->
+    <string id="101">Add</string>
+    <string id="102">Remove</string>
+    <string id="103">Pause</string>
+    <string id="104">Start</string>
+    <string id="105">Pause All</string>
+    <string id="106">Start All</string>
+    <string id="107">Exit</string>
+    
+    <!-- Settings -->
+    <string id="1000">RPC Settings</string>
+    <string id="1001">Host</string>
+    <string id="1002">Port</string>
+    <string id="1003">User</string>
+    <string id="1004">Password</string>
+</strings>

@@ -1,0 +1,5 @@
+Version 0.5.1
+    * Cleaned up for inclusion in the XBMC addon repository
+    * Added Korean language support (submitted by kmp93 on the XBMC forum)
+Version 0.5.0
+    * Initial release
