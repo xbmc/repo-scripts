@@ -1,5 +1,5 @@
 1.7.9
-- added: new service "Napiprojekt", Polish and English subs only
+- added: new service "Napiprojekt", Polish and English subs only. thanks to gregd
 
 1.7.8
 - fixed: saving subs to SMB:// on windows
