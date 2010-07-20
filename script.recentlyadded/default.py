@@ -163,6 +163,7 @@ class Main:
             self.WINDOW.setProperty( "LatestMovie.%d.Title" % ( count + 1, ), fields[ 2 ] )
             self.WINDOW.setProperty( "LatestMovie.%d.Rating" % ( count + 1, ), fields[ 7 ] )
             self.WINDOW.setProperty( "LatestMovie.%d.Year" % ( count + 1, ), fields[ 9 ] )
+            self.WINDOW.setProperty( "LatestMovie.%d.Plot" % ( count + 1, ), fields[ 3 ] )
             self.WINDOW.setProperty( "LatestMovie.%d.RunningTime" % ( count + 1, ), fields[ 13 ] )
             # get cache names of path to use for thumbnail/fanart and play path
             thumb_cache, fanart_cache, play_path = self._get_media( fields[ 25 ], fields[ 24 ] )
@@ -201,6 +202,7 @@ class Main:
             self.WINDOW.setProperty( "LatestEpisode.%d.EpisodeTitle" % ( count + 1, ), fields[ 2 ] )
             self.WINDOW.setProperty( "LatestEpisode.%d.EpisodeNo" % ( count + 1, ), "s%02de%02d" % ( int( fields[ 14 ] ), int( fields[ 15 ] ), ) )
             self.WINDOW.setProperty( "LatestEpisode.%d.Rating" % ( count + 1, ), fields[ 5 ] )
+            self.WINDOW.setProperty( "LatestEpisode.%d.Plot" % ( count + 1, ), fields[ 3 ] )
             # get cache names of path to use for thumbnail/fanart and play path
             thumb_cache, fanart_cache, play_path = self._get_media( fields[ 25 ], fields[ 24 ] )
             if ( not os.path.isfile( xbmc.translatePath( "special://profile/Thumbnails/Video/%s/%s" % ( "Fanart", fanart_cache, ) ) ) ):
