@@ -1,3 +1,6 @@
+1.7.10
+- updated: spanish translations
+
 1.7.9
 - added: new service "Napiprojekt", Polish and English subs only. thanks to gregd
 
