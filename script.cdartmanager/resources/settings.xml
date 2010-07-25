@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="Settings">
+        <setting label="32017" type="folder" id="cdart_path" default="" source="auto" option="writeable" />
+        <setting label="32018" type="folder" id="backup_path" default="" source="auto" option="writeable" />
+        <setting label="32062" type="folder" id="unique_path" default="" source="auto" option="writeable" />
+        <setting id="folder" type="enum" label="32019" lvalues="32054|32055" default="0"/>
+    </category>
+</settings>

@@ -1,0 +1,39 @@
+0.9.8 - fixed copy functions.
+      - changed database to update instead of add when cdARTs are downloaded
+      - added use of built-in module(pysqlite)
+
+0.9.7 - added Local cdART popup
+           - added single copy functions(to the unique and backup folders)
+           - added the delete function
+
+0.9.6 - Changed how cdARTs are matched 
+           - improved number of matches, reduced the number of false-negatives
+
+0.9.5 - Changed how the recognized artists are found, improved matches
+
+0.9.4 - Fixed Local cdART List GUI errors
+
+0.9.3 - fixed autodownload and database queries
+      - Added Local cdART list in Advance menu - from here you will be able to delete unwanted
+        cdARTs
+
+0.9.2 - scraper fix
+      - skin work
+
+0.9.1 - Initial beta release
+
+0.9.0 - cleaned up skin
+
+0.8.9 - fixed path setting in unique_cdart_copy()
+
+0.8.8 - fixed artist/album matching.  now more local artists/albums are matched to those on XBMCSTUFF.com
+      - added cdart copy - copies to the addon_data folder using the artist - album.png naming
+
+0.8.7 - fixed database building
+
+0.8.6 - found problem with file names(double quotes)
+
+0.5.0 - 0.8.5 - a lot of skin work, strings and list building
+
+0.2.0 - 0.5.0 - gui created, change over to script
+
