@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+<!--Common-->
+  <string id="11">Kilépés</string>
+  <string id="12">Következő</string>
+<!--Page 1-->
+  <string id="101">Lépés: 1/7</string>
+  <string id="102">Bootolható lemez varázsló</string>
+  <string id="103">Üdvözöllek az XBMC Live-ban</string>
+  <string id="104">bootolható lemez varázsló</string>
+  <string id="105">A folyamat létrehoz egy indítható XBMC-Live lemezt</string>
+  <string id="106">A lemezen legalább %iMB üres helynek kell lennie</string>
+  <string id="107">FIGYELMEZTETÉS:</string>
+  <string id="108">A folyamat minden adatot töröl a lemezről! Ez egy kísérleti eszköz, csak saját felelőségre használd!</string>
+<!--Page 2-->
+  <string id="201">Lépés: 2/7</string>
+  <string id="202">Rendszerfájlok keresése</string>
+  <string id="203">A varázslónak szüksége van az XBMC-Live rendszerfájlokra. Engedheted keresni, vaqy megadhatsz saját elérési helyet a kiegészítő beállításainál.</string>
+<!--Page 3-->
+  <string id="301">Lépés: 3/7</string>
+  <string id="302">Céllemez választása</string>
+  <string id="303">A varázslónak tudnia kell melyik eltávolítható lemezt használja. Kérlek válassz egyet a listáról.</string>
+<!--Page 4-->
+  <string id="401">Lépés: 4/7</string>
+  <string id="402">Válassz állandó tárolási-fájl méretet</string>
+  <string id="403">Az XBMC Live minden rendszerbeállítást egy fájlba ment, ha van ilyen. Ha ilyen 'állandó tárolási fájl' nem létezik, a rendszerbeállítások változásai elvesznek újraindításkor.</string>
+  <string id="404">Válassz méretet (MB):</string>
+  <string id="405">0MB</string>
+  <string id="406">%sMB</string>
+<!--Page 5-->
+  <string id="501">Lépés: 5/7</string>
+  <string id="502">Telepítő indítása</string>
+  <string id="503">A varázsló teljesen letörli ezt a lemezt:</string>
+  <string id="504">Kérlek válaszd ki ezt a választódobozt az induláshoz!</string>
+  <string id="505">Add meg a jelszavad:</string>
+  <string id="506">Erősítsd meg a jelszavad:</string>
+<!--Page 6-->
+  <string id="601">Lépés: 6/7</string>
+  <string id="602">Lemez létrehozása</string>
+  <string id="603">Particionálás és formatálás</string>
+  <string id="604">Rendszerfájlok másolása</string>
+  <string id="605">GRUB rendszerindító telepítése</string>
+  <string id="606">A folyamat sokáig is eltarthat, kérlek várj...</string>
+  <string id="607">Hiba a formatálás közben</string>
+  <string id="608">Kérlek ellenőrizd a lemezed és próbáld újra. Kapcsold be a hibakeresési naplózást előtte és így részletes infót találsz az xbmc.log fájlban.</string>
+  <string id="609">Hiba az XBMC-Live rendszerfájlok másolásakor</string>
+  <string id="610">Kérlek ellenőrizd a lemezed és próbáld újra. Kapcsold be a hibakeresési naplózást előtte és így részletes infót találsz az xbmc.log fájlban.</string>
+  <string id="611">Hiba a rendszerindító telepítésekor</string>
+  <string id="612">Kapcsold be a hibakeresési naplózást az újraindítás előtt és így részletes infót találsz az xbmc.log fájlban.</string>
+  <string id="613">Hiba a lemez felcsatolásakor</string>
+  <string id="614">Kapcsold be a hibakeresési naplózást az újraindítás előtt és így részletes infót találsz az xbmc.log fájlban.</string>
+  <string id="615">Hiba a lemez lecsatolásakor</string>
+  <string id="616">Kapcsold be a hibakeresési naplózást az újraindítás előtt és így részletes infót találsz az xbmc.log fájlban.</string>
+  <string id="617">%s kész</string>
+  <string id="618">Állandó tárolási fájl létrehozása</string>
+  <string id="619">Hiba az állandó tárolási fájl létrehozásakor</string>
+  <string id="620">Kapcsold be a hibakeresési naplózást az újraindítás előtt és így részletes infót találsz az xbmc.log fájlban.</string>
+<!--Page 7-->
+  <string id="701">Lépés: 7/7</string>
+<!--Page 9-->
+  <string id="901">Műveletek vége</string>
+  <string id="902">Siker</string>
+  <string id="903">Nem sikerült</string>
+  <string id="904">A varázsló sikeresen létrehozta az indítható lemezt.</string>
+  <string id="905">Indítsd újra a géped és állítsd be a BIOS-ban hogy a gép a létrehozott lemezről bootoljon.</string>
+  <string id="906">Hiba történt!</string>
+  <string id="907">Kérlek jelentsd ezt az esetet!</string>
+  <string id="908">Nem találok alkalmas eltávolítható lemezt</string>
+  <string id="909">Ez a varázsló nem talált alkalmas lemezt ezért nem tud tovább menni.</string>
+  <string id="910">Ennek a programnak csak az XBMC-Live-ból szabadna futnia.</string>
+  <string id="911">Nem találom a Live könyvtárat</string>
+  <string id="912">Ez a varázsló nem találja az XBMCLive rendszerfájlokat és ezért nem folytatható.</string>
+</strings>
+
