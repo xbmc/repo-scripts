@@ -78,4 +78,25 @@
   <string id="32074">Copy cdART to Backup Folder</string>
   <string id="32075">Delete cdART</string>
   <string id="32076">Copy To Unique Folder For Upload</string>
+    <!-- Colour choices for labels -->
+  <string id="32077">Custom Colors</string>
+  <string id="32078">Green</string>
+  <string id="32079">Blue</string>
+  <string id="32080">Red</string>
+  <string id="32081">Yellow</string>
+  <string id="32082">Orange</string>
+  <string id="32083">White</string>
+  <string id="32084">Cyan</string>
+  <string id="32085">Violet</string>
+  <string id="32086">Pink</string>
+  <string id="32087">   Label color for Recognized Artists</string>
+  <string id="32088">   Label color for Unrecognized Artists</string>
+  <string id="32089">   Label color for Albums found only on XBMCSTUFF.com</string>
+  <string id="32090">   Label color for Albums only found Locally</string>
+  <string id="32091">   Label color for Albums found Locally and on XBMCSTUFF.com</string>
+  <string id="32092">   Label color for Albums not matched</string>
+  <string id="32093">   Label color for Local cdART list</string>
+  <string id="32094">Enable custom colors for labels</string> 
+  <string id="32095">File Folders</string>
+  <string id="32096">Duplicates Found</string>  
 </strings>

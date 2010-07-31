@@ -1,3 +1,8 @@
+0.9.9 - Changed how special characters are handled
+      - Automatically check to see if folder name has disc numbering(ie CD 1, Disc 1) and if the Album name is missing disc numbering, copy it to the end of album name(Album becomes Album - CD 1 or Album - Disc 1)
+      - added duplicate cdART count(when copying cdARTS), shows duplicates if there are cdARTs in the save folders or if you have mistakes in you Music library
+      - Added the ability to customize Label coloring
+
 0.9.8 - fixed copy functions.
       - changed database to update instead of add when cdARTs are downloaded
       - added use of built-in module(pysqlite)

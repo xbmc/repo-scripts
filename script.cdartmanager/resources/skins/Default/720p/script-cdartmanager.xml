@@ -60,7 +60,7 @@
                 <animation effect="fade" start="100" end="0" time="0" condition="Control.HasFocus(120) | ControlGroup(9003).HasFocus">WindowClose</animation>
                 <animation effect="slide" end="220,0" time="600" tween="quadratic" easing="out" condition="Control.HasFocus(120) | ControlGroup(9003).HasFocus">conditional</animation>
                 <visible>Control.HasFocus(120) | Control.HasFocus(121) | ControlGroup(9004).HasFocus</visible>
-            
+                <!--
                 <control type="button">
                     <description>Fake button for mouse control</description>
                     <posx>-50</posx>
@@ -73,11 +73,11 @@
                     <texturefocus>-</texturefocus>
                     <visible>true</visible>
                 </control>
-            
+                -->
                 <control type="image" id ="220">
                     <posx>-10</posx>
                     <posy>0</posy>
-                    <width>430</width>
+                    <width>500</width>
                     <height>600</height>
                     <texture border="40">default-panel.png</texture>
                 </control>
@@ -92,7 +92,7 @@
                     <onright>121</onright>
                     <onup>120</onup>
                     <ondown>120</ondown>
-                    <viewtype label="535">list</viewtype>
+                    <viewtype label="Artist List">list</viewtype>
                     <pagecontrol>121</pagecontrol>
                     <scrolltime>200</scrolltime>
                     <itemlayout width="400" height="36">
@@ -150,7 +150,7 @@
                     </focusedlayout>
                 </control>
                 <control type="group">
-                    <posx>400</posx>
+                    <posx>470</posx>
                     <posy>20</posy>
                     <control type="scrollbar" id="121">
                         <description>scroll bar indicator for lists</description>
@@ -213,7 +213,7 @@
                     <onright>123</onright>
                     <onup>122</onup>
                     <ondown>122</ondown>
-                    <viewtype label="535">list</viewtype>
+                    <viewtype label="Album List">list</viewtype>
                     <pagecontrol>123</pagecontrol>
                     <scrolltime>200</scrolltime>
                     <itemlayout width="780" height="40">
