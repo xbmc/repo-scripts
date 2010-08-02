@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon
+  id="script.games.rom.collection.browser"
+  version="0.5.3"
+  name="Rom Collection Browser"
+  provider-name="malte">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+	<import addon="script.module.elementtree" version="1.2.7"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py"></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Browse and launch roms and standalones.</summary>
+    <description>Current features:
+    * filter games by console, genre, year and publisher
+    * launch roms with an external emulator
+    * configure script via xml file
+    * simple but configurable description file parser
+    * view different images and videos per game
+    * view game plot and additional game properties
+    
+Note: This script needs some configuration. Please have a look at the commented config.xml in RCBs database directory or check http://code.google.com/p/romcollectionbrowser for complete documentation.</description>
+        <license>GPL 2.0</license>
+        <platform>all</platform>        
+  </extension>
+</addon>

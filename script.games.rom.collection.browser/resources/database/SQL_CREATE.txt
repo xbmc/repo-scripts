@@ -1,0 +1,201 @@
+CREATE TABLE IF NOT EXISTS [Developer] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS [Reviewer]
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS [FileType]
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL UNIQUE,
+	[type] TEXT,
+	[parent] TEXT
+	
+);
+
+CREATE TABLE IF NOT EXISTS [Genre] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS [Publisher] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] NONE NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS [Year] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS [Console] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL UNIQUE,
+    [description] TEXT,
+    [imageFileName] TEXT
+);
+
+
+CREATE TABLE IF NOT EXISTS [RCBSetting]
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [lastSelectedView] TEXT,
+    [lastSelectedConsoleIndex] INTEGER,	
+	[lastSelectedGenreIndex] INTEGER,
+	[lastSelectedPublisherIndex] INTEGER,
+    [lastSelectedYearIndex] INTEGER,
+	[lastSelectedGameIndex] INTEGER,
+	[favoriteConsoleId] INTEGER REFERENCES [Console]
+    (
+        id
+    ),
+	[favoriteGenreId] INTEGER REFERENCES [Genre]
+    (
+        id
+    ),
+	[autoexecBackupPath] TEXT,
+	[dbVersion] TEXT,
+	[showEntryAllConsoles] INTEGER,
+	[showEntryAllGenres] INTEGER,
+	[showEntryAllYears] INTEGER,
+	[showEntryAllPublisher] INTEGER,
+	[saveViewStateOnExit] INTEGER,
+	[saveViewStateOnLaunchEmu] INTEGER,
+	[lastFocusedControlMainView] INTEGER,
+	[lastFocusedControlGameInfoView] INTEGER
+);
+
+
+CREATE TABLE IF NOT EXISTS [RomCollection]
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL UNIQUE,
+    [consoleId] INTEGER REFERENCES [Console]
+    (
+        id
+    ),
+    [emuCommandline] TEXT,
+    [useEmuSolo] INTEGER,
+    [escapeEmuCmd] INTEGER,
+    [descriptionParserFile] TEXT,
+	[relyOnFileNaming] INTEGER,
+	[startWithDescFile] INTEGER,
+	[descFilePerGame] INTEGER,
+	[diskPrefix] TEXT,
+	[typeOfManual] TEXT,
+	[allowUpdate] INTEGER,
+	[ignoreOnScan] INTEGER,
+	[searchGameByCRC] INTEGER,
+	[searchGameByCRCIgnoreRomName] INTEGER,
+	[ignoreGameWithoutDesc] INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS [FileTypeForControl]
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[control] TEXT,
+	[priority] INTEGER,
+    [romCollectionId] INTEGER REFERENCES [RomCollection]
+    (
+        id
+    ),
+	[fileTypeId] INTEGER NOT NULL REFERENCES [FileTypes]
+    (
+        id
+    )
+);
+
+CREATE TABLE IF NOT EXISTS [Game] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL UNIQUE,
+    [description] TEXT,
+	[gameCmd] TEXT,
+	[alternateGameCmd] TEXT,
+    [romCollectionId] INTEGER REFERENCES [RomCollection]
+    (
+        id
+    ),    
+    [publisherId] INTEGER REFERENCES [Publisher]
+    (
+        id
+    ),
+	[developerId] INTEGER REFERENCES [Developer]
+    (
+        id
+    ),
+	[reviewerId] INTEGER REFERENCES [Reviewer]
+    (
+        id
+    ),
+    [yearId] INTEGER REFERENCES [Year]
+    (
+        id
+    ),
+	[maxPlayers] TEXT,
+    [rating] TEXT,
+    [numVotes] INTEGER,
+	[url] TEXT,
+    [region] TEXT,
+	[media] TEXT,
+    [perspective] TEXT,
+    [controllerType] TEXT,
+	[isFavorite] INTEGER,
+	[launchCount] INTEGER,
+	[originalTitle] TEXT,
+	[alternateTitle] TEXT,
+	[translatedBy] TEXT,
+	[version] TEXT
+);
+
+
+CREATE TABLE IF NOT EXISTS [File] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL,
+    [fileTypeId] INTEGER NOT NULL REFERENCES [FileTypes]
+    (
+        id
+    ),
+    [parentId] INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS [Path] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL,
+    [fileTypeId] INTEGER NOT NULL REFERENCES [FileTypes]
+    (
+        id
+    ),
+    [romCollectionId] INTEGER REFERENCES [RomCollection]
+    (
+        id
+    )
+);
+
+
+CREATE TABLE IF NOT EXISTS [GenreGame] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [genreId] INTEGER REFERENCES [Genre]
+    (
+        id
+    ),
+    [gameId] INTEGER REFERENCES [Game]
+    (
+        id
+    )
+);
+
+
