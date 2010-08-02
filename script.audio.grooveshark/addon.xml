@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.audio.grooveshark"
+       name="GrooveShark"
+       version="0.2.0"
+       provider-name="Solver">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+	<import addon="script.module.simplejson" version="2.0.10"/>
+  </requires>
+  <extension point="xbmc.python.script"
+            library="default.py">
+        	<provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Grooveshark client</summary>
+    <description>The script gives you access to Grooveshark and almost all of its contents. Access your playlist, manipulate them and create new ones. Enjoy.</description>
+  </extension>
+</addon>

@@ -1,0 +1,666 @@
+<window>
+	<resolution>PAL16x9</resolution>
+	<useincludes>false</useincludes>
+	<defaultcontrol>205</defaultcontrol>	
+	<allowoverlay>false</allowoverlay>
+<!--	<animation effect="fade" time="1000">WindowOpen</animation>
+	<animation effect="slide" end="0,576" time="1000">WindowClose</animation>-->
+	<controls>
+		<control type="image">
+			<description>Background</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<height>576</height>
+			<width>720</width>
+			<texture>gs-bg.png</texture>	
+			<animation effect="fade" time="1000" start="0" end="100">WindowOpen</animation>
+		</control>
+		<control type="image">
+			<description>Background for playlist or search results</description>
+			<posx>5</posx>
+			<posy>25</posy>
+			<height>530</height>
+			<width>530</width>
+			<texture>list-bg.png</texture>	
+			<visible>false</visible>
+		</control>
+
+
+		<control type="image">
+			<description>Album Cover</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<height>1</height>
+			<width>1</width>
+			<texture>submenu_bg.png</texture>
+		</control>
+<!--		<control type="image">
+			<description>GS Logo</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<height>50</height>
+			<width>720</width>
+			<texture>gs_logo.png</texture>	
+		</control>-->
+
+		<control type="group" id="210">
+			<posx>520</posx>
+			<posy>365</posy>
+			<animation effect="zoom" time="500" center="auto" start="180" end="100" tween="cubic" easing="out">WindowOpen</animation>
+			<animation effect="fade" time="500" start="0" end="100">WindowOpen</animation>
+			<control type="image" id="9001">
+				<description>Cover for playing now</description>
+				<posx>35</posx>
+				<posy>0</posy>
+				<height>120</height>
+				<width>100</width>
+				<texture>default-cover.png</texture>
+				<visible>Player.HasAudio + Player.Playing|Player.HasAudio + Player.Paused</visible>
+			</control>
+			<control type="image">
+				<description>icon for now playing</description>
+				<posx>35</posx>
+				<posy>0</posy>
+				<height>120</height>
+				<width>100</width>
+				<texture>playing.png</texture>	
+				<visible>true</visible>
+				<visible>Player.HasAudio + Player.Playing|Player.HasAudio + Player.Paused</visible>
+			</control>
+			<control type="image">
+				<description>background now playing</description>
+				<posx>35</posx>
+				<posy>101</posy>
+				<height>19</height>
+				<width>100</width>
+				<texture>playing-bg.png</texture>	
+				<visible>true</visible>
+				<visible>Player.HasAudio + Player.Playing|Player.HasAudio + Player.Paused</visible>
+			</control>
+
+			<control type="fadelabel" id="3002">
+				<description>Playing label</description>
+				<width>98</width>			
+				<posx>37</posx>
+				<posy>110</posy>
+				<align>left</align>
+				<aligny>center</aligny>
+				<scrollout>False</scrollout>
+				<pauseatend>2000</pauseatend>
+				<label>NOW PLAYING: [COLOR ffffffff]$INFO[MusicPlayer.Artist] - $INFO[MusicPlayer.Title][/COLOR]</label>
+				<font>font13</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<visible>Player.HasAudio + Player.Playing|Player.HasAudio + Player.Paused</visible>
+			</control>
+			<control type="fadelabel" id="3001">
+				<description>Now playing label</description>
+				<width>220</width>			
+				<posx>37</posx>
+				<posy>110</posy>
+				<align>left</align>
+				<aligny>center</aligny>
+				<label></label>
+				<font>font13</font>
+				<textcolor>ffffffff</textcolor>
+				<visible>false</visible>
+			</control>
+
+			<control type="label" id="3002">
+				<description>Playing label</description>
+				<width>100</width>			
+				<posx>35</posx>
+				<posy>129</posy>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$INFO[MusicPlayer.Time] ($INFO[MusicPlayer.Duration])</label>
+				<font>font13</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<visible>Player.HasDuration</visible>
+			</control>
+		</control>
+
+		<control type="group" id="211">
+			<posx>525</posx>
+			<posy>525</posy>
+			<animation effect="zoom" time="500" center="auto" start="180" end="100" tween="cubic" easing="out">WindowOpen</animation>
+			<animation effect="fade" time="500" start="0" end="100">WindowOpen</animation>
+			<control type="image">
+				<description>Background for playing next</description>
+				<posx>-525</posx>
+				<posy>0</posy>
+				<height>35</height>
+				<width>1080</width>
+				<texture>gs-bg-menu-next.png</texture>	
+				<visible>true</visible>
+			</control>
+			<control type="fadelabel" id="4001">
+				<description>Playing next label</description>
+				<width>130</width>			
+				<posx>0</posx>
+				<posy>25</posy>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label></label>
+				<scrollout>False</scrollout>
+				<pauseatend>4000</pauseatend>
+				<font>font13</font>
+				<textcolor>ffffffff</textcolor>
+				<scrollspeed>10</scrollspeed>
+				<visible>!ControlGroup(210).HasFocus</visible>
+				<animation effect="fade" start="100" end="0" time="200" condition="ControlGroup(210).HasFocus">conditional</animation>
+				<animation effect="fade" start="0" end="100" time="400" condition="!ControlGroup(210).HasFocus">conditional</animation>
+			</control>
+			<control type="label" id="4002">
+				<description>Playing Next label</description>
+				<width>115</width>			
+				<posx>130</posx>
+				<posy>10</posy>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>NEXT</label>
+				<font>font13</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<visible>!ControlGroup(210).HasFocus</visible>
+				<animation effect="fade" start="100" end="0" time="200" condition="ControlGroup(210).HasFocus">conditional</animation>
+				<animation effect="fade" start="0" end="100" time="400" condition="!ControlGroup(210).HasFocus">conditional</animation>
+			</control>
+			<control type="image" id="9002">
+				<description>Cover for playing next</description>
+				<posx>135</posx>
+				<posy>-15</posy>
+				<height>60</height>
+				<width>50</width>
+				<texture></texture>
+				<visible>true</visible>
+				<visible>!ControlGroup(210).HasFocus</visible>
+				<animation effect="fade" start="100" end="0" time="200" condition="ControlGroup(210).HasFocus">conditional</animation>
+				<animation effect="fade" start="0" end="100" time="400" condition="!ControlGroup(210).HasFocus">conditional</animation>
+			</control>
+		</control>
+		
+		<control type="group" id="210">	
+			<posx>-21</posx>
+			<posy>14</posy>
+			<visible allowhiddenfocus="true">ControlGroup(210).HasFocus</visible>
+			<animation effect="fade" start="100" end="0" time="200" condition="!ControlGroup(210).HasFocus">conditional</animation>
+			<animation effect="fade" start="0" end="100" time="400" condition="ControlGroup(210).HasFocus">conditional</animation>
+			<animation effect="zoom" time="500" center="auto" start="180" end="100" tween="cubic" easing="out">WindowOpen</animation>
+			<animation effect="fade" time="500" start="0" end="100">WindowOpen</animation>
+			<control type="button" id="2001">
+				<description>Prev button</description>				
+				<posx>570</posx>
+				<posy>515</posy>
+				<width>23</width>
+				<height>28</height>		
+				<texturefocus>b_prev_focus.png</texturefocus>
+				<texturenofocus>b_prev.png</texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>17</textoffsetx>
+				<aligny>center</aligny>
+				<onup>50</onup>	
+				<onleft>50</onleft>
+				<onright>2002</onright>
+				<font>font12</font>
+				<visible>true</visible>
+			</control>
+			<control type="button" id="2002">
+				<description>Stop button</description>				
+				<posx>600</posx>
+				<posy>515</posy>
+				<width>23</width>
+				<height>28</height>		
+				<texturefocus>b_stop_focus.png</texturefocus>
+				<texturenofocus>b_stop.png</texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>17</textoffsetx>
+				<aligny>center</aligny>					
+				<onup>50</onup>
+				<onleft>2001</onleft>
+				<onright>2003</onright>
+				<font>font12</font>
+				<visible>true</visible>
+			</control>
+			<control type="button" id="2003">
+				<description>Play button</description>				
+				<posx>630</posx>
+				<posy>515</posy>
+				<width>23</width>
+				<height>28</height>		
+				<texturefocus>b_play_focus.png</texturefocus>
+				<texturenofocus>b_play.png</texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>17</textoffsetx>
+				<aligny>center</aligny>					
+				<onup>50</onup>
+				<onleft>2002</onleft>
+				<onright>2004</onright>
+				<font>font12</font>
+				<visible>!Player.Playing|Player.Paused</visible>
+			</control>
+			<control type="button" id="2003">
+				<description>Pause button</description>				
+				<posx>630</posx>
+				<posy>515</posy>
+				<width>23</width>
+				<height>28</height>		
+				<texturefocus>b_pause_focus.png</texturefocus>
+				<texturenofocus>b_pause.png</texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>17</textoffsetx>
+				<aligny>center</aligny>					
+				<onup>50</onup>	
+				<onleft>2002</onleft>
+				<onright>2004</onright>
+				<font>font12</font>
+				<visible>Player.Playing</visible>
+			</control>
+			<control type="button" id="2004">
+				<description>Next button</description>				
+				<posx>660</posx>
+				<posy>515</posy>
+				<width>23</width>
+				<height>28</height>		
+				<texturefocus>b_next_focus.png</texturefocus>
+				<texturenofocus>b_next.png</texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>17</textoffsetx>
+				<aligny>center</aligny>					
+				<onup>50</onup>
+				<onleft>2003</onleft>
+				<onright>2001</onright>
+				<font>font12</font>
+				<visible>true</visible>
+			</control>
+		</control>
+
+		<control type="group" id="205">
+			<posx>0</posx>
+			<posy>0</posy>
+			<animation effect="fade" start="100" end="50" time="200" condition="!Control.HasFocus(50)+!ControlGroup(210).HasFocus">conditional</animation>
+			<animation effect="fade" start="50" end="100" time="400" condition="Control.HasFocus(50)+ControlGroup(210).HasFocus">conditional</animation>
+			<animation effect="zoom" time="500" center="auto" start="280" end="100" tween="cubic" easing="out">WindowOpen</animation>
+			<control type="image">
+				<width>395</width>
+				<height>55</height>
+				<posx>97</posx>
+				<posy>0</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>
+			</control>
+			<control type="list" id="50">
+				<description>Search List</description>
+				<posx>97</posx>
+				<posy>55</posy>
+				<width>600</width>
+				<height>470</height>						
+				<onup>205</onup>
+				<ondown>205</ondown>
+				<onleft>300</onleft>
+				<onright>2001</onright>
+				<viewtype label="Default">list</viewtype>		      
+				<orientation>vertical</orientation>
+				<pagecontrol>25</pagecontrol>
+				<scrolltime>200</scrolltime>
+				<itemlayout width="395" height="65">
+					<control type="image">
+						<width>395</width>
+						<height>65</height>
+						<posx>0</posx>
+						<posy>0</posy>					
+						<texture>gs-bg-item-unfocus.png</texture>
+					</control>
+					<control type="image">
+						<posx>15</posx>
+						<posy>5</posy>
+						<width>50</width>
+						<height>50</height>
+						<info>ListItem.Thumb</info>
+					</control>
+					<control type="label">
+						<posx>70</posx>
+						<posy>3</posy>
+						<width>320</width>
+						<height>20</height>
+						<font>font13</font>
+						<aligny>center</aligny>					
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<textcolor>FFFFFFFF</textcolor>					
+						<selectedcolor>FF000000</selectedcolor>
+					</control>
+					<control type="label" id="50001">
+						<posx>80</posx>
+						<posy>18</posy>
+						<width>310</width>
+						<height>45</height>
+						<font>font12</font>
+						<aligny>center</aligny>					
+						<align>left</align>
+						<info>ListItem.Label2</info>
+						<textcolor>ffffffff</textcolor>					
+						<selectedcolor>FF000000</selectedcolor>
+					</control>
+				</itemlayout>
+				<focusedlayout height="65" width="395">				
+					<control type="image">
+						<width>395</width>
+						<height>65</height>
+						<posx>0</posx>
+						<posy>0</posy>					
+						<texture>gs-list-focus.png</texture>
+					</control>							
+					<control type="image">
+						<posx>15</posx>
+						<posy>5</posy>
+						<width>50</width>
+						<height>50</height>
+						<info>ListItem.Thumb</info>
+						<visible>true</visible>
+					</control>
+					<control type="label">
+						<posx>70</posx>
+						<posy>3</posy>
+						<width>320</width>
+						<height>20</height>
+						<font>font13</font>
+						<aligny>center</aligny>					
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<textcolor>FFFFFFFF</textcolor>					
+						<selectedcolor>FF000000</selectedcolor>
+					</control>
+					<control type="label">
+						<posx>80</posx>
+						<posy>18</posy>
+						<width>310</width>
+						<height>45</height>
+						<font>font12</font>
+						<aligny>center</aligny>					
+						<align>left</align>
+						<info>ListItem.Label2</info>
+						<textcolor>ffffffff</textcolor>					
+						<selectedcolor>FF000000</selectedcolor>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>55</height>
+				<posx>97</posx>
+				<posy>525</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>Container(50).HasNext</visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>70</height>
+				<posx>97</posx>
+				<posy>510</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>!Container(50).HasNext + Container(50).HasPrevious</visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>550</height>
+				<posx>97</posx>
+				<posy>55</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>SubString(Control.GetLabel(3000) ,Start searching,Left)</visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>465</height>
+				<posx>97</posx>
+				<posy>120</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>StringCompare(Container(50).NumItems,0)  + !SubString(Control.GetLabel(3000) ,Start searching,Left)</visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>400</height>
+				<posx>97</posx>
+				<posy>185</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>StringCompare(Container(50).NumItems,1) </visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>370</height>
+				<posx>97</posx>
+				<posy>250</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>StringCompare(Container(50).NumItems,2) </visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>370</height>
+				<posx>97</posx>
+				<posy>250</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>StringCompare(Container(50).NumItems,3)  + SubString(Control.GetLabel(3000) ,Search results for,Left)</visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>370</height>
+				<posx>97</posx>
+				<posy>315</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>StringCompare(Container(50).NumItems,3)  + !SubString(Control.GetLabel(3000) ,Search results for,Left)</visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>370</height>
+				<posx>97</posx>
+				<posy>380</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>StringCompare(Container(50).NumItems,4)</visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>370</height>
+				<posx>97</posx>
+				<posy>445</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>StringCompare(Container(50).NumItems,5)</visible>
+			</control>
+			<control type="image">
+				<width>395</width>
+				<height>370</height>
+				<posx>97</posx>
+				<posy>510</posy>					
+				<texture>gs-bg-item-unfocus.png</texture>'
+				<visible>StringCompare(Container(50).NumItems,6)</visible>
+			</control>
+		</control>
+		<control type="group" id="300">
+			<posx>-200</posx>
+			<posy>150</posy>
+			<animation effect="slide" start="0,0" end="110,0" time="200" tween="quadratic">Focus</animation>
+			<animation effect="slide" start="110,0" end="0,0" time="200" tween="quadratic">Unfocus</animation>
+			<animation effect="slide" start="-110,0" end="0,0" time="200" tween="quadratic">WindowOpen</animation>
+			<control type="image">
+				<description>Background for menu</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<height>220</height>
+				<width>220</width>
+				<texture>gs-bg-leftmenu.png</texture>	
+				<visible>true </visible>			
+			</control>
+			<control type="group" id="111">
+			<posx>100</posx>
+			<posy>20</posy>
+			<control type="label" id="5101">
+				<description>Vertical label</description>
+				<width>100</width>			
+				<posx>60</posx>
+				<posy>85</posy>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>MENU</label>
+				<angle>-90</angle>
+				<font>font16</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<animation effect="fade" start="100" end="0" time="200" condition="ControlGroup(111).HasFocus">conditional</animation>
+				<animation effect="fade" start="0" end="100" time="400" condition="!ControlGroup(111).HasFocus">conditional</animation>
+			</control>
+			<control type="button" id="1001">
+				<description>Current playlist</description>				
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>110</width>
+				<height>30</height>
+				<label>Current playlist</label>
+				<texturefocus>button_focus.png</texturefocus>
+				<texturenofocus></texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>0</textoffsetx>
+				<align>center</align>
+				<aligny>center</aligny>					
+				<onup>1005</onup>
+				<ondown>1002</ondown>	
+				<onleft>205</onleft>
+				<onright>205</onright>
+				<font>font12</font>
+			</control>
+			<control type="button" id="1002">
+				<description>Search</description>				
+				<posx>0</posx>
+				<posy>35</posy>
+				<width>110</width>
+				<height>30</height>
+				<label>Search</label>
+				<texturefocus>button_focus.png</texturefocus>		
+				<texturenofocus></texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>0</textoffsetx>
+				<align>center</align>
+				<aligny>center</aligny>					
+				<onup>1001</onup>
+				<ondown>1003</ondown>	
+				<onleft>205</onleft>
+				<onright>205</onright>
+				<font>font12</font>
+			</control>
+			<control type="button" id="1003">
+				<description>Playlists button</description>				
+				<posx>0</posx>	
+				<posy>70</posy>
+				<width>110</width>
+				<height>30</height>
+				<label>Playlists</label>		
+				<texturefocus>button_focus.png</texturefocus>
+				<texturenofocus></texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>0</textoffsetx>
+				<align>center</align>
+				<aligny>center</aligny>					
+				<onup>1002</onup>
+				<ondown>1004</ondown>	
+				<onleft>205</onleft>
+				<onright>205</onright>
+				<font>font12</font>
+			</control>
+			<control type="button" id="1004">
+				<description>Popular button</description>				
+				<posx>0</posx>	
+				<posy>105</posy>
+				<width>110</width>
+				<height>30</height>
+				<label>Popular</label>		
+				<texturefocus>button_focus.png</texturefocus>
+				<texturenofocus></texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>0</textoffsetx>
+				<align>center</align>
+				<aligny>center</aligny>					
+				<onup>1003</onup>
+				<ondown>1005</ondown>	
+				<onleft>205</onleft>
+				<onright>205</onright>
+				<font>font12</font>
+			</control>
+			<control type="button" id="1005">
+				<description>Settings button</description>				
+				<posx>0</posx>	
+				<posy>140</posy>
+				<width>110</width>
+				<height>30</height>
+				<label>Settings</label>		
+				<texturefocus>button_focus.png</texturefocus>
+				<texturenofocus></texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>0</textoffsetx>
+				<align>center</align>
+				<aligny>center</aligny>					
+				<onup>1004</onup>
+				<ondown>1001</ondown>	
+				<onleft>205</onleft>
+				<onright>205</onright>
+				<font>font12</font>
+			</control>
+			</control>
+		</control>
+
+		<control type="label" id="300011">
+			<description>State label</description>
+			<width>520</width>			
+			<posx>100</posx>
+			<posy>534</posy>
+			<align>left</align>
+			<aligny>center</aligny>
+			<label>Tracks: [COLOR ffffffff]$INFO[Container(50).NumItems][/COLOR]</label>
+			<font>font16</font>
+			<textcolor>FFFFFFFF</textcolor>
+			<visible>!SubString(Control.GetLabel(3000) ,Start searching,Left)+!SubString(Control.GetLabel(3000) ,Songs found,Left)+!SubString(Control.GetLabel(3000) ,Albums found,Left)+ !SubString(Control.GetLabel(3000) ,Artists found,Left)+ !SubString(Control.GetLabel(3000) ,Search result,Left)+ !SubString(Control.GetLabel(3000) ,Albums by,Left)</visible>
+			<animation effect="zoom" time="500" center="auto" start="180" end="100" tween="cubic" easing="out">WindowOpen</animation>
+			<animation effect="fade" time="500" start="0" end="100">WindowOpen</animation>
+		</control>
+		<control type="label" id="3000">
+			<description>State label</description>
+			<width>520</width>			
+			<posx>100</posx>
+			<posy>550</posy>
+			<align>left</align>
+			<aligny>center</aligny>
+			<label></label>
+			<font>font16</font>
+			<textcolor>FFFFFFFF</textcolor>
+			<animation effect="zoom" time="500" center="auto" start="180" end="100" tween="cubic" easing="out">WindowOpen</animation>
+			<animation effect="fade" time="500" start="0" end="100">WindowOpen</animation>
+
+		</control>
+
+		<control type="image">
+			<description>GS Logo</description>
+			<posx>480</posx>
+			<posy>528</posy>
+			<height>5</height>
+			<width>10</width>
+			<texture>arrowdown.png</texture>	
+			<visible>Container(50).HasNext</visible>
+			<animation effect="zoom" time="500" center="auto" start="180" end="100" tween="cubic" easing="out">WindowOpen</animation>
+			<animation effect="fade" time="500" start="0" end="100">WindowOpen</animation>
+		</control>
+		<control type="image">
+			<description>GS Logo</description>
+			<posx>480</posx>
+			<posy>46</posy>
+			<height>5</height>
+			<width>10</width>
+			<texture>arrowup.png</texture>	
+			<visible>Container(50).HasPrevious</visible>
+			<animation effect="zoom" time="500" center="auto" start="180" end="100" tween="cubic" easing="out">WindowOpen</animation>
+			<animation effect="fade" time="500" start="0" end="100">WindowOpen</animation>
+		</control>
+	</controls>
+</window>

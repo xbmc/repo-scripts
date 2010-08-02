@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="0">GrooveShark</string>
+    
+    <!-- Buttons -->
+    <string id="101">Queue</string>
+    <string id="102">Play</string>
+    <string id="103">Queue All</string>
+    <string id="104">Add to playlist</string>
+    <string id="105">Current playlist</string>
+    <string id="106">Search</string>
+	<string id="107">Current playlist</string>
+    <string id="108">Popular</string>
+    <string id="109">Settings</string>
+	<string id="110">Load</string>
+	<string id="111">Rename</string>
+	<string id="112">Delete</string>
+	<string id="113">Remove song</string>
+	<string id="114">Save playlist</string>
+	<string id="115">Save playlist as</string>
+	<string id="116">Close playlist</string>
+
+    <!-- Dialogs -->
+	<string id="1000">Enter a search phrase</string>
+	<string id="1001">Playlists</string>
+	<string id="1002">Do what?</string>
+	<string id="1003">Exit?</string>
+	<string id="1004">Do you want to close GrooveShark?</string>
+    
+    <!-- Settings -->
+    <string id="2000">Username</string>
+    <string id="2001">Password</string>
+    <string id="2002">Debugging (restart script to apply)</string>
+
+    <!-- Labels -->
+    <string id="3000">Start searching for songs or load a playlist</string>
+    <string id="3001">NOW PLAYING</string>
+    <string id="3002">NEXT</string>
+    <string id="3003">Songs found when searching for</string>
+    <string id="3004">Artists found when searching for</string>
+    <string id="3005">Albums found when searching for</string>
+    <string id="3006">by</string>
+    <string id="3007">Current playlist</string>
+    <string id="3008">Could not save the playlist</string>
+    <string id="3009">Type a name for the playlist</string>
+    <string id="3010">You have to type a name for the playlist</string>
+    <string id="3011">Error</string>
+    <string id="3012">Could not get popular items</string>
+    <string id="3013">Please wait</string>
+    <string id="3014">Getting popular songs...</string>
+    <string id="3015">Getting popular artists...</string>
+    <string id="3016">Getting popular albums...</string>
+    <string id="3017">Done</string>
+    <string id="3018">Searching for songs...</string>
+    <string id="3019">Searching for artists...</string>
+    <string id="3020">Searching for albums...</string>
+    <string id="3021">Search complete</string>
+    <string id="3022">Search failed. Try again</string>
+    <string id="3023">Songs</string>
+    <string id="3024">Artists</string>
+    <string id="3025">Albums</string>
+    <string id="3026">Found</string>
+    <string id="3027">Failed to login. Check your login details in settings</string>
+    <string id="3028">You have to be logged in. Set your login in settings</string>
+    <string id="3029">Unable to get playlists</string>
+    <string id="3030">New name for playlist</string>
+    <string id="3031">Could not rename playlist</string>
+    <string id="3032">Are you sure you want to delete the playlist</string>
+    <string id="3033">Delete playlist?</string>
+    <string id="3034">Saving playlist</string>
+	<string id="3035">Saved</string>
+	<string id="3036">Getting thumbnails</string>
+	<string id="3037">Logging in</string>
+	<string id="3038">Getting your playlists</string>
+</strings>

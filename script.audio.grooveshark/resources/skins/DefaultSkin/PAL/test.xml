@@ -1,0 +1,9 @@
+<window>
+	<resolution>PAL16x9</resolution>
+	<useincludes>false</useincludes>
+	<defaultcontrol>204</defaultcontrol>	
+	<allowoverlay>false</allowoverlay>
+	
+	<controls>
+	</controls>
+</window>
