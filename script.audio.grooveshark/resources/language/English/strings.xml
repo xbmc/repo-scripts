@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
     <string id="0">GrooveShark</string>
-    
+
     <!-- Buttons -->
     <string id="101">Queue</string>
     <string id="102">Play</string>
@@ -9,24 +9,24 @@
     <string id="104">Add to playlist</string>
     <string id="105">Current playlist</string>
     <string id="106">Search</string>
-	<string id="107">Current playlist</string>
+    <string id="107">Current playlist</string>
     <string id="108">Popular</string>
     <string id="109">Settings</string>
-	<string id="110">Load</string>
-	<string id="111">Rename</string>
-	<string id="112">Delete</string>
-	<string id="113">Remove song</string>
-	<string id="114">Save playlist</string>
-	<string id="115">Save playlist as</string>
-	<string id="116">Close playlist</string>
+    <string id="110">Load</string>
+    <string id="111">Rename</string>
+    <string id="112">Delete</string>
+    <string id="113">Remove song</string>
+    <string id="114">Save playlist</string>
+    <string id="115">Save playlist as</string>
+    <string id="116">Close playlist</string>
 
     <!-- Dialogs -->
-	<string id="1000">Enter a search phrase</string>
-	<string id="1001">Playlists</string>
-	<string id="1002">Do what?</string>
-	<string id="1003">Exit?</string>
-	<string id="1004">Do you want to close GrooveShark?</string>
-    
+    <string id="1000">Enter a search phrase</string>
+    <string id="1001">Playlists</string>
+    <string id="1002">Do what?</string>
+    <string id="1003">Exit?</string>
+    <string id="1004">Do you want to close GrooveShark?</string>
+
     <!-- Settings -->
     <string id="2000">Username</string>
     <string id="2001">Password</string>
@@ -68,8 +68,8 @@
     <string id="3032">Are you sure you want to delete the playlist</string>
     <string id="3033">Delete playlist?</string>
     <string id="3034">Saving playlist</string>
-	<string id="3035">Saved</string>
-	<string id="3036">Getting thumbnails</string>
-	<string id="3037">Logging in</string>
-	<string id="3038">Getting your playlists</string>
+    <string id="3035">Saved</string>
+    <string id="3036">Getting thumbnails</string>
+    <string id="3037">Logging in</string>
+    <string id="3038">Getting your playlists</string>
 </strings>

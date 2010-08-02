@@ -1,3 +1,7 @@
-0.2.0
+0.2.1:
+
+ - Bug fix: Couldn't navigate to albums found during a search.
+
+0.2.0:
 
 First version for the new Addon-manager.

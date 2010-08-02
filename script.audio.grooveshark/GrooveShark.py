@@ -227,7 +227,7 @@ class GrooveClass(xbmcgui.WindowXMLDialog):
 			self.listAlbums(self.searchResultAlbums, __language__(3005) + '"' + self.searchText + '"', withArtist=1, p=self.listPos[self.stateList])
 
 		elif self.stateList == GrooveClass.STATE_LIST_SONGS_ON_ALBUM_FROM_SEARCH:
-			self.listSongs(self.songs, self.albums[n-1][2] + ' ' + __language__(3006) + ' ' + self.albums[n-1][0], p=self.listPos[self.stateList])
+			self.listSongs(self.songs, self.searchResultAlbums[n-1][2] + ' ' + __language__(3006) + ' ' + self.searchResultAlbums[n-1][0], p=self.listPos[self.stateList])
 
 		elif self.stateList == GrooveClass.STATE_LIST_ALBUMS_BY_ARTIST:
 			self.listAlbums(self.albums, p=self.listPos[self.stateList])
