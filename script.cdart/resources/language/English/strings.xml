@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!-- Script Strings -->
+  <string id="32022">Choose Available cdART</string>
+  <string id="32023">Download Successful!</string>
+  <string id="32024">cdART Downloaded!</string>
+  <string id="32025">Check file paths-cdART Not Downloaded</string>
+  <string id="32026">Download Error Occured!</string>
+  <string id="32027">Searching For Artist on XBMCSTUFF.COM</string>
+  <string id="32029">No cdART found?</string>
+  <string id="32030">Please contribute! Upload your cdARTs</string>
+  <string id="32031">On www.xbmcstuff.com</string>
+  <string id="32032">Choose an Artist</string>
+  <string id="32033">Not Found on XBMCSTUFF.com</string>
+  <string id="32034">No cdART found for</string>
+  <string id="32035"> *DOWNLOADING cdART* </string>
+  <string id="32047">Downloading.....</string>
+  <string id="32066">Error connecting to XBMCSTUFF.COM, Socket Timed out</string>
+</strings>
