@@ -1,3 +1,10 @@
+0.2.2:
+
+ - Bug fix: The script wasn't able to run on revisions higher than 32321.
+
+ - Added: Hungarian translation. Thanks alanwww1.
+
+
 0.2.1:
 
  - Bug fix: Couldn't navigate to albums found during a search.

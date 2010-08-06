@@ -688,8 +688,8 @@ class GrooveClass(xbmcgui.WindowXMLDialog):
 			self.gs.logout()
 		if (username != "") and (password != ""):
 			pDialog = xbmcgui.DialogProgress()
-			pDialog.update(0)
 			pDialog.create(__language__(3037), __language__(3013))
+			pDialog.update(0)
 			try:
 				if basic == 1:
 					self.userId = self.gs.loginBasic(username, password)
@@ -724,8 +724,8 @@ class GrooveClass(xbmcgui.WindowXMLDialog):
 			self.message(__language__(3028),__language__(3029))
 			return None
 		dialog = xbmcgui.DialogProgress()
-		dialog.update(0)
 		dialog.create(__language__(3038), '')		
+		dialog.update(0)
 		try:
 			items = []
 			playlists = self.gs.userGetPlaylists(limit=150)
@@ -777,8 +777,8 @@ class GrooveClass(xbmcgui.WindowXMLDialog):
 	
 	def savePlaylist(self, playlistId, name = '', about = ''):
 		pDialog = xbmcgui.DialogProgress()
-		pDialog.update(0)
 		pDialog.create(__language__(3034), __language__(3013) + '...')
+		pDialog.update(0)
 		if playlistId == 0:
 			if name != '':
 				pId = self.gs.playlistCreate(name, about)
@@ -825,8 +825,8 @@ class GrooveClass(xbmcgui.WindowXMLDialog):
 		
 		n = len(items)
 		pDialog = xbmcgui.DialogProgress()
-		pDialog.update(1)
 		pDialog.create(__language__(3036), __language__(3013))
+		pDialog.update(1)
 		try:
 			i = 0
 			while i < len(items):
