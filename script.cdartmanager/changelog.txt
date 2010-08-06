@@ -1,3 +1,10 @@
+1.0.1 - added script.module.pil use
+             - Resizing of unique cdARTS for uploading to XBMCSTUFF.com
+      - reduced internet access for finding matching cdARTs
+      - Added Hungarian language - Thanks alanww1
+      
+1.0.0 - Changed testing of Artists, Albums and Album paths are handled.  Improved Album Artist sorting
+
 0.9.9 - Changed how special characters are handled
       - Automatically check to see if folder name has disc numbering(ie CD 1, Disc 1) and if the Album name is missing disc numbering, copy it to the end of album name(Album becomes Album - CD 1 or Album - Disc 1)
       - added duplicate cdART count(when copying cdARTS), shows duplicates if there are cdARTs in the save folders or if you have mistakes in you Music library
