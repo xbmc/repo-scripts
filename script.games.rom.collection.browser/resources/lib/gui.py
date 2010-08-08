@@ -619,7 +619,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		self.saveViewMode()
 		
 		import gameinfodialog
-		gid = gameinfodialog.UIGameInfoView("script-Rom_Collection_Browser-gameinfo.xml", os.getcwd(), "Default", 1, gdb=self.gdb, gameId=gameId, 
+		gid = gameinfodialog.UIGameInfoView("script-Rom_Collection_Browser-gameinfo.xml", os.getcwd(), "Default", "PAL", gdb=self.gdb, gameId=gameId, 
 			consoleId=self.selectedConsoleId, genreId=self.selectedGenreId, yearId=self.selectedYearId, publisherId=self.selectedPublisherId, selectedGameIndex=selectedGameIndex,
 			consoleIndex=self.selectedConsoleIndex, genreIndex=self.selectedGenreIndex, yearIndex=self.selectedYearIndex, publisherIndex=self.selectedPublisherIndex, 
 			controlIdMainView=self.selectedControlId, fileTypeForControlDict=self.fileTypeForControlDict, fileTypeDict=self.fileTypeDict, fileDict=self.fileDict, romCollectionDict=self.romCollectionDict)
@@ -1017,7 +1017,7 @@ class UIGameDB(xbmcgui.WindowXML):
 
 
 def main():    
-    ui = UIGameDB("script-Rom_Collection_Browser-main.xml", os.getcwd(), "Default", 1)    
+    ui = UIGameDB("script-Rom_Collection_Browser-main.xml", os.getcwd(), "Default", "PAL")
     ui.doModal()
     del ui
 

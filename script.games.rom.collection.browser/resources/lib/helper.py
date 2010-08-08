@@ -163,8 +163,26 @@ def launchEmu(gdb, gui, gameId):
 		Game(gdb).update(('launchCount',), (launchCount +1,) , gameRow[util.ROW_ID])
 		gdb.commit()
 		
+		toggledScreenMode = False
+		
+		if (romCollectionRow[util.ROMCOLLECTION_useEmuSolo] == 'False'):
+			screenMode = xbmc.executehttpapi("GetSystemInfoByName(system.screenmode)").replace("<li>","")
+			util.log("screenMode: " +screenMode, util.LOG_LEVEL_INFO)
+			isFullScreen = screenMode.endswith("Full Screen")
+		
+			if(isFullScreen):
+				util.log("Toggle to Windowed mode", util.LOG_LEVEL_INFO)
+				#this minimizes xbmc some apps seems to need it
+				xbmc.executehttpapi("Action(199)")
+				toggledScreenMode = True
+		
 		util.log("cmd: " +cmd, util.LOG_LEVEL_INFO)
 		os.system(cmd)
+		
+		if(toggledScreenMode):
+			util.log("Toggle to Full Screen mode", util.LOG_LEVEL_INFO)
+			#this brings xbmc back
+			xbmc.executehttpapi("Action(199)")
 		
 		util.log("End helper.launchEmu", util.LOG_LEVEL_INFO)
 		

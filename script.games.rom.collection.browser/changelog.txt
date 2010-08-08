@@ -1,0 +1,22 @@
+
+0.5.4 (08/2010)
+~~~~~~~~~~~~~
+    * minimize XBMC before launching emulator
+    * maximize XBMC after exiting emulator
+    * using PAL as default resolution (addon could not find window xml file on 720p)
+    * new icon (thanks to freezy)
+    * hungarian translation (thanks to alanwww1)
+
+0.5.3 (08/2010)
+~~~~~~~~~~~~~
+    * initial Dharma version
+
+V0.5 (05/2010)
+~~~~~~~~~~~~~
+supports Camelot only
+    * filter games by console, genre, year and publisher
+    * launch roms with external emulator
+    * configure script via xml file
+    * simple but configurable description file parser
+    * view different images and videos per game
+    * view game plot and additional game properties
