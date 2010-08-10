@@ -1,0 +1,9 @@
+v1.4.0
+- refetch a single logo now replace cache (will reload skin to take change immediately).
+
+v1.3.5 
+- change sqlite to http api to hit bd.
+
+v1.3.1 adding licence.txt 
+- start adaptation for official repository
+	
