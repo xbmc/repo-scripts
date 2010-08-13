@@ -2,8 +2,6 @@ import xbmc, xbmcgui, os, sys
 from xbmcgui import Window
 from xml.dom.minidom import parseString
 
-dialog = xbmcgui.DialogProgress()
-
 class Main:
     # grab the home window
     WINDOW = Window ( 10000 )
@@ -14,7 +12,6 @@ class Main:
         self._parse_String()
         self._fetch_favourites()
         self.doc.unlink()
-        dialog.close()
 
     def _clear_properties( self ):
         for count in range( 20 ):
