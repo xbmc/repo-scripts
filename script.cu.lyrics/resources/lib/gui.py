@@ -17,10 +17,11 @@ except:
     current_dlg_id = 0
 current_win_id = xbmcgui.getCurrentWindowId()
 
-_ = sys.modules[ "__main__" ].__language__
+# _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__ = sys.modules[ "__main__" ].__version__
 __settings__ = sys.modules[ "__main__" ].__settings__
+__language__ = sys.modules[ "__main__" ].__language__
 
 SELECT_ITEM = ( 11, 256, 61453, )
 EXIT_SCRIPT = ( 6, 10, 247, 275, 61467, 216, 257, 61448, )
@@ -90,7 +91,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             return lyrics, error
         except:
             print traceback.format_exc(sys.exc_info()[2])
-            return None, "Failed fetching lyrics"
+            return None, __language__(30001)
 
     def get_lyrics_from_list( self, item ):
         lyrics = self.LyricsScraper.get_lyrics_from_list( self.menu_items[ item ] )
@@ -108,7 +109,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         try:
             lyrics_file = open( song.path(), "r" )
             lyrics.lyrics = unicode(lyrics_file.read(), "utf-8" )
-            lyrics.source = "File"
+            lyrics.source = __language__(30005)
             lyrics_file.close()
             self.save_lyrics_to_memory(lyrics)
             return lyrics, None
@@ -182,7 +183,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def show_prefetch_message(self, song):
         self.reset_controls()
-        self.getControl( 100 ).setText( "Fetching lyrics..." )
+        self.getControl( 100 ).setText( __language__(30000) )
         self.show_control( 100 )
     
     def show_choices( self, choices ):

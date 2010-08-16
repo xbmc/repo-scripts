@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>   
-    <category label="Settings">
-        <setting id="smooth_scrolling" type="bool" label="Smooth Scrolling" default="false"/>
-        <setting id="save_lyrics" type="bool" label="Save Lyrics" default="true"/>
+    <category label="30102">
+        <setting id="smooth_scrolling" type="bool" label="30100" default="false"/>
+        <setting id="save_lyrics" type="bool" label="30101" default="true"/>
     </category>
-    <category label="Info">
-        <setting id="version"   type="text" label="Version" default="0.8.5" enable="false" />
-        <setting id="author"    type="text" label="Author" default="Amet" enable="false" />
-        <setting id="origauthor"    type="text" label="Original authors" default="EnderW,Nuka1195" enable="false" />
+    <category label="30103">
+        <setting id="version"   type="text" label="30104" default="0.8.5" enable="false" />
+        <setting id="author"    type="text" label="30105" default="Amet" enable="false" />
+        <setting id="origauthor"    type="text" label="30106" default="EnderW,Nuka1195" enable="false" />
     </category>    
 </settings>

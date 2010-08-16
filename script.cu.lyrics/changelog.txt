@@ -1,3 +1,6 @@
+0.9.0
+- make strings translatable, thanks alanwww1 for the patch
+
 0.8.9
 - added new icon
 

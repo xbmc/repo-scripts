@@ -3,14 +3,14 @@ import sys
 import os
 import urllib
 import re
+import xbmc
 from utilities import *
 from song import *
 import lyrics
 
-if ( __name__ != "__main__" ):
-    import xbmc
 
-__title__ = "LyricWiki.org API"
+__language__ = sys.modules[ "__main__" ].__language__
+__title__ = __language__(30003)
 __allow_exceptions__ = True
 
 class WikiaFormat:
@@ -183,14 +183,14 @@ class LyricsFetcher:
             
             lyricText = XmlUtils.removeComments(lyricText)
             if ( not lyricText ):
-                return None, "Lyrics not found for song '%s' by '%s'" % (song.title, song.artist) 
+                return None, __language__(30002) % (song.title, song.artist) 
             
             l.lyrics = lyricText
             l.source = __title__
             return l, None            
         except:
             print "%s::%s (%d) [%s]" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ])
-            return None, "Fetching lyrics from %s failed" % (__title__)      
+            return None, __language__(30004) % (__title__)      
 
     def get_lyrics( self, artist, song ):
         """ *required: Returns song lyrics or a list of choices from artist & song """
