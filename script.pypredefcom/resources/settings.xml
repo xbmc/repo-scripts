@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <!-- General -->
+    <category label="30050">
+        <setting label="30100" type="lsep" />
+        <setting label="30110" type="folder" id="doc_path" default="" source="auto" option="writeable" />
+    </category>
+</settings>

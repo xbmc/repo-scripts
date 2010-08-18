@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- ==================================================================== -->
+<!--  PyDev Predefined Completions Creator -->
+<!--  Copyright (C) 2010 James F. Carroll -->
+
+<!--  This program is free software; you can redistribute it and/or modify -->
+<!--  it under the terms of the GNU General Public License as published by -->
+<!--  the Free Software Foundation; either version 2 of the License, or -->
+<!--  (at your option) any later version. -->
+
+<!--  This program is distributed in the hope that it will be useful, -->
+<!--  but WITHOUT ANY WARRANTY; without even the implied warranty of -->
+<!--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the -->
+<!--  GNU General Public License for more details. -->
+<!-- -->
+<!--  You should have received a copy of the GNU General Public License -->
+<!--  along with this program; if not, write to the Free Software -->
+<!--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA -->
+<!--==================================================================== -->
+<addon id="script.pypredefcom" name="PyDev Predefined Completions Creator" version="0.9.0" provider-name="jiminger.com">
+    <requires> 
+       <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <minversion>31123</minversion>
+        <summary>Creates PyDev Predefined Completions. Based on Pydoc by nuka1195</summary>
+        <description>Creates PyDev Predefined Completions for xbmc, xbmcgui, xbmcplugin and xbmcaddon modules. Based on Pydoc by nuka1195. For those that are developing Xbmc addons using Eclipse, these will provide the ability for Eclipse to auto complete xbmc builtin modules and provide the in-IDE usage documentation. Please see http://pydev.org/manual_101_interpreter.html#id2 .</description>
+        <disclaimer>Only potentially accurate for the version of xbmc this script was run in.</disclaimer>
+    </extension>
+</addon>

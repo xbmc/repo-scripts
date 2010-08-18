@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- ==================================================================== -->
+<!--  PyDev Predefined Completions Creator -->
+<!--  Copyright (C) 2010 James F. Carroll -->
+
+<!--  This program is free software; you can redistribute it and/or modify -->
+<!--  it under the terms of the GNU General Public License as published by -->
+<!--  the Free Software Foundation; either version 2 of the License, or -->
+<!--  (at your option) any later version. -->
+
+<!--  This program is distributed in the hope that it will be useful, -->
+<!--  but WITHOUT ANY WARRANTY; without even the implied warranty of -->
+<!--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the -->
+<!--  GNU General Public License for more details. -->
+<!-- -->
+<!--  You should have received a copy of the GNU General Public License -->
+<!--  along with this program; if not, write to the Free Software -->
+<!--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA -->
+<!--==================================================================== -->
+<strings>
+    <!-- plugin title -->
+    <string id="30000">PyDocs Printer</string>
+    <!-- language author (translators put your name here) -->
+    <string id="30002">nuka1195</string>
+
+    <!-- category separators -->
+    <string id="30050">General</string>
+    <string id="30051"></string>
+    <string id="30052"></string>
+    <string id="30053"></string>
+    <string id="30054"></string>
+    <string id="30055"></string>
+    <string id="30056"></string>
+
+    <!-- General -->
+    <string id="30100">Preferences</string>
+    <!-- settings labels & options -->
+    <string id="30110">Save help docs to</string>
+
+    <!-- universal strings -->
+    <!-- messages -->
+    <string id="30711">Saving: %s</string>
+    <string id="30712">To: %s</string>
+</strings>
