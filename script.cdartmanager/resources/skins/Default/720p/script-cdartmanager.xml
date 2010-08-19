@@ -315,11 +315,11 @@
                 <posx>30</posx>
                 <posy>0</posy>
             
-                <animation effect="fade" start="100" end="0" time="0" condition="!ControlGroup(9007).HasFocus + !Control.HasFocus(140) + !ControlGroup(9011).HasFocus">conditional</animation>
-                <animation effect="fade" start="0" end="100" delay="300" time="200" condition="Control.HasFocus(140) | ControlGroup(9007).HasFocus | ControlGroup(9011).HasFocus">conditional</animation>
+                <animation effect="fade" start="100" end="0" time="0" condition="!ControlGroup(9007).HasFocus + !Control.HasFocus(140) + !ControlGroup(9011).HasFocus + !ControlGroup(9012).HasFocus">conditional</animation>
+                <animation effect="fade" start="0" end="100" delay="300" time="200" condition="Control.HasFocus(140) | ControlGroup(9007).HasFocus | ControlGroup(9011).HasFocus | ControlGroup(9012).HasFocus">conditional</animation>
                 <animation effect="fade" start="100" end="0" time="0" condition="Control.HasFocus(140) | ControlGroup(9007).HasFocus">WindowClose</animation>
-                <animation effect="slide" end="220,0" time="300" tween="quadratic" easing="out" condition="Control.HasFocus(140) | ControlGroup(9007).HasFocus | ControlGroup(9011).HasFocus">conditional</animation>
-                <visible>Control.HasFocus(140) | Control.HasFocus(141) | ControlGroup(9011).HasFocus</visible>
+                <animation effect="slide" end="220,0" time="300" tween="quadratic" easing="out" condition="Control.HasFocus(140) | ControlGroup(9007).HasFocus | ControlGroup(9011).HasFocus | ControlGroup(9012).HasFocus">conditional</animation>
+                <visible>Control.HasFocus(140) | Control.HasFocus(141) | ControlGroup(9011).HasFocus | ControlGroup(9012).HasFocus</visible>
             
                 <control type="button">
                     <description>Fake button for mouse control</description>
@@ -551,8 +551,85 @@
                         <onup>143</onup>
                         <ondown>142</ondown>
                     </control>
-                </control>     
-
+                </control>   
+                
+                <control type="group" id="9012">
+                    <posx>650</posx>
+                    <posy>50</posy>
+                    <!--
+                    <animation effect="fade" start="100" end="0" time="0" condition="!ControlGroup(9012).HasFocus">conditional</animation>
+                    <animation effect="fade" start="0" end="100" delay="300" time="200" condition="ControlGroup(9012).HasFocus | Control.HasFocus(400)">conditional</animation>
+                    -->
+                    <visible>False</visible>
+                    <control type="image"> <!-- Box image -->
+                        <posx>-5</posx>
+                        <posy>0</posy>
+                        <width>600</width>
+                        <height>100</height>
+                        <texture border="40">default-panel.png</texture>
+                        
+                    </control>                    
+                    <control type="label" id="400">
+                            <posx>5</posx>
+                            <posy>0</posy>
+                            <width>590</width>
+                            <height>40</height>
+                            <font>font13</font>
+                            <aligny>center</aligny>
+                            <textcolor>green</textcolor>
+                            <focusedcolor>FFFFFFFF</focusedcolor>
+                            <selectedcolor>green</selectedcolor>
+                            <label>Album Title Goes Here</label>
+                            <scroll>true</scroll>
+                            <align>center</align>
+                    </control>
+                    <control type="label" id="150">
+                            <posx>5</posx>
+                            <posy>0</posy>
+                            <width>590</width>
+                            <height>30</height>
+                            <font>font13</font>
+                            <aligny>center</aligny>
+                            <textcolor>green</textcolor>
+                            <focusedcolor>FFFFFFFF</focusedcolor>
+                            <selectedcolor>green</selectedcolor>
+                            <label>Line 1</label>
+                            <scroll>true</scroll>
+                            <align>center</align>
+                    </control>
+                    <control type="label" id="151">
+                            <posx>5</posx>
+                            <posy>0</posy>
+                            <width>590</width>
+                            <height>30</height>
+                            <font>font13</font>
+                            <aligny>center</aligny>
+                            <textcolor>green</textcolor>
+                            <focusedcolor>FFFFFFFF</focusedcolor>
+                            <selectedcolor>green</selectedcolor>
+                            <label>Line 2</label>
+                            <scroll>true</scroll>
+                            <align>center</align>
+                    </control>
+                    
+                    <control type="label" id="152">
+                            <posx>5</posx>
+                            <posy>0</posy>
+                            <width>590</width>
+                            <height>40</height>
+                            <font>font13</font>
+                            <aligny>center</aligny>
+                            <textcolor>green</textcolor>
+                            <focusedcolor>FFFFFFFF</focusedcolor>
+                            <selectedcolor>green</selectedcolor>
+                            <label>Line 3</label>
+                            <scroll>true</scroll>
+                            <align>center</align>
+                    </control>
+                </control> 
+                
+                
+                
             <control type="group" id="9006">  <!-- cdART Backup Menu -->
                 <posx>315</posx>
                 <posy>320</posy>
