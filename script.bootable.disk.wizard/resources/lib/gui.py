@@ -254,6 +254,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 ##--------- Screen 9 -----------##
     def screen_9(self, msg_line1 = "" , msg_line2 = "" ):
       self.hide_all()
+      self.getControl( 1099 ).setVisible( False )
       if msg_line1 != "": self.getControl( 1902 ).setLabel( msg_line1 ) #----------NOTE ---------
       if msg_line2 != "": self.getControl( 1903 ).setLabel( msg_line2 ) # only change labels if we actually send the msg_line1 and msg_line2 
       self.getControl( 1900 ).setVisible( True )
