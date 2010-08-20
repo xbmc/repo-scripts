@@ -172,7 +172,7 @@ class Main:
             self.WINDOW.setProperty( "RandomSong.%d.Year" % ( count + 1, ), fields[ 6 ] )
             self.WINDOW.setProperty( "RandomSong.%d.Artist" % ( count + 1, ), fields[ 24 ] )
             self.WINDOW.setProperty( "RandomSong.%d.Album" % ( count + 1, ), fields[ 21 ] )
-            self.WINDOW.setProperty( "RandomSong.%d.Ratings" % ( count + 1, ), fields[ 18 ] )
+            self.WINDOW.setProperty( "RandomSong.%d.Rating" % ( count + 1, ), fields[ 18 ] )
             path = fields[ 22 ]
             # don't add song for albums list TODO: figure out how toplay albums
             ##if ( not self.ALBUMS ):
