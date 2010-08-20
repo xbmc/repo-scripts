@@ -4,7 +4,7 @@ from urllib import quote_plus, unquote_plus
 import re
 import sys
 import os
-
+import random
     
 class Main:
     # grab the home window
@@ -48,7 +48,8 @@ class Main:
         self.TOTALS = params.get( "totals", "" ) == "True"
         self.PLAY_TRAILER = params.get( "trailer", "" ) == "True"
         self.ALARM = int( params.get( "alarm", "0" ) )
-
+        self.RANDOM_ORDER = params.get( "random", "" ) == "True"
+    
     def _set_alarm( self ):
         # only run if user/skinner preference
         if ( not self.ALARM ): return
@@ -153,7 +154,10 @@ class Main:
         # set our unplayed query
         unplayed = ( "", "where playCount isnull ", )[ self.UNPLAYED ]
         # sql statement
-        if ( self.RECENT ):
+        if ( self.RANDOM_ORDER ):
+            # random order
+            sql_movies = "select * from movieview %sorder by RANDOM() limit %d" % ( unplayed, self.LIMIT, )        
+        elif ( self.RECENT ):
             # recently added
             sql_movies = "select * from movieview %sorder by idMovie desc limit %d" % ( unplayed, self.LIMIT, )
         else:
@@ -192,7 +196,10 @@ class Main:
         # set our unplayed query
         unplayed = ( "", "where playCount isnull ", )[ self.UNPLAYED ]
         # sql statement
-        if ( self.RECENT ):
+        if ( self.RANDOM_ORDER ):
+            # random order
+            sql_episodes = "select * from episodeview %sorder by RANDOM() limit %d" % ( unplayed, self.LIMIT, )
+        elif ( self.RECENT ):
             # recently added
             sql_episodes = "select * from episodeview %sorder by idepisode desc limit %d" % ( unplayed, self.LIMIT, )
         else:
@@ -263,6 +270,7 @@ class Main:
             self.WINDOW.setProperty( "LatestSong.%d.Year" % ( count + 1, ), fields[ 6 ] )
             self.WINDOW.setProperty( "LatestSong.%d.Artist" % ( count + 1, ), fields[ 24 ] )
             self.WINDOW.setProperty( "LatestSong.%d.Album" % ( count + 1, ), fields[ 21 ] )
+            self.WINDOW.setProperty( "LatestSong.%d.Ratings" % ( count + 1, ), fields[ 18 ] )
             path = fields[ 22 ]
             # don't add song for albums list TODO: figure out how toplay albums
             ##if ( not self.ALBUMS ):
