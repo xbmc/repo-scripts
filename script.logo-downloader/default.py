@@ -4,12 +4,29 @@ __url__          = "http://code.google.com/p/passion-xbmc/"
 __svn_url__      = ""
 __credits__      = "Team XBMC PASSION, http://passion-xbmc.org/"
 __platform__     = "xbmc media center, [LINUX, OS X, WIN32, XBOX]"
-__date__         = "10-08-2010"
-__version__      = "1.4.0"
+__date__         = "20-08-2010"
+__version__      = "2.0.0"
 __svn_revision__  = "$Revision: 000 $"
 __XBMC_Revision__ = "30000" #XBMC Babylon
 __useragent__ = "Logo downloader %s" % __version__
 
+##################################### HOW TO USE / INTEGRATE IN SKIN #####################################
+# for automatically download the script from xbmc, include this in your addon.xml:
+# 
+#   <requires>
+# 	<import addon="script.logo-downloader" version="2.0.0"/>
+#   </requires>
+#   
+# for solo mode (usually used from videoinfodialog) , $INFO[ListItem.TVShowTitle] is required.
+# exemple to launch:
+# <onclick>XBMC.RunScript(script.logo-downloader,mode=solo,logo=True,clearart=True,showthumb=True,showname=$INFO[ListItem.TVShowTitle])</onclick>
+# 
+# for bulk mode, no particular info needed, just need a button to launch from where you want.
+# exemple to launch:
+# <onclick>XBMC.RunScript(script.logo-downloader,mode=bulk,clearart=True,logo=True,showthumb=True)</onclick>
+# 
+# you can replace boolean by skin settings to activate / deactivate images types.
+###########################################################################################################
 
 import urllib
 import os
@@ -17,24 +34,18 @@ import re
 from traceback import print_exc
 import xbmc
 import xbmcgui
-
-
+import shutil
 
 SOURCEPATH = os.getcwd()
 RESOURCES_PATH = os.path.join( SOURCEPATH , "resources" )
-
-#BASE_URL = "http://www.themurrayworld.com/xbmc/logos/"
-BASE_URL = "http://www.lockstockmods.net/logos/getlogo.php?id="
-LOGO_TEST_PATH = os.path.join( RESOURCES_PATH , "test" )
-DIALOG_PROGRESS = xbmcgui.DialogProgress()
-
+DIALOG_DOWNLOAD = xbmcgui.DialogProgress()
 
 sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
-
-from convert import translate_string
-from convert import set_entity_or_charref
 from file_item import Thumbnails
 thumbnails = Thumbnails()
+
+if xbmc.executehttpapi( "GetLogLevel()" ).strip("<li>") == "2": DEBUG = True
+else: DEBUG = False
 
 def footprints():
     print "### %s starting ..." % __script__
@@ -65,238 +76,348 @@ def get_html_source( url , save=False):
         print "### ERROR impossible d'ouvrir la page %s" % url
         xbmcgui.Dialog().ok("ERROR" , "site unreacheable")
         return False
-
-def get_nfo_id( path ):
-    nfo= os.path.join(path , "tvshow.nfo")
-    print "### nfo file: %s" % nfo
-    nfo_read = file(repr(nfo).strip("u'\""), "r" ).read()
-    tvdb_id = re.findall( "<tvdbid>(\d{1,10})</tvdbid>", nfo_read )
-    if tvdb_id: 
-        print "### tvdb id: %s" % tvdb_id[0]
-        return tvdb_id[0]
-    else:
-        print "### no tvdb id found in: %s" % nfo
-        return False
-
-def listing():
-    # sql statement for tv shows
-    sql_data = "select tvshow.c00 , tvshow.c12 , path.strPath from tvshow , path , tvshowlinkpath where path.idPath = tvshowlinkpath.idPath AND tvshow.idShow = tvshowlinkpath.idShow"
-    xml_data = xbmc.executehttpapi( "QueryVideoDatabase(%s)" % urllib.quote_plus( sql_data ), )
-    print xml_data
-    match = re.findall( "<field>(.*?)</field><field>(.*?)</field><field>(.*?)</field>", xml_data, re.DOTALL )
-    print match[0]
-    try:
-        TVlist = []
-        for import_base in match:
-            #print import_base
-            TVshow = {}
-            TVshow["name"] = repr(import_base[0]).strip("'u")
-            TVshow["id"] = repr(import_base[1]).strip("'u")
-            TVshow["path"] = import_base[2]
-            TVlist.append(TVshow)
         
-        return TVlist
-    except:
-        print_exc()
-        print "no tvdbid found in db"
-        return False
+class downloader:
+    def __init__(self):
+        print "### DEBUG: %s" % DEBUG
+        print "### logo downloader initializing..."
+        self.clearart = False
+        self.logo = False
+        self.show_thumb = False
+        self.mode = ""
+        self.reinit()
+        if DEBUG:
+            print sys.argv    
+            try: print("arg 0: %s" % sys.argv[0])
+            except:   print "no arg0"
+            try: print("arg 1: %s" % sys.argv[1])
+            except:   print "no arg1"
+            try: print("arg 2: %s" % sys.argv[2])
+            except:   print "no arg2"
+            try: print("arg 3: %s" % sys.argv[3])
+            except:   print "no arg3"
+            try: print("arg 4: %s" % sys.argv[4])
+            except:   print "no arg4"
+            try: print("arg 5: %s" % sys.argv[5])
+            except:   print "no arg5"    
         
-
-def get_tvid_path( tvpath ):
-    sql_data = 'select tvshow.c12 , path.strpath from tvshow,tvshowlinkpath,path where tvshow.idShow=tvshowlinkpath.idshow and tvshowlinkpath.idpath=path.idpath and path.strpath=\"%s\"' % (tvpath)
-    xml_data = xbmc.executehttpapi( "QueryVideoDatabase(%s)" % urllib.quote_plus( sql_data ), )
-    match = re.findall( "<field>(.*?)</field><field>(.*?)</field>", xml_data, re.DOTALL )
-    try:
-        return match[0][0] , match[0][1]
-    except: 
-        print_exc()
-        return  "False" , "False" 
-    
-    
-def get_first_logo( tvid ):
-    #match = re.search("""<li><a href="(.*%s.*\.png)">.*?</a></li>""" % tvid , base_info)
-    base_info = get_html_source( BASE_URL + tvid )
-    match = re.search("""<logo url="(.*?)"/>""" , base_info)
-    if match:
-        logo_url = match.group(1)
-        #getting first logo:
-        multi_logo = re.search("(-\d)\.png" , logo_url )
-        if multi_logo:
-            print "### Detect multi logo, getting the first"
-            logo_url = logo_url.replace ( multi_logo.group(1) , "")
-        print "### logo: %s" % logo_url
-        return logo_url
-    else: 
-        print "### No match"
-        return False
-
-def get_logo_list( tvid ):
-    #match = re.findall("""<li><a href="(.*%s.*\.png)">.*?</a></li>""" % tvid , base_info)
-    base_info = get_html_source( BASE_URL + tvid )
-    match = re.findall("""<logo url="(.*?)"/>""" , base_info)
-    if match: return match
-    else: 
-        print "### No logo found !"
-        return False
-    
-def download_logo( url_logo , path , tvcount , name ):
-    destination = os.path.join( path , "logo.png").replace("\\\\" , "\\").encode("utf-8")
-    print "### download :" + url_logo , "### path: " + repr(destination).strip("'u")
-     
-    try:
-        def _report_hook( count, blocksize, totalsize ):
-            percent = int( float( count * blocksize * 100 ) / totalsize )
-            strProgressBar = str( percent )
-            #print percent  #DEBUG
-            DIALOG_PROGRESS.update( tvcount , "Searching: %s " %  translate_string( name ) , "Downloading: %s" % percent )
-        if os.path.exists(path.encode("utf-8")):
-            fp , h = urllib.urlretrieve( url_logo , destination , _report_hook )
-            #print h
-            return True
-    except :        
-        print "### Logo download Failed !!! (download_logo)"
-        print_exc()  
-        return False
+        for item in sys.argv:
+            match = re.search("mode=(.*)" , item)
+            if match: self.mode = match.group(1)            
+            match = re.search("clearart=(.*)" , item)
+            if match: 
+                if match.group(1): self.clearart = True
+                else: pass
+            match = re.search("logo=(.*)" , item)
+            if match: 
+                if match.group(1): self.logo = True
+                else: pass
+            match = re.search("showthumb=(.*)" , item)
+            if match:
+                if match.group(1): self.show_thumb = True
+                else: pass
+            match = re.search("showname=" , item)
+            if match: self.show_name = item.replace( "showname=" , "" )
+            else: pass
         
+        if self.mode == "solo": 
+            if DEBUG: print "### Start Solo Mode"
+            self.solo_mode()
+        elif self.mode == "bulk": 
+            if DEBUG: print "### Start Bulk Mode"
+            self.bulk_mode()
+            
+    def solo_mode(self):
+        self.get_tvid_path()
+        self.id_verif()
+        self.type_list = []
+        if self.logo:self.type_list.append ("logo")
+        if self.clearart:self.type_list.append ("clearart")
+        if self.show_thumb:self.type_list.append ("showthumb")
         
-if ( __name__ == "__main__" ): 
-     
-    solo_mode = False
-    footprints()
-    try: 
-        if sys.argv[ 1 ] : 
-            DIALOG_PROGRESS.create( "Logo Downloader in action ..." , "Searching Logo ..." )
-            solo_mode = True
-    except: print "### No Args found"
+        if self.choice_type():
+            self.image_list = False
+            if self.logo:
+                self.filename = "logo.png"
+                self.get_lockstock_xml()
+                self.search_logo()
+            elif self.clearart: 
+                self.filename = "clearart.png"
+                self.get_xbmcstuff_xml()
+                self.search_clearart()
+            elif self.show_thumb:
+                self.filename = "folder.jpg"
+                self.get_xbmcstuff_xml()
+                self.search_show_thumb()
+            
+            if self.image_list: 
+                if self.choose_image(): 
+                    self.print_class_var()
+                    if self.download_image(): xbmcgui.Dialog().ok("Success" , "Download successfull" )
+                    else: xbmcgui.Dialog().ok("Error" , "Error downloading file" )
+            
+    def bulk_mode(self):
+        if DEBUG: print "### get tvshow list"
+        DIALOG_PROGRESS = xbmcgui.DialogProgress()
+        DIALOG_PROGRESS.create( "SCRIPT LOGO DOWNLOADER", "checking database ...")
+        self.TV_listing()
+        
+        for currentshow in self.TVlist:
+            print "####################"          
+            try:
+                self.show_path = currentshow["path"]
+                self.tvdbid = currentshow["id"]
+                self.show_name = currentshow["name"]   
+                print "### show_name: %s" % self.show_name 
+                if DEBUG: print "### tvdbid: %s" % self.tvdbid ,"### show_path: %s" % self.show_path        
+                if DEBUG: print "### vérif id"
+                self.id_verif()
+                
+                if self.logo:
+                    if DEBUG: print "### Search logo for %s" % self.show_name
+                    self.filename = "logo.png"
+                    if not os.path.exists( os.path.join( self.show_path , self.filename ) ):
+                        if DEBUG: print "### get lockstock xml"
+                        self.get_lockstock_xml()
+                        if self.search_logo():
+                            if DEBUG: print "### found logo for %s" % self.show_name
+                            if self.download_image():
+                                if DEBUG: print "### logo downloaded for %s" % self.show_name
+                    else: 
+                        if DEBUG: print "### %s already exist, skipping" % self.filename
+                    self.image_url = False
+                    self.filename = False
+                    
+                if self.clearart or self.show_thumb: 
+                    if DEBUG: print "### get xbmcstuff xml"
+                    self.get_xbmcstuff_xml()
+                
+                if self.clearart:
+                    if DEBUG: print "### Search clearart for %s" % self.show_name
+                    self.filename = "clearart.png"
+                    if not os.path.exists( os.path.join( self.show_path , self.filename ) ):
+                        if self.search_clearart():
+                            if DEBUG: print "### found clearart for %s" % self.show_name
+                            if self.download_image():
+                                if DEBUG: print "### clearart downloaded for %s" % self.show_name
+                    else: 
+                        if DEBUG: print "### %s already exist, skipping" % self.filename
+                    self.image_url = False
+                    self.filename = False
+                    
+                if self.show_thumb:
+                    if DEBUG: print "### Search showthumb for %s" % self.show_name
+                    self.filename = "folder.jpg"
+                    if not os.path.exists( os.path.join( self.show_path , self.filename ) ):
+                        if self.search_show_thumb():
+                            if DEBUG: print "### found show thumb for %s" % self.show_name
+                            if self.download_image():
+                                if DEBUG: print "### showthumb downloaded for %s" % self.show_name
+                    else: 
+                        if DEBUG: print "### %s already exist, skipping" % self.filename
+                    self.image_url = False
+                    self.filename = False
+                    
+                self.reinit()
+            except:
+                print "error with: %s" % currentshow
+                print_exc()
+        DIALOG_PROGRESS.close()
+                
+    def reinit(self):
+        if DEBUG: print "### reinit"
+        self.show_path = False
+        self.tvdbid = False
+        self.show_name = ""
+        self.xbmcstuff_xml = False
+        self.lockstock_xml = False
     
-    #base_info = get_html_source( BASE_URL )
-    base_info = True
-    
-    if solo_mode:        
-        print "### Starting solo Mode"
-        logo_path = sys.argv[ 1 ]
-        print "### path:%s###" % logo_path
-        print "### Getting id"
-        try: baseid , logo_path = get_tvid_path( sys.argv[ 1 ] )
-        except: 
-            baseid = False
+    def print_class_var(self):
+        try: print "###show name: %s" % self.show_name
+        except: print "###show name:"
+        try: print "###mode: %s" % self.mode
+        except: print "###mode:"
+        try: print "###clearart: %s" % self.clearart
+        except: print "###clearart:"
+        try: print "###logo: %s" % self.logo
+        except: print "###logo:"
+        try: print "###thumb: %s" % self.show_thumb
+        except: print "###thumb:"
+        try: print "###show path: %s" % self.show_path
+        except: print "###show path:"
+        try: print "###id: %s" % self.tvdbid
+        except: print "###id:"
+        try: print "###lockstock xml: %s" % self.lockstock_xml
+        except: print "###lockstock xml:"
+        try: print "###image list: %s" % self.image_list
+        except: print "###image list:"
+        try: print "###image url: %s" % self.image_url
+        except: print "###image url:"
+        try: print "###filename: %s" % self.filename
+        except: print "###filename:"
+        try: print "###xbmcstuff_xml: %s" % self.xbmcstuff_xml
+        except: print "###xbmcstuff_xml:"
+               
+    def TV_listing(self):
+        # sql statement for tv shows
+        sql_data = "select tvshow.c00 , tvshow.c12 , path.strPath from tvshow , path , tvshowlinkpath where path.idPath = tvshowlinkpath.idPath AND tvshow.idShow = tvshowlinkpath.idShow"
+        xml_data = xbmc.executehttpapi( "QueryVideoDatabase(%s)" % urllib.quote_plus( sql_data ), )
+        if DEBUG: print "### xml data: %s" % xml_data
+        match = re.findall( "<field>(.*?)</field><field>(.*?)</field><field>(.*?)</field>", xml_data, re.DOTALL )
+        
+        try:
+            self.TVlist = []
+            for import_base in match:
+                try:
+                    if DEBUG: print import_base
+                    TVshow = {}
+                    TVshow["name"] = repr(import_base[0]).strip("'u")
+                    TVshow["id"] = repr(import_base[1]).strip("'u")
+                    TVshow["path"] = import_base[2]
+                    self.TVlist.append(TVshow)
+                except: print_exc()
+        except:
             print_exc()
-        print "### id Found: %s" % baseid
-        if baseid:
-            if baseid[0:2] == "tt" or baseid == "" : 
-                print "### IMDB id found (%s) or no id found in db, checking for nfo" % logo_path
-                try: tvid = get_nfo_id( logo_path )
-                except:  
-                    tvid = False              
-                    print "### Error checking for nfo: %stvshow.nfo" % logo_path.replace("\\\\" , "\\").encode("utf-8")
-                    print_exc()
-            else: 
-                tvid = baseid
-            
-            
-            if tvid: 
-                print "### tvdb id Found: %s" % tvid
-                print "### get logo list for id:%s ###" % tvid
-                logo_list = get_logo_list( tvid )
-            else:
-                print "### no tvdb id Found"
-                logo_list = False
-            if logo_list: 
-                print "### %s" % logo_list
-                DIALOG_PROGRESS.close
-                select = xbmcgui.Dialog().select("choose logo to download" , logo_list)
-                if select == -1: 
-                    print "### Canceled by user"
-                    xbmcgui.Dialog().ok("Canceled" , "Download canceled by user" )
-                else:
-                    DIALOG_PROGRESS.create( "Logo Downloader in action ..." , "Downloading ..." )
-                    
-                    url_logo = logo_list[select]
-                    
-                    if logo_path: 
-                        full_logo_path = os.path.join( logo_path , "logo.png").replace("\\\\" , "\\").encode("utf-8")
-                        print "### download logo: %s" % url_logo
-                        print "### destination logo: %s" % full_logo_path
-                        try:
-                            def _report_hook( count, blocksize, totalsize ):
-                                percent = int( float( count * blocksize * 100 ) / totalsize )
-                                strProgressBar = str( percent )
-                                #print percent  #DEBUG
-                                DIALOG_PROGRESS.update( percent , "downloading: %s " %  logo_list[select] , "path: %s" % full_logo_path )
-                            if os.path.exists(logo_path.encode("utf-8")):
-                                fp , h = urllib.urlretrieve( url_logo , full_logo_path , _report_hook )
-                                try: 
-                                    import shutil
-                                    cached_thumb = thumbnails.get_cached_video_thumb( full_logo_path).replace( "\\Video" , "").replace("tbn" , "png")
-                                    print "cache %s" % cached_thumb
-                                    shutil.copy2( full_logo_path , cached_thumb )
-                                    xbmc.executebuiltin( 'XBMC.ReloadSkin()' )
-                                except :
-                                    print_exc()
-                                    print "### cache erasing error"
-                                #print h
-                                DIALOG_PROGRESS.close
-                                print "### Logo downloaded Successfully !!!"
-                                xbmcgui.Dialog().ok("Success" , "Logo downloaded successfully !" )
-                            else: 
-                                print "### Logo download Failed !!!"
-                                print_exc()
-                                xbmcgui.Dialog().ok("Little Error" , "Error detecting path !" )
-                                
-                        except :
-                            print_exc()
-                            DIALOG_PROGRESS.close   
-                            print "### Logo download error !!!"
-                            xbmcgui.Dialog().ok("Error" , "Error downloading logo !" )
-                    else: print "### Path not found"
-            else: xbmcgui.Dialog().ok("Not Found" , "No logo found!" )
-        else: xbmcgui.Dialog().ok("Error" , "Can't get logo from this view" )
-        
-    else:
-        print "### Starting Bulk Mode"
-        DIALOG_PROGRESS.create( "Logo Downloader in action ..." , "Getting info ..." )   
-        TVshow_list = listing()
-   
-        if TVshow_list and base_info:
-            total_tvshow = len(TVshow_list)
-            tvcount = 0
-            total_logo = 0
-            downloaded = 0
-            for TVshow in TVshow_list:
-                tvcount = tvcount + 1
-                ratio =  int (float( tvcount  * 100 ) / total_tvshow )
-                print "### Checking %s TVshow: %s  id: %s" % ( ratio , translate_string( TVshow["name"] ) , TVshow["id"] )
-                if TVshow["id"][0:2] == "tt" or TVshow["id"] == "": 
-                    print "### IMDB id found in database(%s), checking for nfo" % TVshow["id"]
-                    try: tvid = get_nfo_id( TVshow["path"] )
-                    except:                
-                        print "### Error checking for nfo: %stvshow.nfo" % TVshow["path"]
-                        tvid = TVshow["id"]
-                        print_exc()
-                else : tvid = TVshow["id"]        
-                DIALOG_PROGRESS.update( ratio , "Searching: %s " %  translate_string( TVshow["name"] ) , tvid )
-                if ( DIALOG_PROGRESS.iscanceled() ): break
-                if tvid == "" : 
-                    print "### no id, skipping ..."
-                    logo_url = False
-                if os.path.isfile(os.path.join( TVshow["path"] , "logo.png").replace("\\\\" , "\\").encode("utf-8")):
-                    print "### Logo.png already exist, skiping ..."
-                    total_logo = total_logo + 1
-                    logo_url = False
-                else: 
-                    print "### Search for a Logo..."
-                    logo_url = get_first_logo( tvid )
-                if logo_url: 
-                    succes = download_logo( logo_url , TVshow["path"] , ratio , TVshow["name"] )
-                    if succes: 
-                        downloaded = downloaded + 1
-                        total_logo = total_logo + 1
-                        print "### Logo downloaded Successfully !!!"
-                    else: print "### Logo download Failed !!!"
-            DIALOG_PROGRESS.close
-            reussite = int( float( total_logo  * 100 ) / total_tvshow ) 
-            xbmcgui.Dialog().ok("Logo Downloader Finished ..." , " %s Logo Downloaded ! TVshow: %s" % ( downloaded , total_tvshow ) , "%s percent completed (%s logo found)" %  ( reussite , total_logo ) )
-            print "### %s Logo Downloaded ! TVshow: %s" % (downloaded , total_tvshow)
-        else: xbmcgui.Dialog().ok("Error" , "No tvshow find or error getting web page" )
-print "### Exiting ..."    
+            print "### no tvshow found in db"
     
+    def get_tvid_path( self ):
+        sql_data = 'select tvshow.c12 , path.strpath from tvshow,tvshowlinkpath,path where tvshow.idShow=tvshowlinkpath.idshow and tvshowlinkpath.idpath=path.idpath and tvshow.c00=\"%s\"' % (self.show_name)
+        xml_data = xbmc.executehttpapi( "QueryVideoDatabase(%s)" % urllib.quote_plus( sql_data ), )
+        match = re.findall( "<field>(.*?)</field><field>(.*?)</field>", xml_data, re.DOTALL )
+        try:
+            self.tvdbid =  match[0][0]
+            self.show_path =  match[0][1]
+        except: 
+            print_exc()
+        if DEBUG: 
+            print "sql dat: %s" % sql_data
+            print "xml dat: %s" % xml_data
+            
+    def id_verif(self):
+        if self.tvdbid[0:2] == "tt" or self.tvdbid == "" :
+            print "### IMDB id found (%s) or no id found in db, checking for nfo" % self.show_path
+            try: self.tvdbid = self.get_nfo_id()
+            except:  
+                self.tvdbid = False              
+                print "### Error checking for nfo: %stvshow.nfo" % self.show_path.replace("\\\\" , "\\").encode("utf-8")
+                print_exc()
+                
+    def get_nfo_id( self ):
+        nfo= os.path.join(self.show_path , "tvshow.nfo")
+        print "### nfo file: %s" % nfo
+        nfo_read = file(repr(nfo).strip("u'\""), "r" ).read()
+        tvdb_id = re.findall( "<tvdbid>(\d{1,10})</tvdbid>", nfo_read )
+        if tvdb_id: 
+            print "### tvdb id: %s" % tvdb_id[0]
+            return tvdb_id[0]
+        else:
+            print "### no tvdb id found in: %s" % nfo
+            return False
+    
+    def get_lockstock_xml(self):
+        self.lockstock_xml = get_html_source( "http://www.lockstockmods.net/logos/getlogo.php?id=" + self.tvdbid )
+    
+    def get_xbmcstuff_xml(self):
+        self.xbmcstuff_xml = get_html_source ("http://www.xbmcstuff.com/tv_scraper.php?&id_scraper=p7iuVTQXQWGyWXPS&size=big&thetvdb=" + self.tvdbid )
+
+    def search_logo( self ):
+        match = re.findall("""<logo url="(.*?)"/>""" , self.lockstock_xml)
+        if match: 
+            if self.mode == "solo" : self.image_list = match
+            if self.mode == "bulk" : self.image_url = match[0]
+            return True
+        else: 
+            print "### No logo found !"
+            if self.mode == "solo": xbmcgui.Dialog().ok("Not Found" , "No logo found!" )
+            self.image_list = False
+            return False
+            
+    def search_clearart( self ):
+        match = re.findall("<clearart>(.*)</clearart>" , self.xbmcstuff_xml)
+        if match: 
+            if self.mode == "solo" : self.image_list = match
+            if self.mode == "bulk" : self.image_url = match[0]
+            return True
+        else: 
+            print "### No clearart found !"
+            if self.mode == "solo": xbmcgui.Dialog().ok("Not Found" , "No clearart found!" )
+            self.image_list = False
+            return False
+            
+    def search_show_thumb( self ):
+        match = re.findall("<tvthumb>(.*)</tvthumb>" , self.xbmcstuff_xml)
+        if match: 
+            if self.mode == "solo" : self.image_list = match
+            if self.mode == "bulk" : self.image_url = match[0]
+            return True
+        else: 
+            print "### No show thumb found !"
+            if self.mode == "solo": xbmcgui.Dialog().ok("Not Found" , "No show thumb found!" )
+            self.image_list = False
+            return False
+        
+    def choice_type(self):
+        select = xbmcgui.Dialog().select("choose what to download" , self.type_list)
+        if select == -1: 
+            print "### Canceled by user"
+            xbmcgui.Dialog().ok("Canceled" , "Download canceled by user" )
+            return False
+        else:
+            if self.type_list[select] == "logo" : self.clearart , self.show_thumb = False , False
+            elif self.type_list[select] == "showthumb" : self.clearart , self.logo = False , False
+            elif self.type_list[select] == "clearart" : self.show_thumb , self.logo = False , False
+            return True
+            
+    def choose_image(self):
+        select = xbmcgui.Dialog().select("Which one to download ?" , self.image_list)
+        if select == -1: 
+            print "### Canceled by user"
+            xbmcgui.Dialog().ok("Canceled" , "Download canceled by user" )
+            self.image_url = False
+            return False
+        else:
+            self.image_url = self.image_list[select]
+            return True
+    
+    def erase_current_cache(self):
+        try: 
+            
+            if not self.filename == "folder.jpg": cached_thumb = thumbnails.get_cached_video_thumb( os.path.join( self.show_path , self.filename )).replace( "\\Video" , "").replace("tbn" , "png")
+            else: cached_thumb = thumbnails.get_cached_video_thumb(self.show_path)
+            print "### cache %s" % cached_thumb
+            shutil.copy2( os.path.join( self.show_path , self.filename ) , cached_thumb )
+            xbmc.executebuiltin( 'XBMC.ReloadSkin()' )
+        except :
+            print_exc()
+            print "### cache erasing error"
+    
+    def download_image( self ):
+        DIALOG_DOWNLOAD.create( "Downloading: %s " % self.show_name , "Getting info ..." )
+        destination = os.path.join( self.show_path , self.filename )
+        print "### download :" + self.image_url 
+        if DEBUG: "### path: " + repr(destination).strip("'u")
+         
+        try:
+            def _report_hook( count, blocksize, totalsize ):
+                percent = int( float( count * blocksize * 100 ) / totalsize )
+                strProgressBar = str( percent )
+                if DEBUG: print percent  #DEBUG
+                DIALOG_DOWNLOAD.update( percent , "Downloading: %s " % self.show_name , "Downloading: %s" % self.filename )
+            if os.path.exists(self.show_path):
+                fp , h = urllib.urlretrieve( self.image_url.replace(" ", "%20") , destination , _report_hook )
+                if DEBUG: print h
+                DIALOG_DOWNLOAD.close
+                if self.mode == "solo": self.erase_current_cache()
+                return True
+            else : print "problem with path: %s" % self.show_path
+        except :        
+            print "### Image download Failed !!! (download_logo)"
+            print_exc()  
+            return False
+                       
+
+                     
+if ( __name__ == "__main__" ): 
+    footprints()
+    downloader()
+    print "### logo downloader exiting..."    

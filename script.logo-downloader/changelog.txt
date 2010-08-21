@@ -1,3 +1,27 @@
+v2.0.0
+- added xbmcstuff.com as source
+- added show thumb and clearart support (cache replace too)
+- rewritting the code
+- debug condition fit with the xbmc one, debug log appear if xbmc debug level == 2 
+- informations to integrate added:
+  # HOW TO USE / INTEGRATE IN SKIN 
+  #
+  # for automatically download the script from xbmc, include this in your addon.xml:
+  # 
+  #   <requires>
+  # 	<import addon="script.logo-downloader" version="2.0.0"/>
+  #   </requires>
+  #   
+  # for solo mode (usually used from videoinfodialog) , $INFO[ListItem.TVShowTitle] is required.
+  # exemple to launch:
+  # <onclick>XBMC.RunScript(script.logo-downloader,mode=solo,logo=True,clearart=True,showthumb=True,showname=$INFO[ListItem.TVShowTitle])</onclick>
+  # 
+  # for bulk mode, no particular info needed, just need a button to launch from where you want.
+  # exemple to launch:
+  # <onclick>XBMC.RunScript(script.logo-downloader,mode=bulk,clearart=True,logo=True,showthumb=True)</onclick>
+  # 
+  # you can replace boolean by skin settings to activate / deactivate images types.
+  
 v1.4.0
 - refetch a single logo now replace cache (will reload skin to take change immediately).
 
