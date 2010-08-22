@@ -1,0 +1,29 @@
+v1.0.6:
+- submit to xbmc official repo
+- correction of parsing date error
+- add LICENSE.txt
+- change icon.png
+
+v1.0.5:
+- 21-07-2010:correct linux platform urllib bug
+
+v1.0.4:
+- 19-07-2010:change sql query, now use xbmchttp to get info.
+
+v1.0.3:
+- 17-07-2010:
+- fixed: windowxml resolution default to "720p"
+- changed: platform_libraries for addon script.module.pysqlite, only xbox include platform_libraries/win32
+- added: provides -> video to append in video mediatheque
+
+v1.0.2:
+- 11-07-2010: compatibility with pre-merge version
+ 
+v1.0.0
+- 06-07-2010: Initial commit
+
+
+
+
+
+

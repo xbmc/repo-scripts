@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <setting type="lsep" label="Affichage" />
+  <setting id="view_mode" type="enum" values="Banner|Poster|Wide" label="View Mode" default="0" />
+</settings>
