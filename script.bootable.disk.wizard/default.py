@@ -26,7 +26,7 @@ import xbmcaddon
 __scriptname__ = "Bootable Disk Wizard"
 __author__ = "Team XBMC"
 __GUI__    = "ronie"
-__version__ = "0.9.1"
+__version__ = "0.9.4"
 
 BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'lib' ) )
 sys.path.append (BASE_RESOURCE_PATH)

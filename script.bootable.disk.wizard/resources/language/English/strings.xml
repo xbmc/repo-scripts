@@ -15,7 +15,7 @@
 <!--Page 2-->
   <string id="201">Step: 2/7</string>
   <string id="202">Locate System Files</string>
-  <string id="203">This wizard needs the XBMCLive system files to proceed.You can let it find the for you or specify a custom location via a plugin setting.</string>
+  <string id="203">This wizard needs the XBMCLive system files to proceed. The script works only when executed from the original bootable cd/USB, unless configured properly via its addon settings.</string>
 <!--Page 3-->
   <string id="301">Step: 3/7</string>
   <string id="302">Choose Destination Disk</string>
