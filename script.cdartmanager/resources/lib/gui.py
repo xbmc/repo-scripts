@@ -480,11 +480,18 @@ class GUI( xbmcgui.WindowXMLDialog ):
     # finds the cdart for the album list    
     def find_cdart( self , aname , atitle, remote_cdart_url ):
         match = ""
+        s_title = ""
         name = str.lower( aname )
         title = str.lower( atitle )
-        for item in remote_cdart_url:
-            if str.lower(item["title"])==title:
-                return item["picture"]
+        s_title = self.remove_special( title )
+        print remote_cdart_url
+        for album in remote_cdart_url:
+            r_title1 = str.lower( album["title"] )
+            r_title2 = str.lower( album["title"].split(" (")[0] )
+            r_title3 = str.lower(self.remove_special( album["title"] ))
+            r_title4 = str.lower(self.remove_special( album["title"].split(" (")[0] ))
+            if title == r_title1 or title == r_title2 or title == r_title3 or title == r_title4 or s_title == r_title1 or s_title == r_title2 or s_title == r_title3 or s_title == r_title4:
+                return album["picture"]
         return match
 
 
@@ -679,17 +686,19 @@ class GUI( xbmcgui.WindowXMLDialog ):
         return cdart_lvd, difference
 
     def remote_cdart_list( self, artist_menu, mode ):
-        print "#  Finding Remote cdARTs"
+        print "# "
+        print "#####   Finding Remote cdARTs"
         print "# "
         if mode == 1:
             print "#        Mode - Populate Album List"
         elif mode == 2:
             print "#        Mode - Find cdART"
         else:
-            print "#        Mode - unknown"        
+            print "#        Mode - unknown"
+        print "# "
+        print "#####"
         cdart_url = []
         #If there is something in artist_menu["distant_id"] build cdart_url
-        print "# distant id: %s" % artist_menu["distant_id"]
         if artist_menu["distant_id"] :
             #print "#    Local artist matched on XBMCSTUFF.COM"
             #print "#        Artist: %s     Local ID: %s     Distant ID: %s" % (artist_menu["name"] , artist_menu["local_id"] , artist_menu["distant_id"])
@@ -1206,17 +1215,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
             __settings__.openSettings()
             bkup_folder = __settings__.getSetting("backup_path")
             cdart_list_folder = __settings__.getSetting("cdart_path")
-        #print "#    fn_format: %s" % fn_format
-        #print "#    bkup_folder: %s" % bkup_folder
-        #print "#    cdart_list_folder: %s" % cdart_list_folder
         albums = self.get_local_db()
-        #print albums
-        #print len(albums)
         pDialog.create( _(32060) )
         for album in albums:
             if (pDialog.iscanceled()):
                 break
-            #print album
             if album["cdart"] == "TRUE":
                 source=os.path.join(album["path"].replace("\\\\" , "\\"), "cdart.png")
                 print "#     cdART #: %s" % count
@@ -1231,7 +1234,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         fn = os.path.join( destination, (  ( album["artist"].replace("/", "").replace("'","") ) + " - " + ( album["title"].replace("/","").replace("'","") ) + ".png").lower())
                     print "#        Destination Path: %s" % destination
                     if not os.path.exists(destination):
-                        #pass
                         os.makedirs(destination)
                     print "#        Filename: %s" % fn
                     if os.path.isfile(fn):
@@ -1254,7 +1256,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
         print "#     Duplicate cdARTs: %s" % duplicates
         xbmcgui.Dialog().ok( _(32057), "%s: %s" % ( _(32058), bkup_folder), "%s %s" % ( count , _(32059)), "%s Duplicates Found" % duplicates)
         return
-
+        
+        
+# Search for missing cdARTs and save to missing.txt in backup folder
     def missing_list( self, albums ):
         count = 0
         percent = 0
@@ -1270,10 +1274,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         missing.write("\n")
         for album in albums:
             count = count + 1
-            print album
             if album["cdart"] == "FALSE":
                 line = album["artist"] + " - " + album["title"]+"\n"
-                print line
                 missing.write( line )
         missing.close()
         
@@ -1325,9 +1327,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
             local_cdart = (self.getControl(122).getSelectedItem().getLabel2()).split("&&&&")[1]
             url = ((self.getControl( 122 ).getSelectedItem().getLabel2()).split("&&&&")[0]).split("&&")[1]
             cdart_path["path"] = ((self.getControl( 122 ).getSelectedItem().getLabel2()).split("&&&&")[0]).split("&&")[0]
-            #print "#   cdart_path: %s" % cdart_path["path"]
-            #print "#   url: %s" % url
-            #print "#   local_cdart: %s" % local_cdart
             if not local_cdart == "": #Test to see if there is a path in local_cdart
                 image = local_cdart
                 self.getControl( 210 ).setImage( image )
@@ -1337,16 +1336,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     self.getControl( 210 ).setImage( image )
                 else:
                     image =""
-                    #image = addon_img
-        
+                    
         except:  
             try: # If there is information in label 2 of list id 140(local album list)
                 local_cdart = (self.getControl(140).getSelectedItem().getLabel2()).split("&&&&")[1]
                 url = ((self.getControl( 140 ).getSelectedItem().getLabel2()).split("&&&&")[0]).split("&&")[1]
                 cdart_path["path"] = ((self.getControl( 140 ).getSelectedItem().getLabel2()).split("&&&&")[0]).split("&&")[0]
-                #print "#   cdart_path: %s" % cdart_path["path"]
-                #print "#   url: %s" % url
-                #print "#   local_cdart: %s" % local_cdart
                 if not local_cdart == "": #Test to see if there is a path in local_cdart
                     image = local_cdart
                     self.getControl( 210 ).setImage( image )

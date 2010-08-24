@@ -1,10 +1,10 @@
 __scriptname__    = "CDArt Manager Script"
 __scriptID__      = "script.cdartmanager"
 __author__        = "Giftie"
-__version__       = "1.0.3"
+__version__       = "1.0.4"
 __credits__       = "Ppic, Reaven, Imaginos, redje"
 __XBMC_Revision__ = "32000"
-__date__          = "18-08-10"
+__date__          = "23-08-10"
 import sys
 import os
 import xbmcaddon
@@ -24,7 +24,7 @@ __language__ = __settings__.getLocalizedString
 if ( __name__ == "__main__" ):
     print "############################################################"
     print "#    %-50s    #" % __scriptname__
-    print "#        default.py module                                     #"
+    print "#        default.py module                                 #"
     print "#    %-50s    #" % __scriptID__
     print "#    %-50s    #" % __author__
     print "#    %-50s    #" % __version__
