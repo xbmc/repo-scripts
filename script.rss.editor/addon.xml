@@ -16,6 +16,6 @@
     <summary lang="de">Skript zum Bearbeiten des XBMC internen RSS Tickers</summary>
     <description lang="en">A Script for editing XBMC's built in RSS Ticker</description>
     <description lang="hu">A szkript képes szerkeszteni az XBMC beépített RSS forrás készletét</description>
-        <description lang="de">Skript zum Bearbeiten des XBMC internen RSS Tickers</description>
+    <description lang="de">Skript zum Bearbeiten des XBMC internen RSS Tickers</description>
   </extension>
 </addon>
