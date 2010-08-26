@@ -140,7 +140,7 @@ class Main:
 
     def _fetch_music_info( self ):
         # sql statement
-        if ( self.RANDOM_ORDER ):
+        if ( self.ALBUMS ):
             sql_music = "select idAlbum from albumview order by RANDOM() limit %d" % ( self.LIMIT, )
             # separate the records
             albums = re.findall( "<record>(.+?)</record>", music_xml, re.DOTALL )
