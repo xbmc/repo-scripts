@@ -1,3 +1,6 @@
+1.8.0
+- fixed: podnapisi search, we now get the language from "languageId"
+
 1.7.10
 - updated: spanish translations
 

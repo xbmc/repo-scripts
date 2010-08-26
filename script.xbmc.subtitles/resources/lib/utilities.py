@@ -151,7 +151,53 @@ def toOpenSubtitles_two( id ):
   }
   return languages[ id ]
 
-
+def onetotwo(id):
+  languages = {
+    "29"                  :  "sq",
+    "0"                   :  "hy",
+    "12"                  :  "ar",
+    "0"                   :  "ay",
+    "10"                  :  "bs",
+    "48"                  :  "pb",
+    "33"                  :  "bg",
+    "53"                  :  "ca",
+    "17"                  :  "zh",
+    "38"                  :  "hr",
+    "7"                   :  "cs",
+    "24"                  :  "da",
+    "23"                  :  "nl",
+    "2"                   :  "en",
+    "20"                  :  "et",
+    "31"                  :  "fi",
+    "8"                   :  "fr",
+    "5"                   :  "de",
+    "16"                  :  "el",
+    "22"                  :  "he",
+    "42"                  :  "hi",
+    "15"                  :  "hu",
+    "6"                   :  "is",
+    "9"                   :  "it",
+    "11"                  :  "ja",
+    "0"                   :  "kk",
+    "4"                   :  "ko",
+    "21"                  :  "lv",
+    "35"                  :  "mk",
+    "3"                   :  "no",
+    "26"                  :  "pl",
+    "32"                  :  "pt",
+    "13"                  :  "ro",
+    "27"                  :  "ru",
+    "36"                  :  "sr",
+    "37"                  :  "sk",
+    "1"                   :  "sl",
+    "28"                  :  "es",
+    "25"                  :  "sv",
+    "44"                  :  "th",
+    "30"                  :  "tr",
+    "46"                  :  "uk",
+    "51"                  :  "vi"
+  }
+  return languages[ id ]
         
 
 def twotoone(id):
