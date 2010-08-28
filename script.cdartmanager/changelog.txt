@@ -1,3 +1,6 @@
+1.0.5
+- Added German translation - Thanks Mad-Max
+
 1.0.4
 - fine tuned Album Name Stripping(now script removes items contained in round brackets only if preceeded by a space)
   example->  Greatest Hits (2005)     becomes->  Greatest Hits
