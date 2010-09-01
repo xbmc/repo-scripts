@@ -23,7 +23,7 @@ class Song:
             return cmp(self.title, song.title)
     
     def sanitize(self, str):
-        return str.replace( "\\", "_" ).replace( "/", "_" )
+        return str.replace( "\\", "_" ).replace( "/", "_" ).replace(":","_")
     
     def path(self):
         return unicode( os.path.join( lyrics_path, self.sanitize(self.artist), self.sanitize(self.title) + ".txt" ), "utf-8" )

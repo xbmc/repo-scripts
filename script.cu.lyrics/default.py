@@ -9,7 +9,7 @@ __author__ = "Amet, ZorMonkey"
 __url__ = ""
 __scriptid__ = "script.cu.lyrics"
 __credits__ = "EnderW,Nuka1195"
-__version__ = "0.8.8"
+__version__ = "0.9.2"
 __XBMC_Revision__ = "30001"
 
 # Shared resources 
