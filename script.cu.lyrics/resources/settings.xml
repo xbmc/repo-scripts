@@ -3,6 +3,7 @@
     <category label="30102">
         <setting id="smooth_scrolling" type="bool" label="30100" default="false"/>
         <setting id="save_lyrics" type="bool" label="30101" default="true"/>
+        <setting id="show_embeded_lyrics" type="bool" label="30107" default="true"/>
     </category>
     <category label="30103">
         <setting id="version"   type="text" label="30104" default="0.8.5" enable="false" />

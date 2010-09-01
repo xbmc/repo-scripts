@@ -1,3 +1,6 @@
+0.9.3
+- fixed: use embedded lyrics if they exist, enabled by default. thanks paco for reporting it missing
+
 0.9.2
 - fixed: replace ":" in song name with "_"
 

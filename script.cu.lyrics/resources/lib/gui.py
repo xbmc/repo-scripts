@@ -106,6 +106,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def get_lyrics_from_file( self, song):
         lyrics = Lyrics()
         lyrics.song = song
+        xbmc.sleep( 60 )
+        if ( xbmc.getInfoLabel( "MusicPlayer.Lyrics" ) and (__settings__.getSetting( "show_embeded_lyrics" ) == 'true')):
+            lyrics.lyrics = unicode( xbmc.getInfoLabel( "MusicPlayer.Lyrics" ), "utf-8" )
+            self.save_lyrics_to_memory(lyrics)
+            return lyrics, None
         try:
             lyrics_file = open( song.path(), "r" )
             lyrics.lyrics = unicode(lyrics_file.read(), "utf-8" )
