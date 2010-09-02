@@ -1,3 +1,8 @@
+0.9.4
+- fixed: loading of incorect lyrics since 0.9.3
+- added: option to save embeded lyrics to file
+thanks paco for the report
+
 0.9.3
 - fixed: use embedded lyrics if they exist, enabled by default. thanks paco for reporting it missing
 

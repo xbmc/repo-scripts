@@ -17,7 +17,6 @@ except:
     current_dlg_id = 0
 current_win_id = xbmcgui.getCurrentWindowId()
 
-# _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__ = sys.modules[ "__main__" ].__version__
 __settings__ = sys.modules[ "__main__" ].__settings__
@@ -72,19 +71,19 @@ class GUI( xbmcgui.WindowXMLDialog ):
         except:
             self.setFocus( self.getControl( controlId ) )
 
-    def get_lyrics(self, song):
+    def get_lyrics(self, song, next_song = False):
         try:
             lyrics, error = self.get_lyrics_from_memory( song )
             
             if (lyrics is None ):
-                lyrics, error = self.get_lyrics_from_file( song )
-            
+                lyrics, error = self.get_lyrics_from_file( song, next_song )
+                           
             if ( lyrics is None ):
                 lyrics, error = self.LyricsScraper.get_lyrics_thread( song )
                 
                 if ( lyrics is not None ):
                     try:
-                        self.save_lyrics(lyrics)
+                        self.save_lyrics_to_file(lyrics)
                     except:
                         pass
             
@@ -103,13 +102,17 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 return l, None
         return None, "Could not find song in memory"
 
-    def get_lyrics_from_file( self, song):
+    def get_lyrics_from_file( self, song, next_song = False):
         lyrics = Lyrics()
         lyrics.song = song
         xbmc.sleep( 60 )
-        if ( xbmc.getInfoLabel( "MusicPlayer.Lyrics" ) and (__settings__.getSetting( "show_embeded_lyrics" ) == 'true')):
+        if ( not next_song ) and ( xbmc.getInfoLabel( "MusicPlayer.Lyrics" ) and (__settings__.getSetting( "show_embeded_lyrics" ) == 'true')):
             lyrics.lyrics = unicode( xbmc.getInfoLabel( "MusicPlayer.Lyrics" ), "utf-8" )
-            self.save_lyrics_to_memory(lyrics)
+            if (__settings__.getSetting( "save_embeded_lyrics" ) == 'true'):
+              try:
+                  self.save_lyrics_to_file(lyrics)
+              except:
+                  pass            
             return lyrics, None
         try:
             lyrics_file = open( song.path(), "r" )
@@ -141,7 +144,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 lyrics_file.close()
                 return True
             except IOError:
-                #LOG( LOG_ERROR, "%s (rev: %s) %s::%s (%d) [%s]", __scriptname__, self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
                 return False
     
     def focus_lyrics(self):
@@ -156,8 +158,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.show_control( 100 )
         except:
             pass
-            #print "%s::%s (%d) [%s]" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ])
-            #print traceback.format_exc(sys.exc_info()[2])
     
     def show_lyrics( self, lyrics):
         try:
@@ -285,7 +285,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     
                     next_song = Song.next()
                     if ( next_song ):
-                        self.get_lyrics( next_song )
+                        self.get_lyrics( next_song, True )
                     else:
                         print "Missing Artist or Song name in ID3 tag for next track"
                         
@@ -298,14 +298,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
                    
                    next_song = Song.next()
                    if ( next_song ):
-                       self.get_lyrics( next_song )
+                       self.get_lyrics( next_song, True )
                    else:
                        print "Missing Artist or Song name in ID3 tag for next track"                   
                     
         except:
             pass
-            #print "%s::%s (%d) [%s]" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ])
-            #print traceback.format_exc(sys.exc_info()[2])
+
 
 ## Thanks Thor918 for this class ##
 class MyPlayer( xbmc.Player ):
