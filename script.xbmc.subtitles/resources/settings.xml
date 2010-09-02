@@ -25,5 +25,6 @@
       <setting id="fil_name" type="bool" label="30118" default="false"/>
       <setting id="par_folder" type="bool" label="30119" default="false"/>
       <setting id="label_colour" type="labelenum" label="30120" default="Blue" values="Blue|Red|Green|Grey|White|Yellow|Orange" />
+      <setting id="lang_to_end" type="bool" label="30121" default="true" />
     </category>
 </settings>

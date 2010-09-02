@@ -261,7 +261,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
         else:
             sub_ext  = os.path.splitext( file )[1]
             sub_name = os.path.splitext( os.path.basename( self.file_original_path ) )[0]
-            file_name = "%s.%s%s" % ( sub_name, sub_lang, sub_ext )   
+            if (__settings__.getSetting( "lang_to_end" ) == "true"):
+              file_name = "%s.%s%s" % ( sub_name, sub_lang, sub_ext )
+            else:
+              file_name = "%s%s" % ( sub_name, sub_ext )   
             file_path = os.path.join(self.sub_folder, file_name)
             shutil.copyfile(file, file_path)    
             xbmc.Player().setSubtitles(file_path)

@@ -1,3 +1,6 @@
+1.8.1
+- added: option to disable adding language to the sub name. thanks Veron
+
 1.8.0
 - fixed: podnapisi search, we now get the language from "languageId"
 
