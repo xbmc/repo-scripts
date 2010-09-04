@@ -21,16 +21,27 @@ CANCEL_DIALOG = EXIT_SCRIPT + ( 216, 257, 61448, )
 
 class TransmissionGUI(xbmcgui.WindowXMLDialog):
     def __init__(self, strXMLname, strFallbackPath, strDefaultName, bforeFallback=0):
+        self.list = {}
+        self.torrents = {}
+    def onInit(self):
+        p = xbmcgui.DialogProgress()
+        p.create(_(0), _(1)) # 'Transmission', 'Connecting to Transmission'
         params = {
             'address': __settings__.getSetting('rpc_host'),
             'port': __settings__.getSetting('rpc_port'),
             'user': __settings__.getSetting('rpc_user'),
             'password': __settings__.getSetting('rpc_password')
         }
-        self.transmission = transmissionrpc.transmission.Client(**params)
-        self.list = {}
-        self.torrents = {}
-    def onInit(self):
+        try:
+            self.transmission = transmissionrpc.transmission.Client(**params)
+        except transmissionrpc.transmission.TransmissionError:
+            p.close()
+            d = xbmcgui.Dialog()
+            (type, e, traceback) = sys.exc_info()
+            d.ok(_(2), e.message) # 'Transmission Error'
+            self.close()
+            return False
+        p.close()
         self.updateTorrents()
         self.repeater = Repeater(1.0, self.updateTorrents)
         self.repeater.start()
@@ -118,11 +129,10 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
             # Exit button
             self.shutDown()
         if (controlID == 20):
-            return
             # A torrent was chosen, show details
             item = list.getSelectedItem()
-            w = TorrentInfoGUI("script-Transmission-main.xml",os.getcwd() ,"default")
-            w.setTorrent(int(item.getProperty('TorrentID')))
+            w = TorrentInfoGUI("script-Transmission-details.xml",os.getcwd() ,"Default")
+            w.setTorrent(self.transmission, int(item.getProperty('TorrentID')))
             w.doModal()
             del w
     def onFocus(self, controlID):
@@ -136,17 +146,54 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
 
 class TorrentInfoGUI(xbmcgui.WindowXMLDialog):
     def __init__(self, strXMLname, strFallbackPath, strDefaultName, bforeFallback=0):
+        help(xbmcgui)
+        self.transmission = None
         self.torrent_id = None
-        pass
-    def setTorrent(t_id):
+        self.list = {}
+        self.repeater = Repeater(1.0, self.updateTorrent)
+    def setTorrent(self, transmission, t_id):
+        self.transmission = transmission
         self.torrent_id = t_id
+        self.repeater.start()
+    def updateTorrent(self):
+        pbar = self.getControl(219)
+        list = self.getControl(220)
+        labelName = self.getControl(1)
+        labelStatus = self.getControl(2)
+        torrent = self.transmission.info()[self.torrent_id]
+        files = self.transmission.get_files(self.torrent_id)[self.torrent_id]
+        
+        statusline = "[%(status)s] %(down)s down (%(pct).2f%%), %(up)s up (Ratio: %(ratio).2f)" % \
+            {'down': Bytes.format(torrent.downloadedEver), 'pct': torrent.progress, \
+            'up': Bytes.format(torrent.uploadedEver), 'ratio': torrent.ratio, \
+            'status': torrent.status}
+        if torrent.status is 'downloading':
+            statusline += " ETA: %(eta)s" % \
+                    {'eta': torrent.eta}
+        
+        labelName.setLabel(torrent.name)
+        labelStatus.setLabel(statusline)
+        pbar.setPercent(torrent.progress)
+        
+        for i, file in files.iteritems():
+            if i not in self.list:
+                # Create a new list item
+                l = xbmcgui.ListItem(label=file['name'])
+                list.addItem(l)
+                self.list[i] = l
+            else:
+                # Update existing list item
+                l = self.list[i]
+            l.setProperty('Progress', '[%3d%%]' % (file['completed'] * 100 / file['size']))
     def onInit(self):
-        pass
+        self.updateTorrent()
+    def close(self):
+        self.repeater.stop()
+        super(TorrentInfoGUI, self).close()
     def onAction(self, action):
-        buttonCode =  action.getButtonCode()
-        actionID   =  action.getId()
-        if (buttonCode == KEY_BUTTON_BACK or buttonCode == KEY_KEYBOARD_ESC):
+        if (action.getButtonCode() in CANCEL_DIALOG):
             self.close()
+            pass
     def onClick(self, controlID):
         pass
     def onFocus(self, controlID):

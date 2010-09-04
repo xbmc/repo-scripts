@@ -14,9 +14,9 @@ Currently, Transmission-XBMC supports viewing, adding, removing, starting and st
 Installation
 ------------
 
-This script is intended for svn builds of XBMC. For the stable 9.11 release, check out the `master` branch.
+This script is intended for XBMC 10.05 (Dharma). For the 9.11 (Camelot) release, use [version 0.5.0](http://github.com/correl/Transmission-XBMC/downloads)
 
-To install, place the Transmission-XBMC folder in your XBMC plugins directory (usually `${HOME}/.xbmc/plugins`)
+This script can be installed via the addon manager within XBMC. Attempting to install it manually may not work, as it requires the simplejson library which is automatically installed by the addon manager.
 
 If your transmission daemon is running on a machine other than localhost, using a port other than 9091, or requires authentication, you will have to change the plugin settings before running it.
 

@@ -2,6 +2,9 @@
 <strings>
     <string id="0">Transmission</string>
     
+    <string id="1">Connecting to Transmission</string>
+    <string id="2">Transmission Error</string>
+    
     <!-- Buttons -->
     <string id="101">Add</string>
     <string id="102">Remove</string>

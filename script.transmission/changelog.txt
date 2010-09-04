@@ -1,3 +1,8 @@
+Version 0.5.2
+	* Added error handling on connection failure
+	* Added a torrent detail view for viewing the progress of individual files
+	* Added Hungarian language support (submitted by alanwww1@gmail.com)
+	* New icon (submitted by freezy@xboxmediacenter.com)
 Version 0.5.1
     * Cleaned up for inclusion in the XBMC addon repository
     * Added Korean language support (submitted by kmp93 on the XBMC forum)
