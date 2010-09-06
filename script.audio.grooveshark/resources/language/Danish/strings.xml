@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="0">GrooveShark</string>
+
+    <!-- Buttons -->
+    <string id="101">Sæt i kø</string>
+    <string id="102">Afspil</string>
+    <string id="103">Sæt alle i kø</string>
+    <string id="104">Tilføj til afspilningsliste</string>
+    <string id="105">Åben afspilningsliste</string>
+    <string id="106">Søg</string>
+    <string id="107">Nuværende afspilningsliste</string>
+    <string id="108">Populær</string>
+    <string id="109">Instillinger</string>
+    <string id="110">Åben</string>
+    <string id="111">Omdøb</string>
+    <string id="112">Slet</string>
+    <string id="113">Fjern sang</string>
+    <string id="114">Gem afspilningsliste</string>
+    <string id="115">Gem afspilningsliste som</string>
+    <string id="116">Luk afspilningsliste</string>
+
+    <!-- Dialogs -->
+    <string id="1000">Indtast en søgning</string>
+    <string id="1001">Afspilningslister</string>
+    <string id="1002">Gøre hvad?</string>
+    <string id="1003">Luk?</string>
+    <string id="1004">Vil du lukke GrooveShark?</string>
+
+    <!-- Settings -->
+    <string id="2000">Brugernavn</string>
+    <string id="2001">Password</string>
+    <string id="2002">Debugging (Genstart script for at anvende)</string>
+
+    <!-- Labels -->
+    <string id="3000">Start søgning efter sange eller åben afspilningsliste</string>
+    <string id="3001">AFSPILLER NU</string>
+    <string id="3002">NÆSTE</string>
+    <string id="3003">Sange fundet under søgningen</string>
+    <string id="3004">Kunstnere fundet under søgning</string>
+    <string id="3005">Albums fundet under søgning</string>
+    <string id="3006">af</string>
+    <string id="3007">Nuværende afspilningsliste</string>
+    <string id="3008">Kunne ikke gemme afspilningsliste</string>
+    <string id="3009">Indtast et navn for afspilningsliste</string>
+    <string id="3010">Du er nødt til at indtaste et navn for afspilningslisten</string>
+    <string id="3011">Fejl</string>
+    <string id="3012">Kunne ikke hente populære poster</string>
+    <string id="3013">Vent venligst</string>
+    <string id="3014">Henter populære sange...</string>
+    <string id="3015">Henter populære kunstnere...</string>
+    <string id="3016">Henter populære albums...</string>
+    <string id="3017">Færdig</string>
+    <string id="3018">Søger efter sange...</string>
+    <string id="3019">Søger efter kunstnere...</string>
+    <string id="3020">Søger efter albums...</string>
+    <string id="3021">Søgning færdig</string>
+    <string id="3022">Søgning fejlede. Prøv igen</string>
+    <string id="3023">Sange</string>
+    <string id="3024">Kunstnere</string>
+    <string id="3025">Albums</string>
+    <string id="3026">Fundet</string>
+    <string id="3027">Fejl ved login. Check your login details in settings</string>
+    <string id="3028">Du er nødt til at være logget ind. Sæt dit login under instillinger</string>
+    <string id="3029">Ikke muligt at hente afspilningsliste</string>
+    <string id="3030">Nyt navn for afspilningsliste</string>
+    <string id="3031">Kunne ikke omdøbe afspilningsliste</string>
+    <string id="3032">Er du sikker på du vil slette afspilningslisten</string>
+    <string id="3033">Gem afspilningsliste?</string>
+    <string id="3034">Gemmer afspilningsliste</string>
+    <string id="3035">Gemt</string>
+    <string id="3036">Henter thumbnails</string>
+    <string id="3037">Logger ind</string>
+    <string id="3038">Henter dine afspilningslister</string>
+</strings>

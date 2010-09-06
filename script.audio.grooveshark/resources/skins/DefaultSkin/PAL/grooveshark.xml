@@ -2,7 +2,7 @@
 	<resolution>PAL16x9</resolution>
 	<useincludes>false</useincludes>
 	<defaultcontrol>205</defaultcontrol>	
-	<allowoverlay>false</allowoverlay>
+	<allowoverlay>true</allowoverlay>
 <!--	<animation effect="fade" time="1000">WindowOpen</animation>
 	<animation effect="slide" end="0,576" time="1000">WindowClose</animation>-->
 	<controls>
@@ -439,9 +439,9 @@
 				<width>395</width>
 				<height>370</height>
 				<posx>97</posx>
-				<posy>250</posy>					
+				<posy>315</posy>					
 				<texture>gs-bg-item-unfocus.png</texture>'
-				<visible>StringCompare(Container(50).NumItems,3)  + SubString(Control.GetLabel(3000) ,Search results for,Left)</visible>
+				<visible>StringCompare(Container(50).NumItems,3)</visible>
 			</control>
 			<control type="image">
 				<width>395</width>
@@ -449,7 +449,7 @@
 				<posx>97</posx>
 				<posy>315</posy>					
 				<texture>gs-bg-item-unfocus.png</texture>'
-				<visible>StringCompare(Container(50).NumItems,3)  + !SubString(Control.GetLabel(3000) ,Search results for,Left)</visible>
+				<visible>StringCompare(Container(50).NumItems,4) + SubString(Control.GetLabel(3000) ,Search results for,Left)</visible>
 			</control>
 			<control type="image">
 				<width>395</width>
@@ -457,7 +457,7 @@
 				<posx>97</posx>
 				<posy>380</posy>					
 				<texture>gs-bg-item-unfocus.png</texture>'
-				<visible>StringCompare(Container(50).NumItems,4)</visible>
+				<visible>StringCompare(Container(50).NumItems,4) + !SubString(Control.GetLabel(3000) ,Search results for,Left)</visible>
 			</control>
 			<control type="image">
 				<width>395</width>

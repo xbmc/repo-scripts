@@ -25,7 +25,12 @@ class GrooveAPI:
 		socket.setdefaulttimeout(timeout)
 		self.enableDebug = enableDebug
 		self.loggedIn = 0
+		self.radioEnabled = 0
 		self.userId = 0
+		self.seedArtists = []
+		self.frowns = []
+		self.songIDsAlreadySeen = []
+		self.recentArtists = []
 		self.rootDir = os.getcwd()
 		self.sessionID = self.getSavedSession()
 		self.debug('Saved sessionID: ' + self.sessionID)
@@ -100,12 +105,14 @@ class GrooveAPI:
 
 	def callRemote(self, method, params={}):
 		data = {'header': {'sessionID': self.sessionID}, 'method': method, 'parameters': params}
+		#data = {'header': {'sessionID': None}, 'method': method, 'parameters': params}
 		data = simplejson.dumps(data)
 		#proxy_support = urllib2.ProxyHandler({"http" : "http://wwwproxy.kom.aau.dk:3128"})
 		## build a new opener with proxy details
 		#opener = urllib2.build_opener(proxy_support, urllib2.HTTPHandler)
 		## install it
 		#urllib2.install_opener(opener)
+		#print data
 		req = urllib2.Request("http://api.grooveshark.com/ws/1.0/?json")
 		req.add_header('Host', 'api.grooveshark.com')
 		req.add_header('Content-type', 'text/json')
@@ -113,10 +120,15 @@ class GrooveAPI:
 		req.add_data(data)
 		response = urllib2.urlopen(req)
 		result = response.read()
-		result = simplejson.loads(result)
 		response.close()
-		#self.debug(result)
-		return result
+		#print result
+		try:
+			result = simplejson.loads(result)
+			if 'fault' in result:
+				print result
+			return result
+		except:
+			return []
 
 	def startSession(self):
 		response = urllib2.urlopen("http://www.moovida.com/services/grooveshark/session_start")
@@ -194,11 +206,18 @@ class GrooveAPI:
 		if self.loggedIn == 1:
 			return self.userId
 		result = self.callRemote("session.login", {"username": username, "password": password})
-		if 'fault' in result:
-			return 0
+		if 'result' in result:
+			if 'userID' in result['result']:
+				self.loggedIn = 1
+				self.userId = result['result']['userID']
+				return result['result']['userID'] 
 		else:
-			self.loggedIn = 1
-			return result['result']['userID']
+			return 0
+#		if 'fault' in result:
+#			return 0
+#		else:
+#			self.loggedIn = 1
+#			return result['result']['userID']
 
 	def loggedInStatus(self):
 		return self.loggedIn
@@ -217,7 +236,7 @@ class GrooveAPI:
 	
 	def userGetPlaylists(self, limit=25):
 		if self.loggedIn == 1:
-			result = self.callRemote("user.getPlaylists", {"userID": self.userId, "limit": limit})
+			result = self.callRemote("user.getPlaylists", {"userID": self.userId})
 			if 'result' in result:
 				playlists = result['result']['playlists']
 			else:
@@ -243,13 +262,9 @@ class GrooveAPI:
 			return 0
 			
 	def playlistGetSongs(self, playlistId, limit=25):
-		if self.loggedIn == 1:
-			result = self.callRemote("playlist.getSongs", {"playlistID": playlistId, "limit": limit})
-			list = self.parseSongs(result)
-			return list
-		else:
-			return []
-			
+		result = self.callRemote("playlist.getSongs", {"playlistID": playlistId})
+		list = self.parseSongs(result)
+		return list
 			
 	def playlistDelete(self, playlistId):
 		if self.loggedIn == 1:
@@ -289,6 +304,84 @@ class GrooveAPI:
 		else:
 			return 0
 
+	def autoplayStartWithArtistIDs(self, artistIds):
+		result = self.callRemote("autoplay.startWithArtistIDs", {"artistIDs": artistIds})
+		if 'fault' in result:
+			self.radioEnabled = 0
+			return 0
+		else:
+			self.radioEnabled = 1
+			return 1		
+
+	def autoplayStart(self, songIds):
+		result = self.callRemote("autoplay.start", {"songIDs": songIds})
+		if 'fault' in result:
+			self.radioEnabled = 0
+			return 0
+		else:
+			self.radioEnabled = 1
+			return 1
+
+	def autoplayStop(self):
+		result = self.callRemote("autoplay.stop", {})
+		if 'fault' in result:
+			self.radioEnabled = 1
+			return 0
+		else:
+			self.radioEnabled = 0
+			return 1
+
+	def autoplayGetNextSongEx(self, seedArtists = [], frowns = [], songIDsAlreadySeen = [], recentArtists = []):
+		result = self.callRemote("autoplay.getNextSongEx", {"seedArtists": seedArtists, "frowns": frowns, "songIDsAlreadySeen": songIDsAlreadySeen, "recentArtists": recentArtists})
+		if 'fault' in result:
+			return []
+		else:
+			return result
+	
+	def radioGetNextSong(self):
+		if self.seedArtists == []:
+			return []
+		else:
+			result = self.autoplayGetNextSongEx(self.seedArtists, self.frowns, self.songIDsAlreadySeen, self.recentArtists)
+#			print result
+			if 'fault' in result:
+				return []
+			else:
+				song = self.parseSongs(result)
+				self.radioAlreadySeen(song[0][1])
+				return song
+
+	def radioFrown(self, songId):
+		self.frown.append(songId)
+
+	def radioAlreadySeen(self, songId):
+		self.songIDsAlreadySeen.append(songId)
+
+	def radioAddArtist(self, artistId):
+		self.seedArtists.append(artistId)
+
+	def radioStart(self, artists = [], frowns = []):
+		for artist in artists:
+			self.seedArtists.append(artist)
+		for artist in frowns:
+			self.frowns.append(artist)
+		if self.autoplayStartWithArtistIDs(self.seedArtists) == 1:
+			self.radioEnabled = 1
+			return 1
+		else:
+			self.radioEnabled = 0
+			return 0
+
+	def radioStop(self):
+		self.seedArtists = []
+		self.frowns = []
+		self.songIDsAlreadySeen = []
+		self.recentArtists = []
+		self.radioEnabled = 0
+
+	def radioTurnedOn(self):
+		return self.radioEnabled
+
 	def favoriteSong(self, songID):
 		return self.callRemote("song.favorite", {"songID": songID})
 
@@ -306,17 +399,25 @@ class GrooveAPI:
 	def searchSongs(self, query, limit, page=0, sortKey=6):
 		result = self.callRemote("search.songs", {"query": query, "limit": limit, "page:": page, "streamableOnly": 1})
 		list = self.parseSongs(result)
-		return sorted(list, key=itemgetter(sortKey))
+		return list
+		#return sorted(list, key=itemgetter(sortKey))
 
 	def searchArtists(self, query, limit, sortKey=0):
 		result = self.callRemote("search.artists", {"query": query, "limit": limit, "streamableOnly": 1})
 		list = self.parseArtists(result)
-		return sorted(list, key=itemgetter(sortKey))
+		return list
+		#return sorted(list, key=itemgetter(sortKey))
 
 	def searchAlbums(self, query, limit, sortKey=2):
 		result = self.callRemote("search.albums", {"query": query, "limit": limit, "streamableOnly": 1})
 		list = self.parseAlbums(result)
-		return sorted(list, key=itemgetter(sortKey))				
+		return list
+		#return sorted(list, key=itemgetter(sortKey))
+
+	def searchPlaylists(self, query, limit):
+		result = self.callRemote("search.playlists", {"query": query, "limit": limit, "streamableOnly": 1})
+		list = self.parsePlaylists(result)
+		return list
 
 	def popularGetSongs(self, limit):
 		result = self.callRemote("popular.getSongs", {"limit": limit})
@@ -336,7 +437,8 @@ class GrooveAPI:
 	def artistGetAlbums(self, artistId, limit, sortKey=2):
 		result = self.callRemote("artist.getAlbums", {"artistID": artistId, "limit": limit})
 		list = self.parseAlbums(result)
-		return sorted(list, key=itemgetter(sortKey))
+		return list
+		#return sorted(list, key=itemgetter(sortKey))
 
 	def artistGetVerifiedAlbums(self, artistId, limit):
 		result = self.callRemote("artist.getVerifiedAlbums", {"artistID": artistId, "limit": limit})
@@ -348,12 +450,30 @@ class GrooveAPI:
 		list = self.parseSongs(result)
 		return list
 
+	def songGetSimilar(self, songId, limit):
+		result = self.callRemote("song.getSimilar", {"songID": songId, "limit": limit})
+		list = self.parseSongs(result)
+		return list
+
 	def parseSongs(self, items):
 		if 'result' in items:
 			i = 0
 			list = []
-			while(i < len(items['result']['songs'])):
-				s = items['result']['songs'][i]
+			if 'songs' in items['result']:
+				l = len(items['result']['songs'])
+				index = 'songs'
+			elif 'song' in items['result']:
+				l = 1
+				index = 'song'
+			else:
+				l = 0
+				index = ''
+			print 'index: ' + index + 'len: ' + str(l)
+			while(i < l):
+				if index == 'songs':
+					s = items['result'][index][i]
+				else:
+					s = items['result'][index]
 				if 'estDurationSecs' in s:
 					dur = s['estDurationSecs']
 				else:
@@ -406,3 +526,17 @@ class GrooveAPI:
 		else:
 			return []
 
+	def parsePlaylists(self, items):
+		if 'result' in items:
+			i = 0
+			list = []
+			playlists = items['result']['playlists']
+			while(i < len(playlists)):
+				s = playlists[i]
+				list.append([s['playlistID'],\
+				s['playlistName'].encode('ascii', 'ignore'),\
+				s['username'].encode('ascii', 'ignore')])
+				i = i + 1
+			return list
+		else:
+			return []

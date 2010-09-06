@@ -1,3 +1,15 @@
+0.2.3:
+
+ - Fixed: A change in the API prevented people from logging in.
+
+ - Bug fix: Playlists are no longer limited to a max. of 100 songs.
+
+ - Added: Danish translation. Thanks mrdominuzq.
+
+ - Added: Search now returns playlists as well.
+
+ - Changed: Removed alphabetic sorting since Grooveshark has a rating system that will show the best results first based on feedback from users
+
 0.2.2:
 
  - Bug fix: The script wasn't able to run on revisions higher than 32321.
