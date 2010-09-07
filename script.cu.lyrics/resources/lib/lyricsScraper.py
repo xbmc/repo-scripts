@@ -155,14 +155,12 @@ class LyricsFetcher:
         l = lyrics.Lyrics()
         l.song = song
         try:
-            url = "http://lyricwiki.org/index.php?title=%s:%s&fmt=js" % (self.lyricwiki_format(song.artist), self.lyricwiki_format(song.title))
+            url = "http://lyrics.wikia.com/api.php?artist=%s&song=%s&fmt=xml" % (urllib.quote(song.artist.lower()), urllib.quote(song.title.lower()), )
             print "Search url: %s" % (url)
             song_search = urllib.urlopen(url).read()
-            song_title = song_search.split("<title>")[1].split("</title>")[0]
-            song_clean_title = unescape(song_title.replace(" Lyrics - LyricWiki - Music lyrics from songs and albums",""))
-            print "Title:[" + song_clean_title+"]"
-            lyricpage = urllib.urlopen("http://lyricwiki.org/index.php?title=%s&action=edit" % (urllib.quote(song_clean_title),)).read()
-            print ("http://lyricwiki.org/index.php?title=%s&action=edit" % (urllib.quote(song_clean_title),))
+            song_title = song_search.split("<url>http://lyrics.wikia.com/")[1].split("</url>")[0]
+            print "Title:[" + song_title+"]"
+            lyricpage = urllib.urlopen("http://lyricwiki.org/index.php?title=%s&action=edit" % (song_title,)).read()
             content = re.split("<textarea[^>]*>", lyricpage)[1].split("</textarea>")[0]
             
             if ( content.find("{{Disambig}}") >= 0 ):

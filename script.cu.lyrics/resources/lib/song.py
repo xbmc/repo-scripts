@@ -23,7 +23,7 @@ class Song:
             return cmp(self.title, song.title)
     
     def sanitize(self, str):
-        return str.replace( "\\", "_" ).replace( "/", "_" ).replace(":","_")
+        return str.replace( "\\", "_" ).replace( "/", "_" ).replace(":","_").replace("?","_").replace("!","_")
     
     def path(self):
         return unicode( os.path.join( lyrics_path, self.sanitize(self.artist), self.sanitize(self.title) + ".txt" ), "utf-8" )
@@ -32,9 +32,9 @@ class Song:
     def current():
         song = Song()
         song.title = xbmc.getInfoLabel( "MusicPlayer.Title" )
-        song.title = utilities.deAccent(song.title)
+        #song.title = utilities.deAccent(song.title)
         song.artist = xbmc.getInfoLabel( "MusicPlayer.Artist")
-        song.artist = utilities.deAccent(song.artist)
+        #song.artist = utilities.deAccent(song.artist)
         
         print "Current Song: %s:%s" % (song.artist, song.title)
         
