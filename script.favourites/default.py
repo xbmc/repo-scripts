@@ -18,6 +18,7 @@ class Main:
             # clear Property
             self.WINDOW.clearProperty( "favourite.%d.path" % ( count + 1, ) )
             self.WINDOW.clearProperty( "favourite.%d.name" % ( count + 1, ) )
+            self.WINDOW.clearProperty( "favourite.%d.thumb" % ( count + 1, ) )
 
     def _read_file( self ):
         # Set path
@@ -49,6 +50,8 @@ class Main:
             # set properties
             self.WINDOW.setProperty( "favourite.%d.path" % ( count + 1, ) , self.fav_path )
             self.WINDOW.setProperty( "favourite.%d.name" % ( count + 1, ) , self.doc.attributes [ 'name' ].nodeValue )
+            try: self.WINDOW.setProperty( "favourite.%d.thumb" % ( count + 1, ) , self.doc.attributes [ 'thumb' ].nodeValue )
+            except: pass
             count = count+1
 
 if ( __name__ == "__main__" ):
