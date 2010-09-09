@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-    <string id="30300">OpenSubtitles_OSD</string>
+    <string id="30300">XBMC Subtitles</string>
     <string id="30301"></string>
     <string id="30302">Amet</string>
 
@@ -19,7 +19,7 @@
     <string id="645">Download cancelled</string>
     <string id="647">by hash...</string>
     <string id="648">by name...</string>
-
+    <string id="655">Local subtitle available</string>
 
     <!-- OSDB Messages -->
     <string id="730">OSDB server name missing</string>
@@ -36,37 +36,67 @@
     <string id="743">HTTP %s: %s</string>
     
     
-    <!-- translate below this line -->
-    <!-- Dutch -->
-    <string id="500">U heeft geen geldige taal geselecteerd.</string>
-    <string id="501">Wilt u een aparte map voor ondertiteling kiezen?</string>
-    <string id="502">Taal selectie</string>
-    <string id="503">Selecteer Standaard Taal</string>
-    <string id="504">Kies aangepaste map</string>
-    <string id="505">Kies gewenste dienst</string>
-    <string id="506">Wilt u de standaard instellingen herstellen?</string>
-    <string id="601">Items geselecteerd</string>
-    <string id="602">werkt beter</string>
-    <string id="610">Zoek in </string>
-    <string id="611">Zoek in Sublight.si</string>
-    <string id="612">Handmatig invoeren zoekopdracht</string>
-    <string id="633">Bestand wordt gedownload</string>
+    <!-- tarnslate below this line -->
+    <!-- English -->
+    <string id="500">You have not selected a valid language.</string>
+    <string id="501">Would you like to set a custom subtitles folder?</string>
+    <string id="502">Language selection</string>
+    <string id="503">Select default language</string>
+    <string id="504">Please choose subtitle folder</string>
+    <string id="505">Please choose prefered service</string>
+    <string id="506">Do you want to specify new settings?</string>
+    <string id="601">Items marked</string>
+    <string id="602">work better</string>
+    <string id="610">Zoek</string>
+    <string id="611">Search Sublight.si</string>
+    <string id="612">Handmatige zoekopdracht geven</string>
+    <string id="633">Downloading file</string>
     <string id="635">Verbonden</string>
-    <string id="642">Bezig de volgende ondertiteling te zoeken %s</string>
-    <string id="646">Verbinding maken...</string>
-    <string id="649">Downloaden Ondertiteling...</string>
-    <string id="650">Uitpakken Ondertiteling...</string>
-    <string id="651">Ondertiteling uitgepakt</string>
-    <string id="652">Ondertiteling gedownload en uitgepakt</string>
-    <string id="653">Verbinding mislukt.</string>
-    <string id="654">Error tijdens het uitpakken van de ondertiteling</string>
-    <string id="741">Geen ondertiteling gevonden</string>
-    <string id="742"> ondertiteling gevonden</string>
-    <string id="744"> ondertiteling gevonden voor </string>
-    
+    <string id="642">Ondertitels zoeken %s</string>
+    <string id="644">Uitgepakt naar %s</string>
+    <string id="646">Connecting...</string>
+    <string id="649">Ondertitles downloaden...</string>
+    <string id="650">Extracting subtitles...</string>
+    <string id="651">Subtitles extracted</string>
+    <string id="652">Ondertitelbestand gedownload en uitgepakt</string>
+    <string id="653">Connection failed</string>
+    <string id="654">Fout bij uitpakken ondertitels</string>
+    <string id="741">No subtitles found</string>
+    <string id="742"> subtitles found</string>
+    <string id="744"> Ondertitels gevonden voor </string>
+    <string id="745">Podnapisi service requires username and password</string>
+    <string id="746">Please register at www.podnapisi.net</string>
+    <string id="747">Zoek op basis van foldernaam</string>
+    <string id="748">Je kan de ondertitels niet opslaan op de gekozen locatie</string>
+    <string id="749">Kies een andere ondertitelfolder via de script instellingen.</string>
+    <string id="750">Wil je de instellingen nu aanpassen?</string>
+    <string id="751">Enter Movie Name (year)</string>
+    <string id="752">Version %s of %s is available</string>
+    <string id="753">You need rev%s and higher to run this script</string>
+    <string id="754">Your XBMC is rev%i</string>
       <!-- 
-   * Languages
+   * Script Settings
    -->
+  <string id="30100">Talen</string>
+  <string id="30101">- Primaire taal</string>
+  <string id="30102">- Secondaire taal</string>
+  <string id="30103">Services</string>
+  <string id="30104"> - Podnapisi.net gebruikersnaam</string>
+  <string id="30105"> - Podnapisi.net wachtwoord</string>
+  <string id="30106">Geavanceerde opties</string>
+  <string id="30107">- Ondertitels download folder dezelfde als film</string>
+  <string id="30108">  - Zet apart ondertitel download pad</string>
+  <string id="30110">- Handmatige zoekopdracht</string>
+  <string id="30111">- Tertiaire taal</string>  
+  <string id="30112">- Kies standaard service</string>
+  <string id="30113">- Kies standaard film service</string>
+  <string id="30114">- Kies standaard tv show service</string>
+  <string id="30118">- Toon bestandsnaam in resultaten pagina</string>
+  <string id="30119">- Zoek op basis van foldernaam</string>
+  <string id="30120">- Zet service label kleur</string> 
+  <string id="30121">- Voeg taal aan bestandnaam toe </string>
+  <string id="30122">- Zet standaard timeout</string>
+    <!-- Optional  -->
   <string id="30201">Albanian</string>
   <string id="30202">Arabic</string>
   <string id="30203">Belarusian</string>
@@ -110,6 +140,9 @@
   <string id="30244">Turkish</string>
   <string id="30245">Ukrainian</string>
   <string id="30246">Vietnamese</string>
-      
+  <string id="30301">Sublight</string>
+  <string id="30302">Podnapisi</string>
+  <string id="30303">OpenSubtitles</string>
+  
     
 </strings>

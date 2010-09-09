@@ -2,7 +2,7 @@ import sys
 import os
 from utilities import hashFile
 from os_utilities import OSDBServer
-
+import socket
 
 _ = sys.modules[ "__main__" ].__language__
 
@@ -67,18 +67,13 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     
     
     xbmc.output("File Size [%s]\nFile Hash [%s]" % (file_size,hashTry,), level=xbmc.LOGDEBUG)
-    try:
+    
+    xbmc.output("Search by hash and name %s" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
 
-        xbmc.output("Search by hash and name %s" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
+    subtitles_list, msg = osdb_server.searchsubtitles( OS_search_string, lang1, lang2, lang3, hash_search, hashTry, file_size  )
         
-
-        subtitles_list = osdb_server.searchsubtitles( OS_search_string, lang1, lang2, lang3, hash_search, hashTry, file_size  )
-
-        return subtitles_list, "", "" #standard output
-        
-    except :
-        return subtitles_list, "", "" #standard output
-
+    return subtitles_list, "", msg #standard output
+    
 
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input

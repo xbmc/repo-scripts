@@ -1,37 +1,28 @@
 import sys
 import os
 import xbmc
-import string
 import xbmcaddon
-__scriptname__ = "XBMC Subtitles"
-__scriptid__ = "script.xbmc.subtitles"
-__author__ = "Amet"
-__version__ = "1.8.0"
-__XBMC_Revision__ = "30001"
-
-if not xbmc.getCondVisibility('Player.Paused') : xbmc.Player().pause() #Pause if not paused
 
 BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'lib' ) )
-
 sys.path.append (BASE_RESOURCE_PATH)
 
 __settings__ = xbmcaddon.Addon(id='script.xbmc.subtitles')
-
 __language__ = __settings__.getLocalizedString
+__version__  = __settings__.getAddonInfo('version')
+__scriptname__ = "XBMC Subtitles"
+__scriptid__ = "script.xbmc.subtitles"
+__author__ = "Amet,mr_blobby"
 
-if not xbmc.getCondVisibility('videoplayer.isfullscreen') :
-    __settings__.openSettings()
+xbmc.output("XBMC Subtitles version [ %s ]" % (__version__,),level=xbmc.LOGDEBUG) 
+
+if ( __name__ == "__main__" ):
+    if not xbmc.getCondVisibility('Player.Paused') : xbmc.Player().pause() #Pause if not paused        
+    import gui
+    ui = gui.GUI( "script-XBMC-Subtitles-main.xml" , os.getcwd(), "Default")
+    ui.doModal()
     if xbmc.getCondVisibility('Player.Paused'): xbmc.Player().pause() # if Paused, un-pause
-else:
-    skin = "main"
-    xbmc.output("XBMC Subtitles version [ %s ]\nXBMC Subtitles skin XML: [ %s ]" % (__version__,skin,),level=xbmc.LOGDEBUG) 
-    if ( __name__ == "__main__" ):          
-        import gui
-        ui = gui.GUI( "script-XBMC-Subtitles-%s.xml" % skin , os.getcwd(), "Default")
-        ui.doModal()
-        if xbmc.getCondVisibility('Player.Paused'): xbmc.Player().pause() # if Paused, un-pause
-        del ui
-        sys.modules.clear()
+    del ui
+    sys.modules.clear()
 
 
   

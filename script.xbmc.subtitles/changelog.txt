@@ -1,3 +1,22 @@
+1.8.5
+- cosmetics
+
+1.8.4
+- revorked OpenSubtitles search function, it should be much faster now
+
+1.8.3
+- reverted: "close script with back button". apple remote has issues with this. 
+
+1.8.2
+- added: new service "SubtitleSource". Thanks to Veron
+- added: new service "Titlovi". Thanks to mr_blobby
+- added: ability to use different search services for Movies and TV Shows. Thanks to mr_blobby
+- added: timeout setting (only OpenSubtitles for now). Thanks to Nektarios
+- added: more robust error handling. Thanks to Nektarios
+- fixed: "SubScene" is working again (was broken because of site redesign). Thanks to mr_blobby
+- fixed: close script with back button. Thanks to Nektarios
+- updated: dutch translations. Thanks to mr_blobby
+
 1.8.1
 - added: option to disable adding language to the sub name. thanks Veron
 

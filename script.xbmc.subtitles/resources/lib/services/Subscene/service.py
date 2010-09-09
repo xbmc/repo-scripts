@@ -1,19 +1,8 @@
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
 from utilities import toOpenSubtitles_two
 
-_ = sys.modules[ "__main__" ].__language__
-
 main_url = "http://subscene.com/"
 debug_pretext = "[Subscene subtitle service]:"
-
-# Subscene uploads possible:
-# zip, rar, srt, srt.style, sub, txt, ssa, smi
-
-# XBMC supports:
-# AQT, JSS, MicroDVD, MPL, RT, SMI, SRT, SUB, TXT, VobSub (idx + sub), VPlayer and partial SSA and ASS
-
-# Subtypes supported (unfortunately the script and python do not have a rar module):
-subs_types = "zip", "srt", "sub", "txt", "ssa", "smi", "rar"
 
 # Seasons as strings for searching
 seasons = ["Specials", "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth"]
@@ -28,22 +17,27 @@ seasons = seasons + ["Twenty-first", "Twenty-second", "Twenty-third", "Twenty-fo
 """
 		<tr>
 			<td>
+				<a class="a1" href="/arabic/Magnolia/subtitle-311056.aspx" title="Subtitle - Magnolia  - Arabic">
+					<span class="r0" >
 
-				<a class="a1" id=s290610 href="javascript:Subtitle(290610, 'zip', '53', '0');">
-					<span class="r100" >
 						Arabic
 					</span>
-					 <span id="r290610">The.Time.Travelers.Wife.2009.DVDRip.XviD-iMBT (By:  Don4EveR & Abu Essa)</span>
+					 <span id="r311056">Magnolia.1999.720p.BluRay.x264-LEVERAGE</span>
 				</a>
 
 
+
+			</td>
 			<td class="a3">1
-			<td>
+			</td>
+			<td><div id=imgEar title='Hearing Impaired'>&nbsp;</div>
+			</td>
+
 """
-subtitle_pattern = "..<tr>.{5}<td>.{6}<a class=\"a1\" id=s\d+ href=\"javascript:Subtitle\((\d+), '(...)', '\d+', '(\d+)'\);\">\
-.{7}<span class=\"r(0|100)\" >.{8}(.{3,25}) .{7}</span>.{7} <span id=\"r\d+\">(.{5,500})</span>\
-.{6}</a> .{13}<td class=\"a3\">1.{5}<td>(?!<div id=imgEar)" # it think it should not match a "Hearing impaired" subtitle type
-# group(1) = subtitleId, group(2) = typeId, group(3) = filmId, group(4) = qualitycode, group(5) = language, group(6) = filename
+subtitle_pattern = "..<tr>.{5}<td>.{6}<a class=\"a1\" href=\"/([^\n\r]{10,200}?-\d{3,10}.aspx)\" title=\"[^\n\r]{10,200}\">\
+[\r\n\t ]+?<span class=\"r(0|100)\" >[\r\n\t\ ]+([^\r\n\t]+?) [\r\n\t]+</span>[\r\n\t ]+?<span id=\"r\d+\">([^\r\n\t]{5,500})</span>\
+[\r\n\t]+?</a>[\r\n\t ]+?</td>[\r\n\t ]+?<td class=\"a3\">1[\r\n\t\ ]+?</td>[\r\n\t\ ]+?<td>(?!<div id=imgEar)"
+# group(1) = downloadlink, group(2) = qualitycode, group(3) = language, group(4) = filename
 
 
 # movie/seasonfound pattern example:
@@ -55,12 +49,23 @@ movie_season_pattern = "...<a href=\"/([^\n\r\t]*?/subtitles-\d{1,10}.aspx)\".{1
 # group(1) = link, group(2) = movie_season_title,  group(3) = year
 
 
-# viewstate pattern example:
-"""
-<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTM3MDMyNDg2NmQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFF3MkcyRsYyRiY3Ikc29ydEJ5TGF0ZXN0DgczK1M2TFdV419Eo8mR8i4CBFY=" />
-"""
+# (new WebForm_PostBackOptions(&quot;s$lc$bcr$downloadLink&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/arabic/House-MD-Sixth-Season/subtitle-329405-dlpath-78774/zip.zipx&quot;, false, true))
+downloadlink_pattern = "\(new WebForm_PostBackOptions\([^\n\r\t]+?\/([^\n\r\t]+?)&quot;, false, true\)\)"
+
+# <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTk1MDk4NjQwM2Rk5ncGq+1a601mEFQDA9lqLwfzjaY=" />
 viewstate_pattern = "<input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value=\"([^\n\r\t]*?)\" />"
-# group(1) = viewstatevalue
+
+# <input type="hidden" name="__PREVIOUSPAGE" id="__PREVIOUSPAGE" value="V1Stm1vgLeLd6Kbt-zkC8w2" />
+previouspage_pattern = "<input type=\"hidden\" name=\"__PREVIOUSPAGE\" id=\"__PREVIOUSPAGE\" value=\"([^\n\r\t]*?)\" />"
+
+# <input type="hidden" name="subtitleId" id="subtitleId" value="329405" />
+subtitleid_pattern = "<input type=\"hidden\" name=\"subtitleId\" id=\"subtitleId\" value=\"(\d+?)\" />"
+
+# <input type="hidden" name="typeId" value="zip" />
+typeid_pattern = "<input type=\"hidden\" name=\"typeId\" value=\"([^\n\r\t]{3,15})\" />"
+
+# <input type="hidden" name="filmId" value="78774" />
+filmid_pattern = "<input type=\"hidden\" name=\"filmId\" value=\"(\d+?)\" />"
 
 
 #====================================================================================================================
@@ -101,28 +106,21 @@ def find_tv_show_season(content, tvshow, season):
 
 
 def getallsubs(response_url, content, language, title, subtitles_list, search_string):
-    match = re.search(viewstate_pattern, content, re.IGNORECASE | re.DOTALL)
-    if match:
-        viewstate = match.group(1)
-        xbmc.output("%s Hidden inputfield __VIEWSTATE found: %s" % (debug_pretext, viewstate), level=xbmc.LOGDEBUG )
-        for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
-            typeid = matches.group(2)
-            if string.lower(typeid) in subs_types:
-                languagefound = matches.group(5)
-                if languagefound ==  to_subscene_lang(language):
-                    #link = main_url + "downloadissue.aspx?subtitleId=" + matches.group(1) + "&contentType=" + matches.group(2)
-                    languageshort = toOpenSubtitles_two(language)
-                    subtitleid = matches.group(1)
-                    filmid     = matches.group(3)
-                    filename   = matches.group(6)
-                    postparams = urllib.urlencode( { '__VIEWSTATE': viewstate, 'subtitleId': subtitleid , 'filmId': filmid, 'typeId': typeid} )
-                    if search_string != "":
-                        if string.find(string.lower(filename),string.lower(search_string)) > -1:
-                            xbmc.output("%s Subtitles found: %s, %s, id=%s, %s" % (debug_pretext, languagefound, typeid, subtitleid, filename), level=xbmc.LOGDEBUG )
-                            subtitles_list.append({'postparams': postparams, 'rating': '0', 'format': string.lower(typeid), 'movie':  title, 'filename': filename, 'sync': False, 'link': response_url, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': language})
-                    else:
-                        xbmc.output("%s Subtitles found: %s, %s, id=%s, %s" % (debug_pretext, languagefound, typeid, subtitleid, filename), level=xbmc.LOGDEBUG )
-                        subtitles_list.append({'postparams': postparams, 'rating': '0', 'format': string.lower(typeid), 'movie':  title, 'filename': filename, 'sync': False, 'link': response_url, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': language})
+    for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
+        languagefound = matches.group(3)
+        if languagefound == to_subscene_lang(language):
+            link = main_url + matches.group(1)
+            languageshort = toOpenSubtitles_two(language)
+            filename   = matches.group(4)
+            if search_string != "":
+                print "string.lower(filename) = >" + string.lower(filename) + "<"
+                print "string.lower(search_string) = >" + string.lower(search_string) + "<"
+                if string.find(string.lower(filename),string.lower(search_string)) > -1:
+                    xbmc.output("%s Subtitles found: %s, %s" % (debug_pretext, languagefound, filename), level=xbmc.LOGDEBUG )
+                    subtitles_list.append({'rating': '0', 'movie':  title, 'filename': filename, 'sync': False, 'link': link, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': language})
+            else:
+                xbmc.output("%s Subtitles found: %s, %s" % (debug_pretext, languagefound, filename), level=xbmc.LOGDEBUG )
+                subtitles_list.append({'rating': '0', 'movie':  title, 'filename': filename, 'sync': False, 'link': link, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': language})
 
 
 def geturl(url):
@@ -200,48 +198,71 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
-    url        = subtitles_list[pos][ "link" ]
-    postparams = subtitles_list[pos][ "postparams" ]
-    language = subtitles_list[pos][ "language_name" ]    
-    format     = subtitles_list[pos][ "format" ]
-    local_tmp_file = os.path.join(tmp_sub_dir, "subscene." + format)
-    if (format != "zip") and (format != "rar"):
-        subs_file = local_tmp_file
-        packed = False
-    else:
-        packed = True
-    class MyOpener(urllib.FancyURLopener):
-        version = 'User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)'
-    my_urlopener = MyOpener()
-    my_urlopener.addheader('Referer', url)
-    xbmc.output("%s Fetching subtitles using url '%s'with referer header '%s' and post parameters '%s'" % (debug_pretext, url, url, postparams), level=xbmc.LOGDEBUG )
-    response = my_urlopener.open(url,  postparams)
-    try:
-        xbmc.output("%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
-        local_file_handle = open(local_tmp_file, "w" + "b")
-        local_file_handle.write(response.read())
-        local_file_handle.close()
-    except:
-        xbmc.output("%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
-    if packed:
-        files = os.listdir(tmp_sub_dir)
-        init_filecount = len(files)
-        filecount = init_filecount
-        xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
-        waittime  = 0
-        while (filecount == init_filecount) and (waittime < 20): # nothing yet extracted
-            time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
-            files = os.listdir(tmp_sub_dir)
-            filecount = len(files)
-            waittime  = waittime + 1
-        if waittime == 20:
-            xbmc.output("%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )
-        else:
-            xbmc.output("%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )        
-            for file in files:
-                if string.split(file, '.')[-1] in ["srt", "sub", "txt", "ssa", "smi"]: # unpacked file is a subtitle file
-                    xbmc.output("%s Unpacked subtitles file '%s'" % (debug_pretext, file), level=xbmc.LOGDEBUG )        
-                    subs_file = os.path.join(tmp_sub_dir, file)
-    
-    xbmc.output("%s Subtitles saved to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
-    return False, language, subs_file #standard output
+    url = subtitles_list[pos][ "link" ]
+    language = subtitles_list[pos][ "language_name" ]
+    content, response_url = geturl(url)
+    match = re.search(downloadlink_pattern, content, re.IGNORECASE | re.DOTALL)
+    if match:
+        downloadlink = main_url  + match.group(1)
+        xbmc.output("%s Downloadlink: %s " % (debug_pretext, downloadlink), level=xbmc.LOGDEBUG )
+        match = re.search(viewstate_pattern, content, re.IGNORECASE | re.DOTALL)
+        if match:
+            viewstate = match.group(1)
+            xbmc.output("%s Viewstate: %s " % (debug_pretext, viewstate), level=xbmc.LOGDEBUG )
+            match = re.search(previouspage_pattern, content, re.IGNORECASE | re.DOTALL)
+            if match:
+                previouspage = match.group(1)
+                xbmc.output("%s Previouspage: %s " % (debug_pretext, previouspage), level=xbmc.LOGDEBUG )
+                match = re.search(subtitleid_pattern, content, re.IGNORECASE | re.DOTALL)
+                if match:
+                    subtitleid = match.group(1)
+                    xbmc.output("%s Subtitleid: %s " % (debug_pretext, subtitleid), level=xbmc.LOGDEBUG )
+                    match = re.search(typeid_pattern, content, re.IGNORECASE | re.DOTALL)
+                    if match:
+                        typeid = match.group(1)
+                        xbmc.output("%s Typeid: %s " % (debug_pretext, typeid), level=xbmc.LOGDEBUG )
+                        match = re.search(filmid_pattern, content, re.IGNORECASE | re.DOTALL)
+                        if match:
+                            filmid = match.group(1)
+                            xbmc.output("%s Filmid: %s " % (debug_pretext, filmid), level=xbmc.LOGDEBUG )
+                            postparams = urllib.urlencode( { '__EVENTTARGET': 's$lc$bcr$downloadLink', '__EVENTARGUMENT': '' , '__VIEWSTATE': viewstate, '__PREVIOUSPAGE': previouspage, 'subtitleId': subtitleid, 'typeId': typeid, 'filmId': filmid} )
+                            class MyOpener(urllib.FancyURLopener):
+                                version = 'User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)'
+                            my_urlopener = MyOpener()
+                            my_urlopener.addheader('Referer', url)
+                            xbmc.output("%s Fetching subtitles using url '%s' with referer header '%s' and post parameters '%s'" % (debug_pretext, downloadlink, url, postparams), level=xbmc.LOGDEBUG )
+                            response = my_urlopener.open(downloadlink, postparams)
+                            local_tmp_file = os.path.join(tmp_sub_dir, "subscene." + typeid)
+                            if (typeid != "zip") and (typeid != "rar"):
+                                subs_file = local_tmp_file
+                                packed = False
+                            else:
+                                packed = True
+                            try:
+                                xbmc.output("%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+                                local_file_handle = open(local_tmp_file, "w" + "b")
+                                local_file_handle.write(response.read())
+                                local_file_handle.close()
+                            except:
+                                xbmc.output("%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+                            if packed:
+                                files = os.listdir(tmp_sub_dir)
+                                init_filecount = len(files)
+                                filecount = init_filecount
+                                xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
+                                waittime  = 0
+                                while (filecount == init_filecount) and (waittime < 20): # nothing yet extracted
+                                    time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
+                                    files = os.listdir(tmp_sub_dir)
+                                    filecount = len(files)
+                                    waittime  = waittime + 1
+                                if waittime == 20:
+                                    xbmc.output("%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )
+                                else:
+                                    xbmc.output("%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )
+                                    for file in files:
+                                        if string.split(file, '.')[-1] in ["srt", "sub", "txt", "ssa", "smi"]: # unpacked file is a subtitle file
+                                            xbmc.output("%s Unpacked subtitles file '%s'" % (debug_pretext, file), level=xbmc.LOGDEBUG )
+                                            subs_file = os.path.join(tmp_sub_dir, file)
+                            xbmc.output("%s Subtitles saved to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+                            return False, language, subs_file #standard output

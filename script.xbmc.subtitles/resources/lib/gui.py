@@ -7,6 +7,7 @@ import urllib
 import unzip
 import unicodedata
 import shutil
+import socket
 
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
@@ -17,6 +18,8 @@ LOADING_IMAGE = 110
 SUBTITLES_LIST = 120
 SERVICE_DIR = os.path.join(os.getcwd(), "resources", "lib", "services")
 
+EXIT_SCRIPT = ( 9, 10, 247, 275, 61467, )
+CANCEL_DIALOG = EXIT_SCRIPT + ( 216, 257, 61448, )
 
 class GUI( xbmcgui.WindowXMLDialog ):
         
@@ -65,8 +68,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.episode   = str(xbmc.getInfoLabel("VideoPlayer.Episode"))# Episode        
         if self.episode.lower().find("s") > -1:                       # Check if season is "Special"             
             self.season = "0"                                         #
-            self.episode.replace("s","")                              #
-            self.episode.replace("S","")                              #
+            self.episode = self.episode[-1:]                          #
         
         self.tvshow    = xbmc.getInfoLabel("VideoPlayer.TVshowtitle") # Show
         self.title     = unicodedata.normalize('NFKD', 
@@ -158,24 +160,35 @@ class GUI( xbmcgui.WindowXMLDialog ):
 #### ---------------------------- Set Service ----------------------------###     
 
         def_service = __settings__.getSetting( "defservice")
+        def_movie_service = __settings__.getSetting( "defmovieservice")
+        def_tv_service = __settings__.getSetting( "deftvservice")
         service_list = []
-        standard_service_list  = ['OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt']
+        standard_service_list  = ['OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'SubtitleSource', 'Titlovi']
         service = ""
-        
+ 
         for name in os.listdir(SERVICE_DIR):
            if not (name.startswith('.')) and not (name.startswith('_')):
               service_list.append(name)
-            
+
         for serv in standard_service_list:
           if not __settings__.getSetting( serv ) == "true" :
               service_list.remove( serv )
-
           else:
-              service = serv        
-        
-        if service_list.count(def_service) > 0:
-           service = def_service
-        
+              service = serv
+
+        if len(self.tvshow) > 0:
+            if service_list.count(def_tv_service) > 0:
+                service = def_tv_service
+            else:
+                if service_list.count(def_service) > 0:
+                    service = def_service
+        else:
+            if service_list.count(def_movie_service) > 0:
+                service = def_movie_service
+            else:
+                if service_list.count(def_service) > 0:
+                    service = def_service
+
         if len(service_list) > 0:  
             if len(service) < 1:
               self.service = service_list[0]
@@ -195,7 +208,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.controlId = -1
             self.shufle = 0
             self.subtitles_list = []
-            self.Search_Subtitles()
+            try:
+                self.Search_Subtitles()
+            except:
+                errno, errstr = sys.exc_info()[:2]
+                self.getControl( STATUS_LABEL ).setLabel( "Error:" + " " + str(errstr) )
+                xbmc.sleep(2000)
+                self.exit_script()
         else:
             self.getControl( STATUS_LABEL ).setLabel( "No Services Have been selected" )
             xbmc.sleep(2000)
@@ -211,16 +230,38 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
 ###-------------------------- Search Subtitles -------------################
 
-    def Search_Subtitles( self ):        
+    def Search_Subtitles( self ):
+        self.subtitles_list = []
         self.getControl( SUBTITLES_LIST ).reset()
         self.getControl( LOADING_IMAGE ).setImage( xbmc.translatePath( os.path.join( SERVICE_DIR, self.service, "logo.png") ) )
-        self.getControl( STATUS_LABEL ).setLabel( _( 635 ) )    
     
         exec ( "from services.%s import service as Service" % (self.service))
         self.Service = Service
         self.getControl( STATUS_LABEL ).setLabel( _( 646 ) )
         msg = ""
-        self.subtitles_list, self.session_id, msg = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3 )
+
+        xbmc.output("Socket timeout: %s" % (socket.getdefaulttimeout(),),level=xbmc.LOGDEBUG )
+        xbmc.output("Timeout Setting: %s" % (__settings__.getSetting( "timeout" ),),level=xbmc.LOGDEBUG )
+        
+        socket.setdefaulttimeout(float(__settings__.getSetting( "timeout" )))
+        xbmc.output("Socket timeout: %s" % (socket.getdefaulttimeout(),),level=xbmc.LOGDEBUG )
+        
+        try: 
+            self.subtitles_list, self.session_id, msg = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3 )
+        except socket.error:
+            errno, errstr = sys.exc_info()[:2]
+            if errno == socket.timeout:
+                msg = _( 656 )
+            else:
+                msg =  "%s: %s" % ( _( 653 ),str(errstr[1]), )
+        except:
+            errno, errstr = sys.exc_info()[:2]
+            msg = "Error: %s" % ( str(errstr), )
+
+        socket.setdefaulttimeout(None)
+
+        xbmc.output("Socket timeout: %s" % (socket.getdefaulttimeout(),),level=xbmc.LOGDEBUG )
+        
         self.getControl( STATUS_LABEL ).setLabel( _( 642 ) % ( "...", ) )
 
         if not self.subtitles_list: 
@@ -416,7 +457,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 ###-------------------------- "Esc" , "Back" button  -------------################
         
 def onAction( self, action ):
-    if ( action.getButtonCode() in CANCEL_DIALOG ):
+    if ( action.getButtonCode() in CANCEL_DIALOG):
         self.exit_script()
 
 

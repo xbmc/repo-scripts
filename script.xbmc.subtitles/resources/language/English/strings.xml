@@ -60,6 +60,7 @@
     <string id="652">Subtitles file downloaded and extracted</string>
     <string id="653">Connection failed</string>
     <string id="654">Error extracting subtitles</string>
+    <string id="656">Service did not respond within the time out limit</string>
     <string id="741">No subtitles found</string>
     <string id="742"> subtitles found</string>
     <string id="744"> subtitles found for </string>
@@ -73,6 +74,7 @@
     <string id="752">Version %s of %s is available</string>
     <string id="753">You need rev%s and higher to run this script</string>
     <string id="754">Your XBMC is rev%i</string>
+    <string id="755">Server is overloaded, please try again later</string>
       <!-- 
    * Script Settings
    -->
@@ -88,10 +90,13 @@
   <string id="30110">- Manually Enter Search String</string>
   <string id="30111">- Third Language</string>  
   <string id="30112">- Select Default Service</string>
+  <string id="30113">- Select Default Movie Service</string>
+  <string id="30114">- Select Default TV Show Service</string>
   <string id="30118">- Display file name in results page</string>
   <string id="30119">- Search Using Parent Folder</string>
   <string id="30120">- Set Service Label Colour</string>
   <string id="30121">- Add Language To Filename </string>
+  <string id="30122">- Set Default Timeout</string>
     <!-- Optional  -->
   <string id="30201">Albanian</string>
   <string id="30202">Arabic</string>
