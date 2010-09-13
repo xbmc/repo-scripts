@@ -1,4 +1,37 @@
 
+0.6.1 (08/2010)
+~~~~~~~~~~~~~
+UI and general behaviour
+    * fullscreen video browser
+    * implemented different caching options: CACHEALL, CACHEITEM, CACHEITEMANDNEXT
+    * added character filter: select games by first character
+    * skinning support: all game properties are available in the skin xml now
+    * delay videoplayback for one second: better behaviour when browsing the game list
+    * added log level as parameter to config.xml
+    * new option: preventUnfilteredSearch
+    * changed ordering in game list to case insensitive
+    * support for pgup, pgdn, home, end
+    * bugfix: don't restart video if we are already playing the current file
+
+Import
+    * restructuring import methods: scan large description files game by game
+    * importing games: progress update per game and not per rom collection
+    * use default values for all settings: may keep config.xml more simple
+    * check config.xml modification time at startup
+    * new option: using foldername as crc value (useFoldernameAsCRC)
+    * new option: using filename as crc value (useFilenameAsCRC)
+    * ignore case when searching for media files (works also on linux)
+    * limit number of subdirs when importing roms
+    * bugfix: non-ascii chars in filenames during import
+    * bugfix: unique constraint on game (name, romcollection)
+    * bugfix: handle crc with leading zero
+    * bugfix: handle game names with brackets []
+
+Launching Games
+    * xbox support: launch emulators and xbox games
+    * xbox support: create cut files for xbox on the fly
+    * applaunch.sh supports MacOSX (thanks to ryosaeba87)
+
 0.5.4 (08/2010)
 ~~~~~~~~~~~~~
     * minimize XBMC before launching emulator
@@ -9,7 +42,8 @@
 
 0.5.3 (08/2010)
 ~~~~~~~~~~~~~
-    * initial Dharma version
+    * initial Dharma version    
+    * same feature set as V0.5 - just Dharma compatible
 
 V0.5 (05/2010)
 ~~~~~~~~~~~~~

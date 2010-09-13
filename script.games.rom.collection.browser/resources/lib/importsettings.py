@@ -1,20 +1,21 @@
 
 import os, sys, string, re
 from pysqlite2 import dbapi2 as sqlite
-from xml.dom.minidom import Document, parseString
+from xml.dom.minidom import parseString
 
 from gamedatabase import *
 import util
+from util import *
 
 #TODO use elementtree instead of minidom
 from elementtree.ElementTree import *
 
 class SettingsImporter:
 	
-	def importSettings(self, gdb, databaseDir, gui):
+	def importSettings(self, gdb, gui):
 		
 		self.gdb = gdb
-		configFile = os.path.join(databaseDir, 'config.xml')
+		configFile = util.getConfigXmlPath()
 		
 		if(os.path.isfile(configFile)):
 			try:
@@ -22,23 +23,23 @@ class SettingsImporter:
 				xmlDoc = fh.read()
 				fh.close()				
 			except Exception, (exc):
-				util.log('Cannot open file config.xml: ' +str(exc), util.LOG_LEVEL_ERROR)
+				Logutil.log('Cannot open file config.xml: ' +str(exc), util.LOG_LEVEL_ERROR)
 				return False, 'Error: Cannot open file config.xml'
 				
 			try:
 				xmlDoc = parseString(xmlDoc)
 			except Exception, (exc):
-				util.log('config.xml is no valid XML File: ' +str(exc), util.LOG_LEVEL_ERROR)
+				Logutil.log('config.xml is no valid XML File: ' +str(exc), util.LOG_LEVEL_ERROR)
 				return False, 'Error: config.xml is no valid XML File'
 				
 		else:	
-			util.log('File config.xml does not exist', util.LOG_LEVEL_ERROR)
+			Logutil.log('File config.xml does not exist. Place a valid config file here: ' +str(configFile), util.LOG_LEVEL_ERROR)
 			return False, 'Error: File config.xml does not exist'
 
 		#itemCount and stepCount are used to show percentage in ProgressDialog		
 		gui.itemCount = 5
 		stepCount = 1
-		gui.writeMsg("Importing Settings...", stepCount)
+		gui.writeMsg("Importing Settings...", "", "", stepCount)
 				
 		#check config.xml
 		success, errorCount = self.checkFileStructure(xmlDoc, configFile)
@@ -47,22 +48,32 @@ class SettingsImporter:
 		
 		#start import
 		rcbSettings = xmlDoc.getElementsByTagName('RCBSettings')
+		
+		if(len(rcbSettings) == 0):
+			self.insertRCBSetting(None, None, '', '', '', '', '', '', '', '', '', '', 0)
+		else:		
+			for rcbSetting in rcbSettings:
+				favoriteConsole = self.getElementValue(rcbSetting, 'favoriteConsole')
+				favoriteGenre = self.getElementValue(rcbSetting, 'favoriteGenre')
+				showEntryAllConsoles = self.getElementValue(rcbSetting, 'showEntryAllConsoles')
+				showEntryAllGenres = self.getElementValue(rcbSetting, 'showEntryAllGenres')
+				showEntryAllYears = self.getElementValue(rcbSetting, 'showEntryAllYears')
+				showEntryAllPublisher = self.getElementValue(rcbSetting, 'showEntryAllPublisher')
+				saveViewStateOnExit = self.getElementValue(rcbSetting, 'saveViewStateOnExit')
+				saveViewStateOnLaunchEmu = self.getElementValue(rcbSetting, 'saveViewStateOnLaunchEmu')
+				logLevel = self.getElementValue(rcbSetting, 'logLevel')
+				showEntryAllChars = self.getElementValue(rcbSetting, 'showEntryAllChars')				
+				preventUnfilteredSearch = self.getElementValue(rcbSetting, 'preventUnfilteredSearch')
+				cachingOption = self.getElementValue(rcbSetting, 'cachingOption')
 				
-		for rcbSetting in rcbSettings:
-			favoriteConsole = self.getElementValue(rcbSetting, 'favoriteConsole')
-			favoriteGenre = self.getElementValue(rcbSetting, 'favoriteGenre')
-			showEntryAllConsoles = self.getElementValue(rcbSetting, 'showEntryAllConsoles')
-			showEntryAllGenres = self.getElementValue(rcbSetting, 'showEntryAllGenres')
-			showEntryAllYears = self.getElementValue(rcbSetting, 'showEntryAllYears')
-			showEntryAllPublisher = self.getElementValue(rcbSetting, 'showEntryAllPublisher')
-			saveViewStateOnExit = self.getElementValue(rcbSetting, 'saveViewStateOnExit')
-			saveViewStateOnLaunchEmu = self.getElementValue(rcbSetting, 'saveViewStateOnLaunchEmu')
-			
-			self.insertRCBSetting(favoriteConsole, favoriteGenre, showEntryAllConsoles, showEntryAllGenres, showEntryAllYears, showEntryAllPublisher, 
-				saveViewStateOnExit, saveViewStateOnLaunchEmu)
+				#save last edit time of config.xml 
+				modifyTime = util.getConfigXmlModifyTime()
+				
+				self.insertRCBSetting(favoriteConsole, favoriteGenre, showEntryAllConsoles, showEntryAllGenres, showEntryAllYears, showEntryAllPublisher, 
+					saveViewStateOnExit, saveViewStateOnLaunchEmu, logLevel, showEntryAllChars, preventUnfilteredSearch, cachingOption, modifyTime)
 			
 		stepCount = stepCount +1
-		gui.writeMsg("Importing Console Info...", stepCount)
+		gui.writeMsg("Importing Console Info...", "", "", stepCount)
 		
 		consoles = xmlDoc.getElementsByTagName('Console')
 		for console in consoles:			
@@ -74,7 +85,7 @@ class SettingsImporter:
 		
 		
 		stepCount = stepCount +1
-		gui.writeMsg("Importing File Types...", stepCount)
+		gui.writeMsg("Importing File Types...", "", "", stepCount)
 		
 		#import internal file types
 		self.insertFileType('rcb_rom', 'image', 'game')
@@ -93,7 +104,7 @@ class SettingsImporter:
 		
 		
 		stepCount = stepCount +1
-		gui.writeMsg("Importing Rom Collections...", stepCount)
+		gui.writeMsg("Importing Rom Collections...", "", "", stepCount)
 		
 		#fileTypesForControl must be deleted. There is no useful unique key
 		FileTypeForControl(self.gdb).deleteAll()
@@ -116,6 +127,12 @@ class SettingsImporter:
 			searchGameByCRC = self.getElementValue(romCollection, 'searchGameByCRC')
 			searchGameByCRCIgnoreRomName = self.getElementValue(romCollection, 'searchGameByCRCIgnoreRomName')
 			ignoreGameWithoutDesc = self.getElementValue(romCollection, 'ignoreGameWithoutDesc')
+			xboxCreateShortcut = self.getElementValue(romCollection, 'xboxCreateShortcut')
+			xboxCreateShortcutAddRomfile = self.getElementValue(romCollection, 'xboxCreateShortcutAddRomfile')
+			xboxCreateShortcutUseShortGamename = self.getElementValue(romCollection, 'xboxCreateShortcutUseShortGamename')
+			useFoldernameAsCRC = self.getElementValue(romCollection, 'useFoldernameAsCRC')
+			useFilenameAsCRC = self.getElementValue(romCollection, 'useFilenameAsCRC')
+			maxFolderDepth = self.getElementValue(romCollection, 'maxFolderDepth')
 				
 			
 			romPaths = self.getElementValues(romCollection, 'romPath')
@@ -127,7 +144,8 @@ class SettingsImporter:
 			#import romCollection first to obtain the id
 			romCollectionId = self.insertRomCollection(consoleName, romCollName, emuCmd, emuSolo, escapeCmd, relyOnNaming, startWithDescFile, 
 				descFilePerGame, descParserFile, diskPrefix, typeOfManual, allowUpdate, ignoreOnScan, searchGameByCRC, 
-				searchGameByCRCIgnoreRomName, ignoreGameWithoutDesc)
+				searchGameByCRCIgnoreRomName, ignoreGameWithoutDesc, xboxCreateShortcut, xboxCreateShortcutAddRomfile, xboxCreateShortcutUseShortGamename,
+				useFoldernameAsCRC, useFilenameAsCRC, maxFolderDepth)
 			
 			
 			self.insertPaths(romCollectionId, romPaths, 'rcb_rom')
@@ -151,6 +169,7 @@ class SettingsImporter:
 			fileTypesForMainViewGameInfoLowerRight = self.getElementValues(romCollection, 'fileTypeForMainViewGameInfoLowerRight')
 			fileTypesForMainViewVideoWindowBig = self.getElementValues(romCollection, 'fileTypeForMainViewVideoWindowBig')
 			fileTypesForMainViewVideoWindowSmall = self.getElementValues(romCollection, 'fileTypeForMainViewVideoWindowSmall')
+			fileTypesForMainViewVideoFullscreen = self.getElementValues(romCollection, 'fileTypeForMainViewFullscreenVideo')
 			
 			fileTypesForGameInfoViewBackground = self.getElementValues(romCollection, 'fileTypeForGameInfoViewBackground')
 			fileTypesForGameInfoViewGamelist = self.getElementValues(romCollection, 'fileTypeForGameInfoViewGamelist')
@@ -173,7 +192,8 @@ class SettingsImporter:
 			self.insertFileTypeForControl(romCollectionId, fileTypesForMainViewGameInfoLowerLeft, 'mainviewgameinfolowerleft')
 			self.insertFileTypeForControl(romCollectionId, fileTypesForMainViewGameInfoLowerRight, 'mainviewgameinfolowerright')
 			self.insertFileTypeForControl(romCollectionId, fileTypesForMainViewVideoWindowBig, 'mainviewvideowindowbig')
-			self.insertFileTypeForControl(romCollectionId, fileTypesForMainViewVideoWindowSmall, 'mainviewvideowindowsmall')			
+			self.insertFileTypeForControl(romCollectionId, fileTypesForMainViewVideoWindowSmall, 'mainviewvideowindowsmall')
+			self.insertFileTypeForControl(romCollectionId, fileTypesForMainViewVideoFullscreen, 'mainviewvideofullscreen')
 			
 			self.insertFileTypeForControl(romCollectionId, fileTypesForGameInfoViewBackground, 'gameinfoviewbackground')
 			self.insertFileTypeForControl(romCollectionId, fileTypesForGameInfoViewGamelist, 'gameinfoviewgamelist')
@@ -186,7 +206,7 @@ class SettingsImporter:
 		#TODO Transaction?
 		gdb.commit()
 		stepCount = stepCount +1
-		gui.writeMsg("Done.", stepCount)
+		gui.writeMsg("Done.", "", "", stepCount)
 		return True, ''				
 	
 	
@@ -249,7 +269,8 @@ class SettingsImporter:
 		return attr
 	
 	
-	def insertRCBSetting(self, favoriteConsole, favoriteGenre, showEntryAllConsoles, showEntryAllGenres, showEntryAllYears, showEntryAllPublisher, saveViewStateOnExit, saveViewStateOnLaunchEmu):
+	def insertRCBSetting(self, favoriteConsole, favoriteGenre, showEntryAllConsoles, showEntryAllGenres, showEntryAllYears, showEntryAllPublisher, saveViewStateOnExit, 
+			saveViewStateOnLaunchEmu, logLevel, showEntryAllChars, preventUnfilteredSearch, cachingOption, modifyTime):
 		
 		rcbSettingRows = RCBSetting(self.gdb).getAll()
 		
@@ -266,17 +287,45 @@ class SettingsImporter:
 		if(showEntryAllPublisher == ''):
 			showEntryAllPublisher = 'True'
 		if(saveViewStateOnExit == ''):
-			saveViewStateOnExit = 'False'
+			saveViewStateOnExit = 'True'
 		if(saveViewStateOnLaunchEmu == ''):
-			saveViewStateOnLaunchEmu = 'False'
+			saveViewStateOnLaunchEmu = 'True'
+		if(showEntryAllChars == ''):
+			showEntryAllChars = 'True'
+		if(preventUnfilteredSearch == ''):
+			preventUnfilteredSearch = 'False'
+		
+		if(logLevel == ''):
+			logLevel = 1
+		elif(logLevel == 'ERROR'):
+			logLevel = 0
+		elif(logLevel == 'WARNING'):
+			logLevel = 1
+		elif(logLevel == 'INFO'):
+			logLevel = 2
+		elif(logLevel == 'DEBUG'):
+			logLevel = 3
+			
+		if(cachingOption == ''):
+			cachingOption = 3
+		elif(cachingOption == 'CACHEALL'):
+			cachingOption = 0
+		elif(cachingOption == 'CACHESELECTION'):
+			cachingOption = 1
+		elif(cachingOption == 'CACHEITEM'):
+			cachingOption = 2
+		elif(cachingOption == 'CACHEITEMANDNEXT'):
+			cachingOption = 3					
+		
 		
 		if(rcbSettingRows == None or len(rcbSettingRows) == 0):			
-			RCBSetting(self.gdb).insert((None, None, None, None, None, None, favoriteConsole, favoriteGenre, None, CURRENT_SCRIPT_VERSION, 
-				showEntryAllConsoles, showEntryAllGenres, showEntryAllYears, showEntryAllPublisher, saveViewStateOnExit, saveViewStateOnLaunchEmu, None, None))
+			RCBSetting(self.gdb).insert((None, None, None, None, None, None, favoriteConsole, favoriteGenre, None, CURRENT_DB_VERSION, 
+				showEntryAllConsoles, showEntryAllGenres, showEntryAllYears, showEntryAllPublisher, saveViewStateOnExit, saveViewStateOnLaunchEmu, None, None, logLevel,
+				showEntryAllChars, None, preventUnfilteredSearch, cachingOption, modifyTime))
 		else:
 			rcbSetting = rcbSettingRows[0]
-			RCBSetting(self.gdb).update(('dbVersion', 'favoriteConsoleId', 'favoriteGenreId', 'showEntryAllConsoles', 'showEntryAllGenres', 'showEntryAllYears', 'showEntryAllPublisher', 'saveViewStateOnExit', 'saveViewStateOnLaunchEmu'),
-				(CURRENT_SCRIPT_VERSION, favoriteConsole, favoriteGenre, showEntryAllConsoles, showEntryAllGenres, showEntryAllYears, showEntryAllPublisher, saveViewStateOnExit, saveViewStateOnLaunchEmu), rcbSetting[0])
+			RCBSetting(self.gdb).update(('dbVersion', 'favoriteConsoleId', 'favoriteGenreId', 'showEntryAllConsoles', 'showEntryAllGenres', 'showEntryAllYears', 'showEntryAllPublisher', 'saveViewStateOnExit', 'saveViewStateOnLaunchEmu', 'logLevel', 'showEntryAllChars', 'preventUnfilteredSearch', 'cachingOption', 'lastConfigChange'),
+				(CURRENT_DB_VERSION, favoriteConsole, favoriteGenre, showEntryAllConsoles, showEntryAllGenres, showEntryAllYears, showEntryAllPublisher, saveViewStateOnExit, saveViewStateOnLaunchEmu, logLevel, showEntryAllChars, preventUnfilteredSearch, cachingOption, modifyTime), rcbSetting[0])
 	
 	
 	def insertConsole(self, consoleName, consoleDesc, consoleImage):
@@ -289,7 +338,8 @@ class SettingsImporter:
 	
 	def insertRomCollection(self, consoleName, romCollName, emuCmd, emuSolo, escapeCmd, relyOnNaming, startWithDescFile, 
 				descFilePerGame, descParserFile, diskPrefix, typeOfManual, allowUpdate, ignoreOnScan, searchGameByCRC, 
-				searchGameByCRCIgnoreRomName, ignoreGameWithoutDesc):		
+				searchGameByCRCIgnoreRomName, ignoreGameWithoutDesc, xboxCreateShortcut, 
+				xboxCreateShortcutAddRomfile, xboxCreateShortcutUseShortGamename, useFoldernameAsCRC, useFilenameAsCRC, maxFolderDepth):		
 		
 		#set default values
 		if(emuSolo == ''):
@@ -316,6 +366,18 @@ class SettingsImporter:
 			searchGameByCRCIgnoreRomName = 'False'
 		if(ignoreGameWithoutDesc == ''):
 			ignoreGameWithoutDesc = 'False'	
+		if(xboxCreateShortcut == ''):
+			xboxCreateShortcut = 'False'	
+		if(xboxCreateShortcutAddRomfile == ''):
+			xboxCreateShortcutAddRomfile = 'False'	
+		if(xboxCreateShortcutUseShortGamename == ''):
+			xboxCreateShortcutUseShortGamename = 'False'		
+		if(useFoldernameAsCRC == ''):
+			useFoldernameAsCRC = 'False'
+		if(useFilenameAsCRC == ''):
+			useFilenameAsCRC = 'False'
+		if(maxFolderDepth == ''):
+			maxFolderDepth = 999			
 		
 		consoleRow = Console(self.gdb).getOneByName(consoleName)
 		if(consoleRow == None):
@@ -326,14 +388,17 @@ class SettingsImporter:
 		romCollectionRow = RomCollection(self.gdb).getOneByName(romCollName)
 		if(romCollectionRow == None):		
 			RomCollection(self.gdb).insert((romCollName, consoleId, emuCmd, emuSolo, escapeCmd, descParserFile, relyOnNaming, 
-			startWithDescFile, descFilePerGame, diskPrefix, typeOfManual, allowUpdate, ignoreOnScan, searchGameByCRC, searchGameByCRCIgnoreRomName, 
-			ignoreGameWithoutDesc))
+				startWithDescFile, descFilePerGame, diskPrefix, typeOfManual, allowUpdate, ignoreOnScan, searchGameByCRC, searchGameByCRCIgnoreRomName, 
+				ignoreGameWithoutDesc, xboxCreateShortcut, xboxCreateShortcutAddRomfile, xboxCreateShortcutUseShortGamename, useFoldernameAsCRC, useFilenameAsCRC, maxFolderDepth))
 			romCollectionId = self.gdb.cursor.lastrowid
 		else:
 			RomCollection(self.gdb).update(('name', 'consoleId', 'emuCommandline', 'useEmuSolo', 'escapeEmuCmd', 'descriptionParserFile', 'relyOnFileNaming', 'startWithDescFile',
-								'descFilePerGame', 'diskPrefix', 'typeOfManual', 'allowUpdate', 'ignoreOnScan', 'searchGameByCRC', 'searchGameByCRCIgnoreRomName', 'ignoreGameWithoutDesc'),
+								'descFilePerGame', 'diskPrefix', 'typeOfManual', 'allowUpdate', 'ignoreOnScan', 'searchGameByCRC', 
+								'searchGameByCRCIgnoreRomName', 'ignoreGameWithoutDesc', 'xboxCreateShortcut', 'xboxCreateShortcutAddRomfile', 
+								'xboxCreateShortcutUseShortGamename', 'useFoldernameAsCRC', 'useFilenameAsCRC', 'maxFolderDepth'),
 								(romCollName, consoleId, emuCmd, emuSolo, escapeCmd, descParserFile, relyOnNaming, startWithDescFile, descFilePerGame, diskPrefix, typeOfManual, allowUpdate, 
-								ignoreOnScan, searchGameByCRC, searchGameByCRCIgnoreRomName, ignoreGameWithoutDesc),
+								ignoreOnScan, searchGameByCRC, searchGameByCRCIgnoreRomName, ignoreGameWithoutDesc,xboxCreateShortcut, xboxCreateShortcutAddRomfile, 
+								xboxCreateShortcutUseShortGamename, useFoldernameAsCRC, useFilenameAsCRC, maxFolderDepth),
 								romCollectionRow[0])
 			
 			romCollectionId = romCollectionRow[0]
@@ -389,106 +454,116 @@ class SettingsImporter:
 		
 		#RCBSettings
 		rcbSettings = xmlDoc.getElementsByTagName('RCBSettings')		
-		if(len(rcbSettings) != 1):
+		if(len(rcbSettings) > 1):
 			errorCount = errorCount +1
-			util.log('Import Settings: Error in config.xml. There must be exactly 1 RCBSettings entry!', util.LOG_LEVEL_ERROR)
+			Logutil.log('Import Settings: Error in config.xml. There is more than 1 RCBSettings entry!', util.LOG_LEVEL_ERROR)
+		elif(len(rcbSettings) == 1):
+			rcbSetting = rcbSettings[0]
+			logLevel = self.getElementValue(rcbSetting, 'logLevel')
+			if(logLevel != ''):
+				if(logLevel not in ('DEBUG', 'INFO', 'WARNING', 'ERROR')):
+					errorCount = errorCount +1
+					Logutil.log('Import Settings: Error in config.xml. logLevel must be DEBUG, INFO, WARNING OR ERROR!', util.LOG_LEVEL_ERROR)
+		
+			cachingOption = self.getElementValue(rcbSetting, 'cachingOption')
+			if(cachingOption != ''):
+				if(cachingOption not in ('CACHEALL', 'CACHEITEM', 'CACHEITEMANDNEXT')):
+					errorCount = errorCount +1
+					Logutil.log('Import Settings: Error in config.xml. cachingOption must be one of CACHEALL, CACHEITEM, CACHEITEMANDNEXT!', util.LOG_LEVEL_ERROR)	
+		
 			
 		#Consoles
 		consoles = xmlDoc.getElementsByTagName('Console')
 		if(len(consoles) == 0):
 			errorCount = errorCount +1
-			util.log('Import Settings: Error in config.xml. You must have at least 1 Console entry!', util.LOG_LEVEL_ERROR)
+			Logutil.log('Import Settings: Error in config.xml. You must have at least 1 Console entry!', util.LOG_LEVEL_ERROR)
 		
 		for console in consoles:			
 			consoleName = self.getElementValue(console, 'name')
 			if(consoleName == ''):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. Console must have a name!', util.LOG_LEVEL_ERROR)
+				Logutil.log('Import Settings: Error in config.xml. Console must have a name!', util.LOG_LEVEL_ERROR)
 				
 		#FileTypes
-		fileTypes = xmlDoc.getElementsByTagName('FileType')
-		if(len(fileTypes) == 0):
-			errorCount = errorCount +1
-			util.log('Import Settings: Error in config.xml. You must have at least 1 FileType entry!', util.LOG_LEVEL_ERROR)
-		
+		fileTypes = xmlDoc.getElementsByTagName('FileType')		
 		for fileType in fileTypes:
 			
-			name = self.getElementValue(fileType, 'name')			
+			name = self.getElementValue(fileType, 'name')
 			if(name == ''):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. FileType must have a name!', util.LOG_LEVEL_ERROR)
+				Logutil.log('Import Settings: Error in config.xml. FileType must have a name!', util.LOG_LEVEL_ERROR)
 			
 			type = self.getElementValue(fileType, 'type')			
 			if(type == ''):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. FileType must have a type!', util.LOG_LEVEL_ERROR)			
+				Logutil.log('Import Settings: Error in config.xml. FileType must have a type!', util.LOG_LEVEL_ERROR)			
 			elif(type not in ('image', 'video')):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. Allowed values for FileType/@type: image, video!', util.LOG_LEVEL_ERROR)
+				Logutil.log('Import Settings: Error in config.xml. Allowed values for FileType/@type: image, video!', util.LOG_LEVEL_ERROR)
 				
 			parent = self.getElementValue(fileType, 'parent')
 			if(parent == ''):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. FileType must have a parent!', util.LOG_LEVEL_ERROR)
+				Logutil.log('Import Settings: Error in config.xml. FileType must have a parent!', util.LOG_LEVEL_ERROR)
 			elif(parent not in ('game', 'publisher', 'developer', 'console', 'romcollection')):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. Allowed values for FileType/@parent: game, publisher, developer, console, romcollection!', util.LOG_LEVEL_ERROR)
+				Logutil.log('Import Settings: Error in config.xml. Allowed values for FileType/@parent: game, publisher, developer, console, romcollection!', util.LOG_LEVEL_ERROR)
 				
 			
 		#RomCollection
 		romCollections = xmlDoc.getElementsByTagName('RomCollection')
 		if(len(romCollections) == 0):
 			errorCount = errorCount +1
-			util.log('Import Settings: Error in config.xml. You must have at least 1 RomCollection entry!', util.LOG_LEVEL_ERROR)
+			Logutil.log('Import Settings: Error in config.xml. You must have at least 1 RomCollection entry!', util.LOG_LEVEL_ERROR)
 			
 		for romCollection in romCollections:			
 			
 			romCollName = self.getElementValue(romCollection, 'name')
 			if(romCollName == ''):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. RomCollection must have a name!', util.LOG_LEVEL_ERROR)
+				Logutil.log('Import Settings: Error in config.xml. RomCollection must have a name!', util.LOG_LEVEL_ERROR)
 				
 			consoleName = self.getElementValue(romCollection, 'consoleName')
 			if(consoleName == ''):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. RomCollection %s must have a consoleName!' %romCollName, util.LOG_LEVEL_ERROR)
+				Logutil.log('Import Settings: Error in config.xml. RomCollection %s must have a consoleName!' %romCollName, util.LOG_LEVEL_ERROR)
 			else:
 				#check if consoleName is configured in Consoles
 				elementFound = self.checkReferencedElement(tree, 'Consoles/Console/name', consoleName)				
 				if(elementFound == False):
 					errorCount = errorCount +1
-					util.log('Import Settings: Error in config.xml. Console %s in Rom Collection %s does not exist in Consoles!' %(consoleName, romCollName), util.LOG_LEVEL_ERROR)
+					Logutil.log('Import Settings: Error in config.xml. Console %s in Rom Collection %s does not exist in Consoles!' %(consoleName, romCollName), util.LOG_LEVEL_ERROR)
 			
 			emuCmd = self.getElementValue(romCollection, 'emulatorCmd')
 			if(emuCmd == ''):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. RomCollection %s must have an emulatorCmd!' %romCollName, util.LOG_LEVEL_ERROR)			
+				Logutil.log('Import Settings: Error in config.xml. RomCollection %s must have an emulatorCmd!' %romCollName, util.LOG_LEVEL_ERROR)			
 				
 			romPaths = self.getElementValues(romCollection, 'romPath')
 			if(len(romPaths) == 0):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. RomCollection %s must have a romPath!' %romCollName, util.LOG_LEVEL_ERROR)
+				Logutil.log('Import Settings: Error in config.xml. RomCollection %s must have a romPath!' %romCollName, util.LOG_LEVEL_ERROR)
 				
 			for romPath in romPaths:
 				dirname = os.path.dirname(romPath)
 				if(not os.path.isdir(dirname)):
 					errorCount = errorCount +1
-					util.log('Import Settings: Error in config.xml. Configured romPath %s in RomCollection %s does not exist!' %(dirname, romCollName), util.LOG_LEVEL_ERROR)
+					Logutil.log('Import Settings: Error in config.xml. Configured romPath %s in RomCollection %s does not exist!' %(dirname, romCollName), util.LOG_LEVEL_ERROR)
 			
 			descFilePaths = self.getElementValues(romCollection, 'descFilePath')
 			"""
 			if(len(descFilePaths) == 0):
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. RomCollection %s must have a descFilePath!' %romCollName, util.LOG_LEVEL_ERROR)
+				Logutil.log('Import Settings: Error in config.xml. RomCollection %s must have a descFilePath!' %romCollName, util.LOG_LEVEL_ERROR)
 			"""
 			if(len(descFilePaths) > 0):
 				descParserFile = self.getElementValue(romCollection, 'descriptionParserFile')
 				if(descParserFile == ''):
 					errorCount = errorCount +1
-					util.log('Import Settings: Error in config.xml. RomCollection %s must have a descParserFile (if you have configured a descFilePath)!' %romCollName, util.LOG_LEVEL_ERROR)
+					Logutil.log('Import Settings: Error in config.xml. RomCollection %s must have a descParserFile (if you have configured a descFilePath)!' %romCollName, util.LOG_LEVEL_ERROR)
 				elif(not os.path.isfile(descParserFile)):
 					errorCount = errorCount +1
-					util.log('Import Settings: Error in config.xml. descParserFile %s in RomCollection %s does not exist!' %(descParserFile, romCollName), util.LOG_LEVEL_ERROR)
+					Logutil.log('Import Settings: Error in config.xml. descParserFile %s in RomCollection %s does not exist!' %(descParserFile, romCollName), util.LOG_LEVEL_ERROR)
 			
 			for descFilePath in descFilePaths:							
 				dirname = os.path.dirname(descFilePath)
@@ -497,20 +572,20 @@ class SettingsImporter:
 					dirname = dirname[0:phIndex]				
 				if(not os.path.isdir(dirname)):
 					errorCount = errorCount +1
-					util.log('Import Settings: Error in config.xml. Configured descFilePath %s in RomCollection %s does not exist!' %(dirname, romCollName), util.LOG_LEVEL_ERROR)
+					Logutil.log('Import Settings: Error in config.xml. Configured descFilePath %s in RomCollection %s does not exist!' %(dirname, romCollName), util.LOG_LEVEL_ERROR)
 			
 			mediaPaths = romCollection.getElementsByTagName('mediaPath')
 			for mediaPath in mediaPaths:				
 				type = self.getAttribute(mediaPath, 'type')
 				if(type == ''):
 					errorCount = errorCount +1
-					util.log('Import Settings: Error in config.xml. MediaPath must have a type!', util.LOG_LEVEL_ERROR)
+					Logutil.log('Import Settings: Error in config.xml. MediaPath must have a type!', util.LOG_LEVEL_ERROR)
 				else:
 					#check if type is configured
 					elementFound = self.checkReferencedElement(tree, 'FileTypes/FileType/name', type)
 					if(elementFound == False):
 						errorCount = errorCount +1
-						util.log('Import Settings: Error in config.xml. mediaPath type %s in Rom Collection %s does not exist in FileTypes!' %(type, romCollName), util.LOG_LEVEL_ERROR)
+						Logutil.log('Import Settings: Error in config.xml. mediaPath type %s in Rom Collection %s does not exist in FileTypes!' %(type, romCollName), util.LOG_LEVEL_ERROR)
 			
 
 			errorCount = self.checkFileTypeForElements('fileTypeForGameList', romCollection, errorCount, tree)
@@ -548,14 +623,14 @@ class SettingsImporter:
 			firstChild = element.firstChild
 			if(firstChild == None or firstChild.nodeValue == ''):																
 				errorCount = errorCount +1
-				util.log('Import Settings: Error in config.xml. FileTypeFor... element must have a value!', util.LOG_LEVEL_ERROR)							
+				Logutil.log('Import Settings: Error in config.xml. FileTypeFor... element must have a value!', util.LOG_LEVEL_ERROR)							
 			else:
 				#check if type is configured
 				elementFound = self.checkReferencedElement(tree, 'FileTypes/FileType/name', firstChild.nodeValue)
 				if(elementFound == False):
 					romCollName = self.getElementValue(romCollection, 'name')					
 					errorCount = errorCount +1
-					util.log('Import Settings: Error in config.xml. FileTypeFor... value %s in Rom Collection %s does not exist in FileTypes!' %(firstChild.nodeValue, romCollName), util.LOG_LEVEL_ERROR)
+					Logutil.log('Import Settings: Error in config.xml. FileTypeFor... value %s in Rom Collection %s does not exist in FileTypes!' %(firstChild.nodeValue, romCollName), util.LOG_LEVEL_ERROR)
 				
 		return errorCount
 	

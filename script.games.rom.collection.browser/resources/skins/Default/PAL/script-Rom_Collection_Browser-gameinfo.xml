@@ -22,7 +22,7 @@
 		    <posy>0</posy>
 		    <width>720</width>
 		    <height>580</height>
-		    <texture>background.png</texture>
+		    <texture>$INFO[ListItem.Property(gameinfoviewbackground)]</texture>
 		</control>
 		<control type="image">
 			<description>black background overlay</description>
@@ -55,7 +55,7 @@
 						<height>30</height>
 						<posx>0</posx>
 						<posy>0</posy>
-						<info>ListItem.Icon</info>
+						<texture background="true">$INFO[ListItem.ActualIcon]</texture>					
 					</control>				
 				</itemlayout>
 				<focusedlayout width="580">				
@@ -92,6 +92,7 @@
 				<posx>100</posx>
 				<posy>0</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(genre)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -104,6 +105,7 @@
 				<posx>100</posx>
 				<posy>20</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(year)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -116,6 +118,7 @@
 				<posx>100</posx>
 				<posy>40</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(publisher)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -128,6 +131,7 @@
 				<posx>100</posx>
 				<posy>60</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(developer)]</label>
 			</control>		
 			<control type="label">
 				<posx>0</posx>
@@ -140,6 +144,7 @@
 				<posx>100</posx>
 				<posy>80</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(region)]</label>
 			</control>		
 			<control type="label">
 				<posx>0</posx>
@@ -152,6 +157,7 @@
 				<posx>100</posx>
 				<posy>100</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(media)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -164,6 +170,7 @@
 				<posx>100</posx>
 				<posy>120</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(controllertype)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -176,6 +183,7 @@
 				<posx>100</posx>
 				<posy>140</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(rating)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -188,6 +196,7 @@
 				<posx>100</posx>
 				<posy>160</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(votes)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -200,6 +209,7 @@
 				<posx>100</posx>
 				<posy>180</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(maxplayers)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -212,6 +222,7 @@
 				<posx>100</posx>
 				<posy>200</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(perspective)]</label>
 			</control>
 			<control type="label">
 				<posx>00</posx>
@@ -224,6 +235,7 @@
 				<posx>100</posx>
 				<posy>220</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(reviewer)]</label>
 			</control>			
 			<control type="label">
 				<posx>0</posx>
@@ -236,6 +248,7 @@
 				<posx>100</posx>
 				<posy>240</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(translatedby)]</label>
 			</control>						
 			
 			<control type="label">
@@ -249,6 +262,7 @@
 				<posx>100</posx>
 				<posy>260</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(originaltitle)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -261,6 +275,7 @@
 				<posx>100</posx>
 				<posy>280</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(alternatetitle)]</label>
 			</control>
 			<control type="label">
 				<posx>0</posx>
@@ -273,6 +288,7 @@
 				<posx>100</posx>
 				<posy>300</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(version)]</label>
 			</control>			
 			<control type="label">
 				<posx>0</posx>
@@ -285,12 +301,14 @@
 				<posx>100</posx>
 				<posy>320</posy>
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(playcount)]</label>
 			</control>			
 			<control type="label" id="7300">
 				<description>URL value</description>
 				<posx>0</posx>
 				<posy>340</posy>					
 				<textcolor>DDFFFFFF</textcolor>
+				<label>$INFO[ListItem.Property(url)]</label>
 			</control>			
 		</control>
 		
@@ -304,6 +322,7 @@
 			<pagecontrol>8100</pagecontrol>			
 			<textcolor>DDFFFFFF</textcolor>
 			<align>justify</align>
+			<label>$INFO[ListItem.Property(plot)]</label>
 			<!--<autoscroll delay="3000" time="1000" repeat="10000">!Control.HasFocus(8200)</autoscroll>-->
 		</control>
 		<control type="scrollbar" id="8100">
@@ -334,7 +353,7 @@
 		    <posy>440</posy>
 		    <width>100</width>
 		    <height>80</height>			
-			<texture></texture>
+			<texture>$INFO[ListItem.Property(gameinfoview1)]</texture>
 		</control>
 		<!-- gameinfoview2 -->
 		<control type="image" id="9100">
@@ -343,7 +362,7 @@
 		    <posy>440</posy>
 		    <width>100</width>
 		    <height>80</height>			
-			<texture></texture>
+			<texture>$INFO[ListItem.Property(gameinfoview2)]</texture>
 		</control>
 		<!-- gameinfoview3 -->
 		<control type="image" id="9200">
@@ -352,7 +371,7 @@
 		    <posy>440</posy>
 		    <width>100</width>
 		    <height>80</height>
-			<texture></texture>
+			<texture>$INFO[ListItem.Property(gameinfoview3)]</texture>
 		</control>
 		<!-- gameinfoview4 -->
 		<control type="image" id="9300">
@@ -361,7 +380,7 @@
 		    <posy>440</posy>
 		    <width>100</width>
 		    <height>80</height>
-			<texture></texture>
+			<texture>$INFO[ListItem.Property(gameinfoview4)]</texture>
 		</control>
 		<!-- gameinfoviewvideowindow -->
 		<control type="videowindow" id="10000">
@@ -369,7 +388,7 @@
 			<posx>460</posx>
 			<posy>390</posy>
 			<width>240</width>
-			<height>180</height>
+			<height>170</height>
 			<visible>true</visible>
 		</control>
 		

@@ -72,7 +72,13 @@ CREATE TABLE IF NOT EXISTS [RCBSetting]
 	[saveViewStateOnExit] INTEGER,
 	[saveViewStateOnLaunchEmu] INTEGER,
 	[lastFocusedControlMainView] INTEGER,
-	[lastFocusedControlGameInfoView] INTEGER
+	[lastFocusedControlGameInfoView] INTEGER,
+	[logLevel] INTEGER,
+	[showEntryAllChars] INTEGER,
+	[lastSelectedCharacterIndex] INTEGER,
+	[preventUnfilteredSearch] INTEGER,
+	[cachingOption] INTEGER,
+	[lastConfigChange] INTEGER
 );
 
 
@@ -97,7 +103,13 @@ CREATE TABLE IF NOT EXISTS [RomCollection]
 	[ignoreOnScan] INTEGER,
 	[searchGameByCRC] INTEGER,
 	[searchGameByCRCIgnoreRomName] INTEGER,
-	[ignoreGameWithoutDesc] INTEGER
+	[ignoreGameWithoutDesc] INTEGER,
+	[xboxCreateShortcut] INTEGER,
+	[xboxCreateShortcutAddRomfile] INTEGER,
+	[xboxCreateShortcutUseShortGamename] INTEGER,
+	[useFoldernameAsCRC] INTEGER,
+	[useFilenameAsCRC] INTEGER,
+	[maxFolderDepth] INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS [FileTypeForControl]
@@ -118,7 +130,7 @@ CREATE TABLE IF NOT EXISTS [FileTypeForControl]
 CREATE TABLE IF NOT EXISTS [Game] 
 (
     [id] INTEGER PRIMARY KEY AUTOINCREMENT,
-    [name] TEXT NOT NULL UNIQUE,
+    [name] TEXT NOT NULL,
     [description] TEXT,
 	[gameCmd] TEXT,
 	[alternateGameCmd] TEXT,
@@ -155,7 +167,8 @@ CREATE TABLE IF NOT EXISTS [Game]
 	[originalTitle] TEXT,
 	[alternateTitle] TEXT,
 	[translatedBy] TEXT,
-	[version] TEXT
+	[version] TEXT,
+	UNIQUE (name, romCollectionId)
 );
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="script.games.rom.collection.browser"
-  version="0.5.4"
+  version="0.6.1"
   name="Rom Collection Browser"
   provider-name="malte">
   <requires>
@@ -14,7 +14,7 @@
     <summary  lang="hu">Konzol játék ROM-ok böngészése.</summary>
     <description>Current features:
     * filter games by console, genre, year and publisher
-    * launch roms with an external emulator
+    * launch roms with external emulator
     * configure script via xml file
     * simple but configurable description file parser
     * view different images and videos per game

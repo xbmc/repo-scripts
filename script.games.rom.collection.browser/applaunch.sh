@@ -2,7 +2,9 @@
 # App Launch script - Temporarily quit XBMC to launch another program
 # Tx to rodalpho @ # http://xbmc.org/forum/showthread.php?t=34635
 # By Redsandro 	2008-07-07
-# Updated:		2008-02-28
+# By ryosaeba87	2010-08-24
+# Updated:		2010-08-24
+# 	Added support for MacOSX
 
 
 # Check for agruments
@@ -14,10 +16,26 @@ if [ -z "$*" ]; then
 fi
 
 
+case "$(uname -s)" in
+	Darwin)
+		XBMC_PID=$(ps -A | grep XBMC.app | grep -v Helper | grep -v grep | awk '{print $1}')
+		XBMC_BIN=$(ps -A | grep XBMC.app | grep -v Helper | grep -v grep | awk '{print $5}')
+		;;
+	Linux)
+		XBMC_PID=$(pidof xbmc.bin)
+		XBMC_BIN="xbmc"
+		;;	
+	*)
+		echo "I don't support this OS!"
+		exit 1
+		;;
+esac
+
 
 # Is XBMC running?
-if pidof xbmc.bin; then
-	pidof xbmc.bin|xargs kill # Shutdown nice
+if [ -n $XBMC_PID ]
+then
+	kill $XBMC_PID # Shutdown nice
 	echo "Shutdown nice"
 else
 	echo "This script should only be run from within XBMC."
@@ -25,13 +43,13 @@ else
 fi
 
 # Wait for the kill
-sleep 
-
+# sleep 
 
 
 # Is XBMC still running?
-if pidof xbmc.bin; then
-	pidof xbmc.bin|xargs kill -9 # Force immediate kill
+if [ -n $XBMC_PID ]
+then
+        kill -9 $XBMC_PID # Force immediate kill
 	echo "Shutdown hard"	
 fi
 
@@ -46,6 +64,4 @@ echo "$@"
 
 
 # Done? Restart XBMC
-xbmc
-
-
+$XBMC_BIN &

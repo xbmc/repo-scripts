@@ -6,7 +6,7 @@ import codecs
 from pyparsing import *
 from string import lowercase
 
-from xml.dom.minidom import Document, Node, parseString
+from xml.dom.minidom import parseString, Node, Document
 
 #Add support for unicode chars in commaseparated lists
 _mynoncomma = "".join( [ c for c in printables + alphas8bit if c != "," ] )
@@ -33,6 +33,7 @@ class DescriptionParser:
 			
 		grammarNode = gameGrammar[0]
 		attributes = grammarNode.attributes
+		
 		attrNode = attributes.get('type')
 		if(attrNode == None):
 			return "";
@@ -44,8 +45,49 @@ class DescriptionParser:
 		return results
 		
 		
+	def getGameGrammar(self, descParseInstruction, gamename):
+		
+		#configFile = os.path.join(databaseDir, 'parserConfig.xml')
+		fh=open(descParseInstruction,"r")
+		xmlDoc = fh.read()
+		fh.close()
+		
+		xmlDoc = parseString(xmlDoc)
+		
+		gameGrammar = xmlDoc.getElementsByTagName('GameGrammar')
+		if(gameGrammar == None):
+			return "";
+			
+		grammarNode = gameGrammar[0]
+		attributes = grammarNode.attributes
+		attrNode = attributes.get('type')
+		if(attrNode == None):
+			return "";
+			
+		parserType = attrNode.nodeValue
+		if(parserType == 'multiline'):
+			results = self.buildGameGrammar(grammarNode, gamename)
+			
+		return results
+		
 		
 	def parseMultiline(self, descFile, grammarNode, gamename):
+		
+		grammar = self.buildGameGrammar(grammarNode, gamename)
+				
+		gameGrammar = Group(grammar)		
+		
+		all = OneOrMore(gameGrammar)		
+		fh = open(str(descFile), 'r')
+		fileAsString = fh.read()		
+		fileAsString = fileAsString.decode('iso-8859-15')
+		
+		results = all.parseString(fileAsString)
+		
+		return results		
+		
+		
+	def buildGameGrammar(self, grammarNode, gamename):
 		
 		grammarList = []
 		rolGrammar = SkipTo(LineEnd()) +Suppress(LineEnd())
@@ -54,11 +96,9 @@ class DescriptionParser:
 		appendToPreviousNode = False
 		lastNodeGrammar = Empty()
 		
-		for node in grammarNode.childNodes:			
-			
+		for node in grammarNode.childNodes:
 			if (node.nodeType != Node.ELEMENT_NODE):
 				continue
-			
 			#appendToPreviousNode was set at the end of the last loop
 			if(appendToPreviousNode):				
 				nodeGrammar = lastNodeGrammar
@@ -72,9 +112,7 @@ class DescriptionParser:
 				nodeValue = node.firstChild.nodeValue				
 				literal = self.replaceTokens(nodeValue, ('LineStart', 'LineEnd'))
 				if(nodeValue.find('LineEnd') >= 0):
-					lineEndReplaced = True
-				
-							
+					lineEndReplaced = True			
 			rol = node.attributes.get('restOfLine')
 			if(rol != None and rol.nodeValue == 'true'):
 				isRol = True
@@ -82,7 +120,7 @@ class DescriptionParser:
 				appendNextNode = False
 			else:
 				isRol = False
-				appendNextNode = True
+				appendNextNode = True						
 				
 			skipTo = node.attributes.get('skipTo')
 			if(skipTo != None):
@@ -105,7 +143,7 @@ class DescriptionParser:
 			delimiter = node.attributes.get('delimiter')
 			if(delimiter != None):
 				if(nodeGrammar == None):
-					nodeGrammar = (Optional(~LineEnd() +mycommaSeparatedList))
+					nodeGrammar = (Optional(~LineEnd() +mycommaSeparatedList))				
 				else:
 					nodeGrammar += (Optional(~LineEnd() +mycommaSeparatedList))
 			elif (isRol):
@@ -138,17 +176,7 @@ class DescriptionParser:
 		for grammarItem in grammarList:
 			grammar += grammarItem
 		
-		gameGrammar = Group(grammar)
-		
-		all = OneOrMore(gameGrammar)		
-		fh = open(str(descFile), 'r')
-		fileAsString = fh.read()		
-		fileAsString = fileAsString.decode('iso-8859-15')
-		
-		results = all.parseString(fileAsString)		
-				
-		return results
-		
+		return grammar		
 		
 		
 	def replaceTokens(self, inputString, tokens):
@@ -194,15 +222,10 @@ class DescriptionParser:
 			inputString = inputString.replace(nextToken, '', 1)
 			
 			#TODO only LineStart and LineEnd implemented
-			if(nextToken == 'LineStart'):				
+			if(nextToken == 'LineStart'):
 				grammar += LineStart()
-				#print "adding LineStart"
-			elif(nextToken == 'LineEnd'):				
+			elif(nextToken == 'LineEnd'):
 				grammar += LineEnd()
-				#print "adding LineEnd"
-				
-			#print "sub: " +strsub
-			#print "newIn: " +inputString
 			tokenIndex = -1
 			
 		return grammar

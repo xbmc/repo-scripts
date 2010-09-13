@@ -1,17 +1,15 @@
 
 <!--
-Rom Collection Browser V0.5
-27.07.2010
+Rom Collection Browser 0.6.1
+08.2010
 	
 This is a commented version of RCB's config file. The first Rom Collection in this file is just an example collection that will be ignored during import (if you don't change the value of ignoreOnScan).
 
-RCB stores its settings in database. So you need to "Import Settings" if you make changes to this file. Some settings also require to "Import Games" again.
+If you make changes to this file you need to "Import Settings". Some settings also require to "Import Games" again.
 
-There are three stages where RCB reads its settings: 
-1 - Importing Games
-2 - Browsing and Displaying Games
-3 - Launching Games.
-You only need to "Import Games" again if you change settings that address the "Importing Games" stage.
+There are three stages where RCB reads its settings: Importing Games, Browsing and Displaying Games, Launching Games. You only need to "Import Games" again if you make changes to settings that address the "Importing Games" stage.
+
+Most settings have a default value. If you delete a setting, the default value will be used.
 
 See http://code.google.com/p/romcollectionbrowser for latest version and full documentation
 -->
@@ -23,18 +21,31 @@ See http://code.google.com/p/romcollectionbrowser for latest version and full do
 			Stage: Browsing and Displaying Games (no need to Import Games after changing these values) 
 		-->
 		
-		<!-- showEntryAllConsoles: You can set this property to "False" to remove the entry "All" from the Console filter list.-->
+		<!-- showEntryAllConsoles: You can set this property to "False" to remove the entry "All" from the Console filter list. default value: True -->
 		<showEntryAllConsoles>True</showEntryAllConsoles>
-		<!-- showEntryAllGenres: You can set this property to "False" to remove the entry "All" from the Genre filter list.-->
+		<!-- showEntryAllGenres: You can set this property to "False" to remove the entry "All" from the Genre filter list. default value: True -->
 		<showEntryAllGenres>True</showEntryAllGenres>
-		<!-- showEntryAllYears: You can set this property to "False" to remove the entry "All" from the Year filter list.-->
+		<!-- showEntryAllYears: You can set this property to "False" to remove the entry "All" from the Year filter list. default value: True -->
 		<showEntryAllYears>True</showEntryAllYears>
-		<!-- showEntryAllPublisher: You can set this property to "False" to remove the entry "All" from the Publisher filter list.-->
+		<!-- showEntryAllPublisher: You can set this property to "False" to remove the entry "All" from the Publisher filter list. default value: True -->
 		<showEntryAllPublisher>True</showEntryAllPublisher>
-		<!-- saveViewStateOnExit: save and restore current view state (selected filter criteria, focused control, ...) when exiting RCB.-->
+		<!-- showEntryAllChars: You can set this property to "False" to remove the entry "All" from the A-Z filter list. default value: True -->
+		<showEntryAllChars>True</showEntryAllChars>
+		<!-- saveViewStateOnExit: save and restore current view state (selected filter criteria, focused control, ...) when exiting RCB. default value: True -->
 		<saveViewStateOnExit>True</saveViewStateOnExit>
-		<!-- saveViewStateOnLaunchEmu: save and restore current view state when launching a game.-->
-		<saveViewStateOnLaunchEmu>True</saveViewStateOnLaunchEmu>		
+		<!-- saveViewStateOnLaunchEmu: save and restore current view state when launching a game. default value: True -->
+		<saveViewStateOnLaunchEmu>True</saveViewStateOnLaunchEmu>
+		<!-- preventUnfilteredSearch: This will prevent RCB from showing ALL your roms without any filter criteria. default value: False -->
+		<preventUnfilteredSearch>False</preventUnfilteredSearch>
+		<!-- logLevel: Set log level to ERROR, WARNING, INFO or DEBUG. default value: WARNING -->
+		<logLevel>WARNING</logLevel>
+		<!-- cachingOption: controls RCBs caching behaviour. Allowed values: CACHEALL, CACHEITEM, CACHEITEMANDNEXT. default value: CACHEITEMANDNEXT -->
+		<!-- CACHEALL: loads and caches all media files at startup. best for large rom collections on fast PCs with enough RAM. Scrolling down the game list may be a bit slower. -->
+		<!-- CACHEITEM: loads only the media files shown in the game list when the game list is built. All extra info will be loaded when a game is selected.
+						best for slow PCs with little RAM or xbox. Fast list scrolling is possible -->
+		<!-- CACHEITEMANDNEXT: sames as CACHEITEM. This will also load the media files and description for the item before and after the selected one. 
+								This will reduce flickering while browsing the game list. -->
+		<cachingOption>CACHEITEMANDNEXT</cachingOption>
 	</RCBSettings>
 	
 	<!-- 
@@ -48,7 +59,10 @@ See http://code.google.com/p/romcollectionbrowser for latest version and full do
 		</Console>
 		<Console>
 			<name>Super Nintendo</name>			
-		</Console>		
+		</Console>
+		<Console>
+			<name>Xbox</name>
+		</Console>
 	</Consoles>
 	
 	<!-- 
@@ -59,7 +73,7 @@ See http://code.google.com/p/romcollectionbrowser for latest version and full do
 	<!-- With FileTypes you can define your own image or video categories. All imported images or videos will be associated with this FileType. -->
 	<FileTypes>			
 		<FileType>
-			<!-- name: The name is referenced as type in mediaPath and fileTypeFor...-elements.-->
+			<!-- name: The name is referenced as type in mediaPath and fileTypeFor...-elements. No default value -->
 			<name>cover</name>
 			<!-- type: Must be "image" or "video" -->
 			<type>image</type>
@@ -113,26 +127,31 @@ See http://code.google.com/p/romcollectionbrowser for latest version and full do
 			<descriptionParserFile>TestDataBase\Collection V1\parserConfig.xml</descriptionParserFile>
 			<!-- descFilePath: path to your description file. May contain %GAME% as placeholder if you have one desc file per game. -->
 			<descFilePath>TestDataBase\Collection V1\synopsis\synopsis.txt</descFilePath>			
-			<!-- diskPrefix: Disk prefix will be removed when detecting the game name: "MyGame_Disk2.adf" will be "MyGame".-->
+			<!-- diskPrefix: Disk prefix will be removed when detecting the game name: "MyGame_Disk2.adf" will be "MyGame". default value: "_Disk" -->
 			<diskPrefix>_Disk</diskPrefix>
-			<!-- allowUpdate: If set to "False" RCB won't update already imported game descriptions but will add additional media files.-->
+			<!-- allowUpdate: If set to "False" RCB won't update already imported game descriptions but will add additional media files. default value: True -->
 			<allowUpdate>True</allowUpdate>
-			<!-- ignoreOnScan: If set to "True" this RomCollection will be ignored completely during import.-->
+			<!-- ignoreOnScan: If set to "True" this RomCollection will be ignored completely during import. default value: False -->
 			<ignoreOnScan>True</ignoreOnScan>
-			<!-- searchGameByCRC: Compute a crc value for each rom file and search for this value in the description file. -->
+			<!-- searchGameByCRC: Compute a crc value for each rom file and search for this value in the description file. default value: True -->
 			<searchGameByCRC>True</searchGameByCRC>
-			<!-- searchGameByCRCIgnoreRomName: If set to "True" RCB won't try to find game via rom filename.-->
-			<searchGameByCRCIgnoreRomName>False</searchGameByCRCIgnoreRomName>					
-			<!-- ignoreGameWithoutDesc: Don't import games if no description was found.-->
-			<ignoreGameWithoutDesc>False</ignoreGameWithoutDesc>			
+			<!-- searchGameByCRCIgnoreRomName: If set to "True" RCB won't try to find game via rom filename. default value: False -->
+			<searchGameByCRCIgnoreRomName>False</searchGameByCRCIgnoreRomName>
+			<!-- useFoldernameAsCRC: Compare the crc in the description file with the foldername of the current rom file. default value: False -->
+			<useFoldernameAsCRC>False</useFoldernameAsCRC>
+			<!-- useFilenameAsCRC: Compare the crc in the description file with the filename (without extension) of the current rom file. default value: False -->
+			<useFilenameAsCRC>False</useFilenameAsCRC>
+			<!-- maxFolderDepth: limit the number of subfolders RCB scans while searching for rom files. Default value: 999 -->
+			<maxFolderDepth>999</maxFolderDepth>
+			<!-- ignoreGameWithoutDesc: Don't import games if no description was found. default value: False -->
+			<ignoreGameWithoutDesc>False</ignoreGameWithoutDesc>	
 			
-			<!-- mediaPath: The path to your image or video files. Attribute "type" references the name of the configured FileTypes. -->			
+			<!-- mediaPath: The path to your image or video files. Attribute "type" references the name of the configured FileTypes. -->
 			<!-- You can use placeholders in the value: %GAME%, %CONSOLE%, %PUBLISHER%, %DEVELOPER%  -->			
 			<mediaPath type="cover">TestDataBase\Collection V1\cover\%GAME%.jpg</mediaPath>			
 			<mediaPath type="title">TestDataBase\Collection V1\titles\%GAME%.jpg</mediaPath>
 			<mediaPath type="action">TestDataBase\Collection V1\action\%GAME%.jpg</mediaPath>
 			<mediaPath type="gameplay">TestDataBase\Collection V1\movies\%GAME%.wmv</mediaPath>
-			
 			
 			<!-- 
 				Stage: Browsing and Displaying Games (no need to Import Games after changing these values) 
@@ -146,10 +165,10 @@ See http://code.google.com/p/romcollectionbrowser for latest version and full do
 			<fileTypeForGameList>cover</fileTypeForGameList>
 			<!-- fileTypeForGameListSelected: The gamelist in Info and Thumbs view (selected items) -->
 			<fileTypeForGameListSelected>title</fileTypeForGameListSelected>
-			<!-- fileTypeForMainViewBackground: background image (all views) -->
-			<fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
+			<!-- fileTypeForGameInfoViewBackground: background image (all views) -->
+			<fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
 			<!-- You can use more than one entry of the same type. This will be used as fallback if the first image is not available -->
-			<fileTypeForMainViewBackground>cover</fileTypeForMainViewBackground>
+			<fileTypeForGameInfoViewBackground>cover</fileTypeForGameInfoViewBackground>
 			<!-- fileTypeForMainViewGameInfoUpperLeft: upper left image in Info and Info 2 view -->
 			<fileTypeForMainViewGameInfoUpperLeft>title</fileTypeForMainViewGameInfoUpperLeft>
 			<!-- fileTypeForMainViewGameInfoUpperRight: upper right image in Info and Info 2 view -->
@@ -201,9 +220,15 @@ See http://code.google.com/p/romcollectionbrowser for latest version and full do
 			<!-- %ROM% will be replaced with the current file name. %I% will be replaced with the zero-based index of the current rom file  -->
 			<emulatorCmd>E:\Emulatoren\WINUAE\winuae.exe {-%I% "%ROM%"}</emulatorCmd>
 			<!-- useEmuSolo: If set to "True" RCB will try to shutdown XBMC before starting the emulator. Otherwise XBMC will be minimized. -->
-			<useEmuSolo>False</useEmuSolo>
+			<useEmuSolo>True</useEmuSolo>
 			<!-- escapeCommand: will escape the rom file names passed to the emulatorCmd -->
-			<escapeCommand>True</escapeCommand>			
+			<escapeCommand>True</escapeCommand>	
+			<!-- xboxCreateShortcut: creates a temp.cut file with the path to the emulator or the xbox game to be launched. default value: False -->
+			<xboxCreateShortcut>True</xboxCreateShortcut>
+			<!-- xboxCreateShortcutAddRomfile: adds the rom filename as additional parameter to the cut file (not all emulators support this). default value: False -->
+			<xboxCreateShortcutAddRomfile>True</xboxCreateShortcutAddRomfile>
+			<!-- xboxCreateShortcutUseShortGamename: this will use a short game name instead of complete file name (required for some exotic emulators). default value: False -->
+			<xboxCreateShortcutUseShortGamename>True</xboxCreateShortcutUseShortGamename>
 		</RomCollection>
 		
 		<!-- example Amiga configuration: 2 images, description files per game, no video--> 
@@ -211,7 +236,7 @@ See http://code.google.com/p/romcollectionbrowser for latest version and full do
 			<name>Amiga</name>
 			<consoleName>Amiga</consoleName>
 			<emulatorCmd>E:\Emulatoren\WINUAE\winuae.exe {-%I% "%ROM%"}</emulatorCmd>
-			<useEmuSolo>False</useEmuSolo>			
+			<useEmuSolo>True</useEmuSolo>			
 			<descFilePerGame>True</descFilePerGame>
 			<descriptionParserFile>PathToData\Amiga\parserConfig.xml</descriptionParserFile>						
 			<searchGameByCRC>False</searchGameByCRC>			
@@ -222,7 +247,6 @@ See http://code.google.com/p/romcollectionbrowser for latest version and full do
 			<mediaPath type="action">PathToData\Amiga\screens\%GAME%\*.jpg</mediaPath>			
 			<fileTypeForGameList>cover</fileTypeForGameList>
 			<fileTypeForGameListSelected>cover</fileTypeForGameListSelected>
-			<fileTypeForMainViewBackground>cover</fileTypeForMainViewBackground>
 			<fileTypeForMainViewGameInfoBig>action</fileTypeForMainViewGameInfoBig>		
 			<fileTypeForGameInfoViewBackground>cover</fileTypeForGameInfoViewBackground>
 			<fileTypeForGameInfoViewGamelist>cover</fileTypeForGameInfoViewGamelist>			
@@ -250,7 +274,7 @@ See http://code.google.com/p/romcollectionbrowser for latest version and full do
 			<mediaPath type="console">PathToData\consoleImages\%CONSOLE%.png</mediaPath>
 			<fileTypeForGameList>cover</fileTypeForGameList>
 			<fileTypeForGameListSelected>title</fileTypeForGameListSelected>			
-			<fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
+			<fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
 			<fileTypeForMainView1>console</fileTypeForMainView1>
 			<fileTypeForMainViewGameInfoUpperLeft>title</fileTypeForMainViewGameInfoUpperLeft>
 			<fileTypeForMainViewGameInfoUpperRight>action</fileTypeForMainViewGameInfoUpperRight>

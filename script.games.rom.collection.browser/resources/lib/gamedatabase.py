@@ -3,20 +3,19 @@
 import os, sys
 from pysqlite2 import dbapi2 as sqlite
 
-CURRENT_SCRIPT_VERSION = "V0.5"
+import util
 
 
 class GameDataBase:	
 	
-	def __init__(self, databaseDir):
-		#use userdata for storing gameDB
+	def __init__(self, databaseDir):		
 		self.dataBasePath = os.path.join(databaseDir, 'MyGames.db')
 		#use scripts home for reading SQL files
-		self.databaseDir = os.path.join(os.getcwd(), 'resources', 'database')
-		
+		self.sqlDir = os.path.join(util.RCBHOME, 'resources', 'database')		
 		
 	def connect( self ):		
-		self.connection = sqlite.connect(self.dataBasePath)
+		print self.dataBasePath
+		self.connection = sqlite.connect(self.dataBasePath, check_same_thread = False)
 		self.cursor = self.connection.cursor()
 		
 	def commit( self ):		
@@ -36,16 +35,16 @@ class GameDataBase:
 	
 	def createTables(self):
 		print "Create Tables"
-		self.executeSQLScript(os.path.join(self.databaseDir, 'SQL_CREATE.txt'))
+		self.executeSQLScript(os.path.join(self.sqlDir, 'SQL_CREATE.txt'))
 		
 	def dropTables(self):
 		print "Drop Tables"
-		self.executeSQLScript(os.path.join(self.databaseDir, 'SQL_DROP_ALL.txt'))
+		self.executeSQLScript(os.path.join(self.sqlDir, 'SQL_DROP_ALL.txt'))
 
 	
 	def checkDBStructure(self):
 		
-		#returnValues: -1 error, 0=nothing, 1=import Settings and Games, 2=import Settings only
+		#returnValues: -1 error, 0=nothing, 1=import Settings and Games
 		
 		dbVersion = ""
 		try:
@@ -61,15 +60,15 @@ class GameDataBase:
 			return 1, ""
 		
 		#Alter Table
-		if(dbVersion != CURRENT_SCRIPT_VERSION):
-			alterTableScript = "SQL_ALTER_%(old)s_%(new)s.txt" %{'old': dbVersion, 'new':CURRENT_SCRIPT_VERSION}
-			alterTableScript = str(os.path.join(self.databaseDir, alterTableScript))
+		if(dbVersion != util.CURRENT_DB_VERSION):
+			alterTableScript = "SQL_ALTER_%(old)s_%(new)s.txt" %{'old': dbVersion, 'new':util.CURRENT_DB_VERSION}
+			alterTableScript = str(os.path.join(self.sqlDir, alterTableScript))
 			
 			if os.path.isfile(alterTableScript):				
 				self.executeSQLScript(alterTableScript)				
 				return 0, ""
 			else:
-				return -1, "Error: No Update from version %s to %s." %(dbVersion, CURRENT_SCRIPT_VERSION)
+				return -1, "Error: No Update from version %s to %s." %(dbVersion, util.CURRENT_DB_VERSION)
 			
 		return 0, ""
 	
@@ -115,8 +114,8 @@ class DataBaseObject:
 		return allObjects
 		
 		
-	def getAllOrdered(self):
-		self.gdb.cursor.execute("SELECT * FROM '%s' ORDER BY name" % self.tableName)
+	def getAllOrdered(self):		
+		self.gdb.cursor.execute("SELECT * FROM '%s' ORDER BY name COLLATE NOCASE" % self.tableName)
 		allObjects = self.gdb.cursor.fetchall()
 		return allObjects
 		
@@ -144,6 +143,11 @@ class DataBaseObject:
 		self.gdb.cursor.execute(query, args)
 		allObjects = self.gdb.cursor.fetchall()		
 		return allObjects
+		
+	def getObjectsByQueryNoArgs(self, query):
+		self.gdb.cursor.execute(query)
+		allObjects = self.gdb.cursor.fetchall()		
+		return allObjects
 
 	def getObjectByQuery(self, query, args):		
 		self.gdb.cursor.execute(query, args)
@@ -157,7 +161,8 @@ class Game(DataBaseObject):
 					(Id IN (Select GameId From GenreGame Where GenreId = ?) OR (0 = ?)) AND \
 					(YearId = ? OR (0 = ?)) AND \
 					(PublisherId = ? OR (0 = ?)) \
-					ORDER BY name DESC"	#TODO Why DESC to have it sorted ASC in XBMC (without using SortMethod)?
+					AND %s \
+					ORDER BY name COLLATE NOCASE"
 					
 	filterByNameAndRomCollectionId = "SELECT * FROM Game WHERE name = ? and romCollectionId = ?"
 	
@@ -165,9 +170,10 @@ class Game(DataBaseObject):
 		self.gdb = gdb
 		self.tableName = "Game"
 		
-	def getFilteredGames(self, consoleId, genreId, yearId, publisherId):
+	def getFilteredGames(self, consoleId, genreId, yearId, publisherId, likeStatement):
 		args = (consoleId, genreId, yearId, publisherId)
-		games = self.getObjectsByWildcardQuery(self.filterQuery, args)
+		filterQuery = self.filterQuery %likeStatement		
+		games = self.getObjectsByWildcardQuery(filterQuery, args)		
 		return games
 		
 	def getGameByNameAndRomCollectionId(self, name, romCollectionId):
@@ -268,7 +274,7 @@ class FileTypeForControl(DataBaseObject):
 	filterQueryByKeyNoPrio = "Select * from FileTypeForControl \
 					where romCollectionId = ? AND \
 					control = ? \
-					ORDER BY priority"
+					ORDER BY priority"							
 	
 	def __init__(self, gdb):		
 		self.gdb = gdb
@@ -280,7 +286,7 @@ class FileTypeForControl(DataBaseObject):
 		
 	def getFileTypesForControlByKey(self, romCollectionId, control):
 		fileTypes = self.getObjectsByQuery(self.filterQueryByKeyNoPrio, (romCollectionId, control))
-		return fileTypes
+		return fileTypes			
 
 
 class File(DataBaseObject):	
@@ -300,6 +306,12 @@ class File(DataBaseObject):
 	filterQueryByGameIdAndTypeId = "Select * from File \
 					where parentId = ? AND \
 					filetypeid = ?"
+					
+	filterFilesForGameList = "Select * from File Where FileTypeId in (Select distinct filetypeid from filetypeforcontrol \
+					where control = 'gamelist' OR control = 'gamelistselected' OR control = 'mainviewvideofullscreen')"
+					
+	filterQueryByParentIds = "Select * from File \
+					where parentId in (?, ?, ?, ?, ?)"
 	
 	def __init__(self, gdb):		
 		self.gdb = gdb
@@ -323,6 +335,14 @@ class File(DataBaseObject):
 		
 	def getRomsByGameId(self, gameId):
 		files = self.getObjectsByQuery(self.filterQueryByGameIdAndFileType, (gameId, 'rcb_rom'))
+		return files
+		
+	def getFilesForGamelist(self):
+		files = self.getObjectsByQueryNoArgs(self.filterFilesForGameList)
+		return files
+		
+	def getFilesByParentIds(self, gameId, romCollectionId, consoleId, publisherId, developerId):
+		files = self.getObjectsByQuery(self.filterQueryByParentIds, (gameId, romCollectionId, consoleId, publisherId, developerId))
 		return files
 		
 

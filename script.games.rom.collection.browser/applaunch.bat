@@ -1,6 +1,10 @@
 
 
+REM Is XBMC running?
 taskkill /f /IM XBMC.exe
+
+REM Wait for the kill
+REM sleep 
 
 REM Launch app
 %*
@@ -11,6 +15,6 @@ REM sleep 1
 
 
 REM Done? Restart XBMC
-"XBMC.exe"
+"C:\Program Files\XBMC\XBMC.exe"
 
 

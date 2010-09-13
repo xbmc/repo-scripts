@@ -1,0 +1,30 @@
+
+
+ALTER TABLE RomCollection ADD COLUMN [xboxCreateShortcut] INTEGER;
+ALTER TABLE RomCollection ADD COLUMN [xboxCreateShortcutAddRomfile] INTEGER;
+ALTER TABLE RomCollection ADD COLUMN [xboxCreateShortcutUseShortGamename] INTEGER;
+ALTER TABLE RomCollection ADD COLUMN [useFoldernameAsCRC] INTEGER;
+ALTER TABLE RomCollection ADD COLUMN [useFilenameAsCRC] INTEGER;
+ALTER TABLE RomCollection ADD COLUMN [maxFolderDepth] INTEGER;
+
+UPDATE RomCollection SET xboxCreateShortcut = 'False';
+UPDATE RomCollection SET xboxCreateShortcutAddRomfile = 'False';
+UPDATE RomCollection SET xboxCreateShortcutUseShortGamename = 'False';
+UPDATE RomCollection SET useFoldernameAsCRC = 'False';
+UPDATE RomCollection SET useFilenameAsCRC = 'False';
+UPDATE RomCollection SET maxFolderDepth = 999;
+
+ALTER TABLE RCBSetting ADD COLUMN [logLevel] INTEGER;
+ALTER TABLE RCBSetting ADD COLUMN [showEntryAllChars] INTEGER;
+ALTER TABLE RCBSetting ADD COLUMN [lastSelectedCharacterIndex] INTEGER;
+ALTER TABLE RCBSetting ADD COLUMN [preventUnfilteredSearch] INTEGER;
+ALTER TABLE RCBSetting ADD COLUMN [cachingOption] INTEGER;
+ALTER TABLE RCBSetting ADD COLUMN [lastConfigChange] INTEGER;
+
+UPDATE RCBSetting SET logLevel = 1;
+UPDATE RCBSetting SET showEntryAllChars = 'True';
+UPDATE RCBSetting SET preventUnfilteredSearch = 'False';
+UPDATE RCBSetting SET cachingOption = 3;
+UPDATE RCBSetting SET lastConfigChange = 0;
+
+UPDATE RCBSetting SET dbVersion = '0.6.0';
