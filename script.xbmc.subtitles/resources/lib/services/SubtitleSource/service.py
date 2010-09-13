@@ -12,12 +12,20 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     language1 = lang1
     language2 = lang2
     language3 = lang3
+    language_list = [language1, language2, language3]
+    supported_languages_list = ["English", "Swedish", "Danish", "Norvegian", "Finnish", "Icelandic", "Spanish", "French"]
+    msg = ""
     try:
-        if (len ( subtitles_list )) < 1:            
-            xbmc.output("[SubtitleSource] - Search for [%s] by name" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
-            subtitles_list = osdb_server.searchsubtitlesbyname_ss(title, tvshow, season, episode, language1, language2, language3, year)
-        return subtitles_list, "", "" #standard output
-    
+        if (len ( subtitles_list )) < 1: 
+            compare_languages = set(supported_languages_list) & set(language_list)
+            if compare_languages:
+                xbmc.output("[SubtitleSource] - Search for [%s] by name" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
+                subtitles_list = osdb_server.searchsubtitlesbyname_ss(title, tvshow, season, episode, language1, language2, language3, year, os.path.basename( file_original_path ))
+            else:
+                msg = "SubtitleSource works only for: English, Swedish, Danish, Norvegian, Finnish, Icelandic, Spanish and French languages."
+                xbmc.output("[SubtitleSource] - Supported language not found",level=xbmc.LOGDEBUG )           
+        
+        return subtitles_list, "", msg #standard output
     except :
         return subtitles_list, "", "" #standard output
                 
@@ -33,4 +41,3 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 
     language = subtitles_list[pos][ "language_name" ]
     return False, language, local_tmp_file #standard output
-

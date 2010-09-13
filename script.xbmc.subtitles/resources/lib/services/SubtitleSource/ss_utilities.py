@@ -2,12 +2,11 @@ import sys
 import os
 from utilities import twotoone, toOpenSubtitles_two
 import xbmc
-import re
 
 _ = sys.modules[ "__main__" ].__language__
 
 def compare_columns(b,a):
-        return cmp( b["language_name"], a["language_name"] )  or cmp( a["sync"], b["sync"] )
+        return cmp( a["sync"], b["sync"] )
 
 class OSDBServer:
     
@@ -28,7 +27,7 @@ class OSDBServer:
 
 ###-------------------------- Subtitles By Name -------------################
 
-    def searchsubtitlesbyname_ss( self, name, tvshow, season, episode, lang1, lang2, lang3, year ):
+    def searchsubtitlesbyname_ss( self, name, tvshow, season, episode, lang1, lang2, lang3, year, original_filename):
         from xml.dom import minidom
         import urllib        
         self.subtitles_list = []
@@ -39,16 +38,17 @@ class OSDBServer:
             name = tvshow+".S"+str(season)+"E"+str(episode) 
 
         name = name.replace(" ","+")
-                
-        search_url = "http://www.subtitlesource.org/api/xmlsearch/"+name+"/"+lang1+"/0"
-        xbmc.output("[SubtitleSource] - Search URL: [%s]" % (search_url),level=xbmc.LOGDEBUG )
+        original_filename = original_filename[:-4]
         
+        search_url = "http://www.subtitlesource.org/api/xmlsearch/"+name+"/"+lang1+"/0"
+        xbmc.output("[SubtitleSource] - Search URL1: [%s]" % (search_url),level=xbmc.LOGDEBUG )
+
         if lang2!=lang1:
             search_url1 = "http://www.subtitlesource.org/api/xmlsearch/"+name+"/"+lang2+"/0"
-            xbmc.output("[SubtitleSource] - Search URL1: [%s]" % (search_url1),level=xbmc.LOGDEBUG )  
+            xbmc.output("[SubtitleSource] - Search URL2: [%s]" % (search_url1),level=xbmc.LOGDEBUG )  
         if lang3!=lang1 and lang3!=lang2:
             search_url2 = "http://www.subtitlesource.org/api/xmlsearch/"+name+"/"+lang3+"/0"
-            xbmc.output("[SubtitleSource] - Search URL2: [%s]" % (search_url2),level=xbmc.LOGDEBUG )
+            xbmc.output("[SubtitleSource] - Search URL3: [%s]" % (search_url2),level=xbmc.LOGDEBUG )
 
         try:
 
@@ -75,7 +75,7 @@ class OSDBServer:
                 subs = subs + subs1
             
             if subs:
-                xbmc.output("[SubtitleSource] - Subtitles Found",level=xbmc.LOGDEBUG )
+                xbmc.output("[SubtitleSource] - %s Subtitles Found" % (len(subs)),level=xbmc.LOGDEBUG )
                 url_base = "http://www.subtitlesource.org/download/text/"
                 
                 for sub in subs:
@@ -89,12 +89,16 @@ class OSDBServer:
                     link = ""
                     format = "srt"
                     no_files = ""
+                    sync = False
                             
                     if sub.getElementsByTagName("title")[0].firstChild:
                         movie = sub.getElementsByTagName("title")[0].firstChild.data
                     
                     if sub.getElementsByTagName("releasename")[0].firstChild:
                         filename = sub.getElementsByTagName("releasename")[0].firstChild.data
+                    
+                    if filename == original_filename :
+                        sync = True
                     filename = "%s.srt" % (filename,)
                     
                     rating = 0
@@ -114,7 +118,7 @@ class OSDBServer:
                     if sub.getElementsByTagName("cd")[0].firstChild:
                         no_files = int(sub.getElementsByTagName("cd")[0].firstChild.data)   
                                     
-                    self.subtitles_name_list.append({'filename':filename,'link':link,'movie':movie,"ID":subtitle_id,'language_name':languagename,'language_id':lang_id,'language_flag':flag_image,"format":format,"rating":str(rating),"sync":False, "no_files":no_files})
+                    self.subtitles_name_list.append({'filename':filename,'link':link,'movie':movie,"ID":subtitle_id,'language_name':languagename,'language_id':lang_id,'language_flag':flag_image,"format":format,"rating":str(rating),"sync":sync, "no_files":no_files})
                           
                     self.mergesubtitles()                  
                 return self.subtitles_list
@@ -123,4 +127,3 @@ class OSDBServer:
 
         except :
             return self.subtitles_list
-

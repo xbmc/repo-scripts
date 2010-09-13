@@ -1,3 +1,9 @@
+1.8.7
+- changes to SubtitleSource:
+	- Enabled "sync". Script will compare the filename to releasename from SS. If match is found it will mark it as "sync"
+	- Added check that at least one of the user selected language is on SS supported languages list
+	- Changed the way subtitles are sorted.  
+
 1.8.6
 - cosmetics
 
