@@ -5,7 +5,9 @@ import sys
 import pickle
 import os
 import traceback
-sys.path.append(os.path.join(os.getcwd().replace(";",""),'resources/lib'))
+import threading
+sys.path.append(os.path.join(os.getcwd().replace(";",""),'resources','lib'))
+__language__ = sys.modules[ "__main__" ].__language__
 
 def gShowPlaylists(playlists=[], options=[]):
 #	popup = popupList(title= 'Playlists', items=playlists, btns=options, width=400)
@@ -17,18 +19,15 @@ def gShowPlaylists(playlists=[], options=[]):
 	selected = gSimplePopup(title='Playlists', items=playlists)
 	if selected != -1:
 		if options != []:
-			action = gSimplePopup('Do what?', items=options)
+			action = gSimplePopup(__language__(1002), items=options)
 			if action == -1:
 				return [-1, -1]
 			else:
 				return [action, selected]
 		else:
-			return [-1, -1]
-	else:
-		if options != []:
 			return [-1, selected]
-		else:
-			return [-1, -1]
+	else:
+		return [-1, -1]
 	
 	
 def gSimplePopup(title='', items=[], width=300):
@@ -57,20 +56,99 @@ class popupBtnsXml(xbmcgui.WindowXMLDialog):
 	def onInit(self):
 		pass
 			
-	def onControl(self, action):
-		print 'control: ' + action.getButtonCode()
-		pass
+	def onAction(self, action):
+		#self.close()
+		aId = action.getId()
+		print '###### aId: ' + str(aId)
+		if aId == 10:
+			self.close()
+		else:
+
+			#aId = 10
+			pWin = xbmcgui.Window(10500)
+			#xbmc.sendclick(10500, aId)
+			xbmc.executebuiltin('XBMC.Action(10500,' + str(aId) + ')')
+			pWin.onAction(action)
+			#pWin.close()
+		#pass
 
 	def onClick(self, controlId):
 		print 'control, click: ' + controlID
+		aId = controlId.getId()
+		if aId == 10:
+			self.close()
 		pass
 
 	def onFocus(self, controlID):
 		pass
 
+def busy():
+	t = busyThread()
+	w = t.getWindow()
+	t.start()
+	#xbmc.sleep(100)
+	#w.place()
+	return w
+
+
+class busyThread(threading.Thread):
+	def __init__(self):
+		threading.Thread.__init__(self)
+		self.w = popupBusyXml("popup-busy.xml", os.getcwd(), "DefaultSkin")
+		pass
+	def run (self):
+		self.w.doModal()
+	def getWindow(self):
+		return self.w
+
+class popupBusyXml(xbmcgui.WindowXMLDialog):
+#	def __init__(self, *args, **kwargs):
+#		pass
+
+	def onInit(self):
+		pass
+			
 	def onAction(self, action):
+		#self.close()
+		aId = action.getId()
+		print 'Busy closed by user: ' + str(aId)
+		if aId == 10:
+			self.close()
+
+	def onClick(self, controlId):
+		print 'control, click: ' + controlID
+		aId = controlId.getId()
+		if aId == 10:
+			self.close()
 		pass
 
+	def onFocus(self, controlID):
+		pass
+
+	def place(self):
+		rw = 1280
+		rh = 720
+		group = self.getControl(210)
+		icon = self.getControl(220)
+		h = icon.getHeight()
+		w = icon.getWidth()
+		x = rw/2 - w/2
+		y = rh/2 - h/2
+		#print 'x: ' + str(x) + ', y: ' + str(y) + ', h: ' + str(h) + ', w: ' + str(w) + ', rh: ' + str(rh) + ', rw: ' + str(rw)
+		group.setPosition(x, y)
+
+	def setLabel(self, text):
+		self.getControl(310).setLabel(text)
+
+	def setProgress(self, n):
+		self.getControl(230).setVisible(True)
+		if n < 0:
+			i = 0
+		elif n > 100:
+			i = 100
+		else:
+			i = n
+		self.getControl(300).setLabel(str(i) + '%')
 
 class popupBtnsOld(xbmcgui.WindowDialog):
 	def __init__(self, title, btns=[], width=100):
@@ -156,7 +234,7 @@ class popupList(xbmcgui.WindowDialog):
 		self.selected = [-1, -1]
 		h = 420
 		self.btns = btns
-		mediaDir = os.path.join(os.getcwd().replace(";",""),'resources/skins/DefaultSkin/media')
+		mediaDir = os.path.join(os.getcwd(),'resources','skins','DefaultSkin','media')
 		rw = self.getWidth()
 		rh = self.getHeight()
 		x = rw/2 - w/2
@@ -195,7 +273,7 @@ class popupList(xbmcgui.WindowDialog):
 				return None
 		elif action == 7:
 			if len(self.btns) != 0:
-				popupMenu = popupBtns(title='', btns=self.btns, width=150)
+				popupMenu = popupBtnsOld(title='', btns=self.btns, width=150)
 				popupMenu.doModal()
 				if popupMenu.selected != -1:
 					self.selected = [popupMenu.selected, self.cntList.getSelectedPosition()]

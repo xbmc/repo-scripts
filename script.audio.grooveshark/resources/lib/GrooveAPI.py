@@ -1,4 +1,4 @@
-import urllib2, simplejson, md5, unicodedata, re, os, traceback, sys, pickle, socket
+import urllib2, md5, unicodedata, re, os, traceback, sys, pickle, socket
 from operator import itemgetter, attrgetter
 
 class LoginTokensExceededError(Exception):
@@ -20,7 +20,15 @@ class SessionIDTryAgainError(Exception):
 		return repr(self.value)
 
 class GrooveAPI:
-	def __init__(self, enableDebug = False):
+	def __init__(self, enableDebug = False, isXbox = False):
+		if isXbox == True:
+			import simplejson_xbox
+			self.simplejson = simplejson_xbox
+			print 'GrooveShark API: Initialized as XBOX script'
+		else:
+			import simplejson
+			self.simplejson = simplejson
+			print 'GrooveShark API: Initialized as Dharma script'
 		timeout = 40
 		socket.setdefaulttimeout(timeout)
 		self.enableDebug = enableDebug
@@ -48,8 +56,11 @@ class GrooveAPI:
 		self.debug('sessionID: ' + self.sessionID)
 
 	def __del__(self):
-		if self.loggedIn == 1:
-			self.logout()
+		try:
+			if self.loggedIn == 1:
+				self.logout()
+		except:
+			pass
 			
 	def debug(self, msg):
 		if self.enableDebug == True:
@@ -106,7 +117,7 @@ class GrooveAPI:
 	def callRemote(self, method, params={}):
 		data = {'header': {'sessionID': self.sessionID}, 'method': method, 'parameters': params}
 		#data = {'header': {'sessionID': None}, 'method': method, 'parameters': params}
-		data = simplejson.dumps(data)
+		data = self.simplejson.dumps(data)
 		#proxy_support = urllib2.ProxyHandler({"http" : "http://wwwproxy.kom.aau.dk:3128"})
 		## build a new opener with proxy details
 		#opener = urllib2.build_opener(proxy_support, urllib2.HTTPHandler)
@@ -121,11 +132,11 @@ class GrooveAPI:
 		response = urllib2.urlopen(req)
 		result = response.read()
 		response.close()
-		#print result
+		self.debug(result)
 		try:
-			result = simplejson.loads(result)
+			result = self.simplejson.loads(result)
 			if 'fault' in result:
-				print result
+				self.debug(result)
 			return result
 		except:
 			return []
@@ -133,7 +144,8 @@ class GrooveAPI:
 	def startSession(self):
 		response = urllib2.urlopen("http://www.moovida.com/services/grooveshark/session_start")
 		result = response.read()
-		result = simplejson.loads(result)
+		self.debug(result)
+		result = self.simplejson.loads(result)
 		response.close()
 		if 'fault' in result:
 			return ''
@@ -236,13 +248,14 @@ class GrooveAPI:
 	
 	def userGetPlaylists(self, limit=25):
 		if self.loggedIn == 1:
-			result = self.callRemote("user.getPlaylists", {"userID": self.userId})
+			result = self.callRemote("user.getPlaylists", {"userID": self.userId, "limit": limit})
 			if 'result' in result:
 				playlists = result['result']['playlists']
 			else:
 				return []
 			i = 0
 			list = []
+			print result
 			while(i < len(playlists)):
 				p = playlists[i]
 				list.append([p['playlistName'].encode('ascii', 'ignore'), p['playlistID']])
@@ -254,6 +267,7 @@ class GrooveAPI:
 	def playlistCreate(self, name, about):
 		if self.loggedIn == 1:
 			result = self.callRemote("playlist.create", {"name": name, "about": about})
+			#print result
 			if 'result' in result:
 				return result['result']['playlistID']
 			else:
@@ -455,88 +469,131 @@ class GrooveAPI:
 		list = self.parseSongs(result)
 		return list
 
-	def parseSongs(self, items):
-		if 'result' in items:
-			i = 0
-			list = []
-			if 'songs' in items['result']:
-				l = len(items['result']['songs'])
-				index = 'songs'
-			elif 'song' in items['result']:
-				l = 1
-				index = 'song'
-			else:
-				l = 0
-				index = ''
-			print 'index: ' + index + 'len: ' + str(l)
-			while(i < l):
-				if index == 'songs':
-					s = items['result'][index][i]
-				else:
-					s = items['result'][index]
-				if 'estDurationSecs' in s:
-					dur = s['estDurationSecs']
-				else:
-					dur = 0
-				list.append([s['songName'].encode('ascii', 'ignore'),\
-				s['songID'],\
-				dur,\
-				s['albumName'].encode('ascii', 'ignore'),\
-				s['albumID'],\
-				s['image']['tiny'].encode('ascii', 'ignore'),\
-				s['artistName'].encode('ascii', 'ignore'),\
-				s['artistID'],\
-				s['image']['small'].encode('ascii', 'ignore'),\
-				s['image']['medium'].encode('ascii', 'ignore')])
-				i = i + 1
-			return list
-		else:
-			return []
-			pass
+	def artistGetSimilar(self, artistId, limit):
+		result = self.callRemote("artist.getSimilar", {"artistID": artistId, "limit": limit})
+		list = self.parseArtists(result)
+		return list
 
+	def songAbout(self, songId):
+		result = self.callRemote("song.about", {"songID": songId})
+		return result['result']['song']
+
+	def parseSongs(self, items):
+		try:
+			if 'result' in items:
+				i = 0
+				list = []
+				if 'songs' in items['result']:
+					l = len(items['result']['songs'])
+					index = 'songs'
+				elif 'song' in items['result']:
+					l = 1
+					index = 'song'
+				else:
+					l = 0
+					index = ''
+				while(i < l):
+					if index == 'songs':
+						s = items['result'][index][i]
+					else:
+						s = items['result'][index]
+					if 'estDurationSecs' in s:
+						dur = s['estDurationSecs']
+					else:
+						dur = 0
+					try:
+						list.append([s['songName'].encode('ascii', 'ignore'),\
+						s['songID'],\
+						dur,\
+						s['albumName'].encode('ascii', 'ignore'),\
+						s['albumID'],\
+						s['image']['tiny'].encode('ascii', 'ignore'),\
+						s['artistName'].encode('ascii', 'ignore'),\
+						s['artistID'],\
+						s['image']['small'].encode('ascii', 'ignore'),\
+						s['image']['medium'].encode('ascii', 'ignore')])
+					except:
+						print 'GrooveShark: Could not parse song number: ' + str(i)
+						traceback.print_exc()
+					i = i + 1
+				return list
+			else:
+				return []
+				pass
+		except:
+			print 'GrooveShark: Could not parse songs. Got this:'
+			traceback.print_exc()
+			return []
 
 	def parseArtists(self, items):
-		if 'result' in items:
-			i = 0
-			list = []
-			artists = items['result']['artists']
-			while(i < len(artists)):
-				s = artists[i]
-				list.append([s['artistName'].encode('ascii', 'ignore'),\
-				s['artistID']])
-				i = i + 1
-			return list
-		else:
+		try:
+			if 'result' in items:
+				i = 0
+				list = []
+				artists = items['result']['artists']
+				while(i < len(artists)):
+					s = artists[i]
+					try:
+						list.append([s['artistName'].encode('ascii', 'ignore'),\
+						s['artistID']])
+					except:
+						print 'GrooveShark: Could not parse album number: ' + str(i)
+						traceback.print_exc()
+					i = i + 1
+				return list
+			else:
+				return []
+		except:
+			print 'GrooveShark: Could not parse artists. Got this:'
+			traceback.print_exc()
 			return []
 
 	def parseAlbums(self, items):
-		if 'result' in items:
-			i = 0
-			list = []
-			albums = items['result']['albums']
-			while(i < len(albums)):
-				s = albums[i]
-				list.append([s['artistName'].encode('ascii', 'ignore'),\
-				s['artistID'],\
-				s['albumName'].encode('ascii', 'ignore'),\
-				s['albumID'],\
-				s['image']['tiny'].encode('ascii', 'ignore')])
-				i = i + 1
-			return list
-		else:
+		try:
+			if 'result' in items:
+				i = 0
+				list = []
+				albums = items['result']['albums']
+				while(i < len(albums)):
+					s = albums[i]
+					try: # Avoid ascii ancoding errors
+						list.append([s['artistName'].encode('ascii', 'ignore'),\
+						s['artistID'],\
+						s['albumName'].encode('ascii', 'ignore'),\
+						s['albumID'],\
+						s['image']['tiny'].encode('ascii', 'ignore')])
+					except:
+						print 'GrooveShark: Could not parse album number: ' + str(i)
+						traceback.print_exc()
+					i = i + 1
+				return list
+			else:
+				return []
+		except:
+			print 'GrooveShark: Could not parse albums. Got this'
+			traceback.print_exc()
 			return []
 
 	def parsePlaylists(self, items):
-		if 'result' in items:
-			i = 0
-			list = []
-			playlists = items['result']['playlists']
-			while(i < len(playlists)):
-				s = playlists[i]
-				list.append([s['playlistID'],\
-				s['playlistName'].encode('ascii', 'ignore'),\
-				s['username'].encode('ascii', 'ignore')])
-				i = i + 1
-			return list
-		else:
+		try:
+			if 'result' in items:
+				i = 0
+				list = []
+				playlists = items['result']['playlists']
+				while(i < len(playlists)):
+					s = playlists[i]
+					try: # Avoid ascii ancoding errors
+						list.append([s['playlistID'],\
+						s['playlistName'].encode('ascii', 'ignore'),\
+						s['username'].encode('ascii', 'ignore')])
+					except:
+						print 'GrooveShark: Could not parse playlist number: ' + str(i)
+						traceback.print_exc()
+					i = i + 1
+				return list
+			else:
+				return []
+		except:
+			print 'GrooveShark: Could not parse playlists. Got this:'
+			print items
 			return []

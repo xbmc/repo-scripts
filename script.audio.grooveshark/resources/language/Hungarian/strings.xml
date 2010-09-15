@@ -9,7 +9,7 @@
     <string id="104">Játszáslistához ad</string>
     <string id="105">Jelenlegi játszáslista</string>
     <string id="106">Keresés</string>
-    <string id="107">Jelenlegi játszáslista</string>
+    <string id="107">Jelenlegi játszáslista</string> <!-- If you are translating the missing strings make sure to change this one to something similar to 'Now playing' -->
     <string id="108">Népszerű</string>
     <string id="109">Beállítások</string>
     <string id="110">Betöltés</string>
@@ -19,6 +19,10 @@
     <string id="114">Játszáslista mentése</string>
     <string id="115">Játszáslista megjelenítése mint</string>
     <string id="116">Játszáslista bezárása</string>
+    <string id="117">Playlists</string>
+    <string id="118">Save queue</string>
+    <string id="119">Find similar</string>
+    <string id="120">Browse this songs album</string>
 
     <!-- Dialogs -->
     <string id="1000">Keresési szó megadása</string>
@@ -72,4 +76,15 @@
     <string id="3036">Bélyegképek beolvasása</string>
     <string id="3037">Bejelentkezés</string>
     <string id="3038">Játszáslisták beolvasása</string>
+    <string id="3039">Your playlists</string>
+    <string id="3040">Similar</string>
+    <string id="3041">Popular on GrooveShark</string>
+    <string id="3042">Playlists</string>
+    <string id="3043">Could not get the playlist</string>
+    <string id="3044">Could delete the playlist</string>
+    <string id="3045">There where no GrooveShark material in the queue</string>
+    <string id="3046">Unable to get a new session ID. Wait a few minutes and try again</string>
+    <string id="3047">Could not get similar items</string>
+    <string id="3048">Searching for playlists...</string>
+    <string id="3049">Tracks</string>
 </strings>

@@ -1,4 +1,14 @@
-0.2.3:
+0.2.5:
+
+ - New feature: Songs are now queued to XBMC's native playlist meaning that playlists will keep on playing even if you quit the script.
+
+ - New feature: Find similar.
+
+ - New feature: You can now browse the album of a song that you found in a search.
+
+ - Added: Swedish translation. Thanks jolid.
+
+0.2.4:
 
  - Fixed: A change in the API prevented people from logging in.
 
@@ -9,6 +19,10 @@
  - Added: Search now returns playlists as well.
 
  - Changed: Removed alphabetic sorting since Grooveshark has a rating system that will show the best results first based on feedback from users
+
+0.2.3:
+
+ - Misc.
 
 0.2.2:
 

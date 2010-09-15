@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="0">GrooveShark</string>
+
+    <!-- Buttons -->
+    <string id="101">Lägg till i kö</string>
+    <string id="102">Spela</string>
+    <string id="103">Lägg alla i kö</string>
+    <string id="104">Lägg till i spellista</string>
+    <string id="105">Öppna spellista</string>
+    <string id="106">Sök</string>
+    <string id="107">Nuvarande spellista</string> <!-- If you are translating the missing strings make sure to change this one to something similar to 'Now playing' -->
+    <string id="108">Populära</string>
+    <string id="109">Inställningar</string>
+    <string id="110">Öppna</string>
+    <string id="111">Ändra namn</string> 
+    <string id="112">Radera</string>
+    <string id="113">Radera låt</string>
+    <string id="114">Spara spellista</string>
+    <string id="115">">Spara spellista som</string>
+    <string id="116">Stäng spellista</string>
+    <string id="117">Playlists</string>
+    <string id="118">Save queue</string>
+    <string id="119">Find similar</string>
+    <string id="120">Browse this songs album</string>
+
+    <!-- Dialogs -->
+    <string id="1000">Fyll i ett sökord</string>
+    <string id="1001">Spellistor</string>
+    <string id="1002">Göra vad?</string>
+    <string id="1003">Avsluta?</string>
+    <string id="1004">Vill du avsluta GrooveShark?</string>
+
+    <!-- Settings -->
+    <string id="2000">Användarnamn</string>
+    <string id="2001">Lösenord</string>
+    <string id="2002">Debugging (Starta om script för att använda)</string>
+
+    <!-- Labels -->
+    <string id="3000">Starta sökning efter låt eller öppna spellista</string>
+    <string id="3001">SPELAR</string>
+    <string id="3002">NÄSTA</string>
+    <string id="3003">Hittade låtar efter sökning</string>
+    <string id="3004">Hittade Artister efter sökning</string>
+    <string id="3005">Hittade Album efter sökning</string>
+    <string id="3006">av</string>
+    <string id="3007">Nuvarande spellista</string>
+    <string id="3008">Kunde inte spara spellistan</string>
+    <string id="3009">Infoga namn för spellistan</string>
+    <string id="3010">Du måste infoga namn för spellistan</string>
+    <string id="3011">Fel</string>
+    <string id="3012">Kunde inte hitta populära poster</string>
+    <string id="3013">Vänta</string>
+    <string id="3014">Hämtar populära låtar...</string>
+    <string id="3015">Hämtar populära artister...</string>
+    <string id="3016">Hämtar populära album...</string>
+    <string id="3017">Färdig</string>
+    <string id="3018">Söker efter låtar...</string>
+    <string id="3019">Söker efter artister...</string>
+    <string id="3020">Söker efter album...</string>
+    <string id="3021">Sökning färdig</string>
+    <string id="3022">Sökning misslyckades. Prova igen</string>
+    <string id="3023">Låtar</string>
+    <string id="3024">Artister</string>
+    <string id="3025">Album</string>
+    <string id="3026">Hittat</string>
+    <string id="3027">Fel vid inloggning. Kontrollera dina inloggningsuppgifter i inställningar</string>
+    <string id="3028">Du måste vara inloggad. Lägg till användaruppgifter under inställningar</string>
+    <string id="3029">Hämtning av spellista misslyckades</string>
+    <string id="3030">Nytt namn för spellistan</string>
+    <string id="3031">Omdöpning av spellista misslyckades</string>
+    <string id="3032">Är du säker på att du vill radera spellistan?</string>
+    <string id="3033">Radera spellista?</string>
+    <string id="3034">Spara spellista</string>
+    <string id="3035">Sparat</string>
+    <string id="3036">Hämtar miniatyrbild</string>
+    <string id="3037">Loggar in</string>
+    <string id="3038">Hämtar dina spellistor</string>
+    <string id="3039">Your playlists</string>
+    <string id="3040">Similar</string>
+    <string id="3041">Popular on GrooveShark</string>
+    <string id="3042">Playlists</string>
+    <string id="3043">Could not get the playlist</string>
+    <string id="3044">Could delete the playlist</string>
+    <string id="3045">There where no GrooveShark material in the queue</string>
+    <string id="3046">Unable to get a new session ID. Wait a few minutes and try again</string>
+    <string id="3047">Could not get similar items</string>
+    <string id="3048">Searching for playlists...</string>
+    <string id="3049">Tracks</string>
+</strings>

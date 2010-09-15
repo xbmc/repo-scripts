@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.audio.grooveshark"
        name="GrooveShark"
-       version="0.2.4"
+       version="0.2.5"
        provider-name="Solver">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
-	<import addon="script.module.simplejson" version="2.0.10"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
   </requires>
   <extension point="xbmc.python.script"
             library="default.py">
-        	<provides>audio</provides>
+    <provides>audio</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
@@ -19,5 +19,6 @@
     <description lang="en">The script gives you access to Grooveshark and almost all of its contents. Access your playlist, manipulate them and create new ones. Enjoy.</description>
     <description lang="da">Få adgang til næsten alt hvad Grooveshark har at byde på. Brug dine playlist, ændr og lav nye. God fornøjelse.</description>
     <description lang="hu">A program elérést biztosít a Grooveshark.com-hoz és majdnem minden tartalmához. Elérheted vele a lejátszási listáid, szerkesztheted őket, újakat hozhatsz létre. Élvezd!</description>
+    <description lang="sv">Få tillgång till nästan allt som Grooveshark har att erbjuda. Tillgång till dina spellistor, ändra och lägg till nya. Mycket nöje.</description>
   </extension>
 </addon>
