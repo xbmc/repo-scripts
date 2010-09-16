@@ -59,7 +59,7 @@
 				<posy>400</posy>
 				<height>150</height>
 				<width>150</width>
-				<texture>MusicPlayer.Cover</texture>
+				<texture>$INFO[MusicPlayer.Cover]</texture>
 				<visible>Player.HasAudio + Player.Playing|Player.HasAudio + Player.Paused</visible>
 			</control>
 			<control type="image">
@@ -643,7 +643,7 @@
 			<posy>665</posy>
 			<align>left</align>
 			<aligny>center</aligny>
-			<label>$LOCALIZE[SCRIPT3049]:: [COLOR ffffffff]$INFO[Container(50).NumItems][/COLOR]</label>
+			<label>$LOCALIZE[SCRIPT3049]: [COLOR ffffffff]$INFO[Container(50).NumItems][/COLOR]</label>
 			<font>font16</font>
 			<textcolor>FFFFFFFF</textcolor>
 			<visible>True</visible>

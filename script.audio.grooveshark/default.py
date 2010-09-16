@@ -62,10 +62,11 @@ if (len(sys.argv) != 3):
 		w.doModal()
 		del w
 		sys.modules.clear()
-else: #Run as a plugin to open datestreams
+else: #Run as a plugin to open datastreams
 	from GrooveAPI import *
 	import xbmcplugin
 	import xbmcgui
+	import traceback
 	try:
 		tools = tools()
 		tools.loadParameters(sys.argv[2])
@@ -74,14 +75,16 @@ else: #Run as a plugin to open datestreams
 		songId = get('playSong')
 		playlist = get('playlist')
 
-		if (playlist != None): # Far from fully implemented
-			listitem=xbmcgui.ListItem('Playlists')#, iconImage=icon, thumbnailImage=thumbnail )
+		if (playlist != None): # To be implemented...
+			#listitem=xbmcgui.ListItem('Playlists')#, iconImage=icon, thumbnailImage=thumbnail )
 			#listitem.addContextMenuItems( cm, replaceItems=True )
-			listitem.setProperty( "Folder", "true" )
-			xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url='plugin://script.audio.grooveshark/?playSong=409361', listitem=listitem, isFolder=False, totalItems=1)
-			xbmcplugin.endOfDirectory( handle=int( sys.argv[ 1 ] ), succeeded=True, cacheToDisc=False )
+			#listitem.setProperty( "Folder", "true" )
+			#xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url='plugin://script.audio.grooveshark/?playSong=409361', listitem=listitem, isFolder=False, totalItems=1)
+			#xbmcplugin.endOfDirectory( handle=int( sys.argv[ 1 ] ), succeeded=True, cacheToDisc=False )
+			pass
 		
 		elif (songId != None):
+			print 'GrooveShark: Song ID: ' + str(songId)
 			url = gs.getStreamURL(str(songId))
 			if url != "":
 				info = gs.songAbout(str(songId))
@@ -90,10 +93,10 @@ else: #Run as a plugin to open datestreams
 				xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=True, listitem=listitem)
 			else:
 				xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=None)
-				print 'Unknown command'
 		else:
 			xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=None)
+			print 'Unknown command'
 	except:
 		xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=None)
+		traceback.print_exc()
 
-#sys.exit(0)

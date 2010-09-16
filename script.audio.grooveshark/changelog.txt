@@ -1,6 +1,10 @@
+0.2.6:
+
+ - Fixed: Now compatible with Dharma Beta 2
+
 0.2.5:
 
- - New feature: Songs are now queued to XBMC's native playlist meaning that playlists will keep on playing even if you quit the script.
+ - New feature: Songs are now queued to XBMC's native playlist meaning that playlists will keep on playing even if you quit the script. (Not on XBOX)
 
  - New feature: Find similar.
 
