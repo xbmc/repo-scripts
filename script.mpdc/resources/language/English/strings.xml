@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- settings labels -->
+    <string id="30000">MPD host</string>
+    <string id="30001">MPD port</string>
+    <string id="30002">Profile name</string>
+    <string id="30003">Not Playing</string>
+    <string id="30004">Paused</string>
+    <string id="30005">Not connected</string>
+    <string id="30006">Playing</string>
+    <string id="30007">Checking availability of servers, please wait...</string>
+    <string id="30008">Select profile</string>
+    <string id="30009">Available</string>
+    <string id="30010">Offline</string>
+    <string id="30011">Connected to</string>
+    <string id="112">Settings</string>
+    <string id="30110">Profile 1</string>
+    <string id="30111">Profile 2</string>
+    <string id="30112">Profile 3</string>
+    <string id="30013">Skip profile selection and always use 'Profile 1'</string>
+    <string id="30014">General</string>
+    <string id="30015">Connecting</string>
+    <string id="30016">Getting queue</string>
+    <string id="30017">Disconnecting</string>
+    <string id="30018">was added to queue</string>
+    <string id="30019">Getting playlists</string>
+    <string id="30020">Getting artists</string>
+    <string id="30021">Playlist saved</string>
+    <string id="30022">Select action</string>
+    <string id="30023">Load (Add)</string>
+    <string id="30024">Delete</string>
+    <string id="30025">Load (Replace)</string>
+    <string id="30026">Rename</string>
+    <string id="200">Queue</string>
+    <string id="201">Files</string>
+    <string id="202">Artists</string>
+    <string id="203">Playlists</string>
+    <string id="204">Clear queue</string>
+    <string id="205">Save As</string>
+	</strings>
+

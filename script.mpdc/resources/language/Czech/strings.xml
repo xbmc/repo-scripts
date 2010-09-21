@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- settings labels -->
+    <string id="30000">MPD host</string>
+    <string id="30001">MPD port</string>
+    <string id="30002">Název profilu</string>
+    <string id="30003">Zastaven</string>
+    <string id="30004">Pozastaven</string>
+    <string id="30005">Nelze se připojit</string>
+    <string id="30006">Přehrávám</string>
+    <string id="30007">Zjišťuji dosptupnost servrů, prosím počkejte...</string>
+    <string id="30008">Vyberte profil</string>
+    <string id="30009">Dostupný</string>
+    <string id="30010">Offline</string>
+    <string id="30011">Připojen k</string>
+    <string id="112">Nastavení</string>
+    <string id="30110">Profil 1</string>
+    <string id="30111">Profil 2</string>
+    <string id="30112">Profil 3</string>
+    <string id="30013">Přeskočit výběr profilů a rovnou použít 'Profil 1'</string>
+    <string id="30014">Obecné</string>
+    <string id="30015">Připojuji</string>
+    <string id="30016">Získávám frontu</string>
+    <string id="30017">Odpojuji</string>
+    <string id="30018">byl přidán do fronty</string>
+    <string id="30019">Získávám playlisty</string>
+    <string id="30020">Získávám seznam autorů</string>
+    <string id="30021">Playlist uložen</string>
+    <string id="30022">Vyberte akci</string>
+    <string id="30023">Načíst (Přidat)</string>
+    <string id="30024">Smazat</string>
+    <string id="30025">Načíst (Nahradit)</string>
+    <string id="30026">Přejmenovat</string>
+    <string id="200">Fronta</string>
+    <string id="201">Soubory</string>
+    <string id="202">Autoři</string>
+    <string id="203">Playlisty</string>
+    <string id="204">Vyprázdnit frontu</string>
+    <string id="205">Uložit jako</string>
+	</strings>
+

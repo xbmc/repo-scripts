@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<category label="30014">
+		<setting label="30013" type="bool" id="skip-selector" default="false" />
+	</category>
+    <category label="30110">
+		<setting label="30002" type="text" id="0_name" default="Profile 1"/>
+		<setting label="30000" type="text" id="0_mpd_host" default="localhost"/>
+		<setting label="30001" type="text" id="0_mpd_port" default="6600"/>
+    </category>
+    <category label="30111">
+		<setting label="30002" type="text" id="1_name" default="Profile 2"/>
+		<setting label="30000" type="text" id="1_mpd_host" default="localhost"/>
+		<setting label="30001" type="text" id="1_mpd_port" default="6600"/>
+    </category>
+    <category label="30112">
+        <setting label="30002" type="text" id="2_name" default="Profile 3"/>
+		<setting label="30000" type="text" id="2_mpd_host" default="localhost"/>
+		<setting label="30001" type="text" id="2_mpd_port" default="6600"/>
+    </category>
+</settings>
