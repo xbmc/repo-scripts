@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.audio.grooveshark"
        name="GrooveShark"
-       version="0.2.6"
+       version="0.2.7"
        provider-name="Solver">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.simplejson" version="2.0.10"/>
+	<import addon="script.module.pysqlite" version="2.5.6"/>
   </requires>
   <extension point="xbmc.python.script"
             library="default.py">
@@ -13,6 +14,7 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
+	<minversion>33778</minversion>
     <summary lang="en">Grooveshark client</summary>
     <summary lang="da">Klient til Grooveshark</summary>
     <summary lang="hu">Grooveshark.com zenék, rádiók</summary>

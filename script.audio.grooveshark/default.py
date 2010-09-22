@@ -2,11 +2,12 @@ import os
 import sys
 import xbmcplugin
 import xbmc
+import xbmcgui
 import traceback
+import threading
 
 sys.path.append(os.path.join(os.getcwd().replace(";",""),'resources','lib'))
 
-print 'sys.argv: ' + str(sys.argv)
 
 class tools(object):
 	def __init__(self):
@@ -61,7 +62,9 @@ if (len(sys.argv) != 3):
 		w = GrooveClass("grooveshark.xml", os.getcwd(), "DefaultSkin", isXbox = __isXbox__)
 		w.doModal()
 		del w
+		print 'GrooveShark: Closed'
 		sys.modules.clear()
+
 else: #Run as a plugin to open datastreams
 	from GrooveAPI import *
 	import xbmcplugin

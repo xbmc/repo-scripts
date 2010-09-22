@@ -1,6 +1,8 @@
 import urllib2, md5, unicodedata, re, os, traceback, sys, pickle, socket
 from operator import itemgetter, attrgetter
 
+__scriptid__ = sys.modules[ "__main__" ].__scriptid__
+
 class LoginTokensExceededError(Exception):
 	def __init__(self):
 		self.value = 'You have created to many tokens. Only 12 are allowed'
@@ -25,10 +27,12 @@ class GrooveAPI:
 			import simplejson_xbox
 			self.simplejson = simplejson_xbox
 			print 'GrooveShark API: Initialized as XBOX script'
+			self.isXbox = True
 		else:
 			import simplejson
 			self.simplejson = simplejson
 			print 'GrooveShark API: Initialized as Dharma script'
+			self.isXbox = False
 		timeout = 40
 		socket.setdefaulttimeout(timeout)
 		self.enableDebug = enableDebug
@@ -40,6 +44,11 @@ class GrooveAPI:
 		self.songIDsAlreadySeen = []
 		self.recentArtists = []
 		self.rootDir = os.getcwd()
+		if self.isXbox == True:
+			self.dataDir = 'script_data'
+		else:
+			self.dataDir = 'addon_data'
+		self.confDir = os.path.join('special://profile/', self.dataDir, __scriptid__)
 		self.sessionID = self.getSavedSession()
 		self.debug('Saved sessionID: ' + self.sessionID)
 		self.sessionID = self.getSessionFromAPI()
@@ -68,7 +77,7 @@ class GrooveAPI:
 			
 	def getSavedSession(self):
 		sessionID = ''
-		path = os.path.join(self.rootDir, 'data', 'session.txt')
+		path = os.path.join(self.confDir, 'session', 'session.txt')
 
 		try:
 			f = open(path, 'rb')
@@ -82,7 +91,7 @@ class GrooveAPI:
 
 	def saveSession(self):			
 		try:
-			dir = os.path.join(self.rootDir, 'data')
+			dir = os.path.join(self.confDir, 'session')
 			# Create the 'data' directory if it doesn't exist.
 			if not os.path.exists(dir):
 				os.mkdir(dir)
@@ -447,6 +456,10 @@ class GrooveAPI:
 		result = self.callRemote("popular.getAlbums", {"limit": limit})
 		list = self.parseAlbums(result)
 		return list
+
+	def artistAbout(self, artistId):
+		result = self.callRemote("artist.about", {"artistID": artistId})
+		return result
 		
 	def artistGetAlbums(self, artistId, limit, sortKey=2):
 		result = self.callRemote("artist.getAlbums", {"artistID": artistId, "limit": limit})
@@ -502,16 +515,24 @@ class GrooveAPI:
 					else:
 						dur = 0
 					try:
-						list.append([s['songName'].encode('ascii', 'ignore'),\
-						s['songID'],\
-						dur,\
-						s['albumName'].encode('ascii', 'ignore'),\
-						s['albumID'],\
-						s['image']['tiny'].encode('ascii', 'ignore'),\
-						s['artistName'].encode('ascii', 'ignore'),\
-						s['artistID'],\
-						s['image']['small'].encode('ascii', 'ignore'),\
-						s['image']['medium'].encode('ascii', 'ignore')])
+						notIn = True
+						for entry in list:
+							songName = s['songName'].encode('ascii', 'ignore')
+							albumName = s['albumName'].encode('ascii', 'ignore')
+							artistName = s['artistName'].encode('ascii', 'ignore')
+							if (entry[0].lower() == songName.lower()) and (entry[3].lower() == albumName.lower()) and (entry[6].lower() == artistName.lower()):
+								notIn = False
+						if notIn == True:
+							list.append([s['songName'].encode('ascii', 'ignore'),\
+							s['songID'],\
+							dur,\
+							s['albumName'].encode('ascii', 'ignore'),\
+							s['albumID'],\
+							s['image']['tiny'].encode('ascii', 'ignore'),\
+							s['artistName'].encode('ascii', 'ignore'),\
+							s['artistID'],\
+							s['image']['small'].encode('ascii', 'ignore'),\
+							s['image']['medium'].encode('ascii', 'ignore')])
 					except:
 						print 'GrooveShark: Could not parse song number: ' + str(i)
 						traceback.print_exc()
