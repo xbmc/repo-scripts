@@ -1,4 +1,4 @@
-0.2.7:
+0.2.8:
 
  - New feature: Search makes suggestions for songs, artists, and albums to speed up text entry. Based on AcclaimedMusic.net and the most played tracks on last.fm.
 
@@ -7,6 +7,10 @@
  - Bug fix: Using the script in XBMC Live could prevent the script from saving the session ID.
 
  - Added: Remove duplicates on albums
+
+0.2.7:
+
+ - Didn't work. Errornomous pull from my repo to the XBMC repo
 
 0.2.6:
 
