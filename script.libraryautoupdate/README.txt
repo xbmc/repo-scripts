@@ -1,0 +1,1 @@
+In order to launch the script automatically at startup you'll need to move the autoexec.py script into your userdata directory. If you already have an autoexec.py script just add the following line to it: xbmc.executebuiltin('RunScript(script.libraryupdate)')
