@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.wol"
+       name="Wake On Lan"
+       version="1.0.0"
+       provider-name="AT">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Wake up a sleeping computer using Wake-On-Lan</summary>
+    <description lang="en">Sends a WOL magic packet to a remote computer using its ethernet MAC address</description>
+    <platform>all</platform>
+  </extension>
+</addon>

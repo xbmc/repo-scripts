@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="macaddress" type="text" label="50000" default="00:25:11:c4:fb:8a" />
+</settings>
