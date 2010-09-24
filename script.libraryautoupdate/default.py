@@ -7,6 +7,9 @@ Addon = xbmcaddon.Addon(id=os.path.basename(os.getcwd()))
 class Main:
 
     def __init__(self):
+		#cancel the alarm if it is already running
+		xbmc.executebuiltin('CancelAlarm(updatelibrary)')
+	
         timer_amounts = {}
         timer_amounts['0'] = '120'
         timer_amounts['1'] = '300'
