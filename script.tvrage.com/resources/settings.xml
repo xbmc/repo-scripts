@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- General -->
+  <category label="30002">
+    <setting id="hours_between_updates" type="enum" label="30001" values="1 Hour|2 Hours|3 Hours|4 Hours|5 Hours|6 Hours|12 Hours|24 Hours" default="0" />
+  </category>
+  
+</settings>

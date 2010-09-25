@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30001">Update every...</string>
+    <string id="30002">General</string>
+    <string id="30003">Getting Data</string>
+    <string id="30004">Please Wait</string>
+    <string id="30005">Search Shows</string>
+    <string id="30006">Delete</string>
+    <string id="30007">Search/Add</string>
+    <string id="30008">Select Show</string>
+    <string id="30009">Are you sure?</string>
+    <string id="30010">Do you really want to delete @REPLACE@?</string> <!--@REPLACE@ must not be translated -->
+    <string id="30011">Options</string>
+    <string id="30012">Previous:</string>
+    <string id="30013">Press context button/key for options</string>
+    <string id="30014">Notice</string>
+    <string id="30015">Show already saved.</string>
+    <string id="30016">Adding show...</string>
+    <string id="30017">Searching...</string>
+</strings>
