@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.libraryautoupdate"
-    name="XBMC Library Auto Update" version="0.3.1" provider-name="robweber">
+    name="XBMC Library Auto Update" version="0.3.2" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
   </requires>
