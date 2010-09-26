@@ -146,7 +146,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
           self.rem_files(self.tmp_sub_dir)
         
         self.getControl( 111 ).setVisible( False ) # check for existing subtitles and set to "True" if found
-        sub_exts = ["srt", "sub", "txt"]
+        sub_exts = ["srt", "sub", "txt", "smi", "ssa", "ass" ]
         br = 0
         for i in range(3):
           for sub_ext in sub_exts:
@@ -318,36 +318,37 @@ class GUI( xbmcgui.WindowXMLDialog ):
         un = unzip.unzip()
         files = un.get_file_list( zip_subs )
         sub_filename = os.path.basename( self.file_original_path )
-
+        exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
         if len(files) < 1 :
             self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
             self.list_services()
-        else :            
+        else :    
             self.getControl( STATUS_LABEL ).setLabel(  _( 652 ) )
             un.extract( zip_subs, self.tmp_sub_dir )
-            subtitle_set = False 
+            subtitle_set = False
+            movie_sub = False
+            episode = 0
             for zip_entry in files:
-                sub_ext  = os.path.splitext( zip_entry )[1]
-                sub_name = os.path.splitext( sub_filename )[0]
-                file_name = "%s.%s%s" % ( sub_name, subtitle_lang, sub_ext )   
-                file_path = os.path.join(self.sub_folder, file_name)
-                subtitle_file = os.path.join(self.tmp_sub_dir, zip_entry)
-                try:
-                    shutil.copy(subtitle_file, file_path)
-                    subtitle_set = True
-                except :
-                    import filecmp
-                    try:
-                        if filecmp.cmp(subtitle_file, file_path):
-                            subtitle_set = True
-                    except:
-                        dialog = xbmcgui.Dialog()
-                        selected = dialog.yesno( __scriptname__ , _( 748 ), _( 749 ), _( 750 ) )
-                        if selected == 1:
-                            __settings__.openSettings()                                                                         
-                break
+                if os.path.splitext( zip_entry )[1] in exts:
+                    subtitle_file, file_path = self.create_name(zip_entry,sub_filename,subtitle_lang)
+                    if len(self.tvshow) > 0:
+                        title, season, episode = regex_tvshow(False, zip_entry)
+                        if not episode : episode = -1
+                    else:
+                        if os.path.splitext( zip_entry )[1] in exts:
+                          movie_sub = True
 
-        self.rem_files((xbmc.translatePath(self.tmp_sub_dir)))
+                    if ( movie_sub or len(files) < 2 or int(episode) == int(self.episode) ):
+                        subtitle_set,file_path = self.copy_files( subtitle_file, file_path )
+
+            if not subtitle_set:
+                for zip_entry in files:
+                    if os.path.splitext( zip_entry )[1] in exts:
+                        print os.path.splitext( zip_entry )[1]
+                        subtitle_file, file_path = self.create_name(zip_entry,sub_filename,subtitle_lang)
+                        subtitle_set,file_path  = self.copy_files( subtitle_file, file_path )            
+        
+        #self.rem_files((xbmc.translatePath(self.tmp_sub_dir))) # we dont want to clean now as there might be temporary subs activated. we clean on startup
         if subtitle_set :
           xbmc.Player().setSubtitles(file_path)
           self.exit_script()
@@ -355,11 +356,41 @@ class GUI( xbmcgui.WindowXMLDialog ):
           self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
           self.list_services()           
 
+###-------------------------- Create name  -------------################
+
+    def create_name(self,zip_entry,sub_filename,subtitle_lang):
+        sub_ext  = os.path.splitext( zip_entry )[1]
+        sub_name = os.path.splitext( sub_filename )[0]
+        file_name = "%s.%s%s" % ( sub_name, subtitle_lang, sub_ext )   
+        file_path = os.path.join(self.sub_folder, file_name)
+        subtitle_file = os.path.join(self.tmp_sub_dir, zip_entry)
+        return subtitle_file, file_path
+
+###-------------------------- Copy files  -------------################
+        
+    def copy_files( self, subtitle_file, file_path ):
+        subtitle_set = False
+        try:
+            shutil.copy(subtitle_file, file_path)
+            subtitle_set = True
+        except :
+            import filecmp
+            try:
+                if filecmp.cmp(subtitle_file, file_path):
+                    subtitle_set = True
+            except:
+                dialog = xbmcgui.Dialog()
+                selected = dialog.yesno( __scriptname__ , _( 748 ), _( 750 ),"" )
+                if selected == 1:
+                    file_path = subtitle_file
+                    subtitle_set = True
+            
+        return subtitle_set, file_path
+
 
             
             
-            
-###-------------------------- Reset Sub List  -------------################
+###-------------------------- List Available Services  -------------################
 
     def list_services( self ):
         
@@ -441,12 +472,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
 ###-------------------------- Remove temp files  -------------################        
 
     def rem_files( self, directory):
-      for root, dirs, files in os.walk(directory, topdown=False):
-          for items in dirs:
-              shutil.rmtree(os.path.join(root, items), ignore_errors=True, onerror=None)      
-          for name in files:
-              os.remove(os.path.join(root, name))
-
+       try:
+           for root, dirs, files in os.walk(directory, topdown=False):
+               for items in dirs:
+                   shutil.rmtree(os.path.join(root, items), ignore_errors=True, onerror=None)      
+               for name in files:
+                   os.remove(os.path.join(root, name))
+       except:
+           pass
 
 ###-------------------------- On Focus  -------------################
  

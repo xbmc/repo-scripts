@@ -69,7 +69,7 @@
     <string id="747">Search Using Parent Folder</string>
     <string id="748">You can't save subtitle to selected destination</string>
     <string id="749">Please choose different subtitle folder under Script Settings.</string>
-    <string id="750">Would you like to adjust the settings now?</string>
+    <string id="750">Would you like to activate this subtitle temporarily?</string>
     <string id="751">Enter Movie Name (year)</string>
     <string id="752">Version %s of %s is available</string>
     <string id="753">You need rev%s and higher to run this script</string>

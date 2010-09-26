@@ -1,5 +1,10 @@
+1.8.8
+- support for whole season subs zip, usually found on OpenSubtitles.org.
+- activate subtitles from temporary location
+- fallback if episode is not found in zip, or if it is mislabeled
+- try/except when cleaning temp folder, there have been some reports that it crashes on WIN. 
 1.8.7
-- changes to SubtitleSource:
+- changes to SubtitleSource, thanks to Veron
 	- Enabled "sync". Script will compare the filename to releasename from SS. If match is found it will mark it as "sync"
 	- Added check that at least one of the user selected language is on SS supported languages list
 	- Changed the way subtitles are sorted.  
