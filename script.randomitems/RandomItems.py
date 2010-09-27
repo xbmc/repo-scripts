@@ -44,7 +44,7 @@ class Main:
         self.ALBUMS = params.get( "albums", "" ) == "True"
         self.UNPLAYED = params.get( "unplayed", "" ) == "True"
         self.PLAY_TRAILER = params.get( "trailer", "" ) == "True"
-        self.RANDOM_ORDER = params.get( "random", "" ) == "True"
+        self.RANDOM_ORDER = "True"
 
     def __init__( self ):
         # parse argv for any preferences
