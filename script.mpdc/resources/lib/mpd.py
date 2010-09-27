@@ -272,6 +272,7 @@ class MPDClient(object):
         try:
             for retval in self._command_list:
                 yield retval()
+            self._command_list = None
         except:
             self._command_list = None
         self._fetch_nothing()

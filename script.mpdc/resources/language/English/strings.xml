@@ -31,6 +31,12 @@
     <string id="30024">Delete</string>
     <string id="30025">Load (Replace)</string>
     <string id="30026">Rename</string>
+    <string id="30027">Playlist exists</string>
+    <string id="30028">Do you want to overwrite?</string>
+    <string id="30029">Update library</string>
+    <string id="30030">Queue (Add)</string>
+    <string id="30031">Queue (Replace)</string>
+    <string id="30032">Updating DB</string>
     <string id="200">Queue</string>
     <string id="201">Files</string>
     <string id="202">Artists</string>

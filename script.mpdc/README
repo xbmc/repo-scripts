@@ -1,0 +1,10 @@
+Project home: http://github.com/lzoubek/xbmc-plugin-mpdc/wiki
+
+Main features
+ - multi-profile – user can set up 3 different server profiles to connect to
+ - control MPD server (play,stop,pause,prev,next,repeat,random)
+ - view,navigate queue
+ - clear queue
+ - create/edit/save/load playlists
+ - browse music by files and add to current queue
+ - browse music by aritsts and albums and add/replace current queue

@@ -1,4 +1,14 @@
-
-
-[B]0.9.0 [/B]
+[B]0.9.3[/B]
+- added artist browser
+- improoved Confluence skin to better fit
+- added context menu to file browser (can Queue Add,Queue Replace and Update DB)
+- fixed UTF decoding error 
+[B]0.9.2[/B]
+- added browsing in MPD server's filesystem
+- added 'Save as' and 'Clean' buttons on current queue
+- added work with playlists (save/load/delete)
+[B]0.9.1[/B]
+- added progress dialogs when connecting/disconnecting
+- fixed bug when attempted to disconnect when not connected (ended in deadlock)
+[B]0.9.0[/B]
 - Initial version

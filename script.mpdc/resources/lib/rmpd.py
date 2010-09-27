@@ -22,6 +22,12 @@ class RMPDClient(mpd.MPDClient):
             self._reconnect()
             return func(*args)
 
+	def command_list_ok_begin(self):
+		super(RMPDClient, self).command_list_ok_begin()
+	
+	def command_list_end(self):
+		return super(RMPDClient, self).command_list_end()
+
     def _reconnect(self):
 #        print "Connection error (timeout), reconnecting..."
         self.disconnect()

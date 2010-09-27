@@ -1,4 +1,4 @@
-import rmpd,select,threading
+import rmpd,select,threading,traceback
 
 # polling MPD Client
 class PMPDClient(object):
@@ -13,6 +13,11 @@ class PMPDClient(object):
 	def register_callback(self,callback):
 		self.callback = callback
 		
+	def command_list_ok_begin(self):
+		self.client.command_list_ok_begin()
+	
+	def command_list_end(self):
+		return self.client.command_list_end()
 		
 	def __getattr__(self,attr):
 		return self.client.__getattr__(attr)
@@ -60,11 +65,13 @@ class PMPDClient(object):
 				changes = self.poller.fetch_idle()
 			except:
 #				print "poller error"
+#				traceback.print_exc()
 				return
 			try:
 				if not self.callback == None:
-					self.callback(changes)
+					self.callback(self.poller,changes)
 			except:
 #				print "callback error"
+#				traceback.print_exc()
 				return
 				
