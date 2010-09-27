@@ -23,20 +23,20 @@
 import sys
 import os
 import xbmcaddon
-__scriptname__ = "Bootable Disk Wizard"
-__author__ = "Team XBMC"
-__GUI__    = "ronie"
-__version__ = "0.9.4"
 
 BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'lib' ) )
 sys.path.append (BASE_RESOURCE_PATH)
 
+__scriptname__ = "Bootable Disk Wizard"
+__author__ = "Team XBMC"
+__GUI__    = "ronie"
 __settings__ = xbmcaddon.Addon(id='script.bootable.disk.wizard')
 __language__ = __settings__.getLocalizedString
+__version__  = __settings__.getAddonInfo('version')
 
 if ( __name__ == "__main__" ):
     import gui
-    ui = gui.GUI( "script-%s.xml" % (__scriptname__.replace(" ","-")) , os.getcwd(), "Default")
+    ui = gui.GUI( "script-Bootable-Disk-Wizard.xml" , os.getcwd(), "Default")
     ui.doModal()
     del ui
     sys.modules.clear()

@@ -244,19 +244,14 @@ class WizardCore:
 		# I wish there could be a way to temporaily inhibit automounting
 		aCmd = self.udev_helper + " --mount " + targetDevice + "1"
 		stdErr, stdOut, retValue = self.__runSilent(aCmd)
-		if retValue >0:
-			if stdOut.find("is mounted")>0:
-				aCmd = "mount | grep " + targetDevice + "1"
-				stdErr, stdOut, retValue = self.__runSilent(aCmd)
-				if retValue==0:
-					mountPoint = stdOut[stdOut.find("on") + 3:stdOut.find("type") - 1]
-				else:
-					raise RuntimeError("99")
-			else:
-				raise RuntimeError("99")
-		else:
+		
+		aCmd = "mount | grep " + targetDevice + "1"
+		stdErr, stdOut, retValue = self.__runSilent(aCmd)
+		if retValue==0:
 			# TODO make it locale-indipendent
-			mountPoint = stdOut[stdOut.find("at") + 3:]
+			mountPoint = stdOut[stdOut.find("on") + 3:stdOut.find("type") - 1]
+		else:
+			raise RuntimeError("99")
 
 		self.statusUpdater(2, 10)
 		retValue = self.__copyFiles(liveDirectory, mountPoint, 10, 70)

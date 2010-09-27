@@ -66,8 +66,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
       # Check the platform for compliance 
       if self.wCore.checkPlatform() == 0:
-      #if self.wCore.checkPlatform() != 0: #### ---- For amet to test on Mac ------ ####
-           print "This script is supposed to be run only from within XBMCLive." #TODO Remove - Debug Only
+           xbmc.output("This script is supposed to be run only from within XBMCLive." ,level=xbmc.LOGDEBUG )
            self.screen_9( _(910) )
       else:
            diskMinSize = self.wCore.getMinDiskSize()
@@ -75,13 +74,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
            self.getControl( 1006 ).setLabel( "%s[CR][CR][B]%s[/B]" % (_(105),_(106), ) % ( diskMinSize,) )
            
       self.setFocus( self.getControl( 9000 ) )
-      
-      #### ---- For amet to test screen 5 update on Mac (will be removed :) )------ ####
-      #self.hide_all()
-      #self.screen_5()
-      
-      #self.screen_5()
-
 
     def hide_all( self ):
       self.getControl( 1100 ).setVisible( False )
@@ -108,32 +100,28 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
       self.liveDirectory = self.wCore.findLiveDirectory(self.liveDirectory)
       if self.liveDirectory == None:
-         print "Cannot find Live Directory"
+         xbmc.output("Cannot find Live Directory" ,level=xbmc.LOGDEBUG )
          self.screen_9(_(911), _(912))
          return
 
       self.getControl( 1297 ).setLabel("Using system files at: %s" % (self.liveDirectory,))
 
-      print "Live Directory = '%s'" % (self.liveDirectory) #TODO Remove - Debug Only 
+      xbmc.output("Live Directory = '%s'" % (self.liveDirectory) ,level=xbmc.LOGDEBUG )
       self.getControl( 1200 ).setVisible( True )
-      print "Screen 2" #TODO Remove - Debug Only
 
 ##--------- Screen 3 -----------##
     def screen_3( self ):
       self.getControl( 1200 ).setVisible( False )
-      print "Screen 3" #TODO Remove - Debug Only
 
       diskList = self.wCore.findRemovableDisks()
       if len(diskList) == 0:
-         print "Cannot find any suitable removable disks" #TODO Remove - Debug Only
+         xbmc.output("Cannot find any suitable removable disks" ,level=xbmc.LOGDEBUG )
          self.screen_9(_(908), _(909))
          return
 
       guiList = self.getControl(1301)
       for aDisk in diskList:
          guiList.addItem(aDisk)
-
-      # self.setFocus(guiList)
       
       self.getControl( 1300 ).setVisible( True ) 
       self.setFocus( self.getControl( 9000 ) )
@@ -149,16 +137,21 @@ class GUI( xbmcgui.WindowXMLDialog ):
       self.targetDevice = selectedDisk[:selectedDisk.find(" ")]
 
       self.maxSize = self.wCore.getMaxPermStorageSize(self.targetDevice)
-      #self.maxSize = 300
       
+      try:  # this is to accomodate xbmc <= B2
+        self.getControl( 1401 ).setPercent(80)
+        self.slider()
+      except:
+        pass
+
       self.getControl( 1402 ).setLabel("%sMB" % (str(self.maxSize), ) )
       self.setFocus( self.getControl( 1401 ) )
       xbmc.executebuiltin("Control.SetFocus(1098,0)")
-      print "Screen 4" #TODO Remove - Debug Only
 
 ##--------- Screen 5 -----------##
     def screen_5( self ):
       self.hide_all()
+      self.getControl( 1099 ).setVisible( False )
       self.getControl( 1500 ).setVisible( True )
       if __settings__.getSetting( "enable_custom_password" ) == "true" :
           self.getControl( 1502 ).setVisible( False )
@@ -173,26 +166,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
       selectedDisk = diskList.getSelectedItem()
       self.getControl( 1501 ).setLabel(selectedDisk.getLabel())
 
-      print "Screen 5" #TODO Remove - Debug Only      
-
 ##--------- Screen 6 -----------##
     def screen_6( self ):
       self.hide_all()
       self.getControl( 1600 ).setVisible( True )
       self.getControl( 2000 ).setVisible( True )
-      print "Screen 6" #TODO Remove - Debug Only
 
       try:
-        
-        #### ---- For amet to test on Mac ------ ####
-        #self.screen_6_updater(1, 10 ,"/Volumes/Macintosh/10.txt" )
-        #xbmc.sleep(3000)
-        #self.screen_6_updater(2, 20, "/Volumes/Macintosh/20.txt" )
-        #xbmc.sleep(3000)
-        #self.screen_6_updater(3, 31, "/Volumes/Macintosh/31.txt" )
-        #xbmc.sleep(3000)
-        #self.screen_6_updater(4, 43, "/Volumes/Macintosh/43.txt" )
-                
         self.wCore.createBootableDisk(self.liveDirectory, self.targetDevice, self.storage_size, self.password, self.screen_6_updater)
       except Exception, error:
 	eCode = int(str(error))
@@ -227,15 +207,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
       if not percentage == None:
         statusString = "%s - %s%%" % (statusString,str(percentage),)
       xbmc.output(statusString, level=xbmc.LOGDEBUG )
-#      if self.debugLogLevel>0:
-#        statusString = "Step#: " + str(step)
-#        if not item == None:
-#          statusString = statusString + " - " + item
-#        if not percentage == None:
-#          statusString = statusString + " - " + str(percentage) + "%"
-#        print statusString
       percentage = min(100, percentage)
-      self.getControl( 2000 ).setPercent(percentage)### Progress bar :)
+      self.getControl( 2000 ).setPercent(percentage)### Progress bar
 
       if step == 1:                                 # Partitioning/Formatting
         self.getControl( 1604 ).setVisible( False ) ### First line screen 6,
@@ -258,7 +231,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
       if msg_line1 != "": self.getControl( 1902 ).setLabel( msg_line1 ) #----------NOTE ---------
       if msg_line2 != "": self.getControl( 1903 ).setLabel( msg_line2 ) # only change labels if we actually send the msg_line1 and msg_line2 
       self.getControl( 1900 ).setVisible( True )
-      print "Screen 9" #TODO Remove - Debug Only
       self.setFocus( self.getControl( 9000 ) )
       xbmc.executebuiltin("Control.SetFocus(1098,0)")
 
@@ -271,7 +243,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 ##--------- Click -----------##
 
     def onClick( self, controlId ):
-      print "controlId: %s" % (controlId) #TODO: Remove - Debug Only
+      xbmc.output("controlId: %s" % (controlId) ,level=xbmc.LOGDEBUG )
       if ( controlId == CONTROL_END ):
         self.exit_script()
         
@@ -295,8 +267,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
           self.getControl( 1099 ).setVisible((self.password == self.password_confirmed) and self.password != "" and self.getControl( 1502 ).isSelected())
       
       if ( controlId == 1401 ):
+        self.slider()
+
+##--------- Slider -----------##
+    def slider(self):
         slider_percent = int(self.getControl( 1401 ).getPercent())
-        print slider_percent #TODO: Remove - Debug Only
         self.storage_size = (self.maxSize / 100) * slider_percent
         self.getControl( 1403 ).setLabel(_(406) % (str(self.storage_size),))
 

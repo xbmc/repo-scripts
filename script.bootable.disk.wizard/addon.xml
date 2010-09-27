@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.bootable.disk.wizard"
        name="Bootable Disk Wizard"
-       version="0.9.4"
+       version="0.9.5"
        provider-name="Team XBMC">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
@@ -10,10 +10,9 @@
              library="default.py" />
   <extension point="xbmc.addon.metadata">
     <platform>linux</platform>
-    <minversion>30702</minversion>
-    <summary lang="en">Bootable Disk Wizard</summary>
+    <summary lang="en">This script addon automates the creation of an XBMC Live bootable removable disk.</summary>
     <summary lang="hu">XBMC-LIVE lemez varázsló</summary>
-    <description lang="en"></description>
+    <description lang="en">Bootable Disk Wizard (BDW) is designed to be executed from the live CD/live removable disk, but can also run out of a traditional disk installation provided that its addon settings are properly set.</description>
     <description lang="hu">XBMC-LIVE indítható lemezt tudsz készíteni ezzel a kiegészítővel</description>
   </extension>
 </addon>

@@ -9,7 +9,7 @@
   <string id="103">Welcome to XBMC Live</string>
   <string id="104">bootable disk wizard</string>
   <string id="105">The procedure will create a XBMC Live bootable disk</string>
-  <string id="106">The disk must have at least %iMB of capacity</string>
+  <string id="106">The disk must have at least %iMB of capacity and be recognised as removable storage.</string>
   <string id="107">CAUTION:</string>
   <string id="108">The process will erase all data on the specified disk drive! This is an experimental tool, use at your own risk!</string>
 <!--Page 2-->
