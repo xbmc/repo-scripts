@@ -236,6 +236,7 @@
 			<texturenofocus>PlayerControls-RepeatNF.png</texturenofocus>
 			<texturefocus>PlayerControls-RepeatFO.png</texturefocus>
 			<onleft>702</onleft>
+			<onright>704</onright>
 			<ondown>1000</ondown>
 		</control>
 
@@ -248,8 +249,23 @@
 			<texturenofocus>PlayerControls-RepeatAllNF.png</texturenofocus>
 			<texturefocus>PlayerControls-RepeatAllFO.png</texturefocus>
 			<onleft>702</onleft>
+			<onright>704</onright>
 			<ondown>1000</ondown>
 		</control>
+
+		<control type="radiobutton" id="704">
+			<posx>350</posx>
+			<posy>20</posy>
+			<width>248</width>
+			<height>48</height>
+			<visible>true</visible>
+			<textoffsetx>10</textoffsetx>
+			<textoffsety>0</textoffsety>	
+			<label>SCRIPT206</label>
+			<onleft>700</onleft>
+			<ondown>1000</ondown>
+		</control>
+
 
 
     </control>
@@ -292,7 +308,7 @@
       <visible>Container(1000).HasFocus(1001)</visible>
       
           <control type="button" id="1103">
-			<posx>500</posx>
+			<posx>600</posx>
 			<posy>-80</posy>
 			<width>160</width>
 			<height>48</height>
@@ -305,7 +321,7 @@
 			<texturefocus>button-focus2.png</texturefocus>		
 		</control>
         <control type="button" id="1102">
-			<posx>670</posx>
+			<posx>770</posx>
 			<posy>-80</posy>
 			<width>160</width>
 			<height>48</height>

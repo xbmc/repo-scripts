@@ -64,6 +64,7 @@
 			<height>500</height>
 			<viewtype>list</viewtype>
 			<onright>666</onright>
+			<onup>666</onup>
 			<scrolltime>200</scrolltime>			
 				<content>
 				  <item id="1001">
@@ -152,7 +153,7 @@
 		<texturefocus>OSDPrevTrackFO.png</texturefocus>
 		<onright>667</onright>
 		<onleft>1000</onleft>
-		<ondown>120</ondown>
+		<ondown>1000</ondown>
 	</control>
 
 	<control type="button" id="667">
@@ -165,7 +166,7 @@
 		<texturefocus>OSDStopFO.png</texturefocus>
 		<onleft>666</onleft>
 		<onright>668</onright>
-		<ondown>120</ondown>
+		<ondown>1000</ondown>
 	</control>
 	
 	<control type="button" id="668">
@@ -178,7 +179,7 @@
 		<texturefocus>OSDPlayFO.png</texturefocus>
 		<onleft>667</onleft>
 		<onright>669</onright>
-		<ondown>120</ondown>
+		<ondown>1000</ondown>
 	</control>
 	<control type="button" id="670">
 		<posx>120</posx>
@@ -190,7 +191,7 @@
 		<texturefocus>OSDPauseFO.png</texturefocus>
 		<onleft>667</onleft>
 		<onright>669</onright>
-		<ondown>120</ondown>
+		<ondown>1000</ondown>
 	</control>
 
 	<control type="button" id="669">
@@ -202,32 +203,11 @@
 		<texturenofocus>OSDNextTrackNF.png</texturenofocus>
 		<texturefocus>OSDNextTrackFO.png</texturefocus>
 		<onleft>668</onleft>
-		<ondown>120</ondown>
+		<ondown>1000</ondown>
+		<onright>702</onright>
 	</control>
 
-	<control type="button" id="700">
-		<posx>300</posx>
-		<posy>20</posy>
-		<width>48</width>
-		<height>48</height>
-		<visible>true</visible>
-		<texturenofocus>OSDRepeatNF.png</texturenofocus>
-		<texturefocus>OSDRepeatFO.png</texturefocus>
-		<ondown>120</ondown>
-	</control>
-
-	<control type="button" id="701">
-		<posx>300</posx>
-		<posy>20</posy>
-		<width>48</width>
-		<height>48</height>
-		<visible>true</visible>
-		<texturenofocus>OSDRepeatAllNF.png</texturenofocus>
-		<texturefocus>OSDRepeatAllFO.png</texturefocus>
-		<ondown>120</ondown>
-	</control>
-
-<control type="button" id="702">
+	<control type="button" id="702">
 		<posx>250</posx>
 		<posy>20</posy>
 		<width>48</width>
@@ -235,7 +215,9 @@
 		<visible>true</visible>
 		<texturenofocus>OSDRandomOffNF.png</texturenofocus>
 		<texturefocus>OSDRandomOffFO.png</texturefocus>
-		<ondown>120</ondown>
+		<ondown>1000</ondown>
+		<onright>700</onright>
+		<onleft>669</onleft>
 	</control>
 
 	<control type="button" id="703">
@@ -246,9 +228,51 @@
 		<visible>true</visible>
 		<texturenofocus>OSDRandomOnNF.png</texturenofocus>
 		<texturefocus>OSDRandomOnFO.png</texturefocus>
-		<ondown>120</ondown>
+		<ondown>1000</ondown>
+		<onright>700</onright>
+		<onleft>669</onleft>
 	</control>
 
+
+	<control type="button" id="700">
+		<posx>300</posx>
+		<posy>20</posy>
+		<width>48</width>
+		<height>48</height>
+		<visible>true</visible>
+		<texturenofocus>OSDRepeatNF.png</texturenofocus>
+		<texturefocus>OSDRepeatFO.png</texturefocus>
+		<onright>704</onright>
+		<onleft>702</onleft>
+		<ondown>1000</ondown>
+	</control>
+
+	<control type="button" id="701">
+		<posx>300</posx>
+		<posy>20</posy>
+		<width>48</width>
+		<height>48</height>
+		<visible>true</visible>
+		<texturenofocus>OSDRepeatAllNF.png</texturenofocus>
+		<texturefocus>OSDRepeatAllFO.png</texturefocus>
+		<onleft>702</onleft>
+		<onright>704</onright>
+		<ondown>1000</ondown>
+	</control>
+
+
+		<control type="radiobutton" id="704">
+			<posx>350</posx>
+			<posy>20</posy>
+			<width>248</width>
+			<height>48</height>
+			<visible>true</visible>
+			<textoffsetx>10</textoffsetx>
+			<textoffsety>0</textoffsety>	
+			<label>SCRIPT206</label>
+			<onleft>700</onleft>
+			<ondown>1000</ondown>
+		</control>
 
 
       <control type="label" id="111">
@@ -299,7 +323,7 @@
       <visible>Container(1000).HasFocus(1001)</visible>
       
           <control type="button" id="1103">
-			<posx>500</posx>
+			<posx>600</posx>
 			<posy>-60</posy>
 			<width>160</width>
 			<height>48</height>
@@ -312,7 +336,7 @@
 			<texturefocus>button-focus.png</texturefocus>		
 		</control>
         <control type="button" id="1102">
-			<posx>670</posx>
+			<posx>770</posx>
 			<posy>-60</posy>
 			<width>160</width>
 			<height>48</height>

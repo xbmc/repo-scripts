@@ -1,3 +1,6 @@
+[B]0.9.5[/B]
+- added consume mode support
+- new icon and updated fanart
 [B]0.9.4[/B]
 - added PM3.HD skin support
 - added new setting option 'Stream URL' per profile and global one, if enabled, script will play associated stream when MPD server is currently playing/streaming

@@ -44,6 +44,7 @@ CLICK_ACTIONS = dict({
 	'701':'self.client.repeat(0)',
 	'702':'self.client.random(1)',
 	'703':'self.client.random(0)',
+	'704':'self._consume_mode_toggle()',
 	'1103':'self._clear_queue()',
 	'1102':'self._save_queue_as()',
 	'1401':'self._playlist_contextmenu()',
@@ -69,6 +70,7 @@ CLEAR_QUEUE=1103
 SAVE_QUEUE_AS=1102
 PLAYLIST_BROWSER=1401
 ARTIST_BROWSER=1301
+RB_CONSUME_MODE=704
 Addon = xbmcaddon.Addon(id=os.path.basename(os.getcwd()))
 
 #String IDs
@@ -140,7 +142,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		self._update_playlist_browser(self.client.listplaylists())
 		p.update(75,STR_GETTING_ARTISTS)
 		self._update_artist_browser()
-		p.close()
+		p.close()		
 
 	def _update_artist_browser(self,artist_item=None,client=None):		
 		if client == None:
@@ -261,7 +263,11 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 				if state['random'] == '0':
 					self.toggleVisible( SHUFFLE_ON, SHUFFLE_OFF )
 				elif state['random'] == '1':
-					self.toggleVisible( SHUFFLE_OFF, SHUFFLE_ON )					
+					self.toggleVisible( SHUFFLE_OFF, SHUFFLE_ON )
+				if state['consume'] == '1':
+					self.getControl(RB_CONSUME_MODE).setSelected(True)
+				else:
+					self.getControl(RB_CONSUME_MODE).setSelected(False)					
 			if change == 'stored_playlist':
 				self._update_playlist_browser(poller_client.listplaylists())
 			if change == 'database':
@@ -474,6 +480,11 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			else:	
 				self.client.save(kb.getText())
 				self.getControl( STATUS ).setLabel(STR_PLAYLIST_SAVED)
+	def _consume_mode_toggle(self):
+		if self.getControl(RB_CONSUME_MODE).isSelected():
+			self.client.consume(1)
+		else:
+			self.client.consume(0)
 	def _playlist_on_click(self):	
 		seekid = self.getControl( CURRENT_PLAYLIST ).getSelectedItem().getProperty('id')
 		status = self.client.status()
