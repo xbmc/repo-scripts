@@ -8,3 +8,4 @@ Main features
  - create/edit/save/load playlists
  - browse music by files and add to current queue
  - browse music by aritsts and albums and add/replace current queue
+ - can auto play associated stream via XBMC when MPD server is currently playing/streaming

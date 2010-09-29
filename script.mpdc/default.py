@@ -27,7 +27,7 @@ __settings__ = xbmcaddon.Addon(id=os.path.basename(os.getcwd()))
 __language__ = __settings__.getLocalizedString
 
 SERVER_LIST = 120
-ACTION_CLOSE = [6,10,216,247,257,275,61448,61467]
+ACTION_CLOSE = [10]
 STATUS = 100
 SETTINGS = 101
 sys.path.append( os.path.join ( os.getcwd(), 'resources','lib') )
@@ -47,6 +47,7 @@ class MpdProfile:
 		self.name = Addon.getSetting(self.id+'_name')
 		self.host = Addon.getSetting(self.id+'_mpd_host')	
 		self.port = Addon.getSetting(self.id+'_mpd_port')
+		self.stream_url = Addon.getSetting(self.id+'_stream_url')
 		self.status = STR_HOST_OFFLINE
 		self.stat=STATUS_OFF
 
@@ -54,6 +55,7 @@ class MpdProfile:
 		self.name = Addon.getSetting(self.id+'_name')
 		self.host = Addon.getSetting(self.id+'_mpd_host')	
 		self.port = Addon.getSetting(self.id+'_mpd_port')
+		self.stream_url = Addon.getSetting(self.id+'_stream_url')
 		self.status = STR_HOST_OFFLINE
 		self.stat=STATUS_OFF
 		try:
@@ -71,7 +73,8 @@ class MpdProfile:
 class SelectMPDProfile ( xbmcgui.WindowXMLDialog ) :
 	
 	def __init__( self, *args, **kwargs ):
-		self.profiles = []		
+		self.profiles = []
+		self.skin=args[2]		
 	
 	def onFocus (self,controlId ):
 		self.controlId=controlId
@@ -100,7 +103,7 @@ class SelectMPDProfile ( xbmcgui.WindowXMLDialog ) :
 		p.close()
 	    	
 	def onAction(self, action):
-		if action.getButtonCode() in ACTION_CLOSE:						
+		if action.getId() in ACTION_CLOSE:						
 			self.close()		
 	
 	def onClick( self, controlId ):
@@ -110,17 +113,22 @@ class SelectMPDProfile ( xbmcgui.WindowXMLDialog ) :
 		if controlId == SERVER_LIST:
 			seekid = self.getControl( SERVER_LIST ).getSelectedItem().getProperty('id')
 			if self.getControl( SERVER_LIST ).getSelectedItem().getProperty('stat') == STATUS_ON:
-				ui = gui.GUI( 'mpd-client-main.xml',os.getcwd(), 'Confluence',seekid)
+				ui = gui.GUI( 'mpd-client-main.xml',os.getcwd(), self.skin,seekid)
 				ui.doModal()
 				del ui
 
+skin = 'Confluence'
+current_skin=str(xbmc.getSkinDir().lower())
+if current_skin.find('pm3') > -1:
+	skin = 'PM3.HD'
+
 skip_selector = Addon.getSetting('skip-selector')
 if 'true' == skip_selector:
-	ui = gui.GUI( 'mpd-client-main.xml',os.getcwd(), 'Confluence','0')
+	ui = gui.GUI( 'mpd-client-main.xml',os.getcwd(), skin,'0')
 	ui.doModal()
 	del ui
 else:
-	selectorUI = SelectMPDProfile( 'select-profile.xml',os.getcwd(), 'Confluence')		
+	selectorUI = SelectMPDProfile( 'select-profile.xml',os.getcwd(), skin)		
 	selectorUI.profiles = [MpdProfile('0'),MpdProfile('1'),MpdProfile('2')]
 	selectorUI.doModal()
 	del selectorUI

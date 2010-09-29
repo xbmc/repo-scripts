@@ -103,9 +103,14 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		self.client = pmpd.PMPDClient()
 		self.client.register_callback(self._handle_changes)
 		self.profile_id=args[3]
+		self.skin=args[2]
 		self.profile_name=Addon.getSetting(self.profile_id+'_name')
 		self.mpd_host = Addon.getSetting(self.profile_id+'_mpd_host')
-		self.mpd_port = Addon.getSetting(self.profile_id+'_mpd_port')		
+		self.mpd_port = Addon.getSetting(self.profile_id+'_mpd_port')
+		self.stream_url = Addon.getSetting(self.profile_id+'_stream_url')
+		self.is_play_stream = False
+		if Addon.getSetting('play-stream') == 'true':
+			self.is_play_stream = True
 		
 	def onFocus (self,controlId ):
 		self.controlId=controlId
@@ -319,7 +324,9 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			item.setIconImage('')
 			if item.getProperty('id') == itemid:
 				item.setIconImage(state+'-item.png')
-				playlist.selectItem(int(item.getProperty('index')))		
+				playlist.selectItem(int(item.getProperty('index')))
+		if state == 'play':
+			self._play_stream()	
 	
 	def _queue_item(self):
 		if self.getFocusId() == FILE_BROWSER:
@@ -348,9 +355,6 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 					self.getControl( STATUS ).setLabel(status)					
 
 	def _context_menu(self):
-		if self.getFocusId() == CURRENT_PLAYLIST:
-			dialog = xbmcgui.Dialog()
-			ret = dialog.select('choose action',['Clear playlist','Play/Pause','Refresh library'])
 		if self.getFocusId() == FILE_BROWSER:
 			ret = self.dialog(STR_SELECT_ACTION,[STR_QUEUE_ADD,STR_QUEUE_REPLACE,STR_UPDATE_LIBRARY])
 			if ret ==0:
@@ -386,6 +390,18 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 #			print 'action: '+command
 			exec(command)			
 			
+	def _play_stream(self):
+		if self.is_play_stream and not self.stream_url=='':
+			player = xbmc.Player(xbmc.PLAYER_CORE_MPLAYER)
+			if player.isPlayingVideo():
+				return
+			if player.isPlayingAudio():
+				if not player.getPlayingFile() == self.stream_url:
+					player.play(self.stream_url)
+			else:
+				player.play(self.stream_url)
+				
+	
 	def disconnect(self):
 		p = xbmcgui.DialogProgress()
 		p.create(STR_DISCONNECTING_TITLE)
@@ -424,7 +440,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			self.client.rm(playlist)
 			
 	def dialog(self,title,list):
-		d = dialog.Dialog('menu-dialog.xml',os.getcwd(),'Confluence','0')
+		d = dialog.Dialog('menu-dialog.xml',os.getcwd(),self.skin,'0')
 		d.list=list
 		d.title = title
 		d.doModal()

@@ -37,6 +37,8 @@
     <string id="30030">Queue (Add)</string>
     <string id="30031">Queue (Replace)</string>
     <string id="30032">Updating DB</string>
+    <string id="30033">Stream URL</string>
+    <string id="30034">Start playing Stream when MPD server is in 'playing' state</string>    
     <string id="200">Queue</string>
     <string id="201">Files</string>
     <string id="202">Artists</string>

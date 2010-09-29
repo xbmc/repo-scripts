@@ -1,3 +1,6 @@
+[B]0.9.4[/B]
+- added PM3.HD skin support
+- added new setting option 'Stream URL' per profile and global one, if enabled, script will play associated stream when MPD server is currently playing/streaming
 [B]0.9.3[/B]
 - added artist browser
 - improoved Confluence skin to better fit
