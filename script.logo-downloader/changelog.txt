@@ -1,3 +1,6 @@
+v2.1.0
+- added thumb support in select dialog.
+
 v2.0.0
 - added xbmcstuff.com as source
 - added show thumb and clearart support (cache replace too)

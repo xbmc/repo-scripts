@@ -4,8 +4,8 @@ __url__          = "http://code.google.com/p/passion-xbmc/"
 __svn_url__      = ""
 __credits__      = "Team XBMC PASSION, http://passion-xbmc.org/"
 __platform__     = "xbmc media center, [LINUX, OS X, WIN32, XBOX]"
-__date__         = "20-08-2010"
-__version__      = "2.0.0"
+__date__         = "29-09-2010"
+__version__      = "2.1.0"
 __svn_revision__  = "$Revision: 000 $"
 __XBMC_Revision__ = "30000" #XBMC Babylon
 __useragent__ = "Logo downloader %s" % __version__
@@ -39,7 +39,7 @@ import shutil
 SOURCEPATH = os.getcwd()
 RESOURCES_PATH = os.path.join( SOURCEPATH , "resources" )
 DIALOG_DOWNLOAD = xbmcgui.DialogProgress()
-
+ACTION_PREVIOUS_MENU = 10
 sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
 from file_item import Thumbnails
 thumbnails = Thumbnails()
@@ -152,7 +152,7 @@ class downloader:
             
             if self.image_list: 
                 if self.choose_image(): 
-                    self.print_class_var()
+                    if DEBUG: self.print_class_var()
                     if self.download_image(): xbmcgui.Dialog().ok("Success" , "Download successfull" )
                     else: xbmcgui.Dialog().ok("Error" , "Error downloading file" )
             
@@ -160,6 +160,12 @@ class downloader:
         if DEBUG: print "### get tvshow list"
         DIALOG_PROGRESS = xbmcgui.DialogProgress()
         DIALOG_PROGRESS.create( "SCRIPT LOGO DOWNLOADER", "checking database ...")
+        self.logo_found = 0
+        self.logo_download = 0
+        self.thumb_found = 0
+        self.thumb_download = 0
+        self.clearart_found = 0
+        self.clearart_download = 0
         self.TV_listing()
         
         for currentshow in self.TVlist:
@@ -170,7 +176,7 @@ class downloader:
                 self.show_name = currentshow["name"]   
                 print "### show_name: %s" % self.show_name 
                 if DEBUG: print "### tvdbid: %s" % self.tvdbid ,"### show_path: %s" % self.show_path        
-                if DEBUG: print "### vérif id"
+                if DEBUG: print u"### check id"
                 self.id_verif()
                 
                 if self.logo:
@@ -182,9 +188,11 @@ class downloader:
                         if self.search_logo():
                             if DEBUG: print "### found logo for %s" % self.show_name
                             if self.download_image():
+                                self.logo_download = self.logo_download +1
                                 if DEBUG: print "### logo downloaded for %s" % self.show_name
                     else: 
                         if DEBUG: print "### %s already exist, skipping" % self.filename
+                        self.logo_found = self.logo_found + 1
                     self.image_url = False
                     self.filename = False
                     
@@ -199,8 +207,10 @@ class downloader:
                         if self.search_clearart():
                             if DEBUG: print "### found clearart for %s" % self.show_name
                             if self.download_image():
+                                self.clearart_download = self.clearart_download +1
                                 if DEBUG: print "### clearart downloaded for %s" % self.show_name
                     else: 
+                        self.clearart_found = self.clearart_found +1
                         if DEBUG: print "### %s already exist, skipping" % self.filename
                     self.image_url = False
                     self.filename = False
@@ -212,8 +222,10 @@ class downloader:
                         if self.search_show_thumb():
                             if DEBUG: print "### found show thumb for %s" % self.show_name
                             if self.download_image():
+                                self.thumb_download = self.thumb_download +1
                                 if DEBUG: print "### showthumb downloaded for %s" % self.show_name
                     else: 
+                        self.thumb_found = self.thumb_found + 1
                         if DEBUG: print "### %s already exist, skipping" % self.filename
                     self.image_url = False
                     self.filename = False
@@ -223,6 +235,14 @@ class downloader:
                 print "error with: %s" % currentshow
                 print_exc()
         DIALOG_PROGRESS.close()
+        print "total tvshow = %s" % len(self.TVlist) 
+        print "logo found = %s" % self.logo_found
+        print "logo download = %s" % self.logo_download
+        print "thumb found = %s" % self.thumb_found
+        print "thumb download = %s" % self.thumb_download
+        print "clearart found = %s" % self.clearart_found
+        print "clearart download = %s" % self.clearart_download
+        xbmcgui.Dialog().ok('SUMMARY %s TVSHOWS' % len(self.TVlist) , 'DOWNLOADED: logo: %s clearart: %s thumb: %s' % ( self.logo_download , self.clearart_download , self.thumb_download ) , 'FOUND: logo: %s clearart: %s thumb: %s' % ( self.logo_found , self.clearart_found , self.thumb_found ))
                 
     def reinit(self):
         if DEBUG: print "### reinit"
@@ -369,15 +389,19 @@ class downloader:
             return True
             
     def choose_image(self):
-        select = xbmcgui.Dialog().select("Which one to download ?" , self.image_list)
-        if select == -1: 
-            print "### Canceled by user"
-            xbmcgui.Dialog().ok("Canceled" , "Download canceled by user" )
-            self.image_url = False
-            return False
-        else:
-            self.image_url = self.image_list[select]
-            return True
+        #select = xbmcgui.Dialog().select("Which one to download ?" , self.image_list)
+        if DEBUG: print self.image_list
+        self.image_url = MyDialog(self.image_list)
+        if self.image_url: return True
+        else: return False
+#         if select == -1: 
+#             print "### Canceled by user"
+#             xbmcgui.Dialog().ok("Canceled" , "Download canceled by user" )
+#             self.image_url = False
+#             return False
+#         else:
+#             self.image_url = self.image_list[select]
+#             return True
     
     def erase_current_cache(self):
         try: 
@@ -415,8 +439,65 @@ class downloader:
             print_exc()  
             return False
                        
+class MainGui( xbmcgui.WindowXMLDialog ):
+    def __init__( self, *args, **kwargs ):
+        xbmcgui.WindowXMLDialog.__init__( self, *args, **kwargs )
+        xbmc.executebuiltin( "Skin.Reset(AnimeWindowXMLDialogClose)" )
+        xbmc.executebuiltin( "Skin.SetBool(AnimeWindowXMLDialogClose)" )
+        self.listing = kwargs.get( "listing" )
 
-                     
+    def onInit(self):
+        try :
+            self.img_list = self.getControl(6)
+            self.img_list.controlLeft(self.img_list)
+            self.img_list.controlRight(self.img_list)
+            
+            self.getControl(3).setVisible(False)
+        except :
+            print_exc()
+            self.img_list = self.getControl(3)
+        
+        self.getControl(5).setVisible(False)
+        
+        for image in self.listing :
+            listitem = xbmcgui.ListItem( image.split("/")[-1] )
+            listitem.setIconImage( image )
+            listitem.setLabel2(image)
+            print image
+            self.img_list.addItem( listitem )
+        self.setFocus(self.img_list)
+
+    def onAction(self, action):
+        #Close the script
+        if action == ACTION_PREVIOUS_MENU :
+            self.close() 
+        
+    def onClick(self, controlID):
+        print controlID
+        """
+            Notice: onClick not onControl
+            Notice: it gives the ID of the control not the control object
+        """
+        #action sur la liste
+        if controlID == 6 or controlID == 3: 
+            #Renvoie l'item selectionne
+            num = self.img_list.getSelectedPosition()
+            print num
+            self.selected_url = self.img_list.getSelectedItem().getLabel2()
+            self.close()
+            
+    def onFocus(self, controlID):
+        pass
+
+def MyDialog(tv_list):
+    w = MainGui( "DialogSelect.xml", SOURCEPATH, listing=tv_list )
+    w.doModal()
+    try: return w.selected_url
+    except: 
+        print_exc()
+        return False
+    del w
+    
 if ( __name__ == "__main__" ): 
     footprints()
     downloader()
