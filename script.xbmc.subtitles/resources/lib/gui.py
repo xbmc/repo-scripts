@@ -472,14 +472,22 @@ class GUI( xbmcgui.WindowXMLDialog ):
 ###-------------------------- Remove temp files  -------------################        
 
     def rem_files( self, directory):
-       try:
-           for root, dirs, files in os.walk(directory, topdown=False):
-               for items in dirs:
-                   shutil.rmtree(os.path.join(root, items), ignore_errors=True, onerror=None)      
-               for name in files:
-                   os.remove(os.path.join(root, name))
-       except:
-           pass
+      try:
+        for root, dirs, files in os.walk(directory, topdown=False):
+          for items in dirs:
+            shutil.rmtree(os.path.join(root, items), ignore_errors=True, onerror=None)
+          for name in files:
+            os.remove(os.path.join(root, name))
+      except:
+        try:
+          for root, dirs, files in os.walk(directory, topdown=False):
+            for items in dirs:
+              shutil.rmtree(os.path.join(root, items).decode("utf-8"), ignore_errors=True, onerror=None)
+            for name in files:
+              os.remove(os.path.join(root, name).decode("utf-8"))
+        except:
+          pass 
+       
 
 ###-------------------------- On Focus  -------------################
  
