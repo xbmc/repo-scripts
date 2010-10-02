@@ -1,5 +1,10 @@
+v2.1.1
+- correct type of image selection.
+- add scan canceling
+
 v2.1.0
 - added thumb support in select dialog.
+- add summary totals
 
 v2.0.0
 - added xbmcstuff.com as source

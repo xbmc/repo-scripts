@@ -4,8 +4,8 @@ __url__          = "http://code.google.com/p/passion-xbmc/"
 __svn_url__      = ""
 __credits__      = "Team XBMC PASSION, http://passion-xbmc.org/"
 __platform__     = "xbmc media center, [LINUX, OS X, WIN32, XBOX]"
-__date__         = "29-09-2010"
-__version__      = "2.1.0"
+__date__         = "02-10-2010"
+__version__      = "2.1.1"
 __svn_revision__  = "$Revision: 000 $"
 __XBMC_Revision__ = "30000" #XBMC Babylon
 __useragent__ = "Logo downloader %s" % __version__
@@ -106,15 +106,15 @@ class downloader:
             if match: self.mode = match.group(1)            
             match = re.search("clearart=(.*)" , item)
             if match: 
-                if match.group(1): self.clearart = True
+                if not match.group(1) == "False": self.clearart = match.group(1)
                 else: pass
             match = re.search("logo=(.*)" , item)
             if match: 
-                if match.group(1): self.logo = True
+                if not match.group(1) == "False": self.logo = match.group(1)
                 else: pass
             match = re.search("showthumb=(.*)" , item)
             if match:
-                if match.group(1): self.show_thumb = True
+                if not match.group(1) == "False": self.show_thumb = match.group(1)
                 else: pass
             match = re.search("showname=" , item)
             if match: self.show_name = item.replace( "showname=" , "" )
@@ -168,8 +168,16 @@ class downloader:
         self.clearart_download = 0
         self.TV_listing()
         
+        print "###clearart#%s###" % self.clearart
+        print "###logo#%s###" % self.logo
+        print "###show_thumb#%s###" % self.show_thumb
+        
         for currentshow in self.TVlist:
-            print "####################"          
+            print "####################"    
+            if DIALOG_PROGRESS.iscanceled():
+                DIALOG_PROGRESS.close()
+                xbmcgui.Dialog().ok('CANCELED','Operation canceled by user.')
+                break
             try:
                 self.show_path = currentshow["path"]
                 self.tvdbid = currentshow["id"]
