@@ -19,7 +19,7 @@
     <string id="645">Download cancelled</string>
     <string id="647">by hash...</string>
     <string id="648">by name...</string>
-
+    <string id="655">Local subtitle available</string>
 
     <!-- OSDB Messages -->
     <string id="730">OSDB server name missing</string>
@@ -63,23 +63,44 @@
     <string id="741">Nenhuma legenda encontrada</string>
     <string id="742"> legendas encontradas</string>
     <string id="744"> legendas encontradas para </string>
-    
+    <string id="745">O serviço Podnapisi requer usuário e senha</string>
+    <string id="746">Por favor registre em www.podnapisi.net</string>
+    <string id="747">Pesquise Usando o Nome da Pasta</string>
+    <string id="748">Você não pode salvar a legenda no destino selecionado</string>
+    <string id="749">Por favor escolha uma pasta diferente para as legendas nas Configurações do Addon.</string>
+    <string id="750">Você gostaria de ativar essa legenda temporariamente?</string>
+    <string id="751">Digite o Nome do Filme (ano)</string>
+    <string id="752">Versão %s de %s está disponível</string>
+    <string id="753">Você necessita da versão %s ou superior para rodar esse addon</string>
+    <string id="754">Versão do XBMC: %i</string>
+    <string id="755">O servidor está sobrecarregado, por favor tente mais tarde</string>
+    <string id="756">O login falhou. Verifique seus dados nas Configurações do addon</string>
       <!-- 
    * Languages
    -->
    
   <string id="30100">Seleconar Idioma</string>
-  <string id="30101">Idioma Principal</string>
-  <string id="30102">Idioma Secundário</string>
+  <string id="30101">- Idioma Principal</string>
+  <string id="30102">- Idioma Secundário</string>
   <string id="30103">Seleção de Serviços</string>
-  <string id="30104">Podnapisi.net Nome Do Usuário</string>
-  <string id="30105">Podnapisi.net Senha</string>
+  <string id="30104"> - Podnapisi.net Nome Do Usuário</string>
+  <string id="30105"> - Podnapisi.net Senha</string>
   <string id="30106">Pasta Para Download De Legendas</string>
-  <string id="30107">Pasta De Filmes</string>
-  <string id="30108">Selecionar Pasta Alternativa</string>
-  <string id="30109">Buscando Por</string>
-  <string id="30110">Busca Manual</string>
-     
+  <string id="30107">- Pasta De Filmes</string>
+  <string id="30108"> - Selecionar Pasta Alternativa</string>
+  <string id="30110">- Pesquisa Manual</string>
+  <string id="30111">- Idioma Terciário</string> 
+  <string id="30112">- Selecione o Serviço Padrão</string>
+  <string id="30113">- Selecione o Serviço Padrão para Filmes</string>
+  <string id="30114">- Selecione o Serviço Padrão para Séries</string>
+  <string id="30118">- Mostre o Nome do Arquivo nos Resultados</string>
+  <string id="30119">- Pesquise Usando o Nome da Pasta</string>
+  <string id="30120">- Cor da Etiqueta dos Serviços</string>
+  <string id="30121">- Adicionar Língua ao Nome do Arquivo </string>
+  <string id="30122">- Tempo Padrão de Timeout</string>
+  <string id="30123"> - Legendas.TV Nome do Usuário</string>
+  <string id="30124"> - Legendas.TV Senha</string>
+  
   <string id="30201">Albanian</string>
   <string id="30202">Arabic</string>
   <string id="30203">Belarusian</string>
