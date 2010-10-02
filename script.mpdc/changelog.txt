@@ -1,3 +1,9 @@
+[B]0.9.6[/B]
+- added support for password protected servers
+- fixed: broken playlist renaming
+- fixed: changes in settings made via 'Select Profile' dialog were not taken into account
+- better exception and error handling
+- improved file/artist browser navigation: both now remember recent item positions
 [B]0.9.5[/B]
 - added consume mode support
 - new icon and updated fanart

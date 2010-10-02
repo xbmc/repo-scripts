@@ -44,18 +44,21 @@ class MpdProfile:
 	
 	def __init__(self,profile_id):
 		self.id=profile_id
-		self.name = Addon.getSetting(self.id+'_name')
-		self.host = Addon.getSetting(self.id+'_mpd_host')	
-		self.port = Addon.getSetting(self.id+'_mpd_port')
-		self.stream_url = Addon.getSetting(self.id+'_stream_url')
+		self.addon = xbmcaddon.Addon(id=os.path.basename(os.getcwd()))
+		self.name = self.addon.getSetting(self.id+'_name')
+		self.host = self.addon.getSetting(self.id+'_mpd_host')	
+		self.port = self.addon.getSetting(self.id+'_mpd_port')
+		self.stream_url = self.addon.getSetting(self.id+'_stream_url')
+		self.password = self.addon.getSetting(self.id+'_mpd_pass')
 		self.status = STR_HOST_OFFLINE
-		self.stat=STATUS_OFF
+		self.stat = STATUS_OFF
 
 	def update(self):
-		self.name = Addon.getSetting(self.id+'_name')
-		self.host = Addon.getSetting(self.id+'_mpd_host')	
-		self.port = Addon.getSetting(self.id+'_mpd_port')
-		self.stream_url = Addon.getSetting(self.id+'_stream_url')
+		self.name = self.addon.getSetting(self.id+'_name')
+		self.host = self.addon.getSetting(self.id+'_mpd_host')	
+		self.port = self.addon.getSetting(self.id+'_mpd_port')
+		self.stream_url = self.addon.getSetting(self.id+'_stream_url')
+		self.password = self.addon.getSetting(self.id+'_mpd_pass')
 		self.status = STR_HOST_OFFLINE
 		self.stat=STATUS_OFF
 		try:
@@ -74,7 +77,7 @@ class SelectMPDProfile ( xbmcgui.WindowXMLDialog ) :
 	
 	def __init__( self, *args, **kwargs ):
 		self.profiles = []
-		self.skin=args[2]		
+		self.skin=args[2]	
 	
 	def onFocus (self,controlId ):
 		self.controlId=controlId

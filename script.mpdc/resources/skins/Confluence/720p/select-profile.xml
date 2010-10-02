@@ -42,6 +42,7 @@
         <onleft>120</onleft>
         <onright>120</onright>
         <ondown>101</ondown>
+        <onup>120</onup>
         <viewtype label="535">list</viewtype>
         <pagecontrol>121</pagecontrol>
         <scrolltime>200</scrolltime>

@@ -65,6 +65,7 @@
 			<viewtype>list</viewtype>
 			<onright>666</onright>
 			<onup>666</onup>
+			<ondown>1000</ondown>
 			<scrolltime>200</scrolltime>			
 				<content>
 				  <item id="1001">
@@ -575,7 +576,7 @@
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
-				<width>600</width>
+				<width>910</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -603,7 +604,7 @@
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
-				<width>600</width>
+				<width>910</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -669,7 +670,7 @@
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
-				<width>600</width>
+				<width>900</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -709,7 +710,7 @@
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
-				<width>600</width>
+				<width>900</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -789,7 +790,7 @@
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
-				<width>600</width>
+				<width>910</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -817,7 +818,7 @@
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
-				<width>600</width>
+				<width>910</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>

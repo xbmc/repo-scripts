@@ -38,7 +38,8 @@
     <string id="30031">Do fronty (Nahradit)</string>
     <string id="30032">Aktualizuji databázi</string>
     <string id="30033">URL Streamu</string>
-    <string id="30034">Přehrávat stream pokud je MPD server ve stavu 'playing'</string> 
+    <string id="30034">Přehrávat stream pokud je MPD server ve stavu 'playing'</string>
+    <string id="30035">Heslo k servru</string> 
     <string id="200">Fronta</string>
     <string id="201">Soubory</string>
     <string id="202">Autoři</string>

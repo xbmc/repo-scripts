@@ -1,4 +1,4 @@
-import rmpd,select,threading,traceback
+import rmpd,select,threading,traceback,mpd
 
 # polling MPD Client
 class PMPDClient(object):
@@ -8,18 +8,20 @@ class PMPDClient(object):
 		self.callback = None
 		self.thread = threading.Thread(target=self._poll)
 		self.thread.setDaemon(True)
-		self.event = threading.Event()
+		self._permitted_commands = []
 		
 	def register_callback(self,callback):
 		self.callback = callback
 		
-	def command_list_ok_begin(self):
-		self.client.command_list_ok_begin()
+#	def command_list_ok_begin(self):
+#		self.client.command_list_ok_begin()
 	
-	def command_list_end(self):
-		return self.client.command_list_end()
+#	def command_list_end(self):
+#		return self.client.command_list_end()
 		
 	def __getattr__(self,attr):
+		if not attr in self._permitted_commands:
+			raise mpd.CommandError('No Permission for :'+attr)
 		return self.client.__getattr__(attr)
 		
 	def connect(self,host,port,password=None):
@@ -28,6 +30,7 @@ class PMPDClient(object):
 		if not password==None:
 			self.poller.password(password)
 			self.client.password(password)
+		self._permitted_commands = self.client.commands()
 		self.thread.start()
 		
 	def disconnect(self):
