@@ -1,12 +1,12 @@
 import urllib
 import xbmc, xbmcgui, xbmcaddon
-import sys, os, time
+import sys, os, time, re
 import elementtree.ElementTree as etree
 
 __author__ = 'ruuk'
 __url__ = 'http://code.google.com/p/tvragexbmc/'
-__date__ = '09-24-2010'
-__version__ = '0.9.0'
+__date__ = '10-02-2010'
+__version__ = '0.9.1'
 __settings__ = xbmcaddon.Addon(id='script.tvrage.com')
 __language__ = __settings__.getLocalizedString
 
@@ -174,6 +174,11 @@ class TVRageAPI:
 	def getTree(self,url):
 		xml = self.getURLData(url,readlines=False)
 		return etree.fromstring(xml)
+		
+	def getEpSummary(self,url):
+		html = self.getURLData(url,readlines=False)
+		html = html.split('>Episode Summary</h')[-1]
+		return re.findall('<br>(.*?)<br>',html,re.S)[0].strip()
 	
 	def getURLData(self,url,readlines=True):
 		try:
@@ -189,14 +194,45 @@ class TVRageAPI:
 		w.close()
 		return linedata
 
+class SummaryDialog(xbmcgui.WindowXMLDialog):
+	def __init__( self, *args, **kwargs ):
+		xbmcgui.WindowXMLDialog.__init__( self, *args, **kwargs )
+		self.link = kwargs.get('link','')
+	
+	def onInit(self):
+		self.getControl(120).setText('Loading summary...')
+		summary = self.htmlToText(API.getEpSummary(self.link))
+		self.getControl(120).setText(summary)
+		self.setFocusId(121)
+		
+	def onClick( self, controlId ):
+		pass
+                       
+	def onFocus( self, controlId ):
+		self.controlId = controlId
+	
+	def onAction(self,action):
+		if action == ACTION_PARENT_DIR:
+			action = ACTION_PREVIOUS_MENU
+		xbmcgui.WindowXMLDialog.onAction(self,action)
+		
+	def htmlToText(self,html):
+		html = re.sub('<.*?>','',html)
+		return html	.replace("&lt;", "<")\
+					.replace("&gt;", ">")\
+					.replace("&amp;", "&")\
+					.replace("&quot;",'"')\
+					.replace("&apos;","'")
+
 class EpListDialog(xbmcgui.WindowXMLDialog):
 	def __init__( self, *args, **kwargs ):
+		xbmcgui.WindowXMLDialog.__init__( self, *args, **kwargs )
 		self.sid = kwargs.get('sid','')
 		self.imagefile = os.path.join(THUMB_PATH,self.sid + '.jpg')
 	
 	def onInit(self):
 		self.showEpList(self.sid)
-		self.setFocus(self.getControl(120))
+		self.setFocusId(120)
 		
 	def onClick( self, controlId ):
 		pass
@@ -207,7 +243,16 @@ class EpListDialog(xbmcgui.WindowXMLDialog):
 	def onAction(self,action):
 		if action == ACTION_PARENT_DIR:
 			action = ACTION_PREVIOUS_MENU
+		elif action == ACTION_SELECT_ITEM:
+			self.summary()
 		xbmcgui.WindowXMLDialog.onAction(self,action)
+			
+	def summary(self):
+		item = self.getControl(120).getSelectedItem()
+		link = item.getProperty('link')
+		w = SummaryDialog("script-tvrage-summary.xml" , os.getcwd(), "Default",link=link)
+		w.doModal()
+		del w
 		
 	def showEpList(self,sid):
 		result = API.getEpList(sid)
@@ -216,6 +261,7 @@ class EpListDialog(xbmcgui.WindowXMLDialog):
 		self.getControl(102).setImage(self.imagefile)
 		
 		self.getControl(120).reset()
+		xbmcgui.lock()
 		for season in result.find('Episodelist').findall('Season'):
 			snum = season.attrib.get('no','')
 			for e in season.findall('episode'):
@@ -223,11 +269,13 @@ class EpListDialog(xbmcgui.WindowXMLDialog):
 				iurls = ep.getImageUrls()
 				item = xbmcgui.ListItem(label=ep.getEPxSEASON(),label2=ep.title,iconImage=iurls[1],thumbnailImage=iurls[0])
 				item.setProperty('date',ep.airdate)
+				item.setProperty('link',ep.link)
 				self.getControl(120).addItem(item)
+		xbmcgui.unlock()
 				
 class TVRageEps(xbmcgui.WindowXMLDialog):
 	def __init__( self, *args, **kwargs ):
-		pass
+		xbmcgui.WindowXMLDialog.__init__( self, *args, **kwargs )
 	
 	def onInit(self):
 		self.lastUpdateFile = xbmc.translatePath('special://profile/addon_data/script.tvrage.com/last')
@@ -377,6 +425,7 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 		sortd = disp.keys()
 		sortd.sort()
 		self.getControl(120).reset()
+		xbmcgui.lock()
 		for k in sortd:
 			show = disp[k]
 			nextUnix = show.getNextUnix()
@@ -401,6 +450,7 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 			item.setProperty("image",show.imagefile)
 			item.setProperty("id",show.showid)
 			self.getControl(120).addItem(item)
+		xbmcgui.unlock()
 		
 	def fileRead(self,file):
 		if not os.path.exists(file): return ''

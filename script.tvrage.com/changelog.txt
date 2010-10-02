@@ -1,7 +1,11 @@
 TVRage-Eps Changelog
 
-Current Version : 0.9.0
+Current Version : 0.9.1
 
-** 0.9.0 ***
+*** 0.9.1 ***
+
+Added show summary dialog when clicking an episode
+
+*** 0.9.0 ***
 
 Initial Release
