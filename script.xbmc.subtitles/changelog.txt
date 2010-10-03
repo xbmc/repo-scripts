@@ -1,3 +1,6 @@
+1.9.1
+- removed: SubtitleSource due to the changes in their API
+
 1.9.0
 - added: new LegendasTV service, Thanks gfjardim for making it up
 

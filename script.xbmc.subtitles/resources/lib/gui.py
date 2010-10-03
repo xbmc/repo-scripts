@@ -163,7 +163,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         def_movie_service = __settings__.getSetting( "defmovieservice")
         def_tv_service = __settings__.getSetting( "deftvservice")
         service_list = []
-        standard_service_list  = ['OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'SubtitleSource', 'Titlovi', 'LegendasTV']
+        standard_service_list  = ['OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV']
         service = ""
  
         for name in os.listdir(SERVICE_DIR):
