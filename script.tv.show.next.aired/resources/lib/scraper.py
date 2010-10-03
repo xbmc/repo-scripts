@@ -9,6 +9,7 @@ from traceback import print_exc
 import xbmc
 import xbmcgui
 import time
+import socket
 
 SOURCEPATH = os.getcwd()
 DATA_PATH = xbmc.translatePath( "special://profile/addon_data/script.tv.show.next.aired/")
@@ -27,6 +28,7 @@ from convert import translate_string
 from file_item import Thumbnails
 thumbnails = Thumbnails()
 
+socket.setdefaulttimeout(10)
 
 
 fr = ["janvier" , "février" , "mars" , "avril" , "mai" , "juin" , "juillet" , "août" , "septembre" , "octobre" , "novembre" , "décembre" , "Lundi" , "Mardi" , "Mercredi" , "Jeudi" , "Vendredi" , "Samedi" , "Dimanche"]
@@ -40,12 +42,11 @@ def get_html_source( url , save=False):
         version = __useragent__
     urllib._urlopener = AppURLopener()
     succeed = 0
-    while succeed <= 5:
+    while succeed < 5:
         try:
-            if os.path.isfile( url ): sock = open( url, "r" )
-            else:
-                urllib.urlcleanup()
-                sock = urllib.urlopen( url )
+            urllib.urlcleanup()
+            
+            sock = urllib.urlopen( url )
     
             htmlsource = sock.read()
             if save: file( os.path.join( CACHE_PATH , save ) , "w" ).write( htmlsource )
@@ -53,11 +54,12 @@ def get_html_source( url , save=False):
             succeed = 5
             return htmlsource
         except:
-            print_exc()
-            print "### ERROR impossible d'ouvrir la page %s" % ( url )
-            time.sleep(1)
-            #dialog.ok("ERROR" , "TVrage.com might be down")
             succeed = succeed + 1
+            print_exc()
+            print "### ERROR impossible d'ouvrir la page %s ---%s---" % ( url , succeed)
+            #time.sleep(1)
+            #dialog.ok("ERROR" , "TVrage.com might be down")
+            
     return ""
 
 def save_file( txt , temp):
@@ -170,7 +172,7 @@ def getDetails( user_request="" ):
             "### %s existing infos, already in listing" % translate_string(show[0])
             infos = existing_data(show[0],next_aired_list)
             print infos
-        else:
+        else: 
             request_num = request_num + 1
             infos = quick_search( show[0] )
             if infos == "error": 

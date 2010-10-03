@@ -6,9 +6,9 @@ __url__          = "http://code.google.com/p/passion-xbmc/"
 __svn_url__      = "http://passion-xbmc.googlecode.com/svn/trunk/addons/script.tv.show.next.aired/"
 __credits__      = "Team Passion-XBMC, http://passion-xbmc.org/"
 __platform__     = "xbmc media center, [ALL]"
-__date__         = "21-08-2010"
-__version__      = "1.0.6"
-__svn_revision__ = "$Revision: 815 $"
+__date__         = "03-10-2010"
+__version__      = "1.1.0"
+__svn_revision__ = "$Revision: 863 $"
 
 
 import os
