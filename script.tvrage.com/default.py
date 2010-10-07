@@ -2,11 +2,13 @@ import urllib
 import xbmc, xbmcgui, xbmcaddon
 import sys, os, time, re
 import elementtree.ElementTree as etree
+import jsonrpc
+import difflib
 
 __author__ = 'ruuk'
 __url__ = 'http://code.google.com/p/tvragexbmc/'
-__date__ = '10-02-2010'
-__version__ = '0.9.1'
+__date__ = '10-07-2010'
+__version__ = '0.9.4'
 __settings__ = xbmcaddon.Addon(id='script.tvrage.com')
 __language__ = __settings__.getLocalizedString
 
@@ -32,10 +34,12 @@ ACTION_PAUSE          = 12
 ACTION_STOP           = 13
 ACTION_NEXT_ITEM      = 14
 ACTION_PREV_ITEM      = 15
+ACTION_MOUSE_LEFT_CLICK = 100
 ACTION_CONTEXT_MENU   = 117
 
 class Show:
-	def __init__(self,showid='',xmltree=None):
+	def __init__(self,showid='',xmltree=None,offset=0):
+		self.offset = offset
 		self.showid = showid
 		self.name = ''
 		self.airtime = ''
@@ -44,9 +48,9 @@ class Show:
 		self.imagefile = os.path.join(THUMB_PATH,self.showid + '.jpg')
 		self.nextUnix = 0
 		self.status = ''
-		self.cancelled = False
-		self.lastEp = {'number':'?','title':'?','date':'?'}
-		self.nextEp = {'number':'?','title':'?','date':'?'}
+		self.canceled = ''
+		self.lastEp = {'number':'?','title':'Unknown','date':'?'}
+		self.nextEp = {'number':'?','title':'Unknown','date':'?'}
 		if xmltree:
 			self.tree = xmltree
 			self.processTree(xmltree)
@@ -65,12 +69,17 @@ class Show:
 		self.imagefile = os.path.join(THUMB_PATH,self.showid + '.jpg')
 		self.name = show.find('name').text
 		
-		try: self.airtime = show.find('airtime').text.rsplit('at ',1)[-1]
+		try: self.airtime = re.findall('\d+:\d\d\s\w\w',show.find('airtime').text)[0]
 		except: pass
-		
+		if not self.airtime:
+			try: self.airtime = show.find('airtime').text.rsplit('at ',1)[-1]
+			except: pass
+			
 		self.status = show.find('status').text
 		if 'Ended' in self.status or 'Cancel' in self.status:
-			self.cancelled = True
+			ended = show.find('ended').text
+			if ended: self.canceled = time.strftime('%b %d %Y',time.strptime(ended,'%Y-%m-%d'))
+			else: self.canceled = '?'
 			
 		last = show.find('latestepisode')
 		self.lastEp = self.epInfo(last)
@@ -82,9 +91,16 @@ class Show:
 			iurl = 'http://images.tvrage.com/shows/'+str(int(self.showid[0:-3]) + 1)+'/'+self.showid + '.jpg'
 			saveURLToFile(iurl,self.imagefile)
 		
+		if self.offset: self.getOffsetAirtime()
+		
+	def getOffsetAirtime(self):
+		self.getNextUnix(forceupdate=True)
+		self.nextUnix += (self.offset * 3600)
+		self.airtime = time.strftime('%I:%M %p',time.localtime(self.nextUnix))
+		
 	def epInfo(self,eptree):
 		try: 		return {'number':eptree.find('number').text,'title':eptree.find('title').text,'date':eptree.find('airdate').text}
-		except: 	return {'number':'?','title':'?','date':'?'}
+		except: 	return {'number':'?','title':'Unknown','date':'?'}
 		
 	def getSortValue(self):
 		srt = self.getNextUnix(forceupdate=True)
@@ -97,7 +113,7 @@ class Show:
 				srt = time.mktime(struct)
 			except:
 				srt = time.time()+60*60*24*365*10
-				if self.cancelled: srt += 3600
+				if self.canceled: srt += 3600
 			self.nextUnix = srt
 		return self.nextUnix
 		
@@ -200,7 +216,7 @@ class SummaryDialog(xbmcgui.WindowXMLDialog):
 		self.link = kwargs.get('link','')
 	
 	def onInit(self):
-		self.getControl(120).setText('Loading summary...')
+		self.getControl(120).setText(__language__(30025))
 		summary = self.htmlToText(API.getEpSummary(self.link))
 		self.getControl(120).setText(summary)
 		self.setFocusId(121)
@@ -245,6 +261,8 @@ class EpListDialog(xbmcgui.WindowXMLDialog):
 			action = ACTION_PREVIOUS_MENU
 		elif action == ACTION_SELECT_ITEM:
 			self.summary()
+		elif action == ACTION_MOUSE_LEFT_CLICK:
+			if self.getFocusId() == 120: self.summary()
 		xbmcgui.WindowXMLDialog.onAction(self,action)
 			
 	def summary(self):
@@ -281,12 +299,18 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 		self.lastUpdateFile = xbmc.translatePath('special://profile/addon_data/script.tvrage.com/last')
 		self.dataFile = xbmc.translatePath('special://profile/addon_data/script.tvrage.com/data')
 		hours = __settings__.getSetting('hours_between_updates')
+		self.http_user = __settings__.getSetting('xbmc_http_user')
+		self.http_pass = __settings__.getSetting('xbmc_http_pass')
+		air_offset = __settings__.getSetting('air_offset')
+		self.skip_canceled = (__settings__.getSetting('skip_canceled') == 'true')
+		self.reverse_sort = (__settings__.getSetting('reverse_sort') == 'true')
+		self.jump_to_bottom = (__settings__.getSetting('jump_to_bottom') == 'true')
 		self.hours = [1,2,3,4,5,6,12,24][int(hours)]
+		self.air_offset = [-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12][int(air_offset)]
 		
 		self.shows = []
 		self.loadData()
 		self.update(force=self.isStale())
-		self.getControl(100).setLabel(__language__(30013))
 
 		self.setFocus(self.getControl(120))
 	
@@ -319,28 +343,37 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 				pdialog.close()
 				xbmcgui.Dialog().ok(__language__(30014),__language__(30015))
 				return
-		self.shows.append(Show(showid=sid).getShowData())
+		self.doAddShow(sid)
 		self.saveData()
 		pdialog.close()
 		
-	#def onControl(self, control):
-	#	if control == self.clist:
-	#		item = self.list.getSelectedItem()
-	
+	def doAddShow(self,sid,skipCanceled=False):
+		show = Show(showid=sid,offset=self.air_offset).getShowData()
+		if skipCanceled and show.canceled: return
+		self.shows.append(show)
+		
 	def onAction(self,action):
+		#print "ACTION: " + str(action.getId()) + " FOCUS: " + str(self.getFocusId()) + " BC: " + str(action.getButtonCode())
 		if action == ACTION_CONTEXT_MENU:
 			self.doMenu()
 		elif action == ACTION_SELECT_ITEM:
 			self.eplist()
 		elif action == ACTION_PARENT_DIR:
 			action = ACTION_PREVIOUS_MENU
+		elif action == ACTION_MOUSE_LEFT_CLICK:
+			if self.getFocusId() == 200:
+				self.search()
+			elif self.getFocusId() == 120:
+				self.eplist()
 		xbmcgui.WindowXMLDialog.onAction(self,action)
 			
 	def doMenu(self):
 		dialog = xbmcgui.Dialog()
-		idx = dialog.select(__language__(30011),[__language__(30007),__language__(30006)])
+		idx = dialog.select(__language__(30011),[__language__(30007),__language__(30026),__language__(30013),__language__(30006)])
 		if idx == 0: self.search()
-		elif idx == 1: self.deleteShow()
+		elif idx == 1: self.addFromLibrary()
+		elif idx == 2: self.reverse()
+		elif idx == 3: self.deleteShow()
 		
 	def search(self):
 		keyboard = xbmc.Keyboard('',__language__(30005))
@@ -350,19 +383,86 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 		pdialog = xbmcgui.DialogProgress()
 		pdialog.create(__language__(30017))
 		pdialog.update(0)
-		result = API.search(term)
+		result = API.search(term.replace(' ','_'))
+		pdialog.close()
+		sid = self.userPickShow(result)
+		if not sid: return
+		self.addShow(sid)
+		self.updateDisplay()
+
+	def userPickShow(self,result,append=''):
 		slist = []
 		sids = []
 		for s in result.findall('show'):
 			slist.append(s.find('name').text)
 			sids.append(s.find('showid').text)
-		pdialog.close()
 		dialog = xbmcgui.Dialog()
-		idx = dialog.select(__language__(30008),slist)
-		if idx < 0: return
-		self.addShow(sids[idx])
-		self.updateDisplay()
+		if append: append = ': ' + append
+		idx = dialog.select(__language__(30008) + append,slist)
+		if idx < 0: return None
+		return sids[idx]
+		
+	def addFromLibrary(self):
+		pdialog = xbmcgui.DialogProgress()
+		pdialog.create(__language__(30027))
+		try:
+			pdialog.update(0)
+			jrapi = jsonrpc.jsonrpcAPI(user=self.http_user,password=self.http_pass)
+			try:
+				shows = jrapi.VideoLibrary.GetTVShows()
+			except jsonrpc.UserPassError:
+				xbmcgui.Dialog().ok(__language__(30031),__language__(30032),__language__(30033),__language__(30034))
+				return
+			except jsonrpc.ConnectionError:
+				xbmcgui.Dialog().ok(__language__(30031),__language__(30035),__language__(30036),__language__(30037))
+				return
+			tot = len(shows['tvshows'])
+			ct=0.0
+			for s in shows['tvshows']:
+				title = s['label']
+				pdialog.update(int((ct/tot)*100),title)
+				for c in self.shows:
+					if difflib.get_close_matches(title,[c.name],1,0.7):
+						print "SHOW: " + title + " - EXISTS AS: " + c.name
+						break
+				else:
+					result = API.search(title.replace(' ','_'))
+					#result = API.search(re.sub('(.*?)','',title.lower().replace('the ','')))
+					matches = {}
+					for f in result.findall('show'):
+						matches[f.find('name').text] = f.find('showid').text
+					close = difflib.get_close_matches(title,matches.keys(),1,0.8)
+					if close:
+						print "SHOW: " + title + " - MATCHES: " + close[0]
+						pdialog.update(int((ct/tot)*100),__language__(30028) + title)
+						self.doAddShow(matches[close[0]],skipCanceled=self.skipCanceled)
+					else:
+						sid = self.userPickShow(result,append=title)
+						if sid: self.doAddShow(sid)
+				ct+=1
+			self.saveData()
+			self.updateDisplay()
+		finally:
+			pdialog.close()
+					
+	def addShow(self,sid,okdialog=True,name=''):
+		pdialog = xbmcgui.DialogProgress()
+		pdialog.create(__language__(30016),name)
+		pdialog.update(0)
+		for s in self.shows:
+			if s.showid == sid:
+				pdialog.close()
+				if okdialog: xbmcgui.Dialog().ok(__language__(30014),__language__(30015))
+				return
+		self.shows.append(Show(showid=sid).getShowData())
+		self.saveData()
+		pdialog.close()
+			
 	
+	def reverse(self):
+		self.reverse_sort = not self.reverse_sort
+		self.updateDisplay()
+		
 	def deleteShow(self):
 		item = self.getControl(120).getSelectedItem()
 		sid = item.getProperty('id')
@@ -393,7 +493,7 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 			print "Empty XML or XML Error"
 			return
 		for s in shows.findall('show'):
-			self.shows.append(Show(xmltree=s))
+			self.shows.append(Show(xmltree=s,offset=self.air_offset))
 			
 	def saveData(self):
 		sl = ['<shows>']
@@ -412,7 +512,7 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 		lmax = len(self.shows)
 		ct=0
 		for show in self.shows:
-			if not show.cancelled: show.getShowData()
+			if not show.canceled: show.getShowData()
 			ct+=1
 			self.updateProgress(ct,lmax,show.name)
 		self.progress.close()
@@ -424,6 +524,7 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 			disp[show.getSortValue()] = show
 		sortd = disp.keys()
 		sortd.sort()
+		if self.reverse_sort: sortd.reverse()
 		self.getControl(120).reset()
 		xbmcgui.lock()
 		for k in sortd:
@@ -431,7 +532,7 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 			nextUnix = show.getNextUnix()
 			
 			try: 	showdate = time.strftime('%a %b %d',time.strptime(show.nextEp['date'],'%Y-%m-%d'))
-			except:	showdate = '?'
+			except:	showdate = show.canceled
 			
 			item = xbmcgui.ListItem(label=show.name,label2=showdate)
 			if time.strftime('%j:%Y',time.localtime()) == time.strftime('%j:%Y',time.localtime(nextUnix)):
@@ -442,14 +543,15 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 				item.setInfo('video',{"Genre":''})
 						
 			item.setProperty("summary",show.airtime)
-			if show.cancelled: item.setProperty("summary",'ENDED')
+			if show.canceled: item.setProperty("summary",__language__(30030))
 			
 			item.setProperty("updated",show.nextEp['number'] + ' ' + show.nextEp['title'])
-			if show.cancelled: item.setProperty("updated",'CANCELLED')
-			item.setProperty("last",__language__(300012) + ' ' + show.lastEp['number'] + ' ' + show.lastEp['title'] + ' ' + show.lastEp['date'])
+			if show.canceled: item.setProperty("updated",__language__(30029))
+			item.setProperty("last",__language__(30012) + ' ' + show.lastEp['number'] + ' ' + show.lastEp['title'] + ' ' + show.lastEp['date'])
 			item.setProperty("image",show.imagefile)
 			item.setProperty("id",show.showid)
 			self.getControl(120).addItem(item)
+		if self.jump_to_bottom: self.getControl(120).selectItem(self.getControl(120).size()-1)
 		xbmcgui.unlock()
 		
 	def fileRead(self,file):

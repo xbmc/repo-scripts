@@ -1,6 +1,26 @@
 TVRage-Eps Changelog
 
-Current Version : 0.9.1
+Current Version : 0.9.4
+
+*** 0.9.4 ***
+
+Added option to add all from XBMC library
+	-Added settings options category 'Library Access' to control behavior
+Added settings option to change episodes times by an offset
+Canceled shows now show end date
+Search/Add now finds better show matches
+
+*** 0.9.3 ***
+
+Made interface more mouse friendly
+  -Fixed mouse click on lists for select
+  -Added 'Add Show' Button
+Added 'Reverse Sort' and  'Jump To Bottom' options in settings
+Added 'Reverse Sort' option on context menu
+
+*** 0.9.2 ***
+
+Added missing xml file for summary dialog
 
 *** 0.9.1 ***
 

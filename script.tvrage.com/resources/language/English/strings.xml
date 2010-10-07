@@ -5,16 +5,44 @@
     <string id="30003">Getting Data</string>
     <string id="30004">Please Wait</string>
     <string id="30005">Search Shows</string>
-    <string id="30006">Delete</string>
+    <string id="30006">Delete Selected</string>
     <string id="30007">Search/Add</string>
     <string id="30008">Select Show</string>
     <string id="30009">Are you sure?</string>
     <string id="30010">Do you really want to delete @REPLACE@?</string> <!--@REPLACE@ must not be translated -->
     <string id="30011">Options</string>
     <string id="30012">Previous:</string>
-    <string id="30013">Press context button/key for options</string>
+    <string id="30013">Reverse Sort</string>
     <string id="30014">Notice</string>
     <string id="30015">Show already saved.</string>
     <string id="30016">Adding show...</string>
     <string id="30017">Searching...</string>
+    <string id="30018">Jump To Bottom At Start</string>
+    
+    <string id="30019">Library Access</string>
+    <string id="30020">HTTP username</string>
+    <string id="30021">HTTP password</string>
+    <string id="30022">Skip canceled shows</string>
+    <string id="30023">Prompt if match not found</string>
+    
+    <string id="30024">Airtime offset (hours)</string>
+    
+    <string id="30025">Loading summary...</string>
+    <string id="30026">Add All From Library</string>
+    <string id="30027">Checking...</string>
+    <string id="30028">ADDING: </string>
+    <string id="30029">CANCELED</string>
+    <string id="30030">ENDED</string>
+    
+    <string id="30031">Error</string>
+    <string id="30032">Unable to access XBMC server.</string>
+    <string id="30033">Check 'HTTP username' and 'HTTP password'</string>
+    <string id="30034">in this addons settings.</string>
+    
+    <string id="30035">Unable to connect to XBMC server.</string>
+    <string id="30036">Make sure 'Allow control of XBMC via HTTP'</string>
+    <string id="30037">is enabled in XBMC network settings.</string>
+    
+    <string id="3013">Press context button/key for options</string>
+    <string id="3018">Add Show</string>
 </strings>

@@ -32,17 +32,37 @@
              
 
 
-      <control type="label" id="100">
+      <control type="label">
         <description>textarea</description>
         <posx>200</posx>
-        <posy>60</posy>
+        <posy>20</posy>
         <width>690</width>
         <height>40</height>
         <font>font18</font>
         <textcolor>white</textcolor>
         <aligny>center</aligny>
         <align>center</align>
+        <label>$LOCALIZE[SCRIPT3013]</label>
         <wrapmultiline>true</wrapmultiline>
+      </control>
+      
+      <control type="button" id="200">
+       <description>The Button</description>
+       <onleft>120</onleft>
+       <onright>120</onright>
+       <onup>120</onup>
+       <ondown>120</ondown>
+       <posx>370</posx>
+       <posy>60</posy>
+       <width>350</width>
+       <height>40</height>
+       <visible>true</visible>
+       <colordiffuse>FFFFFFFF</colordiffuse>
+       <font>font18</font>
+       <align>center</align>
+       <label>$LOCALIZE[SCRIPT3018]</label>
+       <textcolor>FFFFFFFF</textcolor>
+       <disabledcolor>80FFFFFF</disabledcolor>
       </control>
       
       <control type="image" >
@@ -110,10 +130,10 @@
         <posy>126</posy>
         <width>1040</width>
         <height>380</height>
-        <onleft>120</onleft>
-        <onright>120</onright>
-        <onup>110</onup>
-        <ondown>110</ondown>
+        <onleft>200</onleft>
+        <onright>200</onright>
+        <onup>120</onup>
+        <ondown>120</ondown>
         <viewtype label="535">list</viewtype>
         <pagecontrol>121</pagecontrol>
         <scrolltime>200</scrolltime>

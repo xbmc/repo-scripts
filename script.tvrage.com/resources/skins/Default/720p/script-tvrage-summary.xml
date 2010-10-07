@@ -1,0 +1,78 @@
+<window>
+  <defaultcontrol>121</defaultcontrol>
+  <coordinates>
+    <system>1</system>
+    <posx>0</posx>
+    <posy>0</posy>
+  </coordinates>
+  <animation effect="fade" time="250">WindowOpen</animation>
+  <animation effect="fade" time="250">WindowClose</animation>
+  <controls>
+    <control type="group">
+      <posx>240</posx>
+      <posy>80</posy>
+      <control type="image">
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>810</width>
+        <height>540</height>
+        <texture border="40">default-panel.png</texture>
+      </control>
+
+      <control type="label">
+        <description>textarea</description>
+        <posx>200</posx>
+        <posy>60</posy>
+        <width>400</width>
+        <height>40</height>
+        <font>font18</font>
+        <textcolor>white</textcolor>
+        <aligny>center</aligny>
+        <align>center</align>
+        <wrapmultiline>true</wrapmultiline>
+        <label>Summary</label>
+      </control>
+      
+      <control type="image">
+        <posx>20</posx>
+        <posy>110</posy>
+        <width>780</width>
+        <height>2</height>
+        <texture>TRseparator.png</texture>
+      </control>
+   
+      <!-- ** Required ** Do not change <id> or <type> -->
+      <control type="textbox" id="120">
+        <posx>20</posx>
+        <posy>130</posy>
+        <width>740</width>
+        <height>382</height>
+        <pagecontrol>121</pagecontrol>
+        <description>My first text box control</description>
+        <visible>true</visible>
+        <colordiffuse>FFFFFFFF</colordiffuse>
+        <font>font13</font>
+        <scroll>true</scroll>
+        <textcolor>FFFFFFFF</textcolor>
+      </control>
+      
+      
+        <control type="scrollbar" id="121">
+          <description>scroll bar indicator for lists</description>
+          <posx>775</posx>
+          <posy>126</posy>
+          <width>12</width>
+          <height>382</height>
+          <texturesliderbackground border="6">default-scroll_back.png</texturesliderbackground>
+          <texturesliderbar border="6">default-scroll_mid.png</texturesliderbar>
+          <texturesliderbarfocus border="6">default-scroll_mid.png</texturesliderbarfocus>
+          <textureslidernib>-</textureslidernib>
+          <textureslidernibfocus>-</textureslidernibfocus>
+          <orientation>vertical</orientation>
+          <showonepage>false</showonepage>
+          <visible>Control.IsVisible(120)</visible>
+        </control>
+
+    </control>
+  </controls>
+</window>
