@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.trakt"
+       name="trakt"
+       version="0.0.4"
+       provider-name="rudf0rd">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">trakt</summary>
+    <description lang="en">trakt helps you keep a record of what TV shows you are watching. Based on your favorites, trakt recommends additional shows that you'll enjoy! Get your account started on http://trakt.tv</description>
+    <platform>all</platform>
+  </extension>
+</addon>

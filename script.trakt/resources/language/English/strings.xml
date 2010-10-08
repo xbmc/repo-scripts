@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="45001">General Settings</string>
+	<string id="45002">Exclusions</string>
+	<string id="45003">Misc</string>
+	
+	<string id="45004">Auto-start Trakt on launch</string>
+	<string id="45005">Username</string>
+	<string id="45006">Password</string>
+	<string id="45007">Notify after the video is submitted</string>
+	<string id="45008">Exclude adult content (you perv)</string>
+	<string id="45009">Exclude path</string>
+	<string id="45010">Folder's path (and subfolders)</string>
+	<string id="45011">Check for new version on launch</string>
+	<string id="45012">Enable debug logging</string>
+	<string id="45013">Submission options</string>
+	<string id="45014">Turn on auto submit</string>
+	<string id="45015">Submit only after I watch this percentage of the video</string>
+	
+	<string id="45050">Waiting to submit your media</string>
+	<string id="45051">You need to enter a username and password!</string>
+	<string id="45052">Submitted %MOVIENAME% (%YEAR%)</string>
+	<string id="45053">Submitted %TVSHOW% %SEASON%x%EPISODE%</string>
+</strings>
