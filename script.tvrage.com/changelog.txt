@@ -1,6 +1,10 @@
 TVRage-Eps Changelog
 
-Current Version : 0.9.4
+Current Version : 0.9.5
+
+*** 0.9.5 ***
+
+Bug fix: missing import for simplejson in addon.xml
 
 *** 0.9.4 ***
 

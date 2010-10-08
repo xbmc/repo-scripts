@@ -8,7 +8,7 @@ import difflib
 __author__ = 'ruuk'
 __url__ = 'http://code.google.com/p/tvragexbmc/'
 __date__ = '10-07-2010'
-__version__ = '0.9.4'
+__version__ = '0.9.5'
 __settings__ = xbmcaddon.Addon(id='script.tvrage.com')
 __language__ = __settings__.getLocalizedString
 
@@ -78,8 +78,14 @@ class Show:
 		self.status = show.find('status').text
 		if 'Ended' in self.status or 'Cancel' in self.status:
 			ended = show.find('ended').text
-			if ended: self.canceled = time.strftime('%b %d %Y',time.strptime(ended,'%Y-%m-%d'))
-			else: self.canceled = '?'
+			sc = '?'
+			if ended:
+				try: sc = time.strftime('%b %d %Y',time.strptime(ended,'%Y-%m-%d'))
+				except: pass
+				if not sc:
+					try: sc = time.strftime('%b %Y',time.strptime(ended,'%Y-%m-00'))
+					except: pass
+			self.canceled = sc
 			
 		last = show.find('latestepisode')
 		self.lastEp = self.epInfo(last)
@@ -180,7 +186,7 @@ class TVRageAPI:
 		return self.getTree(url)
 		
 	def search(self,show):
-		url = self._search_url + show
+		url = self._search_url + urllib.quote_plus(show)
 		return self.getTree(url)
 		
 	def getEpList(self,showid):
@@ -383,7 +389,7 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 		pdialog = xbmcgui.DialogProgress()
 		pdialog.create(__language__(30017))
 		pdialog.update(0)
-		result = API.search(term.replace(' ','_'))
+		result = API.search(term)
 		pdialog.close()
 		sid = self.userPickShow(result)
 		if not sid: return
@@ -426,7 +432,7 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 						print "SHOW: " + title + " - EXISTS AS: " + c.name
 						break
 				else:
-					result = API.search(title.replace(' ','_'))
+					result = API.search(title)
 					#result = API.search(re.sub('(.*?)','',title.lower().replace('the ','')))
 					matches = {}
 					for f in result.findall('show'):
@@ -435,7 +441,7 @@ class TVRageEps(xbmcgui.WindowXMLDialog):
 					if close:
 						print "SHOW: " + title + " - MATCHES: " + close[0]
 						pdialog.update(int((ct/tot)*100),__language__(30028) + title)
-						self.doAddShow(matches[close[0]],skipCanceled=self.skipCanceled)
+						self.doAddShow(matches[close[0]],skipCanceled=self.skip_canceled)
 					else:
 						sid = self.userPickShow(result,append=title)
 						if sid: self.doAddShow(sid)
