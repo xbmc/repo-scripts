@@ -4,7 +4,14 @@ import xbmc
 import re
 import struct
 
+__scriptname__ = sys.modules[ "__main__" ].__scriptname__
 
+###-------------------------  Log  ------------------###############
+   
+def log(module,msg):
+  xbmc.output("### [%s-%s] - %s" % (__scriptname__,module,msg,),level=xbmc.LOGDEBUG ) 
+
+###-------------------------  Hash  -----------------###############
 def hashFile(name): 
     try: 
       longlongformat = 'q'  # long long 
@@ -106,7 +113,8 @@ def toOpenSubtitles_two( id ):
     "English"             : "en",
     "Esperanto"           : "eo",
     "Estonian"            : "et",
-    "Farsi"               : "fo",
+    "Farsi"               : "fa",
+    "Persian"             : "fa",
     "Finnish"             : "fi",
     "French"              : "fr",
     "Galician"            : "gl",
@@ -132,6 +140,7 @@ def toOpenSubtitles_two( id ):
     "Polish"              : "pl",
     "Portuguese"          : "pt",
     "PortugueseBrazil"    : "pb",
+    "Portuguese (Brazil)" : "pb",
     "Brazilian"           : "pb",
     "Romanian"            : "ro",
     "Russian"             : "ru",
@@ -196,7 +205,8 @@ def onetotwo(id):
     "44"                  :  "th",
     "30"                  :  "tr",
     "46"                  :  "uk",
-    "51"                  :  "vi"
+    "51"                  :  "vi",
+    "52"                  :  "fa"
   }
   return languages[ id ]
         
@@ -220,6 +230,7 @@ def twotoone(id):
     "et"                  :  "20",
     "fi"                  :  "31",
     "fr"                  :  "8",
+    "fa"                  :  "52",
     "de"                  :  "5",
     "el"                  :  "16",
     "he"                  :  "22",
@@ -294,6 +305,7 @@ def toOpenSubtitlesId( id ):
     "Polish"              : "pol",
     "Portuguese"          : "por",
     "PortugueseBrazil"    : "pob",
+    "Portuguese (Brazil)" : "pob",
     "Romanian"            : "rum",
     "Russian"             : "rus",
     "SerbianLatin"        : "scc",
@@ -397,6 +409,7 @@ def toSublightLanguage(id):
     "pol"                 : "Polish",
     "por"                 : "Portuguese",
     "pob"                 : "PortugueseBrazil",
+    "per"                 : "Persian",
     "rum"                 : "Romanian",
     "rus"                 : "Russian",
     "scc"                 : "SerbianLatin",
@@ -427,6 +440,7 @@ def twotofull(id):
     "et"                  :  "Estonian",
     "fi"                  :  "Finnish",
     "fr"                  :  "French",
+    "fa"                  :  "Farsi",
     "de"                  :  "German",
     "el"                  :  "Greek",
     "he"                  :  "Hebrew",

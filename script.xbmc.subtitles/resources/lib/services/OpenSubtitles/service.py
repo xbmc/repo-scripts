@@ -1,6 +1,6 @@
 import sys
 import os
-from utilities import hashFile
+from utilities import hashFile, log
 from os_utilities import OSDBServer
 import socket
 
@@ -52,23 +52,26 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                 title = title
         OS_search_string = title.replace(" ","+")
     
-    xbmc.output( "OpenSubtitles Search String [ %s ]" % (OS_search_string,),level=xbmc.LOGDEBUG )     
+    log( __name__ , "Search String [ %s ]" % (OS_search_string,))     
     
     if set_temp : 
         hash_search = False
         file_size = "000000000"
         hashTry = "000000000000"
     else:
-        hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
-        try: file_size = os.path.getsize( file_original_path ) 
-        except: file_size = "000000000" 
-        if file_size != "" and hashTry != "":
+        try:
+          hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
+          file_size = os.path.getsize( file_original_path )
           hash_search = True
+        except: 
+          file_size = ""
+          hashTry = ""
+          hash_search = False 
     
+    log( __name__ ,"File Size [%s]" % file_size)
+    log( __name__ ,"File Hash [%s]" % hashTry)
     
-    xbmc.output("File Size [%s]\nFile Hash [%s]" % (file_size,hashTry,), level=xbmc.LOGDEBUG)
-    
-    xbmc.output("Search by hash and name %s" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
+    log( __name__ ,"Search by hash and name %s" % (os.path.basename( file_original_path ),))
 
     subtitles_list, msg = osdb_server.searchsubtitles( OS_search_string, lang1, lang2, lang3, hash_search, hashTry, file_size  )
         

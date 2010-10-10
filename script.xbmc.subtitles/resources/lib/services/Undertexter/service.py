@@ -1,10 +1,10 @@
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
-
+from utilities import log
 _ = sys.modules[ "__main__" ].__language__
 
 main_url = "http://www.undertexter.se/"
 eng_download_url = "http://eng.undertexter.se/"
-debug_pretext = "[Undertexter subtitle service]:"
+debug_pretext = ""
 
 #====================================================================================================================
 # Regular expression patterns
@@ -46,11 +46,11 @@ def getallsubs(searchstring, languageshort, languagelong, subtitles_list):
         url = main_url + "?group1=on&p=eng_search&add=arkiv&submit=S%F6k&select2=&select3=&select=&str=" + urllib.quote_plus(searchstring)
     content = geturl(url)
     if content is not None:
-        xbmc.output("%s Getting '%s' subs ..." % (debug_pretext, languageshort), level=xbmc.LOGDEBUG )
+        log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
         for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
             id = matches.group(1)
             filename = string.strip(matches.group(2))
-            xbmc.output("%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, id), level=xbmc.LOGDEBUG )
+            log( __name__ ,"%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, id))
             subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': filename, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 
 
@@ -58,12 +58,12 @@ def geturl(url):
     class MyOpener(urllib.FancyURLopener):
         version = ''
     my_urlopener = MyOpener()
-    xbmc.output("%s Getting url: %s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+    log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
     try:
         response = my_urlopener.open(url)
         content    = response.read()
     except:
-        xbmc.output("%s Failed to get url:%s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+        log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
         content    = None
     return content
 
@@ -75,7 +75,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         searchstring = title
     if len(tvshow) > 0:
         searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
-    xbmc.output("%s Search string = %s" % (debug_pretext, searchstring), level=xbmc.LOGDEBUG )
+    log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
 
     swedish = 0
     if string.lower(lang1) == "swedish": swedish = 1
@@ -114,7 +114,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
         url = main_url + "utext.php?id=" + id
     if string.lower(language) == "english":
         url = eng_download_url + "download.php?id=" + id
-    xbmc.output("%s Fetching subtitles using url %s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+    log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))
     content = geturl(url)
     if content is not None:
         header = content[:4]
@@ -128,13 +128,13 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             local_tmp_file = os.path.join(tmp_sub_dir, "undertexter.srt") # assume unpacked subtitels file is an '.srt'
             subs_file = local_tmp_file
             packed = False
-        xbmc.output("%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+        log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
         try:
             local_file_handle = open(local_tmp_file, "wb")
             local_file_handle.write(content)
             local_file_handle.close()
         except:
-            xbmc.output("%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+            log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
         if packed:
             files = os.listdir(tmp_sub_dir)
             init_filecount = len(files)
@@ -147,12 +147,12 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
                 filecount = len(files)
                 waittime  = waittime + 1
             if waittime == 20:
-                xbmc.output("%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )
+                log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
             else:
-                xbmc.output("%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )        
+                log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))        
                 for file in files:
                     if string.split(file, '.')[-1] in ['srt', 'sub', 'txt']: # unpacked file is a subtitle file
-                        xbmc.output("%s Unpacked subtitles file '%s'" % (debug_pretext, file), level=xbmc.LOGDEBUG )        
+                        log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))        
                         subs_file = os.path.join(tmp_sub_dir, file)
         return False, language, subs_file #standard output
             

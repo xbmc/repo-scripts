@@ -7,10 +7,11 @@ import xbmc, xbmcgui
 import cookielib, urllib2, urllib, sys, re, os, webbrowser, time, unicodedata
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 from htmlentitydefs import name2codepoint as n2cp
+from utilities import log
 
 base_url = "http://legendas.tv"
 sub_ext = "srt,aas,ssa,sub,smi"
-debug_pretext = "[Legendas.TV]:"
+debug_pretext = ""
 YEAR_MAX_ERROR = 1
 
 _ = sys.modules[ "__main__" ].__language__
@@ -144,10 +145,10 @@ def LegendasLogin(cj=0):
 		request = urllib2.Request(base_url+'/login_verificar.php',login_data)
 		response = urllib2.urlopen(request).read()
 		if response.__contains__('Dados incorretos'):
-			xbmc.output(u"%s Login Failed. Check your data at the addon configuration." % (debug_pretext), level=xbmc.LOGDEBUG )
+			log( __name__ ,u"%s Login Failed. Check your data at the addon configuration." % (debug_pretext))
 			xbmc.executebuiltin("Notification(Legendas.TV,%s,10000])"%( _( 756 ).encode('utf-8') ))
 		else:
-			xbmc.output(u"%s Succesfully logged in." % (debug_pretext), level=xbmc.LOGDEBUG )
+			log( __name__ ,u"%s Succesfully logged in." % (debug_pretext))
 	return cj
 
 def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
@@ -167,7 +168,7 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 	if not original_title or not year: original_title = title
 	else:
 		original_title = Uconvert(original_title[0])
-		xbmc.output(u"%s Original Title[%s]" % (debug_pretext, original_title), level=xbmc.LOGDEBUG )
+		log( __name__ ,u"%s Original Title[%s]" % (debug_pretext, original_title))
 
 	# Encodes the first search string using the original movie title,
 	# and download it.
@@ -180,7 +181,7 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 
 	# If no subtitles with the original name are found, try the parsed title.
 	if response.__contains__('Nenhuma legenda foi encontrada') and original_title != title:
-		xbmc.output(u"%s No subtitles found using the original title, using title instead." % (debug_pretext), level=xbmc.LOGDEBUG )
+		log( __name__ ,u"%s No subtitles found using the original title, using title instead." % (debug_pretext))
 		search_string = chomp(title)
 		search_dict = {'txtLegenda':search_string,'selTipo':tipo,'int_idioma':'99'}
 		search_data = urllib.urlencode(search_dict)
@@ -191,15 +192,15 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 	pages = re.findall("<a class=\"paginacao\" href=",response)
 	if pages: pages = len(pages)+1
 	else: pages = 1
-	xbmc.output(u"%s Found [%s] pages." % (debug_pretext, pages), level=xbmc.LOGDEBUG )
+	log( __name__ ,u"%s Found [%s] pages." % (debug_pretext, pages))
 
 	# Download all pages content.
 	for x in range(pages):
 		if x:
-			xbmc.output(u"%s Downloading page [%s]" % (debug_pretext, str(x+1)), level=xbmc.LOGDEBUG )
+			log( __name__ ,u"%s Downloading page [%s]" % (debug_pretext, str(x+1)))
 			html = urllib2.urlopen(base_url+'/index.php?opcao=buscarlegenda&pagina='+str(x+1)).read()
 			response = response + to_unicode_or_bust(html)
-	xbmc.output(u"%s Results downloaded." % (debug_pretext), level=xbmc.LOGDEBUG )
+	log( __name__ ,u"%s Results downloaded." % (debug_pretext))
 	
 	# Parse all content to BeautifulSoup
 	soup = BeautifulSoup(response)
@@ -240,8 +241,8 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 				if ltv_lang == ltv_flag1: sub1.append( { "title" : ltv_title, "filename" : release,"language_name" : lang1, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag1+".gif" } )
 				if ltv_lang == ltv_flag2: sub2.append( { "title" : ltv_title, "filename" : release,"language_name" : lang2, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag2+".gif" } )
 				if ltv_lang == ltv_flag3: sub3.append( { "title" : ltv_title, "filename" : release,"language_name" : lang3, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag3+".gif" } )
-				xbmc.output(u"%s Matched!\nTitle[%s], Original Title[%s]\nLTV Title[%s], LTV Original Title[%s]\nID[%s], Release[%s], Language[%s], Rating[%s]" % (debug_pretext, title, original_title, ltv_title, ltv_original_title, download_id, release, ltv_lang, ltv_rating), level=xbmc.LOGDEBUG )
-			else: xbmc.output(u"%s Discarted.\nTitle[%s], Original Title[%s]\nLTV Title[%s], LTV Original Title[%s]\nID[%s], Release[%s], Language[%s], Rating[%s]" % (debug_pretext, title, original_title, ltv_title, ltv_original_title, download_id, release, ltv_lang, ltv_rating), level=xbmc.LOGDEBUG )
+				log( __name__ ,u"%s Matched!\nTitle[%s], Original Title[%s]\nLTV Title[%s], LTV Original Title[%s]\nID[%s], Release[%s], Language[%s], Rating[%s]" % (debug_pretext, title, original_title, ltv_title, ltv_original_title, download_id, release, ltv_lang, ltv_rating))
+			else: log( __name__ ,u"%s Discarted.\nTitle[%s], Original Title[%s]\nLTV Title[%s], LTV Original Title[%s]\nID[%s], Release[%s], Language[%s], Rating[%s]" % (debug_pretext, title, original_title, ltv_title, ltv_original_title, download_id, release, ltv_lang, ltv_rating))
 
 	# Append all three language sequences.
 	subtitles.extend(sub1)
@@ -265,7 +266,7 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 	tvshow_id = re.sub("</?[^>]*>","",xbmc.executehttpapi("QueryVideoDatabase(select c12 from tvshow where c00 = '"+xbmc.getInfoLabel("VideoPlayer.TVshowtitle")+"')"))
 	if tvshow_id: original_tvshow = Uconvert(BeautifulStoneSoup(urllib2.urlopen("http://www.thetvdb.com/data/series/"+tvshow_id+"/").read()).data.series.seriesname.string)
 	else: original_tvshow = 0
-	print original_tvshow
+	log( __name__ , original_tvshow )
 
 	# Formating the season to double digit format
 	if int(season) < 10: ss = "0"+season
@@ -278,7 +279,7 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 	if original_tvshow: search_string = chomp(original_tvshow) + " " +"S"+ss+"E"+ee
 	else: search_string = chomp(tvshow) + " " +"S"+ss+"E"+ee
 	if len(search_string) < 3: search_string = search_string +" "+ year
-	print "Searching "+search_string
+	log( __name__ , "Searching "+search_string )
 	# Doing the search and parsing the results to BeautifulSoup
 	search_dict = {'txtLegenda':search_string,'selTipo':tipo,'int_idioma':'99'}
 	search_data = urllib.urlencode(search_dict)
@@ -328,9 +329,9 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 				if ltv_lang == ltv_flag1: sub1.append( { "title" : ltv_original_title, "filename" : release,"language_name" : lang1, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag1+".gif" } )
 				if ltv_lang == ltv_flag2: sub2.append( { "title" : ltv_original_title, "filename" : release,"language_name" : lang2, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag2+".gif" } )
 				if ltv_lang == ltv_flag3: sub3.append( { "title" : ltv_original_title, "filename" : release,"language_name" : lang3, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag3+".gif" } )
-				xbmc.output(u"%s Matched!\nTVShow[%s], Original TVShow[%s]\nLTV TVShow[%s], LTV Original TVShow[%s]\nRelease[%s], Season[%s], ID[%s], Language[%s], Rating[%s]" % (debug_pretext, tvshow, original_tvshow, ltv_title, ltv_original_title, release, ltv_season, download_id, ltv_lang, ltv_rating), level=xbmc.LOGDEBUG )
-			else: xbmc.output(u"%s Discarted.\nTVShow[%s], Original TVShow[%s]\nLTV TVShow[%s], LTV Original TVShow[%s]\nRelease[%s], Season[%s], ID[%s], Language[%s], Rating[%s]" % (debug_pretext, tvshow, original_tvshow, ltv_title, ltv_original_title, release, ltv_season, download_id, ltv_lang, ltv_rating), level=xbmc.LOGDEBUG )
-		else: xbmc.output(u"%s Season do not match. Season[%s], LTV Season[%s]." % (debug_pretext), level=xbmc.LOGDEBUG )
+				log( __name__ ,u"%s Matched!\nTVShow[%s], Original TVShow[%s]\nLTV TVShow[%s], LTV Original TVShow[%s]\nRelease[%s], Season[%s], ID[%s], Language[%s], Rating[%s]" % (debug_pretext, tvshow, original_tvshow, ltv_title, ltv_original_title, release, ltv_season, download_id, ltv_lang, ltv_rating))
+			else: log( __name__ ,u"%s Discarted.\nTVShow[%s], Original TVShow[%s]\nLTV TVShow[%s], LTV Original TVShow[%s]\nRelease[%s], Season[%s], ID[%s], Language[%s], Rating[%s]" % (debug_pretext, tvshow, original_tvshow, ltv_title, ltv_original_title, release, ltv_season, download_id, ltv_lang, ltv_rating))
+		else: log( __name__ ,u"%s Season do not match. Season[%s], LTV Season[%s]." % (debug_pretext))
 		
 	# Append all three language sequences.
 	subtitles.extend(sub1)

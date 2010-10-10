@@ -1,8 +1,8 @@
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
-from utilities import toOpenSubtitles_two
+from utilities import toOpenSubtitles_two, log
 
 main_url = "http://titlovi.com/titlovi/titlovi.aspx?"
-debug_pretext = "[Titlovi subtitle service]:"
+debug_pretext = ""
 subtitles_list = []
 
 #====================================================================================================================
@@ -50,8 +50,8 @@ def getallsubs(content, language, search_string, season, episode):
     for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
         i = i + 1
         title_found = unescape(string.rstrip(matches.group(2)))
-        print title_found
-        print search_string
+        log( __name__ , title_found )
+        log( __name__ , search_string )
         if string.find(string.lower(title_found),string.lower(search_string)) > -1:
             subtitle_id    = matches.group(1)
             year_found     = matches.group(3)
@@ -66,11 +66,11 @@ def getallsubs(content, language, search_string, season, episode):
                 season_episode = 'Sezona' + season + ' Epizoda' + episode
                 if season_episode == season_episode_found:
                     subtitles_list.append({'rating': '0', 'sync': False, 'filename': filename, 'subtitle_id': subtitle_id, 'language_flag': 'flags/' + languageshort+ '.gif', 'language_name': language})
-                    xbmc.output("%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, subtitle_id), level=xbmc.LOGDEBUG )
+                    log( __name__ ,"%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, subtitle_id))
             else:    
                 if len(season_episode_found) == 0:
                     subtitles_list.append({'rating': '0', 'sync': False, 'filename': filename, 'subtitle_id': subtitle_id, 'language_flag': 'flags/' + languageshort+ '.gif', 'language_name': language})
-                    xbmc.output("%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, subtitle_id), level=xbmc.LOGDEBUG )
+                    log( __name__ ,"%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, subtitle_id))
 
 def getnextpage(content):
     i = 0
@@ -85,12 +85,12 @@ def geturl(url):
     class MyOpener(urllib.FancyURLopener):
         version = ''
     my_urlopener = MyOpener()
-    xbmc.output("%s Getting url: %s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+    log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
     try:
         response = my_urlopener.open(url)
         content    = response.read()
     except:
-        xbmc.output("%s Failed to get url:%s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+        log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
         content    = None
     return content
 
@@ -102,7 +102,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     if len(tvshow) > 0:
         searchstring = tvshow
     searchstring = searchstring.replace("The", "")        
-    xbmc.output("%s Search string = %s" % (debug_pretext, searchstring), level=xbmc.LOGDEBUG )
+    log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
     
     if to_titlovi_lang(lang1) is not None:
         url = main_url + "prijevod=" + urllib.quote(searchstring) + "&jezik=" + to_titlovi_lang(lang1)
@@ -149,7 +149,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     subtitle_id = subtitles_list[pos][ "subtitle_id" ]
     language = subtitles_list[pos][ "language_name" ]
     url = "http://titlovi.com/downloads/default.ashx?type=1&mediaid=" + str(subtitle_id)
-    xbmc.output("%s Fetching subtitles using url %s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+    log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))
     content = geturl(url)
     if content is not None:
         header = content[:4]
@@ -163,13 +163,13 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             local_tmp_file = os.path.join(tmp_sub_dir, "titlovi.srt") # assume unpacked subtitels file is an '.srt'
             subs_file = local_tmp_file
             packed = False
-        xbmc.output("%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+        log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
         try:
             local_file_handle = open(local_tmp_file, "wb")
             local_file_handle.write(content)
             local_file_handle.close()
         except:
-            xbmc.output("%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+            log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
         if packed:
             files = os.listdir(tmp_sub_dir)
             init_filecount = len(files)
@@ -182,12 +182,12 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
                 filecount = len(files)
                 waittime  = waittime + 1
             if waittime == 20:
-                xbmc.output("%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )
+                log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
             else:
-                xbmc.output("%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir), level=xbmc.LOGDEBUG )        
+                log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))        
                 for file in files:
                     if string.split(file, '.')[-1] in ['srt', 'sub', 'txt']: # unpacked file is a subtitle file
-                        xbmc.output("%s Unpacked subtitles file '%s'" % (debug_pretext, file), level=xbmc.LOGDEBUG )        
+                        log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))        
                         subs_file = os.path.join(tmp_sub_dir, file)
         return False, language, subs_file #standard output
             

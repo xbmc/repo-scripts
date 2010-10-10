@@ -1,9 +1,10 @@
 import os, sys, re, xbmc, xbmcgui, string, urllib, urllib2
+from utilities import log
 
 _ = sys.modules[ "__main__" ].__language__
 
 main_url = "http://www.ondertitel.com/"
-debug_pretext = "[Ondertitel subtitle service]:"
+debug_pretext = ""
 
 #====================================================================================================================
 # Regular expression patterns
@@ -37,7 +38,7 @@ def getallsubs(content, title, subtitles_list):
         else:
             filename = matches.group(3)
         link = matches.group(1)
-        xbmc.output("%s Subtitles found: %s (link=%s)" % (debug_pretext, filename, link), level=xbmc.LOGDEBUG )
+        log( __name__ ,"%s Subtitles found: %s (link=%s)" % (debug_pretext, filename, link))
         subtitles_list.append({'rating': '0', 'no_files': 1, 'movie':  title, 'filename': filename, 'sync': False, 'link': link, 'language_flag': 'flags/nl.gif', 'language_name': 'Dutch'})
 
 def getdownloadlink(content):
@@ -52,13 +53,13 @@ def getdownloadlink(content):
          return None
 
 def geturl(url):
-    xbmc.output("%s Getting url:%s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+    log( __name__ ,"%s Getting url:%s" % (debug_pretext, url))
     try:
         response   = urllib2.urlopen(url)
         content    = response.read()
         return_url = response.geturl()
     except:
-        xbmc.output("%s Failed to get url:%s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+        log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
         content    = None
         return_url = None
     return(content, return_url)
@@ -67,7 +68,7 @@ def geturl(url):
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
     subtitles_list = []
     msg = ""
-    xbmc.output("%s Title = %s" % (debug_pretext, title), level=xbmc.LOGDEBUG )
+    log( __name__ ,"%s Title = %s" % (debug_pretext, title))
     if len(tvshow) == 0: # only process movies
         url = main_url + "?type=1+CD&p=zoek&trefwoord=" + urllib.quote_plus(title)
         Dutch = False
@@ -75,13 +76,13 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
             Dutch = True
             content, response_url = geturl(url)
             if content is not None:
-                xbmc.output("%s Getting subs ..." % debug_pretext, level=xbmc.LOGDEBUG )
+                log( __name__ ,"%s Getting subs ..." % debug_pretext)
                 getallsubs(content, title, subtitles_list)
         else:
-            xbmc.output("%s Dutch language is not selected" % (debug_pretext), level=xbmc.LOGDEBUG )
+            log( __name__ ,"%s Dutch language is not selected" % (debug_pretext))
             msg = "Won't work, Ondertitel is only for Dutch subtitles."
     else:
-        xbmc.output("%s Tv show detected: %s" % (debug_pretext, tvshow), level=xbmc.LOGDEBUG )
+        log( __name__ ,"%s Tv show detected: %s" % (debug_pretext, tvshow))
         msg = "Won't work, Ondertitel is only for movies."
     return subtitles_list, "", msg #standard output
 
@@ -95,16 +96,16 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
         try:
             url = main_url + downloadlink
             url = string.replace(url," ","+")
-            xbmc.output("%s Fetching subtitles using url %s" % (debug_pretext, url), level=xbmc.LOGDEBUG )
+            log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))
             #response = urllib2.urlopen(url)
             content, response_url = geturl(url)
             if content is not None:
-                xbmc.output("%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+                log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
                 local_file_handle = open(local_tmp_file, "w" + "b")
                 local_file_handle.write(content)
                 local_file_handle.close()
         except:
-            xbmc.output("%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
-        xbmc.output("%s Subtitles saved to '%s'" % (debug_pretext, local_tmp_file), level=xbmc.LOGDEBUG )
+            log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
+        log( __name__ ,"%s Subtitles saved to '%s'" % (debug_pretext, local_tmp_file))
         language = subtitles_list[pos][ "language_name" ]
         return True, language, "" #standard output

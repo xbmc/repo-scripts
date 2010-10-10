@@ -59,7 +59,8 @@ class OSDBServer:
             lang.append(lang33)
         hash_pod =[]
         hash_pod.append(movie_hash)
-        xbmc.output("Languages : [%s]\nHash : [%s]" % (str(lang),str(hash_pod),), level=xbmc.LOGDEBUG )
+        log( __name__ ,"Languages : [%s]" % str(lang))
+        log( __name__ ,"Hash : [%s]" % str(hash_pod))
         try:
     
             init = podserver.initiate("OpenSubtitles_OSD")
@@ -85,7 +86,8 @@ class OSDBServer:
                 auth = podserver.authenticate(pod_session, username, password256)
                 filt = podserver.setFilters(pod_session, True, lang , False)
                 
-                xbmc.output("Filter : [%s]\nAuth : [%s]" % (str(filt),str(auth),),level=xbmc.LOGDEBUG  )                                              
+                log( __name__ ,"Auth : [%s]" % str(auth) )                                              
+                log( __name__ ,"Filter : [%s]" % str(filt) )
                 
                 search = podserver.search(pod_session , hash_pod)
     
@@ -149,13 +151,13 @@ class OSDBServer:
         
         name = name.replace(" ","+")
         search_url = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=" + name + "&sJ=" +str(lang1)+ "&sY=" + str(year)+ "&sTS=" + str(season) + "&sTE=" + str(episode) + "&sXML=1&lang=0"
-        xbmc.output("%s\nSearching for [%s] by name - podnapisi. Language 1" % (search_url,name,),level=xbmc.LOGDEBUG )        
+        log( __name__ ,"%s - Language 1" % search_url)        
         if lang2!=lang1:
             search_url1 = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=" + name + "&sJ=" +str(lang2)+ "&sY=" + str(year)+ "&sTS=" + str(season) + "&sTE=" + str(episode) + "&sXML=1&lang=0"
-            xbmc.output("%s\nSearching for [%s] by name - podnapisi. Language 2" % (search_url1,name,),level=xbmc.LOGDEBUG )             
+            log( __name__ ,"%s - Language 2" % search_url1)             
         if lang3!=lang1 and lang3!=lang2:
             search_url2 = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=" + name + "&sJ=" +str(lang3)+ "&sY=" + str(year)+ "&sTS=" + str(season) + "&sTE=" + str(episode) + "&sXML=1&lang=0"
-            xbmc.output("%s\nSearching for [%s] by name - podnapisi. Language 3" % (search_url2,name,),level=xbmc.LOGDEBUG )         
+            log( __name__ ,"%s - Language 3" % search_url2)         
         try:
 
             socket = urllib.urlopen( search_url )

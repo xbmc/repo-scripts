@@ -1,3 +1,21 @@
+1.9.7
+- added: new titulky.com service. Thanks lzoubek for creating it.
+
+1.9.6
+- added: "Disable hash search" setting under Advanced settings, it disables Hash search on OpenSubtitles and Podnapisi(still does name search). it needs to be disabled on some systems with smb:// drives attached.
+
+1.9.5
+- fixed: works on python2.6??, handles smb:// files better and temp subs are now in addon_data/script.xbmc.subtitles
+
+1.9.4
+- fixed: search using parent folder is showing correctly now
+
+1.9.3
+- changed logging method
+
+1.9.2
+- added: Farsi support
+
 1.9.1
 - removed: SubtitleSource due to the changes in their API
 

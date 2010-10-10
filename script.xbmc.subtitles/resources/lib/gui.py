@@ -90,10 +90,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self.title = self.title  
         else:
             self.year = ""
-        self.language_1 = toScriptLang(__settings__.getSetting( "Language1" ))  # Full language 1
-        self.language_2 = toScriptLang(__settings__.getSetting( "Language2" ))  # Full language 2  
-        self.language_3 = toScriptLang(__settings__.getSetting( "Language3" ))  # Full language 2
-        
+        self.language_1 = __settings__.getSetting( "Lang1" )                    # Full language 1
+        self.language_2 = __settings__.getSetting( "Lang2" )                    # Full language 2  
+        self.language_3 = __settings__.getSetting( "Lang3" )                    # Full language 3
+       
         label_colour = __settings__.getSetting( "label_colour" )                # Service Label Colour 
         if label_colour == "Blue":
           self.label_colour = "0084ff"
@@ -115,9 +115,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.file_original_path = urllib.unquote ( movieFullPath )              # Movie Path
         
         self.set_temp = temp
+        
+        if __settings__.getSetting( "disable_hash_search" ) == "true":
+           self.set_temp = True
 
         self.mansearch =  __settings__.getSetting( "searchstr" ) == "true"      # Manual search string??
-        
+        self.parsearch =  __settings__.getSetting( "par_folder" ) == "true"     # Parent folder as search string
         self.rar = rar                                                          # rar archive?
 
         if (__settings__.getSetting( "fil_name" ) == "true"):                   # Display Movie name or search string
@@ -130,14 +133,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
           else:
             self.file_name = "%s (%s)" % (self.title, str(self.year),)    
           
-        if (__settings__.getSetting( "par_folder" ) == "true"):
-          self.man_search_label = _( 747 )
-          self.parent_folder_search = True
-        else:
-          self.man_search_label = _( 612 ) 
-          self.parent_folder_search = False
           
-        self.tmp_sub_dir = xbmc.translatePath("special://temp/sub_tmp")
+        self.tmp_sub_dir = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( os.getcwd() ),"sub_tmp" )
         
         
         if not self.tmp_sub_dir.endswith(':') and not os.path.exists(self.tmp_sub_dir):
@@ -152,7 +149,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
           for sub_ext in sub_exts:
             if br == 0:
               exec("lang = toOpenSubtitles_two(self.language_%s)" % (str(i+1)) )
-              xbmc.output("Existing Subtitle Notification [%s.%s.%s]" % (os.path.join(sub_folder,os.path.splitext( os.path.basename( self.file_original_path ) )[0]),lang ,sub_ext,),level=xbmc.LOGDEBUG )
               if os.path.isfile ("%s.%s.%s" % (os.path.join(sub_folder,os.path.splitext( os.path.basename( self.file_original_path ) )[0]),lang ,sub_ext,)):
                 self.getControl( 111 ).setVisible( True )
                 br = 1
@@ -163,7 +159,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         def_movie_service = __settings__.getSetting( "defmovieservice")
         def_tv_service = __settings__.getSetting( "deftvservice")
         service_list = []
-        standard_service_list  = ['OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV']
+        standard_service_list  = ['Titulky','OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV']
         service = ""
  
         for name in os.listdir(SERVICE_DIR):
@@ -196,18 +192,23 @@ class GUI( xbmcgui.WindowXMLDialog ):
               self.service = service  
               
             self.service_list = service_list
-                        
-            xbmc.output("Manual Search : [%s]\nDefault Service : [%s]\nServices : %s\nTemp?: [%s]\nFile Path: [%s]\nYear: [%s]\nTv Show Title: [%s]\nTv Show Season: [%s]\nTv Show Episode: [%s]\nMovie/Episode Title: [%s]\nSubtitle Folder: [%s]\nLanguages: [%s] [%s] [%s]\nParent Folder Search: [%s]"
-            
-            % (self.mansearch, self.service, service_list, 
-            self.set_temp, self.file_original_path, str(self.year), self.tvshow, self.season, self.episode, 
-            self.title, self.sub_folder, self.language_1, self.language_2, self.language_3,self.parent_folder_search ),level=xbmc.LOGDEBUG )
-              
-        
- 
             self.controlId = -1
             self.shufle = 0
             self.subtitles_list = []
+            
+            log( __name__ ,"Manual Search : [%s]"        % self.mansearch)
+            log( __name__ ,"Default Service : [%s]"      % self.service)
+            log( __name__ ,"Services : [%s]"             % self.service_list)
+            log( __name__ ,"Temp?: [%s]"                 % self.set_temp)
+            log( __name__ ,"File Path: [%s]"             % self.file_original_path)
+            log( __name__ ,"Year: [%s]"                  % str(self.year))
+            log( __name__ ,"Tv Show Title: [%s]"         % self.tvshow)
+            log( __name__ ,"Tv Show Season: [%s]"        % self.season)
+            log( __name__ ,"Tv Show Episode: [%s]"       % self.episode)
+            log( __name__ ,"Movie/Episode Title: [%s]"   % self.title)
+            log( __name__ ,"Subtitle Folder: [%s]"       % self.sub_folder)
+            log( __name__ ,"Languages: [%s] [%s] [%s]"   % (self.language_1, self.language_2, self.language_3,))
+            log( __name__ ,"Parent Folder Search: [%s]"  % self.parsearch)
             try:
                 self.Search_Subtitles()
             except:
@@ -240,11 +241,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( STATUS_LABEL ).setLabel( _( 646 ) )
         msg = ""
 
-        xbmc.output("Socket timeout: %s" % (socket.getdefaulttimeout(),),level=xbmc.LOGDEBUG )
-        xbmc.output("Timeout Setting: %s" % (__settings__.getSetting( "timeout" ),),level=xbmc.LOGDEBUG )
+        log( __name__ ,"Socket timeout: %s" % (socket.getdefaulttimeout(),)  )
+        log( __name__ ,"Timeout Setting: %s" % (__settings__.getSetting( "timeout" ),)  )
         
         socket.setdefaulttimeout(float(__settings__.getSetting( "timeout" )))
-        xbmc.output("Socket timeout: %s" % (socket.getdefaulttimeout(),),level=xbmc.LOGDEBUG )
+        log( __name__ ,"Socket timeout: %s" % (socket.getdefaulttimeout(),)  )
         
         try: 
             self.subtitles_list, self.session_id, msg = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3 )
@@ -260,7 +261,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
         socket.setdefaulttimeout(None)
 
-        xbmc.output("Socket timeout: %s" % (socket.getdefaulttimeout(),),level=xbmc.LOGDEBUG )
+        log( __name__ ,"Socket timeout: %s" % (socket.getdefaulttimeout(),)  )
         
         self.getControl( STATUS_LABEL ).setLabel( _( 642 ) % ( "...", ) )
 
@@ -293,7 +294,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def Download_Subtitles( self, pos ):
         self.getControl( STATUS_LABEL ).setLabel(  _( 649 ) )
-        zip_subs = "special://temp/sub_tmp/zipsubs.zip"
+        zip_subs = os.path.join( self.tmp_sub_dir, "zipsubs.zip")
         zipped, language, file = self.Service.download_subtitles(self.subtitles_list, pos, zip_subs, self.tmp_sub_dir, self.sub_folder,self.session_id)
         sub_lang = str(toOpenSubtitles_two(language))
 
@@ -413,22 +414,26 @@ class GUI( xbmcgui.WindowXMLDialog ):
               self.getControl( SUBTITLES_LIST ).addItem( listitem )
         
         if self.mansearch :
-            label2 = "[COLOR=FF00FF00]%s[/COLOR]" % (  self.man_search_label )
+            label2 = "[COLOR=FF00FF00]%s[/COLOR]" % (  _( 612 ) )
             listitem = xbmcgui.ListItem( label,label2 )
             self.list.append("Man")
             self.getControl( SUBTITLES_LIST ).addItem( listitem ) 
 
-
+        if self.parsearch :
+            label2 = "[COLOR=FF00FF00]%s[/COLOR]" % (  _( 747 ) )
+            listitem = xbmcgui.ListItem( label,label2 )
+            self.list.append("Par")
+            self.getControl( SUBTITLES_LIST ).addItem( listitem )
 
 ###-------------------------- Manual search Keyboard  -------------################
 
 
-    def keyboard(self):
+    def keyboard(self, parent):
         dir, self.year = xbmc.getCleanMovieTitle(os.path.split(os.path.split(self.file_original_path)[0])[1])
         if self.rar:
             tmp_dir = os.path.split(os.path.split(os.path.split(self.file_original_path)[0])[0])[1]
             dir, self.year = xbmc.getCleanMovieTitle( tmp_dir )
-        if not self.parent_folder_search:
+        if not parent:
             kb = xbmc.Keyboard("%s ()" % (dir,), _( 751 ), False)
             text = self.file_name
             kb.doModal()
@@ -437,7 +442,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         else:
             self.title = dir   
         
-        xbmc.output("Manual/Keyboard Entry: Title:[%s], Year: [%s]" % (self.title, self.year,), level=xbmc.LOGDEBUG )
+        log( __name__ ,"Manual/Keyboard Entry: Title:[%s], Year: [%s]" % (self.title, self.year,))
         if self.year != "" :
             self.file_name = "%s (%s)" % (self.file_name, str(self.year),)
         else:
@@ -457,14 +462,16 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def onClick( self, controlId ):
         selection = str(self.list[self.getControl( SUBTITLES_LIST ).getSelectedPosition()])
-        xbmc.output("In 'On click' selected : [%s]" % (selection, ),level=xbmc.LOGDEBUG )
+        log( __name__ ,"In 'On click' selected : [%s]" % (selection, )  )
         if selection.isdigit():
-            xbmc.output( "Selected : [%s]" % (selection, ),level=xbmc.LOGDEBUG )                               
+            log( __name__ , "Selected : [%s]" % (selection, )  )                               
             self.Download_Subtitles( int(selection) )
         else:
             if selection == "Man":
-              self.keyboard()
-            else:
+              self.keyboard(False)
+            elif selection == "Par":
+              self.keyboard(True)
+            else:  
               self.service = selection
               self.Search_Subtitles()
                                                                                                                                    

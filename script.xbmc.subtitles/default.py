@@ -13,7 +13,7 @@ __scriptname__ = "XBMC Subtitles"
 __scriptid__ = "script.xbmc.subtitles"
 __author__ = "Amet,mr_blobby"
 
-xbmc.output("XBMC Subtitles version [ %s ]" % (__version__,),level=xbmc.LOGDEBUG) 
+xbmc.output("### [%s] - Version: %s" % (__scriptname__,__version__,),level=xbmc.LOGDEBUG )
 
 if ( __name__ == "__main__" ):
     if not xbmc.getCondVisibility('Player.Paused') : xbmc.Player().pause() #Pause if not paused        

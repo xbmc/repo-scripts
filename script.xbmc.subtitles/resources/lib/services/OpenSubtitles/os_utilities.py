@@ -63,7 +63,7 @@ class OSDBServer:
         
     def get_results ( self, search_url ):
         socket = urllib.urlopen( search_url )
-        xbmc.output( "OpenSubtitles Search url [ %s ]" % (search_url,),level=xbmc.LOGDEBUG )
+        log( __name__ , "Search url [ %s ]" % (search_url,))
         result = socket.read()
         socket.close()
         return result                
@@ -87,12 +87,13 @@ class OSDBServer:
             language += "," + toOpenSubtitlesId(lang3)
             search_url2 = BASE_URL_NAME % (toOpenSubtitlesId(lang3),srch_string,)          
         try:
-            search_url = BASE_URL_HASH % (language,size, _hash,)
-            result = self.get_results( search_url )
-            test = True
-            if result.find('<?xml version=') < 0:
+            if hash_search:
+              search_url = BASE_URL_HASH % (language,size, _hash,)
+              result = self.get_results( search_url )
+              test = True
+              if result.find('<?xml version=') < 0:
                 msg = _( 755 )
-            else:
+              else:
                 xmldoc = minidom.parseString(result)
                 subtitles_alt = xmldoc.getElementsByTagName("subtitle")
                 if subtitles_alt:
@@ -100,29 +101,30 @@ class OSDBServer:
                     for subtitle in subtitles_alt:
                        self.sortsubtitles(subtitle, True, url_base)           
 
-                search_url = BASE_URL_NAME % (toOpenSubtitlesId(lang1),srch_string,)
-                result = self.get_results( search_url )
-                if result.find('<?xml version=') < 0:
-                    msg = _( 755 )
-                else:
-                    xmldoc = minidom.parseString(result)
-                    subtitles_alt = xmldoc.getElementsByTagName("subtitle")
+            if (not hash_search) or (not self.subtitles_hash_list):        
+              search_url = BASE_URL_NAME % (toOpenSubtitlesId(lang1),srch_string,)
+              result = self.get_results( search_url )
+              if result.find('<?xml version=') < 0:
+                  msg = _( 755 )
+              else:
+                  xmldoc = minidom.parseString(result)
+                  subtitles_alt = xmldoc.getElementsByTagName("subtitle")
                     
-                    if search_url1 != None :
-                        result = self.get_results( search_url1 )
-                        if result.find('<?xml version=') < 0:
-                            msg = _( 755 )
-                        else:
-                            xmldoc = minidom.parseString(result)
-                            subtitles_alt += xmldoc.getElementsByTagName("subtitle")
+                  if search_url1 != None :
+                      result = self.get_results( search_url1 )
+                      if result.find('<?xml version=') < 0:
+                          msg = _( 755 )
+                      else:
+                          xmldoc = minidom.parseString(result)
+                          subtitles_alt += xmldoc.getElementsByTagName("subtitle")
                     
-                    if search_url2 != None :
-                        result = self.get_results( search_url2 )
-                        if result.find('<?xml version=') < 0:
-                            msg = _( 755 )
-                        else:
-                            xmldoc = minidom.parseString(result)
-                            subtitles_alt += xmldoc.getElementsByTagName("subtitle")    
+                  if search_url2 != None :
+                      result = self.get_results( search_url2 )
+                      if result.find('<?xml version=') < 0:
+                          msg = _( 755 )
+                      else:
+                          xmldoc = minidom.parseString(result)
+                          subtitles_alt += xmldoc.getElementsByTagName("subtitle")    
                     
             if subtitles_alt:
                 url_base = xmldoc.childNodes[0].childNodes[1].firstChild.data

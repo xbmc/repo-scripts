@@ -76,6 +76,9 @@
     <string id="754">Your XBMC is rev%i</string>
     <string id="755">Server is overloaded, please try again later</string>
     <string id="756">Login failed. Please verify your settings at the addon Configuration</string>
+    <string id="757">Server requires you to rewrite code from image</string>
+    <string id="758">Please take look at notification area</string> 
+    <string id="759">Enter code of image in notification area</string>        
       <!-- 
    * Script Settings
    -->
@@ -100,6 +103,7 @@
   <string id="30122">- Set Default Timeout</string>
   <string id="30123"> - Legendas.TV Username</string>
   <string id="30124"> - Legendas.TV Password</string>
+  <string id="30125">- Disable hash search</string>
     <!-- Optional  -->
   <string id="30201">Albanian</string>
   <string id="30202">Arabic</string>
@@ -144,6 +148,7 @@
   <string id="30244">Turkish</string>
   <string id="30245">Ukrainian</string>
   <string id="30246">Vietnamese</string>
+  <string id="30247">Farsi</string>
   <string id="30301">Sublight</string>
   <string id="30302">Podnapisi</string>
   <string id="30303">OpenSubtitles</string>

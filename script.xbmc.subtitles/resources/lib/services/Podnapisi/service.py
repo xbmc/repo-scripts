@@ -1,6 +1,6 @@
 import sys
 import os
-from utilities import hashFile, twotoone, toOpenSubtitles_two
+from utilities import hashFile, twotoone, toOpenSubtitles_two, log
 from pn_utilities import OSDBServer
 import xbmc
 
@@ -51,20 +51,24 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         file_size = "000000000"
         hashTry = "000000000000"       
     else:
-        hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
-        try: file_size = os.path.getsize( file_original_path ) 
-        except: file_size = "000000000" 
-        if file_size != "" and hashTry != "":
+        try:
+          hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
+          file_size = os.path.getsize( file_original_path )
           hash_search = True
+        except: 
+          file_size = ""
+          hashTry = ""
+          hash_search = False 
     
-    xbmc.output("File Size [%s]\nFile Hash [%s]" % (file_size,hashTry,),level=xbmc.LOGDEBUG)
+    log( __name__ ,"File Size [%s]" % file_size )
+    log( __name__ ,"File Hash [%s]" % hashTry)
     try:
 
-        if not set_temp :
-            xbmc.output("Search for [%s] by hash - podnapisi" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
+        if hash_search :
+            log( __name__ ,"Search for [%s] by hash" % (os.path.basename( file_original_path ),))
             subtitles_list, session_id = osdb_server.searchsubtitles_pod( hashTry ,language1, language2, language3)
-        if (len ( subtitles_list )) < 1:
-            xbmc.output("Search for [%s] by name - podnapisi" % (os.path.basename( file_original_path ),),level=xbmc.LOGDEBUG )
+        if not subtitles_list:
+            log( __name__ ,"Search for [%s] by name" % (os.path.basename( file_original_path ),))
             subtitles_list = osdb_server.searchsubtitlesbyname_pod( title, tvshow, season, episode, language1, language2, language3, year )
         return subtitles_list, "", "" #standard output
     except :
