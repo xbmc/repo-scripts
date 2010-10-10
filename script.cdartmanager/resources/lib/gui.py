@@ -8,6 +8,8 @@
 # -  add database update for any downloads
 #        many need to read local database(l_cdart - lalist) to find local id #'s
 #        then write to l_cdart - alblist with the important information
+# -  add bulk uploading and downloading
+# -  add website
 #
 
 import urllib
@@ -235,6 +237,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def get_albums(self, local_id):
         #print "get_albums"
         path =""
+        ascii_title =""
         search_title = ""
         album_songview = []
         conn_b = sqlite3.connect(musicdb_path)
@@ -243,7 +246,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         #print d
         for l in d:
             album = {}
-            album["title"]=(translate_string( repr(l[0]).lstrip("'u").strip('"').rstrip("'") )).replace('"','')
+            ascii_title = l[0].translate(unaccented_map())
+            album["title"]=(translate_string( repr(ascii_title).lstrip("'u").strip('"').rstrip("'") )).replace('"','')
             #print "album %s" % album["title"]
             album["path"]=(repr(l[1]).lstrip("'u").rstrip("'")).replace('"','')
             #print album["path"]
@@ -260,6 +264,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     #retrieve local albums based on artist's name from xbmc's db
     def get_local_album( self , artist, local_id):
         print "#    Retrieving Local Albums from XBMC's Music DB, based on artist id: %s" % local_id
+        ascii_title =""
         local_album_list = []
         album_albumview = []
         temp_albums = []
@@ -270,7 +275,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         #print d
         for item in d:
             albums = {}
-            albums["title"] = (translate_string( repr(item[0]).lstrip("'u").strip('"').rstrip("'") )).replace('"','')
+            ascii_title = item[0].translate(unaccented_map())
+            albums["title"] = (translate_string( repr(ascii_title).lstrip("'u").strip('"').rstrip("'") )).replace('"','')
             album_albumview.append(albums)
         d.close
         album_songview = self.get_albums( local_id )

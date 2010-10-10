@@ -1,3 +1,7 @@
+1.0.7
+- Added Dutch translation - Thanks redje
+- Added ascii converstion to album names(may help scraping for the time being)
+
 1.0.6
 - Fixed saving of missing cdART file for systems using Windows which was causing a lockup
 
