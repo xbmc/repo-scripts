@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.image.bigpictures" name="The Big Picture" version="1.2.0" provider-name="sphere, rwparris2">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+  </requires>
+  <extension point="xbmc.python.script" library="runscript.py">
+    <provides>image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="de">Zeigt Alben/Bilder von Boston.com's Seite "The Big Pictures"</summary>
+    <summary lang="en">Shows Albums/Pictures from Boston.com's photojournalism site</summary>
+    <description lang="de">Das Album kann mit links und rechts gewählt werden.[CR]Mit select wird das Album geöffnet.[CR]Herunterladen der Bilder ist mit der Kontext-Menu Taste möglich.</description>
+    <description lang="en">You can switch the album with left and right.[CR]With select-key you can enter the album to view its content.[CR]Picture Downloading is possible with the context menu key.</description>
+  </extension>
+</addon>

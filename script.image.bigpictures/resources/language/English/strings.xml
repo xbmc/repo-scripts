@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!--LOADING-->
+  <string id="32000">The Big Picture - Boston.com</string>
+  <string id="32001">Image loading may take a while...</string>
+  
+  <!--DOWNLOAD-->
+  <string id="32020">Download</string>
+  <string id="32021">Album</string>
+  <string id="32022">Picture</string>
+  <!--Downloading [picturename] to [path].-->
+  <string id="32023">Downloading</string>
+  <string id="32024">to</string>
+  <string id="32025">of</string>
+  
+  <string id="32030">Info - Toggle Onscreen Information</string>
+  <string id="32031">Context Menu - Download Photos</string>
+</strings>

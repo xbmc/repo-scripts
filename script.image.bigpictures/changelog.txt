@@ -1,0 +1,8 @@
+1.2.0
+  Ported to be dharma compatible by sphere (with permission of rwparris2)
+  Added German Translation
+  Changed from plugin which called script to native script
+  Added new icon.png
+  
+1.1.2
+  Released as plugin for camelot by rwparris2
