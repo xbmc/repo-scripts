@@ -1,3 +1,6 @@
+0.9.8
+- fixed: script wouldn't detect song change with .mp3 + .cue or .flac + .cue files. Thanks pike!
+
 0.9.7
 - cosmetics
 

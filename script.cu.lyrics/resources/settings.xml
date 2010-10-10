@@ -6,9 +6,4 @@
         <setting id="show_embeded_lyrics" type="bool" label="30107" default="true"/>
         <setting id="save_embeded_lyrics" type="bool" visible= "eq(-1,true)" enable="eq(-1,true)" label="30108" default="false"/>
     </category>
-    <category label="30103">
-        <setting id="version"   type="text" label="30104" default="0.9.4" enable="false" />
-        <setting id="author"    type="text" label="30105" default="Amet" enable="false" />
-        <setting id="origauthor"    type="text" label="30106" default="EnderW,Nuka1195" enable="false" />
-    </category>    
 </settings>

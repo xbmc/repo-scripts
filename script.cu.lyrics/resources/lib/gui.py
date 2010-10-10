@@ -36,6 +36,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.fetchedLyrics = []
         self.current_song = Song.current()
         self.current_file = xbmc.Player().getPlayingFile()
+        self.song_info = xbmc.Player().getMusicInfoTag().getTitle()
 
     def onInit( self ):
         self.setup_all()
@@ -250,12 +251,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 # if we need to do anything
                 self.show_prefetch_message(self.current_song)
                 xbmc.sleep( 750 )
-                playing_file = xbmc.Player().getPlayingFile()
-                print "self.current_file: %s" % (self.current_file)
-                print "self.current_song: %s" % (self.current_song)
-                print "playing_file: %s" % (playing_file)
-                if ( self.current_file != playing_file ):
-                    self.current_file = playing_file
+                playing_song = xbmc.Player().getMusicInfoTag().getTitle()
+                if ( self.song_info != playing_song ):
+                    self.song_info = playing_song
                     
                     # Unfortunately, calls to xbmc.getInfoLabel may return 
                     # information about the previous song for a while after
