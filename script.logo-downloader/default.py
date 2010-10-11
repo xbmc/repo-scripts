@@ -1,11 +1,13 @@
+# -*- coding: utf-8 -*-
+
 __script__       = "Logo Downloader"
 __author__       = "Ppic"
 __url__          = "http://code.google.com/p/passion-xbmc/"
 __svn_url__      = ""
 __credits__      = "Team XBMC PASSION, http://passion-xbmc.org/"
 __platform__     = "xbmc media center, [LINUX, OS X, WIN32, XBOX]"
-__date__         = "02-10-2010"
-__version__      = "2.1.1"
+__date__         = "11-10-2010"
+__version__      = "2.1.3"
 __svn_revision__  = "$Revision: 000 $"
 __XBMC_Revision__ = "30000" #XBMC Babylon
 __useragent__ = "Logo downloader %s" % __version__
@@ -130,31 +132,33 @@ class downloader:
     def solo_mode(self):
         self.get_tvid_path()
         self.id_verif()
-        self.type_list = []
-        if self.logo:self.type_list.append ("logo")
-        if self.clearart:self.type_list.append ("clearart")
-        if self.show_thumb:self.type_list.append ("showthumb")
-        
-        if self.choice_type():
-            self.image_list = False
-            if self.logo:
-                self.filename = "logo.png"
-                self.get_lockstock_xml()
-                self.search_logo()
-            elif self.clearart: 
-                self.filename = "clearart.png"
-                self.get_xbmcstuff_xml()
-                self.search_clearart()
-            elif self.show_thumb:
-                self.filename = "folder.jpg"
-                self.get_xbmcstuff_xml()
-                self.search_show_thumb()
+        if self.tvdbid:
+            self.type_list = []
+            if self.logo:self.type_list.append ("logo")
+            if self.clearart:self.type_list.append ("clearart")
+            if self.show_thumb:self.type_list.append ("showthumb")
             
-            if self.image_list: 
-                if self.choose_image(): 
-                    if DEBUG: self.print_class_var()
-                    if self.download_image(): xbmcgui.Dialog().ok("Success" , "Download successfull" )
-                    else: xbmcgui.Dialog().ok("Error" , "Error downloading file" )
+            if self.choice_type():
+                self.image_list = False
+                if self.logo:
+                    self.filename = "logo.png"
+                    self.get_lockstock_xml()
+                    self.search_logo()
+                elif self.clearart: 
+                    self.filename = "clearart.png"
+                    self.get_xbmcstuff_xml()
+                    self.search_clearart()
+                elif self.show_thumb:
+                    self.filename = "folder.jpg"
+                    self.get_xbmcstuff_xml()
+                    self.search_show_thumb()
+                
+                if self.image_list: 
+                    if self.choose_image(): 
+                        if DEBUG: self.print_class_var()
+                        if self.download_image(): xbmcgui.Dialog().ok("Success" , "Download successfull" )
+                        else: xbmcgui.Dialog().ok("Error" , "Error downloading file" )
+        else: xbmcgui.Dialog().ok("ERROR" , "no tvdb id found !" )
             
     def bulk_mode(self):
         if DEBUG: print "### get tvshow list"
@@ -327,14 +331,17 @@ class downloader:
             try: self.tvdbid = self.get_nfo_id()
             except:  
                 self.tvdbid = False              
-                print "### Error checking for nfo: %stvshow.nfo" % self.show_path.replace("\\\\" , "\\").encode("utf-8")
+                print "### Error checking for nfo: %stvshow.nfo" % self.show_path.replace("\\\\" , "\\")
                 print_exc()
                 
     def get_nfo_id( self ):
         nfo= os.path.join(self.show_path , "tvshow.nfo")
         print "### nfo file: %s" % nfo
-        nfo_read = file(repr(nfo).strip("u'\""), "r" ).read()
-        tvdb_id = re.findall( "<tvdbid>(\d{1,10})</tvdbid>", nfo_read )
+        if os.path.isfile(nfo): 
+            nfo_read = file(nfo, "r" ).read()
+            print nfo_read
+        else: print "###tvshow.nfo not found !"
+        tvdb_id = re.findall( "<tvdbid>(\d{1,10})</tvdbid>", nfo_read ) or re.findall( "<id>(\d{1,10})</id>", nfo_read )
         if tvdb_id: 
             print "### tvdb id: %s" % tvdb_id[0]
             return tvdb_id[0]
@@ -344,6 +351,7 @@ class downloader:
     
     def get_lockstock_xml(self):
         self.lockstock_xml = get_html_source( "http://www.lockstockmods.net/logos/getlogo.php?id=" + self.tvdbid )
+        if DEBUG: print self.lockstock_xml
     
     def get_xbmcstuff_xml(self):
         self.xbmcstuff_xml = get_html_source ("http://www.xbmcstuff.com/tv_scraper.php?&id_scraper=p7iuVTQXQWGyWXPS&size=big&thetvdb=" + self.tvdbid )

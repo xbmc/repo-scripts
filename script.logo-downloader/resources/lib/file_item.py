@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 XBMC Cached Thumbnails, based on file 'XBMC/xbmc/FileItem.cpp'
 by Frost
@@ -8,7 +10,7 @@ thumbnails = Thumbnails()
 
 print thumbnails.get_cached_artist_thumb( "artist name" )
 print thumbnails.get_cached_profile_thumb() # current profile thumb
-print thumbnails.get_cached_season_thumb( "F:\serietv\csi\Spécial" )
+print thumbnails.get_cached_season_thumb( "F:\serietv\csi\SpÃ©cial" )
 print thumbnails.get_cached_actor_thumb( "actor name" )
 print thumbnails.get_cached_picture_thumb( "full Path" )
 print thumbnails.get_cached_video_thumb( "full Path" )
@@ -96,4 +98,4 @@ if ( __name__ == "__main__" ):
     thumbnails = Thumbnails()
     print thumbnails.get_cached_script_thumb( "Calculator" )
     print thumbnails.get_cached_plugin_thumbs( "video", "passion-xbmc nfo creator" )# default and folder thumbs
-    print thumbnails.get_cached_season_thumb( "F:\serietv\csi\Spécial" )
+    print thumbnails.get_cached_season_thumb( "F:\serietv\csi\SpÃ©cial" )
