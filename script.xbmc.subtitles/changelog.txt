@@ -1,3 +1,8 @@
+1.9.8
+- fixed: Script would fail on non English XBMC
+- added: New Dutch translation, Thanks Rob Verberk
+- updated: LegendasTV service
+
 1.9.7
 - added: new titulky.com service. Thanks lzoubek for creating it.
 

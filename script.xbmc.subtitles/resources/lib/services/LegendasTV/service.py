@@ -1,7 +1,7 @@
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt
-# Rev. 1.0.0
+# Rev. 1.0.1
 
 import xbmc, xbmcgui
 import cookielib, urllib2, urllib, sys, re, os, webbrowser, time, unicodedata
@@ -67,8 +67,8 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	# so user can choose. If only one subtitle is found, parse it to the addon.
 	if len(legendas_tmp) > 1:
 		dialog = xbmcgui.Dialog()
-		subtitle = dialog.browse(1, 'XBMC', 'files', '', False, False, 'special://temp/sub_tmp/')
-		if subtitle == "special://temp/sub_tmp/": subtitle = ""
+		subtitle = dialog.browse(1, 'XBMC', 'files', '', False, False, tmp_sub_dir+"/")
+		if subtitle == tmp_sub_dir+"/": subtitle = ""
 	elif legendas_tmp:
 		subtitle = legendas_tmp[0]
 	

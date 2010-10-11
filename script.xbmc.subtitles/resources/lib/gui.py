@@ -90,9 +90,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self.title = self.title  
         else:
             self.year = ""
-        self.language_1 = __settings__.getSetting( "Lang1" )                    # Full language 1
-        self.language_2 = __settings__.getSetting( "Lang2" )                    # Full language 2  
-        self.language_3 = __settings__.getSetting( "Lang3" )                    # Full language 3
+        self.language_1 = toScriptLang(__settings__.getSetting( "Lang01" ))     # Full language 1
+        self.language_2 = toScriptLang(__settings__.getSetting( "Lang02" ))     # Full language 2  
+        self.language_3 = toScriptLang(__settings__.getSetting( "Lang03" ))     # Full language 3
        
         label_colour = __settings__.getSetting( "label_colour" )                # Service Label Colour 
         if label_colour == "Blue":
