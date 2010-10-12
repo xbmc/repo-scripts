@@ -1,7 +1,7 @@
+# -*- coding: utf-8 -*-
 
 import os
 from traceback import print_exc
-
 import xbmc
 import xbmcgui
 try: from xbmcaddon import Addon
@@ -12,7 +12,6 @@ CWD = os.getcwd()
 try: __settings__ = Addon( os.path.basename( CWD ) )
 except: __settings__ = xbmc.Settings( os.getcwd() )
 SPECIAL_PROFILE_DIR = xbmc.translatePath( "special://profile/" )
-IMG_DIR = os.path.join( CWD , "resources" , "images" , "sports")
 ACTION_PREVIOUS_MENU = 10
 
 
@@ -102,10 +101,7 @@ class MainGui( xbmcgui.WindowXMLDialog ):
                     del getDetails
                     self.set_container()
             elif controlID == 8:
-                from scraper import getDetails
-                self.next_ep = getDetails()
-                del getDetails
-                self.set_container()
+                __settings__.openSettings()
         except:
             print_exc()
 
@@ -131,22 +127,11 @@ class MainGui( xbmcgui.WindowXMLDialog ):
         time.sleep( .4 )
         self.close()
 
-
-def getUserSkin():
-    current_skin = xbmc.getSkinDir()
-    force_fallback = os.path.exists( os.path.join( CWD, "resources", "skins", current_skin) )
-    if not force_fallback: current_skin = "DefaultSkin"
-    return current_skin, force_fallback
-
-
 def MyDialog(tv_list):
-    current_skin, force_fallback = getUserSkin()
     #"MyDialog.xml", CWD, current_skin, force_fallback sert a ouvrir le xml du script
-    try: w = MainGui( "DialogNextAired.xml", CWD, current_skin, "720p", force_fallback , listing=tv_list )
-    except: w = MainGui( "DialogNextAired.xml", CWD, current_skin, force_fallback , listing=tv_list )
+    w = MainGui( "DialogNextAired.xml", CWD, "DefaultSkin" , listing=tv_list )
     w.doModal()
     del w
-
 
 def test():
     tv_list = [{'Status': 'Returning Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\3\\3ae2ce22.tbn', 'RFC3339': '2010-08-16T22:00:00-4:00', 'GMT+0 NODST': '1282003200', 'Network': 'Showtime', 'Classification': 'Scripted', 'Started': 'Aug/07/2005', 'Show Name': 'Weeds', 'Show URL': 'http://www.tvrage.com/Weeds', 'Genres': 'Comedy | Crime | Drama', 'Premiered': '2005', 'Airtime': 'Monday at 10:00 pm', 'Ended': '', 'Show ID': '6554', 'Country': 'USA', 'Next Episode': '06x01^Season 6 Premiere^Aug/16/2010', 'Runtime': '30', 'dbname': 'Weeds', 'Latest Episode': '05x13^All About My Mom^Aug/31/2009'}, {'Status': 'Returning Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\a\\af34f363.tbn', 'RFC3339': '2010-06-19T18:50:00+01:00', 'GMT+0 NODST': '1276962600', 'Network': 'BBC One (United Kingdom)', 'Classification': 'Scripted', 'Started': 'Mar/26/2005', 'Show Name': 'Doctor Who (2005)', 'Show URL': 'http://www.tvrage.com/DoctorWho_2005', 'Genres': 'Action | Adventure | Sci-Fi', 'Premiered': '2005', 'Airtime': 'Saturday at 07:00 pm', 'Ended': '', 'Country': 'United Kingdom', 'Show ID': '3332', 'Special Airtime': '06:50 pm', 'Next Episode': '05x12^The Pandorica Opens (1)^Jun/19/2010', 'Runtime': '50', 'dbname': 'Doctor Who (2005)', 'Latest Episode': '05x11^The Lodger^Jun/12/2010'}, {'Status': 'New Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\d\\d2463954.tbn', 'Genres': 'Action | Drama', 'GMT+0 NODST': '', 'Network': 'Starz', 'Classification': 'Scripted', 'Started': 'Jan/22/2010', 'Show Name': 'Spartacus: Blood and Sand', 'Show URL': 'http://www.tvrage.com/Spartacus-Blood_and_Sand', 'Premiered': '2010', 'Airtime': 'Friday at 10:00 pm', 'Ended': '', 'Show ID': '21885', 'Country': 'USA', 'Next Episode': '02x01^Season 2, Episode 1^Jan/2011', 'Runtime': '60', 'dbname': 'Spartacus Blood and Sand', 'Latest Episode': '01x13^Kill Them All^Apr/16/2010'}, {'Status': 'Returning Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\8\\877c6a59.tbn', 'RFC3339': '2010-09-26T21:00:00-4:00', 'GMT+0 NODST': '1285542000', 'Network': 'Showtime', 'Classification': 'Scripted', 'Started': 'Oct/01/2006', 'Show Name': 'Dexter', 'Show URL': 'http://www.tvrage.com/Dexter', 'Genres': 'Crime | Drama', 'Premiered': '2006', 'Airtime': 'Sunday at 09:00 pm', 'Ended': '', 'Show ID': '7926', 'Country': 'USA', 'Next Episode': '05x01^Season 5, Episode 1^Sep/26/2010', 'Runtime': '60', 'dbname': 'Dexter', 'Latest Episode': '04x12^The Getaway^Dec/13/2009'}, {'Status': 'Returning Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\1\\1b5ead11.tbn', 'Genres': 'Action | Adventure | Crime | Drama', 'GMT+0 NODST': '', 'Network': 'CBS', 'Classification': 'Scripted', 'Started': 'Sep/22/2005', 'Show Name': 'Criminal Minds', 'Show URL': 'http://www.tvrage.com/Criminal_Minds', 'Premiered': '2005', 'Airtime': 'Wednesday at 09:00 pm', 'Ended': '', 'Show ID': '3171', 'Country': 'USA', 'Next Episode': '06x01^Season 6, Episode 1^Sep/2010', 'Runtime': '60', 'dbname': 'Esprits Criminels', 'Latest Episode': '05x23^Our Darkest Hour^May/26/2010'}, {'Status': 'Returning Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\1\\160b5358.tbn', 'RFC3339': '2010-09-11T22:00:00-4:00', 'GMT+0 NODST': '1284249600', 'Network': 'Showtime', 'Classification': 'Scripted', 'Started': 'Aug/13/2007', 'Show Name': 'Californication', 'Show URL': 'http://www.tvrage.com/Californication', 'Genres': 'Comedy | Drama', 'Premiered': '2007', 'Airtime': 'Sunday at 10:00 pm', 'Ended': '', 'Show ID': '15319', 'Country': 'USA', 'Next Episode': '04x01^Season 4, Episode 1^Sep/11/2010', 'Runtime': '30', 'dbname': 'Californication', 'Latest Episode': '03x12^Mia Culpa^Dec/13/2009'}, {'Status': 'New Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\f\\fb6829f7.tbn', 'RFC3339': '2010-06-14T12:00:00+09:00', 'GMT+0 NODST': '1276477200', 'Network': 'TV Tokyo (Japan)', 'Classification': 'Animation', 'Started': 'Oct/12/2009', 'Show Name': 'Fairy Tail', 'Show URL': 'http://www.tvrage.com/shows/id-24288', 'Genres': 'Anime | Action | Adventure | Drama | Fantasy', 'Premiered': '2009', 'Airtime': 'Monday', 'Ended': '', 'Show ID': '24288', 'Country': 'Japan', 'Next Episode': '01x34^Gerard^Jun/14/2010', 'Runtime': '30', 'dbname': 'Fairy Tail', 'Latest Episode': '01x33^Tower of Paradise^Jun/07/2010'}, {'Status': 'Returning Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\2\\2377d88e.tbn', 'RFC3339': '2010-06-17T19:30:00+09:00', 'GMT+0 NODST': '1276763400', 'Network': 'TV Tokyo (Japan)', 'Classification': 'Animation', 'Started': 'Feb/15/2007', 'Show Name': 'Naruto: Shippuuden', 'Show URL': 'http://www.tvrage.com/Naruto_Shippuuden', 'Genres': 'Anime | Action | Adventure | Comedy | Drama | Fantasy | Mystery', 'Premiered': '2007', 'Airtime': 'Thursday at 07:30 pm', 'Ended': '', 'Show ID': '14748', 'Country': 'Japan', 'Next Episode': '07x22^Nine-Tails Capture Complete^Jun/17/2010', 'Runtime': '30', 'dbname': 'Naruto', 'Latest Episode': '07x21^Crisis! Sage Mode Disappears^Jun/10/2010'}, {'Status': 'Returning Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\1\\1b84f8e2.tbn', 'RFC3339': '2010-06-15T19:30:00+09:00', 'GMT+0 NODST': '1276590600', 'Network': 'TV Tokyo (Japan)', 'Classification': 'Animation', 'Started': 'Oct/05/2004', 'Show Name': 'Bleach (JP)', 'Show URL': 'http://www.tvrage.com/Bleach_JP', 'Genres': 'Anime | Action | Adventure | Fantasy', 'Premiered': '2004', 'Airtime': 'Wednesday at 07:30 pm', 'Ended': '', 'Show ID': '2825', 'Country': 'Japan', 'Next Episode': '14x20^The Approaching Breath of Death, the King Who Rules Over Death!^Jun/15/2010', 'Runtime': '30', 'dbname': 'Bleach', 'Latest Episode': '14x19^Hitsugaya, the Suicidal Frozen Heavens Hundred Flowers Funeral!^Jun/08/2010'}, {'Status': 'Returning Series', 'ep_img': 'C:\\Program Files\\XBMC\\userdata\\Thumbnails\\Video\\1\\15b02f06.tbn', 'RFC3339': '2010-06-17T19:30:00+09:00', 'GMT+0 NODST': '1276763400', 'Network': 'TV Tokyo (Japan)', 'Classification': 'Animation', 'Started': 'Feb/15/2007', 'Show Name': 'Naruto: Shippuuden', 'Show URL': 'http://www.tvrage.com/Naruto_Shippuuden', 'Genres': 'Anime | Action | Adventure | Comedy | Drama | Fantasy | Mystery', 'Premiered': '2007', 'Airtime': 'Thursday at 07:30 pm', 'Ended': '', 'Show ID': '14748', 'Country': 'Japan', 'Next Episode': '07x22^Nine-Tails Capture Complete^Jun/17/2010', 'Runtime': '30', 'dbname': 'Naruto Shippuuden', 'Latest Episode': '07x21^Crisis! Sage Mode Disappears^Jun/10/2010'}]

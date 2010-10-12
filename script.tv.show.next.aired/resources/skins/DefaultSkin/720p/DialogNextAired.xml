@@ -711,7 +711,7 @@
 						<enable>false</enable><!-- desactiver pas encore implanter -->
 					</control>
 					<control type="button" id="8">
-						<description>Refresh</description>
+						<description>Settings</description>
 						<height>40</height>
 						<width>170</width>
 						<textoffsetx>20</textoffsetx>
@@ -721,7 +721,7 @@
 						<texturefocus border="5">NextAired-button-focus.png</texturefocus>
 						<texturenofocus border="5">NextAired-button-nofocus.png</texturenofocus>
 						<pulseonselect>false</pulseonselect>
-						<label>184</label>
+						<label>5</label>
 					</control>
 					<control type="button" id="10">
 						<description>close</description>
