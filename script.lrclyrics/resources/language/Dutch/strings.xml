@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC Lyrics</string>
+
+    <string id="30001">Geen lyrics gevonden!</string>
+
+    <!-- Settings labels -->
+    <string id="30100">Bron</string>
+    <string id="30101">Lyrics opslaan</string>
+    <string id="30102">Opslaan in</string>
+
+
+    <string id="30105">Vloeiend scrollen</string>
+    <string id="30106">Gebruik bestandsnaam voor zoeken</string>
+    <string id="30107">Bestandsnaam formaat</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+
+
+</strings>

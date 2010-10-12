@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC Lyrics</string>
+
+    <string id="30001">Les paroles n'ont pas été retrouvées!</string>
+
+    <!-- Settings labels -->
+    <string id="30100">Scraper</string>
+    <string id="30101">Sauvegarder les paroles</string>
+    <string id="30102">Dossier de Sauvegardes</string>
+    <string id="30103">Garder les fichiers lyrics xbox compatible</string>
+
+    <string id="30105">Défilement lisse des paroles</string>
+    <string id="30106">Utiliser uniquement le nom du fichier pour la recherche</string>
+    <string id="30107">Format de nom du fichier</string>
+    <string id="30108">Artiste - Chanson.ext</string>
+    <string id="30109">Artiste\Album\Chanson.ext</string>
+    <string id="30110">Artiste\Album\Piste Chanson.ext</string>
+</strings>

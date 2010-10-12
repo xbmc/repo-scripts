@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC Lyrics</string>
+
+    <string id="30001">Nie znalazłem tekstu</string>
+
+    <!-- Settings labels -->
+    <string id="30100">Scraper</string>
+    <string id="30101">Zapisuj teksty na dysk</string>
+    <string id="30102">Zapisz do ..</string>
+    <string id="30103">Utrzymuj pliki z tekstami w zgodności z xboksem</string>
+
+    <string id="30105">Płynne przewijanie tekstu</string>
+    <string id="30106">Tylko nazwa pliku jako podstawa szukania</string>
+    <string id="30107">Format nazwy pliku</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+</strings>

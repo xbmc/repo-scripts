@@ -1,0 +1,358 @@
+<window>
+	<allowoverlay>no</allowoverlay>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="300" />
+		<effect type="fade" start="0" end="100" time="300" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="300" />
+		<effect type="fade" start="100" end="0" time="300" />
+	</animation>
+	<controls>
+		<control type="image">
+			<description>background image</description>
+			<posx>40</posx>
+			<posy>40</posy>
+			<width>640</width>
+			<height>496</height>
+			<texture border="20,20,20,20">default-panel.png</texture>
+		</control>
+		<!-- media infos -->
+		<control type="group">
+			<posx>40</posx>
+			<posy>40</posy>
+			<control type="image">
+				<description>Cover Image</description>
+				<posx>34</posx>
+				<posy>34</posy>
+				<width>112</width>
+				<height>112</height>
+				<texture diffuse="default-diffuse.png">$INFO[MusicPlayer.Cover]</texture>
+				<aspectratio>stretch</aspectratio>
+			</control>
+			<control type="image">
+				<description>Cover Image Mirror</description>
+				<posx>34</posx>
+				<posy>146</posy>
+				<width>112</width>
+				<height>112</height>
+				<texture flipy="true" diffuse="default-diffuse-mirror.png">$INFO[MusicPlayer.Cover]</texture>
+				<aspectratio>stretch</aspectratio>
+			</control>
+			<control type="label">
+				<description>CU Lyrics label</description>
+				<posx>220</posx>
+				<posy>34</posy>
+				<width>200</width>
+				<label>[B]$LOCALIZE[SCRIPT0][/B]</label>
+				<font>font13</font>
+				<align>center</align>
+				<textcolor>FF009CFF</textcolor>
+				<shadowcolor>AA000000</shadowcolor>
+			</control>
+			<control type="image">
+				<description>separator</description>
+				<posx>270</posx>
+				<posy>55</posy>
+				<width>100</width>
+				<height>1</height>
+				<texture>default-separatorOSD.png</texture>
+				<colordiffuse>DDFFFFFF</colordiffuse>
+			</control>
+			<control type="label" id="200">
+				<description>Scraper Label</description>
+				<posx>600</posx>
+				<posy>34</posy>
+				<width>220</width>
+				<posx>600</posx>
+				<label>-</label>
+				<font>font13</font>
+				<align>right</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<disabledcolor>60FFFFFF</disabledcolor>
+			</control>
+			<control type="label">
+				<description>Artist label</description>
+				<posx>168</posx>
+				<posy>65</posy>
+				<width>438</width>
+				<label>[B]$INFO[MusicPlayer.Artist][/B]</label>
+				<font>font13</font>
+				<align>left</align>
+				<textcolor>FF4DBAFF</textcolor>
+			</control>
+			<control type="label">
+				<description>Title label</description>
+				<posx>168</posx>
+				<posy>85</posy>
+				<width>340</width>
+				<label>[B]$INFO[MusicPlayer.Title][/B]</label>
+				<font>font13</font>
+				<align>left</align>
+				<textcolor>FF99D8FF</textcolor>
+			</control>
+			<control type="label">
+				<description>Album label</description>
+				<posx>168</posx>
+				<posy>105</posy>
+				<width>340</width>
+				<label>[B]$INFO[MusicPlayer.Album][/B]</label>
+				<font>font13</font>
+				<align>left</align>
+				<textcolor>FFFFFFFF</textcolor>
+			</control>
+			<control type="image">
+				<description>Song Rating Image</description>
+				<posx>515</posx>
+				<posy>85</posy>
+				<height>15</height>
+				<width>90</width>
+				<texture>$INFO[Player.StarRating]</texture>
+				<aspectratio>keep</aspectratio>
+			</control>
+			<control type="label">
+				<description>Time Label</description>
+				<posx>168</posx>
+				<posy>125</posy>
+				<width>200</width>
+				<label>$INFO[MusicPlayer.Time]</label>
+				<font>font13</font>
+				<align>left</align>
+				<textcolor>FFFFFFFF</textcolor>
+			</control>
+			<control type="label">
+				<description>Duration Label</description>
+				<posx>600</posx>
+				<posy>124</posy>
+				<width>200</width>
+				<label>$INFO[MusicPlayer.Duration]</label>
+				<font>font13</font>
+				<align>right</align>
+				<textcolor>FFFFFFFF</textcolor>
+			</control>
+			<control type="label">
+				<description>Playlist Pos No</description>
+				<posx>600</posx>
+				<posy>104</posy>
+				<width>200</width>
+				<label>$INFO[MusicPlayer.Playlistposition,$LOCALIZE[435] ]$INFO[MusicPlayer.Playlistlength,/]</label>
+				<font>font13</font>
+				<align>right</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<visible>!MusicPartyMode.Enabled</visible>
+			</control>
+			<control type="label">
+				<description>PartyMode Enabled</description>
+				<posx>600</posx>
+				<posy>104</posy>
+				<width>200</width>
+				<label>589</label>
+				<font>font13</font>
+				<align>right</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<visible>MusicPartyMode.Enabled</visible>
+			</control>
+			<control type="progress">
+				<description>Progressbar</description>
+				<posx>210</posx>
+				<posy>128</posy>
+				<width>346</width>
+				<height>12</height>
+				<info>Player.Progress</info>
+				<texturebg border="6,0,6,0">default-progress_back.png</texturebg>
+				<lefttexture>-</lefttexture>
+				<midtexture border="6,0,6,0">default-progress_mid.png</midtexture>
+				<righttexture>-</righttexture>
+				<overlaytexture>-</overlaytexture>
+				<overlaytexture>-</overlaytexture>
+			</control>
+			<control type="image">
+				<description>separator</description>
+				<posx>14</posx>
+				<posy>165</posy>
+				<width>612</width>
+				<height>2</height>
+				<texture>default-separatorOSD.png</texture>
+			</control>
+		</control>
+		<!-- ** Required ** Do not change <id> or <type> -->
+		<control type="textbox" id="100">
+			<description>textarea</description>
+			<posx>74</posx>
+			<posy>225</posy>
+			<width>572</width>
+			<height>261</height>
+			<onup>101</onup>
+			<ondown>101</ondown>
+			<onleft>101</onleft>
+			<onright>101</onright>
+			<pagecontrol>101</pagecontrol>
+			<font>font13</font>
+			<textcolor>DDFFFFFF</textcolor>
+		</control>
+  		<control type="spincontrol" id="101">
+			<description>Next page button</description>
+			<posx>610</posx>
+			<posy>500</posy>
+			<width>20</width>
+			<height>15</height>
+			<font>font13</font>
+			<align>right</align>
+			<subtype>page</subtype>
+   			<textcolor>FFFFFFFF</textcolor>
+			<onleft>101</onleft>
+			<onright>101</onright>
+			<ondown>101</ondown>
+			<onup>101</onup>
+			<showonepage>false</showonepage>
+			<textureup>default-scroll-up.png</textureup>
+			<texturedown>default-scroll-down.png</texturedown>
+			<textureupfocus>default-scroll-up-focus.png</textureupfocus>
+			<texturedownfocus>default-scroll-down-focus.png</texturedownfocus>
+			<visible>Control.IsVisible(100)</visible>
+		</control>        
+		<!-- ** Required ** Do not change <id> or <type> -->
+		<control type="list" id="110">
+			<posx>74</posx>
+			<posy>225</posy>
+			<width>572</width>
+			<height>261</height>
+			<onleft>111</onleft>
+			<onright>111</onright>
+			<onup>110</onup>
+			<ondown>110</ondown>
+			<viewtype label="535">list</viewtype>
+			<pagecontrol>111</pagecontrol>
+			<scrolltime>200</scrolltime>
+			<itemlayout height="29">
+				<control type="label">
+					<posx>10</posx>
+					<posy>3</posy>
+					<width>552</width>
+					<height>22</height>
+					<info>ListItem.Label</info>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<textcolor>FFFFFFFF</textcolor>
+				</control>
+			</itemlayout>
+			<focusedlayout height="29">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>572</width>
+					<height>29</height>
+					<texture>default-list-focus.png</texture>
+					<visible>Control.HasFocus(110)</visible>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>3</posy>
+					<width>552</width>
+					<height>22</height>
+					<info>ListItem.Label</info>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<textcolor>FFEB9E17</textcolor>
+				</control>
+			</focusedlayout>
+		</control>
+  		<control type="spincontrol" id="111">
+			<description>Next page button</description>
+			<posx>610</posx>
+			<posy>500</posy>
+			<width>20</width>
+			<height>15</height>
+			<font>font13</font>
+			<align>right</align>
+			<subtype>page</subtype>
+			<onleft>110</onleft>
+			<onright>110</onright>
+			<ondown>110</ondown>
+			<onup>110</onup>
+			<textcolor>FFFFFFFF</textcolor>
+			<textureup>default-scroll-up.png</textureup>
+			<texturedown>default-scroll-down.png</texturedown>
+			<textureupfocus>default-scroll-up-focus.png</textureupfocus>
+			<texturedownfocus>default-scroll-down-focus.png</texturedownfocus>
+			<showonepage>false</showonepage>
+			<visible>Control.IsVisible(110)</visible>
+		</control>
+		<!-- ** Required ** Do not change <id> or <type> -->
+		<control type="list" id="120">
+			<posx>74</posx>
+			<posy>225</posy>
+			<width>572</width>
+			<height>261</height>
+			<onleft>121</onleft>
+			<onright>121</onright>
+			<onup>120</onup>
+			<ondown>120</ondown>
+			<viewtype label="535">list</viewtype>
+			<pagecontrol>121</pagecontrol>
+			<scrolltime>200</scrolltime>
+			<itemlayout height="29">
+				<control type="label">
+					<posx>10</posx>
+					<posy>3</posy>
+					<width>552</width>
+					<height>22</height>
+					<info>ListItem.Label</info>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<textcolor>FFFFFFFF</textcolor>
+				</control>
+			</itemlayout>
+			<focusedlayout height="29">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>572</width>
+					<height>29</height>
+					<texture>default-list-focus.png</texture>
+					<visible>Control.HasFocus(120)</visible>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>3</posy>
+					<width>552</width>
+					<height>22</height>
+					<info>ListItem.Label</info>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<textcolor>FFEB9E17</textcolor>
+				</control>
+			</focusedlayout>
+		</control>
+  		<control type="spincontrol" id="121">
+			<description>Next page button</description>
+			<posx>610</posx>
+			<posy>500</posy>
+			<width>20</width>
+			<height>15</height>
+			<font>font13</font>
+			<align>right</align>
+			<subtype>page</subtype>
+			<textcolor>FFFFFFFF</textcolor>
+			<onleft>120</onleft>
+			<onright>120</onright>
+			<ondown>120</ondown>
+			<onup>120</onup>
+			<textureup>default-scroll-up.png</textureup>
+			<texturedown>default-scroll-down.png</texturedown>
+			<textureupfocus>default-scroll-up-focus.png</textureupfocus>
+			<texturedownfocus>default-scroll-down-focus.png</texturedownfocus>
+			<showonepage>false</showonepage>
+			<visible>Control.IsVisible(120)</visible>
+		</control>
+	</controls>
+</window>
