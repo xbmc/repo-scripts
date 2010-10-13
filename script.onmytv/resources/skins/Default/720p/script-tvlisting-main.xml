@@ -1,0 +1,129 @@
+<window>
+	<defaultcontrol>15</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>120</posx>
+		<posy>70</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<posx>-10</posx>
+			<posy>-8</posy>
+			<width>980</width>
+			<height>560</height>
+			<texture>tvlisting-main.png</texture>
+			<animation effect="fade" time="200">WindowOpen</animation>
+			<animation effect="fade" time="200">WindowClose</animation>
+		</control>
+
+		<control type="label">
+			<description>textarea</description>
+			<posx>0</posx>
+			<posy>-5</posy>
+			<width>980</width>
+			<visible>true</visible>
+			<label>TV Listings</label>
+			<font>font13_title</font>
+			<textcolor>white</textcolor>
+			<texture></texture>
+			<align>center</align>
+		</control>
+		<control type="radiobutton" id="96">
+			<description>Exit</description>
+			<posx>0</posx>
+			<posy>432</posy>
+			<height>30</height>
+			<width>225</width>
+			<label>Show All</label>
+			<ondown>15</ondown>
+		</control>		
+		<control type="button" id="15">
+			<description>Exit</description>
+			<posx>0</posx>
+			<posy>467</posy>
+			<height>50</height>
+			<width>225</width>
+			<align>center</align>
+			<aligny>top</aligny>
+			<textoffsety>15</textoffsety>
+			<label>Exit</label>
+			<onup>96</onup>
+			<ondown>96</ondown>
+		</control>
+
+		<control type='label' id='25'>
+			<description>Heading</description>
+			<posx>240</posx>
+			<posy>32</posy>
+			<width>720</width>
+			<visible>true</visible>
+			<label></label>
+			<font>font30_title</font>
+			<textcolor>white</textcolor>
+			<align>center</align>
+		</control>
+		<control type="list" id="20">
+			<description>Show Listing</description>
+			<posx>240</posx>
+			<posy>72</posy>
+			<width>720</width>
+			<height>440</height>
+			<viewtype label="Show Listing">list</viewtype>
+			<orientation>vertical</orientation>
+			<visible>true</visible>
+			<onleft>15</onleft>
+			<onright>15</onright>
+			<itemlayout width="720" height="70">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>720</width>
+					<height>70</height>
+					<texture>list-bg.png</texture>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>0</posy>
+					<width>720</width>
+					<height>20</height>
+					<info>ListItem.label</info>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>25</posy>
+					<width>720</width>
+					<height>20</height>
+					<font>font3</font>
+					<info>ListItem.label2</info>
+				</control>
+			</itemlayout>
+		
+			<focusedlayout width="720" height="70">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>720</width>
+					<height>70</height>
+					<visible>Control.HasFocus(20)</visible>
+					<texture border="5">list-bg-selected.png</texture>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>0</posy>
+					<width>720</width>
+					<height>20</height>
+					<info>ListItem.label</info>
+					<scroll>true</scroll>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>25</posy>
+					<width>720</width>
+					<height>20</height>
+					<font>font3</font>
+					<info>ListItem.label2</info>
+				</control>
+			</focusedlayout>
+		</control>
+	</controls>
+</window>

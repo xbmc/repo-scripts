@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting type="lsep" label="1000" />
+    <setting id="onmytv_uid" type="text" label="on-my.tv uid" default="" />
+    <setting id='max_cache_age' type="number" label="Cache listings for (seconds)" default="3600" />
+</settings>

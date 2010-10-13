@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.onmytv"
+       name="TV Listings"
+       version="0.0.1"
+       provider-name="andre_pl">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.simplejson" version="2.0.9"/>
+    <import addon="script.module.pil" version="1.1.7"/>
+    <import addon="script.module.elementtree" version="1.2.7" />
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">TV Listings from On-My.TV</summary>
+    <description>Displays TV Listings from On-My.TV.  Be sure to configure the plugin and enter your On-My.TV UserID to allow filtering only the shows you want to see.</description>
+    <platform>all</platform>
+  </extension>
+</addon>

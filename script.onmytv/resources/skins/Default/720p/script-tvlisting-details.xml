@@ -1,0 +1,53 @@
+<window>
+	<defaultcontrol>100</defaultcontrol>
+	<allowoverlay>no</allowoverlay>
+	<coordinates>
+		<system>1</system>
+		<posx>120</posx>
+		<posy>70</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>960</width>
+			<height>540</height>
+			<texture>dialog.png</texture>
+                        <animation effect="fade" time="200">WindowOpen</animation>
+                        <animation effect="fade" time="200">WindowClose</animation>
+		</control>
+		<control type="label" id='1'>
+			<description>textarea</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>960</width>
+			<height>30</height>
+			<visible>true</visible>
+			<label></label>
+			<font>font11</font>
+			<textcolor>white</textcolor>
+			<align>center</align>
+		</control>
+		<control type='textbox' id='99'>
+			<description>textarea</description>
+			<posx>50</posx>
+			<posy>280</posy>
+			<width>840</width>
+			<height>200</height>
+			<font>font11</font>
+			<textcolor>white</textcolor>
+			<autoscroll delay='5000' time='5000' repeat='10000'></autoscroll>
+			<label></label>
+		</control>
+		<control type='button' id='100'>
+			<description>Quit Button</description>
+			<posx>405</posx>
+			<posy>500</posy>
+			<width>150</width>
+			<height>30</height>
+			<label>OK</label>
+			<align>center</align>
+		</control>
+		
+	</controls>
+</window>
