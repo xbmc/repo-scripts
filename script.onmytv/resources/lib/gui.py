@@ -174,7 +174,7 @@ class EpisodeInfoGUI(xbmcgui.WindowXMLDialog):
         left_margin = 50
         top = 50
         if not self.episode_set:
-            self.getControl(1).setLabel("%s %sx%02d" % (self.episode['show_name'], self.episode['season'], int(self.episode['episode'])))
+            self.getControl(1).setLabel("%s - %sx%02d - %s" % (self.episode['show_name'], self.episode['season'], int(self.episode['episode']), self.episode['name']))
             if self.episode['screen_cap']:
                 progress_dialog = xbmcgui.DialogProgress()
                 progress_dialog.create("Downloading Screenshot","")
@@ -193,11 +193,13 @@ class EpisodeInfoGUI(xbmcgui.WindowXMLDialog):
                     imctl = xbmcgui.ControlImage(50,40,image.size[0]*(240/float(image.size[1])),240,filename)
                     self.addControl(imctl)
                     top = 50 + image.size[1]
-                    
                 except:
                     pass
                 progress_dialog.close()
-                
+            else:
+                self.getControl(99).setPosition(50,top)
+                self.getControl(99).setHeight(480)
+            
             self.getControl(99).setText(self.episode['episode_summary'])
             self.episode_set = True
 #            print "SIZE: %sx%s" % im.size

@@ -22,18 +22,24 @@ class OnMyTV(object):
         self.cache_dir = cache_dir
         self.uid = uid
         self.base_url = "http://next.seven.days.on-my.tv/?xml"
-        self.max_age = max_cache_age or 60*60
+        self.max_age = int(max_cache_age) or 60*60
         self.full_listing = {}
         self.user_listing = {}
         
     def check_cache(self, dest):
-        now = time.time()
+        now = int(time.time())
+        print 'checking cache: NOW: %s' % (now,)
         if not os.path.exists(dest):
+            print "%s doesn't exist" % (dest,)
             return False
         else:
-            cachetime = os.path.getmtime(dest)
-            if now - cachetime > self.max_age:
+            cachetime = int(os.path.getmtime(dest))
+            diff = int(now - cachetime)
+            print ">>> %d - %d = %d max age(%d)<<<" % (now, cachetime, diff, self.max_age)
+            if diff > self.max_age:
+                print 'Too Old!'
                 return False
+            print 'not too old'
         return True
 
     def user_cache_file(self):
