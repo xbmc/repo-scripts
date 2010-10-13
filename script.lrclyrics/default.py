@@ -8,9 +8,9 @@ import xbmcaddon
 __scriptname__ = "LRC Lyrics"
 __scriptid__ = "script.lrclyrics"
 __author__ = "Taxigps"
-__url__ = "http://code.google.com/p/xbmc-scripting/"
+__url__ = "http://code.google.com/p/xbmc-addons-chinese/"
 __credits__ = "EnderW,Nuka1195"
-__version__ = "1.3.2"
+__version__ = "1.3.3"
 __XBMC_Revision__ = "30001"
 
 # Shared resources 

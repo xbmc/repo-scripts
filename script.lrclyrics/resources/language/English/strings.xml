@@ -17,4 +17,6 @@
     <string id="30108">%A - %T</string>
     <string id="30109">%A\%B\%T</string>
     <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">Load same name lyrics from sub folder</string>
+    <string id="30112">- Sub folder name</string>
 </strings>

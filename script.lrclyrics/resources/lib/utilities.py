@@ -126,4 +126,6 @@ def get_settings():
     settings[ "filename_format" ] = __settings__.getSetting( "filename_format" )
     settings[ "compatible" ] = __settings__.getSetting( "compatible" ) == "true"
     settings[ "artist_folder" ] = __settings__.getSetting( "artist_folder" ) == "true"
+    settings[ "subfolder" ] = __settings__.getSetting( "subfolder" ) == "true"
+    settings[ "subfolder_name" ] = __settings__.getSetting( "subfolder_name" )
     return settings

@@ -1,4 +1,7 @@
-﻿[B]1.3.2 (2010.10.12)[/B]
+﻿[B]1.3.3 (2010.10.13)[/B]
+added: settings to load same name lyrics from sub folder
+
+[B]1.3.2 (2010.10.12)[/B]
 removed: unused codes
 Initial import into official addons repository
 

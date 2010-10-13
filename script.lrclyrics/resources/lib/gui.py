@@ -140,7 +140,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
             dirname = os.path.dirname(path)
             basename = os.path.basename(path)
             filename = basename.rsplit( ".", 1 )[ 0 ]
-            self.song_path = make_legal_filepath( unicode( os.path.join( dirname, filename + ".lrc" ), "utf-8" ), self.settings[ "compatible" ] )
+            if ( self.settings[ "subfolder" ] ):
+                self.song_path = make_legal_filepath( unicode( os.path.join( dirname, self.settings[ "subfolder_name" ], filename + ".lrc" ), "utf-8" ), self.settings[ "compatible" ] )
+            else:
+                self.song_path = make_legal_filepath( unicode( os.path.join( dirname, filename + ".lrc" ), "utf-8" ), self.settings[ "compatible" ] )
             lyrics_file = open( self.song_path, "r" )
             lyrics = lyrics_file.read()
             lyrics_file.close()

@@ -17,4 +17,6 @@
     <string id="30108">%A - %T</string>
     <string id="30109">%A\%B\%T</string>
     <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">读取同名歌词文件于子目录</string>
+    <string id="30112">- 子目录名</string>
 </strings>

@@ -10,4 +10,6 @@
     <setting id="smooth_scrolling" type="bool" label="30105" default="true"/>
     <setting id="use_filename" type="bool" label="30106" default="false"/>
     <setting id="filename_format" type="enum" label="30107" default="0" lvalues="30108|30109|30110" />
+    <setting id="subfolder" type="bool" label="30111" default="false"/>
+    <setting id="subfolder_name" type="text" visible= "eq(-1,true)" enable="eq(-1,true)" label="30112" default="lyrics"/>
 </settings>
