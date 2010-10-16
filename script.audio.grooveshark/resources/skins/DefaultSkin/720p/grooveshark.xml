@@ -17,7 +17,7 @@
 			<posy>0</posy>
 			<height>720</height>
 			<width>1280</width>
-			<texture>gs-bg.png</texture>	
+			<texture>gs-bg.jpg</texture>	
 			<animation effect="fade" time="1000" start="0" end="100">WindowOpen</animation>
 		</control>
 		<control type="image">
@@ -491,7 +491,7 @@
 				<description>Background for menu</description>
 				<posx>0</posx>
 				<posy>0</posy>
-				<height>300</height>
+				<height>335</height>
 				<width>300</width>
 				<texture>gs-bg-leftmenu.png</texture>	
 				<visible>true </visible>			
@@ -503,7 +503,7 @@
 				<description>Vertical label</description>
 				<width>100</width>			
 				<posx>130</posx>
-				<posy>95</posy>
+				<posy>110</posy>
 				<align>center</align>
 				<aligny>center</aligny>
 				<label>MENU</label>
@@ -527,7 +527,7 @@
 				<textoffsetx>0</textoffsetx>
 				<align>center</align>
 				<aligny>center</aligny>					
-				<onup>1005</onup>
+				<onup>1007</onup>
 				<ondown>1002</ondown>	
 				<onleft>205</onleft>
 				<onright>205</onright>
@@ -628,6 +628,26 @@
 				<align>center</align>
 				<aligny>center</aligny>					
 				<onup>1006</onup>
+				<ondown>1001</ondown>	
+				<onleft>205</onleft>
+				<onright>205</onright>
+				<font>font12</font>
+			</control>
+			<control type="button" id="1007">
+				<description>Exit button</description>				
+				<posx>0</posx>	
+				<posy>210</posy>
+				<width>180</width>
+				<height>30</height>
+				<label>$LOCALIZE[SCRIPT121]</label>		
+				<texturefocus>button_focus.png</texturefocus>
+				<texturenofocus></texturenofocus>
+				<textcolor>ffffffff</textcolor>
+				<disabledcolor>60ffffff</disabledcolor>
+				<textoffsetx>0</textoffsetx>
+				<align>center</align>
+				<aligny>center</aligny>					
+				<onup>1005</onup>
 				<ondown>1001</ondown>	
 				<onleft>205</onleft>
 				<onright>205</onright>

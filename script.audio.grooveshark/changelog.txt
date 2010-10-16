@@ -1,3 +1,11 @@
+0.2.9:
+
+ - Fixed: Login works again after changes in the API.
+
+ - Added: Added Korean translation. Thanks neurostar.
+
+ - Added: Exit button in menu.
+
 0.2.8:
 
  - New feature: Search makes suggestions for songs, artists, and albums to speed up text entry. Based on AcclaimedMusic.net and the most played tracks on last.fm.

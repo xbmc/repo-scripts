@@ -23,6 +23,7 @@
     <string id="118">Gem kø</string>
     <string id="119">Find lignende</string>
     <string id="120">Se denne sangs album</string>
+    <string id="121">Afslut</string>
 
     <!-- Dialogs -->
     <string id="1000">Indtast en søgning</string>
@@ -37,7 +38,7 @@
     <string id="2002">Debugging (Genstart script for at anvende)</string>
 
     <!-- Labels -->
-    <string id="3000">Start søgning efter sange eller åbn afspilningsliste</string>
+    <string id="3000">Start søgning efter sange eller åbn spilleliste</string>
     <string id="3001">AFSPILLER NU</string>
     <string id="3002">NÆSTE</string>
     <string id="3003">Sange fundet under søgningen</string>

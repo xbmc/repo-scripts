@@ -4,9 +4,12 @@ import os
 import traceback
 import threading
 
-#path = os.path.abspath(os.path.join(os.getcwd(), '..', 'script.module.pysqlite', 'lib', 'pysqlite2'))
-#sys.path.append(path)
-from pysqlite2 import dbapi2 as sqlite
+try:
+	from pysqlite2 import dbapi2 as sqlite
+	pysqlFound = True
+except:
+	pysqlFound = False
+	print "Unable to import pysqlite2. Search suggestions disabled. This should only happen if you've compiled from SVN and forgotten to compile sqlite2."
 
 __language__ = sys.modules[ "__main__" ].__language__
 
@@ -75,11 +78,14 @@ class getTextThread(threading.Thread):
 			xbmc.sleep(100)
 
 	def searchDatabase(self, query):
-		db = self.db
-		songs = db.getSongs(query)
-		artists = db.getArtists(query)
-		albums = db.getAlbums(query)
-		return songs, artists, albums
+		if pysqlFound == True:
+			db = self.db
+			songs = db.getSongs(query)
+			artists = db.getArtists(query)
+			albums = db.getAlbums(query)
+			return songs, artists, albums
+		else:
+			return [], [], []
 	
 	def closeThread(self):
 		self.running = 0

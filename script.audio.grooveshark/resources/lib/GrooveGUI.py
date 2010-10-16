@@ -6,10 +6,13 @@ import pickle
 import os
 import traceback
 import threading
-from MusicSuggestions import getTextThread
 
 sys.path.append(os.path.join(os.getcwd().replace(";",""),'resources','lib'))
 __language__ = sys.modules[ "__main__" ].__language__
+__isXbox__ = sys.modules[ "__main__" ].__isXbox__
+
+if __isXbox__ == False: # MusicSuggestions is not supported fox XBOX yet
+	from MusicSuggestions import getTextThread
 
 def gShowPlaylists(playlists=[], options=[]):
 #	popup = popupList(title= 'Playlists', items=playlists, btns=options, width=400)
@@ -113,7 +116,6 @@ class popupBusyXml(xbmcgui.WindowXMLDialog):
 	def onAction(self, action):
 		#self.close()
 		aId = action.getId()
-		print 'Busy closed by user: ' + str(aId)
 		if aId == 10:
 			self.close()
 
@@ -544,10 +546,19 @@ class SearchXml(xbmcgui.WindowXMLDialog):
 
 class Search(object):
 	def __init__(self):
-		w = SearchXml("search.xml", os.getcwd(), "DefaultSkin")
-		w.doModal()
-		self.result = w.getResult()
-		del w
+		if __isXbox__ == False:
+			w = SearchXml("search.xml", os.getcwd(), "DefaultSkin")
+			w.doModal()
+			self.result = w.getResult()
+			del w
+		else:
+			keyboard = xbmc.Keyboard('',__language__(1000))
+			keyboard.doModal()
+			if keyboard.isConfirmed():
+				ret = keyboard.getText()
+				self.result = {'type': 'all', 'query': ret}
+			else:
+				self.result = None
 	
 	def getResult(self):
 		return self.result
