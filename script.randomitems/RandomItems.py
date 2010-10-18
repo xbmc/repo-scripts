@@ -121,6 +121,8 @@ class Main:
             self.WINDOW.setProperty( "RandomEpisode.%d.ShowTitle" % ( count + 1, ), fields[ 28 ] )
             self.WINDOW.setProperty( "RandomEpisode.%d.EpisodeTitle" % ( count + 1, ), fields[ 2 ] )
             self.WINDOW.setProperty( "RandomEpisode.%d.EpisodeNo" % ( count + 1, ), "s%02de%02d" % ( int( fields[ 14 ] ), int( fields[ 15 ] ), ) )
+            self.WINDOW.setProperty( "RandomEpisode.%d.EpisodeSeason" % ( count + 1, ), fields[ 14 ] )
+            self.WINDOW.setProperty( "RandomEpisode.%d.EpisodeNumber" % ( count + 1, ), fields[ 15 ] )
             self.WINDOW.setProperty( "RandomEpisode.%d.Rating" % ( count + 1, ), fields[ 5 ] )
             self.WINDOW.setProperty( "RandomEpisode.%d.Plot" % ( count + 1, ), fields[ 3 ] )
             # get cache names of path to use for thumbnail/fanart and play path
