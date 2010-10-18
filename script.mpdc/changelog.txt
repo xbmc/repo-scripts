@@ -1,3 +1,8 @@
+[B]0.9.7[/B]
+- added Transparency! skin support
+- fixed non-working STOP action (from remotes)
+- added context menu for queuing items in artist browser
+- added navigations 'onright' from lists to scrollbars
 [B]0.9.6[/B]
 - added support for password protected servers
 - fixed: broken playlist renaming

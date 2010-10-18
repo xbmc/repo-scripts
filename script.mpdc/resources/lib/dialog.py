@@ -23,7 +23,7 @@ import sys,os
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin
 
 LIST = 120
-ACTION_CLOSE = [6,10,216,247,257,275,61448,61467]
+ACTION_CLOSE = [9,10]
 STATUS = 100
 SETTINGS = 101
 
@@ -47,7 +47,7 @@ class Dialog ( xbmcgui.WindowXMLDialog ) :
 
 	    	
 	def onAction(self, action):
-		if action.getButtonCode() in ACTION_CLOSE:						
+		if action.getId() in ACTION_CLOSE:
 			self.result = -1
 			self.close()		
 	

@@ -28,6 +28,7 @@ ACTIONS = dict({
 	'9':'self._action_back()',
 	'10':'self.exit()',
 	'12':'self.client.pause()',
+	'13':'self.client.stop()',
 	'14':'self.client.next()',
 	'15':'self.client.previous()',
 	'34':'self._queue_item()',
@@ -111,6 +112,8 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		self.mpd_host = self.addon.getSetting(self.profile_id+'_mpd_host')
 		self.mpd_port = self.addon.getSetting(self.profile_id+'_mpd_port')
 		self.stream_url = self.addon.getSetting(self.profile_id+'_stream_url')
+		if not self.stream_url == '' and not self.stream_url.startswith('http://'):
+			self.stream_url = 'http://'+self.stream_url
 		self.mpd_pass = self.addon.getSetting(self.profile_id+'_mpd_pass')
 		self.fb_indexes = []
 		self.ab_indexes = []
@@ -337,6 +340,9 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 							listitem.setIconImage(state['state']+'-item.png')						
 						self.getControl( CURRENT_PLAYLIST ).addItem( listitem )
 						index  = index + 1
+					if current_id == '' and self.getControl(CURRENT_PLAYLIST).size() > 0:
+						item = self.getControl(CURRENT_PLAYLIST).getListItem(0)
+						item.setIconImage(state['state']+'-item.png')
 #		print 'Changes handled'
 
 	def _format_time(self,time):
@@ -373,6 +379,9 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			if item.getProperty('id') == itemid:
 				item.setIconImage(state+'-item.png')
 				playlist.selectItem(int(item.getProperty('index')))
+		if itemid == '' and self.getControl(CURRENT_PLAYLIST).size() > 0:
+			item = self.getControl(CURRENT_PLAYLIST).getListItem(0)
+			item.setIconImage(state+'-item.png')
 		if state == 'play':
 			self._play_stream()	
 	
@@ -396,6 +405,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 					found = self.client.find('artist',item.getProperty('artist'),'album',item.getProperty('album'))
 					status = item.getProperty('artist')+' - '+item.getProperty('album')+ ' '+STR_WAS_QUEUED
 				if not found == []:
+					self.client.try_command('add')
 					self.client.command_list_ok_begin()
 					for f_item in found:
 						self.client.add(f_item['file'])
@@ -403,9 +413,17 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 					self.getControl( STATUS ).setLabel(status)					
 
 	def _context_menu(self):
+		if self.getFocusId() == ARTIST_BROWSER:
+			ret = self.dialog(STR_SELECT_ACTION,[STR_QUEUE_ADD,STR_QUEUE_REPLACE])
+			if ret == 0:
+				self._queue_item()
+			if ret == 1:
+				self.client.stop()
+				self.client.clear()
+				self._queue_item()
 		if self.getFocusId() == FILE_BROWSER:
 			ret = self.dialog(STR_SELECT_ACTION,[STR_QUEUE_ADD,STR_QUEUE_REPLACE,STR_UPDATE_LIBRARY])
-			if ret ==0:
+			if ret == 0:
 				self._queue_item()
 			if ret == 1:
 				self.client.stop()
@@ -434,6 +452,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			
 	def _play_stream(self):
 		if self.is_play_stream and not self.stream_url=='':
+			print 'Playing '+self.stream_url
 			player = xbmc.Player(xbmc.PLAYER_CORE_MPLAYER)
 			if player.isPlayingVideo():
 				return
@@ -489,6 +508,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		return d.result
 	
 	def _clear_queue(self):
+		self.client.try_command('clear')
 		self.client.stop()
 		self.client.clear()
 

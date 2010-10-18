@@ -12,13 +12,16 @@ class PMPDClient(object):
 		
 	def register_callback(self,callback):
 		self.callback = callback
-		
-#	def command_list_ok_begin(self):
-#		self.client.command_list_ok_begin()
+	# need to call try_command before passing any commands to list!	
+	def command_list_ok_begin(self):
+		self.client.command_list_ok_begin()
 	
-#	def command_list_end(self):
-#		return self.client.command_list_end()
-		
+	def command_list_end(self):
+		return self.client.command_list_end()
+
+	def try_command(self,command):
+		if not command in self._permitted_commands:
+			raise mpd.CommandError('No Permission for :'+command)
 	def __getattr__(self,attr):
 		if not attr in self._permitted_commands:
 			raise mpd.CommandError('No Permission for :'+attr)

@@ -1,0 +1,108 @@
+<window>
+  <defaultcontrol>120</defaultcontrol>
+  <coordinates>
+    <system>1</system>
+    <posx>0</posx>
+    <posy>0</posy>
+  </coordinates>
+  <animation effect="fade" time="250">WindowOpen</animation>
+  <animation effect="fade" time="250">WindowClose</animation>
+  <controls>
+    <control type="group">
+      <posx>440</posx>
+      <posy>200</posy>
+      <control type="image">
+        <posx>-48</posx>
+        <posy>0</posy>
+        <width>48</width>
+        <height>300</height>
+        <texture>dialog-left.png</texture>
+      </control>
+      <control type="image">
+        <posx>400</posx>
+        <posy>0</posy>
+        <width>48</width>
+        <height>300</height>
+        <texture>dialog-right.png</texture>
+      </control>
+      <control type="image">
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>400</width>
+        <height>300</height>
+        <texture>dialog-middle.png</texture>
+      </control>
+
+      <control type="label" id="100">
+        <description>textarea</description>
+        <posx>10</posx>
+        <posy>10</posy>
+        <width>380</width>
+        <height>80</height>
+        <textcolor>white</textcolor>
+        <aligny>center</aligny>
+        <align>center</align>
+        <wrapmultiline>true</wrapmultiline>
+      </control>
+	<control type="image">
+        <posx>20</posx>
+        <posy>80</posy>
+        <width>360</width>
+        <height>2</height>
+        <texture>separator.png</texture>
+      </control>
+    
+
+      <!-- ** Required ** Do not change <id> or <type> -->
+      <control type="list" id="120">
+        <posx>50</posx>
+        <posy>90</posy>
+        <width>300</width>
+        <height>220</height>
+        <onleft>120</onleft>
+        <onright>120</onright>
+        <ondown>120</ondown>
+        <onup>120</onup>
+        <viewtype label="535">list</viewtype>
+        <pagecontrol>121</pagecontrol>
+        <scrolltime>200</scrolltime>
+        <itemlayout height="38">		
+          <control type="label">
+            <posx>150</posx>
+            <posy>0</posy>
+            <width>300</width>
+            <height>38</height>
+            <aligny>center</aligny>
+            <align>center</align>
+            <textcolor>white</textcolor>
+            <selectedcolor>green</selectedcolor>
+            <info>ListItem.Label</info>
+          </control>
+          
+        </itemlayout>
+        <focusedlayout height="38">
+          <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>300</width>
+            <height>38</height>
+            <texture>list-focus.png</texture>
+            <visible>Control.HasFocus(120)</visible>
+          </control>
+          <control type="label">
+            <posx>150</posx>
+            <posy>0</posy>
+            <width>300</width>
+            <height>38</height>
+            <aligny>center</aligny>
+            <align>center</align>
+            <textcolor>white</textcolor>
+            <selectedcolor>green</selectedcolor>
+            <info>ListItem.Label</info>
+          </control>
+        </focusedlayout>
+      </control>
+      
+    </control>
+  </controls>
+</window>
