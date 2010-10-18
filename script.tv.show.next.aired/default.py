@@ -7,9 +7,9 @@ __url__          = "http://code.google.com/p/passion-xbmc/"
 __svn_url__      = "http://passion-xbmc.googlecode.com/svn/trunk/addons/script.tv.show.next.aired/"
 __credits__      = "Team Passion-XBMC, http://passion-xbmc.org/"
 __platform__     = "xbmc media center, [ALL]"
-__date__         = "12-10-2010"
-__version__      = "2.0.1"
-__svn_revision__ = "$Revision: 875 $"
+__date__         = "17-10-2010"
+__version__      = "2.1.2"
+__svn_revision__ = "$Revision: 880 $"
 __useragent__ = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/2008070208 Firefox/3.6"
 
 import urllib
@@ -21,7 +21,6 @@ import socket
 import xbmc
 import xbmcgui
 import time
-from datetime import timedelta
 
 DATA_PATH = xbmc.translatePath( "special://profile/addon_data/script.tv.show.next.aired/")
 RESOURCES_PATH = os.path.join( os.getcwd() , "resources" )
@@ -108,25 +107,30 @@ class NextAired:
         # only run if user/skinner preference
         if self.ALARM == "0": return
         # set the alarms command
+        print "### Alarm enabled: %s" % self.ALARM
         command = "XBMC.RunScript(%s,silent=True&alarm=%d)" % ( os.path.join( os.getcwd(), __file__ ), self.ALARM, )
         xbmc.executebuiltin( "AlarmClock(NextAired,%s,%d,true)" % ( command, self.ALARM, ) )
         
     def check_today_show(self):
         self.todayshow = 0
-        today = time.strftime('%b/%d/%Y',time.localtime()) 
-        print time.strftime("%Y")
-        for i in self.nextlist:
+        self.todaylist = []
+        today = time.strftime('%Y-%m-%d',time.localtime()) 
+        print today
+        #print time.strftime("%Y")
+        for show in self.nextlist:
             print "################"
-            print "###%s" % i.get("localname")
+            print "###%s" % show.get("localname")
 #             test = timedelta(i.get("RFC3339", "0")) - timedelta(time.strftime(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())))
 #             print test
-            if str(i.get("Next Episode").split("^")[2]) == str(today): 
+            if str(show.get("RFC3339" , "" )[:10]) == str(today): 
                 self.todayshow = self.todayshow + 1
+                self.todaylist.append(show.get("localname"))
                 print "TODAY"
-                i["Today"] = "True"
-            print "###%s" % i.get("Next Episode") 
-            print "###%s" % i.get("RFC3339", "no rfc")
-        print "today show: %s" % self.todayshow
+                show["Today"] = "True"
+            print "###%s" % show.get("Next Episode", "") 
+            print "###%s" % show.get("RFC3339", "no rfc")
+            print str(show.get("RFC3339", "")[:10])
+        print "###today show: %s - %s" % ( self.todayshow , str(self.todaylist).strip("[]") )
         
     def push_data(self):
         # grab the home window
@@ -134,6 +138,7 @@ class NextAired:
         # reset Total property for visible condition
         self.WINDOW.setProperty( "NextAired.Total" , str(len(self.nextlist)) )
         self.WINDOW.setProperty( "NextAired.TodayTotal" , str(self.todayshow) )
+        self.WINDOW.setProperty( "NextAired.TodayShow" , str(self.todaylist).strip("[]") )
         for count in range( len(self.nextlist) ):
             # we clear title for visible condition
             self.WINDOW.clearProperty( "NextAired.%d.Title" % ( count + 1, ) )
@@ -141,14 +146,18 @@ class NextAired:
             #print "###%d %s" % ( count + 1 , current_show["localname"] )
             self.WINDOW.setProperty( "NextAired.%d.Today" % ( count + 1, ), current_show.get( "Today" , "False"))
             self.WINDOW.setProperty( "NextAired.%d.ShowTitle" % ( count + 1, ), current_show.get( "localname", "" ))
-            next = current_show.get( "Next Episode").split("^")
-            self.WINDOW.setProperty( "NextAired.%d.NextDate" % ( count + 1, ), next[2] or "")
-            self.WINDOW.setProperty( "NextAired.%d.NextTitle" % ( count + 1, ), next[1] or "")
-            self.WINDOW.setProperty( "NextAired.%d.NextNumber" % ( count + 1, ), next[0] or "")
-            latest = current_show.get("Latest Episode").split("^")
-            self.WINDOW.setProperty( "NextAired.%d.LatestDate" % ( count + 1, ), latest[2] or "")
-            self.WINDOW.setProperty( "NextAired.%d.LatestTitle" % ( count + 1, ), latest[1] or "")
-            self.WINDOW.setProperty( "NextAired.%d.LatestNumber" % ( count + 1, ), latest[0] or "")            
+            try:
+                next = current_show.get( "Next Episode","").split("^")
+                self.WINDOW.setProperty( "NextAired.%d.NextDate" % ( count + 1, ), next[2] or "")
+                self.WINDOW.setProperty( "NextAired.%d.NextTitle" % ( count + 1, ), next[1] or "")
+                self.WINDOW.setProperty( "NextAired.%d.NextNumber" % ( count + 1, ), next[0] or "")
+            except: print_exc()
+            try:
+                latest = current_show.get("Latest Episode","").split("^")
+                self.WINDOW.setProperty( "NextAired.%d.LatestDate" % ( count + 1, ), latest[2] or "")
+                self.WINDOW.setProperty( "NextAired.%d.LatestTitle" % ( count + 1, ), latest[1] or "")
+                self.WINDOW.setProperty( "NextAired.%d.LatestNumber" % ( count + 1, ), latest[0] or "")       
+            except: print_exc()     
             self.WINDOW.setProperty( "NextAired.%d.Airtime" % ( count + 1, ), current_show.get("Airtime", "" )) 
             self.WINDOW.setProperty( "NextAired.%d.Showpath" % ( count + 1, ), current_show.get("path", "" ))
             self.WINDOW.setProperty( "NextAired.%d.Status" % ( count + 1, ), current_show.get("Status", "" ))
@@ -159,7 +168,14 @@ class NextAired:
             self.WINDOW.setProperty( "NextAired.%d.Genres" % ( count + 1, ), current_show.get("Genres", "" ))
             self.WINDOW.setProperty( "NextAired.%d.Premiered" % ( count + 1, ), current_show.get("Premiered", "" ))
             self.WINDOW.setProperty( "NextAired.%d.Country" % ( count + 1, ), current_show.get("Country", "" ))
-            self.WINDOW.setProperty( "NextAired.%d.Runtime" % ( count + 1, ), current_show.get("Runtime", "" ))
+            self.WINDOW.setProperty( "NextAired.%d.Runtime" % ( count + 1, ), current_show.get("Runtime", "" )) 
+            try:
+                airday, shortime = current_show.get("Airtime", "  at  " ).split(" at ")
+                self.WINDOW.setProperty( "NextAired.%d.airday" % ( count + 1, ), airday)
+                self.WINDOW.setProperty( "NextAired.%d.shortime" % ( count + 1, ), shortime)
+            except: print "### %s" % current_show.get("Airtime", "  at  " )
+            #print airday, shortime
+            
             
     def scan_info(self):
         if self.PROGRESS: 

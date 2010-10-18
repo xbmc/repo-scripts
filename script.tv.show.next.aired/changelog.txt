@@ -1,3 +1,15 @@
+v2.1.2
+- correction for better handle when informations are missing
+
+v2.1.1
+- corrected TodayShow detection (to prevent that would have occured next year with month locale name)
+
+v2.1.0
+- added properties:
+"NextAired.TodayShow" contains a list of tvshow name aired to day, useful to do stringcompare to highlight show aired today when browsing library (example: "'The Big Bang Theory', "Grey's Anatomy", 'The Mentalist'" )
+"NextAired.%d.airday" contains day of airing (english day, example: "Friday")
+"NextAired.%d.shortime" contains time of airing (example: "08:00 pm")
+
 v2.0.1:
 - correct tvshow not found informations
 
