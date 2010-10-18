@@ -44,6 +44,22 @@
 			<textcolor>white</textcolor>
 			<shadowcolor>black</shadowcolor>
 		</control>
+        <control type="button" id ="10">
+			<description>Close Window button</description>
+			<posx>800</posx>
+			<posy>8</posy>
+			<width>64</width>
+			<height>32</height>
+			<label>-</label>
+			<font>-</font>
+			<texturefocus>DialogCloseButton-focus.png</texturefocus>
+			<texturenofocus>DialogCloseButton.png</texturenofocus>
+			<onleft>1000</onleft>
+			<onright>1000</onright>
+			<onup>1000</onup>
+			<ondown>1000</ondown>
+			<visible>system.getbool(input.enablemouse)</visible>
+		</control>
 		<control type="grouplist" id="17">
 			<description>Grouplist</description>
 			<posx>40</posx>

@@ -68,8 +68,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
             first_set = True
       self.getControl( 1000*self.counter ).setVisible( False )  
     
-    def set_gui_values( self, aControl ):
-      
+
+    def set_gui_values( self, aControl ):   
       if not self.alsaCore.hasSwitch(aControl):
           self.getControl( self.counter + 900 ).setVisible( False )
       if not self.alsaCore.hasVolume(aControl):
@@ -104,9 +104,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( (1000*self.counter)+903 ).setLabel( "%.2d %s" % (int(volume), "%",)) 
       
       self.counter += 1
-    
-    def set_alsa_values( self ):
-      
+
+   
+    def set_alsa_values( self ):    
       for i in range((self.counter-1)):
         control = self.getControl( (1000*(i+1))+900 ).getLabel()
         label_value = self.getControl( (1000*(i+1))+903 ).getLabel().replace(" %","" )
@@ -122,8 +122,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.alsaCore.setVolume( control, "on" )
             self.alsaCore.setVolume( control, label_value )
 
-    def set_mute( self, controlId, set_label = True ):
-      
+
+    def set_mute( self, controlId, set_label = True ):     
       i = controlId - 900
       control = self.getControl( (1000*i)+900 ).getLabel()
       label_value = self.getControl( (1000*i)+903 ).getLabel().replace(" %","" )
@@ -139,8 +139,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         
 
     def set_slider_value( self, controlId ):
-      
-
       i = (controlId - 902)/1000
       self.set_mute(i+900, False)
       control = self.getControl( (1000*i)+900 ).getLabel()
@@ -152,44 +150,52 @@ class GUI( xbmcgui.WindowXMLDialog ):
 ##--------- End Script -----------##
 
     def exit_script( self, restart=False ):
+      if ( self.controlId >= 1000 ):
+        self.slider_onfocus(0)
+        self.controlId = 0
+        self.alsaCore.saveVolumes()
       self.close()
 
 ##--------- Click ----------------##
 
     def onClick( self, controlId ):
+     if ( controlId == 10 ):
+       self.log("Exit")
+       self.exit_script()
+    
      if ( controlId >= 1000 ):
-        self.getControl( controlId + 1 ).setLabel("%.2d %s" % (int(self.getControl( controlId ).getPercent()), "%",))
-        if self.getControl( controlId ).getPercent() == 0:
-          self.getControl( (controlId/1000) + 900 ).setSelected( True )
-        else:
-          self.getControl( (controlId/1000) + 900 ).setSelected( False )  
+       self.getControl( controlId + 1 ).setLabel("%.2d %s" % (int(self.getControl( controlId ).getPercent()), "%",))
+       if self.getControl( controlId ).getPercent() == 0:
+         self.getControl( (controlId/1000) + 900 ).setSelected( True )
+       else:
+         self.getControl( (controlId/1000) + 900 ).setSelected( False )  
 
      if ( controlId >= 900 ) and ( controlId <  1000 ):
-        self.set_mute(controlId)
+       self.set_mute(controlId)
 
 ##--------- Focus -----------##
    
     def onFocus( self, controlId ):
-        self.log("Focused: [%i] Previous [%s]" % (controlId,self.controlId,))
-        if self.controlId == 0: self.controlId = controlId     
-        if ( self.controlId >= 1000 ):
-            self.slider_onfocus(controlId)
-        self.controlId = controlId
+      self.log("Focused: [%i] Previous [%s]" % (controlId,self.controlId,))
+      if self.controlId == 0: self.controlId = controlId     
+      if ( self.controlId >= 1000 ):
+          self.slider_onfocus(controlId)
+      self.controlId = controlId
         
 ##--------- Slider onFocus -----------## 
        
     def slider_onfocus(self, controlId):
-        cur_slider = self.getControl( self.controlId ).getPercent()
-        try:
-          if self.control_state[self.controlId] != cur_slider:
-            slider_set = True
-          else:
-            slider_set = False
-        except:
-          slider_set = False 
-        if ( self.controlId != controlId ) and slider_set :  
-          self.set_slider_value(self.controlId)
-          self.control_state[self.controlId] = cur_slider
+      cur_slider = self.getControl( self.controlId ).getPercent()
+      try:
+        if self.control_state[self.controlId] != cur_slider:
+          slider_set = True
+        else:
+          slider_set = False
+      except:
+        slider_set = False 
+      if ( self.controlId != controlId ) and slider_set :  
+        self.set_slider_value(self.controlId)
+        self.control_state[self.controlId] = cur_slider
         
 ##--------  Log  ------------##
        
@@ -198,18 +204,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
         
 ##--------- End Script ------##
     
-    def onAction( self, action ):
-    
-        if ( action.getButtonCode() == 61453 ):
-          if ( self.controlId >= 1000 ):
-              self.slider_onfocus(0)
-          
-        if ( action.getButtonCode() in CANCEL_DIALOG ):
-          self.log("Exit")
-          if ( self.controlId >= 1000 ):
-              self.slider_onfocus(0)
-              self.controlId = 0
-          self.alsaCore.saveVolumes()
-          self.exit_script()
+    def onAction( self, action ):   
+      if ( action.getId() == 7 ):
+        if ( self.controlId >= 1000 ):
+            self.slider_onfocus(0)
+        
+      if ( action.getId() in CANCEL_DIALOG ):
+        self.log("Exit")
+        self.exit_script()
 
 
