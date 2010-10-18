@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xbmc.audio.mixer"
+       name="XBMC Audio Mixer"
+       version="1.0.0"
+       provider-name="Team XBMC">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>osx linux</platform>
+    <summary lang="en">Used to configure sound settings and adjust the volume</summary>
+    <description lang="en">Used to configure sound settings and adjust the volume</description>
+  </extension>
+</addon>

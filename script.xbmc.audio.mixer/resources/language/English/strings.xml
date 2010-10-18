@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+<!--Common-->
+  <string id="10">Mute</string>
+  <string id="11">Apply</string>
+  <string id="12">Save</string>
+  
+  <string id="30001">Failed to save audio settings</string>
+</strings>
+
