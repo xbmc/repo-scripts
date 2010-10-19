@@ -156,9 +156,11 @@ class alsaMixerCore:
 			if nameStart>0:
 				stdErr, stdOut, retValue = self.__runSilent("amixer sget " + mixername)
 				if stdOut.find("pvolume") > 0:
-					hasVol=True
+					if not stdOut.find("cvolume") > 0:
+						hasVol=True
 				if stdOut.find("pswitch") > 0:
-					hasSw = True
+					if not stdOut.find("cswitch") > 0:
+						hasSw = True
 				if hasVol or hasSw:
 					channels = channels + mixername + "|"
 					self.controls[mixername] = [volLevel, hasVol, hasSw]
@@ -254,5 +256,5 @@ if __name__ == '__main__':
 
 	except Exception, error:
 		print "ErrorCode:" + str(error)
-		eCode = int(str(error))
+		# eCode = int(str(error))
 
