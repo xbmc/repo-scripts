@@ -1,6 +1,49 @@
 TVRage-Eps Changelog
 
-Current Version : 0.9.5
+Current Version : 1.0.0
+
+*** 1.0.0 ***
+
+Fixed bug: Time was showing incorrectly when offset was changed
+Added 'Loading episodes...' message when loading episodes dialog
+
+*** 0.9.91 ***
+
+Fixed bug: failing on bad xml (ie & when should be &amp;) when getting show data
+Fixed bug: adding single show had blank title in "Add XBMC name: " - changed to "Add as (Empty): "
+
+*** 0.9.9 ***
+
+Added ability to add show not found on TVRage.com (As a dummy listing), mainly to keep library scan from asking every time
+'Add All From Library' now lists unmatched shows at the end with the option to skip all or choose shows to add
+Added 'Refresh' option to list options
+
+*** 0.9.8 ***
+
+Fixed bug in a debugging print statement crashing on unicode
+Added summary dialog after adding all from library
+Pressing play on episode plays episode (list and summary)
+
+*** 0.9.7 ***
+
+Fixed a bug with fetching images on some shows causing an error
+Fixed: Was adding canceled shows if chosen from list on 'Add all from library'
+Added provides video & executable to addon.xml
+Added < Skip > option when prompting for choice
+Fixed a search bug causing errors on special characters
+Made setting 'Prompt if match not found' actually do something :)
+Added cancel option on show options
+Revamped interface
+ +Added 'Add All From Library Button'
+ -Removed 'Add All From Library' from show options lists
+ -Removed 'Add/Search' from show options lists
+ +Added 'Settings' button
+ +Larger show images
+
+*** 0.9.6 ***
+
+Fixed remote/keyboard click on 'Add Show' button bringing up the episode list
+No longer needs to use HTTP for accessing library (but still can as an option if, for example, you want to pull data from another computer)
 
 *** 0.9.5 ***
 

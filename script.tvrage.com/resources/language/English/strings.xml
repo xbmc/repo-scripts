@@ -9,7 +9,7 @@
     <string id="30007">Search/Add</string>
     <string id="30008">Select Show</string>
     <string id="30009">Are you sure?</string>
-    <string id="30010">Do you really want to delete @REPLACE@?</string> <!--@REPLACE@ must not be translated -->
+    <string id="30010">Really delete @REPLACE@?</string> <!--@REPLACE@ must not be translated -->
     <string id="30011">Options</string>
     <string id="30012">Previous:</string>
     <string id="30013">Reverse Sort</string>
@@ -43,6 +43,35 @@
     <string id="30036">Make sure 'Allow control of XBMC via HTTP'</string>
     <string id="30037">is enabled in XBMC network settings.</string>
     
-    <string id="3013">Press context button/key for options</string>
+    <string id="30038">Access via HTTP</string>
+    <string id="30039">HTTP address</string>
+    
+    <string id="30040">Skip</string>
+    <string id="30041">Cancel</string>
+    
+    <string id="30042">Done</string>
+    <string id="30043">@NUMBER1@ of @NUMBER2@ shows added.</string>
+    <string id="30044">@NUMBER@ already in list.</string>
+    <string id="30045">@NUMBER@ skipped.</string>
+    
+    <string id="30046">File Not Found</string>
+    <string id="30047">No matching file found.</string>
+    
+    <string id="30048">Add as (Empty): @REPLACE@</string>
+    
+    <string id="30049">No Data</string>
+    <string id="30050">No TVRage.com data</string>
+    
+    <string id="30051">Add: </string>
+    <string id="30052">Not Matched</string>
+    <string id="30053">Skip All</string>
+    
+    <string id="30054">Refresh</string>
+
+    <string id="30055">Loading episodes...</string>
+            
+    <string id="3013">Press context button/key when in list for show options</string>
+    <string id="3016">Add All From Library</string>
+    <string id="3017">Settings</string>
     <string id="3018">Add Show</string>
 </strings>

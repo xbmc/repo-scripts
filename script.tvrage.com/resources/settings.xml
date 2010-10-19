@@ -8,10 +8,11 @@
     <setting id="jump_to_bottom" type="bool" label="30018" default="false" />
   </category>
   <category label="30019">
-    <setting id="xbmc_http_user" type="text" label="30020"/>
-    <setting id="xbmc_http_pass" type="text" option="hidden" label="30021"/>
+    <setting id="json_use_http" type="bool" label="30038" default="false"/>
+    <setting id="xbmc_http_addrress" type="text" label="30039" default="http://127.0.0.1:8080" enable="eq(-1,true)" />
+    <setting id="xbmc_http_user" type="text" label="30020" enable="eq(-2,true)" />
+    <setting id="xbmc_http_pass" type="text" option="hidden" label="30021" enable="eq(-3,true)" />
     <setting id="ask_on_no_match" type="bool" label="30023" default="true" />
     <setting id="skip_canceled" type="bool" label="30022" default="false" />
   </category>
-  
 </settings>

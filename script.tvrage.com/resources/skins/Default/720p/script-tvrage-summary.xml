@@ -43,9 +43,9 @@
    
       <!-- ** Required ** Do not change <id> or <type> -->
       <control type="textbox" id="120">
-        <posx>20</posx>
+        <posx>40</posx>
         <posy>130</posy>
-        <width>740</width>
+        <width>720</width>
         <height>382</height>
         <pagecontrol>121</pagecontrol>
         <description>My first text box control</description>
