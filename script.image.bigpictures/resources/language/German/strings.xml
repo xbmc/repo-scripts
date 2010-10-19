@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
   <!--LOADING-->
-  <string id="32000">The Big Picture - Boston.com</string>
   <string id="32001">Das Laden kann einige Zeit dauern...</string>
-  
   <!--DOWNLOAD-->
   <string id="32020">Herunterladen</string>
   <string id="32021">Album</string>
@@ -12,7 +10,12 @@
   <string id="32023">Lade</string>
   <string id="32024">nach</string>
   <string id="32025">von</string>
-  
-  <string id="32030">Info - OSD Zeigen</string>
-  <string id="32031">Context Menu - Bilder herunterladen</string>
+  <!--Picture Mode -->
+  <string id="32030">Links + Rechts - Bild wechseln</string>
+  <string id="32031">Info - OSD an/aus</string>
+  <string id="32032">Kontext Menu - Bilder herunterladen</string>
+  <!--Album Mode -->
+  <string id="32040">Links + Rechts - Album wechseln</string>
+  <string id="32041">Hoch + Runter - Quelle wechseln</string>
+  <string id="32042">Select - Album öffnen</string>
 </strings>

@@ -6,7 +6,7 @@ from BeautifulSoup import BeautifulSoup
 scriptName = sys.modules['__main__'].__scriptname__
 
 
-class TBP:
+class WSJ:
 
     def getHTML(self, url, headers = [('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14')]):
         """Returns HTML from a given URL"""
@@ -40,44 +40,35 @@ class TBP:
         s = re.sub('\s+', ' ', s) #remove extra spaces
         s = re.sub('<.+?>|Image:.+?\r|\r', '', s) #remove htmltags, image captions, & newlines
         s = s.replace('&#39;', '\'') #replace html-encoded double-quotes
-        s = re.sub('#$', '', s) #remove hash at the end
+        s = s.replace('&#8217;', '\'') #replace html-encoded single-quotes
+        s = s.replace('&#8221;', '"') #replace html-encoded double-quotes 
         s = s.strip()
         return s
-
-    def getFilters(self, url):
-        """TBP lets you filter results by categories or months.
-        creatues a list of those filters: [[month|category,url], ...]"""
-        tree = BeautifulSoup(self.getHTML(url))
-        self.months = list()
-        self.categories = list()
-        optionNodes = tree.findAll('option', value = re.compile('.+?'))
-        for node in optionNodes:
-            if node.parent.option.contents[0] == 'Select a month':
-                self.months.append([node.string, node['value']])
-            elif node.parent.option.contents[0] == 'Select a category':
-                self.categories.append([node.string, node['value']])
 
     def getAlbums(self, url):
         """creates an ordered list albums = [{title, pic, description, link}, ...]"""
         tree = BeautifulSoup(self.getHTML(url))
         self.albums = list()
-        storyNodes = tree.findAll('div', 'headDiv2')
+        storyNodes = tree.findAll('li', 'postitem imageFormat-P')
         for node in storyNodes:
-            title = node.find('a').string
-            link = node.find('a')['href']
-            description = self.cleanHTML(node.find('div', attrs={'class': 'bpBody'}).contents)
-            pic = node.find('img')['src']
+            title = self.cleanHTML(node.find('h2').a.string)
+            link = node.find('h2').a['href']
+            description = self.cleanHTML(node.findAll('div', attrs={'class': 'postContent'})[1].p)
+            pic = node.find('img')['src'].strip()
             self.albums.append({'title': title, 'pic': pic, 'description': description, 'link': link})
 
-    def getPhotos(self, url):
+    def getPhotos(self, url, append=False):
         """creates an ordered list photos = [{title, pic, description}, ...] """
         tree = BeautifulSoup(self.getHTML(url))
-        title = tree.find('div', 'headDiv2').h2.a.string
-        self.photos = list()
-        photoNodes = tree.findAll('div', {'class': re.compile('bpImageTop|bpBoth')})
+        title = tree.find('div', 'articleHeadlineBox headlineType-newswire').h1.string
+        if not append:
+            self.photos = list()
+        subtree = tree.find('div', {'class': 'articlePage'})
+        subtree.extract()
+        photoNodes = subtree.findAll('p')
         for node in photoNodes:
-            pic = node.img['src']
-            if node.find('div', 'photoNum'):
-                node.find('div', 'photoNum').replaceWith('')
-            description = self.cleanHTML(node.find('div', 'bpCaption').contents)
+            pic = node.img['src'].strip()
+            description = self.cleanHTML(node.contents)
             self.photos.append({'title': title, 'pic': pic, 'description': description})
+        if tree.find('a', 'nav_next'):
+            self.getPhotos(tree.find('a', 'nav_next')['href'], append=True)

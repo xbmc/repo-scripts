@@ -4,7 +4,7 @@ import sys
 # Script constants
 __scriptname__ = 'The Big Picture'
 __author__ = 'sphere, rwparris2'
-__version__ = '1.2.0'
+__version__ = '1.3.0'
 
 print '[SCRIPT][%s] version %s initialized!' % (__scriptname__, __version__)
 

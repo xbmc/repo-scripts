@@ -17,17 +17,17 @@
                 <height>66</height>
                 <texture>loader.gif</texture>
             </control>
-            <control type="label" id="1">
+            <control type="label" id="101">
                 <posx>20</posx>
                 <posy>35</posy>
                 <width>1200</width>
                 <height>100</height>
                 <align>left</align>
                 <aligny>top</aligny>
-                <label>32000</label>
+                <label></label>
                 <textcolor>FFAAAAAA</textcolor>
             </control>
-            <control type="label" id="2">
+            <control type="label" id="102">
                 <posx>20</posx>
                 <posy>60</posy>
                 <width>1200</width>
@@ -173,7 +173,7 @@
                     </control>
                 </focusedlayout>
             </control>
-            <control type="textbox" id="3">
+            <control type="textbox" id="103">
                 <!--usage instructions-->
                 <posx>20</posx>
                 <posy>10</posy>

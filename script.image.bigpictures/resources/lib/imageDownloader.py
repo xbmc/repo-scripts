@@ -1,6 +1,7 @@
 import urllib
 import os
 import sys
+import re
 import xbmc
 import xbmcgui
 import xbmcaddon
@@ -17,22 +18,22 @@ class Download:
     def __init__(self, photos, downloadPath):
         self.len = str(len(photos))
         self.pDialog = xbmcgui.DialogProgress()
-        self.pDialog.create(getLS(32000))
+        self.pDialog.create('')
         downloadPath = xbmc.translatePath(downloadPath)
 
         for i, photo in enumerate(photos):
             self.url = photo['pic']
             self.index = str(i+1)
             #unicode causes problems here, convert to standard str
-            self.filename = str(self.url.split('/')[-1])
-            foldername = str(self.url.split('/')[-2])
+            self.filename = '_'.join([str(i), str(self.url.split('/')[-1])])
+            foldername = re.sub('[^\w\s-]', '', str(photo['title'])) # download folder should be named like the album
             self.fullDownloadPath = os.path.join(downloadPath, foldername, self.filename)
-            print '[SCRIPT][%s] %s : Attempting to download %s of %s' % (scriptName, __name__, i+1, len(photos))
+            #print '[SCRIPT][%s] %s : Attempting to download %s of %s' % (scriptName, __name__, i+1, len(photos))
             print '[SCRIPT][%s] %s --> %s\n' %  (scriptName, self.url, self.fullDownloadPath)
 
             if self.checkPath(downloadPath, foldername, self.filename):
                 try:
-                    re = urllib.urlretrieve(self.url, self.fullDownloadPath, reporthook = self.showdlProgress)
+                    dl = urllib.urlretrieve(self.url, self.fullDownloadPath, reporthook = self.showdlProgress)
                     print '[SCRIPT][%s] Download Success!' % (scriptName)
                 except IOError, e:
                     print e

@@ -1,8 +1,18 @@
+1.3.0
+  Added: The possibility to get albums/images from more than one website (switch source)
+  Added: New Scraper 'Wallstreetjournal: The Photo Journal'
+  Added: New Scraper 'Boston.com: The Big Shot'
+  Added: New Scraper 'Sacramento Bee: The Frame'
+  Changed: The Layout and content of the help texts
+  Fixed: TBP-Scraper: Remove the image-number within the description text
+  Fixed: TBP-Scraper: removed #-sign at the end of the picture  
+  Improved: Changes to the icon.png (more padding)
+
 1.2.0
   Ported to be dharma compatible by sphere (with permission of rwparris2)
-  Added German Translation
-  Changed from plugin which called script to native script
-  Added new icon.png
+  Added: German Translation
+  Changed: Addon ported from plugin which called script to native script
+  Added: New icon.png
   
 1.1.2
   Released as plugin for camelot by rwparris2

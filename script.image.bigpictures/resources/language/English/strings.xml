@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
   <!--LOADING-->
-  <string id="32000">The Big Picture - Boston.com</string>
   <string id="32001">Image loading may take a while...</string>
-  
   <!--DOWNLOAD-->
   <string id="32020">Download</string>
   <string id="32021">Album</string>
@@ -12,7 +10,12 @@
   <string id="32023">Downloading</string>
   <string id="32024">to</string>
   <string id="32025">of</string>
-  
-  <string id="32030">Info - Toggle Onscreen Information</string>
-  <string id="32031">Context Menu - Download Photos</string>
+  <!--Picture Mode -->
+  <string id="32030">Left + Right - Switch Picture</string>  
+  <string id="32031">Info - Toggle Onscreen Information</string>
+  <string id="32032">Context Menu - Download Photos</string>
+  <!--Album Mode -->
+  <string id="32040">Left + Right - Switch Album</string>
+  <string id="32041">Up + Down - Switch Source</string>
+  <string id="32042">Select - Enter Album</string>
 </strings>

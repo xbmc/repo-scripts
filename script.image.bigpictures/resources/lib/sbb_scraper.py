@@ -6,7 +6,7 @@ from BeautifulSoup import BeautifulSoup
 scriptName = sys.modules['__main__'].__scriptname__
 
 
-class TBP:
+class SBB:
 
     def getHTML(self, url, headers = [('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14')]):
         """Returns HTML from a given URL"""
@@ -40,44 +40,34 @@ class TBP:
         s = re.sub('\s+', ' ', s) #remove extra spaces
         s = re.sub('<.+?>|Image:.+?\r|\r', '', s) #remove htmltags, image captions, & newlines
         s = s.replace('&#39;', '\'') #replace html-encoded double-quotes
-        s = re.sub('#$', '', s) #remove hash at the end
         s = s.strip()
         return s
-
-    def getFilters(self, url):
-        """TBP lets you filter results by categories or months.
-        creatues a list of those filters: [[month|category,url], ...]"""
-        tree = BeautifulSoup(self.getHTML(url))
-        self.months = list()
-        self.categories = list()
-        optionNodes = tree.findAll('option', value = re.compile('.+?'))
-        for node in optionNodes:
-            if node.parent.option.contents[0] == 'Select a month':
-                self.months.append([node.string, node['value']])
-            elif node.parent.option.contents[0] == 'Select a category':
-                self.categories.append([node.string, node['value']])
 
     def getAlbums(self, url):
         """creates an ordered list albums = [{title, pic, description, link}, ...]"""
         tree = BeautifulSoup(self.getHTML(url))
         self.albums = list()
-        storyNodes = tree.findAll('div', 'headDiv2')
+        storyNodes = tree.findAll('div', 'entry-asset asset hentry story')
         for node in storyNodes:
             title = node.find('a').string
             link = node.find('a')['href']
-            description = self.cleanHTML(node.find('div', attrs={'class': 'bpBody'}).contents)
+            description = self.cleanHTML(node.find('div', attrs={'style': 'width: 980px; padding: 5px; text-align: left;'}).contents)
             pic = node.find('img')['src']
             self.albums.append({'title': title, 'pic': pic, 'description': description, 'link': link})
 
     def getPhotos(self, url):
         """creates an ordered list photos = [{title, pic, description}, ...] """
         tree = BeautifulSoup(self.getHTML(url))
-        title = tree.find('div', 'headDiv2').h2.a.string
+        title = tree.find('div', 'asset-name entry-title title').a.string
         self.photos = list()
-        photoNodes = tree.findAll('div', {'class': re.compile('bpImageTop|bpBoth')})
-        for node in photoNodes:
-            pic = node.img['src']
-            if node.find('div', 'photoNum'):
-                node.find('div', 'photoNum').replaceWith('')
-            description = self.cleanHTML(node.find('div', 'bpCaption').contents)
+        subtree_img = tree.findAll('div', attrs={'style': 'background: rgb(224, 224, 224); width: 982px; padding: 4px;'})
+        subtree_txt = tree.findAll('div', attrs={'style': 'background: rgb(224, 224, 224); width: 970px; padding: 10px;'})
+        # this is very dirty because this website is very dirty :(
+        for i, node_img in enumerate(subtree_img):
+            print i
+            pic = node_img.find('img')['src']
+            try:
+                description = self.cleanHTML(subtree_txt[i])
+            except:
+                description = ''
             self.photos.append({'title': title, 'pic': pic, 'description': description})

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.image.bigpictures" name="The Big Picture" version="1.2.0" provider-name="sphere, rwparris2">
+<addon id="script.image.bigpictures" name="The Big Picture" version="1.3.0" provider-name="sphere, rwparris2">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
@@ -9,9 +9,9 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary lang="de">Zeigt Alben/Bilder von Boston.com's Seite "The Big Pictures"</summary>
-    <summary lang="en">Shows Albums/Pictures from Boston.com's photojournalism site</summary>
-    <description lang="de">Das Album kann mit links und rechts gewählt werden.[CR]Mit select wird das Album geöffnet.[CR]Herunterladen der Bilder ist mit der Kontext-Menu Taste möglich.</description>
-    <description lang="en">You can switch the album with left and right.[CR]With select-key you can enter the album to view its content.[CR]Picture Downloading is possible with the context menu key.</description>
+    <summary lang="de">Zeigt Alben/Bilder von Photojournalismus-Seiten wie Boston.com's "The Big Pictures"</summary>
+    <summary lang="en">Shows Albums/Pictures from photojournalism site's like Boston.com's 'The Big Picture'</summary>
+    <description lang="de">Die Quelle kann mit hoch und runter gewechselt werden - das album mit links und rechts[CR]Mit select wird das Album geöffnet.[CR]Herunterladen der Bilder ist mit der Kontext-Menu Taste möglich.[CR]Aktuell sind die folgenden Quellen verfügbar:[CR] - Boston.com: The Big Picture[CR] - Boston.com: The Big Shot[CR] - Sacramento Bee: The Frame[CR] - Wallstreetjournal: The Photo Journal</description>
+    <description lang="en">You can switch the source with up and down, switch the album with left and right[CR]With select-key you can enter an album to view its content.[CR]Picture Downloading is possible with the context menu key.[CR]Currently the following Sources are included:[CR] - Boston.com: The Big Picture[CR] - Boston.com: The Big Shot[CR] - Sacramento Bee: The Frame[CR] - Wallstreetjournal: The Photo Journal</description>
   </extension>
 </addon>
