@@ -42,10 +42,10 @@ class Main:
         for self.doc in self.favourites:
             self.fav_path = self.doc.childNodes [ 0 ].nodeValue
             # add return 
-            if '10024' not in self.fav_path: self.fav_path = self.fav_path.replace( ')', ',return)' )
-            if (sys.argv[ 1 ] == 'playlists=window'):
-                if 'playlists/music' in self.fav_path: self.fav_path = self.fav_path.replace( 'PlayMedia(', 'ActivateWindow(10502,' )
-                if 'playlists/video' in self.fav_path: self.fav_path = self.fav_path.replace( 'PlayMedia(', 'ActivateWindow(MyVideoLibrary,' )
+            if 'RunScript' not in self.fav_path: self.fav_path = self.fav_path.replace( ')', ',return)' )
+            if (sys.argv[ 1 ] == 'playlists=play'):
+                if 'playlists/music' in self.fav_path: self.fav_path = self.fav_path.replace( 'ActivateWindow(10502,', 'PlayMedia(' )
+                if 'playlists/video' in self.fav_path: self.fav_path = self.fav_path.replace( 'ActivateWindow(10025,', 'PlayMedia(' )
             print 'playlists :' + sys.argv[ 1 ]
             # set properties
             self.WINDOW.setProperty( "favourite.%d.path" % ( count + 1, ) , self.fav_path )
