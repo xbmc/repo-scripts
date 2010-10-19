@@ -1,3 +1,6 @@
+1.3.1
+  Fixed: Crash/Hang when using Alaska/Rapier-Skin
+
 1.3.0
   Added: The possibility to get albums/images from more than one website (switch source)
   Added: New Scraper 'Wallstreetjournal: The Photo Journal'

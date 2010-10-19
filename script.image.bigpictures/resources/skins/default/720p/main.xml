@@ -36,6 +36,7 @@
                 <aligny>top</aligny>
                 <label>32001</label>
                 <textcolor>FFAAAAAA</textcolor>
+                <font>font13</font>
             </control>
             <control type="list" id="100">
                 <!--Main List of Images-->
@@ -78,6 +79,7 @@
                         <label>$INFO[ListItem.Label]</label>
                         <textcolor>FFDDDDDD</textcolor>
                         <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <font>font13</font>
                     </control>
                 </itemlayout>
                 <focusedlayout width="1280" height="720">
@@ -113,6 +115,7 @@
                         <label>$INFO[ListItem.Label]</label>
                         <textcolor>FFDDDDDD</textcolor>
                         <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <font>font13</font>
                     </control>
                     <!--<control type="image">
                         <animation type="Focus">
@@ -182,6 +185,7 @@
                 <align>right</align>
                 <aligny>top</aligny>
                 <textcolor>FFAAAAAA</textcolor>
+                <font>font13</font>
             </control>
         </control>
     </controls>

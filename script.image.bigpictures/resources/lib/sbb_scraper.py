@@ -64,7 +64,6 @@ class SBB:
         subtree_txt = tree.findAll('div', attrs={'style': 'background: rgb(224, 224, 224); width: 970px; padding: 10px;'})
         # this is very dirty because this website is very dirty :(
         for i, node_img in enumerate(subtree_img):
-            print i
             pic = node_img.find('img')['src']
             try:
                 description = self.cleanHTML(subtree_txt[i])
