@@ -145,9 +145,9 @@
 				</control>
 				<control type="image">
 					<posx>135</posx>
-					<posy>16</posy>
-					<width>27</width>
-					<height>7</height>
+					<posy>13</posy>
+					<width>40</width>
+					<height>12</height>
 					<texture>icon_sync.png</texture>
 					<visible>ListItem.property(sync)</visible>
 				</control>
@@ -208,9 +208,9 @@
 				</control>
 				<control type="image">
 					<posx>135</posx>
-					<posy>16</posy>
-					<width>27</width>
-					<height>7</height>
+					<posy>13</posy>
+					<width>40</width>
+					<height>12</height>
 					<texture>icon_sync.png</texture>
 					<visible>ListItem.property(sync)</visible>
 					<colordiffuse>white</colordiffuse>

@@ -1,3 +1,7 @@
+1.9.9
+- fixed: podnapisi name search string is urllib.quoted. helps with "$#*! My Dad Says" and similar
+- fixed: sync icon is made bigger on default skin window
+
 1.9.8
 - fixed: Script would fail on non English XBMC
 - added: New Dutch translation, Thanks Rob Verberk
