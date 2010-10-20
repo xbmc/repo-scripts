@@ -156,9 +156,11 @@ class alsaMixerCore:
 			if nameStart>0:
 				stdErr, stdOut, retValue = self.__runSilent("amixer sget " + mixername)
 				if stdOut.find("pvolume") > 0:
-					if not stdOut.find("cvolume") > 0:
+					if not stdOut.find("cvolume") > 0 and not stdOut.find("cswitch") > 0:
 						hasVol=True
-				if stdOut.find("pswitch") > 0:
+						if stdOut.find("pswitch") > 0:
+							hasSw = True
+				elif stdOut.find("pswitch") > 0:
 					if not stdOut.find("cswitch") > 0:
 						hasSw = True
 				if hasVol or hasSw:
