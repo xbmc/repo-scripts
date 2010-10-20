@@ -1,3 +1,10 @@
+v2.2.0
+- add poster and banner (from www.tvdb.com) support (with custom naming) on bulk mode.
+- add poster and banner (from www.tvdb.com) support (with custom naming) on solo mode.
+
+v2.1.4
+- add custom naming. pass name in parameter instead of True / False
+
 v2.1.3
 - corrections for users with python 2.5 - thanks to Anssi(xbmc.org)
 

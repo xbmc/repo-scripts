@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.logo-downloader"
        name="Logo Downloader"
-       version="2.1.3"
+       version="2.2.0"
        provider-name="ppic">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
@@ -11,7 +11,15 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <minversion>30369</minversion>
-    <summary>TV Show Logo Downloader script</summary>
-    <description>Download TV show Logos</description>
+    <summary lang="en">Download Logos / posters / banners / cleararts /showthumbs for your favorites Tvshows</summary>
+    <summary lang="fr">téléchargez les Logos / posters / banners / cleararts /showthumbs de vos séries préférées</summary>
+    <description lang="en">Download logos from www.lockstockmods.net
+    cleararts and showthumbs from www.xbmcstuff.com
+    Banners and posters from www.tvdb.com</description>
+    <description lang="fr">Téléchargez les logos depuis www.lockstockmods.net
+    les cleararts et les showthumbs depuis www.xbmcstuff.com
+    les Banners et les posters depuis www.tvdb.com</description>
+    <disclaimer lang="en">Please contribute on www.xbmcstuff.com www.tvdb.com www.lockstockmods.net</disclaimer>
+    <disclaimer lang="fr">Contribuez sur www.xbmcstuff.com www.tvdb.com www.lockstockmods.net</disclaimer>
   </extension>
 </addon>
