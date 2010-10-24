@@ -12,11 +12,12 @@ import socket
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __settings__ = sys.modules[ "__main__" ].__settings__
+__cwd__ = sys.modules[ "__main__" ].__cwd__
 
 STATUS_LABEL = 100
 LOADING_IMAGE = 110
 SUBTITLES_LIST = 120
-SERVICE_DIR = os.path.join(os.getcwd(), "resources", "lib", "services")
+SERVICE_DIR = os.path.join(__cwd__, "resources", "lib", "services")
 
 EXIT_SCRIPT = ( 9, 10, 247, 275, 61467, )
 CANCEL_DIALOG = EXIT_SCRIPT + ( 216, 257, 61448, )
@@ -39,7 +40,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if (movieFullPath.find("http://") > -1 ):
             temp = True
 
-        if (movieFullPath.find("rar://") > -1 ) and path:
+        if (movieFullPath.find("rar://") > -1 ):
             rar = True
             
             movieFullPath = sub_folder = movieFullPath.replace("rar://","")
@@ -134,7 +135,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.file_name = "%s (%s)" % (self.title, str(self.year),)    
           
           
-        self.tmp_sub_dir = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( os.getcwd() ),"sub_tmp" )
+        self.tmp_sub_dir = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( __cwd__ ),"sub_tmp" )
         
         
         if not self.tmp_sub_dir.endswith(':') and not os.path.exists(self.tmp_sub_dir):
@@ -159,7 +160,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         def_movie_service = __settings__.getSetting( "defmovieservice")
         def_tv_service = __settings__.getSetting( "deftvservice")
         service_list = []
-        standard_service_list  = ['Titulky','OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV']
+        standard_service_list  = ['Titulky','OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV', 'Subdivx']
         service = ""
  
         for name in os.listdir(SERVICE_DIR):
@@ -200,6 +201,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             log( __name__ ,"Default Service : [%s]"      % self.service)
             log( __name__ ,"Services : [%s]"             % self.service_list)
             log( __name__ ,"Temp?: [%s]"                 % self.set_temp)
+            log( __name__ ,"Rar?: [%s]"                  % self.rar)
             log( __name__ ,"File Path: [%s]"             % self.file_original_path)
             log( __name__ ,"Year: [%s]"                  % str(self.year))
             log( __name__ ,"Tv Show Title: [%s]"         % self.tvshow)
@@ -504,8 +506,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
 ###-------------------------- "Esc" , "Back" button  -------------################
         
-def onAction( self, action ):
-    if ( action.getButtonCode() in CANCEL_DIALOG):
-        self.exit_script()
+    def onAction( self, action ):
+        if ( action.getId() in CANCEL_DIALOG):
+            self.exit_script()
 
 

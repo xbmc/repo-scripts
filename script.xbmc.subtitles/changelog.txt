@@ -1,3 +1,8 @@
+2.0.0
+- added: new service Subdivx.com, Spanish subs only. Thanks to Enric Godes.
+- updated: use .getAddonInfo('path') instead of os.getcwd()
+- cosmetics
+
 1.9.9
 - fixed: podnapisi name search string is urllib.quoted. helps with "$#*! My Dad Says" and similar
 - fixed: sync icon is made bigger on default skin window
