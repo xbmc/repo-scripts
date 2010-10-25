@@ -8,7 +8,7 @@ import difflib
 __author__ = 'ruuk'
 __url__ = 'http://code.google.com/p/tvragexbmc/'
 __date__ = '10-19-2010'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __settings__ = xbmcaddon.Addon(id='script.tvrage.com')
 __language__ = __settings__.getLocalizedString
 
@@ -411,7 +411,7 @@ class TVRageEps(xbmcgui.WindowXML):
 		if sid == '0':
 			self.shows.append(Show(showid=sid,name=name))
 			return 1
-		show = Show(showid=sid,offset=self.air_offset).getShowData()
+		show = Show(showid=sid).getShowData()
 		if skipCanceled and show.canceled: return 0
 		self.shows.append(show)
 		return 1
