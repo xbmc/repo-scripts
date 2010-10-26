@@ -78,7 +78,8 @@
     <string id="756">Login failed. Please verify your settings at the addon Configuration</string>
     <string id="757">Server requires you to rewrite code from image</string>
     <string id="758">Please take look at notification area</string> 
-    <string id="759">Enter code of image in notification area</string>        
+    <string id="759">Enter code of image in notification area</string>
+    <string id="760">Available Services</string>        
       <!-- 
    * Script Settings
    -->
