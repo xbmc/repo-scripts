@@ -22,7 +22,7 @@ class Main:
 
     def _read_file( self ):
         # Set path
-        self.fav_dir = 'special://masterprofile//favourites.xml'
+        self.fav_dir = 'special://profile//favourites.xml'
         # Check to see if file exists
         if (os.path.isfile( self.fav_dir ) == False):
             self.favourites_xml = '<favourites><favourite name="Can Not Find favourites.xml">-</favourite></favourites>'
