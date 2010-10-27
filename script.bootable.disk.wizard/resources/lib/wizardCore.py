@@ -83,7 +83,7 @@ class WorkerThread(Thread):
 	      return self.running
 
 	def getResults(self):
-	      return self.retCode, self.stdout_value, self.stderr_value 
+	      return self.retCode, self.stdout_value, self.stderr_value
 
 class WizardCore:
 	const_minSizeMB = 800
@@ -143,7 +143,7 @@ class WizardCore:
 			self.__printDebugLine("os.path.islink does not return a correct value!")
 
 
-		
+
 		# TODO Check for grub version
 
 		return 1
@@ -222,15 +222,16 @@ class WizardCore:
 
 		self.statusUpdater(1, 0)
 
-		aCmd = "mount | grep " + targetDevice + "1"
+		aCmd = "mount"
 		stdErr, stdOut, retValue = self.__runSilent(aCmd)
-		if retValue==0:
-			# aCmd = self.udev_helper + " --unmount " + targetDevice + "1"
-			aCmd = 'echo "' + aPassword + '" | sudo -S umount ' + targetDevice  + "1"
-
-			stdErr, stdOut, retValue = self.__runSilent(aCmd)
-			if retValue >0:
-				raise RuntimeError("-99")
+		outputLines = stdOut.splitlines()
+		for mountedDevice in outputLines:
+			if mountedDevice.find(targetDevice)>=0:
+				aDevice = (mountedDevice.split(' '))[0]
+				aCmd = 'echo "' + aPassword + '" | sudo -S umount ' + aDevice
+				stdErr, stdOut, retValue = self.__runSilent(aCmd)
+				if retValue >0:
+					raise RuntimeError("-99")
 
 		self.statusUpdater(1, 1)
 
@@ -244,7 +245,7 @@ class WizardCore:
 		# I wish there could be a way to temporaily inhibit automounting
 		aCmd = self.udev_helper + " --mount " + targetDevice + "1"
 		stdErr, stdOut, retValue = self.__runSilent(aCmd)
-		
+
 		aCmd = "mount | grep " + targetDevice + "1"
 		stdErr, stdOut, retValue = self.__runSilent(aCmd)
 		if retValue==0:
@@ -266,7 +267,7 @@ class WizardCore:
 			raise RuntimeError("3")
 
 		self.__runSilent("sync")
-		
+
 		self.statusUpdater(4, 85)
 
 		if storageSizeMB>0:
@@ -362,7 +363,7 @@ class WizardCore:
 				if aDir == "debian":
 					 dirs.remove(aDir)
 			###
-			
+
 			for file in files:
 				if file == self.const_permStorageFilename:
 					continue
@@ -467,7 +468,7 @@ class WizardCore:
 
 if __name__ == '__main__':
 	import getpass
-	
+
 	wCore = WizardCore(1)
 
 	targetDevice = sys.argv[1]
