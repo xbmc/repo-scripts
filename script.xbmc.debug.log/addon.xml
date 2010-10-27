@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xbmc.debug.log"
+       name="XBMC Debug Log"
+       version="0.5.6"
+       provider-name="Team-XBMC">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Copy or Pastebin your debug log</summary>     
+    <description lang="en">This script will either copy your selected debug logs to a desired location or upload it to pastebin.com website for easy linking on the forum</description>
+<platform>all</platform>
+  </extension>
+</addon>
