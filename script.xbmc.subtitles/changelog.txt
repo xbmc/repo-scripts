@@ -1,3 +1,7 @@
+2.0.4
+- added: right arrow to indicate where the services have been hiding
+- added: new icon, thanks freezy3k
+
 2.0.3
 - fixed: script fails in some cases, related to new window
 

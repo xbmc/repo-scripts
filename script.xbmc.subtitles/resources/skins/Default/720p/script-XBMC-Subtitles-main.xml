@@ -38,6 +38,14 @@
 			<height>540</height>
 			<texture border="20,20,20,20">default-panel.png</texture>
 		</control>
+        <control type="image">
+            <posx>1038</posx>
+            <posy>330</posy>
+            <width>32</width>
+            <height>24</height>
+            <texture>nav-right.png</texture>
+            <colordiffuse>FF009CFF</colordiffuse>
+        </control> 
 	<!-- ** Required ** Do not change <id>or<type>-->
 		<control type="group">
 			<posx>200</posx>
