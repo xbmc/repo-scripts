@@ -6,8 +6,8 @@
       <setting id="Lang03" type="enum" label="30111" default="11" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246" />
     </category>
     <category label="30103">
-      <setting id="defmovieservice" type="labelenum" label="30113" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx" />
-      <setting id="deftvservice" type="labelenum" label="30114" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx" />
+      <setting id="defmovieservice" type="labelenum" label="30113" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx|Addic7ed" />
+      <setting id="deftvservice" type="labelenum" label="30114" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx|Addic7ed" />
       <setting id="Sublight" type="bool" label="- Sublight.si" default="true"/>
       <setting id="Podnapisi" type="bool" label="- Podnapisi.net" default="false"/>
       <setting id="PNuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30104" default=""/>
@@ -24,6 +24,7 @@
       <setting id="Titlovi" type="bool" label="- Titlovi.com" default="false"/> 
       <setting id="Titulky" type="bool" label="- Titulky.com (Czech and Slovak subs only)" default="false"/>       
       <setting id="Subdivx" type="bool" label="- Subdivx.com (Spanish subs only)" default="false"/>
+      <setting id="Addic7ed" type="bool" label="- Addic7ed.com" default="false"/>
     </category>
     <category label="30106">
       <setting id="subfolder" type="bool" label="30107" default="true" />

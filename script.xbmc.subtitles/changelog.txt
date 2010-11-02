@@ -1,3 +1,13 @@
+2.0.7
+- fix: ability select Addic7ed as default service
+
+2.0.6
+- fix: new window + mouse should work now
+- fix: Addic7ed would fail if the sub is not found
+
+2.0.5
+- added: Addic7ed service
+
 2.0.4
 - added: right arrow to indicate where the services have been hiding
 - added: new icon, thanks freezy3k

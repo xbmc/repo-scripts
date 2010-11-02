@@ -162,7 +162,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         def_movie_service = __settings__.getSetting( "defmovieservice")
         def_tv_service = __settings__.getSetting( "deftvservice")
         service_list = []
-        standard_service_list  = ['Titulky','OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV', 'Subdivx']
+        standard_service_list  = ['Titulky','OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV', 'Subdivx', 'Addic7ed']
         service = ""
  
         for name in os.listdir(SERVICE_DIR):
@@ -558,9 +558,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         try:
           if controlId == 8999:
             self.setFocusId( 150 )
-            self.getControl( 8999 ).setVisible( False )
-          else:
-            self.getControl( 8999 ).setVisible( True )
         except:
           pass    
             
