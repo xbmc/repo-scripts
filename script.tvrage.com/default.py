@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import urllib
 import xbmc, xbmcgui, xbmcaddon
 import sys, os, time, re
@@ -7,8 +8,8 @@ import difflib
 
 __author__ = 'ruuk'
 __url__ = 'http://code.google.com/p/tvragexbmc/'
-__date__ = '10-19-2010'
-__version__ = '1.0.1'
+__date__ = '11-02-2010'
+__version__ = '1.0.2'
 __settings__ = xbmcaddon.Addon(id='script.tvrage.com')
 __language__ = __settings__.getLocalizedString
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import urllib, simplejson
 try:
 	import xbmc
