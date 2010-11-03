@@ -1,3 +1,7 @@
+2.0.8
+- fix: Arabic had incorrect two letter code(would crash podnapisi search)
+- added: "# -*- coding: utf-8 -*-" for Python 2.5+ compatibility
+
 2.0.7
 - fix: ability select Addic7ed as default service
 

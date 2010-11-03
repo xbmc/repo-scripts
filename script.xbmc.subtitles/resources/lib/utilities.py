@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*- 
+
 import sys
 import os
 import xbmc
@@ -437,7 +439,7 @@ def twotofull(id):
             
 
     "sq"                  :  "Albanian",
-    "hy"                  :  "Arabic",
+    "ar"                  :  "Arabic",
     "bg"                  :  "Bulgarian",
     "zh"                  :  "Chinese",
     "hr"                  :  "Croatian",
