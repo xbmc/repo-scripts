@@ -24,6 +24,7 @@
     <string id="119">Find similar</string>
     <string id="120">Browse this songs album</string>
     <string id="121">Exit</string>
+    <string id="122">Remove all songs</string>
 
     <!-- Dialogs -->
     <string id="1000">Enter a search phrase</string>
@@ -36,6 +37,8 @@
     <string id="2000">Username</string>
     <string id="2001">Password</string>
     <string id="2002">Debugging (restart script to apply)</string>
+    <string id="2003">XBOX</string>
+    <string id="2004">Shuffle</string>
 
     <!-- Labels -->
     <string id="3000">Start searching for songs or load a playlist</string>

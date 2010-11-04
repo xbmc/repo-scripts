@@ -2,6 +2,7 @@ import urllib2, md5, unicodedata, re, os, traceback, sys, pickle, socket, string
 from operator import itemgetter, attrgetter
 
 __scriptid__ = sys.modules[ "__main__" ].__scriptid__
+__cwd__ = sys.modules[ "__main__" ].__cwd__
 
 class LoginTokensExceededError(Exception):
 	def __init__(self):
@@ -43,7 +44,7 @@ class GrooveAPI:
 		self.frowns = []
 		self.songIDsAlreadySeen = []
 		self.recentArtists = []
-		self.rootDir = os.getcwd()
+		self.rootDir = __cwd__
 		if self.isXbox == True:
 			self.dataDir = 'script_data'
 		else:
@@ -51,8 +52,8 @@ class GrooveAPI:
 		self.confDir = os.path.join('special://profile/', self.dataDir, __scriptid__)
 		self.sessionID = self.getSavedSession()
 		self.debug('Saved sessionID: ' + self.sessionID)
-		self.sessionID = self.getSessionFromAPI()
-		self.debug('API sessionID: ' + self.sessionID)
+		#self.sessionID = self.getSessionFromAPI()
+		#self.debug('API sessionID: ' + self.sessionID)
 		if self.sessionID == '':
 			self.sessionID = self.startSession()
 			self.debug('Start() sessionID: ' + self.sessionID)
@@ -78,7 +79,6 @@ class GrooveAPI:
 	def getSavedSession(self):
 		sessionID = ''
 		path = os.path.join(self.confDir, 'session', 'session.txt')
-
 		try:
 			f = open(path, 'rb')
 			sessionID = pickle.load(f)
@@ -89,7 +89,7 @@ class GrooveAPI:
 		
 		return sessionID
 
-	def saveSession(self):			
+	def saveSession(self):
 		try:
 			dir = os.path.join(self.confDir, 'session')
 			# Create the 'data' directory if it doesn't exist.
@@ -145,6 +145,15 @@ class GrooveAPI:
 			result = self.simplejson.loads(result)
 			if 'fault' in result:
 				self.debug(result)
+				if result['fault']['code'] == 8: #Session ID has expired. Get a new and try again if possible.
+					self.debug(result['fault']['message'])
+					self.sessionID = self.startSession()
+					if self.sessionID != '':
+						self.saveSession()
+						return self.callRemote(method, params)
+					else:
+						self.debug('SessionID expired, but unable to get new')
+						return []
 			return result
 		except:
 			return []
@@ -326,7 +335,6 @@ class GrooveAPI:
 			
 	def playlistReplace(self, playlistId, songIds):
 		if self.loggedIn == 1:
-			print "######## Logged in"
 			result = self.callRemote("playlist.replace", {"playlistID": playlistId, "songIDs": songIds})
 			if 'fault' in result:
 				return 0

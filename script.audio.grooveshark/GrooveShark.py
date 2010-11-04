@@ -4,13 +4,7 @@ import pickle
 import os
 import traceback
 import threading
-
-sys.path.append(os.path.join(os.getcwd().replace(";",""),'resources','lib'))
-
-from GrooveAPI import *
-from GroovePlayer import GroovePlayer
-from GrooveGUI import *
-from operator import itemgetter, attrgetter
+import random
 
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__ = sys.modules[ "__main__" ].__version__
@@ -19,6 +13,32 @@ __language__ = sys.modules[ "__main__" ].__language__
 __scriptid__ = sys.modules[ "__main__" ].__scriptid__
 __debugging__ = sys.modules["__main__"].__debugging__
 __isXbox__ = sys.modules["__main__"].__isXbox__
+__cwd__ = sys.modules["__main__"].__cwd__
+
+sys.path.append(os.path.join(__cwd__.replace(";",""),'resources','lib'))
+
+from GrooveAPI import *
+from GroovePlayer import GroovePlayer
+from GrooveGUI import *
+from operator import itemgetter, attrgetter
+
+class searchThread(threading.Thread):
+	def __init__(self, item, query):
+		threading.Thread.__init__(self)
+		self.item = item
+		self.query = query
+
+	def run (self):
+		try:
+			function = self.item['function']
+			if self.query == None:
+				self.item['result'] = function(GrooveClass.SEARCH_LIMIT)
+			else:
+				self.item['result'] = function(self.query, GrooveClass.SEARCH_LIMIT)
+		except:
+			self.item['result'] = None
+			print "GrooveShark: Search thread failed"
+			traceback.print_exc()
 
 class GrooveClass(xbmcgui.WindowXML):
 
@@ -74,7 +94,7 @@ class GrooveClass(xbmcgui.WindowXML):
 
 	def initPlayer(self):
 		try:
-			self.player = GroovePlayer()
+			self.player = GroovePlayer(xbmc.PLAYER_CORE_MPLAYER)
 			self.player.setCallBackFunc(self.playerChanged)
 		except:
 			xbmc.log('GrooveShark Exception (initPlayer): ' + str(sys.exc_info()[0]))
@@ -137,8 +157,21 @@ class GrooveClass(xbmcgui.WindowXML):
 			result = search.getResult()
 			if result != None:
 				text = result['query']
+				lst = []
+				lst.append({'result': [], 'id':id(self.searchResultSongs), 'function': self.gs.searchSongs})
+				lst.append({'result': [], 'id':id(self.searchResultArtists), 'function': self.gs.searchArtists})
+				lst.append({'result': [], 'id':id(self.searchResultAlbums), 'function': self.gs.searchAlbums})
+				lst.append({'result': [], 'id':id(self.searchResultPlaylists), 'function': self.gs.searchPlaylists})
 				self.searchText = text
-				self.searchAll(text)
+				self.search(text, lst)
+				for item in lst:
+					if item['result'] == None:
+						item['result'] = []
+						self.message(__language__(3022), __language__(3011))
+				self.searchResultSongs = lst[0]['result']
+				self.searchResultArtists = lst[1]['result']
+				self.searchResultAlbums = lst[2]['result']
+				self.searchResultPlaylists = lst[3]['result']
 				self.setStateListDown(GrooveClass.STATE_LIST_SEARCH, reset = True, query = text)
 		elif control == 1001:
 			if __isXbox__ == True:
@@ -162,7 +195,10 @@ class GrooveClass(xbmcgui.WindowXML):
 		elif control == 1004:
 			self.getPopular()
 		elif control == 1005:
-			__settings__.openSettings()
+			try:
+				__settings__.openSettings()
+			except:
+				traceback.print_exc()
 		elif control == 1007: #Exit
 			self.saveState()
 			self.close()
@@ -327,7 +363,7 @@ class GrooveClass(xbmcgui.WindowXML):
 		self.playlistId = 0
 		self.playlistName = 'Unsaved'
 		self.searchText = ""
-		self.rootDir = os.getcwd()
+		self.rootDir = __cwd__
 		self.xbmcPlaylist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
 		self.location = []
 		if __isXbox__ == True:
@@ -351,7 +387,7 @@ class GrooveClass(xbmcgui.WindowXML):
 		self.defaultArtMediumUrl = 'http://beta.grooveshark.com/webincludes/img/defaultart/album/mdefault.png'
 		self.itemsPrPage = 10
 
-	def saveState(self):			
+	def saveState(self):
 		try:
 			print 'GrooveShark: Saving state'
 			self.location[len(self.location)-1]['itemFocused'] = self.getCurrentListPosition()
@@ -608,7 +644,7 @@ class GrooveClass(xbmcgui.WindowXML):
 			pass
 
 	def showOptionsNowPlaying(self, songs):
-		items = [__language__(102),__language__(113)]
+		items = [__language__(102),__language__(113), __language__(122), __language__(104)]
 		result = gSimplePopup(title='', items=items, width=200)
 
 		n = self.getCurrentListPosition()-1
@@ -619,6 +655,40 @@ class GrooveClass(xbmcgui.WindowXML):
 			self.nowPlayingList.pop(n)
 			self.listMenu()
 
+		elif result == 2: #Remove all songs
+			self.nowPlayingList = []
+			self.nowPlaying = -1
+			self.listMenu()
+
+		elif result == 3: #Add to playlist
+			if self.gs.loggedInStatus() != 1:
+				result = self.login()
+				if result == 1:
+					pass
+				elif result == -1:
+					return None
+				elif result == -2:
+					self.message(__language__(3028),__language__(3029))
+					return None
+				else:
+					return None
+			items = []
+			b = busy()
+			playlists = self.gs.userGetPlaylists(limit=150)
+			i = 0
+			while (i < len(playlists)):
+				items.append(playlists[i][0])
+				i += 1
+			b.close()
+			del b
+			result = gShowPlaylists(playlists=items,options=[])
+			action = result[0]
+			selected = result[1]
+			if selected != -1:
+				pId = playlists[selected][1]
+				n = self.getCurrentListPosition()
+				songId = songs[n-1][1]
+				self.gs.playlistAddSong(pId, songId, 0)
 	def showOptionsSearch(self, songs, withBrowse = False):
 		items = [__language__(102),__language__(101),__language__(103),__language__(104), __language__(119)]
 		if withBrowse == True:
@@ -736,35 +806,42 @@ class GrooveClass(xbmcgui.WindowXML):
 		self.playSong(n)
 
 	def queueSong(self, song, i = -1):
-		if __isXbox__ == True: #FIXME
+		if __isXbox__ == True:
 			self.nowPlayingList.append(song)
 		else:
 			if i < 0:
 				n = self.xbmcPlaylist.size()
 			else:
 				n = i
+			replace = [{'searchFor':'&','replaceWith':'and'}, {'searchFor':'?','replaceWith':''}]
 			songId = song[1]
-			title = song[0]
+			title = self.replaceCharacters(song[0], replace)
 			albumId = song[4]
-			artist = song[6]
-			album = song[3]
+			artist = self.replaceCharacters(song[6], replace)
+			album = self.replaceCharacters(song[3], replace)
 			duration = song[2]
 			imgUrl = song[9] # Medium image
-			url = 'plugin://%s/?playSong=%s' % (__scriptid__, songId) # Adding plugin:// to the url makes xbmc call the script to resolve the real url
+			url = 'plugin://%s/?playSong=%s&album=%s&title=%s&artist=%s&cover=%s&duration=%s' % (__scriptid__, songId, album, title, artist, imgUrl.replace('http://', ''), duration) # Adding plugin:// to the url makes xbmc call the script to resolve the real url
 			listItem = xbmcgui.ListItem('music', thumbnailImage=imgUrl, iconImage=imgUrl)
 			listItem.setProperty( 'Music', "true" )
 			listItem.setProperty('mimetype', 'audio/mpeg')
 			listItem.setProperty('IsPlayable', 'true') # Tell XBMC that it is playable and not a folder
-			listItem.setInfo( type = 'Music', infoLabels = { 'title': title, 'artist': artist, 'album': album, 'duration': duration} )
+			listItem.setInfo( type = 'Music', infoLabels = {'title': title, 'artist': artist, 'album': album, 'duration': duration})
 			self.xbmcPlaylist.add(url, listitem=listItem, index = n)			
 
 	def queueSongs(self, songs, queueFrom = -1):
 		if queueFrom < 0:
 			n = self.xbmcPlaylist.size()
 		else:
-			n = queueFrom			
+			n = queueFrom
 		for i in range(len(songs)):
 			self.queueSong(songs[i], i = i + n)
+
+	def replaceCharacters(self, text, items):
+		newText = text
+		for item in items:
+			newText = newText.replace(item['searchFor'], item['replaceWith'])
+		return newText
 
 	def getSimilar(self, songs):
 		self.searchText = 'Similar'
@@ -860,50 +937,48 @@ class GrooveClass(xbmcgui.WindowXML):
 			pass
 
 	def getPopular(self):
-		b = busy()
-		try:
-			self.searchResultSongs = self.gs.popularGetSongs(GrooveClass.SEARCH_LIMIT)
-			b.setProgress(33)
-			self.searchResultArtists = self.gs.popularGetArtists(GrooveClass.SEARCH_LIMIT)
-			b.setProgress(66)
-			self.searchResultAlbums = self.gs.popularGetAlbums(GrooveClass.SEARCH_LIMIT)
-			b.setProgress(100)
-			self.setStateListDown(GrooveClass.STATE_LIST_SEARCH, reset = True, folderName = __language__(3041))
-			b.close()
-			del b
-			self.playlistHasFocus()
-		except:
-			b.close()
-			del b
-			self.message(__language__(3012))
-			traceback.print_exc()
+		lst = []
+		lst.append({'result': [], 'id':id(self.searchResultSongs), 'function': self.gs.popularGetSongs})
+		lst.append({'result': [], 'id':id(self.searchResultArtists), 'function': self.gs.popularGetArtists})
+		lst.append({'result': [], 'id':id(self.searchResultAlbums), 'function': self.gs.popularGetAlbums})
+		self.search(None, lst)
+		for item in lst:
+			if item['result'] == None:
+				item['result'] = []
+				self.message(__language__(3012), __language__(3011))
+		self.searchResultSongs = lst[0]['result']
+		self.searchResultArtists = lst[1]['result']
+		self.searchResultAlbums = lst[2]['result']
+		self.setStateListDown(GrooveClass.STATE_LIST_SEARCH, reset = True, folderName = __language__(3041))
+		self.playlistHasFocus()
 	
-	def searchAll(self, text):
-		self.searchText = text
+	def search(self, text, lst):
 		b = busy()
+		searchList = []
+		for item in lst:
+			f = searchThread(item, text)
+			searchList.append(f)
+			f.start()
+		total = len(searchList)
 		try:
-			self.searchResultSongs = self.gs.searchSongs(text, GrooveClass.SEARCH_LIMIT)
-			b.setProgress(25)
-			self.searchResultArtists = self.gs.searchArtists(text, GrooveClass.SEARCH_LIMIT)
-			b.setProgress(50)
-			self.searchResultAlbums = self.gs.searchAlbums(text, GrooveClass.SEARCH_LIMIT)
-			b.setProgress(75)
-			self.searchResultPlaylists = self.gs.searchPlaylists(text, GrooveClass.SEARCH_LIMIT)
-			b.setProgress(100)
-			xbmc.sleep(500)
-			b.close()
-			del b
-			self.playlistHasFocus()
+			while len(searchList) > 0:
+				for i in range(len(searchList)):
+					if searchList[i].isAlive() == False:
+						searchList.pop(i)
+						progress = int(((total - len(searchList))*100.0)/float(total))
+						b.setProgress(progress)
+						break
 		except:
-			b.close()
-			del b
-			self.message(__language__(3022), __language__(3011))
 			traceback.print_exc()
-	
+
+		xbmc.sleep(500)
+		b.close()
+		del b
+
 	def listSearchResults(self, songs, artists, albums, playlists):
 		self.getControl(300011).setVisible(False)
 		xbmcgui.lock()
-		path = os.path.join(os.getcwd(),'resources','skins','DefaultSkin', 'media', 'default-cover.png')
+		path = os.path.join(__cwd__,'resources','skins','DefaultSkin', 'media', 'default-cover.png')
 		self.clearList()
 		item = xbmcgui.ListItem (label=__language__(3023), label2=str(len(songs)) + ' ' + __language__(3026), thumbnailImage=path)			
 		self.addItem(item)
@@ -919,7 +994,7 @@ class GrooveClass(xbmcgui.WindowXML):
 
 	def listSimilar(self, songs, artists):
 		xbmcgui.lock()
-		path = os.path.join(os.getcwd(),'resources','skins','DefaultSkin', 'media', 'default-cover.png')
+		path = os.path.join(__cwd__,'resources','skins','DefaultSkin', 'media', 'default-cover.png')
 		self.clearList()
 		item = xbmcgui.ListItem (label='..')			
 		self.addItem(item)
@@ -937,13 +1012,6 @@ class GrooveClass(xbmcgui.WindowXML):
 			i = 0
 			self.clearList()
 			self.addItem('..')
-			items = []
-			while(i < len(songs)):
-				items.append([songs[i][4], songs[i][8]])
-				i += 1
-
-			if __isXbox__ == True:
-				self.getThumbs(items)
 			i = 0
 			while(i < len(songs)):
 				if songs[i][2] == -1:
@@ -956,10 +1024,7 @@ class GrooveClass(xbmcgui.WindowXML):
 					else:
 						durStr = '(' + str(durMin) + ':' + str(durSec) + ')'
 				songId = str(songs[i][1])
-				if __isXbox__ == True:
-					path = self.getThumbPath(items[i])
-				else:
-					path = songs[i][8]
+				path = songs[i][8]
 				l1 = songs[i][0]
 				l2 = songs[i][6] + '\n' + songs[i][3]
 				item = xbmcgui.ListItem (label=l1,label2=l2, thumbnailImage=path, iconImage=path)			
@@ -977,7 +1042,7 @@ class GrooveClass(xbmcgui.WindowXML):
 		i = 0
 		self.clearList()
 		self.addItem('..')
-		path = os.path.join(os.getcwd(),'resources','skins','DefaultSkin', 'media','default-cover.png')
+		path = os.path.join(__cwd__,'resources','skins','DefaultSkin', 'media','default-cover.png')
 		while(i < len(artists)):
 			item = xbmcgui.ListItem (label=artists[i][0], thumbnailImage=path)
 			self.addItem(item)
@@ -993,18 +1058,8 @@ class GrooveClass(xbmcgui.WindowXML):
 		if len(albums) == 0:
 			return
 		i = 0
-		items = []
 		while(i < len(albums)):
-			items.append([albums[i][3], albums[i][4]])
-			i += 1
-		if __isXbox__ == True:
-			self.getThumbs(items)
-		i = 0
-		while(i < len(albums)):
-			if __isXbox__ == True:
-				path = self.getThumbPath(items[i])
-			else:
-				path = albums[i][4]
+			path = albums[i][4]
 			if withArtist == 0:
 				item = xbmcgui.ListItem (label=albums[i][2], thumbnailImage=path, iconImage=path)
 			else:
@@ -1020,7 +1075,7 @@ class GrooveClass(xbmcgui.WindowXML):
 		i = 0
 		self.clearList()
 		self.addItem('..')
-		path = os.path.join(os.getcwd(),'resources','skins','DefaultSkin', 'media','default-cover.png')
+		path = os.path.join(__cwd__,'resources','skins','DefaultSkin', 'media','default-cover.png')
 		while(i < len(playlists)):
 			item = xbmcgui.ListItem (label=playlists[i][1], label2=playlists[i][2], thumbnailImage=path)
 			self.addItem(item)
@@ -1148,6 +1203,8 @@ class GrooveClass(xbmcgui.WindowXML):
 			pass
 
 	def getNextSongNumber(self):
+		if __settings__.getSetting("xbox_shuffle") == "true":
+			return random.randint(0, len(self.nowPlayingList)-1)
 		n = len(self.nowPlayingList)-1
 		if n > 0:
 			if (self.nowPlaying + 1) > n:
@@ -1480,7 +1537,7 @@ class GrooveClass(xbmcgui.WindowXML):
 		if os.path.exists(filePath):
 			return filePath
 		else:
-			return os.path.join(os.getcwd(),'resources','skins','DefaultSkin' ,'media', 'default-cover.png')
+			return os.path.join(__cwd__,'resources','skins','DefaultSkin' ,'media', 'default-cover.png')
 
 
 

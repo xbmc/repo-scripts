@@ -24,6 +24,7 @@
     <string id="119">Find lignende</string>
     <string id="120">Se denne sangs album</string>
     <string id="121">Afslut</string>
+    <string id="122">Fjern alle sange</string>
 
     <!-- Dialogs -->
     <string id="1000">Indtast en søgning</string>
@@ -36,6 +37,8 @@
     <string id="2000">Brugernavn</string>
     <string id="2001">Password</string>
     <string id="2002">Debugging (Genstart script for at anvende)</string>
+    <string id="2003">XBOX</string>
+    <string id="2004">Shuffle</string>
 
     <!-- Labels -->
     <string id="3000">Start søgning efter sange eller åbn spilleliste</string>
