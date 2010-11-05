@@ -320,28 +320,52 @@ class WizardCore:
 		return True
 
 	def __partitionFormatDisk(self, aDevice, aPassword):
-		aCmd = 'echo "' + aPassword + '" | sudo -S parted -s ' + aDevice + ' mklabel msdos'
+		aCmd = 'echo "' + aPassword + '" | sudo -S dd if=/dev/zero of=' + aDevice + " bs=512 count=2"
 		stdErr, stdOut, retValue = self.__runSilent(aCmd)
 		if retValue >0:
 			self.__printDebugLine("Error partitioning (1): " + stdOut)
 			return False
 
-		aCmd = 'echo "' + aPassword + '" | sudo -S parted -s ' + aDevice + ' mkpart primary fat32 0.0 100%'
+		aCmd = 'sync'
 		stdErr, stdOut, retValue = self.__runSilent(aCmd)
 		if retValue >0:
 			self.__printDebugLine("Error partitioning (2): " + stdOut)
 			return False
 
-		aCmd = 'echo "' + aPassword + '" | sudo -S parted -s ' + aDevice + ' set 1 boot on'
+		aCmd = 'echo "' + aPassword + '" | sudo -S partprobe ' + aDevice
 		stdErr, stdOut, retValue = self.__runSilent(aCmd)
 		if retValue >0:
 			self.__printDebugLine("Error partitioning (3): " + stdOut)
 			return False
 
-		aCmd = 'echo "' + aPassword + '" | sudo -S parted -s ' + aDevice + ' set 1 lba off'
+		aCmd = 'echo "' + aPassword + '" | sudo -S parted -s ' + aDevice + ' mklabel msdos'
 		stdErr, stdOut, retValue = self.__runSilent(aCmd)
 		if retValue >0:
 			self.__printDebugLine("Error partitioning (4): " + stdOut)
+			return False
+
+		aCmd = 'echo "' + aPassword + '" | sudo -S parted -s ' + aDevice + ' mkpart primary fat32 0.0 100%'
+		stdErr, stdOut, retValue = self.__runSilent(aCmd)
+		if retValue >0:
+			self.__printDebugLine("Error partitioning (5): " + stdOut)
+			return False
+
+		aCmd = 'echo "' + aPassword + '" | sudo -S parted -s ' + aDevice + ' set 1 boot on'
+		stdErr, stdOut, retValue = self.__runSilent(aCmd)
+		if retValue >0:
+			self.__printDebugLine("Error partitioning (6): " + stdOut)
+			return False
+
+		aCmd = 'echo "' + aPassword + '" | sudo -S parted -s ' + aDevice + ' set 1 lba off'
+		stdErr, stdOut, retValue = self.__runSilent(aCmd)
+		if retValue >0:
+			self.__printDebugLine("Error partitioning (7): " + stdOut)
+			return False
+
+		aCmd = 'echo "' + aPassword + '" | sudo -S partprobe ' + aDevice
+		stdErr, stdOut, retValue = self.__runSilent(aCmd)
+		if retValue >0:
+			self.__printDebugLine("Error partitioning (8): " + stdOut)
 			return False
 
 		aLabel = "XBMCLive_" + str(random.randint(0, 99))
