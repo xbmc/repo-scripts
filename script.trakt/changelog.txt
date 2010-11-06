@@ -1,0 +1,14 @@
+Version 0.0.6
+	- added icon to notifications
+	- now sending video progress % to api
+	- cached imdb id for movies
+	- tvdb id now sent to api
+	- changed url to post to (legacy support will remain for a while)
+	
+Version 0.0.5
+	- startup notification now follows notification setting
+	- text fix on the settings menu
+	- added this changelog!
+
+Version 0.0.4
+	- initial public release

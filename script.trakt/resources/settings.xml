@@ -19,6 +19,5 @@
   <setting id="ExcludePath3" type="folder" source="files" label="45010" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
 
   <setting type="lsep" label="45003" />
-  <setting id="new_ver" type="bool" label="45011" default="true" />
   <setting id="debug" type="bool" label="45012" default="true" />
 </settings>

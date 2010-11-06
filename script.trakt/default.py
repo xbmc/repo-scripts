@@ -2,20 +2,17 @@ import sys
 import os
 import xbmc
 import xbmcaddon
-import xbmcgui
 import string
-import webbrowser
 import time
 import ConfigParser
 import string
+import re
 
 ###General vars
 __scriptname__ = "trakt"
 __author__ = "Sean Rudford"
 __url__ = "http://trakt.tv/"
-# __svn_url__ = ""
-# __credits__ = ""
-__version__ = "0.0.4"
+__version__ = "0.0.6"
 __XBMC_Revision__ = ""
 
 def addPadding(number):
@@ -33,10 +30,15 @@ def CheckAndSubmit(Manual=False):
         bExcluded = False
         short = ""
         title = ""
-        imdburl = ""
+        global getID
         global VideoThreshold
         global lasttitle
         global lastUpdate
+        global video_id
+        
+        if(lasttitle == title and lasttitle != ""):
+            Debug('lasttitle == title, getID set to False', False)
+            getID = False
         
         pauseCheck = xbmc.Player().getTime()
         time.sleep(1)
@@ -71,34 +73,47 @@ def CheckAndSubmit(Manual=False):
                 bPathExcluded = True                     
         
         if len(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")) >= 1: # TvShow
-            sType = "TVShow"   
-            Debug("Found TV Show", False)     
-            # format: title, year, season, episode
+            sType = "TVShow"
+            Debug("Found TV Show", False)
+            # get tvdb id
+            if (xbmc.getInfoLabel("VideoPlayer.Year") != "" and getID == True):
+                getID = False
+                try:
+                    query = "select c12 from tvshow where c00 = '" + unicode(xbmc.getInfoLabel("VideoPlayer.TvShowTitle"), 'utf-8') + "'"
+                    res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
+                    tvid = re.findall('[\d.]*\d+',res) # find it
+
+                    if len(tvid[0].strip()) >= 1:
+                        video_id = tvid[0].strip();
+                except:        
+                    video_id = ""
+                
+            # format: title, year, season, episode, tvdbid
             title = (unicode(xbmc.getInfoLabel("VideoPlayer.TvShowTitle"), 'utf-8') +
                     ',' + unicode(xbmc.getInfoLabel("VideoPlayer.Year"), 'utf-8') +
                     ',' + unicode(addPadding(xbmc.getInfoLabel("VideoPlayer.Season")), 'utf-8') +
-                    ',' + unicode(addPadding(xbmc.getInfoLabel("VideoPlayer.Episode")), 'utf-8'))
-            # title = title.replace('%EPISODENAME%', unicode(xbmc.getInfoLabel("VideoPlayer.Title"), 'utf-8'))
-            # title = title.replace('%EPISODENUMBER%', unicode(xbmc.getInfoLabel("VideoPlayer.Episode"), 'utf-8'))
-            # title = title.replace('%EPISODENUMBER_PADDED%', unicode(addPadding(xbmc.getInfoLabel("VideoPlayer.Episode")), 'utf-8'))            
-            # title = title.replace('%SEASON%', , 'utf-8'))
-            # title = title.replace('%SEASON_PADDED%', unicode(addPadding(xbmc.getInfoLabel("VideoPlayer.Season")), 'utf-8'))
+                    ',' + unicode(addPadding(xbmc.getInfoLabel("VideoPlayer.Episode")), 'utf-8') +
+                    ',' + video_id)
 
         elif len(xbmc.getInfoLabel("VideoPlayer.Title")) >= 1: #Movie
             sType = "Movie"
             Debug("Found Movie", False)
-            # format: title, year
-            title = unicode(xbmc.getInfoLabel("VideoPlayer.Title"), 'utf-8') + ',' + unicode(xbmc.getInfoLabel("VideoPlayer.Year"), 'utf-8')
-
-            if (xbmc.getInfoLabel("VideoPlayer.Year") != ""):
+            
+            if (xbmc.getInfoLabel("VideoPlayer.Year") != "" and getID == True):
+                getID = False
                 try:
                     query = "select case when not movie.c09 is null then movie.c09 else 'NOTFOUND' end as [MovieID] from movie where movie.c00 = '" + unicode(xbmc.getInfoLabel("VideoPlayer.Title")) + "' limit 1"
                     res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
                     movieid = re.findall('>(.*?)<',res) # find it
                     if len(movieid[1].strip()) >= 1:
-                        imdburl = "http://www.imdb.com/title/" + str(movieid[1].strip())
-                except:        
-                    imdburl = ""
+                        video_id = str(movieid[1].strip())
+                except:       
+                    video_id = ""
+            
+            # format: title, year
+            title = (unicode(xbmc.getInfoLabel("VideoPlayer.Title"), 'utf-8') + ',' +
+                    unicode(xbmc.getInfoLabel("VideoPlayer.Year"), 'utf-8') + ',' +
+                    video_id)
                 
             #don't submit if not in library
             if (xbmc.getInfoLabel("VideoPlayer.Year") == ""):
@@ -110,15 +125,16 @@ def CheckAndSubmit(Manual=False):
         
         Debug("Title: " + title)
         
-        if ((title != "" and lasttitle != title)  and not bExcluded):
+        if ((title != "" and lasttitle != title) and not bExcluded):
             iPercComp = CalcPercentageRemaining(xbmc.getInfoLabel("VideoPlayer.Time"), xbmc.getInfoLabel("VideoPlayer.Duration"))
             if (iPercComp > (float(VideoThreshold) / 100)):
                 Debug('Title: ' + title + ', sending watched status, current percentage: ' + str(iPercComp), True)
-                SendUpdate(title, sType, "watched")
+                SendUpdate(title, int(iPercComp*100), sType, "watched")
+                getID = True
                 lasttitle = title
             elif (time.time() - lastUpdate >= 900):
                 Debug('Title: ' + title + ', sending watching status, current percentage: ' + str(iPercComp), True)
-                SendUpdate(title, sType, "watching")
+                SendUpdate(title, int(iPercComp*100), sType, "watching")
                 lastUpdate = time.time();
     
     else:
@@ -126,8 +142,6 @@ def CheckAndSubmit(Manual=False):
         lastUpdate = 0
     
 ###Path handling
-BASE_PATH = xbmc.translatePath( os.getcwd() )
-RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources' ) )
 BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'lib' ) )
 LANGUAGE_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'language' ) )
 MEDIA_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'skins' ) )
@@ -141,10 +155,7 @@ Debug('----------- ' + __scriptname__ + ' by ' + __author__ + ', version ' + __v
 ###Settings related parsing
 __settings__ = xbmcaddon.Addon(id='script.trakt')
 __language__ = __settings__.getLocalizedString
-
-# __language__ = xbmc.Language( os.getcwd() ).getLocalizedString
 _ = sys.modules[ "__main__" ].__language__
-# __settings__ = xbmc.Settings( path=os.getcwd() )
 
 ###Vars and initial load
 bRun = True #Enter idle state waiting to submit
@@ -154,13 +165,17 @@ bUsername = False
 bPassword = False
 lasttitle = ""
 lastUpdate = 0
+video_id = ""
+getID = True
 
 bAutoStart = False
+bNotify = False
 bRunBackground = False
 bAutoSubmitVideo = False
 VideoThreshold = 0
 
 if (__settings__.getSetting( "AutoStart" ) == 'true'): bAutoStart = True
+if (__settings__.getSetting( "NotifyOnSubmit" ) == 'true'): bNotify = True
 if (__settings__.getSetting( "RunBackground" ) == 'true'): bRunBackground = True
 if (__settings__.getSetting( "AutoSubmitVideo" ) == 'true'): bAutoSubmitVideo = True
 
@@ -168,10 +183,8 @@ bUsername = __settings__.getSetting( "Username" )
 bPassword = __settings__.getSetting( "Password" )
 
 VideoThreshold = int(__settings__.getSetting( "VideoThreshold" ))
-if (VideoThreshold == 0): VideoThreshold = 75
-elif (VideoThreshold == 1): VideoThreshold = 95
-
-bFirstRun = CheckIfFirstRun()
+if (VideoThreshold == 0): VideoThreshold = 70
+elif (VideoThreshold == 1): VideoThreshold = 85
 
 try:
     count = len(sys.argv) - 1
@@ -185,32 +198,10 @@ Debug( 'AutoStart: ' + str(bAutoStart), True)
 Debug( 'RunBackground: ' + str(bRunBackground), True)
 Debug( 'Username: ' + bUsername, True)
 Debug( 'Password: ' + bPassword, True)
-Debug( 'FirstRun: ' + str(bFirstRun), True)
 Debug( 'AutoSubmitVideo:' + str(bAutoSubmitVideo), True)
 Debug( 'VideoThreshold: ' + str(VideoThreshold), True)
 Debug( 'Startup: ' + str(bStartup), True)
 Debug( '::Settings::', True)
-
-###Initial checks
-
-#New Version
-# if ((CheckVersion() != __version__ ) and (bShowWhatsNew)):
-#     try:
-#         import urllib
-#         usock = urllib.urlopen("http://xbtweet.googlecode.com/svn/trunk/xbTweet/whatsnew" + __version__ + ".txt")
-#         message = usock.read()
-#         usock.close()
-# 
-#         import gui_welcome
-#         ui = gui_welcome.GUI( "script-xbTweet-Generic.xml" , os.getcwd(), "Default")
-#         ui.setParams ("message",  __language__(30043), message, 0)
-#         ui.doModal()
-#         del ui
-# 
-#         #bRun = True
-#         WriteVersion(__version__)
-#     except:
-#         Debug('Failed to validate if new version', False)
 
 ###Main logic
 if (not xbmc.getCondVisibility('videoplayer.isfullscreen') and not bShortcut and not bStartup):
@@ -220,8 +211,9 @@ if (not xbmc.getCondVisibility('videoplayer.isfullscreen') and not bShortcut and
 #Startup Execution 
 if ((bStartup and bAutoStart) or bRun):
     Debug(  'Entering idle state, waiting for media playing...', False)
-
-    xbmc.executebuiltin('Notification(Trakt,' + __language__(45050).encode( "utf-8", "ignore" ) + ',3000)')
+    
+    if (bNotify):
+        notification("Trakt", __language__(45050).encode( "utf-8", "ignore" ), 3000, __settings__.getAddonInfo("icon"))
 
     while 1:
         #If Set To AutoSubmit
