@@ -1,4 +1,4 @@
-import os
+import sys
 
 import xbmcgui
 import imageDownloader
@@ -8,8 +8,7 @@ import tbp_scraper
 import sbb_scraper
 import wsj_scraper
 
-_id = os.path.basename(os.getcwd())
-Addon = xbmcaddon.Addon(_id)
+Addon = sys.modules['__main__'].Addon
 #enable localization
 getLS = Addon.getLocalizedString
 

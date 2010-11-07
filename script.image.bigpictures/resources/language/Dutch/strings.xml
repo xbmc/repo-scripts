@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Vertaald door Michel de Bokx (20101019) -->
+<strings>
+  <!--LOADING-->
+  <string id="32001">Afbeeldingen ophalen kan even duren...</string>
+  <!--DOWNLOAD-->
+  <string id="32020">Download</string>
+  <string id="32021">Album</string>
+  <string id="32022">Afbeelding</string>
+  <!--Downloading [picturename] to [path].-->
+  <string id="32023">Downloading</string>
+  <string id="32024">van</string>
+  <string id="32025">tot</string>
+  <!--Picture Mode -->
+  <string id="32030">Links + Rechts - Wisselen van afbeelding</string>  
+  <string id="32031">Info - Wisselt Onscreen Information</string>
+  <string id="32032">Context menu - Download afbeeldingen</string>
+  <!--Album Mode -->
+  <string id="32040">Links + Rechts - Wisselen van album</string>
+  <string id="32041">Boven + Beneden - Wisselt afbeelding</string>
+  <string id="32042">Select - Activeert (bekijken) album</string>
+</strings>

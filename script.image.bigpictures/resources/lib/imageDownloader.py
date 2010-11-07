@@ -6,8 +6,7 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 
-_id = os.path.basename(os.getcwd())
-Addon = xbmcaddon.Addon(_id)
+Addon = sys.modules['__main__'].Addon
 #enable localization
 getLS = Addon.getLocalizedString
 
