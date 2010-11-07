@@ -1,3 +1,8 @@
+[B]0.9.8[/B]
+- fixed deadlocks/hangs when autoplaying stream
+- added context menu in current queue to be able to remove single tracks from queue
+- added: showing song progress when playing - can be disabled in settings (for low bandwidth connections)
+- changed background to fanart in Transparency! skin
 [B]0.9.7[/B]
 - added Transparency! skin support
 - fixed non-working STOP action (from remotes)

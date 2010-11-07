@@ -2,6 +2,7 @@
 <settings>
 	<category label="30014">
 		<setting label="30013" type="bool" id="skip-selector" default="false" />
+		<setting label="30040" type="bool" id="time-polling" default="true" />
 	</category>
     <category label="30110">
 		<setting label="30002" type="text" id="0_name" default="Profile 1"/>

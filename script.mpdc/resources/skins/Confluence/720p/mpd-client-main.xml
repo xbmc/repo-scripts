@@ -52,6 +52,7 @@
 			<texture>VSeparator.png</texture>
       </control>
 	</control>
+
     <control type="group">
 		<description>left control group (switches content in right control group)</description>
 		<posx>0</posx>
@@ -142,6 +143,7 @@
         <height>720</height>
         <texture border="40">ContentPanel.png</texture>
       </control>
+
 
             
 	<control type="button" id="666">
@@ -859,5 +861,27 @@
           
 
     </control>
+
+ <control type="group" id="99">
+	<description>song progress info group</description>
+		<posx>280</posx>
+		<posy>65</posy>
+		<control type="label" id="992">
+			<description>textarea</description>
+			<posx>580</posx>
+			<posy>0</posy>
+			<width>220</width>
+			<height>30</height>
+			<align>right</align>
+			<textcolor>white</textcolor>
+			<label></label>
+		</control>
+		<control type="progress" id="991">
+			<posx>0</posx>
+			<posy>30</posy>
+			<width>590</width>
+			<height>16</height>
+		</control>
+	</control>
   </controls>
 </window>
