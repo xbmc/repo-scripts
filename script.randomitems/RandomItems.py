@@ -143,7 +143,9 @@ class Main:
     def _fetch_music_info( self ):
         # sql statement
         if ( self.ALBUMS ):
-            sql_music = "select idAlbum from albumview order by RANDOM() limit %d" % ( self.LIMIT, )
+            sql_music = "select idAlbum from albumview order by idAlbum desc limit %d" % ( self.LIMIT, )
+            # query the database for recently added albums
+            music_xml = xbmc.executehttpapi( "QueryMusicDatabase(%s)" % quote_plus( sql_music ), )
             # separate the records
             albums = re.findall( "<record>(.+?)</record>", music_xml, re.DOTALL )
             # set our unplayed query
