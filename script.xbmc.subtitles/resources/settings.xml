@@ -6,33 +6,32 @@
       <setting id="Lang03" type="enum" label="30111" default="11" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246" />
     </category>
     <category label="30103">
-      <setting id="defmovieservice" type="labelenum" label="30113" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx|Addic7ed" />
-      <setting id="deftvservice" type="labelenum" label="30114" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx|Addic7ed" />
-      <setting id="Sublight" type="bool" label="- Sublight.si" default="true"/>
-      <setting id="Podnapisi" type="bool" label="- Podnapisi.net" default="false"/>
+      <setting id="Sublight" type="bool" label="Sublight.si" default="false"/>
+      <setting id="Podnapisi" type="bool" label="Podnapisi.net" default="true"/>
       <setting id="PNuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30104" default=""/>
       <setting id="PNpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30105" default=""/>
-      <setting id="LegendasTV" type="bool" label="- Legendas.tv" default="false"/>
+      <setting id="OpenSubtitles" type="bool" label="OpenSubtitles.org" default="true"/>
+      <setting id="Subscene" type="bool" label="Subscene.com" default="false"/>
+      <setting id="Undertexter" type="bool" label="Undertexter.se (Swedish and English subs only)" default="false"/>
+      <setting id="Ondertitel" type="bool" label="Ondertitel.com (Movies and Dutch subs only)" default="false"/>
+      <setting id="Bierdopje" type="bool" label="Bierdopje.com (TV Shows and Dutch/English subs only)" default="false"/>
+      <setting id="Napiprojekt" type="bool" label="Napiprojekt.pl (Polish/English subs only)" default="false"/>
+      <setting id="LegendasTV" type="bool" label="Legendas.tv" default="false"/>
       <setting id="LTVuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30123" default=""/>
-      <setting id="LTVpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30124" default=""/>
-      <setting id="OpenSubtitles" type="bool" label="- OpenSubtitles.org" default="false"/>
-      <setting id="Subscene" type="bool" label="- Subscene.com" default="false"/>
-      <setting id="Undertexter" type="bool" label="- Undertexter.se (Swedish and English subs only)" default="false"/>
-      <setting id="Ondertitel" type="bool" label="- Ondertitel.com (Movies and Dutch subs only)" default="false"/>
-      <setting id="Bierdopje" type="bool" label="- Bierdopje.com (TV Shows and Dutch/English subs only)" default="false"/>
-      <setting id="Napiprojekt" type="bool" label="- Napiprojekt.pl (Polish/English subs only)" default="false"/>         
-      <setting id="Titlovi" type="bool" label="- Titlovi.com" default="false"/> 
-      <setting id="Titulky" type="bool" label="- Titulky.com (Czech and Slovak subs only)" default="false"/>       
-      <setting id="Subdivx" type="bool" label="- Subdivx.com (Spanish subs only)" default="false"/>
-      <setting id="Addic7ed" type="bool" label="- Addic7ed.com" default="false"/>
+      <setting id="LTVpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30124" default=""/>              
+      <setting id="Titlovi" type="bool" label="Titlovi.com" default="false"/> 
+      <setting id="Titulky" type="bool" label="Titulky.com (Czech and Slovak subs only)" default="false"/>       
+      <setting id="Subdivx" type="bool" label="Subdivx.com (Spanish subs only)" default="false"/>
+      <setting id="Addic7ed" type="bool" label="Addic7ed.com" default="false"/>
     </category>
     <category label="30106">
+      <setting id="defmovieservice" type="labelenum" label="30113" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx|Addic7ed" />
+      <setting id="deftvservice" type="labelenum" label="30114" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx|Addic7ed" />    
       <setting id="subfolder" type="bool" label="30107" default="true" />
       <setting id="subfolderpath" type="folder" visible= "eq(-1,false)" source="files" label="30108" default="" />
       <setting id="searchstr" type="bool" label="30110" default="false"/>
       <setting id="fil_name" type="bool" label="30118" default="false"/>
       <setting id="par_folder" type="bool" label="30119" default="false"/>
-      <setting id="label_colour" type="labelenum" label="30120" default="Blue" values="Blue|Red|Green|Grey|White|Yellow|Orange" />
       <setting id="lang_to_end" type="bool" label="30121" default="true" />
       <setting id="disable_hash_search" type="bool" label="30125" default="false" />
       <setting id="timeout" type="enum" label="30122" default="6" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25" />

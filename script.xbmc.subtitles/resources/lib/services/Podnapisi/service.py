@@ -44,37 +44,33 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     msg = ""
     hash_search = False
     osdb_server = OSDBServer()
-    subtitles_list = []    
+    osdb_server.create()    
+    subtitles_list = []
+    file_size = ""
+    hashTry = ""
     language1 = twotoone(toOpenSubtitles_two(lang1))
     language2 = twotoone(toOpenSubtitles_two(lang2))
     language3 = twotoone(toOpenSubtitles_two(lang3))  
     if set_temp : 
-        hash_search = False
-        file_size = "000000000"
-        hashTry = "000000000000"       
+      hash_search = False      
     else:
-        try:
-          hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
-          file_size = os.path.getsize( file_original_path )
-          hash_search = True
-        except: 
-          file_size = ""
-          hashTry = ""
-          hash_search = False 
+      try:
+        hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
+        file_size = os.path.getsize( file_original_path )
+        hash_search = True
+      except: 
+        hash_search = False 
     
-    log( __name__ ,"File Size [%s]" % file_size )
-    log( __name__ ,"File Hash [%s]" % hashTry)
-    try:
+    if file_size != "": log( __name__ ,"File Size [%s]" % file_size )
+    if hashTry != "":   log( __name__ ,"File Hash [%s]" % hashTry)
+    if hash_search :
+      log( __name__ ,"Search for [%s] by hash" % (os.path.basename( file_original_path ),))
+      subtitles_list, session_id = osdb_server.searchsubtitles_pod( hashTry ,language1, language2, language3)
+    if not subtitles_list:
+      log( __name__ ,"Search for [%s] by name" % (os.path.basename( file_original_path ),))
+      subtitles_list = osdb_server.searchsubtitlesbyname_pod( title, tvshow, season, episode, language1, language2, language3, year )
+    return subtitles_list, "", "" #standard output
 
-        if hash_search :
-            log( __name__ ,"Search for [%s] by hash" % (os.path.basename( file_original_path ),))
-            subtitles_list, session_id = osdb_server.searchsubtitles_pod( hashTry ,language1, language2, language3)
-        if not subtitles_list:
-            log( __name__ ,"Search for [%s] by name" % (os.path.basename( file_original_path ),))
-            subtitles_list = osdb_server.searchsubtitlesbyname_pod( title, tvshow, season, episode, language1, language2, language3, year )
-        return subtitles_list, "", "" #standard output
-    except :
-        return subtitles_list, "", "" #standard output
 
 
 

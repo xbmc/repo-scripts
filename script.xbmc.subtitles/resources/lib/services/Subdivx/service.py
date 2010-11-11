@@ -1,4 +1,4 @@
-﻿# Subdivx.com subtitles, based on a mod of Undertext subtitles
+# Subdivx.com subtitles, based on a mod of Undertext subtitles
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
 from utilities import log
 _ = sys.modules[ "__main__" ].__language__
@@ -32,12 +32,13 @@ subtitle_pattern =  "<div\sid=\"buscador_detalle_sub\">(.+?)</div><div\sid=\"bus
 
 
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list):
+    page = 1
     if languageshort == "es":
-        url = main_url + "index.php?accion=5&masdesc=&oxdown=1&buscar=" + urllib.quote_plus(searchstring)
+        url = main_url + "index.php?accion=5&masdesc=&oxdown=1&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)
                         
     content = geturl(url)
-    if content is not None:
-        log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
+    log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
+    while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
         for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
             id = matches.group(4)
             no_files = matches.group(3)
@@ -57,6 +58,20 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
                 sync = True
             log( __name__ ,"%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, id))
             subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'sync': sync, 'id' : id, 'server' : server, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+        page = page + 1
+        url = main_url + "index.php?accion=5&masdesc=&oxdown=1&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)
+        content = geturl(url)
+        
+    # Bubble sort, to put syncs on top
+    for n in range(0,len(subtitles_list)): 
+        for i in range(1, len(subtitles_list)): 
+            temp = subtitles_list[i]
+            if subtitles_list[i]["sync"] > subtitles_list[i-1]["sync"]:
+                subtitles_list[i] = subtitles_list[i-1]
+                subtitles_list[i-1] = temp
+
+        
+
 
 
 def geturl(url):
@@ -106,7 +121,9 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     if content is not None:
         header = content[:4]
         if header == 'Rar!':
+            log( __name__ ,"%s subdivx: el contenido es RAR" % (debug_pretext)) #EGO
             local_tmp_file = os.path.join(tmp_sub_dir, "subdivx.rar")
+            log( __name__ ,"%s subdivx: local_tmp_file %s" % (debug_pretext, local_tmp_file)) #EGO
             packed = True
         elif header == 'PK':
             local_tmp_file = os.path.join(tmp_sub_dir, "subdivx.zip")
@@ -117,6 +134,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             packed = False
         log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
         try:
+            log( __name__ ,"%s subdivx: escribo en %s" % (debug_pretext, local_tmp_file)) #EGO
             local_file_handle = open(local_tmp_file, "wb")
             local_file_handle.write(content)
             local_file_handle.close()
@@ -125,6 +143,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
         if packed:
             files = os.listdir(tmp_sub_dir)
             init_filecount = len(files)
+            log( __name__ ,"%s subdivx: número de init_filecount %s" % (debug_pretext, init_filecount)) #EGO
             filecount = init_filecount
             xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
             waittime  = 0

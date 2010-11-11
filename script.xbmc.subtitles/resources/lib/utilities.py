@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*- 
-
 import sys
 import os
 import xbmc
@@ -14,36 +12,37 @@ def log(module,msg):
   xbmc.output("### [%s-%s] - %s" % (__scriptname__,module,msg,),level=xbmc.LOGDEBUG ) 
 
 ###-------------------------  Hash  -----------------###############
-def hashFile(name): 
+def hashFile(filename): 
     try: 
-      longlongformat = 'q'  # long long 
+      longlongformat = '<LL'  # signed long, unsigned long 
       bytesize = struct.calcsize(longlongformat) 
           
-      f = open(name, "rb") 
+      f = file(filename, "rb") 
           
-      filesize = os.path.getsize(name) 
+      filesize = os.path.getsize(filename) 
       hash = filesize 
           
-      if filesize < 65536 * 2: 
-             return "SizeError" 
-       
-      for x in range(65536/bytesize): 
-              buffer = f.read(bytesize) 
-              (l_value,)= struct.unpack(longlongformat, buffer)  
-              hash += l_value 
-              hash = hash & 0xFFFFFFFFFFFFFFFF #to remain as 64bit number  
-               
-
-      f.seek(max(0,filesize-65536),0) 
-      for x in range(65536/bytesize): 
-              buffer = f.read(bytesize) 
-              (l_value,)= struct.unpack(longlongformat, buffer)  
-              hash += l_value 
-              hash = hash & 0xFFFFFFFFFFFFFFFF 
-       
+      if filesize < 65536 * 2:
+        return "Error"
+        
+      for x in range(65536/bytesize):
+        buffer = f.read(bytesize)
+        (l2, l1)= struct.unpack(longlongformat, buffer) 
+        l_value = (long(l1) << 32) | long(l2) 
+        hash += l_value 
+        hash = hash & 0xFFFFFFFFFFFFFFFF #to remain as 64bit number
+      
+      f.seek(max(0,filesize-65536),0)
+      for x in range(65536/bytesize):
+        buffer = f.read(bytesize)
+        (l2, l1) = struct.unpack(longlongformat, buffer)
+        l_value = (long(l1) << 32) | long(l2)
+        hash += l_value
+        hash = hash & 0xFFFFFFFFFFFFFFFF
+      
       f.close() 
       returnedhash =  "%016x" % hash 
-      return returnedhash 
+      return returnedhash
     
     except(IOError): 
       return "IOError"
@@ -159,13 +158,15 @@ def toOpenSubtitles_two( id ):
     "Urdu"                       : "ur",
     "Vietnamese"                 : "vi",
     "English (US)"               : "en",
-    u"English (UK)"              : "en",
-    u"Portuguese (Brazilian)"    : "pt-br",
-    u"Español (Latinoamérica)" : "es",
-    u"Español (España)"        : "es",
-    u"Spanish (Latin America)"   : "es",
-    u"Español"                  : "es",
-    u"Spanish (Spain)"           : "es",
+    "English (UK)"              : "en",
+    "Portuguese (Brazilian)"    : "pt-br",
+    "Español (Latinoamérica)" : "es",
+    "Español (España)"        : "es",
+    "Spanish (Latin America)"   : "es",
+    "Español"                  : "es",
+    "Spanish (Spain)"           : "es",
+    "Chinese (Traditional)"     : "zh",
+    "Chinese (Simplified)"      : "zh",
     "All"                        : "all"
   }
   return languages[ id ]

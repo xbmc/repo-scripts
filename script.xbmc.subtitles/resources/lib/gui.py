@@ -96,22 +96,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.language_1 = toScriptLang(__settings__.getSetting( "Lang01" ))     # Full language 1
         self.language_2 = toScriptLang(__settings__.getSetting( "Lang02" ))     # Full language 2  
         self.language_3 = toScriptLang(__settings__.getSetting( "Lang03" ))     # Full language 3
-       
-        label_colour = __settings__.getSetting( "label_colour" )                # Service Label Colour 
-        if label_colour == "Blue":
-          self.label_colour = "0084ff"
-        elif label_colour == "White":
-          self.label_colour = "FFFFFF"          
-        elif label_colour == "Red":
-          self.label_colour = "FF0000"
-        elif label_colour == "Green":
-          self.label_colour = "097054"
-        elif label_colour == "Yellow":
-          self.label_colour = "FFDE00"
-        elif label_colour == "Orange":
-          self.label_colour = "FF9900"
-        elif label_colour == "Grey":
-          self.label_colour = "777B88"          
                                        
         self.sub_folder = sub_folder                                            # Subtitle download folder
 
@@ -280,7 +264,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if msg != "":
               self.getControl( STATUS_LABEL ).setLabel( msg )
             else:
-              self.getControl( STATUS_LABEL ).setLabel( "No Subtitles Found!" )
+              self.getControl( STATUS_LABEL ).setLabel( _( 657 ) )
             if self.newWindow:  
               self.setFocusId( SERVICES_LIST )
               self.getControl( SERVICES_LIST ).selectItem( 0 )
@@ -446,7 +430,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     
             for serv in self.service_list:
                 if serv != self.service:
-                  label2 = "[COLOR=FF%s]%s%s[/COLOR]" %(self.label_colour,_( 610 ), serv,)
+                  label2 = "[COLOR=FF0084ff]%s%s[/COLOR]" %(_( 610 ), serv,)
                   listitem = xbmcgui.ListItem( label,label2 )
                   self.list.append(serv)
                   self.getControl( SUBTITLES_LIST ).addItem( listitem )

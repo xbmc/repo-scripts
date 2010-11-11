@@ -143,7 +143,7 @@
 			<itemlayout width="780" height="36">
 				<control type="image">
 					<posx>0</posx>
-					<posy>36</posy>
+					<posy>0</posy>
 					<width>780</width>
 					<height>38</height>
 					<texture>default-list-nofocus.png</texture>
@@ -198,7 +198,7 @@
 			<focusedlayout width="780" height="36">
 				<control type="image">
 					<posx>0</posx>
-					<posy>36</posy>
+					<posy>0</posy>
 					<width>780</width>
 					<height>38</height>
 					<texture>default-list-nofocus.png</texture>
@@ -306,7 +306,7 @@
 				<itemlayout width="400" height="36">
 					<control type="image">
 						<posx>0</posx>
-						<posy>38</posy>
+						<posy>0</posy>
 						<width>230</width>
 						<height>38</height>
 						<texture>default-list-nofocus.png</texture>
@@ -341,7 +341,7 @@
 				<focusedlayout width="400" height="36">
 					<control type="image">
 						<posx>0</posx>
-						<posy>38</posy>
+						<posy>0</posy>
 						<width>230</width>
 						<height>38</height>
 						<texture>default-list-nofocus.png</texture>
