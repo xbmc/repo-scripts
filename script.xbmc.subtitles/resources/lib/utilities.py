@@ -18,25 +18,25 @@ def hashFile(filename):
     try: 
       longlongformat = '<LL'  # signed long, unsigned long 
       bytesize = struct.calcsize(longlongformat) 
+      f = open(filename, "rb") 
           
-      f = file(filename, "rb") 
-          
-      filesize = os.path.getsize(filename) 
+      filesize = os.path.getsize(filename)
       hash = filesize 
           
       if filesize < 65536 * 2:
         return "Error"
-        
+      b = f.read(65536)
       for x in range(65536/bytesize):
-        buffer = f.read(bytesize)
+        buffer = b[x*bytesize:x*bytesize+bytesize]
         (l2, l1)= struct.unpack(longlongformat, buffer) 
         l_value = (long(l1) << 32) | long(l2) 
         hash += l_value 
         hash = hash & 0xFFFFFFFFFFFFFFFF #to remain as 64bit number
       
       f.seek(max(0,filesize-65536),0)
+      b = f.read(65536)
       for x in range(65536/bytesize):
-        buffer = f.read(bytesize)
+        buffer = b[x*bytesize:x*bytesize+bytesize]
         (l2, l1) = struct.unpack(longlongformat, buffer)
         l_value = (long(l1) << 32) | long(l2)
         hash += l_value

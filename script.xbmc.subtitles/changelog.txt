@@ -1,3 +1,6 @@
+2.1.3
+- fixed: smb hashing *should* work now :)
+
 2.1.2
 - cosmetics: removed spaces from strings, unix EOL
 
