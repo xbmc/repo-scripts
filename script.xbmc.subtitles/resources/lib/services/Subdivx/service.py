@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*- 
+
 # Subdivx.com subtitles, based on a mod of Undertext subtitles
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
 from utilities import log
