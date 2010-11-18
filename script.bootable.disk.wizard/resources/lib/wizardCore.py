@@ -241,16 +241,31 @@ class WizardCore:
 
 		self.__runSilent("sync")
 
-		# XBMC in standalone mode may mount the newly created partition
-		# I wish there could be a way to temporaily inhibit automounting
-		aCmd = self.udev_helper + " --mount " + targetDevice + "1"
-		stdErr, stdOut, retValue = self.__runSilent(aCmd)
+		#
+		# Wait until XBMC mounts the newly created volume
+		#
+		for sec in range(1, 10):
+			time.sleep(1)
+			self.__printDebugLine("Waiting for disk to be mounted (" + str(sec) + ") ...")
 
-		aCmd = "mount | grep " + targetDevice + "1"
-		stdErr, stdOut, retValue = self.__runSilent(aCmd)
+			aCmd = "mount | grep " + targetDevice + "1"
+			stdErr, stdOut, retValue = self.__runSilent(aCmd)
+			if retValue==0:
+			    break
+
+		if retValue!=0:
+			#
+			# disk not mounted yet, let's mount it ourself
+			#
+			aCmd = udev_helper + " --mount " + targetDevice + "1"
+			stdErr, stdOut, retValue = self.__runSilent(aCmd)
+			aCmd = "mount | grep " + targetDevice + "1"
+			stdErr, stdOut, retValue = self.__runSilent(aCmd)
+
 		if retValue==0:
-			# TODO make it locale-indipendent
-			mountPoint = stdOut[stdOut.find("on") + 3:stdOut.find("type") - 1]
+			# Note: we have no spaces in the label
+			# /dev/sdb1 on /media/XBMCLive_xx type vfat ...'
+			mountPoint = stdOut.split(" ")[2]
 		else:
 			raise RuntimeError("99")
 
@@ -375,6 +390,12 @@ class WizardCore:
 			self.__printDebugLine("Error formatting: " + stdOut)
 			return False
 
+		aCmd = 'echo "' + aPassword + '" | sudo -S partprobe ' + aDevice
+		stdErr, stdOut, retValue = self.__runSilent(aCmd)
+		if retValue >0:
+			self.__printDebugLine("Error partitioning (9): " + stdOut)
+			return False
+
 		return True
 
 	def __copyFiles(self, srcDirectory, dstDirectory, percStart, percEnd):
@@ -447,10 +468,7 @@ class WizardCore:
 				except:
 					self.__printDebugLine("Error copying file: " + file + " - check your media")
 					result = False
-					continue
-
-		if not os.path.exists(dstDirectory + "/" + "Hooks"):
-			os.mkdir(dstDirectory + "/" + "Hooks")
+					return result
 
 		return result
 
