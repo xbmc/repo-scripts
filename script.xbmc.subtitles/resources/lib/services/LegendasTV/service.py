@@ -1,7 +1,7 @@
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt
-# Rev. 1.0.1
+# Rev. 1.0.2
 
 import xbmc, xbmcgui
 import cookielib, urllib2, urllib, sys, re, os, webbrowser, time, unicodedata
@@ -145,10 +145,10 @@ def LegendasLogin(cj=0):
 		request = urllib2.Request(base_url+'/login_verificar.php',login_data)
 		response = urllib2.urlopen(request).read()
 		if response.__contains__('Dados incorretos'):
-			log( __name__ ,u"%s Login Failed. Check your data at the addon configuration." % (debug_pretext))
+			log( __name__ ,u" Login Failed. Check your data at the addon configuration.")
 			xbmc.executebuiltin("Notification(Legendas.TV,%s,10000])"%( _( 756 ).encode('utf-8') ))
 		else:
-			log( __name__ ,u"%s Succesfully logged in." % (debug_pretext))
+			log( __name__ ,u" Succesfully logged in.")
 	return cj
 
 def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
@@ -156,23 +156,22 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 	# Initiating variables and languages.
 	lang1, ltv_flag1, langid1, lang2, ltv_flag2, langid2, lang3, ltv_flag3, langid3 = LegendasLanguage(lang1,lang2,lang3)
 	tipo = "2"
-	legenda_id = 0
-	subtitles = []
-	sub1 = []
-	sub2 = []
-	sub3 = []
+	subtitles, sub1, sub2, sub3, PartialSubtitles = [], [], [], [], []
 	
 	# Try to get the original movie name from the XBMC database, 
 	# and if not available, set it to the parsed title.
-	original_title = re.findall("<[^>]*>([^<]*)</[^>]*>",xbmc.executehttpapi("QueryVideoDatabase(select c16 from movie where movie.c00 = '"+xbmc.Player().getVideoInfoTag().getTitle()+"')"))
-	if not original_title or not year: original_title = title
+	xbmcPlayerTitle = xbmc.getCleanMovieTitle( xbmc.getInfoLabel("VideoPlayer.Title") )[0]
+	original_title = re.sub("</?[^>]*>","",xbmc.executehttpapi("QueryVideoDatabase(select c16 from movie where movie.c00 = \""+xbmcPlayerTitle+"\")"))
+
+	if original_title == "" or year == "" : original_title = title
 	else:
-		original_title = Uconvert(original_title[0])
+		original_title = Uconvert(original_title)
 		log( __name__ ,u"%s Original Title[%s]" % (debug_pretext, original_title))
 
 	# Encodes the first search string using the original movie title,
 	# and download it.
 	search_string = chomp(original_title)
+	log( __name__ ,u"Searching[%s]" % (debug_pretext))
 	if len(search_string) < 3: search_string = search_string + year
 	search_dict = {'txtLegenda':search_string,'selTipo':tipo,'int_idioma':'99'}
 	search_data = urllib.urlencode(search_dict)
@@ -181,7 +180,7 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 
 	# If no subtitles with the original name are found, try the parsed title.
 	if response.__contains__('Nenhuma legenda foi encontrada') and original_title != title:
-		log( __name__ ,u"%s No subtitles found using the original title, using title instead." % (debug_pretext))
+		log( __name__ ,u" No subtitles found using the original title, using title instead.")
 		search_string = chomp(title)
 		search_dict = {'txtLegenda':search_string,'selTipo':tipo,'int_idioma':'99'}
 		search_data = urllib.urlencode(search_dict)
@@ -213,8 +212,10 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 			td = span.find('td',{'class':'mais'})
 			
 			# Translated and original titles from LTV.
-			ltv_title = Uconvert(td.contents[2])
-			ltv_original_title = Uconvert(td.contents[0].contents[0])
+			ltv_title = CleanLTVTitle(td.contents[2])
+			ltv_original_title = CleanLTVTitle(td.contents[0].contents[0])
+			
+			if re.search("[0-9]+[St|Nd|Rd|Th] Season", ltv_original_title): continue
 			
 			# Release name of the subtitle file.
 			release = Uconvert(td.parent.parent.find('span',{'class':'brls'}).contents[0])
@@ -237,12 +238,13 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 			
 			# Compare the retrieved titles from LTV to those parsed or snatched by this service.
 			# Each language is appended to a sequence.
-			if comparetitle(ltv_original_title, original_title) or comparetitle(ltv_title, title) or comparetitle(ltv_original_title, title) or comparetitle(original_title, ltv_title) or re.findall('^'+original_title+"[/s|$]",ltv_original_title) or re.findall(original_title+'$',ltv_original_title) or re.findall('^'+title,ltv_title) or re.findall(title+'$',ltv_title):
+			original_title, title = CleanLTVTitle(original_title), CleanLTVTitle(title)
+			if comparetitle(ltv_original_title, original_title) or comparetitle(ltv_title, title) or comparetitle(ltv_original_title, title) or comparetitle(original_title, ltv_title) or re.findall('^'+original_title+"[ |$]",ltv_original_title) or re.findall(original_title+'$',ltv_original_title) or re.findall('^'+title,ltv_title) or re.findall(title+'$',ltv_title):
 				if ltv_lang == ltv_flag1: sub1.append( { "title" : ltv_title, "filename" : release,"language_name" : lang1, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag1+".gif" } )
 				if ltv_lang == ltv_flag2: sub2.append( { "title" : ltv_title, "filename" : release,"language_name" : lang2, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag2+".gif" } )
 				if ltv_lang == ltv_flag3: sub3.append( { "title" : ltv_title, "filename" : release,"language_name" : lang3, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag3+".gif" } )
-				log( __name__ ,u"%s Matched!\nTitle[%s], Original Title[%s]\nLTV Title[%s], LTV Original Title[%s]\nID[%s], Release[%s], Language[%s], Rating[%s]" % (debug_pretext, title, original_title, ltv_title, ltv_original_title, download_id, release, ltv_lang, ltv_rating))
-			else: log( __name__ ,u"%s Discarted.\nTitle[%s], Original Title[%s]\nLTV Title[%s], LTV Original Title[%s]\nID[%s], Release[%s], Language[%s], Rating[%s]" % (debug_pretext, title, original_title, ltv_title, ltv_original_title, download_id, release, ltv_lang, ltv_rating))
+				log( __name__ ,u" Matched!\nTitle[%s], Original Title[%s]\nLTV Title[%s], LTV Original Title[%s]\nID[%s], Release[%s], Language[%s], Rating[%s]" % (title, original_title, ltv_title, ltv_original_title, download_id, release, ltv_lang, ltv_rating))
+			else:log( __name__ ,u" Mismatched.\nTitle[%s], Original Title[%s]\nLTV Title[%s], LTV Original Title[%s]\nID[%s], Release[%s], Language[%s], Rating[%s]" % (title, original_title, ltv_title, ltv_original_title, download_id, release, ltv_lang, ltv_rating))
 
 	# Append all three language sequences.
 	subtitles.extend(sub1)
@@ -255,17 +257,17 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 	# Initiating variables and languages.
 	lang1, ltv_flag1, langid1, lang2, ltv_flag2, langid2, lang3, ltv_flag3, langid3 = LegendasLanguage(lang1,lang2,lang3)
 	tipo = "1"
-	idioma = "1"
-	subtitles = []
-	sub1 = []
-	sub2 = []
-	sub3 = []
+	subtitles, sub1, sub2, sub3, PartialSubtitles = [], [], [], [], []
 	
 	# Searching XBMC Database for TheTVDb id of the tvshow and retreaving the original tvshow title from TheTVDB.
 	# This tries to avoid mismatches when using translated tvshow names.
-	tvshow_id = re.sub("</?[^>]*>","",xbmc.executehttpapi("QueryVideoDatabase(select c12 from tvshow where c00 = '"+xbmc.getInfoLabel("VideoPlayer.TVshowtitle")+"')"))
-	if tvshow_id: original_tvshow = Uconvert(BeautifulStoneSoup(urllib2.urlopen("http://www.thetvdb.com/data/series/"+tvshow_id+"/").read()).data.series.seriesname.string)
-	else: original_tvshow = 0
+	
+	try:
+		xbmcTVShow = xbmc.getInfoLabel("VideoPlayer.TVshowtitle")
+		tvshow_id = int(re.sub("</?[^>]*>","",xbmc.executehttpapi("QueryVideoDatabase(select c12 from tvshow where c00 = \""+xbmcTVShow+"\")")))
+		if tvshow_id: original_tvshow = Uconvert(BeautifulStoneSoup(urllib2.urlopen("http://www.thetvdb.com/data/series/"+str(tvshow_id)+"/").read()).data.series.seriesname.string)
+		else: original_tvshow = tvshow
+	except: original_tvshow = tvshow
 	log( __name__ , original_tvshow )
 
 	# Formating the season to double digit format
@@ -276,10 +278,11 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 
 	# Setting up the search string; the original tvshow name is preferable.
 	# If the tvshow name lenght is less than 3 characters, append the year to the search.
-	if original_tvshow: search_string = chomp(original_tvshow) + " " +"S"+ss+"E"+ee
-	else: search_string = chomp(tvshow) + " " +"S"+ss+"E"+ee
+	
+	search_string = chomp(original_tvshow) + " " +"S"+ss+"E"+ee
 	if len(search_string) < 3: search_string = search_string +" "+ year
 	log( __name__ , "Searching "+search_string )
+	
 	# Doing the search and parsing the results to BeautifulSoup
 	search_dict = {'txtLegenda':search_string,'selTipo':tipo,'int_idioma':'99'}
 	search_data = urllib.urlencode(search_dict)
@@ -298,15 +301,25 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 		# Translated and original titles from LTV, the LTV season number and the
 		# scene release name of the subtitle. If a movie is retrieved, the re.findall
 		# will raise an exception and will continue to the next loop.
-		try:
-			ltv_title = re.findall("(.*) - [0-9]*",Uconvert(td.contents[2]))[0]
-			ltv_original_title, ltv_season = re.findall("(.*) - ([0-9]*)",Uconvert(td.contents[0].contents[0]))[0]
-			release = td.parent.parent.find('span',{'class':'brls'}).contents[0]
-			if not ltv_season: continue
-		except:
-			continue
+		reResult = re.findall("(.*) - [0-9]*",CleanLTVTitle(td.contents[2]))
+		if reResult: ltv_title = reResult[0]
+		else:
+			ltv_title = CleanLTVTitle(td.contents[2])
 		
-		# Retrieves the rating of the subtitle, and set it to '0' id not available.
+		reResult = re.findall("(.*) - ([0-9]*)",CleanLTVTitle(td.contents[0].contents[0]))
+		if reResult: ltv_original_title, ltv_season = reResult[0]
+		else:
+			ltv_original_title = CleanLTVTitle(td.contents[0].contents[0])
+			ltv_season = 0
+
+		release = td.parent.parent.find('span',{'class':'brls'}).contents[0]
+		if not ltv_season:
+			reResult = re.findall("[Ss]([0-9]+)[Ee][0-9]+",release)
+			if reResult: ltv_season = re.sub("^0","",reResult[0])
+			
+		if not ltv_season: continue
+
+		# Retrieves the rating of the subtitle, and set it to '0' if not available.
 		ltv_rating = td.contents[10]
 		ltv_rating = chomp(ltv_rating.split("/")[0])
 		if ltv_rating == "N": ltv_rating = "0"
@@ -324,36 +337,45 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 		# Compares the parsed and the LTV season number, then compares the retrieved titles from LTV
 		# to those parsed or snatched by this service.
 		# Each language is appended to a unique sequence.
+		tvshow = CleanLTVTitle(tvshow)
+		original_tvshow = CleanLTVTitle(original_tvshow)
 		if int(ltv_season) == int(season): 
-			if re.findall('^%s' % (tvshow),ltv_original_title) or comparetitle(ltv_title,tvshow) or comparetitle(ltv_original_title,original_tvshow):
-				if ltv_lang == ltv_flag1: sub1.append( { "title" : ltv_original_title, "filename" : release,"language_name" : lang1, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag1+".gif" } )
-				if ltv_lang == ltv_flag2: sub2.append( { "title" : ltv_original_title, "filename" : release,"language_name" : lang2, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag2+".gif" } )
-				if ltv_lang == ltv_flag3: sub3.append( { "title" : ltv_original_title, "filename" : release,"language_name" : lang3, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_flag3+".gif" } )
-				log( __name__ ,u"%s Matched!\nTVShow[%s], Original TVShow[%s]\nLTV TVShow[%s], LTV Original TVShow[%s]\nRelease[%s], Season[%s], ID[%s], Language[%s], Rating[%s]" % (debug_pretext, tvshow, original_tvshow, ltv_title, ltv_original_title, release, ltv_season, download_id, ltv_lang, ltv_rating))
-			else: log( __name__ ,u"%s Discarted.\nTVShow[%s], Original TVShow[%s]\nLTV TVShow[%s], LTV Original TVShow[%s]\nRelease[%s], Season[%s], ID[%s], Language[%s], Rating[%s]" % (debug_pretext, tvshow, original_tvshow, ltv_title, ltv_original_title, release, ltv_season, download_id, ltv_lang, ltv_rating))
-		else: log( __name__ ,u"%s Season do not match. Season[%s], LTV Season[%s]." % (debug_pretext))
+			SubtitleResult = { "title" : ltv_original_title, "filename" : release,"language_name" : lang1, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_lang+".gif" } 
+			if re.findall("^%s" % (tvshow),ltv_original_title) or comparetitle(ltv_title,tvshow) or comparetitle(ltv_original_title,original_tvshow):
+				if ltv_lang == ltv_flag1: sub1.append( SubtitleResult )
+				if ltv_lang == ltv_flag2: sub2.append( SubtitleResult )
+				if ltv_lang == ltv_flag3: sub3.append( SubtitleResult )
+				log( __name__ ,u" Matched!\nTVShow[%s], Original TVShow[%s]\nLTV TVShow[%s], LTV Original TVShow[%s]\nRelease[%s], Season[%s], ID[%s], Language[%s], Rating[%s]" % (tvshow, original_tvshow, ltv_title, ltv_original_title, release, ltv_season, download_id, ltv_lang, ltv_rating))
+			else:
+				reResult = re.findall("[Ss][0-9]+[Ee]([0-9]+)",release)
+				if reResult: LTVEpisode = re.sub("^0","",reResult[0])
+				else: LTVEpisode = 0
+				if int(LTVEpisode) == int(episode):
+					PartialSubtitles.append( SubtitleResult )
+				log( __name__ ,u" Mismatched.\nTVShow[%s], Original TVShow[%s]\nLTV TVShow[%s], LTV Original TVShow[%s]\nRelease[%s], Season[%s], ID[%s], Language[%s], Rating[%s]" % (tvshow, original_tvshow, ltv_title, ltv_original_title, release, ltv_season, download_id, ltv_lang, ltv_rating))
+		else: log( __name__ ,u" Seasons mismatched. Season[%s], LTV Season[%s]." % (season, ltv_season))
 		
 	# Append all three language sequences.
 	subtitles.extend(sub1)
 	subtitles.extend(sub2)
 	subtitles.extend(sub3)
+	if not len(subtitles): subtitles.extend(PartialSubtitles)
 	return subtitles
 
 def chomp(s):
-	a = re.compile("(\r|\n|^ | $|\'|\"|,|;)")
-	b = re.compile("(\t|-|:|[(]|[)]|\/)")
-	s = a.sub("",s)
+	s = re.sub("[ ]{2,20}"," ",s)
+	a = re.compile("(\r|\n|^ | $|\'|\"|,|;|[(]|[)])")
+	b = re.compile("(\t|-|:|\/)")
 	s = b.sub(" ",s)
 	s = re.sub("[ ]{2,20}"," ",s)
+	s = a.sub("",s)
 	return s
 	
 def CleanLTVTitle(s):
-	a = re.compile("(\r|\n|^ | $|\'|\"|,|;)")
-	b = re.compile("(\t|-|:|[(]|[)]|\/)")
+	s = Uconvert(s)
 	s = re.sub("[(]?[0-9]{4}[)]?$","",s)
-	s = a.sub("",s)
-	s = b.sub(" ",s)
-	s = re.sub("[ ]{2,20}"," ",s)
+	s = chomp(s)
+	s = s.title()
 	return s
 
 	
@@ -392,12 +414,12 @@ def compareyear(a, b):
 		return 0
 
 def comparetitle(a, b):
-	a = CleanLTVTitle(a.title())
-	b = CleanLTVTitle(b.title())
 	if (a == b) or (noarticle(a) == noarticle(b)) or (a == noarticle(b)) or (noarticle(a) == b) or (a == shiftarticle(b)) or (shiftarticle(a) == b):
 		return 1
 	else:
+#		print "[%s] != [%s]" % (a,b)
 		return 0
+		
 
 def to_unicode_or_bust(
          obj, encoding='iso-8859-1'):

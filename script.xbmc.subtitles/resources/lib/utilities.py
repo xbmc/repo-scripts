@@ -160,15 +160,15 @@ def toOpenSubtitles_two( id ):
     "Urdu"                       : "ur",
     "Vietnamese"                 : "vi",
     "English (US)"               : "en",
-    "English (UK)"              : "en",
-    "Portuguese (Brazilian)"    : "pt-br",
-    "Español (Latinoamérica)" : "es",
-    "Español (España)"        : "es",
-    "Spanish (Latin America)"   : "es",
-    "Español"                  : "es",
-    "Spanish (Spain)"           : "es",
-    "Chinese (Traditional)"     : "zh",
-    "Chinese (Simplified)"      : "zh",
+    "English (UK)"               : "en",
+    "Portuguese (Brazilian)"     : "pt-br",
+    "Español (Latinoamérica)"  : "es",
+    "Español (España)"         : "es",
+    "Spanish (Latin America)"    : "es",
+    "Español"                   : "es",
+    "Spanish (Spain)"            : "es",
+    "Chinese (Traditional)"      : "zh",
+    "Chinese (Simplified)"       : "zh",
     "All"                        : "all"
   }
   return languages[ id ]
@@ -476,6 +476,17 @@ def twotofull(id):
     "es"                  :  "Spanish",
     "sv"                  :  "Swedish",
     "tr"                  :  "Turkish",
+    "pb"                  :  "PortugueseBrazil",
+    "hy"                  :  "Belarusian",
+    "bs"                  :  "Bosnian",
+    "ca"                  :  "Catalan",
+    "is"                  :  "Icelandic",
+    "kk"                  :  "Kazakh",
+    "th"                  :  "Thai",
+    "uk"                  :  "Ukrainian",
+    "vi"                  :  "Vietnamese",
+    "fa"                  :  "Persian",
+
 
   }
   return languages[ id ]  

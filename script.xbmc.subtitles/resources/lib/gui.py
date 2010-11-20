@@ -45,10 +45,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if (movieFullPath.find("rar://") > -1 ):
             rar = True
             
-            movieFullPath = sub_folder = movieFullPath.replace("rar://","")
-            sub_folder = os.path.dirname(os.path.dirname( sub_folder ))
+            movieFullPath = movieFullPath.replace("rar://","")
+            if path:
+              sub_folder = os.path.dirname(os.path.dirname( movieFullPath ))
                 
-        if not path and not rar:
+        if not path:
             if len(sub_folder) < 1 :
                 sub_folder = os.path.dirname( movieFullPath )
                               
@@ -114,11 +115,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
           self.file_name = os.path.basename( movieFullPath )
         else:
           if (len(str(self.year)) < 1 ) :
-            self.file_name = self.title
+            self.file_name = self.title.encode('utf-8')
             if (len(self.tvshow) > 0):
-              self.file_name = "%s S%.2dE%.2d" % (self.tvshow, int(self.season), int(self.episode) )
+              self.file_name = "%s S%.2dE%.2d" % (self.tvshow.encode('utf-8'), int(self.season), int(self.episode) )
           else:
-            self.file_name = "%s (%s)" % (self.title, str(self.year),)    
+            self.file_name = "%s (%s)" % (self.title.encode('utf-8'), str(self.year),)    
           
           
         self.tmp_sub_dir = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( __cwd__ ),"sub_tmp" )
