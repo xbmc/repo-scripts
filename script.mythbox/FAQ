@@ -1,0 +1,221 @@
+
+                  Frequently Asked Questions
+                  --------------------------
+
+Q1. What should I do if I run into problems or something doesn't work?
+Q2. How to I change the log settings?
+Q3. Where are the MythBox configuration settings stored?
+Q4. When is the next release coming out?
+Q5. How do I specify more than one recording directory in the settings?
+Q6. Where can I discuss MythBox online with other MythBox users?
+Q7. TODO: Placeholder
+Q8. (Linux Only) Why does XBMC act like I pressed a button twice on my remote control when I only pressed it once?
+Q9. Where is the source code?
+Q10. When are you going to add feature <insert your feature here> to MythBox?
+Q11. What sort of MythTV setup do you use with MythBox?
+Q12. When I play a recorded program, I get nothing but a green screen.
+Q13. (Windows Only) Import errors when running scipt
+Q14. How do I fix a 'MySQL connection error 1043 bad handshake' error? 
+Q15. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
+Q16. What is the difference between XBMC's built-in myth:// protocol support and MythBox? 
+Q17. What is the plan to support the new Confluence skin released with XBMC 9.11?
+Q18. What happened to all the translations? Everything seems to be in English.
+
+-------------------------------------------------------------------------
+Q1. What should I do if I run into problems or something doesn't work?
+
+A1. Please file a defect if the issue has not already been identified @
+    http://code.google.com/p/mythbox/issues/list
+
+    Creating a new defect:
+    
+    1. Grab the MythBox log file:
+       - Linux  : ~/mythbox.log
+       - Mac    : /Applications/mythbox.log
+       - Windows: Log file broken at the moment.
+       - Vista  : Log file broken at the moment.
+  
+    2. Grab the XBMC log file:
+       - Linux  : ~/.xbmc/temp/xbmc.log
+       - Mac    : ~/Library/logs/xbmc.log 
+       - Windows: C:\Documents and Settings\[user]\Application Data\XBMC\xbmc.log
+       - Vista  : C:\Users\[user]\AppData\Roaming\XBMC\xbmc.log
+       
+    3. Take a screenshot in XBMC (PrintScreen key) if possible. 
+   
+    4. Create a defect @ http://code.google.com/p/mythbox/issues/list
+       - attach the log files and/or screenshot
+       - enter the list of steps to reproduce the problem
+
+-------------------------------------------------------------------------------
+Q2. How to I change the log settings?
+
+A2. MythBox -> Settings -> Advanced -> Enabled debug logging 
+
+-------------------------------------------------------------------------------
+Q3. Where are the MythBox configuration settings stored?
+
+A3. Linux  : ~/.xbmc/userdata/script_data/MythBox/settings.xml
+    Mac    : ~/Library/Application Support/UserData/script_data/MythBox/settings.xml
+    Windows: C:\Document and Settings\[user]\Application Data\XBMC\UserData\script_data\MythBox\settings.xml
+    Vista  : C:\Users\[user]\AppData\Roaming\XBMC\UserData\script_data\MythBox\settings.xml
+
+-------------------------------------------------------------------------------
+Q4. When is the next release coming out?
+
+A4. Subscribe to this RSS Feed and you'll be the first to know...
+    http://code.google.com/feeds/p/mythbox/downloads/basic
+    
+-------------------------------------------------------------------------------
+Q5. How do I specify more than one recording directory in the settings?
+
+A5. You can enter multiple directories by separating them with a colon on 
+    Linux/Mac or a semi-colon on windows.
+    
+-------------------------------------------------------------------------------
+Q6. Where can I discuss MythBox online with other MythBox users?
+
+A6. Try the XBMC forums @ http://xbmc.org/forum/showthread.php?t=43115
+
+-------------------------------------------------------------------------------
+Q7. TODO: Placeholder 
+
+A7. TODO: Placeholder
+
+-------------------------------------------------------------------------------
+Q8. (Linux Only) Why does XBMC act like I pressed a button twice on my remote
+    control when I only pressed it once?
+
+A8. Known issue with XBMC - See http://trac.xbmc.org/ticket/4552 
+    (add your $.02 to the Trac ticket if you would like to see this fixed)
+    The workaround is to add <remoterepeat>700</remoterepeat> to your 
+    advancedsettings.xml. (A higher number for the delay may be required)
+    
+    More info on this issue be found here:  
+    http://xbmc.org/wiki/?title=Advancedsettings.xml#.3Cremoterepeat.3E
+
+-------------------------------------------------------------------------------
+Q9. Where is the source code?  
+    
+A9. To checkout the source (assuming you have Mercurial installed): 
+  
+        hg clone http://mythbox.googlecode.com/hg MythBox
+  
+    Description of source tree:
+    
+        +-bin        - various scripts for development
+        +-resources
+            +-src    - source code
+            +-test   - unit tests  (250+)
+            +-lib    - 3rd party libs
+            +-bin    - 3rd party executables
+            +-skins  - default skin xml files + images
+                
+    To run unit tests from the MythBox dir:
+    
+        $ source bin/setenv; python2.4 resources/test/runtests.py                
+
+-------------------------------------------------------------------------------    
+Q10. When are you going to add feature <insert your feature here> to MythBox?  
+     
+A10. If I find the feature compelling enough, there is reasonable chance that
+     it might make its way into the codebase. If you're technically inclined,
+     feel free to submit a patch. High quality patches are always welcome! 
+     Otherwise, create an enhancement request on Google Code's issue tracker
+     so that the feature can be tracked.
+
+-------------------------------------------------------------------------------      
+Q11. What sort of MythTV setup do you use with MythBox? My setup doesn't seem
+     to work.
+
+     It is quite possible that you may be having problems getting MythBox to work
+     if your setup is significantly different from mine.
+
+     FrontEnd + Slave Backend (Acer Aspire Revo - Atom 1.6Ghz - NVidia ION - 2GB)
+        Ubuntu Lucid (32bit)
+        Hauppauge HD-PVR (capturing @ 1280x720x60fps) 
+        DirecTV HD receiver
+        Gigabit Ethernet
+        Recording dirs mounted via NFS
+        50" Plasma (1920x1080)
+        HP MCE Remote
+        XBMC 9.11 + VDPAU playback
+     
+     Master Backend (Athlon 4800+)
+        Ubuntu Lucid (32bit)
+        SiliconDust HDHomeRun - 2xATSC  (OTA Chicago)
+        Intel Gigabit Ethernet
+        Recording dirs mounted via NFS
+        2 comm flagging slots
+             
+     Slave Backend (Athlon 4600+)
+       Ubuntu Lucid (32bit)
+       2 comm flagging slots
+        
+     FrontEnd (Mac Book)
+        Mac OS X Snow Leopard
+        Wireless 802.11n
+        Recording dirs mounted via NFS
+        XBMC 9.11
+
+---------------------------------------------------------------------------------
+Q12. When I play a recorded program, I get nothing but a green screen.
+
+     You need to change your recording profile to use MPEG4 instead of RTjpeg.
+     1. Start the MythTV frontend
+     2. Go to Utilites/Setup->Setup->TV Settings->Recording Profiles->Software Encoders->Live TV
+     3. Set the codec to MPEG4 instead of RTjpeg.
+
+---------------------------------------------------------------------------------
+Q13. (Windows Only) Import errors when running scipt
+
+     Old versions of WinZip don't uncompress tar.gz files correctly. 
+     Upgrade to the latest version of WinZip and try again.
+
+---------------------------------------------------------------------------------     
+Q14. How do I fix a 'MySQL connection error 1043 bad handshake' error?
+
+     Your MySQL database server is set to authenticate using the old MySQL 4.0 style 
+     instead of the newer style used since MySQL 4.1+. This is pretty easy to fix 
+     if you have phpMyAdmin installed (highly recommended). Just login to phpMyAdmin
+     using your mythtv username and password and then click on the password link to
+     reset it making sure you select MySQL 4.1+ for 'Password hashing'.
+     
+---------------------------------------------------------------------------------     
+Q15. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
+
+     1. Edit /etc/mysql/my.cnf and change old_passwords=1 to old_passwords=0
+     2. Reset the password for the MythTV database (see Q14) and restart MythBox
+
+---------------------------------------------------------------------------------     
+Q16. What is the difference between XBMC's myth:// protocol support and MythBox?     
+     
+     Feature                  MythBox        XBMC + myth://
+     ==========================================================
+     Commercial skipping      Yes            Yes (since Camelot)
+     Watch Live TV            Yes            Yes
+     Schedule Recordings      Yes            No 
+     Upcoming Recordings      Yes            No
+     Enhanced Program Guide   Yes            No 
+     Fan art for TV Programs  Yes            No
+     Fan art for Movies       Yes            Yes (since Camelot)
+     Library Mode             No             Yes
+     Tuners/Jobs/Load stats   Yes            No
+     Detailed Recording Info  Yes            No
+     Support for Confluence   No (help!)     Yes
+     Network streaming        Live TV only   Yes
+
+---------------------------------------------------------------------------------     
+Q17. What is the plan to support the new Confluence skin released in XBMC 9.11?
+     
+     While I've been able to cobble together the current look & feel of the
+     MythBox user interface based on the PM3.HD skin, I am by no means aesthetically 
+     gifted. If you've got the skills or think you're up to it, please get in touch 
+     and lets get you commit access.
+
+---------------------------------------------------------------------------------
+Q18. What happened to all the translations? Everything seems to be in English.
+
+     The english translations are now stable. Contact me if would like to contribute
+     translations for additional languages. 
+              

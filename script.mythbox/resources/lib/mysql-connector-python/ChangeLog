@@ -1,0 +1,202 @@
+MySQL Connector/Python - Release Notes / ChangeLog
+Copyright (c) 2009,2010, Oracle and/or its affiliates. All rights reserved.
+Use is subject to license terms. (See COPYING)
+
+-----------------------------------------------------------------------
+0.1.5
+-----------------------------------------------------------------------
+Highlights:
+o It was impossible to retrieve big result sets. (bug lp:551533 and lp:586003)
+o Changing copyright from Sun to Oracle (also fixing silly typo).
+
+Details:
+241: Geert Vanderkelen 2010-05-27
+  Copyright change to Oracle
+240: Geert Vanderkelen 2010-05-27
+  Critical bug fix: impossible to select big results
+
+
+-----------------------------------------------------------------------
+0.1.4
+-----------------------------------------------------------------------
+Highlights:
+o Reading from network was broken for bigger packages.
+o Reimplementing protocol.MySQLProtocol marking simpler and easier to
+  maintain.
+o It is now possible to send multiple statements to MySQL using
+  MySQLCursor.execute(). The results are accessible by calling the method
+  next_resultset().
+o MySQLCursor.callproc() will now store all result sets as a
+  MySQLCursorBuffered. They are accessible using the next_proc_resultset()
+  method. The result of the stored procedure is returned by callproc()
+  itself as defined by PEP249.
+o MySQL DATETIME conversion to Python datetime.datetime is now much faster.
+o Some overall performance improvements.
+o Copyright notice changes
+
+Details:
+238: Geert Vanderkelen 2010-05-20
+  Fix raising errors
+237: Geert Vanderkelen 2010-05-16
+  Additional fix for bug lp:573274
+236: Geert Vanderkelen 2010-05-16
+  Fixes the operation not being encoded to character set
+235: Geert Vanderkelen 2010-05-14
+  Adding default collations to constants.CharacterSet
+234: Geert Vanderkelen 2010-05-13
+  Improving DATETIME to datetime.datetime conversion
+233: Geert Vanderkelen 2010-05-05
+  Adding support for Multiple Statements using MySQLCusor.execute()
+232: Geert Vanderkelen 2010-05-05
+  Adding new debug output 'mode' to utils._dump_buffer()
+231: Geert Vanderkelen 2010-05-05
+  Adding constants.flag_is_set helper method
+230: Geert Vanderkelen 2010-04-29
+  Removing debug code from MySQLCursor
+229: Geert Vanderkelen 2010-04-24
+  Fixing unittests checking temporal data
+228: Geert Vanderkelen 2010-04-23
+  Updating the ChangeLog for 0.1.4
+227: Geert Vanderkelen 2010-04-23
+	Adding support for multiple results sets returned by stored procedures
+226: Geert Vanderkelen 2010-04-20
+	Fixing compat with 2.5 and get_desc() now works
+225: Geert Vanderkelen 2010-04-20
+	Adding changes done since rev 220
+224: Geert Vanderkelen 2010-03-19
+	Reverting to use regular expressions when parting MySQL version
+223: Geert Vanderkelen 2010-03-16
+	Optimizing read_lc_string and fixing intread a bit
+222: Geert Vanderkelen 2010-02-26
+	Removing MySQLBase.conn, moving connection to MySQLProtocol
+221: Geert Vanderkelen 2010-02-26
+	Reimplementing protocol.MySQLProtocol
+220: Geert Vanderkelen 2010-02-22
+	Correct test case for bug lp:524668 using Py3k
+219: Geert Vanderkelen 2010-02-22
+	Removing socket flags when using UNIX socket
+218: Geert Vanderkelen 2010-02-22
+	Fix parsing MySQL versions which have none-digits
+217: Geert Vanderkelen 2010-02-21
+	Fix test case for Bug499362 to support older versions of MySQL
+216: Geert Vanderkelen 2010-02-19
+	Refactoring MySQLBaseConnection.recv()
+215: Geert Vanderkelen 2010-02-18
+	Moving packet header parsing into MySQLBaseConnection
+214: Geert Vanderkelen 2010-02-18
+	Refactoring utils.read_lc_string_list() back to original
+213: Geert Vanderkelen 2010-02-18
+	Removing unnecessary constants import
+212: Geert Vanderkelen 2010-02-18
+	Refactoring methods utils.intread and utils.read_int
+211: Geert Vanderkelen 2010-02-18
+	Refactoring MySQLBase._open_connection
+210: Geert Vanderkelen 2010-02-18
+	Refactoring MySQLProtocol.set_handshake
+209: Geert Vanderkelen 2010-02-18
+	Refactoring MySQLBase.set_autocommit
+208: Geert Vanderkelen 2010-02-17
+	Optimizing the CharacterSet constant
+207: Geert Vanderkelen 2010-02-16
+	Adding passwd as connection parameter
+206: Geert Vanderkelen 2010-02-12
+	Adding support Cygwin setting socket flags to zero
+205: Geert Vanderkelen 2010-02-12
+	Fix authentication by fixing utils.int1read()
+204: Geert Vanderkelen 2010-02-12
+	Reverting rev200
+203: Geert Vanderkelen 2010-02-08
+	Fix possible problem with socket.error without errno
+202: Geert Vanderkelen 2010-01-28
+	{0.1.3-devel} Adding changelog for 0.1.3-devel
+
+-----------------------------------------------------------------------
+0.1.3-devel (2010-01-28)
+-----------------------------------------------------------------------
+Highlights:
+o Important memory leak fixed when closing cursors.
+o Warnings can now be raised as exceptions.
+o Fixing unicode usage and broken error message when MySQL chops them
+o Client flags can now be set correctly when connecting
+o Conversion fixes for BIT/YEARSET and Python to DATE/DATETIME
+o Adding MySQL Client Errors and raising better exceptions based on errno.
+
+Details:
+201: Geert Vanderkelen 2010-01-28 {0.1.3-devel} Using weak references
+200: Geert Vanderkelen 2010-01-28 Moving dict attributes of MySQLConverter to methods
+199: Geert Vanderkelen 2010-01-27 Fixing memory leak when opening cursors
+198: Geert Vanderkelen 2010-01-26 Exception raised in protocol module using errors.get_mysql_exception
+197: Geert Vanderkelen 2010-01-26 Fixing mysql.Error and simplying
+196: Geert Vanderkelen 2010-01-25 Adding MySQL server errors and better exceptions (part 1)
+195: Geert Vanderkelen 2010-01-25 Fixing rowcount in Cursor executemany() with no-result sets
+194: Geert Vanderkelen 2010-01-25 Using MySQL Client Error messages when connecting
+193: Geert Vanderkelen 2010-01-25 Implementing MySQL Client Errors
+192: Geert Vanderkelen 2010-01-23 Simplying the cursor.set_connection method raising correct Exception
+191: Geert Vanderkelen 2010-01-23 Changing get_flags_info to get_bit_info in a new class
+190: Geert Vanderkelen 2010-01-22 Implementing Raise-On-Warnings
+189: Geert Vanderkelen 2010-01-22 Fixed the conversion of binary fields
+188: Geert Vanderkelen 2010-01-22 Removing sys.path change
+187: Geert Vanderkelen 2010-01-22 Adding method to retrieve names given FieldFlag bitvalues
+186: Geert Vanderkelen 2010-01-22 Fixing _constants get_desc/get_info methods
+185: Geert Vanderkelen 2010-01-22 Adding missing check for BIT-field in to_python method
+184: Geert Vanderkelen 2010-01-22 Fixing buffered MySQL cursor & handling unread results
+183: Geert Vanderkelen 2010-01-20 Change in convesion of SET data type to Python set
+182: Geert Vanderkelen 2010-01-20 Adding tests for MySQL data types (numeric and temporal)
+181: Geert Vanderkelen 2010-01-19 Fixing Python to MySQL DATE/DATETIME conversions and throwing exceptions
+180: Geert Vanderkelen 2010-01-17 Removing fields and nrflds attributes from MySQLCursor
+179: Geert Vanderkelen 2010-01-15 Fixing MySQL BIT column conversion to Python
+178: Geert Vanderkelen 2010-01-14 Adding conversion for MySQL's BIT data type
+177: Geert Vanderkelen 2010-01-14 Updating inserts.py example so it commits
+176: Geert Vanderkelen 2010-01-14 Adding conversion for MySQL's YEAR data type
+175: Geert Vanderkelen 2009-12-31 Fix in unittests for comparing results from MySQL and what is expected
+174: Geert Vanderkelen 2009-12-31 Fix for setting client flags when connecting
+173: Geert Vanderkelen 2009-12-23 [merge] Merging from 0.1.2-devel release
+172: Geert Vanderkelen 2009-12-23 Fix for broken unicode characters when MySQL trimed the errmsg
+171: Geert Vanderkelen 2009-12-23 Fixing unicode usage for both Python 2.4+ and 3.1
+
+-----------------------------------------------------------------------
+0.1.2-devel (2009-12-23)
+-----------------------------------------------------------------------
+o Fixing unicode usage for both Python 2.4+ and 3.1
+  * Setting 'use_unicode' at connection time is now working.
+  * conversion.py: removing regular expression for quoting backslashes.
+  * Adding test case for bug lp:499410
+  
+  Py3k specific:
+  * Strings from MySQL are decoded to the given character when use_unicode
+    is false
+  * The statement is encoded just before sending it to the MySQL server.
+    Internally, all is done in unicode.
+  * In conversion.py: removing _unicode_to_mysql, adding _bytes_to_mysql
+  * MySQLCursor.__unicode__ is obsolete and replaced with __str__
+  * Removing tests for which the methods were deleted.
+
+o Fix setting character set at connection
+  
+  * mysql.connector.Connect(charset='latin1') now works as expected
+  * Default character set is (still) UTF-8.
+  * SET NAMES is only used when changing character set after connecting.
+    Use MySQL.set_charset(charsetname) to change.
+  * Test case added for bug report; fixing test case in test_protocol.py
+    to reflect the new default character set 'utf-8'.
+
+-----------------------------------------------------------------------
+0.1.1-devel (2009-12-21)
+-----------------------------------------------------------------------
+o Added Python v3.1 support
+  * The subdirectory/module py3k/ contains Connector/Python compatible
+    with Python v3.1.1.
+  * setup.py will install the correct Connector/Python distribution
+    depending on the Python version.
+  * Test cases which were running against Python v2.4+ are also working
+    under Python v3.1
+  * Examples found in py3k/examples should work with Python v3.1
+  * The code will not check whether the Python version is supported.
+  
+o Misc.
+  * Using divmod() in MySQLConverter._timedelta_to_mysql()
+  * Avoiding imports and the use of isinstance() by putting code in
+    exceptions.
+  * Stop using types module.
+
+

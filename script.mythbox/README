@@ -1,0 +1,126 @@
+What is MythBox?
+================
+MythBox is a MythTV frontend for XBMC. 
+
+Features:
+  - Watch recordings with commercial skipping
+  - Watch Live TV
+  - Create and update recording schedules
+  - View upcoming recordings 
+  - Enhanced program guide
+  - TV show and movie metadata (fanart, episodes, etc) downloaded from tvdb, tvrage, tmdb, imdb, and google image search
+  - View tuner and job queue info
+  - Compatible with MythTV 0.21, 0.22, 0.23, and 0.23.1 
+  - Add your own public Twitter feeds
+  - Move comm flagging jobs to the front of the queue
+
+Requirements
+================
+  
+  All Platforms
+    - XBMC 10.10 (Dharma) or XBMC 9.11 (Camelot)
+    - A working MythTV backend
+    - MythTV recordings directory(s) and/or storage groups accessible via the local 
+      filesystem (the machine running XBMC) pre-mounted using nfs, samba, afp, etc.   
+
+  Linux
+    - 32-bit or 64-bit distro (Ubuntu, Debian, Fedora, Gentoo, Arch, OpenSuse, etc) 
+    - ffmpeg installed as /usr/bin/ffmpeg (Ubuntu/Debian users: sudo apt-get install ffmpeg)
+
+  Mac OSX
+    - Mac OSX 10.5 or newer - Intel only 
+
+  Windows
+    - Windows XP, Vista, or Windows 7
+  
+  MythBox does *not* work on the XBox.
+  
+  
+Installation
+================
+
+  XBMC 10.10
+    
+      1. TODO  
+  
+  XBMC 9.11
+    
+      1. Extract mythbox.tar.gz to the following directory:
+         Linux   : ~/.xbmc/scripts 
+         Mac     : ~/Library/Application Support/XBMC/scripts
+         Windows : C:\Documents and Settings\[user]\Application Data\XBMC\scripts
+         Vista   : C:\Users\[user]\AppData\Roaming\XBMC\scripts
+               
+      2. Launch XBMC
+      
+      3. From the main XBMC screen, select Scripts
+      
+      4. From the Scripts screen, select MythBox 
+      
+      5. You'll be sent straight to the Settings screen (with an error message). 
+         Fill in all the settings and click on the 'Test Settings' button until 
+         you get a 'Settings OK' message.
+      
+      6. Exit the Settings screen & enjoy!
+
+
+Keybindings/Remote Control
+============================================================================
+Context         Keyboard       MCE Remote     Action
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Global          \              N/A            Toggle fullscreen/windowed mode  
+
+Navigation      Esc            -              Go back to the previous screen
+                Backspace      Back/Previous  Go back to the previous screen 
+                m              Win Button     Go back to the main menu
+
+Playing Video   x              Stop           Stop video
+                Space          Pause          Pause video
+                PrtScrn        Record         Take screenshot
+                i              Info           Show program info                               
+                o              Guide          Show audio/video/fps stats
+                z              OK             Toggle zoom modes
+                Tab            N/A            Toggle fullscreen/embedded player mode
+
+Home Window     Context Menu   TV Guide Btn   Activate popup menu to delete
+Coverflow                                     or re-record the selected
+                                              recording
+
+Recording       PgUp           Channel Up     Goto previous recording
+Details Window  PgDown         Channel Dn     Goto next recording
+
+TV Guide        PgUp           Channel Up     Scroll TV guide up one page
+                PgDown         Channel Dn     Scroll TV guide down one page
+                r              FastRewind     Scroll TV guide left one page
+                f              FastForward    Scroll TV guide right one page                                                    
+                ?              End            Scroll TV guide forward 1 day
+                ?              Begin          Scroll TV guide back 1 day  
+----------------------------------------------------------------------------
+
+
+TODO
+=============================
+- Confluence skin (any skinners out there?)
+
+History
+==========================
+MythBox was forked from xbmc-mythtv (http://xbmc-mythtv.sourceforge.net) 
+and heavily modified to bring MythTV protocol support up to date, 
+add new features, and make MythTV a pleasure to use in XBMC (obviously, not there yet).
+Many thanks to all the developers whose time and effort went into the original 
+xbmc-mythtv project!
+
+
+Contact Info
+==========================
+Email      : analogue@yahoo.com
+Bugs       : Create a defect @ http://mythbox.googlecode.com
+Suggestions: Create an enhancement request @ http://mythbox.googlecode.com
+Discuss    : http://xbmc.org/forum/showthread.php?t=43115
+
+
+Acknowledgements
+==========================
+Thanks to Team XBMC for an awesome mediacenter!
+Thanks to the MythTV devs!
+Thanks to the folks at www.iconshock.com for the TV icon.

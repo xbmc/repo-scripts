@@ -1,0 +1,74 @@
+
+MySQL Connector/Python                          MySQL driver written in Python
+==============================================================================
+Copyright (c) 2009,2010, Oracle and/or its affiliates. All rights reserved.
+Use is subject to license terms. (See COPYING)
+
+MySQL Connector/Python is implementing the MySQL Client/Server protocol
+completely in Python. This means you don't have to compile anything or MySQL
+(client library) doesn't even have to be installed on the machine.
+
+Disclaimer
+=====================
+
+!!!!!!!!!!! THIS IS STILL IN DEVELOPMENT !!!!!!!!!!!!!!!!!!!
+!!!!!!!! EXPECT THING TO NOT WORK OR GO WRONG !!!!!!!!!!!!!!
+!!!! DO NOT USE IN PRODUCTION etc.. etc... !!!!!!!!!!!!!!!!!
+
+Ah, and make backups! :-)
+
+Dependencies
+=====================
+
+* Python 2.4 or greater
+
+Connects to:
+* MySQL 4.1 or higher
+* Will not work with MySQL servers using 'old passwords'!
+
+
+Installation
+=====================
+
+* Install MySQL Connector/Python:
+
+To install, you'll need Python 2.4 or greater.
+Then, execute following (with proper permissions):
+
+  shell> python ./setup.py install
+
+setup.py will figure out which Python version you have and install the
+correct modules.
+
+Usage
+=====================
+
+* Check out the examples:
+
+In the examples directory of the source distribution you will find config.py,
+edit this file and change the connection settings for your MySQL server.
+Once that done, you should be able to run the examples. If not, contact me!
+
+ shell> ./engines.py
+
+Python v3.1 users: The examples are in the py3k/ subdirectory.
+
+Testing
+=====================
+
+Unit tests are provided and can be run using the unittests.py script. Mind
+that you best edit the file so the connection parameters are correct for your
+MySQL Server.
+
+Report problems
+=====================
+
+Report problems using LaunchPad's bug system here:
+  https://bugs.launchpad.net/myconnpy
+
+Credits
+=====================
+
+* Andy Dustman - we owe you big time for MySQLdb!
+* Jess Balint - early development of native Python driver, helped a bit!
+* (long list to come!)
