@@ -13,7 +13,7 @@
 			<posy>0</posy>
 			<height>576</height>
 			<width>720</width>
-			<texture>gs-bg.jpg</texture>	
+			<texture>gs-bg.png</texture>	
 			<animation effect="fade" time="1000" start="0" end="100">WindowOpen</animation>
 		</control>
 		<control type="image">

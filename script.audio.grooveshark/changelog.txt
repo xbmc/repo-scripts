@@ -1,3 +1,13 @@
+0.3.1:
+
+ - Fixed: The script couldn't get a session id due to API changes.
+
+ - New feature: Preliminary support for GrooveShark Radio.
+
+ - Enhancement: More options added in settings.
+
+ - Bug fix: The script would crash XBMC Dharma if no stream URL was returned.
+
 0.3.0:
 
 From this version onward only XBOX and Dharma will be supported.

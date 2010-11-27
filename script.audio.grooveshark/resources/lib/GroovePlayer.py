@@ -14,7 +14,7 @@ class GroovePlayer(xbmc.Player):
 
 	def onPlayBackEnded(self):
 		self.state = 0
-		self.function(1)
+		self.function(1, xbmcgui.getCurrentWindowId())
 
 	def onPlayBackStarted(self):
 		self.state = 2
@@ -28,8 +28,8 @@ class GroovePlayer(xbmc.Player):
 		self.state = 2
 		self.function(4)
 		
-	def playnext(self):
-		self.function(5)
+	#def playnext(self):
+	#	self.function(5)
 		
 	def isPaused(self):
 		if self.state == 1:

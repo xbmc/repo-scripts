@@ -25,6 +25,8 @@
     <string id="120">Se denne sangs album</string>
     <string id="121">Afslut</string>
     <string id="122">Fjern alle sange</string>
+    <string id="123">Anvend til radio</string>
+    <string id="124">Tilføj til radio</string>
 
     <!-- Dialogs -->
     <string id="1000">Indtast en søgning</string>
@@ -35,8 +37,8 @@
 
     <!-- Settings -->
     <string id="2000">Brugernavn</string>
-    <string id="2001">Password</string>
-    <string id="2002">Debugging (Genstart script for at anvende)</string>
+    <string id="2001">Kodeord</string>
+    <string id="2002">Fejlfinding</string>
     <string id="2003">XBOX</string>
     <string id="2004">Shuffle</string>
 

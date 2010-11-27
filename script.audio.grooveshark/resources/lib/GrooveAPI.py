@@ -76,6 +76,12 @@ class GrooveAPI:
 		if self.enableDebug == True:
 			print msg
 			
+	def setRemoveDuplicates(self, enable):
+		if enable == True or enable == 'true' or enable == 'True':
+			self.removeDuplicates = True
+		else:
+			self.removeDuplicates = False
+
 	def getSavedSession(self):
 		sessionID = ''
 		path = os.path.join(self.confDir, 'session', 'session.txt')
@@ -85,14 +91,13 @@ class GrooveAPI:
 			f.close()
 		except:
 			sessionID = ''
-			pass		
-		
+			pass				
 		return sessionID
 
 	def saveSession(self):
 		try:
 			dir = os.path.join(self.confDir, 'session')
-			# Create the 'data' directory if it doesn't exist.
+			# Create the 'session' directory if it doesn't exist.
 			if not os.path.exists(dir):
 				os.mkdir(dir)
 			path = os.path.join(dir, 'session.txt')
@@ -125,14 +130,7 @@ class GrooveAPI:
 
 	def callRemote(self, method, params={}):
 		data = {'header': {'sessionID': self.sessionID}, 'method': method, 'parameters': params}
-		#data = {'header': {'sessionID': None}, 'method': method, 'parameters': params}
 		data = self.simplejson.dumps(data)
-		#proxy_support = urllib2.ProxyHandler({"http" : "http://wwwproxy.kom.aau.dk:3128"})
-		## build a new opener with proxy details
-		#opener = urllib2.build_opener(proxy_support, urllib2.HTTPHandler)
-		## install it
-		#urllib2.install_opener(opener)
-		#print data
 		req = urllib2.Request("http://api.grooveshark.com/ws/1.0/?json")
 		req.add_header('Host', 'api.grooveshark.com')
 		req.add_header('Content-type', 'text/json')
@@ -152,10 +150,11 @@ class GrooveAPI:
 						self.saveSession()
 						return self.callRemote(method, params)
 					else:
-						self.debug('SessionID expired, but unable to get new')
+						self.debug('GrooveShark: SessionID expired, but unable to get new')
 						return []
 			return result
 		except:
+			traceback.print_exc()
 			return []
 
 	def startSession(self):
@@ -167,7 +166,7 @@ class GrooveAPI:
 		if 'fault' in result:
 			return ''
 		else:
-			return result['header']['sessionID']
+			return result['result']['sessionID']
 
 	def sessionDestroy(self):
 		return self.callRemote("session.destroy")
@@ -281,7 +280,6 @@ class GrooveAPI:
 				return []
 			i = 0
 			list = []
-			print result
 			while(i < len(playlists)):
 				p = playlists[i]
 				list.append([p['playlistName'].encode('ascii', 'ignore'), p['playlistID']])
@@ -361,15 +359,6 @@ class GrooveAPI:
 			self.radioEnabled = 1
 			return 1
 
-	def autoplayStop(self):
-		result = self.callRemote("autoplay.stop", {})
-		if 'fault' in result:
-			self.radioEnabled = 1
-			return 0
-		else:
-			self.radioEnabled = 0
-			return 1
-
 	def autoplayGetNextSongEx(self, seedArtists = [], frowns = [], songIDsAlreadySeen = [], recentArtists = []):
 		result = self.callRemote("autoplay.getNextSongEx", {"seedArtists": seedArtists, "frowns": frowns, "songIDsAlreadySeen": songIDsAlreadySeen, "recentArtists": recentArtists})
 		if 'fault' in result:
@@ -378,15 +367,19 @@ class GrooveAPI:
 			return result
 	
 	def radioGetNextSong(self):
-		if self.seedArtists == []:
-			return []
+		radio = self.getSavedRadio()
+		if radio == None:
+			return None
 		else:
-			result = self.autoplayGetNextSongEx(self.seedArtists, self.frowns, self.songIDsAlreadySeen, self.recentArtists)
+			seedArtists = []
+			for song in radio['seedArtists']:
+				seedArtists.append(song[7])
+			result = self.autoplayGetNextSongEx(seedArtists, radio['frowns'], radio['songIDsAlreadySeen'], radio['recentArtists'])
 			if 'fault' in result:
 				return []
 			else:
 				song = self.parseSongs(result)
-				self.radioAlreadySeen(song[0][1])
+				self.radioSetAlreadyListenedSong(songId = song[0][1])
 				return song
 
 	def radioFrown(self, songId):
@@ -395,15 +388,24 @@ class GrooveAPI:
 	def radioAlreadySeen(self, songId):
 		self.songIDsAlreadySeen.append(songId)
 
-	def radioAddArtist(self, artistId):
-		self.seedArtists.append(artistId)
+	def radioAddArtist(self, song = None, radioName = None):
+		radio = self.getSavedRadio(name = radioName)
+		if radio != None and song != None:
+			radio['seedArtists'].append(song)
+			return self.saveRadio(radio = radio)
+		else:
+			return 0
 
-	def radioStart(self, artists = [], frowns = []):
-		for artist in artists:
-			self.seedArtists.append(artist)
-		for artist in frowns:
-			self.frowns.append(artist)
-		if self.autoplayStartWithArtistIDs(self.seedArtists) == 1:
+	def radioStart(self):
+		return 1
+		radio = self.getSavedRadio()
+		if radio == None:
+			return 0
+		else:
+			seedArtists = []
+			for song in radio['seedArtists']:
+				seedArtists.append(song[7])
+		if self.autoplayStartWithArtistIDs(seedArtists) == 1:
 			self.radioEnabled = 1
 			return 1
 		else:
@@ -419,6 +421,51 @@ class GrooveAPI:
 
 	def radioTurnedOn(self):
 		return self.radioEnabled
+
+	def radioSetAlreadyListenedSong(self, name = None, songId = ''):
+		radio = self.getSavedRadio(name = name)
+		if radio != None and songId != '':
+			radio['songIDsAlreadySeen'].append(songId)
+			#while len(radio['songIDsAlreadySeen']) > 20:
+			#	radio['songIDsAlreadySeen'].pop(0) # Trim
+			return self.saveRadio(radio = radio)
+		else:
+			return 0
+
+	def getSavedRadio(self, name = None):
+		if name == None:
+			path = os.path.join(self.confDir, 'radio', 'default.txt')
+		else:
+			path = os.path.join(self.confDir, 'radio', 'saved', name)
+		try:
+			f = open(path, 'rb')
+			radio = pickle.load(f)
+			f.close()
+		except:
+			radio = None
+		return radio
+
+	def saveRadio(self, name = None, radio = {}): #blaher
+		try:
+			dir = os.path.join(self.confDir, 'radio')
+			# Create the 'data' directory if it doesn't exist.
+			if not os.path.exists(dir):
+				os.mkdir(dir)
+				os.mkdir(os.path.join(dir, 'saved'))
+			if name == None:
+				path = os.path.join(dir, 'default.txt')
+			else:
+				path = os.path.join(dir, 'saved', name)
+			f = open(path, 'wb')
+			pickle.dump(radio, f, protocol=pickle.HIGHEST_PROTOCOL)
+			f.close()
+			return 1
+		except IOError, e:
+			print 'There was an error while saving the radio pickle (%s)' % e
+			return 0
+		except:
+			print "An unknown error occured during save radio: " + str(sys.exc_info()[0])
+			return 0
 
 	def favoriteSong(self, songID):
 		return self.callRemote("song.favorite", {"songID": songID})
@@ -506,6 +553,10 @@ class GrooveAPI:
 		result = self.callRemote("song.about", {"songID": songId})
 		return result['result']['song']
 
+	def getVersion(self):
+		result = self.callRemote("service.getVersion", {})
+		return result
+
 	def parseSongs(self, items):
 		try:
 			if 'result' in items:
@@ -535,8 +586,9 @@ class GrooveAPI:
 							songName = s['songName'].encode('ascii', 'ignore')
 							albumName = s['albumName'].encode('ascii', 'ignore')
 							artistName = s['artistName'].encode('ascii', 'ignore')
-							if (entry[0].lower() == songName.lower()) and (entry[3].lower() == albumName.lower()) and (entry[6].lower() == artistName.lower()):
-								notIn = False
+							if self.removeDuplicates == True:
+								if (entry[0].lower() == songName.lower()) and (entry[3].lower() == albumName.lower()) and (entry[6].lower() == artistName.lower()):
+									notIn = False
 						if notIn == True:
 							list.append([s['songName'].encode('ascii', 'ignore'),\
 							s['songID'],\
