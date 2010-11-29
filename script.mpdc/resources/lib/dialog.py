@@ -30,7 +30,7 @@ SETTINGS = 101
 class Dialog ( xbmcgui.WindowXMLDialog ) :
 	
 	def __init__(self,*args,**kwargs):
-		super(xbmcgui.WindowXMLDialog, self).__init__('menu-dialog.xml',os.getcwd(),'Confluence','0')
+		super(xbmcgui.WindowXMLDialog, self).__init__('menu-dialog.xml',xbmcaddon.Addon('script.mpdc').getAddonInfo('path'),'Confluence','0')
 		self.result = -1
 		self.list = []
 		self.title=''		

@@ -20,31 +20,27 @@
 # */
 import sys,os
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin
-Addon = xbmcaddon.Addon(id=os.path.basename(os.getcwd()))
-
-__settings__ = xbmcaddon.Addon(id=os.path.basename(os.getcwd()))
-
-__language__ = __settings__.getLocalizedString
-
+__scriptid__ = 'script.mpdc'
+__addon__ = xbmcaddon.Addon(id=__scriptid__)
 SERVER_LIST = 120
 ACTION_CLOSE = [10]
 STATUS = 100
 SETTINGS = 101
-sys.path.append( os.path.join ( os.getcwd(), 'resources','lib') )
+sys.path.append( os.path.join ( __addon__.getAddonInfo('path'), 'resources','lib') )
 import gui,mpd,dialog
 
 STATUS_ON='on'
 STATUS_OFF='off'
-STR_CONNECTING=Addon.getLocalizedString(30007)
-STR_CONNECTING_TITLE=Addon.getLocalizedString(30015) 
-STR_SELECT_PROFILE=Addon.getLocalizedString(30008)
-STR_HOST_ONLINE=Addon.getLocalizedString(30009)
-STR_HOST_OFFLINE=Addon.getLocalizedString(30010)
+STR_CONNECTING=__addon__.getLocalizedString(30007)
+STR_CONNECTING_TITLE=__addon__.getLocalizedString(30015) 
+STR_SELECT_PROFILE=__addon__.getLocalizedString(30008)
+STR_HOST_ONLINE=__addon__.getLocalizedString(30009)
+STR_HOST_OFFLINE=__addon__.getLocalizedString(30010)
 class MpdProfile:
 	
 	def __init__(self,profile_id):
 		self.id=profile_id
-		self.addon = xbmcaddon.Addon(id=os.path.basename(os.getcwd()))
+		self.addon = xbmcaddon.Addon(id=__scriptid__)
 		self.name = self.addon.getSetting(self.id+'_name')
 		self.host = self.addon.getSetting(self.id+'_mpd_host')	
 		self.port = self.addon.getSetting(self.id+'_mpd_port')
@@ -52,8 +48,12 @@ class MpdProfile:
 		self.password = self.addon.getSetting(self.id+'_mpd_pass')
 		self.status = STR_HOST_OFFLINE
 		self.stat = STATUS_OFF
+		self.enabled=False
+		if self.addon.getSetting(self.id+'_enabled') == 'true':
+			self.enabled=True
 
 	def update(self):
+		self.addon = xbmcaddon.Addon(id=__scriptid__)
 		self.name = self.addon.getSetting(self.id+'_name')
 		self.host = self.addon.getSetting(self.id+'_mpd_host')	
 		self.port = self.addon.getSetting(self.id+'_mpd_port')
@@ -61,6 +61,11 @@ class MpdProfile:
 		self.password = self.addon.getSetting(self.id+'_mpd_pass')
 		self.status = STR_HOST_OFFLINE
 		self.stat=STATUS_OFF
+		self.enabled=False
+		if self.addon.getSetting(self.id+'_enabled') == 'true':
+			self.enabled=True
+		if not self.enabled:
+			return
 		try:
 			client = mpd.MPDClient()
 			client.connect(self.host,int(self.port))
@@ -97,11 +102,12 @@ class SelectMPDProfile ( xbmcgui.WindowXMLDialog ) :
 				break
 			percent = percent+33
 			p.update(percent)
-			listitem = xbmcgui.ListItem( label=item.name)						
-			listitem.setProperty( 'id', item.id )												
-			listitem.setProperty( 'status', item.status )
-			listitem.setProperty( 'stat', item.stat )						
-			self.getControl( SERVER_LIST ).addItem( listitem )
+			if item.enabled:
+				listitem = xbmcgui.ListItem( label=item.name)
+				listitem.setProperty( 'id', item.id )
+				listitem.setProperty( 'status', item.status )
+				listitem.setProperty( 'stat', item.stat )
+				self.getControl( SERVER_LIST ).addItem( listitem )
 		self.getControl( STATUS ).setLabel( STR_SELECT_PROFILE )
 		p.close()
 	    	
@@ -111,12 +117,12 @@ class SelectMPDProfile ( xbmcgui.WindowXMLDialog ) :
 	
 	def onClick( self, controlId ):
 		if controlId == SETTINGS:
-			Addon.openSettings()
+			__addon__.openSettings()
 			self.update_servers()
 		if controlId == SERVER_LIST:
 			seekid = self.getControl( SERVER_LIST ).getSelectedItem().getProperty('id')
 			if self.getControl( SERVER_LIST ).getSelectedItem().getProperty('stat') == STATUS_ON:
-				ui = gui.GUI( 'mpd-client-main.xml',os.getcwd(), self.skin,seekid)
+				ui = gui.GUI( 'mpd-client-main.xml',__addon__.getAddonInfo('path'), self.skin,seekid)
 				ui.doModal()
 				del ui
 
@@ -126,13 +132,13 @@ if current_skin.find('pm3') > -1:
 	skin = 'PM3.HD'
 if current_skin.find('transparency') > -1:
 	skin = 'transparency'
-skip_selector = Addon.getSetting('skip-selector')
+skip_selector = __addon__.getSetting('skip-selector')
 if 'true' == skip_selector:
-	ui = gui.GUI( 'mpd-client-main.xml',os.getcwd(), skin,'0')
+	ui = gui.GUI( 'mpd-client-main.xml',__addon__.getAddonInfo('path'), skin,'0')
 	ui.doModal()
 	del ui
 else:
-	selectorUI = SelectMPDProfile( 'select-profile.xml',os.getcwd(), skin)		
+	selectorUI = SelectMPDProfile( 'select-profile.xml',__addon__.getAddonInfo('path'), skin)
 	selectorUI.profiles = [MpdProfile('0'),MpdProfile('1'),MpdProfile('2')]
 	selectorUI.doModal()
 	del selectorUI

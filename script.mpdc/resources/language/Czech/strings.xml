@@ -47,6 +47,8 @@
     <string id="30039">Playing stream</string>
     <!-- Do not translate - block end -->
     <string id="30040">Zobrazovat čas přehrávané skladby</string>
+    <string id="30041">Povolen (Profil bude zobrazen při výběru)</string>
+	<string id="30042">Autorů : %sAlb : %sSkladeb : %sČas : %s</string>
     <string id="200">Fronta</string>
     <string id="201">Soubory</string>
     <string id="202">Autoři</string>

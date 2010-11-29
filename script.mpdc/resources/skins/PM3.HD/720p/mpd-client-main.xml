@@ -55,12 +55,32 @@
 	</control>
 	<control type="group" id="99">
 	<description>song progress info group</description>
-		<posx>255</posx>
-		<posy>55</posy>
+		<posx>300</posx>
+		<posy>20</posy>
+		<control type="label" id="993">
+			<description>song artist</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>600</width>
+			<height>30</height>
+			<align>left</align>
+			<textcolor>white</textcolor>
+			<label></label>
+		</control>
+		<control type="label" id="994">
+			<description>song album</description>
+			<posx>0</posx>
+			<posy>30</posy>
+			<width>620</width>
+			<height>30</height>
+			<align>left</align>
+			<textcolor>white</textcolor>
+			<label></label>
+		</control>		
 		<control type="label" id="992">
 			<description>textarea</description>
 			<posx>610</posx>
-			<posy>0</posy>
+			<posy>30</posy>
 			<width>220</width>
 			<height>30</height>
 			<align>right</align>
@@ -69,7 +89,7 @@
 		</control>
 		<control type="progress" id="991">
 			<posx>0</posx>
-			<posy>30</posy>
+			<posy>60</posy>
 			<width>620</width>
 			<height>10</height>
 		</control>
@@ -154,14 +174,23 @@
 						</control>
 				  </focusedlayout>
         </control>
+		<control type="label" id="1009">
+			<description>textarea</description>
+			<posx>20</posx>
+			<posy>400</posy>
+			<width>240</width>
+			<height>220</height>
+			<textcolor>white</textcolor>
+			<aligny>center</aligny>
+		</control>
     </control>
     <control type="group">
-	  <posx>100</posx>
-      <posy>10</posy>
+	  <posx>1000</posx>
+      <posy>25</posy>
       <description>player control group</description>
 		<control type="button" id="666">
-			<posx>20</posx>
-			<posy>20</posy>
+			<posx>0</posx>
+			<posy>0</posy>
 			<width>48</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -173,8 +202,8 @@
 		</control>
 
 		<control type="button" id="667">
-			<posx>70</posx>
-			<posy>20</posy>
+			<posx>50</posx>
+			<posy>0</posy>
 			<width>48</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -186,8 +215,8 @@
 		</control>
 		
 		<control type="button" id="668">
-			<posx>120</posx>
-			<posy>20</posy>
+			<posx>100</posx>
+			<posy>0</posy>
 			<width>48</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -198,8 +227,8 @@
 			<ondown>1000</ondown>
 		</control>
 		<control type="button" id="670">
-			<posx>120</posx>
-			<posy>20</posy>
+			<posx>100</posx>
+			<posy>0</posy>
 			<width>48</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -211,8 +240,8 @@
 		</control>
 
 		<control type="button" id="669">
-			<posx>170</posx>
-			<posy>20</posy>
+			<posx>150</posx>
+			<posy>0</posy>
 			<width>48</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -222,10 +251,19 @@
 			<onright>702</onright>
 			<ondown>1000</ondown>
 		</control>
-
+		<control type="progress" id="671">
+			<posx>0</posx>
+			<posy>55</posy>
+			<height>10</height>
+			<width>200</width>
+		</control>			
+</control>		
+<control type="group">
+      <posx>930</posx>
+      <posy>670</posy>
 	<control type="button" id="702">
-			<posx>250</posx>
-			<posy>20</posy>
+			<posx>0</posx>
+			<posy>0</posy>
 			<width>48</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -237,8 +275,8 @@
 		</control>
 
 		<control type="button" id="703">
-			<posx>250</posx>
-			<posy>20</posy>
+			<posx>0</posx>
+			<posy>0</posy>
 			<width>48</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -250,8 +288,8 @@
 		</control>
 
 		<control type="button" id="700">
-			<posx>300</posx>
-			<posy>20</posy>
+			<posx>50</posx>
+			<posy>0</posy>
 			<width>48</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -263,8 +301,8 @@
 		</control>
 
 		<control type="button" id="701">
-			<posx>300</posx>
-			<posy>20</posy>
+			<posx>50</posx>
+			<posy>0</posy>
 			<width>48</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -276,8 +314,8 @@
 		</control>
 
 		<control type="radiobutton" id="704">
-			<posx>350</posx>
-			<posy>20</posy>
+			<posx>100</posx>
+			<posy>0</posy>
 			<width>248</width>
 			<height>48</height>
 			<visible>true</visible>
@@ -287,9 +325,6 @@
 			<onleft>700</onleft>
 			<ondown>1000</ondown>
 		</control>
-
-
-
     </control>
     <control type="group">
       <posx>260</posx>
@@ -313,8 +348,8 @@
       <control type="label" id="100">
         <description>textarea</description>
         <posx>35</posx>
-        <posy>665</posy>
-        <width>970</width>
+        <posy>670</posy>
+        <width>620</width>
         <height>40</height>
         <textcolor>white</textcolor>
         <aligny>center</aligny>
@@ -328,34 +363,7 @@
 	  <height>530</height>
       <description>playlist group</description>
       <visible>Container(1000).HasFocus(1001)</visible>
-      
-          <control type="button" id="1103">
-			<posx>600</posx>
-			<posy>-80</posy>
-			<width>160</width>
-			<height>48</height>
-			<align>center</align>
-			<visible>true</visible>
-			<label>SCRIPT204</label>
-			<ondown>1101</ondown>
-			<onright>1102</onright>
-			<texturenofocus>button-nofocus.png</texturenofocus>
-			<texturefocus>button-focus2.png</texturefocus>		
-		</control>
-        <control type="button" id="1102">
-			<posx>770</posx>
-			<posy>-80</posy>
-			<width>160</width>
-			<height>48</height>
-			<align>center</align>
-			<visible>true</visible>
-			<label>SCRIPT205</label>
-			<ondown>1101</ondown>
-			<onleft>1103</onleft>
-			<texturenofocus>button-nofocus.png</texturenofocus>
-			<texturefocus>button-focus2.png</texturefocus>		
-		</control>
-      
+     
 		  <control type="list" id="1101">
 			<posx>0</posx>
 			<posy>0</posy>
@@ -392,7 +400,7 @@
 			  <control type="label">
 				<posx>40</posx>
 				<posy>0</posy>
-				<width>150</width>
+				<width>200</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -403,9 +411,9 @@
 
 			  
 			  <control type="label">
-				<posx>200</posx>
+				<posx>245</posx>
 				<posy>0</posy>
-				<width>180</width>
+				<width>260</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -415,9 +423,9 @@
 			  </control>
 			  
 			  <control type="label">
-				<posx>395</posx>
+				<posx>510</posx>
 				<posy>0</posy>
-				<width>600</width>
+				<width>480</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -469,7 +477,7 @@
 			  <control type="label">
 				<posx>40</posx>
 				<posy>0</posy>
-				<width>150</width>
+				<width>200</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -479,9 +487,9 @@
 			  </control>
 			  
 			  <control type="label">
-				<posx>200</posx>
+				<posx>245</posx>
 				<posy>0</posy>
-				<width>180</width>
+				<width>260</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -491,9 +499,9 @@
 			  </control>
 			  
 			  <control type="label">
-				<posx>395</posx>
+				<posx>510</posx>
 				<posy>0</posy>
-				<width>600</width>
+				<width>480</width>
 				<height>38</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>

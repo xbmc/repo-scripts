@@ -51,6 +51,7 @@ class PMPDClient(object):
 		
 	def disconnect(self):
 		print 'disconnecting'
+		self.callback = None
 		try:
 			self.client.close()
 		except:

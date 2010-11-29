@@ -21,7 +21,9 @@
 import sys,os,time,re,traceback
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin
 import pmpd,mpd,dialog
-
+__scriptid__ = 'script.mpdc'
+__addon__ = xbmcaddon.Addon(id=__scriptid__)
+__scriptname__ = __addon__.getAddonInfo('name')
 #get actioncodes from keymap.xml
 ACTION_SELECT_ITEM = 7
 ACTIONS = dict({
@@ -33,7 +35,9 @@ ACTIONS = dict({
 	'15':'self.client.previous()',
 	'34':'self._queue_item()',
 	'79':'self.client.play()',
-	'117':'self._context_menu()'
+	'117':'self._context_menu()',
+	'88':'self._volume(88)',
+	'89':'self._volume(89)'
 	})
 CLICK_ACTIONS = dict({
 	'668':'self.client.play()',
@@ -46,20 +50,23 @@ CLICK_ACTIONS = dict({
 	'702':'self.client.random(1)',
 	'703':'self.client.random(0)',
 	'704':'self._consume_mode_toggle()',
-	'1103':'self._clear_queue()',
-	'1102':'self._save_queue_as()',
 	'1401':'self._playlist_contextmenu()',
 	'1101':'self._playlist_on_click()',
 	'1301':'self._update_artist_browser(artist_item=self.getControl(1301).getSelectedItem())',
-	'1201':'self._update_file_browser(browser_item=self.getControl(1201).getSelectedItem())'
+	'1201':'self._update_file_browser(browser_item=self.getControl(1201).getSelectedItem())',
+	'671':'self._set_volume()'
 	})
+ACTION_VOLUME_UP=88
+ACTION_VOLUME_DOWN=89
 # control IDs
 STATUS = 100
+SERVER_STATS=1009
 PLAY = 668
 PAUSE = 670
 PREV = 666
 STOP = 667
-NEXT = 669 
+NEXT = 669
+VOLUME = 671 
 REPEAT_OFF = 700
 REPEAT_ON = 701
 SHUFFLE_OFF = 702
@@ -67,51 +74,49 @@ SHUFFLE_ON = 703
 CURRENT_PLAYLIST = 1101
 FILE_BROWSER = 1201
 PROFILE=101
-CLEAR_QUEUE=1103
-SAVE_QUEUE_AS=1102
 PLAYLIST_BROWSER=1401
 ARTIST_BROWSER=1301
 RB_CONSUME_MODE=704
-SONG_PROGRESS=991
-SONG_PROGESS_GROUP=99
-SONG_PRORESS_TEXT=992
-Addon = xbmcaddon.Addon(id=os.path.basename(os.getcwd()))
-__scriptname__ = Addon.getAddonInfo('name')
-
+SONG_INFO_PROGRESS=991
+SONG_INFO_GROUP=99
+SONG_INFO_TIME=992
+SONG_INFO_ATRIST=993
+SONG_INFO_ALBUM=994
 #String IDs
-STR_STOPPED=Addon.getLocalizedString(30003)
-STR_PAUSED=Addon.getLocalizedString(30004)
-STR_NOT_CONNECTED=Addon.getLocalizedString(30005)
-STR_CONNECTED_TO=Addon.getLocalizedString(30011) 
-STR_PLAYING=Addon.getLocalizedString(30006) 
-STR_PROFILE_NAME=Addon.getLocalizedString(30002)
-STR_CONNECTING_TITLE=Addon.getLocalizedString(30015)
-STR_DISCONNECTING_TITLE=Addon.getLocalizedString(30017) 
-STR_GETTING_QUEUE=Addon.getLocalizedString(30016)
-STR_GETTING_PLAYLISTS=Addon.getLocalizedString(30019)
-STR_GETTING_ARTISTS=Addon.getLocalizedString(30020)
-STR_WAS_QUEUED=Addon.getLocalizedString(30018)      
-STR_PLAYLIST_SAVED=Addon.getLocalizedString(30021)
-STR_SELECT_ACTION=Addon.getLocalizedString(30022)
-STR_LOAD_ADD=Addon.getLocalizedString(30023)
-STR_DELETE=Addon.getLocalizedString(30024)      
-STR_LOAD_REPLACE=Addon.getLocalizedString(30025)
-STR_RENAME=Addon.getLocalizedString(30026)
-STR_Q__PLAYLIST_EXISTS=Addon.getLocalizedString(30027)
-STR_Q_OVERWRITE=Addon.getLocalizedString(30028)
-STR_UPDATE_LIBRARY=Addon.getLocalizedString(30029)
-STR_QUEUE_ADD=Addon.getLocalizedString(30030)
-STR_QUEUE_REPLACE=Addon.getLocalizedString(30031)
-STR_UPDATING_LIBRARY=Addon.getLocalizedString(30032)
-STR_REMOVE_FROM_QUEUE=Addon.getLocalizedString(30036)
-STR_SAVE_QUEUE_AS=Addon.getLocalizedString(30037)
-STR_CLEAR_QUEUE=Addon.getLocalizedString(30038)
-STR_PLAYING_STREAM=Addon.getLocalizedString(30039)
-STR_SAVE_AS=Addon.getLocalizedString(205)  
+STR_STOPPED=__addon__.getLocalizedString(30003)
+STR_PAUSED=__addon__.getLocalizedString(30004)
+STR_NOT_CONNECTED=__addon__.getLocalizedString(30005)
+STR_CONNECTED_TO=__addon__.getLocalizedString(30011)
+STR_PLAYING=__addon__.getLocalizedString(30006)
+STR_PROFILE_NAME=__addon__.getLocalizedString(30002)
+STR_CONNECTING_TITLE=__addon__.getLocalizedString(30015)
+STR_DISCONNECTING_TITLE=__addon__.getLocalizedString(30017)
+STR_GETTING_QUEUE=__addon__.getLocalizedString(30016)
+STR_GETTING_PLAYLISTS=__addon__.getLocalizedString(30019)
+STR_GETTING_ARTISTS=__addon__.getLocalizedString(30020)
+STR_WAS_QUEUED=__addon__.getLocalizedString(30018)
+STR_PLAYLIST_SAVED=__addon__.getLocalizedString(30021)
+STR_SELECT_ACTION=__addon__.getLocalizedString(30022)
+STR_LOAD_ADD=__addon__.getLocalizedString(30023)
+STR_DELETE=__addon__.getLocalizedString(30024)
+STR_LOAD_REPLACE=__addon__.getLocalizedString(30025)
+STR_RENAME=__addon__.getLocalizedString(30026)
+STR_Q__PLAYLIST_EXISTS=__addon__.getLocalizedString(30027)
+STR_Q_OVERWRITE=__addon__.getLocalizedString(30028)
+STR_UPDATE_LIBRARY=__addon__.getLocalizedString(30029)
+STR_QUEUE_ADD=__addon__.getLocalizedString(30030)
+STR_QUEUE_REPLACE=__addon__.getLocalizedString(30031)
+STR_UPDATING_LIBRARY=__addon__.getLocalizedString(30032)
+STR_REMOVE_FROM_QUEUE=__addon__.getLocalizedString(30036)
+STR_SAVE_QUEUE_AS=__addon__.getLocalizedString(30037)
+STR_CLEAR_QUEUE=__addon__.getLocalizedString(30038)
+STR_PLAYING_STREAM=__addon__.getLocalizedString(30039)
+STR_SERVER_STATS=__addon__.getLocalizedString(30042)
+STR_SAVE_AS=__addon__.getLocalizedString(205)
 class GUI ( xbmcgui.WindowXMLDialog ) :
 	
 	def __init__( self, *args, **kwargs ):
-		self.addon = xbmcaddon.Addon(id=os.path.basename(os.getcwd()))
+		self.addon = xbmcaddon.Addon(id=__scriptid__)
 		self.time_polling=False
 		if 'true' == self.addon.getSetting('time-polling'):
 			self.client = pmpd.PMPDClient(poll_time=True)
@@ -134,7 +139,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		if self.mpd_pass == '':
 			self.mpd_pass = None
 		self.is_play_stream = False
-		if Addon.getSetting(self.profile_id+'_play_stream') == 'true':
+		if self.addon.getSetting(self.profile_id+'_play_stream') == 'true':
 			self.is_play_stream = True
 		
 	def onFocus (self,controlId ):
@@ -145,7 +150,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		self.getControl( PROFILE ).setLabel(self.profile_name)					
 		self._connect()
 	def _connect(self):
-		self.getControl(SONG_PROGESS_GROUP).setVisible(False)
+		self.getControl(SONG_INFO_GROUP).setVisible(False)
 		p = xbmcgui.DialogProgress()
 		p.create(STR_CONNECTING_TITLE,STR_CONNECTING_TITLE+' '+self.mpd_host+':'+self.mpd_port)
 		p.update(0)
@@ -166,9 +171,11 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			return
 		print 'Connected'
 		try:
+			stats = self.client.stats()
+			self.getControl(SERVER_STATS).setLabel(STR_SERVER_STATS % (stats['artists']+'\n',stats['albums']+'\n',stats['songs']+'\n',self._format_time2(stats['db_playtime'])))
 			self.getControl ( STATUS ).setLabel(STR_CONNECTED_TO +' '+self.mpd_host+':'+self.mpd_port )
 			p.update(25,STR_GETTING_QUEUE)
-			self._handle_changes(self.client,['playlist','player','options'])
+			self._handle_changes(self.client,['mixer','playlist','player','options'])
 			self._handle_time_changes(self.client,self.client.status())
 			p.update(50,STR_GETTING_PLAYLISTS)
 			self._update_file_browser()
@@ -215,6 +222,15 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			index = self.getControl( CURRENT_PLAYLIST ).size()-1
 		self.getControl(CURRENT_PLAYLIST).selectItem(index)
 
+	def _update_song_info(self,current, status):
+		self.getControl(SONG_INFO_GROUP).setVisible(self.time_polling)	
+		self.update_fields(current,['artist','album','title','date','file'])
+		if current['artist']=='' or current['title']=='':
+			self.getControl(SONG_INFO_ATRIST).setLabel(current['file'])
+		else:
+			self.getControl(SONG_INFO_ATRIST).setLabel(current['artist']+' - '+current['title'])
+		self.getControl(SONG_INFO_ALBUM).setLabel(current['album']+' ('+current['date']+')')
+		
 	def _update_artist_browser(self,artist_item=None,client=None,back=False):		
 		select_index=0
 		index = self.getControl(ARTIST_BROWSER).getSelectedPosition()
@@ -281,6 +297,14 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 						self.getControl(ARTIST_BROWSER).addItem(listitem)
 			self.getControl(ARTIST_BROWSER).selectItem(select_index)
 
+	def _volume(self,action):
+		if self._can_volume:
+			volume = int(self.client.status()['volume'])
+			if action == ACTION_VOLUME_DOWN:
+				self.client.setvol(volume - 5)
+			elif action == ACTION_VOLUME_UP:
+				self.client.setvol(volume + 5)
+
 	def _update_playlist_browser(self,playlists):
 		self.getControl(PLAYLIST_BROWSER).reset()
 		for item in playlists:
@@ -335,30 +359,44 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		if not status['state'] == 'stop' and self.time_polling:
 			time = status['time'].split(':')
 			percent = float(time[0]) / (float(time[1])/100 )
-			self.getControl(SONG_PROGRESS).setPercent(percent)
-			self.getControl(SONG_PRORESS_TEXT).setLabel(self._format_time(time[0])+' - '+self._format_time(time[1]))
+			self.getControl(SONG_INFO_PROGRESS).setPercent(percent)
+			self.getControl(SONG_INFO_TIME).setLabel(self._format_time(time[0])+' - '+self._format_time(time[1]))
+
+	def _update_volume(self,state):
+		if state['volume']=='-1':
+			self.getControl(VOLUME).setVisible(False)
+			self._can_volume=False
+		else:
+			self._can_volume=True
+			self.getControl(VOLUME).setVisible(True)
+			self.getControl(VOLUME).setPercent(int(state['volume']))
+
+	def _update_player_controls(self,current,state):
+		if state['state'] =='play':
+			self.toggleVisible( PLAY, PAUSE )
+			self.getControl( STATUS ).setLabel(STR_PLAYING + ' : ' + self._current_song(current))
+			self.update_playlist('play',current)
+		elif state['state'] == 'pause':
+			self.toggleVisible( PAUSE, PLAY )
+			self.getControl( STATUS ).setLabel(STR_PAUSED + ' : ' + self._current_song(current))
+			self.update_playlist('pause',current)
+		elif state['state'] == 'stop':
+			self.getControl( STATUS ).setLabel(STR_STOPPED)
+			self.toggleVisible( PAUSE, PLAY )
+			self.update_playlist('stop',current)
 
 	def _handle_changes(self,poller_client,changes):
 		state = poller_client.status()
+#		print state
+#		print poller_client.playlistid(state['songid'])
 		print 'Handling changes - ' + str(changes)
 		for change in changes:
+			if change =='mixer':
+				self._update_volume(state)
 			if change == 'player':
 				current = poller_client.currentsong()
-				if state['state'] =='play':					
-					self.toggleVisible( PLAY, PAUSE )
-					self.getControl( STATUS ).setLabel(STR_PLAYING + ' : ' + self._current_song(current))
-					self.update_playlist('play',current)
-					self.getControl(SONG_PROGESS_GROUP).setVisible(self.time_polling)
-				elif state['state'] == 'pause':
-					self.toggleVisible( PAUSE, PLAY )
-					self.getControl( STATUS ).setLabel(STR_PAUSED + ' : ' + self._current_song(current))
-					self.update_playlist('pause',current)
-					self.getControl(SONG_PROGESS_GROUP).setVisible(self.time_polling)
-				elif state['state'] == 'stop':
-					self.getControl( STATUS ).setLabel(STR_STOPPED)
-					self.toggleVisible( PAUSE, PLAY )
-					self.update_playlist('stop',current)
-					self.getControl(SONG_PROGESS_GROUP).setVisible(False)
+				self._update_song_info(current,state)
+				self._update_player_controls(current,state)
 			if change == 'options':
 				if state['repeat'] == '0':
 					self.toggleVisible( REPEAT_ON, REPEAT_OFF )
@@ -383,6 +421,9 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 
 	def _format_time(self,time):
 		return '%d:%02d' % ((int(time) / 60 ),(int(time) % 60))
+	def _format_time2(self,time):
+		minutes = (int(time) - ((int(time) / 3600) * 3600))/60
+		return '%d:%d:%02d' % ((int(time) / 3600 ),minutes,(int(time) % 60))
 		
 	def toggleVisible(self,cFrom,cTo):
 		self.getControl( cFrom ).setVisible(False)
@@ -508,7 +549,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 				self._start_media_player()
 
 	def _start_media_player(self):
-		icon =  os.path.join(os.getcwd(),'icon.png')
+		icon =  os.path.join(__addon__.getAddonInfo('path'),'icon.png')
 		xbmc.executebuiltin("XBMC.Notification(%s,%s,5000,%s)" % (__scriptname__,STR_PLAYING_STREAM,'icon.png'))
 		xbmc.executebuiltin('PlayMedia(%s)' % self.stream_url)
 	
@@ -550,7 +591,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			self.client.rm(playlist)
 			
 	def dialog(self,title,list):
-		d = dialog.Dialog('menu-dialog.xml',os.getcwd(),self.skin,'0')
+		d = dialog.Dialog('menu-dialog.xml',__addon__.getAddonInfo('path'),self.skin,'0')
 		d.list=list
 		d.title = title
 		d.doModal()

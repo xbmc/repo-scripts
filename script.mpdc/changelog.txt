@@ -1,3 +1,8 @@
+[B]0.9.9[/B]
+- changed appearance slightly, according to forum requests
+- added volume control
+- displaying server stats in left panel
+- added per-profile option, profile can be enabled/disabled to prevent displaying in 'Select profile' dialog
 [B]0.9.8[/B]
 - fixed deadlocks/hangs when autoplaying stream
 - added context menu in current queue to be able to remove single tracks from queue
