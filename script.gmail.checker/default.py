@@ -11,14 +11,12 @@ __version__ = "1.0.0"
 __XBMC_Revision__ = "22240"
 
 
+__settings__   = xbmcaddon.Addon(id='script.gmail.checker')
+__language__   = __settings__.getLocalizedString
+__cwd__        = __settings__.getAddonInfo('path')
+
 BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'lib' ) )
-
 sys.path.append (BASE_RESOURCE_PATH)
-
-__settings__ = xbmcaddon.Addon(id='script.gmail.checker')
-
-__language__ = __settings__.getLocalizedString
-
 
 if __name__ == "__main__":
     import gui
