@@ -41,7 +41,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     if (movieFullPath.find("rar://") > -1 ):
       rar = True
-
       movieFullPath = movieFullPath.replace("rar://","")
       if path:
         sub_folder = os.path.dirname(os.path.dirname( movieFullPath ))
@@ -60,155 +59,155 @@ class GUI( xbmcgui.WindowXMLDialog ):
       else:
         sub_folder = os.path.dirname( movieFullPath )   
 
-      self.list = []
+    self.list = []
 
-      self.year      = xbmc.getInfoLabel("VideoPlayer.Year")                  # Year
-      self.season    = str(xbmc.getInfoLabel("VideoPlayer.Season"))           # Season
-      self.episode   = str(xbmc.getInfoLabel("VideoPlayer.Episode"))          # Episode        
-      if self.episode.lower().find("s") > -1:                                 # Check if season is "Special"             
-        self.season = "0"                                                     #
-        self.episode = self.episode[-1:]                                      #
+    self.year      = xbmc.getInfoLabel("VideoPlayer.Year")                  # Year
+    self.season    = str(xbmc.getInfoLabel("VideoPlayer.Season"))           # Season
+    self.episode   = str(xbmc.getInfoLabel("VideoPlayer.Episode"))          # Episode        
+    if self.episode.lower().find("s") > -1:                                 # Check if season is "Special"             
+      self.season = "0"                                                     #
+      self.episode = self.episode[-1:]                                      #
 
-      self.tvshow    = xbmc.getInfoLabel("VideoPlayer.TVshowtitle")           # Show
-      self.title     = unicodedata.normalize('NFKD', 
-                        unicode(unicode(xbmc.getInfoLabel
-                        ("VideoPlayer.Title"), 'utf-8'))
-                        ).encode('ascii','ignore')                            # Title
+    self.tvshow    = xbmc.getInfoLabel("VideoPlayer.TVshowtitle")           # Show
+    self.title     = unicodedata.normalize('NFKD', 
+                      unicode(unicode(xbmc.getInfoLabel
+                      ("VideoPlayer.Title"), 'utf-8'))
+                      ).encode('ascii','ignore')                            # Title
 
-      if self.tvshow == "":
-        if str(self.year) == "":
-          title, season, episode = regex_tvshow(False, self.title)
-          if episode != "":
-            self.season = str(int(season))
-            self.episode = str(int(episode))
-            self.tvshow = title
-          else:
-            self.title, self.year = xbmc.getCleanMovieTitle( self.title )
-
+    if self.tvshow == "":
+      if str(self.year) == "":
+        title, season, episode = regex_tvshow(False, self.title)
+        if episode != "":
+          self.season = str(int(season))
+          self.episode = str(int(episode))
+          self.tvshow = title
         else:
-          self.title = self.title  
+          self.title, self.year = xbmc.getCleanMovieTitle( self.title )
+
       else:
-        self.year = ""
-      self.language_1 = toScriptLang(__settings__.getSetting( "Lang01" ))     # Full language 1
-      self.language_2 = toScriptLang(__settings__.getSetting( "Lang02" ))     # Full language 2  
-      self.language_3 = toScriptLang(__settings__.getSetting( "Lang03" ))     # Full language 3
+        self.title = self.title  
+    else:
+      self.year = ""
+    self.language_1 = toScriptLang(__settings__.getSetting( "Lang01" ))     # Full language 1
+    self.language_2 = toScriptLang(__settings__.getSetting( "Lang02" ))     # Full language 2  
+    self.language_3 = toScriptLang(__settings__.getSetting( "Lang03" ))     # Full language 3
 
-      self.sub_folder = sub_folder                                            # Subtitle download folder
+    self.sub_folder = sub_folder                                            # Subtitle download folder
 
-      self.file_original_path = urllib.unquote ( movieFullPath )              # Movie Path
+    self.file_original_path = urllib.unquote ( movieFullPath )              # Movie Path
 
-      self.set_temp = temp
+    self.set_temp = temp
 
-      if __settings__.getSetting( "disable_hash_search" ) == "true":
-        self.set_temp = True
+    if __settings__.getSetting( "disable_hash_search" ) == "true":
+      self.set_temp = True
 
-      self.mansearch =  __settings__.getSetting( "searchstr" ) == "true"      # Manual search string??
-      self.parsearch =  __settings__.getSetting( "par_folder" ) == "true"     # Parent folder as search string
-      self.rar = rar                                                          # rar archive?
+    self.mansearch =  __settings__.getSetting( "searchstr" ) == "true"      # Manual search string??
+    self.parsearch =  __settings__.getSetting( "par_folder" ) == "true"     # Parent folder as search string
+    self.rar = rar                                                          # rar archive?
 
-      if (__settings__.getSetting( "fil_name" ) == "true"):                   # Display Movie name or search string
-        self.file_name = os.path.basename( movieFullPath )
+    if (__settings__.getSetting( "fil_name" ) == "true"):                   # Display Movie name or search string
+      self.file_name = os.path.basename( movieFullPath )
+    else:
+      if (len(str(self.year)) < 1 ) :
+        self.file_name = self.title.encode('utf-8')
+        if (len(self.tvshow) > 0):
+          self.file_name = "%s S%.2dE%.2d" % (self.tvshow.encode('utf-8'), int(self.season), int(self.episode) )
       else:
-        if (len(str(self.year)) < 1 ) :
-          self.file_name = self.title.encode('utf-8')
-          if (len(self.tvshow) > 0):
-            self.file_name = "%s S%.2dE%.2d" % (self.tvshow.encode('utf-8'), int(self.season), int(self.episode) )
-        else:
-          self.file_name = "%s (%s)" % (self.title.encode('utf-8'), str(self.year),)    
+        self.file_name = "%s (%s)" % (self.title.encode('utf-8'), str(self.year),)    
 
-      self.tmp_sub_dir = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( __cwd__ ),"sub_tmp" )
+    self.tmp_sub_dir = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( __cwd__ ),"sub_tmp" )
 
-      if not self.tmp_sub_dir.endswith(':') and not os.path.exists(self.tmp_sub_dir):
-        os.makedirs(self.tmp_sub_dir)
-      else:
-        self.rem_files(self.tmp_sub_dir)
+    if not self.tmp_sub_dir.endswith(':') and not os.path.exists(self.tmp_sub_dir):
+      os.makedirs(self.tmp_sub_dir)
+    else:
+      self.rem_files(self.tmp_sub_dir)
 
-      self.getControl( 111 ).setVisible( False )                              # check for existing subtitles and set to "True" if found
-      sub_exts = ["srt", "sub", "txt", "smi", "ssa", "ass" ]
-      br = 0
-      for i in range(3):
-        for sub_ext in sub_exts:
-          if br == 0:
-            exec("lang = toOpenSubtitles_two(self.language_%s)" % (str(i+1)) )
-            if os.path.isfile ("%s.%s.%s" % (os.path.join(sub_folder,os.path.splitext( os.path.basename( self.file_original_path ) )[0]),lang ,sub_ext,)):
-              self.getControl( 111 ).setVisible( True )
-              br = 1
-              break
+    self.getControl( 111 ).setVisible( False )                              # check for existing subtitles and set to "True" if found
+    sub_exts = ["srt", "sub", "txt", "smi", "ssa", "ass" ]
+    br = 0
+    for i in range(3):
+      for sub_ext in sub_exts:
+        if br == 0:
+          exec("lang = toOpenSubtitles_two(self.language_%s)" % (str(i+1)) )
+          if os.path.isfile ("%s.%s.%s" % (os.path.join(sub_folder,os.path.splitext( os.path.basename( self.file_original_path ) )[0]),lang ,sub_ext,)):
+            self.getControl( 111 ).setVisible( True )
+            br = 1
+            break
 #### ---------------------------- Set Service ----------------------------###     
 
-      def_service = __settings__.getSetting( "defservice")
-      def_movie_service = __settings__.getSetting( "defmovieservice")
-      def_tv_service = __settings__.getSetting( "deftvservice")
-      service_list = []
-      standard_service_list  = ['Titulky','OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV', 'Subdivx', 'Addic7ed']
-      service = ""
+    def_service = __settings__.getSetting( "defservice")
+    def_movie_service = __settings__.getSetting( "defmovieservice")
+    def_tv_service = __settings__.getSetting( "deftvservice")
+    service_list = []
+    standard_service_list  = ['Titulky','OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV', 'Subdivx', 'Addic7ed']
+    service = ""
 
-      for name in os.listdir(SERVICE_DIR):
-        if not (name.startswith('.')) and not (name.startswith('_')):
-          service_list.append(name)
+    for name in os.listdir(SERVICE_DIR):
+      if not (name.startswith('.')) and not (name.startswith('_')):
+        service_list.append(name)
 
-      for serv in standard_service_list:
-        if not __settings__.getSetting( serv ) == "true" :
-          service_list.remove( serv )
-        else:
-          service = serv
-
-      if len(self.tvshow) > 0:
-        if service_list.count(def_tv_service) > 0:
-          service = def_tv_service
-        else:
-          if service_list.count(def_service) > 0:
-            service = def_service
+    for serv in standard_service_list:
+      if not __settings__.getSetting( serv ) == "true" :
+        service_list.remove( serv )
       else:
-        if service_list.count(def_movie_service) > 0:
-          service = def_movie_service
-        else:
-          if service_list.count(def_service) > 0:
-            service = def_service
+        service = serv
 
-      if len(service_list) > 0:  
-        if len(service) < 1:
-          self.service = service_list[0]
-        else:
-          self.service = service  
-
-        self.service_list = service_list
-        self.controlId = -1
-        self.shufle = 0
-        self.subtitles_list = []
-
-        log( __name__ ,"Manual Search : [%s]"        % self.mansearch)
-        log( __name__ ,"Default Service : [%s]"      % self.service)
-        log( __name__ ,"Services : [%s]"             % self.service_list)
-        log( __name__ ,"Temp?: [%s]"                 % self.set_temp)
-        log( __name__ ,"Rar?: [%s]"                  % self.rar)
-        log( __name__ ,"File Path: [%s]"             % self.file_original_path)
-        log( __name__ ,"Year: [%s]"                  % str(self.year))
-        log( __name__ ,"Tv Show Title: [%s]"         % self.tvshow)
-        log( __name__ ,"Tv Show Season: [%s]"        % self.season)
-        log( __name__ ,"Tv Show Episode: [%s]"       % self.episode)
-        log( __name__ ,"Movie/Episode Title: [%s]"   % self.title)
-        log( __name__ ,"Subtitle Folder: [%s]"       % self.sub_folder)
-        log( __name__ ,"Languages: [%s] [%s] [%s]"   % (self.language_1, self.language_2, self.language_3,))
-        log( __name__ ,"Parent Folder Search: [%s]"  % self.parsearch)
-
-        try:
-          self.list_services()
-        except:
-          self.newWindow = False
-          self.list_services()
-
-        try:
-          self.Search_Subtitles()
-        except:
-          errno, errstr = sys.exc_info()[:2]
-          self.getControl( STATUS_LABEL ).setLabel( "Error:" + " " + str(errstr) )
-          xbmc.sleep(2000)
-          self.exit_script()
+    if len(self.tvshow) > 0:
+      if service_list.count(def_tv_service) > 0:
+        service = def_tv_service
       else:
-        self.getControl( STATUS_LABEL ).setLabel( "No Services Have been selected" )
+        if service_list.count(def_service) > 0:
+          service = def_service
+    else:
+      if service_list.count(def_movie_service) > 0:
+        service = def_movie_service
+      else:
+        if service_list.count(def_service) > 0:
+          service = def_service
+
+    if len(service_list) > 0:  
+      if len(service) < 1:
+        self.service = service_list[0]
+      else:
+        self.service = service  
+
+      self.service_list = service_list
+      self.controlId = -1
+      self.shufle = 0
+      self.subtitles_list = []
+
+      log( __name__ ,"Manual Search : [%s]"        % self.mansearch)
+      log( __name__ ,"Default Service : [%s]"      % self.service)
+      log( __name__ ,"Services : [%s]"             % self.service_list)
+      log( __name__ ,"Temp?: [%s]"                 % self.set_temp)
+      log( __name__ ,"Rar?: [%s]"                  % self.rar)
+      log( __name__ ,"File Path: [%s]"             % self.file_original_path)
+      log( __name__ ,"Year: [%s]"                  % str(self.year))
+      log( __name__ ,"Tv Show Title: [%s]"         % self.tvshow)
+      log( __name__ ,"Tv Show Season: [%s]"        % self.season)
+      log( __name__ ,"Tv Show Episode: [%s]"       % self.episode)
+      log( __name__ ,"Movie/Episode Title: [%s]"   % self.title)
+      log( __name__ ,"Subtitle Folder: [%s]"       % self.sub_folder)
+      log( __name__ ,"Languages: [%s] [%s] [%s]"   % (self.language_1, self.language_2, self.language_3,))
+      log( __name__ ,"Parent Folder Search: [%s]"  % self.parsearch)
+
+      try:
+        self.list_services()
+      except:
+        self.newWindow = False
+        self.list_services()
+
+      try:
+        self.Search_Subtitles()
+      except:
+        errno, errstr = sys.exc_info()[:2]
+        self.getControl( STATUS_LABEL ).setLabel( "Error:" + " " + str(errstr) )
         xbmc.sleep(2000)
-        self.exit_script()    
+        self.exit_script()
+    else:
+      self.getControl( STATUS_LABEL ).setLabel( "No Services Have been selected" )
+      xbmc.sleep(2000)
+      self.exit_script()    
 
 #### ---------------------------- On Init ----------------------------###
 

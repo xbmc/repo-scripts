@@ -1,3 +1,6 @@
+2.1.8
+- fixed: indent error while cleaning up :(
+
 2.1.7
 - changed: use getAddonInfo('path') instead of os.getcwd()
 
