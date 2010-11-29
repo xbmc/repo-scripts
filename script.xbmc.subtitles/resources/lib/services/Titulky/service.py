@@ -12,6 +12,7 @@ from utilities import toOpenSubtitles_two, log
 
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
+__cwd__        = sys.modules[ "__main__" ].__cwd__
 
 """
             <tr class="row2">
@@ -109,7 +110,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	link = client.get_link(content)
 	log(__name__,'Got the link, wait %i seconds before download' % (wait_time))
 	delay = wait_time
-	icon =  os.path.join(os.getcwd(),'icon.png')
+	icon =  os.path.join(__cwd__,'icon.png')
 	for i in range(wait_time+1):
 		line2 = 'Download will start in %i seconds' % (delay,)
 		xbmc.executebuiltin("XBMC.Notification(%s,%s,1000,%s)" % (__scriptname__,line2,icon))

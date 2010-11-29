@@ -25,7 +25,7 @@ except ImportError:
 
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
-
+__cwd__        = sys.modules[ "__main__" ].__cwd__
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
        
@@ -82,7 +82,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     ticket_id, download_wait = sublightWebService.GetDownloadTicket(session_id, subtitle_id)
     
     if ticket_id != "" :
-        icon =  os.path.join(os.getcwd(),"icon.png")
+        icon =  os.path.join(__cwd__,"icon.png")
         if download_wait > 0 :
             delay = int(download_wait)
             for i in range (int(download_wait)):
