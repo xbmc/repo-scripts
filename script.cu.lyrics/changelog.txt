@@ -1,3 +1,6 @@
+0.9.9
+- changed: use getAddonInfo('path') instead of os.getcwd()
+
 0.9.8
 - fixed: script wouldn't detect song change with .mp3 + .cue or .flac + .cue files. Thanks pike!
 

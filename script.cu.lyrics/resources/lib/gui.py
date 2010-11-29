@@ -18,9 +18,10 @@ except:
 current_win_id = xbmcgui.getCurrentWindowId()
 
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
-__version__ = sys.modules[ "__main__" ].__version__
-__settings__ = sys.modules[ "__main__" ].__settings__
-__language__ = sys.modules[ "__main__" ].__language__
+__version__    = sys.modules[ "__main__" ].__version__
+__settings__   = sys.modules[ "__main__" ].__settings__
+__language__   = sys.modules[ "__main__" ].__language__
+__cwd__        = sys.modules[ "__main__" ].__cwd__
 
 SELECT_ITEM = ( 11, 256, 61453, )
 EXIT_SCRIPT = ( 6, 10, 247, 275, 61467, 216, 257, 61448, )

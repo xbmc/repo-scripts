@@ -1,8 +1,11 @@
 import os
 import utilities
 import xbmc
+import sys
 
-BASE_DATA_PATH = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( os.getcwd() ) )
+__cwd__ = sys.modules[ "__main__" ].__cwd__
+
+BASE_DATA_PATH = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( __cwd__ ) )
 lyrics_path = os.path.join( BASE_DATA_PATH, "lyrics")
 
 class Song:
