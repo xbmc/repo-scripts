@@ -220,7 +220,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def exit_script( self, restart=False ):
         self.close()
-        if ( restart ): xbmc.executebuiltin( "XBMC.RunScript(%s)" % ( os.path.join( os.getcwd(), "default.py" ), ) )
+        if ( restart ): xbmc.executebuiltin( "XBMC.RunScript(%s)" % ( os.path.join( __cwd__, "default.py" ), ) )
 
     def onClick( self, controlId ):
         if ( controlId == 120 ):

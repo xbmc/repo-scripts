@@ -1,3 +1,6 @@
+1.0.0
+- changed: more os.getcwd() found
+
 0.9.9
 - changed: use getAddonInfo('path') instead of os.getcwd()
 
