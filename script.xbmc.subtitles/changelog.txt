@@ -1,3 +1,9 @@
+2.1.6
+- Changes in Titulky service: service now supports series too, improved 'sync' feature (now based on file size), fixed bad filtering when movie did not have 'year' field defined, thanks to Libor Zoubek
+- updated: Swedish translation, thx Pike and Blittan
+- fixed: encode issue with Cyrilyc titles
+- cosmetics
+
 2.1.5
 - added: Bulgarian translation, Thanks to Radoslav Vasilev
 

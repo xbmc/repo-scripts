@@ -31,7 +31,7 @@ __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 
 """
 
-subtitle_pattern='..<tr class=\"row[12]\">\s+?<td?[= \w\"]+><a href=\"[\w-]+-(?P<id>\d+).htm\"[ ]?>(?P<title>[\w\- ]*)</a></td>\s+?<td?[= \w\"]+>(<a?[= \w\"]+title=\"(?P<sync>[,\{\}\w.\d \(\)\]\[-]+)\"><img?[= \w\\./"]+></a>)?</td>\s+?<td?[= \w\"]+>(?P<tvshow>[\w\;\&]+)</td>\s+<td?[= \w\"]+>(?P<year>\d+)</td>\s+<td?[= \w\"]+>[\w\;\&\.\d]+</td>\s+<td?[= \w\"]+>(?P<downloads>\d+)</td>\s+<td?[= \w\"]+>(?P<lang>\w{2})</td>'
+subtitle_pattern='..<tr class=\"row[12]\">\s+?<td?[= \w\"]+><a href=\"[\w-]+-(?P<id>\d+).htm\"[ ]?>(?P<title>[\w\- ]*)</a></td>\s+?<td?[= \w\"]+>(<a?[= \w\"]+title=\"(?P<sync>[,\{\}\w.\d \(\)\]\[-]+)\"><img?[= \w\\./"]+></a>)?</td>\s+?<td?[= \w\"]+>(?P<tvshow>[\w\;\&]+)</td>\s+<td?[= \w\"]+>(?P<year>\d+)</td>\s+<td?[= \w\"]+>[\w\;\&\.\d]+</td>\s+<td?[= \w\"]+>(?P<downloads>\d+)</td>\s+<td?[= \w\"]+>(?P<lang>\w{2})</td>\s+<td?[= \w\"]+>(?P<cds>\w+)</td>\s+<td?[= \w\"]+>(?P<size>[\w\.]+)MB</td>'
 
 control_image_pattern='(secode.php\?[\w\d=]+)'
 session_id_pattern='secode.php\?PHPSESSID=([\w\d]+)'
@@ -49,16 +49,16 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 		title = title[:br_index]
 	title = title.strip()
 #   print 'path '+file_original_path
-#    print 'title '+title
-#    print 'tvshow '+tvshow
-#   print 'year '+year
-#   print 'season '+season
-#    print 'episode'+episode
+#	print 'title '+title
+#	print 'tvshow '+tvshow
+#	print 'year '+year
+#	print 'season '+season
+#	print 'episode'+episode
 #    print 'set_temp '+str(set_temp)
 #    print 'rar '+str(rar)
-#    print 'lang1 '+lang1
-#    print 'lang2 '+lang2
-#    print 'lang3 '+lang3
+#	print 'lang1 '+lang1
+#	print 'lang2 '+lang2
+#	print 'lang3 '+lang3
 	session_id = "0"
 	client = TitulkyClient()    
 	subtitles_list = client.search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 )   
@@ -133,6 +133,14 @@ def lang_xbmclang2titulky(lang):
 	if lang == 'Slovak': return 'SK'
 	return 'EN'	
 
+def get_episode_season(episode,season):
+	return 'S%sE%s' % (get2DigitStr(int(season)),get2DigitStr(int(episode)))
+def get2DigitStr(number):
+	if number>9:
+		return str(number)
+	else:
+		return '0'+str(number)
+
 def lang2_opensubtitles(lang):
 	lang = lang_titulky2xbmclang(lang)
 	return toOpenSubtitles_two(lang)
@@ -147,7 +155,14 @@ class TitulkyClient(object):
 	
 	def search_subtitles(self, file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ):	
 		url = self.server_url+'/index.php?'+urllib.urlencode({'Fulltext':title,'FindUser':''})
+		if not (tvshow == None or tvshow == ''):
+			title2 = tvshow+' '+get_episode_season(episode,season)
+			url = self.server_url+'/index.php?'+urllib.urlencode({'Fulltext':title2,'FindUser':''})
 		req = urllib2.Request(url)
+		try:
+			file_size='%.2f' % (float(os.path.getsize(file_original_path))/(1024*1024))
+		except:
+			file_size=''
 		log(__name__,'Opening %s' % (url))
 		response = urllib2.urlopen(req)
 		content = response.read()
@@ -155,7 +170,7 @@ class TitulkyClient(object):
 		log(__name__,'Done')
 		subtitles_list = []
 		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):			
-#			print matches.group('id') +' ' +matches.group('title')+' '+ str(matches.group('sync'))+' '+ matches.group('tvshow')+' '+ matches.group('year')+' '+ matches.group('downloads')+' '+ matches.group('lang')
+#			print matches.group('id') +' ' +matches.group('title')+' '+ str(matches.group('sync'))+' '+ matches.group('tvshow')+' '+ matches.group('year')+' '+ matches.group('downloads')+' '+ matches.group('lang')+' '+ matches.group('cds')+' '+matches.group('size')
 			file_name = matches.group('sync')
 			if file_name == None: # if no sync info is found, just use title instead of None
 				file_name = matches.group('title') 
@@ -163,11 +178,14 @@ class TitulkyClient(object):
 			sync = False
 			if file_original_path.find(matches.group('sync')) > -1:
 				sync = True
-			if not matches.group('year') == year:
-				continue
+			if file_size==matches.group('size'):
+				sync = True
+			if not year == '':
+				if not matches.group('year') == year:
+					continue
 			lang = lang_titulky2xbmclang(matches.group('lang'))
 			if lang == lang1 or lang == lang2 or lang == lang3:
-				subtitles_list.append( { 'title' : matches.group('title'), 'year' : matches.group('year'), "filename" : file_name, 'language_name' : lang_titulky2xbmclang(matches.group('lang')), 'ID' : matches.group('id'), "mediaType" : 'mediaType', "numberOfDiscs" : '2', "downloads" : matches.group('downloads'), "sync" : sync, "rating" :'0', "language_flag":flag_image } )
+				subtitles_list.append( { 'title' : matches.group('title'), 'year' : matches.group('year'), "filename" : file_name, 'language_name' : lang_titulky2xbmclang(matches.group('lang')), 'ID' : matches.group('id'), "mediaType" : 'mediaType', "numberOfDiscs" : '1', "downloads" : matches.group('downloads'), "sync" : sync, "rating" :'0', "language_flag":flag_image } )
 		return subtitles_list
 	
 	def get_waittime(self,content):
