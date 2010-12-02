@@ -11,12 +11,23 @@ self_host = "http://www.addic7ed.com"
 self_release_pattern = re.compile(" \nVersion (.+), ([0-9]+).([0-9])+ MBs")
 
 def compare_columns(b,a):
-    return cmp( a["sync"], b["sync"] ) or cmp( b["language_name"], a["language_name"] ) 
+    return cmp( a["sync"], b["sync"] ) or cmp( b["language_name"], a["language_name"] )
+    
+def get_url(url):
+    req_headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
+    'Referer': 'http://www.addic7ed.com'}
+    request = urllib2.Request(url, headers=req_headers)
+    opener = urllib2.build_opener()
+    response = opener.open(request)
+
+    contents = response.read() 
+    return contents    
 
 def query_TvShow(name, season, episode, file_original_path, langs):
     sublinks = []
     name = name.lower().replace(" ", "_").replace("$#*!","shit") #need this for $#*! My Dad Says
-    searchurl = "%s/serie/%s/%s/%s/%s" %(self_host, name, season, episode, name)
+    searchurl = "%s/serie/%s/%s/%s/addic7ed" %(self_host, name, season, episode)
     socket.setdefaulttimeout(3)
     page = urllib2.urlopen(searchurl)
     content = page.read()
@@ -25,6 +36,7 @@ def query_TvShow(name, season, episode, file_original_path, langs):
     for subs in soup("td", {"class":"NewsTitle", "colspan" : "3"}):
       try:  
         langs_html = subs.findNext("td", {"class" : "language"})
+        fullLanguage = str(langs_html).split('class="language">')[1].split('&nbsp;<a')[0].replace("\n","")
         subteams = self_release_pattern.match(str(subs.contents[1])).groups()[0].lower()
         file_name = os.path.basename(file_original_path).lower()
         if (file_name.find(str(subteams))) > -1:
@@ -32,15 +44,16 @@ def query_TvShow(name, season, episode, file_original_path, langs):
         else:
           hashed = False
         try:
-          lang = toOpenSubtitles_two(langs_html.string.strip())
+          lang = toOpenSubtitles_two(fullLanguage)
         except:
           lang = ""
         statusTD = langs_html.findNext("td")
         status = statusTD.find("strong").string.strip()
         link = "%s%s"%(self_host,statusTD.findNext("td").find("a")["href"])
         if status == "Completed" and (lang in langs) :
-            sublinks.append({'filename':"%s.S%.2dE%.2d-%s" %(name.replace("_", ".").title(), int(season), int(episode),subteams ),'link':link,'language_name':langs_html.string.strip(),'language_id':lang,'language_flag':"flags/%s.gif" % (lang,),'movie':"movie","ID":"subtitle_id","rating":"0","format":"srt","sync":hashed})
+            sublinks.append({'filename':"%s.S%.2dE%.2d-%s" %(name.replace("_", ".").title(), int(season), int(episode),subteams ),'link':link,'language_name':fullLanguage,'language_id':lang,'language_flag':"flags/%s.gif" % (lang,),'movie':"movie","ID":"subtitle_id","rating":"0","format":"srt","sync":hashed})
       except:
+        print "Error"
         pass      
     return sublinks
  
@@ -56,6 +69,7 @@ def query_Film(name, file_original_path,year, langs):
     for subs in soup("td", {"class":"NewsTitle", "colspan" : "3"}):
       try:
         langs_html = subs.findNext("td", {"class" : "language"})
+        fullLanguage = str(langs_html).split('class="language">')[1].split('&nbsp;<a')[0].replace("\n","")
         subteams = self_release_pattern.match(str(subs.contents[1])).groups()[0].lower()
         file_name = os.path.basename(file_original_path).lower()
         if (file_name.find(str(subteams))) > -1:
@@ -63,14 +77,14 @@ def query_Film(name, file_original_path,year, langs):
         else:
           hashed = False  
         try:
-          lang = toOpenSubtitles_two(langs_html.string.strip())
+          lang = toOpenSubtitles_two(fullLanguage)
         except:
           lang = ""
         statusTD = langs_html.findNext("td")
         status = statusTD.find("strong").string.strip()
         link = "%s%s"%(self_host,statusTD.findNext("td").find("a")["href"])
         if status == "Completed" and (lang in langs) :
-            sublinks.append({'filename':"%s-%s" %(name.replace("_", ".").title(),subteams ),'link':link,'language_name':langs_html.string.strip(),'language_id':lang,'language_flag':"flags/%s.gif" % (lang,),'movie':"movie","ID":"subtitle_id","rating":"0","format":"srt","sync":hashed})
+            sublinks.append({'filename':"%s-%s" %(name.replace("_", ".").title(),subteams ),'link':link,'language_name':fullLanguage,'language_id':lang,'language_flag':"flags/%s.gif" % (lang,),'movie':"movie","ID":"subtitle_id","rating":"0","format":"srt","sync":hashed})
       except:
         pass
     return sublinks    
@@ -99,10 +113,10 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     url = subtitles_list[pos][ "link" ]
     file = os.path.join(tmp_sub_dir, "adic7ed.srt")
 
-    f = urllib2.urlopen(url)
+    f = get_url(url)
 
     local_file_handle = open(file, "w" + "b")
-    local_file_handle.write(f.read())
+    local_file_handle.write(f)
     local_file_handle.close() 
    
     language = subtitles_list[pos][ "language_name" ]
