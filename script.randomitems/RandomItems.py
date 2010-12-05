@@ -62,7 +62,7 @@ class Main:
     
     def _fetch_movie_info( self ):
         # set our unplayed query
-        unplayed = ( "", "where playCount isnull ", )[ self.UNPLAYED ]
+        unplayed = ( "", "where playCount is null ", )[ self.UNPLAYED ]
         # sql statement
         if ( self.RANDOM_ORDER ):
             # random order
@@ -101,7 +101,7 @@ class Main:
 
     def _fetch_tvshow_info( self ):
         # set our unplayed query
-        unplayed = ( "", "where playCount isnull ", )[ self.UNPLAYED ]
+        unplayed = ( "", "where playCount is null ", )[ self.UNPLAYED ]
         # sql statement
         if ( self.RANDOM_ORDER ):
             # random order
@@ -149,7 +149,7 @@ class Main:
             # separate the records
             albums = re.findall( "<record>(.+?)</record>", music_xml, re.DOTALL )
             # set our unplayed query
-            unplayed = ( "(idAlbum = %s)", "(idAlbum = %s and lastplayed isnull)", )[ self.UNPLAYED ]
+            unplayed = ( "(idAlbum = %s)", "(idAlbum = %s and lastplayed is null)", )[ self.UNPLAYED ]
             # sql statement
             sql_music = "select songview.* from songview where %s limit 1" % ( unplayed, )
             # clear our xml data
@@ -160,7 +160,7 @@ class Main:
                 music_xml += xbmc.executehttpapi( "QueryMusicDatabase(%s)" % quote_plus( sql_music % ( album.replace( "<field>", "" ).replace( "</field>", "" ), ) ), )
         else:
             # set our unplayed query
-            unplayed = ( "", "where lastplayed isnull ", )[ self.UNPLAYED ]
+            unplayed = ( "", "where lastplayed is null ", )[ self.UNPLAYED ]
             # sql statement
             sql_music = "select * from songview %sorder by RANDOM() limit %d" % ( unplayed, self.LIMIT, )
             # query the database
