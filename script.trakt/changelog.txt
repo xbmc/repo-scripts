@@ -1,3 +1,13 @@
+Version 0.0.7
+	- fixed double submit
+	- added error handling for bad user/pass
+	- fixed unicode issue with special characters in show name
+	- added German translation thanks to BurningSky!
+	- corrected tvdb id send
+	- changed os.getcwd() to getAddonInfo('path')
+	- instruction in addon xml
+	- extended check time to 164 seconds (minimum needed for 20 minute shows)
+
 Version 0.0.6
 	- added icon to notifications
 	- now sending video progress % to api

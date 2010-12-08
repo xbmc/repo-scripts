@@ -10,7 +10,16 @@
              library="default.py" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en">trakt</summary>
-    <description lang="en">trakt helps you keep a record of what TV shows you are watching. Based on your favorites, trakt recommends additional shows that you'll enjoy! Get your account started on http://trakt.tv</description>
+    <description lang="en">
+		Installation instructions: 
+		After installing this plugin, sign up for an account at http://trakt.tv.  Then.. 
+		
+		1. Press c (or rightclick if using a mouse) and select configure 
+		2. Enter in username and password that you have set up on the trakt website and any other configuration you would like 
+		3. Navigate to Home > Programs and activate trakt* (location of trakt activation is skin dependent and may be in other places labeled Addons, Scripts, etc.) 
+		
+		Note: if you do not configure trakt to autostart, you will need to repeat step 5 any time you would like to submit tv shows
+    </description>
     <platform>all</platform>
   </extension>
 </addon>

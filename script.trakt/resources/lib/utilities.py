@@ -2,23 +2,26 @@ import sys
 import os
 import xbmc
 import xbmcaddon
+import re
 import string
 import urllib
 import urllib2
-
-#Path handling
-LANGUAGE_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'language' ) )
-CONFIG_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'settings.cfg' ) )
-AUTOEXEC_PATH = xbmc.translatePath( 'special://home/userdata/autoexec.py' )
-AUTOEXEC_FOLDER_PATH = xbmc.translatePath( 'special://home/userdata/' )
-VERSION_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'version.cfg' ) )
-
-#Consts
-AUTOEXEC_SCRIPT = '\nimport time;time.sleep(5);xbmc.executebuiltin("XBMC.RunScript(special://home/addons/script.trakt/default.py,-startup)")\n'
+from urllib2 import URLError
 
 __settings__ = xbmcaddon.Addon(id='script.trakt')
 __language__ = __settings__.getLocalizedString
-__version__ = "0.0.6"
+__version__ = "0.0.7"
+__cwd__ = __settings__.getAddonInfo('path')
+
+#Path handling
+LANGUAGE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'language' ) )
+CONFIG_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'settings.cfg' ) )
+AUTOEXEC_PATH = xbmc.translatePath( 'special://home/userdata/autoexec.py' )
+AUTOEXEC_FOLDER_PATH = xbmc.translatePath( 'special://home/userdata/' )
+VERSION_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'version.cfg' ) )
+
+#Consts
+AUTOEXEC_SCRIPT = '\nimport time;time.sleep(5);xbmc.executebuiltin("XBMC.RunScript(special://home/addons/script.trakt/default.py,-startup)")\n'
 
 def SendUpdate(info, progress, sType, status):
     Debug("Creating data to send", False)
@@ -34,12 +37,17 @@ def SendUpdate(info, progress, sType, status):
     
     Debug(info, False)
     
+    if (sType == "TVShow"):
+        ID = getID(sType, unicode(xbmc.getInfoLabel("VideoPlayer.TvShowTitle"), 'utf-8'))
+    elif (sType == "Movie"):
+        ID = getID(sType, unicode(xbmc.getInfoLabel("VideoPlayer.Title")))
+    
     # split on type and create data packet for each type
     if (sType == "Movie"):
         Debug("Parsing Movie", False)
         
         # format: title, year
-        title, year, imdbid = info.split(",")
+        title, year, ID = info.split(",")
         
         # set alert text
         submitAlert = __language__(45052).encode( "utf-8", "ignore" )
@@ -50,7 +58,7 @@ def SendUpdate(info, progress, sType, status):
                                     "status": status,
                                     "title": title, 
                                     "year": year,
-                                    "imdbid": imdbid,
+                                    "imdbid": ID,
                                     "progress": progress,
                                     "plugin_version": __version__,
                                     "media_center": 'xbmc',
@@ -62,7 +70,7 @@ def SendUpdate(info, progress, sType, status):
         Debug("Parsing TVShow", False)
         
         # format: title, year, season, episode
-        title, year, season, episode, tvdbid = info.split(",")
+        title, year, season, episode, ID = info.split(",")
         
         # set alert text
         submitAlert = __language__(45053).encode( "utf-8", "ignore" )
@@ -76,7 +84,7 @@ def SendUpdate(info, progress, sType, status):
                                     "year": year, 
                                     "season": season, 
                                     "episode": episode,
-                                    "tvdbid": tvdbid,
+                                    "tvdbid": ID,
                                     "progress": progress,
                                     "plugin_version": __version__,
                                     "media_center": 'xbmc',
@@ -95,16 +103,6 @@ def SendUpdate(info, progress, sType, status):
     
 def transmit(status):
     bNotify = __settings__.getSetting( "NotifyOnSubmit" )
-    # may use this later if other auth methods suck
-    # def basic_authorization(user, password):
-    #         bUsername = __settings__.getSetting( "Username" )
-    #         bPassword = __settings__.getSetting( "Password" )
-    #         if(bUsername == '' || bPassword == '')
-    #             xbmc.executebuiltin('Notification(Trakt,' + __language__(45051).encode( "utf-8", "ignore" ) + ',3000)')
-    #             return false
-    #         
-    #         s = user + ":" + password
-    #         return "Basic " + s.encode("base64").rstrip()
 
     req = urllib2.Request("http://api.trakt.tv/post",
             status,
@@ -114,10 +112,17 @@ def transmit(status):
 
     try:
         f = urllib2.urlopen(req)
-    
+        response = f.read()
+        Debug("Return packet: "+response)
+        
+    except URLError, e:
+        if e.code == 401:
+            Debug("Bad username or password", False)
+            if (bNotify == "true"):
+                notification("Trakt: Bad Authentication!", "Check your login information", 5000, __settings__.getAddonInfo("icon"))
+                
     except:
-        # do nothing 'cept spit out error
-        Debug("", False)
+        # do nothing 'cept spit out error (catch all)
         if (bNotify == "true"):
             notification("Trakt", "Error sending status.  API may not be reachable", 10000, __settings__.getAddonInfo("icon"))
 
@@ -200,3 +205,28 @@ def notification( header="", message="", sleep=5000, icon=__settings__.getAddonI
         in addition you can set the length of time it displays in milliseconds and a icon image. 
     """
     xbmc.executebuiltin( "XBMC.Notification(%s,%s,%i,%s)" % ( header, message, sleep, icon ) )
+    
+def getID(sType, title):
+    video_id = ""
+    if (sType == "TVShow"):
+        # get tvdb id
+        try:
+            query = "select c12 from tvshow where c00 = '" + title + "'"
+            res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
+            tvid = re.findall('[\d.]*\d+',res) # find it
+
+            if len(tvid[0].strip()) >= 1:
+                video_id = tvid[0].strip();
+        except:        
+            video_id = ""
+    else:
+        try:
+            query = "select case when not movie.c09 is null then movie.c09 else 'NOTFOUND' end as [MovieID] from movie where movie.c00 = '" + title + "' limit 1"
+            res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
+            movieid = re.findall('>(.*?)<',res) # find it
+            if len(movieid[1].strip()) >= 1:
+                video_id = str(movieid[1].strip())
+        except:
+            video_id = ""
+    
+    return video_id
