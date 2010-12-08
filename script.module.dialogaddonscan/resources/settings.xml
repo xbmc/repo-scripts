@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- General -->
+  <category label="$LOCALIZE[128]">
+    <setting type="lsep" label="$LOCALIZE[480]" />
+    <setting id="hidedialog" label="$ADDON[script.module.dialogaddonscan 30100]" type="bool" default="false" />
+    <setting id="animation" label="$LOCALIZE[20079]" type="bool" default="true" />
+    <setting id="hidecancelbtn" label="$ADDON[script.module.dialogaddonscan 30110] [COLOR=88FFFFFF]$ADDON[script.module.dialogaddonscan 30111][/COLOR]" type="bool" default="true" />
+    <setting type="lsep" label="$ADDON[script.module.dialogaddonscan 30102]" />
+    <setting id="custompos" label="$ADDON[script.module.dialogaddonscan 30103]" type="bool" default="false" />
+    <setting id="customposx" label="$ADDON[script.module.dialogaddonscan 30104]" subsetting="true" type="slider" default="0" range="-640,1,1280" format="%1.f" enable="eq(-1,true)" />
+    <setting id="customposy" label="$ADDON[script.module.dialogaddonscan 30105]" subsetting="true" type="slider" default="0" range="-360,1,720" format="%1.f" enable="eq(-2,true)" />
+  </category>
+
+  <!-- Credits -->
+  <category label="30051">
+    <setting type="lsep" label="$LOCALIZE[21863]: [COLOR=88FFFFFF]Frost (passion-xbmc.org)[/COLOR]" />
+    <setting type="lsep" label="$ADDON[script.module.dialogaddonscan 30501] [COLOR=88FFFFFF]alexsolex[/COLOR]" />
+    <setting type="lsep" label="$ADDON[script.module.dialogaddonscan 30502] [COLOR=88FFFFFF]ppic[/COLOR]" />
+    <setting type="lsep" label="$LOCALIZE[24053] [COLOR=88FFFFFF]GPL[/COLOR]" />
+    <setting type="sep" />
+    <setting type="action" label="$ADDON[script.module.dialogaddonscan 30504]" option="close" action="RunScript(special://home/addons/script.module.dialogaddonscan/lib/TextViewer.py,changelog)" default="" />
+    <setting type="action" label="$ADDON[script.module.dialogaddonscan 30505]" option="close" action="RunScript(special://home/addons/script.module.dialogaddonscan/lib/TextViewer.py,readme)" default="" />
+  </category>
+</settings>

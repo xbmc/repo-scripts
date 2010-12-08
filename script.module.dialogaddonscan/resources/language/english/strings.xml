@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!-- Add-on title -->
+  <string id="30000">Dialog Addon Scan</string>
+  <string id="30001"></string>
+
+  <!-- category separators -->
+  <string id="30050">General</string>
+  <string id="30051">Credits</string>
+  <string id="30052"></string>
+  <string id="30053"></string>
+  <string id="30054"></string>
+  <string id="30055"></string>
+
+  <!-- General -->
+  <string id="30100">Hide Dialog</string>
+  <string id="30101"></string>
+  <string id="30102">Dialog Positions</string>
+  <string id="30103">Enable custom positions</string>
+  <string id="30104">Position X</string>
+  <string id="30105">Position Y</string>
+
+  <string id="30110">Enable Cancel button</string>
+  <string id="30111">(Only mouse has ability to cancel)</string>
+
+  <!-- Credits -->
+  <string id="30500"></string>
+  <string id="30501">Idea of:</string>
+  <string id="30502">Council:</string>
+  <string id="30503"></string>
+  <string id="30504">Show Changelog</string>
+  <string id="30505">Show Dev Readme</string>
+</strings>

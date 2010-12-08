@@ -1,0 +1,32 @@
+1.0.6
+ - fixed: gui.py cause conflict with other addons, renamed in AddonScan.py
+
+1.0.5
+ - fixed-changed: xbmcguiWindowError( Exception )
+
+1.0.4
+ - fixed: NameError: name 'WindowsError' is not defined
+
+1.0.3
+ - added: Cancel button ( Only mouse has ability to cancel )
+ - added: settings to enable cancel button
+ - added: text viewer for "changelog.txt" and "readme.txt" via dialog settings
+ - updated: readme.txt
+
+1.0.2
+ - added: iscanceled()
+   - function to cancel scan: 
+   -- ( xbmcgui.Window( xbmcgui.getCurrentWindowId() ).setProperty( "DialogAddonScan.Cancel", "true" ) )
+ - added: small settings for displaying dialog positions...
+ - changed: properties name ( DialogAddonScanIsAlive -> DialogAddonScan.IsAlive )
+ - added: skin xml ( but is not displaying, is loaded for keeping layout of controls )
+
+ Note: The "readme.txt" is not updated. See Demo() function in DialogAddonScan.
+
+1.0.1
+ - added: Window.Property(DialogAddonScanIsAlive) value is "true"
+    if xbmc.getInfoLabel( "Window.Property(DialogAddonScanIsAlive)" ) == "true":
+        print "Oops! pass is alive :)"
+
+1.0.0
+ - initial version

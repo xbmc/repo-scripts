@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- $Revision: 896 $ -->
+<addon id="script.module.dialogaddonscan" name="Dialog Addon Scan"
+       version="1.0.6" date="27.10.2010"
+       provider-name="Frost (passion-xbmc.org)">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Dialog Scan for Add-on</summary>
+    <description>Dialog Scan for Add-on</description>
+    <license>GPL</license>
+    <platform>all</platform>
+  </extension>
+</addon>

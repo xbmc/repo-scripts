@@ -1,0 +1,92 @@
+<window id="3000">
+	<defaultcontrol>2006</defaultcontrol>
+	<!-- Dummy XML, load xml for keeping infos of displaying -->
+	<controls>
+		<!-- ALL ID'S REQUIRED -->
+		<control type="label" id="1999">
+			<description>General Infos of animations</description>
+			<visible>false</visible>
+			<!-- http://passion-xbmc.org/gros_fichiers/XBMC%20Python%20Doc/xbmc_svn/xbmcgui.html#ControlGroup-setAnimations -->
+			<label>
+				['WindowOpen', 'effect=slide start=0,-70 end=0,0 time=200']
+				['WindowClose', 'effect=slide start=0,0 end=0,-70 delay=400 time=200']
+				['Conditional', 'effect=slide end=-100,0 delay=400 time=1000 condition=Window.IsVisible(videoscan)']
+			</label>
+		</control>
+		<control type="group" id="2000">
+			<description>Coordinates</description>
+			<visible>false</visible>
+			<posx>440</posx>
+			<posy>0</posy>
+			<control type="image" id="2001">
+				<posx>0</posx>
+				<posy>-10</posy>
+				<width>400</width>
+				<height>70</height>
+				<!--<texture flipy="true" border="20,20,20,2">BackgroundPanel.png</texture>-->
+				<!-- image.png or texture=image.png and OPTION: [, colorKey=, aspectRatio=, colorDiffuse=] -->
+				<texture>BackgroundPanel.png</texture>
+				<visible>false</visible>
+			</control>
+			<control type="label" id="2002">
+				<description>Caption Label</description>
+				<posx>15</posx>
+				<posy>4</posy>
+				<width>370</width>
+				<height>18</height>
+				<!-- OPTION: [font=, textColor=, disabledColor=, alignment=x+y, hasPath=, angle=] -->
+				<label>font=font10,textColor=FFEB9E17,alignment=left+centery</label>
+				<!--<font>font10_title</font>
+				<textcolor>selected</textcolor>
+				<align>left</align>
+				<aligny>center</aligny>-->
+				<visible>false</visible>
+			</control>
+			<control type="label" id="2003">
+				<description>Current Directory Label</description>
+				<posx>15</posx>
+				<posy>20</posy>
+				<width>370</width>
+				<height>20</height>
+				<!-- OPTION: [font=, textColor=, disabledColor=, alignment=x+y, hasPath=, angle=] -->
+				<label>font=font10,textColor=FFFFFFFF,alignment=left+centery</label>
+				<!--<font>font10</font>
+				<align>left</align>
+				<aligny>center</aligny>-->
+				<visible>false</visible>
+			</control>
+			<control type="progress" id="2004">
+				<description>progress1 control</description>
+				<posx>15</posx>
+				<posy>38</posy>
+				<width>370</width>
+				<height>8</height>
+				<visible>false</visible>
+			</control>
+			<control type="progress" id="2005">
+				<description>progress2 control</description>
+				<posx>15</posx>
+				<posy>45</posy>
+				<width>370</width>
+				<height>8</height>
+				<visible>false</visible>
+			</control>
+			<control type="label" id="2045">
+				<description>Infos Progress Images</description>
+				<!-- OPTION: [texturebg=, textureleft=, texturemid=, textureright=, textureoverlay=] -->
+				<label>texturebg=ProgressBack.png,texturemid=ProgressFront.png,textureleft=,textureright=,textureoverlay=</label>
+				<visible>false</visible>
+			</control>
+			<control type="button" id="2006">
+				<description>cancel button</description>
+				<posx>345</posx>
+				<posy>0</posy>
+				<width>40</width>
+				<height>20</height>
+				<!-- OPTION: [focusTexture=, noFocusTexture=, textOffsetX=, textOffsetY=, alignment=x+y, font=, textColor=, disabledColor=, angle=, shadowColor=, focusedColor=] -->
+				<label>focusTexture=DialogCloseButton-focus.png,noFocusTexture=DialogCloseButton.png</label>
+				<visible>false</visible>
+			</control>
+		</control>
+	</controls>
+</window>
