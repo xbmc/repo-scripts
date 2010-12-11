@@ -12,7 +12,7 @@ import re
 __scriptname__ = "trakt"
 __author__ = "Sean Rudford"
 __url__ = "http://trakt.tv/"
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 __XBMC_Revision__ = ""
 
 def addPadding(number):
@@ -93,7 +93,7 @@ def CheckAndSubmit(Manual=False):
             Debug("Found Movie", False)
             
             # format: title, year
-            moviename = xbmc.getInfoLabel("VideoPlayer.TvShowTitle")
+            moviename = xbmc.getInfoLabel("VideoPlayer.Title")
             moviename = moviename.replace(",", '')
             
             title = (moviename + ',' + xbmc.getInfoLabel("VideoPlayer.Year"))

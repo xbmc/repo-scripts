@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="45001">Algemene instellingen</string>
+	<string id="45002">Uitzonderingen</string>
+	<string id="45003">Diversen</string>
+	
+	<string id="45004">Automatisch starten van Trakt tijdens opstarten</string>
+	<string id="45005">Gebruikersnaam</string>
+	<string id="45006">Wachtwoord</string>
+	<string id="45007">Laat notificaties zien</string>
+	<string id="45008">Sluit volwassen inhoud uit</string>
+	<string id="45009">Uit te sluiten locatie</string>
+	<string id="45010">Folderlocatie (en submappen)</string>
+	<string id="45011">Controleer voor nieuwe versie bij opstarten</string>
+	<string id="45012">Foutregistratie inschakelen</string>
+	<string id="45013">Toevoeg opties</string>
+	<string id="45014">Zet automatisch toevoegen aan</string>
+	<string id="45015">Toevoegen na het kijken van</string>
+	
+	<string id="45050">Klaar om je media toe te voegen</string>
+	<string id="45051">U moet een gebruikersnaam en wachtwoord in te voeren!</string>
+	<string id="45052">Toegevoegd %MOVIENAME% (%YEAR%)</string>
+	<string id="45053">Toegevoegd %TVSHOW% %SEASON%x%EPISODE%</string>
+</strings>
+

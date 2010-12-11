@@ -1,3 +1,8 @@
+Version 0.0.8
+	- added Dutch translation thanks to IIINeOIIINL!
+	- fixed bug sending movie data (still pre-emptive, but coming soon)
+	- sha1'd password
+
 Version 0.0.7
 	- fixed double submit
 	- added error handling for bad user/pass

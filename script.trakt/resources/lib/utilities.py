@@ -8,9 +8,17 @@ import urllib
 import urllib2
 from urllib2 import URLError
 
+# disgracefully stolen from xbmc subtitles
+try:
+  # Python 2.6 +
+  from hashlib import sha as sha
+except ImportError:
+  # Python 2.5 and earlier
+  import sha
+
 __settings__ = xbmcaddon.Addon(id='script.trakt')
 __language__ = __settings__.getLocalizedString
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 __cwd__ = __settings__.getAddonInfo('path')
 
 #Path handling
@@ -27,8 +35,9 @@ def SendUpdate(info, progress, sType, status):
     Debug("Creating data to send", False)
     
     bUsername = __settings__.getSetting( "Username" )
-    bPassword = __settings__.getSetting( "Password" )
+    bPassword = sha.new(__settings__.getSetting( "Password" )).hexdigest()
     bNotify = __settings__.getSetting( "NotifyOnSubmit" )
+    
     
     if (bUsername == '' or bPassword == ''):
         Debug("Username or password not set", False)
