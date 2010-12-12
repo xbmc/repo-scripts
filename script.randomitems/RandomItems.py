@@ -44,13 +44,23 @@ class Main:
         self.ALBUMS = params.get( "albums", "" ) == "True"
         self.UNPLAYED = params.get( "unplayed", "" ) == "True"
         self.PLAY_TRAILER = params.get( "trailer", "" ) == "True"
+        self.ALARM = int( params.get( "alarm", "0" ) )
         self.RANDOM_ORDER = "True"
+
+    def _set_alarm( self ):
+        # only run if user/skinner preference
+        if ( not self.ALARM ): return
+        # set the alarms command
+        command = "XBMC.RunScript(%s,limit=%d&albums=%s&unplayed=%s&trailer=%s&alarm=%d)" % ( os.path.join( os.getcwd(), __file__ ), self.LIMIT, str( self.ALBUMS ), str( self.UNPLAYED ), str( self.PLAY_TRAILER ), self.ALARM, )
+        xbmc.executebuiltin( "AlarmClock(RandomItems,%s,%d,true)" % ( command, self.ALARM, ) )
 
     def __init__( self ):
         # parse argv for any preferences
         self._parse_argv()
         # clear properties
         self._clear_properties()
+        # set any alarm
+        self._set_alarm()
         # format our records start and end
         xbmc.executehttpapi( "SetResponseFormat()" )
         xbmc.executehttpapi( "SetResponseFormat(OpenRecord,%s)" % ( "<record>", ) )
