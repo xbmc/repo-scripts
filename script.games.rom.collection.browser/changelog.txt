@@ -1,4 +1,20 @@
 
+0.7.9 (12/2010)
+~~~~~~~~~~~~~
+Online Scraping
+    * scraping game information and artwork from various online sources
+    * current available scrapers: thevideogamedb.com, thegamesdb.net, giantbomb.com, mobygames.com
+    * scraped artwork types: boxfront, boxback, cartridge, screenshot and fanart
+    * create local nfo files while scraping
+    * option to reimport local nfo files (possibility to add or edit game properties)
+    * create info files about scrape results (missing artwork, missing description, wrong game name)
+
+Configuration
+    * startup configuration wizard (create config.xml with most common options)
+    * configure global settings via Addon Settings page
+    * refactoring of config.xml structure
+    * config.xml will be read at every start: no need to import settings anymore
+
 0.6.1 (08/2010)
 ~~~~~~~~~~~~~
 UI and general behaviour

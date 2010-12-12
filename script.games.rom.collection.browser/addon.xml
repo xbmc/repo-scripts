@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="script.games.rom.collection.browser"
-  version="0.6.1"
+  version="0.7.9"
   name="Rom Collection Browser"
   provider-name="malte">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
-	<import addon="script.module.elementtree" version="1.2.7"/>
+    <import addon="script.module.elementtree" version="1.2.7"/>
   </requires>
   <extension point="xbmc.python.script" library="default.py"></extension>
   <extension point="xbmc.addon.metadata">
-    <summary>Browse and launch roms and standalones.</summary>
-    <summary  lang="hu">Konzol játék ROM-ok böngészése.</summary>
+    <summary>Browse and launch roms and standalones</summary>
+    <summary  lang="hu">Konzol játék ROM-ok böngészése</summary>
     <description>Current features:
-    * filter games by console, genre, year and publisher
-    * launch roms with external emulator
-    * configure script via xml file
-    * simple but configurable description file parser
-    * view different images and videos per game
-    * view game plot and additional game properties
-    
-Note: This script needs some configuration. Please have a look at the commented config.xml in RCBs database directory or check http://code.google.com/p/romcollectionbrowser for complete documentation.</description>
+    * scan your rom folders and import games to local database
+    * scrape artwork and meta data from various online sources
+    * browse games by console, genre, year and publisher
+    * launch roms and standalone games in solo or non-solo mode
+    * automatic video playback in video window
+    * fullscreen video browser
+    * game details page
+    * configurable description file parser
+
+Update from previous versions:
+    * older versions (0.6.1 and higher) will be updated automatically
+
+First use:
+    * if there is no config file available RCB will start a configuration wizard
+    * select platform, emulator command, path to roms and artwork
+    * online scraping scenario:
+        --> RCB will scrape game info and artwork from online sources
+    * data available locally:
+        --> tell RCB where to find artwork and game descriptions
+
+Note: if you choose online scraping scenario, RCB will try to create following sub folders below your artwork path: boxfront, boxback, cartridge, screenshot, fanart
+</description>
 
     <description lang="hu">Jelenlegi funkciók:
     * játékok szűrése konzoltípus, műfaj, év és kiadó alapján

@@ -7,11 +7,11 @@ import xbmc, time
 # CONSTANTS #
 #
 
-RCBHOME = os.getcwd()
 SCRIPTNAME = 'Rom Collection Browser'
 SCRIPTID = 'script.games.rom.collection.browser'
-CURRENT_SCRIPT_VERSION = "0.6.1"
-CURRENT_DB_VERSION = "0.6.0"
+CURRENT_SCRIPT_VERSION = "0.7.9"
+CURRENT_DB_VERSION = "0.7.4"
+ISTESTRUN = False
 
 #time to wait before automatic playback starts
 WAITTIME_PLAYERSTART = 500
@@ -32,7 +32,30 @@ LOG_LEVEL_DEBUG = 3
 
 CURRENT_LOG_LEVEL = LOG_LEVEL_INFO
 
+API_KEYS = {'%VGDBAPIKey%' : 'Zx5m2Y9Ndj6B4XwTf83JyKz7r8WHt3i4',
+			'%GIANTBOMBAPIKey%' : '279442d60999f92c5e5f693b4d23bd3b6fd8e868'}
+
+FUZZY_FACTOR_ENUM = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+
 SETTING_RCB_VIEW_MODE = 'rcb_view_mode'
+SETTING_RCB_CACHINGOPTION = 'rcb_cachingOption'
+SETTING_RCB_FUZZYFACTOR = 'rcb_fuzzyFactor'
+SETTING_RCB_LOGLEVEL = 'rcb_logLevel'
+SETTING_RCB_USEEMUSOLO = 'rcb_useEmulatorSolo'
+SETTING_RCB_ESCAPECOMMAND = 'rcb_escapeEmulatorCommand'
+SETTING_RCB_CREATENFOFILE = 'rcb_createNfoWhileScraping'
+SETTING_RCB_ENABLEFULLREIMPORT = 'rcb_enableFullReimport'
+SETTING_RCB_IGNOREGAMEWITHOUTDESC = 'rcb_ignoreGamesWithoutDesc'
+SETTING_RCB_IGNOREGAMEWITHOUTARTWORK = 'rcb_ignoreGamesWithoutArtwork'
+SETTING_RCB_SHOWENTRYALLCONSOLES = 'rcb_showEntryAllConsoles'
+SETTING_RCB_SHOWENTRYALLGENRES = 'rcb_showEntryAllGenres'
+SETTING_RCB_SHOWENTRYALLYEARS = 'rcb_showEntryAllYears'
+SETTING_RCB_SHOWENTRYALLPUBLISHER = 'rcb_showEntryAllPublisher'
+SETTING_RCB_SHOWENTRYALLCHARS = 'rcb_showEntryAllChars'
+SETTING_RCB_PREVENTUNFILTEREDSEARCH = 'rcb_preventUnfilteredSearch'
+SETTING_RCB_SAVEVIEWSTATEONEXIT = 'rcb_saveViewStateOnExit'
+SETTING_RCB_SAVEVIEWSTATEONLAUNCHEMU = 'rcb_saveViewStateOnLaunchEmu'
+
 
 #
 # DB FIELDS #
@@ -47,31 +70,11 @@ RCBSETTING_lastSelectedGenreIndex = 3
 RCBSETTING_lastSelectedPublisherIndex = 4
 RCBSETTING_lastSelectedYearIndex = 5
 RCBSETTING_lastSelectedGameIndex = 6
-RCBSETTING_favoriteConsoleId = 7
-RCBSETTING_favoriteGenreId = 8
-RCBSETTING_autoexecBackupPath = 9
-RCBSETTING_dbVersion = 10
-RCBSETTING_showEntryAllConsoles = 11
-RCBSETTING_showEntryAllGenres = 12
-RCBSETTING_showEntryAllYears = 13
-RCBSETTING_showEntryAllPublisher = 14
-RCBSETTING_saveViewStateOnExit = 15
-RCBSETTING_saveViewStateOnLaunchEmu = 16
-RCBSETTING_lastFocusedControlMainView = 17
-RCBSETTING_lastFocusedControlGameInfoView = 18
-RCBSETTING_logLevel = 19
-RCBSETTING_showEntryAllChars = 20
-RCBSETTING_lastSelectedCharacterIndex = 21
-RCBSETTING_preventUnfilteredSearch = 22
-RCBSETTING_cachingOption = 23
-
-ROMCOLLECTION_consoleId = 2
-ROMCOLLECTION_emuCommandLine = 3
-ROMCOLLECTION_useEmuSolo = 4
-ROMCOLLECTION_escapeEmuCmd = 5
-ROMCOLLECTION_xboxCreateShortcut = 17
-ROMCOLLECTION_xboxCreateShortcutAddRomfile = 18
-ROMCOLLECTION_xboxCreateShortcutUseShortGamename = 19
+RCBSETTING_autoexecBackupPath = 7
+RCBSETTING_dbVersion = 8
+RCBSETTING_lastFocusedControlMainView = 9
+RCBSETTING_lastFocusedControlGameInfoView = 10
+RCBSETTING_lastSelectedCharacterIndex = 11
 
 
 GAME_description = 2
@@ -97,12 +100,6 @@ GAME_version = 23
 
 FILE_fileTypeId = 2
 FILE_parentId = 3
-
-FILETYPE_parent = 3
-
-FILETYPEFORCONTROL_control = 1
-FILETYPEFORCONTROL_romCollectionId = 3
-FILETYPEFORCONTROL_fileTypeId = 4
 
 GENREGAME_genreId = 1
 GENREGAME_gameId = 2
@@ -147,6 +144,44 @@ FILETYPEPARENT_PUBLISHER = 'publisher'
 FILETYPEPARENT_DEVELOPER = 'developer'
 FILETYPEPARENT_CONSOLE = 'console'
 FILETYPEPARENT_ROMCOLLECTION = 'romcollection'
+				
+
+html_unescape_table = {
+	    "&amp;" : "&",
+	    "&quot;" : '"' ,
+	    "&apos;" : "'",
+	    "&gt;" : ">",
+	    "&lt;" : "<",
+	    "&nbsp;" : " ",
+	    "&#x26;" : "&",
+	    "&#x27;" : "\'",
+	    "&#xB2;" : "2",
+	    "&#xB3;" : "3",	    
+	    }
+
+def html_unescape(text):
+		
+		for key in html_unescape_table.keys():
+			text = text.replace(key, html_unescape_table[key])
+			
+		return text
+	
+
+html_escape_table = {
+	    "&" : "%26",
+	    " " : "%20" ,
+	    "'" : "%27",
+	    ">" : "%3E",
+	    "<" : "%3C",	    
+	    }
+
+def html_escape(text):
+		
+		for key in html_escape_table.keys():
+			text = text.replace(key, html_escape_table[key])
+			
+		return text
+
 
 
 #
@@ -171,8 +206,20 @@ def getAddonDataPath():
 		except:
 			path = ''	
 	return path
-			
 
+
+def getAddonInstallPath():
+	
+	path = ''
+	
+	if(isPostCamelot()):
+		import xbmcaddon
+		addon = xbmcaddon.Addon(id='%s' %SCRIPTID)
+		path = addon.getAddonInfo('path')
+	else:
+		path = os.getcwd()
+	return path
+			
 
 def getAutoexecPath():
 	if(isPostCamelot()):
@@ -184,9 +231,13 @@ def getAutoexecPath():
 	
 
 def getConfigXmlPath():
-	addonDataPath = getAddonDataPath() 
-	configFile = os.path.join(addonDataPath, "config.xml")
+	if(not ISTESTRUN):
+		addonDataPath = getAddonDataPath() 
+		configFile = os.path.join(addonDataPath, "config.xml")
+	else:
+		configFile = os.path.join(getAddonInstallPath(), "TestDataBase", "config.xml")
 	
+	Logutil.log('Reading configuration file: ' +str(configFile), LOG_LEVEL_INFO)
 	return configFile
 
 
@@ -237,6 +288,26 @@ def getRevision():
 
 	return xbmc_rev
 
+
+def indentXml(elem, level=0):
+	i = "\n" + level*"  "
+	if len(elem):
+		if not elem.text or not elem.text.strip():
+			elem.text = i + "  "
+		if not elem.tail or not elem.tail.strip():
+			elem.tail = i
+		for elem in elem:
+			indentXml(elem, level+1)
+		if not elem.tail or not elem.tail.strip():
+			elem.tail = i
+	else:
+		if level and (not elem.tail or not elem.tail.strip()):
+			elem.tail = i
+
+
+RCBHOME = getAddonInstallPath()
+
+
 #
 # Logging
 #
@@ -273,17 +344,19 @@ class Logutil:
 		
 	
 	@staticmethod
-	def getCurrentLogLevel():	
+	def getCurrentLogLevel():
 		logLevel = 1
 		try:
-			dataBasePath = os.path.join(getAddonDataPath(), 'MyGames.db')
-			connection = sqlite.connect(dataBasePath)
-			cursor = connection.cursor()
-			cursor.execute("SELECT * FROM RCBSetting")
-			rcbSettings = cursor.fetchall()
-			
-			rcbSetting = rcbSettings[0]
-			logLevel = rcbSetting[19]
+			settings = getSettings()
+			logLevelStr = settings.getSetting(SETTING_RCB_LOGLEVEL)
+			if(logLevelStr == 'ERROR'):
+				logLevel = LOG_LEVEL_ERROR
+			elif(logLevelStr == 'WARNING'):
+				logLevel = LOG_LEVEL_WARNING
+			elif(logLevelStr == 'INFO'):
+				logLevel = LOG_LEVEL_INFO
+			elif(logLevelStr == 'DEBUG'):
+				logLevel = LOG_LEVEL_DEBUG
 		except:
-			logLevel = 1
+			pass
 		return logLevel

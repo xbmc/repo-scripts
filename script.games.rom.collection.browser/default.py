@@ -22,10 +22,14 @@ import os
 import sys
 import re
 
+
 # Shared resources
-BASE_RESOURCE_PATH = os.path.join( os.getcwd(), "resources" )
+import xbmcaddon
+addon = xbmcaddon.Addon(id='script.games.rom.collection.browser')
+BASE_RESOURCE_PATH = os.path.join(addon.getAddonInfo('path'), "resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib", "pyparsing" ) )
+sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib", "pyscraper" ) )
 
 
 # append the proper platforms folder to our path, xbox is the same as win32

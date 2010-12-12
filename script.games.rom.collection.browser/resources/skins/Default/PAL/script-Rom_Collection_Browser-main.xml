@@ -196,7 +196,7 @@
 						<align>center</align>
 						<aligny>center</aligny>						
 						<onup>500</onup>
-						<ondown>3000</ondown>
+						<ondown>3100</ondown>
 						<onleft>500</onleft>
 						<onright>2200</onright>
 					</control>
@@ -491,7 +491,7 @@
 						<align>center</align>
 						<aligny>center</aligny>						
 						<onup>500</onup>
-						<ondown>3000</ondown>
+						<ondown>3100</ondown>
 						<onleft>500</onleft>
 						<onright>2200</onright>
 					</control>
@@ -611,7 +611,7 @@
 					<onleft>58</onleft>
 					<onright>58</onright>
 					<onup>500</onup>
-					<ondown>3000</ondown>
+					<ondown>3100</ondown>
 					<orientation>horizontal</orientation>
 					<focusposition>2</focusposition>
 					<viewtype label="Thumbs">wrap</viewtype>			
@@ -737,7 +737,7 @@
 				<posy>50</posy>
 				<width>125</width>
 				<height>96</height>
-				<onleft>3000</onleft>
+				<onleft>2</onleft>
 				<onright>600</onright>
 				<onup>500</onup>
 				<ondown>500</ondown>
@@ -1026,7 +1026,7 @@
 				<width>30</width>
 				<height>96</height>
 				<onleft>800</onleft>
-				<onright>2</onright>
+				<onright>3100</onright>
 				<onup>900</onup>
 				<ondown>900</ondown>
 				<viewtype label="Character">wrap</viewtype>
@@ -1102,32 +1102,9 @@
 				<texture>rcb-Blade-Lower.png</texture>
 				<colordiffuse>90FFFFFF</colordiffuse>				
 			</control>
-			<control type="button" id="3000"> 
-				<description>Import Settings</description>
-				<posx>50</posx>
-				<posy>25</posy>
-				<width>100</width>
-				<height>30</height>
-				<visible>true</visible>
-				<colordiffuse>DDFFFFFF</colordiffuse>
-				<texturefocus>rcb-button-focus.png</texturefocus>
-				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>Import Settings</label>				
-				<textcolor>DDFFFFFF</textcolor>
-				<disabledcolor>80FFFFFF</disabledcolor>
-				<align>center</align>
-				<aligny>center</aligny>
-				<textoffsetx></textoffsetx>
-				<textoffsety></textoffsety>
-				<pulseonselect></pulseonselect>
-				<onup>50</onup>
-				<ondown>500</ondown>
-				<onleft>500</onleft>
-				<onright>3100</onright>
-			</control>
 			<control type="button" id="3100"> 
 				<description>Import Games</description>
-				<posx>175</posx>
+				<posx>25</posx>
 				<posy>25</posy>
 				<width>100</width>
 				<height>30</height>
@@ -1145,12 +1122,12 @@
 				<pulseonselect></pulseonselect>
 				<onup>50</onup>
 				<ondown>500</ondown>
-				<onleft>3000</onleft>
+				<onleft>900</onleft>
 				<onright>2</onright>
 			</control>
 			<control type="button" id="2"> 
 				<description>Change View</description>
-				<posx>300</posx>
+				<posx>175</posx>
 				<posy>25</posy>
 				<width>100</width>
 				<height>30</height>
@@ -1168,8 +1145,8 @@
 				<pulseonselect></pulseonselect>
 				<onup>50</onup>
 				<ondown>500</ondown>
-				<onleft>3000</onleft>
-				<onright>900</onright>				
+				<onleft>3100</onleft>
+				<onright>500</onright>				
 			</control>			
 		</control>			
 		
