@@ -18,7 +18,7 @@ except ImportError:
 
 __settings__ = xbmcaddon.Addon(id='script.trakt')
 __language__ = __settings__.getLocalizedString
-__version__ = "0.0.8"
+__version__ = "0.0.9"
 __cwd__ = __settings__.getAddonInfo('path')
 
 #Path handling

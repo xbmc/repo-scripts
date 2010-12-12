@@ -1,3 +1,7 @@
+Version 0.0.9
+	- adjusted time intervals to be more aggressive if video is not playing
+	- corrected bug in title checking
+
 Version 0.0.8
 	- added Dutch translation thanks to IIINeOIIINL!
 	- fixed bug sending movie data (still pre-emptive, but coming soon)

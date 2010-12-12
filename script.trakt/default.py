@@ -12,7 +12,7 @@ import re
 __scriptname__ = "trakt"
 __author__ = "Sean Rudford"
 __url__ = "http://trakt.tv/"
-__version__ = "0.0.8"
+__version__ = "0.0.9"
 __XBMC_Revision__ = ""
 
 def addPadding(number):
@@ -35,12 +35,15 @@ def CheckAndSubmit(Manual=False):
         global lasttitle
         global lastUpdate
         global video_id
+        global sleepTime
+        global checkTitle
         
         iPercComp = CalcPercentageRemaining(xbmc.getInfoLabel("VideoPlayer.Time"), xbmc.getInfoLabel("VideoPlayer.Duration"))
-        
-        if iPercComp > (float(VideoThreshold) / 100) or lastUpdate == 0:
+
+        if iPercComp > (float(VideoThreshold) / 100) or lastUpdate == 0 or checkTitle != xbmc.getInfoLabel("VideoPlayer.Title"):
             # do nothing and let it continue to main script
-            Debug("continuing to main script")
+            lastUpdate = 0
+            Debug("continuing to send check")
         elif (time.time() - lastUpdate < 900):
             return
         
@@ -115,14 +118,19 @@ def CheckAndSubmit(Manual=False):
                 Debug('Title: ' + title + ', sending watched status, current percentage: ' + str(iPercComp), True)
                 SendUpdate(title+","+video_id, int(iPercComp*100), sType, "watched")
                 lasttitle = title
+                checkTitle = xbmc.getInfoLabel("VideoPlayer.Title")
+                sleepTime = 15
             elif (time.time() - lastUpdate >= 900):
                 Debug('Title: ' + title + ', sending watching status, current percentage: ' + str(iPercComp), True)
                 SendUpdate(title+","+video_id, int(iPercComp*100), sType, "watching")
                 lastUpdate = time.time();
+                checkTitle = xbmc.getInfoLabel("VideoPlayer.Title")
+                sleepTime = 168
     
     else:
         Debug('Resetting last update timestamp')
         lastUpdate = 0
+        sleepTime = 15
         getID = True
 
 
@@ -182,6 +190,8 @@ lasttitle = ""
 lastUpdate = 0
 video_id = ""
 getID = True
+sleepTime = 168
+checkTitle = ''
 
 bAutoStart = False
 bNotify = False
@@ -235,6 +245,6 @@ if ((bStartup and bAutoStart) or bRun):
         if (bAutoSubmitVideo):
             CheckAndSubmit()
 
-        time.sleep(168)
+        time.sleep(sleepTime)
 
 Debug( 'Exiting...', False)
