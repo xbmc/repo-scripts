@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- General -->
+  <category label="30000">
+    <setting id="always_login" type="bool" label="30004" default="false" />
+    <setting id="open_thread_to_newest" type="bool" label="30001" default="true" />
+    <setting id="reverse_sort" type="bool" label="30002" default="false" />
+    <setting id="language" type="enum" label="30003" values="Afrikaans|Albanian|Amharic|Arabic|Armenian|Azerbaijani|Basque|Belarusian|Bengali|Bihari|Breton|Bulgarian|Burmese|Catalan|Cherokee|Chinese|Chinese_Simplified|Chinese_Traditional|Corsican|Croatian|Czech|Danish|Dhivehi|Dutch|English|Esperanto|Estonian|Faroese|Filipino|Finnish|French|Frisian|Galician|Georgian|German|Greek|Gujarati|Haitian_Creole|Hebrew|Hindi|Hungarian|Icelandic|Indonesian|Inuktitut|Irish|Italian|Japanese|Javanese|Kannada|Kazakh|Khmer|Korean|Kurdish|Kyrgyz|Lao|Latin|Latvian|Lithuanian|Luxembourgish|Macedonian|Malay|Malayalam|Maltese|Maori|Marathi|Mongolian|Nepali|Norwegian|Occitan|Oriya|Pashto|Persian|Polish|Portuguese|Portuguese_Portugal|Punjabi|Quechua|Romanian|Russian|Sanskrit|Scots_Gaelic|Serbian|Sindhi|Sinhalese|Slovak|Slovenian|Spanish|Sundanese|Swahili|Swedish|Syriac|Tajik|Tamil|Tatar|Telugu|Thai|Tibetan|Tonga|Turkish|Uighur|Ukrainian|Urdu|Uzbek|Vietnamese|Welsh|Yiddish|Yoruba|Unknown" default="24" />
+    <setting id="color_mode" type="enum" label="30005" lvalues="30010|30011|30012" default="0" />
+    <setting id="use_text_editor" type="bool" label="30006" default="false" />
+    <!--<setting id="set_logins" label="30003" type="action" action="XBMC.RunScript(special://home/addons/script.forum.browser/default.py,set_logins)"/>-->
+  </category>
+</settings>

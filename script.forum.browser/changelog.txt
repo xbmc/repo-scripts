@@ -1,0 +1,81 @@
+Forum Browser Changelog
+
+Current Version : 0.8.0
+
+*** 0.8.0 ***
+
+Fixed: dvhk.pl now works again (Can view and create PM's but PM counts on the message button don't work - I will have to fix that)
+Fixed: Selecting the post editor list when empty caused error
+Added close buttons for mouse users
+Missing images in Post Message window now show a default if XBMC fails to display them 
+Fixed: Clicking on empty list while loading was aborting load
+Now disables "Messages" button when not implemented (for example xbmc4xbox.org, currently)
+Experimental: Added an option in settings to use a text editor instead of the current 'line' editor
+  for editing posts/PM's. Currently needs a keyboard and will probably only work with US keyboards.
+  XBMC doesn't have a multi-line text input so I had to do some fancy tricks to make to make this work.
+  Expect a few minor quirks with text navigation. Also - and = will work but will also change the volume. 
+  Use CTRL-\ for backslash otherwise you'll just toggle fullscreen and there's nothing I can do about that :)
+  Controls: Use the context menu button/right mouse click for options. CTRL-PgUp/PgDn will operate on
+    the preview window.
+
+*** 0.7.9 ***
+
+Modifed theme in replies for highlighted users
+Added default avatar for users without avatar
+Fix dialogs and displays for private messages to match the context
+Got avatars working for boxee.tv and member status working for boxee.tv and xbmc4xbox.org
+Mark sticky threads for all forums (probably including dvhk.pl if I can ever connect to it)
+Next/Previous paging buttons now only visible if necessary.
+
+*** 0.7.8 ***
+
+Added avatars to private messages
+Fixed avatar image updating issue
+Added theme coloring to post message window
+Changed colors for xbmc.org
+Forums, threads and posts now load in a background thread and are interruptable/cancelable
+Fixed bug with xbmc4xboc paging
+Improved Forums and Threads window interface.
+Fixed handling of nested display tags.
+Added the ability to delete private messages (xbmc.org,boxee.tv,dvhk.pl)
+Added theming to lists (dark and light) default is to set by forum, but can be overridden in settings.
+
+*** 0.7.7 ***
+
+Re-designed Posts interface
+Added Post view with links and images side menus
+Added Polish translation - thanks to scalpel
+Added ability to view Private messages ('Messages' button) for xbmc.org, boxee.tv and dvhk.pl
+Added 'Always Login If Possible' setting, which for now allows updating pm count
+Added 'Add Line Before' in post editing context menu
+Changed page jumping on posts and threads to handle logged in sort/page number issues
+Changed page options in settings to 'Open Thread At Newest Post' and 'Reverse Sort Posts'
+
+*** 0.7.6 ***
+
+Added simplejson import to addon.xml
+
+*** 0.7.5 ***
+
+Fixed some color handling in posts
+Fixed some code box handling in posts
+Improved post editing preview
+Added forum.dvhk.pl
+Added ability to handle fourms which require login
+Add ability to translate posts with Google Translate
+Added language option in settings
+Added progress indicators for all windows
+Finished strings.xml for translatablity
+Added ability to follow thread and post links
+
+*** 0.7.4 ***
+
+Fixed a bug handling unicode chars in posts
+Added the ability to view image links
+Added the ability to download links
+Improved post formatting handling
+Fixed post quote handling regex for xbmc.org/boxee.tv
+
+*** 0.7.3 ***
+
+Initial public beta release

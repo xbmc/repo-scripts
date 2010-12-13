@@ -1,0 +1,86 @@
+<window>
+  <defaultcontrol>202</defaultcontrol>
+  <coordinates>
+    <system>1</system>
+    <posx>0</posx>
+    <posy>0</posy>
+  </coordinates>
+  <animation effect="fade" time="250">WindowOpen</animation>
+  <animation effect="fade" time="250">WindowClose</animation>
+  <controls>
+    <control type="group">
+      <posx>100</posx>
+      <posy>10</posy>
+      <control type="image" id="101">
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>1090</width>
+        <height>700</height>
+        <texture border="40">default-panel.png</texture>
+      </control>
+      
+      <control type="image" id="102">
+        <posx>20</posx>
+        <posy>10</posy>
+        <width>1058</width>
+        <height>610</height>
+        <aspectratio>keep</aspectratio>
+      </control>
+      
+      <control type="button" id="200">
+       <description>The Button</description>
+       <onleft>202</onleft>
+       <onright>202</onright>
+       <onup>200</onup>
+       <ondown>200</ondown>
+       <posx>30</posx>
+       <posy>625</posy>
+       <width>330</width>
+       <height>40</height>
+       <visible>true</visible>
+       <colordiffuse>FFFFFFFF</colordiffuse>
+       <font>font12</font>
+       <align>right</align>
+       <textcolor>FFFFFFFF</textcolor>
+       <disabledcolor>80555555</disabledcolor>
+       <label>$LOCALIZE[SCRIPT3000]</label>
+       <textoffsetx>35</textoffsetx>
+       <texturefocus>left-focus.png</texturefocus>
+       <texturenofocus>left-nofocus.png</texturenofocus>
+      </control>
+      <control type="button" id="110">
+        <description>Close Button</description>
+        <posx>533</posx>
+        <posy>625</posy>
+        <width>32</width>
+        <height>28</height>
+        <texturefocus>close-button-focus.png</texturefocus>
+        <texturenofocus>close-button.png</texturenofocus>
+        <visible>system.getbool(input.enablemouse)</visible>
+        <onclick>PreviousMenu</onclick>
+      </control>
+      <control type="button" id="202">
+       <description>The Button</description>
+       <onleft>200</onleft>
+       <onright>200</onright>
+       <onup>202</onup>
+       <ondown>202</ondown>
+       <posx>738</posx>
+       <posy>625</posy>
+       <width>330</width>
+       <height>40</height>
+       <visible>true</visible>
+       <colordiffuse>FFFFFFFF</colordiffuse>
+       <font>font12</font>
+       <align>left</align>
+       <textcolor>FFFFFFFF</textcolor>
+       <disabledcolor>80555555</disabledcolor>
+       <label>$LOCALIZE[SCRIPT3001]</label>
+       <textoffsetx>35</textoffsetx>
+       <texturefocus>right-focus.png</texturefocus>
+       <texturenofocus>right-nofocus.png</texturenofocus>
+      </control>
+
+    </control>
+  </controls>
+</window>
