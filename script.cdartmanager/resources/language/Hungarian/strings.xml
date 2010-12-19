@@ -7,17 +7,17 @@
   <string id="32003">Albumok keresése</string>
   <string id="32004">Automata letöltés</string>
   <string id="32005">Helyi cd-kép lista mentése</string>
-  <string id="32006">Beállítások</string>
+  <string id="32006"></string>
   <string id="32007">Helyi előadók: %s</string>
   <string id="32008">Helyi cd-képek: %s</string>
-  <string id="32009">Kilépés</string>
+  <string id="32009"></string>
   <string id="32010">Helyi albumok: %s</string>
   <string id="32011">Haladó</string>
   <string id="32012">Helyi adatbázis frissítése</string>
   <string id="32013">Zenei adatbázis tisztítása</string>
   <string id="32014">Zenei adatbázis frissítése</string>
   <string id="32015">Helyi adatbázis törlése?</string>
-  <string id="32016">Kérlek várj....</string>
+  <string id="32016"></string>
   <string id="32017">Helyi cd-kép lista mentési helye</string>
   <string id="32018">cd-kép biztonsági-mentés helye</string>
   <string id="32019">Biztonsági mentés formátuma: </string>
@@ -48,7 +48,7 @@
   <string id="32044">Helyi cd-képek:</string>  <!-- string insert for local cdARTs -->
   <string id="32045">Helyi albumok:</string>  <!-- string insert for local albums -->
   <string id="32046">cd-képek automatikus letöltése</string>
-  <string id="32047">Letöltés.....</string>
+  <string id="32047">Letöltése...</string>
   <string id="32048">Felismert előadók listájának beolvasása....</string>
   <string id="32049">Talált előadók: %s</string>
   <string id="32050">Adatbázis felállítás megszakadt...</string>
@@ -100,4 +100,13 @@
   <string id="32095">Fájlmappák</string>
   <string id="32096">duplikált volt</string>
   <string id="32097">    Egyedi cd-képek átméretezése</string>
+  <string id="32098">Local cdART List</string>
+  <string id="32099"></string>
+  <string id="32100">Local Album Count</string>
+  <string id="32101">Sorting Album Artists</string>
+  <string id="32102">Retrieving Local Database</string>
+  <string id="32103">Saving Missing cdART List to Backup Folder</string>
+  <string id="32104">Uploading Missing cdART List to website</string>
+  <string id="32105">Retrieving Album Details</string>
+  <string id="32106">Using Dharma</string>
 </strings>

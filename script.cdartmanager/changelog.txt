@@ -1,3 +1,63 @@
+1.2.5
+- Added Portuguese (Brazil) language strings and description - Thanks Jair!
+
+1.2.4
+- Organized Settings
+- Updated addon.xml with an Italian description of the script
+
+1.2.3
+- fixed hopefully the last unicode error...
+
+1.2.2
+- Moved Italian translation to the correct Folder
+- Added Back database removal, if Addon database does not match the proper version
+- Changed 'Refresh Local Database' to 'Refresh Addon Database'
+
+1.2.1
+- fixed some utf-8 vs. latin-1 coding
+- fixed Artist Search(seems to have been broken for a long time)
+
+1.2.0
+- some fixes for Windows machines.
+
+1.1.9
+- removed strings that are already available through XBMC
+
+1.1.8
+- programmed version testing(stored in addon's DB) to correct for changes if required
+- fixed 'add disc numbering if included in path' - allows multiple disc albums to download cdARTs for each disc(if path has CD #, Disc # or Part #)
+
+1.1.7
+- fixed another spot where HTTP API was needed
+- Corrected 'Settings' in German language string.xml
+
+1.1.6
+- added back some HTTP API functions until AudioLibrary.GetAlbumDetails is added to the JSON RPC(Dharma and beyond)
+
+1.1.5
+- fixed some hard coded labels(for language files)
+
+1.1.4
+- fixed JSONRPC parsing(for albums)
+- fixed some more unicode errors
+
+1.1.3
+- start adding uploading and downloading
+- re-arrange how things are processed
+- full json implementation
+- more unicode fixes
+
+1.1.1 - 1.1.2
+- rewrite xbmc database access, using json now instead of pysqlite and HTTP API
+- change os.getcwd() to getAddonInfo('path') to provide forward compatibility
+
+1.0.9 - 1.1.0
+- multi-Database stepping stones
+- fixed path name.
+
+1.0.8
+- Added HTTP API database calls to allow MySQL users to use script.
+
 1.0.7
 - Added Dutch translation - Thanks redje
 - Added ascii converstion to album names(may help scraping for the time being)

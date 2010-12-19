@@ -7,17 +7,17 @@
   <string id="32003">Albums Recherche</string>
   <string id="32004">Téléchargement Réussi</string>
   <string id="32005">Enregistrer Local cdART Liste</string>
-  <string id="32006">Paramètres</string>
+  <string id="32006"></string>
   <string id="32007">Artistes Existantes: %s</string>
   <string id="32008">cdARTs Existantes: %s</string>
-  <string id="32009">Sortie</string>
+  <string id="32009"></string>
   <string id="32010">Local Albums: %s</string>     <!--Translation needed -->
   <string id="32011">Advanced</string><!--Translation needed -->
-  <string id="32012">Refresh Local Database</string><!--Translation needed -->
+  <string id="32012">Refresh Addon Database</string><!--Translation needed -->
   <string id="32013">Clean Music Database</string><!--Translation needed -->
   <string id="32014">Update Music Database</string><!--Translation needed -->
   <string id="32015">Delete Local Database?</string><!--Translation needed -->
-  <string id="32016">Please Wait....</string><!--Translation needed -->
+  <string id="32016"></string><!--Translation needed -->
   <string id="32017">Local cdART List saving folder</string><!--Translation needed -->
   <string id="32018">cdART  Backup folder</string><!--Translation needed -->
   <string id="32019">Backup saving format: </string><!--Translation needed -->
@@ -48,7 +48,7 @@
   <string id="32044">Local cdARTs:</string>  <!-- string insert for local cdARTs --><!--Translation needed -->
   <string id="32045">Local Albums:</string>  <!-- string insert for local albums --><!--Translation needed -->
   <string id="32046">Automatic Downloading cdARTs</string><!--Translation needed -->
-  <string id="32047">Downloading.....</string><!--Translation needed -->
+  <string id="32047">Downloading...</string><!--Translation needed -->
   <string id="32048">Recherchant la liste identifiée d'artiste….</string><!--Translation needed -->
   <string id="32049">Artists Matched: %s</string><!--Translation needed -->
   <string id="32050">L'installation de données a avorté... </string>
@@ -99,5 +99,14 @@
   <string id="32094">Enable custom colors for labels</string> 
   <string id="32095">File Folders</string>
   <string id="32096">Duplicates Found</string>
-  <string id="32097">    Resize Unique cdARTs?</string>  
+  <string id="32097">    Resize Unique cdARTs?</string>
+  <string id="32098">Local cdART List</string>
+  <string id="32099"></string>
+  <string id="32100">Local Album Count</string>
+  <string id="32101">Sorting Album Artists</string>
+  <string id="32102">Retrieving Local Database</string>
+  <string id="32103">Saving Missing cdART List to Backup Folder</string>
+  <string id="32104">Uploading Missing cdART List to website</string>
+  <string id="32105">Retrieving Album Details</string>
+  <string id="32106">Using Dharma</string>
 </strings>
