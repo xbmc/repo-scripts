@@ -1,3 +1,10 @@
+2.2.1
+-added Swesub.nu, thx mr_blobby
+
+2.2.0
+- simplify services code
+- automatically retrieve list of available services
+
 2.1.9
 - fixed: addic7ed service changes due to the changed website layout
 

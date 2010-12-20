@@ -23,10 +23,11 @@
       <setting id="Titulky" type="bool" label="Titulky.com (Czech and Slovak subs only)" default="false"/>       
       <setting id="Subdivx" type="bool" label="Subdivx.com (Spanish subs only)" default="false"/>
       <setting id="Addic7ed" type="bool" label="Addic7ed.com" default="false"/>
+      <setting id="Swesub" type="bool" label="Swesub.nu" default="false"/>
     </category>
     <category label="30106">
-      <setting id="defmovieservice" type="labelenum" label="30113" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx|Addic7ed" />
-      <setting id="deftvservice" type="labelenum" label="30114" default="Sublight" values="Sublight|Podnapisi|OpenSubtitles|Subscene|Undertexter|Ondertitel|Bierdopje|Napiprojekt|Titlovi|LegendasTV|Titulky|Subdivx|Addic7ed" />    
+      <setting id="defmovieservice" type="fileenum" mask="/" label="30113" default="OpenSubtitles" values="/resources/lib/services" />
+      <setting id="deftvservice" type="fileenum" mask="/" label="30114" default="OpenSubtitles" values="/resources/lib/services" />    
       <setting id="subfolder" type="bool" label="30107" default="true" />
       <setting id="subfolderpath" type="folder" visible= "eq(-1,false)" source="files" label="30108" default="" />
       <setting id="searchstr" type="bool" label="30110" default="false"/>

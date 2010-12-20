@@ -135,35 +135,22 @@ class GUI( xbmcgui.WindowXMLDialog ):
             break
 #### ---------------------------- Set Service ----------------------------###     
 
-    def_service = __settings__.getSetting( "defservice")
     def_movie_service = __settings__.getSetting( "defmovieservice")
     def_tv_service = __settings__.getSetting( "deftvservice")
     service_list = []
-    standard_service_list  = ['Titulky','OpenSubtitles', 'Podnapisi', 'Sublight', 'Bierdopje', 'Subscene', 'Ondertitel', 'Undertexter', 'Napiprojekt', 'Titlovi', 'LegendasTV', 'Subdivx', 'Addic7ed']
     service = ""
 
     for name in os.listdir(SERVICE_DIR):
-      if not (name.startswith('.')) and not (name.startswith('_')):
-        service_list.append(name)
-
-    for serv in standard_service_list:
-      if not __settings__.getSetting( serv ) == "true" :
-        service_list.remove( serv )
-      else:
-        service = serv
+      if os.path.isdir(os.path.join(SERVICE_DIR,name)) and __settings__.getSetting( name ) == "true":
+        service_list.append( name )
+        service = name
 
     if len(self.tvshow) > 0:
       if service_list.count(def_tv_service) > 0:
         service = def_tv_service
-      else:
-        if service_list.count(def_service) > 0:
-          service = def_service
     else:
       if service_list.count(def_movie_service) > 0:
         service = def_movie_service
-      else:
-        if service_list.count(def_service) > 0:
-          service = def_service
 
     if len(service_list) > 0:  
       if len(service) < 1:
@@ -173,7 +160,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
       self.service_list = service_list
       self.controlId = -1
-      self.shufle = 0
       self.subtitles_list = []
 
       log( __name__ ,"Manual Search : [%s]"        % self.mansearch)
