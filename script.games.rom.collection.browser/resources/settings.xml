@@ -29,4 +29,5 @@
 	</category>
 	
 	<setting id="rcb_view_mode" visible="false" value="" type="text"/>
+
 </settings>

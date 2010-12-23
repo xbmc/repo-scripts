@@ -186,11 +186,12 @@ class ConfigxmlUpdater:
 		SubElement(site, 'Scraper', {'parseInstruction' : '04.02 - mobygames - details.xml', 'source' : '1'})				
 		SubElement(site, 'Scraper', {'parseInstruction' : '04.03 - mobygames - coverlink.xml', 'source' : '1', 'returnUrl' : 'true'})
 		SubElement(site, 'Scraper', {'parseInstruction' : '04.04 - mobygames - coverart.xml', 'source' : '2'})
-		SubElement(site, 'Scraper', {'parseInstruction' : '04.05 - mobygames - screenshotlink.xml', 'source' : '1', 'returnUrl' : 'true'})
+		SubElement(site, 'Scraper', {'parseInstruction' : '04.05 - mobygames - screenshotlink.xml', 'source' : '1', 'returnUrl' : 'true'})		
 		#use short name on xbox
 		if (os.environ.get( "OS", "xbox" ) == "xbox"):
 			SubElement(site, 'Scraper', {'parseInstruction' : '04.06 - mobygames - screenoriglink.xml', 'source' : '3', 'returnUrl' : 'true'})
 		else:
 			SubElement(site, 'Scraper', {'parseInstruction' : '04.06 - mobygames - screenshotoriginallink.xml', 'source' : '3', 'returnUrl' : 'true'})
+		
 		SubElement(site, 'Scraper', {'parseInstruction' : '04.07 - mobygames - screenshots.xml', 'source' : '4'})						
 					

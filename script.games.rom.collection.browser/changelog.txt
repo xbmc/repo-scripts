@@ -1,4 +1,10 @@
 
+0.7.10 (12/2010)
+~~~~~~~~~~~~~
+Online Scraping
+    * improvements to sequel and subtitle handling
+	
+
 0.7.9 (12/2010)
 ~~~~~~~~~~~~~
 Online Scraping
