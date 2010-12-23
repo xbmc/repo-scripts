@@ -1,3 +1,6 @@
+1.0.1
+- added: two more scrapers Lyricsmode and Lyricstime
+
 1.0.0
 - changed: more os.getcwd() found
 

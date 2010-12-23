@@ -48,7 +48,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getMyPlayer()
 
     def get_scraper( self ):
-        import lyricsScraper as lyricsScraper        
+        exec ( "from scrapers.%s import lyricsScraper as lyricsScraper" % (__settings__.getSetting( "scraper")))
         self.LyricsScraper = lyricsScraper.LyricsFetcher()
         self.scraper_title = lyricsScraper.__title__
         self.scraper_exceptions = lyricsScraper.__allow_exceptions__

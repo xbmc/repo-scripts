@@ -9,9 +9,8 @@ from song import *
 import lyrics
 
 
-__language__         = sys.modules[ "__main__" ].__language__
-__cwd__              = sys.modules[ "__main__" ].__cwd__
-__title__            = __language__(30003)
+__language__ = sys.modules[ "__main__" ].__language__
+__title__ = __language__(30003)
 __allow_exceptions__ = True
 
 class WikiaFormat:
@@ -214,10 +213,10 @@ class LyricsFetcher:
         """ Sets exceptions for formatting artist """
         try:
             if ( __name__ == "__main__" ):
-                ex_path = os.path.join( __cwd__, "exceptions.txt" )
+                ex_path = os.path.join( os.getcwd(), "exceptions.txt" )
             else:
                 name = __name__.replace( "resources.scrapers.", "" ).replace( ".lyricsScraper", "" )
-                ex_path = os.path.join( xbmc.translatePath( "P:\\script_data" ), __cwd__, "scrapers", name, "exceptions.txt" )
+                ex_path = os.path.join( xbmc.translatePath( "P:\\script_data" ), os.getcwd(), "scrapers", name, "exceptions.txt" )
             ex_file = open( ex_path, "r" )
             self.exceptions = eval( ex_file.read() )
             ex_file.close()
@@ -247,7 +246,7 @@ class LyricsFetcher:
                 usock = urllib.urlopen( url % ( artist, song, ) )
                 
             else:
-                usock = open( os.path.join( __cwd__, "lyrics_source.txt" ), "r" )
+                usock = open( os.path.join( os.getcwd(), "lyrics_source.txt" ), "r" )
             # read source
             jsonSource = usock.read()
             print str(jsonSource)
@@ -271,7 +270,7 @@ class LyricsFetcher:
             
             # Save htmlSource to a file for testing scraper (if debugWrite)
             if ( debugWrite ):
-                file_object = open( os.path.join( __cwd__, "lyrics_source.txt" ), "w" )
+                file_object = open( os.path.join( os.getcwd(), "lyrics_source.txt" ), "w" )
                 file_object.write( jsonSource )
                 file_object.close()
             # exec jsonSource to a native python dictionary
@@ -292,14 +291,14 @@ class LyricsFetcher:
             if ( not debug ):
                 usock = urllib.urlopen( url % ( artist, ) )
             else:
-                usock = open( os.path.join( __cwd__, "songs_source.txt" ), "r" )
+                usock = open( os.path.join( os.getcwd(), "songs_source.txt" ), "r" )
             # read source
             jsonSource = usock.read()
             # close socket
             usock.close()
             # Save htmlSource to a file for testing scraper (if debugWrite)
             if ( debugWrite ):
-                file_object = open( os.path.join( __cwd__, "songs_source.txt" ), "w" )
+                file_object = open( os.path.join( os.getcwd(), "songs_source.txt" ), "w" )
                 file_object.write( jsonSource )
                 file_object.close()
             # exec jsonSource to a native python dictionary

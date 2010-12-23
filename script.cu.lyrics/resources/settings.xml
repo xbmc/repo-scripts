@@ -5,5 +5,6 @@
         <setting id="save_lyrics" type="bool" label="30101" default="true"/>
         <setting id="show_embeded_lyrics" type="bool" label="30107" default="true"/>
         <setting id="save_embeded_lyrics" type="bool" visible= "eq(-1,true)" enable="eq(-1,true)" label="30108" default="false"/>
+        <setting id="scraper" type="fileenum" mask="/" label="30109" default="lyricwiki" values="/resources/lib/scrapers" />
     </category>
 </settings>

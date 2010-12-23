@@ -8,6 +8,8 @@
     <string id="30003">LyricWiki.org API</string>
     <string id="30004">Fetching lyrics from %s failed</string>
     <string id="30005">File</string>
+    <string id="30006">Lyricsmode.com API</string>
+    <string id="30007">Lyricstime.com API</string>
 
     <!-- Settings -->
     <string id="30100">Smooth Scrolling</string>
@@ -19,5 +21,6 @@
     <string id="30106">Original authors</string>
     <string id="30107">Use embeded lyrics</string>
     <string id="30108"> - Save embeded lyrics to file</string>
+    <string id="30109">Select Scraper</string>
 
 </strings>
