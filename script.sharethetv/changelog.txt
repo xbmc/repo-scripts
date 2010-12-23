@@ -1,3 +1,6 @@
+Version 1.1.0
+		* Leaving XBMC running for long periods of time would slow down system.  Method of checking the movie count has changed to fix this.
+
 Version 1.0.6
 		* Fixed bug related to slow shutdowns when autorun enabled
 
@@ -14,4 +17,4 @@ Version 1.0.0
 		* Updated description, disclaimer
 
 Version 0.9.0
-    * Initial working version
+		* Initial working version
