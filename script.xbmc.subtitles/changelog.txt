@@ -1,3 +1,6 @@
+2.2.2
+-added Itasa (Italiansubs.net), thx mr_blobby
+
 2.2.1
 -added Swesub.nu, thx mr_blobby
 
