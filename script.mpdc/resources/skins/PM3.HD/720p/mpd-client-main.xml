@@ -93,6 +93,18 @@
 			<width>620</width>
 			<height>10</height>
 		</control>
+		<control type="image" id="995">
+		  <description>album art image</description>
+		  <posx>-270</posx>
+		  <posy>320</posy>
+		  <width>200</width>
+		  <height>200</height>
+		  <visible>true</visible>
+		  <colordiffuse>FFFFFFFF</colordiffuse>
+		  <fadetime>200</fadetime>
+		  <texture border="5">album_not_found.jpg</texture>
+		  <aspectratio>keep</aspectratio>
+		</control>
 	</control>
     <control type="group">
 		<description>left control group (switches content in right control group)</description>
@@ -370,8 +382,8 @@
 			<width>970</width>
 			<height>530</height>
 			<onleft>1000</onleft>
-			<onup>1103</onup>
-			<ondown>110</ondown>
+			<onup>1101</onup>
+			<ondown>1101</ondown>
 			<onright>1104</onright>
 			<viewtype label="535">list</viewtype>
 			<pagecontrol>1104</pagecontrol>
@@ -563,6 +575,8 @@
 			<height>530</height>
 			<onleft>1000</onleft>
 			<onright>1202</onright>
+			<onup>1201</onup>
+			<ondown>1201</ondown>
 			<viewtype label="535">list</viewtype>
 			<pagecontrol>1202</pagecontrol>
 			<scrolltime>200</scrolltime>
@@ -651,7 +665,9 @@
 			<width>970</width>
 			<height>530</height>
 			<onleft>1000</onleft>
-			<onright>1302</onright>			
+			<onright>1302</onright>
+			<onup>1301</onup>
+			<ondown>1301</ondown>
 			<viewtype label="535">list</viewtype>
 			<pagecontrol>1302</pagecontrol>
 			<scrolltime>200</scrolltime>
@@ -766,7 +782,9 @@
 			<width>970</width>
 			<height>530</height>
 			<onleft>1000</onleft>
-			<onright>1402</onright>			
+			<onright>1402</onright>
+			<onup>1401</onup>
+			<ondown>1401</ondown>
 			<viewtype label="535">list</viewtype>
 			<pagecontrol>1402</pagecontrol>
 			<scrolltime>200</scrolltime>

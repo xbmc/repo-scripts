@@ -1,3 +1,12 @@
+[B]1.0.0[/B]
+- added: album art fetching using allmusic.com (images can be optionaly stored/cached for further reuse)
+- added: album art fetching using local folder (together with per-profile setting 'MPD Media root' album arts are retrieved from folder of played media)
+- added: setting 'Use IDLE command' (enabled by default). Having this disabled client is compatible with mopidy.com which does not implement IDLE on server side.
+- added: in artist browser albums are displayed including release year and are sorted (latest on top)
+- added: when MPD is playing and queue gets replaced playback is resumed
+- changed: completely redesigned Confluence appearance (using Tabs now, more space for displaying current playlist info)
+- changed: notification is now done via XBMC.Notification pop-up and can be disabled
+- fixed: possible divByZero thanks to sl33nyc
 [B]0.9.9[/B]
 - changed appearance slightly, according to forum requests
 - added volume control

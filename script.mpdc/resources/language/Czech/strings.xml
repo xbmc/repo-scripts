@@ -43,12 +43,20 @@
     <string id="30036">Odebrat z fronty</string>
     <string id="30037">Uložit frontu jako</string>
     <string id="30038">Vyprázdnit frontu</string>
-    <!-- Do not translate - block start -->
-    <string id="30039">Playing stream</string>
-    <!-- Do not translate - block end -->
+    <string id="30039">Přehrávám stream</string>
     <string id="30040">Zobrazovat čas přehrávané skladby</string>
     <string id="30041">Povolen (Profil bude zobrazen při výběru)</string>
 	<string id="30042">Autorů : %sAlb : %sSkladeb : %sČas : %s</string>
+	<string id="30044">Ukládat obaly alb na disk</string>
+	<string id="30043">Stahovat obaly alb</string>
+	<string id="30044">Ukládat stažené obaly na disk</string>
+	<string id="30045">Vypnuto</string>
+	<string id="30046">Allmusic.com</string>
+	<string id="30047">lokálně</string>
+	<string id="30048">Cesta ke složce MPD medií</string>
+	<string id="30049">Maska souboru s obalem</string>
+	<string id="30050">Použít příkaz IDLE</string>
+	<string id="30051">Povolit oznamování</string>
     <string id="200">Fronta</string>
     <string id="201">Soubory</string>
     <string id="202">Autoři</string>

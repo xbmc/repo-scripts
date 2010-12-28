@@ -49,6 +49,15 @@
     <string id="30040">Show song progress when playing</string>
     <string id="30041">Enabled (show this profile in selection dialog)</string>
 	<string id="30042">Artists : %sAlbums : %sTracks : %sDB Time : %s</string>
+	<string id="30043">Album art fetching</string>
+	<string id="30044">Store/cache album images to disk</string>
+	<string id="30045">Off</string>
+	<string id="30046">Allmusic.com</string>
+	<string id="30047">local</string>
+	<string id="30048">MPD media root (for local album fetch)</string>
+	<string id="30049">Image mask to search for</string>	
+	<string id="30050">Use IDLE command</string>
+	<string id="30051">Enable notification</string>
     <string id="200">Queue</string>
     <string id="201">Files</string>
     <string id="202">Artists</string>
