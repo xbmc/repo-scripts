@@ -56,9 +56,16 @@ def getshowid(showname):
             log( __name__ ," show id for '%s' is '%s'" % (showname, str(showid[0])) )
             return str(showid[0])
         else:
-            okdialog = xbmcgui.Dialog()
-            ok = okdialog.ok("Error", "Failed to get a show id from Bierdopje for " + showname)
-            log( __name__ ," failed to get a show id for '%s'" % showname )
+            response = apicall("GetShowByName",[string.replace(showname,"'","''")])
+            if response is not None:
+                showid = gettextelements(response,"response/showid")
+                if len(showid) == 1:
+                    log( __name__ ," show id for '%s' is '%s' (replaced ' with '')" % (string.replace(showname,"'","''"), str(showid[0])) )
+                    return str(showid[0])
+                else:
+                    okdialog = xbmcgui.Dialog()
+                    ok = okdialog.ok("Error", "Failed to get a show id from Bierdopje for " + showname)
+                    log( __name__ ," failed to get a show id for '%s'" % showname )
         
 
 def isexactmatch(subsfile, moviefile):

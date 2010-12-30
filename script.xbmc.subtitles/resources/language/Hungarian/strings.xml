@@ -34,13 +34,13 @@
     <string id="30103">Szolgáltastások</string>
     <string id="30104">- Podnapisi.net felhasználónév</string>
     <string id="30105">- Podnapisi.net jelszó</string>
-    <string id="30106">Különleges beállítások</string>
+    <string id="30106">Egyéb</string>
     <string id="30107">Feliratmappa megeggyezik a film mappájával</string>
     <string id="30108">- Egyedi feliratmappa megadása</string>
     <string id="30110">Keresési szöveg manuális megadása</string>
     <string id="30111">Harmadik nyelv</string>  
-    <string id="30113">Alapértelmezett szolgáltatás választása mozifilmekre</string>
-    <string id="30114">Alapértelmezett szolgáltatás választása TV sorozatokra</string>    
+    <string id="30113">Szolgáltatás mozifilmekre</string>
+    <string id="30114">Szolgáltatás TV sorozatokra</string>    
     <string id="30118">Fájlnév megjelenítése a találatok között</string>
     <string id="30119">Keresés mappanév használatával</string> 
     <string id="30121">Nyelv hozzáadása a fájlnévhez </string>

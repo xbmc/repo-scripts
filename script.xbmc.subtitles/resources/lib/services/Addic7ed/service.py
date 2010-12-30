@@ -26,7 +26,7 @@ def get_url(url):
 
 def query_TvShow(name, season, episode, file_original_path, langs):
     sublinks = []
-    name = name.lower().replace(" ", "_").replace("$#*!","shit") #need this for $#*! My Dad Says
+    name = name.lower().replace(" ", "_").replace("$#*!","shit").replace("'","") # need this for $#*! My Dad Says and That 70s show
     searchurl = "%s/serie/%s/%s/%s/addic7ed" %(self_host, name, season, episode)
     socket.setdefaulttimeout(3)
     page = urllib2.urlopen(searchurl)
