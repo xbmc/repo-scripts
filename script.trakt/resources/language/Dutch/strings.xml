@@ -19,7 +19,7 @@
 	
 	<string id="45050">Klaar om je media toe te voegen</string>
 	<string id="45051">U moet een gebruikersnaam en wachtwoord in te voeren!</string>
-	<string id="45052">Toegevoegd %MOVIENAME% (%YEAR%)</string>
-	<string id="45053">Toegevoegd %TVSHOW% %SEASON%x%EPISODE%</string>
+	<string id="45052">Toegevoegd: %MOVIENAME% (%YEAR%)</string>
+	<string id="45053">Toegevoegd: %TVSHOW% %SEASON%x%EPISODE%</string>
 </strings>
 

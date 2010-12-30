@@ -18,7 +18,7 @@ except ImportError:
 
 __settings__ = xbmcaddon.Addon(id='script.trakt')
 __language__ = __settings__.getLocalizedString
-__version__ = "0.0.9"
+__version__ = "0.1.0"
 __cwd__ = __settings__.getAddonInfo('path')
 
 #Path handling
@@ -49,14 +49,21 @@ def SendUpdate(info, progress, sType, status):
     if (sType == "TVShow"):
         ID = getID(sType, unicode(xbmc.getInfoLabel("VideoPlayer.TvShowTitle"), 'utf-8'))
     elif (sType == "Movie"):
-        ID = getID(sType, unicode(xbmc.getInfoLabel("VideoPlayer.Title")))
+        ID = getID(sType, urllib.quote(xbmc.getInfoLabel("VideoPlayer.Title"))) 
+    
+    Debug("IMDB/tvdb id: "+ID);
     
     # split on type and create data packet for each type
     if (sType == "Movie"):
         Debug("Parsing Movie", False)
         
         # format: title, year
-        title, year, ID = info.split(",")
+        title, year = info.split(",")
+        
+        # check to make sure the data is there
+        # otherwise return
+        if(title == ''):
+            return
         
         # set alert text
         submitAlert = __language__(45052).encode( "utf-8", "ignore" )
@@ -73,13 +80,19 @@ def SendUpdate(info, progress, sType, status):
                                     "media_center": 'xbmc',
                                     "media_center_version": xbmc.getInfoLabel( "system.buildversion" ),
                                     "media_center_date": xbmc.getInfoLabel( "system.builddate" ),
+                                    "duration": xbmc.getInfoLabel("VideoPlayer.Duration"),
                                     "username": bUsername, 
                                     "password": bPassword})
     elif (sType == "TVShow"):
         Debug("Parsing TVShow", False)
         
         # format: title, year, season, episode
-        title, year, season, episode, ID = info.split(",")
+        title, year, season, episode = info.split(",")
+        
+        # check to make sure the data is there
+        # otherwise return
+        if(title == '' or season == '' or episode == ''):
+            return
         
         # set alert text
         submitAlert = __language__(45053).encode( "utf-8", "ignore" )
@@ -99,6 +112,7 @@ def SendUpdate(info, progress, sType, status):
                                     "media_center": 'xbmc',
                                     "media_center_version": xbmc.getInfoLabel( "system.buildversion" ),
                                     "media_center_date": xbmc.getInfoLabel( "system.builddate" ),
+                                    "duration": xbmc.getInfoLabel("VideoPlayer.Duration"),
                                     "username": bUsername, 
                                     "password": bPassword})
         
@@ -153,7 +167,7 @@ def Debug(message, Verbose=True):
 
 def CalcPercentageRemaining(currenttime, duration):
     try:
-         iCurrentMinutes = (int(currenttime.split(':')[0]) * 60) + int(currenttime.split(':')[1])
+        iCurrentMinutes = (int(currenttime.split(':')[0]) * 60) + int(currenttime.split(':')[1])
     except:
         iCurrentMinutes = int(0)
         
@@ -216,11 +230,12 @@ def notification( header="", message="", sleep=5000, icon=__settings__.getAddonI
     xbmc.executebuiltin( "XBMC.Notification(%s,%s,%i,%s)" % ( header, message, sleep, icon ) )
     
 def getID(sType, title):
+    Debug("Title sent to getID: "+title, False)
     video_id = ""
     if (sType == "TVShow"):
         # get tvdb id
         try:
-            query = "select c12 from tvshow where c00 = '" + title + "'"
+            query = "select c12 from tvshow where lower(c00) = lower('" + title + "') limit 1"
             res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
             tvid = re.findall('[\d.]*\d+',res) # find it
 
@@ -230,11 +245,15 @@ def getID(sType, title):
             video_id = ""
     else:
         try:
-            query = "select case when not movie.c09 is null then movie.c09 else 'NOTFOUND' end as [MovieID] from movie where movie.c00 = '" + title + "' limit 1"
+            query = "select movie.c09 from movie where lower(movie.c00) = lower('" + title + "') limit 1"
+            Debug(query)
             res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
-            movieid = re.findall('>(.*?)<',res) # find it
-            if len(movieid[1].strip()) >= 1:
-                video_id = str(movieid[1].strip())
+            Debug(res)
+            movieid = re.findall('<field>(.*?)</field>',res) # find it
+
+            if len(str(movieid[0])) >= 1:
+                Debug("Final answer (for id!) --> "+str(movieid[0]))
+                video_id = str(movieid[0])
         except:
             video_id = ""
     

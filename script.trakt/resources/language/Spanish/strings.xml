@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="45001">Opciones Generales</string>
+	<string id="45002">Exclusiones</string>
+	<string id="45003">Miscelánea</string>
+
+	<string id="45004">Empezar Trakt al abrir XBMC</string>
+	<string id="45005">Usuario</string>
+	<string id="45006">Contraseña</string>
+	<string id="45007">Mostrar Notificaciones</string>
+	<string id="45008">Excluir contenido para adultos</string>
+	<string id="45009">Ruta de Exclusión</string>
+	<string id="45010">Ruta a la carpeta (y subcarpetas)</string>
+	<string id="45011">Comprobar si hay una nueva versión al empezar</string>
+	<string id="45012">Activar modo debug</string>
+	<string id="45013">Opciones de envio</string>
+	<string id="45014">Activar Auto-Enviar</string>
+	<string id="45015">Enviar después de ver un XX por ciento</string>
+
+	<string id="45050">Listo para enviar...</string>
+	<string id="45051">¡Necesitas un usuario y contraseña!</string>
+	<string id="45052">Película enviada: %MOVIENAME% (%YEAR%)</string>
+	<string id="45053">Capitulo enviado: %TVSHOW% %SEASON%x%EPISODE%</string>
+</strings>

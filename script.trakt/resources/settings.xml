@@ -8,7 +8,7 @@
 	<setting type="lsep" label="45013" />
 	<setting id="AutoSubmitVideo" type="bool" label="45014" default="true" />
 	<setting id="NotifyOnSubmit" type="bool" label="45007" default="true" />
-	<setting id="VideoThreshold" type="enum"  visible= "eq(-2,true)" enable="eq(-2,true)" label="45015" values="75%|95%" default="1" />
+	<setting id="VideoThreshold" type="enum"  visible= "eq(-2,true)" enable="eq(-2,true)" label="45015" values="70%|85%" default="1" />
 
   <setting type="lsep" label="45002" />
 	<setting id="ExcludePathOption" type="bool" label="45009" default="false" />

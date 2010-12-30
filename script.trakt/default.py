@@ -12,7 +12,7 @@ import re
 __scriptname__ = "trakt"
 __author__ = "Sean Rudford"
 __url__ = "http://trakt.tv/"
-__version__ = "0.0.9"
+__version__ = "0.1.0"
 __XBMC_Revision__ = ""
 
 def addPadding(number):
@@ -30,7 +30,6 @@ def CheckAndSubmit(Manual=False):
         bExcluded = False
         short = ""
         title = ""
-        global getID
         global VideoThreshold
         global lasttitle
         global lastUpdate
@@ -57,9 +56,6 @@ def CheckAndSubmit(Manual=False):
             Debug('Video ended during pause check', False)
             return
         
-        if (xbmc.getInfoLabel("VideoPlayer.Year") == ""):
-            Debug('Video is not in library', False)
-            bLibraryExcluded = True
         if ((xbmc.getInfoLabel("VideoPlayer.mpaa") == "XXX")):
             Debug('Video is with XXX mpaa rating', False)
             bRatingExcluded = True
@@ -100,10 +96,6 @@ def CheckAndSubmit(Manual=False):
             moviename = moviename.replace(",", '')
             
             title = (moviename + ',' + xbmc.getInfoLabel("VideoPlayer.Year"))
-                
-            #don't submit if not in library
-            if (xbmc.getInfoLabel("VideoPlayer.Year") == ""):
-                title = ""
 
         if (bLibraryExcluded or bPathExcluded or bRatingExcluded):
             bExcluded = True
@@ -111,18 +103,17 @@ def CheckAndSubmit(Manual=False):
         
         Debug("Title: " + title)
         
-        if ((title != "" and lasttitle != title) and not bExcluded):                
-            get_id(sType)
+        if ((title != "" and lasttitle != title) and not bExcluded):
             
             if (iPercComp > (float(VideoThreshold) / 100)):
                 Debug('Title: ' + title + ', sending watched status, current percentage: ' + str(iPercComp), True)
-                SendUpdate(title+","+video_id, int(iPercComp*100), sType, "watched")
+                SendUpdate(title, int(iPercComp*100), sType, "watched")
                 lasttitle = title
                 checkTitle = xbmc.getInfoLabel("VideoPlayer.Title")
                 sleepTime = 15
             elif (time.time() - lastUpdate >= 900):
                 Debug('Title: ' + title + ', sending watching status, current percentage: ' + str(iPercComp), True)
-                SendUpdate(title+","+video_id, int(iPercComp*100), sType, "watching")
+                SendUpdate(title, int(iPercComp*100), sType, "watching")
                 lastUpdate = time.time();
                 checkTitle = xbmc.getInfoLabel("VideoPlayer.Title")
                 sleepTime = 168
@@ -131,36 +122,6 @@ def CheckAndSubmit(Manual=False):
         Debug('Resetting last update timestamp')
         lastUpdate = 0
         sleepTime = 15
-        getID = True
-
-
-def get_id(video_type):
-    global getID
-    global video_id
-    
-    getID = False
-    Debug("Looking up video ID (tvdb or imdb)", False)
-    
-    if video_type == "Movie":
-        try:
-            query = "select case when not movie.c09 is null then movie.c09 else 'NOTFOUND' end as [MovieID] from movie where movie.c00 = '" + xbmc.getInfoLabel("VideoPlayer.Title") + "' limit 1"
-            res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
-            movieid = re.findall('>(.*?)<',res) # find it
-            if len(movieid[1].strip()) >= 1:
-                video_id = str(movieid[1].strip())
-        except:
-            video_id = ""
-            
-    elif video_type == "TVShow":
-        try:
-            query = "select c12 from tvshow where c00 = '" + xbmc.getInfoLabel("VideoPlayer.TvShowTitle") + "'"
-            res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
-            tvid = re.findall('[\d.]*\d+',res) # find it
-
-            if len(tvid[0].strip()) >= 1:
-                video_id = tvid[0].strip();
-        except:
-            video_id = ""
 
 
 ###Settings related parsing
@@ -189,7 +150,6 @@ bPassword = False
 lasttitle = ""
 lastUpdate = 0
 video_id = ""
-getID = True
 sleepTime = 168
 checkTitle = ''
 
@@ -244,7 +204,10 @@ if ((bStartup and bAutoStart) or bRun):
         #If Set To AutoSubmit
         if (bAutoSubmitVideo):
             CheckAndSubmit()
-
+        
+        if (xbmc.abortRequested):
+            break
+            
         time.sleep(sleepTime)
 
 Debug( 'Exiting...', False)
