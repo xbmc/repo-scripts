@@ -1,0 +1,13 @@
+<settings>
+    <category label="00008">
+        <setting id="service_enabled" type="bool" label="30001" default="false"/>
+        <setting id="show_notifications" type="bool" label="30004" default="true" />
+        <setting id="delete_movies" type="bool" label="30016" default="false" />
+        <setting id="delete_tvshows" type="bool" label="30017" default="true" />
+        <setting id="clean_library" type="bool" label="30003" default="true"/>
+        <setting id="expire_after" type="text" label="30010" default="14"/>
+        <setting id="delete_on_low_disk" type="bool" label="30006" default="true"/>
+        <setting id="low_disk_percentage" type="text" label="30007" default="10"/>
+        <setting id="low_disk_path" type="text" label="30011" default="special://home"/>
+    </category>
+</settings>

@@ -1,0 +1,10 @@
+Version 1.1.0
+===============
+- Almost entire rewrite of script
+- Created service loop instead of relying on AlarmClock
+- Setting changes will now be detected by the running service
+- Removed 'delete only if watched' option and instead will ONLY delete watched files
+
+Version 1.0.0
+===============
+- Intial version

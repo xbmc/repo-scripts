@@ -1,0 +1,17 @@
+<strings>
+    <string id="30001">Enable service</string>
+    <string id="30003">Clean library when finished</string>
+    <string id="30004">Show notifications</string>
+    <string id="30006">Only delete videos if low on disk space</string>
+    <string id="30007">Low disk space percentage</string>
+    <string id="30008">Service</string>
+    <string id="30009">Running clearup</string>
+    <string id="30010">Days after which a video is classed as expired</string>
+    <string id="30011">Path to check for low disk usage</string>
+    <string id="30012">Error opening video library database</string>
+    <string id="30013">Monitoring library</string>
+    <string id="30014">Deleted</string>
+    <string id="30015">Service Disabled</string>
+    <string id="30016">Delete movies</string>
+    <string id="30017">Delete TV shows</string>
+</strings>
