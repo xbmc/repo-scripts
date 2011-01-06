@@ -10,8 +10,3 @@ Service is disabled in options by default, please make sure that you fully under
 DESCRIPTION
 =====================================    
 This plugin will automatically scan your library for watched TV shows and Movies and delete them from the file system and from the library.  By default only TV episodes are deleted and files will only be deleted if the hard disk is running out of space and the file has previously been watched over 14 days ago.  All these options and more can be configured via add-on settings (right click addon or press C for context menu and select 'Add-on Settings').  Also make sure you set the disk usage path before enabling if you store your videos on a secondary drive (e.g, /media/external or D:\ etc).
-
-QUESTIONS/COMMENTS/SUGGESTIONS
-=====================================
-email: azhigginson@gmail.com
-twitter: drewzh
