@@ -25,7 +25,7 @@
 # *  Team XBMC
 
 import xbmc
-from xbmcgui import Window
+import xbmcgui
 from urllib import quote_plus, unquote_plus
 import re
 import sys
@@ -34,7 +34,7 @@ import random
     
 class Main:
     # grab the home window
-    WINDOW = Window( 10000 )
+    WINDOW = xbmcgui.Window( 10000 )
 
     def _clear_properties( self ):
         # reset Totals property for visible condition
@@ -66,7 +66,10 @@ class Main:
         except:
             # no params passed
             params = {}
-        # set our preferences
+           
+ 
+            # set our preferences
+        print params
         self.LIMIT = int( params.get( "limit", "5" ) )
         self.RECENT = not params.get( "partial", "" ) == "True"
         self.ALBUMS = params.get( "albums", "" ) == "True"
@@ -75,6 +78,7 @@ class Main:
         self.PLAY_TRAILER = params.get( "trailer", "" ) == "True"
         self.ALARM = int( params.get( "alarm", "0" ) )
         self.RANDOM_ORDER = params.get( "random", "" ) == "True"
+        self.ALBUMID = params.get( "albumid", "" )
     
     def _set_alarm( self ):
         # only run if user/skinner preference
@@ -95,10 +99,13 @@ class Main:
         xbmc.executehttpapi( "SetResponseFormat(OpenRecord,%s)" % ( "<record>", ) )
         xbmc.executehttpapi( "SetResponseFormat(CloseRecord,%s)" % ( "</record>", ) )
         # fetch media info
-        self._fetch_totals()
-        self._fetch_movie_info()
-        self._fetch_tvshow_info()
-        self._fetch_music_info()
+        print self.ALBUMID
+        if self.ALBUMID: self._Play_Album( self.ALBUMID )
+        else:
+            self._fetch_totals()
+            self._fetch_movie_info()
+            self._fetch_tvshow_info()
+            self._fetch_music_info()
 
     def _fetch_totals( self ):
         # only run if user/skinner preference
@@ -263,51 +270,87 @@ class Main:
             self.WINDOW.setProperty( "LatestEpisode.%d.Thumb" % ( count + 1, ), thumb )
 
     def _fetch_music_info( self ):
-        # sql statement
-        if ( self.ALBUMS ):
-            sql_music = "select idAlbum from albumview order by idAlbum desc limit %d" % ( self.LIMIT, )
-            # query the database for recently added albums
-            music_xml = xbmc.executehttpapi( "QueryMusicDatabase(%s)" % quote_plus( sql_music ), )
+            # Current Working Directory
+            # sql statement
+            if ( self.ALBUMS ):
+                if ( self.RANDOM_ORDER ):
+                    sql_music = "select * from albumview order by RANDOM() limit %d" % ( self.LIMIT, )
+                else:
+                    sql_music = "select * from albumview order by idAlbum desc limit %d" % ( self.LIMIT, )
+                # query the database for recently added albums
+                music_xml = xbmc.executehttpapi( "QueryMusicDatabase(%s)" % quote_plus( sql_music ), )
+                # separate the records
+                items = re.findall( "<record>(.+?)</record>", music_xml, re.DOTALL )
+                # enumerate thru our records and set our properties
+                for count, item in enumerate( items ):
+                    # separate individual fields
+                    fields = re.findall( "<field>(.*?)</field>", item, re.DOTALL )
+                    # set properties
+                    self.WINDOW.setProperty( "LatestSong.%d.Title" % ( count + 1, ), fields[ 3 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Year" % ( count + 1, ), fields[ 8 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Artist" % ( count + 1, ), fields[ 6 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Album" % ( count + 1, ), fields[ 1 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Rating" % ( count + 1, ), fields[ 18 ] )
+                    # Album Path  (ID)
+                    path = 'XBMC.RunScript(script.recentlyadded,albumid=' + fields[ 0 ] + ')'
+                    self.WINDOW.setProperty( "LatestSong.%d.Path" % ( count + 1, ), path )
+                    # get cache name of path to use for fanart
+                    cache_name = xbmc.getCacheThumbName( fields[ 6 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Fanart" % ( count + 1, ), "special://profile/Thumbnails/Music/%s/%s" % ( "Fanart", cache_name, ) )
+                    self.WINDOW.setProperty( "LatestSong.%d.Thumb" % ( count + 1, ), fields[ 9 ] )
+                
+            else:
+                # set our unplayed query
+                unplayed = ( "", "where lastplayed is null ", )[ self.UNPLAYED ]
+                # sql statement
+                #sql_music = "select * from songview %sorder by idSong desc limit %d" % ( unplayed, self.LIMIT, )
+                if ( self.RANDOM_ORDER ):
+                    sql_music = "select * from songview order by RANDOM() limit %d" % ( self.LIMIT, )
+                else:
+                    sql_music = "select * from songview %sorder by idSong desc limit %d" % ( unplayed, self.LIMIT, )
+                # query the database
+                music_xml = xbmc.executehttpapi( "QueryMusicDatabase(%s)" % quote_plus( sql_music ), )
+                # separate the records
+                items = re.findall( "<record>(.+?)</record>", music_xml, re.DOTALL )
+                # enumerate thru our records and set our properties
+                for count, item in enumerate( items ):
+                    # separate individual fields
+                    fields = re.findall( "<field>(.*?)</field>", item, re.DOTALL )
+                    # set properties
+                    self.WINDOW.setProperty( "LatestSong.%d.Title" % ( count + 1, ), fields[ 3 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Year" % ( count + 1, ), fields[ 6 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Artist" % ( count + 1, ), fields[ 24 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Album" % ( count + 1, ), fields[ 21 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Rating" % ( count + 1, ), fields[ 18 ] )
+                    path = fields[ 22 ]
+                    # don't add song for albums list TODO: figure out how toplay albums
+                    ##if ( not self.ALBUMS ):
+                    path += fields[ 8 ]
+                    self.WINDOW.setProperty( "LatestSong.%d.Path" % ( count + 1, ), path )
+                    # get cache name of path to use for fanart
+                    cache_name = xbmc.getCacheThumbName( fields[ 24 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Fanart" % ( count + 1, ), "special://profile/Thumbnails/Music/%s/%s" % ( "Fanart", cache_name, ) )
+                    self.WINDOW.setProperty( "LatestSong.%d.Thumb" % ( count + 1, ), fields[ 27 ] )
+   
+    def _Play_Album( self, ID ):
+            print "play album"
+            playlist=xbmc.PlayList(0)
+            playlist.clear()
+            # sql statements
+            sql_song = "select * from songview where idAlbum='%s' order by iTrack " % ( ID )
+            # query the databases
+            songs_xml = xbmc.executehttpapi( "QueryMusicDatabase(%s)" % quote_plus( sql_song ), )
             # separate the records
-            albums = re.findall( "<record>(.+?)</record>", music_xml, re.DOTALL )
-            # set our unplayed query
-            unplayed = ( "(idAlbum = %s)", "(idAlbum = %s and lastplayed is null)", )[ self.UNPLAYED ]
-            # sql statement
-            sql_music = "select songview.* from songview where %s limit 1" % ( unplayed, )
-            # clear our xml data
-            music_xml = ""
-            # enumerate thru albums and fetch info
-            for album in albums:
-                # query the database and add result to our string
-                music_xml += xbmc.executehttpapi( "QueryMusicDatabase(%s)" % quote_plus( sql_music % ( album.replace( "<field>", "" ).replace( "</field>", "" ), ) ), )
-        else:
-            # set our unplayed query
-            unplayed = ( "", "where lastplayed is null ", )[ self.UNPLAYED ]
-            # sql statement
-            sql_music = "select * from songview %sorder by idSong desc limit %d" % ( unplayed, self.LIMIT, )
-            # query the database
-            music_xml = xbmc.executehttpapi( "QueryMusicDatabase(%s)" % quote_plus( sql_music ), )
-        # separate the records
-        items = re.findall( "<record>(.+?)</record>", music_xml, re.DOTALL )
-        # enumerate thru our records and set our properties
-        for count, item in enumerate( items ):
-            # separate individual fields
-            fields = re.findall( "<field>(.*?)</field>", item, re.DOTALL )
-            # set properties
-            self.WINDOW.setProperty( "LatestSong.%d.Title" % ( count + 1, ), fields[ 3 ] )
-            self.WINDOW.setProperty( "LatestSong.%d.Year" % ( count + 1, ), fields[ 6 ] )
-            self.WINDOW.setProperty( "LatestSong.%d.Artist" % ( count + 1, ), fields[ 24 ] )
-            self.WINDOW.setProperty( "LatestSong.%d.Album" % ( count + 1, ), fields[ 21 ] )
-            self.WINDOW.setProperty( "LatestSong.%d.Rating" % ( count + 1, ), fields[ 18 ] )
-            path = fields[ 22 ]
-            # don't add song for albums list TODO: figure out how toplay albums
-            ##if ( not self.ALBUMS ):
-            path += fields[ 8 ]
-            self.WINDOW.setProperty( "LatestSong.%d.Path" % ( count + 1, ), path )
-            # get cache name of path to use for fanart
-            cache_name = xbmc.getCacheThumbName( fields[ 24 ] )
-            self.WINDOW.setProperty( "LatestSong.%d.Fanart" % ( count + 1, ), "special://profile/Thumbnails/Music/%s/%s" % ( "Fanart", cache_name, ) )
-            self.WINDOW.setProperty( "LatestSong.%d.Thumb" % ( count + 1, ), fields[ 27 ] )
+            songs = re.findall( "<record>(.+?)</record>", songs_xml, re.DOTALL )
+            # enumerate thru our records and set our properties
+            for count, movie in enumerate( songs ):
+                # separate individual fields
+                fields = re.findall( "<field>(.*?)</field>", movie, re.DOTALL )
+                # set album name
+                path = fields[ 22 ] + fields[ 8 ]
+                listitem = xbmcgui.ListItem( fields[ 7 ] )
+                xbmc.PlayList(0).add (path, listitem )
+            xbmc.Player().play(playlist)
 
 
 if ( __name__ == "__main__" ):
