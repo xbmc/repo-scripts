@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+
+  <string id="610">Mount disks for this session</string>
+  <string id="611">Enable mount on boot</string>
+  <string id="612">Disable mount on boot</string>
+  <string id="613">Run</string>
+  <string id="614">Exit</string>
+  <string id="615">615remove me</string>
+  
+  <string id="30100">General</string>
+  <string id="30101">Enter password</string>
+  <string id="30102">30102</string>
+  
+  <string id="30103">Available partitions mounted</string>
+  <string id="30104">Mount on boot enabled</string>
+  <string id="30105">Mount on boot disabled</string>
+  <string id="30106"></string>
+  <string id="30107">You have not entered ant password!</string>
+  <string id="30108">Sucessfuly 30108</string>
+  
+</strings>
