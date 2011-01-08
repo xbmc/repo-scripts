@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.qlock"
+       name="Qlock"
+       version="0.0.4"
+       provider-name="Amet">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.library"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Qlock script</summary>
+    <description lang="en">Script to display current time in words, needs skin support. so far only Transparency! is supporting this in SVN</description>
+    <platform>all</platform>
+  </extension>
+</addon>
