@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.web.viewer"
+       name="Web Viewer"
+       version="0.7.3"
+       provider-name="Rick Phillips (ruuk)">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8.1"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="lib/webviewer/webviewer.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Simple web browser</summary>
+    <description lang="en">
+Web Viewer is a linear text web browser. It is linear because it doesn't render pages, it filters them and displays text in the order it is found in the original HTML.
+
+Web viewer also allows addon developers to process application authorization (ie. facebook,flickr etc.) with little programming and without violating terms of use.
+
+What it does:
+    *You can follow links, fill out forms, view images
+    *Stream video/audio links
+    *It has back/forward history
+    *Bookmarks
+    
+What it doesn't do:
+    *Handle style sheets, javascript, flash, etc.
+    *Make web pages look good :)
+    *Lots of other stuff
+    </description>
+  </extension>
+</addon>
