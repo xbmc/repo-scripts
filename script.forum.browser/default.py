@@ -1,7 +1,8 @@
-import urllib2, re, os, sys, time, urlparse
+import urllib2, re, os, sys, time, urlparse, htmlentitydefs
 import xbmc, xbmcgui, xbmcaddon #@UnresolvedImport
 from googletranslate import googleTranslateAPI
 import threading
+from webviewer import webviewer #@UnresolvedImport
 
 '''
 TODO:
@@ -14,7 +15,7 @@ __plugin__ = 'Forum Browser'
 __author__ = 'ruuk (Rick Phillips)'
 __url__ = 'http://code.google.com/p/forumbrowserxbmc/'
 __date__ = '12-12-2010'
-__version__ = '0.8.0'
+__version__ = '0.8.1'
 __addon__ = xbmcaddon.Addon(id='script.forum.browser')
 __language__ = __addon__.getLocalizedString
 
@@ -385,7 +386,7 @@ class ForumBrowser:
 	def login(self):
 		LOG('LOGGING IN')
 		if not self.mechanize:
-			import mechanize
+			from webviewer import mechanize #@UnresolvedImport
 			self.mechanize = mechanize
 		if not self.browser: self.browser = self.mechanize.Browser()
 		response = self.browser.open(self.getURL('login'))
@@ -446,7 +447,10 @@ class ForumBrowser:
 		
 	def makeURL(self,phppart):
 		if not phppart: return ''
-		url = self._url + phppart
+		if phppart.startswith('http://'):
+			url = phppart
+		else:
+			url = self._url + phppart
 		return url.replace('&amp;','&').replace('/./','/')
 		
 	def getPMCounts(self,html=''):
@@ -987,9 +991,11 @@ class BaseWindow(xbmcgui.WindowXMLDialog,ThreadWindow):
 		return False
 			
 	def onAction(self,action):
+		#print action.getId()
 		if action == ACTION_PARENT_DIR:
 			action = ACTION_PREVIOUS_MENU
 		if ThreadWindow.onAction(self,action): return
+		if action == ACTION_PREVIOUS_MENU: self.close()
 		xbmcgui.WindowXMLDialog.onAction(self,action)
 	
 	def startProgress(self):
@@ -1069,7 +1075,7 @@ class ImagesDialog(BaseWindow):
 	def __init__( self, *args, **kwargs ):
 		self.images = kwargs.get('images')
 		self.index = 0
-		xbmcgui.WindowXML.__init__( self, *args, **kwargs )
+		BaseWindow.__init__( self, *args, **kwargs )
 	
 	def onInit(self):
 		self.setTheme()
@@ -1116,7 +1122,7 @@ class ImagesDialog(BaseWindow):
 			self.nextImage()
 		elif action == ACTION_PREV_ITEM:
 			self.prevImage()
-		xbmcgui.WindowXMLDialog.onAction(self,action)
+		BaseWindow.onAction(self,action)
 		
 ######################################################################################
 # Post Dialog
@@ -1360,7 +1366,7 @@ class TextPostDialog(PostDialog):
 		#if not self.editButton.isSelected(): return False
 		aid = action.getId()
 		bc = action.getButtonCode()
-		print aid,bc
+		#print aid,bc
 		try:
 			shift = False
 			if bc & 0x00020000:
@@ -1707,6 +1713,8 @@ class MessageWindow(BaseWindow):
 			self.action = PostMessage(tid=link.tid,pid=link.pid)
 			self.close()
 		else:
+			webviewer.getWebResult(link.url,dialog=True)
+			return
 			base = xbmcgui.Dialog().browse(3,__language__(30144),'files')
 			if not base: return
 			fname,ftype = Downloader(message=__language__(30145)).downloadURL(base,link.url)
@@ -1724,11 +1732,9 @@ class MessageWindow(BaseWindow):
 		del w
 			
 	def onAction(self,action):
-		if action == ACTION_PARENT_DIR:
-			action = ACTION_PREVIOUS_MENU
-		elif action == ACTION_CONTEXT_MENU:
-			self.doMenu()
 		BaseWindow.onAction(self,action)
+		if action == ACTION_CONTEXT_MENU:
+			self.doMenu()
 		
 	def doMenu(self):
 		options = [__language__(30134),__language__(30135)]
@@ -2164,7 +2170,7 @@ class ThreadsWindow(PageWindow):
 		fid = item.getProperty('fid') or self.fid
 		lastid = item.getProperty('lastid')
 		topic = item.getProperty('title')
-		w = RepliesWindow("script-forumbrowser-replies.xml" , __addon__.getAddonInfo('path'), THEME,tid=tid,fid=fid,lastid=lastid,topic=topic,parent=self)
+		w = RepliesWindow("script-forumbrowser-replies.xml" , __addon__.getAddonInfo('path'),THEME,tid=tid,fid=fid,lastid=lastid,topic=topic,parent=self)
 		w.doModal()
 		del w
 
@@ -2306,7 +2312,7 @@ class ForumsWindow(BaseWindow):
 		self.getControl(203).setLabel(__language__(3009) + disp)
 		
 	def openPMWindow(self):
-		w = RepliesWindow("script-forumbrowser-replies.xml" , __addon__.getAddonInfo('path'), THEME,tid='private_messages',topic=__language__(30176),parent=self)
+		w = RepliesWindow("script-forumbrowser-replies.xml" , __addon__.getAddonInfo('path'),THEME,tid='private_messages',topic=__language__(30176),parent=self)
 		w.doModal()
 		del w
 		self.setPMCounts(FB.getPMCounts())
@@ -2589,25 +2595,14 @@ def calculatePage(low,high,total):
 	return str(int(round(float(high)/((high-low)+1))))
 	
 def cUConvert(m): return unichr(int(m.group(1)))
-def cConvert(m): return chr(int(m.group(1)))
+def cTConvert(m): return unichr(htmlentitydefs.name2codepoint.get(m.group(1),32))
 def convertHTMLCodes(html):
-	#conv = False
-	#try:
-	#	html = re.sub('&#(\d{1,3});',cConvert,html)
-	#	conv = True
-	#except:
-	#	pass
-	#if not conv:
 	try:
-		html = re.sub('&#(\d{1,3});',cUConvert,html)
+		html = re.sub('&#(\d{1,5});',cUConvert,unicode(html,'utf8'))
+		html = re.sub('&(\w+?);',cTConvert,html)
 	except:
 		pass
-	return html	.replace("&lt;", "<")\
-				.replace("&gt;", ">")\
-				.replace("&amp;", "&")\
-				.replace("&quot;",'"')\
-				.replace("&apos;","'")\
-				.replace("&nbsp;"," ")
+	return html
 				
 def messageToText(html):
 	html = MC.lineFilter.sub('',html)

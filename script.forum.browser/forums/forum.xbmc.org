@@ -3,8 +3,9 @@
 # import other data here ex-> import:forum.xbmc.org
 
 ### URLs ######################################
-# Base url including the trailing /
+# Base URL including the trailing /
 url:base=http://forum.xbmc.org/
+#The part after the slash on the base URL
 url:forums=index.php
 url:threads=forumdisplay.php?f=!FORUMID!
 url:replies=showthread.php?t=!THREADID!&p=!POSTID!&mode=linear
@@ -40,7 +41,6 @@ format:pm_csv_columns=date,folder,title,user,to,message
 format:pm_csv_folder=Inbox
 
 filter:pm_counts1=<a href="private.php">(?P<display>Private Messages</a>: Unread (?:<strong>)?(?P<unread>\d+)(?:</strong>)?, Total (?P<total>\d+)).</div>
-#<a href="usercp.php">Your Notifications:</a> <strong>1</strong>
 filter:pm_counts2=Private Messages.+?<a href="private.php".+?>(?P<unread>\d+)</a>
 
 url:pm_new_message=private.php?do=newpm
@@ -57,10 +57,11 @@ form:pm_submit_wait=1
 filter:logo=<a href="index.php.*?"><img src="(?P<suburl>.*?)"
 # valid match names are forumid, title, and description
 filter:forums=(?P<subforum>\s/>\s)*(?<!\s/></a>|ntrol">|an="5">)(?:<a\shref="forumdisplay.php\?).*?f=(?P<forumid>\d+)">(?P<title>.*?)</a>.*?(?:(?:<div class="smallfont">(?P<description>.*?)</div>)|,)
-# valid match names are threadid, title, starter and lastposter
+#start looking for threads after this string
 filter:threads_start_after=<!-- threads list  -->
+# valid match names are threadid, title, starter and lastposter
 filter:threads=(?P<sticky>Sticky: )?<a href="showthread.php\?[^<>]*?t=(?P<threadid>\d+)"\sid="thread_title.*?>(?P<title>.*?)</a>.*?window.open\(\'member.php\?.*?u=\d+\', \'_self\'\)">(?P<starter>.*?)</span.*?<a href="member.php.*?rel="nofollow">(?P<lastposter>.*?)</a>
-# this should match  the entire text for every post on the page from which the post filter will extract
+# this should match the entire text for every post on the page from which the post filter will extract
 filter:replies=<table\s.*?id="post\d+.*?<!-- / message -->.*?(?:<!-- sig -->.+?<!-- / sig -->)?
 # valid match names are postid, date, userid, user, avatar, title, and message
 filter:private_message===replies

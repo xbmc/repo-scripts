@@ -1,6 +1,10 @@
 Forum Browser Changelog
 
-Current Version : 0.8.0
+Current Version : 0.8.1
+
+*** 0.8.1 ***
+
+Follow links in Web Viewer
 
 *** 0.8.0 ***
 
