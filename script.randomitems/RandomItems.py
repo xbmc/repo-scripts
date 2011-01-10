@@ -42,6 +42,7 @@ class Main:
             self.WINDOW.clearProperty( "RandomMovie.%d.Title" % ( count + 1, ) )
             self.WINDOW.clearProperty( "RandomEpisode.%d.ShowTitle" % ( count + 1, ) )
             self.WINDOW.clearProperty( "RandomSong.%d.Title" % ( count + 1, ) )
+            self.WINDOW.clearProperty( "RandomSong.%d.Album" % ( count + 1, ) )
 
     def _get_media( self, path, file ):
         # set default values
