@@ -1,0 +1,8 @@
+0.0.5
+- added: French layout, thanks to humferier
+- added: changelog.txt
+
+0.0.4
+- initial commit
+- Thanks to donabi for the idea, Jezz_X for making initial code for Confluence, lcapriotti for Italian layout,  ronie for support on Transparency! and Dutch layout
+ 
