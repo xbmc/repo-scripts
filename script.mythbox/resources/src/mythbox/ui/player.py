@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -162,13 +162,9 @@ class MythPlayer(xbmc.Player):
                 "Plot"   : self._program.formattedDescription()
             })
         
-        #playlistItem.setProperty('AspectRatio', '1.85 : 1')
-        # TODO: playlistItem.setProperty('StartOffset', '256.4')
-        from mythbox.platform import getPlatform
-        if not getPlatform().isDharma():        
-            toolkit.setThumbnailImage(playlistItem, self.mythThumbnailCache.get(self._program))
-            toolkit.setIconImage(playlistItem, self.mythThumbnailCache.get(self._program))
-            
+        # TODO: Set start offset if a comm break starts at 0.0 
+        #  playlistItem.setProperty('StartOffset', '256.4')
+
         mlog.debug("< _buildPlayList")
         return playlistItem
 

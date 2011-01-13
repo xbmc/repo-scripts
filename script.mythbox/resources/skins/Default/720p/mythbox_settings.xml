@@ -436,6 +436,93 @@
 
         </control>
 
+        <control type="group" id="9005">
+            <description>readme and faq panel</description>
+            <posx>300</posx>
+            <posy>135</posy>
+            <width>1100</width>
+            <height>550</height>
+            <itemgap>4</itemgap>
+            <onleft>258</onleft>
+            <onright>258</onright>
+            <ondown>9005</ondown>
+            <onup>9005</onup>
+            <visible>Control.HasFocus(258)|ControlGroup(9005).HasFocus</visible>
+            <animation effect="fade" time="200">VisibleChange</animation>
+
+            <control type="textbox" id="599">
+                <description>textarea</description>
+                <posy>10</posy>
+                <posx>10</posx>
+                <height>480</height>
+                <width>900</width>
+                <font>font12</font>
+<!--                <align>center</align>-->
+                <textcolor>ffffffff</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <pagecontrol>598</pagecontrol>
+<!--                <autoscroll time="1000" delay="5000" repeat="5000">true</autoscroll>-->
+                <info>Window.Property(ReadmeText)</info>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+            </control>
+            
+            <control type="scrollbar" id="598">
+                <posx>950</posx>
+                <posy>10</posy>
+                <width>15</width>
+                <height>480</height>
+<!--                <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>-->
+<!--                <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>-->
+<!--                <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>-->
+<!--                <textureslidernib>ScrollBarNib.png</textureslidernib>-->
+<!--                <textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>-->
+
+	            <texturesliderbackground border="2,2,2,2">scrollbar_bar_back2.png</texturesliderbackground> 
+	            <texturesliderbar border="2,16,2,16">scrollbar_bar.png</texturesliderbar> 
+	            <texturesliderbarfocus border="2,16,2,16">scrollbar_bar_focus.png</texturesliderbarfocus> 
+	            <textureslidernib>scrollbar_nib.png</textureslidernib> 
+	            <textureslidernibfocus>scrollbar_nib.png</textureslidernibfocus> 
+
+                <onleft>258</onleft>
+                <onright>258</onright>
+                <showonepage>false</showonepage>
+                <orientation>vertical</orientation>
+            </control>            
+            
+            <!--  
+                    <control type="textbox" id="400">
+                        <description>Description</description>
+                        <posx>10</posx>
+                        <posy>195</posy>
+                        <width>580</width>
+                        <height>160</height>
+                        <font>font12</font>
+                        <align>-</align>
+                        <textcolor>white</textcolor>
+                        <label>$INFO[ListItem.Property(Addon.Description)]</label>
+                        <pagecontrol>60</pagecontrol>
+                    </control>
+                    <control type="scrollbar" id="60">
+                        <posx>610</posx>
+                        <posy>190</posy>
+                        <width>25</width>
+                        <height>175</height>
+                        <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
+                        <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
+                        <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
+                        <textureslidernib>ScrollBarNib.png</textureslidernib>
+                        <textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
+                        <onleft>9000</onleft>
+                        <onright>61</onright>
+                        <showonepage>false</showonepage>
+                        <orientation>vertical</orientation>
+                    </control>            
+            
+            -->
+            
+        </control>
+
         <control type="group" id="9003">
             <description>About panel</description>
             <posx>300</posx>
@@ -855,15 +942,15 @@
             <pulseonselect>true</pulseonselect>
             <enable>!substring(Window.Property(busy),true)</enable>
             <onup>256</onup>
-            <ondown>255</ondown>
+            <ondown>258</ondown>
             <onright>9004</onright>
             <onleft>9004</onleft>
             <onclick>ActivateWindow(settings)</onclick>
         </control>
 
-        <control type="button" id="255">
-            <description>about</description>
-            <label>SCRIPT460</label>
+        <control type="button" id="258">
+            <description>readme and faq</description>
+            <label>SCRIPT455</label>
             <posx>0</posx>
             <posy>240</posy>
             <width>285</width>
@@ -876,6 +963,26 @@
             <pulseonselect>true</pulseonselect>
             <enable>!substring(Window.Property(busy),true)</enable>
             <onup>257</onup>
+            <ondown>255</ondown>
+            <onright>9005</onright>
+            <onleft>9005</onleft>
+        </control>
+
+        <control type="button" id="255">
+            <description>about</description>
+            <label>SCRIPT460</label>
+            <posx>0</posx>
+            <posy>280</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onup>258</onup>
             <ondown>251</ondown>
         </control>
     </control>

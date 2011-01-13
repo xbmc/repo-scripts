@@ -19,7 +19,6 @@ Q14. How do I fix a 'MySQL connection error 1043 bad handshake' error?
 Q15. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
 Q16. What is the difference between XBMC's built-in myth:// protocol support and MythBox? 
 Q17. What is the plan to support the new Confluence skin released with XBMC 9.11?
-Q18. What happened to all the translations? Everything seems to be in English.
 
 -------------------------------------------------------------------------
 Q1. What should I do if I run into problems or something doesn't work?
@@ -31,7 +30,7 @@ A1. Please file a defect if the issue has not already been identified @
     
     1. Grab the MythBox log file:
        - Linux  : ~/mythbox.log
-       - Mac    : /Applications/mythbox.log
+       - Mac    : ~/Library/Logs/mythbox.log
        - Windows: Log file broken at the moment.
        - Vista  : Log file broken at the moment.
   
@@ -55,10 +54,10 @@ A2. MythBox -> Settings -> Advanced -> Enabled debug logging
 -------------------------------------------------------------------------------
 Q3. Where are the MythBox configuration settings stored?
 
-A3. Linux  : ~/.xbmc/userdata/script_data/MythBox/settings.xml
-    Mac    : ~/Library/Application Support/UserData/script_data/MythBox/settings.xml
-    Windows: C:\Document and Settings\[user]\Application Data\XBMC\UserData\script_data\MythBox\settings.xml
-    Vista  : C:\Users\[user]\AppData\Roaming\XBMC\UserData\script_data\MythBox\settings.xml
+A3. Linux  : ~/.xbmc/userdata/addon_data/script.mythbox/settings.xml
+    Mac    : ~/Library/Application Support/UserData/addon_data/script.mythbox/settings.xml
+    Windows: C:\Document and Settings\[user]\Application Data\XBMC\UserData\addon_data\script.mythbox\settings.xml
+    Vista  : C:\Users\[user]\AppData\Roaming\XBMC\UserData\addon_data\script.mythbox\settings.xml
 
 -------------------------------------------------------------------------------
 Q4. When is the next release coming out?
@@ -103,12 +102,11 @@ A9. To checkout the source (assuming you have Mercurial installed):
   
     Description of source tree:
     
-        +-bin        - various scripts for development
+        +-bin        - packaging scripts
         +-resources
             +-src    - source code
-            +-test   - unit tests  (250+)
+            +-test   - unit tests
             +-lib    - 3rd party libs
-            +-bin    - 3rd party executables
             +-skins  - default skin xml files + images
                 
     To run unit tests from the MythBox dir:
@@ -131,32 +129,29 @@ Q11. What sort of MythTV setup do you use with MythBox? My setup doesn't seem
      It is quite possible that you may be having problems getting MythBox to work
      if your setup is significantly different from mine.
 
-     FrontEnd + Slave Backend (Acer Aspire Revo - Atom 1.6Ghz - NVidia ION - 2GB)
-        Ubuntu Lucid (32bit)
+     FrontEnd + Slave Backend (Zotac HD-U11 - Atom 1.8Ghz - NVidia ION2 - 2GB)
+        Ubuntu 10.10 Maverick (32bit)
         Hauppauge HD-PVR (capturing @ 1280x720x60fps) 
         DirecTV HD receiver
         Gigabit Ethernet
         Recording dirs mounted via NFS
         50" Plasma (1920x1080)
         HP MCE Remote
-        XBMC 9.11 + VDPAU playback
+        XBMC 10.10 + VDPAU playback
      
      Master Backend (Athlon 4800+)
+        MythTV 0.23.1
         Ubuntu Lucid (32bit)
         SiliconDust HDHomeRun - 2xATSC  (OTA Chicago)
         Intel Gigabit Ethernet
         Recording dirs mounted via NFS
         2 comm flagging slots
              
-     Slave Backend (Athlon 4600+)
-       Ubuntu Lucid (32bit)
-       2 comm flagging slots
-        
      FrontEnd (Mac Book)
         Mac OS X Snow Leopard
         Wireless 802.11n
         Recording dirs mounted via NFS
-        XBMC 9.11
+        XBMC 10.10
 
 ---------------------------------------------------------------------------------
 Q12. When I play a recorded program, I get nothing but a green screen.
@@ -192,13 +187,13 @@ Q16. What is the difference between XBMC's myth:// protocol support and MythBox?
      
      Feature                  MythBox        XBMC + myth://
      ==========================================================
-     Commercial skipping      Yes            Yes (since Camelot)
+     Commercial skipping      Yes            Yes
      Watch Live TV            Yes            Yes
      Schedule Recordings      Yes            No 
      Upcoming Recordings      Yes            No
      Enhanced Program Guide   Yes            No 
      Fan art for TV Programs  Yes            No
-     Fan art for Movies       Yes            Yes (since Camelot)
+     Fan art for Movies       Yes            Yes
      Library Mode             No             Yes
      Tuners/Jobs/Load stats   Yes            No
      Detailed Recording Info  Yes            No
@@ -212,10 +207,3 @@ Q17. What is the plan to support the new Confluence skin released in XBMC 9.11?
      MythBox user interface based on the PM3.HD skin, I am by no means aesthetically 
      gifted. If you've got the skills or think you're up to it, please get in touch 
      and lets get you commit access.
-
----------------------------------------------------------------------------------
-Q18. What happened to all the translations? Everything seems to be in English.
-
-     The english translations are now stable. Contact me if would like to contribute
-     translations for additional languages. 
-              

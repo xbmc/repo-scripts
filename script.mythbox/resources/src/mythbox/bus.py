@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -47,8 +47,9 @@ class EventBus(object):
         @type event: dict
         @param event: Put in whatever you like. The only mandatory key is 'id'
         """
-        for listener in self.listeners:
+        for listener in self.listeners[:]:
             try:
+                log.debug('Sending event %s to %s' % (event, listener))
                 listener.onEvent(event)
             except:
                 log.exception('Error publishing event %s to %s' % (event, listener))

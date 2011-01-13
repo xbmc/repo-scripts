@@ -93,7 +93,7 @@ class FileCache(object):
             
             # Don't cache zero byte files
             if not os.path.exists(filepath):
-                log.warn('File could not be resolved: %s ' % safe_str(fileUrl))
+                log.warn('File could not be resolved: %s and not at path: %s' % (safe_str(fileUrl), filepath) )
                 return None
             
             if os.path.getsize(filepath) == 0:

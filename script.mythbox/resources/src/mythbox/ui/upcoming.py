@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -20,7 +20,8 @@
 import datetime
 import logging
 import odict
-import os
+import time
+import xbmc
 import xbmcgui
 import mythbox.msg as m
 
@@ -29,7 +30,7 @@ from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.domain import Channel
 from mythbox.ui.schedules import ScheduleDialog
 from mythbox.ui.toolkit import BaseWindow, window_busy, Action
-from mythbox.util import catchall_ui, lirc_hack, timed, run_async, catchall, ui_locked, coalesce, ui_locked2
+from mythbox.util import catchall_ui, lirc_hack, run_async, catchall, ui_locked, ui_locked2
 
 log = logging.getLogger('mythbox.ui')
 
@@ -65,6 +66,7 @@ class UpcomingRecordingsWindow(BaseWindow):
         self.sortBy = self.settings.get('upcoming_sort_by')
         self.sortAscending = self.settings.getBoolean('upcoming_sort_ascending')
         self.closed = False
+        self.activeRenderToken = None
         
     @catchall_ui
     def onInit(self):
@@ -113,7 +115,7 @@ class UpcomingRecordingsWindow(BaseWindow):
         
         ScheduleDialog(
             'mythbox_schedule_dialog.xml', 
-            os.getcwd(), 
+            self.platform.getScriptDir(), 
             forceFallback=True,
             schedule=schedules[0], 
             translator=self.translator,
@@ -191,31 +193,30 @@ class UpcomingRecordingsWindow(BaseWindow):
         self.programsListBox.reset()
         self.programsListBox.addItems(listItems)
         self.renderNav()
-        self.renderChannelIcons()
-        self.renderPosters()        
+        
+        self.activeRenderToken = time.clock()
+        self.renderChannelIcons(self.activeRenderToken)
+        self.renderPosters(self.activeRenderToken)        
 
     def renderNav(self):
         self.setWindowProperty('sortBy', self.translator.get(m.SORT) + ': ' + self.translator.get(SORT_BY[self.sortBy]['translation_id']))
         self.setWindowProperty('sortAscending', ['false', 'true'][self.sortAscending])
         
     @run_async
-    @timed
     @catchall
-    @coalesce
-    def renderChannelIcons(self):
-        for i, (program, listItem) in enumerate(self.listItemsByProgram.items()):
-            if self.closed: return
+    def renderChannelIcons(self, myRenderToken):
+        for i, (program, listItem) in enumerate(self.listItemsByProgram.items()[:]):
+            if self.closed or xbmc.abortRequested or myRenderToken != self.activeRenderToken: 
+                return
             channel = self.channelsById[program.getChannelId()]
             if channel and channel.getIconPath() and len(listItem.getProperty('airdate')) == 0:
                 self.setListItemProperty(listItem, 'channelIcon', self.mythChannelIconCache.get(channel))
         
     @run_async
-    @timed
     @catchall
-    @coalesce
-    def renderPosters(self):
-        for (program, listItem) in self.listItemsByProgram.items():
-            if self.closed: 
+    def renderPosters(self, myRenderToken):
+        for (program, listItem) in self.listItemsByProgram.items()[:]:
+            if self.closed or xbmc.abortRequested or myRenderToken != self.activeRenderToken: 
                 return
             posterPath = self.fanArt.getRandomPoster(program)
             if posterPath is None:

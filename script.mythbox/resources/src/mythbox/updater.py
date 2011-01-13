@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -17,13 +17,16 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 import logging
+import os
+import urllib
 import urllib2
 
 from mythbox.util import run_async
 
 log = logging.getLogger('mythbox.core')
 
-URL_MYTHBOX_UPDATE = 'http://mythbox-xbmc.dyndns.org/updates1.0.0'
+URL_MYTHBOX_UPDATE = 'http://mythbox-xbmc.dyndns.org/updates'
+URL_MYTHBOX_DOWNLOAD_COUNTER = 'http://mythbox.googlecode.com/files/download_counter.txt'
 
 class UpdateChecker(object):
     
@@ -32,11 +35,16 @@ class UpdateChecker(object):
         self.updateUrl = updateUrl
    
     @run_async
-    def isUpdateAvailable(self):
+    def run(self):
         try:
-            response = urllib2.urlopen('%s_%s.xml' % (self.updateUrl, self.platform.getName()), None)
-            log.debug('Update URL response: %s' % response)
-            return True
+            response = urllib2.urlopen('%s_%s_%s.xml' % (self.updateUrl, self.platform.getVersion(), self.platform.getName()), None)
         except:
-            log.warn('Failed to check for updates')
-            return False
+            pass
+        
+        # poke download counter one and only once
+        try:
+            fname = os.path.join(self.platform.getCacheDir(), 'mythbox-' + self.platform.getVersion())
+            if not os.path.exists(fname):
+                filename, headers = urllib.urlretrieve(URL_MYTHBOX_DOWNLOAD_COUNTER, fname)
+        except:
+            pass

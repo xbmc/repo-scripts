@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -21,7 +21,7 @@ import xbmc
 import xbmcgui
 
 from decorator import decorator
-from mythbox.util import timed
+from mythbox.util import timed, safe_str
 
 log = logging.getLogger('mythbox.ui')
 elog = logging.getLogger('mythbox.event')
@@ -77,8 +77,8 @@ def showPopup(title, text, millis=10000):
     # filter all commas out of text since they delimit args
     title = title.replace(',', ';')
     text = text.replace(',', ';')
-    s = 'XBMC.Notification(%s,%s,%s)'  % (title, text, millis)
-    log.debug('showPopup: %s' % s)
+    s = u'XBMC.Notification(%s,%s,%s)'  % (title, text, millis)
+    log.debug('showPopup: %s' % safe_str(s))
     xbmc.executebuiltin(s)
 
 

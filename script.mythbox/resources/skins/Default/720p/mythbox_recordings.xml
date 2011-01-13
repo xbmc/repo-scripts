@@ -112,6 +112,20 @@
             <label>SCRIPT212</label>
         </control>
 
+        <control type="label">
+            <description>episode</description>
+            <posx>1175</posx>
+            <posy>140</posy>
+            <width>80</width>
+            <height>35</height>
+            <font>font12</font>
+            <textcolor>ffddddff</textcolor>
+            <selectedcolor>FFe2ff43</selectedcolor>
+            <align>left</align>
+            <aligny>center</aligny>
+            <label>SCRIPT161</label>
+        </control>
+
 <!--  Programs Listbox -->
 
         <control type="list" id="600">
@@ -151,7 +165,7 @@
                     <description>list item title</description>
                     <posx>200</posx>
                     <posy>0</posy>
-                    <width>790</width>
+                    <width>640</width>
                     <height>30</height>
                     <font>font12</font>
                     <textcolor>DDFFFFFF</textcolor>
@@ -159,6 +173,20 @@
                     <align>left</align>
                     <aligny>center</aligny>
                     <label>$INFO[ListItem.Property(title)]</label>
+                </control>
+
+                <control type="label">
+                    <description>list item episode</description>
+                    <posx>860</posx>
+                    <posy>0</posy>
+                    <width>80</width>
+                    <height>30</height>
+                    <font>font12</font>
+                    <textcolor>DDFFFFFF</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <label>$INFO[ListItem.Property(episode)]</label>
                 </control>
                 
             </itemlayout>
@@ -173,6 +201,7 @@
                     <texture border="3">input-focus.png</texture>
                     <visible>Control.HasFocus(600)</visible>
                 </control>
+
                 <control type="image">
                     <posx>0</posx>
                     <posy>0</posy>
@@ -200,7 +229,7 @@
                     <description>list item title</description>
                     <posx>200</posx>
                     <posy>0</posy>
-                    <width>790</width>
+                    <width>640</width>
                     <height>30</height>
                     <font>font12</font>
                     <textcolor>DDFFFFFF</textcolor>
@@ -208,6 +237,20 @@
                     <align>left</align>
                     <aligny>center</aligny>
                     <label>$INFO[ListItem.Property(title)]</label>
+                </control>
+
+                <control type="label">
+                    <description>list item episode</description>
+                    <posx>860</posx>
+                    <posy>0</posy>
+                    <width>80</width>
+                    <height>30</height>
+                    <font>font12</font>
+                    <textcolor>DDFFFFFF</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <label>$INFO[ListItem.Property(episode)]</label>
                 </control>
                 
             </focusedlayout>

@@ -10,7 +10,7 @@ Features:
   - Enhanced program guide
   - TV show and movie metadata (fanart, episodes, etc) downloaded from tvdb, tvrage, tmdb, imdb, and google image search
   - View tuner and job queue info
-  - Compatible with MythTV 0.21, 0.22, 0.23, and 0.23.1 
+  - Compatible with MythTV 0.23, 0.23.1 and 0.24 
   - Add your own public Twitter feeds
   - Move comm flagging jobs to the front of the queue
 
@@ -18,7 +18,7 @@ Requirements
 ================
   
   All Platforms
-    - XBMC 10.10 (Dharma) or XBMC 9.11 (Camelot)
+    - XBMC 10.10 (Dharma)
     - A working MythTV backend
     - MythTV recordings directory(s) and/or storage groups accessible via the local 
       filesystem (the machine running XBMC) pre-mounted using nfs, samba, afp, etc.   
@@ -41,28 +41,16 @@ Installation
 
   XBMC 10.10
     
-      1. TODO  
+      1. To install: System > Add-ons > Get Add-ons > XBMC.org Add-ons > Video Add-ons > MythBox
+         
+      2. To run: Videos > Video Add-ons > MythBox
   
-  XBMC 9.11
-    
-      1. Extract mythbox.tar.gz to the following directory:
-         Linux   : ~/.xbmc/scripts 
-         Mac     : ~/Library/Application Support/XBMC/scripts
-         Windows : C:\Documents and Settings\[user]\Application Data\XBMC\scripts
-         Vista   : C:\Users\[user]\AppData\Roaming\XBMC\scripts
-               
-      2. Launch XBMC
-      
-      3. From the main XBMC screen, select Scripts
-      
-      4. From the Scripts screen, select MythBox 
-      
-      5. You'll be sent straight to the Settings screen (with an error message). 
+      3. You'll be sent straight to the Settings screen (with an error message). 
          Fill in all the settings and click on the 'Test Settings' button until 
          you get a 'Settings OK' message.
       
-      6. Exit the Settings screen & enjoy!
-
+      4. Exit the Settings screen & enjoy!
+ 
 
 Keybindings/Remote Control
 ============================================================================
@@ -106,7 +94,7 @@ History
 ==========================
 MythBox was forked from xbmc-mythtv (http://xbmc-mythtv.sourceforge.net) 
 and heavily modified to bring MythTV protocol support up to date, 
-add new features, and make MythTV a pleasure to use in XBMC (obviously, not there yet).
+add new features, and make MythTV a pleasure to use in XBMC.
 Many thanks to all the developers whose time and effort went into the original 
 xbmc-mythtv project!
 

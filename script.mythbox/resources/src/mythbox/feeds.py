@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -16,8 +16,9 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
+import string
 import twitter
-
+import datetime
 from mythbox.bus import Event
 
 twitterApi = twitter.Api()
@@ -32,7 +33,7 @@ class FeedHose(object):
         
     def initFeeds(self):
         self.feeds = []
-        twits = self.settings.get('feeds_twitter').split(',')
+        twits = filter(lambda twit: len(string.strip(twit)) > 0, self.settings.get('feeds_twitter').split(','))
         for twit in twits:
             self.feeds.append(TwitterFeed(twit))
         
@@ -65,9 +66,10 @@ class FeedEntry(object):
 
 class TwitterFeed(object):
 
-    def __init__(self, user, api=twitterApi):
+    def __init__(self, user, api=twitterApi, sinceDays=14):
         self.user = user
         self.api = twitterApi
+        self.sinceDays = sinceDays
         
     def getEntries(self):
         #  The Status structure exposes the following properties:
@@ -84,12 +86,11 @@ class TwitterFeed(object):
         #    status.relative_created_at # read only
         #    status.user
         
-        entries = []
-        tweets = self.api.GetUserTimeline(user=self.user, count=3)
-        for tweet in tweets:
-            entries.append(FeedEntry(tweet.user.screen_name, tweet.text, tweet.created_at_in_seconds))
-        return entries
-    
+        drop_tweets_before = datetime.datetime.now() - datetime.timedelta(days=self.sinceDays)
+        tweets = self.api.GetUserTimeline(id=self.user, count=3)
+        tweets = filter(lambda t: datetime.datetime.fromtimestamp(t.created_at_in_seconds) > drop_tweets_before, tweets)
+        return map(lambda t: FeedEntry(t.user.screen_name, t.text, t.created_at_in_seconds), tweets)
+
 
 class RssFeed(object):
     pass

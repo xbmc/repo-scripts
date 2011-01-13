@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -21,6 +21,7 @@ import os
 import socket
 import sys
 import xbmc
+import xbmcaddon
 import xbmcgui
 import urllib
 import stat
@@ -55,16 +56,7 @@ def requireDir(dir):
 class Platform(object):
 
     def __init__(self, *args, **kwargs):
-        try:
-            import xbmcaddon
-            self.addon = xbmcaddon.Addon('script.mythbox')
-            self.cwd = self.addon.getAddonInfo('path')
-        except:
-            self.addon = None
-            # os.getcwd() can and does change @ runtime. retain and use initial value
-            self.cwd = os.getcwd()
-            
-        self._scriptDataDir = None
+        self.addon = xbmcaddon.Addon('script.mythbox')
         requireDir(self.getScriptDataDir())
         requireDir(self.getCacheDir())
 
@@ -102,10 +94,7 @@ class Platform(object):
         windows: c:\Documents and Settings\[user]\Application Data\XBMC\addons\script.mythbox
         mac    : ~/Library/Application Support/XBMC/addons/script.mythbox
         '''
-        try:
-            return self.addon.getAddonInfo('path')
-        except:
-            return self.cwd
+        return self.addon.getAddonInfo('path')
     
     def getScriptDataDir(self):
         '''
@@ -115,12 +104,7 @@ class Platform(object):
         windows: c:\Documents and Settings\[user]\Application Data\XBMC\UserData\addon_data\script.mythbox
         mac    : ~/Library/Application Support/XBMC/UserData/addon_data/script.mythbox
         '''
-        if self._scriptDataDir is None:
-            try:
-                self._scriptDataDir = xbmc.translatePath(self.addon.getAddonInfo('profile'))
-            except:
-                self._scriptDataDir = xbmc.translatePath("T:\\script_data") + os.sep + os.path.basename(self.getScriptDir())
-        return self._scriptDataDir
+        return xbmc.translatePath(self.addon.getAddonInfo('profile'))
     
     def getCacheDir(self):
         return os.path.join(self.getScriptDataDir(), 'cache')
@@ -134,18 +118,8 @@ class Platform(object):
     def isUnix(self):
         return False
     
-    def isDharma(self):
-        try:
-            from xbmc import executeJSONRPC
-            return True
-        except:
-            return False
-
     def getVersion(self):
-        if self.isDharma():
-            return self.addon.getAddonInfo('version')
-        else:
-            return "1.0.RC3"
+        return self.addon.getAddonInfo('version')
             
     def __repr__(self):
         bar = "=" * 80
@@ -173,7 +147,7 @@ script data dir = %s
         # filter all commas out of text since they delimit args
         title = title.replace(',', ';')
         text = text.replace(',', ';')
-        s = 'XBMC.Notification(%s,%s,%s)'  % (title, text, millis)
+        s = u'XBMC.Notification(%s,%s,%s)' % (title, text, millis)
         xbmc.executebuiltin(s)
 
     def requireFFMpeg(self, path):

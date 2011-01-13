@@ -32,7 +32,7 @@ from mythbox.mythtv import protocol
 from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.enums import TVState, Upcoming
 from mythbox.mythtv.protocol import ProtocolException
-from mythbox.util import timed, threadlocals, timed_cache
+from mythbox.util import timed, threadlocals, timed_cache, safe_str
 
 log     = logging.getLogger('mythbox.core')     # mythtv core logger
 wirelog = logging.getLogger('mythbox.wire')     # wire level protocol logger
@@ -149,6 +149,7 @@ class Connection(object):
         self.settings = settings
         self.translator = translator
         self.platform = platform
+        self.protocol = None
         self.bus = bus
         self._db = db
         self.db_init()
@@ -182,12 +183,15 @@ class Connection(object):
             protocol.serverVersion = self.getServerVersion()
         
         # Protocol version has to be sent on each new connection
-        serverVersion = self.negotiateProtocol(s, protocol.serverVersion)
+
         try:
-            self.protocol = protocol.protocols[serverVersion]
+            self.protocol = protocol.protocols[protocol.serverVersion]
         except KeyError:
-            raise ProtocolException('Unsupported protocol: %s' % serverVersion)
-            
+            raise ProtocolException('Unsupported protocol: %s' % protocol.serverVersion)
+
+        #serverVersion = 
+        self.negotiateProtocol(s, protocol.serverVersion, self.protocol.protocolToken())
+
         if announce:
             if announce == 'Playback':
                 self.annPlayback(s)
@@ -223,20 +227,20 @@ class Connection(object):
             self._db.close()
                 
     @timed            
-    def negotiateProtocol(self, s, clientVersion):
+    def negotiateProtocol(self, s, clientVersion, versionToken):
         """ 
         @return: version of the MythTV protocol the server supports
         @rtype: int 
         @raise ProtocolException: when clientVersion is less than serverVersion
         """
-        reply = self._sendRequest(s, ['MYTH_PROTO_VERSION %s' % clientVersion])
+        reply = self._sendRequest(s, ['MYTH_PROTO_VERSION %s %s' % (clientVersion, versionToken) ])
         
         serverResponse = reply[0]
         serverVersion  = int(reply[1])
-        wirelog.debug('negotiateProtocol: %s -> %s %s' % (clientVersion, serverResponse, serverVersion))
+        wirelog.debug('negotiateProtocol: %s %s -> %s %s' % (clientVersion, versionToken, serverResponse, serverVersion))
         
-        if (serverVersion < clientVersion):
-            pe = ProtocolException('Protocol mismatch - Server protocol version: %s  Client protocol version: %s'%(serverVersion, clientVersion))
+        if (serverResponse  != 'ACCEPT'):
+            pe = ProtocolException('Protocol Exception, Server responded to our version request with: %s instead of ACCEPT - Server protocol version: %s  Client protocol version: %s'%(serverResponse, serverVersion, clientVersion))
             pe.protocolVersion = serverVersion
             raise pe   
         return serverVersion
@@ -339,7 +343,7 @@ class Connection(object):
         """
         reply = self._sendRequest(self.cmdSock, ['QUERY_RECORDER %d' % tuner.tunerId, 'GET_CURRENT_RECORDING'])
         from mythbox.mythtv.domain import RecordedProgram
-        program = RecordedProgram(reply, self.settings, self.translator, self.platform, [self, None][self._db is None])
+        program = RecordedProgram(reply, self.settings, self.translator, self.platform, self.protocol, [self, None][self._db is None])
         return program
         
     @inject_db
@@ -350,7 +354,7 @@ class Connection(object):
         @rtype: int
         @todo: Change return type to Tuner or None
         @todo: Rename to getTunerWatchingOrRecording(...)
-        """ 
+        """
         tuners = self.db().getTuners()
         for tuner in tuners:
             tvState = int(self._sendRequest(self.cmdSock, ['QUERY_REMOTEENCODER %d'%tuner.tunerId, 'GET_STATE'])[0])
@@ -485,7 +489,7 @@ class Connection(object):
             self.bus.publish({'id':Event.RECORDING_DELETED, 'source': self, 'program':program})
         else:
             raise ServerException, reply[0]
-        log.debug('Deleted recording %s with response %s' % (program.title(), rc))
+        log.debug('Deleted recording %s with response %s' % (safe_str(program.title()), rc))
         return rc
 
     @timed
@@ -506,7 +510,7 @@ class Connection(object):
             rc2 = int(reply[0])
         else:
             raise ServerException, reply[0]
-        log.debug('Allowed re-record of %s with response %s' %(program.title(), rc2))
+        log.debug('Allowed re-record of %s with response %s' %(safe_str(program.title()), rc2))
         return rc1
 
     @timed
@@ -523,64 +527,21 @@ class Connection(object):
         @return: True if successful, False otherwise 
         """
         msg = program.data()[:]
-        
-        # clear out fields - this is based on what mythweb does
-        # mythtv-0.16
-        msg[0] = ' '    # title
-        msg[1] = ' '    # subtitle
-        msg[2] = ' '    # description
-        msg[3] = ' '    # category
-                        # chanid
-        msg[5] = ' '    # channum
-        msg[6] = ' '    # chansign
-        msg[7] = ' '    # channame
-                        # filename
-        msg[9] = '0'    # upper 32 bits
-        msg[10] = '0'   # lower 32 bits
-                        # starttime
-                        # endtime
-        msg[13] = '0'   # conflicting
-        msg[14] = '1'   # recording
-        msg[15] = '0'   # duplicate
-                        # hostname
-        msg[17] = '-1'  # sourceid
-        msg[18] = '-1'  # cardid
-        msg[19] = '-1'  # inputid
-        msg[20] = ' '   # recpriority
-        msg[21] = ' '   # recstatus  - really int
-        msg[22] = ' '   # recordid
-        msg[23] = ' '   # rectype
-        msg[24] = '15'  # dupin
-        msg[25] = '6'   # dupmethod
-                        # recstarttime
-                        # recendtime
-        msg[28] = ' '   # repeat
-        msg[29] = ' '   # program flags
-        msg[30] = ' '   # recgroup
-        msg[31] = ' '   # commfree
-        msg[32] = ' '   # chanoutputfilters
-                        # seriesid
-                        # programid
-                        # dummy lastmodified
-                        
-        msg[36] = '0'   # dummy stars
-                        # dummy org airdate
-        msg[38] = '0'   # hasAirDate
-        msg[39] = '0'   # playgroup
-        msg[40] = '0'   # recpriority2
-        msg[41] = '0'   # parentid
-                        # storagegroup
-        
-        msg.insert(0, 'QUERY_GENPIXMAP')
-
+        for token in reversed(self.protocol.genPixMapCommand()):
+            msg.insert(0, token)
+            
         # extra data
         #if width and height:
         msg.append('s')
         timeLow, timeHigh = encodeLongLong(180)
         msg.append('%d' % timeHigh)
         msg.append('%d' % timeLow)
-        #msg.append('<EMPTY>')
-        msg.append(program.getBareFilename() + '.640x360.png')
+        
+        # WORKAROUND:
+        #    Specifying output file as non <EMPTY> in 0.24 seems to break preview generation.
+        #    mythpreviewgen seems to think the local dir is '/' and can't write to it in the call
+        #    to IsLocal() in myth. Letting myth generate its own filename works, though.
+        msg.append(self.protocol.genPixMapPreviewFilename(program))
         msg.append('%d' % 640)
         msg.append('%d' % 360)
         
@@ -623,51 +584,51 @@ class Connection(object):
         
         # clear out fields - this is based on what mythweb does
         # mythtv-0.16
-        msg[0] = ' '    # title
-        msg[1] = ' '    # subtitle
-        msg[2] = ' '    # description
-        msg[3] = ' '    # category
-                        # chanid
-        msg[5] = ' '    # channum
-        msg[6] = ' '    # chansign
-        msg[7] = ' '    # channame
-                        # filename
-        msg[9] = '0'    # upper 32 bits
-        msg[10] = '0'   # lower 32 bits
-                        # starttime
-                        # endtime
-        msg[13] = '0'   # conflicting
-        msg[14] = '1'   # recording
-        msg[15] = '0'   # duplicate
-                        # hostname
-        msg[17] = '-1'  # sourceid
-        msg[18] = '-1'  # getTunerId
-        msg[19] = '-1'  # inputid
-        msg[20] = ' '   # recpriority
-        msg[21] = ' '   # recstatus - really int
-        msg[22] = ' '   # recordid
-        msg[23] = ' '   # rectype
-        msg[24] = '15'  # dupin
-        msg[25] = '6'   # dupmethod
-                        # recstarttime
-                        # recendtime
-        msg[28] = ' '   # repeat
-        msg[29] = ' '   # program flags
-        msg[30] = ' '   # recgroup
-        msg[31] = ' '   # commfree
-        msg[32] = ' '   # chanoutputfilters
-                        # seriesid
-                        # programid
-                        # dummy lastmodified
-                        
-        msg[36] = '0'   # dummy stars
-                        # dummy org airdate
-        msg[38] = '0'   # hasAirDate
-        msg[39] = '0'   # playgroup
-        msg[40] = '0'   # recpriority2
-        msg[41] = '0'   # parentid
-                        # storagegroup
-        msg.append('')  # trailing separator
+#        msg[0] = ' '    # title
+#        msg[1] = ' '    # subtitle
+#        msg[2] = ' '    # description
+#        msg[3] = ' '    # category
+#                        # chanid
+#        msg[5] = ' '    # channum
+#        msg[6] = ' '    # chansign
+#        msg[7] = ' '    # channame
+#                        # filename
+#        msg[9] = '0'    # upper 32 bits
+#        msg[10] = '0'   # lower 32 bits
+#                        # starttime
+#                        # endtime
+#        msg[13] = '0'   # conflicting
+#        msg[14] = '1'   # recording
+#        msg[15] = '0'   # duplicate
+#                        # hostname
+#        msg[17] = '-1'  # sourceid
+#        msg[18] = '-1'  # getTunerId
+#        msg[19] = '-1'  # inputid
+#        msg[20] = ' '   # recpriority
+#        msg[21] = ' '   # recstatus - really int
+#        msg[22] = ' '   # recordid
+#        msg[23] = ' '   # rectype
+#        msg[24] = '15'  # dupin
+#        msg[25] = '6'   # dupmethod
+#                        # recstarttime
+#                        # recendtime
+#        msg[28] = ' '   # repeat
+#        msg[29] = ' '   # program flags
+#        msg[30] = ' '   # recgroup
+#        msg[31] = ' '   # commfree
+#        msg[32] = ' '   # chanoutputfilters
+#                        # seriesid
+#                        # programid
+#                        # dummy lastmodified
+#                        
+#        msg[36] = '0'   # dummy stars
+#                        # dummy org airdate
+#        msg[38] = '0'   # hasAirDate
+#        msg[39] = '0'   # playgroup
+#        msg[40] = '0'   # recpriority2
+#        msg[41] = '0'   # parentid
+#                        # storagegroup
+#        msg.append('')  # trailing separator
         msg.insert(0, 'QUERY_PIXMAP_LASTMODIFIED')
 
         # if a slave backend, establish a new connection otherwise reuse existing connection to master backend.
@@ -708,6 +669,7 @@ class Connection(object):
                     self.settings, 
                     self.translator,
                     self.platform,
+                    self.protocol,
                     [self, None][self._db is None]))
             offset += self.protocol.recordSize()
         return scheduledRecordings
@@ -757,8 +719,8 @@ class Connection(object):
         upcoming = []
         reply = self._sendRequest(self.cmdSock, ['QUERY_GETALLPENDING', '2'])
         
-        log.debug('getUpcomingRecordings reply begin= %s' % reply[:80])
-        log.debug('getUpcomingRecordings reply end  = %s' % reply[-80:])
+        log.debug('getUpcomingRecordings reply begin= %s' % safe_str(reply[:80]))
+        log.debug('getUpcomingRecordings reply end  = %s' % safe_str(reply[-80:]))
         
         numRows = int(reply[1])
         offset = 2
@@ -770,6 +732,7 @@ class Connection(object):
                     self.settings, 
                     self.translator,
                     self.platform,
+                    self.protocol,
                     [self, None][self._db is None])
             if program.getRecordingStatus() in filter:
                 upcoming.append(program)
@@ -784,12 +747,18 @@ class Connection(object):
         reply = self._sendRequest(self.cmdSock, ['QUERY_RECORDINGS Play'])   
         numPrograms = int(reply.pop(0))
         programs = [] 
-        offset =0
+        offset = 0
         recordSize = self.protocol.recordSize()
         from mythbox.mythtv.domain import RecordedProgram
         for i in xrange(numPrograms):
             # use of self._db intentional 
-            programs.append(RecordedProgram(reply[offset:offset+recordSize], self.settings, self.translator, self.platform, [self, None][self._db is None])) 
+            programs.append(RecordedProgram(
+                reply[offset:offset+recordSize], 
+                self.settings, 
+                self.translator, 
+                self.platform,
+                self.protocol, 
+                [self, None][self._db is None])) 
             offset += recordSize
         programs = filter(lambda p: p.getRecordingGroup() != 'LiveTV', programs)
         programs.sort(key=RecordedProgram.starttimeAsTime, reverse=True)
@@ -819,7 +788,7 @@ class Connection(object):
         for i in xrange(numRows):
             response = reply[offset:offset+self.protocol.recordSize()]
             # use of self._db intentional
-            p = RecordedProgram(response, self.settings, self.translator, self.platform, [self, None][self._db is None])
+            p = RecordedProgram(response, self.settings, self.translator, self.platform, self.protocol, [self, None][self._db is None])
             if  recordingGroup.upper() in ('ALL GROUPS', p.getRecordingGroup().upper(),) and \
                 title.upper() in ('ALL SHOWS', p.title().upper(),):
                 programs.append(p) 
@@ -833,6 +802,7 @@ class Connection(object):
         @type startTime: str or datetime.datetime
         @return: RecordedProgram or None if not found 
         """
+        log.debug(startTime)
         if isinstance(startTime, datetime.datetime):
             from mythbox.mythtv.domain import dbTime2MythTime
             startTime = dbTime2MythTime(startTime)
@@ -840,7 +810,7 @@ class Connection(object):
         reply = self._sendRequest(self.cmdSock, [query])
         from mythbox.mythtv.domain import RecordedProgram
         if self._isOk(reply):
-            return RecordedProgram(reply[1:], self.settings, self.translator, self.platform, [self, None][self._db is None])
+            return RecordedProgram(reply[1:], self.settings, self.translator, self.platform, self.protocol, [self, None][self._db is None])
         else:
             log.debug('Program not found')
             return None
@@ -851,7 +821,8 @@ class Connection(object):
         Return the frame number of the bookmark as a long for the passed in program or 
         zero if no bookmark is found.
         """
-        command = 'QUERY_BOOKMARK %s %s' %(program.getChannelId(), program.starttimets())
+        #command = 'QUERY_BOOKMARK %s %s' %(program.getChannelId(), program.starttimets())
+        command = 'QUERY_BOOKMARK %s %s' %(program.getChannelId(), program.recstarttimets())
         reply = self._sendRequest(self.cmdSock, [command])
         bookmarkFrame = decodeLongLong(int(reply[1]), int(reply[0])) 
         log.debug('bookmarkFrame = int %s int %s => long %s' %(reply[0], reply[1], bookmarkFrame))
@@ -864,7 +835,8 @@ class Connection(object):
         Raises ServerException on failure.
         """
         lowWord, highWord = encodeLongLong(frameNumber)
-        command = 'SET_BOOKMARK %s %s %s %s' %(program.getChannelId(), program.starttimets(), highWord, lowWord)
+        #command = 'SET_BOOKMARK %s %s %s %s' %(program.getChannelId(), program.starttimets(), highWord, lowWord)
+        command = 'SET_BOOKMARK %s %s %s %s' %(program.getChannelId(), program.recstarttimets(), highWord, lowWord)
         reply = self._sendRequest(self.cmdSock, [command])
         
         if reply[0] == 'OK':
@@ -916,7 +888,7 @@ class Connection(object):
             from mythbox.mythtv.domain import frames2seconds, CommercialBreak
             commBreaks.append(CommercialBreak(frames2seconds(frameStart, fps), frames2seconds(frameEnd, fps)))
                         
-        log.debug('%s commercials in %s' %(len(commBreaks), program.title()))
+        log.debug('%s commercials in %s' %(len(commBreaks), safe_str(program.title())))
         return commBreaks
         
     def getDiskUsage(self):
@@ -1044,7 +1016,7 @@ class Connection(object):
         schedule is not specified, all recording schedules will be rescheduled
         by the backend.
         """
-        log.debug('rescheduleNotify(schedule= %s)' % schedule)
+        log.debug('rescheduleNotify(schedule= %s)' % safe_str(schedule))
         scheduleId = 0
         if schedule:
             scheduleId = schedule.getScheduleId()
@@ -1153,7 +1125,11 @@ class Connection(object):
             if retMsg.upper() == 'OK':
                 return 'OK'
             wirelog.debug('retMsg: [%d] %s' % (len(retMsg), retMsg))
-            n = int(retMsg)
+
+            n = 0
+            if len(retMsg) > 0:
+                n = int(retMsg)
+
             #wirelog.debug("reply len: %d" % n)
             i = 0
             while i < n:
@@ -1162,7 +1138,7 @@ class Connection(object):
                 i = len(reply)
                 wirelog.debug("total read = %d" % i)
 
-            wirelog.debug('read  <- %s' % reply[:80])
+            wirelog.debug('read  <- %s' % safe_str(reply[:80]))
             return reply.split(protocol.separator)
         except:
             log.exception('Error reading message: %s' % retMsg)
@@ -1184,7 +1160,14 @@ class Connection(object):
             try:
                 new = socket.recv(left)
             except Exception, e:
-                wirelog.error('left bytes = %d out of %d'  % (left, bytes))
+		if str(e) == "(9, 'Bad file descriptor')" or str(e) == "(10054, 'Connection reset by peer')":
+			print('Lost connection resetting')
+			try:
+				self.close()
+			except Exception, e:
+				print('noclose')
+			self.db_init()
+			return b
                 raise e
             if new == '':
                 break # eof
@@ -1193,7 +1176,7 @@ class Connection(object):
     
     def _sendMsg(self, s, req):
         msg = self._buildMsg(req)
-        wirelog.debug('write -> %s' % msg[:80])
+        wirelog.debug('write -> %s' % safe_str(msg[:80]))
         s.send(msg)
             
     def _sendRequest(self, s, msg):

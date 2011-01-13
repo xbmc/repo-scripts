@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -24,7 +24,6 @@ import mythbox.msg as m
 
 from mythbox.bus import Event, EventBus
 from mythbox.mythtv.db import MythDatabase
-from mythbox.platform import WindowsPlatform, MacPlatform, UnixPlatform
 from mythbox.util import requireDir
 from xml.dom import minidom
 
@@ -156,7 +155,11 @@ class MythSettings(object):
                 results = mythtv.getElementsByTagName(tag)
                 if len(results) > 0:
                     #print results[0].toxml()
-                    self.d[tag] = string.strip(results[0].firstChild.nodeValue)
+                    if hasattr(results[0].firstChild, 'nodeValue'):
+                        self.d[tag] = string.strip(results[0].firstChild.nodeValue)
+                    else:
+                        # empty nodes default to empty string instead of None
+                        self.d[tag] = ''
                 else:
                     slog.error('no tag found for %s ' % tag)
                     

@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -18,7 +18,8 @@
 #
 import logging
 import odict
-import os
+import time
+import xbmc
 import xbmcgui
 import mythbox.msg as m
 
@@ -65,6 +66,7 @@ class RecordingsWindow(BaseWindow):
         self.sortBy = self.settings.get('recordings_sort_by')
         self.sortAscending = self.settings.getBoolean('recordings_sort_ascending')
         self.group = self.settings.get('recordings_recording_group')
+        self.activeRenderToken = None
         
     @catchall_ui
     def onInit(self):
@@ -109,7 +111,7 @@ class RecordingsWindow(BaseWindow):
         if self.allPrograms:
             log.debug('Precaching %d thumbnails' % len(self.allPrograms))
             for program in self.allPrograms[:]:  # work on copy since async
-                if self.closed: 
+                if self.closed or xbmc.abortRequested: 
                     return
                 try:
                     self.mythThumbnailCache.get(program)
@@ -122,7 +124,7 @@ class RecordingsWindow(BaseWindow):
         if self.allPrograms:
             log.debug('Precaching %d comm breaks' % len(self.allPrograms))
             for program in self.programs:
-                if self.closed: 
+                if self.closed or xbmc.abortRequested: 
                     return
                 try:
                     if program.isCommFlagged():
@@ -161,9 +163,11 @@ class RecordingsWindow(BaseWindow):
     @ui_locked
     def render(self):
         log.debug('Rendering....')
+        self.activeRenderToken = time.clock()
         self.renderNav()
         self.renderPrograms()
-        self.renderPosters()
+        self.renderPosters(self.activeRenderToken)
+        self.renderEpisodeColumn(self.activeRenderToken)
         
     def renderNav(self):
         self.setWindowProperty('sortBy', self.translator.get(m.SORT) + ': ' + self.translator.get(SORT_BY[self.sortBy]['translation_id']))
@@ -231,18 +235,32 @@ class RecordingsWindow(BaseWindow):
             self.setListItemProperty(listItem, 'index', str(i + selectionIndex + 1))
         
     @run_async
-    @timed
     @catchall
-    @coalesce
-    def renderPosters(self):
+    def renderPosters(self, myRenderToken):
         for (listItem, program) in self.programsByListItem.items()[:]:
-            if self.closed: 
+            if self.closed or xbmc.abortRequested or myRenderToken != self.activeRenderToken: 
                 return
             try:
                 self.lookupPoster(listItem, program)
             except:
                 log.exception('Program = %s' % program)
-                
+
+    @run_async
+    @catchall
+    def renderEpisodeColumn(self, myRenderToken):
+        results = odict.odict()
+        for (listItem, program) in self.programsByListItem.items()[:]:
+            if self.closed or xbmc.abortRequested or myRenderToken != self.activeRenderToken:
+                return
+            try:
+                season, episode = self.fanArt.getSeasonAndEpisode(program)
+                if season and episode:
+                    results[listItem] = '%sx%s' % (season, episode)
+                    self.setListItemProperty(listItem, 'episode', results[listItem])
+                    listItem.setThumbnailImage('OverlayHD.png')  # HACK: to force lisitem update 
+            except:
+                log.exception('Rendering season and episode for program %s' % safe_str(program.title()))
+        
     def goRecordingDetails(self):
         self.lastSelected = self.programsListBox.getSelectedPosition()
         selectedItem = self.programsListBox.getSelectedItem()
@@ -257,7 +275,7 @@ class RecordingsWindow(BaseWindow):
         
         win = RecordingDetailsWindow(
             'mythbox_recording_details.xml', 
-            os.getcwd(), 
+            self.platform.getScriptDir(), 
             forceFallback=True,
             programIterator=programIterator,
             settings=self.settings,

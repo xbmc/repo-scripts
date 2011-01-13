@@ -17,20 +17,20 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 
-from mythbox.mythtv.enums import TVState, TVState44 
+from mythbox.mythtv.enums import TVState, TVState44, TVState58
 
 # MythTV Protcol Constants
 initVersion = 8
-clientVersion = 40
-separator = "[]:[]"
+initToken = ''
+separator = '[]:[]'
 serverVersion = None
 
 
 class ProtocolException(Exception):
-    """
+    '''
     Thrown on protcol version mismatch between frontend and backend or
     general protocol related errors.
-    """ 
+    ''' 
     pass
 
 
@@ -40,7 +40,7 @@ class BaseProtocol(object):
         raise Exception, 'Abstract method'
     
     def recordSize(self):
-        raise Exception, 'Abstract method'
+        return len(self.recordFields())
     
     def tvState(self):
         raise Exception, 'Abstract method'
@@ -51,14 +51,39 @@ class BaseProtocol(object):
     def getLiveTvBrain(self, settings, translator):
         raise Exception, 'Abstract method'
 
+    def recordFields(self):
+        return Exception, 'Abstract method'
+
+    def emptyRecordFields(self):
+        return []
+    
+    def protocolToken(self):
+        return ""
+
 
 class Protocol40(BaseProtocol):
     
     def version(self):
         return 40
     
-    def recordSize(self):
-        return 46
+    def recordFields(self):
+        # Based on from https://github.com/MythTV/mythtv/blob/v0.23.1/mythtv/bindings/python/MythTV/MythData.py
+        return [ 'title',        'subtitle',     'description',
+                 'category',     'chanid',       'channum',
+                 'callsign',     'channame',     'filename',
+                 'fs_high',      'fs_low',       'starttime',
+                 'endtime',      'duplicate',    'shareable',
+                 'findid',       'hostname',     'sourceid',
+                 'cardid',       'inputid',      'recpriority',
+                 'recstatus',    'recordid',     'rectype',
+                 'dupin',        'dupmethod',    'recstartts',
+                 'recendts',     'repeat',       'programflags',
+                 'recgroup',     'commfree',     'outputfilters',
+                 'seriesid',     'programid',    'lastmodified',
+                 'stars',        'airdate',      'hasairdate',
+                 'playgroup',    'recpriority2', 'parentid',
+                 'storagegroup', 'audio_props',  'video_props',
+                 'subtitle_type']
     
     def tvState(self):
         return TVState
@@ -69,6 +94,16 @@ class Protocol40(BaseProtocol):
     def getLiveTvBrain(self, settings, translator):
         from mythbox.ui.livetv import MythLiveTvBrain
         return MythLiveTvBrain(settings, translator)
+
+    def getFileSize(self, program):
+        from mythbox.mythtv.conn import decodeLongLong
+        return decodeLongLong(int(program.getField('fs_low')), int(program.getField('fs_high'))) / 1024.0
+
+    def genPixMapCommand(self):
+        return ['QUERY_GENPIXMAP']        
+
+    def genPixMapPreviewFilename(self, program):
+        return program.getBareFilename() + '.640x360.png'
 
 
 class Protocol41(Protocol40):
@@ -88,8 +123,24 @@ class Protocol43(Protocol42):
     def version(self):
         return 43
     
-    def recordSize(self):
-        return 47
+    def recordFields(self):
+        # Copied from https://github.com/MythTV/mythtv/blob/v0.23.1/mythtv/bindings/python/MythTV/MythData.py
+        return [ 'title',        'subtitle',     'description',
+                 'category',     'chanid',       'channum',
+                 'callsign',     'channame',     'filename',
+                 'fs_high',      'fs_low',       'starttime',
+                 'endtime',      'duplicate',    'shareable',
+                 'findid',       'hostname',     'sourceid',
+                 'cardid',       'inputid',      'recpriority',
+                 'recstatus',    'recordid',     'rectype',
+                 'dupin',        'dupmethod',    'recstartts',
+                 'recendts',     'repeat',       'programflags',
+                 'recgroup',     'commfree',     'outputfilters',
+                 'seriesid',     'programid',    'lastmodified',
+                 'stars',        'airdate',      'hasairdate',
+                 'playgroup',    'recpriority2', 'parentid',
+                 'storagegroup', 'audio_props',  'video_props',
+                 'subtitle_type','year']
 
 
 class Protocol44(Protocol43):
@@ -148,17 +199,100 @@ class Protocol56(Protocol50):
         return 56
 
 
+class Protocol23056(Protocol56):
+    
+    def version(self):
+        return 23056
+    
+
 class Protocol57(Protocol56):
     
     def version(self):
         return 57
 
+    def recordFields(self):
+        return ['title','subtitle','description',
+                'category','chanid','channum',
+                'callsign','channame','filename',
+                'filesize','starttime','endtime',
+                'findid','hostname','sourceid',
+                'cardid','inputid','recpriority',
+                'recstatus','recordid','rectype',
+                'dupin','dupmethod','recstartts',
+                'recendts','programflags','recgroup',
+                'outputfilters','seriesid','programid',
+                'lastmodified','stars','airdate',
+                'playgroup','recpriority2','parentid',
+                'storagegroup','audio_props','video_props',
+                'subtitle_type','year']
+    
+    def buildAnnounceFileTransferCommand(self, hostname, filePath):
+        return ["ANN FileTransfer %s 0" % hostname, filePath, 'Default']
 
-class Protocol23056(Protocol57):
+    def getFileSize(self, program):
+        return int(program.getField('filesize')) / 1024.0
+
+
+class Protocol58(Protocol57):
+    
+    def tvState(self):
+        return TVState58
+
+    def version(self):
+        return 58
+    
+    
+class Protocol59(Protocol58):
     
     def version(self):
-        return 23056
+        return 59    
+
+
+class Protocol60(Protocol59):
     
+    def version(self):
+        return 60
+    
+    def buildAnnounceFileTransferCommand(self, hostname, filePath):
+        return ["ANN FileTransfer %s 0 1 10000" % hostname, filePath, 'Default']
+
+    def genPixMapCommand(self):
+        return ['QUERY_GENPIXMAP2', 'do_not_care']
+
+    def genPixMapPreviewFilename(self, program):
+        return '<EMPTY>'
+
+
+class Protocol61(Protocol60):
+    
+    def version(self):
+        return 61
+
+
+class Protocol62(Protocol61):
+    
+    def version(self):
+        return 62
+    
+    def protocolToken(self):
+        return "78B5631E"
+
+
+class Protocol63(Protocol62):
+    
+    def version(self):
+        return 63
+    
+    def protocolToken(self):
+        return "3875641D"
+
+class Protocol64(Protocol63):
+    
+    def version(self):
+        return 64
+    
+    def protocolToken(self):
+        return "8675309J"
 
 # Current rev in mythversion.h
 protocols = {
@@ -174,6 +308,13 @@ protocols = {
     49: Protocol49(),
     50: Protocol50(),  # 0.22
     56: Protocol56(),  # 0.23
-    57: Protocol57(),  # 0.23.1
-    23056: Protocol23056()  # mythbuntu weirdness
+    23056: Protocol23056(), # 0.23.1 - mythbuntu weirdness    
+    57: Protocol57(),  # 0.24
+    58: Protocol58(),  # 0.24
+    59: Protocol59(),  # 0.24
+    60: Protocol60(),  # 0.24
+    61: Protocol61(),  # 0.24
+    62: Protocol62(),  # 0.24
+    63: Protocol63(),  # 0.24
+    64: Protocol64()   # 0.24
 }    

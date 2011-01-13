@@ -15,6 +15,7 @@
                 <posx>0</posx>
                 <posy>0</posy>
                 <texture border="20">mythbox.png</texture>
+		        <animation effect="fade" time="500">WindowOpen</animation>
             </control>
         </control>
     </controls>

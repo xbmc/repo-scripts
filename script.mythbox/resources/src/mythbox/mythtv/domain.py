@@ -256,7 +256,7 @@ class Program(object):
 
     def __eq__(self, rhs):
         return \
-            isinstance(rhs, type(self)) and \
+            isinstance(rhs, Program) and \
             self.getChannelId() == rhs.getChannelId() and \
             self.starttime() == rhs.starttime()
 
@@ -579,61 +579,73 @@ class RecordedProgram(Program):
     10    LONGLONG_TO_LIST(filesize)
     11    DATETIME_TO_LIST(startts)
     12    DATETIME_TO_LIST(endts)
-    13    INT_TO_LIST(duplicate)
-    14    INT_TO_LIST(shareable)
-    15    INT_TO_LIST(findid);
-    16    STR_TO_LIST(hostname)
-    17    INT_TO_LIST(sourceid)
-    18    INT_TO_LIST(cardid)
-    19    INT_TO_LIST(inputid)
-    20    INT_TO_LIST(recpriority)
-    21    INT_TO_LIST(recstatus)
-    22    INT_TO_LIST(recordid)
-    23    INT_TO_LIST(rectype)
-    24    INT_TO_LIST(dupin)
-    25    INT_TO_LIST(dupmethod)
-    26    DATETIME_TO_LIST(recstartts)
-    27    DATETIME_TO_LIST(recendts)
-    28    INT_TO_LIST(repeat)
-    29    INT_TO_LIST(programflags)
-    30    STR_TO_LIST((recgroup != "") ? recgroup : "Default")
-    31    INT_TO_LIST(chancommfree)
-    32    STR_TO_LIST(chanOutputFilters)
-    33    STR_TO_LIST(seriesid)
-    34    STR_TO_LIST(programid)
-    35    DATETIME_TO_LIST(lastmodified)
-    36    FLOAT_TO_LIST(stars)
-    37    DATE_TO_LIST(originalAirDate)
-    38    INT_TO_LIST(hasAirDate)
-    39    STR_TO_LIST((playgroup != "") ? playgroup : "Default")
-    40    INT_TO_LIST(recpriority2)
-    41    INT_TO_LIST(parentid)
-    42    STR_TO_LIST((storagegroup != "") ? storagegroup : "Default")
-    43    INT_TO_LIST(audioproperties)
-    44    INT_TO_LIST(videoproperties)
-    45    INT_TO_LIST(subtitleType)
-    46    STR_TO_LIST(year)
+    13    INT_TO_LIST(findid)
+    14    STR_TO_LIST(hostname)
+    15    INT_TO_LIST(sourceid)
+    16    INT_TO_LIST(cardid)
+    17    INT_TO_LIST(inputid)
+    18    INT_TO_LIST(recpriority)
+    19    INT_TO_LIST(recstatus)
+    20    INT_TO_LIST(recordid)
+    21    INT_TO_LIST(rectype)
+    22    INT_TO_LIST(dupin)
+    23    INT_TO_LIST(dupmethod)
+    24    DATETIME_TO_LIST(recstartts)
+    25    DATETIME_TO_LIST(recendts)
+    26    INT_TO_LIST(programflags)
+    27    STR_TO_LIST((recgroup != "") ? recgroup : "Default")
+    28    STR_TO_LIST(chanOutputFilters)
+    29    STR_TO_LIST(seriesid)
+    30    STR_TO_LIST(programid)
+    31    DATETIME_TO_LIST(lastmodified)
+    32    FLOAT_TO_LIST(stars)
+    33    DATE_TO_LIST(originalAirDate)
+    34    STR_TO_LIST((playgroup != "") ? playgroup : "Default")
+    35    INT_TO_LIST(recpriority2)
+    36    INT_TO_LIST(parentid)
+    37    STR_TO_LIST((storagegroup != "") ? storagegroup : "Default")
+    38    INT_TO_LIST(audioproperties)
+    39    INT_TO_LIST(videoproperties)
+    40    INT_TO_LIST(subtitleType)
+    41    STR_TO_LIST(year)
     """
-
-    def __init__(self, data, settings, translator, platform, conn=None):
-        """
+    _rec_program_dict = {}
+    _rec_program_dict_empty = {}
+    
+    def __init__(self, data, settings, translator, platform, protocol, conn=None):
+        '''
         @param data: list of fields from mythbackend. libs/libmythtv/programinfo.cpp in the mythtv source 
                      describes the ordering of these fields.
-        @type data: list
-        @type settings: MythSettings
-        @type translator: Translator
-        @type platform: Platform
-        @type conn: Connection
-        @param conn: Non-null for unit tests only
-        """
+        @param conn: Non-null for unit tests only otherwise inject via @inject_conn
+        '''
         Program.__init__(self, translator)
         self._data = data[:]
-        self._conn = conn
         self.settings = settings
         self._platform = platform
+        self.protocol = protocol
+        self._conn = conn
+        
         self._fps = None
         self._commercials = None
         self._localPath = None
+        
+        for index, item in enumerate(self.protocol.recordFields()):
+            self._rec_program_dict[item] = index
+        
+        for index, item in enumerate(self.protocol.emptyRecordFields()):
+            self._rec_program_dict_empty[item] = index
+
+    def getField(self, fieldName):
+        return self._data[self.getFieldPos(fieldName)]
+
+    def getFieldPos(self, fieldName):
+        if fieldName in self._rec_program_dict:
+            return self._rec_program_dict[fieldName]
+        elif fieldName in self._rec_program_dict_empty:
+            return ""
+        else:
+            from mythbox.mythtv.conn import ClientException
+            raise ClientException("Can't get position of fieldName %s in RecordingInfo as does not exist" % (fieldName)) 
 
     def isMovie(self):
         """
@@ -654,19 +666,19 @@ class RecordedProgram(Program):
         """
         @rtype: string
         """
-        return self._data[0]
+        return self.getField('title')
     
     def subtitle(self):
         """
         @rtype: string
         """
-        return self._data[1]
+        return self.getField('subtitle')
     
     def description(self):
         """
         @rtype: string
         """
-        return self._data[2]
+        return self.getField('description')
     
     def category(self):
         """
@@ -674,55 +686,57 @@ class RecordedProgram(Program):
         @return: Biography, Comedy, Documentary, Entertainment, Game,House/garden, How-to, News, Newsmagazine,
                  Reality, Science, Sitcom, or Talk
         """
-        return self._data[3]
+        return self.getField('category')
     
     def getChannelId(self):
         """
         @rtype: int
         """
-        return int(self._data[4])
+        return int(self.getField('chanid'))
     
     def setChannelId(self, channelId):
         """
         @type channelId: int
         """
-        self._data[4] = str(channelId)
+        self._data[self.getFieldPos('chanid')] = str(channelId)
         
     def getChannelNumber(self):
-        return [self._data[5], ''][self._data[5] is None]
+        return [self.getField('channum'), ''][self.getField('channum') is None]
         
     def getCallSign(self):
         """
         @rtype: string
         @note: MTVHD
         """
-        return self._data[6]
+        return self.getField('callsign')
     
     def getChannelName(self):
         """
         @rtype: string
         @note: Music Television HD
         """
-        return self._data[7]
+        return self.getField('channame')
     
     def getFilename(self):
         """
         @rtype: string
         @note: myth://some/dir/on/backend/000_111122223333.mpg
         """
-        return str(self._data[8]) # str scrubs unicode
-     
+        # str scrubs unicode, remove the full path as not needed any more
+        #return re.sub(r'myth://.+?/','/', str(self.getField('filename'))) 
+        return str(self.getField('filename')) # str scrubs unicode
+
     def starttimets(self):
         """
         @rtype: int
         """
-        return int(self._data[11])
+        return int(self.getField('starttime'))
     
     def endtimets(self):
         """
         @rtype: int
         """
-        return int(self._data[12])
+        return int(self.getField('endtime'))
     
     def starttime(self):
         """
@@ -730,7 +744,7 @@ class RecordedProgram(Program):
         @note: internal type is an int aka time.time() 
         """
         if self.starttimets() < 0:
-            return ctime2MythTime(self.recstarttime())
+            return ctime2MythTime(self.recstarttimets())
         else:
             return ctime2MythTime(self.starttimets())
     
@@ -745,97 +759,104 @@ class RecordedProgram(Program):
             return ctime2MythTime(self.endtimets())
     
     def duplicate(self):
-        return self._data[13]
+        return 0
     
     def hostname(self):
         """
         @return: Backend that captured this recording
         """
-        return self._data[16]
+        return self.getField('hostname')
     
     def sourceid(self):
-        return self._data[17]
+        return self.getField('sourceid')
     
     def getTunerId(self):
         """
         @return: Unique id of the tuner this program was/will be recorded on.
         @rtype: int
         """
-        return int(self._data[18])
+        return int(self.getField('cardid'))
     
     def inputid(self):
-        return self._data[19]
+        return self.getField('inputid')
     
     def getPriority(self):
         """
         @rtype: int
         @note: -99 <= priority <= 99
         """
-        return int(self._data[20])
+        return int(self.getField('recpriority'))
     
     def getRecordingStatus(self):
         """
         @return: RecordingStatus
         @rtype: int
         """
-        return int(self._data[21])
+        return int(self.getField('recstatus'))
         
     def getScheduleId(self):
-        return int(self._data[22])
+        return int(self.getField('recordid'))
     
     def rectype(self):
-        return self._data[23]
+        return self.getField('rectype')
+
+    def recstarttimets(self):
+        '''
+        @return: Scheduled start time of this program according to the tv guide data.
+        @note: int ctime
+        '''
+        return int(self.getField('recstartts'))
     
     def recstarttime(self):
-        """
+        '''
         @return: Scheduled start time of this program according to the tv guide data.
-        @todo: rename to scheduledStartTime()
-        """
-        return self._data[26]
+        @note: str myth format
+        '''
+        return ctime2MythTime(self.recstarttimets())
     
     def recendtime(self):
         """
         @return: Scheduled end time of this program according to the tv guide data.
         @todo: rename to scheduledEndTime()
         """
-        return self._data[27]
+        return self.getField('recendts')
     
     def repeat(self):
-        return self._data[28]
+        return 0
     
     def getProgramFlags(self):
         """
         @rtype: int
         """
-        return int(self._data[29])
+        return int(self.getField('programflags'))
     
     def setProgramFlags(self, flags):
         """
         @type flags: int
         @note: set flags by or'ing together FlagMask.FL_*
         """
-        self._data[29] = str(flags)
+        self._data[self.getFieldPos('programflags')] = str(flags)
         
     def getRecordingGroup(self):
         """
         @rtype: string
         @note: Default, LiveTV, etc
         """
-        return self._data[30]
+        return self.getField('recgroup')
 
     def seriesId(self):
         """
         @rtype: str
         @sample: TODO
         """
-        return self._data[33]
+        return self.getField('seriesid')
     
     def programId(self):
         """
         @rtype: str
         @sample: TODO
         """
-        return self._data[34]
+        return self.getField('programid')
 
     def hasOriginalAirDate(self):
         return int(self._data[38]) == 1
@@ -845,14 +866,14 @@ class RecordedProgram(Program):
         @rtype: str
         @sample: 2010-07-14
         '''
-        return [None, self._data[37]][self.hasOriginalAirDate()]
+        return self.getField('airdate')
     
     def getStorageGroup(self):
         """
         @rtype: str
         @note: Usually 'Default'
         """
-        return self._data[42]
+        return self.getField('storagegroup')
     
     def isAutoExpire(self):
         return self.getProgramFlags() & FlagMask.FL_AUTOEXP == FlagMask.FL_AUTOEXP
@@ -910,9 +931,8 @@ class RecordedProgram(Program):
         """
         @return: filesize in KB
         @rtype: int
-        """   
-        from mythbox.mythtv.conn import decodeLongLong 
-        return (decodeLongLong(int(self._data[10]), int(self._data[9])) / 1024.0)
+        """
+        return self.protocol.getFileSize(self)
     
     def getLocalPath(self):
         """

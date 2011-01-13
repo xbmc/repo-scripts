@@ -66,9 +66,14 @@ class MythThumbnailResolver(FileResolver):
             
     def hash(self, program):
         return md5.new(safe_str(self.getKey(program))).hexdigest()
-        
+    
+    @inject_conn    
     def getKey(self, program):
-        return program.getFilename() + '.640x360.png'
+        # TODO: Fix hack
+        if self.conn().protocol.genPixMapPreviewFilename(program) == '<EMPTY>':
+            return program.getFilename() + '.png'
+        else:
+            return program.getFilename() + '.640x360.png'
 
 
 class MythChannelIconResolver(FileResolver):

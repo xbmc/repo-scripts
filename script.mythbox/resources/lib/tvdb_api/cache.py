@@ -44,7 +44,11 @@ def locked_function(origfunc):
 def calculate_cache_path(cache_location, url):
     """Checks if [cache_location]/[hash_of_url].headers and .body exist
     """
-    thumb = md5.new(url).hexdigest()
+    try:
+        thumb = md5.new(url).hexdigest()   # 2.4
+    except AttributeError:
+        thumb = md5(url).hexdigest()       # 2.6+
+        
     header = os.path.join(cache_location, thumb + ".headers")
     body = os.path.join(cache_location, thumb + ".body")
     return header, body

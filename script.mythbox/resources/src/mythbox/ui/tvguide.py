@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 #  Copyright (C) 2005 Tom Warkentin <tom@ixionstudios.com>
 #
 #  This program is free software; you can redistribute it and/or
@@ -24,7 +24,6 @@
 #
 
 import logging
-import os
 import xbmcgui
 import mythbox.msg as m
 import mythbox.ui.toolkit as ui
@@ -33,9 +32,10 @@ from datetime import datetime, timedelta
 from mythbox.mythtv.conn import inject_conn
 from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.domain import ScheduleFromProgram, Channel
+from mythbox.mythtv.enums import Upcoming
 from mythbox.ui.schedules import ScheduleDialog
 from mythbox.ui.toolkit import Action, Align, AspectRatio, window_busy
-from mythbox.util import catchall_ui, timed, lirc_hack, catchall, ui_locked2, safe_str
+from mythbox.util import catchall_ui, timed, lirc_hack, catchall, ui_locked2, safe_str, coalesce, run_async
 
 log = logging.getLogger('mythbox.ui')
 
@@ -100,6 +100,7 @@ class TvGuideWindow(ui.BaseWindow):
         self.platform     = kwargs['platform']
         self.fanArt       = kwargs['fanArt']
         self.cachesByName = kwargs['cachesByName']
+        self.upcoming = []  # RecordedProgram[]
         self.win = None
         
         self.mythThumbnailCache = self.cachesByName['mythThumbnailCache']
@@ -139,6 +140,7 @@ class TvGuideWindow(ui.BaseWindow):
     @catchall_ui
     @timed
     @inject_db
+    @inject_conn
     def loadGuide(self):
         """
         Method to load and display the tv guide information.  If this is
@@ -189,6 +191,7 @@ class TvGuideWindow(ui.BaseWindow):
             
             self.setChannel(int(self.settings.get('tv_guide_last_selected')))
             self.setTime(datetime.now() - timedelta(minutes=30))
+            self.cacheUpcoming()
             self.initialized = True
 
         self._render()
@@ -200,6 +203,13 @@ class TvGuideWindow(ui.BaseWindow):
                 self.setFocus(self.prevFocus)
             else:
                 raise Exception, self.translator.get(m.NO_EPG_DATA)
+
+    @run_async
+    @coalesce
+    @catchall
+    @inject_conn
+    def cacheUpcoming(self):
+        self.upcoming = self.conn().getUpcomingRecordings(filter=Upcoming.SCHEDULED)
 
     @catchall_ui
     @lirc_hack            
@@ -342,7 +352,7 @@ class TvGuideWindow(ui.BaseWindow):
                 schedule = ScheduleFromProgram(program, self.translator)
                 createScheduleDialog = ScheduleDialog(
                     'mythbox_schedule_dialog.xml',
-                    os.getcwd(),
+                    self.platform.getScriptDir(),
                     forceFallback=True,
                     schedule=schedule,
                     translator=self.translator,
@@ -410,6 +420,10 @@ class TvGuideWindow(ui.BaseWindow):
 #            if program.starttimeAsTime() < self.startTime:
 #                cell.control.setLabel(label= '<')
 
+        if program in self.upcoming:
+            # TODO: Decorate cell as an upcoming recording 
+            cell.title = '[B][COLOR=ffe2ff43]' + cell.title + '[/COLOR][/B]'
+            
         # Create a label to hold the name of the program with insets  
         # Label text seems to get truncated correctly...
         cell.label = xbmcgui.ControlLabel(

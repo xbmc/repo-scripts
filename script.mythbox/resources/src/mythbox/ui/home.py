@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -58,6 +58,7 @@ class HomeWindow(BaseWindow):
         self.httpCache = kwargs['cachesByName']['httpCache']
         self.win = None
         self.lastFocusId = None
+        self.shutdownPending = False
         self.bus.register(self)
         
     def onFocus(self, controlId):
@@ -101,8 +102,10 @@ class HomeWindow(BaseWindow):
     @catchall_ui
     @lirc_hack            
     def onAction(self, action):
+        if self.shutdownPending:
+            return
+        
         if action.getId() in (Action.PREVIOUS_MENU, Action.PARENT_DIR):
-            self.closed = True
             self.shutdown()
             self.close()
         elif action.getId() in (Action.CONTEXT_MENU,) and self.lastFocusId in (ID_COVERFLOW_GROUP, ID_COVERFLOW_WRAPLIST):
@@ -187,6 +190,11 @@ class HomeWindow(BaseWindow):
             log.info('\t' + str(b))
             
     def shutdown(self):
+        if self.shutdownPending:
+            xbmc.log("Mythbox shutdown already in progress...")
+            return
+        
+        self.shutdownPending = True
         self.setBusy(True)
         self.bus.deregister(self)
         try:
@@ -194,9 +202,13 @@ class HomeWindow(BaseWindow):
         except:
             log.exception('Saving settings on exit')
 
+        xbmc.log('Before fanart shutdown')
         self.fanArt.shutdown()
-
+        
+        xbmc.log('Before bus.publish')
         self.bus.publish({'id':Event.SHUTDOWN})
+        
+        xbmc.log('Before reaping')
         
         try:
             # HACK ALERT:
@@ -219,7 +231,8 @@ class HomeWindow(BaseWindow):
                 waitForWorkersToDie(30.0) # in seconds
         except:
             log.exception('Waiting for worker threads to die')
-            
+
+        xbmc.log('Before pools')
         try:
             # print pool stats and shutdown
             for (poolName, poolInstance) in pool.pools.items():
@@ -228,6 +241,7 @@ class HomeWindow(BaseWindow):
         except:
             log.exception('Error while shutting down')
 
+        xbmc.log('Before logging shutdown')
         try:
             log.info('Goodbye!')
             logging.shutdown()
@@ -236,7 +250,7 @@ class HomeWindow(BaseWindow):
         
     def goWatchTv(self):
         from mythbox.ui.livetv import LiveTvWindow 
-        LiveTvWindow('mythbox_livetv.xml', os.getcwd(), **self.dependencies).doModal()
+        LiveTvWindow('mythbox_livetv.xml', self.platform.getScriptDir(), **self.dependencies).doModal()
 
     @window_busy
     def goPlayRecording(self):
@@ -247,23 +261,23 @@ class HomeWindow(BaseWindow):
             
     def goWatchRecordings(self):
         from mythbox.ui.recordings import RecordingsWindow
-        RecordingsWindow('mythbox_recordings.xml', os.getcwd(), **self.dependencies).doModal()
+        RecordingsWindow('mythbox_recordings.xml', self.platform.getScriptDir(), **self.dependencies).doModal()
         
     def goTvGuide(self):
         from tvguide import TvGuideWindow 
-        TvGuideWindow('mythbox_tvguide.xml', os.getcwd(), **self.dependencies).doModal() 
+        TvGuideWindow('mythbox_tvguide.xml', self.platform.getScriptDir(), **self.dependencies).doModal() 
     
     def goRecordingSchedules(self):
         from schedules import SchedulesWindow 
-        SchedulesWindow('mythbox_schedules.xml', os.getcwd(), **self.dependencies).doModal()
+        SchedulesWindow('mythbox_schedules.xml', self.platform.getScriptDir(), **self.dependencies).doModal()
             
     def goUpcomingRecordings(self):
         from upcoming import UpcomingRecordingsWindow
-        UpcomingRecordingsWindow('mythbox_upcoming.xml', os.getcwd(), **self.dependencies).doModal()
+        UpcomingRecordingsWindow('mythbox_upcoming.xml', self.platform.getScriptDir(), **self.dependencies).doModal()
         
     def goSettings(self):
         from uisettings import SettingsWindow
-        SettingsWindow('mythbox_settings.xml', os.getcwd(), **self.dependencies).doModal() 
+        SettingsWindow('mythbox_settings.xml', self.platform.getScriptDir(), **self.dependencies).doModal() 
 
     @window_busy
     def refresh(self):
@@ -451,9 +465,11 @@ class HomeWindow(BaseWindow):
     def renderNewsFeed(self):
         log.debug('renderNewsFeed enter')
         t = u'' 
-        for entry in self.feedHose.getLatestEntries():
-            t += '[COLOR=ffe2ff43]%s[/COLOR] [COLOR=white]%s[/COLOR]       ' % (entry.username, entry.text)
-        t = ' ' * 300 + t
+        entries = self.feedHose.getLatestEntries()
+        if len(entries) > 0:
+            for entry in entries:
+                t += '[COLOR=ffe2ff43]%s[/COLOR] [COLOR=white]%s[/COLOR]       ' % (entry.username, entry.text)
+            t = ' ' * 300 + t
         self.setWindowProperty('newsfeed', t)
         log.debug('renderNewsFeed exit')
         

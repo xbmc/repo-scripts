@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -586,73 +586,37 @@ def which(program, all=False):
             return list(paths)
     return None
 
-try:
-    #
-    #  XBMC Camelot 9.11
-    #
-    class NativeTranslator(xbmc.Language):
-        
-        def __init__(self, scriptPath, defaultLanguage=None, *args, **kwargs):
-            xbmc.Language.__init__(self, scriptPath, defaultLanguage, *args, **kwargs)
-            
-        def get(self, id):
-            """
-            Alias for getLocalizedString(...)
+
+class NativeTranslator(object):
     
-            @param id: translation id
-            @type id: int
-            @return: translated text
-            @rtype: string
-            """
-            # if id is a string, assume no need to lookup translation
-            if type(id) is str:
-                return id
-            else:
-                return self.getLocalizedString(id)
+    def __init__(self, scriptPath, defaultLanguage=None, *args, **kwargs):
+        import xbmcaddon
+        self.addon = xbmcaddon.Addon('script.mythbox')
         
-        def toList(self, someMap):
-            """
-            @param someMap: dict with translation ids as values. Keys are ignored
-            @return: list of strings containing translations
-            """
-            result = []
-            for key in someMap.keys():
-                result.append(self.get(someMap[key]))
-            return result
-except:
-    #
-    #  XBMC Dharma
-    #
-    class NativeTranslator(object):
-        
-        def __init__(self, scriptPath, defaultLanguage=None, *args, **kwargs):
-            import xbmcaddon
-            self.addon = xbmcaddon.Addon('script.mythbox')
-            
-        def get(self, id):
-            """
-            Alias for getLocalizedString(...)
+    def get(self, id):
+        """
+        Alias for getLocalizedString(...)
+
+        @param id: translation id
+        @type id: int
+        @return: translated text
+        @rtype: string
+        """
+        # if id is a string, assume no need to lookup translation
+        if type(id) is str:
+            return id
+        else:
+            return self.addon.getLocalizedString(id)
     
-            @param id: translation id
-            @type id: int
-            @return: translated text
-            @rtype: string
-            """
-            # if id is a string, assume no need to lookup translation
-            if type(id) is str:
-                return id
-            else:
-                return self.addon.getLocalizedString(id)
-        
-        def toList(self, someMap):
-            """
-            @param someMap: dict with translation ids as values. Keys are ignored
-            @return: list of strings containing translations
-            """
-            result = []
-            for key in someMap.keys():
-                result.append(self.get(someMap[key]))
-            return result
+    def toList(self, someMap):
+        """
+        @param someMap: dict with translation ids as values. Keys are ignored
+        @return: list of strings containing translations
+        """
+        result = []
+        for key in someMap.keys():
+            result.append(self.get(someMap[key]))
+        return result
     
 
 class OnDemandConfig(object):

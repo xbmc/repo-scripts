@@ -314,6 +314,71 @@ class TVState44(object):
     ChangingState = 7
 
 
+class TVState58(object):
+    """
+    Protocol version 58 onwards TVState
+    """
+    
+    #
+    # Error State, if we ever try to enter this state errored is set.
+    #
+    Error = -1                  
+    
+    #
+    # None State, this is the initial state in both TV and TVRec, it
+    # indicates that we are ready to change to some other state.
+    #
+    OK = 0         
+    
+    #
+    # Watching LiveTV is the state for when we are watching a
+    # recording and the user has control over the channel and
+    # the tuner to use. 
+    #
+    WatchingLiveTV = 1          
+    
+    #
+    # Watching Pre-recorded is a TV only state for when we are
+    # watching a pre-existing recording.
+    #
+    WatchingPreRecorded = 2
+    
+    #
+    # Watching Video is the state when we are watching a video and is not
+    # a dvd
+    WatchingVideo = 3
+    
+    #
+    # Watching DVD is the state when we are watching a DVD 
+    #
+    WatchingDVD = 4
+
+    #
+    # Watching BD is the state when we are watching a Bluray Disc 
+    #
+    WatchingBD = 5
+        
+    #
+    # Watching Recording is the state for when we are watching
+    # an in progress recording, but the user does not have control
+    # over the channel and tuner to use.
+    #
+    WatchingRecording = 6
+    
+    #
+    # Recording Only is a TVRec only state for when we are recording
+    # a program, but there is no one currently watching it.
+    #
+    RecordingOnly = 7
+    
+    #
+    # This is a placeholder state which we never actualy enter,
+    # but is returned by GetState() when we are in the process
+    # of changing the state.
+    #
+    ChangingState = 8
+
+
 class JobStatus(object):  
     """ 
     @see: Job.status

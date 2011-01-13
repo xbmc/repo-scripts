@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -17,12 +17,13 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 import logging
+import os
 import xbmcgui
 import mythbox.msg as m
 
 from mythbox.settings import MythSettings, SettingsException
 from mythbox.ui.toolkit import window_busy, BaseWindow, enterNumeric, enterText, Action
-from mythbox.util import catchall, lirc_hack, timed
+from mythbox.util import catchall, lirc_hack, timed, safe_str
 
 log = logging.getLogger('mythbox.ui')
 
@@ -127,9 +128,6 @@ class Setting(object):
 class SettingsWindow(BaseWindow):
     
     def __init__(self, *args, **kwargs):
-        """
-        @keyword cachesByName: dict(str:FileCache)
-        """
         BaseWindow.__init__(self, *args, **kwargs)
         self.settings = kwargs['settings']
         self.translator = kwargs['translator']
@@ -209,14 +207,13 @@ class SettingsWindow(BaseWindow):
     @window_busy
     def render(self):
         for setting in self.settingsMap.values():
-            log.debug('Rendering %s' % setting.key)
+            log.debug('Rendering %s' % safe_str(setting.key))
             setting.render()
-        self.renderAbout()            
-        
-    def renderAbout(self):
         import default
-        contents = "%s\n\n%s\n\n%s\n\n%s" % (default.__scriptname__, default.__author__, default.__url__, self.platform.getVersion())
-        self.setWindowProperty('AboutText', contents)
+        self.setWindowProperty('AboutText', "%s\n\n%s\n\n%s\n\n%s" % (default.__scriptname__, default.__author__, default.__url__, self.platform.getVersion()))
+        self.setWindowProperty('ReadmeText', '%s\n%s' % (
+            open(os.path.join(self.platform.getScriptDir(), 'README'), 'r').read(),
+            open(os.path.join(self.platform.getScriptDir(), 'FAQ'), 'r').read()))
 
     @window_busy
     def testSettings(self):
