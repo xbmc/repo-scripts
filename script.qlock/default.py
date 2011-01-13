@@ -110,7 +110,10 @@ class Main:
     if hour == "h00":
       hour = "h12"
            
-    highlight = times[0].getAttribute(minute).split(",") + times[0].getAttribute("all").split(",") + times[0].getAttribute(hour).split(",")
+    if xbmc.getLanguage() == "German" and hour == "h01" and minute == "m00":  # German only, at one o'clock
+      highlight = ["1","2","4","5","6","45","46","47","108","109","110"]
+    else:
+      highlight = times[0].getAttribute(minute).split(",") + times[0].getAttribute("all").split(",") + times[0].getAttribute(hour).split(",")
 
     for l in highlight:
      self.WINDOW.setProperty( "Qlock.%s.Highlight" % l.replace(" ",""), self.background[int(l)-1] )

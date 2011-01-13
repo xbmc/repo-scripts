@@ -1,3 +1,7 @@
+0.0.6
+- added: German layout, thanks donabi
+- added: fix for german layout at one o'clock
+
 0.0.5
 - added: French layout, thanks to humferier
 - added: changelog.txt
