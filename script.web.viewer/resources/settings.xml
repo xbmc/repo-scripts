@@ -2,6 +2,6 @@
 <settings>
   <!-- General -->
   <category label="30000">
-    <setting id="test" type="bool" label="test" default="false" />
+    <setting id="add_missing_submit" type="bool" label="30001" default="true" />
   </category>
 </settings>

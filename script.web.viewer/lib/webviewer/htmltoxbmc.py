@@ -3,10 +3,10 @@ import htmlentitydefs
 
 '''
 TODO:
-Handle Nested Lists
 '''
 class HTMLConverter:
 	def __init__(self):
+		self.ordered = False
 		self.bullet = unichr(8226)
 		self.tdSeperator = ' %s ' % self.bullet
 		
@@ -28,13 +28,13 @@ class HTMLConverter:
 		self.formReplace = '[CR][COLOR '+self.formColorA+']______________________________[/COLOR][CR][COLOR '+self.formColorB+'][B]- FORM: %s -[/B][/COLOR][CR]%s[CR][COLOR '+self.formColorC+']______________________________[/COLOR][CR][CR]'
 		self.submitReplace = '[\g<value>] '
 		#static filters
-		self.linkFilter = re.compile('<a[^>]+?href="(?P<url>[^>"]+?)"[^>]*?(?:title="(?P<title>[^>"]+?)"[^>]*?)?>(?P<text>.*?)</a>',re.I)
-		self.imageFilter = re.compile('<img[^>]+?src="(?P<url>(?:http://)?[^>"]+?)"[^>]*?/>',re.I)
+		self.linkFilter = re.compile('<a[^>]+?href=["\'](?P<url>[^>"]+?)["\'][^>]*?(?:title=["\'](?P<title>[^>"]+?)["\'][^>]*?)?>(?P<text>.*?)</a>',re.I|re.S|re.U)
+		self.imageFilter = re.compile('<img[^>]+?src=["\'](?P<url>[^>"]+?)["\'][^>]*?>',re.I|re.S|re.U)
 		self.scriptFilter = re.compile('<script[^>]*?>.*?</script>',re.S|re.I)
 		self.styleFilter = re.compile('<style[^>]*?>.+?</style>',re.I)
 		self.commentFilter = re.compile('<!--.*?-->')
-		self.formFilter = re.compile('<form[^>]*?(?:id="(?P<id>[^>"]+?)"[^>]*?)?>(?P<contents>.+?)(?:</form>|<form>|$)',re.I)
-		self.labelFilter = re.compile('<label[^>]*?(?:(?:for=")|(?:>\s*<input[^>]*?id="))(?P<inputid>[^>"].*?)"[^>]*?>(?P<label>.*?)</label>',re.I)
+		self.formFilter = re.compile('<form[^>]*?(?:id=["\'](?P<id>[^>"]+?)["\'][^>]*?)?>(?P<contents>.+?)(?:</form>|<form>|$)',re.I)
+		self.labelFilter = re.compile('<label[^>]*?(?:(?:for=["\'])|(?:>\s*<input[^>]*?id="))(?P<inputid>[^>"].*?)["\'][^>]*?>(?P<label>.*?)</label>',re.I)
 		self.altLabelFilter = re.compile('>(?:(?P<header>[^<>]*?)<(?!input|select)\w+[^>]*?>)?(?P<label>[^<>]+?)(?:<(?!input|select)\w+[^>]*?>)?(?:<input |<select )[^>]*?(?:id|name)="(?P<inputid>[^>"]+?)"',re.I)
 		self.submitFilter = re.compile('<input type=["\']submit["\'][^>]+?value=["\'](?P<value>[^>"\']+?)["\'][^>]*?>',re.I)
 		self.lineItemFilter = re.compile('<(li|/li|ul|ol|/ul|/ol)[^>]*?>',re.I)
@@ -48,7 +48,8 @@ class HTMLConverter:
 		interTagWSString = '(%s)\s*(%s)' % (self.tagString,self.tagString)
 		self.tagFilter = re.compile(self.tagString,re.S|re.I)
 		self.interTagWSFilter = re.compile(interTagWSString,re.I)
-		self.lineFilter = re.compile('[\n\r\t]')
+		self.lineFilter = re.compile('[\n\r]')
+		self.tabFilter = re.compile('\t')
 		self.titleFilter = re.compile('<title>(.+?)</title>',re.I)
 		self.bodyFilter = re.compile('<body[^>]*?>(.+)</body>',re.S|re.I)
 		self.frameFilter = re.compile('<i?frame[^>]*?src="(?P<url>[^>"]+?)"[^>]*?>(?:.*?</iframe>)?',re.I)
@@ -77,9 +78,12 @@ class HTMLConverter:
 		self.leadingTrailingWSFilter = re.compile('\s*([\n\r])\s*')
 		self.lineReduceFilter = re.compile('\n+')
 		
+		self.eolWhitspaceFilter = re.compile('\s+(?=\[CR\])',re.U)
+		self.lessEolFilter = re.compile('(?:\[CR\]){2,}')
+		
 	def htmlToDisplay(self,html):
 		if not html: return 'NO PAGE','NO PAGE'
-		html = unicode(html,'utf8','replace')
+		if type(html) != type(u''): html = unicode(html,'utf8','replace')
 		try:
 			title = self.titleFilter.search(html).group(1)
 		except:
@@ -89,6 +93,7 @@ class HTMLConverter:
 		
 		self.imageCount = 0
 		self.imageDict = {}
+		
 		html = self.linkFilter.sub(self.linkConvert,html)
 		html = self.imageFilter.sub(self.imageConvert,html)
 		html = self.formFilter.sub(self.formConvert,html)
@@ -119,15 +124,17 @@ class HTMLConverter:
 		html = html.replace('</tr>','[CR][CR]')
 		html = html.replace('</td><td>',self.tdSeperator)
 		html = self.tagFilter.sub('',html)
-		#print self.tagFilter.findall(html)
-		#print 'Test: %s' % len(html.split('[COLOR %s]' % self.linkColor))
 		html = self.removeNested(html,'\[/?B\]','[B]')
 		html = self.removeNested(html,'\[/?I\]','[I]')
-		#html = re.sub('(?:\[CR\]){2,}','[CR][CR]',html) #to get rid of excessive new lines
-		html = html.replace('[CR]','\n').strip().replace('\n','[CR]') #TODO Make this unnecessary
+		html = html.replace('[CR]','\n').strip().replace('\n','[CR]') #TODO: Make this unnecessary
+		
+		html = self.convertHTMLCodes(html)
+		html = self.eolWhitspaceFilter.sub('',html)
+		html = self.lessEolFilter.sub('[CR][CR]',html)
 		#import codecs
 		#codecs.open('/home/ruuk/test.txt','w',encoding='utf-8').write(html)
-		return self.convertHTMLCodes(html),self.convertHTMLCodes(title)
+		
+		return html,self.convertHTMLCodes(title)
 	
 	def cleanHTML(self,html):
 		try:
@@ -137,7 +144,7 @@ class HTMLConverter:
 			#print 'ERROR - Could not parse <body> contents'
 			print 'ERROR - Could not find </head> tag'
 		#html = self.lineFilter.sub(' ',html)
-		
+		html = self.tabFilter.sub('',html)
 		#remove leading and trailing whitespace 
 		html = self.leadingTrailingWSFilter.sub(r'\1',html)
 		
@@ -173,6 +180,7 @@ class HTMLConverter:
 		return self.formReplace % (m.group('id'),m.group('contents'))
 	
 	def htmlToDisplayWithIDs(self,html):
+		html = unicode(html,'utf8','replace')
 		html = self.idFilter.sub(r'\g<0>[{\g<1>}]',html)
 		return self.htmlToDisplay(html)
 

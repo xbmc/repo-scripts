@@ -2,6 +2,7 @@
 <strings>
     <!-- All %s must remain in string but can change position -->
     <string id="30000">General</string>
+    <string id="30001">Add Submit Button If Missing</string>
     
     <string id="30100">Error loading page.</string>
     <string id="30101">Processing Data</string>
@@ -52,4 +53,6 @@
     <string id="30144">File %s of %s</string><!-- Example: File 2 of 9 -->
     <string id="30145">Downloading %s</string>
     <string id="30146">Help</string>
+    <string id="30147">Submit</string>
+    <string id="30148">Close Web Viewer?</string>
 </strings>
