@@ -1,3 +1,13 @@
+Version 1.3.5
+===============
+- Bug fixes
+
+Version 1.2.0
+===============
+- Added option to delete based on movie/episode rating
+- Added option to movie to holding folder instead of deleting
+- Code cleanup
+
 Version 1.1.2
 ===============
 - Fixed file naming conventions

@@ -3,10 +3,15 @@ __  _____ __  __  ___   ___ _ _        ___ _
  >  <| _ \ |\/| | (__  | _|| | / -_) | (__| / -_) _` | ' \/ -_) '_|
 /_/\_\___/_|  |_|\___| |_| |_|_\___|  \___|_\___\__,_|_||_\___|_|  
 
-DISCLAIMER
+DANGER WILL ROBINSON!!!
 =====================================
-Service is disabled in options by default, please make sure that you fully understand what this plugin is intended to do and that you've configured the options to your requirements before enabling.  Once enabled, please run once to intialize the service.  I will not be held responsible for loss of data due to user error.
+This script has the potential to wipe your entire video collection!  Please make sure you understand exactly what this script is designed to do before running.  I will not be held responsible for loss of data due to user error.
 
 DESCRIPTION
 =====================================    
-This plugin will automatically scan your library for watched TV shows and Movies and delete them from the file system and from the library.  By default only TV episodes are deleted and files will only be deleted if the hard disk is running out of space and the file has previously been watched over 14 days ago.  All these options and more can be configured via add-on settings (right click addon or press C for context menu and select 'Add-on Settings').  Also make sure you set the disk usage path before enabling if you store your videos on a secondary drive (e.g, /media/external or D:\ etc).
+This plugin will automatically scan your library for watched TV shows and Movies and delete them from the file system based on numerous critia such as age, rating, disk free space etc.  All these options and more can be configured via add-on settings (right click addon or press C for context menu and select 'Add-on Settings').  Also make sure you set the disk usage path before enabling if you store your videos on a secondary drive (e.g, /media/external or D:\ etc).
+
+QUESTIONS/COMMENTS/SUGGESTIONS
+=====================================
+web: http://drewzh.com
+email: me@drewzh.com

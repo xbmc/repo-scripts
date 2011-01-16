@@ -2,6 +2,7 @@
     <string id="30001">Enable service</string>
     <string id="30003">Clean library when finished</string>
     <string id="30004">Show notifications</string>
+    <string id="30004">Delete video when watched X days ago</string>
     <string id="30006">Only delete videos if low on disk space</string>
     <string id="30007">Low disk space percentage</string>
     <string id="30008">Service</string>
@@ -14,4 +15,12 @@
     <string id="30015">Service Disabled</string>
     <string id="30016">Delete movies</string>
     <string id="30017">Delete TV shows</string>
+    <string id="30018">Only delete when rating has a low rating</string>
+    <string id="30019">Delete when rating lower than</string>
+    <string id="30020">Ignore files with no rating</string>
+    <string id="30021">Enable holding folder</string>
+    <string id="30022">Holding folder location</string>
+    <string id="30023">How many days to hold files before deletion</string>
+    <string id="30024">Enable debug messages</string>
+    <string id="30025">Moved %s to holding folder</string>
 </strings>

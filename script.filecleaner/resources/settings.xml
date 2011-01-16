@@ -1,13 +1,21 @@
 <settings>
     <category label="00008">
         <setting id="service_enabled" type="bool" label="30001" default="false"/>
-        <setting id="show_notifications" type="bool" label="30004" default="true" />
-        <setting id="delete_movies" type="bool" label="30016" default="false" />
-        <setting id="delete_tvshows" type="bool" label="30017" default="true" />
-        <setting id="clean_library" type="bool" label="30003" default="true"/>
-        <setting id="expire_after" type="text" label="30010" default="14"/>
-        <setting id="delete_on_low_disk" type="bool" label="30006" default="true"/>
-        <setting id="low_disk_percentage" type="text" label="30007" default="10"/>
-        <setting id="low_disk_path" type="text" label="30011" default="special://home"/>
+        <setting id="show_notifications" type="bool" label="30004" default="true" visible="eq(-1,true)" />
+        <setting id="delete_movies" type="bool" label="30016" default="false" visible="eq(-2,true)" />
+        <setting id="delete_tvshows" type="bool" label="30017" default="true" visible="eq(-3,true)" />
+        <setting id="clean_library" type="bool" label="30003" default="true" visible="eq(-4,true)" />
+        <setting id="enable_expire" type="bool" label="30004" default="true" visible="eq(-5,true)" />
+        <setting id="expire_after" type="labelenum" label="30010" values="0|1|2|3|4|5|7|14|21|28" default="7" visible="eq(-6,true)" />
+        <setting id="delete_low_rating" type="bool" label="30018" default="true" visible="eq(-7,true)" />
+        <setting id="low_rating_figure" type="labelenum" label="30019" values="1|2|3|4|5|6|7|8|9|10" default="7" visible="eq(-8,true) + eq(-1,true)" />
+        <setting id="ignore_no_rating" type="bool" label="30020" default="true" visible="eq(-9,true) + eq(-2,true)" />
+        <setting id="delete_on_low_disk" type="bool" label="30006" default="true" visible="eq(-10,true)" />
+        <setting id="low_disk_percentage" type="labelenum" label="30007" values="10|20|30|40|50|60|70|80" default="0" visible="eq(-11,true) + eq(-1,true)" />
+        <setting id="low_disk_path" type="folder" label="30011" default="special://home" visible="eq(-12,true) + eq(-2,true)" />
+        <setting id="enable_holding" type="bool" label="30021" default="false" visible="eq(-13,true)" />
+        <setting id="holding_folder" type="folder" label="30022" default="special://temp" visible="eq(-14,true) + eq(-1,true)" />
+        <setting id="holding_expire" type="labelenum" label="30023" values="1|2|3|4|5|7|14|21|28" default="5" enable="false" visible="eq(-15,true) + eq(-2,true)" />
+        <setting id="enable_debug" type="bool" label="30024" default="false" visible="eq(-16,true)" />
     </category>
 </settings>
