@@ -1,3 +1,6 @@
+v 2.0.4 (Ppic):
+- add some corections for LatestSong fields
+
 v 2.0.3 (Ppic):
 - restored album function (clic on random or recently added album will play the full album)
   TO SKINNERS: the "playmedia" isn't needed for album, instead of that, "LatestSong.%d.Path" will be filled with command to run the script with albumid, then the script will make a playlist with all song of the album and play it ;)

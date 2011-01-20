@@ -45,6 +45,7 @@ class Main:
             self.WINDOW.clearProperty( "LatestMovie.%d.Title" % ( count + 1, ) )
             self.WINDOW.clearProperty( "LatestEpisode.%d.ShowTitle" % ( count + 1, ) )
             self.WINDOW.clearProperty( "LatestSong.%d.Title" % ( count + 1, ) )
+            self.WINDOW.clearProperty( "LatestSong.%d.Album" % ( count + 1, ) )
 
     def _get_media( self, path, file ):
         # set default values
@@ -127,10 +128,10 @@ class Main:
             movies_totals[ 0 ] += int( fields[ 0 ] )
             movies_totals[ 1 ] += int( fields[ 1 ] )
             if ( fields[ 29 ] ):
-                movies_totals[ 2 ] = fields[ 3 ] # title
-                movies_totals[ 3 ] = fields[ 10 ] # year
-                movies_totals[ 4 ] = fields[ 14 ] # runningtime
-                movies_totals[ 5 ] = fields[ 17 ] # genre
+                movies_totals[ 2 ] = fields[ 4 ] # title
+                movies_totals[ 3 ] = fields[ 11 ] # year
+                movies_totals[ 4 ] = fields[ 15 ] # runningtime
+                movies_totals[ 5 ] = fields[ 18 ] # genre
                 movies_totals[ 6 ] = "" # last watched
                 date = fields[ 29 ].split( " " )[ 0 ].split( "-" )
                 movies_totals[ 6 ] = datetime.date( int( date[ 0 ] ), int( date[ 1 ] ), int( date[ 2 ] ) ).strftime( date_format ) # last played
@@ -286,10 +287,9 @@ class Main:
                     # separate individual fields
                     fields = re.findall( "<field>(.*?)</field>", item, re.DOTALL )
                     # set properties
-                    self.WINDOW.setProperty( "LatestSong.%d.Title" % ( count + 1, ), fields[ 3 ] )
+                    self.WINDOW.setProperty( "LatestSong.%d.Title" % ( count + 1, ), fields[ 1 ] )
                     self.WINDOW.setProperty( "LatestSong.%d.Year" % ( count + 1, ), fields[ 8 ] )
                     self.WINDOW.setProperty( "LatestSong.%d.Artist" % ( count + 1, ), fields[ 6 ] )
-                    self.WINDOW.setProperty( "LatestSong.%d.Album" % ( count + 1, ), fields[ 1 ] )
                     self.WINDOW.setProperty( "LatestSong.%d.Rating" % ( count + 1, ), fields[ 18 ] )
                     # Album Path  (ID)
                     path = 'XBMC.RunScript(script.recentlyadded,albumid=' + fields[ 0 ] + ')'
