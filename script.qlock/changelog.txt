@@ -1,3 +1,6 @@
+0.0.8
+-fixed: two o'clock in Serbian
+
 0.0.7
 - added: Croatian layout, thanks Zrino
 
