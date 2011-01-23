@@ -1,6 +1,10 @@
 Forum Browser Changelog
 
-Current Version : 0.8.1
+Current Version : 0.8.2
+
+*** 0.8.2 ***
+
+Remove version requirement from addon.xml to stop import error
 
 *** 0.8.1 ***
 
