@@ -25,6 +25,7 @@
     <string id="758">Please take look at notification area</string> 
     <string id="759">Enter code of image in notification area</string>
     <string id="760">Available Services</string>        
+    <string id="761">You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration</string>
 
   <!-- Script Settings -->
 
@@ -50,6 +51,8 @@
     <string id="30125">Disable hash search</string>
     <string id="30126">- Itasa Username</string>
     <string id="30127">- Itasa Password</string>
+    <string id="30128">- Titulky Username</string>
+    <string id="30129">- Titulky Password</string>
   
   <!-- Languages  -->
   

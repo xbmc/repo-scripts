@@ -1,3 +1,6 @@
+2.2.4
+- fixed: Titulky service login, thx to Libor
+
 2.2.3
 - fixed: Bierdopje needs a single quote changed to two single quotes (Grey's Anatomy -> Grey''s Anatomy) otherwise it couldn't find a show-id, thx mr_blobby 
 - fixed: Hungarian translation, thanks alanwww1.

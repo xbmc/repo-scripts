@@ -24,7 +24,8 @@
     <string id="757">Server vyžaduje opsat kontrolní kód z obrázku</string>
     <string id="758">Kontrolní kód se objeví v oznamovací oblasti</string> 
     <string id="759">Vložte kontrolní kód</string>
-    <string id="760">Available Services</string>
+    <string id="760">Dostupné služby</string>
+    <string id="761">Pro stažení těchto titulků je třeba přihlášení,[CR]nastavte prosím přihlašovací údaje</string>
 
   <!-- Script Settings -->
   
@@ -50,6 +51,8 @@
     <string id="30125">Vypnout hledání pomocí hashe</string>
     <string id="30126">- Itasa jméno</string>
     <string id="30127">- Itasa heslo</string>
+    <string id="30128">- Titulky jméno</string>
+    <string id="30129">- Titulky heslo</string>
   
   <!-- Languages  -->
   

@@ -19,13 +19,13 @@ sys.path.append (BASE_RESOURCE_PATH)
 xbmc.output("### [%s] - Version: %s" % (__scriptname__,__version__,),level=xbmc.LOGDEBUG )
 
 if ( __name__ == "__main__" ):
-    if not xbmc.getCondVisibility('Player.Paused') : xbmc.Player().pause() #Pause if not paused        
-    import gui
-    ui = gui.GUI( "script-XBMC-Subtitles-main.xml" , __cwd__ , "Default")
-    ui.doModal()
-    if xbmc.getCondVisibility('Player.Paused'): xbmc.Player().pause() # if Paused, un-pause
-    del ui
-    sys.modules.clear()
+  if not xbmc.getCondVisibility('Player.Paused') : xbmc.Player().pause() #Pause if not paused        
+  import gui
+  ui = gui.GUI( "script-XBMC-Subtitles-main.xml" , __cwd__ , "Default")
+  ui.doModal()
+  if xbmc.getCondVisibility('Player.Paused'): xbmc.Player().pause() # if Paused, un-pause
+  del ui
+  sys.modules.clear()
 
 
   
