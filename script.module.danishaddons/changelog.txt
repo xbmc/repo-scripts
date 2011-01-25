@@ -1,0 +1,24 @@
+[B]Version 1.1.0[/B]
+- Added tests and initial stub version of xbmc module to allow execution of tests outside of XBMC
+- Added init() method
+- When using this module you must import each module separately instead of 'from danishaddons import *'
+    and explicitly call danishaddons.init() before ADDON_* constants are available
+
+[B]Version 1.0.5[/B]
+- Changes version number to (hopefully) force download
+
+[B]Version 1.0.4[/B]
+- Fix cache dir creation
+
+[B]Version 1.0.3[/B]
+- Added support for using this module with scripts as well as plugins
+
+[B]Version 1.0.2[/B]
+- Load ADDON_ID from folder name instead of first argument to make the module work for scripts as well
+
+[B]Version 1.0.1[/B]
+- Added downloadUrl(..) and decodeHtmlEntities(..) to web module
+- Added pydoc documentation to methods
+
+[B]Version 1.0.0[/B]
+- Initial version
