@@ -126,7 +126,7 @@ def SendUpdate(info, progress, sType, status):
     Debug("Data: "+toSend, False)
     
     # send
-    #transmit(toSend)
+    transmit(toSend)
     # and notify if wanted
     if (bNotify and status == "watched"):
         notification("Trakt", submitAlert, 3000, __settings__.getAddonInfo("icon"))

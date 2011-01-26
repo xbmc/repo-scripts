@@ -211,7 +211,6 @@ if ((bStartup and bAutoStart) or bRun):
         if (xbmc.abortRequested):
             break
             
-        # time.sleep(sleepTime)
-        time.sleep(10)
+        time.sleep(sleepTime)
 
 Debug( 'Exiting...', False)

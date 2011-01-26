@@ -12,11 +12,11 @@
 
   <setting type="lsep" label="45002" />
 	<setting id="ExcludePathOption" type="bool" label="45009" default="false" />
-  <setting id="ExcludePath" type="folder" source="files" label="45010" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+  <setting id="ExcludePath" type="folder" source="video" label="45010" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
   <setting id="ExcludePathOption2" type="bool" label="45009" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
-  <setting id="ExcludePath2" type="folder" source="files" label="45010" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+  <setting id="ExcludePath2" type="folder" source="video" label="45010" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
   <setting id="ExcludePathOption3" type="bool" label="45009" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
-  <setting id="ExcludePath3" type="folder" source="files" label="45010" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+  <setting id="ExcludePath3" type="folder" source="video" label="45010" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
 
   <setting type="lsep" label="45003" />
   <setting id="debug" type="bool" label="45012" default="true" />
