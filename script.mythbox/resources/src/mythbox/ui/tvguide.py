@@ -362,6 +362,7 @@ class TvGuideWindow(ui.BaseWindow):
                 createScheduleDialog.doModal()
                 
                 if createScheduleDialog.shouldRefresh:
+                    self.cacheUpcoming()
                     log.debug('schedule saved')
         return actionConsumed
 

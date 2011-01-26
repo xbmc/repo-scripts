@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -30,7 +30,7 @@ from mythbox.mythtv.domain import Channel
 from mythbox.mythtv.conn import ServerException
 from mythbox.ui.player import MythPlayer, NoOpCommercialSkipper
 from mythbox.ui.toolkit import Action, BaseWindow, window_busy
-from mythbox.util import catchall, catchall_ui, run_async, lirc_hack, ui_locked, coalesce, ui_locked2
+from mythbox.util import safe_str,catchall, catchall_ui, run_async, lirc_hack, ui_locked, coalesce, ui_locked2
 from odict import odict
 
 log = logging.getLogger('mythbox.ui')
@@ -84,7 +84,7 @@ class MythLiveTvBrain(BaseLiveTvBrain):
             #del livePlayer # induce GC so on* callbacks unregistered
             return self.tuner
         except ServerException, se:
-            xbmcgui.Dialog().ok(self.translator.get(m.INFO), str(se))
+            xbmcgui.Dialog().ok(self.translator.get(m.INFO), safe_str(se))
 
 
 class MythLiveTvPlayer(xbmc.Player):
@@ -326,7 +326,7 @@ class LiveTvWindow(BaseWindow):
             self.lastSelected = self.channelsListBox.getSelectedPosition()
             channel = self.listItem2Channel(self.channelsListBox.getSelectedItem())
             if channel.currentProgram and channel.needsPoster:
-                log.debug("Adding channel %s to front of q" % channel)
+                log.debug('Adding channel %s to front of q' % channel.getChannelNumber())
                 self.workq.append(channel)
 
     def listIndex2Channel(self, i):
@@ -348,7 +348,7 @@ class LiveTvWindow(BaseWindow):
             brain.watchLiveTV(channel)
         except Exception, e:
             log.error(e)
-            xbmcgui.Dialog().ok(self.translator.get(m.ERROR), '', str(e))
+            xbmcgui.Dialog().ok(self.translator.get(m.ERROR), '', safe_str(e))
 
     @inject_db
     def loadChannels(self):
@@ -410,7 +410,7 @@ class LiveTvWindow(BaseWindow):
                         channel.needsPoster = True
                         self.setListItemProperty(listItem, 'poster', 'loading.gif')
                 else:
-                    self.setListItemProperty(listItem, 'title', 'No Data')
+                    self.setListItemProperty(listItem, 'title', self.translator.get(m.NO_DATA))
                     
                 listItems.append(listItem)
                 self.listItemsByChannel[channel] = listItem
@@ -437,7 +437,7 @@ class LiveTvWindow(BaseWindow):
                     self.lookupPoster(listItem, channel)
                     channel.needsPoster = False
             except:
-                log.exception('channel = %s' % channel)
+                log.exception('channel = %s' % safe_str(channel))
 
     def lookupPoster(self, listItem, channel):
         posterPath = self.fanArt.getRandomPoster(channel.currentProgram)

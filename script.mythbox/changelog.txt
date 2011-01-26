@@ -1,3 +1,16 @@
+1/25/2011 - MythBox 1.0.2
+-----------------------------
+  New
+    - Issue 148 - Dutch translations (tnx Fred van Zwieten)
+    
+  Fixed
+    - Issue 145 - Fixed unicode error in Live TV window 
+    - Issue 147 - Changes to the recording schedule do not take effect immediately
+    - Issue 149 - Help text on Settings screen gets truncated based on the translation
+    - Added support for ScheduleType.NOT_RECORDING
+    - TVRage grabber more resilient to incomplete season and episode information
+    - Google image search now works for programs with unicode chars in the title
+    
 1/13/2011 - MythBox 1.0.1
 -----------------------------
   New

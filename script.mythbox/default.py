@@ -1,7 +1,7 @@
 #
 #  MythBox for XBMC
 #
-#  Copyright (C) 2010 analogue@yahoo.com 
+#  Copyright (C) 2011 analogue@yahoo.com 
 #  http://mythbox.googlecode.com
 #
 #  This program is free software; you can redistribute it and/or
@@ -32,12 +32,13 @@ if __name__ == '__main__':
     #import rpdb2 
     #rpdb2.start_embedded_debugger('xxx')
 
-    import os, sys
-    sys.path.append(os.path.join(os.getcwd(), 'resources', 'src'))
+    import os, sys, xbmcaddon
+    scriptDir = xbmcaddon.Addon('script.mythbox').getAddonInfo('path')
+    sys.path.append(os.path.join(scriptDir, 'resources', 'src'))
 
     import xbmcgui
     import xbmc
-    splash = xbmcgui.WindowXML('mythbox_splash.xml', os.getcwd())
+    splash = xbmcgui.WindowXML('mythbox_splash.xml', scriptDir)
     splash.show()
     
     from mythbox.bootstrapper import BootStrapper

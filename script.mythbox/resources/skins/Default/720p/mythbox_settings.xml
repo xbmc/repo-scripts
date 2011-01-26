@@ -584,9 +584,9 @@
             <animation effect="fade" time="200">VisibleChange</animation>
 	    </control>
       
-	    <control type="button">
+	    <control type="label">
 	      	<description>mythtv recording dirs help1</description>
-	      	<posx>300</posx>
+	      	<posx>310</posx>
 	      	<posy>580</posy>
 	      	<height>50</height>
 	      	<width>900</width>
@@ -598,11 +598,12 @@
 			<visible>Control.HasFocus(205)</visible>
 			<texturenofocus>-</texturenofocus>
             <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
 	    </control>
 	    
-	    <control type="button">
+	    <control type="label">
 	      	<description>mythtv recording dirs help2</description>
-	      	<posx>300</posx>
+	      	<posx>310</posx>
 	      	<posy>610</posy>
 	      	<height>50</height>
 	      	<width>900</width>
@@ -614,29 +615,12 @@
 			<visible>Control.HasFocus(205)</visible>
 			<texturenofocus>-</texturenofocus>
             <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
 	    </control>
-
-        <!--
-	    <control type="button">
-	      	<description>empty help</description>
-	      	<posx>300</posx>
-	      	<posy>580</posy>
-	      	<height>50</height>
-	      	<width>900</width>
-	      	<align>left</align>
-	      	<aligny>center</aligny>
-	      	<font>font12</font>
-	      	<textcolor>ffffffff</textcolor>
-	      	<label>SCRIPT418</label>
-			<visible>Control.HasFocus(209)</visible>
-			<texturenofocus>-</texturenofocus>
-            <animation effect="fade" time="200">VisibleChange</animation>
-	    </control>
-        -->
          
-        <control type="button">
+        <control type="label">
             <description>aggressive caching help1</description>
-            <posx>300</posx>
+            <posx>310</posx>
             <posy>580</posy>
             <height>50</height>
             <width>900</width>
@@ -648,11 +632,12 @@
             <visible>Control.HasFocus(207)</visible>
             <texturenofocus>-</texturenofocus>
             <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
         </control>
         
-        <control type="button">
+        <control type="label">
             <description>aggressive caching help2</description>
-            <posx>300</posx>
+            <posx>310</posx>
             <posy>610</posy>
             <height>50</height>
             <width>900</width>
@@ -664,6 +649,7 @@
             <visible>Control.HasFocus(207)</visible>
             <texturenofocus>-</texturenofocus>
             <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
         </control>
 
 	    <control type="button">
@@ -714,9 +700,9 @@
             <animation effect="fade" time="200">VisibleChange</animation>
 	    </control>
 
-        <control type="button">
+        <control type="label">
             <description>lirc hack help1</description>
-            <posx>300</posx>
+            <posx>310</posx>
             <posy>580</posy>
             <height>50</height>
             <width>900</width>
@@ -728,11 +714,12 @@
             <visible>Control.HasFocus(501)</visible>
             <texturenofocus>-</texturenofocus>
             <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
         </control>
 
-        <control type="button">
+        <control type="label">
             <description>lirc hack help2</description>
-            <posx>300</posx>
+            <posx>310</posx>
             <posy>610</posy>
             <height>50</height>
             <width>900</width>
@@ -744,11 +731,12 @@
             <visible>Control.HasFocus(501)</visible>
             <texturenofocus>-</texturenofocus>
             <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
         </control>
 
-        <control type="button">
+        <control type="label">
             <description>twitter help</description>
-            <posx>300</posx>
+            <posx>310</posx>
             <posy>580</posy>
             <height>50</height>
             <width>900</width>
@@ -760,6 +748,7 @@
             <visible>Control.HasFocus(503)</visible>
             <texturenofocus>-</texturenofocus>
             <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
         </control>
 
     </control>

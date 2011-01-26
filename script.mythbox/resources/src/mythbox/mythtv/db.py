@@ -34,7 +34,7 @@ import string
 from decorator import decorator
 from mythbox import pool
 from mythbox.pool import PoolableFactory
-from mythbox.util import timed, threadlocals
+from mythbox.util import timed, threadlocals, safe_str
         
 log = logging.getLogger('mythbox.core')
 ilog = logging.getLogger('mythbox.inject')
@@ -720,7 +720,6 @@ class MythDatabase(object):
         return self.cursor.rowcount
     
     @timed
-    @inject_cursor
     def saveSchedule(self, schedule):
         """
         Method to save a schedule to the database. If schedule.getScheduleId() is None 
@@ -731,7 +730,7 @@ class MythDatabase(object):
         have been made so that the backend will apply the changes.
 
         @param schedule: Schedule
-        @return: 0 on success
+        @return: saved schedule w/ populated scheduleId (if a new schedule)
         """
         s = schedule
         
@@ -826,11 +825,26 @@ class MythDatabase(object):
                 int(not s.isEnabled()), 
                 int(s.parentid()))
 
-        log.debug("sql = %s"%sql)
+        log.debug("sql = %s" % safe_str(sql))
         args = (s.title(), s.subtitle(), s.description())
-        self.cursor.execute(sql, args)
-        log.debug('Row count = %s' % self.cursor.rowcount)
- 
+
+        c = self.conn.cursor(*cursorArgs)       
+        try:
+            c.execute(sql, args)
+        finally:
+            c.close()
+
+        if s.getScheduleId() is None:
+            c2 = self.conn.cursor(*cursorArgs)
+            try:
+                c2.execute("select max(recordid) from record")
+                scheduleId = c2.fetchall()[0][0]
+                s.setScheduleId(scheduleId)
+                log.debug('New scheduleId = %s' % scheduleId)
+            finally:
+                c.close()
+        return s
+    
         # INSERT INTO `record` (
         # `recordid`,       241,  
         # `type`,           5, 

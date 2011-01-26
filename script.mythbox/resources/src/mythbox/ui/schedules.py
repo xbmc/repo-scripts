@@ -223,8 +223,11 @@ class ScheduleDialog(BaseDialog):
         log.debug('onClick %s ' % controlId)
         source = self.getControl(controlId)
         s = self.schedule
-        
-        if controlId == 201: self._chooseFromList(ScheduleType.long_translations, t(m.RECORD_WHEN), 'scheduleType', s.setScheduleType)
+ 
+        # NOTE: Don't let user select ScheduleType.NOT_RECORDING -- remove from translation list
+        scheduleTypeMinusNotRecording = odict.odict(ScheduleType.long_translations)
+        del scheduleTypeMinusNotRecording[ScheduleType.NOT_RECORDING]        
+        if controlId == 201: self._chooseFromList(scheduleTypeMinusNotRecording, t(m.RECORD_WHEN), 'scheduleType', s.setScheduleType)
         
         elif controlId == 202:
             priority = self._enterNumber(t(m.RECORDING_PRIORITY), s.getPriority(), -99, 99)

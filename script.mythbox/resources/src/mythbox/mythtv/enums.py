@@ -78,41 +78,45 @@ class RecordingStatus(object):
 
 
 class ScheduleType(object):
+    '''See recordingtypes.cpp'''
     
-    ONCE        = 1
-    DAILY       = 2
-    CHANNEL     = 3
-    ALWAYS      = 4
-    WEEKLY      = 5
-    FIND_ONE    = 6
-    OVERRIDE    = 7
-    DONT_RECORD = 8
-    FIND_DAILY  = 9
-    FIND_WEEKLY = 10
+    NOT_RECORDING = 0
+    ONCE          = 1
+    DAILY         = 2
+    CHANNEL       = 3
+    ALWAYS        = 4
+    WEEKLY        = 5
+    FIND_ONE      = 6
+    OVERRIDE      = 7
+    DONT_RECORD   = 8
+    FIND_DAILY    = 9
+    FIND_WEEKLY   = 10
     
     translations = odict([
-        (ONCE       ,111),
-        (DAILY      ,112),
-        (WEEKLY     ,115),
-        (FIND_ONE   ,116),
-        (FIND_DAILY ,119),
-        (FIND_WEEKLY,120),
-        (CHANNEL    ,113),
-        (ALWAYS     ,114),
-        (OVERRIDE   ,117),
-        (DONT_RECORD,118)])
+        (ONCE         ,111),
+        (DAILY        ,112),
+        (WEEKLY       ,115),
+        (FIND_ONE     ,116),
+        (FIND_DAILY   ,119),
+        (FIND_WEEKLY  ,120),
+        (CHANNEL      ,113),
+        (ALWAYS       ,114),
+        (OVERRIDE     ,117),
+        (DONT_RECORD  ,118),
+        (NOT_RECORDING,170)])
     
     long_translations = odict([
-        (ONCE       ,135),
-        (DAILY      ,136),
-        (WEEKLY     ,139),
-        (FIND_ONE   ,140),
-        (FIND_DAILY ,143),
-        (FIND_WEEKLY,144),
-        (CHANNEL    ,137),
-        (ALWAYS     ,138),
-        (OVERRIDE   ,141),
-        (DONT_RECORD,142)])
+        (ONCE         ,135),
+        (DAILY        ,136),
+        (WEEKLY       ,139),
+        (FIND_ONE     ,140),
+        (FIND_DAILY   ,143),
+        (FIND_WEEKLY  ,144),
+        (CHANNEL      ,137),
+        (ALWAYS       ,138),
+        (OVERRIDE     ,141),
+        (DONT_RECORD  ,142),
+        (NOT_RECORDING,170)])
     
 
 class EpisodeFilter(object):

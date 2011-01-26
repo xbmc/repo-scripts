@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -994,10 +994,11 @@ class Connection(object):
         the backend.
         
         @type schedule: Schedule
+        @return Saved schedule with newly generated scheduleId (if new)
         """
-        new = schedule.getScheduleId() is None
-        self.db().saveSchedule(schedule)
-        self.rescheduleNotify(schedule)
+        savedSchedule = self.db().saveSchedule(schedule)
+        self.rescheduleNotify(savedSchedule)
+        return savedSchedule
 
     @inject_db
     def deleteSchedule(self, schedule):
@@ -1017,11 +1018,11 @@ class Connection(object):
         by the backend.
         """
         log.debug('rescheduleNotify(schedule= %s)' % safe_str(schedule))
-        scheduleId = 0
+        scheduleId = -1
         if schedule:
             scheduleId = schedule.getScheduleId()
             if scheduleId is None:
-                scheduleId = 0
+                scheduleId = -1
         reply = self._sendRequest(self.cmdSock, ['RESCHEDULE_RECORDINGS %s' % scheduleId])
         if int(reply[0]) < 0:
             raise ServerException, 'Reschedule notify failed: %s' % reply
@@ -1160,14 +1161,14 @@ class Connection(object):
             try:
                 new = socket.recv(left)
             except Exception, e:
-		if str(e) == "(9, 'Bad file descriptor')" or str(e) == "(10054, 'Connection reset by peer')":
-			print('Lost connection resetting')
-			try:
-				self.close()
-			except Exception, e:
-				print('noclose')
-			self.db_init()
-			return b
+                if str(e) == "(9, 'Bad file descriptor')" or str(e) == "(10054, 'Connection reset by peer')":
+                    log.warn('Lost connection resetting')
+                    try:
+                        self.close()
+                    except Exception, e:
+                        log.exception('noclose')
+                    self.db_init()
+                    return b
                 raise e
             if new == '':
                 break # eof

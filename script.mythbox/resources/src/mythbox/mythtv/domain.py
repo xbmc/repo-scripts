@@ -255,9 +255,17 @@ class Program(object):
         self.translator = translator
 
     def __eq__(self, rhs):
+        #
+        # NOTE: 
+        #   Replaced use of channelId with channelNumber
+        #   since channelId is tied to a tuner and comparing
+        #   a TVProgram to a RecordedProgram would result in
+        #   failures if > 1 tuner has the same channel 
+        #   (different channelId but same channelNumber)
+        #
         return \
             isinstance(rhs, Program) and \
-            self.getChannelId() == rhs.getChannelId() and \
+            self.getChannelNumber() == rhs.getChannelNumber() and \
             self.starttime() == rhs.starttime()
 
     def getChannelId(self):

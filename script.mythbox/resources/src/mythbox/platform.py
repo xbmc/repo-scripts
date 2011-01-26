@@ -75,10 +75,15 @@ class Platform(object):
             'mysql-connector-python',
             'python-twitter',
             'twisted',
-            'zope.interface']
+            'zope.interface',
+            'mockito',
+            'unittest2',
+            'unittest']
         
         for lib in libs:
             sys.path.append(os.path.join(self.getScriptDir(), 'resources', 'lib', lib))
+        
+        sys.path.append(os.path.join(self.getScriptDir(), 'resources', 'test'))
             
         for i, path in enumerate(sys.path):    
             log.debug('syspath[%d] = %s' % (i, path))

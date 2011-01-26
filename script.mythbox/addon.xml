@@ -2,7 +2,7 @@
 <addon 
     id="script.mythbox" 
     name="MythBox" 
-    version="1.0.1" 
+    version="1.0.2" 
     provider-name="analogue@yahoo.com">
     <requires>
         <import addon="xbmc.python" version="1.0" />

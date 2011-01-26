@@ -14,11 +14,10 @@ Q9. Where is the source code?
 Q10. When are you going to add feature <insert your feature here> to MythBox?
 Q11. What sort of MythTV setup do you use with MythBox?
 Q12. When I play a recorded program, I get nothing but a green screen.
-Q13. (Windows Only) Import errors when running scipt
-Q14. How do I fix a 'MySQL connection error 1043 bad handshake' error? 
-Q15. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
-Q16. What is the difference between XBMC's built-in myth:// protocol support and MythBox? 
-Q17. What is the plan to support the new Confluence skin released with XBMC 9.11?
+Q13. How do I fix a 'MySQL connection error 1043 bad handshake' error? 
+Q14. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
+Q15. What is the difference between XBMC's built-in myth:// protocol support and MythBox? 
+Q16. What is the plan to support the new Confluence skin released with XBMC 9.11?
 
 -------------------------------------------------------------------------
 Q1. What should I do if I run into problems or something doesn't work?
@@ -161,14 +160,8 @@ Q12. When I play a recorded program, I get nothing but a green screen.
      2. Go to Utilites/Setup->Setup->TV Settings->Recording Profiles->Software Encoders->Live TV
      3. Set the codec to MPEG4 instead of RTjpeg.
 
----------------------------------------------------------------------------------
-Q13. (Windows Only) Import errors when running scipt
-
-     Old versions of WinZip don't uncompress tar.gz files correctly. 
-     Upgrade to the latest version of WinZip and try again.
-
 ---------------------------------------------------------------------------------     
-Q14. How do I fix a 'MySQL connection error 1043 bad handshake' error?
+Q13. How do I fix a 'MySQL connection error 1043 bad handshake' error?
 
      Your MySQL database server is set to authenticate using the old MySQL 4.0 style 
      instead of the newer style used since MySQL 4.1+. This is pretty easy to fix 
@@ -177,13 +170,13 @@ Q14. How do I fix a 'MySQL connection error 1043 bad handshake' error?
      reset it making sure you select MySQL 4.1+ for 'Password hashing'.
      
 ---------------------------------------------------------------------------------     
-Q15. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
+Q14. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
 
      1. Edit /etc/mysql/my.cnf and change old_passwords=1 to old_passwords=0
      2. Reset the password for the MythTV database (see Q14) and restart MythBox
 
 ---------------------------------------------------------------------------------     
-Q16. What is the difference between XBMC's myth:// protocol support and MythBox?     
+Q15. What is the difference between XBMC's myth:// protocol support and MythBox?     
      
      Feature                  MythBox        XBMC + myth://
      ==========================================================
@@ -201,7 +194,7 @@ Q16. What is the difference between XBMC's myth:// protocol support and MythBox?
      Network streaming        Live TV only   Yes
 
 ---------------------------------------------------------------------------------     
-Q17. What is the plan to support the new Confluence skin released in XBMC 9.11?
+Q16. What is the plan to support the new Confluence skin released in XBMC 9.11?
      
      While I've been able to cobble together the current look & feel of the
      MythBox user interface based on the PM3.HD skin, I am by no means aesthetically 

@@ -135,6 +135,7 @@ To submit translations for your native language
   <string id="110">Recording Schedules</string>
   
   <!-- enums.ScheduleType -->
+  <string id="170">Not Recording</string>
   <string id="111">Once</string>
   <string id="112">Daily</string>
   <string id="113">Channel</string>
