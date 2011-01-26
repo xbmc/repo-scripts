@@ -1,3 +1,8 @@
+Version 0.1.1
+	- excluded all videos starting with http://
+	- fixed url encoding of special chars when searching for tvdb id's
+	- added year to IMDB id query
+	
 Version 0.1.0
 	- added Spanish translation thanks to MaDDoGo!
 	- removed check for year since the year is missing if you start a tv show/movie in certain manners (ex: android xbmc remote)

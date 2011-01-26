@@ -18,7 +18,7 @@ except ImportError:
 
 __settings__ = xbmcaddon.Addon(id='script.trakt')
 __language__ = __settings__.getLocalizedString
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __cwd__ = __settings__.getAddonInfo('path')
 
 #Path handling
@@ -46,12 +46,7 @@ def SendUpdate(info, progress, sType, status):
     
     Debug(info, False)
     
-    if (sType == "TVShow"):
-        ID = getID(sType, unicode(xbmc.getInfoLabel("VideoPlayer.TvShowTitle"), 'utf-8'))
-    elif (sType == "Movie"):
-        ID = getID(sType, urllib.quote(xbmc.getInfoLabel("VideoPlayer.Title"))) 
     
-    Debug("IMDB/tvdb id: "+ID);
     
     # split on type and create data packet for each type
     if (sType == "Movie"):
@@ -59,6 +54,12 @@ def SendUpdate(info, progress, sType, status):
         
         # format: title, year
         title, year = info.split(",")
+        if (year == ''):
+            year_for_id = False
+        else:
+            year_for_id = year
+        ID = getID(sType, xbmc.getInfoLabel("VideoPlayer.Title"), year_for_id)
+        Debug("IMDB: "+ID);
         
         # check to make sure the data is there
         # otherwise return
@@ -88,6 +89,12 @@ def SendUpdate(info, progress, sType, status):
         
         # format: title, year, season, episode
         title, year, season, episode = info.split(",")
+        if (year == ''):
+            year_for_id = False
+        else:
+            year_for_id = year
+        ID = getID(sType, xbmc.getInfoLabel("VideoPlayer.TvShowTitle"), year_for_id) 
+        Debug("TVDB id: "+ID);
         
         # check to make sure the data is there
         # otherwise return
@@ -119,9 +126,9 @@ def SendUpdate(info, progress, sType, status):
     Debug("Data: "+toSend, False)
     
     # send
-    transmit(toSend)
+    #transmit(toSend)
     # and notify if wanted
-    if (bNotify == "true" and status == "watched"):
+    if (bNotify and status == "watched"):
         notification("Trakt", submitAlert, 3000, __settings__.getAddonInfo("icon"))
     
 def transmit(status):
@@ -141,12 +148,12 @@ def transmit(status):
     except URLError, e:
         if e.code == 401:
             Debug("Bad username or password", False)
-            if (bNotify == "true"):
+            if (bNotify):
                 notification("Trakt: Bad Authentication!", "Check your login information", 5000, __settings__.getAddonInfo("icon"))
                 
     except:
         # do nothing 'cept spit out error (catch all)
-        if (bNotify == "true"):
+        if (bNotify):
             notification("Trakt", "Error sending status.  API may not be reachable", 10000, __settings__.getAddonInfo("icon"))
 
 
@@ -229,13 +236,15 @@ def notification( header="", message="", sleep=5000, icon=__settings__.getAddonI
     """
     xbmc.executebuiltin( "XBMC.Notification(%s,%s,%i,%s)" % ( header, message, sleep, icon ) )
     
-def getID(sType, title):
+def getID(sType, title, year=False):
     Debug("Title sent to getID: "+title, False)
     video_id = ""
     if (sType == "TVShow"):
         # get tvdb id
         try:
+            # year isn't used here because i'm still trying to figure out how to reconcile air date vs tv show first air date
             query = "select c12 from tvshow where lower(c00) = lower('" + title + "') limit 1"
+            Debug(query)
             res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
             tvid = re.findall('[\d.]*\d+',res) # find it
 
@@ -245,16 +254,19 @@ def getID(sType, title):
             video_id = ""
     else:
         try:
-            query = "select movie.c09 from movie where lower(movie.c00) = lower('" + title + "') limit 1"
+            if(year):
+                query = "select movie.c09 from movie where movie.c07 = '" + year + "' and lower(movie.c00) = lower('" + title + "') limit 1"
+            else:
+                query = "select movie.c09 from movie where lower(movie.c00) = lower('" + title + "') limit 1"
             Debug(query)
             res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
             Debug(res)
             movieid = re.findall('<field>(.*?)</field>',res) # find it
 
             if len(str(movieid[0])) >= 1:
-                Debug("Final answer (for id!) --> "+str(movieid[0]))
                 video_id = str(movieid[0])
         except:
             video_id = ""
-    
+            
+    Debug("Final answer (for id!) --> "+video_id)
     return video_id

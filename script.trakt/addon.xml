@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.trakt"
        name="trakt"
-       version="0.1.0"
+       version="0.1.1"
        provider-name="rudf0rd">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
@@ -9,8 +9,10 @@
   <extension point="xbmc.python.script"
              library="default.py" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">trakt</summary>
+    <summary lang="en">trakt helps keep a record of what TV shows and movies you are watching. Based on your favorites, trakt recommends additional shows and movies you'll enjoy!</summary>
     <description lang="en">
+		The XMBC plugin for trakt automatically fills your library and updates it with what you've been watching in XBMC. For best results, make sure you are in library mode.
+		
 		Installation instructions: 
 		After installing this plugin, sign up for an account at http://trakt.tv.  Then.. 
 		
@@ -18,7 +20,7 @@
 		2. Enter in username and password that you have set up on the trakt website and any other configuration you would like 
 		3. Navigate to Home > Programs and activate trakt* (location of trakt activation is skin dependent and may be in other places labeled Addons, Scripts, etc.) 
 		
-		Note: if you do not configure trakt to autostart, you will need to repeat step 5 any time you would like to submit tv shows
+		Note: if you do not configure trakt to autostart, you will need to repeat step 3 any time you would like to submit tv shows
     </description>
     <platform>all</platform>
   </extension>

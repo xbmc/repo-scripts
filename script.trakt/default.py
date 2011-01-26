@@ -12,7 +12,7 @@ import re
 __scriptname__ = "trakt"
 __author__ = "Sean Rudford"
 __url__ = "http://trakt.tv/"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __XBMC_Revision__ = ""
 
 def addPadding(number):
@@ -59,8 +59,11 @@ def CheckAndSubmit(Manual=False):
         if ((xbmc.getInfoLabel("VideoPlayer.mpaa") == "XXX")):
             Debug('Video is with XXX mpaa rating', False)
             bRatingExcluded = True
+        currentPath = xbmc.Player().getPlayingFile()
+        if (currentPath.find("http://") > -1):
+            Debug("Video is playing via web source.  Excluded.", False)
+            bPathExcluded = True
         if ((__settings__.getSetting( "ExcludePath" ) != "") and (__settings__.getSetting( "ExcludePathOption" ) == 'true')):
-            currentPath = xbmc.Player().getPlayingFile()
             if (currentPath.find(__settings__.getSetting( "ExcludePath" )) > -1):
                 Debug('Video is located in excluded path', False)
                 bPathExcluded = True
@@ -208,6 +211,7 @@ if ((bStartup and bAutoStart) or bRun):
         if (xbmc.abortRequested):
             break
             
-        time.sleep(sleepTime)
+        # time.sleep(sleepTime)
+        time.sleep(10)
 
 Debug( 'Exiting...', False)
