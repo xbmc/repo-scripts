@@ -1,6 +1,15 @@
 TVRage-Eps Changelog
 
-Current Version : 1.0.2
+Current Version : 1.0.4
+
+*** 1.0.4 ***
+
+Extended airtime offset values in settings to +-23
+Bug Fix (Hopefully =] ): Old shows staying at top of list
+
+*** 1.0.3 ***
+
+Fix: Error when failing to fetch data for show
 
 *** 1.0.2 ***
 

@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 import urllib, simplejson
 try:
-	import xbmc
+	import xbmc #@UnresolvedImport
 except:
 	#we're not in XBMC so we only get http
 	pass
 
 class JsonRPCError(Exception):
-    def __init__(self, code, message):
-        Exception.__init__(self, message)
-        self.code = code
-        self.message = message
-        
+	def __init__(self, code, message):
+		Exception.__init__(self, message)
+		self.code = code
+		self.message = message
+		
 class ConnectionError(Exception):
-    def __init__(self, code, message):
-        Exception.__init__(self, message)
-        self.code = code
-        self.message = message
-        
+	def __init__(self, code, message):
+		Exception.__init__(self, message)
+		self.code = code
+		self.message = message
+		
 class UserPassError(Exception): pass
 
 class baseNamespace:
@@ -55,7 +55,7 @@ class httpNamespace(baseNamespace):
 				fobj = urllib.urlopen(self.api.url,postdata)
 			except IOError,e:
 				if e.args[0] == 'http error':
-					 if e.args[1] == 401: raise UserPassError()
+					if e.args[1] == 401: raise UserPassError()
 				raise ConnectionError(e.errno,'Connection error: ' + str(e.errno))
 			
 			try:

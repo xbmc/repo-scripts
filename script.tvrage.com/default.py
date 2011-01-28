@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-import urllib
-import xbmc, xbmcgui, xbmcaddon
-import sys, os, time, re
-import elementtree.ElementTree as etree
+import xbmc, xbmcgui, xbmcaddon #@UnresolvedImport
+import sys, os, time, re, traceback
+import elementtree.ElementTree as etree #@UnresolvedImport
 import jsonrpc
 import difflib
+from tvrageapi import Episode, Show, TVRageAPI
 
 __author__ = 'ruuk'
 __url__ = 'http://code.google.com/p/tvragexbmc/'
-__date__ = '11-02-2010'
-__version__ = '1.0.2'
+__date__ = '1-26-2011'
+__version__ = '1.0.4'
 __settings__ = xbmcaddon.Addon(id='script.tvrage.com')
 __language__ = __settings__.getLocalizedString
 
@@ -44,200 +44,10 @@ ACTION_CONTEXT_MENU   = 117
 
 def LOG(msg):
 	xbmc.log(msg.encode('ascii','replace'))
-	
-class Show:
-	def __init__(self,showid='',xmltree=None,name=''):
-		self.showid = showid
-		self.name = name
-		self._airtime = ''
-		self.next = {}
-		self.last = {}
-		self.imagefile = os.path.join(THUMB_PATH,self.showid + '.jpg')
-		self.nextUnix = 0
-		self.status = ''
-		self.canceled = ''
-		self.lastEp = {'number':'?','title':'Unknown','date':''}
-		self.nextEp = {'number':'?','title':'Unknown','date':''}
-		if self.isDummy():
-			self.tree = etree.fromstring('<show id="0"><name>'+name+'</name></show>')
-		if xmltree:
-			self.tree = xmltree
-			self.processTree(xmltree)
-		
-	def isDummy(self):
-		return self.showid == '0'
-		
-	def getShowData(self):
-		if self.isDummy(): return
-		tree = API.getShowInfo(self.showid)
-		self.processTree(tree)
-		return self
-		
-	def processTree(self,show):
-		sid = show.attrib.get('id',self.showid)
-		#if no show id keep our data
-		if not sid: return
-		self.showid = sid
-		self.tree = show
-		self.imagefile = os.path.join(THUMB_PATH,self.showid + '.jpg')
-		self.name = show.find('name').text
-		if self.isDummy(): return
-		
-		try: self._airtime = re.findall('\d+:\d\d\s\w\w',show.find('airtime').text)[0]
-		except: pass
-		if not self._airtime:
-			try: self._airtime = show.find('airtime').text.rsplit('at ',1)[-1]
-			except: pass
-			
-		self.status = show.find('status').text
-		if 'Ended' in self.status or 'Cancel' in self.status:
-			ended = show.find('ended').text
-			sc = '?'
-			if ended:
-				try: sc = time.strftime('%b %d %Y',time.strptime(ended,'%Y-%m-%d'))
-				except: pass
-				if not sc:
-					try: sc = time.strftime('%b %Y',time.strptime(ended,'%Y-%m-00'))
-					except: pass
-			self.canceled = sc
-			
-		last = show.find('latestepisode')
-		self.lastEp = self.epInfo(last)
-		
-		next = show.find('nextepisode')
-		if next: self.nextEp = self.epInfo(next)
-		
-		if not os.path.exists(self.imagefile):
-			try:
-				iurl = 'http://images.tvrage.com/shows/'+str(int(self.showid[0:-3]) + 1)+'/'+self.showid + '.jpg'
-			except:
-				print "IMAGE ERROR - SHOWID: " + self.showid
-				return
-			saveURLToFile(iurl,self.imagefile)
-				
-	def airtime(self,offset=0):
-		return time.strftime('%I:%M %p',time.localtime(self.getNextUnix(offset=offset)))
-		
-	def epInfo(self,eptree):
-		try: 		return {'number':eptree.find('number').text,'title':eptree.find('title').text,'date':eptree.find('airdate').text}
-		except: 	return {'number':'?','title':'Unknown','date':'?'}
-		
-	def getSortValue(self):
-		srt = self.getNextUnix(forceupdate=True)
-		return str(srt) + '@' + self.name
-		
-	def getNextUnix(self,forceupdate=False,offset=0):
-		if forceupdate or not self.nextUnix:
-			try:
-				struct = time.strptime(self.nextEp['date'] + ' ' + self._airtime,'%Y-%m-%d %I:%M %p')
-				srt = time.mktime(struct)
-			except:
-				srt = time.time()+60*60*24*365*10
-				if self.canceled: srt += 3600
-				elif self.isDummy(): srt += 3601
-			self.nextUnix = srt
-		return self.nextUnix + (offset * 3600)
-		
-	def xml(self):
-		return etree.tostring(self.tree)
 
-		"""
-			<link>http://www.tvrage.com/Futurama</link>
-			<started>1999-03-28</started>
-			<ended/>
-			<country>USA</country>
-			<classification>Animation</classification>
-			<genres>
-			<genre>Adult Cartoons</genre>
-			<genre>Comedy</genre>
-			<genre>Sci-Fi</genre>
-			</genres>
-			<runtime>30</runtime>
-			<ended>1969-06-03</ended>
-		"""
-		
-class Episode:
-	_image_url_base = 'http://images.tvrage.com/screencaps/'
-
-	def __init__(self,season,xmltree=None,showid=''):
-		self.number = ''
-		self.season = season
-		self.prodnum = ''
-		self.airdate = ''
-		self.title = ''
-		self.epnum = ''
-		self.link = ''
-		self.epid = ''
-		self.showid = showid
-		if xmltree:
-			self.processTree(xmltree)
-	
-	def processTree(self,tree):
-		self.title = tree.find('title').text
-		self.number = tree.find('epnum').text
-		self.epnum = tree.find('seasonnum').text
-		self.airdate = tree.find('airdate').text
-		self.prodnum = tree.find('prodnum').text
-		self.link = tree.find('link').text
-		self.epid = self.link.rsplit('/',1)[-1]
-		
-	def getEPxSEASON(self):
-		return self.season + 'x' + self.epnum
-	
-	def getImageUrls(self):
-		#This seems to work but...
-		num = int(int(self.showid) / 200) + 1
-		base = self._image_url_base + str(num) + '/' + self.showid + '/' + self.epid
-		return (base + '.jpg',base + '.png')
-
-
-class TVRageAPI:
-	_search_url = 'http://services.tvrage.com/feeds/search.php?show='
-	_info_url = 'http://services.tvrage.com/feeds/episodeinfo.php?sid='
-	_eplist_url = 'http://services.tvrage.com/feeds/episode_list.php?sid='
-	
-	def getShowInfo(self,showid):
-		url = self._info_url + str(showid)
-		return self.getTree(url)
-		
-	def search(self,show):
-		try:
-			url = self._search_url + urllib.quote_plus(show.encode('utf-8'))
-		except:
-			url = self._search_url + show.replace(' ','_')
-		return self.getTree(url)
-		
-	def getEpList(self,showid):
-		url = self._eplist_url + str(showid)
-		return self.getTree(url)
-		
-	def getTree(self,url):
-		xml = self.getURLData(url,readlines=False)
-		xml = re.sub('&(?!amp;)','&amp;',xml)
-		try:
-			return etree.fromstring(xml)
-		except:
-			LOG('TVRage-Eps: BAD XML data')
-			return None
-		
-	def getEpSummary(self,url):
-		html = self.getURLData(url,readlines=False)
-		html = html.split('>Episode Summary</h')[-1]
-		return re.findall('<br>(.*?)<br>',html,re.S)[0].strip()
-	
-	def getURLData(self,url,readlines=True):
-		try:
-			w = urllib.urlopen(url)
-		except:
-			return None
-		try:
-			if readlines: linedata = w.readlines()
-			else: linedata = w.read()
-		except:
-			w.close()
-			return None
-		w.close()
-		return linedata
+def ERROR(msg):
+	LOG(msg)
+	traceback.print_exc()
 
 class SummaryDialog(xbmcgui.WindowXMLDialog):
 	def __init__( self, *args, **kwargs ):
@@ -253,7 +63,7 @@ class SummaryDialog(xbmcgui.WindowXMLDialog):
 		
 	def onClick( self, controlId ):
 		pass
-                       
+	
 	def onFocus( self, controlId ):
 		self.controlId = controlId
 	
@@ -290,7 +100,7 @@ class EpListDialog(xbmcgui.WindowXMLDialog):
 		
 	def onClick( self, controlId ):
 		pass
-                       
+
 	def onFocus( self, controlId ):
 		self.controlId = controlId
 		
@@ -367,13 +177,13 @@ class TVRageEps(xbmcgui.WindowXML):
 		self.http_address = __settings__.getSetting('xbmc_http_address')
 		self.http_user = __settings__.getSetting('xbmc_http_user')
 		self.http_pass = __settings__.getSetting('xbmc_http_pass')
-		air_offset = __settings__.getSetting('air_offset')
+		air_offset = __settings__.getSetting('airtime_offset')
 		self.skip_canceled = (__settings__.getSetting('skip_canceled') == 'true')
 		self.reverse_sort = (__settings__.getSetting('reverse_sort') == 'true')
 		self.jump_to_bottom = (__settings__.getSetting('jump_to_bottom') == 'true')
 		self.ask_on_no_match = (__settings__.getSetting('ask_on_no_match') == 'true')
 		self.hours = [1,2,3,4,5,6,12,24][int(hours)]
-		self.air_offset = [-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12][int(air_offset)]
+		self.air_offset = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,-23,-22,-21,-20,-19,-18,-17,-16,-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1][int(air_offset)]
 		
 	def isStale(self):
 		last = self.fileRead(self.lastUpdateFile)
@@ -385,7 +195,7 @@ class TVRageEps(xbmcgui.WindowXML):
 		
 	def onClick( self, controlId ):
 		pass
-                       
+
 	def onFocus( self, controlId ):
 		self.controlId = controlId
 
@@ -394,19 +204,6 @@ class TVRageEps(xbmcgui.WindowXML):
 			self.updateData()
 			self.saveData()
 		self.updateDisplay()
-		
-	def addShow(self,sid):
-		pdialog = xbmcgui.DialogProgress()
-		pdialog.create(__language__(30016))
-		pdialog.update(0)
-		for s in self.shows:
-			if s.showid == sid:
-				pdialog.close()
-				xbmcgui.Dialog().ok(__language__(30014),__language__(30015))
-				return
-		self.doAddShow(sid)
-		self.saveData()
-		pdialog.close()
 		
 	def doAddShow(self,sid,skipCanceled=False,name=''):
 		if sid == '0':
@@ -478,9 +275,10 @@ class TVRageEps(xbmcgui.WindowXML):
 	def userPickShow(self,result,append=''):
 		slist = ['< %s >' % (__language__(30040)),__language__(30048).replace('@REPLACE@',append)]
 		sids = [None,'0']
-		for s in result.findall('show'):
-			slist.append(s.find('name').text)
-			sids.append(s.find('showid').text)
+		if result:
+			for s in result.findall('show'):
+				slist.append(s.find('name').text)
+				sids.append(s.find('showid').text)
 		dialog = xbmcgui.Dialog()
 		if append: append = ': ' + append
 		idx = dialog.select(__language__(30008) + append,slist)
@@ -525,10 +323,12 @@ class TVRageEps(xbmcgui.WindowXML):
 						break
 				else:
 					result = API.search(title)
-					matches = {}
-					for f in result.findall('show'):
-						matches[f.find('name').text] = f.find('showid').text
-					close = difflib.get_close_matches(title,matches.keys(),1,0.8)
+					close = None
+					if result:
+						matches = {}
+						for f in result.findall('show'):
+							matches[f.find('name').text] = f.find('showid').text
+						close = difflib.get_close_matches(title,matches.keys(),1,0.8)
 					if close:
 						LOG("SHOW: " + title + " - MATCHES: " + close[0])
 						pdialog.update(int((ct/tot)*100),__language__(30028) + title)
@@ -563,7 +363,7 @@ class TVRageEps(xbmcgui.WindowXML):
 								__language__(30043).replace('@NUMBER1@',str(added)).replace('@NUMBER2@',str(int(ct))),
 								__language__(30044).replace('@NUMBER@',str(exist)),
 								__language__(30045).replace('@NUMBER@',str(int(skipped))))
-			
+		
 	def addShow(self,sid,okdialog=True,name=''):
 		pdialog = xbmcgui.DialogProgress()
 		pdialog.create(__language__(30016),name)
@@ -599,6 +399,7 @@ class TVRageEps(xbmcgui.WindowXML):
 		
 	def eplist(self):
 		item = self.getControl(120).getSelectedItem()
+		if not item: return
 		sid = item.getProperty('id')
 		if sid == '0':
 			xbmcgui.Dialog().ok(__language__(30049),__language__(30050))
@@ -660,7 +461,7 @@ class TVRageEps(xbmcgui.WindowXML):
 			lmax = len(self.shows)
 			ct=0
 			for show in self.shows:
-				if not show.canceled and show.showid != '0': show.getShowData()
+				if show and not show.canceled and show.showid != '0': show.getShowData()
 				if progress.iscanceled(): break
 				ct+=1
 				percent = int((float(ct)/lmax)*100)
@@ -742,14 +543,9 @@ class TVRageEps(xbmcgui.WindowXML):
 	def fileWriteList(self,file,dataList):
 		self.fileWrite(file,'\n'.join(dataList))
 
-		
-def saveURLToFile(url,file,hook=None,e_hook=None):
-	try:
-		urllib.urlretrieve(url,file,hook)
-	except:
-		if e_hook: ehook()
-
 API = TVRageAPI()
+Show.API = API
+Show.THUMB_PATH = THUMB_PATH
 
 w = TVRageEps("script-tvrage-main.xml" , os.getcwd(), "Default")
 w.doModal()
