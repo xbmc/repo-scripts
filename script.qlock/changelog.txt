@@ -1,3 +1,6 @@
+0.0.9
+-fixed: spelling in English layout
+
 0.0.8
 -fixed: two o'clock in Serbian
 
