@@ -18,8 +18,11 @@ except ImportError:
 
 __settings__ = xbmcaddon.Addon(id='script.trakt')
 __language__ = __settings__.getLocalizedString
-__version__ = "0.1.1"
+__version__ = "0.1.3"
 __cwd__ = __settings__.getAddonInfo('path')
+
+bNotify = False
+if (__settings__.getSetting( "NotifyOnSubmit" ) == 'true'): bNotify = True
 
 #Path handling
 LANGUAGE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'language' ) )
@@ -32,12 +35,11 @@ VERSION_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'version.
 AUTOEXEC_SCRIPT = '\nimport time;time.sleep(5);xbmc.executebuiltin("XBMC.RunScript(special://home/addons/script.trakt/default.py,-startup)")\n'
 
 def SendUpdate(info, progress, sType, status):
+    global bNotify
     Debug("Creating data to send", False)
     
     bUsername = __settings__.getSetting( "Username" )
-    bPassword = sha.new(__settings__.getSetting( "Password" )).hexdigest()
-    bNotify = __settings__.getSetting( "NotifyOnSubmit" )
-    
+    bPassword = sha.new(__settings__.getSetting( "Password" )).hexdigest()    
     
     if (bUsername == '' or bPassword == ''):
         Debug("Username or password not set", False)
@@ -132,7 +134,7 @@ def SendUpdate(info, progress, sType, status):
         notification("Trakt", submitAlert, 3000, __settings__.getAddonInfo("icon"))
     
 def transmit(status):
-    bNotify = __settings__.getSetting( "NotifyOnSubmit" )
+    global bNotify
 
     req = urllib2.Request("http://api.trakt.tv/post",
             status,

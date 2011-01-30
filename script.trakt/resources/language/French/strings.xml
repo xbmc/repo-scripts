@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="45001">Options Générales</string>
+	<string id="45002">Exclusions</string>
+	<string id="45003">divers</string>
+	
+	<string id="45004">Activer Trakt au démarrage</string>
+	<string id="45005">Nom d'utilisateur</string>
+	<string id="45006">Mot de passe</string>
+	<string id="45007">Afficher les notifications</string>
+	<string id="45008">Exclure les contenus adultes (pervers !)</string>
+	<string id="45009">Exclure chemin</string>
+	<string id="45010">Chemin du répertoire (sous repertoires inclus)</string>
+	<string id="45011">Vérifier si une nouvelle version est disponible au démarrage</string>
+	<string id="45012">Activer le débug</string>
+	<string id="45013">Options d'envois des informations</string>
+	<string id="45014">Activer l'envoi des informations automatique</string>
+	<string id="45015">Soumettre les infos après XX%</string>
+	
+	<string id="45050">En attente d'infos de lecture</string>
+	<string id="45051">Vous devez spécifer un nom d'utilisateur et un mot de passe!</string>
+	<string id="45052">Envoyé %MOVIENAME% (%YEAR%)</string>
+	<string id="45053">Envoyé %TVSHOW% %SEASON%x%EPISODE%</string>
+</strings>
