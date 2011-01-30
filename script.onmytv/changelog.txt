@@ -5,3 +5,6 @@ Version 0.0.2
     * Fixed cache bug (listings were not being updated)
     * Changed Addon Name to "On-My.TV Listings"
     * Fixed vertical positioning of episode summary when no screen cap is available.
+    
+Version 0.0.3
+    * Added new icon
