@@ -1,3 +1,7 @@
+2.2.5
+- added: Added storing of Bierdopje show ids to reduce the number of api calls. thx mr_blobby
+- use getAddonInfo('profile') for temporary subtitle location 
+
 2.2.4
 - fixed: Titulky service login, thx to Libor
 

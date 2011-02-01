@@ -9,10 +9,12 @@ import unicodedata
 import shutil
 import socket
 
-_ = sys.modules[ "__main__" ].__language__
+_              = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
-__settings__ = sys.modules[ "__main__" ].__settings__
-__cwd__ = sys.modules[ "__main__" ].__cwd__
+__settings__   = sys.modules[ "__main__" ].__settings__
+__cwd__        = sys.modules[ "__main__" ].__cwd__
+__profile__    = sys.modules[ "__main__" ].__profile__ 
+
 
 STATUS_LABEL = 100
 LOADING_IMAGE = 110
@@ -115,7 +117,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       else:
         self.file_name = "%s (%s)" % (self.title.encode('utf-8'), str(self.year),)    
 
-    self.tmp_sub_dir = os.path.join( xbmc.translatePath( "special://profile/" ), "addon_data", os.path.basename( __cwd__ ),"sub_tmp" )
+    self.tmp_sub_dir = os.path.join( __profile__ ,"sub_tmp" )
 
     if not self.tmp_sub_dir.endswith(':') and not os.path.exists(self.tmp_sub_dir):
       os.makedirs(self.tmp_sub_dir)

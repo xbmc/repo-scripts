@@ -1,10 +1,11 @@
 import os, sys, re, xbmc, xbmcgui, string, urllib, ElementTree as XMLTree
 from utilities import log
 
-_ = sys.modules[ "__main__" ].__language__
-
-apiurl   = "http://api.bierdopje.com/"
-apikey   = "369C2ED4261DE9C3"
+_                = sys.modules[ "__main__" ].__language__
+__settings__     = sys.modules[ "__main__" ].__settings__
+apiurl           = "http://api.bierdopje.com/"
+apikey           = "369C2ED4261DE9C3"
+showids_filename = os.path.join( __settings__.getAddonInfo('profile') ,"bierdopje_show_ids.txt" )
 
 #====================================================================================================================
 # Functions
@@ -49,24 +50,34 @@ def gettextelements(xml, path):
     return textelements
 
 def getshowid(showname):
+    showids = {}
+    if os.path.isfile(showids_filename):
+        showids_filedata = file(showids_filename,'r').read()
+        showids = eval(showids_filedata)
+        if showname in showids:
+            log( __name__ ," show id for '%s' is '%s' (from cachefile '%s')" % (showname, showids[showname], showids_filename))
+            return showids[showname]
     response = apicall("GetShowByName",[showname])
     if response is not None:
         showid = gettextelements(response,"response/showid")
         if len(showid) == 1:
             log( __name__ ," show id for '%s' is '%s'" % (showname, str(showid[0])) )
+            showids[showname] = str(showid[0])
+            file(showids_filename,'w').write(repr(showids))
             return str(showid[0])
-        else:
+        elif ("'" in showname):
             response = apicall("GetShowByName",[string.replace(showname,"'","''")])
             if response is not None:
                 showid = gettextelements(response,"response/showid")
                 if len(showid) == 1:
                     log( __name__ ," show id for '%s' is '%s' (replaced ' with '')" % (string.replace(showname,"'","''"), str(showid[0])) )
+                    showids[showname] = str(showid[0])
+                    file(showids_filename,'w').write(repr(showids))
                     return str(showid[0])
-                else:
-                    okdialog = xbmcgui.Dialog()
-                    ok = okdialog.ok("Error", "Failed to get a show id from Bierdopje for " + showname)
-                    log( __name__ ," failed to get a show id for '%s'" % showname )
-        
+        okdialog = xbmcgui.Dialog()
+        ok = okdialog.ok("Error", "Failed to get a show id from Bierdopje for " + showname)
+        log( __name__ ," failed to get a show id for '%s'" % showname )
+
 
 def isexactmatch(subsfile, moviefile):
     match = re.match("(.*)\.", moviefile)
