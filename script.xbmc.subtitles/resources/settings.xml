@@ -29,6 +29,7 @@
       <setting id="Itasa" type="bool" label="Itasa (Italiansubs.net, TV Shows and Italian only)" default="false"/>
       <setting id="ITuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30126" default=""/>
       <setting id="ITpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30127" default=""/>
+      <setting id="SubDB" type="bool" label="theSubDB.com" default="false"/>
     </category>
     <category label="30106">
       <setting id="defmovieservice" type="fileenum" mask="/" label="30113" default="OpenSubtitles" values="/resources/lib/services" />

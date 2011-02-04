@@ -1,3 +1,8 @@
+2.2.6
+- added: theSubDB, thanks to jrhames
+- added: open addon settings from the service window
+- removed: legacy window support
+
 2.2.5
 - added: Added storing of Bierdopje show ids to reduce the number of api calls. thx mr_blobby
 - use getAddonInfo('profile') for temporary subtitle location 
