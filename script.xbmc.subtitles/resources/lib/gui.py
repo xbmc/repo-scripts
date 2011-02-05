@@ -116,7 +116,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       else:
         self.file_name = "%s (%s)" % (self.title.encode('utf-8'), str(self.year),)    
 
-    self.tmp_sub_dir = xbmc.translatePath(os.path.join( __profile__ ,"sub_tmp" ))
+    self.tmp_sub_dir = os.path.join( __profile__ ,"sub_tmp" )
 
     if not self.tmp_sub_dir.endswith(':') and not os.path.exists(self.tmp_sub_dir):
       os.makedirs(self.tmp_sub_dir)
@@ -238,7 +238,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( STATUS_LABEL ).setLabel( msg )
       else:
         self.getControl( STATUS_LABEL ).setLabel( _( 657 ) )
-
       self.setFocusId( SERVICES_LIST )
       self.getControl( SERVICES_LIST ).selectItem( 0 )
 
@@ -274,7 +273,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         file_name = "%s.%s%s" % ( sub_name, sub_lang, sub_ext )
       else:
         file_name = "%s%s" % ( sub_name, sub_ext )
-      file_from = os.path.join(self.tmp_sub_dir, "zipsubs.zip").replace('\\','/')
+      file_from = file.replace('\\','/')
       file_to = os.path.join(self.sub_folder, file_name).replace('\\','/')
       try:
         shutil.copyfile(file_from, file_to)

@@ -1,3 +1,6 @@
+2.2.7
+- fixed: reverted part of 5ae14804a9c0c7dff49af852759f9a15ba337a23, should fix Legendas.TV issue. 
+
 2.2.6
 - added: theSubDB, thanks to jrhames
 - added: open addon settings from the service window
