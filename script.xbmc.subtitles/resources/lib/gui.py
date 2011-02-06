@@ -33,6 +33,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
   def set_allparam(self):       
     temp = False
     rar = False
+    self.newWindow = True
     movieFullPath = urllib.unquote(xbmc.Player().getPlayingFile())
     path = __settings__.getSetting( "subfolder" ) == "true"                 # True for movie folder
     sub_folder = xbmc.translatePath(__settings__.getSetting( "subfolderpath" ))
@@ -178,7 +179,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
       log( __name__ ,"Languages: [%s] [%s] [%s]"   % (self.language_1, self.language_2, self.language_3,))
       log( __name__ ,"Parent Folder Search: [%s]"  % self.parsearch)
 
-      self.list_services()
+      try:
+        self.list_services()
+      except:
+        self.newWindow = False
+        self.list_services()
 
       try:
         self.Search_Subtitles()
@@ -238,10 +243,16 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( STATUS_LABEL ).setLabel( msg )
       else:
         self.getControl( STATUS_LABEL ).setLabel( _( 657 ) )
-      self.setFocusId( SERVICES_LIST )
-      self.getControl( SERVICES_LIST ).selectItem( 0 )
+      if self.newWindow:  
+        self.setFocusId( SERVICES_LIST )
+        self.getControl( SERVICES_LIST ).selectItem( 0 )
+      else:
+        self.list_services()
+        self.setFocusId( SUBTITLES_LIST )
+        self.getControl( SUBTITLES_LIST ).selectItem( 0 )  
 
     else:
+      if not self.newWindow: self.list_services()
       subscounter = 0
       for item in self.subtitles_list:
         listitem = xbmcgui.ListItem( label=item["language_name"], label2=item["filename"], iconImage=item["rating"], thumbnailImage=item["language_flag"] )
@@ -292,8 +303,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
     exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
     if len(files) < 1 :
       self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
-      self.setFocusId( SERVICES_LIST )
-      self.getControl( SERVICES_LIST ).selectItem( 0 )
+      if self.newWindow:  
+        self.setFocusId( SERVICES_LIST )
+        self.getControl( SERVICES_LIST ).selectItem( 0 )
+      else:
+        self.list_services()
     else :    
       self.getControl( STATUS_LABEL ).setLabel(  _( 652 ) )
       un.extract( zip_subs, self.tmp_sub_dir )
@@ -324,8 +338,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
       self.exit_script()
     else:
       self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
-      self.setFocusId( SERVICES_LIST )
-      self.getControl( SERVICES_LIST ).selectItem( 0 )
+      if self.newWindow:  
+        self.setFocusId( SERVICES_LIST )
+        self.getControl( SERVICES_LIST ).selectItem( 0 )
+      else:
+        self.list_services()           
+        self.setFocusId( SUBTITLES_LIST )
+        self.getControl( SUBTITLES_LIST ).selectItem( 0 )                       
 
 ###-------------------------- Create name  -------------################
 
@@ -362,30 +381,52 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
   def list_services( self ):
     self.list = []
-    self.getControl( SERVICES_LIST ).reset()
-    for serv in self.service_list:
-      listitem = xbmcgui.ListItem( serv )
-      self.list.append(serv)
-      listitem.setProperty( "man", "false" )
-      self.getControl( SERVICES_LIST ).addItem( listitem )
-
-    if self.mansearch :
-        listitem = xbmcgui.ListItem( _( 612 ) )
-        listitem.setProperty( "man", "true" )
-        self.list.append("Man")
+    if self.newWindow:
+      self.getControl( SERVICES_LIST ).reset()
+      for serv in self.service_list:
+        listitem = xbmcgui.ListItem( serv )
+        self.list.append(serv)
+        listitem.setProperty( "man", "false" )
         self.getControl( SERVICES_LIST ).addItem( listitem )
 
-    if self.parsearch :
-        listitem = xbmcgui.ListItem( _( 747 ) )
-        listitem.setProperty( "man", "true" )
-        self.list.append("Par")
-        self.getControl( SERVICES_LIST ).addItem( listitem )
+      if self.mansearch :
+          listitem = xbmcgui.ListItem( _( 612 ) )
+          listitem.setProperty( "man", "true" )
+          self.list.append("Man")
+          self.getControl( SERVICES_LIST ).addItem( listitem )
+
+      if self.parsearch :
+          listitem = xbmcgui.ListItem( _( 747 ) )
+          listitem.setProperty( "man", "true" )
+          self.list.append("Par")
+          self.getControl( SERVICES_LIST ).addItem( listitem )
         
-    listitem = xbmcgui.ListItem( _( 762 ) )
-    listitem.setProperty( "man", "true" )
-    self.list.append("Set")
-    self.getControl( SERVICES_LIST ).addItem( listitem )
-       
+      listitem = xbmcgui.ListItem( _( 762 ) )
+      listitem.setProperty( "man", "true" )
+      self.list.append("Set")
+      self.getControl( SERVICES_LIST ).addItem( listitem )
+              
+    else:
+        self.getControl( SUBTITLES_LIST ).reset()
+        label = ""
+        for serv in self.service_list:
+            if serv != self.service:
+              label2 = "[COLOR=FF0084ff]%s%s[/COLOR]" %(_( 610 ), serv,)
+              listitem = xbmcgui.ListItem( label,label2 )
+              self.list.append(serv)
+              self.getControl( SUBTITLES_LIST ).addItem( listitem )
+
+        if self.mansearch :
+            label2 = "[COLOR=FF00FF00]%s[/COLOR]" % ( _( 612 ) )
+            listitem = xbmcgui.ListItem( label,label2 )
+            self.list.append("Man")
+            self.getControl( SUBTITLES_LIST ).addItem( listitem )
+
+        if self.parsearch :
+            label2 = "[COLOR=FF00FF00]%s[/COLOR]" % ( _( 747 ) )
+            listitem = xbmcgui.ListItem( label,label2 )
+            self.list.append("Par")
+            self.getControl( SUBTITLES_LIST ).addItem( listitem )   
 
 ###-------------------------- Manual search Keyboard  -------------################
 
@@ -422,7 +463,23 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
   def onClick( self, controlId ):
     if controlId == 120:
-      self.Download_Subtitles( self.getControl( SUBTITLES_LIST ).getSelectedPosition() )
+      if self.newWindow:
+        self.Download_Subtitles( self.getControl( SUBTITLES_LIST ).getSelectedPosition() )
+      else:
+        selection = str(self.list[self.getControl( SUBTITLES_LIST ).getSelectedPosition()])
+        log( __name__ ,"In 'On click' selected : [%s]" % (selection, ) )
+        if selection.isdigit():
+          log( __name__ , "Selected : [%s]" % (selection, ) )
+          self.Download_Subtitles( int(selection) )
+        else:
+          if selection == "Man":
+            self.keyboard(False)
+          elif selection == "Par":
+            self.keyboard(True)
+          else:
+            self.service = selection
+            self.Search_Subtitles()
+
     elif controlId == 150:     
       selection = str(self.list[self.getControl( SERVICES_LIST ).getSelectedPosition()])
       log( __name__ ,"In 'On click' selected : [%s]" % (selection, )  )

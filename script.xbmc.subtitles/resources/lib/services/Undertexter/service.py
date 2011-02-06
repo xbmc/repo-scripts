@@ -111,7 +111,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     id = subtitles_list[pos][ "id" ]
     language = subtitles_list[pos][ "language_name" ]
     if string.lower(language) == "swedish":
-        url = main_url + "utext.php?id=" + id
+        url = main_url + "laddatext.php?id=" + id
     if string.lower(language) == "english":
         url = eng_download_url + "download.php?id=" + id
     log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))

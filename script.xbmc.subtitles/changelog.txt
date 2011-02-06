@@ -1,3 +1,10 @@
+2.2.9
+- fixed: undertexter download
+
+2.2.8
+- reverted: legacy window support
+- fixed: theSubDB service extraction
+
 2.2.7
 - fixed: reverted part of 5ae14804a9c0c7dff49af852759f9a15ba337a23, should fix Legendas.TV issue. 
 

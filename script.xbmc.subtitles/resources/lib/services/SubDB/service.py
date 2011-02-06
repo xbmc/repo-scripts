@@ -90,18 +90,15 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	link = subtitles_list[pos][ "link" ]
 	file = os.path.splitext(subtitles_list[pos]["filename"])[0]
 	ext = ""
-	
 	req = urllib2.Request(link)
 	req.add_header('User-Agent', user_agent)
 	try:
 		response = urllib2.urlopen(req)
 		ext = response.info()['Content-Disposition'].split(".")[1]
-		
-		local_file = open(zip_subs, "w" + "b")
+		filename = os.path.join(tmp_sub_dir, "%s.%s" % (file, ext))
+		local_file = open(filename, "w" + "b")
 		local_file.write(response.read())
 		local_file.close()
-
-		filename = "%s.%s" % (file, ext)
 		return False, language, filename #standard output
 	except:
 		return False , language, "" #standard output	
