@@ -30,7 +30,8 @@
         h12 = "100,101,102,103,104"
         shiftHour = "0"
         shiftOnHalfHour ="0"
-        shiftOn20 ="1"
-        />        
+        shiftOn25 = "1"
+        shiftOn20 ="0"
+        />
         
 </layout>

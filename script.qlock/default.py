@@ -99,6 +99,11 @@ class Main:
       to = int(times[0].getAttribute("shiftOn20"))
       if self.now.minute > 34 and self.now.minute != 0:
         to += int(times[0].getAttribute("shiftOnHalfHour"))
+      if self.now.minute > 24 and self.now.minute != 0:
+        try:
+          to += int(times[0].getAttribute("shiftOn25"))
+        except:
+          pass
     else:
       to = 0 
     
