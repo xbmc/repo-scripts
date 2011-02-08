@@ -1,3 +1,7 @@
+2.3.0
+- fixed: temporary folder needs xbmc.translatePath()
+- removed Addic7ed service, requested by alex from Addic7ed.com
+
 2.2.9
 - fixed: undertexter download
 

@@ -61,7 +61,16 @@ def geturl(url):
     log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
     try:
         response = my_urlopener.open(url)
-        content    = response.read()
+        content = response.read()
+        return_url = response.geturl()
+        if url != return_url:
+            log( __name__ ,"%s Getting redirected url: %s" % (debug_pretext, return_url))
+            if (' ' in return_url):
+                log( __name__ ,"%s Redirected url contains space (workaround a bug in python redirection: 'http://bugs.python.org/issue1153027', should be solved, but isn't)" % (debug_pretext))
+                return_url = return_url.replace(' ','%20')
+            response = my_urlopener.open(return_url)
+            content = response.read()
+            return_url = response.geturl()
     except:
         log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
         content    = None
@@ -123,7 +132,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             packed = True
         elif header == 'PK':
             local_tmp_file = os.path.join(tmp_sub_dir, "undertexter.zip")
-            packed = True                   
+            packed = True
         else: # never found/downloaded an unpacked subtitles file, but just to be sure ...
             local_tmp_file = os.path.join(tmp_sub_dir, "undertexter.srt") # assume unpacked subtitels file is an '.srt'
             subs_file = local_tmp_file
@@ -138,21 +147,34 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
         if packed:
             files = os.listdir(tmp_sub_dir)
             init_filecount = len(files)
+            max_mtime = 0
             filecount = init_filecount
+            # determine the newest file from tmp_sub_dir
+            for file in files:
+                mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+                if mtime > max_mtime:
+                    max_mtime =  mtime
+            init_max_mtime = max_mtime
+            time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
             xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
             waittime  = 0
-            while (filecount == init_filecount) and (waittime < 20): # nothing yet extracted
+            while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
                 time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
                 files = os.listdir(tmp_sub_dir)
                 filecount = len(files)
+                # determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
+                for file in files:
+                    mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+                    if mtime > max_mtime:
+                        max_mtime =  mtime
                 waittime  = waittime + 1
             if waittime == 20:
                 log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
             else:
-                log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))        
+                log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
                 for file in files:
-                    if string.split(file, '.')[-1] in ['srt', 'sub', 'txt']: # unpacked file is a subtitle file
-                        log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))        
+                    # there could be more subtitle files in tmp_sub_dir, so make sure we get the newly created subtitle file
+                    if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
+                        log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))
                         subs_file = os.path.join(tmp_sub_dir, file)
         return False, language, subs_file #standard output
-            

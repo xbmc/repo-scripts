@@ -117,7 +117,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       else:
         self.file_name = "%s (%s)" % (self.title.encode('utf-8'), str(self.year),)    
 
-    self.tmp_sub_dir = os.path.join( __profile__ ,"sub_tmp" )
+    self.tmp_sub_dir = os.path.join( xbmc.translatePath(__profile__) ,"sub_tmp" )
 
     if not self.tmp_sub_dir.endswith(':') and not os.path.exists(self.tmp_sub_dir):
       os.makedirs(self.tmp_sub_dir)

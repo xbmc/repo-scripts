@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 # Subdivx.com subtitles, based on a mod of Undertext subtitles
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
@@ -24,7 +24,7 @@ debug_pretext = "subdivx"
 """
 
 subtitle_pattern =  "<div\sid=\"buscador_detalle_sub\">(.+?)</div><div\sid=\"buscador_detalle_sub_datos\"><b>Downloads:</b>(.+?)<b>Cds:</b>(.+?)<b>Comentarios:</b>\s.+?\s<b>Formato:</b>.+?<b>Subido\spor:</b>\s<a\sclass=\"link1\"\shref=.+?</a>\s<.+?>.*?<a\srel=\"nofollow\"\starget=\"new\"\shref=\"http://www.subdivx.com/bajar.php\?id=(.+?)&u=(.+?)\">"
-# group(1) = user comments, may content filename, group(2)= downloads used for ratings, group(3) = #files, group(4) = id, group(5) = server 
+# group(1) = user comments, may content filename, group(2)= downloads used for ratings, group(3) = #files, group(4) = id, group(5) = server
 
 
 
@@ -37,7 +37,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
     page = 1
     if languageshort == "es":
         url = main_url + "index.php?accion=5&masdesc=&oxdown=1&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)
-                        
+
     content = geturl(url)
     log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
     while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
@@ -63,16 +63,16 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
         page = page + 1
         url = main_url + "index.php?accion=5&masdesc=&oxdown=1&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)
         content = geturl(url)
-        
+
     # Bubble sort, to put syncs on top
-    for n in range(0,len(subtitles_list)): 
-        for i in range(1, len(subtitles_list)): 
+    for n in range(0,len(subtitles_list)):
+        for i in range(1, len(subtitles_list)):
             temp = subtitles_list[i]
             if subtitles_list[i]["sync"] > subtitles_list[i-1]["sync"]:
                 subtitles_list[i] = subtitles_list[i-1]
                 subtitles_list[i-1] = temp
 
-        
+
 
 
 
@@ -129,7 +129,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             packed = True
         elif header == 'PK':
             local_tmp_file = os.path.join(tmp_sub_dir, "subdivx.zip")
-            packed = True                   
+            packed = True
         else: # never found/downloaded an unpacked subtitles file, but just to be sure ...
             local_tmp_file = os.path.join(tmp_sub_dir, "subdivx.srt") # assume unpacked sub file is an '.srt'
             subs_file = local_tmp_file
@@ -147,20 +147,34 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             init_filecount = len(files)
             log( __name__ ,"%s subdivx: número de init_filecount %s" % (debug_pretext, init_filecount)) #EGO
             filecount = init_filecount
+            max_mtime = 0
+            # determine the newest file from tmp_sub_dir
+            for file in files:
+                mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+                if mtime > max_mtime:
+                    max_mtime =  mtime
+            init_max_mtime = max_mtime
+            time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
             xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
             waittime  = 0
-            while (filecount == init_filecount) and (waittime < 20): # nothing yet extracted
+            while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
                 time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
                 files = os.listdir(tmp_sub_dir)
                 filecount = len(files)
+                # determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
+                for file in files:
+                    mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+                    if mtime > max_mtime:
+                        max_mtime =  mtime
                 waittime  = waittime + 1
             if waittime == 20:
                 log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
             else:
-                log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))        
+                log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
                 for file in files:
-                    if string.split(file, '.')[-1] in ['srt', 'sub', 'txt']: # unpacked file is a subtitle file
-                        log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))        
+                    # there could be more subtitle files in tmp_sub_dir, so make sure we get the newly created subtitle file
+                    if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
+                        log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))
                         subs_file = os.path.join(tmp_sub_dir, file)
         return False, language, subs_file #standard output
-            
+
