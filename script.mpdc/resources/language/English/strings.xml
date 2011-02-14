@@ -4,7 +4,7 @@
     <string id="30000">MPD host</string>
     <string id="30001">MPD port</string>
     <string id="30002">Profile name</string>
-    <string id="30003">Not Playing</string>
+    <string id="30003">Stopped</string>
     <string id="30004">Paused</string>
     <string id="30005">Not connected</string>
     <string id="30006">Playing</string>
@@ -12,7 +12,7 @@
     <string id="30008">Select profile</string>
     <string id="30009">Available</string>
     <string id="30010">Offline</string>
-    <string id="30011">Connected to</string>
+    <string id="30011">Connected</string>
     <string id="112">Settings</string>
     <string id="30110">Profile 1</string>
     <string id="30111">Profile 2</string>
@@ -22,7 +22,7 @@
     <string id="30015">Connecting</string>
     <string id="30016">Getting queue</string>
     <string id="30017">Disconnecting</string>
-    <string id="30018">was added to queue</string>
+    <string id="30018">Added to queue</string>
     <string id="30019">Getting playlists</string>
     <string id="30020">Getting artists</string>
     <string id="30021">Playlist saved</string>
@@ -48,22 +48,25 @@
     <!-- Do not translate - block end -->
     <string id="30040">Show song progress when playing</string>
     <string id="30041">Enabled (show this profile in selection dialog)</string>
-	<string id="30042">Artists : %sAlbums : %sTracks : %sDB Time : %s</string>
 	<string id="30043">Album art fetching</string>
 	<string id="30044">Store/cache album images to disk</string>
 	<string id="30045">Off</string>
 	<string id="30046">Allmusic.com</string>
 	<string id="30047">local</string>
 	<string id="30048">MPD media root (for local album fetch)</string>
-	<string id="30049">Image mask to search for</string>	
+	<string id="30049">Image mask to search for</string>
 	<string id="30050">Use IDLE command</string>
 	<string id="30051">Enable notification</string>
+	<string id="30052">Force server settings on startup</string>
+	<string id="30053"> - Random</string>
+	<string id="30054"> - Repeat</string>
+	<string id="30055"> - Single</string>
+	<string id="30056"> - Consume</string>
     <string id="200">Queue</string>
     <string id="201">Files</string>
     <string id="202">Artists</string>
     <string id="203">Playlists</string>
     <string id="204">Clear queue</string>
     <string id="205">Save As</string>
-    <string id="206">Consuming mode</string>
 	</strings>
 

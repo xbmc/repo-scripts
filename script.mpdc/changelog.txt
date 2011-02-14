@@ -1,3 +1,11 @@
+[B]1.0.1[/B]
+- changed consume radiobutton to an icon button
+- fixed: navigation using arrows between player control buttons was not always working
+- fixed: display song info properly when MPD is listening to stream
+- added: single mode setting
+- added: server settings (consume,single,repeat,random) can be forced to server when connecting
+- removed: support for skins other than Confluence ('till I'll create icons for single, consume)
+- removed: displaying server stats
 [B]1.0.0[/B]
 - added: album art fetching using allmusic.com (images can be optionaly stored/cached for further reuse)
 - added: album art fetching using local folder (together with per-profile setting 'MPD Media root' album arts are retrieved from folder of played media)

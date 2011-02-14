@@ -12,7 +12,7 @@
     <string id="30008">Vyberte profil</string>
     <string id="30009">Dostupný</string>
     <string id="30010">Offline</string>
-    <string id="30011">Připojen k</string>
+    <string id="30011">Připojen</string>
     <string id="112">Nastavení</string>
     <string id="30110">Profil 1</string>
     <string id="30111">Profil 2</string>
@@ -22,7 +22,7 @@
     <string id="30015">Připojuji</string>
     <string id="30016">Získávám frontu</string>
     <string id="30017">Odpojuji</string>
-    <string id="30018">byl přidán do fronty</string>
+    <string id="30018">Přidán do fronty</string>
     <string id="30019">Získávám playlisty</string>
     <string id="30020">Získávám seznam autorů</string>
     <string id="30021">Playlist uložen</string>
@@ -46,7 +46,6 @@
     <string id="30039">Přehrávám stream</string>
     <string id="30040">Zobrazovat čas přehrávané skladby</string>
     <string id="30041">Povolen (Profil bude zobrazen při výběru)</string>
-	<string id="30042">Autorů : %sAlb : %sSkladeb : %sČas : %s</string>
 	<string id="30044">Ukládat obaly alb na disk</string>
 	<string id="30043">Stahovat obaly alb</string>
 	<string id="30044">Ukládat stažené obaly na disk</string>
@@ -57,12 +56,16 @@
 	<string id="30049">Maska souboru s obalem</string>
 	<string id="30050">Použít příkaz IDLE</string>
 	<string id="30051">Povolit oznamování</string>
+	<string id="30052">Vynutit nastavení servru při startu</string>
+	<string id="30053"> - Random</string>
+	<string id="30054"> - Repeat</string>
+	<string id="30055"> - Single</string>
+	<string id="30056"> - Consume</string>
     <string id="200">Fronta</string>
     <string id="201">Soubory</string>
     <string id="202">Autoři</string>
     <string id="203">Playlisty</string>
     <string id="204">Vyprázdnit</string>
     <string id="205">Uložit jako</string>
-    <string id="206">Conzumovací mód</string>
 	</strings>
 

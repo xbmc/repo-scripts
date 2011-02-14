@@ -1,5 +1,5 @@
 <window>
-  <defaultcontrol>1101</defaultcontrol>
+  <defaultcontrol>1000</defaultcontrol>
   <coordinates>
     <system>1</system>
     <posx>0</posx>
@@ -76,7 +76,7 @@
 			<align>left</align>
 			<textcolor>white</textcolor>
 			<label></label>
-		</control>		
+		</control>
 		<control type="label" id="992">
 			<description>textarea</description>
 			<posx>610</posx>
@@ -117,10 +117,10 @@
 			<width>220</width>
 			<height>500</height>
 			<viewtype>list</viewtype>
-			<onright>666</onright>
-			<onup>666</onup>
-			<ondown>1000</ondown>
-			<scrolltime>200</scrolltime>			
+			<onright>2000</onright>
+			<onup>2000</onup>
+			<ondown>3000</ondown>
+			<scrolltime>200</scrolltime>
 				<content>
 				  <item id="1001">
 					<label>SCRIPT200</label>
@@ -141,17 +141,17 @@
 				  <item id="1004">
 					<label>SCRIPT203</label>
 					<visible>true</visible>
-					<onclick>Control.SetFocus(1401)</onclick>					
-				  </item>				  
-				</content>						    
-			      <itemlayout width="170" height="50">						 
+					<onclick>Control.SetFocus(1401)</onclick>
+				  </item>
+				</content>
+			      <itemlayout width="170" height="50">
 						<control type="image">
 							<posx>0</posx>
 							<posy>0</posy>
 							<width>220</width>
 							<height>40</height>
 							<texture>Button_Side_NoFocus.png</texture>
-						</control> 							
+						</control> 
 						<control type="label">
 							<posx>190</posx>
 							<posy>0</posy>
@@ -185,157 +185,99 @@
 							<info>ListItem.Label</info>
 						</control>
 				  </focusedlayout>
-        </control>
-		<control type="label" id="1009">
-			<description>textarea</description>
-			<posx>20</posx>
-			<posy>400</posy>
-			<width>240</width>
-			<height>220</height>
-			<textcolor>white</textcolor>
-			<aligny>center</aligny>
-		</control>
+			</control>
     </control>
     <control type="group">
-	  <posx>1000</posx>
+	  <posx>1070</posx>
       <posy>25</posy>
       <description>player control group</description>
-		<control type="button" id="666">
+		<control type="list" id="2000">
 			<posx>0</posx>
 			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>PlayerControls-PrevNF.png</texturenofocus>
-			<texturefocus>PlayerControls-PrevFO.png</texturefocus>
-			<onright>667</onright>
+			<width>200</width>
+			<height>50</height>
+			<viewtype>wrap</viewtype>
 			<onleft>1000</onleft>
-			<ondown>1000</ondown>
+			<ondown>3000</ondown>
+			<onright>2000</onright>
+			<orientation>horizontal</orientation>
+			<focusposition>0</focusposition>
+			<scrolltime>200</scrolltime>
+				<itemlayout width="50" height="50">	
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<info>ListItem.ActualIcon</info>
+					</control>
+				</itemlayout>
+				<focusedlayout width="50" height="50">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<info>ListItem.ActualIcon</info>
+					</control>
+					 <control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<info>ListItem.Thumb</info>
+						<visible>Control.HasFocus(2000)</visible>
+					</control>
+				</focusedlayout>
 		</control>
-
-		<control type="button" id="667">
-			<posx>50</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>PlayerControls-StopNF.png</texturenofocus>
-			<texturefocus>PlayerControls-StopFO.png</texturefocus>
-			<onleft>666</onleft>
-			<onright>668</onright>
-			<ondown>1000</ondown>
-		</control>
-		
-		<control type="button" id="668">
-			<posx>100</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>PlayerControls-PlayNF.png</texturenofocus>
-			<texturefocus>PlayerControls-PlayFO.png</texturefocus>
-			<onleft>667</onleft>
-			<onright>669</onright>
-			<ondown>1000</ondown>
-		</control>
-		<control type="button" id="670">
-			<posx>100</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>PlayerControls-PauseNF.png</texturenofocus>
-			<texturefocus>PlayerControls-PauseFO.png</texturefocus>
-			<onleft>667</onleft>
-			<onright>669</onright>
-			<ondown>1000</ondown>
-		</control>
-
-		<control type="button" id="669">
-			<posx>150</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>PlayerControls-NextNF.png</texturenofocus>
-			<texturefocus>PlayerControls-NextFO.png</texturefocus>
-			<onleft>668</onleft>
-			<onright>702</onright>
-			<ondown>1000</ondown>
-		</control>
-		<control type="progress" id="671">
+		<control type="progress" id="2001">
 			<posx>0</posx>
 			<posy>55</posy>
 			<height>10</height>
 			<width>200</width>
-		</control>			
-</control>		
+		</control>
+</control>
 <control type="group">
-      <posx>930</posx>
+      <posx>1075</posx>
       <posy>670</posy>
-	<control type="button" id="702">
+		<control type="list" id="3000">
 			<posx>0</posx>
 			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>PlayerControls-RandomNF.png</texturenofocus>
-			<texturefocus>PlayerControls-RandomFO.png</texturefocus>
-			<onright>700</onright>
+			<width>200</width>
+			<height>50</height>
 			<ondown>1000</ondown>
-			<onleft>669</onleft>
-		</control>
-
-		<control type="button" id="703">
-			<posx>0</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>PlayerControls-RandomOnNF.png</texturenofocus>
-			<texturefocus>PlayerControls-RandomOnFO.png</texturefocus>
-			<onright>700</onright>
-			<ondown>1000</ondown>
-			<onleft>669</onleft>
-		</control>
-
-		<control type="button" id="700">
-			<posx>50</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>PlayerControls-RepeatNF.png</texturenofocus>
-			<texturefocus>PlayerControls-RepeatFO.png</texturefocus>
-			<onleft>702</onleft>
-			<onright>704</onright>
-			<ondown>1000</ondown>
-		</control>
-
-		<control type="button" id="701">
-			<posx>50</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>PlayerControls-RepeatAllNF.png</texturenofocus>
-			<texturefocus>PlayerControls-RepeatAllFO.png</texturefocus>
-			<onleft>702</onleft>
-			<onright>704</onright>
-			<ondown>1000</ondown>
-		</control>
-
-		<control type="radiobutton" id="704">
-			<posx>100</posx>
-			<posy>0</posy>
-			<width>248</width>
-			<height>48</height>
-			<visible>true</visible>
-			<textoffsetx>10</textoffsetx>
-			<textoffsety>0</textoffsety>	
-			<label>SCRIPT206</label>
-			<onleft>700</onleft>
-			<ondown>1000</ondown>
+			<onup>2000</onup>
+			<onleft>2000</onleft>
+			<viewtype>wrap</viewtype>
+			<orientation>horizontal</orientation>
+			<focusposition>0</focusposition>
+			<scrolltime>200</scrolltime>
+			 <itemlayout width="50" height="50">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<info>ListItem.ActualIcon</info>
+					</control>
+			</itemlayout>
+			<focusedlayout width="50" height="50">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<info>ListItem.ActualIcon</info>
+				</control>
+				 <control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<info>ListItem.Thumb</info>
+					<visible>Control.HasFocus(3000)</visible>
+				</control>
+			</focusedlayout>
 		</control>
     </control>
     <control type="group">

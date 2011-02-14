@@ -128,10 +128,10 @@ class SelectMPDProfile ( xbmcgui.WindowXMLDialog ) :
 
 skin = 'Confluence'
 current_skin=str(xbmc.getSkinDir().lower())
-if current_skin.find('pm3') > -1:
-	skin = 'PM3.HD'
-if current_skin.find('transparency') > -1:
-	skin = 'transparency'
+#if current_skin.find('pm3') > -1:
+#	skin = 'PM3.HD'
+#if current_skin.find('transparency') > -1:
+#	skin = 'transparency'
 skip_selector = __addon__.getSetting('skip-selector')
 if 'true' == skip_selector:
 	ui = gui.GUI( 'mpd-client-main.xml',__addon__.getAddonInfo('path'), skin,'0')

@@ -1,5 +1,5 @@
 <window>
-  <defaultcontrol>1101</defaultcontrol>
+  <defaultcontrol>1000</defaultcontrol>
   <coordinates>
     <system>1</system>
     <posx>0</posx>
@@ -49,7 +49,7 @@
 			<width>240</width>
 			<height>30</height>
 			<align>right</align>
-			<textcolor>white</textcolor>       
+			<textcolor>white</textcolor>
 			<label></label>
 		</control>
 	</control>
@@ -76,7 +76,7 @@
 			<align>left</align>
 			<textcolor>white</textcolor>
 			<label></label>
-		</control>			
+		</control>
 		<control type="label" id="992">
 			<description>textarea</description>
 			<posx>610</posx>
@@ -116,10 +116,10 @@
 			<width>220</width>
 			<height>500</height>
 			<viewtype>list</viewtype>
-			<onright>666</onright>
-			<onup>666</onup>
-			<ondown>1000</ondown>
-			<scrolltime>200</scrolltime>			
+			<onright>2000</onright>
+			<onup>2000</onup>
+			<ondown>3000</ondown>
+			<scrolltime>200</scrolltime>
 				<content>
 				  <item id="1001">
 					<label>SCRIPT200</label>
@@ -140,17 +140,17 @@
 				  <item id="1004">
 					<label>SCRIPT203</label>
 					<visible>true</visible>
-					<onclick>Control.SetFocus(1401)</onclick>					
-				  </item>				  
-				</content>						    
-			      <itemlayout width="170" height="40">						 
+					<onclick>Control.SetFocus(1401)</onclick>
+				  </item>
+				</content>
+			      <itemlayout width="170" height="40">
 						<control type="image">
 							<posx>0</posx>
 							<posy>0</posy>
 							<width>220</width>
 							<height>40</height>
 							<texture>Button_Home_NoFocus.png</texture>
-						</control> 							
+						</control> 
 						<control type="label">
 							<posx>190</posx>
 							<posy>0</posy>
@@ -183,157 +183,98 @@
 							<info>ListItem.Label</info>
 						</control>
 				  </focusedlayout>
-        </control>
-		<control type="label" id="1009">
-			<description>textarea</description>
-			<posx>20</posx>
-			<posy>400</posy>
-			<width>240</width>
-			<height>220</height>
-			<textcolor>white</textcolor>
-			<aligny>center</aligny>
-		</control>
+			</control>
     </control>
     <control type="group">
-	  <posx>1000</posx>
+	  <posx>1070</posx>
       <posy>25</posy>
       <description>player control group</description>
-
-		<control type="button" id="666">
+		<control type="list" id="2000">
 			<posx>0</posx>
 			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>player-previous-nofocus.png</texturenofocus>
-			<texturefocus>player-previous-focus.png</texturefocus>
-			<onright>667</onright>
+			<width>200</width>
+			<height>50</height>
+			<viewtype>wrap</viewtype>
 			<onleft>1000</onleft>
-			<ondown>1000</ondown>
+			<ondown>3000</ondown>
+			<onright>2000</onright>
+			<orientation>horizontal</orientation>
+			<focusposition>0</focusposition>
+			<scrolltime>200</scrolltime>
+				<itemlayout width="50" height="50">	
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<info>ListItem.ActualIcon</info>
+					</control>
+				</itemlayout>
+				<focusedlayout width="50" height="50">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<info>ListItem.ActualIcon</info>
+					</control>
+					 <control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<info>ListItem.Thumb</info>
+						<visible>Control.HasFocus(2000)</visible>
+					</control>
+				</focusedlayout>
 		</control>
-
-		<control type="button" id="667">
-			<posx>50</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>player-stop-nofocus.png</texturenofocus>
-			<texturefocus>player-stop-focus.png</texturefocus>
-			<onleft>666</onleft>
-			<onright>668</onright>
-			<ondown>1000</ondown>
-		</control>
-		
-		<control type="button" id="668">
-			<posx>100</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>player-play-nofocus.png</texturenofocus>
-			<texturefocus>player-play-focus.png</texturefocus>
-			<onleft>667</onleft>
-			<onright>669</onright>
-			<ondown>1000</ondown>
-		</control>
-		<control type="button" id="670">
-			<posx>100</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>player-pause-nofocus.png</texturenofocus>
-			<texturefocus>player-pause-focus.png</texturefocus>
-			<onleft>667</onleft>
-			<onright>669</onright>
-			<ondown>1000</ondown>
-		</control>
-
-		<control type="button" id="669">
-			<posx>150</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>player-next-nofocus.png</texturenofocus>
-			<texturefocus>player-next-focus.png</texturefocus>
-			<onleft>668</onleft>
-			<onright>702</onright>
-			<ondown>1000</ondown>
-		</control>
-		<control type="progress" id="671">
+		<control type="progress" id="2001">
 			<posx>0</posx>
 			<posy>50</posy>
 			<width>200</width>
 		</control>
 </control>
 <control type="group">
-	  <posx>920</posx>
+	  <posx>1070</posx>
       <posy>670</posy>
-	<control type="button" id="702">
+		<control type="list" id="3000">
 			<posx>0</posx>
 			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>player-random-nofocus.png</texturenofocus>
-			<texturefocus>player-random-focus.png</texturefocus>
-			<onright>700</onright>
+			<width>200</width>
+			<height>50</height>
 			<ondown>1000</ondown>
-			<onleft>669</onleft>
-		</control>
-
-		<control type="button" id="703">
-			<posx>0</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>player-randomselected-nofocus.png</texturenofocus>
-			<texturefocus>player-randomselected-focus.png</texturefocus>
-			<onright>700</onright>
-			<ondown>1000</ondown>
-			<onleft>669</onleft>
-		</control>
-
-		<control type="button" id="700">
-			<posx>50</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>player-repeat-nofocus.png</texturenofocus>
-			<texturefocus>player-repeat-focus.png</texturefocus>
-			<onleft>702</onleft>
-			<onright>704</onright>
-			<ondown>1000</ondown>
-		</control>
-
-		<control type="button" id="701">
-			<posx>50</posx>
-			<posy>0</posy>
-			<width>48</width>
-			<height>48</height>
-			<visible>true</visible>
-			<texturenofocus>player-repeatall-nofocus.png</texturenofocus>
-			<texturefocus>player-repeatall-focus.png</texturefocus>
-			<onleft>702</onleft>
-			<onright>704</onright>
-			<ondown>1000</ondown>
-		</control>
-
-		<control type="radiobutton" id="704">
-			<posx>100</posx>
-			<posy>0</posy>
-			<width>248</width>
-			<height>48</height>
-			<visible>true</visible>
-			<textoffsetx>10</textoffsetx>
-			<textoffsety>0</textoffsety>	
-			<label>SCRIPT206</label>
-			<onleft>700</onleft>
-			<ondown>1000</ondown>
+			<onup>2000</onup>
+			<onleft>2000</onleft>
+			<viewtype>wrap</viewtype>
+			<orientation>horizontal</orientation>
+			<focusposition>0</focusposition>
+			<scrolltime>200</scrolltime>
+			 <itemlayout width="50" height="50">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<info>ListItem.ActualIcon</info>
+					</control>
+			</itemlayout>
+			<focusedlayout width="50" height="50">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<info>ListItem.ActualIcon</info>
+				</control>
+				 <control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<info>ListItem.Thumb</info>
+					<visible>Control.HasFocus(3000)</visible>
+				</control>
+			</focusedlayout>
 		</control>
     </control>
 
@@ -395,14 +336,14 @@
 			<viewtype label="535">list</viewtype>
 			<pagecontrol>1104</pagecontrol>
 			<scrolltime>200</scrolltime>
-			<itemlayout height="38">       			  
+			<itemlayout height="38">
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>970</width>
 				<height>38</height>
 				<texture>list-nofocus.png</texture>
-			  </control>	
+			  </control>
 			  <control type="image">
 				<posx>8</posx>
 				<posy>8</posy>
@@ -421,7 +362,7 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Property(file)</info>
-			  </control>			
+			  </control>
 			  <control type="label">
 				<posx>40</posx>
 				<posy>0</posy>
@@ -432,7 +373,7 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Property(artist)</info>
-			  </control>			  
+			  </control>
 			  <control type="label">
 				<posx>245</posx>
 				<posy>0</posy>
@@ -443,7 +384,7 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Property(album)</info>
-			  </control>			  
+			  </control>
 			  <control type="label">
 				<posx>510</posx>
 				<posy>0</posy>
@@ -454,7 +395,7 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Label</info>
-			  </control>			  
+			  </control>
 			<control type="label">
 				<posx>950</posx>
 				<posy>0</posy>
@@ -476,7 +417,7 @@
 				<height>38</height>
 				<texture>list-focus.png</texture>
 				<visible>Control.HasFocus(1101)</visible>
-			  </control>			  
+			  </control>
 			  <control type="image">
 				<posx>8</posx>
 				<posy>8</posy>
@@ -494,7 +435,7 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Property(file)</info>
-			  </control>				
+			  </control>
 			  <control type="label">
 				<posx>40</posx>
 				<posy>0</posy>
@@ -541,7 +482,7 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Property(time)</info>
-			  </control>          			  
+			  </control>
 			</focusedlayout>
 		  </control>
 		  
@@ -554,7 +495,7 @@
 					  <posy>0</posy>
 					  <width>24</width>
 					  <height>530</height>
-					  <onleft>1101</onleft>					  
+					  <onleft>1101</onleft>
 					  <texturesliderbackground border="10,14,10,14">scrollbar-back.png</texturesliderbackground>
 					  <texturesliderbar  border="10,14,10,14">scrollbar-front-nofocus.png</texturesliderbar>
 					  <texturesliderbarfocus  border="10,14,10,14">scrollbar-front.png</texturesliderbarfocus>
@@ -589,21 +530,21 @@
 			<viewtype label="535">list</viewtype>
 			<pagecontrol>1202</pagecontrol>
 			<scrolltime>200</scrolltime>
-			<itemlayout height="38">       			  
+			<itemlayout height="38">
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>970</width>
 				<height>38</height>
 				<texture>list-nofocus.png</texture>
-			  </control>	
+			  </control>
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>38</width>
 				<height>38</height>
 				<info>ListItem.Icon</info>
-			  </control>			  
+			  </control>
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
@@ -614,7 +555,7 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Label</info>
-			  </control>			  
+			  </control>
 			</itemlayout>
 			<focusedlayout height="38">
 			  <control type="image">
@@ -624,7 +565,7 @@
 				<height>38</height>
 				<texture>list-focus.png</texture>
 				<visible>Control.HasFocus(1201)</visible>
-			  </control>			  
+			  </control>
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
@@ -642,9 +583,9 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Label</info>
-			  </control>       			  
+			  </control>
 			</focusedlayout>
-		  </control>		  
+		  </control>
 			  <control type="group">
 				<posx>5r</posx>
 				<posy>0</posy>
@@ -654,7 +595,7 @@
 					  <posy>0</posy>
 					  <width>24</width>
 					  <height>530</height>
-					  <onleft>1201</onleft>					  
+					  <onleft>1201</onleft>
 					  <texturesliderbackground border="10,14,10,14">scrollbar-back.png</texturesliderbackground>
 					  <texturesliderbar  border="10,14,10,14">scrollbar-front-nofocus.png</texturesliderbar>
 					  <texturesliderbarfocus  border="10,14,10,14">scrollbar-front.png</texturesliderbarfocus>
@@ -664,7 +605,7 @@
 					  <showonepage>false</showonepage>
 					  <visible>Control.IsVisible(1201)</visible>
 					</control>
-			  </control>		  
+			  </control>
 	  </control>
       <!-- END file browser control group--> 
      <!-- START artists browser control group--> 
@@ -683,25 +624,25 @@
 			<onleft>1000</onleft>
 			<onright>1302</onright>
 			<onup>1301</onup>
-			<ondown>1301</ondown>		
+			<ondown>1301</ondown>
 			<viewtype label="535">list</viewtype>
 			<pagecontrol>1302</pagecontrol>
 			<scrolltime>200</scrolltime>
-			<itemlayout height="38">       			  
+			<itemlayout height="38">
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>970</width>
 				<height>38</height>
 				<texture>list-nofocus.png</texture>
-			  </control>	
+			  </control>
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>38</width>
 				<height>38</height>
 				<info>ListItem.Icon</info>
-			  </control>			  
+			  </control>
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
@@ -724,7 +665,7 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Property(time)</info>
-			  </control>			  
+			  </control>
 			</itemlayout>
 			<focusedlayout height="38">
 			  <control type="image">
@@ -734,7 +675,7 @@
 				<height>38</height>
 				<texture>list-focus.png</texture>
 				<visible>Control.HasFocus(1301)</visible>
-			  </control>			  
+			  </control>
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
@@ -764,9 +705,9 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Property(time)</info>
-			  </control>       			  
+			  </control>
 			</focusedlayout>
-		  </control>		  
+		  </control>
 			  <control type="group">
 				<posx>5r</posx>
 				<posy>0</posy>
@@ -776,7 +717,7 @@
 					  <posy>0</posy>
 					  <width>24</width>
 					  <height>530</height>
-					  <onleft>1301</onleft>					  
+					  <onleft>1301</onleft>
 					  <texturesliderbackground border="10,14,10,14">scrollbar-back.png</texturesliderbackground>
 					  <texturesliderbar  border="10,14,10,14">scrollbar-front-nofocus.png</texturesliderbar>
 					  <texturesliderbarfocus  border="10,14,10,14">scrollbar-front.png</texturesliderbarfocus>
@@ -786,7 +727,7 @@
 					  <showonepage>false</showonepage>
 					  <visible>Control.IsVisible(1301)</visible>
 					</control>
-			  </control>		  
+			  </control>
 	  </control>
       <!-- END artists browser control group--> 
  
@@ -807,7 +748,7 @@
 			<onleft>1000</onleft>
 			<onright>1402</onright>
 			<onup>1401</onup>
-			<ondown>1401</ondown>		
+			<ondown>1401</ondown>
 			<viewtype label="535">list</viewtype>
 			<pagecontrol>1402</pagecontrol>
 			<scrolltime>200</scrolltime>
@@ -825,7 +766,7 @@
 				<width>38</width>
 				<height>38</height>
 				<info>ListItem.Icon</info>
-			  </control>			  
+			  </control>
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
@@ -836,7 +777,7 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Label</info>
-			  </control>			  
+			  </control>
 			</itemlayout>
 			<focusedlayout height="38">
 			  <control type="image">
@@ -845,8 +786,8 @@
 				<width>970</width>
 				<height>38</height>
 				<texture>list-focus.png</texture>
-				<visible>Control.HasFocus(1401)</visible>		
-			  </control>			  
+				<visible>Control.HasFocus(1401)</visible>
+			  </control>
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
@@ -864,9 +805,9 @@
 				<selectedcolor>green</selectedcolor>
 				<align>left</align>
 				<info>ListItem.Label</info>
-			  </control>       			  
+			  </control>
 			</focusedlayout>
-		  </control>		  
+		  </control>
 			  <control type="group">
 				<posx>5r</posx>
 				<posy>0</posy>
@@ -876,7 +817,7 @@
 					  <posy>0</posy>
 					  <width>24</width>
 					  <height>530</height>
-					  <onleft>1401</onleft>					  
+					  <onleft>1401</onleft>
 					  <texturesliderbackground border="10,14,10,14">scrollbar-back.png</texturesliderbackground>
 					  <texturesliderbar  border="10,14,10,14">scrollbar-front-nofocus.png</texturesliderbar>
 					  <texturesliderbarfocus  border="10,14,10,14">scrollbar-front.png</texturesliderbarfocus>
@@ -886,7 +827,7 @@
 					  <showonepage>false</showonepage>
 					  <visible>Control.IsVisible(1401)</visible>
 					</control>
-			  </control>		  
+			  </control>
 	  </control>
       <!-- END playlists browser control group--> 
           
