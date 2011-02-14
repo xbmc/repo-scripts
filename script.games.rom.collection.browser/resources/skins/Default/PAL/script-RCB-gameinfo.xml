@@ -327,16 +327,16 @@
 		</control>
 		<control type="scrollbar" id="8100">
 			<description>GameDesc Scrollbar</description>
-			<posx>685</posx>
-			<posy>65</posy>
-			<width>5</width>
-			<height>250</height>
+			<posx>683</posx>
+			<posy>60</posy>
+			<width>15</width>
+			<height>255</height>
 			<visible>Control.IsVisible(8000)</visible>
-			<texturesliderbackground>scrollbar-bg.png</texturesliderbackground>
-			<texturesliderbar>scrollbar-bar.png</texturesliderbar>
-			<texturesliderbarfocus>scrollbar-barFocus.png</texturesliderbarfocus>
-			<textureslidernib>scrollbar-nib.png</textureslidernib>
-			<textureslidernibfocus>scrollbar-nibFocus.png</textureslidernibfocus>
+			<texturesliderbackground border="0,14,0,14">rcb-ScrollBarH.png</texturesliderbackground>
+			<texturesliderbar border="0,14,0,14">rcb-ScrollBarH_bar.png</texturesliderbar>
+			<texturesliderbarfocus border="0,14,0,14">rcb-ScrollBarH_bar_focus.png</texturesliderbarfocus>
+			<textureslidernib>rcb-ScrollBarNib.png</textureslidernib>
+			<textureslidernibfocus>rcb-ScrollBarNib.png</textureslidernibfocus>
 			<pulseonselect></pulseonselect>
 			<orientation>vertical</orientation>
 			<showonepage>false</showonepage>

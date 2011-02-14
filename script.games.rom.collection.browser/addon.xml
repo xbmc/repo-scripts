@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="script.games.rom.collection.browser"
-  version="0.7.10"
+  version="0.8.1"
   name="Rom Collection Browser"
-  provider-name="malte">
+  provider-name="carabalb, jimyx17, malte">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.elementtree" version="1.2.7"/>
@@ -15,6 +15,7 @@
     <description>Current features:
     * scan your rom folders and import games to local database
     * scrape artwork and meta data from various online sources
+    * import local available descriptions, artwork and videos
     * browse games by console, genre, year and publisher
     * launch roms and standalone games in solo or non-solo mode
     * automatic video playback in video window
@@ -26,14 +27,13 @@ Update from previous versions:
     * older versions (0.6.1 and higher) will be updated automatically
 
 First use:
-    * if there is no config file available RCB will start a configuration wizard
-    * select platform, emulator command, path to roms and artwork
+    * in config wizard select platform, emulator command, path to roms and artwork
     * online scraping scenario:
-        --> RCB will scrape game info and artwork from online sources
+    --> RCB will scrape game info and artwork from online sources
     * data available locally:
-        --> tell RCB where to find artwork and game descriptions
+    --> tell RCB where to find artwork and game descriptions
 
-Note: if you choose online scraping scenario, RCB will try to create following sub folders below your artwork path: boxfront, boxback, cartridge, screenshot, fanart
+Note: if you choose online scraping scenario, RCB will try to create following sub folders below your artwork path: boxfront, boxback, cartridge, screenshot, fanart. Make sure that the user that runs xbmc has write access to this path.
 </description>
 
     <description lang="hu">Jelenlegi funkciók:

@@ -1,6 +1,7 @@
 
 import os, sys, re
-import xbmc, time
+#import xbmc, time
+import time
 
 
 #
@@ -9,7 +10,7 @@ import xbmc, time
 
 SCRIPTNAME = 'Rom Collection Browser'
 SCRIPTID = 'script.games.rom.collection.browser'
-CURRENT_SCRIPT_VERSION = "0.7.10"
+CURRENT_SCRIPT_VERSION = "0.8.1"
 CURRENT_DB_VERSION = "0.7.4"
 ISTESTRUN = False
 
@@ -56,6 +57,12 @@ SETTING_RCB_SHOWENTRYALLCHARS = 'rcb_showEntryAllChars'
 SETTING_RCB_PREVENTUNFILTEREDSEARCH = 'rcb_preventUnfilteredSearch'
 SETTING_RCB_SAVEVIEWSTATEONEXIT = 'rcb_saveViewStateOnExit'
 SETTING_RCB_SAVEVIEWSTATEONLAUNCHEMU = 'rcb_saveViewStateOnLaunchEmu'
+SETTING_RCB_SHOWIMPORTOPTIONSDIALOG = 'rcb_showImportOptions'
+SETTING_RCB_SCRAPINGMODE = 'rcb_scrapingMode'
+
+SCRAPING_OPTION_AUTO_ACCURATE = 0
+SCRAPING_OPTION_AUTO_GUESS = 1
+SCRAPING_OPTION_INTERACTIVE = 2
 
 
 #
@@ -116,10 +123,17 @@ IMAGE_CONTROL_MV_BACKGROUND = 'mainviewbackground'
 IMAGE_CONTROL_MV_GAMELIST = 'gamelist'
 IMAGE_CONTROL_MV_GAMELISTSELECTED = 'gamelistselected'
 IMAGE_CONTROL_MV_GAMEINFO_BIG = 'mainviewgameinfobig'
+
 IMAGE_CONTROL_MV_GAMEINFO_UPPERLEFT = 'mainviewgameinfoupperleft'
 IMAGE_CONTROL_MV_GAMEINFO_UPPERRIGHT = 'mainviewgameinfoupperright'
 IMAGE_CONTROL_MV_GAMEINFO_LOWERLEFT = 'mainviewgameinfolowerleft'
 IMAGE_CONTROL_MV_GAMEINFO_LOWERRIGHT = 'mainviewgameinfolowerright'
+
+IMAGE_CONTROL_MV_GAMEINFO_UPPER = 'mainviewgameinfoupper'
+IMAGE_CONTROL_MV_GAMEINFO_LOWER = 'mainviewgameinfolower'
+IMAGE_CONTROL_MV_GAMEINFO_LEFT = 'mainviewgameinfoleft'
+IMAGE_CONTROL_MV_GAMEINFO_RIGHT = 'mainviewgameinforight'
+
 IMAGE_CONTROL_MV_1 = 'mainview1'
 IMAGE_CONTROL_MV_2 = 'mainview2'
 IMAGE_CONTROL_MV_3 = 'mainview3'
@@ -191,13 +205,14 @@ def html_escape(text):
 
 
 def getAddonDataPath():
-	
 	path = ''
 	
-	if(isPostCamelot()):		
+	if(hasAddons()):		
+		import xbmc
 		path = xbmc.translatePath('special://profile/addon_data/%s' %(SCRIPTID))
 		#path = xbmc.translatePath('special://profile/addon_data/%s-%s' %(SCRIPTID, CURRENT_SCRIPT_VERSION))
-	else:
+	else:		
+		import xbmc
 		path = xbmc.translatePath('special://profile/script_data/%s' %(SCRIPTID))
 		#path = xbmc.translatePath('special://profile/script_data/%s-%s' %(SCRIPTID, CURRENT_SCRIPT_VERSION))
 		
@@ -213,7 +228,7 @@ def getAddonInstallPath():
 	
 	path = ''
 	
-	if(isPostCamelot()):
+	if(hasAddons()):
 		import xbmcaddon
 		addon = xbmcaddon.Addon(id='%s' %SCRIPTID)
 		path = addon.getAddonInfo('path')
@@ -223,7 +238,8 @@ def getAddonInstallPath():
 			
 
 def getAutoexecPath():
-	if(isPostCamelot()):
+	import xbmc
+	if(hasAddons()):
 		return xbmc.translatePath('special://profile/autoexec.py')
 	else:
 		autoexec = os.path.join(RCBHOME, '..', 'autoexec.py')
@@ -238,7 +254,7 @@ def getConfigXmlPath():
 	else:
 		configFile = os.path.join(getAddonInstallPath(), "TestDataBase", "config.xml")
 	
-	Logutil.log('Reading configuration file: ' +str(configFile), LOG_LEVEL_INFO)
+	Logutil.log('Path to configuration file: ' +str(configFile), LOG_LEVEL_INFO)
 	return configFile
 
 
@@ -255,8 +271,9 @@ def getConfigXmlModifyTime():
 	
 	
 def getSettings():
+	import xbmc
 	settings = ''
-	if isPostCamelot():
+	if hasAddons():
 		import xbmcaddon
 		settings = xbmcaddon.Addon(id='%s' %SCRIPTID)
 	else:
@@ -264,30 +281,16 @@ def getSettings():
 	return settings
 
 
-def isPostCamelot():  
+def hasAddons():  
 	if os.environ.get('OS') == 'xbox':
 		return False
-	# preliminary test number for now. will bump this to the revision of the stable
-	# xbmc release when it is out
-	elif getRevision() >= 28276:
-		return True
-	else:
-		return False  
-
-
-def getRevision():
-	rev_re = re.compile('r(\d+)')
-	try: xbmc_version = xbmc.getInfoLabel('System.BuildVersion')
-	except: xbmc_version = 'Unknown'
-
+	
 	try:
-		xbmc_rev = int(rev_re.search(xbmc_version).group(1))
-		print "XBMC Revision: %s" % xbmc_rev
+		import xbmcaddon
+		return True
 	except:
-		print "XBMC Revision not available - Version String: %s" % xbmc_version
-		xbmc_rev = 0
+		return False
 
-	return xbmc_rev
 
 
 def indentXml(elem, level=0):

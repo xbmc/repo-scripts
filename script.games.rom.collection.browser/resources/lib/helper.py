@@ -5,6 +5,8 @@ from gamedatabase import *
 import util
 from util import *
 import time
+import zipfile
+import xbmcgui
 
 
 def getFilesByControl_Cached(gdb, fileTypes, gameId, publisherId, developerId, romCollectionId, fileDict):
@@ -66,6 +68,7 @@ def launchEmu(gdb, gui, gameId, config, settings):
 			Logutil.log('Cannot get rom collection with id: ' +str(gameRow[util.GAME_romCollectionId]), util.LOG_LEVEL_ERROR)
 			
 		gui.writeMsg("Launch Game " + gameRow[util.ROW_NAME])
+		
 		cmd = ""
 		
 		#get environment OS
@@ -92,7 +95,7 @@ def launchEmu(gdb, gui, gameId, config, settings):
 				cmd = os.path.join(re.escape(util.RCBHOME), 'applaunch.sh ') +cmd
 		else:
 			#use call to support paths with whitespaces
-			if(env == "win32"):
+			if(env == "win32" and not (os.environ.get( "OS", "xbox" ) == "xbox")):
 				cmd = 'call ' +cmd
 		
 		#update LaunchCount
@@ -111,6 +114,16 @@ def launchEmu(gdb, gui, gameId, config, settings):
 		except Exception, (exc):
 			Logutil.log("Error while launching emu: " +str(exc), util.LOG_LEVEL_ERROR)
 			gui.writeMsg("Error while launching emu: " +str(exc))
+			
+		try:
+			#delete temporary files (from zip or 7z extraction
+			tempDir = getTempDir()
+			files = os.listdir(tempDir)
+			for file in files:
+				os.remove(os.path.join(tempDir, file))
+		except Exception, (exc):
+			Logutil.log("Error deleting files after launch emu: " +str(exc), util.LOG_LEVEL_ERROR)
+			gui.writeMsg("Error deleting files after launch emu: " +str(exc))
 		
 		Logutil.log("End helper.launchEmu", util.LOG_LEVEL_INFO)
 		
@@ -186,6 +199,7 @@ def buildLikeStatement(selectedCharacter):
 def buildCmd(filenameRows, romCollection, escapeCmd):
 	
 	fileindex = int(0)
+	compressedExtensions = ['7z', 'zip']
 	
 	emuCommandLine = romCollection.emulatorCmd
 	emuParams = romCollection.emulatorParams
@@ -206,6 +220,7 @@ def buildCmd(filenameRows, romCollection, escapeCmd):
 	for fileNameRow in filenameRows:
 		fileName = fileNameRow[0]			
 		rom = ""
+		roms = []
 		#we could have multiple rom Paths - search for the correct one
 		for romPath in romCollection.romPaths:
 			rom = os.path.join(romPath, fileName)
@@ -214,24 +229,82 @@ def buildCmd(filenameRows, romCollection, escapeCmd):
 		if(rom == ""):
 			Logutil.log("no rom file found for game: " +str(fileName), util.LOG_LEVEL_ERROR)
 			return ""
+
+		# If it's a .7z file
+		filext = rom.split('.')[-1]
 		
-		if fileindex == 0:
-			if (escapeCmd):
-				emuParams = emuParams.replace('%ROM%', re.escape(rom))
-				emuCommandLine = re.escape(emuCommandLine)
-			else:					
-				emuParams = emuParams.replace('%ROM%', rom)
-			cmd = '\"' +emuCommandLine +'\" ' +emuParams.replace('%I%', str(fileindex))
-		else:
-			newrepl = replString
-			if (escapeCmd):
-				newrepl = newrepl.replace('%ROM%', re.escape(rom))
-				emuCommandLine = re.escape(emuCommandLine)					
-			else:					
-				newrepl = newrepl.replace('%ROM%', rom)
-			newrepl = newrepl.replace('%I%', str(fileindex))
-			cmd += ' ' +newrepl		
-		fileindex += 1
+		
+		if filext in compressedExtensions and not romCollection.doNotExtractZipFiles:
+			Logutil.log('Treating file as a compressed archive', util.LOG_LEVEL_INFO)
+			compressed = True						
+		
+			names = getNames(filext, rom)
+			
+			chosenROM = -1
+			
+			#check if we should handle multiple roms
+			if '%I%' in emuParams and romCollection.diskPrefix in str(names):
+				Logutil.log("Loading %d archives" % len(names), util.LOG_LEVEL_INFO)
+				archives = getArchives(filext, rom, names)
+				for archive in archives:					
+					newPath = os.path.join(getTempDir(), archive[0])
+					fp = open(newPath, 'wb')
+					fp.write(archive[1])
+					fp.close()
+					roms.append(newPath)
+				
+			elif len(names) > 1:
+				Logutil.log("The Archive has %d files" % len(names), util.LOG_LEVEL_INFO)
+				chosenROM = xbmcgui.Dialog().select('Choose a ROM', names)
+			elif len(names) == 1:
+				Logutil.log("Archive only has one file inside; picking that one", util.LOG_LEVEL_INFO)
+				chosenROM = 0
+			else:
+				Logutil.log("Archive had no files inside!", util.LOG_LEVEL_ERROR)
+				return ""
+		
+			if chosenROM != -1:
+				# Extract the chosen file to %TMP%
+				newPath = os.path.join(getTempDir(), names[chosenROM])
+				
+				Logutil.log("Putting extracted file in %s" % newPath, util.LOG_LEVEL_INFO)
+				
+				data = getArchives(filext, rom, [names[chosenROM]])
+				fo = open(str(newPath), 'wb')
+				fo.write(data[0][1])
+				fo.close()
+				
+				# Point file name to the newly extracted file and continue
+				# as usual
+				roms = [newPath]
+		
+		if len(roms) == 0:
+			roms = [rom]
+		
+		del rom
+		
+		for rom in roms:
+			if fileindex == 0:
+				if (escapeCmd):
+					emuParams = emuParams.replace('%ROM%', re.escape(rom))
+					emuCommandLine = re.escape(emuCommandLine)
+				else:					
+					emuParams = emuParams.replace('%ROM%', rom)
+				
+				if (os.environ.get( "OS", "xbox" ) == "xbox"):
+					cmd = emuCommandLine.replace('%ROM%', rom)
+				else:
+					cmd = '\"' +emuCommandLine +'\" ' +emuParams.replace('%I%', str(fileindex))
+			else:
+				newrepl = replString
+				if (escapeCmd):
+					newrepl = newrepl.replace('%ROM%', re.escape(rom))
+					emuCommandLine = re.escape(emuCommandLine)					
+				else:					
+					newrepl = newrepl.replace('%ROM%', rom)
+				newrepl = newrepl.replace('%I%', str(fileindex))
+				cmd += ' ' +newrepl		
+			fileindex += 1
 	
 	return cmd
 	
@@ -359,7 +432,7 @@ def getRomfilenameForXboxCutfile(filenameRows, romCollection):
 		Logutil.log("Error while launching emu: File %s does not exist!" %filename, util.LOG_LEVEL_ERROR)		
 		return ""	
 	
-	if (romCollection.xboxCreateShortcutUseShortGamename):
+	if (not romCollection.xboxCreateShortcutUseShortGamename):
 		return filename
 		
 	basename = os.path.basename(filename)
@@ -392,3 +465,76 @@ def launchNonXbox(cmd, settings):
 		#this brings xbmc back
 		xbmc.executehttpapi("Action(199)")
 	
+	
+# Compressed files functions
+
+def getNames(type, filepath):
+	return {'zip' : getNamesZip,
+			'7z'  : getNames7z}[type](filepath)
+
+
+def getNames7z(filepath):
+	
+	try:
+		import py7zlib
+	except:
+		xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Error launching .7z file.', 'Please check XBMC.log for details.')
+		Logutil.log("You have tried to launch a .7z file but you are missing required libraries to extract the file. You can download the latest RCB version from RCBs project page. It contains all required libraries.", util.LOG_LEVEL_ERROR)
+		return
+	
+	fp = open(str(filepath), 'rb')
+	archive = py7zlib.Archive7z(fp)
+	names = archive.getnames()
+	fp.close()
+	return names
+
+	
+def getNamesZip(filepath):
+	fp = open(str(filepath), 'rb')
+	archive =  zipfile.ZipFile(fp)
+	names = archive.namelist()
+	fp.close()
+	return names
+
+	
+def getArchives(type, filepath, archiveList):
+	return {'zip' : getArchivesZip,
+			'7z'  : getArchives7z}[type](filepath, archiveList)
+			
+				
+def getArchives7z(filepath, archiveList):
+	
+	try:
+		import py7zlib
+	except:
+		xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Error launching .7z file.', 'Please check XBMC.log for details.')
+		Logutil.log("You have tried to launch a .7z file but you are missing required libraries to extract the file. You can download the latest RCB version from RCBs project page. It contains all required libraries.", util.LOG_LEVEL_ERROR)
+		return
+	
+	fp = open(str(filepath), 'rb')
+	archive = py7zlib.Archive7z(fp)
+	archivesDecompressed =  [(name, archive.getmember(name).read())for name in archiveList]
+	fp.close()
+	return archivesDecompressed
+
+
+def getArchivesZip(filepath, archiveList):
+	fp = open(str(filepath), 'rb')
+	archive = zipfile.ZipFile(fp)
+	archivesDecompressed = [(name, archive.read(name)) for name in archiveList]
+	fp.close()
+	return archivesDecompressed
+
+
+def getTempDir():
+	tempDir = os.path.join(util.getAddonDataPath(), 'tmp')
+	
+	try:
+		#check if folder exists
+		if(not os.path.isdir(tempDir)):
+			os.mkdir(tempDir)
+		return tempDir
+	except Exception, (exc):
+		Logutil.log('Error creating temp dir: ' +str(exc), util.LOG_LEVEL_ERROR)
+		return None
+		

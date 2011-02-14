@@ -1,0 +1,82 @@
+<window id="5100">
+	<defaultcontrol>5110</defaultcontrol>
+	<include>dialogeffect</include>
+	<coordinates>
+		<system>1</system>
+		<posx>200</posx>
+		<posy>150</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<description>background top image</description>
+			<posx>0</posx>
+			<posy>-54</posy>
+			<width>320</width>
+			<height>54</height>
+			<texture border="45,45,45,0">rcb-DialogContextTop.png</texture>
+		</control>
+		<control type="button" id="5101">
+			<description>Close Window button</description>
+			<posx>250</posx>
+			<posy>-20</posy>
+			<width>30</width>
+			<height>20</height>
+			<label>-</label>
+			<font>-</font>
+			<texturefocus>rcb-DialogCloseButton-focus.png</texturefocus>
+			<texturenofocus>rcb-DialogCloseButton.png</texturenofocus>
+			<onleft>5110</onleft>
+			<onright>5110</onright>
+			<onup>5110</onup>
+			<ondown>5110</ondown>
+			<visible>system.getbool(input.enablemouse)</visible>
+		</control>
+		<control type="image">
+			<description>background image</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>320</width>
+			<height>78</height>
+			<texture border="45,0,45,0">rcb-DialogContextMiddle.png</texture>
+		</control>
+		<control type="image">
+			<description>background bottom image</description>
+			<posx>0</posx>
+			<posy>78</posy>
+			<width>320</width>
+			<texture border="45,0,45,49">rcb-DialogContextBottom.png</texture>
+		</control>
+		<control type="button" id="5110">
+			<description>button import games</description>
+			<posx>34</posx>
+			<posy>-</posy>
+			<width>247</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>Import Games</label>
+			<onup>5101</onup>
+			<ondown>5111</ondown>
+		</control>
+		<control type="button" id="5111">
+			<description>button template</description>
+			<posx>34</posx>
+			<posy>38</posy>
+			<width>247</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>Add Rom Collection</label>
+			<onup>5110</onup>
+			<ondown>5101</ondown>
+		</control>
+	</controls>
+</window>

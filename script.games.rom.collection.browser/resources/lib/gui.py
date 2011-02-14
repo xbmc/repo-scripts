@@ -10,8 +10,10 @@ from gamedatabase import *
 import helper, util, config
 from util import *
 from config import *
+from configxmlwriter import *
 
 from threading import *
+import dialogimportoptions
 
 
 #Action Codes
@@ -24,6 +26,7 @@ ACTION_MOVEMENT_UP = (3,)
 ACTION_MOVEMENT_DOWN = (4,)
 ACTION_MOVEMENT = (1, 2, 3, 4, 5, 6, 159, 160)
 ACTION_INFO = (11,)
+ACTION_CONTEXT = (117,)
 
 
 #ControlIds
@@ -34,7 +37,7 @@ CONTROL_PUBLISHER = 800
 CONTROL_CHARACTER = 900
 FILTER_CONTROLS = (500, 600, 700, 800, 900,)
 GAME_LISTS = (50, 51, 52, 53, 54, 55, 56, 57, 58)
-CONROL_SCROLLBARS = (2200, 2201,)
+CONTROL_SCROLLBARS = (2200, 2201, 60, 61, 62)
 
 CONTROL_GAMES_GROUP_START = 50
 CONTROL_GAMES_GROUP_END = 59
@@ -112,12 +115,43 @@ class ProgressDialogGUI:
 		elif (count > 0):
 			percent = int(count * (float(100) / self.itemCount))			
 			self.dialog.update(percent, line1, line2, line3)
-			if (self.dialog.iscanceled()): 
+			if (self.dialog.iscanceled()):
 				return False
 			else: 
 				return True
 		else:
 			self.dialog.close()
+
+
+class ContextMenuDialog(xbmcgui.WindowXMLDialog):
+	def __init__(self, *args, **kwargs):
+		# Don't put GUI sensitive stuff here (as the xml hasn't been read yet)
+		Logutil.log('init ContextMenu', util.LOG_LEVEL_INFO)
+		
+		self.gui = kwargs[ "gui" ]
+		
+		self.doModal()
+	
+	def onInit(self):
+		Logutil.log('onInit ContextMenu', util.LOG_LEVEL_INFO)		
+	
+	def onAction(self, action):
+		if (action.getId() in ACTION_CANCEL_DIALOG):
+			self.close()
+	
+	def onClick(self, controlID):
+		if (controlID == 5101): # Close window button
+			self.close()
+		elif (controlID == 5110): # Import games
+			self.close()
+			self.gui.updateDB()		
+		elif (controlID == 5111): # add Rom Collection			
+			self.close()
+			self.gui.addRomCollection()
+	
+	def onFocus(self, controlID):
+		pass
+
 
 
 class UIGameDB(xbmcgui.WindowXML):	
@@ -192,6 +226,14 @@ class UIGameDB(xbmcgui.WindowXML):
 		#check if we have config file 
 		configFile = util.getConfigXmlPath()
 		if(not os.path.isfile(configFile)):
+			
+			dialog = xbmcgui.Dialog()
+		
+			retValue = dialog.yesno('Rom Collection Browser', 'No config file found.', 'Do you want to create one?')
+			if(retValue == False):
+				self.quit = True
+				return
+			
 			statusOk, errorMsg = self.createConfigXml(configFile)
 			
 		
@@ -215,7 +257,6 @@ class UIGameDB(xbmcgui.WindowXML):
 			self.cachingOption = 2
 		elif(cachingOptionStr == 'CACHEITEMANDNEXT'):
 			self.cachingOption = 3
-		print "caching option: " +str(self.cachingOption)						
 		
 		self.cacheItems()
 		
@@ -244,30 +285,31 @@ class UIGameDB(xbmcgui.WindowXML):
 	
 	def onAction(self, action):
 		
+		Logutil.log("onAction: " +str(action.getId()), util.LOG_LEVEL_DEBUG)
+		
 		#Hack: prevent being invoked twice
 		onActionCurrentRun = time.clock()
 		
-		Logutil.log("onActionCurrentRun: %d ms" % (onActionCurrentRun * 1000), util.LOG_LEVEL_DEBUG)
-		Logutil.log("onActionLastRun: %d ms" % (self.onActionLastRun * 1000), util.LOG_LEVEL_DEBUG)
+		Logutil.log("onActionCurrentRun: %d ms" % (onActionCurrentRun * 1000), util.LOG_LEVEL_INFO)
+		Logutil.log("onActionLastRun: %d ms" % (self.onActionLastRun * 1000), util.LOG_LEVEL_INFO)
 		
 		diff = (onActionCurrentRun - self.onActionLastRun) * 1000
-		Logutil.log("diff: %d ms" % (diff), util.LOG_LEVEL_DEBUG)
+		Logutil.log("diff: %d ms" % (diff), util.LOG_LEVEL_INFO)
 		
 		waitTime = util.WAITTIME_ONACTION
 		if (os.environ.get("OS", "xbox") == "xbox"):
 			waitTime = util.WAITTIME_ONACTION_XBOX
 		
 		if(int(diff) <= waitTime):
-			Logutil.log("Last run still active. Do nothing.", util.LOG_LEVEL_DEBUG)
+			Logutil.log("Last run still active. Do nothing.", util.LOG_LEVEL_INFO)
 			self.onActionLastRun = time.clock()
 			return
 		
 		self.onActionLastRun = time.clock()
 							
 		try:
-			#print "action: " +str(action.getId())
 			if(action.getId() in ACTION_CANCEL_DIALOG):
-				Logutil.log("onAction: ACTION_CANCEL_DIALOG", util.LOG_LEVEL_DEBUG)
+				Logutil.log("onAction: ACTION_CANCEL_DIALOG", util.LOG_LEVEL_INFO)
 							
 				if(self.player.isPlayingVideo()):
 					self.player.stoppedByRCB = True
@@ -277,7 +319,7 @@ class UIGameDB(xbmcgui.WindowXML):
 				self.onActionLastRun = time.clock()
 				self.exit()
 			elif(action.getId() in ACTION_MOVEMENT):
-										
+														
 				Logutil.log("onAction: ACTION_MOVEMENT", util.LOG_LEVEL_DEBUG)
 				
 				control = self.getControlById(self.selectedControlId)
@@ -290,42 +332,42 @@ class UIGameDB(xbmcgui.WindowXML):
 					if(not self.fullScreenVideoStarted):
 						self.showGameInfo()
 				
-				if(action.getId() in ACTION_MOVEMENT_UP or action.getId() in ACTION_MOVEMENT_DOWN):	
-					if(self.selectedControlId in FILTER_CONTROLS):								
+				#if(action.getId() in ACTION_MOVEMENT_UP or action.getId() in ACTION_MOVEMENT_DOWN):	
+				if(self.selectedControlId in FILTER_CONTROLS):
+					
+					label = str(control.getSelectedItem().getLabel())
+					label2 = str(control.getSelectedItem().getLabel2())
 						
-						label = str(control.getSelectedItem().getLabel())
-						label2 = str(control.getSelectedItem().getLabel2())
+					filterChanged = False
+					
+					if (self.selectedControlId == CONTROL_CONSOLES):
+						if(self.selectedConsoleIndex != control.getSelectedPosition()):
+							self.selectedConsoleId = int(label2)
+							self.selectedConsoleIndex = control.getSelectedPosition()
+							filterChanged = True
 							
-						filterChanged = False
-						
-						if (self.selectedControlId == CONTROL_CONSOLES):
-							if(self.selectedConsoleIndex != control.getSelectedPosition()):
-								self.selectedConsoleId = int(label2)
-								self.selectedConsoleIndex = control.getSelectedPosition()
-								filterChanged = True
-								
-						elif (self.selectedControlId == CONTROL_GENRE):
-							if(self.selectedGenreIndex != control.getSelectedPosition()):
-								self.selectedGenreId = int(label2)
-								self.selectedGenreIndex = control.getSelectedPosition()
-								filterChanged = True
-						elif (self.selectedControlId == CONTROL_YEAR):
-							if(self.selectedYearIndex != control.getSelectedPosition()):
-								self.selectedYearId = int(label2)
-								self.selectedYearIndex = control.getSelectedPosition()
-								filterChanged = True
-						elif (self.selectedControlId == CONTROL_PUBLISHER):
-							if(self.selectedPublisherIndex != control.getSelectedPosition()):
-								self.selectedPublisherId = int(label2)
-								self.selectedPublisherIndex = control.getSelectedPosition()
-								filterChanged = True
-						elif (self.selectedControlId == CONTROL_CHARACTER):
-							if(self.selectedCharacterIndex != control.getSelectedPosition()):
-								self.selectedCharacter = label
-								self.selectedCharacterIndex = control.getSelectedPosition()
-								filterChanged = True
-						if(filterChanged):					
-							self.showGames()								
+					elif (self.selectedControlId == CONTROL_GENRE):
+						if(self.selectedGenreIndex != control.getSelectedPosition()):
+							self.selectedGenreId = int(label2)
+							self.selectedGenreIndex = control.getSelectedPosition()
+							filterChanged = True
+					elif (self.selectedControlId == CONTROL_YEAR):
+						if(self.selectedYearIndex != control.getSelectedPosition()):
+							self.selectedYearId = int(label2)
+							self.selectedYearIndex = control.getSelectedPosition()
+							filterChanged = True
+					elif (self.selectedControlId == CONTROL_PUBLISHER):
+						if(self.selectedPublisherIndex != control.getSelectedPosition()):
+							self.selectedPublisherId = int(label2)
+							self.selectedPublisherIndex = control.getSelectedPosition()
+							filterChanged = True
+					elif (self.selectedControlId == CONTROL_CHARACTER):
+						if(self.selectedCharacterIndex != control.getSelectedPosition()):
+							self.selectedCharacter = label
+							self.selectedCharacterIndex = control.getSelectedPosition()
+							filterChanged = True
+					if(filterChanged):					
+						self.showGames()								
 				
 			elif(action.getId() in ACTION_INFO):
 				Logutil.log("onAction: ACTION_INFO", util.LOG_LEVEL_DEBUG)
@@ -336,11 +378,14 @@ class UIGameDB(xbmcgui.WindowXML):
 					self.onActionLastRun = time.clock()					
 					return
 				if(CONTROL_GAMES_GROUP_START <= self.selectedControlId <= CONTROL_GAMES_GROUP_END):
-					self.showGameInfoDialog()							
+					self.showGameInfoDialog()
+			elif (action.getId() in ACTION_CONTEXT):
+				Logutil.log('onAction: ACTION_CONTEXT', util.LOG_LEVEL_INFO)
+				self.showContextMenu()
 		except Exception, (exc):
 			print "RCB_ERROR: unhandled Error in onAction: " +str(exc)
 			self.onActionLastRun = time.clock()
-		
+				
 		self.onActionLastRun = time.clock()
 			
 
@@ -500,7 +545,7 @@ class UIGameDB(xbmcgui.WindowXML):
 			return		
 		
 		fileDict = self.getFileDictForGamelist()
-
+		
 		self.writeMsg("loading games...")
 		
 		#timestamp1 = time.clock()
@@ -662,16 +707,52 @@ class UIGameDB(xbmcgui.WindowXML):
 		Logutil.log("End updateDB" , util.LOG_LEVEL_INFO)
 		
 	
-	def importSettings(self):
-		Logutil.log("Begin importSettings" , util.LOG_LEVEL_INFO)				
+	
+	def addRomCollection(self):
+		Logutil.log("Begin addRomCollection" , util.LOG_LEVEL_INFO)
 		
-		self.clearList()
-		self.clearCache()
-		self.checkImport(2)
-		self.cacheItems()
-		self.updateControls()			
+		consoleList = sorted(config.consoleDict.keys())
+		id = 1
 		
-		Logutil.log("End importSettings" , util.LOG_LEVEL_INFO)
+		#read existing rom collection ids and names
+		for rcId in self.config.romCollections.keys():						
+			
+			#remove already configured consoles from the list			
+			if(self.config.romCollections[rcId].name in consoleList):
+				consoleList.remove(self.config.romCollections[rcId].name)
+			#find highest id
+			if(rcId > id):
+				id = rcId
+								
+		id = int(id) +1
+		
+		#build fileTypeList
+		fileTypeList = []
+		fileTypes = self.config.tree.findall('FileTypes/FileType')
+		for fileType in fileTypes:
+			name = fileType.attrib.get('name')
+			if(name != None):
+				fileTypeList.append(name)
+		
+		success, romCollections = self.addRomCollections(id, consoleList, fileTypeList, True)
+		if(not success):
+			Logutil.log('Action canceled. Config.xml will not be written', util.LOG_LEVEL_INFO)
+			return False, 'Action canceled. Config.xml will not be written'
+				
+		configWriter = ConfigXmlWriter(False)
+		success, message = configWriter.writeRomCollections(romCollections)
+		
+		#update self.config
+		statusOk, errorMsg = self.config.readXml()
+		if(statusOk == False):
+			xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Error reading config.xml.', errorMsg)
+			Logutil.log('Error reading config.xml: ' +errorMsg, util.LOG_LEVEL_INFO)
+			return False, 'Error reading config.xml: ' +errorMsg
+		
+		#import Games
+		self.updateDB()
+		
+		Logutil.log("End addRomCollection" , util.LOG_LEVEL_INFO)
 		
 		
 	def showGameInfoDialog(self):
@@ -700,11 +781,11 @@ class UIGameDB(xbmcgui.WindowXML):
 		
 		#HACK: Dharma has a new parameter in Window-Constructor for default resolution
 		constructorParam = 1
-		if(util.isPostCamelot()):
+		if(util.hasAddons()):
 			constructorParam = "PAL"		
 		
 		import gameinfodialog
-		gid = gameinfodialog.UIGameInfoView("script-Rom_Collection_Browser-gameinfo.xml", util.getAddonInstallPath(), "Default", constructorParam, gdb=self.gdb, gameId=gameId,
+		gid = gameinfodialog.UIGameInfoView("script-RCB-gameinfo.xml", util.getAddonInstallPath(), "Default", constructorParam, gdb=self.gdb, gameId=gameId,
 			consoleId=self.selectedConsoleId, genreId=self.selectedGenreId, yearId=self.selectedYearId, publisherId=self.selectedPublisherId, selectedGameIndex=selectedGameIndex,
 			consoleIndex=self.selectedConsoleIndex, genreIndex=self.selectedGenreIndex, yearIndex=self.selectedYearIndex, publisherIndex=self.selectedPublisherIndex,
 			selectedCharacter=self.selectedCharacter, selectedCharacterIndex=self.selectedCharacterIndex, controlIdMainView=self.selectedControlId, fileDict=fileDict, config=self.config, settings=self.Settings)
@@ -721,7 +802,15 @@ class UIGameDB(xbmcgui.WindowXML):
 		
 		Logutil.log("End showGameInfoDialog", util.LOG_LEVEL_INFO)
 		
+	
+	def showContextMenu(self):
 		
+		constructorParam = 1
+		if(util.hasAddons()):
+			constructorParam = "PAL"
+		cm = ContextMenuDialog("script-RCB-contextmenu.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self)
+		del cm
+				
 		
 		
 	"""
@@ -961,6 +1050,12 @@ class UIGameDB(xbmcgui.WindowXML):
 		imageGameInfoUpperRight = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainViewGameInfoUpperRight, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 		imageGameInfoLowerLeft = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainViewGameInfoLowerLeft, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 		imageGameInfoLowerRight = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainViewGameInfoLowerRight, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		
+		imageGameInfoUpper = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainViewGameInfoUpper, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		imageGameInfoLower = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainViewGameInfoLower, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		imageGameInfoLeft = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainViewGameInfoLeft, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		imageGameInfoRight = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainViewGameInfoRight, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		
 		imageMainView1 = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainView1, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 		imageMainView2 = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainView2, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 		imageMainView3 = self.getFileForControl(romCollection.imagePlacing.fileTypesForMainView3, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)		
@@ -971,7 +1066,11 @@ class UIGameDB(xbmcgui.WindowXML):
 		item.setProperty(util.IMAGE_CONTROL_MV_GAMEINFO_UPPERLEFT, imageGameInfoUpperLeft)
 		item.setProperty(util.IMAGE_CONTROL_MV_GAMEINFO_UPPERRIGHT, imageGameInfoUpperRight)
 		item.setProperty(util.IMAGE_CONTROL_MV_GAMEINFO_LOWERLEFT, imageGameInfoLowerLeft)
-		item.setProperty(util.IMAGE_CONTROL_MV_GAMEINFO_LOWERRIGHT, imageGameInfoLowerRight)
+		item.setProperty(util.IMAGE_CONTROL_MV_GAMEINFO_LOWERRIGHT, imageGameInfoLowerRight)		
+		item.setProperty(util.IMAGE_CONTROL_MV_GAMEINFO_UPPER, imageGameInfoUpper)
+		item.setProperty(util.IMAGE_CONTROL_MV_GAMEINFO_LOWER, imageGameInfoLower)
+		item.setProperty(util.IMAGE_CONTROL_MV_GAMEINFO_LEFT, imageGameInfoLeft)
+		item.setProperty(util.IMAGE_CONTROL_MV_GAMEINFO_RIGHT, imageGameInfoRight)
 		item.setProperty(util.IMAGE_CONTROL_MV_1, imageMainView1)
 		item.setProperty(util.IMAGE_CONTROL_MV_2, imageMainView2)
 		item.setProperty(util.IMAGE_CONTROL_MV_3, imageMainView3)
@@ -1030,23 +1129,47 @@ class UIGameDB(xbmcgui.WindowXML):
 	
 	
 	def createConfigXml(self, configFile):
+				
+		id = 1		
+		consoleList = sorted(config.consoleDict.keys())
 		
+		#build fileTypeList
+		fileTypeList = []
+		configFile = os.path.join(util.getAddonInstallPath(), 'resources', 'database', 'config_template.xml')
+
+		if(not os.path.isfile(configFile)):
+			Logutil.log('File config_template.xml does not exist. Place a valid config file here: ' +str(configFile), util.LOG_LEVEL_ERROR)
+			return False, 'Error: File config_template.xml does not exist'
+		
+		tree = ElementTree().parse(configFile)
+		
+		fileTypes = tree.findall('FileTypes/FileType')
+		for fileType in fileTypes:
+			name = fileType.attrib.get('name')
+			if(name != None):
+				fileTypeList.append(name)
+				
+		success, romCollections = self.addRomCollections(id, consoleList, fileTypeList, False)
+		if(not success):
+			Logutil.log('Action canceled. Config.xml will not be written', util.LOG_LEVEL_INFO)
+			return False, 'Action canceled. Config.xml will not be written'
+				
+		configWriter = ConfigXmlWriter(True)
+		success, message = configWriter.writeRomCollections(romCollections)
+			
+		return success, message		
+	
+	
+	def addRomCollections(self, id, consoleList, fileTypeList, isUpdate):
+		
+		romCollections = {}
 		dialog = xbmcgui.Dialog()
-		
-		retValue = dialog.yesno('Rom Collection Browser', 'No config file found.', 'Do you want to create one?')
-		if(retValue == False):
-			return False, 'Action canceled.'
 		
 		#scraping scenario
 		scenarioIndex = dialog.select('Choose a scenario', ['Scrape game info and artwork online', 'Game info and artwork are available locally'])
 		if(scenarioIndex == -1):
-			return False, 'Action canceled.'
-			
-		newConfig = Config()
-		romCollections = {}
-				
-		id = 1
-		consoleList = config.consoleList
+			del dialog
+			return False, romCollections
 		
 		while True:
 		
@@ -1073,67 +1196,124 @@ class UIGameDB(xbmcgui.WindowXML):
 			id = id +1
 			
 			#emulator
-			consolePath = dialog.browse(1, '%s Emulator' %console, 'files')
-			if(consolePath == ''):
-				break
-			romCollection.emulatorCmd = consolePath
+			#xbox games on xbox will be launched directly
+			if (os.environ.get( "OS", "xbox" ) == "xbox" and romCollection.name == 'Xbox'):
+				romCollection.emulatorCmd = '%ROM%'
+			else:
+				consolePath = dialog.browse(1, '%s Emulator' %console, 'files')
+				if(consolePath == ''):
+					break
+				romCollection.emulatorCmd = consolePath
 			
 			#params
-			keyboard = xbmc.Keyboard()
-			keyboard.setHeading('Emulator params (use "%ROM%" for your rom files)')			
-			keyboard.doModal()
-			if (keyboard.isConfirmed()):
-				emuParams = keyboard.getText()
+			#on xbox we will create .cut files without params
+			if (os.environ.get( "OS", "xbox" ) == "xbox"):
+				romCollection.emulatorParams = ''
 			else:
-				break
-			romCollection.emulatorParams = emuParams
+				keyboard = xbmc.Keyboard()
+				#TODO add all rom params here
+				keyboard.setDefault('"%ROM%"')
+				keyboard.setHeading('Emulator params ("%ROM%" is used for your rom files)')			
+				keyboard.doModal()
+				if (keyboard.isConfirmed()):
+					emuParams = keyboard.getText()
+				else:
+					break
+				romCollection.emulatorParams = emuParams
 			
+			#roms
 			romPath = dialog.browse(0, '%s Roms' %console, 'files')
 			if(romPath == ''):
 				break
 			
+			
 			#filemask
-			keyboard = xbmc.Keyboard()
-			keyboard.setHeading('File mask (comma-separated): e.g. *.zip, *.smc')			
-			keyboard.doModal()
-			if (keyboard.isConfirmed()):
-				fileMaskInput = keyboard.getText()				
-				fileMasks = fileMaskInput.split(',')
+			
+			#xbox games always use default.xbe as executable
+			if (os.environ.get( "OS", "xbox" ) == "xbox" and romCollection.name == 'Xbox'):
+				romPathComplete = os.path.join(romPath, 'default.xbe')					
 				romCollection.romPaths = []
-				for fileMask in fileMasks:
-					romPathComplete = os.path.join(romPath, fileMask.strip())					
-					romCollection.romPaths.append(romPathComplete)
+				romCollection.romPaths.append(romPathComplete)
 			else:
-				break
+				keyboard = xbmc.Keyboard()
+				keyboard.setHeading('File mask (comma-separated): e.g. *.zip, *.smc')			
+				keyboard.doModal()
+				if (keyboard.isConfirmed()):
+					fileMaskInput = keyboard.getText()				
+					fileMasks = fileMaskInput.split(',')
+					romCollection.romPaths = []
+					for fileMask in fileMasks:
+						romPathComplete = os.path.join(romPath, fileMask.strip())					
+						romCollection.romPaths.append(romPathComplete)
+				else:
+					break
 	
-			if(scenarioIndex == 0):			
-				artworkPath = dialog.browse(0, '%s Artwork' %console, 'files')
+			if (os.environ.get( "OS", "xbox" ) == "xbox"):
+				romCollection.xboxCreateShortcut = True
+				romCollection.xboxCreateShortcutAddRomfile = True
+				romCollection.xboxCreateShortcutUseShortGamename = False
+				
+				#TODO use flags for complete platform list (not only xbox)
+				if(romCollection.name == 'Xbox'):
+					romCollection.useFoldernameAsGamename = True
+					romCollection.searchGameByCRC = False
+					romCollection.maxFolderDepth = 1
+			
+			
+			if(scenarioIndex == 0):
+				artworkPath = dialog.browse(0, '%s Artwork' %console, 'files', '', False, False, romPath)
 				if(artworkPath == ''):
 					break
 				
-				romCollection.mediaPaths = []
-				romCollection.mediaPaths.append(self.createMediaPath('boxfront', artworkPath, scenarioIndex))
-				romCollection.mediaPaths.append(self.createMediaPath('boxback', artworkPath, scenarioIndex))
-				romCollection.mediaPaths.append(self.createMediaPath('cartridge', artworkPath, scenarioIndex))
-				romCollection.mediaPaths.append(self.createMediaPath('screenshot', artworkPath, scenarioIndex))
-				romCollection.mediaPaths.append(self.createMediaPath('fanart', artworkPath, scenarioIndex))
-				
 				romCollection.descFilePerGame= True
-
-			else:
 				
-				fileTypes = ['boxfront', 'boxback', 'cartridge', 'screenshot', 'fanart', 'action', 'title', '3dbox', 'romcollection', 'developer', 'publisher', 'gameplay (video)']
+				#mediaPaths
+				romCollection.mediaPaths = []
+				
+				if(romCollection.name == 'MAME'):
+					romCollection.mediaPaths.append(self.createMediaPath('boxfront', artworkPath, scenarioIndex))
+					romCollection.mediaPaths.append(self.createMediaPath('action', artworkPath, scenarioIndex))
+					romCollection.mediaPaths.append(self.createMediaPath('title', artworkPath, scenarioIndex))
+					romCollection.mediaPaths.append(self.createMediaPath('cabinet', artworkPath, scenarioIndex))
+					romCollection.mediaPaths.append(self.createMediaPath('marquee', artworkPath, scenarioIndex))					
+				else:
+					romCollection.mediaPaths.append(self.createMediaPath('boxfront', artworkPath, scenarioIndex))
+					romCollection.mediaPaths.append(self.createMediaPath('boxback', artworkPath, scenarioIndex))
+					romCollection.mediaPaths.append(self.createMediaPath('cartridge', artworkPath, scenarioIndex))
+					romCollection.mediaPaths.append(self.createMediaPath('screenshot', artworkPath, scenarioIndex))
+					romCollection.mediaPaths.append(self.createMediaPath('fanart', artworkPath, scenarioIndex))
+				
+				#other MAME specific properties
+				if(romCollection.name == 'MAME'):
+					romCollection.imagePlacing = ImagePlacing()
+					romCollection.imagePlacing.name = 'gameinfomamecabinet'
+					
+					#MAME zip files contain several files but they must be passed to the emu as zip file
+					romCollection.doNotExtractZipFiles = True
+					
+					#create MAWS scraper
+					site = Site()
+					site.name = 'maws.mameworld.info'
+					scrapers = []
+					scraper = Scraper()
+					scraper.parseInstruction = '06 - maws.xml'
+					scraper.source = 'http://maws.mameworld.info/maws/romset/%GAME%'
+					scrapers.append(scraper)
+					site.scrapers = scrapers
+					romCollection.scraperSites = []
+					romCollection.scraperSites.append(site)
+			else:
 				
 				romCollection.mediaPaths = []
 				
 				while True:
 					
-					fileTypeIndex = dialog.select('Choose an artwork type', fileTypes)
+					fileTypeIndex = dialog.select('Choose an artwork type', fileTypeList)
 					if(fileTypeIndex == -1):
 						break
 					
-					fileType = fileTypes[fileTypeIndex]
-					fileTypes.remove(fileType)
+					fileType = fileTypeList[fileTypeIndex]
+					fileTypeList.remove(fileType)
 					
 					artworkPath = dialog.browse(0, '%s Artwork (%s)' %(console, fileType), 'files')
 					if(artworkPath == ''):
@@ -1166,24 +1346,21 @@ class UIGameDB(xbmcgui.WindowXML):
 				scraper = Scraper()
 				scraper.parseInstruction = parserPath
 				scraper.source = descPath
+				scraper.encoding = 'iso-8859-1'
 				scrapers.append(scraper)
 				site.scrapers = scrapers
 				romCollection.scraperSites = []
 				romCollection.scraperSites.append(site)
-				
 			
 			romCollections[romCollection.id] = romCollection						
 			
 			retValue = dialog.yesno('Rom Collection Browser', 'Do you want to add another Rom Collection?')
 			if(retValue == False):
-				break						
+				break
 		
-		newConfig.romCollections = romCollections		
-		newConfig.writeXml()
+		del dialog
 		
-		del dialog	
-			
-		return True, ''
+		return True, romCollections
 	
 	
 	def createMediaPath(self, type, path, scenarioIndex):
@@ -1208,32 +1385,52 @@ class UIGameDB(xbmcgui.WindowXML):
 			mediaPath.path = os.path.join(path, type, fileMask)
 		else:
 			mediaPath.path = os.path.join(path, fileMask)
-		
+				
 		return mediaPath
 	
 	
-	def checkImport(self, doImport):				
+	def checkImport(self, doImport):
 		
 		#doImport: 0=nothing, 1=import Settings and Games, 2=import Settings only, 3=import games only
 		if(doImport == 0):
 			return
 		
-		message = ''	
-		if(doImport == 1):
-			message = 'Database is empty. Do you want to import Games now?'		
-		elif(doImport == 3):
-			message = 'Do you want to import Games now?'
+		#Show options dialog if user wants to see it
+		#Import is started from dialog
+		showImportOptionsDialog = self.Settings.getSetting(util.SETTING_RCB_SHOWIMPORTOPTIONSDIALOG).upper() == 'TRUE'
+		if(showImportOptionsDialog):
+			constructorParam = 1
+			if(util.hasAddons()):
+				constructorParam = "PAL"
+			iod = dialogimportoptions.ImportOptionsDialog("script-RCB-importoptions.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self)
+			del iod
 		else:
-			return
+						
+			message = 'Do you want to import Games now?'		
 		
-		dialog = xbmcgui.Dialog()
-		retGames = dialog.yesno('Rom Collection Browser', 'Import Games', message)
-		if(retGames == True):
-			progressDialog = ProgressDialogGUI()
-			progressDialog.writeMsg("Import games...", "", "")
-			dbupdate.DBUpdate().updateDB(self.gdb, progressDialog)
-			progressDialog.writeMsg("", "", "", -1)
-			del progressDialog
+			dialog = xbmcgui.Dialog()
+			retGames = dialog.yesno('Rom Collection Browser', 'Import Games', message)
+			if(retGames == True):
+				
+				scrapingMode = 0
+				scrapingModeStr = self.Settings.getSetting(util.SETTING_RCB_SCRAPINGMODE)			
+				if(scrapingModeStr == 'Automatic: Accurate'):
+					scrapingMode = 0
+				elif(scrapingModeStr == 'Automatic: Guess Matches'):
+					scrapingMode = 1
+				elif(scrapingModeStr == 'Interactive: Select Matches'):
+					scrapingMode = 2
+					
+				#Import Games
+				self.doImport(scrapingMode, self.config.romCollections)
+		
+		
+	def doImport(self, scrapingmode, romCollections):
+		progressDialog = ProgressDialogGUI()
+		progressDialog.writeMsg("Import games...", "", "")
+		dbupdate.DBUpdate().updateDB(self.gdb, progressDialog, scrapingmode, romCollections)
+		progressDialog.writeMsg("", "", "", -1)
+		del progressDialog
 
 			
 	def checkAutoExec(self):
@@ -1604,7 +1801,7 @@ class UIGameDB(xbmcgui.WindowXML):
 			control = self.getControl(controlId)
 		except Exception, (exc):
 			#HACK there seems to be a problem with recognizing the scrollbar controls
-			if(controlId not in (CONROL_SCROLLBARS)):
+			if(controlId not in (CONTROL_SCROLLBARS)):
 				Logutil.log("Control with id: %s could not be found. Check WindowXML file. Error: %s" % (str(controlId), str(exc)), util.LOG_LEVEL_ERROR)
 				self.writeMsg("Control with id: %s could not be found. Check WindowXML file." % str(controlId))
 			return None
@@ -1632,10 +1829,12 @@ class UIGameDB(xbmcgui.WindowXML):
 
 
 def main():
-	if(util.isPostCamelot()):
+	if(util.hasAddons()):
 		ui = UIGameDB("script-Rom_Collection_Browser-main.xml", util.getAddonInstallPath(), "Default", "PAL")
+		#ui = UIGameDB("script-Rom_Collection_Browser-main.xml", util.getAddonInstallPath(), "Light", "PAL")
 	else:
 		ui = UIGameDB("script-Rom_Collection_Browser-main.xml", util.getAddonInstallPath(), "Default", 1)
+		#ui = UIGameDB("script-Rom_Collection_Browser-main.xml", util.getAddonInstallPath(), "Light", 1)
 	ui.doModal()
 	del ui
 

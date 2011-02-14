@@ -8,13 +8,15 @@ from util import *
 
 import difflib
 
+import xbmcgui
+
 
 class PyScraper:
 	
 	def __init__(self):
 		pass
 
-	def scrapeResults(self, results, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, romFile, fuzzyFactor):		
+	def scrapeResults(self, results, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, romFile, fuzzyFactor, updateOption):		
 		Logutil.log("using parser file: " +scraper.parseInstruction, util.LOG_LEVEL_DEBUG)		
 		Logutil.log("using game description: " +scraper.source, util.LOG_LEVEL_DEBUG)
 		
@@ -40,7 +42,7 @@ class PyScraper:
 			Logutil.log('Using nfoFile: ' +str(nfoFile), util.LOG_LEVEL_INFO)
 			scraperSource = nfoFile
 														
-		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc, fuzzyFactor)
+		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc, fuzzyFactor, updateOption)
 		
 		if(tempResults == None):
 			if(scraper.returnUrl):
@@ -75,7 +77,7 @@ class PyScraper:
 	
 	
 	
-	def parseDescriptionFile(self, scraper, scraperSource, gamenameFromFile, foldername, crc, fuzzyFactor):
+	def parseDescriptionFile(self, scraper, scraperSource, gamenameFromFile, foldername, crc, fuzzyFactor, updateOption):
 			
 		try:				
 			#replace configurable tokens
@@ -121,17 +123,18 @@ class PyScraper:
 			
 			parser = DescriptionParserFactory.getParser(str(scraper.parseInstruction))
 			Logutil.log("description file (tokens replaced): " +scraperSource, util.LOG_LEVEL_INFO)
-			results = parser.parseDescription(str(scraperSource))
+			Logutil.log("Encoding: %s" % scraper.encoding, util.LOG_LEVEL_WARNING)
+			results = parser.parseDescription(str(scraperSource), scraper.encoding)
 		except Exception, (exc):
 			Logutil.log("an error occured while parsing game description: " +scraperSource, util.LOG_LEVEL_WARNING)
 			Logutil.log("Parser complains about: " +str(exc), util.LOG_LEVEL_WARNING)
 			return None			
 
-		results = self.getBestResults(results, gamenameFromFile, fuzzyFactor)
+		results = self.getBestResults(results, gamenameFromFile, fuzzyFactor, updateOption)
 		return results
 	
 	
-	def getBestResults(self, results, gamenameFromFile, fuzzyFactor):		
+	def getBestResults(self, results, gamenameFromFile, fuzzyFactor, updateOption):		
 		
 		digits = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1']
 		romes = ['X', 'IX', 'VIII', 'VII', 'VI', 'V', 'IV', 'III', 'II', 'I']
@@ -144,10 +147,33 @@ class PyScraper:
 			bestMatchingGame = self.resolveParseResult(result, 'SearchKey')
 			
 			if(highestRatio != 1.0):
+				
+				#stop searching in accurate mode
+				if(updateOption == util.SCRAPING_OPTION_AUTO_ACCURATE):
+					Logutil.log('Ratio != 1.0 and scraping option is set to "Accurate". Result will be skipped', LOG_LEVEL_WARNING)
+					return None
+			
+				#Ask for correct result in Interactive mode
+				if(updateOption == util.SCRAPING_OPTION_INTERACTIVE):
+					options = []
+					options.append('Skip Game')
+					for resultEntry in results:
+						options.append(self.resolveParseResult(resultEntry, 'SearchKey'))
+						
+					resultIndex = xbmcgui.Dialog().select('Search for: ' +gamenameFromFile, options)
+					if(resultIndex == 0):
+						Logutil.log('No result chosen by user', util.LOG_LEVEL_INFO)
+						return None
+					#-1 because of "Skip Game" entry
+					resultIndex = resultIndex - 1
+					selectedGame = self.resolveParseResult(results[resultIndex], 'Game')
+					Logutil.log('Result chosen by user: ' +str(selectedGame), util.LOG_LEVEL_INFO)
+					return results[resultIndex]
+				
+				#check seq no in guess names mode
 				seqNoIsEqual = self.checkSequelNoIsEqual(gamenameFromFile, bestMatchingGame)
 				if (not seqNoIsEqual):										
 					highestRatio = 0.0
-								
 			
 			if(highestRatio < fuzzyFactor):
 				Logutil.log('No result found with a ratio better than %s. Try again with subtitle search.' %(str(fuzzyFactor),), LOG_LEVEL_WARNING)
@@ -337,7 +363,7 @@ class PyScraper:
 			resultValue = result[itemName][0]
 			resultValue = util.html_unescape(resultValue)
 			resultValue = resultValue.strip()
-			resultValue = resultValue.encode('utf-8')
+			resultValue = resultValue
 									
 		except Exception, (exc):
 			Logutil.log("Error while resolving item: " +itemName +" : " +str(exc), util.LOG_LEVEL_WARNING)

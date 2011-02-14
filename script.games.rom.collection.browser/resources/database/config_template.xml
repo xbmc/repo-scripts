@@ -1,0 +1,228 @@
+<config>
+  <RomCollections>
+    
+  </RomCollections>
+  <FileTypes>
+    <FileType id="1" name="boxfront">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="2" name="boxback">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="3" name="cartridge">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="4" name="screenshot">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="5" name="fanart">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="6" name="action">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="7" name="title">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="8" name="3dbox">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="9" name="romcollection">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="10" name="developer">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="11" name="publisher">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+    <FileType id="12" name="gameplay">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+	<FileType id="13" name="cabinet">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+	<FileType id="14" name="marquee">
+      <type>image</type>
+      <parent>game</parent>
+    </FileType>
+  </FileTypes>
+  <ImagePlacing>
+    <fileTypeFor name="gameinfobig">
+      <fileTypeForGameList>boxfront</fileTypeForGameList>
+      <fileTypeForGameList>screenshot</fileTypeForGameList>
+      <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>screenshot</fileTypeForGameListSelected>
+      <fileTypeForMainViewBackground>fanart</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>screenshot</fileTypeForMainViewBackground>
+      <fileTypeForMainViewGameInfoBig>screenshot</fileTypeForMainViewGameInfoBig>
+      <fileTypeForMainViewGameInfoBig>boxfront</fileTypeForMainViewGameInfoBig>
+      <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
+      <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
+      <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
+      <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
+    </fileTypeFor>
+    <fileTypeFor name="gameinfobigVideo">
+      <fileTypeForGameList>boxfront</fileTypeForGameList>
+      <fileTypeForGameList>screenshot</fileTypeForGameList>
+      <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>screenshot</fileTypeForGameListSelected>
+      <fileTypeForMainViewBackground>fanart</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>screenshot</fileTypeForMainViewBackground>
+      <fileTypeForMainViewGameInfoBig>screenshot</fileTypeForMainViewGameInfoBig>
+      <fileTypeForMainViewGameInfoBig>boxfront</fileTypeForMainViewGameInfoBig>
+      <fileTypeForMainViewVideoWindowBig>gameplay</fileTypeForMainViewVideoWindowBig>
+      <fileTypeForMainViewVideoFullscreen>gameplay</fileTypeForMainViewVideoFullscreen>
+      <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
+      <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
+      <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
+      <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
+    </fileTypeFor>
+    <fileTypeFor name="gameinfosmall">
+      <fileTypeForGameList>boxfront</fileTypeForGameList>
+      <fileTypeForGameList>screenshot</fileTypeForGameList>
+      <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>screenshot</fileTypeForGameListSelected>
+      <fileTypeForMainViewBackground>fanart</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>screenshot</fileTypeForMainViewBackground>
+      <fileTypeForMainViewGameInfoUpperLeft>screenshot</fileTypeForMainViewGameInfoUpperLeft>
+      <fileTypeForMainViewGameInfoUpperRight>boxfront</fileTypeForMainViewGameInfoUpperRight>
+      <fileTypeForMainViewGameInfoLowerLeft>cartridge</fileTypeForMainViewGameInfoLowerLeft>
+      <fileTypeForMainViewGameInfoLowerRight>boxback</fileTypeForMainViewGameInfoLowerRight>
+      <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
+      <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
+      <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
+      <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
+    </fileTypeFor>
+    <fileTypeFor name="gameinfosmallVideo">
+      <fileTypeForGameList>boxfront</fileTypeForGameList>
+      <fileTypeForGameList>screenshot</fileTypeForGameList>
+      <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>screenshot</fileTypeForGameListSelected>
+      <fileTypeForMainViewBackground>fanart</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>screenshot</fileTypeForMainViewBackground>
+      <fileTypeForMainViewGameInfoUpperLeft>screenshot</fileTypeForMainViewGameInfoUpperLeft>
+      <fileTypeForMainViewGameInfoUpperRight>boxfront</fileTypeForMainViewGameInfoUpperRight>
+      <fileTypeForMainViewGameInfoLowerLeft>cartridge</fileTypeForMainViewGameInfoLowerLeft>
+      <fileTypeForMainViewGameInfoLowerRight>boxback</fileTypeForMainViewGameInfoLowerRight>
+      <fileTypeForMainViewVideoWindowSmall>gameplay</fileTypeForMainViewVideoWindowSmall>
+      <fileTypeForMainViewVideoFullscreen>gameplay</fileTypeForMainViewVideoFullscreen>
+      <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
+      <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
+      <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
+      <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
+    </fileTypeFor>
+	<fileTypeFor name="gameinfomamemarquee">
+      <fileTypeForGameList>marquee</fileTypeForGameList>
+      <fileTypeForGameList>boxfront</fileTypeForGameList>
+	  <fileTypeForGameList>title</fileTypeForGameList>
+	  <fileTypeForGameListSelected>marquee</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
+	  <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
+      <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>action</fileTypeForMainViewBackground>
+      <fileTypeForMainViewGameInfoLeft>cabinet</fileTypeForMainViewGameInfoLeft>
+      <fileTypeForMainViewGameInfoUpperRight>title</fileTypeForMainViewGameInfoUpperRight>
+      <fileTypeForMainViewGameInfoLowerRight>action</fileTypeForMainViewGameInfoLowerRight>      
+      <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
+      <fileTypeForGameInfoView2>action</fileTypeForGameInfoView2>
+      <fileTypeForGameInfoView3>title</fileTypeForGameInfoView3>
+      <fileTypeForGameInfoView4>cabinet</fileTypeForGameInfoView4>
+    </fileTypeFor>
+	<fileTypeFor name="gameinfomamecabinet">
+      <fileTypeForGameList>cabinet</fileTypeForGameList>
+      <fileTypeForGameList>boxfront</fileTypeForGameList>
+	  <fileTypeForGameList>title</fileTypeForGameList>
+	  <fileTypeForGameListSelected>cabinet</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
+	  <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
+      <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
+      <fileTypeForMainViewBackground>action</fileTypeForMainViewBackground>
+      <fileTypeForMainViewGameInfoUpperLeft>title</fileTypeForMainViewGameInfoUpperLeft>
+      <fileTypeForMainViewGameInfoUpperRight>action</fileTypeForMainViewGameInfoUpperRight>
+      <fileTypeForMainViewGameInfoLower>marquee</fileTypeForMainViewGameInfoLower>      
+      <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
+      <fileTypeForGameInfoView2>action</fileTypeForGameInfoView2>
+      <fileTypeForGameInfoView3>title</fileTypeForGameInfoView3>
+      <fileTypeForGameInfoView4>cabinet</fileTypeForGameInfoView4>
+    </fileTypeFor>
+  </ImagePlacing>
+  <Scrapers>
+    <Site name="local nfo">
+      <Scraper parseInstruction="00 - local nfo.xml" source="nfo" />
+    </Site>
+    <Site name="thevideogamedb.com">
+      <Scraper parseInstruction="01 - thevideogamedb.xml" source="http://thevideogamedb.com/API/GameDetail.aspx?apikey=%VGDBAPIKey%&amp;crc=%CRC%" />
+    </Site>
+    <Site name="thegamesdb.net">
+      <Scraper parseInstruction="02 - thegamesdb.xml" source="http://thegamesdb.net/api/GetGame.php?name=%GAME%" />
+    </Site>
+    <Site name="giantbomb.com">
+      <Scraper parseInstruction="03.01 - giantbomb - search.xml" replaceKeyString="%REPLACEKEYS%" replaceValueString="%REPLACEVALUES%" returnUrl="true" source="http://api.giantbomb.com/search/?api_key=%GIANTBOMBAPIKey%&amp;query=%GAME%&amp;resources=game&amp;field_list=api_detail_url,name&amp;format=xml" />
+      <Scraper parseInstruction="03.02 - giantbomb - detail.xml" source="1" />
+    </Site>
+    <Site name="mobygames.com">
+      <Scraper parseInstruction="04.01 - mobygames - gamesearch.xml" replaceKeyString="%REPLACEKEYS%" replaceValueString="%REPLACEVALUES%" returnUrl="true" source="http://www.mobygames.com/search/quick?game=%GAME%&amp;p=%PLATFORM%" />
+      <Scraper parseInstruction="04.02 - mobygames - details.xml" source="1" />
+      <Scraper parseInstruction="04.03 - mobygames - coverlink.xml" returnUrl="true" source="1" />
+      <Scraper parseInstruction="04.04 - mobygames - coverart.xml" source="2" />
+      <Scraper parseInstruction="04.05 - mobygames - screenshotlink.xml" returnUrl="true" source="1" />
+      <Scraper parseInstruction="04.06 - mobygames - screenoriglink.xml" returnUrl="true" source="3" />
+      <Scraper parseInstruction="04.07 - mobygames - screenshots.xml" source="4" />
+    </Site>
+	<Site name="maws.mameworld.info">
+	  <Scraper parseInstruction="06 - maws.xml" source="http://maws.mameworld.info/maws/romset/%GAME%" encoding='iso-8859-1'/>
+	</Site>
+  </Scrapers>
+</config>

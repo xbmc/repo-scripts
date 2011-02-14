@@ -1,15 +1,50 @@
 
+0.8.1 (02/2011)
+~~~~~~~~~~~~~
+General:
+    * rework of Confluence Thumbs view
+
+Game Import:
+    * scraping options: automatic: accurate, automatic: guess matches, interactive: select matches    
+    * new import options dialog (select Rom Collection, scraping mode and scrapers)
+    * small fixes in MAME scraper
+
+0.8.0 (01/2011)
+~~~~~~~~~~~~~
+General:
+    * added context menu
+    * option "Add Rom Collection" available via context menu
+    * reworked Confluence views
+
+Game Import:
+    * new scraper: maws.mameworld.info
+    * rework of progress dialog (info about current scraper and current action)
+    * bugfix: stop import when action is canceled
+
+Game Launching:
+    * detect games in zip and 7z archives and ask user which game to load
+
+0.7.11 (12/2010)
+~~~~~~~~~~~~~
+General:
+    * prevent download of multiple images: check if file is available with different extension
+    * bugfix: fallback images did not work in previous versions
+
+Xbox related:
+    * bugfix: Launching games on xbox was broken
+    * set correct RomCollection-properties on xbox (create shortcuts, ...)
+    * complete configuration can be done with the wizard (for roms and Xbox-games)
+
 0.7.10 (12/2010)
 ~~~~~~~~~~~~~
 Online Scraping
     * improvements to sequel and subtitle handling
-	
 
 0.7.9 (12/2010)
 ~~~~~~~~~~~~~
 Online Scraping
     * scraping game information and artwork from various online sources
-    * current available scrapers: thevideogamedb.com, thegamesdb.net, giantbomb.com, mobygames.com
+    * current available scrapers: thegamesdb.net, giantbomb.com, mobygames.com
     * scraped artwork types: boxfront, boxback, cartridge, screenshot and fanart
     * create local nfo files while scraping
     * option to reimport local nfo files (possibility to add or edit game properties)
