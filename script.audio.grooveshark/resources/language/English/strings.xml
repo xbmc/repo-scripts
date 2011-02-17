@@ -27,6 +27,11 @@
     <string id="122">Remove all songs</string>
     <string id="123">Use for radio</string>
     <string id="124">Add to radio</string>
+    <string id="125">Play album</string>
+    <string id="126">Enqueue album</string>
+    <string id="127">Save album as a playlist</string>
+    <string id="128">Search results</string>
+    <string id="129">Favorites</string>
 
     <!-- Dialogs -->
     <string id="1000">Enter a search phrase</string>
@@ -70,7 +75,7 @@
     <string id="3024">Artists</string>
     <string id="3025">Albums</string>
     <string id="3026">Found</string>
-    <string id="3027">Failed to login. Check your login details in settings</string>
+    <string id="3027">Wrong username/password</string>
     <string id="3028">You have to be logged in. Set your login in settings</string>
     <string id="3029">Unable to get playlists</string>
     <string id="3030">New name for playlist</string>

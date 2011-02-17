@@ -93,7 +93,8 @@ else:
 		try:
 			tools = tools()
 			tools.loadParameters(sys.argv[2])
-			gs = GrooveAPI()
+			gs = GrooveAPI(enableDebug = __debugging__, cwd = __cwd__,clientUuid = None, clientVersion = None)
+			gs.startSession('','')
 			get = tools.getCmd
 			songId = get('playSong')
 			playlist = get('playlist')
@@ -141,7 +142,9 @@ else:
 							listitemNext.setProperty('IsPlayable', 'true')
 							playlist.add(url, listitemNext, 0)
 					print 'GrooveShark: Found stream url: (' + url + ')'
+					xbmc.Player(xbmc.PLAYER_CORE_MPLAYER)
 					xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=True, listitem=listitem)
+					print 'GrooveShark: ####### Finished'
 				else:
 					print 'GrooveShark: No stream url returned for song id'
 					listitem=xbmcgui.ListItem(label='music', path='')

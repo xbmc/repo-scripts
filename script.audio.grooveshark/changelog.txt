@@ -1,3 +1,17 @@
+0.4.0:
+
+ - Migrated to new API.
+
+ - Navigation has been revamped.
+
+ - Radio support has been disabled until it's fully implemented in the new API.
+
+ - New feature: See your favorites.
+
+ - Preliminary support for external python.
+
+ - This version hasn't been tested on XBOX so don't expect it to work.
+
 0.3.1:
 
  - Fixed: The script couldn't get a session id due to API changes.

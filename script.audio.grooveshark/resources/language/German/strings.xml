@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="0">GrooveShark</string>
+
+    <!-- Buttons -->
+    <string id="101">Einreihen</string>
+    <string id="102">Abspielen</string>
+    <string id="103">Alle einreihen</string>
+    <string id="104">Zur Playlist hinzufügen</string>
+    <string id="105">Lade Playlist</string>
+    <string id="106">Suche</string>
+    <string id="107">jetzt läuft</string>
+    <string id="108">Beliebt</string>
+    <string id="109">Einstellungen</string>
+    <string id="110">Laden</string>
+    <string id="111">Umbennenen</string>
+    <string id="112">Löschen</string>
+    <string id="113">Song entfernen</string>
+    <string id="114">Playlist speichern</string>
+    <string id="115">Playlist speichern als</string>
+    <string id="116">Playlist schließen</string>
+    <string id="117">Playlists</string>
+    <string id="118">Warteschlange speichern</string>
+    <string id="119">änliche finden</string>
+    <string id="120">im Album des Songs browsen</string>
+    <string id="121">Beenden</string>
+    <string id="122">alle Songs entfernen</string>
+    <string id="123">Als Radio benutzen</string>
+    <string id="124">Zum Radio hinzufügen</string>
+
+    <!-- Dialogs -->
+    <string id="1000">Suchbegriff eingeben</string>
+    <string id="1001">Playlists</string>
+    <string id="1002">Do what?</string>
+    <string id="1003">Beenden?</string>
+    <string id="1004">Möchten Sie GrooveShark beenden?</string>
+
+    <!-- Settings -->
+    <string id="2000">Benutzername</string>
+    <string id="2001">Passwort</string>
+    <string id="2002">Debugging</string>
+    <string id="2003">XBOX</string>
+    <string id="2004">Shuffle</string>
+
+    <!-- Labels -->
+    <string id="3000">Starte eine Songsuche oder lade eine Playlist</string>
+    <string id="3001">JETZT LÄUFT</string>
+    <string id="3002">WEITER</string>
+    <string id="3003">Gefundene Songs</string>
+    <string id="3004">Gefundene Interpretenound</string>
+    <string id="3005">Gefundenen Alben</string>
+    <string id="3006">von</string>
+    <string id="3007">Aktuelle Playlist</string>
+    <string id="3008">Konnte Playlist nicht speichern</string>
+    <string id="3009">Gebe einen Name für die Playlist ein</string>
+    <string id="3010">Es muss ein Name für die Playlist vergeben werden</string>
+    <string id="3011">Fehler</string>
+    <string id="3012">Konnte keine beliebten Objekte empfangen</string>
+    <string id="3013">Please wait</string>
+    <string id="3014">Hole beliebte Songs...</string>
+    <string id="3015">Hole beliebte Interpreten...</string>
+    <string id="3016">Hole beliebte Alben...</string>
+    <string id="3017">Fertig</string>
+    <string id="3018">Suche Songs...</string>
+    <string id="3019">Suche Interpreten...</string>
+    <string id="3020">Suche Alben...</string>
+    <string id="3021">Suche beendet</string>
+    <string id="3022">Suche fehlgeschlagen. Versuche es nocheinmal</string>
+    <string id="3023">Songs</string>
+    <string id="3024">Interpreten</string>
+    <string id="3025">Alben</string>
+    <string id="3026">Gefunden</string>
+    <string id="3027">Login fehlgeschlagen. Überprüfe deine Logindaten in den Einstellungen</string>
+    <string id="3028">Sie müssen eingeoggt sein. Richte in den Einstellungen deine Logindaten ein</string>
+    <string id="3029">Kann Playlist nicht empfangen</string>
+    <string id="3030">Neuer name für die Pplaylist</string>
+    <string id="3031">Kann Playlist nicht umbenennen</string>
+    <string id="3032">Möchten Sie die Playlist wirklich löschen</string>
+    <string id="3033">Playlist löschen?</string>
+    <string id="3034">Playlist speichern</string>
+    <string id="3035">gespeichert</string>
+    <string id="3036">Hole thumbnails</string>
+    <string id="3037">Einloggen</string>
+    <string id="3038">Hole Playlists</string>
+    <string id="3039">Deine Playlists</string>
+    <string id="3040">Similar</string>
+    <string id="3041">Populär bei GrooveShark</string>
+    <string id="3042">Playlists</string>
+    <string id="3043">Playlist konnte nicht empfangen werden</string>
+    <string id="3044">Playlist konnte nicht gelöscht werden</string>
+    <string id="3045">Kein Grooveshark material in der Warteschlange</string>
+    <string id="3046">Konnte keine neue Session ID empfangen. Versuche es in ein paar minuten nocheinmal</string>
+    <string id="3047">Konnte keine änlichen Einträge finden</string>
+    <string id="3048">Suche nach Playlists...</string>
+    <string id="3049">Tracks</string>
+    <string id="3050">keine Vorschläge</string>
+    <string id="3051">Vorschläge für</string>
+</strings>

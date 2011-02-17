@@ -536,7 +536,7 @@ class SearchXml(xbmcgui.WindowXMLDialog):
 		self.getControl(502).reset()
 		self.getControl(502).addItems(albums)
 
-class Search(object):
+class SearchGUI(object):
 	def __init__(self):
 		if __isXbox__ == False:
 			w = SearchXml("search.xml", os.getcwd(), "DefaultSkin")
