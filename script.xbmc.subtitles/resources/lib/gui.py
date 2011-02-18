@@ -9,6 +9,11 @@ import unicodedata
 import shutil
 import socket
 
+try:
+  import xbmcvfs
+  VFS = True
+except:
+  VFS = False  
 _              = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __settings__   = sys.modules[ "__main__" ].__settings__
@@ -117,7 +122,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       else:
         self.file_name = "%s (%s)" % (self.title.encode('utf-8'), str(self.year),)    
 
-    self.tmp_sub_dir = os.path.join( xbmc.translatePath(__profile__) ,"sub_tmp" )
+    self.tmp_sub_dir = os.path.join( __profile__ ,"sub_tmp" )
 
     if not self.tmp_sub_dir.endswith(':') and not os.path.exists(self.tmp_sub_dir):
       os.makedirs(self.tmp_sub_dir)
@@ -287,7 +292,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
       file_from = file.replace('\\','/')
       file_to = os.path.join(self.sub_folder, file_name).replace('\\','/')
       try:
-        shutil.copyfile(file_from, file_to)
+        if VFS:
+          xbmcvfs.copy(file_from, file_to)
+          log( __name__ ,"vfs module copy %s -> %s" % (file_from, file_to))
+        else:  
+          shutil.copyfile(file_from, file_to)
       except IOError, e:
         log( __name__ ,"Error: [%s]" % (e,)  )
       xbmc.Player().setSubtitles(file_to)
@@ -329,7 +338,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
       if not subtitle_set:
         for zip_entry in files:
           if os.path.splitext( zip_entry )[1] in exts:
-            print os.path.splitext( zip_entry )[1]
             subtitle_file, file_path = self.create_name(zip_entry,sub_filename,subtitle_lang)
             subtitle_set,file_path  = self.copy_files( subtitle_file, file_path )            
 
@@ -361,7 +369,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
   def copy_files( self, subtitle_file, file_path ):
     subtitle_set = False
     try:
-      shutil.copy(subtitle_file, file_path)
+      if VFS:
+        xbmcvfs.copy(subtitle_file, file_path)
+        log( __name__ ,"vfs module copy %s -> %s" % (subtitle_file, file_path))
+      else:  
+        shutil.copy(subtitle_file, file_path)
       subtitle_set = True
     except :
       import filecmp

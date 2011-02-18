@@ -1,3 +1,12 @@
+2.3.3
+- oops, c/p error
+
+2.3.2
+- added: support for xbmcvfs module, with this its possible to search by hash and save on smb:// drives on git post 07214fed10baf7dff89e and atv2 branch post 9da6df570ce8b840fd85
+
+2.3.1
+- fixed: more xbmc.translatePath() games for external python setups
+
 2.3.0
 - fixed: temporary folder needs xbmc.translatePath()
 - removed Addic7ed service, requested by alex from Addic7ed.com

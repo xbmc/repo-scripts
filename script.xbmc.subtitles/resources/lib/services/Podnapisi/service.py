@@ -42,7 +42,6 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
        
     ok = False
     msg = ""
-    hash_search = False
     osdb_server = OSDBServer()
     osdb_server.create()    
     subtitles_list = []
@@ -55,8 +54,12 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
       hash_search = False      
     else:
       try:
-        hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
-        file_size = os.path.getsize( file_original_path )
+        try:
+          file_size, hashTry = xbmc.subHashAndFileSize(file_original_path)
+          log( __name__ ,"xbmc module hash and size")
+        except:  
+          hashTry = timeout(set_filehash, args=(file_original_path, rar), timeout_duration=5)
+          file_size = str(os.path.getsize( file_original_path ))
         hash_search = True
       except: 
         hash_search = False 

@@ -3,9 +3,11 @@ from utilities import log
 
 _                = sys.modules[ "__main__" ].__language__
 __settings__     = sys.modules[ "__main__" ].__settings__
+__profile__      = sys.modules[ "__main__" ].__profile__
+
 apiurl           = "http://api.bierdopje.com/"
 apikey           = "369C2ED4261DE9C3"
-showids_filename = os.path.join( __settings__.getAddonInfo('profile') ,"bierdopje_show_ids.txt" )
+showids_filename = os.path.join( __profile__ ,"bierdopje_show_ids.txt" )
 
 #====================================================================================================================
 # Functions

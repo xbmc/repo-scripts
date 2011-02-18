@@ -9,7 +9,7 @@ __settings__   = xbmcaddon.Addon(id='script.xbmc.subtitles')
 __language__   = __settings__.getLocalizedString
 __version__    = __settings__.getAddonInfo('version')
 __cwd__        = __settings__.getAddonInfo('path')
-__profile__    = __settings__.getAddonInfo('profile')
+__profile__    = xbmc.translatePath( __settings__.getAddonInfo('profile') )
 __scriptname__ = "XBMC Subtitles"
 __scriptid__   = "script.xbmc.subtitles"
 __author__     = "Amet,mr_blobby"
