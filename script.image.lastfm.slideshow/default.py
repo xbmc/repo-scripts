@@ -1,10 +1,9 @@
-import urllib,urllib2,re,os
+import urllib,urllib2,re
 import xbmcaddon,xbmcgui
 from BeautifulSoup import BeautifulSoup
 
 __settings__ = xbmcaddon.Addon(id='script.image.lastfm.slideshow')
 __language__ = __settings__.getLocalizedString
-portnum = __settings__.getSetting('port_number')
 
 def SlideShow():
 	class MyPlayer( xbmc.Player ) :            
@@ -43,12 +42,10 @@ def SlideShow():
 			response.close()
 			soup = BeautifulSoup(link)
 			images = soup('image')
-			useradd = xbmc.getIPAddress()+':'+portnum
-			HTTP_API_url = "http://%s/xbmcCmds/xbmcHttp?command="%useradd
-			urllib.urlopen(HTTP_API_url + "ClearSlideshow" )
+			xbmc.executehttpapi("ClearSlideshow")
 			for image in images:
 				url = image.size.string
-				urllib.urlopen(HTTP_API_url + "AddToSlideshow(%s)" % url)
+				xbmc.executehttpapi("AddToSlideshow(%s)" % url)
 			xbmc.executebuiltin( "SlideShow(,,notrandom)" )
 
 	MyPlayer().onPlayBackStarted()

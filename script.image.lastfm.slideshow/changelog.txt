@@ -1,0 +1,5 @@
+Version 0.0.2
+removed settings, no longer required
+
+Version 0.0.1
+initial
