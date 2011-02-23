@@ -82,18 +82,23 @@ class Main:
     def __init__( self ):
         # parse argv for any preferences
         self._parse_argv()
-        # clear properties
-        self._clear_properties()
-        # set any alarm
-        self._set_alarm()
         # format our records start and end
         xbmc.executehttpapi( "SetResponseFormat()" )
         xbmc.executehttpapi( "SetResponseFormat(OpenRecord,%s)" % ( "<record>", ) )
         xbmc.executehttpapi( "SetResponseFormat(CloseRecord,%s)" % ( "</record>", ) )
-        # fetch media info
-        self._fetch_movie_info()
-        self._fetch_tvshow_info()
-        self._fetch_music_info()
+        # check if we were executed internally
+        print self.ALBUMID
+        if self.ALBUMID:
+            self._Play_Album( self.ALBUMID )
+        else:
+            # clear properties
+            self._clear_properties()
+            # set any alarm
+            self._set_alarm()
+            # fetch media info
+            self._fetch_movie_info()
+            self._fetch_tvshow_info()
+            self._fetch_music_info()
     
     def _fetch_movie_info( self ):
         # set our unplayed query
@@ -194,7 +199,7 @@ class Main:
                     self.WINDOW.setProperty( "RandomSong.%d.Artist" % ( count + 1, ), fields[ 6 ] )
                     self.WINDOW.setProperty( "RandomSong.%d.Rating" % ( count + 1, ), fields[ 18 ] )
                     # Album Path  (ID)
-                    path = 'XBMC.RunScript(script.recentlyadded,albumid=' + fields[ 0 ] + ')'
+                    path = 'XBMC.RunScript(script.randomitems,albumid=' + fields[ 0 ] + ')'
                     self.WINDOW.setProperty( "RandomSong.%d.Path" % ( count + 1, ), path )
                     # get cache name of path to use for fanart
                     cache_name = xbmc.getCacheThumbName( fields[ 6 ] )

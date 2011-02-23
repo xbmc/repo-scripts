@@ -1,0 +1,3 @@
+v 1.0.10:
+- don't clear window properties when playing an album
+- don't execute script.recentlyadded internally
