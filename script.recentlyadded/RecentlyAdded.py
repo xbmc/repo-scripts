@@ -67,8 +67,6 @@ class Main:
         except:
             # no params passed
             params = {}
-           
- 
             # set our preferences
         print params
         self.LIMIT = int( params.get( "limit", "5" ) )
@@ -91,18 +89,20 @@ class Main:
     def __init__( self ):
         # parse argv for any preferences
         self._parse_argv()
-        # clear properties
-        self._clear_properties()
-        # set any alarm
-        self._set_alarm()
         # format our records start and end
         xbmc.executehttpapi( "SetResponseFormat()" )
         xbmc.executehttpapi( "SetResponseFormat(OpenRecord,%s)" % ( "<record>", ) )
         xbmc.executehttpapi( "SetResponseFormat(CloseRecord,%s)" % ( "</record>", ) )
-        # fetch media info
+        # check if we were executed internally
         print self.ALBUMID
-        if self.ALBUMID: self._Play_Album( self.ALBUMID )
+        if self.ALBUMID:
+            self._Play_Album( self.ALBUMID )
         else:
+            # clear properties
+            self._clear_properties()
+            # set any alarm
+            self._set_alarm()
+            # fetch media info
             self._fetch_totals()
             self._fetch_movie_info()
             self._fetch_tvshow_info()
@@ -154,11 +154,9 @@ class Main:
                 tvshows_totals[ 2 ] += int( fields[ 26 ] ) # watched?
                 tvshows_totals[ 3 ] += int( fields[ 25 ] ) # number of episodes watched
          # sql statement for tv albums/songs totals
-
         sql_totals = "select count(1), count(distinct strAlbum), count(distinct strArtist) from songview"
         totals_xml = xbmc.executehttpapi( "QueryMusicDatabase(%s)" % quote_plus( sql_totals ), )
-        music_totals = re.findall( "<field>(.+?)</field>", totals_xml, re.DOTALL )
-        
+        music_totals = re.findall( "<field>(.+?)</field>", totals_xml, re.DOTALL )        
         # set properties
         self.WINDOW.setProperty( "Movies.Count" , str( movies_totals[ 0 ] ) or "" )
         self.WINDOW.setProperty( "Movies.Watched" , str( movies_totals[ 1 ] ) or "" )
@@ -168,18 +166,15 @@ class Main:
         self.WINDOW.setProperty( "Movies.LastWatchedRuntime" , movies_totals[ 4 ] or "" )
         self.WINDOW.setProperty( "Movies.LastWatchedGenre" , movies_totals[ 5 ] or "" )
         self.WINDOW.setProperty( "Movies.LastWatchedDate" , movies_totals[ 6 ] or "" )
-        
         self.WINDOW.setProperty( "MusicVideos.Count" , mvideos_totals[ 0 ] or "" )
         self.WINDOW.setProperty( "MusicVideos.Watched" , mvideos_totals[ 1 ] or "" )
         self.WINDOW.setProperty( "MusicVideos.UnWatched" , str( int( mvideos_totals[ 0 ] ) - int( mvideos_totals[ 1 ] ) ) or "" )
-        
         self.WINDOW.setProperty( "TVShows.Count" , str( tvshows_totals[ 0 ] ) or "" )
         self.WINDOW.setProperty( "TVShows.Watched" , str( tvshows_totals[ 2 ] ) or "" )
         self.WINDOW.setProperty( "TVShows.UnWatched" , str( tvshows_totals[ 0 ] - tvshows_totals[ 2 ] ) or "" )
         self.WINDOW.setProperty( "Episodes.Count" , str( tvshows_totals[ 1 ] ) or "" )
         self.WINDOW.setProperty( "Episodes.Watched" , str( tvshows_totals[ 3 ] ) or "" )
         self.WINDOW.setProperty( "Episodes.UnWatched" , str( tvshows_totals[ 1 ] - tvshows_totals[ 3 ] ) or "" )
-        
         self.WINDOW.setProperty( "Music.SongsCount" , music_totals[ 0 ] or "" )
         self.WINDOW.setProperty( "Music.AlbumsCount" , music_totals[ 1 ] or "" )
         self.WINDOW.setProperty( "Music.ArtistsCount" , music_totals[ 2 ] or "" )
@@ -206,7 +201,6 @@ class Main:
             # separate individual fields
             fields = re.findall( "<field>(.*?)</field>", movie, re.DOTALL )
             # set properties
-
             self.WINDOW.setProperty( "LatestMovie.%d.Title" % ( count + 1, ), fields[ 2 ] )
             self.WINDOW.setProperty( "LatestMovie.%d.Rating" % ( count + 1, ), fields[ 7 ] )
             self.WINDOW.setProperty( "LatestMovie.%d.Year" % ( count + 1, ), fields[ 9 ] )
@@ -351,7 +345,6 @@ class Main:
                 listitem = xbmcgui.ListItem( fields[ 7 ] )
                 xbmc.PlayList(0).add (path, listitem )
             xbmc.Player().play(playlist)
-
 
 if ( __name__ == "__main__" ):
     Main()

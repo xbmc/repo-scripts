@@ -1,3 +1,6 @@
+v 2.0.5:
+- don't clear window properties when playing an album
+
 v 2.0.4 (Ppic):
 - add some corections for LatestSong fields
 
