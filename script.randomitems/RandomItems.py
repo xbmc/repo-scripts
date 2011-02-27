@@ -121,7 +121,7 @@ class Main:
             # set properties
 
             self.WINDOW.setProperty( "RandomMovie.%d.Title" % ( count + 1, ), fields[ 2 ] )
-            self.WINDOW.setProperty( "RandomMovie.%d.Rating" % ( count + 1, ), fields[ 7 ] )
+            self.WINDOW.setProperty( "RandomMovie.%d.Rating" % ( count + 1, ), "%.1f" % float(fields[ 7 ]) )
             self.WINDOW.setProperty( "RandomMovie.%d.Year" % ( count + 1, ), fields[ 9 ] )
             self.WINDOW.setProperty( "RandomMovie.%d.Plot" % ( count + 1, ), fields[ 3 ] )
             self.WINDOW.setProperty( "RandomMovie.%d.RunningTime" % ( count + 1, ), fields[ 13 ] )
@@ -163,7 +163,7 @@ class Main:
             self.WINDOW.setProperty( "RandomEpisode.%d.EpisodeNo" % ( count + 1, ), "s%02de%02d" % ( int( fields[ 14 ] ), int( fields[ 15 ] ), ) )
             self.WINDOW.setProperty( "RandomEpisode.%d.EpisodeSeason" % ( count + 1, ), fields[ 14 ] )
             self.WINDOW.setProperty( "RandomEpisode.%d.EpisodeNumber" % ( count + 1, ), fields[ 15 ] )
-            self.WINDOW.setProperty( "RandomEpisode.%d.Rating" % ( count + 1, ), fields[ 5 ] )
+            self.WINDOW.setProperty( "RandomEpisode.%d.Rating" % ( count + 1, ), "%.1f" % float(fields[ 5 ]) )
             self.WINDOW.setProperty( "RandomEpisode.%d.Plot" % ( count + 1, ), fields[ 3 ] )
             # get cache names of path to use for thumbnail/fanart and play path
             thumb_cache, fanart_cache, play_path = self._get_media( fields[ 25 ], fields[ 24 ] )
