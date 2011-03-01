@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<smartplaylist type="episodes">
+    <name>Action &amp; Adventure TV</name>
+    <match>one</match>
+    <rule field="genre" operator="is">Action and Adventure</rule>
+    <rule field="genre" operator="is">Adventure</rule>
+    <limit>50</limit>
+    <order direction="ascending">random</order>
+</smartplaylist>

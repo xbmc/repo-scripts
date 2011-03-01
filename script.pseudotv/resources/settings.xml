@@ -1,0 +1,8 @@
+<settings>
+    <setting id="AutoOff" type="enum" label="30001" values="Disable|30|60|90|120|150|180|210|240" default="6"/>
+    <setting id="InfoOnChange" type="bool" label="30003" default="true"/>
+    <setting id="ForceChannelReset" type="bool" label="30002" default="false"/>
+    <setting id="ChannelResetSetting" type="enum" label="30004" values="Automatic|Every Day|Every Week|Every Month|Never" default="0"/>
+    <setting id="FillInChannels" type="bool" label="30005" default="true"/>
+	<setting id="ShowChannelBug" type="bool" label="30006" default="false"/>
+</settings>

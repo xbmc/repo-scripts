@@ -1,0 +1,59 @@
+Changelog
+
+
+1.0.0
+    Crazy jump in version to 1.0 because I can.
+    Turn off shuffling if it's on.
+    Playlist parsing is completely minidom now.
+    Manually shuffle playlists when the order is random.
+    Allow the stop button inside of the 2 second window.
+    Added the Confluence skin (thanks Sranshaft).
+    Added the Transparency skin (thanks Zepfan).
+    Now have channel icons for most presets (thanks jtucker1972).
+    Fixed an uncaught exception in video parsers.
+    Works if onClick isn't called in the EPG.
+
+
+0.2.0
+    New default skin (thanks to Sranshaft)
+    Added an info window (again, Sranshaft).
+    There is now a PseudoTV icon (thanks bridgman).
+    Channel icons.
+    Control over button placement put into the skin.
+    Start the script on the previously viewed channel.
+    EPG speed improvement.
+    Support mixed playlists.
+    Support for future JSON modification.
+
+
+0.1.5
+    Resolved the problem with not resuming the channel properly.
+    Fixed the issue introduced in 0.1.4 that prevending gathering information
+        on Windows systems.
+    Put several of the controls into the hands of the skinners.
+
+
+0.1.4
+    New method of scanning channels (thanks to TheOddLinguist) that correctly
+        uses movie sets and TV show-type playlists.
+    Display music video information in the EPG.
+
+
+0.1.3
+    There was an issue where XBMC woukd sometimes return a float when an int
+        was expected, resulting in a type error and a freeze.
+    Sometimes the EPG wouldn't properly select or display the correct show.
+    The EPG would sometimes stop scrolling.
+    Changed the EPG to left-shift the time offsets.
+
+
+0.1.2
+    Windows systems experienced freezes...but no more!
+    There was also an issue getting the duration of an episode.
+
+
+0.1.1
+    Fixed a freeze when there are unexpected things in the smart playlist.
+    
+
+0.1.0 (Initial alpha version)

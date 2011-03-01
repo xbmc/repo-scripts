@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<smartplaylist type="episodes">
+    <name>Real TV</name>
+    <match>one</match>
+    <rule field="genre" operator="is">Documentary</rule>
+    <rule field="genre" operator="is">History</rule>
+    <rule field="genre" operator="is">Reality</rule>
+    <rule field="genre" operator="is">Special Interest</rule>
+    <limit>50</limit>
+    <order direction="ascending">random</order>
+</smartplaylist>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<smartplaylist type="movies">
+    <name>Historical Movies</name>
+    <match>one</match>
+    <rule field="genre" operator="is">Biography</rule>
+    <rule field="genre" operator="is">Documentary</rule>
+    <rule field="genre" operator="is">History</rule>
+    <limit>25</limit>
+    <order direction="ascending">random</order>
+</smartplaylist>

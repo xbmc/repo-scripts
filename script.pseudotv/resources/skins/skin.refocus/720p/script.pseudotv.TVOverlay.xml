@@ -1,0 +1,95 @@
+<window>
+    <allowoverlay>no</allowoverlay>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    
+    <controls>    
+        <control type="image" id="101">
+            <description>Background</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>pstvSolid.png</texture>
+            <colordiffuse>FF000000</colordiffuse>
+        </control>
+		
+		<control type="group" id="102">
+			<control type="image">
+				<description>Info Background</description>
+				<posx>0</posx>
+				<posy>300</posy>
+				<width>1280</width>
+				<height>200</height>
+				<texture>pstvInfoBottom.png</texture>
+				<!--<animation effect="fade" start="0" end="100" delay="200" time="500" condition="Control.IsVisible(120)">Conditional</animation>-->
+			</control>
+        
+			<control type="image">
+				<description>Info Background</description>
+				<posx>0</posx>
+				<posy>500</posy>
+				<width>1280</width>
+				<height>220</height>
+				<texture>pstvInfoTop.png</texture>
+			</control>
+        
+			<control type="label" id="502">
+				<description>Now watching</description>
+				<posx>200</posx>
+				<posy>450</posy>
+				<width>840</width>
+				<label>Now watching</label>
+				<textcolor>title</textcolor>
+				<font>pagelabel</font>
+				<!--<animation effect="fade" start="0" end="100" delay="200" time="1000" condition="Control.IsVisible(120)">Conditional</animation>-->
+			</control>  
+        
+			<!--HIGHLIGHTED SHOW INFORMATION-->
+        
+			<control type="group">
+				<posx>200</posx>
+				<posy>520</posy>
+				<control type="label" id="503">
+					<description>Show Name Label</description>
+					<posy>0</posy>
+					<width>1040</width>
+					<label>Show Name</label>
+					<textcolor>title</textcolor>
+					<include>Heading1</include>
+				</control>
+				<control type="label" id="504">
+					<description>Show Title Label</description>
+					<posy>34</posy>
+					<width>1040</width>
+					<label>[B]Show Title[/B]</label>
+					<align>left</align>
+					<include>Heading3</include>
+				</control>
+				<control type="label" id="505">
+					<posy>70</posy>
+					<width>1040</width>
+					<height>40</height>
+					<align>left</align>
+					<aligny>top</aligny>
+					<label>Show Description</label>
+					<textcolor>Color1</textcolor>
+					<font>description</font>
+					<wrapmultiline>true</wrapmultiline>
+				</control>
+			</control>
+        
+			<control type="image" id="506">
+				<description>Channel Logo</description>
+				<posx>40</posx>
+				<posy>520</posy>
+				<width>130</width>
+				<height>75</height>
+			</control>
+		</control>
+    </controls>
+</window>

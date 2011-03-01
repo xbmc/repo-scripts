@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<smartplaylist type="movies">
+    <name>Romance Movies</name>
+    <match>one</match>
+    <rule field="genre" operator="is">Romance</rule>
+    <limit>25</limit>
+    <order direction="ascending">random</order>
+</smartplaylist>
