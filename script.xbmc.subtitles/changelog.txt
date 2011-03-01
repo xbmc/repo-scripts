@@ -1,3 +1,10 @@
+2.3.5
+- Corrected the fix for the problem of failing services on Unix with unpacking subtitle file 
+
+2.3.4
+- fixed: On Unix some services failed in using the unpacked subtitle file
+- added: more tvshow regex for file mode search
+
 2.3.3
 - oops, c/p error
 
