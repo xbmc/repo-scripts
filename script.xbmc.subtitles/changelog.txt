@@ -1,3 +1,6 @@
+2.3.6
+- added: Sratim.co.il, thanks to orivar
+
 2.3.5
 - Corrected the fix for the problem of failing services on Unix with unpacking subtitle file 
 
