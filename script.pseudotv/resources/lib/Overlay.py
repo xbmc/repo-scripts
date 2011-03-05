@@ -938,6 +938,20 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         elif action == ACTION_PREVIOUS_MENU:
             if self.showingInfo:
                 self.hideInfo()
+            else:
+                dlg = xbmcgui.Dialog()
+
+                if self.sleepTimeValue > 0:
+                    if self.sleepTimer.isAlive():
+                        self.sleepTimer.cancel()
+                        self.sleepTimer = threading.Timer(self.sleepTimeValue, self.sleepAction)
+
+                if dlg.yesno("Exit?", "Are you sure you want to exit PseudoTV?"):
+                    self.end()
+                else:
+                    self.startSleepTimer()
+
+                del dlg
         elif action == ACTION_SHOW_INFO:
             if self.showingInfo:
                 self.hideInfo()

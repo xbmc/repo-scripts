@@ -26,7 +26,7 @@ import xbmcaddon
 __scriptname__ = "PseudoTV"
 __author__     = "Jason102"
 __url__        = "http://github.com/Jasonra/XBMC-PseudoTV"
-__version__    = "1.0.0"
+__version__    = "1.0.1"
 __settings__   = xbmcaddon.Addon(id='script.pseudotv')
 __language__   = __settings__.getLocalizedString
 __cwd__        = __settings__.getAddonInfo('path')

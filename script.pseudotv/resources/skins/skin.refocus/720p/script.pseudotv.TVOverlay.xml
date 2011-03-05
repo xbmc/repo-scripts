@@ -18,6 +18,18 @@
             <colordiffuse>FF000000</colordiffuse>
         </control>
 		
+		<control type="image" id="103">
+            <description>Channel Bug</description>
+            <posx>220r</posx>
+            <posy>120r</posy>
+            <width>150</width>
+            <height>100</height>
+    		<aspectratio>keep</aspectratio>
+			<texture></texture>
+            <!--<colordiffuse>FF000000</colordiffuse>-->
+			<animation effect="fade" start="40" end="40" condition="True">Conditional</animation>
+        </control>
+		
 		<control type="group" id="102">
 			<control type="image">
 				<description>Info Background</description>

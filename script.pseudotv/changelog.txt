@@ -1,6 +1,11 @@
 Changelog
 
 
+1.0.1
+    Able to use the Previous Menu key to exit.
+    Update to the Refocus skin from Sranshaft.
+
+
 1.0.0
     Crazy jump in version to 1.0 because I can.
     Turn off shuffling if it's on.
