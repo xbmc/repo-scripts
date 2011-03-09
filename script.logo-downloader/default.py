@@ -6,8 +6,8 @@ __url__          = "http://code.google.com/p/passion-xbmc/"
 __svn_url__      = ""
 __credits__      = "Team XBMC PASSION, http://passion-xbmc.org/"
 __platform__     = "xbmc media center, [LINUX, OS X, WIN32, XBOX]"
-__date__         = "20-10-2010"
-__version__      = "2.2.0"
+__date__         = "02-03-2010"
+__version__      = "2.3.0"
 __svn_revision__  = "$Revision: 000 $"
 __XBMC_Revision__ = "30000" #XBMC Babylon
 __useragent__ = "Logo downloader %s" % __version__
@@ -37,8 +37,10 @@ from traceback import print_exc
 import xbmc
 import xbmcgui
 import shutil
+import xbmcaddon
 
-SOURCEPATH = os.getcwd()
+addon = xbmcaddon.Addon("script.logo-downloader")
+SOURCEPATH = addon.getAddonInfo('path')
 RESOURCES_PATH = os.path.join( SOURCEPATH , "resources" )
 DIALOG_DOWNLOAD = xbmcgui.DialogProgress()
 ACTION_PREVIOUS_MENU = 10
@@ -164,12 +166,12 @@ class downloader:
                 elif self.clearart: 
                     if self.clearart == "True": self.filename = "clearart.png"
                     else: self.filename = self.clearart
-                    self.get_xbmcstuff_xml()
+                    self.get_lockstock_xml()
                     self.search_clearart()
                 elif self.show_thumb:
                     if self.show_thumb == "True": self.filename = "folder.jpg"
                     else: self.filename = self.show_thumb
-                    self.get_xbmcstuff_xml()
+                    self.get_lockstock_xml()
                     self.search_show_thumb()
                 elif self.banner:
                     if self.banner == "True": self.filename = "folder.jpg"
@@ -242,9 +244,9 @@ class downloader:
                     self.image_url = False
                     self.filename = False
                     
-                if self.clearart or self.show_thumb: 
-                    if DEBUG: print "### get xbmcstuff xml"
-                    self.get_xbmcstuff_xml()
+#                 if self.clearart or self.show_thumb: 
+#                     if DEBUG: print "### get xbmcstuff xml"
+#                     self.get_xbmcstuff_xml()
                 
                 if self.clearart:
                     if DEBUG: print "### Search clearart for %s" % self.show_name
@@ -349,7 +351,7 @@ class downloader:
             msg2 = msg2 + "banner: %s " % self.banner_found
             
         xbmcgui.Dialog().ok('SUMMARY %s TVSHOWS' % len(self.TVlist) , msg , msg2 )
-        xbmcgui.Dialog().ok('LOGO DOWNLOADER NEEDS YOU', "Please help us to get more art on" , "www.lockstockmods.net / www.xbmcstuff.com / www.tvdb.com".upper() )
+        xbmcgui.Dialog().ok('LOGO DOWNLOADER NEEDS YOU', "Please help us to get more art on" , "http://fanart.tv / www.tvdb.com".upper() )
     def reinit(self):
         if DEBUG: print "### reinit"
         self.show_path = False
@@ -445,17 +447,17 @@ class downloader:
             return False
     
     def get_lockstock_xml(self):
-        self.lockstock_xml = get_html_source( "http://www.lockstockmods.net/logos/getlogo.php?id=" + self.tvdbid )
+        self.lockstock_xml = get_html_source( "http://fanart.tv/api/fanart.php?id=" + self.tvdbid )
         if DEBUG: print self.lockstock_xml
     
-    def get_xbmcstuff_xml(self):
-        self.xbmcstuff_xml = get_html_source ("http://www.xbmcstuff.com/tv_scraper.php?&id_scraper=p7iuVTQXQWGyWXPS&size=big&thetvdb=" + self.tvdbid )
+#     def get_xbmcstuff_xml(self):
+#         self.xbmcstuff_xml = get_html_source ("http://www.xbmcstuff.com/tv_scraper.php?&id_scraper=p7iuVTQXQWGyWXPS&size=big&thetvdb=" + self.tvdbid )
 
     def get_tvdb_xml(self):
         self.tvdb_xml = get_html_source ("http://www.thetvdb.com/api/F90E687D789D7F7C/series/%s/banners.xml" % self.tvdbid )
 
     def search_logo( self ):
-        match = re.findall("""<logo url="(.*?)"/>""" , self.lockstock_xml)
+        match = re.findall("""<clearlogo url="(.*?)"/>""" , self.lockstock_xml)
         if match: 
             if self.mode == "solo" : self.image_list = match
             if self.mode == "bulk" : self.image_url = match[0]
@@ -467,7 +469,7 @@ class downloader:
             return False
             
     def search_clearart( self ):
-        match = re.findall("<clearart>(.*)</clearart>" , self.xbmcstuff_xml)
+        match = re.findall("""<clearart url="(.*?)"/>""" , self.lockstock_xml)
         if match: 
             if self.mode == "solo" : self.image_list = match
             if self.mode == "bulk" : self.image_url = match[0]
@@ -479,7 +481,7 @@ class downloader:
             return False
             
     def search_show_thumb( self ):
-        match = re.findall("<tvthumb>(.*)</tvthumb>" , self.xbmcstuff_xml)
+        match = re.findall("""<tvthumb url="(.*?)"/>""" , self.lockstock_xml)
         if match: 
             if self.mode == "solo" : self.image_list = match
             if self.mode == "bulk" : self.image_url = match[0]

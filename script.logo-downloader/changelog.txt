@@ -1,6 +1,12 @@
+v2.3.0
+- move to new fanart.tv API, also switch clearart and showthumb to download from fanart.tv
+- add readme file
+
 v2.2.0
 - add poster and banner (from www.tvdb.com) support (with custom naming) on bulk mode.
 - add poster and banner (from www.tvdb.com) support (with custom naming) on solo mode.
+example:
+<onclick>XBMC.RunScript(script.logo-downloader,mode=bulk,clearart=True,logo=True,showthumb=landscape.jpg,poster=poster.jpg,banner=banner.jpg)</onclick>
 
 v2.1.4
 - add custom naming. pass name in parameter instead of True / False
