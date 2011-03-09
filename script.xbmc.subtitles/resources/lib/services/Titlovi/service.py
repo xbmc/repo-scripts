@@ -95,7 +95,7 @@ def geturl(url):
     return content
 
 
-def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
+def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
     msg = ""
     if len(tvshow) == 0:
         searchstring = title

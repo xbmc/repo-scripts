@@ -36,7 +36,7 @@ class OSDBServer:
 ###-------------------------- Merge Subtitles All -------------################
 
 
-    def mergesubtitles( self ):
+    def mergesubtitles( self, stack ):
       if( len ( self.subtitles_hash_list ) > 0 ):
         for item in self.subtitles_hash_list:
           if item["format"].find( "srt" ) == 0 or item["format"].find( "sub" ) == 0:
@@ -45,8 +45,12 @@ class OSDBServer:
       if( len ( self.subtitles_name_list ) > 0 ):
         for item in self.subtitles_name_list:
           if item["format"].find( "srt" ) == 0 or item["format"].find( "sub" ) == 0:
-            if item["no_files"] < 2:
-              self.subtitles_list.append( item )
+            if stack:
+              if item["no_files"] == 2:
+                self.subtitles_list.append( item )
+            else:
+              if item["no_files"] < 2:
+                self.subtitles_list.append( item )                
 
       if( len ( self.subtitles_list ) > 0 ):
         self.subtitles_list = sorted(self.subtitles_list, compare_columns)
@@ -57,7 +61,7 @@ class OSDBServer:
 ###-------------------------- Podnapisi Hash -------------################
 
 
-    def searchsubtitles_pod( self, movie_hash, lang1,lang2,lang3):
+    def searchsubtitles_pod( self, movie_hash, lang1,lang2,lang3, stack):
 #      movie_hash = "e1b45885346cfa0b" # Matrix Hash, Debug only
       podserver = xmlrpclib.Server('http://ssp.podnapisi.net:8000')      
       pod_session = ""
@@ -115,7 +119,7 @@ class OSDBServer:
               else:
                 sync1 = True
               self.subtitles_hash_list.append({'filename':name,'link':link,"language_name":twotofull(item["lang"]),"language_flag":flag_image,"language_id":item["lang"],"ID":item["id"],"sync":sync1, "format":"srt", "rating": str(int(item['rating'])*2) })
-          self.mergesubtitles()
+          self.mergesubtitles(stack)
         return self.subtitles_list,pod_session
       except :
         return self.subtitles_list,pod_session
@@ -125,7 +129,7 @@ class OSDBServer:
 
 ###-------------------------- Podnapisi By Name -------------################
 
-    def searchsubtitlesbyname_pod( self, name, tvshow, season, episode, lang1, lang2, lang3, year ):
+    def searchsubtitlesbyname_pod( self, name, tvshow, season, episode, lang1, lang2, lang3, year, stack ):
       if len(tvshow) > 1:
         name = tvshow                
       search_url1 = None
@@ -194,7 +198,7 @@ class OSDBServer:
             if subtitle.getElementsByTagName("cds")[0].firstChild:
               no_files = int(subtitle.getElementsByTagName("cds")[0].firstChild.data)
             self.subtitles_name_list.append({'filename':filename,'link':link,'language_name':twotofull(lang_name),'language_id':lang_id,'language_flag':flag_image,'movie':movie,"ID":subtitle_id,"rating":str(rating),"format":format,"sync":False, "no_files":no_files})
-          self.mergesubtitles()
+          self.mergesubtitles(stack)
         return self.subtitles_list
       except :
         return self.subtitles_list

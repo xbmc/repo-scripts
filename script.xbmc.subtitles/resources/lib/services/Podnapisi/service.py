@@ -38,7 +38,7 @@ def set_filehash(path,rar):
     return file_hash        
 
 
-def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
+def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
        
     ok = False
     msg = ""
@@ -68,10 +68,10 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     if hashTry != "":   log( __name__ ,"File Hash [%s]" % hashTry)
     if hash_search :
       log( __name__ ,"Search for [%s] by hash" % (os.path.basename( file_original_path ),))
-      subtitles_list, session_id = osdb_server.searchsubtitles_pod( hashTry ,language1, language2, language3)
+      subtitles_list, session_id = osdb_server.searchsubtitles_pod( hashTry ,language1, language2, language3, stack)
     if not subtitles_list:
       log( __name__ ,"Search for [%s] by name" % (os.path.basename( file_original_path ),))
-      subtitles_list = osdb_server.searchsubtitlesbyname_pod( title, tvshow, season, episode, language1, language2, language3, year )
+      subtitles_list = osdb_server.searchsubtitlesbyname_pod( title, tvshow, season, episode, language1, language2, language3, year, stack )
     return subtitles_list, "", "" #standard output
 
 

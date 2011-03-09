@@ -8,6 +8,7 @@ import unzip
 import unicodedata
 import shutil
 import socket
+import re
 
 try:
   import xbmcvfs
@@ -36,21 +37,29 @@ class GUI( xbmcgui.WindowXMLDialog ):
     pass
 
   def set_allparam(self):       
-    temp = False
-    rar = False
-    self.newWindow = True
-    movieFullPath = urllib.unquote(xbmc.Player().getPlayingFile())
-    path = __settings__.getSetting( "subfolder" ) == "true"                 # True for movie folder
-    sub_folder = xbmc.translatePath(__settings__.getSetting( "subfolderpath" ))
+    temp             = False
+    rar              = False
+    self.newWindow   = True
+    self.stack       = False
+    self.stackSecond = ""
+    movieFullPath    = urllib.unquote(xbmc.Player().getPlayingFile())
+    path             = __settings__.getSetting( "subfolder" ) == "true"                 # True for movie folder
+    sub_folder       = xbmc.translatePath(__settings__.getSetting( "subfolderpath" ))
 
     if (movieFullPath.find("http://") > -1 ):
       temp = True
 
-    if (movieFullPath.find("rar://") > -1 ):
+    elif (movieFullPath.find("rar://") > -1 ):
       rar = True
       movieFullPath = movieFullPath.replace("rar://","")
       if path:
         sub_folder = os.path.dirname(os.path.dirname( movieFullPath ))
+    
+    elif (movieFullPath.find("stack://") > -1 ):
+      movieFullPath, stackSecond = movieFullPath.split(" , ")
+      movieFullPath = movieFullPath[8:]
+      self.stackSecond = os.path.basename(stackSecond)
+      self.stack = True
 
     if not path:
       if len(sub_folder) < 1 :
@@ -183,6 +192,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       log( __name__ ,"Subtitle Folder: [%s]"       % self.sub_folder)
       log( __name__ ,"Languages: [%s] [%s] [%s]"   % (self.language_1, self.language_2, self.language_3,))
       log( __name__ ,"Parent Folder Search: [%s]"  % self.parsearch)
+      log( __name__ ,"Stacked(CD1/CD2)?: [%s]"     % self.stack)
 
       try:
         self.list_services()
@@ -226,7 +236,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     log( __name__ ,"Socket timeout: %s" % (socket.getdefaulttimeout(),)  )
 
     try: 
-      self.subtitles_list, self.session_id, msg = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3 )
+      self.subtitles_list, self.session_id, msg = self.Service.search_subtitles( self.file_original_path, self.title, self.tvshow, self.year, self.season, self.episode, self.set_temp, self.rar, self.language_1, self.language_2, self.language_3, self.stack )
     except socket.error:
       errno, errstr = sys.exc_info()[:2]
       if errno == socket.timeout:
@@ -291,17 +301,30 @@ class GUI( xbmcgui.WindowXMLDialog ):
         file_name = "%s%s" % ( sub_name, sub_ext )
       file_from = file.replace('\\','/')
       file_to = os.path.join(self.sub_folder, file_name).replace('\\','/')
-      try:
-        if VFS:
-          xbmcvfs.copy(file_from, file_to)
-          log( __name__ ,"vfs module copy %s -> %s" % (file_from, file_to))
-        else:  
-          shutil.copyfile(file_from, file_to)
-      except IOError, e:
-        log( __name__ ,"Error: [%s]" % (e,)  )
-      xbmc.Player().setSubtitles(file_to)
-      self.rem_files(self.tmp_sub_dir)
-      self.exit_script()
+      # Create a files list of from-to tuples so that multiple files may be
+      # copied (sub+idx etc')
+      files_list = [(file_from,file_to)]
+      # If the subtitle's extension sub, check if an idx file exists and if so
+      # add it to the list
+      if ((sub_ext == ".sub") and (os.path.exists(file[:-3]+"idx"))):
+          log( __name__ ,"found .sub+.idx pair %s + %s" % (file_from,file_from[:-3]+"idx"))
+          files_list.append((file_from[:-3]+"idx",file_to[:-3]+"idx"))
+      for cur_file_from, cur_file_to in files_list:
+         subtitle_set,file_path  = self.copy_files( cur_file_from, cur_file_to )  
+      # Choose the last pair in the list, second item (destination file)
+      if subtitle_set:
+        xbmc.Player().setSubtitles(files_list[-1][1])
+        self.rem_files(self.tmp_sub_dir)
+        self.exit_script()
+      else:
+        self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
+        if self.newWindow:  
+          self.setFocusId( SERVICES_LIST )
+          self.getControl( SERVICES_LIST ).selectItem( 0 )
+        else:
+          self.list_services()           
+          self.setFocusId( SUBTITLES_LIST )
+          self.getControl( SUBTITLES_LIST ).selectItem( 0 )  
 
 ###-------------------------- Extract, Rename & Activate Subtitles  -------------################    
 
@@ -333,16 +356,28 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if os.path.splitext( zip_entry )[1] in exts:
               movie_sub = True
           if ( movie_sub or len(files) < 2 or int(episode) == int(self.episode) ):
-            subtitle_set,file_path = self.copy_files( subtitle_file, file_path )
+            if self.stack:
+              try:
+                if (re.split("(?x)(?i)\CD(\d)", zip_entry)[1]) == (re.split("(?x)(?i)\CD(\d)", sub_filename)[1]):
+                  subtitle_file, file_path = self.create_name(zip_entry,sub_filename,subtitle_lang)          
+                elif (re.split("(?x)(?i)\CD(\d)", zip_entry)[1]) == (re.split("(?x)(?i)\CD(\d)", self.stackSecond)[1]):
+                  subtitle_file, file_path = self.create_name(zip_entry,self.stackSecond,subtitle_lang)                
+                subtitle_set,file_path = self.copy_files( subtitle_file, file_path ) 
+                if re.split("(?x)(?i)\CD(\d)", zip_entry)[1] == "1":
+                  subToActivate = file_path
+              except:
+                subtitle_set = False              
+            else:            
+              subtitle_set,subToActivate = self.copy_files( subtitle_file, file_path )
 
       if not subtitle_set:
         for zip_entry in files:
           if os.path.splitext( zip_entry )[1] in exts:
             subtitle_file, file_path = self.create_name(zip_entry,sub_filename,subtitle_lang)
-            subtitle_set,file_path  = self.copy_files( subtitle_file, file_path )            
+            subtitle_set,subToActivate  = self.copy_files( subtitle_file, file_path )
 
     if subtitle_set :
-      xbmc.Player().setSubtitles(file_path)
+      xbmc.Player().setSubtitles(subToActivate)
       self.exit_script()
     else:
       self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )

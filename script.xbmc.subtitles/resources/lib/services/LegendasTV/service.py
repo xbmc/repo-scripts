@@ -18,7 +18,7 @@ _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __settings__ = sys.modules[ "__main__" ].__settings__
 
-def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ): #standard input
+def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
 	cookie = LegendasLogin()
 	if len(tvshow) > 0:
 		subtitles =  LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 )
