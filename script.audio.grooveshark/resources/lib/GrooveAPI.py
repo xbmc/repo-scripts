@@ -69,8 +69,8 @@ class GrooveAPI(gwAPI):
 		sys.path.append(os.path.join(cwd,'uuid'))
 		import uuid
 		self.clientVersion = clientVersion
-		timeout = 40
-		socket.setdefaulttimeout(timeout)
+		#timeout = 40
+		#socket.setdefaulttimeout(timeout) # Disabled for now. A bug in SSL in python 2.4 on windows makes the connection throw a read error
 		self.enableDebug = enableDebug
 		self.loggedIn = 0
 		self.radioEnabled = 0

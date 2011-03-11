@@ -1,3 +1,7 @@
+0.4.1:
+
+ - Fixed a bug that prevented windows users in logging in.
+
 0.4.0:
 
  - Migrated to new API.
