@@ -130,7 +130,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         xbmc.log( "[script.cdartmanager] - #    %-50s    #" % __version__, xbmc.LOGNOTICE )
         xbmc.log( "[script.cdartmanager] - #    %-50s    #" % __credits__, xbmc.LOGNOTICE )
         xbmc.log( "[script.cdartmanager] - #    %-50s    #" % __credits2__, xbmc.LOGNOTICE )
-        xbmc.log( "[script.cdartmanager] - #    Thanks the help...                                    #", xbmc.LOGNOTICE )
+        xbmc.log( "[script.cdartmanager] - #    Thanks for the help...                                #", xbmc.LOGNOTICE )
         xbmc.log( "[script.cdartmanager] - ############################################################", xbmc.LOGNOTICE )
         self.retrieve_settings()
         self.setup_colors()
@@ -1564,7 +1564,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     # copy cdarts from music folder to temporary location
     # first step to copy to skin folder
     def cdart_copy( self ):
-        xbmc.log( "[script.cdartmanager] - ### Copying cdARTs to Backup folder", xbmc.LOGNOTICE )
+        xbmc.log( "[script.cdartmanager] - # Copying cdARTs to Backup folder", xbmc.LOGNOTICE )
         destination = ""
         duplicates = 0
         percent = 0
@@ -1962,9 +1962,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 122 ).addItem( listitem )
         listitem.setLabel2(self.label_2)
         #checking to see if addon_db exists, if not, run database_setup()
-        if os.path.isfile((addon_db).replace("\\\\" , "\\").encode("utf-8")):
+        if os.path.isfile( (addon_db).replace("\\\\" , "\\").encode("utf-8") ):
+            xbmc.log( "[script.cdartmanager] - Addon Db found - Loading Counts", xbmc.LOGNOTICE )
             local_album_count, local_artist_count, local_cdart_count = self.new_local_count()
         else:
+            xbmc.log( "[script.cdartmanager] - Addon Db Not Found - Building New Addon Db", xbmc.LOGNOTICE )
             local_album_count, local_artist_count, local_cdart_count = self.new_database_setup()
         self.refresh_counts( local_album_count, local_artist_count, local_cdart_count )
         self.local_artists = self.get_local_artists_db() # retrieve data from addon's database

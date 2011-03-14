@@ -49,6 +49,7 @@
                 <posy>12</posy>
                 <width>220</width>
                 <height>220</height>
+                <aspectratio scalediffuse="false">keep</aspectratio>
                 <visible>Control.HasFocus(122) | Control.HasFocus(140) | ControlGroup(9011).HasFocus</visible>
             </control>
 

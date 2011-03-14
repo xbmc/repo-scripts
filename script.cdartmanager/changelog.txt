@@ -1,3 +1,11 @@
+1.2.9
+- Added Spanish Translation - Thanks KiSUAN
+- Added Aspect Ratio Fix for cdART Image - Thanks KiSUAN 
+
+1.2.8
+- change how script works on start up.  Should help Windows 7 users
+- Windows 7 permissions still get in the way, but script will not run if they do.
+
 1.2.7
 - added some logging
 - changed how logging is sent to XBMC
