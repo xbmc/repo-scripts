@@ -61,6 +61,13 @@
 	<string id="30054"> - Repeat</string>
 	<string id="30055"> - Single</string>
 	<string id="30056"> - Consume</string>
+	<string id="30057">%i skladeb, celkový čas %s</string>
+	<string id="30058">Při ukončení zastavit přehrávání</string>
+	<string id="30059">Odebat z playlistu</string>
+	<string id="30060">Přidat do playlistu</string>
+	<string id="30061">Vyberte prosím playlist</string>
+	<string id="30062">Přidán do %s</string>
+	<string id="30063"> * Nový playlist *</string>
     <string id="200">Fronta</string>
     <string id="201">Soubory</string>
     <string id="202">Autoři</string>

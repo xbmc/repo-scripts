@@ -43,9 +43,7 @@
     <string id="30036">Remove from queue</string>
     <string id="30037">Save queue as</string>
     <string id="30038">Clear queue</string>
-    <!-- Do not translate - block start -->
     <string id="30039">Playing stream</string>
-    <!-- Do not translate - block end -->
     <string id="30040">Show song progress when playing</string>
     <string id="30041">Enabled (show this profile in selection dialog)</string>
 	<string id="30043">Album art fetching</string>
@@ -62,6 +60,13 @@
 	<string id="30054"> - Repeat</string>
 	<string id="30055"> - Single</string>
 	<string id="30056"> - Consume</string>
+	<string id="30057">%i tracks, total time %s</string>
+	<string id="30058">Stop playing on exit</string>
+	<string id="30059">Remove from playlist</string>
+	<string id="30060">Add to playlist</string>
+	<string id="30061">Please select playlist</string>
+	<string id="30062">Added to %s</string>
+	<string id="30063"> * New playlist *</string>
     <string id="200">Queue</string>
     <string id="201">Files</string>
     <string id="202">Artists</string>

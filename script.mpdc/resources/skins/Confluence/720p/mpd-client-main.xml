@@ -347,7 +347,6 @@
 			<onright>1104</onright>
 			<onup>1000</onup>
 			<onleft>1000</onleft>
-			<ondown>1101</ondown>
 			<viewtype>list</viewtype>
 			<pagecontrol>1104</pagecontrol>
 			<scrolltime>200</scrolltime>
@@ -560,7 +559,6 @@
 			<onleft>1000</onleft>
 			<onright>1202</onright>
 			<onup>1000</onup>
-			<ondown>1201</ondown>
 			<viewtype>list</viewtype>
 			<pagecontrol>1202</pagecontrol>
 			<scrolltime>200</scrolltime>
@@ -658,7 +656,6 @@
 			<onleft>1000</onleft>
 			<onright>1302</onright>
 			<onup>1000</onup>
-			<ondown>1301</ondown>
 			<viewtype>list</viewtype>
 			<pagecontrol>1302</pagecontrol>
 			<scrolltime>200</scrolltime>
@@ -775,12 +772,11 @@
 		  <control type="list" id="1401">
 			<posx>0</posx>
 			<posy>0</posy>
-			<width>1240</width>
+			<width>340</width>
 			<height>490</height>
 			<onleft>1000</onleft>
 			<onright>1402</onright>
 			<onup>1000</onup>
-			<ondown>1401</ondown>
 			<viewtype>list</viewtype>
 			<pagecontrol>1402</pagecontrol>
 			<scrolltime>200</scrolltime>
@@ -788,7 +784,7 @@
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
-				<width>1240</width>
+				<width>340</width>
 				<height>34</height>
 				<texture>MenuItemNF.png</texture>
 			  </control>
@@ -802,7 +798,7 @@
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
-				<width>1190</width>
+				<width>290</width>
 				<height>32</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -815,10 +811,18 @@
 			  <control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
-				<width>1240</width>
+				<width>340</width>
 				<height>32</height>
 				<texture>MenuItemFO.png</texture>
-				<visible>Control.HasFocus(1401)</visible>
+				<visible>ControlGroup(1400).HasFocus()</visible>
+			  </control>
+			  <control type="image">
+				<posx>10</posx>
+				<posy>5</posy>
+				<width>320</width>
+				<height>22</height>
+				<texture>MediaItemDetailBG.png</texture>
+				<visible>Control.HasFocus(1403)</visible>
 			  </control>
 			  <control type="image">
 				<posx>0</posx>
@@ -830,7 +834,7 @@
 			  <control type="label">
 				<posx>45</posx>
 				<posy>0</posy>
-				<width>1190</width>
+				<width>290</width>
 				<height>32</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -841,7 +845,7 @@
 			</focusedlayout>
 		  </control>
 			  <control type="group">
-				<posx>5r</posx>
+				<posx>330</posx>
 				<posy>0</posy>
 					<control type="scrollbar" id="1402">
 					  <description>scroll bar indicator for lists</description>
@@ -850,6 +854,7 @@
 					  <width>24</width>
 					  <height>490</height>
 					  <onleft>1401</onleft>
+					  <onright>1403</onright>
 					  <texturesliderbackground border="10,14,10,14">ScrollBarV.png</texturesliderbackground>
 					  <texturesliderbar  border="10,14,10,14">ScrollBarV_bar.png</texturesliderbar>
 					  <texturesliderbarfocus  border="10,14,10,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
@@ -858,6 +863,118 @@
 					  <orientation>vertical</orientation>
 					  <showonepage>false</showonepage>
 					  <visible>Control.IsVisible(1401)</visible>
+					</control>
+			  </control>
+			  <control type="group">
+					<posx>355</posx>
+					<posy>0</posy>
+					<control type="image">
+						<posx>-5</posx>
+						<posy>0</posy>
+						<width>2</width>
+						<height>480</height>
+						<texture>Fanart_Diffuse.png</texture>
+						<visible>!Control.IsVisible(1402)</visible>
+					</control>
+					<control type="list" id="1403">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>890</width>
+						<height>450</height>
+						<onleft>1401</onleft>
+						<onright>1404</onright>
+						<onup>1403</onup>
+						<viewtype>list</viewtype>
+						<pagecontrol>1404</pagecontrol>
+						<scrolltime>200</scrolltime>
+						<itemlayout height="32">
+						  <control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>890</width>
+							<height>34</height>
+							<texture>MenuItemNF.png</texture>
+						  </control>
+						  <control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>32</width>
+							<height>32</height>
+							<info>ListItem.Icon</info>
+						  </control>
+						  <control type="label">
+							<posx>45</posx>
+							<posy>0</posy>
+							<width>840</width>
+							<height>32</height>
+							<aligny>center</aligny>
+							<textcolor>white</textcolor>
+							<selectedcolor>green</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						  </control>
+						</itemlayout>
+						<focusedlayout height="32">
+						  <control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>890</width>
+							<height>32</height>
+							<texture>MenuItemFO.png</texture>
+							<visible>Control.HasFocus(1403)</visible>
+						  </control>
+						  <control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>32</width>
+							<height>32</height>
+							<info>ListItem.Icon</info>
+							</control>
+						  <control type="label">
+							<posx>45</posx>
+							<posy>0</posy>
+							<width>840</width>
+							<height>32</height>
+							<aligny>center</aligny>
+							<textcolor>white</textcolor>
+							<selectedcolor>green</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						  </control>
+						</focusedlayout>
+				  </control>
+				  <control type="scrollbar" id="1404">
+					  <description>scroll bar indicator for lists</description>
+					  <posx>880</posx>
+					  <posy>0</posy>
+					  <width>24</width>
+					  <height>450</height>
+					  <onleft>1403</onleft>
+					  <texturesliderbackground border="10,14,10,14">ScrollBarV.png</texturesliderbackground>
+					  <texturesliderbar  border="10,14,10,14">ScrollBarV_bar.png</texturesliderbar>
+					  <texturesliderbarfocus  border="10,14,10,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
+					  <textureslidernib>-</textureslidernib>
+					  <textureslidernibfocus>-</textureslidernibfocus>
+					  <orientation>vertical</orientation>
+					  <showonepage>false</showonepage>
+					  <visible>Control.IsVisible(1403)</visible>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>450</posy>
+						<width>890</width>
+						<height>2</height>
+						<texture>VSeparator.png</texture>
+					</control>
+					<control type="label" id="1405">
+						<description>playlist sum</description>
+						<posx>10</posx>
+						<posy>455</posy>
+						<width>880</width>
+						<height>30</height>
+						<align>left</align>
+						<textcolor>white</textcolor>
+						<label></label>
 					</control>
 			  </control>
 	  </control>

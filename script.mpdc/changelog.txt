@@ -1,3 +1,8 @@
+[B]1.0.2[/B]
+- added: any track, dir, artist, album can be added to any (or new) playlist
+- added: playlist details - we are displaying tracks, contained in selected playlist, tracks can be queued directly or removed from playlist
+- added: per-profile option to stop MPD on client exit
+- improved navigation (using backspace) thanks to sandos
 [B]1.0.1[/B]
 - changed consume radiobutton to an icon button
 - fixed: navigation using arrows between player control buttons was not always working
