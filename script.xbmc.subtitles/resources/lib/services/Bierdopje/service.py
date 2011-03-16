@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import os, sys, re, xbmc, xbmcgui, string, urllib, ElementTree as XMLTree
 from utilities import log
 

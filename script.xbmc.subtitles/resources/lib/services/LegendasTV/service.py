@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt

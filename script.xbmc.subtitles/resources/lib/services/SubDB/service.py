@@ -2,7 +2,6 @@
 
 import cPickle
 import StringIO
-import md5
 import sys
 import os
 import random
@@ -14,6 +13,13 @@ import xbmc
 import xbmcgui
 from utilities import log, toOpenSubtitles_two, twotofull
 
+try:
+  #Python 2.6 +
+  from hashlib import md5
+except ImportError:
+  #Python 2.5 and earlier
+  from md5 import new as md5
+  
 _ = sys.modules[ "__main__" ].__language__
 
 base_url = 'http://api.thesubdb.com/?%s'
@@ -30,7 +36,7 @@ def get_languages(languages):
 
 def get_hash(name):
 	data = ""
-	m = md5.new()
+	m = md5()
 	readsize = 64 * 1024
 	# with open(name, 'rb') as f:
 	f = open(name, 'rb')

@@ -1,3 +1,12 @@
+2.4.0
+- code cleanup
+- removed unzip module and use built-in "XBMC.Extract"
+
+2.3.9
+- added: Search next available service if no results are found
+- fixed: SubDB md5 depreciated warning
+- added: Auto download first available "sync" subtitle, those are the only ones we can say for sure are 100% in sync
+
 2.3.8
 - added: support for stack:// files (CD1/CD2)
 

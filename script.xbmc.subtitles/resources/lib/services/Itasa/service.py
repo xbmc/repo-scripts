@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib
 from utilities import log
 _ = sys.modules[ "__main__" ].__language__

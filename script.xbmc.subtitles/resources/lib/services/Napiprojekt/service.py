@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import sys
 import os
 from utilities import hashFile, twotoone, toOpenSubtitles_two
