@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="General">
+  	<setting id="autostart" type="bool" label="Autostart" default="true" />
+    <setting id="username" type="text" label="Username" default="" />
+    <setting id="password" type="text" option="hidden" label="Password" default="" />
+	<setting id="separator" type="lsep" label=""/>
+	<setting id="dontdeleteacquired" type="bool" label="Do not set unacquired on mmdb when not existing locally" default="true" />
+	<setting id="dontsyncwatched" type="bool" label="Do not synchronise watched status" default="false" />
+  </category>
+  <category label="Advanced (Only change if you know what you are doing)">
+  	<setting id="database" type="text" label="Video Database file" default="MyVideos34.db"/>
+    <setting id="debug" type="bool" label="Debug" default="false" />
+    <setting id="testmode" type="bool" label="Testmode" default="false" />
+  </category>
+</settings>

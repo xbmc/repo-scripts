@@ -1,0 +1,8 @@
+[B]0.1.3[/B]
+- Removed extra thread to prevent python from failing on exit. Added Testmode, Testmode stops setting tags for media locally and remotly.
+[B]0.1.2[/B]
+- added basic cookie handling, enabling reuse of http session id's (JSESSIONID)
+
+
+[B]0.1.1[/B]
+- initial working version!

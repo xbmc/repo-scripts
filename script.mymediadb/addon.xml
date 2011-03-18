@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon
+  id="script.mymediadb"
+  version="0.1.3"
+  name="MyMediaDB"
+  provider-name="mmdb"
+  >
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.simplejson" version="2.0.9"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.service"
+             library="default.py" />             
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Sync your media collection with MyMediaDB.org</summary>
+    <description>Sync your acquired and watched state of your videolibrary to and from MyMediaDB.org Share your entertainment endavours with your friends and family!</description>
+    <disclaimer>An account at www.mymediadb.org is required!</disclaimer>
+  </extension>
+</addon>
+
+
