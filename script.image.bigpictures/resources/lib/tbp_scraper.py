@@ -8,12 +8,12 @@ scriptName = sys.modules['__main__'].__scriptname__
 
 class TBP:
 
-    def getHTML(self, url, headers = [('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14')]):
+    def getHTML(self, url, headers=[('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14')]):
         """Returns HTML from a given URL"""
         opener = urllib2.build_opener()
         opener.addheaders = headers
         try:
-            print '[SCRIPT][%s] %s attempting to open %s' % (scriptName, __name__, url)
+            # print '[SCRIPT][%s] %s attempting to open %s' % (scriptName, __name__, url)
             usock = opener.open(url)
             response = usock.read()
             usock.close()
@@ -37,10 +37,10 @@ class TBP:
         for ns in s:
             tmp.append(str(ns))
         s = ''.join(tmp)
-        s = re.sub('\s+', ' ', s) #remove extra spaces
-        s = re.sub('<.+?>|Image:.+?\r|\r', '', s) #remove htmltags, image captions, & newlines
-        s = s.replace('&#39;', '\'') #replace html-encoded double-quotes
-        s = re.sub('#$', '', s) #remove hash at the end
+        s = re.sub('\s+', ' ', s)  # remove extra spaces
+        s = re.sub('<.+?>|Image:.+?\r|\r', '', s)  # remove htmltags, image captions, & newlines
+        s = s.replace('&#39;', '\'')  # replace html-encoded double-quotes
+        s = re.sub('#$', '', s)  # remove hash at the end
         s = s.strip()
         return s
 
@@ -50,7 +50,7 @@ class TBP:
         tree = BeautifulSoup(self.getHTML(url))
         self.months = list()
         self.categories = list()
-        optionNodes = tree.findAll('option', value = re.compile('.+?'))
+        optionNodes = tree.findAll('option', value=re.compile('.+?'))
         for node in optionNodes:
             if node.parent.option.contents[0] == 'Select a month':
                 self.months.append([node.string, node['value']])

@@ -1,3 +1,13 @@
+1.4.0
+  Changed: Skin has a new Look - thanks to Jezz_X
+  Changed: Skin is now animated
+  Changed: Dedicated Usage-Help-Box (hides if any key is pressed)
+  Added: French Translation
+  Changed: Split Sourcename, Albumtitle and Picturetitle for different use in 3rd party Skins
+  Improved: The toggle "showInfo" stays now in its last state
+  Improved: Respect pep8 styleguide (except line length...)
+  Improved: Skin XML-File is now clean  
+
 1.3.2
   Changed: Don't use 'os.getcwd()'
   Improved: author, name, id, version only at one place

@@ -4,6 +4,7 @@
     <controls>
         <control type="group">
             <control type="image">
+                <description>Black Background</description>
                 <posx>0</posx>
                 <posy>0</posy>
                 <width>1280</width>
@@ -11,23 +12,15 @@
                 <texture>black.png</texture>
             </control>
             <control type="image">
-                <posx>574</posx>
-                <posy>294</posy>
+                <description>The spinning animation in the background</description>
+                <posx>607</posx>
+                <posy>327</posy>
                 <width>66</width>
                 <height>66</height>
                 <texture>loader.gif</texture>
             </control>
-            <control type="label" id="101">
-                <posx>20</posx>
-                <posy>35</posy>
-                <width>1200</width>
-                <height>100</height>
-                <align>left</align>
-                <aligny>top</aligny>
-                <label></label>
-                <textcolor>FFAAAAAA</textcolor>
-            </control>
             <control type="label" id="102">
+                <description>"Image Loading may take a while"</description>
                 <posx>20</posx>
                 <posy>60</posy>
                 <width>1200</width>
@@ -39,17 +32,17 @@
                 <font>font13</font>
             </control>
             <control type="list" id="100">
-                <!--Main List of Images-->
+                <description>Main list of Images</description>
                 <posx>0</posx>
                 <posy>0</posy>
                 <width>1280</width>
                 <height>720</height>
                 <scrolltime>200</scrolltime>
                 <orientation>horizontal</orientation>
-                <preloaditems>5</preloaditems>
+                <preloaditems>10</preloaditems>
                 <itemlayout width="1280" height="720">
-                    <control type="image">
-                        <!--The Picture-->
+                    <control type="largeimage">
+                        <description>The Picture</description>
                         <posx>0</posx>
                         <posy>0</posy>
                         <width>1280</width>
@@ -58,33 +51,49 @@
                         <texture background="true">$INFO[ListItem.Icon]</texture>
                         <aspectratio>scale</aspectratio>
                     </control>
-                    <control type="image">
-                        <!--background for title-->
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>1280</width>
-                        <height>100</height>
-                        <texture>black.png</texture>
-                        <colordiffuse>CCFFFFFF</colordiffuse>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
-                    </control>
                     <control type="label">
-                        <!--label for title-->
+                        <description>Label for the Source title</description>
                         <posx>20</posx>
                         <posy>10</posy>
-                        <width>1200</width>
-                        <height>100</height>
+                        <width>320</width>
+                        <height>20</height>
                         <align>left</align>
-                        <aligny>top</aligny>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(Album)]</label>
+                        <textcolor>FFDDDDDD</textcolor>
+                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <font>font13</font>
+                    </control>
+                    <control type="label">
+                        <description>Label for Album or Picture title</description>
+                        <posx>640</posx>
+                        <posy>10</posy>
+                        <width>640</width>
+                        <height>20</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
                         <label>$INFO[ListItem.Label]</label>
+                        <textcolor>FFDDDDDD</textcolor>
+                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <font>font13</font>
+                    </control>
+                    <control type="label">
+                        <description>Label (x/y)</description>
+                        <posx>1260</posx>
+                        <posy>10</posy>
+                        <width>320</width>
+                        <height>20</height>
+                        <align>right</align>
+                        <aligny>center</aligny>
+                        <label>($INFO[ListItem.Property(duration)])</label>
                         <textcolor>FFDDDDDD</textcolor>
                         <visible>$INFO[ListItem.Property(showInfo)]</visible>
                         <font>font13</font>
                     </control>
                 </itemlayout>
                 <focusedlayout width="1280" height="720">
-                    <control type="image">
-                        <!--the picture-->
+                    <control type="largeimage">
+                        <description>The Picture</description>
                         <posx>0</posx>
                         <posy>0</posy>
                         <width>1280</width>
@@ -94,77 +103,108 @@
                         <aspectratio>scale</aspectratio>
                     </control>
                     <control type="image">
-                        <!--background for title-->
+                        <description>Background for the Headline</description>
                         <posx>0</posx>
                         <posy>0</posy>
                         <width>1280</width>
-                        <height>100</height>
-                        <texture>black.png</texture>
-                        <colordiffuse>CCFFFFFF</colordiffuse>
+                        <height>64</height>
+                        <texture border="0,0,20,0">HeaderBack.png</texture>
+                        <colordiffuse>AAFFFFFF</colordiffuse>
                         <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="label">
-                        <!--label for title-->
+                        <description>Label for the Source title</description>
                         <posx>20</posx>
                         <posy>10</posy>
-                        <width>1200</width>
-                        <height>100</height>
-                        <font>font48b</font>
+                        <width>480</width>
+                        <height>20</height>
                         <align>left</align>
-                        <aligny>top</aligny>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(Album)]</label>
+                        <textcolor>FFDDDDDD</textcolor>
+                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <font>font13</font>
+                        <animation effect="fade" time="200">VisibleChange</animation>
+                    </control>
+                    <control type="label">
+                        <description>Label for Album or Picture title</description>
+                        <posx>640</posx>
+                        <posy>10</posy>
+                        <width>640</width>
+                        <height>20</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
                         <label>$INFO[ListItem.Label]</label>
                         <textcolor>FFDDDDDD</textcolor>
                         <visible>$INFO[ListItem.Property(showInfo)]</visible>
                         <font>font13</font>
+                        <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
-                    <!--<control type="image">
-                        <animation type="Focus">
-                            <effect type="fade" start="70" end="100" time="100" delay="500"/>
-                        </animation>
-                        <posx>600</posx>
-                        <posy>320</posy>
-                        <width>80</width>
-                        <height>80</height>
-                        <texture>play_.png</texture>
-                    </control>-->
+                    <control type="label">
+                        <description>Label (x/y)</description>
+                        <posx>1260</posx>
+                        <posy>10</posy>
+                        <width>320</width>
+                        <height>20</height>
+                        <align>right</align>
+                        <aligny>center</aligny>
+                        <label>($INFO[ListItem.Property(duration)])</label>
+                        <textcolor>FFDDDDDD</textcolor>
+                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <font>font13</font>
+                        <animation effect="fade" time="200">VisibleChange</animation>
+                    </control>
                     <control type="image">
+                    <description>Arrow left</description>
+                        <animation type="Focus">
+                            <effect type="slide" start="-50,0" end="0" time="100" delay="2000"/>
+                            <effect type="fade" start="0" end="100" time="100" delay="2000"/>
+                        </animation>
                         <posx>10</posx>
                         <posy>320</posy>
                         <width>80</width>
                         <height>80</height>
                         <texture>left.png</texture>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(showInfo)] + Container(100).HasPrevious</visible>
+                        <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="image">
+                    <description>Arrow right</description>
+                        <animation type="Focus">
+                            <effect type="slide" start="50,0" end="0" time="100" delay="2000"/>
+                            <effect type="fade" start="0" end="100" time="100" delay="2000"/>
+                        </animation>
                         <posx>1190</posx>
                         <posy>320</posy>
                         <width>80</width>
                         <height>80</height>
                         <texture>right.png</texture>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(showInfo)] + Container(100).HasNext</visible>
+                        <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="image">
-                        <!--background for description-->
+                        <description>Background for description</description>
                         <animation type="Focus">
-                            <effect type="slide" start="0,215" end="0,0" time="100" delay="200"/>
+                            <effect type="fade" start="0" end="100" time="100" delay="2000"/>
                         </animation>
                         <posx>0</posx>
-                        <posy>500</posy>
+                        <posy>450</posy>
                         <width>1280</width>
-                        <height>220</height>
-                        <texture>black.png</texture>
-                        <colordiffuse>CCFFFFFF</colordiffuse>
+                        <height>270</height>
+                        <texture>DescriptionBack.png</texture>
                         <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="textbox">
-                        <!--text of description-->
+                        <description>Description Text</description>
                         <animation type="Focus">
-                            <effect type="slide" start="0,215" end="0,0" time="100" delay="200"/>
+                            <effect type="fade" start="0" end="100" time="100" delay="2000"/>
                         </animation>
                         <posx>20</posx>
-                        <posy>505</posy>
+                        <posy>560</posy>
                         <width>1240</width>
-                        <height>215</height>
+                        <height>150</height>
                         <font>font28</font>
                         <align>left</align>
                         <aligny>top</aligny>
@@ -173,19 +213,31 @@
                         <label>$INFO[ListItem.Label2]</label>
                         <textcolor>white</textcolor>
                         <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                 </focusedlayout>
             </control>
+            <control type="image" id="104">
+                <description>Background for Usage Instructions</description>
+                <posx>450</posx>
+                <posy>232</posy>
+                <width>380</width>
+                <height>150</height>
+                <texture border="20">UsageBack.png</texture>
+                <colordiffuse>CCFFFFFF</colordiffuse>
+                <visible>true</visible>
+            </control>
             <control type="textbox" id="103">
-                <!--usage instructions-->
-                <posx>20</posx>
-                <posy>10</posy>
-                <width>1200</width>
-                <height>120</height>
-                <align>right</align>
+                <description>Usage Instructions</description>
+                <posx>490</posx>
+                <posy>260</posy>
+                <width>300</width>
+                <height>100</height>
+                <align>center</align>
                 <aligny>top</aligny>
-                <textcolor>FFAAAAAA</textcolor>
+                <textcolor>FFFFFFFF</textcolor>
                 <font>font13</font>
+                <visible>true</visible>
             </control>
         </control>
     </controls>

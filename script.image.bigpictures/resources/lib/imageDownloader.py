@@ -12,6 +12,7 @@ getLS = Addon.getLocalizedString
 
 scriptName = sys.modules['__main__'].__scriptname__
 
+
 class Download:
 
     def __init__(self, photos, downloadPath):
@@ -22,18 +23,18 @@ class Download:
 
         for i, photo in enumerate(photos):
             self.url = photo['pic']
-            self.index = str(i+1)
+            self.index = str(i + 1)
             #unicode causes problems here, convert to standard str
             self.filename = '_'.join([str(i), str(self.url.split('/')[-1])])
-            foldername = re.sub('[^\w\s-]', '', str(photo['title'])) # download folder should be named like the album
+            foldername = re.sub('[^\w\s-]', '', str(photo['title']))  # download folder should be named like the album
             self.fullDownloadPath = os.path.join(downloadPath, foldername, self.filename)
             #print '[SCRIPT][%s] %s : Attempting to download %s of %s' % (scriptName, __name__, i+1, len(photos))
-            print '[SCRIPT][%s] %s --> %s\n' %  (scriptName, self.url, self.fullDownloadPath)
+            print '[SCRIPT][%s] %s --> %s\n' % (scriptName, self.url, self.fullDownloadPath)
 
             if self.checkPath(downloadPath, foldername, self.filename):
                 try:
-                    dl = urllib.urlretrieve(self.url, self.fullDownloadPath, reporthook = self.showdlProgress)
-                    print '[SCRIPT][%s] Download Success!' % (scriptName)
+                    dl = urllib.urlretrieve(self.url, self.fullDownloadPath, reporthook=self.showdlProgress)
+                    print '[SCRIPT][%s] Download Success!' % scriptName
                 except IOError, e:
                     print e
                     self.pDialog.close()
@@ -47,20 +48,20 @@ class Download:
         self.pDialog.close()
 
     def showdlProgress(self, count, blockSize, totalSize):
-        percent = int(count*blockSize*100/totalSize)
+        percent = int(count * blockSize * 100 / totalSize)
         enum = '%s %s %s' % (self.index, getLS(32025), self.len)
         fromPath = '%s %s' % (getLS(32023), self.url)
         toPath = '%s %s' % (getLS(32024), self.fullDownloadPath)
         self.pDialog.update(percent, enum, fromPath, toPath)
-    
+
     def checkPath(self, path, folder, filename):
         if os.path.isdir(path):
             if os.path.isdir(os.path.join(path, folder)):
                 if os.path.isfile(os.path.join(path, folder, filename)):
-                    if not os.path.getsize(os.path.join(path, folder, filename))>0:
-                        return True #overwrite empty files, #skip others.
+                    if not os.path.getsize(os.path.join(path, folder, filename)) > 0:
+                        return True  # overwrite empty files, #skip others.
                 else:
                     return True
             else:
                 os.mkdir(os.path.join(path, folder))
-                self.checkPath(path, folder, filename) #check again after creating directory
+                self.checkPath(path, folder, filename)  # check again after creating directory
