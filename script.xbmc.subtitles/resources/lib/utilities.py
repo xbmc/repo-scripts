@@ -171,6 +171,7 @@ def toOpenSubtitles_two( id ):
     "Spanish (Spain)"            : "es",
     "Chinese (Traditional)"      : "zh",
     "Chinese (Simplified)"       : "zh",
+    "Portuguese-BR"              : "pb",
     "All"                        : "all"
   }
   return languages[ id ]
