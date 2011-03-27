@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<!--
+# The contents of this file are subject to the Mozilla Public License
+# Version 1.1 (the "License"); you may not use this file except in
+# compliance with the License. You may obtain a copy of the License at
+# http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS IS"
+# basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+# License for the specific language governing rights and limitations
+# under the License.
+#
+# The Original Code is plugin.games.xbmame.
+#
+# The Initial Developer of the Original Code is Olivier LODY aka Akira76.
+# Portions created by the XBMC team are Copyright (C) 2003-2010 XBMC.
+# All Rights Reserved.
+-->
+
+<strings>
+    <!-- Plugin name -->
+    <string id="30000">Mame Frontend</string>
+
+    <!-- Home screen categories -->
+    <string id="30100">Spiele nach Jahren</string>
+    <string id="30101">Spiele nach Bios</string>
+    <string id="30102">Spiele nach Hersteller</string>
+    <string id="30103">Spiele nach Namen</string>
+    <string id="30104">Spiele mit Festplatte</string>
+    <string id="30105">Alle Spiele</string>
+    <string id="30106">Suche...</string>
+    <string id="30107">%s Spiele</string>
+    <string id="30108">Meine Favorite</string>
+
+    <!-- InfoDialog strings -->
+    <string id="30500">Ordner darüber</string>
+    <string id="30503">Spiel starten</string>
+    <string id="30504">Ähnliche Spiele</string>
+
+    <!-- ID Card related -->
+    <string id="30550">Spielename</string>
+    <string id="30551">Hersteller</string>
+    <string id="30552">Veröffentlichungsjahr</string>
+    <string id="30553">Level</string>
+    <string id="30554">Andere Emulatoren</string>
+    <string id="30555">ROMSet Infos</string>
+    <string id="30556">Quellen</string>
+
+    <!-- Other infos -->
+    <string id="30557">ID Card</string>
+    <string id="30558">Biographie</string>
+    <string id="30559">Wissenswertes</string>
+    <string id="30560">Technische Infos</string>
+    <string id="30561">Scoring</string>
+    <string id="30562">Tips & Tricks</string>
+    <string id="30563">Test Modus</string>
+    <string id="30564">Setup</string>
+    <string id="30565">Updates</string>
+    <string id="30566">WIP</string>
+    <string id="30567">TODO</string>
+    <string id="30568">Bugs</string>
+    <string id="30569">Notizen</string>
+    <string id="30570">Serie</string>
+    <string id="30571">Entwicklerteam</string>
+    <string id="30572">Portierungen</string>
+
+    <!-- progress dialogs labels -->
+    <string id="30600">Liste der Spiele wird erstellt</string>
+    <string id="30601">Sammlung wird befüllt</string>
+    <string id="30602">%s wird hinzugefügt</string>
+    <string id="30603">Erstellen Objekt %s von %s</string>
+    <string id="30604">Spieledatenbank wird erstellt</string>
+    <string id="30605">Schritt %s von %s</string>
+    <string id="30606">MAME XML Liste wird eingelesen</string>
+    <string id="30607">XML List wird gesäubert</string>
+    <string id="30608">Einträge in "mameinfo.dat" werden erstellt</string>
+    <string id="30609">Einträge in "history.dat" werden erstellt</string>
+    <string id="30610">Spieleinträge werden erstellt (%s von %s)</string>
+    <string id="30611">"haben/fehlt" Liste auffrischen</string>
+    <string id="30612">Datenbank auffrischen</string>
+    <string id="30613">Gefundene Romsets %s</string>
+    <string id="30614">Einträge auffrischen %s von %s</string>
+    <string id="30615">XBMame - Miniaturbilder auffrischen</string>
+    <string id="30616">Datenbank auffrischen</string>
+    <string id="30617">Festlegen Miniaturbild für %s</string>
+    <string id="30618">Einträge auffrischen %s von %s</string>
+    <string id="30619">Erstelle Liste der Spiele</string>
+    <string id="30620">Das Datenbankschema wurde aufgefrischt.</string>
+    <string id="30621">Spiel v%s ausgewählt, aktuelle Version v%s</string>
+    <string id="30622">Die Datenbank muss neu aufgebaut werden.</string>
+
+    <!-- dialog labels -->
+    <string id="30700">Noch nicht implementiert.</string>
+    <string id="30701">Entweder fehlt dieses Romset</string>
+    <string id="30702">oder die Spieledatenbank ist nicht aktuell.</string>
+    <string id="30703">Datenbank neu aufbauen?</string>
+    <string id="30704">Die Anwendung hat gerade das Plugin für Einstellungen installiert</string>
+    <string id="30705">XBMC wird für einen Neustart geschlossen</string>
+
+    <!-- context menu -->
+    <string id="30800">Spiel Einstellungen</string>
+    <string id="30801">Dipswitche</string>
+    <string id="30802">Spiel Infos</string>
+    <string id="30803">Plugin Einstellungen</string>
+    <string id="30804">Favoriten hinzufügen</string>
+    <string id="30805">Favoriten entfernen</string>
+
+    <!-- settings -->
+
+    <!-- settings : general settings -->
+    <string id="30900">Allgemeine Einstellungen</string>
+    <string id="30901">Pfad zu Mame exe</string>
+    <string id="30902">Pfad zu Mame roms</string>
+    <string id="30903">Pfad zu Mame samples</string>
+    <string id="30990">Importiere history.dat sofern diese vorhanden ist</string>
+    <string id="30991">Importiere mameinfo.dat sofern diese vorhanden ist</string>
+
+    <!-- settings : thumbnails -->
+    <string id="30904">Miniaturbilder</string>
+    <string id="30905">Pfad zu Miniaturbilder</string>
+    <string id="30906">Cache Miniaturbilder</string>
+    <string id="30907">Miniaturbilder über Web beziehen</string>
+    <string id="30908">Miniaturbilder mit höherer Auflösung beziehen</string>
+    <string id="30909">Nur für vorhandene Roms</string>
+
+    <!-- settings : rom filters -->
+    <string id="30910">Rom Filter</string>
+    <string id="30911">Klone verbergen</string>
+    <string id="30912">Nicht funktionierende Spiele verbergen</string>
+    <string id="30913">Fehlende Romsets verbergen</string>
+    <string id="30933">Spiele mit inkorrekter Emulation verbergen</string>
+    <string id="30934">Spiele mit inkorrekten Farben verbergen</string>
+    <string id="30935">Spiele mit inkorrekter Grafik verbergen</string>
+    <string id="30936">Spiele mit inkorrektem Sound verbergen</string>
+
+    <!-- settings : display settings -->
+    <string id="30914">Anzeigeneinstellungen</string>
+    <string id="30915">Bild drehen</string>
+    <string id="30916">None</string>
+    <string id="30917">90° Uhrzeigersinn</string>
+    <string id="30918">180°</string>
+    <string id="30919">90° Gegenuhrzeigersinn</string>
+    <string id="30920">Anzeige</string>
+    <string id="30921">Farboverlay</string>
+    <string id="30922">Standard (4:3)</string>
+    <string id="30923">Pixel Aspekt (65:56)</string>
+    <string id="30924">Cocktail</string>
+    <string id="30925">Zeige Backdrops</string>
+    <string id="30926">Zeige Overlays</string>
+    <string id="30927">Zeige Blenden</string>
+    <string id="30928">Verwende "picture cropping"</string>
+
+    <string id="30929">Wartung</string>
+    <string id="30930">Datenbank neu aufbauen</string>
+    <string id="30931">"haben/fehlt" Liste neu aufbauen</string>
+    <string id="30932">Miniaturbilder neu aufbauen</string>
+    <string id="30937">BIOS Einstellungen</string>
+    <string id="30938">Verwende folgendes BIOS :</string>
+
+    <string id="30950">Emulator Einstellungen</string>
+    <string id="30951">Video related</string>
+    <string id="30952">Anzeige Typ</string>
+    <string id="30953">DirectX Version für Verwendung (falls relevant)</string>
+    <string id="30954">Erlaube MAME die Auflösung zu ändern</string>
+    <string id="30955">Video Verstärkung</string>
+    <string id="30957">Scanlines einschalten</string>
+    <string id="30956">Warte auf VSync</string>
+    <string id="30958">Andere</string>
+    <string id="30959">Multithreading einschalten</string>
+    <string id="30960">Cheats einschallten wenn verfügbar</string>
+    <string id="30961">Zeige Spieleinfos beim Start</string>
+
+</strings>

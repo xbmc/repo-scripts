@@ -1,0 +1,243 @@
+<!--
+# The contents of this file are subject to the Mozilla Public License
+# Version 1.1 (the "License"); you may not use this file except in
+# compliance with the License. You may obtain a copy of the License at
+# http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS IS"
+# basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+# License for the specific language governing rights and limitations
+# under the License.
+#
+# The Original Code is plugin.games.xbmame.
+#
+# The Initial Developer of the Original Code is Olivier LODY aka Akira76.
+# Portions created by the XBMC team are Copyright (C) 2003-2010 XBMC.
+# All Rights Reserved.
+-->
+
+<window id="30500">
+    <defaultcontrol always="true">30501</defaultcontrol>
+    <allowoverlay>yes</allowoverlay>
+
+    <coordinates>
+        <system>1</system>
+        <posx>160</posx>
+        <posy>55</posy>
+    </coordinates>
+    <include>dialogeffect</include>
+    <controls>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>960</width>
+            <height>610</height>
+            <aspectratio>stretch</aspectratio>
+            <texture border="8">bar2.png</texture>
+        </control>
+        <control type="image">
+            <description>background image</description>
+            <posx>8</posx>
+            <posy>8</posy>
+            <width>944</width>
+            <height>594</height>
+            <aspectratio>center</aspectratio>
+            <texture>dialog-bg.png</texture>
+        </control>
+<!--        <control type="image">
+            <posx>8</posx>
+            <posy>8</posy>
+            <width>944</width>
+            <height>48</height>
+            <texture border="16">bevel.png</texture>
+        </control> -->
+        <control type="label" id="20">
+            <description>header label</description>
+            <posx>0</posx>
+            <posy>16</posy>
+            <width>960</width>
+            <height>30</height>
+            <font>font13caps</font>
+            <align>center</align>
+            <aligny>center</aligny>
+            <textcolor>white</textcolor>
+            <shadowcolor>black</shadowcolor>
+        </control>
+        <control type="image">
+            <posx>8</posx>
+            <posy>56</posy>
+            <width>274</width>
+            <height>490</height>
+            <texture border="16">bevel.png</texture>
+        </control>
+        <control type="list" id="30501">
+            <posx>16</posx>
+            <posy>64</posy>
+            <width>258</width>
+            <height>474</height>
+            <alignx>left</alignx>
+            <aligny>top</aligny>
+            <onleft>30502</onleft>
+            <onright>30502</onright>
+            <onup>30501</onup>
+            <ondown>30501</ondown>
+            <viewtype>list</viewtype>
+            <orientation>vertical</orientation>
+            <scrolltime>100</scrolltime>
+            <itemlayout width="258" height="30">
+<control type="label">
+                    <posx>10</posx>
+                    <posy>0</posy>
+                    <width>248</width>
+                    <height>30</height>
+                    <font>font16</font>
+                    <label>$INFO[ListItem.Label]</label>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFB2D4F5</textcolor>
+                </control>
+            </itemlayout>
+            <focusedlayout width="258" height="30">
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>258</width>
+                    <height>30</height>
+                    <texture border="5">select.png</texture>
+                    <visible>Control.HasFocus(30501)</visible>
+                    <colordiffuse>FFFFFFFF</colordiffuse>
+                </control>
+                <control type="label">
+                    <posx>10</posx>
+                    <posy>0</posy>
+                    <width>248</width>
+                    <height>30</height>
+                    <font>font24</font>
+                    <label>$INFO[ListItem.Label]</label>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>white</textcolor>
+                </control>
+            </focusedlayout>
+        </control>
+        <control type="image">
+            <posx>280</posx>
+            <posy>56</posy>
+            <width>640</width>
+            <height>490</height>
+                    <visible>Control.IsVisible(30)</visible>
+            <texture border="16">bevel.png</texture>
+        </control>
+        <control type="image">
+            <posx>280</posx>
+            <posy>56</posy>
+            <width>672</width>
+            <height>490</height>
+                    <visible>!Control.IsVisible(30)</visible>
+            <texture border="16">bevel.png</texture>
+        </control>
+        <control type="textbox" id="30502">
+            <posx>296</posx>
+            <posy>58</posy>
+            <width>598</width>
+            <height>474</height>
+            <visible>true</visible>
+            <align>justify</align>
+            <font>font12</font>
+            <textcolor>FFB2D4F5</textcolor>
+            <onup>10</onup>
+            <ondown>10</ondown>
+            <onleft>30501</onleft>
+            <onright>30</onright>
+            <pagecontrol>30</pagecontrol>
+            <autoscroll>true</autoscroll>
+        </control>
+        <control type="image">
+                <posx>922</posx>
+                <posy>56</posy>
+                <width>32</width>
+                <height>490</height>
+                <texture border="0,16,0,16">bevel.png</texture>
+                    <visible>Control.IsVisible(30)</visible>
+            </control>
+        <control type="scrollbar" id="30">
+            <posx>930</posx>
+            <height>474</height>
+            <posy>64</posy>
+            <width>16</width>
+            <texturesliderbar border="0,32,0,32">vbar_disabled.png</texturesliderbar>
+            <texturesliderbarfocus border="0,32,0,32">vbar_enabled.png</texturesliderbarfocus>
+            <pulseonselect></pulseonselect>
+            <onup>10</onup>
+            <ondown>10</ondown>
+            <onleft>30502</onleft>
+            <onright>10</onright>
+            <showonepage>false</showonepage>
+            <orientation>vertical</orientation>
+        </control>
+<!--        <control type="image">
+            <posx>8</posx>
+            <posy>546</posy>
+            <width>944</width>
+            <height>56</height>
+            <texture border="16">bevel.png</texture>
+        </control> -->
+        <control type="button" id="10">
+            <posy>554</posy>
+            <posx>165</posx>
+            <description>OK Button</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>210</width>
+            <height>30</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <texturenofocus border="5">MenuItemNF.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <font>font12_title</font>
+            <label>186</label>
+            <onleft>30501</onleft>
+            <onright>30503</onright>
+            <onup>10</onup>
+            <ondown>10</ondown>
+        </control>
+        <control type="button" id="30503">
+            <posy>554</posy>
+            <posx>385</posx>
+            <description>OK Button</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>210</width>
+            <height>30</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <texturenofocus border="5">MenuItemNF.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <font>font12_title</font>
+            <label>$LOCALIZE[30510]</label>
+            <onleft>10</onleft>
+            <onright>30504</onright>
+            <onup>10</onup>
+            <ondown>10</ondown>
+        </control>
+        <control type="button" id="30504">
+            <posy>554</posy>
+            <posx>605</posx>
+            <description>OK Button</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>210</width>
+            <height>30</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <texturenofocus border="5">MenuItemNF.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <font>font12_title</font>
+            <label>$LOCALIZE[30511]</label>
+            <onleft>30503</onleft>
+            <onright>30</onright>
+            <onup>10</onup>
+            <ondown>10</ondown>
+        </control>
+    </controls>
+</window>
