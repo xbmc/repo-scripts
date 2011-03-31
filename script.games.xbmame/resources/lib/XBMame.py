@@ -35,6 +35,17 @@ class XBMame:
         self.__language__ = Addon(ADDON_ID).getLocalizedString
         self.__profile__ = Addon(ADDON_ID).getAddonInfo("profile")
 
+        OLD_PLUGIN_PATH = path.abspath(translatePath(path.join(path.dirname(self.__profile__), "..", "plugin.games.xbmame")))
+	ADDON_PATH = translatePath(self.__profile__)
+
+	if path.exists(OLD_PLUGIN_PATH):
+	    try :
+		print self.__profile__
+		if path.exists(ADDON_PATH):rmtree(ADDON_PATH)
+		move(OLD_PLUGIN_PATH, ADDON_PATH)
+	    except Exception:
+		pass
+	    
 	self.MEDIA_PATH = path.join(Addon(ADDON_ID).getAddonInfo("path"), "resources", "skins", "Default", "media")
 	self._MAME_CONFIG_PATH = translatePath(path.join(self.__profile__, "cfg"))
         self._MAME_NVRAM_PATH = translatePath(path.join(self.__profile__, "nvram"))

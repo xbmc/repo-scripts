@@ -64,8 +64,8 @@
         <setting label="30928" type="bool" id="display_zoom" default="false"/>
     </category>
     <category label="30929">
-        <setting label="30930" type="action" id="a1" option="close" action="XBMC.RunScript(special://home/addons/plugin.games.xbmame/xbmame.py,exec:builddb)"/>
-        <setting label="30931" type="action" id="a2" option="close" action="XBMC.RunScript(special://home/addons/plugin.games.xbmame/xbmame.py,exec:havemiss)"/>
-        <setting label="30932" type="action" id="a3" option="close" action="XBMC.RunScript(special://home/addons/plugin.games.xbmame/xbmame.py,exec:buildthumb)"/>
+        <setting label="30930" type="action" id="a1" option="close" action="xbmc.runscript(special://home/addons/script.games.xbmame/xbmame.py,exec:builddb)"/>
+        <setting label="30931" type="action" id="a2" option="close" action="xbmc.runscript(special://home/addons/script.games.xbmame/xbmame.py,exec:havemiss)"/>
+        <setting label="30932" type="action" id="a3" option="close" action="xbmc.runscript(special://home/addons/script.games.xbmame/xbmame.py,exec:buildthumb)"/>
     </category>
 </settings>

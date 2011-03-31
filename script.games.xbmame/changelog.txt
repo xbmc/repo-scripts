@@ -1,3 +1,7 @@
+2011-03-31 -> v2.0.1
+    Fixed a bug where maintenance operations from the settings dialog wouldn't work
+    Added plugin profile migration
+    
 2011-03-25 -> v2.0.0
     Rewrote most of the code
     Reworked thumbnail generation process
@@ -6,7 +10,7 @@
     Added skin support
     Added favorites
     Added German plugin description
-    Databse schema upgrade
+    Database schema upgrade
 
 2010-11-06 -> v1.2.2
     Fixed a bug that prevented the dipswitch settings to display
