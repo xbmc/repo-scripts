@@ -32,7 +32,7 @@ class HTMLConverter:
 		self.imageFilter = re.compile('<img[^>]+?src=["\'](?P<url>[^>"]+?)["\'][^>]*?>',re.I|re.S|re.U)
 		self.scriptFilter = re.compile('<script[^>]*?>.*?</script>',re.S|re.I)
 		self.styleFilter = re.compile('<style[^>]*?>.+?</style>',re.I)
-		self.commentFilter = re.compile('<!--.*?-->')
+		self.commentFilter = re.compile('<!.*?-->')
 		self.formFilter = re.compile('<form[^>]*?(?:id=["\'](?P<id>[^>"]+?)["\'][^>]*?)?>(?P<contents>.+?)(?:</form>|<form>|$)',re.I)
 		self.labelFilter = re.compile('<label[^>]*?(?:(?:for=["\'])|(?:>\s*<input[^>]*?id="))(?P<inputid>[^>"].*?)["\'][^>]*?>(?P<label>.*?)</label>',re.I)
 		self.altLabelFilter = re.compile('>(?:(?P<header>[^<>]*?)<(?!input|select)\w+[^>]*?>)?(?P<label>[^<>]+?)(?:<(?!input|select)\w+[^>]*?>)?(?:<input |<select )[^>]*?(?:id|name)="(?P<inputid>[^>"]+?)"',re.I)
@@ -44,7 +44,7 @@ class HTMLConverter:
 		self.blockQuoteFilter = re.compile('<blockquote>(.+?)</blockquote>',re.S|re.I)
 		self.colorFilter = re.compile('<font color="([^>"]+?)">(.+?)</font>',re.I)
 		self.colorFilter2 = re.compile('<span[^>]*?style="[^>"]*?color: ?([^>]+?)"[^>]*?>(.+?)</span>',re.I)
-		self.tagString = '<[^>]+?>'
+		self.tagString = '<[^!][^>]*?>'
 		interTagWSString = '(%s)\s*(%s)' % (self.tagString,self.tagString)
 		self.tagFilter = re.compile(self.tagString,re.S|re.I)
 		self.interTagWSFilter = re.compile(interTagWSString,re.I)

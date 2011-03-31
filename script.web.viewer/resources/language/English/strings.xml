@@ -3,6 +3,8 @@
     <!-- All %s must remain in string but can change position -->
     <string id="30000">General</string>
     <string id="30001">Add Submit Button If Missing</string>
+    <string id="30002">Goto URL option edits current URL</string>
+    <string id="30003">Use Simple Controls (ie Boxee)</string>
     
     <string id="30100">Error loading page.</string>
     <string id="30101">Processing Data</string>
@@ -55,4 +57,21 @@
     <string id="30146">Help</string>
     <string id="30147">Submit</string>
     <string id="30148">Close Web Viewer?</string>
+    
+    <string id="30149">Search Google</string>
+    <string id="30150">Enter Search Terms</string>
+    
+    <string id="30151">Unknown URL Type</string>
+    <string id="30152">Web Viewer cannot open links of type:</string>
+    
+    <string id="30153">Search Page</string>
+    <string id="30154">Not Found</string>
+    <string id="30155">Match Not Found</string>
+    <string id="30156">Try again from top of page?</string>
+    
+    <string id="30157">View Page Source</string>
+    <string id="30158">Back</string>
+    <string id="30159">Forward</string>
+    <string id="30160">Refresh</string>
+
 </strings>

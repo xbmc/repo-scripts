@@ -5,8 +5,6 @@
 		<posx>0</posx>
 		<posy>0</posy>
 	</coordinates>
-	<animation effect="fade" time="250">WindowOpen</animation>
-	<animation effect="fade" time="250">WindowClose</animation>
 	<controls>
 		<control type="group">
 			<posx>0</posx>
@@ -147,8 +145,17 @@
 					<texturenofocus>webviewer-stop-nofocus.png</texturenofocus>
 				</control>
 			</control>
+			<control type="button" id="112">
+				<description>Url Box</description>
+				<posx>1148</posx>
+				<posy>40</posy>
+				<width>30</width>
+				<height>30</height>
+				<texturefocus>webviewer-search.png</texturefocus>
+				<texturenofocus>webviewer-search-nofocus.png</texturenofocus>
+			</control>
 			
-			<control type="button">
+			<control type="button" id="111">
 		        <description>Close Button</description>
 		        <posx>1230</posx>
 		        <posy>15</posy>
@@ -314,9 +321,9 @@
 						<aspectratio>keep</aspectratio>
 					</control>
 					<control type="label">
-						<posx>25</posx>
+						<posx>20</posx>
 						<posy>134</posy>
-						<width>130</width>
+						<width>355</width>
 						<height>30</height>
 						<font>font12</font>
 						<aligny>center</aligny>
@@ -357,9 +364,9 @@
 						<aspectratio>keep</aspectratio>
 					</control>
 					<control type="label">
-						<posx>10</posx>
+						<posx>20</posx>
 						<posy>295</posy>
-						<width>365</width>
+						<width>355</width>
 						<height>30</height>
 						<font>font12</font>
 						<aligny>center</aligny>

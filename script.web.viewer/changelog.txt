@@ -1,6 +1,28 @@
-Forum Browser Changelog
+Web Viewer Changelog
 
-Current Version : 0.7.5
+Current Version : 0.7.8
+
+*** 0.7.8 ***
+
+New icon courtesy of freezy
+Added autofill option for autoforms
+Added autosubmit option for autoforms
+
+*** 0.7.7 ***
+
+Made compatible with Boxee
+
+*** 0.7.6 ***
+
+Added settings option to prefill 'Goto URL' with current URL
+Right clicking with mouse on buttons now brings up context menu, instead of closing window
+Added 'Search Google' to context menu and Google button
+Added dialog when links are clicked that cannot be followed.
+Bug Fix: Scrolling through links list was sometimes selecting wrong page elements
+Added 'Search Page' to context menu
+Changed 'Settings' to 'Options' on context menu
+Changed 'Preferences' to 'Settings' under 'Options' on context menu
+Added 'View' source to 'Options' on context menu
 
 *** 0.7.5 ***
 	

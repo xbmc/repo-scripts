@@ -12,7 +12,7 @@
 			<posy>0</posy>
 			<width>1280</width>
 			<height>720</height>
-			<texture>webviewer-control-help.png</texture>
+			<texture>webviewer-control-simple-help.png</texture>
 			<visible>true</visible>
 		</control>
 		<control type="button" id="100">

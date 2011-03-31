@@ -5,8 +5,6 @@
 		<posx>0</posx>
 		<posy>0</posy>
 	</coordinates>
-	<animation effect="fade" time="250">WindowOpen</animation>
-	<animation effect="fade" time="250">WindowClose</animation>
 	<controls>
 		<control type="group">
 			<posx>40</posx>
