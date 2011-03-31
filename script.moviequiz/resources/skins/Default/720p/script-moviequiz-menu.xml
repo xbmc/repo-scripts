@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="5000">
+    <allowoverlay>no</allowoverlay>
+    <defaultcontrol always="false">4001</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
+    <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+    <controls>
+        <!-- Background -->
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>quiz-menu-background.png</texture>
+        </control>
+
+        <control type="button" id="4001">
+            <description>Movie Quiz</description>
+            <posx>334</posx>
+            <posy>200</posy>
+            <width>256</width>
+            <height>256</height>
+            <texturefocus>quiz-button-movie.png</texturefocus>
+            <texturenofocus>quiz-button-movie.png</texturenofocus>
+            <onleft>4000</onleft>
+            <onright>4002</onright>
+            <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4001)">Conditional</animation>
+        </control>
+        <control type="label">
+            <posx>294</posx>
+            <posy>460</posy>
+            <width>336</width>
+            <height>40</height>
+            <label>$ADDON[script.moviequiz 30100]</label>
+            <align>center</align>
+            <textcolor>ffffffff</textcolor>
+            <font>font30</font>
+        </control>
+
+        <control type="button" id="4002">
+            <description>TV Show Quiz</description>
+            <posx>690</posx>
+            <posy>200</posy>
+            <width>256</width>
+            <height>256</height>
+            <texturefocus>quiz-button-tvshows.png</texturefocus>
+            <texturenofocus>quiz-button-tvshows.png</texturenofocus>
+            <onleft>4001</onleft>
+            <onright>4003</onright>
+            <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4002)">Conditional</animation>
+        </control>
+        <control type="label">
+            <posx>650</posx>
+            <posy>460</posy>
+            <width>336</width>
+            <height>40</height>
+            <label>$ADDON[script.moviequiz 30101]</label>
+            <align>center</align>
+            <textcolor>ffffffff</textcolor>
+            <font>font30</font>
+        </control>
+
+        <control type="button" id="4000">
+            <description>Settings</description>
+            <posx>112</posx>
+            <posy>490</posy>
+            <width>96</width>
+            <height>96</height>
+            <texturefocus>quiz-button-radio.png</texturefocus>
+            <texturenofocus>quiz-button-radio.png</texturenofocus>
+            <onleft>4003</onleft>
+            <onright>4001</onright>
+            <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4000)">Conditional</animation>
+        </control>
+        <control type="button">
+            <posx>34</posx>
+            <posy>590</posy>
+            <width>256</width>
+            <height>40</height>
+            <label>$ADDON[script.moviequiz 30102]</label>
+            <align>center</align>
+            <textcolor>ffffffff</textcolor>
+            <font>font13</font>
+        </control>
+
+        <control type="button" id="4003">
+            <description>Exit</description>
+            <posx>1072</posx>
+            <posy>490</posy>
+            <width>96</width>
+            <height>96</height>
+            <texturefocus>quiz-button-theater.png</texturefocus>
+            <texturenofocus>quiz-button-theater.png</texturenofocus>
+            <onleft>4002</onleft>
+            <onright>4000</onright>
+            <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4003)">Conditional</animation>
+        </control>
+        <control type="label">
+            <posx>990</posx>
+            <posy>590</posy>
+            <width>256</width>
+            <height>40</height>
+            <label>$ADDON[script.moviequiz 30103]</label>
+            <align>center</align>
+            <textcolor>ffffffff</textcolor>
+            <font>font13</font>
+        </control>
+
+        <control type="label" id="6000">
+            <description>translated by</description>
+            <posx>0</posx>
+            <posy>683</posy>
+            <width>1280</width>
+            <height>40</height>
+            <font>font13</font>
+            <textcolor>ffffffff</textcolor>
+            <scroll>true</scroll>
+            <scrollsuffix>  *  </scrollsuffix>
+        </control>
+
+        <control type="image">
+            <posx>230</posx>
+            <posy>580</posy>
+            <width>820</width>
+            <height>80</height>
+            <texture>quiz-button-background.png</texture>
+        </control>
+        <control type="label">
+            <description>note about lockup</description>
+            <posx>230</posx>
+            <posy>580</posy>
+            <width>820</width>
+            <height>80</height>
+            <font>font13</font>
+            <align>center</align>
+            <textcolor>ffffffff</textcolor>
+            <wrapmultiline>true</wrapmultiline>
+            <label>[B]Warning! There is a known bug in XBMC 10.x that affects this addon
+and is causing XBMC to lockups and crash. It is fixed for XBMC 11.0.
+See http://trac.xbmc.org/ticket/11290 for details.[/B]</label>
+
+        </control>
+
+        <control type="image">
+            <description>Activate glasspane when addon settings are visible</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>quiz-background-glass.png</texture>
+            <animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
+            <visible>Window.IsVisible(140)</visible>
+        </control>
+
+
+    </controls>
+</window>

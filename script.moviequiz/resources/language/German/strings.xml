@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../strings.xsd">
+    <!-- -->
+    <string id="30000">Frage %d von %d</string>
+    <string id="30001">Richtig:</string>
+    <string id="30002">Falsch:</string>
+	<string id="30003">Game Over</string>
+    <string id="30004">Du hast %d von %d</string><!-- 1st %d is score, 2nd %d is total question -->
+
+    <string id="30005">Specials</string>
+    <string id="30006">Staffel %d</string>
+    <string id="30007">%B %e, %Y</string><!-- episode first aired date format: http://docs.python.org/library/time.html#time.strftime -->
+	<string id="30008">[B]Lade...[/B]</string>
+	<!-- Menu -->
+    <string id="30100">Movie Quiz spielen</string>
+    <string id="30101">TV Quiz spielen</string>
+    <string id="30102">Einstellungen</string>
+    <string id="30103">Beenden</string>
+
+    <string id="30110">[B]Film Trivia[/B]</string>
+    <string id="30111">%d Filme</string><!-- %d is movie count -->
+    <string id="30112">%d Schauspieler</string><!-- %d is actor count -->
+    <string id="30113">%d Regisseure</string><!-- %d is director count -->
+    <string id="30114">%d Studios</string><!-- %d is studio count -->
+    <string id="30115">%d Stunden Unterhaltung</string>
+
+	<string id="30120">[B]TV Serien Trivia[/B]</string>
+    <string id="30121">%d TV Serien</string><!-- %d is TV show count -->
+    <string id="30122">%d Stafflen</string><!-- %d is season count -->
+    <string id="30123">%d Episoden</string><!-- %d is episodes  -->
+	
+    <!-- Movie Questions -->
+    <string id="30400">Welcher Film ist das?</string>
+    <string id="30401">In welchem Film spielt [B]%s[/B] nicht mit?</string><!-- %s is actor name -->
+    <string id="30402">In welchem Jahr wurde [B]%s[/B] veröffentlicht?</string><!-- %s is movie title -->
+    <string id="30403">Welche Tagline gehört zu [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30404">Wer führte Regie bei [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30405">Welches Studio veröffentlichte [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30406">Welcher Schauspieler ist das?</string>
+	<string id="30407">Wer spielt [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+	<string id="30408">Wer spricht [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+    <string id="30409">Aus welchem Film ist dieses Zitat?</string>
+    <string id="30410">Welcher Film ist der Neuste?</string>
+    <string id="30411">Bei welchem Film führte [B]%s[/B] nicht Regie?</string><!-- %s is director name -->
+    <string id="30412">Welcher Schauspieler spielt in diesen Filmen mit?</string>
+
+	<!-- TV Questions -->
+    <string id="30450">Welche TV-Serie ist das?</string>
+    <string id="30451">Welche Staffel von [B]%s[/B] ist das?</string><!-- %s is tvshow title -->
+    <string id="30452">Welche Episode von [B]%s[/B] ist das?</string><!-- %s is tvshow title -->
+    <string id="30453">Wann wurde [B]%s[/B] von [B]%s[/B] zuerst ausgestrahlt?</string><!-- 1st %s is episode, 2nd %s is tvshow title -->
+    <string id="30454">Wann wurde [B]%s[/B] zuerst ausgestrahlt?</string><!-- %s is tvshow title -->
+    <string id="30455">Wer spielt [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
+    <string id="30456">Wer spricht [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
+
+  <!-- Settings strings -->
+    <string id="30500">Allgemein</string>
+	<string id="30501">Filme</string>
+    <string id="30502">TV Serien</string>
+    <string id="30503">Downloads</string>
+	
+    <string id="30510">Limitiere Anzahl der Frage </string>
+    <string id="30511">Fragen Limit</string>
+    <string id="30512">Limitiere Filme anhand der Altersfreigabe</string>
+    <string id="30513">Max. Altersfreigabe</string>
+    <string id="30514">Zeige korrekte Antwort, wenn falsche ausgewählt wurde</string>
+    <string id="30515">Nutze nur gesehene Filme für das Quiz</string>
+	<string id="30516">Limitiere TV Serien anhand der Altersfreigabe</string>
+    <string id="30517">Maximale Altersfreigabe</string>
+	
+	<string id="30519">Downloade IMDB Daten...</string>
+    <string id="30520">Downloading IMDB data...</string>
+    <string id="30521">%d von %d MB abgerufen</string>
+    <string id="30522">Manche Fragen benötigen lokale Daten,</string>
+    <string id="30523">welche hier herunterladbar sind:</string>
+	
+    <string id="39999">Übersetzt bei mad-max</string>
+</strings>

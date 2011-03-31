@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../strings.xsd">
+    <!-- -->
+    <string id="30000">Spørgsmål %d af %d</string>
+    <string id="30001">Rigtige:</string>
+    <string id="30002">Forkerte:</string>
+    <string id="30003">Spillet er slut</string>
+    <string id="30004">Du fik %d af %d rigtige</string><!-- 1st %d is score, 2nd %d is total question -->
+
+    <string id="30005">Specials</string><!-- same value as id="20381" in main xbmc strings.xml -->  
+    <string id="30006">Sæson %s</string><!-- same value as id="20358" in main xbmc strings.xml -->
+    <string id="30007">%e. %B %Y</string><!-- episode first aired date format: http://docs.python.org/library/time.html#time.strftime -->
+    <string id="30008">[B]Indlæser[/B]</string>
+
+
+    <!-- Menu -->
+    <string id="30100">Spil Film Quiz</string>
+    <string id="30101">Spil TV Quiz</string>
+    <string id="30102">Indstillinger</string>
+    <string id="30103">Afslut</string>
+
+    <string id="30110">[B]Filmsamlingen i tal[/B]</string>
+    <string id="30111">%d film</string><!-- %d is movie count -->
+    <string id="30112">%d skuespillere</string><!-- %d is actor count -->
+    <string id="30113">%d instruktører</string><!-- %d is director count -->
+    <string id="30114">%d filmstudier</string><!-- %d is studio count -->
+    <string id="30115">%d timers underholdning</string>
+
+    <string id="30120">[B]TV-seriesamlingen i tal[/B]</string>
+    <string id="30121">%d serier</string><!-- %d is TV show count -->
+    <string id="30122">%d sæsoner</string><!-- %d is season count -->
+    <string id="30123">%d afsnit</string><!-- %d is episodes count -->
+
+    <!-- Movie Questions -->
+    <string id="30400">Hvilken film er det?</string>
+    <string id="30401">Hvilken film medvirker [B]%s[/B] ikke i?</string><!-- %s is actor name -->
+    <string id="30402">Hvilket år blev [B]%s[/B] udgivet?</string><!-- %s is movie title -->
+    <string id="30403">Hvilken tagline hører til [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30404">Hvem var instruktør på [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30405">Hvilket studie udgav [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30406">Hvem er denne skuespiller?</string>
+    <string id="30407">Hvem spiller [B]%s[/B] i [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+    <string id="30408">Hvem ligger stemme til [B]%s[/B] i [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+    <string id="30409">Hvilken film er dette citat fra?</string>
+    <string id="30410">Hvilken film er nyest?</string>
+    <string id="30411">Hvilken film er ikke instrueret af [B]%s[/B]?</string><!-- %s is director name -->
+    <string id="30412">Hvilken skuespiller medvirker i disse film?</string>
+
+    <!-- TV show Questions -->
+    <string id="30450">Hvilken TV-serie er det?</string>
+    <string id="30451">Hvilken sæson af [B]%s[/B] er det?</string><!-- %s is tvshow title -->
+    <string id="30452">Hvilket afsnit af [B]%s[/B] er det?</string><!-- %s is tvshow title -->
+    <string id="30453">Hvornår blev [B]%s[/B] af [B]%s[/B] sendt første gang?</string><!-- 1st %s is episode, 2nd %s is tvshow title -->
+    <string id="30454">Hvornår blev [B]%s[/B] sendt første gang?</string><!-- %s is tvshow title -->
+    <string id="30455">Hvem spiller [B]%s[/B] i [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
+    <string id="30456">Hvem ligger stemme til [B]%s[/B] i [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+
+
+    <!-- Settings strings -->
+    <string id="30500">Generelt</string>
+    <string id="30501">Film</string>
+    <string id="30502">TV-serier</string>
+    <string id="30503">Downloads</string>
+
+    <string id="30510">Begræns antallet af spørgsmål</string>
+    <string id="30511">Spørgsmålsgrænse</string>
+    <string id="30512">Begræns udvalget af film baseret på MPAA rating</string>
+	<string id="30513">Højeste MPAA rating</string>
+    <string id="30514">Vis det rigtige svar, når du svarer forkert</string>
+    <string id="30515">Brug kun sete film til spørgsmålene</string>
+    <string id="30516">Begræns udvalget af TV-serier baseret på Content rating</string>
+	<string id="30517">Højeste Content rating</string>
+    <string id="30519">Hent IMDB data...</string>
+    <string id="30520">Henter IMDB data...</string>
+    <string id="30521">%d af %d mb. modtaget</string>
+    <string id="30522">Nogle spørgsmål kræver ekstra lokale data,</string>
+    <string id="30523">som kan hentes herunder:</string>
+
+    <string id="39999">Oversat af Tommy Winther</string>
+</strings>

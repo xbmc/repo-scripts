@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings>
+    <!-- -->
+    <string id="30000">Question %d sur %d</string>
+    <string id="30001">Correcte:</string>
+    <string id="30002">Erreur:</string>
+
+    <!-- Questions -->
+    <string id="30400">Quel est ce film ?</string>
+    <string id="30401">Dans quel film ne trouve t'on pas [B]%s[/B]?</string><!-- %s is actor name -->
+    <string id="30402">En quelle année le film [B]%s[/B] est t'il sorti ?</string><!-- %s is movie title -->
+    <string id="30403">Quel est l'accroche du film [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30404">Quel est le metteur en scène de [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30405">Quel studio a réalisé [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30406">Quel est cet acteur?</string>
+
+    <!-- Settings strings -->
+    <string id="30500">Général</string>
+    <string id="30510">Limiter le nombre de question</string>
+    <string id="30511">Limite de question</string>
+    <string id="30512">Limiter la sélection des films selon le classement MPAA</string>
+	<string id="30513">Classement MPAA max.</string>
+
+</strings>
+

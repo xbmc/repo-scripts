@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../strings.xsd">
+    <!-- -->
+    <string id="30000">Question %d of %d</string>
+    <string id="30001">Correct:</string>
+    <string id="30002">Wrong:</string>
+    <string id="30003">Game Over</string>
+    <string id="30004">You scored %d of %d</string><!-- 1st %d is score, 2nd %d is total question -->
+
+    <string id="30005">Specials</string><!-- same value as id="20381" in main xbmc strings.xml -->
+    <string id="30006">Season %i</string><!-- same value as id="20358" in main xbmc strings.xml -->
+    <string id="30007">%B %e, %Y</string><!-- episode first aired date format: http://docs.python.org/library/time.html#time.strftime -->
+    <string id="30008">[B]Loading[/B]</string>
+
+    <!-- Menu -->
+    <string id="30100">Play Movie Quiz</string>
+    <string id="30101">Play TV Quiz</string>
+    <string id="30102">Settings</string>
+    <string id="30103">Exit</string>
+
+    <string id="30110">[B]Movie collection trivia[/B]</string>
+    <string id="30111">%d movies</string><!-- %d is movie count -->
+    <string id="30112">%d actors</string><!-- %d is actor count -->
+    <string id="30113">%d directors</string><!-- %d is director count -->
+    <string id="30114">%d studios</string><!-- %d is studio count -->
+    <string id="30115">%d hours of entertainment</string>
+
+    <string id="30120">[B]TV shows collection trivia[/B]</string>
+    <string id="30121">%d TV shows</string><!-- %d is TV show count -->
+    <string id="30122">%d seasons</string><!-- %d is season count -->
+    <string id="30123">%d episodes</string><!-- %d is episodes count -->
+
+
+    <!-- Movie Questions -->
+    <string id="30400">What movie is this?</string>
+    <string id="30401">What movie is [B]%s[/B] not in?</string><!-- %s is actor name -->
+    <string id="30402">What year was [B]%s[/B] released?</string><!-- %s is movie title -->
+    <string id="30403">What tagline belongs to [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30404">Who directed [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30405">What studio released [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30406">What actor is this?</string>
+    <string id="30407">Who plays [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+    <string id="30408">Who voices [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+    <string id="30409">What movie is this quote from?</string>
+    <string id="30410">What movie is the newest?</string>
+    <string id="30411">What movie is not directed by [B]%s[/B]?</string><!-- %s is director name -->
+    <string id="30412">What actor is in these movies?</string>
+
+    <!-- TV show Questions -->
+    <string id="30450">What TV show is this?</string>
+    <string id="30451">What season of [B]%s[/B] is this?</string><!-- %s is tvshow title -->
+    <string id="30452">What episode of [B]%s[/B] is this?</string><!-- %s is tvshow title -->
+    <string id="30453">When was [B]%s[/B] of [B]%s[/B] first aired?</string><!-- 1st %s is episode, 2nd %s is tvshow title -->
+    <string id="30454">When was [B]%s[/B] first aired?</string><!-- %s is tvshow title -->
+    <string id="30455">Who plays [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
+    <string id="30456">Who voices [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
+
+
+    <!-- Settings strings -->
+    <string id="30500">General</string>
+    <string id="30501">Movies</string>
+    <string id="30502">TV Shows</string>
+    <string id="30503">Downloads</string>
+
+    <string id="30510">Limit number of questions</string>
+    <string id="30511">Question limit</string>
+    <string id="30512">Limit movie selection based on MPAA rating</string>
+	<string id="30513">Max. MPAA rating</string>
+    <string id="30514">Display the correct answer, when you answer incorrectly</string>
+    <string id="30515">Only use watched movies in the questions</string>
+    <string id="30516">Limit TV show selection based on Content rating</string>
+	<string id="30517">Max. Content rating</string>
+    <string id="30519">Download IMDB data...</string>
+    <string id="30520">Downloading IMDB data...</string>
+    <string id="30521">Retrieved %d of %d mb.</string>
+    <string id="30522">Some questions require additional local data,</string>
+    <string id="30523">which can be downloaded below:</string>
+
+    <string id="39999">Translated by Tommy Winther</string>
+</strings>

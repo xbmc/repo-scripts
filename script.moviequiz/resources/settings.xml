@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="settings.xsd">
+	<category label="30500">
+        <setting id="question.limit.enabled" label="30510" type="bool" default="false" />
+        <setting id="question.limit" label="30511" type="number" default="20"  visible="eq(-1,true)"/>
+
+        <setting id="show.correct.answer" label="30514" type="bool" default="false" />
+        <setting id="only.watched.movies" label="30515" type="bool" default="true" />
+
+	</category>
+
+    <category label="30501">
+        <setting id="movie.rating.limit.enabled" label="30512" type="bool" default="false" />
+        <setting id="movie.rating.limit" label="30513" type="labelenum" default="R" values="R|PG-13|PG|G" visible="eq(-1,true)"/>
+    </category>
+
+    <category label="30502">
+        <setting id="tvshow.rating.limit.enabled" label="30516" type="bool" default="false" />
+        <setting id="tvshow.rating.limit" label="30517" type="labelenum" default="TV-MA" values="TV-MA|TV-14|TV-PG|TV-G|TV-Y7-FV|TV-Y7|TV-Y" visible="eq(-1,true)"/>
+    </category>
+
+    <category label="30503">
+        <setting type="lsep" label="30522"/>
+        <setting type="lsep" label="30523"/>
+        <setting label="30519" type="action" action="RunScript($CWD/quizlib/imdb.py)"/>
+    </category>
+</settings>
+

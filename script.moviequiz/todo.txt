@@ -1,0 +1,22 @@
+TODOs and suggestions in no particular order
+
+- Add support for non-interactive execution to run from Cinema Experience
+- DVD ISO's plays menu instead of movie
+- Add support for global statistics, eg. "lifetime" correct/incorrect answers and such
+- Use fanart instead of movie (fallback / option in settings)
+
+Movie Question suggestions:
+* Which actor was also in movie xy besides actor z?
+* How many movies do you have for year xy?
+- Which movie of this 4 is the longest (runtime)?
+- Which movie of this 4 is the shortest (runtime)?
+- Which of this Movie is not a <genre>-Movie? (very easy)
+- What role does <actor> play in <movie>?
+
+- In what movie does <actor> play <role>?
+- What actor stars in these three movies?
+- What year was these three movies released?
+- What movie is these three actors starring?
+
+TV Question:
+- When was season first aired?
