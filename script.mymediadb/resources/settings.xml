@@ -5,6 +5,7 @@
     <setting id="username" type="text" label="Username" default="" />
     <setting id="password" type="text" option="hidden" label="Password" default="" />
 	<setting id="separator" type="lsep" label=""/>
+	<setting id="shownotifications" type="bool" label="Show all notifications" default="true" />
 	<setting id="dontdeleteacquired" type="bool" label="Do not set unacquired on mmdb when not existing locally" default="true" />
 	<setting id="dontsyncwatched" type="bool" label="Do not synchronise watched status" default="false" />
   </category>
