@@ -84,7 +84,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     if lang1 == 'fr' or lang2 == 'fr' or lang3 == 'fr': querylang += "VF"
     log( __name__ , "query language: '%s'" % (querylang))
 
-    if len(file_original_path) > 0:
+    if (len(file_original_path) > 0) and (len(tvshow) > 0) :
 
         show = getShortTV(tvshow)
         if len(show)>0:

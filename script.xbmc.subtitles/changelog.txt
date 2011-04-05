@@ -1,3 +1,8 @@
+2.4.4
+- added: new service, Argenteam, thx to Esteban
+- fixed: various issues in LegendasDivx.com, thx to HiGhLaNdR
+- fixed: throw an error if played file is a movie (betaserie is for tvshow only, for now), thx to darknao
+
 2.4.3
 - added: new service LegendasDivx.com, thx to HiGhLaNdR
 

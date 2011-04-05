@@ -1,17 +1,29 @@
 # -*- coding: utf-8 -*-
 
-# Version 0.1.6
+# Version 0.1.9
 # Code based on Undertext service
 # Coded by HiGhLaNdR@OLDSCHOOL
+# Help by VaRaTRoN
 # Bugs & Features to highlander@teknorage.com
 # http://www.teknorage.com
 # License: GPL v2
 #
-# FIXED on v0.1.6:
+# NEW on v0.1.9:
+# When no sync subtitle is found and the pack has more then 1 sub, it will open a dialog box for browsing the substitles inside the multi pack.
+#
+# NEW on v0.1.8:
+# Uncompress rar'ed subtitles inside a rar file... yeh weird site...
+#
+# NEW on v0.1.7:
+# BUG found in multi packs is now fixed.
+# Added more accuracy to the selection of subtitle to load. Now checks the release dirname against the subtitles downloaded.
+# When no sync is found and if the substitle name is not equal to the release dirname or release filename it will load one random subtitle from the package.
+#
+# NEW on v0.1.6:
 # Movies or TV eps with 2cds or more will now work.
 # Sync subs is now much more accurate.
 #
-# FIXED on v0.1.5:
+# First Release v0.1.5:
 # TV Season packs now downloads and chooses the best one available in the pack
 # Movie packs with several releases now works too, tries to choose the sync sub using filename or dirname
 # Search description for SYNC subtitles using filename or dirname
@@ -19,7 +31,7 @@
 # KNOWN BUGS (TODO for next versions):
 # Regex isn't perfect so a few results might have html tags still, not many but...
 # Filtering languages, shows only European Portuguese flag.
-# Just using .srt subs. Others will come in further versions.
+# Just using .srt subs for auto sync download. Others will come in further versions.
 
 # LegendasDivx.com subtitles, based on a mod of Undertext subtitles
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib, shutil, fnmatch
@@ -165,6 +177,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 	msg = ""
 	searchstring_notclean = ""
 	searchstring = ""
+	global israr
 	israr = os.path.split(file_original_path)
 	israr = string.split(israr[0], '/')
 	israr = string.split(israr[-1], '.')
@@ -226,6 +239,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 
 	log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, subtitles_list))
 	id = subtitles_list[pos][ "id" ]
+	sync = subtitles_list[pos][ "sync" ]
 	log( __name__ ,"%s Fetching id using url %s" % (debug_pretext, id))
 	#Grabbing login and pass from xbmc settings
 	username = __settings__.getSetting( "LDivxuser" )
@@ -302,40 +316,88 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 				log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
 			else:
 				log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
+				searchrars = recursive_glob(tmp_sub_dir, '*.rar')
+				searchrarcount = len(searchrars)
+				log( __name__ ,"%s DEBUG-rarcount: '%s'" % (debug_pretext, searchrarcount))
+				log( __name__ ,"%s DEBUG-rarcount: '%s'" % (debug_pretext, searchrars))
+				if searchrarcount > 1:
+					for filerar in searchrars:
+						log( __name__ ,"%s DEBUG-nomedorar: '%s'" % (debug_pretext, filerar))
+						if filerar != os.path.join(tmp_sub_dir,'ldivx.rar'):
+							#filerar = os.path.join(tmp_sub_dir, filerar)
+							log( __name__ ,"%s DEBUG-nomedorarcompleto: '%s'" % (debug_pretext, filerar))
+							xbmc.executebuiltin("XBMC.Extract(" + filerar + "," + tmp_sub_dir +")")
+				time.sleep(1)
 				searchsubs = recursive_glob(tmp_sub_dir, '*.srt')
+				log( __name__ ,"%s DEBUG-searchsubs: '%s'" % (debug_pretext, searchsubs))
 				searchsubscount = len(searchsubs)
 				for filesub in searchsubs:
 					nopath = string.split(filesub, tmp_sub_dir)[-1]
 					justfile = string.split(nopath, '\\')[-1]
 					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s DEBUG-nopath: '%s'" % (debug_pretext, nopath))
-					#log( __name__ ,"%s DEBUG-justfile: '%s'" % (debug_pretext, justfile))
+					log( __name__ ,"%s DEBUG-nopath: '%s'" % (debug_pretext, nopath))
+					log( __name__ ,"%s DEBUG-justfile: '%s'" % (debug_pretext, justfile))
 					releasefilename = filesearch[1][:len(filesearch[1])-4]
+					releasedirname = string.split(filesearch[0], '/')
+					if 'rar' in israr:
+						releasedirname = releasedirname[-2]
+					else:
+						releasedirname = releasedirname[-1]
 					#For DEBUG only uncomment next line
 					#log( __name__ ,"%s DEBUG-releasefilename: '%s'" % (debug_pretext, releasefilename))
 					subsfilename = justfile[:len(justfile)-4]
 					#For DEBUG only uncomment next line
 					#log( __name__ ,"%s DEBUG-subsfilename: '%s'" % (debug_pretext, subsfilename))
 					#log( __name__ ,"%s DEBUG-subscount: '%s'" % (debug_pretext, searchsubscount))
-					if searchsubscount == 1:
-						#log( __name__ ,"%s DEBUG-inside subscount: '%s'" % (debug_pretext, searchsubscount))
+					#Check for multi CD Releases
+					multicds_pattern = "\+?(cd\d)\+?"
+					multicdsubs = re.search(multicds_pattern, subsfilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
+					multicdsrls = re.search(multicds_pattern, releasefilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
+
+					log( __name__ ,"%s DEBUG-sync: '%s'" % (debug_pretext, sync))
+					#Start choosing the right subtitle(s)
+					if searchsubscount == 1 and sync == 'True':
 						subs_file = filesub
-					elif (string.lower(subsfilename)) == (string.lower(releasefilename)):
+						log( __name__ ,"%s DEBUG-inside subscount: '%s'" % (debug_pretext, searchsubscount))
+						break
+					elif string.lower(subsfilename) == string.lower(releasefilename) and sync == 'True':
 						subs_file = filesub
 						#For DEBUG only uncomment next line
-						#log( __name__ ,"%s DEBUG-subsfile: '%s'" % (debug_pretext, subs_file))
-					else:
-						multicds_pattern = "\+?(cd\d)\+?"
-						multicdsubs = re.search(multicds_pattern, subsfilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
-						multicdsrls = re.search(multicds_pattern, releasefilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
-						if (multicdsubs != None) and (multicdsrls != None):
-							multicdsubs = multicdsubs.group(1)
-							multicdsrls = multicdsrls.group(1)
-							#log( __name__ ,"%s DEBUG-multicdsubs: '%s'" % (debug_pretext, multicdsubs))
-							#log( __name__ ,"%s DEBUG-multicdsrls: '%s'" % (debug_pretext, multicdsrls))
-							if (string.lower(multicdsrls) == string.lower(multicdsubs)):
-								subs_file = filesub
+						log( __name__ ,"%s DEBUG-subsfile-morethen1: '%s'" % (debug_pretext, subs_file))
+						break
+					elif string.lower(subsfilename) == string.lower(releasedirname) and sync == 'True':
+						subs_file = filesub
+						#For DEBUG only uncomment next line
+						log( __name__ ,"%s DEBUG-subsfile-morethen1-dirname: '%s'" % (debug_pretext, subs_file))
+						break
+					elif (multicdsubs != None) and (multicdsrls != None) and sync == 'True':
+						multicdsubs = string.lower(multicdsubs.group(1))
+						multicdsrls = string.lower(multicdsrls.group(1))
+						log( __name__ ,"%s DEBUG-multicdsubs: '%s'" % (debug_pretext, multicdsubs))
+						log( __name__ ,"%s DEBUG-multicdsrls: '%s'" % (debug_pretext, multicdsrls))
+						if multicdsrls == multicdsubs:
+							subs_file = filesub
+							break
 				else:
-					subs_file = filesub
-								
+					#If none is found just open a dialog box for browsing the temporary subtitle folder
+					sub_ext = "srt,aas,ssa,sub,smi"
+					sub_tmp = []
+					for root, dirs, files in os.walk(tmp_sub_dir, topdown=False):
+						for file in files:
+							dirfile = os.path.join(root, file)
+							ext = os.path.splitext(dirfile)[1][1:].lower()
+							if ext in sub_ext:
+								sub_tmp.append(dirfile)
+							elif os.path.isfile(dirfile):
+								os.remove(dirfile)
+					
+					# If there are more than one subtitle in the temp dir, launch a browse dialog
+					# so user can choose. If only one subtitle is found, parse it to the addon.
+					if len(sub_tmp) > 1:
+						dialog = xbmcgui.Dialog()
+						subs_file = dialog.browse(1, 'XBMC', 'files', '', False, False, tmp_sub_dir+"/")
+						if subs_file == tmp_sub_dir+"/": subs_file = ""
+					elif sub_tmp:
+						subs_file = sub_tmp[0]
+							
 		return False, language, subs_file #standard output
