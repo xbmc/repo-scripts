@@ -97,7 +97,7 @@
 						<posy>0</posy>
 						<width>440</width>
 						<height>30</height>
-						<texture>MenuItemFO.png</texture>
+						<texture>rcb-MenuItemFO.png</texture>
 						<visible>[Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
 					</control>
 					<control type="label">
@@ -212,7 +212,7 @@
 						<posy>0</posy>
 						<width>440</width>
 						<height>30</height>
-						<texture>MenuItemFO.png</texture>
+						<texture>rcb-MenuItemFO.png</texture>
 						<visible>[Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
 					</control>
 					<control type="label">
@@ -331,7 +331,7 @@
 							<posy>0</posy>
 							<width>440</width>
 							<height>30</height>
-							<texture>MenuItemFO.png</texture>
+							<texture>rcb-MenuItemFO.png</texture>
 							<visible>[Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
 						</control>
 						<control type="label">
@@ -445,7 +445,7 @@
 							<posy>0</posy>
 							<width>440</width>
 							<height>30</height>
-							<texture>MenuItemFO.png</texture>
+							<texture>rcb-MenuItemFO.png</texture>
 							<visible>[Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
 						</control>
 						<control type="label">
@@ -559,7 +559,7 @@
 							<posy>0</posy>
 							<width>440</width>
 							<height>30</height>
-							<texture>MenuItemFO.png</texture>
+							<texture>rcb-MenuItemFO.png</texture>
 							<visible>[Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
 						</control>
 						<control type="label">
@@ -650,10 +650,11 @@
 			<control type="button" id="5300"> 
 				<description>Import</description>
 				<posx>150</posx>
-				<posy>180</posy>
+				<posy>185</posy>
 				<width>100</width>
 				<height>25</height>
 				<visible>true</visible>
+				<font>font13</font>
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
@@ -666,17 +667,18 @@
 				<textoffsety></textoffsety>
 				<pulseonselect></pulseonselect>
 				<onup>5292</onup>
-				<ondown>5210</ondown>
+				<ondown>5101</ondown>
 				<onleft>5310</onleft>
 				<onright>5310</onright>
 			</control>
 			<control type="button" id="5310"> 
 				<description>Cancel</description>
 				<posx>270</posx>
-				<posy>180</posy>
+				<posy>185</posy>
 				<width>100</width>
 				<height>25</height>
 				<visible>true</visible>
+				<font>font13</font>
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
@@ -689,7 +691,7 @@
 				<textoffsety></textoffsety>
 				<pulseonselect></pulseonselect>
 				<onup>5292</onup>
-				<ondown>5210</ondown>
+				<ondown>5101</ondown>
 				<onleft>5300</onleft>
 				<onright>5300</onright>
 			</control>

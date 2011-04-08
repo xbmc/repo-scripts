@@ -1,4 +1,24 @@
 
+0.8.3 (04/2011)
+~~~~~~~~~~~~~
+Game Import:
+    * encoding error workaround (Windows only)
+
+0.8.2 (03/2011)
+~~~~~~~~~~~~~
+General:
+    * new option: Delete Game
+    * bugfix: use uppercase "\Addon"-path in autoexec.py (Windows only)
+
+Configuration:
+    * option "Edit Rom Collection" in context menu
+    * config wizard bugfixes and improvements
+
+Game Import:
+    * background scraping: start scraping on XBMC startup
+    * encoding error fixes
+    * better error handling on encoding errors
+
 0.8.1 (02/2011)
 ~~~~~~~~~~~~~
 General:

@@ -71,10 +71,8 @@ class DBUpdate:
 			Logutil.log("update is allowed for current rom collection: " +str(romCollection.allowUpdate), util.LOG_LEVEL_INFO)			
 			Logutil.log("search game by CRC: " +str(romCollection.searchGameByCRC), util.LOG_LEVEL_INFO)			
 			Logutil.log("ignore rom filename when searching game by CRC: " +str(romCollection.searchGameByCRCIgnoreRomName), util.LOG_LEVEL_INFO)
-						
 			Logutil.log("use foldername as CRC: " +str(romCollection.useFoldernameAsCRC), util.LOG_LEVEL_INFO)			
 			Logutil.log("use filename as CRC: " +str(romCollection.useFilenameAsCRC), util.LOG_LEVEL_INFO)
-																
 			Logutil.log("max folder depth: " +str(romCollection.maxFolderDepth), util.LOG_LEVEL_INFO)
 			
 			#check if we can find any roms with this configuration
@@ -83,8 +81,14 @@ class DBUpdate:
 				"You won't find any description with this configuration!", util.LOG_LEVEL_ERROR)
 				continue			
 			
-					
-			files = self.getRomFilesByRomCollection(romCollection.romPaths, romCollection.maxFolderDepth)				
+			enableFullReimport = self.Settings.getSetting(util.SETTING_RCB_ENABLEFULLREIMPORT).upper() == 'TRUE'
+			
+			if enableFullReimport == False:
+				id = romCollection.id
+			else:
+				id = None
+			
+			files = self.getRomFilesByRomCollection(romCollection.romPaths, romCollection.maxFolderDepth, RCId=id)				
 								
 			lastgamenameFromFile = ""
 			lastgamename = ""
@@ -102,7 +106,7 @@ class DBUpdate:
 			fileCount = 1
 			
 			Logutil.log("Start building file crcs", util.LOG_LEVEL_INFO)
-			for filename in files:				
+			for filename in files:
 				gui.writeMsg(progDialogRCHeader, "Building file list...", "", fileCount)
 				fileCount = fileCount +1
 				
@@ -124,17 +128,11 @@ class DBUpdate:
 					filecrc = self.getFileCRC(filename)
 					#use crc of first rom if it is a multirom game
 					if(not isMultiRomGame):
-						try:
-							crcOfFirstGame[gamename] = filecrc
-							Logutil.log('Adding crc to crcOfFirstGame-dict: %s:%s' %(gamename, filecrc), util.LOG_LEVEL_DEBUG)
-						except:							
-							pass
+						crcOfFirstGame[gamename] = filecrc
+						Logutil.log('Adding crc to crcOfFirstGame-dict: %s:%s' %(gamename, filecrc), util.LOG_LEVEL_DEBUG)
 					else:
-						try:
-							filecrc = crcOfFirstGame[gamename]
-							Logutil.log('Read crc from crcOfFirstGame-dict: %s:%s' %(gamename, filecrc), util.LOG_LEVEL_DEBUG)
-						except Exception, (exc):							
-							pass
+						filecrc = crcOfFirstGame[gamename]
+						Logutil.log('Read crc from crcOfFirstGame-dict: %s:%s' %(gamename, filecrc), util.LOG_LEVEL_DEBUG)
 						
 					filecrcDict = self.buildFilenameDict(filecrcDict, isMultiRomGame, filename, filecrc, fileGamenameDict, gamename, False)
 				
@@ -154,25 +152,6 @@ class DBUpdate:
 			if (matchingRatioIndex == ''):
 				matchingRatioIndex = 2
 			fuzzyFactor = util.FUZZY_FACTOR_ENUM[int(matchingRatioIndex)]
-			
-			"""			
-			#HACK: only use local nfo scraper if chosen in option dialog
-			if(updateOption == util.SCRAPING_OPTION_LOCALNFO):				
-				site = Site()
-				site.name = 'local nfo'
-				scrapers = []
-				scraper = Scraper()				
-				scraper.parseInstruction = os.path.join(util.RCBHOME, 'resources', 'scraper', '00 - local nfo.xml') 
-				scraper.source = 'nfo'
-				#TODO: check correct encoding
-				#scraper.encoding = 'iso-8859-15'
-				scrapers.append(scraper)
-				site.scrapers = scrapers 				
-				sites = []
-				sites.append(site)
-				
-				romCollection.scraperSites = sites
-			"""
 				
 			
 			if(not romCollection.descFilePerGame and len(romCollection.scraperSites) > 0):
@@ -246,7 +225,7 @@ class DBUpdate:
 						self.insertGameFromDesc(result, gamenameFromFile, romCollection, filenamelist, foldername, isUpdate, gameId, gui, dialogDict)
 							
 				except Exception, (exc):
-					Logutil.log("an error occured while adding game " +gamename.encode('utf-8'), util.LOG_LEVEL_WARNING)
+					Logutil.log("an error occured while adding game " +gamename, util.LOG_LEVEL_WARNING)
 					Logutil.log("Error: " +str(exc), util.LOG_LEVEL_WARNING)
 					continue
 			else:	
@@ -256,89 +235,95 @@ class DBUpdate:
 				
 				for filename in files:
 					
-					isUpdate = False
-					gameId = None
-					
-					gamenameFromFile = self.getGamenameFromFilename(filename, romCollection)
-					
-					#check if we are handling one of the additional disks of a multi rom game
-					isMultiRomGame = self.checkRomfileIsMultirom(gamenameFromFile, lastgamename)
-					lastgamename = gamenameFromFile
-					
-					if(isMultiRomGame):
-						if(lastGameId == None):
-							Logutil.log('Game detected as multi rom game, but lastGameId is None.', util.LOG_LEVEL_ERROR)
+					try:
+						isUpdate = False
+						gameId = None
+						
+						gamenameFromFile = ''
+						gamenameFromFile = self.getGamenameFromFilename(filename, romCollection)
+						
+						#check if we are handling one of the additional disks of a multi rom game
+						isMultiRomGame = self.checkRomfileIsMultirom(gamenameFromFile, lastgamename)
+						lastgamename = gamenameFromFile
+						
+						if(isMultiRomGame):
+							if(lastGameId == None):
+								Logutil.log('Game detected as multi rom game, but lastGameId is None.', util.LOG_LEVEL_ERROR)
+								continue
+							fileType = FileType()
+							fileType.id = 0
+							fileType.name = "rcb_rom"
+							fileType.parent = "game"
+							self.insertFile(filename, lastGameId, fileType, None, None, None)
 							continue
-						fileType = FileType()
-						fileType.id = 0
-						fileType.name = "rcb_rom"
-						fileType.parent = "game"
-						self.insertFile(filename, lastGameId, fileType, None, None, None)
+						
+						Logutil.log('Start scraping info for game: ' + gamenameFromFile, LOG_LEVEL_INFO)						
+						
+						continueUpdate = gui.writeMsg(progDialogRCHeader, "Import game: " +gamenameFromFile, "", fileCount)
+						if(not continueUpdate):				
+							Logutil.log('Game import canceled', util.LOG_LEVEL_INFO)
+							break
+							
+						
+						#check if this file already exists in DB
+						romFile = File(self.gdb).getFileByNameAndType(filename, 0)
+						if(romFile != None):
+							isUpdate = True
+							gameId = romFile[3]
+							Logutil.log('File "%s" already exists in database.' %filename, util.LOG_LEVEL_INFO)						
+							enableFullReimport = self.Settings.getSetting(util.SETTING_RCB_ENABLEFULLREIMPORT).upper() == 'TRUE'
+							Logutil.log('Always rescan imported games = ' +str(enableFullReimport), util.LOG_LEVEL_INFO)
+							if(enableFullReimport == False):
+								Logutil.log('Won\'t scrape this game again. Set "Always rescan imported games" to True to force scraping.', util.LOG_LEVEL_INFO)
+								continue										
+						
+						foldername = os.path.dirname(filename)
+						filecrc = self.getFileCRC(filename)																		
+						
+						results = {}
+						artScrapers = {}					
+						
+						for scraperSite in romCollection.scraperSites:
+							#Show Scraper Download Info in Dialog
+							Logutil.log('Progress Scraper: ' +scraperSite.name, util.LOG_LEVEL_INFO)
+							gui.writeMsg(progDialogRCHeader, "Import game: " +gamenameFromFile, scraperSite.name + " - downloading info", fileCount)
+							
+							Logutil.log('using scraper: ' +scraperSite.name, util.LOG_LEVEL_INFO)
+							urlsFromPreviousScrapers = []						
+							for scraper in scraperSite.scrapers:
+								pyScraper = PyScraper()							
+								results, urlsFromPreviousScrapers, doContinue = pyScraper.scrapeResults(results, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, filename, fuzzyFactor, updateOption)							
+								if(doContinue):
+									continue
+						
+							#Find Filetypes and Scrapers for Art Download					
+							if(len(results) > 0):
+								for path in romCollection.mediaPaths:
+									thumbKey = 'Filetype' + path.fileType.name 
+									if(len(self.resolveParseResult(results, thumbKey)) > 0):
+										if((thumbKey in artScrapers) == 0):
+											artScrapers[thumbKey] = scraperSite.name
+						
+						#print results
+						if(len(results) == 0):
+							lastgamename = ""
+							gamedescription = None
+						else:						
+							gamedescription = results
+							
+						filenamelist = []
+						filenamelist.append(filename)
+						fileCount = fileCount +1
+	
+						#Variables to process Art Download Info
+						dialogDict = {'dialogHeaderKey':progDialogRCHeader, 'gameNameKey':gamenameFromFile, 'scraperSiteKey':artScrapers, 'fileCountKey':fileCount}
+						#Add 'gui' and 'dialogDict' parameters to function
+						lastGameId = self.insertGameFromDesc(gamedescription, gamenameFromFile, romCollection, filenamelist, foldername, isUpdate, gameId, gui, dialogDict)													
+					except Exception, (exc):
+						Logutil.log("an error occured while adding game " +gamenameFromFile, util.LOG_LEVEL_WARNING)
+						Logutil.log("Error: " +str(exc), util.LOG_LEVEL_WARNING)
 						continue
 					
-					Logutil.log('Start scraping info for game: ' +str(gamenameFromFile), LOG_LEVEL_INFO)						
-					
-					continueUpdate = gui.writeMsg(progDialogRCHeader, "Import game: " +gamenameFromFile, "", fileCount)
-					if(not continueUpdate):				
-						Logutil.log('Game import canceled', util.LOG_LEVEL_INFO)
-						break
-						
-					
-					#check if this file already exists in DB
-					romFile = File(self.gdb).getFileByNameAndType(filename, 0)
-					if(romFile != None):
-						isUpdate = True
-						gameId = romFile[3]
-						Logutil.log('File "%s" already exists in database.' %filename, util.LOG_LEVEL_INFO)						
-						enableFullReimport = self.Settings.getSetting(util.SETTING_RCB_ENABLEFULLREIMPORT).upper() == 'TRUE'
-						Logutil.log('Always rescan imported games = ' +str(enableFullReimport), util.LOG_LEVEL_INFO)
-						if(enableFullReimport == False):
-							Logutil.log('Won\'t scrape this game again. Set "Always rescan imported games" to True to force scraping.', util.LOG_LEVEL_INFO)
-							continue										
-					
-					foldername = os.path.dirname(filename)
-					filecrc = self.getFileCRC(filename)																		
-					
-					results = {}
-					artScrapers = {}					
-					
-					for scraperSite in romCollection.scraperSites:
-						#Show Scraper Download Info in Dialog
-						Logutil.log('Progress Scraper: ' +scraperSite.name, util.LOG_LEVEL_INFO)
-						gui.writeMsg(progDialogRCHeader, "Import game: " +gamenameFromFile, scraperSite.name + " - downloading info", fileCount)
-						
-						Logutil.log('using scraper: ' +scraperSite.name, util.LOG_LEVEL_INFO)
-						urlsFromPreviousScrapers = []						
-						for scraper in scraperSite.scrapers:
-							pyScraper = PyScraper()							
-							results, urlsFromPreviousScrapers, doContinue = pyScraper.scrapeResults(results, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, filename, fuzzyFactor, updateOption)							
-							if(doContinue):
-								continue
-					
-						#Find Filetypes and Scrapers for Art Download					
-						if(len(results) > 0):
-							for path in romCollection.mediaPaths:
-								thumbKey = 'Filetype' + path.fileType.name 
-								if(len(self.resolveParseResult(results, thumbKey)) > 0):
-									if((thumbKey in artScrapers) == 0):
-										artScrapers[thumbKey] = scraperSite.name
-					
-					#print results
-					if(len(results) == 0):
-						lastgamename = ""
-						gamedescription = None
-					else:						
-						gamedescription = results
-						
-					filenamelist = []
-					filenamelist.append(filename)
-					fileCount = fileCount +1
-
-					#Variables to process Art Download Info
-					dialogDict = {'dialogHeaderKey':progDialogRCHeader, 'gameNameKey':gamenameFromFile, 'scraperSiteKey':artScrapers, 'fileCountKey':fileCount}
-					#Add 'gui' and 'dialogDict' parameters to function
-					lastGameId = self.insertGameFromDesc(gamedescription, gamenameFromFile, romCollection, filenamelist, foldername, isUpdate, gameId, gui, dialogDict)													
-			
 			#timestamp2 = time.clock()
 			#diff = (timestamp2 - timestamp1) * 1000		
 			#print "load %i games in %d ms" % (self.getListSize(), diff)
@@ -349,7 +334,7 @@ class DBUpdate:
 	
 	
 	
-	def getRomFilesByRomCollection(self, romPaths, maxFolderDepth):
+	def getRomFilesByRomCollection(self, romPaths, maxFolderDepth, RCId = None):
 				
 		Logutil.log("Rom path: " +str(romPaths), util.LOG_LEVEL_INFO)
 				
@@ -358,8 +343,12 @@ class DBUpdate:
 		for romPath in romPaths:
 			files = self.walkDownPath(files, romPath, maxFolderDepth)
 			
+		
+		if RCId != None:
+			inDBFiles = DataBaseObject(self.gdb, '').getFileAllFilesByRCId(RCId)
+			files = [f.decode('utf-8') for f in files if not f.decode('utf-8') in inDBFiles]			
+		
 		files.sort()
-			
 		Logutil.log("Files read: " +str(files), util.LOG_LEVEL_INFO)
 		
 		return files
@@ -375,8 +364,9 @@ class DBUpdate:
 		Logutil.log("basename: " +basename, util.LOG_LEVEL_INFO)						
 				
 		Logutil.log("checking sub directories", util.LOG_LEVEL_INFO)
-		for walkRoot, walkDirs, walkFiles in self.walklevel(dirname.encode('utf-8'), maxFolderDepth):
-			Logutil.log( "root: " +str(walkRoot), util.LOG_LEVEL_DEBUG)
+		dirname = dirname.decode(sys.getfilesystemencoding()).encode('utf-8')
+		for walkRoot, walkDirs, walkFiles in self.walklevel(dirname, maxFolderDepth):
+			Logutil.log( "root: " + walkRoot, util.LOG_LEVEL_DEBUG)
 			Logutil.log( "walkDirs: " +str(walkDirs), util.LOG_LEVEL_DEBUG)
 			Logutil.log( "walkFiles: " +str(walkFiles), util.LOG_LEVEL_DEBUG)
 									
@@ -406,7 +396,7 @@ class DBUpdate:
 		
 	def getGamenameFromFilename(self, filename, romCollection):		
 					
-		Logutil.log("current rom file: " +str(filename), util.LOG_LEVEL_INFO)
+		Logutil.log("current rom file: " + filename, util.LOG_LEVEL_INFO)
 
 		#build friendly romname
 		if(not romCollection.useFoldernameAsGamename):
@@ -436,49 +426,52 @@ class DBUpdate:
 		return False
 		
 		
-	def buildFilenameDict(self, dict, isMultiRomGame, filename, key, fileGamenameDict, gamename, appendToGamenameDict):				
+	def buildFilenameDict(self, result, isMultiRomGame, filename, key, fileGamenameDict, gamename, appendToGamenameDict):				
 		
-		try:											
-			if(not isMultiRomGame):
-				filenamelist = []
+#		try:											
+		if(not isMultiRomGame):
+			filenamelist = []
+			filenamelist.append(filename)
+			result[key] = filenamelist
+			Logutil.log('Add filename "%s" with key "%s"' %(filename, key), util.LOG_LEVEL_DEBUG)
+		else:
+			filenamelist = fileGamenameDict[gamename]
+			if(appendToGamenameDict):
 				filenamelist.append(filename)
-				dict[key] = filenamelist
-				Logutil.log('Add filename "%s" with key "%s"' %(filename, key), util.LOG_LEVEL_DEBUG)
-			else:
-				filenamelist = fileGamenameDict[gamename]
-				if(appendToGamenameDict):
-					filenamelist.append(filename)
-				dict[key] = filenamelist
-				Logutil.log('Add filename "%s" to multirom game with key "%s"' %(filename, key), util.LOG_LEVEL_DEBUG)
-		except:
-			pass
+			result[key] = filenamelist
+			Logutil.log('Add filename "%s" to multirom game with key "%s"' %(filename, key), util.LOG_LEVEL_DEBUG)
+#		except:
+#			pass
 			
-		return dict
+		return result
 		
 		
 	def getFileCRC(self, filename):
-		#get crc value of the rom file - this can take a long time for large files, so it is configurable
-		filecrc = ''		
-		if (zipfile.is_zipfile(str(filename))):
-			try:
-				Logutil.log("handling zip file", util.LOG_LEVEL_INFO)
-				zip = zipfile.ZipFile(str(filename), 'r')
-				zipInfos = zip.infolist()
-				if(len(zipInfos) > 1):
-					Logutil.log("more than one file in zip archive is not supported! Checking CRC of first entry.", util.LOG_LEVEL_WARNING)
-				filecrc = "%0.8X" %(zipInfos[0].CRC & 0xFFFFFFFF)
-				Logutil.log("crc in zipped file: " +filecrc, util.LOG_LEVEL_INFO)
-			except:
-				Logutil.log("Error while creating crc from zip file!", util.LOG_LEVEL_ERROR)
-		else:						
-			prev = 0
-			for eachLine in open(str(filename),"rb"):
-				prev = zlib.crc32(eachLine, prev)					
-			filecrc = "%0.8X"%(prev & 0xFFFFFFFF)
-			Logutil.log("crc for current file: " +str(filecrc), util.LOG_LEVEL_INFO)
-				
-		filecrc = filecrc.strip()
-		filecrc = filecrc.lower()
+		
+		try:
+			#get crc value of the rom file - this can take a long time for large files, so it is configurable
+			filecrc = ''		
+			if (zipfile.is_zipfile(str(filename))):			
+					Logutil.log("handling zip file", util.LOG_LEVEL_INFO)
+					zip = zipfile.ZipFile(str(filename), 'r')
+					zipInfos = zip.infolist()
+					if(len(zipInfos) > 1):
+						Logutil.log("more than one file in zip archive is not supported! Checking CRC of first entry.", util.LOG_LEVEL_WARNING)
+					filecrc = "%0.8X" %(zipInfos[0].CRC & 0xFFFFFFFF)
+					Logutil.log("crc in zipped file: " +filecrc, util.LOG_LEVEL_INFO)			
+			else:						
+				prev = 0
+				for eachLine in open(str(filename),"rb"):
+					prev = zlib.crc32(eachLine, prev)					
+				filecrc = "%0.8X"%(prev & 0xFFFFFFFF)
+				Logutil.log("crc for current file: " +str(filecrc), util.LOG_LEVEL_INFO)
+			
+			filecrc = filecrc.strip()
+			filecrc = filecrc.lower()
+		except Exception, (exc):
+			Logutil.log("Error while creating crc: " +str(exc), util.LOG_LEVEL_ERROR)
+			return "000000"
+		
 		return filecrc
 		
 		
@@ -570,6 +563,7 @@ class DBUpdate:
 				Logutil.log('No description found for game "%s". Game will not be imported.' %gamename, util.LOG_LEVEL_WARNING)
 				return None
 			game = ''
+			gamedescription = {}
 						
 		if(filenamelist == None or len(filenamelist) == 0):
 			Logutil.log("game " +game +" was found in parsed results but not in your rom collection.", util.LOG_LEVEL_WARNING)
@@ -718,7 +712,10 @@ class DBUpdate:
 		if(item != "" and item != None):
 			itemRow = gdbObject.getOneByName(item)
 			if(itemRow == None):	
-				Logutil.log(itemName +" does not exist in database. Insert: " +item, util.LOG_LEVEL_INFO)
+				try:
+					Logutil.log(itemName +" does not exist in database. Insert: " +item, util.LOG_LEVEL_INFO)
+				except:
+					pass
 				gdbObject.insert((item,))
 				itemId = self.gdb.cursor.lastrowid
 			else:
@@ -744,7 +741,10 @@ class DBUpdate:
 			
 			itemRow = gdbObject.getOneByName(item)
 			if(itemRow == None):
-				Logutil.log(itemName +" does not exist in database. Insert: " +item, util.LOG_LEVEL_INFO)
+				try:
+					Logutil.log(itemName +" does not exist in database. Insert: " +item, util.LOG_LEVEL_INFO)
+				except:
+					pass
 				gdbObject.insert((item,))
 				idList.append(self.gdb.cursor.lastrowid)
 			else:
@@ -911,7 +911,7 @@ class DBUpdate:
 	def stripHTMLTags(self, inputString):
 				
 		inputString = util.html_unescape(inputString)
-				
+		
 		#remove html tags and double spaces
 		intag = [False]
 		lastSpace = [False]
@@ -996,7 +996,7 @@ class DBUpdate:
 			Logutil.log("Insert file with parent game", util.LOG_LEVEL_INFO)
 			parentId = gameId
 		elif(fileType.parent == 'romcollection'):
-			Logutil.log("Insert file with parent romcollection", util.LOG_LEVEL_INFO)
+			Logutil.log("Insert file with parent romcollection.", util.LOG_LEVEL_INFO)
 			parentId = romCollectionId		
 		elif(fileType.parent == 'publisher'):
 			Logutil.log("Insert file with parent publisher", util.LOG_LEVEL_INFO)
@@ -1004,6 +1004,8 @@ class DBUpdate:
 		elif(fileType.parent == 'developer'):
 			Logutil.log("Insert file with parent developer", util.LOG_LEVEL_INFO)
 			parentId = developerId
+					
+		Logutil.log("Insert file with parentid: " +str(parentId), util.LOG_LEVEL_INFO)
 			
 		fileRow = File(self.gdb).getFileByNameAndTypeAndParent(fileName, fileType.id, parentId)
 		if(fileRow == None):

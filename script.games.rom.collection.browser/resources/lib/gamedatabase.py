@@ -11,12 +11,12 @@ class GameDataBase:
 	
 	def __init__(self, databaseDir):		
 		self.dataBasePath = os.path.join(databaseDir, 'MyGames.db')
+		sqlite.register_adapter(str, lambda s:s.decode('utf-8'))
 		#use scripts home for reading SQL files
 		self.sqlDir = os.path.join(util.RCBHOME, 'resources', 'database')		
 		
 	def connect( self ):
 		print self.dataBasePath
-		sqlite.register_adapter(str, lambda s:s.decode('utf-8'))
 		self.connection = sqlite.connect(self.dataBasePath, check_same_thread = False)
 		self.cursor = self.connection.cursor()
 		
@@ -29,6 +29,38 @@ class GameDataBase:
 	def close( self ):
 		print "close Connection"
 		self.connection.close()
+	
+	def toMem(self):
+		try:
+			memDB = sqlite.connect(':memory:', check_same_thread = False)
+			
+			dump = os.linesep.join([line for line in self.connection.iterdump()])
+			
+			memDB.executescript(dump)
+			
+			self.connection.close()
+			
+			self.connection = memDB
+			self.cursor = memDB.cursor()
+			return True
+		except Exception, e: 
+				util.Logutil.log("ERROR: %s" % str(e), util.LOG_LEVEL_INFO)
+				return False	
+	
+	def toDisk(self):
+		try:
+			self.connection.commit()
+			os.remove(self.dataBasePath)
+			diskDB = sqlite.connect(self.dataBasePath)
+			dump = os.linesep.join([line for line in self.connection.iterdump()])
+			diskDB.executescript(dump)
+			self.connection.close()
+			self.connection = diskDB
+			self.cursor = diskDB.cursor()
+			return True
+		except Exception, e: 
+			util.Logutil.log("ERROR: %s" % str(e), util.LOG_LEVEL_INFO)
+			return False
 	
 	def executeSQLScript(self, scriptName):
 		sqlCreateFile = open(scriptName, 'r')
@@ -93,7 +125,6 @@ class GameDataBase:
 				return -1, "Error: No Update from version %s to %s." %(dbVersion, util.CURRENT_DB_VERSION)
 			
 		return 0, ""
-		
 	
 
 class DataBaseObject:
@@ -131,6 +162,8 @@ class DataBaseObject:
 		self.gdb.cursor.execute("DELETE FROM '%s'" % self.tableName)		
 	
 	
+	def deleteObjectByQuery(self, query, args):
+		self.gdb.cursor.execute(query, args)
 	def getAll(self):
 		self.gdb.cursor.execute("SELECT * FROM '%s'" % self.tableName)
 		allObjects = self.gdb.cursor.fetchall()
@@ -179,6 +212,11 @@ class DataBaseObject:
 		object = self.gdb.cursor.fetchone()		
 		return object
 	
+	def getFileAllFilesByRCId(self, id):
+		self.gdb.cursor.execute('select File.name from File, Game where Game.romcollectionid=? and File.parentId=Game.id and File.fileTypeId=0', (id,))
+		objects = self.gdb.cursor.fetchall()
+		results = [r[0] for r in objects]
+		return results
 	
 	def encodeUtf8(self, list):
 		newList = []
@@ -204,6 +242,7 @@ class Game(DataBaseObject):
 					
 	filterByNameAndRomCollectionId = "SELECT * FROM Game WHERE name = ? and romCollectionId = ?"
 	
+	deleteQuery = "DELETE FROM Game WHERE id = ?"
 	def __init__(self, gdb):		
 		self.gdb = gdb
 		self.tableName = "Game"
@@ -219,6 +258,8 @@ class Game(DataBaseObject):
 		game = self.getObjectByQuery(self.filterByNameAndRomCollectionId, (name, romCollectionId))
 		return game
 
+	def delete(self, gameId):
+		self.deleteObjectByQuery(self.deleteQuery, (gameId,))
 
 class RCBSetting(DataBaseObject):	
 	def __init__(self, gdb):		
@@ -230,6 +271,18 @@ class Genre(DataBaseObject):
 	
 	filteGenreByGameId = "SELECT * FROM Genre WHERE Id IN (Select GenreId From GenreGame Where GameId = ?)"
 	
+	filteGenreIdByGameId = "SELECT GenreId From GenreGame Where GameId = ?"
+	
+	genreIdCountQuery = "SELECT g.genreid, count(*) 'genreIdCount' \
+					from genregame g \
+					inner join genregame g2 \
+					on g.genreid=g2.genreid \
+					where g.gameid = ? \
+					group by g.genreid"
+	
+	genreDeleteQuery = "DELETE FROM Genre WHERE id = ?"
+	
+	genreGameDeleteQuery = "DELETE FROM GenreGame WHERE gameId = ?"
 	def __init__(self, gdb):		
 		self.gdb = gdb
 		self.tableName = "Genre"
@@ -238,6 +291,21 @@ class Genre(DataBaseObject):
 		genres = self.getObjectsByQuery(self.filteGenreByGameId, (gameId,))
 		return genres
 
+	def getGenreIdByGameId(self, gameId):
+		genreId = self.getObjectsByQuery(self.filteGenreIdByGameId, (gameId,))
+		return genreId
+		
+	def delete(self, gameId):
+		#genreId = self.getGenreIdByGameId(gameId)
+		self.gdb.cursor.execute(self.genreIdCountQuery, (gameId,))	
+		object = self.gdb.cursor.fetchall()
+		if(object != None):
+			for items in object:	
+				if (items[1] < 2):
+					util.Logutil.log("Delete Genre with id %s" % str(items[0]), util.LOG_LEVEL_INFO)
+					self.deleteObjectByQuery(self.genreDeleteQuery, (items[0],))
+		util.Logutil.log("Delete GenreGame with gameId %s" % str(gameId), util.LOG_LEVEL_INFO)
+		self.deleteObjectByQuery(self.genreGameDeleteQuery, (gameId,))
 
 class GenreGame(DataBaseObject):
 					
@@ -256,21 +324,98 @@ class GenreGame(DataBaseObject):
 
 class Year(DataBaseObject):
 	
+	yearIdByGameIdQuery = "SELECT yearId From Game Where Id = ?"
+	
+	yearIdCountQuery = "SELECT count(yearId) 'yearIdCount' \
+					from Game \
+					where yearId = ? \
+					group by yearId"
+	
+	yearDeleteQuery = "DELETE FROM Year WHERE id = ?"
+
+
 	def __init__(self, gdb):		
 		self.gdb = gdb
 		self.tableName = "Year"
+	def getYearIdByGameId(self, gameId):
+		yearId = self.getObjectByQuery(self.yearIdByGameIdQuery, (gameId,))
+		if(yearId == None):
+			return None
+		else:
+			return yearId[0]
+	
+	def delete(self, gameId):
+		yearId = self.getYearIdByGameId(gameId)	
+		if(yearId != None):	
+			object = self.getObjectByQuery(self.yearIdCountQuery, (yearId,))
+			if (object[0] < 2):
+				util.Logutil.log("Delete Year with id %s" % str(yearId), util.LOG_LEVEL_INFO)
+				self.deleteObjectByQuery(self.yearDeleteQuery, (yearId,))
 
 
 class Publisher(DataBaseObject):	
+
+	publisherIdByGameIdQuery = "SELECT publisherId From Game Where Id = ?"
+	
+	publisherIdCountQuery = "SELECT count(publisherId) 'publisherIdCount' \
+					from Game \
+					where publisherId = ? \
+					group by publisherId"
+	
+	publisherDeleteQuery = "DELETE FROM Publisher WHERE id = ?"
+
+
 	def __init__(self, gdb):		
 		self.gdb = gdb
 		self.tableName = "Publisher"
 		
+	def getPublisherIdByGameId(self, gameId):
+		publisherId = self.getObjectByQuery(self.publisherIdByGameIdQuery, (gameId,))
+		if(publisherId == None):
+			return None
+		else:
+			return publisherId[0]
+	
+	def delete(self, gameId):
+		publisherId = self.getPublisherIdByGameId(gameId)
+		if(publisherId != None):
+			object = self.getObjectByQuery(self.publisherIdCountQuery, (publisherId,))
+			if (object[0] < 2):
+				util.Logutil.log("Delete Publisher with id %s" % str(publisherId), util.LOG_LEVEL_INFO)
+				self.deleteObjectByQuery(self.publisherDeleteQuery, (publisherId,))
+
 
 class Developer(DataBaseObject):
+
+	developerIdByGameIdQuery = "SELECT developerId From Game Where Id = ?"
+	
+	developerIdCountQuery = "SELECT count(developerId) 'developerIdCount' \
+					from Game \
+					where developerId = ? \
+					group by developerId"
+	
+	developerDeleteQuery = "DELETE FROM Developer WHERE id = ?"
+
+
 	def __init__(self, gdb):		
 		self.gdb = gdb
 		self.tableName = "Developer"
+
+	def getDeveloperIdByGameId(self, gameId):
+		developerId = self.getObjectByQuery(self.developerIdByGameIdQuery, (gameId,))
+		if(developerId == None):
+			return None
+		else:
+			return developerId[0]
+	
+	def delete(self, gameId):
+		developerId = self.getDeveloperIdByGameId(gameId)
+		if(developerId != None):
+			object = self.getObjectByQuery(self.developerIdCountQuery, (developerId,))
+			if (object[0] < 2):
+				util.Logutil.log("Delete Developer with id %s" % str(developerId), util.LOG_LEVEL_INFO)
+				self.deleteObjectByQuery(self.developerDeleteQuery, (developerId,))
+		
 		
 class Reviewer(DataBaseObject):
 	def __init__(self, gdb):		
@@ -301,6 +446,11 @@ class File(DataBaseObject):
 	filterQueryByParentIds = "Select * from File \
 					where parentId in (?, ?, ?, ?)"
 	
+	getFileList = "SELECT * FROM File WHERE filetypeid = 0"
+	
+	deleteQuery = "DELETE FROM File WHERE parentId= ?"
+	
+	deleteFileQuery = "DELETE FROM File WHERE Id= ?"
 	def __init__(self, gdb):		
 		self.gdb = gdb
 		self.tableName = "File"
@@ -334,3 +484,14 @@ class File(DataBaseObject):
 		files = self.getObjectsByQuery(self.filterQueryByParentIds, (gameId, romCollectionId, publisherId, developerId))
 		return files
 	
+	def delete(self, gameId):
+		util.Logutil.log("Delete Files with gameId %s" % str(gameId), util.LOG_LEVEL_INFO)
+		self.deleteObjectByQuery(self.deleteQuery, (gameId,))
+	
+	def deleteByFileId(self, fileId):
+		util.Logutil.log("Delete File with id %s" % str(fileId), util.LOG_LEVEL_INFO)
+		self.deleteObjectByQuery(self.deleteFileQuery, (fileId,))
+		
+	def getFilesList(self):
+		files = self.getObjectsByQueryNoArgs(self.getFileList)
+		return files

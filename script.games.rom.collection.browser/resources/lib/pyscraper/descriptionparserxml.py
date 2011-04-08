@@ -4,6 +4,7 @@ import urllib
 import time
 
 import util
+from util import Logutil
 
 class DescriptionParserXml:
 	
@@ -23,8 +24,10 @@ class DescriptionParserXml:
 		else:
 			fh = open(str(descFile), 'r')
 			descFile = fh.read()
+			
+		#descFile = descFile.decode(encoding).encode('utf-8')
 		
-		descFile = descFile.decode(encoding).encode('utf-8')
+		#Logutil.log('parseDescription: %s' % descFile, util.LOG_LEVEL_INFO)	
 				
 		#load xmlDoc as elementtree to check with xpaths
 		tree = fromstring(descFile)
@@ -44,18 +47,26 @@ class DescriptionParserXml:
 				results = tempResults
 				results = self.replaceResultTokens(results)
 				resultList.append(results)		
+				
+		#Logutil.log('parseDescription: %s' % resultList, util.LOG_LEVEL_INFO)	
+		
 		return resultList
 	
 	
 	def scanDescription(self, descFile, descParseInstruction, encoding):		
 		
 		if(descFile.startswith('http://')):
-			descFile = urllib.urlopen(descFile)
+			descFile = urllib.urlopen(descFile).read()
+		else:
+			fh = open(str(descFile), 'r')
+			descFile = fh.read()
 		
-		descFile = descFile.decode(encoding).encode('utf-8')
+		#descFile = descFile.decode(encoding).encode('utf-8')
+		Logutil.log('scanDescription: %s' % descFile, util.LOG_LEVEL_INFO)	
 		
 		#load xmlDoc as elementtree to check with xpaths
-		tree = ElementTree().parse(descFile)
+		tree = fromstring(descFile)
+		
 		
 		#single result as dictionary
 		result = {}
@@ -179,7 +190,8 @@ class DescriptionParserXml:
 					resultValues.append(attribute)
 					#print "found attribute: " +attribute
 				else:
-					resultValues.append(element.text)					
+					if(element.text != None):
+						resultValues.append(element.text.encode('utf-8'))					
 					#print "found result: " +element.text
 				
 			try:

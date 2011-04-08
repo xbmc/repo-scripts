@@ -4,6 +4,7 @@ from elementtree.ElementTree import *
 import urllib
 import time
 import util
+from util import Logutil
 #from xml.dom.minidom import parseString, Node, Document
 
 
@@ -33,7 +34,9 @@ class DescriptionParserFlatFile:
 		
 		fileAsString = fileAsString.decode(encoding).encode('utf-8')
 		
+		
 		results = all.parseString(fileAsString)
+		# Logutil.log('parseDescription Results!: %s' % results, util.LOG_LEVEL_INFO)	
 		
 		if(len(results) == 0 or results == Empty()):
 			print "Parser Error: parseDescription returned 0 results. Check your parseInstruction"
@@ -51,7 +54,12 @@ class DescriptionParserFlatFile:
 	def scanDescription(self, descFile, descParseInstruction, encoding):
 				
 		fileAsString = self.openDescFile(descFile)
+		
 		fileAsString = fileAsString.decode(encoding).encode('utf-8')
+		
+		
+		#Logutil.log('scanDescription: %s' % fileAsString, util.LOG_LEVEL_INFO)	
+		
 		self.gameGrammar = self.getGameGrammar(str(descParseInstruction))
 				
 		for result,start,end in self.gameGrammar.scanString(fileAsString):
@@ -137,7 +145,10 @@ class DescriptionParserFlatFile:
 	def getGameGrammar(self, descParseInstruction):				
 		
 		#load xmlDoc as elementtree to check with xpaths
-		tree = ElementTree().parse(descParseInstruction)
+		#tree = ElementTree().parse(descParseInstruction)
+		fp = open(descParseInstruction, 'r')
+		tree = fromstring(fp.read())
+		fp.close()
 		
 		grammarNode = tree.find('GameGrammar')
 		if(grammarNode == None):

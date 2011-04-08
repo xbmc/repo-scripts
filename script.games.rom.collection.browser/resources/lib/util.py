@@ -10,7 +10,7 @@ import time
 
 SCRIPTNAME = 'Rom Collection Browser'
 SCRIPTID = 'script.games.rom.collection.browser'
-CURRENT_SCRIPT_VERSION = "0.8.1"
+CURRENT_SCRIPT_VERSION = "0.8.2"
 CURRENT_DB_VERSION = "0.7.4"
 ISTESTRUN = False
 
@@ -41,6 +41,7 @@ FUZZY_FACTOR_ENUM = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
 SETTING_RCB_VIEW_MODE = 'rcb_view_mode'
 SETTING_RCB_CACHINGOPTION = 'rcb_cachingOption'
+SETTING_RCB_MEMDB = 'rcb_memDB'
 SETTING_RCB_FUZZYFACTOR = 'rcb_fuzzyFactor'
 SETTING_RCB_LOGLEVEL = 'rcb_logLevel'
 SETTING_RCB_USEEMUSOLO = 'rcb_useEmulatorSolo'
@@ -59,6 +60,7 @@ SETTING_RCB_SAVEVIEWSTATEONEXIT = 'rcb_saveViewStateOnExit'
 SETTING_RCB_SAVEVIEWSTATEONLAUNCHEMU = 'rcb_saveViewStateOnLaunchEmu'
 SETTING_RCB_SHOWIMPORTOPTIONSDIALOG = 'rcb_showImportOptions'
 SETTING_RCB_SCRAPINGMODE = 'rcb_scrapingMode'
+SETTING_RCB_SCRAPONSTART = 'rcb_scrapOnStartUP'
 
 SCRAPING_OPTION_AUTO_ACCURATE = 0
 SCRAPING_OPTION_AUTO_GUESS = 1
@@ -159,43 +161,43 @@ FILETYPEPARENT_PUBLISHER = 'publisher'
 FILETYPEPARENT_DEVELOPER = 'developer'
 FILETYPEPARENT_CONSOLE = 'console'
 FILETYPEPARENT_ROMCOLLECTION = 'romcollection'
-				
+                
 
 html_unescape_table = {
-	    "&amp;" : "&",
-	    "&quot;" : '"' ,
-	    "&apos;" : "'",
-	    "&gt;" : ">",
-	    "&lt;" : "<",
-	    "&nbsp;" : " ",
-	    "&#x26;" : "&",
-	    "&#x27;" : "\'",
-	    "&#xB2;" : "2",
-	    "&#xB3;" : "3",	    
-	    }
+        "&amp;" : "&",
+        "&quot;" : '"' ,
+        "&apos;" : "'",
+        "&gt;" : ">",
+        "&lt;" : "<",
+        "&nbsp;" : " ",
+        "&#x26;" : "&",
+        "&#x27;" : "\'",
+        "&#xB2;" : "2",
+        "&#xB3;" : "3",        
+        }
 
 def html_unescape(text):
-		
-		for key in html_unescape_table.keys():
-			text = text.replace(key, html_unescape_table[key])
-			
-		return text
-	
+        
+        for key in html_unescape_table.keys():
+            text = text.replace(key, html_unescape_table[key])
+            
+        return text
+    
 
 html_escape_table = {
-	    "&" : "%26",
-	    " " : "%20" ,
-	    "'" : "%27",
-	    ">" : "%3E",
-	    "<" : "%3C",	    
-	    }
+        "&" : "%26",
+        " " : "%20" ,
+        "'" : "%27",
+        ">" : "%3E",
+        "<" : "%3C",        
+        }
 
 def html_escape(text):
-		
-		for key in html_escape_table.keys():
-			text = text.replace(key, html_escape_table[key])
-			
-		return text
+        
+        for key in html_escape_table.keys():
+            text = text.replace(key, html_escape_table[key])
+            
+        return text
 
 
 
@@ -203,110 +205,129 @@ def html_escape(text):
 # METHODS #
 #
 
+def getEnvironment():
+	return ( os.environ.get( "OS", "win32" ), "win32", )[ os.environ.get( "OS", "win32" ) == "xbox" ]
+	
 
 def getAddonDataPath():
-	path = ''
-	
-	if(hasAddons()):		
-		import xbmc
-		path = xbmc.translatePath('special://profile/addon_data/%s' %(SCRIPTID))
-		#path = xbmc.translatePath('special://profile/addon_data/%s-%s' %(SCRIPTID, CURRENT_SCRIPT_VERSION))
-	else:		
-		import xbmc
-		path = xbmc.translatePath('special://profile/script_data/%s' %(SCRIPTID))
-		#path = xbmc.translatePath('special://profile/script_data/%s-%s' %(SCRIPTID, CURRENT_SCRIPT_VERSION))
-		
-	if not os.path.exists(path):
-		try:
-			os.makedirs(path)
-		except:
-			path = ''	
-	return path
+    path = ''
+    
+    if(hasAddons()):        
+        import xbmc
+        path = xbmc.translatePath('special://profile/addon_data/%s' %(SCRIPTID))
+        #path = xbmc.translatePath('special://profile/addon_data/%s-%s' %(SCRIPTID, CURRENT_SCRIPT_VERSION))
+    else:        
+        import xbmc
+        path = xbmc.translatePath('special://profile/script_data/%s' %(SCRIPTID))
+        #path = xbmc.translatePath('special://profile/script_data/%s-%s' %(SCRIPTID, CURRENT_SCRIPT_VERSION))
+        
+    if not os.path.exists(path):
+        try:
+            os.makedirs(path)
+        except:
+            path = ''    
+    return path
 
 
 def getAddonInstallPath():
-	
-	path = ''
-	
-	if(hasAddons()):
-		import xbmcaddon
-		addon = xbmcaddon.Addon(id='%s' %SCRIPTID)
-		path = addon.getAddonInfo('path')
-	else:
-		path = os.getcwd()
-	return path
-			
+    
+    path = ''
+    
+    if(hasAddons()):
+        import xbmcaddon
+        addon = xbmcaddon.Addon(id='%s' %SCRIPTID)
+        path = addon.getAddonInfo('path')
+    else:
+        path = os.getcwd()
+    return path
+            
 
 def getAutoexecPath():
-	import xbmc
-	if(hasAddons()):
-		return xbmc.translatePath('special://profile/autoexec.py')
-	else:
-		autoexec = os.path.join(RCBHOME, '..', 'autoexec.py')
-		autoexec = os.path.normpath(autoexec)
-		return autoexec
-	
+    import xbmc
+    if(hasAddons()):
+        return xbmc.translatePath('special://profile/autoexec.py')
+    else:
+        autoexec = os.path.join(RCBHOME, '..', 'autoexec.py')
+        autoexec = os.path.normpath(autoexec)
+        return autoexec
+    
 
 def getConfigXmlPath():
-	if(not ISTESTRUN):
-		addonDataPath = getAddonDataPath() 
-		configFile = os.path.join(addonDataPath, "config.xml")
-	else:
-		configFile = os.path.join(getAddonInstallPath(), "TestDataBase", "config.xml")
-	
-	Logutil.log('Path to configuration file: ' +str(configFile), LOG_LEVEL_INFO)
-	return configFile
+    if(not ISTESTRUN):
+        addonDataPath = getAddonDataPath() 
+        configFile = os.path.join(addonDataPath, "config.xml")
+    else:
+        configFile = os.path.join(getAddonInstallPath(), "TestDataBase", "config.xml")
+    
+    Logutil.log('Path to configuration file: ' +str(configFile), LOG_LEVEL_INFO)
+    return configFile
 
 
 def getConfigXmlModifyTime():
-	configFile = getConfigXmlPath()		
-	if(os.path.isfile(configFile)):
-		modifyTime = os.path.getmtime(configFile)
-	else:
-		modifyTime = 0
-	
-	Logutil.log("modifyTime from file (as int): " +str(modifyTime), LOG_LEVEL_INFO)
-	Logutil.log("modifyTime from file (as time): " +str(time.ctime(modifyTime)), LOG_LEVEL_INFO)
-	return modifyTime
-	
-	
+    configFile = getConfigXmlPath()        
+    if(os.path.isfile(configFile)):
+        modifyTime = os.path.getmtime(configFile)
+    else:
+        modifyTime = 0
+    
+    Logutil.log("modifyTime from file (as int): " +str(modifyTime), LOG_LEVEL_INFO)
+    Logutil.log("modifyTime from file (as time): " +str(time.ctime(modifyTime)), LOG_LEVEL_INFO)
+    return modifyTime
+    
+    
 def getSettings():
-	import xbmc
-	settings = ''
-	if hasAddons():
-		import xbmcaddon
-		settings = xbmcaddon.Addon(id='%s' %SCRIPTID)
-	else:
-		settings = xbmc.Settings(RCBHOME)
-	return settings
+    import xbmc
+    settings = ''
+    if hasAddons():
+        import xbmcaddon
+        settings = xbmcaddon.Addon(id='%s' %SCRIPTID)
+    else:
+        settings = xbmc.Settings(RCBHOME)
+    return settings
 
 
 def hasAddons():  
-	if os.environ.get('OS') == 'xbox':
-		return False
-	
-	try:
-		import xbmcaddon
-		return True
-	except:
-		return False
+    if os.environ.get('OS') == 'xbox':
+        return False
+    
+    try:
+        import xbmcaddon
+        return True
+    except:
+        return False
+       
+       
+def getDbupdateStatusFilename():
+	return os.path.join(getAddonDataPath(), 'dbupdatestatus.txt')
 
+
+def getScrapingMode(settings):
+	scrapingMode = 0
+	scrapingModeStr = settings.getSetting(SETTING_RCB_SCRAPINGMODE)			
+	if(scrapingModeStr == 'Automatic: Accurate'):
+		scrapingMode = 0
+	elif(scrapingModeStr == 'Automatic: Guess Matches'):
+		scrapingMode = 1
+	elif(scrapingModeStr == 'Interactive: Select Matches'):
+		scrapingMode = 2
+		
+	return scrapingMode
 
 
 def indentXml(elem, level=0):
-	i = "\n" + level*"  "
-	if len(elem):
-		if not elem.text or not elem.text.strip():
-			elem.text = i + "  "
-		if not elem.tail or not elem.tail.strip():
-			elem.tail = i
-		for elem in elem:
-			indentXml(elem, level+1)
-		if not elem.tail or not elem.tail.strip():
-			elem.tail = i
-	else:
-		if level and (not elem.tail or not elem.tail.strip()):
-			elem.tail = i
+    i = "\n" + level*"  "
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = i + "  "
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+        for elem in elem:
+            indentXml(elem, level+1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+    else:
+        if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = i
 
 
 RCBHOME = getAddonInstallPath()
@@ -320,47 +341,50 @@ RCBHOME = getAddonInstallPath()
 from pysqlite2 import dbapi2 as sqlite
 
 class Logutil:
-	
-	currentLogLevel = None
+    
+    currentLogLevel = None
 
-	@staticmethod
-	def log(message, logLevel):
-			
-		if(Logutil.currentLogLevel == None):
-			print "RCB: init log level"
-			Logutil.currentLogLevel = Logutil.getCurrentLogLevel()
-			print "RCB: current log level: " +str(Logutil.currentLogLevel)
-		
-		if(logLevel > Logutil.currentLogLevel):			
-			return
-			
-		prefix = ''
-		if(logLevel == LOG_LEVEL_DEBUG):
-			prefix = 'RCB_DEBUG: '
-		elif(logLevel == LOG_LEVEL_INFO):
-			prefix = 'RCB_INFO: '
-		elif(logLevel == LOG_LEVEL_WARNING):
-			prefix = 'RCB_WARNING: '
-		elif(logLevel == LOG_LEVEL_ERROR):
-			prefix = 'RCB_ERROR: '
-
-		print prefix + message
-		
-	
-	@staticmethod
-	def getCurrentLogLevel():
-		logLevel = 1
-		try:
-			settings = getSettings()
-			logLevelStr = settings.getSetting(SETTING_RCB_LOGLEVEL)
-			if(logLevelStr == 'ERROR'):
-				logLevel = LOG_LEVEL_ERROR
-			elif(logLevelStr == 'WARNING'):
-				logLevel = LOG_LEVEL_WARNING
-			elif(logLevelStr == 'INFO'):
-				logLevel = LOG_LEVEL_INFO
-			elif(logLevelStr == 'DEBUG'):
-				logLevel = LOG_LEVEL_DEBUG
-		except:
-			pass
-		return logLevel
+    @staticmethod
+    def log(message, logLevel):
+            
+        if(Logutil.currentLogLevel == None):
+            print "RCB: init log level"
+            Logutil.currentLogLevel = Logutil.getCurrentLogLevel()
+            print "RCB: current log level: " +str(Logutil.currentLogLevel)
+        
+        if(logLevel > Logutil.currentLogLevel):            
+            return
+            
+        prefix = ''
+        if(logLevel == LOG_LEVEL_DEBUG):
+            prefix = 'RCB_DEBUG: '
+        elif(logLevel == LOG_LEVEL_INFO):
+            prefix = 'RCB_INFO: '
+        elif(logLevel == LOG_LEVEL_WARNING):
+            prefix = 'RCB_WARNING: '
+        elif(logLevel == LOG_LEVEL_ERROR):
+            prefix = 'RCB_ERROR: '
+                        
+        try:
+        	print prefix + message
+        except:
+        	pass
+        
+    
+    @staticmethod
+    def getCurrentLogLevel():
+        logLevel = 1
+        try:
+            settings = getSettings()
+            logLevelStr = settings.getSetting(SETTING_RCB_LOGLEVEL)
+            if(logLevelStr == 'ERROR'):
+                logLevel = LOG_LEVEL_ERROR
+            elif(logLevelStr == 'WARNING'):
+                logLevel = LOG_LEVEL_WARNING
+            elif(logLevelStr == 'INFO'):
+                logLevel = LOG_LEVEL_INFO
+            elif(logLevelStr == 'DEBUG'):
+                logLevel = LOG_LEVEL_DEBUG
+        except:
+            pass
+        return logLevel

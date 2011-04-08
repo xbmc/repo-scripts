@@ -99,7 +99,7 @@ class PyScraper:
 			gamenameFromFile = re.sub('\s\(.*\)|\s\[.*\]|\(.*\)|\[.*\]','',gamenameFromFile)
 				
 			if(scraperSource.startswith('http://')):
-				gamenameToParse = util.html_escape(gamenameFromFile)
+				gamenameToParse = urllib.quote(gamenameFromFile, safe='')
 			else:
 				gamenameToParse = gamenameFromFile					
 				
@@ -124,7 +124,7 @@ class PyScraper:
 			parser = DescriptionParserFactory.getParser(str(scraper.parseInstruction))
 			Logutil.log("description file (tokens replaced): " +scraperSource, util.LOG_LEVEL_INFO)
 			Logutil.log("Encoding: %s" % scraper.encoding, util.LOG_LEVEL_WARNING)
-			results = parser.parseDescription(str(scraperSource), scraper.encoding)
+			results = parser.parseDescription(scraperSource, scraper.encoding)
 		except Exception, (exc):
 			Logutil.log("an error occured while parsing game description: " +scraperSource, util.LOG_LEVEL_WARNING)
 			Logutil.log("Parser complains about: " +str(exc), util.LOG_LEVEL_WARNING)

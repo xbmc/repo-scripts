@@ -37,18 +37,18 @@
     </FileType>
     <FileType id="9" name="romcollection">
       <type>image</type>
-      <parent>game</parent>
+      <parent>romcollection</parent>
     </FileType>
     <FileType id="10" name="developer">
       <type>image</type>
-      <parent>game</parent>
+      <parent>developer</parent>
     </FileType>
     <FileType id="11" name="publisher">
       <type>image</type>
-      <parent>game</parent>
+      <parent>publisher</parent>
     </FileType>
     <FileType id="12" name="gameplay">
-      <type>image</type>
+      <type>video</type>
       <parent>game</parent>
     </FileType>
 	<FileType id="13" name="cabinet">
@@ -64,134 +64,214 @@
     <fileTypeFor name="gameinfobig">
       <fileTypeForGameList>boxfront</fileTypeForGameList>
       <fileTypeForGameList>screenshot</fileTypeForGameList>
+	  <fileTypeForGameList>title</fileTypeForGameList>
+	  <fileTypeForGameList>action</fileTypeForGameList>
       <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
       <fileTypeForGameListSelected>screenshot</fileTypeForGameListSelected>
+	  <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>action</fileTypeForGameListSelected>	  
       <fileTypeForMainViewBackground>fanart</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>screenshot</fileTypeForMainViewBackground>
+	  <fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
+	  <fileTypeForMainViewBackground>action</fileTypeForMainViewBackground>	  
       <fileTypeForMainViewGameInfoBig>screenshot</fileTypeForMainViewGameInfoBig>
       <fileTypeForMainViewGameInfoBig>boxfront</fileTypeForMainViewGameInfoBig>
+	  <fileTypeForMainViewGameInfoBig>action</fileTypeForMainViewGameInfoBig>
+      <fileTypeForMainViewGameInfoBig>title</fileTypeForMainViewGameInfoBig>
+	  <fileTypeForMainView1>publisher</fileTypeForMainView1>
+	  <fileTypeForMainView2>romcollection</fileTypeForMainView2>
+	  <fileTypeForMainView3>developer</fileTypeForMainView3>
       <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+	  <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
+	  <fileTypeForGameInfoViewBackground>action</fileTypeForGameInfoViewBackground>	  
       <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>action</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
       <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
+	  <fileTypeForGameInfoView2>title</fileTypeForGameInfoView2>
       <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
       <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
+	  <fileTypeForGameInfoView4>action</fileTypeForGameInfoView4>
+	  <fileTypeForGameInfoView4>title</fileTypeForGameInfoView4>
     </fileTypeFor>
     <fileTypeFor name="gameinfobigVideo">
       <fileTypeForGameList>boxfront</fileTypeForGameList>
       <fileTypeForGameList>screenshot</fileTypeForGameList>
+	  <fileTypeForGameList>title</fileTypeForGameList>
+	  <fileTypeForGameList>action</fileTypeForGameList>
       <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
       <fileTypeForGameListSelected>screenshot</fileTypeForGameListSelected>
+	  <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>action</fileTypeForGameListSelected>	  
       <fileTypeForMainViewBackground>fanart</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>screenshot</fileTypeForMainViewBackground>
+	  <fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
+	  <fileTypeForMainViewBackground>action</fileTypeForMainViewBackground>	  
       <fileTypeForMainViewGameInfoBig>screenshot</fileTypeForMainViewGameInfoBig>
       <fileTypeForMainViewGameInfoBig>boxfront</fileTypeForMainViewGameInfoBig>
+	  <fileTypeForMainViewGameInfoBig>action</fileTypeForMainViewGameInfoBig>
+      <fileTypeForMainViewGameInfoBig>title</fileTypeForMainViewGameInfoBig>
       <fileTypeForMainViewVideoWindowBig>gameplay</fileTypeForMainViewVideoWindowBig>
+	  <fileTypeForMainView1>publisher</fileTypeForMainView1>
+	  <fileTypeForMainView2>romcollection</fileTypeForMainView2>
+	  <fileTypeForMainView3>developer</fileTypeForMainView3>
       <fileTypeForMainViewVideoFullscreen>gameplay</fileTypeForMainViewVideoFullscreen>
       <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+	  <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
+	  <fileTypeForGameInfoViewBackground>action</fileTypeForGameInfoViewBackground>	  
       <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>action</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
       <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
+	  <fileTypeForGameInfoView2>title</fileTypeForGameInfoView2>
       <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
       <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
+	  <fileTypeForGameInfoView4>action</fileTypeForGameInfoView4>
+	  <fileTypeForGameInfoView4>title</fileTypeForGameInfoView4>
     </fileTypeFor>
     <fileTypeFor name="gameinfosmall">
       <fileTypeForGameList>boxfront</fileTypeForGameList>
       <fileTypeForGameList>screenshot</fileTypeForGameList>
+	  <fileTypeForGameList>title</fileTypeForGameList>
+	  <fileTypeForGameList>action</fileTypeForGameList>
       <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
       <fileTypeForGameListSelected>screenshot</fileTypeForGameListSelected>
+	  <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>action</fileTypeForGameListSelected>	  
       <fileTypeForMainViewBackground>fanart</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>screenshot</fileTypeForMainViewBackground>
+	  <fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
+	  <fileTypeForMainViewBackground>action</fileTypeForMainViewBackground>	  
       <fileTypeForMainViewGameInfoUpperLeft>screenshot</fileTypeForMainViewGameInfoUpperLeft>
+	  <fileTypeForMainViewGameInfoUpperLeft>action</fileTypeForMainViewGameInfoUpperLeft>
+	  <fileTypeForMainViewGameInfoUpperLeft>title</fileTypeForMainViewGameInfoUpperLeft>
       <fileTypeForMainViewGameInfoUpperRight>boxfront</fileTypeForMainViewGameInfoUpperRight>
       <fileTypeForMainViewGameInfoLowerLeft>cartridge</fileTypeForMainViewGameInfoLowerLeft>
       <fileTypeForMainViewGameInfoLowerRight>boxback</fileTypeForMainViewGameInfoLowerRight>
+	  <fileTypeForMainViewGameInfoLowerRight>title</fileTypeForMainViewGameInfoLowerRight>
+	  <fileTypeForMainView1>publisher</fileTypeForMainView1>
+	  <fileTypeForMainView2>romcollection</fileTypeForMainView2>
+	  <fileTypeForMainView3>developer</fileTypeForMainView3>
       <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+	  <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
+	  <fileTypeForGameInfoViewBackground>action</fileTypeForGameInfoViewBackground>	  
       <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>action</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
       <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
+	  <fileTypeForGameInfoView2>title</fileTypeForGameInfoView2>
       <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
       <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
+	  <fileTypeForGameInfoView4>action</fileTypeForGameInfoView4>
+	  <fileTypeForGameInfoView4>title</fileTypeForGameInfoView4>
     </fileTypeFor>
     <fileTypeFor name="gameinfosmallVideo">
       <fileTypeForGameList>boxfront</fileTypeForGameList>
       <fileTypeForGameList>screenshot</fileTypeForGameList>
+	  <fileTypeForGameList>title</fileTypeForGameList>
+	  <fileTypeForGameList>action</fileTypeForGameList>
       <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
       <fileTypeForGameListSelected>screenshot</fileTypeForGameListSelected>
+	  <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>action</fileTypeForGameListSelected>	  
       <fileTypeForMainViewBackground>fanart</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>screenshot</fileTypeForMainViewBackground>
+	  <fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
+	  <fileTypeForMainViewBackground>action</fileTypeForMainViewBackground>	  
       <fileTypeForMainViewGameInfoUpperLeft>screenshot</fileTypeForMainViewGameInfoUpperLeft>
+	  <fileTypeForMainViewGameInfoUpperLeft>action</fileTypeForMainViewGameInfoUpperLeft>
+	  <fileTypeForMainViewGameInfoUpperLeft>title</fileTypeForMainViewGameInfoUpperLeft>
       <fileTypeForMainViewGameInfoUpperRight>boxfront</fileTypeForMainViewGameInfoUpperRight>
       <fileTypeForMainViewGameInfoLowerLeft>cartridge</fileTypeForMainViewGameInfoLowerLeft>
       <fileTypeForMainViewGameInfoLowerRight>boxback</fileTypeForMainViewGameInfoLowerRight>
+	  <fileTypeForMainViewGameInfoLowerRight>title</fileTypeForMainViewGameInfoLowerRight>
+	  <fileTypeForMainView1>publisher</fileTypeForMainView1>
+	  <fileTypeForMainView2>romcollection</fileTypeForMainView2>
+	  <fileTypeForMainView3>developer</fileTypeForMainView3>
       <fileTypeForMainViewVideoWindowSmall>gameplay</fileTypeForMainViewVideoWindowSmall>
       <fileTypeForMainViewVideoFullscreen>gameplay</fileTypeForMainViewVideoFullscreen>
       <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
+	  <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
+	  <fileTypeForGameInfoViewBackground>action</fileTypeForGameInfoViewBackground>	  
       <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
+	  <fileTypeForGameInfoViewGamelist>action</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
       <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
+	  <fileTypeForGameInfoView2>title</fileTypeForGameInfoView2>
       <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
       <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
+	  <fileTypeForGameInfoView4>action</fileTypeForGameInfoView4>
+	  <fileTypeForGameInfoView4>title</fileTypeForGameInfoView4>
     </fileTypeFor>
 	<fileTypeFor name="gameinfomamemarquee">
       <fileTypeForGameList>marquee</fileTypeForGameList>
       <fileTypeForGameList>boxfront</fileTypeForGameList>
-	  <fileTypeForGameList>title</fileTypeForGameList>
-	  <fileTypeForGameListSelected>marquee</fileTypeForGameListSelected>
+      <fileTypeForGameList>title</fileTypeForGameList>
+      <fileTypeForGameListSelected>marquee</fileTypeForGameListSelected>
       <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
-	  <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
       <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>action</fileTypeForMainViewBackground>
       <fileTypeForMainViewGameInfoLeft>cabinet</fileTypeForMainViewGameInfoLeft>
       <fileTypeForMainViewGameInfoUpperRight>title</fileTypeForMainViewGameInfoUpperRight>
-      <fileTypeForMainViewGameInfoLowerRight>action</fileTypeForMainViewGameInfoLowerRight>      
+      <fileTypeForMainViewGameInfoLowerRight>action</fileTypeForMainViewGameInfoLowerRight>
+      <fileTypeForMainView1>publisher</fileTypeForMainView1>
+      <fileTypeForMainView2>romcollection</fileTypeForMainView2>
+      <fileTypeForMainView3>developer</fileTypeForMainView3>
       <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
       <fileTypeForGameInfoView2>action</fileTypeForGameInfoView2>
       <fileTypeForGameInfoView3>title</fileTypeForGameInfoView3>
       <fileTypeForGameInfoView4>cabinet</fileTypeForGameInfoView4>
     </fileTypeFor>
-	<fileTypeFor name="gameinfomamecabinet">
+    <fileTypeFor name="gameinfomamecabinet">
       <fileTypeForGameList>cabinet</fileTypeForGameList>
       <fileTypeForGameList>boxfront</fileTypeForGameList>
-	  <fileTypeForGameList>title</fileTypeForGameList>
-	  <fileTypeForGameListSelected>cabinet</fileTypeForGameListSelected>
+      <fileTypeForGameList>title</fileTypeForGameList>
+      <fileTypeForGameListSelected>cabinet</fileTypeForGameListSelected>
       <fileTypeForGameListSelected>boxfront</fileTypeForGameListSelected>
-	  <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
+      <fileTypeForGameListSelected>title</fileTypeForGameListSelected>
       <fileTypeForMainViewBackground>boxfront</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>title</fileTypeForMainViewBackground>
       <fileTypeForMainViewBackground>action</fileTypeForMainViewBackground>
       <fileTypeForMainViewGameInfoUpperLeft>title</fileTypeForMainViewGameInfoUpperLeft>
       <fileTypeForMainViewGameInfoUpperRight>action</fileTypeForMainViewGameInfoUpperRight>
-      <fileTypeForMainViewGameInfoLower>marquee</fileTypeForMainViewGameInfoLower>      
+      <fileTypeForMainViewGameInfoLower>marquee</fileTypeForMainViewGameInfoLower>
+      <fileTypeForMainView1>publisher</fileTypeForMainView1>
+      <fileTypeForMainView2>romcollection</fileTypeForMainView2>
+      <fileTypeForMainView3>developer</fileTypeForMainView3>
       <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
       <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
+      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
       <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
       <fileTypeForGameInfoView2>action</fileTypeForGameInfoView2>
       <fileTypeForGameInfoView3>title</fileTypeForGameInfoView3>

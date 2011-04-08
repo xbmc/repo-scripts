@@ -142,6 +142,7 @@ class Scraper:
 	returnUrl = False
 	replaceKeyString = ''
 	replaceValueString = ''
+	platformId = 0
 	
 class Site:
 	name = ''
@@ -182,9 +183,12 @@ class Config:
 		
 	
 	def readXml(self):
+		
+		Logutil.log('Begin readXml', util.LOG_LEVEL_INFO)
+		
 		configFile = util.getConfigXmlPath()		
 		
-		if(not os.path.isfile(configFile)):
+		if(not os.path.isfile(configFile)):			
 			Logutil.log('File config.xml does not exist. Place a valid config file here: ' +str(configFile), util.LOG_LEVEL_ERROR)
 			return False, 'Error: File config.xml does not exist'
 		
@@ -204,32 +208,11 @@ class Config:
 		
 		return True, ''	
 
-		
 	
-	"""
-	def writeFileType(self, fileTypesXml, id, name):
-		
-		fileType = SubElement(fileTypesXml, 'FileType' , {'id' : id, 'name' : name})
-		
-		if (fileType == 'romcollection'):
-			SubElement(fileType, 'type').text = 'image'
-			SubElement(fileType, 'parent').text = 'romcollection'
-		elif(fileType == 'developer'):
-			SubElement(fileType, 'type').text = 'image'
-			SubElement(fileType, 'parent').text = 'developer'
-		elif(fileType == 'publisher'):
-			SubElement(fileType, 'type').text = 'image'
-			SubElement(fileType, 'parent').text = 'publisher'
-		elif(fileType == 'gameplay'):
-			SubElement(fileType, 'type').text = 'video'
-			SubElement(fileType, 'parent').text = 'game'
-		else:
-			SubElement(fileType, 'type').text = 'image'
-			SubElement(fileType, 'parent').text = 'game'
-	"""	
-		
 		
 	def readRomCollections(self, tree):
+		
+		Logutil.log('Begin readRomCollections', util.LOG_LEVEL_INFO)
 		
 		romCollections = {}
 		
@@ -250,6 +233,8 @@ class Config:
 				Logutil.log('Configuration error. RomCollection must have an attribute name', util.LOG_LEVEL_ERROR)
 				return None, 'Configuration error. See xbmc.log for details'
 			
+			Logutil.log('current Rom Collection: ' +str(romCollection.name), util.LOG_LEVEL_INFO)
+			
 			id = romCollectionRow.attrib.get('id')
 			if(id == ''):
 				Logutil.log('Configuration error. RomCollection %s must have an id' %romCollection.name, util.LOG_LEVEL_ERROR)
@@ -258,8 +243,9 @@ class Config:
 			
 			#romPath
 			romCollection.romPaths = []
-			romPathRows = romCollectionRow.findall('romPath')
+			romPathRows = romCollectionRow.findall('romPath')			
 			for romPathRow in romPathRows:
+				Logutil.log('Rom path: ' +str(romPathRow.text), util.LOG_LEVEL_INFO)
 				romCollection.romPaths.append(romPathRow.text)
 				
 			#mediaPath
@@ -268,6 +254,7 @@ class Config:
 			for mediaPathRow in mediaPathRows:
 				mediaPath = MediaPath()
 				mediaPath.path = mediaPathRow.text
+				Logutil.log('Media path: ' +str(mediaPathRow.text), util.LOG_LEVEL_INFO)
 				fileType, errorMsg = self.readFileType(mediaPathRow.attrib.get('type'), tree)
 				if(fileType == None):
 					return None, errorMsg
@@ -276,10 +263,11 @@ class Config:
 				romCollection.mediaPaths.append(mediaPath)
 			
 			#Scraper
-			romCollection.scraperSites = []						
+			romCollection.scraperSites = []
 			scraperRows = romCollectionRow.findall('scraper')
 			for scraperRow in scraperRows:
 				siteName = scraperRow.attrib.get('name')
+				Logutil.log('Scraper site: ' +str(siteName), util.LOG_LEVEL_INFO)
 				if(siteName == None or siteName == ''):
 					Logutil.log('Configuration error. RomCollection/scraper must have an attribute name', util.LOG_LEVEL_ERROR)
 					return None, 'Configuration error. See xbmc.log for details'
@@ -295,6 +283,7 @@ class Config:
 				if(replaceValueString == None):
 					replaceValueString = ''
 				
+				
 				scraper, errorMsg = self.readScraper(siteName, platform, replaceKeyString, replaceValueString, tree)
 				if(scraper == None):
 					return None, errorMsg
@@ -302,8 +291,9 @@ class Config:
 				
 			#imagePlacing
 			romCollection.imagePlacing = []
-			imagePlacingRow = romCollectionRow.find('imagePlacing')
+			imagePlacingRow = romCollectionRow.find('imagePlacing')			
 			if(imagePlacingRow != None):
+				Logutil.log('Image Placing name: ' +str(imagePlacingRow.text), util.LOG_LEVEL_INFO)
 				fileTypeFor, errorMsg = self.readImagePlacing(imagePlacingRow.text, tree)
 				if(fileTypeFor == None):
 					return None, errorMsg
@@ -313,10 +303,12 @@ class Config:
 			#all simple RomCollection properties
 			emulatorCmd = romCollectionRow.find('emulatorCmd')
 			if(emulatorCmd != None):
+				Logutil.log('Emulator cmd: ' +str(emulatorCmd.text), util.LOG_LEVEL_INFO)
 				romCollection.emulatorCmd = emulatorCmd.text
 			
 			emulatorParams = romCollectionRow.find('emulatorParams')
 			if(emulatorParams != None):
+				Logutil.log('Emulator params: ' +str(emulatorParams.text), util.LOG_LEVEL_INFO)
 				romCollection.emulatorParams = emulatorParams.text
 			
 			ignoreOnScan = romCollectionRow.find('ignoreOnScan')
@@ -399,6 +391,7 @@ class Config:
 		
 		site = Site()
 		site.name = siteName
+		site.platformId = platform
 		
 		scrapers = []
 		
@@ -492,6 +485,8 @@ class Config:
 			return None, 'Configuration error. See xbmc.log for details'
 		
 		imagePlacing = ImagePlacing()
+		
+		imagePlacing.name = imagePlacingName
 			
 		imagePlacing.fileTypesForGameList, errorMsg = self.readFileTypeForElement(fileTypeForRow, 'fileTypeForGameList', tree)		
 		imagePlacing.fileTypesForGameListSelected, errorMsg = self.readFileTypeForElement(fileTypeForRow, 'fileTypeForGameListSelected', tree)

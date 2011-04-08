@@ -1539,32 +1539,9 @@
 				<texture>rcb-Blade-Lower.png</texture>
 				<colordiffuse>FFFFFFFF</colordiffuse>				
 			</control>
-			<control type="button" id="3100"> 
-				<description>Import Games</description>
-				<posx>25</posx>
-				<posy>25</posy>
-				<width>100</width>
-				<height>30</height>
-				<visible>true</visible>
-				<colordiffuse>DDFFFFFF</colordiffuse>
-				<texturefocus>rcb-button-focus.png</texturefocus>
-				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>Import Games</label>				
-				<textcolor>DDFFFFFF</textcolor>
-				<disabledcolor>80FFFFFF</disabledcolor>
-				<align>center</align>
-				<aligny>center</aligny>
-				<textoffsetx></textoffsetx>
-				<textoffsety></textoffsety>
-				<pulseonselect></pulseonselect>
-				<onup>50</onup>
-				<ondown>500</ondown>
-				<onleft>900</onleft>
-				<onright>2</onright>
-			</control>
 			<control type="button" id="2"> 
 				<description>Change View</description>
-				<posx>175</posx>
+				<posx>25</posx>
 				<posy>25</posy>
 				<width>100</width>
 				<height>30</height>
