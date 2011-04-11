@@ -22,6 +22,7 @@ import os
 import parsers.MP4Parser as MP4Parser
 import parsers.AVIParser as AVIParser
 import parsers.MKVParser as MKVParser
+import parsers.FLVParser as FLVParser
 
 from Globals import *
 
@@ -30,8 +31,9 @@ from Globals import *
 class VideoParser:
     def __init__(self):
         self.AVIExts = ['.avi']
-        self.MP4Exts = ['.mp4', '.m4v', '.3gp', '.3g2']
+        self.MP4Exts = ['.mp4', '.m4v', '.3gp', '.3g2', '.f4v']
         self.MKVExts = ['.mkv']
+        self.FLVExts = ['.flv']
 
 
     def log(self, msg, level = xbmc.LOGDEBUG):
@@ -59,6 +61,8 @@ class VideoParser:
             self.parser = MP4Parser.MP4Parser()
         elif ext in self.MKVExts:
             self.parser = MKVParser.MKVParser()
+        elif ext in self.FLVExts:
+            self.parser = FLVParser.FLVParser()
         else:
             self.log("No parser found for extension " + ext)
             return 0

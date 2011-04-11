@@ -18,22 +18,112 @@
 
 import os
 import xbmcaddon, xbmc
+import Settings
+
 
 
 def log(msg, level = xbmc.LOGDEBUG):
     xbmc.log(ADDON_ID + '-' + msg, level)
 
 
+def migrate():
+    log("migration")
+    curver = "0.0.0"
+
+    try:
+        curver = ADDON_SETTINGS.getSetting("Version")
+    except:
+        pass
+
+    if compareVersions(curver, VERSION) < 0:
+        if compareVersions(curver, "1.0.2") < 0:
+            log("Migrating to 1.0.2")
+
+            # Migrate to 1.0.2
+            for i in range(200):
+                if os.path.exists(xbmc.translatePath('special://profile/playlists/video') + '/Channel_' + str(i + 1) + '.xsp'):
+                    ADDON_SETTINGS.setSetting("Channel_" + str(i + 1) + "_type", "0")
+                    ADDON_SETTINGS.setSetting("Channel_" + str(i + 1) + "_1", "special://profile/playlists/video/Channel_" + str(i + 1) + ".xsp")
+                elif os.path.exists(xbmc.translatePath('special://profile/playlists/mixed') + '/Channel_' + str(i + 1) + '.xsp'):
+                    ADDON_SETTINGS.setSetting("Channel_" + str(i + 1) + "_type", "0")
+                    ADDON_SETTINGS.setSetting("Channel_" + str(i + 1) + "_1", "special://profile/playlists/mixed/Channel_" + str(i + 1) + ".xsp")
+
+            currentpreset = 0
+
+            for i in range(TOTAL_FILL_CHANNELS):
+                chantype = 9999
+
+                try:
+                    chantype = int(ADDON_SETTINGS.getSetting("Channel_" + str(i + 1) + "_type"))
+                except:
+                    pass
+
+                if chantype == 9999:
+                    addPreset(i + 1, currentpreset)
+                    currentpreset += 1
+
+    ADDON_SETTINGS.setSetting("Version", VERSION)
+
+    
+def addPreset(channel, presetnum):
+    networks = ['ABC', 'AMC', 'Bravo', 'CBS', 'Comedy Central', 'Food Network', 'FOX', 'FX', 'HBO', 'NBC', 'SciFi', 'The WB']
+    genres = ['Animation', 'Comedy', 'Documentary', 'Drama', 'Fantasy']
+    studio = ['Brandywine Productions Ltd.', 'Fox 2000 Pictures', 'GK Films', 'Legendary Pictures', 'Universal Pictures']
+    
+    if presetnum < len(networks):
+        ADDON_SETTINGS.setSetting("Channel_" + str(channel) + "_type", "1")
+        ADDON_SETTINGS.setSetting("Channel_" + str(channel) + "_1", networks[presetnum])
+    elif presetnum - len(networks) < len(genres):
+        ADDON_SETTINGS.setSetting("Channel_" + str(channel) + "_type", "5")
+        ADDON_SETTINGS.setSetting("Channel_" + str(channel) + "_1", genres[presetnum - len(networks)])
+    elif presetnum - len(networks) - len(genres) < len(studio):
+        ADDON_SETTINGS.setSetting("Channel_" + str(channel) + "_type", "2")
+        ADDON_SETTINGS.setSetting("Channel_" + str(channel) + "_1", studio[presetnum - len(networks) - len(genres)])
+
+
+def compareVersions(version1, version2):
+    retval = 0
+    ver1 = version1.split('.')
+    ver2 = version2.split('.')
+
+    for i in range(min(len(ver1), len(ver2))):
+        if ver1[i] < ver2[i]:
+            retval = -1
+            break
+
+        if ver1[i] > ver2[i]:
+            retval = 1
+            break
+
+    if retval == 0:
+        if len(ver1) > len(ver2):
+            retval = 1
+        elif len(ver2) > len(ver1):
+            retval = -1
+
+    return retval
+
+
+
 ADDON_ID = 'script.pseudotv'
-ADDON_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
-ADDON_INFO = ADDON_SETTINGS.getAddonInfo('path')
+ADDON_SETTINGS = Settings.Settings()
+REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
+ADDON_INFO = REAL_SETTINGS.getAddonInfo('path')
+
+VERSION = "1.1.0"
 
 TIMEOUT = 15 * 1000
 TOTAL_FILL_CHANNELS = 20
 
+MODE_RESUME = 1
+MODE_ALWAYSPAUSE = 2
+MODE_ORDERAIRDATE = 4
+MODE_SERIAL = MODE_RESUME | MODE_ALWAYSPAUSE | MODE_ORDERAIRDATE
+
 IMAGES_LOC = xbmc.translatePath(os.path.join(ADDON_INFO, 'resources', 'images')) + '/'
 PRESETS_LOC = xbmc.translatePath(os.path.join(ADDON_INFO, 'resources', 'presets')) + '/'
 CHANNELS_LOC = xbmc.translatePath('special://profile/addon_data/' + ADDON_ID + '/cache/')
+GEN_CHAN_LOC = os.path.join(CHANNELS_LOC, 'generated') + '/'
 
 TIME_BAR = 'pstvTimeBar.png'
 BUTTON_FOCUS = 'pstvButtonFocus.png'
@@ -56,7 +146,7 @@ ACTION_STEP_FOWARD = 17
 ACTION_STEP_BACK = 18
 ACTION_BIG_STEP_FORWARD = 19
 ACTION_BIG_STEP_BACK = 20
-ACTION_OSD = 21
+ACTION_OSD = 122
 ACTION_NUMBER_0 = 58
 ACTION_NUMBER_1 = 59
 ACTION_NUMBER_2 = 60

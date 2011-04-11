@@ -29,7 +29,30 @@ from Playlist import Playlist
 from Globals import *
 from Channel import Channel
 from EPGWindow import EPGWindow
-from VideoParser import VideoParser
+from ChannelList import ChannelList
+
+
+
+class MyPlayer(xbmc.Player):
+    def __init__(self):
+        xbmc.Player.__init__(self, xbmc.PLAYER_CORE_AUTO)
+        self.stopped = False
+
+
+    def log(self, msg, level = xbmc.LOGDEBUG):
+        log('Player: ' + msg, level)
+
+
+    def onPlayBackStopped(self):
+        if self.stopped == False:
+            self.log('Playback stopped')
+
+            if self.overlay.sleepTimeValue == 0:
+                self.overlay.sleepTimer = threading.Timer(1, self.overlay.sleepAction)
+    
+            self.overlay.sleepTimeValue = 1
+            self.overlay.startSleepTimer()
+            self.stopped = True
 
 
 
@@ -40,6 +63,8 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         self.log('__init__')
         # initialize all variables
         self.channels = []
+        self.Player = MyPlayer()
+        self.Player.overlay = self
         self.inputChannel = -1
         self.channelLabel = []
         self.lastActionTime = 0
@@ -76,33 +101,32 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
     # override the doModal function so we can setup everything first
     def onInit(self):
         self.log('onInit')
+        migrate()
         self.channelLabelTimer = threading.Timer(5.0, self.hideChannelLabel)
         self.infoTimer = threading.Timer(5.0, self.hideInfo)
         self.background = self.getControl(101)
         self.getControl(102).setVisible(False)
 
-        if not os.path.exists(CHANNELS_LOC):
+        if not os.path.exists(GEN_CHAN_LOC):
             try:
-                os.makedirs(CHANNELS_LOC)
+                os.makedirs(GEN_CHAN_LOC)
             except:
                 self.Error('Unable to create the cache directory')
                 return
 
         self.myEPG = EPGWindow("script.pseudotv.EPG.xml", ADDON_INFO, "default")
-        self.videoParser = VideoParser()
         self.myEPG.MyOverlayWindow = self
-        self.findMaxChannels()
         # Don't allow any actions during initialization
         self.actionSemaphore.acquire()
 
         if self.readConfig() == False:
             return
 
-        if self.fillInChannels:
-            self.fillChannels()
+        self.myEPG.channelLogos = self.channelLogos
+        self.maxChannels = len(self.channels)
 
         if self.maxChannels == 0:
-            self.Error('Unable to find any channels. Create smart\nplaylists with file names Channel_1, Chanbel_2, etc.')
+            self.Error('Unable to find any channels. Please configure the addon.')
             return
 
         found = False
@@ -136,203 +160,37 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         self.log('onInit return')
 
 
-    # Determine the maximum number of channels by opening consecutive
-    # playlists until we don't find one
-    def findMaxChannels(self):
-        self.log('findMaxChannels')
-        notfound = False
-        channel = 1
-
-        while notfound == False:
-            if len(self.getSmartPlaylistFilename(channel)) == 0:
-                break
-
-            channel += 1
-
-        self.maxChannels = channel - 1
-        self.log('findMaxChannels return ' + str(self.maxChannels))
-
-
     # setup all basic configuration parameters, including creating the playlists that
     # will be used to actually run this thing
     def readConfig(self):
         self.log('readConfig')
-        self.updateDialog = xbmcgui.DialogProgress()
         # Sleep setting is in 30 minute incriments...so multiply by 30, and then 60 (min to sec)
-        self.sleepTimeValue = int(ADDON_SETTINGS.getSetting('AutoOff')) * 1800
+        self.sleepTimeValue = int(REAL_SETTINGS.getSetting('AutoOff')) * 1800
         self.log('Auto off is ' + str(self.sleepTimeValue))
-        self.forceReset = ADDON_SETTINGS.getSetting('ForceChannelReset') == "true"
-        self.log('Force Reset is ' + str(self.forceReset))
-        self.infoOnChange = ADDON_SETTINGS.getSetting("InfoOnChange") == "true"
+        self.infoOnChange = REAL_SETTINGS.getSetting("InfoOnChange") == "true"
         self.log('Show info label on channel change is ' + str(self.infoOnChange))
-        self.channelResetSetting = int(ADDON_SETTINGS.getSetting("ChannelResetSetting"))
-        self.log('Channel Reset Setting is ' + str(self.channelResetSetting))
-        self.fillInChannels = ADDON_SETTINGS.getSetting("FillInChannels") == "true"
-        self.log('Filling in channels - ' + str(self.fillInChannels))
-        self.showChannelBug = ADDON_SETTINGS.getSetting("ShowChannelBug") == "true"
+        self.showChannelBug = REAL_SETTINGS.getSetting("ShowChannelBug") == "true"
         self.log('Show channel bug - ' + str(self.showChannelBug))
+        self.forceReset = REAL_SETTINGS.getSetting('ForceChannelReset') == "true"
+        self.channelLogos = xbmc.translatePath(REAL_SETTINGS.getSetting('ChannelLogoFolder'))
 
-        try:
-            self.lastResetTime = int(ADDON_SETTINGS.getSetting("LastResetTime"))
-        except:
-            self.lastResetTime = 0
+        if os.path.exists(self.channelLogos) == False:
+            self.channelLogos = IMAGES_LOC
 
+        self.log('Channel logo folder - ' + self.channelLogos)
         self.startupTime = time.time()
-        self.updateDialog.create("PseudoTV", "Updating channel list")
-        self.updateDialog.update(0, "Updating channel list")
+        chn = ChannelList()
         self.background.setVisible(True)
+        self.channels = chn.setupList()
 
-        # Go through all channels, create their arrays, and setup the new playlist
-        for i in range(self.maxChannels):
-            self.updateDialog.update(i * 100 // self.maxChannels, "Updating channel " + str(i + 1))
-            self.channels.append(Channel())
+        if self.channels is None:
+            self.log('readConfig No channel list returned')
+            self.end()
+            return False
 
-            # If the user pressed cancel, stop everything and exit
-            if self.updateDialog.iscanceled():
-                self.log('Update channels cancelled')
-                self.updateDialog.close()
-                self.end()
-                return False
-
-            self.setupChannel(i + 1)
-
-        ADDON_SETTINGS.setSetting('ForceChannelReset', 'false')
-        self.updateDialog.update(100, "Update complete")
-        xbmc.Player().stop()
-        self.updateDialog.close()
+        self.Player.stop()
         self.log('readConfig return')
         return True
-
-
-    def setupChannel(self, channel, presetval = 0):
-        returnval = False
-        createlist = True
-        postfix = ""
-
-        if presetval > 0:
-            postfix = "_" + str(presetval)
-
-        # If possible, use an existing playlist
-        if os.path.exists(CHANNELS_LOC + 'channel_' + str(channel) + postfix + '.m3u'):
-            try:
-                self.channels[channel - 1].totalTimePlayed = int(ADDON_SETTINGS.getSetting('Channel_' + str(channel) + '_time'))
-
-                if self.channels[channel - 1].setPlaylist(CHANNELS_LOC + 'channel_' + str(channel) + postfix + '.m3u') == True:
-                    self.channels[channel - 1].isValid = True
-                    self.channels[channel - 1].fileName = CHANNELS_LOC + 'channel_' + str(channel) + postfix + '.m3u'
-                    returnval = True
-
-                    # If this channel has been watched for longer than it lasts, reset the channel
-                    if self.channelResetSetting == 0 and self.channels[channel - 1].totalTimePlayed < self.channels[channel - 1].getTotalDuration():
-                        createlist = self.forceReset
-
-                    if self.channelResetSetting > 0 and self.channelResetSetting < 4:
-                        timedif = time.time() - self.lastResetTime
-
-                        if self.channelResetSetting == 1 and timedif < (60 * 60 * 24):
-                            createlist = self.forceReset
-
-                        if self.channelResetSetting == 2 and timedif < (60 * 60 * 24 * 7):
-                            createlist = self.forceReset
-
-                        if self.channelResetSetting == 3 and timedif < (60 * 60 * 24 * 30):
-                            createlist = self.forceReset
-
-                        if timedif < 0:
-                            createlist = self.forceReset
-
-                        if createlist:
-                            ADDON_SETTINGS.setSetting('LastResetTime', str(int(time.time())))
-
-                    if self.channelResetSetting == 4:
-                        createlist = self.forceReset
-            except:
-                pass
-
-        if createlist:
-            if self.makeChannelList(channel, presetval) == True:
-                if self.channels[channel - 1].setPlaylist(CHANNELS_LOC + 'channel_' + str(channel) + postfix + '.m3u') == True:
-                    self.channels[channel - 1].totalTimePlayed = 0
-                    self.channels[channel - 1].isValid = True
-                    self.channels[channel - 1].fileName = CHANNELS_LOC + 'channel_' + str(channel) + postfix + '.m3u'
-                    returnval = True
-                    ADDON_SETTINGS.setSetting('Channel_' + str(channel) + '_time', '0')
-
-        self.channels[channel - 1].name = self.getSmartPlaylistName(self.getSmartPlaylistFilename(channel, presetval))
-        return returnval
-
-
-    def fillChannels(self):
-        self.log("fillChannels")
-        currentmax = self.maxChannels
-        self.updateDialog.create("PseudoTV", "Filling in channels")
-        self.updateDialog.update(0, "Filling in channels")
-
-        for i in range(currentmax - 1, TOTAL_FILL_CHANNELS):
-            self.channels.append(Channel())
-            self.channels[-1].isValid = False
-
-        self.maxChannels = TOTAL_FILL_CHANNELS
-        currentpreset = 1
-        maxpreset = 0
-
-        while os.path.exists(self.getSmartPlaylistFilename(1, maxpreset + 1)):
-            maxpreset += 1
-
-        for i in range(self.maxChannels):
-            self.updateDialog.update(i * 100 // self.maxChannels, "Filling in channel " + str(i + 1))
-
-            if self.channels[i].isValid == False:
-                while currentpreset <= maxpreset and self.setupChannel(i + 1, currentpreset) == False:
-                    currentpreset += 1
-
-                currentpreset += 1
-
-        self.updateDialog.close()
-        self.log("fillChannels return")
-
-
-    def getSmartPlaylistFilename(self, channel, presetval = 0):
-        if presetval == 0:
-            if os.path.exists(xbmc.translatePath('special://profile/playlists/video') + '/Channel_' + str(channel) + '.xsp'):
-                return xbmc.translatePath('special://profile/playlists/video') + '/Channel_' + str(channel) + '.xsp'
-            elif os.path.exists(xbmc.translatePath('special://profile/playlists/mixed') + '/Channel_' + str(channel) + '.xsp'):
-                return xbmc.translatePath('special://profile/playlists/mixed') + '/Channel_' + str(channel) + '.xsp'
-            else:
-                return ''
-        else:
-            if os.path.exists(PRESETS_LOC + "Preset_" + str(presetval) + ".xsp"):
-                return PRESETS_LOC + "Preset_" + str(presetval) + ".xsp"
-            else:
-                return ''
-
-
-    # Open the smart playlist and read the name out of it...this is the channel name
-    def getSmartPlaylistName(self, fle):
-        self.log('getSmartPlaylistName')
-
-        try:
-            xml = open(fle, "r")
-        except:
-            self.log("getSmartPlaylisyName Unable to open the smart playlist " + fle, xbmc.LOGERROR)
-            return ''
-
-        try:
-            dom = parse(xml)
-        except:
-            self.log('getSmartPlaylistName Problem parsing playlist ' + fle, xbmc.LOGERROR)
-            xml.close()
-            return ''
-
-        xml.close()
-
-        try:
-            plname = dom.getElementsByTagName('name')
-            self.log('getSmartPlaylistName return ' + plname[0].childNodes[0].nodeValue)
-            return plname[0].childNodes[0].nodeValue
-        except:
-            self.log("Unable to get the playlist name.", xbmc.LOGERROR)
-            return ''
 
 
     # handle fatal errors: log it, show the dialog, and exit
@@ -342,177 +200,6 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         dlg.ok('Error', message)
         del dlg
         self.end()
-
-
-    def getSmartPlaylistType(self, dom):
-        self.log('getSmartPlaylistType')
-
-        try:
-            pltype = dom.getElementsByTagName('smartplaylist')
-            return pltype[0].attributes['type'].value
-        except:
-            self.log("Unable to get the playlist type.", xbmc.LOGERROR)
-            return ''
-
-
-    # Based on a smart playlist, create a normal playlist that can actually be used by us
-    def makeChannelList(self, channel, presetval = 0):
-        self.log('makeChannelList ' + str(channel))
-        fle = self.getSmartPlaylistFilename(channel, presetval)
-        postfix = ""
-
-        if presetval > 0:
-            postfix = "_" + str(presetval)
-
-        if len(fle) == 0:
-            self.log('Unable to locate the playlist for channel ' + str(channel), xbmc.LOGERROR)
-            return False
-
-        try:
-            xml = open(fle, "r")
-        except:
-            self.log("makeChannelList Unable to open the smart playlist " + fle, xbmc.LOGERROR)
-            return False
-
-        try:
-            dom = parse(xml)
-        except:
-            self.log('makeChannelList Problem parsing playlist ' + fle, xbmc.LOGERROR)
-            xml.close()
-            return False
-
-        xml.close()
-
-        if self.getSmartPlaylistType(dom) == 'mixed':
-            fileList = self.buildMixedFileList(dom)
-        else:
-            fileList = self.buildFileList(fle)
-
-        try:
-            channelplaylist = open(CHANNELS_LOC + "channel_" + str(channel) + postfix + ".m3u", "w")
-        except:
-            self.Error('Unable to open the cache file ' + CHANNELS_LOC + 'channel_' + str(channel) + postfix + '.m3u', xbmc.LOGERROR)
-            return False
-
-        channelplaylist.write("#EXTM3U\n")
-
-        if len(fileList) == 0:
-            self.log("Unable to get information about channel " + str(channel), xbmc.LOGERROR)
-            channelplaylist.close()
-            return False
-
-        try:
-            order = dom.getElementsByTagName('order')
-
-            if order[0].childNodes[0].nodeValue.lower() == 'random':
-                random.shuffle(fileList)
-        except:
-            pass
-
-        fileList = fileList[:250]
-
-        # Write each entry into the new playlist
-        for string in fileList:
-            channelplaylist.write("#EXTINF:" + string + "\n")
-
-        channelplaylist.close()
-        self.log('makeChannelList return')
-        return True
-
-
-    def buildFileList(self, dir_name, media_type="video", recursive="TRUE"):
-        fileList = []
-        json_query = '{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "%s", "recursive": "%s", "fields":["duration","tagline","showtitle","album","artist","plot"]}, "id": 1}' % ( self.escapeDirJSON( dir_name ), media_type, recursive )
-        json_folder_detail = xbmc.executeJSONRPC(json_query)
-        self.log(json_folder_detail)
-        file_detail = re.compile( "{(.*?)}", re.DOTALL ).findall(json_folder_detail)
-
-        for f in file_detail:
-            match = re.search('"file" *: *"(.*?)",', f)
-
-            if match:
-                if(match.group(1).endswith("/") or match.group(1).endswith("\\")):
-                    if(recursive == "TRUE"):
-                        fileList.extend(self.buildFileList(match.group(1), media_type, recursive))
-                else:
-                    duration = re.search('"duration" *: *([0-9]*?),', f)
-
-                    try:
-                        dur = int(duration.group(1))
-                    except:
-                        dur = 0
-
-                    if dur == 0:
-                        dur = self.videoParser.getVideoLength(match.group(1).replace("\\\\", "\\"))
-
-                    try:
-                        if dur > 0:
-                            title = re.search('"label" *: *"(.*?)"', f)
-                            tmpstr = str(dur) + ','
-                            showtitle = re.search('"showtitle" *: *"(.*?)"', f)
-                            plot = re.search('"plot" *: *"(.*?)",', f)
-
-                            if plot == None:
-                                theplot = ""
-                            else:
-                                theplot = plot.group(1)
-
-                            # This is a TV show
-                            if showtitle != None:
-                                tmpstr += showtitle.group(1) + "//" + title.group(1) + "//" + theplot
-                            else:
-                                tmpstr += title.group(1) + "//"
-                                album = re.search('"album" *: *"(.*?)"', f)
-
-                                # This is a movie
-                                if album == None:
-                                    tagline = re.search('"tagline" *: *"(.*?)"', f)
-
-                                    if tagline != None:
-                                        tmpstr += tagline.group(1)
-
-                                    tmpstr += "//" + theplot
-                                else:
-                                    artist = re.search('"artist" *: *"(.*?)"', f)
-                                    tmpstr += album.group(1) + "//" + artist.group(1)
-
-                            tmpstr = tmpstr[:600]
-                            tmpstr = tmpstr.replace("\\n", " ").replace("\\r", " ").replace("\\\"", "\"")
-                            tmpstr = tmpstr + '\n' + match.group(1).replace("\\\\", "\\")
-                            fileList.append(tmpstr)
-                    except:
-                        pass
-            else:
-                continue
-
-        return fileList
-
-
-    def buildMixedFileList(self, dom1):
-        fileList = []
-        self.log('buildMixedFileList')
-
-        try:
-            rules = dom1.getElementsByTagName('rule')
-            order = dom1.getElementsByTagName('order')
-        except:
-            self.log('buildMixedFileList Problem parsing playlist ' + filename, xbmc.LOGERROR)
-            xml.close()
-            return fileList
-
-        for rule in rules:
-            rulename = rule.childNodes[0].nodeValue
-            fileList.extend(self.buildFileList(xbmc.translatePath('special://profile/playlists/video/') + rulename))
-
-        self.log("buildMixedFileList returning")
-        return fileList
-
-
-    def escapeDirJSON(self, dir_name):
-        if (dir_name.find(":")):
-            dir_name = dir_name.replace("\\", "\\\\")
-
-        return dir_name
 
 
     def channelDown(self):
@@ -566,89 +253,69 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
 
         self.lastActionTime = 0
         timedif = 0
-        forcestart = True
-        samechannel = False
         self.getControl(102).setVisible(False)
         self.showingInfo = False
 
         # first of all, save playing state, time, and playlist offset for
         # the currently playing channel
-        if xbmc.Player().isPlaying():
+        if self.Player.isPlaying():
             if channel != self.currentChannel:
                 self.channels[self.currentChannel - 1].setPaused(xbmc.getCondVisibility('Player.Paused'))
-                self.channels[self.currentChannel - 1].setShowTime(xbmc.Player().getTime())
-                self.channels[self.currentChannel - 1].setShowPosition(xbmc.PlayList(xbmc.PLAYLIST_VIDEO).getposition())
+
+                # Automatically pause in serial mode
+                if self.channels[self.currentChannel - 1].mode & MODE_ALWAYSPAUSE > 0:
+                    self.channels[self.currentChannel - 1].setPaused(True)
+
+                self.channels[self.currentChannel - 1].setShowTime(self.Player.getTime())
+                self.channels[self.currentChannel - 1].setShowPosition(xbmc.PlayList(xbmc.PLAYLIST_MUSIC).getposition())
                 self.channels[self.currentChannel - 1].setAccessTime(time.time())
-            else:
-                samechannel = True
 
-            forcestart = False
+        self.currentChannel = channel
+        # now load the proper channel playlist
+        xbmc.PlayList(xbmc.PLAYLIST_MUSIC).clear()
+        if xbmc.PlayList(xbmc.PLAYLIST_MUSIC).load(self.channels[channel - 1].fileName) == False:
+            self.log("Error loading playlist")
+            self.InvalidateChannel(channel)
+            return
 
-        if self.currentChannel != channel or forcestart:
-            self.currentChannel = channel
-            # now load the proper channel playlist
-            xbmc.PlayList(xbmc.PLAYLIST_VIDEO).clear()
-            self.log('starting video')
-            self.log('filename is ' + self.channels[channel - 1].fileName)
+        # Disable auto playlist shuffling if it's on
+        if xbmc.getInfoLabel('Playlist.Random').lower() == 'random':
+            self.log('Random on.  Disabling.')
+            xbmc.PlayList(xbmc.PLAYLIST_MUSIC).unshuffle()
 
-            if self.startPlaylist('XBMC.PlayMedia(' + self.channels[channel - 1].fileName + ')') == False:
-                self.log("Unable to set channel " + str(channel) + ". Invalidating.", xbmc.LOGERROR)
-                self.InvalidateChannel(channel)
-                return
-
-            # Disable auto playlist shuffling if it's on
-            if xbmc.getInfoLabel('Playlist.Random').lower() == 'random':
-                self.log('Random on.  Disabling.')
-                xbmc.PlayList(0).unshuffle()
-                xbmc.PlayList(1).unshuffle()
-                xbmc.PlayList(xbmc.PLAYLIST_VIDEO).clear()
-                self.log('starting video')
-
-                if self.startPlaylist('XBMC.PlayMedia(' + self.channels[channel - 1].fileName + ')') == False:
-                    self.log("Unable to set channel " + str(channel) + ". Invalidating.", xbmc.LOGERROR)
-                    self.InvalidateChannel(channel)
-                    return
-
-            xbmc.executebuiltin("XBMC.PlayerControl(repeatall)")
+        xbmc.executebuiltin("self.PlayerControl(repeatall)")
 
         timedif += (time.time() - self.channels[self.currentChannel - 1].lastAccessTime)
 
         # adjust the show and time offsets to properly position inside the playlist
         while self.channels[self.currentChannel - 1].showTimeOffset + timedif > self.channels[self.currentChannel - 1].getCurrentDuration():
-            self.channels[self.currentChannel - 1].addShowPosition(1)
             timedif -= self.channels[self.currentChannel - 1].getCurrentDuration() - self.channels[self.currentChannel - 1].showTimeOffset
+            self.channels[self.currentChannel - 1].addShowPosition(1)
             self.channels[self.currentChannel - 1].setShowTime(0)
 
-        # if needed, set the show offset
-        if self.channels[self.currentChannel - 1].playlistPosition != xbmc.PlayList(xbmc.PLAYLIST_VIDEO).getposition():
-            if samechannel == False:
-                if self.startPlaylist('XBMC.Playlist.PlayOffset(' + str(self.channels[self.currentChannel - 1].playlistPosition) + ')') == False:
-                    self.log('Unable to set offset for channel ' + str(channel) + ". Invalidating.", xbmc.LOGERROR)
-                    self.InvalidateChannel(channel)
-                    return
-            else:
-                if self.startPlaylist('XBMC.Playlist.PlayOffset(' + str(self.channels[self.currentChannel - 1].playlistPosition - xbmc.PlayList(xbmc.PLAYLIST_VIDEO).getposition()) + ')') == False:
-                    self.log('Unable to set offset for channel ' + str(channel) + ". Invalidating.", xbmc.LOGERROR)
-                    self.InvalidateChannel(channel)
-                    return
-
+        # set the show offset
+        self.Player.playselected(self.channels[self.currentChannel - 1].playlistPosition)
         # set the time offset
         self.channels[self.currentChannel - 1].setAccessTime(time.time())
 
         if self.channels[self.currentChannel - 1].isPaused:
-            try:
-                xbmc.Player().seekTime(self.channels[self.currentChannel - 1].showTimeOffset)
-                xbmc.Player().pause()
+            self.channels[self.currentChannel - 1].setPaused(False)
 
-                if self.waitForVideoPaused() == False:
-                    return
+            try:
+                self.Player.seekTime(self.channels[self.currentChannel - 1].showTimeOffset)
+                
+                if self.channels[self.currentChannel - 1].mode & MODE_ALWAYSPAUSE == 0:
+                    self.Player.pause()
+    
+                    if self.waitForVideoPaused() == False:
+                        return
             except:
                 self.log('Exception during seek on paused channel', xbmc.LOGERROR)
         else:
             seektime = self.channels[self.currentChannel - 1].showTimeOffset + timedif
 
             try:
-                xbmc.Player().seekTime(seektime)
+                self.Player.seekTime(seektime)
             except:
                 self.log('Exception during seek', xbmc.LOGERROR)
 
@@ -691,7 +358,7 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         while sleeptime < TIMEOUT:
             xbmc.sleep(100)
 
-            if xbmc.Player().isPlaying():
+            if self.Player.isPlaying():
                 if xbmc.getCondVisibility('Player.Paused'):
                     break
 
@@ -701,63 +368,6 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
             return False
 
         self.log('waitForVideoPaused return')
-        return True
-
-
-    def waitForVideoStop(self):
-        self.log('waitForVideoStop')
-        sleeptime = 0
-
-        while sleeptime < TIMEOUT:
-            xbmc.sleep(100)
-
-            if xbmc.Player().isPlaying() == False:
-                break
-
-            sleeptime += 100
-        else:
-            self.log('Timeout waiting for video to stop', xbmc.LOGERROR)
-            return False
-
-        self.log('waitForVideoStop return')
-        return True
-
-
-    # run a built-in command and wait for it to take effect
-    def startPlaylist(self, command):
-        self.log('startPlaylist ' + command)
-
-        if xbmc.Player().isPlaying():
-            if xbmc.getCondVisibility('Player.Paused') == False:
-                self.log('Pausing')
-                xbmc.Player().pause()
-
-                if self.waitForVideoPaused() == False:
-                    return False
-
-        self.log('Executing command')
-        xbmc.executebuiltin(command)
-        sleeptime = 0
-        self.log('Waiting for video')
-
-        while sleeptime < TIMEOUT:
-            xbmc.sleep(100)
-
-            if xbmc.Player().isPlaying():
-                try:
-                    if xbmc.getCondVisibility('!Player.Paused') and xbmc.Player().getTime() > 0.0:
-                        break
-                except:
-                    self.log('Exception waiting for video to start')
-                    pass
-
-            sleeptime += 100
-
-        if sleeptime >= TIMEOUT:
-            self.log('Timeout waiting for video to start', xbmc.LOGERROR)
-            return False
-
-        self.log('startPlaylist return')
         return True
 
 
@@ -775,7 +385,7 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         self.getControl(503).setLabel(self.channels[self.currentChannel - 1].getItemTitle(position))
         self.getControl(504).setLabel(self.channels[self.currentChannel - 1].getItemEpisodeTitle(position))
         self.getControl(505).setLabel(self.channels[self.currentChannel - 1].getItemDescription(position))
-        self.getControl(506).setImage(IMAGES_LOC + self.channels[self.currentChannel - 1].name + '.png')
+        self.getControl(506).setImage(self.channelLogos + self.channels[self.currentChannel - 1].name + '.png')
         self.log('setShowInfo return')
 
 
@@ -813,7 +423,7 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
 
         if self.showChannelBug == True:
             try:
-                self.getControl(103).setImage(IMAGES_LOC + self.channels[self.currentChannel - 1].name + '.png')
+                self.getControl(103).setImage(self.channelLogos + self.channels[self.currentChannel - 1].name + '.png')
             except:
                 pass
         ##
@@ -856,6 +466,7 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         self.infoTimer = threading.Timer(timer, self.hideInfo)
         self.infoTimer.start()
 
+
     # return a valid channel in the proper range
     def fixChannel(self, channel, increasing = True):
         while channel < 1 or channel > self.maxChannels:
@@ -882,14 +493,6 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         # ignore all actions if we're in the middle of processing one
         if self.actionSemaphore.acquire(False) == False:
             self.log('Unable to get semaphore')
-            return
-
-        # Don't force the 2 second rule on the stop command since it will
-        # be done anyway.
-        if action == ACTION_STOP:
-            self.end()
-            self.actionSemaphore.release()
-            self.log('onAction return')
             return
 
         lastaction = time.time() - self.lastActionTime
@@ -965,6 +568,8 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
                     self.inputChannel = self.inputChannel * 10 + action - ACTION_NUMBER_0
 
             self.showChannelLabel(self.inputChannel)
+        elif action == ACTION_OSD:
+            xbmc.executebuiltin("ActivateWindow(12901)")
 
         self.actionSemaphore.release()
         self.log('onAction return')
@@ -975,7 +580,7 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         if self.sleepTimeValue == 0:
             return
 
-        # Cancel the timer if itbis still running
+        # Cancel the timer if it is still running
         if self.sleepTimer.isAlive():
             self.sleepTimer.cancel()
             self.sleepTimer = threading.Timer(self.sleepTimeValue, self.sleepAction)
@@ -1011,13 +616,26 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         except:
             pass
 
-        if xbmc.Player().isPlaying():
-            xbmc.Player().stop()
+        if self.Player.isPlaying():
+            self.Player.stop()
 
         if self.timeStarted > 0:
             for i in range(self.maxChannels):
                 if self.channels[i].isValid:
-                    ADDON_SETTINGS.setSetting('Channel_' + str(i + 1) + '_time', str(int(time.time() - self.timeStarted + self.channels[i].totalTimePlayed)))
+                    if self.channels[i].mode & MODE_RESUME == 0:
+                        ADDON_SETTINGS.setSetting('Channel_' + str(i + 1) + '_time', str(int(time.time() - self.timeStarted + self.channels[i].totalTimePlayed)))
+                    else:
+                        tottime = 0
+
+                        for j in range(self.channels[i].playlistPosition):
+                            tottime += self.channels[i].getItemDuration(j)
+
+                        tottime += self.channels[i].showTimeOffset
+
+                        if i == self.currentChannel - 1:
+                            tottime += (time.time() - self.channels[i].lastAccessTime)
+
+                        ADDON_SETTINGS.setSetting('Channel_' + str(i + 1) + '_time', str(int(tottime)))
 
         try:
             ADDON_SETTINGS.setSetting('CurrentChannel', str(self.currentChannel))

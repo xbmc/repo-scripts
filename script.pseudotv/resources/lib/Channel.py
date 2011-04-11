@@ -32,6 +32,7 @@ class Channel:
         self.fileName = ''
         self.isPaused = False
         self.isValid = False
+        self.mode = 0
 
 
     def log(self, msg):

@@ -87,7 +87,6 @@
 				<align>right</align>
 				<aligny>center</aligny>
 				<textcolor>blue</textcolor>
-				<visible>false</visible>
 			</control>
 
 			<control type="image" id="321">
@@ -98,6 +97,7 @@
 				<height>40</height>
 				<texture></texture>
 				<aspectratio>keep</aspectratio>
+				<visible>false</visible>
 			</control>
 			
 			<!-- CHANNEL 2 -->
@@ -135,7 +135,6 @@
 				<align>right</align>
 				<aligny>center</aligny>
 				<textcolor>blue</textcolor>
-				<visible>false</visible>
 			</control>
 
 			<control type="image" id="322">
@@ -146,6 +145,7 @@
 				<height>40</height>
 				<texture></texture>
 				<aspectratio>keep</aspectratio>
+				<visible>false</visible>
 			</control>
 			
 			<!-- CHANNEL 3 -->
@@ -183,7 +183,6 @@
 				<align>right</align>
 				<aligny>center</aligny>
 				<textcolor>blue</textcolor>
-				<visible>false</visible>
 			</control>
 
 			<control type="image" id="323">
@@ -194,6 +193,7 @@
 				<height>40</height>
 				<texture></texture>
 				<aspectratio>keep</aspectratio>
+				<visible>false</visible>
 			</control>
 			
 			<!-- CHANNEL 4 -->
@@ -231,7 +231,6 @@
 				<align>right</align>
 				<aligny>center</aligny>
 				<textcolor>blue</textcolor>
-				<visible>false</visible>
 			</control>
 
 			<control type="image" id="324">
@@ -242,6 +241,7 @@
 				<height>40</height>
 				<texture></texture>
 				<aspectratio>keep</aspectratio>
+				<visible>false</visible>
 			</control>
 			
 			<!-- CHANNEL 5 -->
@@ -279,7 +279,6 @@
 				<align>right</align>
 				<aligny>center</aligny>
 				<textcolor>blue</textcolor>
-				<visible>false</visible>
 			</control>
 
 			<control type="image" id="325">
@@ -290,6 +289,7 @@
 				<height>40</height>
 				<texture></texture>
 				<aspectratio>keep</aspectratio>
+				<visible>false</visible>
 			</control>
 			
 			<!-- CHANNEL 6 -->
@@ -327,7 +327,6 @@
 				<align>right</align>
 				<aligny>center</aligny>
 				<textcolor>blue</textcolor>
-				<visible>false</visible>
 			</control>
 
 			<control type="image" id="326">
@@ -338,6 +337,7 @@
 				<height>40</height>
 				<texture></texture>
 				<aspectratio>keep</aspectratio>
+				<visible>false</visible>
 			</control>
         </control>
 		
@@ -400,19 +400,11 @@
 		
 		<!--TIME BAR-->
 		
-		<control type="image">
-			<posx>400</posx>
-			<posy>390</posy>
-			<width>785</width>
-			<height>10</height>
-			<texture border="5">pstvTimeBarBack.png</texture>
-		</control>
-		
 		<control type="image" id="120">
 			<posx>400</posx>
-			<posy>390</posy>
-			<width>10</width>
-			<height>10</height>
+			<posy>100</posy>
+			<width>20</width>
+			<height>300</height>
 		</control>
 		
 		<!--SHOW LISTINGS-->

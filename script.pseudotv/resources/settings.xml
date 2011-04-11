@@ -1,8 +1,13 @@
 <settings>
-    <setting id="AutoOff" type="enum" label="30001" values="Disable|30|60|90|120|150|180|210|240" default="6"/>
-    <setting id="InfoOnChange" type="bool" label="30003" default="true"/>
-    <setting id="ForceChannelReset" type="bool" label="30002" default="false"/>
-    <setting id="ChannelResetSetting" type="enum" label="30004" values="Automatic|Every Day|Every Week|Every Month|Never" default="0"/>
-    <setting id="FillInChannels" type="bool" label="30005" default="true"/>
-	<setting id="ShowChannelBug" type="bool" label="30006" default="false"/>
+    <category label="30000">
+    	<setting label="30007" type="lsep"/>
+    	<setting type="action" label="30008" action="RunScript($CWD/resources/lib/config.py)"/>
+    	<setting label="30009" type="lsep"/>
+        <setting id="AutoOff" type="enum" label="30001" values="Disable|30|60|90|120|150|180|210|240" default="6"/>
+        <setting id="InfoOnChange" type="bool" label="30003" default="true"/>
+        <setting id="ForceChannelReset" type="bool" label="30002" default="false"/>
+        <setting id="ChannelResetSetting" type="enum" label="30004" values="Automatic|Daily|Weekly|Monthly|Never|Every Time" default="0"/>
+    	<setting id="ShowChannelBug" type="bool" label="30006" default="false"/>
+    	<setting id="ChannelLogoFolder" type="folder" source="auto" label="30010" default="special://home/addons/script.pseudotv/resources/images/"/>
+    </category>
 </settings>

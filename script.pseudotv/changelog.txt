@@ -1,6 +1,23 @@
 Changelog
 
 
+1.1.0
+    Added the channel configuration utility.
+    Fixed a potential crash in the mp4 parser.
+    Separated the channel creation code into a different module.
+    Changed a few of the configuration strings.
+    Added the ability to refresh channels on every start.
+    Improved the channel changing speed.
+    Resume a channel at the proper time when switching between channels.
+    Allow the user to specify a directory for channel logos.
+    Allow the use of the OSD.
+    Added an FLV parser.
+    New skins from Zepfan.
+    Fixed a problem with shows not being resumed properly from the EPG.
+    Gave skinners the ability to change the EPG button text color.
+    Updates to nearly all skins (thanks Zepfan and Sranshaft).
+
+
 1.0.1
     Able to use the Previous Menu key to exit.
     Update to the Refocus skin from Sranshaft.
