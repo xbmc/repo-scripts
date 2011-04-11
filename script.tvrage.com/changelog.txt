@@ -1,6 +1,10 @@
 TVRage-Eps Changelog
 
-Current Version : 1.0.4
+Current Version : 1.0.5
+
+*** 1.0.5 ***
+
+replaced os.getcwd() to fix errors with current nightlies
 
 *** 1.0.4 ***
 

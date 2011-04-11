@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import xbmc, xbmcgui, xbmcaddon #@UnresolvedImport
+import xbmcaddon #@UnresolvedImport
+import xbmc, xbmcgui #@UnresolvedImport
 import sys, os, time, re, traceback
 import elementtree.ElementTree as etree #@UnresolvedImport
 import jsonrpc
@@ -9,16 +10,16 @@ from tvrageapi import Episode, Show, TVRageAPI
 __author__ = 'ruuk'
 __url__ = 'http://code.google.com/p/tvragexbmc/'
 __date__ = '1-26-2011'
-__version__ = '1.0.4'
-__settings__ = xbmcaddon.Addon(id='script.tvrage.com')
-__language__ = __settings__.getLocalizedString
+__version__ = '1.0.5'
+__addon__ = xbmcaddon.Addon(id='script.tvrage.com')
+__language__ = __addon__.getLocalizedString
 
 #for k in xbmc.__dict__.keys(): print k
 
-BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources') )
+BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __addon__.getAddonInfo('path'), 'resources') )
 sys.path.append (BASE_RESOURCE_PATH)
 
-IMAGE_PATH = xbmc.translatePath( os.path.join( os.getcwd(), 'resources', 'skin','Default','media') )
+IMAGE_PATH = xbmc.translatePath( os.path.join( __addon__.getAddonInfo('path'), 'resources', 'skin','Default','media') )
 THUMB_PATH = xbmc.translatePath('special://profile/addon_data/script.tvrage.com/images')
 if not os.path.exists(THUMB_PATH): os.makedirs(THUMB_PATH)
 
@@ -120,7 +121,7 @@ class EpListDialog(xbmcgui.WindowXMLDialog):
 	def summary(self):
 		item = self.getControl(120).getSelectedItem()
 		link = item.getProperty('link')
-		w = SummaryDialog("script-tvrage-summary.xml" , os.getcwd(), "Default",link=link,parent=self)
+		w = SummaryDialog("script-tvrage-summary.xml" , __addon__.getAddonInfo('path'), "Default",link=link,parent=self)
 		w.doModal()
 		del w
 		
@@ -172,16 +173,16 @@ class TVRageEps(xbmcgui.WindowXML):
 		self.setFocus(self.getControl(120))
 	
 	def loadSettings(self):
-		hours = __settings__.getSetting('hours_between_updates')
-		self.json_use_http = (__settings__.getSetting('json_use_http') == 'true')
-		self.http_address = __settings__.getSetting('xbmc_http_address')
-		self.http_user = __settings__.getSetting('xbmc_http_user')
-		self.http_pass = __settings__.getSetting('xbmc_http_pass')
-		air_offset = __settings__.getSetting('airtime_offset')
-		self.skip_canceled = (__settings__.getSetting('skip_canceled') == 'true')
-		self.reverse_sort = (__settings__.getSetting('reverse_sort') == 'true')
-		self.jump_to_bottom = (__settings__.getSetting('jump_to_bottom') == 'true')
-		self.ask_on_no_match = (__settings__.getSetting('ask_on_no_match') == 'true')
+		hours = __addon__.getSetting('hours_between_updates')
+		self.json_use_http = (__addon__.getSetting('json_use_http') == 'true')
+		self.http_address = __addon__.getSetting('xbmc_http_address')
+		self.http_user = __addon__.getSetting('xbmc_http_user')
+		self.http_pass = __addon__.getSetting('xbmc_http_pass')
+		air_offset = __addon__.getSetting('airtime_offset')
+		self.skip_canceled = (__addon__.getSetting('skip_canceled') == 'true')
+		self.reverse_sort = (__addon__.getSetting('reverse_sort') == 'true')
+		self.jump_to_bottom = (__addon__.getSetting('jump_to_bottom') == 'true')
+		self.ask_on_no_match = (__addon__.getSetting('ask_on_no_match') == 'true')
 		self.hours = [1,2,3,4,5,6,12,24][int(hours)]
 		self.air_offset = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,-23,-22,-21,-20,-19,-18,-17,-16,-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1][int(air_offset)]
 		
@@ -243,7 +244,7 @@ class TVRageEps(xbmcgui.WindowXML):
 	def openSettings(self):
 		rs = self.reverse_sort
 		ao = self.air_offset
-		__settings__.openSettings()
+		__addon__.openSettings()
 		self.loadSettings()
 		if rs != self.reverse_sort or ao != self.air_offset: self.updateDisplay()
 		
@@ -291,7 +292,7 @@ class TVRageEps(xbmcgui.WindowXML):
 		try:
 			pdialog.update(0)
 			if self.json_use_http:
-				jrapi = jsonrpc.jsonrpcAPI(url=self.http_address + '/jsonrpc',user=self.http_user,password=self.http_pass)
+				jrapi = jsonrpc.jsonrpcAPI(mode='http',url=self.http_address + '/jsonrpc',user=self.http_user,password=self.http_pass)
 			else:
 				jrapi = jsonrpc.jsonrpcAPI()
 			try:
@@ -405,7 +406,7 @@ class TVRageEps(xbmcgui.WindowXML):
 			xbmcgui.Dialog().ok(__language__(30049),__language__(30050))
 			return
 		showname = item.getLabel()
-		w = EpListDialog("script-tvrage-eplist.xml" , os.getcwd(), "Default",sid=sid,showname=showname,parent=self)
+		w = EpListDialog("script-tvrage-eplist.xml" , __addon__.getAddonInfo('path'), "Default",sid=sid,showname=showname,parent=self)
 		w.doModal()
 		del w
 	
@@ -547,7 +548,7 @@ API = TVRageAPI()
 Show.API = API
 Show.THUMB_PATH = THUMB_PATH
 
-w = TVRageEps("script-tvrage-main.xml" , os.getcwd(), "Default")
+w = TVRageEps("script-tvrage-main.xml" , __addon__.getAddonInfo('path'), "Default")
 w.doModal()
 del w
-sys.modules.clear()
+#sys.modules.clear()

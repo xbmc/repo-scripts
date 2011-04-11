@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import urllib, simplejson
+import urllib2, simplejson
 try:
 	import xbmc #@UnresolvedImport
 except:
@@ -52,7 +52,7 @@ class httpNamespace(baseNamespace):
 			postdata = self.createParams(method,args,kwargs)
 			
 			try:
-				fobj = urllib.urlopen(self.api.url,postdata)
+				fobj = urllib2.urlopen(self.api.url,postdata)
 			except IOError,e:
 				if e.args[0] == 'http error':
 					if e.args[1] == 401: raise UserPassError()
