@@ -31,7 +31,7 @@
       <setting id="SubDB" type="bool" label="theSubDB.com" default="false"/>
       <setting id="Sratim" type="bool" label="Sratim.co.il" default="false"/>
       <setting id="BetaSeries" type="bool" label="betaseries.com" default="false"/>
-      <setting id="LegendasDivx" type="bool" label="LegendasDivx.com.com" default="false"/>
+      <setting id="LegendasDivx" type="bool" label="LegendasDivx.com" default="false"/>
       <setting id="LDivxuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30132" default=""/>
       <setting id="LDivxpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30133" default=""/>
       <setting id="Argenteam" type="bool" label="Argenteam.net" default="false"/>
