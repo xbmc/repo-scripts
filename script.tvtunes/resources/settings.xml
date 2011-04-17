@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+<setting id="loop" type="bool" label="45001" default="False"/>
+<setting id="downvolume" label="45002" type="slider" default="0" range="0,1,60" format="%1.f db" />
+<setting id="smb_share" type="bool" label="45003" default="False"/>
+<setting id="smb_login" enable="eq(-1,true)" type="text" label="45004" default="" />
+<setting id="smb_psw" enable="eq(-2,true)" type="text" option="hidden" label="45005" default="" />
+</settings>
