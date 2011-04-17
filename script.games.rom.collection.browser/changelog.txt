@@ -1,3 +1,7 @@
+0.8.4 (04/2011)
+~~~~~~~~~~~~~
+General:
+    * bugfix: Add Rom Collection does not increment ids greater than 10
 
 0.8.3 (04/2011)
 ~~~~~~~~~~~~~

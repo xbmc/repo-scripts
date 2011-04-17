@@ -239,6 +239,12 @@ class Config:
 			if(id == ''):
 				Logutil.log('Configuration error. RomCollection %s must have an id' %romCollection.name, util.LOG_LEVEL_ERROR)
 				return None, 'Configuration error. See xbmc.log for details'
+			try:
+				rc = romCollections[id]
+				Logutil.log('Error while adding RomCollection. Make sure that the id is unique.', util.LOG_LEVEL_ERROR)
+				return None, 'Rom Collection ids are not unique'
+			except:
+				pass
 			romCollection.id = id
 			
 			#romPath
@@ -367,11 +373,8 @@ class Config:
 			if(xboxCreateShortcutUseShortGamename != None):
 				romCollection.xboxCreateShortcutUseShortGamename = xboxCreateShortcutUseShortGamename.text.upper() == 'TRUE'
 									
-			try:
-				romCollections[id] = romCollection 
-			except:
-				return None, 'Error while adding RomCollection. Make sure that the id is unique'
-		
+			romCollections[id] = romCollection
+			
 		return romCollections, ''
 		
 			

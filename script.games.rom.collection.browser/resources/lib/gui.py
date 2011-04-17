@@ -798,14 +798,15 @@ class UIGameDB(xbmcgui.WindowXML):
 		consoleList = sorted(config.consoleDict.keys())
 		id = 1
 		
+		rcIds = self.config.romCollections.keys()
+		rcIds.sort()
 		#read existing rom collection ids and names
-		for rcId in self.config.romCollections.keys():						
-			
+		for rcId in rcIds:
 			#remove already configured consoles from the list			
 			if(self.config.romCollections[rcId].name in consoleList):
 				consoleList.remove(self.config.romCollections[rcId].name)
 			#find highest id
-			if(rcId > id):
+			if(int(rcId) > int(id)):
 				id = rcId
 								
 		id = int(id) +1
