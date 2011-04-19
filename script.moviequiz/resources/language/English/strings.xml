@@ -31,7 +31,6 @@
     <string id="30122">%d seasons</string><!-- %d is season count -->
     <string id="30123">%d episodes</string><!-- %d is episodes count -->
 
-
     <!-- Movie Questions -->
     <string id="30400">What movie is this?</string>
     <string id="30401">What movie is [B]%s[/B] not in?</string><!-- %s is actor name -->

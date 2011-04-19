@@ -1,8 +1,17 @@
 from elementtree import ElementTree
-from pysqlite2 import dbapi2 as sqlite3
+from xml.parsers.expat import ExpatError
+
 import os
 import xbmc
 import mysql.connector
+import glob
+
+try:
+    # Used by Eden/external python
+    from sqlite3 import dbapi2 as sqlite3
+except:
+    # Used by Dharma/internal python
+    from pysqlite2 import dbapi2 as sqlite3
 
 __author__ = 'twinther'
 
@@ -154,10 +163,9 @@ class SQLiteDatabase(Database):
         found = True
         db_file = None
 
-        candidates = [
-            'MyVideos48.db', # Eden
-            'MyVideos34.db'  # Dharma
-        ]
+        # Find newest MyVideos.db and use that
+        candidates = glob.glob(settings['host'] + '/MyVideos*.db')
+        list.sort(candidates, reverse=True)
         if settings.has_key('name') and settings['name'] is not None:
             candidates.insert(0, settings['name'] + '.db') # defined in settings
 
@@ -172,7 +180,7 @@ class SQLiteDatabase(Database):
             return
 
         xbmc.log("Connecting to SQLite database file: %s" % db_file)
-        self.conn = sqlite3.connect(db_file)
+        self.conn = sqlite3.connect(db_file, check_same_thread = False)
         self.conn.row_factory = self._sqlite_dict_factory
         xbmc.log("SQLiteDatabase opened")
 
@@ -224,19 +232,23 @@ def _loadSettings():
     advancedSettings = xbmc.translatePath('special://userdata/advancedsettings.xml')
     if os.path.exists(advancedSettings):
         f = open(advancedSettings)
-        doc = ElementTree.fromstring(f.read())
+        xml = f.read()
         f.close()
+        try:
+            doc = ElementTree.fromstring(xml)
 
-        if doc.findtext('videodatabase/type') is not None:
-            settings['type'] = doc.findtext('videodatabase/type')
-        if doc.findtext('videodatabase/host') is not None:
-            settings['host'] = doc.findtext('videodatabase/host')
-        if doc.findtext('videodatabase/name') is not None:
-            settings['name'] = doc.findtext('videodatabase/name')
-        if doc.findtext('videodatabase/user') is not None:
-            settings['user'] = doc.findtext('videodatabase/user')
-        if doc.findtext('videodatabase/pass') is not None:
-            settings['pass'] = doc.findtext('videodatabase/pass')
+            if doc.findtext('videodatabase/type') is not None:
+                settings['type'] = doc.findtext('videodatabase/type')
+            if doc.findtext('videodatabase/host') is not None:
+                settings['host'] = doc.findtext('videodatabase/host')
+            if doc.findtext('videodatabase/name') is not None:
+                settings['name'] = doc.findtext('videodatabase/name')
+            if doc.findtext('videodatabase/user') is not None:
+                settings['user'] = doc.findtext('videodatabase/user')
+            if doc.findtext('videodatabase/pass') is not None:
+                settings['pass'] = doc.findtext('videodatabase/pass')
+        except ExpatError:
+           xbmc.log("Unable to parse advancedsettings.xml")
 
     return settings
     

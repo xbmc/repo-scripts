@@ -18,11 +18,22 @@ class TenSecondPlayer(xbmc.Player):
         xbmc.Player.__init__(self)
         xbmc.log(">> TenSecondPlayer.__init__()")
         self.tenSecondTimer = None
-        self.startTime = None
 
         self.database = database
         self.bookmark = None
         self.startingPlayback = False
+
+        self.replaying = False
+        self.lastFile = None
+        self.lastIdFile = None
+        self.lastStartTime = None
+
+    def replay(self):
+        xbmc.log(">> TenSecondPlayer.replay()")
+        if self.lastFile is not None:
+            self.replaying = True
+            self.playWindowed(self.lastFile, self.lastIdFile)
+            self.replaying = False
 
     def stop(self):
         """
@@ -56,6 +67,13 @@ class TenSecondPlayer(xbmc.Player):
         """
         xbmc.log(">> TenSecondPlayer.playWindowed()")
         self.startingPlayback = True
+
+        self.lastFile = file
+        self.lastIdFile= idFile
+
+        if not self.replaying:
+            self.lastStartTime = None
+
         if self.tenSecondTimer is not None:
             #self.stop()
             self.tenSecondTimer.cancel()
@@ -119,12 +137,16 @@ class TenSecondPlayer(xbmc.Player):
     def onPlayBackStarted(self):
         xbmc.log(">> TenSecondPlayer.onPlayBackStarted()")
 
-        totalTime = self.getTotalTime()
-        # find start time, ignore first 10% and last 20% of movie
-        self.startTime = random.randint(int(totalTime * 0.1), int(totalTime * 0.8))
+        if self.lastStartTime is not None:
+            startTime = self.lastStartTime
+        else:
+            totalTime = self.getTotalTime()
+            # find start time, ignore first 10% and last 20% of movie
+            startTime = random.randint(int(totalTime * 0.1), int(totalTime * 0.8))
+            self.lastStartTime = startTime
 
-        xbmc.log(">> Playback from %d secs. to %d secs." % (self.startTime, self.startTime + 10))
-        self.seekTime(self.startTime)
+        xbmc.log(">> Playback from %d secs. to %d secs." % (startTime, startTime + 10))
+        self.seekTime(startTime)
 
         self.tenSecondTimer = threading.Timer(10.0, self.onTenSecondsPassed)
         self.tenSecondTimer.start()

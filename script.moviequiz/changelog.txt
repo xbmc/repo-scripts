@@ -1,3 +1,12 @@
+[B]Version 0.3.2 - 2011-04-17[/B]
+- Improved support for XBMC Eden nightly builds
+- Added support for Cinema Experience integration
+- Use fanart instead of movie clips where relevant
+- Improved data selection for some questions
+- Added icons for replaying movie clip and exiting the game
+- Removed 'When was episode first aired?' question as it's too difficult
+- Removed French translation as it was outdated
+
 [B]Version 0.3.1 - 2011-03-27[/B]
 - Added support for XBMC Eden nightly builds
 - Fixed Imdb data download

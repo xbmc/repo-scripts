@@ -12,6 +12,7 @@
     <string id="30006">Staffel %d</string>
     <string id="30007">%B %e, %Y</string><!-- episode first aired date format: http://docs.python.org/library/time.html#time.strftime -->
 	<string id="30008">[B]Lade...[/B]</string>
+
 	<!-- Menu -->
     <string id="30100">Movie Quiz spielen</string>
     <string id="30101">TV Quiz spielen</string>

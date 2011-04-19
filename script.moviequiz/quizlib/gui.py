@@ -1,5 +1,7 @@
 import threading
 import os
+import re
+
 import xbmc
 import xbmcgui
 
@@ -9,6 +11,10 @@ import db
 from strings import *
 
 __author__ = 'twinther'
+
+# Constants from [xbmc]/xbmc/guilib/Key.h
+ACTION_PARENT_DIR = 9
+ACTION_PREVIOUS_MENU = 10
 
 class MenuGui(xbmcgui.WindowXML):
     C_MENU_MOVIE_QUIZ = 4001
@@ -78,7 +84,7 @@ class MenuGui(xbmcgui.WindowXML):
         self.getControl(self.C_MENU_COLLECTION_TRIVIA).setLabel(label)
 
     def onAction(self, action):
-        if action.getId() == 9 or action.getId() == 10:
+        if action.getId() == ACTION_PARENT_DIR or action.getId() == ACTION_PREVIOUS_MENU:
             self.close()
 
     def onClick(self, controlId):
@@ -119,6 +125,8 @@ class MenuGui(xbmcgui.WindowXML):
 class QuizGui(xbmcgui.WindowXML):
     C_MAIN_FIRST_ANSWER = 4000
     C_MAIN_LAST_ANSWER = 4003
+    C_MAIN_REPLAY = 4010
+    C_MAIN_EXIT = 4011
     C_MAIN_CORRECT_SCORE = 4101
     C_MAIN_INCORRECT_SCORE = 4103
     C_MAIN_QUESTION_COUNT = 4104
@@ -138,6 +146,7 @@ class QuizGui(xbmcgui.WindowXML):
     C_MAIN_CORRECT_VISIBILITY = 5002
     C_MAIN_INCORRECT_VISIBILITY = 5003
     C_MAIN_LOADING_VISIBILITY = 5005
+    C_MAIN_REPLAY_BUTTON_VISIBILITY = 5007
 
 
     def __init__(self, xmlFilename, scriptPath, addon, type, questionLimit = -1, maxRating = None, interactive = True):
@@ -149,6 +158,12 @@ class QuizGui(xbmcgui.WindowXML):
         self.maxRating = maxRating
         self.interactive = interactive
 
+        path = self.addon.getAddonInfo('path')
+        if self.type == question.TYPE_TV:
+            self.defaultBackground = os.path.join(path, 'resources', 'skins', 'Default', 'media', 'quiz-background-tvshows.png')
+        else:
+            self.defaultBackground = os.path.join(path, 'resources', 'skins', 'Default', 'media', 'quiz-background.png')
+
         self.database = db.connect()
         self.player = player.TenSecondPlayer(database=self.database)
         self.question = question.Question(self.database, None, None, None)
@@ -156,7 +171,9 @@ class QuizGui(xbmcgui.WindowXML):
         self.score = {'correct': 0, 'wrong': 0}
 
         self.maxRating = None
-        if self.type == question.TYPE_MOVIE and self.addon.getSetting('movie.rating.limit.enabled') == 'true':
+        if maxRating is not None:
+            self.maxRating = maxRating
+        elif self.type == question.TYPE_MOVIE and self.addon.getSetting('movie.rating.limit.enabled') == 'true':
             self.maxRating = self.addon.getSetting('movie.rating.limit')
         elif self.type == question.TYPE_TV and self.addon.getSetting('tvshow.rating.limit.enabled') == 'true':
             self.maxRating = self.addon.getSetting('tvshow.rating.limit')
@@ -166,35 +183,40 @@ class QuizGui(xbmcgui.WindowXML):
         try :
             xbmcgui.lock()
             if self.type == question.TYPE_TV:
-                self.getControl(self.C_MAIN_MOVIE_BACKGROUND).setVisible(False)
+                self.getControl(self.C_MAIN_MOVIE_BACKGROUND).setImage(self.defaultBackground)
         finally:
             xbmcgui.unlock()
 
         self._setup_question()
 
     def close(self):
-        if hasattr(self, 'player') and self.player.isPlaying():
+        if self.player and self.player.isPlaying():
             self.player.stop()
         # TODO self.database.close()
         xbmcgui.WindowXML.close(self)
         
     def onAction(self, action):
-        if action.getId() == 9 or action.getId() == 10:
+        if action.getId() == ACTION_PARENT_DIR or action.getId() == ACTION_PREVIOUS_MENU:
             self._game_over()
             self.close()
+
 
     def onClick(self, controlId):
         if not self.interactive:
             return # ignore
 
-        if hasattr(self, 'question') and (controlId >= self.C_MAIN_FIRST_ANSWER  or controlId <= self.C_MAIN_LAST_ANSWER):
+        if self.question and (controlId >= self.C_MAIN_FIRST_ANSWER and controlId <= self.C_MAIN_LAST_ANSWER):
             answer = self.question.getAnswer(controlId - self.C_MAIN_FIRST_ANSWER)
             self._handle_answer(answer)
             self._setup_question()
+        elif controlId == self.C_MAIN_EXIT:
+            self._game_over()
+        elif controlId == self.C_MAIN_REPLAY:
+            self.player.replay()
 
     #noinspection PyUnusedLocal
     def onFocus(self, controlId):
-        self._update_thumb()
+        self._update_thumb(controlId)
 
     def _game_over(self):
         if self.interactive:
@@ -225,10 +247,10 @@ class QuizGui(xbmcgui.WindowXML):
             button = self.getControl(self.C_MAIN_FIRST_ANSWER + idx)
             if idx >= len(answers):
                 button.setLabel('')
-                button.setEnabled(False)
+                button.setVisible(False)
             else:
                 button.setLabel(answers[idx].text, textColor='0xFFFFFFFF')
-                button.setEnabled(True)
+                button.setVisible(True)
 
             if not self.interactive and answers[idx].correct:
                 # highlight correct answer
@@ -237,50 +259,40 @@ class QuizGui(xbmcgui.WindowXML):
         self._update_thumb()
         self._update_stats()
 
+        print self.question.getFanartFile()
+        if self.question.getFanartFile() is not None and os.path.exists(self.question.getFanartFile()):
+            self.getControl(self.C_MAIN_MOVIE_BACKGROUND).setImage(self.question.getFanartFile())
+        else:
+            self.getControl(self.C_MAIN_MOVIE_BACKGROUND).setImage(self.defaultBackground)
+
         correctAnswer = self.question.getCorrectAnswer()
         if self.question.getDisplay() == question.DISPLAY_VIDEO:
-            self.show(self.C_MAIN_VIDEO_VISIBILITY)
-            self.hide(self.C_MAIN_PHOTO_VISIBILITY)
-            self.hide(self.C_MAIN_QUOTE_VISIBILITY)
-            self.hide(self.C_MAIN_THREE_PHOTOS_VISIBILITY)
+            self._changeVisibility(video = True)
             xbmc.sleep(1500) # give skin animation time to execute
             self.player.playWindowed(self.question.getVideoFile(), correctAnswer.idFile)
 
         elif self.question.getDisplay() == question.DISPLAY_PHOTO:
             self.getControl(self.C_MAIN_PHOTO).setImage(self.question.getPhotoFile())
-
-            self.hide(self.C_MAIN_VIDEO_VISIBILITY)
-            self.show(self.C_MAIN_PHOTO_VISIBILITY)
-            self.hide(self.C_MAIN_QUOTE_VISIBILITY)
-            self.hide(self.C_MAIN_THREE_PHOTOS_VISIBILITY)
+            self._changeVisibility(photo = True)
 
         elif self.question.getDisplay() == question.DISPLAY_QUOTE:
-            self.getControl(self.C_MAIN_QUOTE_LABEL).setText(self.question.getQuoteText())
-
-            self.hide(self.C_MAIN_VIDEO_VISIBILITY)
-            self.hide(self.C_MAIN_PHOTO_VISIBILITY)
-            self.show(self.C_MAIN_QUOTE_VISIBILITY)
-            self.hide(self.C_MAIN_THREE_PHOTOS_VISIBILITY)
+            quoteText = self.question.getQuoteText()
+            quoteText = self._obfuscateQuote(quoteText)
+            self.getControl(self.C_MAIN_QUOTE_LABEL).setText(quoteText)
+            self._changeVisibility(quote = True)
 
         elif self.question.getDisplay() == question.DISPLAY_NONE:
-            self.hide(self.C_MAIN_VIDEO_VISIBILITY)
-            self.hide(self.C_MAIN_PHOTO_VISIBILITY)
-            self.hide(self.C_MAIN_QUOTE_VISIBILITY)
-            self.hide(self.C_MAIN_THREE_PHOTOS_VISIBILITY)
+            self._changeVisibility()
 
         elif self.question.getDisplay() == question.DISPLAY_THREE_PHOTOS:
             self.getControl(self.C_MAIN_PHOTO_1).setImage(self.question.getPhotoFile(0))
             self.getControl(self.C_MAIN_PHOTO_2).setImage(self.question.getPhotoFile(1))
             self.getControl(self.C_MAIN_PHOTO_3).setImage(self.question.getPhotoFile(2))
-
-            self.hide(self.C_MAIN_VIDEO_VISIBILITY)
-            self.hide(self.C_MAIN_PHOTO_VISIBILITY)
-            self.hide(self.C_MAIN_QUOTE_VISIBILITY)
-            self.show(self.C_MAIN_THREE_PHOTOS_VISIBILITY)
+            self._changeVisibility(threePhotos = True)
 
         if not self.interactive:
             # answers correctly in ten seconds
-            threading.Timer(3.0, self._answer_correctly).start()
+            threading.Timer(10.0, self._answer_correctly).start()
 
         self.getControl(self.C_MAIN_LOADING_VISIBILITY).setVisible(False)
 
@@ -311,10 +323,10 @@ class QuizGui(xbmcgui.WindowXML):
     def _handle_answer(self, answer):
         if answer is not None and answer.correct:
             self.score['correct'] += 1
-            self.show(self.C_MAIN_CORRECT_VISIBILITY)
+            self.getControl(self.C_MAIN_CORRECT_VISIBILITY).setVisible(False)
         else:
             self.score['wrong'] += 1
-            self.show(self.C_MAIN_INCORRECT_VISIBILITY)
+            self.getControl(self.C_MAIN_INCORRECT_VISIBILITY).setVisible(False)
 
         if self.player.isPlaying():
             self.player.stop()
@@ -327,6 +339,10 @@ class QuizGui(xbmcgui.WindowXML):
                     self.setFocusId(self.C_MAIN_FIRST_ANSWER + idx)
                 else:
                     self.getControl(self.C_MAIN_FIRST_ANSWER + idx).setLabel(textColor='0x88888888')
+
+            if self.question.getDisplay() == question.DISPLAY_QUOTE:
+                # Display non-obfuscated quote text
+                self.getControl(self.C_MAIN_QUOTE_LABEL).setText(self.question.getQuoteText())
 
             xbmc.sleep(3000)
 
@@ -341,11 +357,12 @@ class QuizGui(xbmcgui.WindowXML):
             label.setLabel('')
 
 
-    def _update_thumb(self):
+    def _update_thumb(self, controlId = None):
         if self.question is None:
             return # not initialized yet
 
-        controlId = self.getFocusId()
+        if controlId is None:
+            controlId = self.getFocusId()
         if controlId >= self.C_MAIN_FIRST_ANSWER or controlId <= self.C_MAIN_LAST_ANSWER:
             answer = self.question.getAnswer(controlId - self.C_MAIN_FIRST_ANSWER)
             coverImage = self.getControl(self.C_MAIN_COVER_IMAGE)
@@ -360,14 +377,34 @@ class QuizGui(xbmcgui.WindowXML):
                 coverImage.setVisible(False)
 
     def _hide_icons(self):
-        self.hide(self.C_MAIN_CORRECT_VISIBILITY)
-        self.hide(self.C_MAIN_INCORRECT_VISIBILITY)
+        """Visibility is inverted in skin
+        """
+        self.getControl(self.C_MAIN_CORRECT_VISIBILITY).setVisible(True)
+        self.getControl(self.C_MAIN_INCORRECT_VISIBILITY).setVisible(True)
 
-    def show(self, controlId):
-        self.getControl(controlId).setVisible(False) # Visibility is inverted in skin
+    def _changeVisibility(self, video = False, photo = False, quote = False, threePhotos = False):
+        """Visibility is inverted in skin
+        """
+        self.getControl(self.C_MAIN_VIDEO_VISIBILITY).setVisible(not video)
+        self.getControl(self.C_MAIN_PHOTO_VISIBILITY).setVisible(not photo)
+        self.getControl(self.C_MAIN_QUOTE_VISIBILITY).setVisible(not quote)
+        self.getControl(self.C_MAIN_THREE_PHOTOS_VISIBILITY).setVisible(not threePhotos)
+        
+        self.getControl(self.C_MAIN_REPLAY_BUTTON_VISIBILITY).setVisible(video)
 
-    def hide(self, controlId):
-        self.getControl(controlId).setVisible(True) # Visibility is inverted in skin
+    def _obfuscateQuote(self, quote):
+        names = list()
+        for m in re.finditer('(.*?\:)', quote):
+            name = m.group(1)
+            if not name in names:
+                names.append(name)
+
+        for idx, name in enumerate(names):
+            repl = '#%d:' % (idx + 1)
+            quote = quote.replace(name, repl)
+
+        return quote
+
 
 
 class ClapperDialog(xbmcgui.WindowXMLDialog):

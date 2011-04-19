@@ -1,9 +1,7 @@
 TODOs and suggestions in no particular order
 
-- Add support for non-interactive execution to run from Cinema Experience
 - DVD ISO's plays menu instead of movie
 - Add support for global statistics, eg. "lifetime" correct/incorrect answers and such
-- Use fanart instead of movie (fallback / option in settings)
 
 Movie Question suggestions:
 * Which actor was also in movie xy besides actor z?

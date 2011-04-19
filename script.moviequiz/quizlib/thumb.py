@@ -3,25 +3,31 @@ import os
 
 __author__ = 'tommy'
 
-def getCachedThumb(file):
-    if file[0:8] == 'stack://':
-        commaPos = file.find(' , ')
-        file = file[8:commaPos].strip()
+def _getFilename(path, filename = None):
+    if filename is not None and filename[0:8] == 'stack://':
+        commaPos = filename.find(' , ')
+        file = filename[8:commaPos].strip()
+    elif filename is not None:
+        file = os.path.join(path, filename)
+    else:
+        file = path
 
-    crc = xbmc.getCacheThumbName(file.lower())
+    return file
+
+def _getCachedThumb(path, filename = None):
+    crc = xbmc.getCacheThumbName(_getFilename(path, filename).lower())
     return xbmc.translatePath('special://profile/Thumbnails/Video/%s/%s' % (crc[0], crc))
 
 def getCachedVideoThumb(path, filename):
-    if filename[0:8] == 'stack://':
-        videoFile = filename
-    else:
-        videoFile = os.path.join(path, filename)
-        
-    return getCachedThumb(videoFile)
+    return _getCachedThumb(path, filename)
+
+def getCachedVideoFanart(path, filename):
+    crc = xbmc.getCacheThumbName(_getFilename(path, filename).lower())
+    return xbmc.translatePath('special://profile/Thumbnails/Video/Fanart/%s' % crc)
 
 
 def getCachedActorThumb(name):
-    return getCachedThumb('actor' + name)
+    return _getCachedThumb('actor' + name)
 
 def getCachedSeasonThumb(path, label):
     """
@@ -30,7 +36,7 @@ def getCachedSeasonThumb(path, label):
             for English this can be Specials, Season 1, Season 10, etc
 
     """
-    return getCachedThumb('season' + path + label)
+    return _getCachedThumb('season' + path + label)
 
 def getCachedTVShowThumb(path):
-    return getCachedThumb(path)
+    return _getCachedThumb(path)

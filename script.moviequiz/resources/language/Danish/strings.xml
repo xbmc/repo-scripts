@@ -13,7 +13,6 @@
     <string id="30007">%e. %B %Y</string><!-- episode first aired date format: http://docs.python.org/library/time.html#time.strftime -->
     <string id="30008">[B]Indlæser[/B]</string>
 
-
     <!-- Menu -->
     <string id="30100">Spil Film Quiz</string>
     <string id="30101">Spil TV Quiz</string>
@@ -55,7 +54,6 @@
     <string id="30454">Hvornår blev [B]%s[/B] sendt første gang?</string><!-- %s is tvshow title -->
     <string id="30455">Hvem spiller [B]%s[/B] i [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
     <string id="30456">Hvem ligger stemme til [B]%s[/B] i [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
-
 
     <!-- Settings strings -->
     <string id="30500">Generelt</string>
