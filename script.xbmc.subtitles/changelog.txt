@@ -1,0 +1,517 @@
+2.9.0
+- fixed: BetaSeries language conversion 
+- fixed: unicode tvshow string, thx to Saviq
+- fixed: podnapisi hash search
+- fork from Dharma branch
+- removed python hashing function, use only xbmc.subHashAndFileSize()
+- md5 warning fix in NapiProject
+
+2.4.5
+- fixes in LegendasDivx.com version 0.2.0/0.2.1
+- fixed: BetaSeries fetching .ass subtitle in archive cause some issues
+
+2.4.4
+- added: new service, Argenteam, thx to Esteban
+- fixed: various issues in LegendasDivx.com, thx to HiGhLaNdR
+- fixed: throw an error if played file is a movie (betaserie is for tvshow only, for now), thx to darknao
+
+2.4.3
+- added: new service LegendasDivx.com, thx to HiGhLaNdR
+
+2.4.2
+- added: BetaSeries services, thanks to darknao
+
+2.4.1
+- fixed: Portuguese-BR language error
+
+2.4.0
+- code cleanup
+- removed unzip module and use built-in "XBMC.Extract"
+
+2.3.9
+- added: Search next available service if no results are found
+- fixed: SubDB md5 depreciated warning
+- added: Auto download first available "sync" subtitle, those are the only ones we can say for sure are 100% in sync
+
+2.3.8
+- added: support for stack:// files (CD1/CD2)
+
+2.3.7
+- fixed: sratim.co.il movie search bug, thanks to orivar
+- added: option to copy two sub files to the destination, needed in sub+idx cases. Thanks to orivar 
+- Bulgarian string fix, thx to Radoslav
+
+2.3.6
+- added: Sratim.co.il, thanks to orivar
+
+2.3.5
+- Corrected the fix for the problem of failing services on Unix with unpacking subtitle file 
+
+2.3.4
+- fixed: On Unix some services failed in using the unpacked subtitle file
+- added: more tvshow regex for file mode search
+
+2.3.3
+- oops, c/p error
+
+2.3.2
+- added: support for xbmcvfs module, with this its possible to search by hash and save on smb:// drives on git post 07214fed10baf7dff89e and atv2 branch post 9da6df570ce8b840fd85
+
+2.3.1
+- fixed: more xbmc.translatePath() games for external python setups
+
+2.3.0
+- fixed: temporary folder needs xbmc.translatePath()
+- removed Addic7ed service, requested by alex from Addic7ed.com
+
+2.2.9
+- fixed: undertexter download
+
+2.2.8
+- reverted: legacy window support
+- fixed: theSubDB service extraction
+
+2.2.7
+- fixed: reverted part of 5ae14804a9c0c7dff49af852759f9a15ba337a23, should fix Legendas.TV issue. 
+
+2.2.6
+- added: theSubDB, thanks to jrhames
+- added: open addon settings from the service window
+- removed: legacy window support
+
+2.2.5
+- added: Added storing of Bierdopje show ids to reduce the number of api calls. thx mr_blobby
+- use getAddonInfo('profile') for temporary subtitle location 
+
+2.2.4
+- fixed: Titulky service login, thx to Libor
+
+2.2.3
+- fixed: Bierdopje needs a single quote changed to two single quotes (Grey's Anatomy -> Grey''s Anatomy) otherwise it couldn't find a show-id, thx mr_blobby 
+- fixed: Hungarian translation, thanks alanwww1.
+- fixed: addic7ed would fail on That '70s Show, we remove "'" to fix the search
+
+2.2.2
+-added: Itasa (Italiansubs.net), thx mr_blobby
+
+2.2.1
+-added: Swesub.nu, thx mr_blobby
+
+2.2.0
+- simplify services code
+- automatically retrieve list of available services
+
+2.1.9
+- fixed: addic7ed service changes due to the changed website layout
+
+2.1.8
+- fixed: indent error while cleaning up :(
+
+2.1.7
+- changed: use getAddonInfo('path') instead of os.getcwd()
+
+2.1.6
+- Changes in Titulky service: service now supports series too, improved 'sync' feature (now based on file size), fixed bad filtering when movie did not have 'year' field defined, thanks to Libor Zoubek
+- updated: Swedish translation, thx Pike and Blittan
+- fixed: encode issue with Cyrilyc titles
+- cosmetics
+
+2.1.5
+- added: Bulgarian translation, Thanks to Radoslav Vasilev
+
+2.1.4
+- updated: LegendasTV and Brazilian string
+- fixed: if movie is in rar it wouldnt honour custom subtitle path
+
+2.1.3
+- fixed: smb hashing *should* work now :)
+
+2.1.2
+- cosmetics: removed spaces from strings, unix EOL
+
+2.1.1
+- fixes in Subdivx service
+- cleanup of language string files(I hope everyone is happy now ;p)
+
+2.1.0
+- cleaned up language files
+- removed label colour setting
+
+2.0.9
+- fixed: Addic7ed languages, would fail on Chinese (Traditional) and Chinese (Simplified).
+- fixed: podnapisi service hash search + cosmetics 
+- xml window cosmetics 
+
+2.0.8
+- fix: Arabic had incorrect two letter code(would crash podnapisi search)
+- added: "# -*- coding: utf-8 -*-" for Python 2.5+ compatibility
+
+2.0.7
+- fix: ability select Addic7ed as default service
+
+2.0.6
+- fix: new window + mouse should work now
+- fix: Addic7ed would fail if the sub is not found
+
+2.0.5
+- added: Addic7ed service
+
+2.0.4
+- added: right arrow to indicate where the services have been hiding
+- added: new icon, thanks freezy3k
+
+2.0.3
+- fixed: script fails in some cases, related to new window
+
+2.0.2
+- fixed: os.mkdir() to os.makedirs(), it failed creating tmp folder. thx beenje!
+
+2.0.1
+- updated xml window to have services in separate list, purely cosmetics. backward compatible with old xml
+
+2.0.0
+- added: new service Subdivx.com, Spanish subs only. Thanks to Enric Godes.
+- updated: use .getAddonInfo('path') instead of os.getcwd()
+- cosmetics
+
+1.9.9
+- fixed: podnapisi name search string is urllib.quoted. helps with "$#*! My Dad Says" and similar
+- fixed: sync icon is made bigger on default skin window
+
+1.9.8
+- fixed: Script would fail on non English XBMC
+- added: New Dutch translation, Thanks Rob Verberk
+- updated: LegendasTV service
+
+1.9.7
+- added: new titulky.com service. Thanks lzoubek for creating it.
+
+1.9.6
+- added: "Disable hash search" setting under Advanced settings, it disables Hash search on OpenSubtitles and Podnapisi(still does name search). it needs to be disabled on some systems with smb:// drives attached.
+
+1.9.5
+- fixed: works on python2.6??, handles smb:// files better and temp subs are now in addon_data/script.xbmc.subtitles
+
+1.9.4
+- fixed: search using parent folder is showing correctly now
+
+1.9.3
+- changed logging method
+
+1.9.2
+- added: Farsi support
+
+1.9.1
+- removed: SubtitleSource due to the changes in their API
+
+1.9.0
+- added: new LegendasTV service, Thanks gfjardim for making it up
+
+1.8.9
+- fixed: removal of temp files, thanks gfjardim
+
+1.8.8
+- support for whole season subs zip, usually found on OpenSubtitles.org.
+- activate subtitles from temporary location
+- fallback if episode is not found in zip, or if it is mislabeled
+- try/except when cleaning temp folder, there have been some reports that it crashes on WIN. 
+
+1.8.7
+- changes to SubtitleSource, thanks to Veron
+	- Enabled "sync". Script will compare the filename to releasename from SS. If match is found it will mark it as "sync"
+	- Added check that at least one of the user selected language is on SS supported languages list
+	- Changed the way subtitles are sorted.  
+
+1.8.6
+- cosmetics
+
+1.8.5
+- cosmetics
+
+1.8.4
+- revorked OpenSubtitles search function, it should be much faster now
+
+1.8.3
+- reverted: "close script with back button". apple remote has issues with this. 
+
+1.8.2
+- added: new service "SubtitleSource". Thanks to Veron
+- added: new service "Titlovi". Thanks to mr_blobby
+- added: ability to use different search services for Movies and TV Shows. Thanks to mr_blobby
+- added: timeout setting (only OpenSubtitles for now). Thanks to Nektarios
+- added: more robust error handling. Thanks to Nektarios
+- fixed: "SubScene" is working again (was broken because of site redesign). Thanks to mr_blobby
+- fixed: close script with back button. Thanks to Nektarios
+- updated: dutch translations. Thanks to mr_blobby
+
+1.8.1
+- added: option to disable adding language to the sub name. thanks Veron
+
+1.8.0
+- fixed: podnapisi search, we now get the language from "languageId"
+
+1.7.10
+- updated: spanish translations
+
+1.7.9
+- added: new service "Napiprojekt", Polish and English subs only. thanks to gregd
+
+1.7.8
+- fixed: saving subs to SMB:// on windows
+
+1.7.7
+- fixed: 'Ondertitel' and 'Undertexter' services couldn't be turned off
+
+1.7.6
+- cosmetics: user can set the colour of the service label. Default is Blue.
+
+1.7.5
+- added Ondertitel and Undertexter services, thanks to mr_blobby for both services 
+- added support for rare archives for Subscene. again, thanks mr_blobby
+
+1.7.4
+- added: check and notify for existing subtitles, again
+
+1.7.3
+- added: Subscene service, Thanks mr_blobby
+
+1.7.2
+- return podnapisi results in english, thanks zipleen for finding this and helping debug
+
+1.7.1
+- fixed: Bierdopje was showing even if disabled
+
+1.7.0
+- Updated Polish strings, thanks piotr
+- cosmetics
+
+1.6.9
+- using xbmcaddon for languages and settings
+- new settings layout includes categories
+1.6.8
+- services can now return message to display after failed search
+
+1.6.7
+- added fourth service, Bierdopje, only works for TV Shows and English and Dutch language. Thanks mr_blobby for this
+
+1.6.6
+- removed scripts debug logging, it uses XBMC debug log setting now
+- removed check for existing subtitles, need to do it properly
+
+1.6.5
+- fixed: check for existing subtitles
+
+1.6.4
+- fixed: script would fail if 0 subtitles are found
+
+1.6.3
+- enabled Sublight download wait
+- added download delay notification for sublight service
+- new main xml, thanks ronie. 
+- removed all other skin specific windows, will be added if the skins are made compatible with 10.05
+- check if subtitle already exists and notify the user if it does.
+
+1.6.2
+- changed thumbnail to icon.png
+- added changelog.txt
+
+1.6.0
+- Name changed from OpenSubtitles_OSD to XBMC Subtitles
+
+1.5.2
+
+- Fixed: Sublight.si search and download due to the changes to their API.
+
+1.5.0
+
+- Fixed: works on XBOX now - thanks arnova
+
+- Fixed: simplified onClick - thanks mr_blobby
+
+- Added: setting for displaying file name on search page
+
+- Added: Alaska skin support - thanks psike
+
+- Various code cleanup
+
+
+1.4.7
+
+- Fixed: podnapisi.net download change due to their website redesign.
+
+1.4.6
+
+- Fixed: script error when it cant save to a desired location.
+
+1.4.5
+
+- Fixed: Bosnian subtitle search
+
+1.4.4
+
+- Fixed: Podnapisi would hang with Greek language,thanks xalaros for pointing it out
+- Fixed: Brazilian == PortugueseBrazil, Thanks ecsousa
+
+1.4.3
+
+- Third Language search option and Russian translation, thanks to hentar
+
+1.4.2
+
+- Confluence support
+
+1.4.1
+
+- Minor fix for Win users
+
+1.4.0
+
+- Ability to download subs for RAR movies to the movie folder.Thanks Crayonman for testing on Linux.Works on RARs over SMB as well.
+
+1.3.9
+
+- Script can save subtitles to SMB drive, you have to set SMB permissions correctly.
+
+- resolved search error caused by OpenSubtitles and Podnapisi hash search.
+
+- Automatically check for newer version, off by default.
+
+- if installed via SVN repo installer, it will not install on incompatible XBMC version(< 22240)
+
+1.3.7
+
+- Fixed script error on newer SVN builds
+
+
+1.3.6
+
+- Search and Subtitle renaming on XBOX is now fixed, if you having trouble with subtitle not activating try disabling "Search for subtitles in RAR" under XBMC -->settings -->Video --> Subtitles. --- Thanks Bram77 for testing and the solution for disabling RARs
+
+- German translation
+
+
+1.3.5
+
+- Changed OpenSubtitles.org to new server, the response is much faster
+
+- Finnish Translation
+
+- Added Debug log toggle button in settings, if you are having trouble with the script you will need to enable this before posting the xbmc debug log.
+
+- Added support for accented characters in file names.If you are using accented characters please let me know that everything is working correctly.
+
+- Few visual fixes
+
+
+1.3.3
+
+
+- Fixed "sync" icon, added rating and release names on Podnapisi service.Thanks to Gregor Kališnik from Podnapisi.net for all the help while adding their service.
+
+ 
+
+- Polish Translation
+
+
+1.3.2
+
+- Podnapisi.net password hashing issue fixed, its now calculates the whole hash within the script.
+
+- Set default search service
+
+
+1.3.0
+
+- New Settings menu
+
+- Podnapisi.net new service, You will need to register at www.podnapisi.net and enter username and password under script settings
+
+- More Language translations
+
+- General Bug fixes
+
+ 
+1.2.8
+
+- Fixed(improved) OpenSubtitles search
+
+- Swedish Translation
+
+ 
+
+1.2.7
+
+- Works with XBOX and smb:// drives, but it will skip the Hash search for those files.
+
+- Thanks to Jonas, Bram77 and iLLiac4 for testing
+
+- Localization for Dutch, Serbian and Slovenian
+
+ 
+
+1.2.5
+
+- supports Sublight.si in addition to OpenSubtitles.org
+
+
+1.1.1
+
+
+- v1.1.0 crashing on Windows, fixed in v1.1.1 - Sorry Win users
+
+
+1.1.0
+ 
+
+- Subtitles for movies stored on smb:// drives will now download in a temp folder. Thanks to Justcop and johoja for testing
+
+- Aeon Stark, MiniMeedia, MediaStream_Redux_Mod is now supported
+
+- Note: I couldnt find a suitable subtitle button for MiniMeedia, I just used the DVD one. If you dont like it please contact the skin developers as there is not much I can do.
+
+ 
+
+1.0.9
+
+
+- subtitles for internet streams are now supported - Thanks Nixa for the idea and testing
+
+- confirmed working on XBOX, AppleTv,Mac, Linux and win
+
+- PMIII PAL is now supported
+
+
+1.0.7
+
+- The script now pauses video while downloading the subtitles.
+
+
+1.0.4
+
+- Fix for some issues on PMIII skin support -- Thanks Meez
+
+- PMIII PAL support is still not confirmed. PAL16x9 works by me.
+
+
+1.0.3
+
+Added support for Aeon skin
+
+
+1.0.2
+
+- Added support for Project Mayhem III skin
+
+
+1.0.1
+
+- Visual improvements
+
+- Better search for TV Shows and Movies.
+
+- You will now see "Sync" icon for all the subtitles that are found by Hash   search. In theory those subtitles should work 100%
+
+ 
+1.0.0
+
+- Support for MediaStream,MediaStream_Redux and PM3.HD

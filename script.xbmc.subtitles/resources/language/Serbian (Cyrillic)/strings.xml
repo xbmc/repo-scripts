@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+
+  <!-- Srpski -->
+  
+    <string id="610">Претражи </string>
+    <string id="612">Ручно унети име филма</string>
+    <string id="642">Претрага Превода %s</string>
+    <string id="646">Конектовање...</string>
+    <string id="649">Преузимање превода...</string>
+    <string id="652">Превод отпакован</string>
+    <string id="653">Конекција није успела.</string>
+    <string id="654">Грешка при отпакивању</string>
+    <string id="655">Локални превод доступан</string>
+    <string id="656">Сервис није одговорио у одређеном временском периоду</string>
+    <string id="657">Није пронађен ни један превод!</string>
+    <string id="744">превода нађено за</string>
+    <string id="747">Претражи користећи име датотеке</string>
+    <string id="748">Не можете снимити превод на жељену локацију</string>
+    <string id="750">Желите ли да активирате превод привремено?</string>
+    <string id="751">Унесите име филма (годину)</string>
+    <string id="755">Сервер је преоптерећен, покушајте поново касније</string>
+    <string id="760">Доступни сервиси</string>
+
+  <!-- Script Settings-->
+  
+    <string id="30100">Избор Језика</string>
+    <string id="30101">Први Језик</string>
+    <string id="30102">Други Језик</string>
+    <string id="30103">Избор Сервиса</string>
+    <string id="30104">- Podnapisi.net Корисничко Име</string>
+    <string id="30105">- Podnapisi.net Лозинка</string>
+    <string id="30106">Опције</string>
+    <string id="30107">Датотека за скинуте преводе иста као филм</string>
+    <string id="30108">- Подеси датотеку за скинуте преводе</string>
+    <string id="30110">Ручно унети име филма</string>
+    <string id="30111">Трећи Језик</string>
+    <string id="30113">Изаберите подразумеван Сервис за Филм</string>
+    <string id="30114">Изаберите подразумеван Сервис за ТВ</string>
+    <string id="30118">Прикажи име фајла на страници са резултатима</string>
+    <string id="30119">Претражи користећи име датотеке</string>
+    <string id="30121">Дотати језик имену превода</string>
+    <string id="30122">Жељени сервис тајмоут</string>
+    <string id="30123">- Legendas.TV Корисничко Име</string>
+    <string id="30124">- Legendas.TV Лозинка</string>
+    <string id="30125">Обуставити hash претрагу</string>
+    <string id="30126">- Itasa Корисничко Име</string>
+    <string id="30127">- Itasa Лозинка</string>
+
+  <!-- Languages -->
+
+    <string id="30201">Албански</string>
+    <string id="30202">Арапски</string>
+    <string id="30203">Белоруски</string>
+    <string id="30204">Босански</string>
+    <string id="30205">Бугарски</string>
+    <string id="30206">Каталонски</string>
+    <string id="30207">Кинески</string>
+    <string id="30208">Хрватски</string>
+    <string id="30209">Чешки</string>
+    <string id="30210">Дански</string>
+    <string id="30211">Холандски</string>
+    <string id="30212">Енглески</string>
+    <string id="30213">Естонски</string>
+    <string id="30214">Фински</string>
+    <string id="30215">Француски</string>
+    <string id="30216">Немачки</string>
+    <string id="30217">Грчки</string>
+    <string id="30218">Хебрејски</string>
+    <string id="30219">Хинду</string>
+    <string id="30220">Мађарски</string>
+    <string id="30221">Исландски</string>
+    <string id="30222">Индонежански</string>
+    <string id="30224">Италијански</string>
+    <string id="30225">Јапански</string>
+    <string id="30226">Кореански</string>
+    <string id="30227">Латвијски</string>
+    <string id="30228">Литвански</string>
+    <string id="30229">Македонски</string>
+    <string id="30230">Норвешки</string>
+    <string id="30232">Пољски</string>
+    <string id="30233">Португалски</string>
+    <string id="30234">Португалски (Бразил)</string>
+    <string id="30235">Румунски</string>
+    <string id="30236">Руски</string>
+    <string id="30237">Српски</string>
+    <string id="30238">Словачки</string>
+    <string id="30239">Словеначки</string>
+    <string id="30240">Шпански</string>
+    <string id="30242">Шведски</string>
+    <string id="30243">Тајландски</string>
+    <string id="30244">Турски</string>
+    <string id="30245">Украјински</string>
+    <string id="30246">Вијетнамски</string>
+    <string id="30247">Персијски</string>
+
+</strings>
+
