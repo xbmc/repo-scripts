@@ -95,7 +95,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
             else:
                 return "%s : %s[CR][CR]" % (label, info)
         else: return ""
-    
+
     def addMenu(self, info, label):
         control = self.getControl(CONTROL_MENU)
         if info==None:info = ""

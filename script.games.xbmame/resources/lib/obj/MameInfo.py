@@ -147,4 +147,3 @@ class InfoItem(object):
                 self.games += re.sub(".\((.*?)\)", "", games.replace("&&&&", ",").strip())
         except IndexError:
             pass
-

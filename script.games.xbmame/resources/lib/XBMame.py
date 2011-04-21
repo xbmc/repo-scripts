@@ -33,7 +33,14 @@ class XBMame:
     def __init__(self, ADDON_ID, arg):
         self.__settings__ = Addon(ADDON_ID)
         self.__language__ = Addon(ADDON_ID).getLocalizedString
-        self.__profile__ = Addon(ADDON_ID).getAddonInfo("profile")
+        self.__profile__ = translatePath(Addon(ADDON_ID).getAddonInfo("profile"))
+
+	command = arg.split(":")
+	if len(command)==1:Path="/"
+	else: Path = "/%s" % command[1]
+        XBMameGUI("XBMame.xml", self.__settings__.getAddonInfo("path"), "default", "720p", Plugin=self, Path=Path, command=command)
+
+    def _postInit(self, command):
 
         OLD_PLUGIN_PATH = path.abspath(translatePath(path.join(path.dirname(self.__profile__), "..", "plugin.games.xbmame")))
 	ADDON_PATH = translatePath(self.__profile__)
@@ -45,16 +52,16 @@ class XBMame:
 		move(OLD_PLUGIN_PATH, ADDON_PATH)
 	    except Exception:
 		pass
-	    
-	self.MEDIA_PATH = path.join(Addon(ADDON_ID).getAddonInfo("path"), "resources", "skins", "Default", "media")
+
+	self.MEDIA_PATH = path.join(self.__settings__.getAddonInfo("path"), "resources", "skins", "Default", "media")
 	self._MAME_CONFIG_PATH = translatePath(path.join(self.__profile__, "cfg"))
         self._MAME_NVRAM_PATH = translatePath(path.join(self.__profile__, "nvram"))
         if not path.exists(self._MAME_CONFIG_PATH): makedirs(self._MAME_CONFIG_PATH)
         self._MAME_CACHE_PATH = translatePath(path.join(self.__profile__, "titles"))
         if not path.exists(self._MAME_CACHE_PATH): makedirs(self._MAME_CACHE_PATH)
 
-        SETTINGS_PLUGIN_ID = "%s.settings" % ADDON_ID
-        SETTINGS_PLUGIN_PATH = path.join(path.dirname(Addon(ADDON_ID).getAddonInfo("path")), SETTINGS_PLUGIN_ID)
+        SETTINGS_PLUGIN_ID = "%s.settings" % self.__settings__.getAddonInfo("id")
+        SETTINGS_PLUGIN_PATH = path.join(path.dirname(self.__settings__.getAddonInfo("path")), SETTINGS_PLUGIN_ID)
         try:
             Addon(SETTINGS_PLUGIN_ID)
 	    self.SETTINGS_PLUGIN_ID=SETTINGS_PLUGIN_ID
@@ -67,7 +74,7 @@ class XBMame:
             executebuiltin("RestartApp")
 
         self._FILTERS = ""
-        
+
         if not path.exists(self.__profile__): makedirs(self.__profile__)
 
 	self._MAME_DATABASE_PATH = translatePath(path.join(self.__settings__.getAddonInfo("profile"), "XBMame.db"))
@@ -79,8 +86,6 @@ class XBMame:
             self.__settings__.openSettings()
             self.getSettings()
 
-	command = arg.split(":")
-
 	if command[0]=="exec": self.execute(command[1:])
 	else:
 	    if self._db.isEmpty():MameImport(self)
@@ -89,9 +94,6 @@ class XBMame:
 	    if dbver!=DB_VERSION:
                 dialog.ok(self.__language__(30600), self.__language__(30620), self.__language__(30621) % (dbver, DB_VERSION), self.__language__(30622))
 		MameImport(self)
-	    if len(command)==1:Path="/"
-	    else: Path = "/%s" % command[1]
-            XBMameGUI("XBMame.xml", self.__settings__.getAddonInfo("path"), "default", "720p", Plugin=self, Path=Path)
 
     def getSettings(self):
 	    self._MAME_PARAMS = {}
@@ -159,7 +161,7 @@ class XBMame:
 		self.GUI.populateList(self.browse(self.GUI.path))
 	    except AttributeError:
 		pass
-	    
+
     def execute(self, args):
 	print args
 	if args[0]=="builddb":MameImport(self)
@@ -259,7 +261,7 @@ class XBMame:
                     for i in range(10):
                         criteria += "gamename LIKE '" + str(i) + "%'"
                         if i < 9:
-                            criteria += " OR " 
+                            criteria += " OR "
                     criteria += ")"
                 else:
                     criteria = "gamename LIKE '" + Path[1] + "%'"
@@ -277,7 +279,7 @@ class XBMame:
             items = self._gameCollection("", favorites=1)
         unlock()
         return items
-        
+
     def _item(self, caption, image, action="", menu = ""):
 	menu = "%s,exec:config," % self.__language__(30803) + menu
 	if menu[-1]==",": menu=menu[:-1]
@@ -343,7 +345,7 @@ class XBMame:
 #        xbmcgui.unlock()
         return items
         del games
-	
+
     def _runGame(self, romset):
         game = GameItem(self._db, id=romset)
         if game.have:
@@ -528,7 +530,7 @@ class XBMame:
 class XBMameGUI(WindowXML):
 
     _LISTCONTAINER = 30301
-    
+
     def __init__(self, *args, **kwargs):
         self.parent = kwargs["Plugin"]
         try:
@@ -536,35 +538,40 @@ class XBMameGUI(WindowXML):
         except KeyError:
             self.path = "/"
 	self.parent.GUI = self
+	self.command = kwargs["command"]
 	self.doModal()
 
     def onInit(self):
         self._LIST = self.getControl(self._LISTCONTAINER)
         self.populateList(self.parent.browse(self.path))
-    
+	self.parent._postInit(self.command)
+
     def onClick(self, controlId):
         if controlId==self._LISTCONTAINER:
-            action = self._LIST.getSelectedItem().getProperty("action").split(":")
-            if action[0]=="browse":
-		self.path = action[1]
-                self.populateList(self.parent.browse(action[1]))
-            elif action[0]=="exec":
-		self.parent.execute(action[1:])
+	    if self._LIST.getSelectedPosition()<self._LIST.size():
+                action = self._LIST.getSelectedItem().getProperty("action").split(":")
+                if action[0]=="browse":
+		    self.path = action[1]
+                    self.populateList(self.parent.browse(action[1]))
+		elif action[0]=="exec":
+		    self.parent.execute(action[1:])
 
     def onFocus(self, controlId):
 	pass
-    
+
     def onAction(self, action):
         if action.getId()==10:
             self.close()
         elif action.getId()==117:
-            obj = self._LIST.getSelectedItem()
-            if obj.getProperty("menu")!="":
-                menu = ContextMenu("ContextMenu.xml", self.parent.__settings__.getAddonInfo("path"), "Default", "720p", menu=obj.getProperty("menu"))
-                action = menu.action.split(":")
-                if action[0]=="exec":
-		    self.parent.execute(action[1:])
-		    
+	    print self._LIST.getSelectedPosition()
+	    if self._LIST.getSelectedPosition()<self._LIST.size():
+                obj = self._LIST.getSelectedItem()
+                if obj.getProperty("menu")!="":
+                    menu = ContextMenu("ContextMenu.xml", self.parent.__settings__.getAddonInfo("path"), "Default", "720p", menu=obj.getProperty("menu"))
+                    action = menu.action.split(":")
+                    if action[0]=="exec":
+		        self.parent.execute(action[1:])
+
     def populateList(self, items):
         self._LIST.reset()
         self._LIST.addItems(items)

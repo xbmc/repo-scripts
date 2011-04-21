@@ -1,12 +1,17 @@
+2011-04-20 -> v2.0.3
+    Fixed a bug that would prevent the script to startup on nightly builds.
+    Fixed a bug where the script would randomly crash when using mouse.
+    Changed the initialization sequence for GUI to spawn faster.
+
 2011-03-31 -> v2.0.1
     Fixed a bug where maintenance operations from the settings dialog wouldn't work
     Added plugin profile migration
-    
+
 2011-03-25 -> v2.0.0
     Rewrote most of the code
     Reworked thumbnail generation process
     Changed execution mode from plugin to script
-    Fixed a but where XBMame would appear twice in the add-on list
+    Fixed a bug where XBMame would appear twice in the add-on list
     Added skin support
     Added favorites
     Added German plugin description
@@ -27,7 +32,7 @@
     Reworked the database for faster creation/indexing.
     It's now possible to fix most of mame parameters from the plugin settings.
     Informations from mameinfo.dat are now imported if available.
-    
+
 2010-10-30 -> v1.1.2
     Reworked the database for faster creation/indexing.
     Fixed an issue where MAME couldn't start on windows XP.

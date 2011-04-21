@@ -23,7 +23,7 @@ class DBHelper(object):
     def __init__(self, dbpath):
         self._db = sqlite.connect(dbpath)
         self._cursor = self._db.cursor()
-        
+
         if self.needsSchema():
             self.execute("CREATE TABLE GameSettings (id INTEGER PRIMARY KEY, romset TEXT, view INTEGER, rotate INTEGER, backdrops BOOLEAN, overlays BOOLEAN, bezels BOOLEAN, zoom BOOLEAN, have BOOLEAN, thumb BOOLEAN)")
             self.execute("CREATE TABLE XBMame (id INTEGER PRIMARY KEY, setting TEXT, value TEXT)")
@@ -33,7 +33,7 @@ class DBHelper(object):
             self.execute("CREATE TABLE Dipswitches (id INTEGER PRIMARY KEY, romset_id integer, name TEXT, tag TEXT, mask INTEGER, defvalue INTEGER, value INTEGER)")
             self.execute("CREATE TABLE DipswitchesValues (id INTEGER PRIMARY KEY, dipswitch_id INTEGER, name TEXT, value TEXT)")
             self.commit()
-        
+
 
     def commit(self):
         self.db.commit()
@@ -138,4 +138,3 @@ class DBHelper(object):
                 fields[headers[i]]=result[i]
             values.append(fields)
         return values
-

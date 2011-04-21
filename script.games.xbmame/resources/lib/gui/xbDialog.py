@@ -120,7 +120,7 @@ class Progress(xbmcgui.WindowXMLDialog):
 
     def iscanceled(self):
         return self.canceled
-    
+
     def onClick(self, controlId):
         print "clicked"
         self.canceled = True

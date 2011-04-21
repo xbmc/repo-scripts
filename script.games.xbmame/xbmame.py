@@ -25,7 +25,7 @@ sys.path.append(os.path.join(Addon(ADDON_ID).getAddonInfo("path"), "resources", 
 sys.path.append(os.path.join(Addon(ADDON_ID).getAddonInfo("path"), "resources", "lib", "gui" ))
 
 if __name__ == "__main__":
-    from XBMame import XBMame    
+    from XBMame import XBMame
     if len(sys.argv)==1:action=""
     else: action = sys.argv[1]
     XBMame(ADDON_ID, action)
