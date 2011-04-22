@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import os, sys, re, xbmc, xbmcgui, string, urllib, ElementTree as XMLTree
+import os, sys, re, xbmc, xbmcgui, string, urllib, xml.etree.ElementTree as XMLTree
 from utilities import log
 
 _                = sys.modules[ "__main__" ].__language__
