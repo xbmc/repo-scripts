@@ -53,6 +53,9 @@ class GUI(xbmcgui.WindowXML):
     def onAction(self, action):
         if action in self.ACTION_ANYKEY:
             self.toggleHelp('false')
+        else:
+            pass
+            # print action.getId()
         if action in self.ACTION_SHOW_INFO:
             self.toggleInfo()
         elif action in self.ACTION_CONTEXT_MENU:
@@ -81,6 +84,7 @@ class GUI(xbmcgui.WindowXML):
 
     def onClick(self, controlId):
         if controlId == self.CONTROL_MAIN_IMAGE:
+            self.toggleHelp('true')
             if self.getProperty('type') == 'album':
                 self.showPhotos()
             elif self.getProperty('type') == 'photo':
@@ -138,7 +142,6 @@ class GUI(xbmcgui.WindowXML):
                 imageDownloader.Download(photos, downloadPath)
 
     def showPhotos(self):  # the order is significant!
-        self.toggleHelp('true')
         self.getControl(self.CONTROL_USAGE_TEXT).setText('\n'.join([getLS(32030), getLS(32031), getLS(32032)]))
         link = self.getProperty('link')
         self.getControl(self.CONTROL_MAIN_IMAGE).reset()  # Clear the old list of albums.
@@ -156,7 +159,6 @@ class GUI(xbmcgui.WindowXML):
         self.showItems(photos, 'photo')
 
     def showAlbums(self):
-        self.toggleHelp('true')
         self.getControl(self.CONTROL_USAGE_TEXT).setText('\n'.join([getLS(32040), getLS(32041), getLS(32042)]))
         self.getControl(self.CONTROL_MAIN_IMAGE).reset()  # This is necessary when returning from photos.
         if self.SOURCES[self.ACTIVESOURCE]['object'] == 'tbp':

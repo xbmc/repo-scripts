@@ -11,11 +11,11 @@
   <string id="32024">to</string>
   <string id="32025">of</string>
   <!--Picture Mode -->
-  <string id="32030">Left + Right - Switch Picture</string>  
-  <string id="32031">Info - Toggle Onscreen Information</string>
-  <string id="32032">Context Menu - Download Photos</string>
+  <string id="32030">Left + Right = Switch Picture</string>  
+  <string id="32031">Info = Toggle Onscreen Info</string>
+  <string id="32032">Context = Download Photos</string>
   <!--Album Mode -->
-  <string id="32040">Left + Right - Switch Album</string>
-  <string id="32041">Up + Down - Switch Source</string>
-  <string id="32042">Select - Enter Album</string>
+  <string id="32040">Left + Right = Switch Album</string>
+  <string id="32041">Up + Down = Switch Source</string>
+  <string id="32042">Select = Enter Album</string>
 </strings>

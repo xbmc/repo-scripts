@@ -9,6 +9,7 @@ __id__ = Addon.getAddonInfo('id')
 __author__ = Addon.getAddonInfo('author')
 __version__ = Addon.getAddonInfo('version')
 __path__ = Addon.getAddonInfo('path')
+__cachedir__ = 'special://profile/addon_data/%s/cache/' % __id__
 
 print '[SCRIPT][%s] version %s initialized!' % (__scriptname__, __version__)
 
@@ -21,4 +22,3 @@ if (__name__ == '__main__'):
     print '[SCRIPT][%s] version %s exited!' % (__scriptname__, __version__)
     del ui
     sys.modules.clear()
-
