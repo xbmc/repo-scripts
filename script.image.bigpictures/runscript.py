@@ -1,5 +1,6 @@
 import sys
 import xbmcaddon
+import xbmc
 
 Addon = xbmcaddon.Addon('script.image.bigpictures')
 
@@ -9,7 +10,7 @@ __id__ = Addon.getAddonInfo('id')
 __author__ = Addon.getAddonInfo('author')
 __version__ = Addon.getAddonInfo('version')
 __path__ = Addon.getAddonInfo('path')
-__cachedir__ = 'special://profile/addon_data/%s/cache/' % __id__
+__cachedir__ = xbmc.translatePath('special://profile/addon_data/%s/cache/' % __id__)
 
 print '[SCRIPT][%s] version %s initialized!' % (__scriptname__, __version__)
 

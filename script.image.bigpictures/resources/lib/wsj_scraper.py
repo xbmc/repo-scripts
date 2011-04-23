@@ -17,8 +17,9 @@ class WSJ(Scraper):
             self.albums.append({'title': title, 'pic': pic, 'description': description, 'link': link})
 
     def getPhotos(self, url, append=False):
+        print url
         """creates an ordered list photos = [{title, pic, description}, ...] """
-        tree = BeautifulSoup(self.getCachedUrl(url))
+        tree = BeautifulSoup(self.getCachedURL(url))
         title = tree.find('div', 'articleHeadlineBox headlineType-newswire').h1.string
         if not append:
             self.photos = list()

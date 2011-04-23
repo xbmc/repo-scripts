@@ -1,3 +1,8 @@
+1.4.2
+  Fixed: Error with external Python and os.makedirs(cachedir) with cachedir = "special://..."
+  Fixed TheSacramentoBee wasn't able to get Photos
+  Fixed WallStreetJournal wasn't able to get Photos
+
 1.4.1
   Fixed: boston.com now needs a referer for the photosets
   Improved: Better class Inheritance

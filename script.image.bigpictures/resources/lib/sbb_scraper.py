@@ -18,7 +18,7 @@ class SBB(Scraper):
 
     def getPhotos(self, url):
         """creates an ordered list photos = [{title, pic, description}, ...] """
-        tree = BeautifulSoup(self.getCachedUrl(url))
+        tree = BeautifulSoup(self.getCachedURL(url))
         title = tree.find('div', 'asset-name entry-title title').a.string
         self.photos = list()
         subtree_img = tree.findAll('div', attrs={'style': 'background: rgb(224, 224, 224); width: 982px; padding: 4px;'})
