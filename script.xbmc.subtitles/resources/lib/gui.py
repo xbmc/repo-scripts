@@ -383,8 +383,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     
 ###-------------------------- Create name  -------------################
 
-  def create_name(self,zip_entry,sub_filename,subtitle_lang):
-    file_name = "%s.%s%s" % ( os.path.splitext( sub_filename )[0], subtitle_lang, os.path.splitext( zip_entry )[1] )
+  def create_name(self,zip_entry,sub_filename,subtitle_lang): 
+    if (__settings__.getSetting( "lang_to_end" ) == "true"):
+      file_name = "%s.%s%s" % ( os.path.splitext( sub_filename )[0], subtitle_lang, os.path.splitext( zip_entry )[1] )
+    else:
+      file_name = "%s%s" % ( os.path.splitext( sub_filename )[0], os.path.splitext( zip_entry )[1] )
     return os.path.join(self.tmp_sub_dir, zip_entry), os.path.join(self.sub_folder, file_name)
 
 ###-------------------------- Copy files  -------------################
