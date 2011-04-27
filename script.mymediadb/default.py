@@ -59,36 +59,40 @@ def syncWithMMDB():
     anyRemoteChanges = False
     anyLocalChanges = False
     for remoteMedia in mmdb_library:
-        localMedia = xbmcApp.getLocalMovie(remoteMedia['imdbId'])
-        if (localMedia != None):
-            debug('Media exists both locally and remotely - ('+remoteMedia['name']+')')
-            if not remoteMedia['acquired']:
-                debug('Setting remote media status to acquired')
-                _setRemoteMovieTag(remoteMedia['imdbId'],{'acquired':True})
-                anyRemoteChanges = True
-            if(remoteMedia['experienced'] != localMedia['watched']):
-                debug('watched status is not synchronized')
-                if(addon.getSetting('dontsyncwatched') == 'false'):
-                    if(remoteMedia['experienced']):
-                        debug('setting local media to watched')
-                        xbmcApp.setLocalMovieAsWatched(localMedia['idFile'])
-                        anyLocalChanges = True
-                    else:
-                        debug ('setting remote media to watched')
-                        _setRemoteMovieTag(localMedia['imdbId'],{'experienced':localMedia['watched'] == 1})
-                        anyRemoteChanges = True
-                else:
-                    debug('Cancelled synchronize of watched status due to settings!')
-        else:
-            debug('Media ('+remoteMedia['name']+') exists only remotely')
-            if(remoteMedia['acquired'] == True):
-                if(addon.getSetting('dontdeleteacquired') == 'false'):
-                    debug('Acquired flag was removed from mmdb')
-                    _setRemoteMovieTag(remoteMedia['imdbId'],{'acquired':False})
+        if(remoteMedia['imdbId']) != None:
+            localMedia = xbmcApp.getLocalMovie(remoteMedia['imdbId'])
+            if (localMedia != None): 
+                debug('Media exists both locally and remotely - ('+remoteMedia['name']+')')
+                if not remoteMedia['acquired']:
+                    debug('Setting remote media status to acquired')
+                    _setRemoteMovieTag(remoteMedia['imdbId'],{'acquired':True})
                     anyRemoteChanges = True
-                else:
-                    debug('Acquired flag was not removed from mmdb due to settings!')
-            
+                if(remoteMedia['experienced'] != localMedia['watched']):
+                    debug('watched status is not synchronized')
+                    if(addon.getSetting('dontsyncwatched') == 'false'):
+                        if(remoteMedia['experienced']):
+                            debug('setting local media to watched')
+                            xbmcApp.setLocalMovieAsWatched(localMedia['idFile'])
+                            anyLocalChanges = True
+                        else:
+                            debug ('setting remote media to watched')
+                            _setRemoteMovieTag(localMedia['imdbId'],{'experienced':localMedia['watched'] == 1})
+                            anyRemoteChanges = True
+                    else:
+                        debug('Cancelled synchronize of watched status due to settings!')
+            else:
+                debug('Media ('+remoteMedia['name']+') exists only remotely')
+                if(remoteMedia['acquired'] == True):
+                    if(addon.getSetting('dontdeleteacquired') == 'false'):
+                        debug('Acquired flag was removed from mmdb')
+                        _setRemoteMovieTag(remoteMedia['imdbId'],{'acquired':False})
+                        anyRemoteChanges = True
+                    else:
+                        debug('Acquired flag was not removed from mmdb due to settings!')
+        else:
+            #MISSING IMDBID in REMOTE MOVIE
+            debug('('+remoteMedia['name']+') was missing imdbID, please add it at TMDB.org')
+      
     #sync local media with remote db
     for localMedia in xbmcApp.getLocalMovieLibrary():
         if(remoteMovieExists(localMedia['imdbId'])):
@@ -196,7 +200,9 @@ try:
 except urllib2.URLError, e:
     if(e.code == 401):
         xbmc.executebuiltin('Notification(%s,%s,%s,%s)' % (addon.getAddonInfo('name'),e,3000,addon.getAddonInfo("icon")))
-except Exception:
-        xbmc.executebuiltin('Notification(%s,%s,%s,%s)' % (addon.getAddonInfo('name'),"An error occured.. check the logs! exiting!",3000,addon.getAddonInfo("icon")))
+except Exception, e:
+        xbmc.executebuiltin('Notification(%s,%s,%s,%s)' % (addon.getAddonInfo('name'),'Error: %s' %e,5000,addon.getAddonInfo("icon")))
+        #xbmc.executebuiltin('Notification(%s,%s,%s,%s)' % (addon.getAddonInfo('name'),"An error occured.. check the logs! exiting!",3000,addon.getAddonInfo("icon")))
+        debug(e)
         sleeper(5000)
         sys.exit(1)

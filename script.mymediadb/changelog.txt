@@ -1,3 +1,7 @@
+[B]0.1.5[/B]
+- Fixed issues with movies without imdbIDs
+- Made the errors notification tell you what kind of error you got.
+
 [B]0.1.4[/B]
 - Added notifications, and now handles 404 exceptions. Fixed compabillity issues with python 2.6
 
