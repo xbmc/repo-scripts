@@ -1,8 +1,8 @@
 import socket
-import mpd
+import xbmpc
 
 # reconnecting wrapper for mpd client
-class RMPDClient(mpd.MPDClient):
+class RMPDClient(xbmpc.MPDClient):
     def __init__(self):
         self._host = None
         self._port = None
@@ -18,7 +18,7 @@ class RMPDClient(mpd.MPDClient):
     def _wrap(self, func, args):
         try:
             return func(*args)
-        except (socket.error, mpd.MPDError):
+        except (socket.error, xbmpc.MPDError):
             self._reconnect()
             return func(*args)
 

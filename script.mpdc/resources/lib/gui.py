@@ -20,7 +20,7 @@
 # */
 import sys,os,time,re,traceback,threading
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin
-import pmpd,mpd,dialog,albumart,mopidy,playercontrols
+import pmpd,xbmpc,dialog,albumart,playercontrols
 __scriptid__ = 'script.mpdc'
 __addon__ = xbmcaddon.Addon(id=__scriptid__)
 __scriptname__ = __addon__.getAddonInfo('name')
@@ -130,7 +130,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		self.addon = xbmcaddon.Addon(id=__scriptid__)
 		self.time_polling=False
 		if 'false' == self.addon.getSetting('use-idle'):
-			self.client = mopidy.MopidyMPDClient(poll_time = ('true' == self.addon.getSetting('time-polling')))
+			self.client = pmpd.MopidyMPDClient(poll_time = ('true' == self.addon.getSetting('time-polling')))
 		else:
 			self.client = pmpd.PMPDClient(poll_time = ('true' == self.addon.getSetting('time-polling')))
 		if 'true' == self.addon.getSetting('time-polling'):
@@ -166,6 +166,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		self.notification_enabled = self.addon.getSetting('notify') == 'true'
 		self.controls = playercontrols.Controls(self.skin)
 		self.stop_on_exit = self.addon.getSetting(self.profile_id+'_stop_on_exit') == 'true'
+		self.play_on_queued= self.addon.getSetting(self.profile_id+'_play_on_queued') == 'true'
 
 	def onFocus (self,controlId ):
 		self.controlId=controlId
@@ -187,17 +188,13 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		try:
 			print 'Connecting  to  MPD ' + self.mpd_host + ':'+self.mpd_port 
 			self.client.connect(self.mpd_host,int(self.mpd_port),self.mpd_pass)
-		except mpd.CommandError:
-			traceback.print_exc()
-			formatted_lines = traceback.format_exc().splitlines()
-			xbmcgui.Dialog().ok(STR_NOT_CONNECTED,formatted_lines[-1])
-			self.exit()
-			return
 		except:
-			self._status_notify(STR_NOT_CONNECTED)
 			traceback.print_exc()
 			print 'Cannot connect'
 			p.close()
+			formatted_lines = traceback.format_exc().splitlines()
+			xbmcgui.Dialog().ok(STR_NOT_CONNECTED,formatted_lines[-1])
+			self.exit()
 			return
 		print 'Connected'
 		try:
@@ -606,12 +603,12 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		if state == 'play':
 			self._play_stream()	
 
-	def _queue_item(self,replace=False):
+	def _queue_item(self,replace=False,play=False):
 		if replace:
 			stopped = self._stop_if_playing()
 			self.client.stop()
 			self.client.clear()
-			self._queue_item()
+			self._queue_item(play=stopped or play)
 		if self.getFocusId() == PLAYLIST_DETAILS:
 			item = self.getControl(PLAYLIST_DETAILS).getSelectedItem()
 			self.client.add(item.getProperty('file'))
@@ -641,7 +638,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 						self.client.add(f_item['file'])
 					self.client.command_list_end()
 					self._status_notify(status,STR_WAS_QUEUED)
-		if stopped and replace:
+		if play or self.play_on_queued:
 			self.client.play()
 
 	def _context_menu(self):
@@ -803,13 +800,15 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		if ret == 0:
 			self.client.load(playlist)
 			self._status_notify('Playlist %s'%playlist,STR_WAS_QUEUED)
+			if self.play_on_queued:
+				self.client.play()
 		elif ret == 1:
 			stopped = self._stop_if_playing()
 			self.client.stop()
 			self.client.clear()
 			self.client.load(playlist)
 			self._status_notify('Playlist %s'%playlist,STR_WAS_QUEUED)
-			if stopped:
+			if stopped or self.play_on_queued:
 				self.client.play()
 		elif ret == 2:
 				kb = xbmc.Keyboard(playlist,STR_RENAME,False)
@@ -919,15 +918,15 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 	def _exec_command(self,command):
 		try:
 			exec(command)
-		except mpd.CommandError:
+		except xbmpc.CommandError:
 			traceback.print_exc()
 			formatted_lines = traceback.format_exc().splitlines()
 			xbmcgui.Dialog().ok('MPD',formatted_lines[-1])
-		except mpd.ProtocolError:
+		except xbmpc.ProtocolError:
 			traceback.print_exc()
 			self.disconnect()
 			self._status_notify(STR_NOT_CONNECTED)
-		except mpd.ConnectionError:
+		except xbmpc.ConnectionError:
 			traceback.print_exc()
 			self.disconnect()
 			self._status_notify(STR_NOT_CONNECTED)

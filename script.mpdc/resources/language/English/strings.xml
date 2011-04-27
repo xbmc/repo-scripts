@@ -67,6 +67,7 @@
 	<string id="30061">Please select playlist</string>
 	<string id="30062">Added to %s</string>
 	<string id="30063"> * New playlist *</string>
+	<string id="30064">Start playing after item is queued</string>
     <string id="200">Queue</string>
     <string id="201">Files</string>
     <string id="202">Artists</string>

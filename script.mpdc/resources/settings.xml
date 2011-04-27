@@ -17,8 +17,9 @@
 		<setting label="30035" type="text" id="0_mpd_pass" option="hidden" default="" />
 		<setting label="30048" type="folder" id="0_media_root"  source="\"  default="" />
 		<setting label="30034" type="bool" id="0_play_stream" default="false" />
-		<setting label="30033" type="text" id="0_stream_url" default="" />
+		<setting label="30033" type="text" id="0_stream_url" default="" visible="eq(-1,true)" />
 		<setting label="30058" type="bool" id="0_stop_on_exit" default="false" />
+		<setting label="30064" type="bool" id="0_play_on_queued" default="false" />
 		<setting label="30052" type="bool" id="0_force_settings" default="false" />
 		<setting label="30053" type="bool" id="0_force_random" default="false" visible="eq(-1,true)" />
 		<setting label="30054" type="bool" id="0_force_repeat" default="false" visible="eq(-2,true)" />
@@ -33,8 +34,9 @@
 		<setting label="30035" type="text" id="1_mpd_pass" option="hidden" default="" />
 		<setting label="30048" type="folder" id="1_media_root"  source="\"  default="" />
 		<setting label="30034" type="bool" id="1_play_stream" default="false" />
-		<setting label="30033" type="text" id="1_stream_url" default="" />
+		<setting label="30033" type="text" id="1_stream_url" default="" visible="eq(-1,true)" />
 		<setting label="30058" type="bool" id="1_stop_on_exit" default="false" />
+		<setting label="30064" type="bool" id="1_play_on_queued" default="false" />
 		<setting label="30052" type="bool" id="1_force_settings" default="false" />
 		<setting label="30053" type="bool" id="1_force_random" default="false" visible="eq(-1,true)" />
 		<setting label="30054" type="bool" id="1_force_repeat" default="false" visible="eq(-2,true)" />
@@ -49,8 +51,9 @@
 		<setting label="30035" type="text" id="2_mpd_pass" option="hidden" default="" />
 		<setting label="30048" type="folder" id="2_media_root"  source="\"  default="" />
 		<setting label="30034" type="bool" id="2_play_stream" default="false" />
-		<setting label="30033" type="text" id="2_stream_url" default="" />
+		<setting label="30033" type="text" id="2_stream_url" default="" visible="eq(-1,true)" />
 		<setting label="30058" type="bool" id="2_stop_on_exit" default="false" />
+		<setting label="30064" type="bool" id="2_play_on_queued" default="false" />
 		<setting label="30052" type="bool" id="2_force_settings" default="false" />
 		<setting label="30053" type="bool" id="2_force_random" default="false" visible="eq(-1,true)" />
 		<setting label="30054" type="bool" id="2_force_repeat" default="false" visible="eq(-2,true)" />
