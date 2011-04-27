@@ -1,3 +1,7 @@
+2.4.6
+- fixes: Service LegendasDivx.com v0.2.2
+- fixed: "Add Language To Filename" was ignored in some cases
+
 2.4.5
 - fixes in LegendasDivx.com version 0.2.0/0.2.1
 - fixed: BetaSeries fetching .ass subtitle in archive cause some issues

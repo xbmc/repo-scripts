@@ -8,6 +8,9 @@
 # http://www.teknorage.com
 # License: GPL v2
 #
+# NEW on Service LegendasDivx.com v0.2.2:
+# Fixed pathnames using (os.sep). For sure :)
+#
 # NEW on Service LegendasDivx.com v0.2.1:
 # Fixed bug when the file is played from a root path, no parent dir search\sync when that happens.
 # Fixed pathnames to work with all OS (Win, Unix, etc).
@@ -130,9 +133,17 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			#Find filename on the comentaries to show sync label using filename or dirname (making it global for further usage)
 			global filesearch
 			filesearch = os.path.abspath(file_original_path)
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s abspath: '%s'" % (debug_pretext, filesearch))
 			filesearch = os.path.split(filesearch)
-			dirsearch = string.split(filesearch[0], '\\')
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s path.split: '%s'" % (debug_pretext, filesearch))
+			dirsearch = filesearch[0].split(os.sep)
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s dirsearch: '%s'" % (debug_pretext, dirsearch))
 			dirsearch_check = string.split(dirsearch[-1], '.')
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s dirsearch_check: '%s'" % (debug_pretext, dirsearch_check))
 			if (searchstring_notclean != ""):
 				sync = False
 				if re.search(searchstring_notclean, desc):
@@ -193,7 +204,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 	global israr
 	israr = os.path.abspath(file_original_path)
 	israr = os.path.split(israr)
-	israr = string.split(israr[0], '\\')
+	israr = israr[0].split(os.sep)
 	israr = string.split(israr[-1], '.')
 	israr = string.lower(israr[-1])
 	
@@ -202,7 +213,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 			if 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
 				dirsearch = os.path.abspath(file_original_path)
 				dirsearch = os.path.split(dirsearch)
-				dirsearch = string.split(dirsearch[0], '\\')
+				dirsearch = dirsearch[0].split(os.sep)
 				if len(dirsearch) > 1:
 					searchstring_notclean = dirsearch[-3]
 					searchstring = xbmc.getCleanMovieTitle(dirsearch[-3])
@@ -214,7 +225,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 		elif 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
 			dirsearch = os.path.abspath(file_original_path)
 			dirsearch = os.path.split(dirsearch)
-			dirsearch = string.split(dirsearch[0], '\\')
+			dirsearch = dirsearch[0].split(os.sep)
 			if len(dirsearch) > 1:
 				searchstring_notclean = dirsearch[-2]
 				searchstring = xbmc.getCleanMovieTitle(dirsearch[-2])
@@ -344,12 +355,12 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 				searchsubscount = len(searchsubs)
 				for filesub in searchsubs:
 					nopath = string.split(filesub, tmp_sub_dir)[-1]
-					justfile = string.split(nopath, '\\')[-1]
+					justfile = nopath.split(os.sep)[-1]
 					#For DEBUG only uncomment next line
 					#log( __name__ ,"%s DEBUG-nopath: '%s'" % (debug_pretext, nopath))
 					#log( __name__ ,"%s DEBUG-justfile: '%s'" % (debug_pretext, justfile))
 					releasefilename = filesearch[1][:len(filesearch[1])-4]
-					releasedirname = string.split(filesearch[0], '\\')
+					releasedirname = filesearch[0].split(os.sep)
 					if 'rar' in israr:
 						releasedirname = releasedirname[-2]
 					else:

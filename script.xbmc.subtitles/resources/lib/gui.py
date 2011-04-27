@@ -411,7 +411,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
   def create_name(self,zip_entry,sub_filename,subtitle_lang):
     sub_ext  = os.path.splitext( zip_entry )[1]
     sub_name = os.path.splitext( sub_filename )[0]
-    file_name = "%s.%s%s" % ( sub_name, subtitle_lang, sub_ext )   
+    if (__settings__.getSetting( "lang_to_end" ) == "true"):
+      file_name = "%s.%s%s" % ( sub_name, subtitle_lang, sub_ext )
+    else:
+      file_name = "%s%s" % ( sub_name, sub_ext )  
     file_path = os.path.join(self.sub_folder, file_name)
     subtitle_file = os.path.join(self.tmp_sub_dir, zip_entry)
     return subtitle_file, file_path
