@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
 
-    <!-- Portugues Brasileiro -->
+    <!-- Português -->
 
-    <string id="610">Buscar em </string>
-    <string id="612">Busca manual</string>
-    <string id="642">Procurando legendas %s</string>
-    <string id="646">Conectando...</string>
-    <string id="649">Baixando legendas...</string>
-    <string id="652">Legenda baixada e extraída</string>
-    <string id="653">Falha na Conexão.</string>
-    <string id="654">Erro extraindo legenda</string>
+    <string id="610">Procurar em </string>
+    <string id="612">Procura manual</string>
+    <string id="642">A procurar legendas %s</string>
+    <string id="646">A ligar...</string>
+    <string id="649">Legenda em Download...</string>
+    <string id="652">Download terminado e extraído</string>
+    <string id="653">Falha na Ligação.</string>
+    <string id="654">Erro a extrair a legenda</string>
     <string id="655">Legenda local disponível</string>
     <string id="656">O serviço não respondeu no tempo disponível</string>
     <string id="657">Nenhuma Legenda Encontrada!</string>
-    <string id="744">legendas encontradas para</string>
-    <string id="745">O serviço Podnapisi requer usuário e senha</string>
-    <string id="746">Por favor registre em www.podnapisi.net</string>
-    <string id="747">Pesquise Usando o Nome da Pasta</string>
-    <string id="748">Você não pode salvar a legenda no destino selecionado</string>
+    <string id="744">legenda(s) encontrada(s) para</string>
+    <string id="745">O serviço Podnapisi precisa de utilizador e password</string>
+    <string id="746">Por favor registe-se em www.podnapisi.net</string>
+    <string id="747">Pesquisar pelo Nome da Pasta</string>
+    <string id="748">Não pode gravar a legenda no destino seleccionado</string>
     <string id="749">Por favor escolha uma pasta diferente para as legendas nas Configurações do Addon.</string>
-    <string id="750">Você gostaria de ativar essa legenda temporariamente?</string>
-    <string id="751">Digite o Nome do Filme (ano)</string>
+    <string id="750">Gostaria de activar esta legenda temporariamente?</string>
+    <string id="751">Escreva o Nome do Filme (ano)</string>
     <string id="755">O servidor está sobrecarregado, por favor tente mais tarde</string>
-    <string id="756">O login falhou. Verifique seus dados nas Configurações do addon</string>
+    <string id="756">O login falhou. Verifique os seus dados nas Configurações do addon</string>
     <string id="760">Serviços Disponíveis</string> 
     
   <!-- Script Settings -->
    
-    <string id="30100">Selecionar Idioma</string>
+    <string id="30100">Seleccionar Idioma</string>
     <string id="30101">Idioma Principal</string>
     <string id="30102">Idioma Secundário</string>
-    <string id="30103">Seleção de Serviços</string>
-    <string id="30104">- Podnapisi.net Nome Do Usuário</string>
-    <string id="30105">- Podnapisi.net Senha</string>
+    <string id="30103">Selecção de Serviços</string>
+    <string id="30104">- Podnapisi.net Nome Do Utilizador</string>
+    <string id="30105">- Podnapisi.net Password</string>
     <string id="30106">Opções Avançadas</string>
     <string id="30107">Gravar Legenda na Pasta do Vídeo</string>
     <string id="30108">- Selecione a Pasta Personalizada</string>
@@ -41,25 +41,25 @@
     <string id="30111">Idioma Terciário</string> 
     <string id="30113">Selecione o Serviço Padrão para Filmes</string>
     <string id="30114">Selecione o Serviço Padrão para Séries</string>
-    <string id="30118">Mostre o Nome do Arquivo nos Resultados</string>
-    <string id="30119">Pesquise Usando o Nome da Pasta</string>
+    <string id="30118">Mostrar o Nome do Arquivo nos Resultados</string>
+    <string id="30119">Pesquisar Usando o Nome da Pasta</string>
     <string id="30121">Adicionar Língua ao Nome do Arquivo </string>
     <string id="30122">Tempo Padrão de Timeout</string>
-    <string id="30123">- Legendas.TV Nome do Usuário</string>
-    <string id="30124">- Legendas.TV Senha</string>
+    <string id="30123">- Legendas.TV Nome do Utilizador</string>
+    <string id="30124">- Legendas.TV Password</string>
     <string id="30125">Desabilitar pesquisa por hash</string>
-    <string id="30126">- Itasa Nome do Usuário</string>
-    <string id="30127">- Itasa Senha</string>
-    <string id="30128">- Titulky Nome do Usuário</string>
-    <string id="30129">- Titulky Senha</string>
-    <string id="30130">Search next available service if no results are found</string>
-    <string id="30131">Auto download first "sync" subtitle</string>
-    <string id="30132">- LegendasDivx Usuário</string>
-    <string id="30133">- LegendasDivx Senha</string>
-    <string id="30134">- PTSubs Usuário</string>
-    <string id="30135">- PTSubs Senha</string>
-    <string id="30136">- OmniSubs Usuário</string>
-    <string id="30137">- OmniSubs Senha</string>
+    <string id="30126">- Itasa Nome do Utilizador</string>
+    <string id="30127">- Itasa Password</string>
+    <string id="30128">- Titulky Nome do Utilizador</string>
+    <string id="30129">- Titulky Password</string>
+    <string id="30130">Procurar o serviço seguinte se não houver resultados</string>
+    <string id="30131">Descarregar a primeira legenda sincronizada ("sync") automaticamente</string>
+    <string id="30132">- LegendasDivx Utilizador</string>
+    <string id="30133">- LegendasDivx Password</string>
+    <string id="30134">- PTSubs Utilizador</string>
+    <string id="30135">- PTSubs Password</string>
+    <string id="30136">- OmniSubs Utilizador</string>
+    <string id="30137">- OmniSubs Password</string>
   
   <!-- Languages  -->
 

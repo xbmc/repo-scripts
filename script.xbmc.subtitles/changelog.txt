@@ -1,3 +1,8 @@
+2.9.4
+- added: New services PT-SUBS.net and OmniSubs.net, thx to highlandr
+- removed: Sratim service until API is sorted out
+- fixed: Turkish translation and encoding correction, thx queeup
+
 2.9.3
 - fixed: LegendasDivx.com, string.split now uses os.sep for better results
 - fixes: Service LegendasDivx.com v0.2.2
