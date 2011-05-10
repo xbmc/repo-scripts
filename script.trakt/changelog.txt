@@ -1,3 +1,7 @@
+Version 0.1.5
+	- bug fix with xbmc httpapi sql query
+	- code/reason urlerror fix (thanks Mizaki!)
+
 Version 0.1.3
 	- notification bug fixed
 	- translation for French added thanks to ppic!

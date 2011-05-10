@@ -12,7 +12,7 @@ import re
 __scriptname__ = "trakt"
 __author__ = "Sean Rudford"
 __url__ = "http://trakt.tv/"
-__version__ = "0.1.3"
+__version__ = "0.1.5"
 __XBMC_Revision__ = ""
 
 def addPadding(number):
@@ -203,13 +203,10 @@ if ((bStartup and bAutoStart) or bRun):
     if (bNotify):
         notification("Trakt", __language__(45050).encode( "utf-8", "ignore" ), 3000, __settings__.getAddonInfo("icon"))
 
-    while 1:
+    while (not xbmc.abortRequested):
         #If Set To AutoSubmit
         if (bAutoSubmitVideo):
             CheckAndSubmit()
-        
-        if (xbmc.abortRequested):
-            break
             
         time.sleep(sleepTime)
 
