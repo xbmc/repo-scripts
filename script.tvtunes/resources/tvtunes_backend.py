@@ -7,7 +7,7 @@ import os
 #Modules XBMC
 import xbmc
 import xbmcgui
-import sys         
+import sys
 
 try:
     # parse sys.argv for params
@@ -97,11 +97,23 @@ class mythread( threading.Thread ):
             print "### Try authentification share"
             self.newpath = self.newpath.replace("smb://", "smb://%s:%s@" % (params.get("user", "guest" ) , params.get("password", "guest" )) )
             print "### %s" % self.newpath
-        if os.path.exists( os.path.join (self.newpath , "theme.mp3" ) ):
-            self.playpath = os.path.join (self.newpath , "theme.mp3" )
+
+        #######hack for TV shows stored as ripped disc folders
+        if 'VIDEO_TS' in str(self.newpath):
+            print "### FOUND VIDEO_TS IN PATH: Correcting the path for DVDR tv shows"
+            uppedpath = self._updir( self.newpath, 3 )
+            if os.path.exists( os.path.join ( uppedpath , "theme.mp3" )):
+                self.playpath = os.path.join ( uppedpath , "theme.mp3" )
+            else:
+                self.playpath = os.path.join ( self._updir(uppedpath,1) , "theme.mp3" )
+        #######end hack
+                
+        elif os.path.exists( os.path.join ( self.newpath , "theme.mp3" ) ):
+            self.playpath = os.path.join ( self.newpath , "theme.mp3" )
         elif os.path.exists(os.path.join(os.path.dirname( os.path.dirname( self.newpath ) ) , "theme.mp3")):                                
             self.playpath = (os.path.join(os.path.dirname( os.path.dirname( self.newpath ) ) , "theme.mp3"))
         else: self.playpath = False
+
         if self.playpath:
             if not self.loud: self.lower_volume()
             xbmcgui.Window( 10025 ).setProperty( "TvTunesIsAlive", "true" )
@@ -109,8 +121,16 @@ class mythread( threading.Thread ):
             xbmc.Player().play(self.playpath)
             if params.get("loop", "false" ) == "true" : xbmc.executebuiltin('XBMC.PlayerControl(Repeat)')
             else: xbmc.executebuiltin('XBMC.PlayerControl(RepeatOff)')             
+
         else: print "### no theme found for %s or %s" % ( os.path.join( self.newpath , "theme.mp3" ) , os.path.join ( os.path.dirname( os.path.dirname ( self.newpath ) ) , "theme.mp3" ) )
- 
+
+    def _updir(self, thepath, x):
+        # move up x directories on thepath
+        while x > 0:
+            x -= 1
+            thepath = (os.path.split(thepath))[0]
+        return thepath
+        
     def stop( self ):
         if xbmc.getInfoLabel( "Window(10025).Property(TvTunesIsAlive)" ) == "true" and not xbmc.Player().isPlayingVideo(): 
             print "### stop playing"
@@ -121,9 +141,9 @@ class mythread( threading.Thread ):
         if self.loud: self.raise_volume()
         print "### Stopping TvTunes Backend ###"
         self._stop = True
-        
+
+      
 xbmcgui.Window( 10025 ).setProperty( "TvTunesIsRunning", "true" )
 thread = mythread()
 # start thread
-thread.start()
-
+thread.start()  

@@ -1,3 +1,9 @@
+v0.9.0:
+- added support for dvd iso folders (thanks to anarchintosh)
+
+v0.8.1:
+- localized settings.
+
 v0.8.0:
 - added solo mode, use this line with a button on dialogvideoinfo for tvshow:
 <onclick>XBMC.RunScript(script.TvTunes,mode=solo&tvpath=$INFO[ListItem.FilenameAndPath]&tvname=$INFO[ListItem.TVShowTitle])</onclick>
