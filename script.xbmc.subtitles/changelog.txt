@@ -1,3 +1,8 @@
+2.4.7
+- added: New services PT-SUBS.net and OmniSubs.net, thx to highlandr
+- removed: Sratim service until API is sorted out
+- fixed: Turkish translation and encoding correction, thx queeup
+
 2.4.6
 - fixes: Service LegendasDivx.com v0.2.2
 - fixed: "Add Language To Filename" was ignored in some cases
