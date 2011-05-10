@@ -56,6 +56,13 @@ class AllMusicFetcher(object):
 			if os.path.exists(imagefile):
 				print 'Image already downloaded, returning '+imagefile
 				return imagefile
+			if os.path.exists(imagefile+'.none'):
+				#ha, we have tried to download image before, but failed, redownload after week expires
+				if (time.time() - os.path.getctime(imagefile+'.none')) > (3600*24*7):
+					# week expired, delete dummy file and return nothing to force another download attepmt
+					os.remove(imagefile+'.none')
+					return None
+				return ''
 		return None
 
 	def get_album_art(self,artist,album,file=None):
@@ -72,6 +79,9 @@ class AllMusicFetcher(object):
 			print 'Nothing to search for'
 			return None
 		filename = self._get_local_album(artist,album)
+		if filename == '':
+			print 'No results found time ago'
+			return None
 		if not filename == None:
 			return filename
 		url = self.server_url+'/search/album/'+urllib.quote(album)
@@ -91,6 +101,11 @@ class AllMusicFetcher(object):
 				break
 		if link == None:
 			print 'No results found'
+			if self.cache:
+				# save dummy file to know we have already failed to get image
+				f = open(self.get_image_file_name(artist,album)+'.none','w')
+				f.write('')
+				f.close()
 			return None
 		response = urllib2.urlopen(link)
 		content = response.read()

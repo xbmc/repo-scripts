@@ -138,19 +138,19 @@
 					<onright>130</onright>
 				  </item>
 				</content>
-			      <itemlayout width="180" height="50">
+			      <itemlayout width="200" height="50">
 						<control type="image">
 							<posx>10</posx>
 							<posy>10</posy>
-							<width>160</width>
+							<width>180</width>
 							<height>40</height>
 							<colordiffuse>FF585858</colordiffuse>
 							<texture>RecentAddedNF.png</texture>
 						</control>
 						<control type="label">
-							<posx>90</posx>
+							<posx>100</posx>
 							<posy>10</posy>
-							<width>280</width>
+							<width>180</width>
 							<height>38</height>
 							<font>font24_title</font>
 							<aligny>left</aligny>
@@ -160,27 +160,27 @@
 							<info>ListItem.Label</info>
 						</control>
 				  </itemlayout>
-				  <focusedlayout width="180" height="50">
+				  <focusedlayout width="200" height="50">
 						<control type="image">
 							<posx>0</posx>
 							<posy>0</posy>
-							<width>180</width>
+							<width>200</width>
 							<height>50</height>
 							<texture>RecentAddedNF.png</texture>
-						<animation effect="zoom" end="0,0,180,50" time="200">focus</animation>
+						<animation effect="zoom" end="0,0,200,50" time="200">focus</animation>
 						</control> 
 						<control type="image">
 							<posx>0</posx>
 							<posy>4</posy>
-							<width>180</width>
+							<width>200</width>
 							<height>42</height>
 							<texture>MenuItemFO.png</texture>
 							<visible>Control.HasFocus(1000)</visible>
 						</control> 
 						<control type="label">
-							<posx>90</posx>
+							<posx>100</posx>
 							<posy>5</posy>
-							<width>180</width>
+							<width>200</width>
 							<height>38</height>
 							<font>font28_title</font>
 							<aligny>center</aligny>
@@ -380,7 +380,7 @@
 			<control type="label">
 				<posx>40</posx>
 				<posy>0</posy>
-				<width>35</width>
+				<width>40</width>
 				<height>32</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -389,9 +389,9 @@
 				<info>ListItem.Property(track)</info>
 			  </control>
 			  <control type="label">
-				<posx>80</posx>
+				<posx>85</posx>
 				<posy>0</posy>
-				<width>295</width>
+				<width>290</width>
 				<height>32</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -464,7 +464,7 @@
 			<control type="label">
 				<posx>40</posx>
 				<posy>0</posy>
-				<width>35</width>
+				<width>40</width>
 				<height>32</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -473,9 +473,9 @@
 				<info>ListItem.Property(track)</info>
 			  </control>
 			  <control type="label">
-				<posx>80</posx>
+				<posx>85</posx>
 				<posy>0</posy>
-				<width>295</width>
+				<width>290</width>
 				<height>32</height>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>

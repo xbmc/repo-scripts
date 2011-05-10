@@ -1,3 +1,7 @@
+[B]1.0.4[/B]
+- added: Polish translation thanks to Marek Lawicki
+- fixed: items were queued twice when replacing queue
+- improved allmusic.com album art fetcher - do not search for image when searching did not succeed previously
 [B]1.0.3[/B]
 - added: per-profile option to start playing MPD right after an item was queued
 - fixed: MPD did not resume playing when queue was replaced
