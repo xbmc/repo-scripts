@@ -24,7 +24,7 @@ import mythbox.msg as m
 
 from mythbox.bus import Event, EventBus
 from mythbox.mythtv.db import MythDatabase
-from mythbox.util import requireDir
+from mythbox.util import requireDir, safe_str
 from xml.dom import minidom
 
 slog = logging.getLogger('mythbox.settings')
@@ -108,34 +108,40 @@ class MythSettings(object):
                 
     def initDefaults(self):
         self.defaults = {
-            'mysql_host'                : 'localhost',
-            'mysql_port'                : '3306',
-            'mysql_database'            : 'mythconverg',
-            'mysql_user'                : 'mythtv',
-            'mysql_password'            : 'change_me',
-            'mysql_encoding_override'   : 'latin1',
-            'paths_recordedprefix'      : self.platform.getDefaultRecordingsDir(),
-            'aggressive_caching'        : 'False',
-            'recorded_view_by'          : '2', 
-            'upcoming_view_by'          : '2',
-            'confirm_on_delete'         : 'True',
-            'fanart_tvdb'               : 'True',
-            'fanart_tmdb'               : 'True',
-            'fanart_imdb'               : 'True',
-            'fanart_tvrage'             : 'True',
-            'fanart_google'             : 'True',
-            'feeds_twitter'             : 'mythboxfeed',
-            'lirc_hack'                 : 'False',
-            'logging_enabled'           : 'False',
-            'schedules_last_selected'   : '0',
-            'livetv_last_selected'      : '0',
-            'recordings_last_selected'  : '0',
-            'recordings_sort_by'        : 'Date',
-            'recordings_sort_ascending' : 'False',
-            'recordings_recording_group': 'Default',
-            'tv_guide_last_selected'    : '0',
-            'upcoming_sort_by'          : 'Date',
-            'upcoming_sort_ascending'   : 'False',
+            'mysql_host'                 : 'localhost',
+            'mysql_port'                 : '3306',
+            'mysql_database'             : 'mythconverg',
+            'mysql_user'                 : 'mythtv',
+            'mysql_password'             : 'change_me',
+            'mysql_encoding_override'    : 'latin1',
+            'streaming_enabled'          : 'True',
+            'paths_recordedprefix'       : self.platform.getDefaultRecordingsDir(),
+            'aggressive_caching'         : 'True',
+            'recorded_view_by'           : '2', 
+            'upcoming_view_by'           : '2',
+            'confirm_on_delete'          : 'True',
+            'fanart_tvdb'                : 'True',
+            'fanart_tmdb'                : 'True',
+            'fanart_imdb'                : 'True',
+            'fanart_tvrage'              : 'True',
+            'fanart_google'              : 'True',
+            'feeds_twitter'              : 'mythboxfeed',
+            'logging_enabled'            : 'False',
+
+            'schedules_last_selected'    : '0',
+            'schedules_sort_by'          : 'Title',
+            
+            'livetv_last_selected'       : '0',
+
+            'recordings_last_selected'   : '0',
+            'recordings_selected_group'  : u'',
+            'recordings_selected_program': u'',
+            'recordings_group_sort'      : 'Date',
+            'recordings_title_sort'      : 'Date',
+            
+            'tv_guide_last_selected'     : '0',
+            'upcoming_sort_by'           : 'Date',
+            'upcoming_sort_ascending'    : 'False',
         }
 
     def load(self):
@@ -159,7 +165,7 @@ class MythSettings(object):
                         self.d[tag] = string.strip(results[0].firstChild.nodeValue)
                     else:
                         # empty nodes default to empty string instead of None
-                        self.d[tag] = ''
+                        self.d[tag] = u''
                 else:
                     slog.error('no tag found for %s ' % tag)
                     
@@ -167,15 +173,15 @@ class MythSettings(object):
         settingsDir = self.platform.getScriptDataDir()
         requireDir(settingsDir)
 
-        dom = minidom.parseString('<mythtv></mythtv>')
+        dom = minidom.parseString('<mythtv></mythtv>'.encode('utf-8'))
         for key in self.d.keys():
             e = dom.createElement(key)
-            n = dom.createTextNode(string.strip(self.d[key]))
+            n = dom.createTextNode(self.d[key].strip())
             e.appendChild(n)
             dom.childNodes[0].appendChild(e)
         slog.debug('Saving settings to %s' % self.settingsPath)
         fh = file(self.settingsPath, 'w')
-        fh.write(dom.toxml())
+        fh.write(dom.toxml(encoding='utf-8'))
         fh.close()
 
     def getBoolean(self, tag):
@@ -196,7 +202,9 @@ class MythSettings(object):
         self.verifyMySQLConnectivity()
         self.verifyMythTVConnectivity()
         
-        MythSettings.verifyRecordingDirs(self.get('paths_recordedprefix'))
+        if not self.getBoolean('streaming_enabled'): 
+            MythSettings.verifyRecordingDirs(self.get('paths_recordedprefix'))
+        
         MythSettings.verifyBoolean(self.get('confirm_on_delete'), 'Confirm on delete must be True or False')
         MythSettings.verifyBoolean(self.get('aggressive_caching'), 'Aggressive Caching must be True or False')
         slog.debug('verified settings')
@@ -224,7 +232,7 @@ class MythSettings(object):
     def __repr__(self):
         sb = ''
         for tag in self.defaults.keys():
-            sb += '%s = %s\n' % (tag, [self.get(tag), '<EMPTY>'][self.get(tag) is None]) 
+            sb += '%s = %s\n' % (tag, [safe_str(self.get(tag)), '<EMPTY>'][self.get(tag) is None]) 
         return sb
     
     @staticmethod    

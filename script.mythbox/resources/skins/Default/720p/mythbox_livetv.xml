@@ -84,6 +84,15 @@
                     <info>ListItem.Property(channelIcon)</info>
                     <aspectratio>keep</aspectratio>
                 </control>
+
+                <control type="image">
+                    <posx>598</posx>
+                    <posy>2</posy>
+                    <width>300</width>
+                    <height>56</height>
+                    <aspectratio>scale</aspectratio>
+                    <texture diffuse="mb-diffuse-left.png">$INFO[ListItem.Property(banner)]</texture>
+                </control>
                 
                 <control type="label">
                     <posx>140</posx>
@@ -166,6 +175,15 @@
                     <height>56</height>
                     <info>ListItem.Property(channelIcon)</info>
                     <aspectratio>keep</aspectratio>
+                </control>
+
+                <control type="image">
+                    <posx>598</posx>
+                    <posy>2</posy>
+                    <width>300</width>
+                    <height>56</height>
+                    <aspectratio>scale</aspectratio>
+                    <texture diffuse="mb-diffuse-left.png">$INFO[ListItem.Property(banner)]</texture>
                 </control>
                 
                 <control type="label">
@@ -391,6 +409,17 @@
           <fadetime>400</fadetime>
           <texture>$INFO[Container(600).ListItem.Property(poster)]</texture>
           <visible>!Player.HasVideo</visible>
+      </control>
+
+      <control type="label">
+          <description>poster size</description>
+          <posx>40</posx>
+          <posy>590</posy>
+          <width>230</width>
+          <height>40</height>
+          <font>font10</font>
+          <textcolor>88FFFFFF</textcolor>
+          <label>$INFO[Container(600).ListItem.Property(posterSize)]</label>
       </control>
   
       <control type="image">

@@ -97,13 +97,13 @@ class BootStrapper(object):
         from mythbox.util import requireDir
         requireDir(cacheDir)
         
-        try:
-            self.platform.getFFMpegPath(prompt=True)
-        except Exception, e:
-            self.failSilent = True
-            raise e
+#        try:
+#            self.platform.getFFMpegPath(prompt=True)
+#        except Exception, e:
+#            self.failSilent = True
+#            raise e
         
-        self.log.info('Mythbox Platform Initialized')
+        self.log.info('MythBox %s Initialized' % self.platform.addonVersion())
 
     def bootstrapEventBus(self):
         self.bus = EventBus()
@@ -121,11 +121,15 @@ class BootStrapper(object):
         self.mythThumbnailCache = MythThumbnailFileCache(join(cacheDir, 'thumbnail'), MythThumbnailResolver(), self.bus)
         self.mythChannelIconCache = FileCache(join(cacheDir, 'channel'), MythChannelIconResolver())
         self.httpCache = FileCache(join(cacheDir, 'http'), HttpResolver())
-
+        
+        from mythbox.mythtv.cache import DomainCache
+        self.domainCache = DomainCache(bus=self.bus)
+        
         self.cachesByName = {
             'mythThumbnailCache'  : self.mythThumbnailCache, 
             'mythChannelIconCache': self.mythChannelIconCache, 
-            'httpCache'           : self.httpCache
+            'httpCache'           : self.httpCache,
+            'domainCache'         : self.domainCache
         }
 
     def bootstrapSettings(self):
@@ -185,9 +189,14 @@ class BootStrapper(object):
         self.fanArt = FanArt(self.platform, self.httpCache, self.settings, self.bus)
         #self.fanArt = DelayedInstantiationProxy(self.platform, self.httpCache, self.settings, self.bus)
         
-        import socket
-        socket.setdefaulttimeout(20)
+        try:
+            import socket
+            socket.setdefaulttimeout(float(os.getenv('MYTHBOX_TIMEOUT', '30')))
+        except:
+            self.log.exception('Error setting socket timeout')
+            
         self.bus.register(self)
+
         # Generate fake event to reflect value in settings.xml instead of mythbox_log.ini
         from bus import Event
         self.onEvent({'id': Event.SETTING_CHANGED, 'tag':'logging_enabled', 'old':'DontCare', 'new':self.settings.get('logging_enabled')})
@@ -202,16 +211,14 @@ class BootStrapper(object):
         self.feedHose = FeedHose(self.settings, self.bus)
 
     def bootstrapDebugShell(self):
-        # only startup debug shell on my mythboxen
-        import socket
-        if socket.gethostname() in ('htpc2', 'faraday',):
-            try:
-                from mythbox.shell import DebugShell
-                globals()['bootstrapper'] = self
-                self.shell = DebugShell(self.bus, namespace=globals())
-                self.shell.start()
-            except:
-                self.log.exception('Debug shell startup')
+        # debug shell only packaged with bin/package-debug-zip
+        try: 
+            from mythbox.shell import DebugShell
+            globals()['bootstrapper'] = self
+            self.shell = DebugShell(self.bus, namespace=globals())
+            self.shell.start()
+        except ImportError:
+            self.log.debug('Punting on debug shell -- not packaged')
 
     def bootstrapXbmcShutdownListener(self):
         from threading import Thread

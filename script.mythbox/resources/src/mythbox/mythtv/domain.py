@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -21,6 +21,7 @@ import logging
 import os
 import re
 import sre
+import tempfile
 import time
 
 import mythbox.msg as m
@@ -31,7 +32,7 @@ from mythbox.mythtv.enums import CheckForDupesIn, CheckForDupesUsing, \
     ScheduleType, Upcoming
 from mythbox.platform import WindowsPlatform
 from mythbox.ui.toolkit import showPopup
-from mythbox.util import timed, formatSeconds, formatSize, synchronized, requireDir
+from mythbox.util import timed, formatSeconds, formatSize, synchronized, requireDir, safe_str
 from odict import odict
 
 log = logging.getLogger('mythbox.core')
@@ -176,6 +177,7 @@ class Channel(object):
     
     @staticmethod
     def sortableChannelNumber(channelNumber, alternative):
+        # TODO: Handle channels like S2 S34 SE20 E11
         c = channelNumber
         try:
             n = int(c)
@@ -185,7 +187,7 @@ class Channel(object):
                 c = c.replace('-', '.')
                 n = float(c)
             except:
-                log.warn('Was not able to convert channel number %s into a number' % channelNumber)
+                log.warn('Was not able to convert channel number %s into a number. Returning %s instead' % (channelNumber, alternative))
                 n = alternative
         return n
         
@@ -263,11 +265,17 @@ class Program(object):
         #   failures if > 1 tuner has the same channel 
         #   (different channelId but same channelNumber)
         #
-        return \
-            isinstance(rhs, Program) and \
-            self.getChannelNumber() == rhs.getChannelNumber() and \
-            self.starttime() == rhs.starttime()
+        return isinstance(rhs, Program) and self.key() == rhs.key()
 
+    def __ne__(self, rhs):
+        return not self.__eq__(rhs)
+        
+    def __hash__(self):
+        return hash(self.key())
+
+    def key(self):
+        return self.getChannelNumber(), self.starttime()
+        
     def getChannelId(self):
         raise Exception, "Abstract base class"
     
@@ -620,7 +628,14 @@ class RecordedProgram(Program):
     _rec_program_dict = {}
     _rec_program_dict_empty = {}
     
-    def __init__(self, data, settings, translator, platform, protocol, conn=None):
+    _fps_overrides = {
+        'hdpvr_1080i': {
+            'fps'  : 29.97,
+            'tags' : {'format': 'mpegts', 'pixel_format': 'yuv420p', 'frame_rate': '59.94', 'video_codec': ': h264',       'dimension': '1920x1080 [PAR 1:1 DAR 16:9]'}
+        }
+    }
+    
+    def __init__(self, data, settings, translator, platform, protocol, conn=None, db=None):
         '''
         @param data: list of fields from mythbackend. libs/libmythtv/programinfo.cpp in the mythtv source 
                      describes the ordering of these fields.
@@ -632,8 +647,9 @@ class RecordedProgram(Program):
         self._platform = platform
         self.protocol = protocol
         self._conn = conn
+        self._db = db
         
-        self._fps = None
+        self._fps = None 
         self._commercials = None
         self._localPath = None
         
@@ -663,6 +679,9 @@ class RecordedProgram(Program):
     
     def conn(self):
         return self._conn
+    
+    def db(self):
+        return self._db
     
     def data(self):
         """
@@ -921,7 +940,7 @@ class RecordedProgram(Program):
         @param seconds: Bookmark in seconds
         @type seconds: float
         """
-        self.conn().setBookmark(self, seconds2frames(seconds, self.getFrameRate()))
+        self.conn().setBookmark(self, seconds2frames(seconds, self.getFPS()))
         self.setProgramFlags(self.getProgramFlags() | FlagMask.FL_BOOKMARK)
 
     @inject_conn
@@ -933,7 +952,7 @@ class RecordedProgram(Program):
         if not self.isBookmarked():
             return 0.0
         else:
-            return frames2seconds(self.conn().getBookmark(self), self.getFrameRate())
+            return frames2seconds(self.conn().getBookmark(self), self.getFPS())
 
     def getFileSize(self):
         """
@@ -978,104 +997,144 @@ class RecordedProgram(Program):
         """
         return self.getFilename() + '.png'
 
-    @timed
-    @synchronized
-    def getFrameRate(self):
-        """
-        @rtype: float
-        @note: cached 
-        @note: most recordings are either 29.97 or 59.97
-        @todo: GUIInfoManager.cpp - look at refs to GetFPS()
-        """
-        if not self._fps:
-            
-            ffmpeg_cache_dir=os.path.join(self._platform.getScriptDataDir(), 'cache', 'ffmpeg')
-            requireDir(ffmpeg_cache_dir) 
-                
-            ffmpegParser = FFMPEG(
-                ffmpeg=self._platform.getFFMpegPath(),
-                closeFDs=(type(self._platform) != WindowsPlatform),  # WORKAROUND: close_fds borked on windows
-                windows=(type(self._platform) == WindowsPlatform),   # WORKAROUND: let pyxcoder know we're on windows
-                tempdir=ffmpeg_cache_dir)
-            
-            try:
-                metadata = ffmpegParser.get_metadata(self.getLocalPath())
-            except:
-                log.exception('ffmpeg parsing failed')
-                metadata = None
-                
-            log.debug('ffmpeg metadata for %s = %s' % (self.getLocalPath(), metadata))
-            if metadata:
-                self._fps = float(metadata.frame_rate)
-                
-                # Hack for FFMPEG returning incorrect framerate (59.94 instead of 29.97) for 1080i HDPVR recordings
-                try:
-                    hdpvr1080i = {'format': 'mpegts', 'pixel_format': 'yuv420p', 'frame_rate': '59.94', 'video_codec': ': h264', 'dimension': '1920x1080 [PAR 1:1 DAR 16:9]'}
-                    if  metadata.format       == hdpvr1080i['format'] and       \
-                        metadata.pixel_format == hdpvr1080i['pixel_format'] and \
-                        metadata.frame_rate   == hdpvr1080i['frame_rate'] and   \
-                        metadata.video_codec  == hdpvr1080i['video_codec'] and  \
-                        metadata.dimension    == hdpvr1080i['dimension']:
-                        log.debug('HDPVR 1080i recording detected. Defaulting to 29.97 fps')
-                        self._fps = 29.97
-                except:
-                    log.exception('HDPVR 1080i detection code blew up. FPS remains at %s' % self._fps)
-            else:
-                self._fps = 29.97
-                log.error("""Could not determine FPS for file %s so defaulting to %s FPS.
-                             Make sure you have the ffmpeg executable in your path. 
-                             Commercial skipping may be inaccurate""" % (self._fps, self.getLocalPath()))
-                showPopup(self.translator.get(m.ERROR), 'FFMPEG error - comm skips may be incorrect')
-        return self._fps
-
-    @timed
     @inject_db
-    @inject_conn
-    def getFrameRate2(self):
-        """
-        Get framerate without the recording being accessible via the filesystem.
-        @rtype: float
-        @note: cached 
-        @note: most recordings are either 29.97 or 59.97
-        """
-        
-        #
-        # TODO: Integrate for Issue 111
-        #
-        if not self._fps:
-            ffmpegParser = FFMPEG(
-                ffmpeg=self._platform.getFFMpegPath(),
-                closeFDs=(type(self._platform) != WindowsPlatform),
-                windows=(type(self._platform) == WindowsPlatform))  
-                # WORKAROUND: close_fds borked on windows
+    def getFPS(self):
+        # only cache fps if recording has finished
+        if self.getRecordingStatus() != RecordingStatus.RECORDED:
+            return self.db().getFramerate(self)
 
-                        
-            import tempfile
-            fileSink = tempfile.mktemp('.mpg', 'mythbox')
-            log.debug('Saving recording fragment to: %s' % fileSink)
-            transferred = self.conn().transferFile(self.getFilename(), fileSink, self.db().toBackend(self.hostname()).ipAddress, max=5000000)
-
-            if not transferred:
-                showPopup('Error', 'Transfer fragment failed')
-                self._fps = 29.97
-                return self._fps
-            
-            try:
-                metadata = ffmpegParser.get_metadata(fileSink)
-            except:
-                log.exception('ffmpeg parsing failed')
-                metadata = None
-                
-            log.debug('ffmpeg metadata for %s = %s' % (fileSink, metadata))
-            if metadata:
-                self._fps = float(metadata.frame_rate)
-            else:
-                self._fps = 29.97
-                log.error("""Could not determine FPS for file %s so defaulting to %s FPS.
-                             Make sure you have the ffmpeg executable in your path. 
-                             Commercial skipping may be inaccurate""" % (self._fps, self.getLocalPath()))
-                showPopup(self.translator.get(m.ERROR), 'FFMpeg could not determine framerate. Comm skip may be inaccurate')
+        if self._fps is None:
+            self._fps = self.db().getFramerate(self)
         return self._fps
+    
+#    def getFrameRate(self):
+#        if self.settings.getBoolean('streaming_enabled'):
+#            # framerate not needed when using streaming.
+#            # use an obviously invalid default so CommercialBreak objects 
+#            # can still be constructed to get number of breaks 
+#            return 29.97
+#        else:
+#            return self.getFrameRate1()
+        
+#    @timed
+#    @synchronized
+#    def getFrameRate1(self):
+#        """
+#        @rtype: float
+#        @note: cached 
+#        @note: most recordings are either 29.97 or 59.97
+#        @todo: GUIInfoManager.cpp - look at refs to GetFPS()
+#        """
+#        if not self._fps:
+#            
+#            ffmpeg_cache_dir=os.path.join(self._platform.getScriptDataDir(), 'cache', 'ffmpeg')
+#            requireDir(ffmpeg_cache_dir) 
+#                
+#            ffmpegParser = FFMPEG(
+#                ffmpeg=self._platform.getFFMpegPath(),
+#                closeFDs=(type(self._platform) != WindowsPlatform),  # WORKAROUND: close_fds borked on windows
+#                windows=(type(self._platform) == WindowsPlatform),   # WORKAROUND: let pyxcoder know we're on windows
+#                tempdir=ffmpeg_cache_dir,
+#                log=log)
+#            
+#            try:
+#                metadata = ffmpegParser.get_metadata(self.getLocalPath())
+#            except:
+#                log.exception('ffmpeg parsing failed')
+#                metadata = None
+#                
+#            log.debug('ffmpeg metadata for %s = %s' % (self.getLocalPath(), metadata))
+#            if metadata:
+#                self._fps = float(metadata.frame_rate)
+#
+#                # Hack for FFMPEG returning incorrect or conflicting framerates for specific types of video files
+#                for name, profile_data in self._fps_overrides.iteritems():
+#                    try:
+#                        if len([key for key,value in profile_data['tags'].iteritems() if getattr(metadata, key) == value]) == len(profile_data['tags']):  # all key/value pairs match
+#                            old_fps = self._fps
+#                            self._fps = profile_data['fps']
+#                            log.debug('FPS override %s activated for %s from %s to %s' % (name, safe_str(self.title()), old_fps, self._fps))
+#                            break
+#                    except:
+#                        log.exception('Blew up trying to test for fps overrides')
+#            else:
+#                self._fps = 29.97
+#                log.error("""Could not determine FPS for file %s so defaulting to %s FPS.
+#                             Make sure you have the ffmpeg executable in your path. 
+#                             Commercial skipping may be inaccurate""" % (self._fps, self.getLocalPath()))
+#                showPopup(self.translator.get(m.ERROR), 'FFMPEG error - comm skips may be incorrect')
+#            log.debug('FPS = %s' % self._fps)
+#        return self._fps
+
+#    @timed
+#    @inject_db
+#    @inject_conn
+#    def getFrameRate2(self):
+#        """
+#        Get framerate without the recording being accessible via the filesystem.
+#        @rtype: float
+#        @note: cached 
+#        @note: most recordings are either 29.97 or 59.97
+#        """
+#        
+#        #
+#        # TODO: Integrate for Issue 111
+#        #
+#        
+#        ffmpeg_cache_dir=os.path.join(self._platform.getScriptDataDir(), 'cache', 'ffmpeg')
+#        requireDir(ffmpeg_cache_dir) 
+#        
+#        if not self._fps:
+#            ffmpegParser = FFMPEG(
+#                ffmpeg=self._platform.getFFMpegPath(),
+#                closeFDs=(type(self._platform) != WindowsPlatform),  # WORKAROUND: close_fds borked on windows
+#                windows=(type(self._platform) == WindowsPlatform),   # WORKAROUND: let pyxcoder know we're on windows
+#                tempdir=ffmpeg_cache_dir,
+#                log=log)
+#            
+#            fileSink = os.path.join(ffmpeg_cache_dir, self.getBareFilename())           
+#            
+#            try:
+#                if not os.path.exists(os.path.join(ffmpeg_cache_dir, fileSink + ".out")):
+#                    log.debug('Saving recording fragment to: %s' % fileSink)
+#                    transferred = self.conn().transferFile(self.getFilename(), fileSink, self.db().toBackend(self.hostname()).ipAddress, numBytes=5000000)
+#    
+#                    if not transferred:
+#                        log.exception('Error', 'Transfer file fragment for %s failed' % safe_str(self.title()))
+#                        self._fps = 29.97
+#                        return self._fps
+#                    
+#                try:
+#                    metadata = ffmpegParser.get_metadata(fileSink)
+#                except:
+#                    log.exception('ffmpeg parsing failed')
+#                    metadata = None
+#                    
+#                log.debug('ffmpeg metadata for %s = %s' % (fileSink, metadata))
+#                if metadata:
+#                    self._fps = float(metadata.frame_rate)
+#
+#                    # Hack for FFMPEG returning incorrect or conflicting framerates for specific types of video files
+#                    for name, profile_data in self._fps_overrides.iteritems():
+#                        try:
+#                            if len([key for key,value in profile_data['tags'].iteritems() if getattr(metadata, key) == value]) == len(profile_data['tags']):  # all key/value pairs match
+#                                old_fps = self._fps
+#                                self._fps = profile_data['fps']
+#                                log.debug('FPS override %s activated for %s from %s to %s' % (name, safe_str(self.title()), old_fps, self._fps))
+#                                break
+#                        except:
+#                            log.exception('Blew up trying to test for fps overrides')
+#                else:
+#                    self._fps = 29.97
+#                    log.error("""Could not determine FPS for file %s so defaulting to %s FPS.
+#                                 Make sure you have the ffmpeg executable in your path. 
+#                                 Commercial skipping may be inaccurate""" % (self._fps, fileSink))
+#                    showPopup(self.translator.get(m.ERROR), 'FFMpeg could not determine framerate. Comm skip may be inaccurate')
+#            finally:
+#                if os.path.exists(fileSink):
+#                    os.remove(fileSink)
+#            log.debug('FPS = %s' % self._fps)
+#        return self._fps
 
     def formattedFileSize(self):
         """
@@ -1291,6 +1350,19 @@ class RecordingSchedule(Schedule):
         
         if not 'icon' in self._data or not self._data['icon'] or self._data['icon'] == "none":
             self._data['icon'] = None
+
+    def __repr__(self):
+        return "%s {recordid=%s, type=%s, title=%s, subtitle=%s, starttime=%s, endtime=%s startdate=%s, enddate=%s, nr=%d}" % (
+            type(self).__name__,
+            self.getScheduleId(),
+            self.formattedScheduleType(),
+            repr(self.title()),
+            repr(self.subtitle()),
+            self.starttime(),
+            self.endtime(),
+            self.startdate(),
+            self.enddate(),
+            self.numRecorded())
     
     def data(self):
         """
@@ -1299,6 +1371,9 @@ class RecordingSchedule(Schedule):
         """
         return self._data
 
+    def numRecorded(self):
+        return int(self._data['numRecorded'])
+    
     def getScheduleId(self):
         """
         @return: schedule id if persisted, None otherwise
@@ -1446,14 +1521,13 @@ class RecordingSchedule(Schedule):
         """
         return self._data['category']
     
-    def profile(self):
-        """
-        @return: recording profile
-        @rtype: string
-        @note: Default
-        """
+    def setRecordingProfile(self, name):
+        self._data['profile'] = name
+
+    def getRecordingProfile(self):
+        '''Ex: Default, High Quality, Low Quality'''
         return self._data['profile']
-    
+        
     def getPriority(self):
         """
         @rtype: int
@@ -1627,7 +1701,7 @@ class RecordingSchedule(Schedule):
         """
         # Internal value 0 or 1
         return bool(self._data['autouserjob1'])
-    
+         
     def isAutoUserJob2(self):
         """
         @return: True if userjob2 set to run automatically, False otherwise.
@@ -1648,6 +1722,18 @@ class RecordingSchedule(Schedule):
         """
         # Internal value 0 or 1
         return bool(self._data['autouserjob4'])
+
+    def setAutoUserJob1(self, b):
+        self._data['autouserjob1'] = int(b)
+
+    def setAutoUserJob2(self, b):
+        self._data['autouserjob2'] = int(b)
+
+    def setAutoUserJob3(self, b):
+        self._data['autouserjob3'] = int(b)
+
+    def setAutoUserJob4(self, b):
+        self._data['autouserjob4'] = int(b)
     
     def findday(self):
         """
@@ -1721,9 +1807,8 @@ class RecordingSchedule(Schedule):
     
 
 class ScheduleFromProgram(RecordingSchedule):
-    """
-    Schedule seeded from TVProgram.
-    """
+    '''New Schedule seeded from a TVProgram.'''
+    
     def __init__(self, program, translator):
         RecordingSchedule.__init__(self, dict(), translator)
         
@@ -1744,7 +1829,7 @@ class ScheduleFromProgram(RecordingSchedule):
         self.data()['starttime']     = program.starttime()[8:14]
         self.data()['enddate']       = program.endtime()[0:8]
         self.data()['endtime']       = program.endtime()[8:14]
-        self.data()['profile']       = 'Default'
+        self.data()['profile']       = u'Default'
         self.data()['recpriority']   = 0
         self.data()['autoexpire']    = 0
         self.data()['maxepisodes']   = 0
@@ -1767,6 +1852,7 @@ class ScheduleFromProgram(RecordingSchedule):
         self.data()['findid']        = '0'
         self.data()['inactive']      = 0
         self.data()['parentid']      = '0'
+        self.data()['numRecorded']   = 0
 
 
 class Tuner(object):
@@ -1938,36 +2024,35 @@ class Tuner(object):
         tvState = self.conn().protocol.tvState()
         
         if tunerStatus in (tvState.WatchingLiveTV, tvState.WatchingRecording, tvState.RecordingOnly):
-            recording = self.conn().getCurrentRecording(self)
+            r = self.conn().getCurrentRecording(self)
         
         if tvState.OK == tunerStatus:
             next = self.getNextScheduledRecording() 
             status = t(m.IDLE) + u'. '
             if next:
                 status += t(m.NEXT_RECORDING_STARTS_AT) % (next.title(), next.formattedStartTime())
+                
         elif tvState.Error == tunerStatus:
             status = t(m.UNKNOWN)
+            
         elif tvState.WatchingLiveTV == tunerStatus:
-            status = t(m.WATCHING_AND_ENDS_AT) %(
-                recording.title(), 
-                recording.getChannelName(), 
-                self.time2string(recording.recendtime()))
+            status = t(m.WATCHING_AND_ENDS_AT) % (r.title(), r.getChannelName(), self.time2string(r.recendtime()))
+            
         elif tvState.WatchingPreRecorded == tunerStatus:
             status = t(m.WATCHING_PRERECORDED)
+            
         elif tvState.WatchingRecording == tunerStatus:
-            status = t(m.WATCHING_AND_RECORDING_UNTIL) % (
-                recording.title(), 
-                recording.getChannelName(), 
-                self.time2string(recording.recendtime()))
+            status = t(m.WATCHING_AND_RECORDING_UNTIL) % (r.title(), r.getChannelName(), self.time2string(r.recendtime()))
+            
         elif tvState.RecordingOnly == tunerStatus: 
-            status = t(m.RECORDING_ON_UNTIL) % (
-                recording.title(), 
-                recording.getChannelName(),
-                self.time2string(recording.recendtime()))                    
+            status = t(m.RECORDING_ON_UNTIL) % (r.title(), r.getChannelName(), self.time2string(r.recendtime()))
+            
         elif tvState.ChangingState == tunerStatus:
             status = t(m.BUSY)
+            
         else: 
             status = t(m.UNKNOWN_TUNER_STATUS) % tunerStatus
+            
         return status
 
     def time2string(self, t):

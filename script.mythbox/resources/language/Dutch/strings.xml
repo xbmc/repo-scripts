@@ -25,7 +25,7 @@
   <string id="21">Myth TV</string>
   <string id="22">MySQL</string>
   <string id="23">Paden</string>
-  <string id="24">Test instellingen</string>
+  <string id="24">Test instellingen..</string>
   <string id="25">Instellingen succesvol bewaard</string>
   
   <string id="29">Instellingen zijn veranderd. Deze veranderingen opheffen?</string>
@@ -364,7 +364,7 @@
   <string id="411">Master backend hostnaam</string>
   <string id="412">Master backend poort</string>
   <string id="413">Lokale opname map(pen)</string>
-  <string id="414">FFMpeg programma pad</string>
+
   <string id="415">Verwijderingen bevestigen</string>
   <string id="416">Locatie MythTV opnames op het lokale systeem, eventueel via gekoppelde storage groepen</string>
   <string id="417">Meerdere mappen scheiden met een ":" op Linux/Mac en een ";" op Windows</string>
@@ -383,7 +383,7 @@
   <string id="426">Cache successvol geschoond</string>
   <string id="429">Gebruik TVRage.com</string>
     
-  <string id="430">Test instellingen</string>
+  <string id="430">Test instellingen..</string>
   <string id="431">Instellingen OK</string>
 
   <string id="440">Geavanceerd</string>
@@ -394,7 +394,7 @@
   <string id="445">activeer dan deze aanpassing om de extra aanslag te compenseren</string>
   <string id="446">Kommagescheiden lijst van publieke twitter namen. Bijv: cnnbrk, woot, thelittleidiot, wired, current...</string> 
   
-  <string id="450">XBMC instellingen</string>
+  <string id="450">XBMC instellingen..</string>
     
   <string id="460">Over</string>
 

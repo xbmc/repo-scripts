@@ -2,7 +2,7 @@
 <addon 
     id="script.mythbox" 
     name="MythBox" 
-    version="1.0.2" 
+    version="1.0.3" 
     provider-name="analogue@yahoo.com">
     <requires>
         <import addon="xbmc.python" version="1.0" />
@@ -26,7 +26,7 @@
         - Enhanced program guide
         - Show upcoming recordings
         - Tuner and job status
-        - Supports MythTV 0.21, 0.22, 0.23, and 0.24 (no live tv with 0.24)
+        - Supports MythTV 0.23 and 0.24 (no live tv with 0.24)
         </description>
         <description lang="fr">[B]MythBox est un frontal MythTV pour XBMC[/B]
 
@@ -37,7 +37,7 @@
         - Guide de programme amélioré
         - Afficher les enregistrements à venir
         - Statut du syntoniseur et des travaux
-        - Support de MythTV 0.21, 0.22, 0.23, et 0.24 (pas de tv en direct en 0.24)
+        - Support de MythTV 0.23 et 0.24 (pas de tv en direct en 0.24)
         </description>
     </extension>
 </addon>

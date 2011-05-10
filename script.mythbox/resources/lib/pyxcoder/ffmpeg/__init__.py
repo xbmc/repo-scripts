@@ -17,6 +17,7 @@ class FFMPEG:
         self.closeFDs = closeFDs
         self.windows = kwargs.has_key('windows') and kwargs['windows'] == True
         self.tempdir = kwargs.get('tempdir', tempfile.gettempdir())
+        self.log = kwargs.get('log')
         
     def get_metadata(self, input_filename):
         args = build_ffmpeg_args(input_filename)
@@ -30,10 +31,10 @@ class FFMPEG:
             # If output exists from a previous run, use it
             #
             if os.path.exists(outfile):
-                print 'Using cached ffmpeg output for %s' % input_filename
+                self.log.debug('Using cached ffmpeg output for %s' % input_filename)
             else:
                 outfileQuoted = '"' + outfile + '"'
-                print 'outfile = %s' % outfileQuoted
+                self.log.debug('outfile = %s' % outfileQuoted)
                 #'start /B /WAIT /MIN ' +
                 
                 #print 'ffmpeg = %s' % self.ffmpeg
@@ -46,9 +47,9 @@ class FFMPEG:
                 else:
                     cmd = '"' + self.ffmpeg + '"' + ' -i ' + '"' + input_filename + '"' + ' 2>' + outfileQuoted
                 
-                print 'cmd = %s' % cmd
+                self.log.debug('cmd = %s' % cmd)
                 result = os.system(cmd)
-                print 'os.system = %s' % result
+                self.log.debug('os.system = %s' % result)
                     
             child_stderr = open(outfile)
         else:

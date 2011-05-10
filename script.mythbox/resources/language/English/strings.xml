@@ -33,7 +33,7 @@ To submit translations for your native language
   <string id="21">Myth TV</string>
   <string id="22">MySQL</string>
   <string id="23">Paths</string>
-  <string id="24">Test Settings</string>
+  <string id="24">Test Settings..</string>
   <string id="25">Settings saved successfully.</string>
   
   <string id="29">Settings have been modified.  Lose unsaved changes?</string>
@@ -59,7 +59,7 @@ To submit translations for your native language
   <string id="28">Confirmation</string>
   <string id="45">Unknown</string>
   <string id="65">Are you sure you want to delete the recording?</string>
-  <string id="51">Are you sure you want to rerecord the recording?</string>
+  <string id="51">Are you sure you want to re-record the recording?</string>
   
   
   
@@ -331,7 +331,9 @@ To submit translations for your native language
   <string id="850">Date</string>
   <string id="851">Title</string>
   <string id="852">Orig. Air Date</string>
-  <string id="853">Sort</string>  
+  <string id="853">Sort</string>
+  <string id="854">Episodes</string>
+  <string id="855">No recordings found</string>  
   
   <!-- Recording Schedules Screen -->
   <string id="900">[B]Recording Schedules[/B]</string>
@@ -339,7 +341,8 @@ To submit translations for your native language
   <string id="902">[B]Type[/B]</string>
   <string id="903">[B]Priority[/B]</string>
   <string id="904">[B]Channel[/B]</string>
-    
+  <string id="905">[B]# Recorded[/B]</string>
+  <string id="906"># Recorded</string>
   
   <!-- Upcoming Recording Screen -->
   <string id="1000">[B]Upcoming Recordings[/B]</string>
@@ -377,6 +380,11 @@ To submit translations for your native language
   <string id="1118">On time</string>
   <string id="1119">%d minute(s) late</string>  
   <string id="1123">Value must be between %d and %d</string>
+  <string id="1124">User Job 1 Enabled</string>
+  <string id="1125">User Job 2 Enabled</string>
+  <string id="1126">User Job 3 Enabled</string>
+  <string id="1127">User Job 4 Enabled</string>
+  <string id="1128">Recording Profile</string>
   
   <string id="1120">Save</string>
   <string id="1121">Cancel</string>
@@ -397,8 +405,9 @@ To submit translations for your native language
   <string id="410">MythTV</string>
   <string id="411">Master Backend Hostname</string>
   <string id="412">Master Backend Port</string>
+  <string id="480">Stream recordings directly from the MythTV backend. No need to mount remote dirs locally.</string>
   <string id="413">Local Recording Directory(s)</string>
-  <string id="414"></string>
+  <string id="414">Enable Streaming</string>
   <string id="415">Confirm on Delete</string>
   <string id="416">Location of MythTV recordings on the local filesystem (mounted storage group dirs if your backend is remote).</string>
   <string id="417">Multiple directories can be separated with a colon on Linux/Mac or a semi-colon on Windows.</string>
@@ -417,7 +426,7 @@ To submit translations for your native language
   <string id="426">Caches cleared successfully</string>
   <string id="429">Enable TVRage.com</string>
     
-  <string id="430">Test Settings</string>
+  <string id="430">Test Settings..</string>
   <string id="431">Settings OK</string>
 
   <string id="440">Advanced</string>
@@ -427,9 +436,18 @@ To submit translations for your native language
   <string id="444">If you're using a remote control with lirc and sometimes get two button events instead of just one</string>
   <string id="445">then enable this workaround to consume the extra event.</string>
   <string id="446">Comma separated list of public Twitter names. Try some: cnnbrk, woot, thelittleidiot, wired, current...</string> 
+  <string id="447">Located at %s</string>
   
-  <string id="450">XBMC Settings</string>
+  <string id="450">XBMC Settings..</string>
   <string id="455">Readme and FAQ</string>
   <string id="460">About</string>
   
+  <string id="470">Playback</string>
+  <string id="471">Restart XBMC for this change to take effect.</string>
+  <string id="472">Seek Forward</string>
+  <string id="473">Seek Backward</string>
+  <string id="474">Big Seek Forward</string>
+  <string id="475">Big Seek Backward</string>
+  
+
 </strings>

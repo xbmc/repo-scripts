@@ -101,7 +101,7 @@
 
         <control type="label">
             <description>channel</description>
-            <posx>965</posx>
+            <posx>940</posx>
             <posy>140</posy>
             <width>240</width>
             <height>35</height>
@@ -111,6 +111,20 @@
             <align>left</align>
             <aligny>center</aligny>
             <label>SCRIPT904</label>
+        </control>
+
+        <control type="label">
+            <description>number recorded</description>
+            <posx>1245</posx>
+            <posy>140</posy>
+            <width>150</width>
+            <height>35</height>
+            <font>font12</font>
+            <textcolor>ffddddff</textcolor>
+            <selectedcolor>FFe2ff43</selectedcolor>
+            <align>right</align>
+            <aligny>center</aligny>
+            <label>SCRIPT905</label>
         </control>
 
         <!-- ============================================= -->
@@ -175,9 +189,9 @@
                 </control>
 
                 <control type="label">
-                    <posx>650</posx>
+                    <posx>625</posx>
                     <posy>0</posy>
-                    <width>290</width>
+                    <width>250</width>
                     <height>30</height>
                     <font>font12</font>
                     <textcolor>FFFFFFFF</textcolor>
@@ -186,6 +200,20 @@
                     <aligny>center</aligny>
                     <label>$INFO[ListItem.Property(channelName)]</label>
                 </control>
+
+                <control type="label">
+                    <posx>930</posx>
+                    <posy>0</posy>
+                    <width>100</width>
+                    <height>30</height>
+                    <font>font12</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <label>$INFO[ListItem.Property(numRecorded)]</label>
+                </control>
+
             </itemlayout>
             
             <focusedlayout height="30">
@@ -247,9 +275,9 @@
                 </control>
 
                 <control type="label">
-                    <posx>650</posx>
+                    <posx>625</posx>
                     <posy>0</posy>
-                    <width>290</width>
+                    <width>250</width>
                     <height>30</height>
                     <font>font12</font>
                     <textcolor>FFFFFFFF</textcolor>
@@ -257,6 +285,19 @@
                     <align>left</align>
                     <aligny>center</aligny>
                     <label>$INFO[ListItem.Property(channelName)]</label>
+                </control>
+
+                <control type="label">
+                    <posx>930</posx>
+                    <posy>0</posy>
+                    <width>100</width>
+                    <height>30</height>
+                    <font>font12</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <label>$INFO[ListItem.Property(numRecorded)]</label>
                 </control>
 
             </focusedlayout>
@@ -380,7 +421,24 @@
             <ondown>2000</ondown>
             <onleft>600</onleft>
             <onright>600</onright>
-            
+
+            <control type="button" id="251">
+                <description>Sort by button</description>
+<!--                <posx>0</posx>-->
+<!--                <posy>0</posy>-->
+                <width>285</width>
+                <label>$INFO[Window.Property(sortBy)]</label>
+                <align>left</align>
+                <textoffsetx>40</textoffsetx>
+                <texturefocus>button_focus.png</texturefocus>
+                <texturenofocus>button_nofocus.png</texturenofocus>
+                <pulseonselect>true</pulseonselect>
+                <onleft>600</onleft>
+                <onright>600</onright>
+                <onup>250</onup>
+                <ondown>250</ondown>
+            </control>
+
             <control type="button" id="250">
                 <description>Refresh button</description>
                 <label>SCRIPT210</label>

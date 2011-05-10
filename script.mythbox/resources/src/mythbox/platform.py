@@ -39,9 +39,13 @@ def getPlatform():
         elif 'linux' in sys.platform:
             __instance = UnixPlatform()
         elif 'darwin' in sys.platform:
-            __instance = MacPlatform()
+            # gotta be a better way to detect ipad/iphone/atv2
+            if 'USER' in os.environ and os.environ['USER'] in ('mobile','frontrow',):
+                __instance = IOSPlatform()
+            else: 
+                __instance = MacPlatform()
         else:
-            log.error('ERROR: Platform check did not match win32, linux, or darwin. Was %s instead' % sys.platform)
+            log.error('ERROR: Platform check did not match win32, linux, darwin, or iOS. Was %s instead' % sys.platform)
             __instance = UnixPlatform()
     return __instance
 
@@ -60,12 +64,27 @@ class Platform(object):
         requireDir(self.getScriptDataDir())
         requireDir(self.getCacheDir())
 
+    def xbmcVersion(self):
+        version = 0.0
+        vs = xbmc.getInfoLabel('System.BuildVersion')
+        try: 
+            # sample input: '10.1 Git:Unknown'
+            version = float(vs.split()[0])
+        except ValueError:
+            try:
+                # sample input: 'PRE-11.0 Git:Unknown'
+                version = float(vs.split()[0].split('-')[1])
+            except ValueError:
+                log.error('Cannot determine version of XBMC from build version: %s. Returning %s' % (vs, version))
+        return version
+    
     def addLibsToSysPath(self):
         '''Add 3rd party libs in ${scriptdir}/resources/lib to the PYTHONPATH'''
         libs = [
             'pyxcoder', 
             'decorator', 
-            'odict', 
+            'odict',
+            'bidict', 
             'elementtree', 
             'tvdb_api', 
             'tvrage',
@@ -91,6 +110,12 @@ class Platform(object):
     def getName(self):
         return "N/A"
     
+    def getDebugLog(self):
+        raise Exception('Abstract method')
+    
+    def getXbmcLog(self):
+        raise Exception('abstract method')
+    
     def getScriptDir(self):
         '''
         @return: directory that this xbmc script resides in.
@@ -114,16 +139,19 @@ class Platform(object):
     def getCacheDir(self):
         return os.path.join(self.getScriptDataDir(), 'cache')
     
+    def getUserDataDir(self):
+        return xbmc.translatePath('special://userdata')
+    
     def getHostname(self):
         try:
             return socket.gethostname()
         except:
             return xbmc.getIPAddress()
-        
+     
     def isUnix(self):
         return False
     
-    def getVersion(self):
+    def addonVersion(self):
         return self.addon.getAddonInfo('version')
             
     def __repr__(self):
@@ -177,7 +205,6 @@ class UnixPlatform(Platform):
 
     def __init__(self, *args, **kwargs):
         Platform.__init__(self, *args, **kwargs)
-        self.ffmpegUrl = '/usr/bin/ffmpeg'
         
     def getName(self):
         return "unix"
@@ -196,7 +223,13 @@ class UnixPlatform(Platform):
 
     def getDefaultRecordingsDir(self):
         return '/var/lib/mythtv/recordings'
+
+    def getXbmcLog(self):    
+        return os.path.join(xbmc.translatePath('special://temp'), 'xbmc.log')
     
+    def getDebugLog(self):
+        return os.path.join(os.getenv('HOME'), 'mythbox.log')
+
 
 class WindowsPlatform(Platform):
 
@@ -215,6 +248,13 @@ class WindowsPlatform(Platform):
     def getDefaultRecordingsDir(self):
         return 'c:\\change\\me'
 
+    def getXbmcLog(self):    
+        return os.path.join(xbmc.translatePath('special://home'), 'xbmc.log')
+    
+    def getDebugLog(self):
+        # TODO: mythbox.log not working on windows
+        return self.getXbmcLog() 
+
         
 class MacPlatform(Platform):
 
@@ -232,3 +272,45 @@ class MacPlatform(Platform):
 
     def getDefaultRecordingsDir(self):
         return '/change/me'
+
+    def getXbmcLog(self):
+        # TODO: verify    
+        return os.path.expanduser(os.path.join('~', 'Library', 'Logs', 'xbmc.log'))
+
+    def getDebugLog(self):
+        return os.path.expanduser(os.path.join('~', 'Library', 'Logs', 'mythbox.log'))
+
+    
+class IOSPlatform(Platform):
+    
+    def __init__(self, *args, **kwargs):
+        Platform.__init__(self, *args, **kwargs)
+        
+    def getName(self):
+        return 'ios'
+
+    def getFFMpegPath(self, prompt=False):
+        f = '/usr/local/bin/ffmpeg'
+        if os.path.exists(f) and os.path.isfile(f):
+            return f
+        else:
+            if prompt:
+                xbmcgui.Dialog().ok('Error', 'Please install ffmpeg via Cydia', '1) Sections > Repositories > ModMyi.com > Install', '2) Sections > Multimedia > FFmpeg > Install')
+            raise Exception, 'ffmpeg not installed'
+
+    def getDefaultRecordingsDir(self):
+        return '/var/mobile'
+
+    def getXbmcLog(self):
+        #19:30:47 T:165597184 M: 73052160  NOTICE: Starting XBMC, Platform: Mac OS X (10.4.0 AppleTV2,1). Built on Feb 27 2011 (Git:6ba831d)
+        #19:30:47 T:165597184 M: 73052160  NOTICE: special://xbmc/ is mapped to: /Applications/XBMC.frappliance/XBMCData/XBMCHome
+        #19:30:47 T:165597184 M: 73052160  NOTICE: special://xbmcbin/ is mapped to: /Applications/XBMC.frappliance/XBMCData/XBMCHome
+        #19:30:47 T:165597184 M: 72990720  NOTICE: special://masterprofile/ is mapped to: /var/mobile/Library/Preferences/XBMC/userdata
+        #19:30:47 T:165597184 M: 72990720  NOTICE: special://home/ is mapped to: /var/mobile/Library/Preferences/XBMC
+        #19:30:47 T:165597184 M: 72990720  NOTICE: special://temp/ is mapped to: /var/mobile/Library/Preferences/XBMC/temp
+        #19:30:47 T:165597184 M: 72990720  NOTICE: The executable running is: /Applications/XBMC.frappliance/XBMC
+        #19:30:47 T:165597184 M: 72990720  NOTICE: Log File is located: /var/mobile/Library/Preferences/xbmc.log        
+        return os.path.expanduser(os.path.join('~', 'Library', 'Preferences', 'xbmc.log'))
+
+    def getDebugLog(self):
+        return os.path.expanduser(os.path.join('~', 'Library', 'Logs', 'mythbox.log'))

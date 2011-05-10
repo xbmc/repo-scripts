@@ -33,7 +33,7 @@ To submit translations for your native language
   <string id="21">Myth TV</string>
   <string id="22">MySQL</string>
   <string id="23">Cesty</string>
-  <string id="24">Test nastavení</string>
+  <string id="24">Test nastavení..</string>
   <string id="25">Nastavení bylo úspěšně uloženo.</string>
   
   <string id="29">Nastavení bylo změněno. Zahodit neuložené změny?</string>
@@ -397,7 +397,7 @@ To submit translations for your native language
   <string id="411">Název hlavního backend serveru</string>
   <string id="412">Port hlavního backend serveru</string>
   <string id="413">Místní adresář(e) nahrávání</string>
-  <string id="414"></string>
+
   <string id="415">Potvrzení smazání</string>
   <string id="416">Umístění nahrávek MythTV na místním souborovém systému (připojená skupina adresářů úložišť, jestliže je váš backend vzdálený).</string>
   <string id="417">Více adresářů může být odděleno čárkou pro systémy Linux/Mac nebo středníkem pro Windows.</string>
@@ -416,7 +416,7 @@ To submit translations for your native language
   <string id="426">Vyrovnávací paměť úspěšně smazána</string>
   <string id="429">Povolit TVRage.com</string>
     
-  <string id="430">Test Nastavení</string>
+  <string id="430">Test Nastavení..</string>
   <string id="431">Nastavení OK</string>
 
   <string id="440">Rozšířené</string>
@@ -427,7 +427,7 @@ To submit translations for your native language
   <string id="445">potom povolte toto řešení pro obsluhu dodatečných událostí.</string>
   <string id="446">Seznam čárkou oddělených veřejných jmen Twitteru. Zkuste: cnnbrk, woot, thelittleidiot, wired, current...</string> 
   
-  <string id="450">XBMC Nastavení</string>
+  <string id="450">XBMC Nastavení..</string>
     
   <string id="460">O programu</string>
 

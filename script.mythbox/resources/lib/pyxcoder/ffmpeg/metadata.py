@@ -43,6 +43,7 @@ class FFMPEGMetadataParser:
     # Stream #0.0[0x1011]: Video: h264, yuv420p, 1280x720 [PAR 1:1 DAR 16:9], 59.94 tbr, 90k tbn, 119.88 tbc
     # Stream #0.0[0x31]: Video: mpeg2video, yuv420p, 1280x720 [PAR 1:1 DAR 16:9], 65000 kb/s, 59.94 tbr, 90k tbn, 119.88 tbc
     # Stream #0.0[0x800]: Video: mpeg2video, yuv420p, 1920x1080 [PAR 1:1 DAR 16:9], 38810 kb/s, 29.97 fps, 29.97 tbr, 90k tbn, 59.94 tbc
+    # Stream #0.0[0x31]: Video: mpeg2video, yuv420p, 1280x720 [PAR 1:1 DAR 16:9], 24000 kb/s, 81.76 fps, 59.94 tbr, 90k tbn, 119.88 tbc
     VIDEO_STREAM_PATTERN = re.compile(r'^\s*Stream\s+#\d+\.\d+.*:\s+Video(.*)$')
     
     def __init__(self, filelike):
@@ -69,18 +70,24 @@ class FFMPEGMetadataParser:
         log.debug('parse_video_stream: %s' % line)
         metadata = self.metadata
         video_tokens = self.VIDEO_STREAM_PATTERN.match(line).groups()[0].split(',')
+        frame_rate2 = None
         
         if len(video_tokens) in (4, 6):
             video_codec, pixel_format, dimension, frame_rate = [each.strip() for each in video_tokens[:4]]
-        elif len(video_tokens) in (5,7,8,):
+        elif len(video_tokens) in (5,):
             video_codec, pixel_format, dimension, bit_rate, frame_rate = [each.strip() for each in video_tokens[:5]]
+        elif len(video_tokens) in (7,8,):
+            video_codec, pixel_format, dimension, bit_rate, frame_rate, frame_rate2 = [each.strip() for each in video_tokens[:6]]
         else:
             raise Exception('Could not extract framerate from line with %d tokens: %s' % (len(video_tokens), line))
         
         metadata.video_codec = video_codec
         metadata.pixel_format = pixel_format
         metadata.dimension = dimension
-        if frame_rate:
+        # jacked up ffmpeg in maverick keeps on changing output format
+        if frame_rate and frame_rate2 and 'fps' in frame_rate and 'tbr' in frame_rate2:
+            metadata.frame_rate = frame_rate2.split(' ')[0]
+        elif frame_rate:
             metadata.frame_rate = frame_rate.split(' ')[0]  # extract first word
         
     def parse_input(self, line):

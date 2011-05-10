@@ -18,7 +18,9 @@
 #
 import datetime
 import logging
+import os
 import threading
+import time
 import xbmcgui
 import xbmc
 import collections
@@ -28,13 +30,12 @@ from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.conn import inject_conn
 from mythbox.mythtv.domain import Channel
 from mythbox.mythtv.conn import ServerException
-from mythbox.ui.player import MythPlayer, NoOpCommercialSkipper
+from mythbox.ui.player import MountedPlayer, NoOpCommercialSkipper
 from mythbox.ui.toolkit import Action, BaseWindow, window_busy
-from mythbox.util import safe_str,catchall, catchall_ui, run_async, lirc_hack, ui_locked, coalesce, ui_locked2
+from mythbox.util import safe_str,catchall, catchall_ui, run_async, ui_locked, ui_locked2, formatSize
 from odict import odict
 
-log = logging.getLogger('mythbox.ui')
-    
+log = logging.getLogger('mythbox.ui')    
 
 class BaseLiveTvBrain(object):
 
@@ -186,16 +187,16 @@ class FileLiveTvBrain(BaseLiveTvBrain):
         self.tuner.stopLiveTV()
     
 
-class FileLiveTvPlayer(MythPlayer):
+class FileLiveTvPlayer(MountedPlayer):
     """
     Play live tv using the livetv recording available on the filesystem
     """
     
-    # TODO: Callback listener registration needs to be pushed down to MythPlayer
+    # TODO: Callback listener registration needs to be pushed down to MountedPlayer
     #       eventually making this class obsolete.
     
     def __init__(self):
-        MythPlayer.__init__(self)
+        MountedPlayer.__init__(self)
         self.listeners = []  
     
     def addListener(self, listener):
@@ -255,24 +256,18 @@ class LiveTvWindow(BaseWindow):
     
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
+        [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings', 'translator', 'platform', 'fanArt', 'cachesByName',)]
+        [setattr(self,k,v) for k,v in self.cachesByName.iteritems() if k in ('mythChannelIconCache',)]
          
-        self.settings = kwargs['settings']
-        self.translator = kwargs['translator']
-        self.mythChannelIconCache = kwargs['cachesByName']['mythChannelIconCache']
-        self.platform = kwargs['platform']
-        self.fanArt = kwargs['fanArt']
-
         self.channels = None                     # Channels sorted and merged (if multiple tuners)
         self.channelsById = None                 # {int channelId:Channel}
         self.programs = None                     # [TVProgram]
         self.listItemsByChannel = odict()        # {Channel:ListItem}
-        self.closed = False
         self.lastSelected = int(self.settings.get('livetv_last_selected'))
 
-        # Async work queue for fanart lookup        
-        self.cancelRender = False
-        self.renderThread = None
-        self.workq = collections.deque()         # contains Channel elements                         
+        self.activeRenderToken = None
+        self.tvQueue = collections.deque()       # Channels showing a tv program that needs poster lookup
+        self.movieQueue = collections.deque()    # Channels showing a movie that needs poster lookup
         
     @catchall_ui
     def onInit(self):
@@ -292,16 +287,13 @@ class LiveTvWindow(BaseWindow):
 
     @window_busy
     def refresh(self):
-        if self.renderThread:
-            self.cancelRender = True    # induce abandonment of renderThread 
-            self.renderThread.join()
-            self.cancelRender = False
-
         self.loadPrograms()
         self.render()
-        self.renderThread = self.renderPosters()
+        self.activeRenderToken = time.clock()
+        self.renderTvPosters(self.activeRenderToken)    # async
+        self.renderMoviePosters(self.activeRenderToken) # async
+        self.renderBanners(self.activeRenderToken)      # async
     
-    @lirc_hack    
     @catchall    
     def onClick(self, controlId):
         source = self.getControl(controlId)
@@ -314,7 +306,6 @@ class LiveTvWindow(BaseWindow):
         log.debug('FOCUS %s' % controlId)
             
     @catchall_ui
-    @lirc_hack            
     def onAction(self, action):
         
         if action.getId() in (Action.PREVIOUS_MENU, Action.PARENT_DIR):
@@ -326,8 +317,8 @@ class LiveTvWindow(BaseWindow):
             self.lastSelected = self.channelsListBox.getSelectedPosition()
             channel = self.listItem2Channel(self.channelsListBox.getSelectedItem())
             if channel.currentProgram and channel.needsPoster:
-                log.debug('Adding channel %s to front of q' % channel.getChannelNumber())
-                self.workq.append(channel)
+                log.debug('Adding %s:%s to poster lookup q' % (channel.getChannelNumber(), safe_str(channel.currentProgram.title())))
+                [self.tvQueue, self.movieQueue][channel.currentProgram.isMovie()].append(channel)
 
     def listIndex2Channel(self, i):
         return self.listItem2Channel(self.channelsListBox.getListItem(i))
@@ -340,6 +331,13 @@ class LiveTvWindow(BaseWindow):
     @window_busy
     @inject_conn
     def watchSelectedChannel(self):
+        if not self.conn().protocol.supportsStreaming(self.platform):
+            xbmcgui.Dialog().ok(self.translator.get(m.ERROR), 
+                'Watching Live TV is currently not supported', 
+                'with your configuration of MythTV %s and' % self.conn().protocol.mythVersion(), 
+                'XBMC %s. Should be working in XBMC 11.0+' % self.platform.xbmcVersion())
+            return
+        
         self.lastSelected = self.channelsListBox.getSelectedPosition()
         channel = self.listItem2Channel(self.channelsListBox.getSelectedItem())
         brain = self.conn().protocol.getLiveTvBrain(self.settings, self.translator)
@@ -347,7 +345,7 @@ class LiveTvWindow(BaseWindow):
         try:
             brain.watchLiveTV(channel)
         except Exception, e:
-            log.error(e)
+            log.error(safe_str(e))
             xbmcgui.Dialog().ok(self.translator.get(m.ERROR), '', safe_str(e))
 
     @inject_db
@@ -405,10 +403,16 @@ class LiveTvWindow(BaseWindow):
                     
                     if self.fanArt.hasPosters(channel.currentProgram):
                         channel.needsPoster = False
-                        self.lookupPoster(listItem, channel)
+                        self.lookupPoster(listItem, channel, self.activeRenderToken)
                     else:
                         channel.needsPoster = True
                         self.setListItemProperty(listItem, 'poster', 'loading.gif')
+                        
+                    if self.fanArt.hasBanners(channel.currentProgram):
+                        channel.needsBanner = False
+                        self.setListItemProperty(listItem, 'banner', self.fanArt.pickBanner(channel.currentProgram))
+                    else:
+                        channel.needsBanner = True
                 else:
                     self.setListItemProperty(listItem, 'title', self.translator.get(m.NO_DATA))
                     
@@ -418,29 +422,65 @@ class LiveTvWindow(BaseWindow):
         buildListItems()
         self.channelsListBox.reset()
         self.channelsListBox.addItems(listItems)
-        self.channelsListBox.selectItem(self.lastSelected)
-        self.workq.clear()
-        self.workq.extend(reversed(self.listItemsByChannel.keys()))
-        self.workq.append(self.listIndex2Channel(self.lastSelected))
+        self.channelsListBox.selectItem(min(len(listItems), self.lastSelected))
+        
+        channels = list(reversed(self.listItemsByChannel.keys()[:]))
+        channels.append(self.listIndex2Channel(min(len(listItems), self.lastSelected)))
+        self.tvQueue.clear()
+        self.movieQueue.clear()
+        self.tvQueue.extend([c for c in channels if c.currentProgram and not c.currentProgram.isMovie()])
+        self.movieQueue.extend([c for c in channels if c.currentProgram and c.currentProgram.isMovie()])
         
     @run_async
     @catchall
-    @coalesce
-    def renderPosters(self):
-        while len(self.workq):
-            if self.closed or self.cancelRender: 
+    def renderTvPosters(self, myRenderToken):
+        while len(self.tvQueue):
+            if self.closed or xbmc.abortRequested or myRenderToken != self.activeRenderToken: 
                 return
-            channel  = self.workq.pop()
+            channel  = self.tvQueue.pop()
             try:
                 if channel.currentProgram and channel.needsPoster:
                     listItem = self.listItemsByChannel[channel]
-                    self.lookupPoster(listItem, channel)
+                    self.lookupPoster(listItem, channel, myRenderToken)
                     channel.needsPoster = False
             except:
                 log.exception('channel = %s' % safe_str(channel))
 
-    def lookupPoster(self, listItem, channel):
-        posterPath = self.fanArt.getRandomPoster(channel.currentProgram)
+    @run_async
+    @catchall
+    def renderMoviePosters(self, myRenderToken):
+        while len(self.movieQueue):
+            if self.closed or xbmc.abortRequested or myRenderToken != self.activeRenderToken: 
+                return
+            channel  = self.movieQueue.pop()
+            try:
+                if channel.currentProgram and channel.needsPoster:
+                    listItem = self.listItemsByChannel[channel]
+                    self.lookupPoster(listItem, channel, myRenderToken)
+                    channel.needsPoster = False
+            except:
+                log.exception('channel = %s' % safe_str(channel))
+
+    @run_async
+    @catchall
+    def renderBanners(self, myRenderToken):
+        log.debug('---- RENDER BANNER BEGIN ----')
+        for channel, li in self.listItemsByChannel.items():
+            if self.closed or xbmc.abortRequested or myRenderToken != self.activeRenderToken:
+                return
+            if channel.currentProgram and channel.needsBanner:
+                channel.needsBanner = False
+                bannerPath = self.fanArt.pickBanner(channel.currentProgram)
+                if bannerPath:
+                    log.debug('setting banner for %s to %s' % (safe_str(channel.currentProgram.title()), bannerPath))
+                    self.updateListItemProperty(li, 'banner', bannerPath)
+                else:
+                    log.debug('no banner for %s' % safe_str(channel.currentProgram.title()))
+        log.debug('---- RENDER BANNER END ----')
+                    
+        
+    def lookupPoster(self, listItem, channel, myRenderToken):
+        posterPath = self.fanArt.pickPoster(channel.currentProgram)
         if not posterPath:
             if channel.getIconPath():
                 posterPath = self.mythChannelIconCache.get(channel)
@@ -448,5 +488,10 @@ class LiveTvWindow(BaseWindow):
                     posterPath =  'mythbox-logo.png'
             else:
                 posterPath = 'mythbox-logo.png'
-        self.setListItemProperty(listItem, 'poster', posterPath)
-        
+        if myRenderToken == self.activeRenderToken:
+            self.setListItemProperty(listItem, 'poster', posterPath)
+            if log.isEnabledFor(logging.DEBUG):
+                try:
+                    self.setListItemProperty(listItem, 'posterSize', formatSize(os.path.getsize(posterPath)/1000))
+                except:
+                    pass

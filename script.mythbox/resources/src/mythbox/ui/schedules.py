@@ -26,34 +26,36 @@ import mythbox.msg as m
 
 from mythbox.mythtv.conn import inject_conn 
 from mythbox.mythtv.db import inject_db 
-from mythbox.mythtv.domain import RecordingSchedule
 from mythbox.mythtv.enums import CheckForDupesIn, CheckForDupesUsing, EpisodeFilter, ScheduleType
 from mythbox.ui.toolkit import BaseDialog, BaseWindow, window_busy, Action 
-from mythbox.util import catchall_ui, lirc_hack, catchall, run_async, ui_locked, ui_locked2, safe_str
+from mythbox.util import catchall_ui, catchall, run_async, ui_locked, ui_locked2, safe_str
 
 log = logging.getLogger('mythbox.ui')
 
 ID_SCHEDULES_LISTBOX = 600
 ID_REFRESH_BUTTON = 250
+ID_SORT_BY_BUTTON = 251
+
+
+SORT_BY = odict.odict([
+    ('Title',          {'translation_id': m.TITLE,              'sorter' : lambda rs: safe_str(rs.title())                                 }), 
+    ('# Recorded',     {'translation_id': m.NUM_RECORDED,       'sorter' : lambda rs: '%05d %s' % (rs.numRecorded(), safe_str(rs.title())) }), 
+    ('Priority',       {'translation_id': m.RECORDING_PRIORITY, 'sorter' : lambda rs: '%05d %s' % (rs.getPriority(), safe_str(rs.title())) })])
 
 
 class SchedulesWindow(BaseWindow):
     
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
-        
-        self.settings = kwargs['settings']
-        self.translator = kwargs['translator']
-        self.platform = kwargs['platform']
-        self.fanArt = kwargs['fanArt']
-        self.mythChannelIconCache = kwargs['cachesByName']['mythChannelIconCache']
+        [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings','translator','platform','fanArt','cachesByName',)]
+        [setattr(self,k,v) for k,v in self.cachesByName.iteritems() if k in ('mythChannelIconCache', 'domainCache',)]
         
         self.schedules = []                       # [RecordingSchedule]
         self.listItemsBySchedule = odict.odict()  # {RecordingSchedule:ListItem}
         self.channelsById = None                  # {int:Channel}
-        self.closed = False
         self.lastFocusId = ID_SCHEDULES_LISTBOX
         self.lastSelected = int(self.settings.get('schedules_last_selected'))
+        self.sortBy = self.settings.get('schedules_sort_by')
         self.activeRenderToken = None
         
     @catchall
@@ -65,12 +67,15 @@ class SchedulesWindow(BaseWindow):
             self.refresh()
 
     @catchall_ui
-    @lirc_hack    
     def onClick(self, controlId):
         if controlId == ID_SCHEDULES_LISTBOX: 
             self.goEditSchedule()
         elif controlId == ID_REFRESH_BUTTON:
-            self.refresh()
+            self.refresh(force=True)
+        elif controlId == ID_SORT_BY_BUTTON:
+            keys = SORT_BY.keys()
+            self.sortBy = keys[(keys.index(self.sortBy) + 1) % len(keys)] 
+            self.applySort()
              
     def onFocus(self, controlId):
         self.lastFocusId = controlId
@@ -78,12 +83,16 @@ class SchedulesWindow(BaseWindow):
         #    self.lastSelected = self.schedulesListBox.getSelectedPosition()
 
     @catchall
-    @lirc_hack            
     def onAction(self, action):
         if action.getId() in (Action.PREVIOUS_MENU, Action.PARENT_DIR):
             self.closed = True
             self.settings.put('schedules_last_selected', '%d'%self.schedulesListBox.getSelectedPosition())
+            self.settings.put('schedules_sort_by', self.sortBy)
             self.close()
+
+    def applySort(self):
+        self.schedules.sort(key=SORT_BY[self.sortBy]['sorter'], reverse=False)
+        self.render()
             
     def goEditSchedule(self):
         self.lastSelected = self.schedulesListBox.getSelectedPosition()
@@ -109,10 +118,10 @@ class SchedulesWindow(BaseWindow):
         
     @window_busy
     @inject_db
-    def refresh(self):
+    def refresh(self, force=False):
         self.cacheChannels()
-        self.schedules = self.db().getRecordingSchedules()
-        self.schedules.sort(key=RecordingSchedule.title)
+        self.schedules = self.domainCache.getRecordingSchedules(invalidate=force, async=False)
+        self.applySort()
         self.render()
         
     @ui_locked
@@ -124,37 +133,49 @@ class SchedulesWindow(BaseWindow):
         @ui_locked2
         def buildListItems():
             for i, s in enumerate(self.schedules):
-                listItem = xbmcgui.ListItem()
-                self.setListItemProperty(listItem, 'title', s.title())
-                self.setListItemProperty(listItem, 'scheduleType', s.formattedScheduleType())
-                self.setListItemProperty(listItem, 'fullTitle', s.fullTitle())
-                self.setListItemProperty(listItem, 'priority', '%s' % s.getPriority())
-                self.setListItemProperty(listItem, 'channelName', s.getChannelName())
-                self.setListItemProperty(listItem, 'poster', 'loading.gif')
-                self.setListItemProperty(listItem, 'index', str(i+1))
-                #self.setListItemProperty(listItem, 'description', s.formattedDescription())
-                #self.setListItemProperty(listItem, 'airDate', s.formattedAirDateTime())
-                #self.setListItemProperty(listItem, 'originalAirDate', s.formattedOriginalAirDate())
-                
-                try:
-                    # isolate failure for schedules with a channel that may no longer exist
+                li = xbmcgui.ListItem()
+                self.setListItemProperty(li, 'title', s.title())
+                self.setListItemProperty(li, 'scheduleType', s.formattedScheduleType())
+                self.setListItemProperty(li, 'fullTitle', s.fullTitle())
+                self.setListItemProperty(li, 'priority', '%s' % s.getPriority())
+                self.setListItemProperty(li, 'poster', 'loading.gif')
+                self.setListItemProperty(li, 'index', str(i+1))
+                self.setListItemProperty(li, 'numRecorded', '%s' % s.numRecorded())                
+
+                # protect against deleted channels/tuners
+                if s.getChannelId() in self.channelsById:
+
+                    if s.getChannelName():
+                        self.setListItemProperty(li, 'channelName', s.getChannelName())
+                    
                     channel = self.channelsById[s.getChannelId()]
                     if channel.getIconPath():
                         channelIcon = self.mythChannelIconCache.get(channel)
                         if channelIcon:
-                            self.setListItemProperty(listItem, 'channelIcon', channelIcon)
-                except:
-                    log.warn('Schedule for %s refers to non-existant channel with id %s' % (safe_str(s.title()), s.getChannelId()))
+                            self.setListItemProperty(li, 'channelIcon', channelIcon)
+                elif s.station():
+                    self.setListItemProperty(li, 'channelName', s.station())
                 
-                listItems.append(listItem)
-                self.listItemsBySchedule[s] = listItem
+                if self.fanArt.hasPosters(s):
+                    s.needsPoster = False
+                    self.setListItemProperty(li, 'poster', self.lookupPoster(s))
+                else:
+                    s.needsPoster = True
+                
+                listItems.append(li)
+                self.listItemsBySchedule[s] = li
 
         buildListItems()
         self.schedulesListBox.reset()
         self.schedulesListBox.addItems(listItems)
         self.schedulesListBox.selectItem(self.lastSelected)
+        self.renderNav()
+        
         self.activeRenderToken = time.clock()
         self.renderPosters(self.activeRenderToken)
+
+    def renderNav(self):
+        self.setWindowProperty('sortBy', self.translator.get(m.SORT) + ': ' + self.translator.get(SORT_BY[self.sortBy]['translation_id']))
 
     @run_async
     @catchall
@@ -162,33 +183,35 @@ class SchedulesWindow(BaseWindow):
         for schedule in self.listItemsBySchedule.keys()[:]:
             if self.closed or xbmc.abortRequested or myRenderToken != self.activeRenderToken: 
                 return
-            listItem = self.listItemsBySchedule[schedule]
-            try:
-                try:
-                    posterPath = self.fanArt.getRandomPoster(schedule)
-                    if not posterPath:
-                        channel =  self.channelsById[schedule.getChannelId()]
-                        if channel.getIconPath():
-                            posterPath = self.mythChannelIconCache.get(channel)
-                except:
-                    posterPath = self.platform.getMediaPath('mythbox.png')
-                    log.exception('Schedule = %s' % safe_str(schedule))
-            finally:
-                self.setListItemProperty(listItem, 'poster', posterPath)
-                
+            if schedule.needsPoster:
+                schedule.needsPoster = False
+                listItem = self.listItemsBySchedule[schedule]
+                self.setListItemProperty(listItem, 'poster', self.lookupPoster(schedule))
+
+    def lookupPoster(self, schedule):
+        try:
+            posterPath = self.fanArt.pickPoster(schedule)
+            if not posterPath:
+                channel =  self.channelsById[schedule.getChannelId()]
+                if channel.getIconPath():
+                    posterPath = self.mythChannelIconCache.get(channel)
+        except:
+            posterPath = self.platform.getMediaPath('mythbox.png')
+            log.exception('Schedule = %s' % safe_str(schedule))
+        
+        return posterPath
+        
 
 class ScheduleDialog(BaseDialog):
     """Create new and edit existing recording schedules"""
         
     def __init__(self, *args, **kwargs):
         BaseDialog.__init__(self, *args, **kwargs)
+        [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings','translator','platform','mythChannelIconCache',)]
+        
         # Leave passed in schedule untouched; work on a copy of it 
         # in case the user cancels the operation.
         self.schedule = copy.copy(kwargs['schedule'])
-        self.translator = kwargs['translator']
-        self.platform = kwargs['platform']
-        self.settings = kwargs['settings']
-        self.mythChannelIconCache = kwargs['mythChannelIconCache']
         self.shouldRefresh = False
         
     @catchall
@@ -199,6 +222,10 @@ class ScheduleDialog(BaseDialog):
         self.autoExpireCheckBox = self.getControl(207)
         self.autoTranscodeCheckBox = self.getControl(218)
         self.recordNewExpireOldCheckBox = self.getControl(213) 
+        self.userJob1CheckBox = self.getControl(214)
+        self.userJob2CheckBox = self.getControl(215)
+        self.userJob3CheckBox = self.getControl(216)
+        self.userJob4CheckBox = self.getControl(217)
         
         self.saveButton = self.getControl(250)
         self.deleteButton = self.getControl(251)
@@ -210,14 +237,13 @@ class ScheduleDialog(BaseDialog):
         pass
         
     @catchall_ui 
-    @lirc_hack
     def onAction(self, action):
         if action.getId() in (Action.PREVIOUS_MENU, Action.PARENT_DIR):
             self.close() 
 
     @catchall_ui
-    @lirc_hack    
     @inject_conn
+    @inject_db
     def onClick(self, controlId):
         t = self.translator.get
         log.debug('onClick %s ' % controlId)
@@ -249,10 +275,27 @@ class ScheduleDialog(BaseDialog):
         elif self.recordNewExpireOldCheckBox == source: 
             s.setRecordNewAndExpireOld(self.recordNewExpireOldCheckBox.isSelected())    
         
+        elif self.userJob1CheckBox == source:
+            s.setAutoUserJob1(self.userJob1CheckBox.isSelected())
+
+        elif self.userJob2CheckBox == source:
+            s.setAutoUserJob2(self.userJob2CheckBox.isSelected())
+        
+        elif self.userJob3CheckBox == source:
+            s.setAutoUserJob3(self.userJob3CheckBox.isSelected())
+            
+        elif self.userJob4CheckBox == source:
+            s.setAutoUserJob4(self.userJob4CheckBox.isSelected())
+            
         elif controlId == 203: self._chooseFromList(CheckForDupesUsing.translations, t(m.CHECK_FOR_DUPES_USING), 'checkForDupesUsing', s.setCheckForDupesUsing)            
         elif controlId == 204: self._chooseFromList(CheckForDupesIn.translations, t(m.CHECK_FOR_DUPES_IN), 'checkForDupesIn', s.setCheckForDupesIn)
         elif controlId == 208: self._chooseFromList(EpisodeFilter.translations, t(m.EPISODE_FILTER), 'episodeFilter', s.setEpisodeFilter)
-            
+        elif controlId == 219: 
+            fakeTr = odict.odict()
+            for name in self.db().getRecordingProfileNames():
+                fakeTr[name] = name
+            self._chooseFromList(fakeTr, t(m.RECORDING_PROFILE), 'recordingProfile', s.setRecordingProfile)
+                
         elif controlId == 206:
             maxEpisodes = self._enterNumber(t(m.KEEP_AT_MOST), s.getMaxEpisodes(), 0, 99)
             s.setMaxEpisodes(maxEpisodes)
@@ -287,7 +330,7 @@ class ScheduleDialog(BaseDialog):
     def _updateView(self):
         s = self.schedule
         t = self.translator.get
-        
+
         if s.getScheduleId() is None:
             self.setWindowProperty('heading', t(m.NEW_SCHEDULE))
             self.deleteButton.setEnabled(False)
@@ -327,14 +370,36 @@ class ScheduleDialog(BaseDialog):
         self.setWindowProperty('checkForDupesIn', t(CheckForDupesIn.translations[s.getCheckForDupesIn()]))
         self.setWindowProperty('episodeFilter', t(EpisodeFilter.translations[s.getEpisodeFilter()])) 
         
-        self.enabledCheckBox.setSelected(s.isEnabled())
         self.autoTranscodeCheckBox.setSelected(s.isAutoTranscode())
         self.recordNewExpireOldCheckBox.setSelected(s.isRecordNewAndExpireOld())
         
         self.setWindowProperty('maxEpisodes', (t(m.N_EPISODES) % s.getMaxEpisodes(), t(m.ALL_EPISODES))[s.getMaxEpisodes() == 0])
         self.setWindowProperty('startEarly', (t(m.N_MINUTES_EARLY) % s.getStartOffset(), t(m.ON_TIME))[s.getStartOffset() == 0])
         self.setWindowProperty('endLate', (t(m.N_MINUTES_LATE) % s.getEndOffset(), t(m.ON_TIME))[s.getEndOffset() == 0])
-            
+        
+        self.setWindowProperty('recordingProfile', s.getRecordingProfile())
+        
+        self.enabledCheckBox.setSelected(s.isEnabled())
+        self.renderUserJobs(s, t)
+        
+    @inject_db
+    def renderUserJobs(self, s, t):
+        jobs = {
+            'UserJob1': {'control':self.userJob1CheckBox, 'text':m.USERJOB1_ENABLED, 'descColumn':'UserJobDesc1', 'getter':s.isAutoUserJob1}, 
+            'UserJob2': {'control':self.userJob2CheckBox, 'text':m.USERJOB2_ENABLED, 'descColumn':'UserJobDesc2', 'getter':s.isAutoUserJob2},
+            'UserJob3': {'control':self.userJob3CheckBox, 'text':m.USERJOB3_ENABLED, 'descColumn':'UserJobDesc3', 'getter':s.isAutoUserJob3}, 
+            'UserJob4': {'control':self.userJob4CheckBox, 'text':m.USERJOB4_ENABLED, 'descColumn':'UserJobDesc4', 'getter':s.isAutoUserJob4}
+        }
+        
+        for jobName in jobs.keys():
+            jobCommand = self.db().getMythSetting(jobName)
+            checkBox = jobs[jobName]['control']
+            if jobCommand is None or len(jobCommand) == 0:
+                checkBox.setVisible(False)
+            else:
+                checkBox.setLabel(self.db().getMythSetting(jobs[jobName]['descColumn']))    
+                checkBox.setSelected(jobs[jobName]['getter']())
+        
     def _chooseFromList(self, translations, title, property, setter):
         """
         Boiler plate code that presents the user with a dialog box to select a value from a list.

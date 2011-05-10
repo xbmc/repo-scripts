@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -19,6 +19,7 @@
 import datetime
 import logging
 import odict
+from mythbox.mythtv.enums import RecordingStatus
 
 try:
     # native mysql client libs
@@ -226,7 +227,7 @@ class MythDatabase(object):
     
     def toBackend(self, hostnameOrIpAddress):
         for b in self.getBackends():
-            if hostnameOrIpAddress in (b.hostname, b.ipAddress,):
+            if hostnameOrIpAddress.lower() in (b.hostname.lower(), b.ipAddress.lower(),):
                 return b
         master = self.getMasterBackend()
         log.warn('Host %s could not be mapped to a backend. Returning master backend %s instead.' % (hostnameOrIpAddress, master.hostname))
@@ -318,6 +319,27 @@ class MythDatabase(object):
             self._channels = map(lambda rd: Channel(rd), rows)
         return self._channels
 
+    @inject_cursor
+    def getRecordingProfileNames(self):
+        sql = """
+            select 
+                distinct(rp.name) as recording_profile_name
+            from 
+                capturecard cc,
+                cardinput ci,
+                profilegroups pg,
+                recordingprofiles rp
+            where
+                cc.cardid = ci.cardid
+                and cc.cardtype = pg.cardtype
+                and rp.profilegroup = pg.id
+                and rp.name != 'Live TV'
+            order by 
+                rp.name asc;
+        """
+        self.cursor.execute(sql)
+        return [self.toDict(self.cursor,row)['recording_profile_name'] for row in self.cursor.fetchall()]
+        
     @inject_cursor            
     def getRecordingGroups(self):
         """
@@ -382,6 +404,51 @@ class MythDatabase(object):
         titlegroups[0][1] = grpcnt
         return titlegroups
 
+    @inject_cursor
+    def getFramerate(self, recording):
+        '''Returns fps as a float or defaults to 29.97 if problems occur'''
+
+        sql = '''        
+            select 
+                rs.mark/time_to_sec(timediff(r.progend,r.progstart)) as fps_actual,
+                rs.mark/time_to_sec(timediff(r.endtime,r.starttime)) as fps_duration
+            from 
+                recorded r, 
+                recordedseek rs
+            where
+                r.chanid = %d 
+            and r.starttime={ts '%s'}
+            and r.chanid = rs.chanid
+            and r.starttime = rs.starttime
+            order by rs.mark desc
+            limit 1 
+            ''' % (recording.getChannelId(), recording.starttimeAsTime())       
+        fps = float(29.97)
+        self.cursor.execute(sql)
+        for row in self.cursor.fetchall():
+            row = self.toDict(self.cursor, row)
+            try:
+                log.debug('FPS actual   %s' % row['fps_actual'])
+                log.debug('FPS duration %s' % row['fps_duration'])
+                
+                holder = float(row['fps_duration'])
+                if holder is not None:
+                    fps = holder
+                    break
+            except TypeError, te:
+                log.warn('Decimal to float conversion failed for "%s" with error %s. Returning default of 29.97' % (fps, safe_str(te)))
+                break
+        
+        # since we're deriving an approximation from the recordedseek table, just fudge to the
+        # most obvious correct values
+        if fps >= 28.0 and fps <= 32.0:
+            fps = float(29.97)
+        elif fps >= 58.0 and fps <= 62.0:
+            fps = float(59.94)
+        elif fps >= 22.0 and fps <= 26.0:
+            fps = float(24.0)
+        return fps
+    
     @timed
     @inject_cursor
     def getTuners(self):
@@ -507,8 +574,9 @@ class MythDatabase(object):
         @rtype: str
         @return: Setting from the  SETTINGS table or None if not found
         """
-        sql = 'select data from settings where value = "%s"  '% key
-        if hostname: sql += ' and hostname = "%s"' % hostname
+        sql = 'select data from settings where value = "%s" '% key
+        if hostname: 
+            sql += ' and hostname = "%s"' % hostname
                    
         result = None
         self.cursor.execute(sql)
@@ -565,12 +633,13 @@ class MythDatabase(object):
                 c.channum,
                 c.callsign,
                 c.name as channame,
-                c.icon
+                c.icon,
+                (select count(*) from oldrecorded where oldrecorded.title=r.title and oldrecorded.recstatus = %d) as numRecorded
             FROM
                 record r
             LEFT JOIN channel c ON r.chanid = c.chanid
-            """
-            
+            """ % RecordingStatus.RECORDED
+    
         if chanId != "":
             sql += "WHERE r.chanid = '%s' "%chanId
             
@@ -759,6 +828,7 @@ class MythDatabase(object):
                 subtitle, 
                 description,
                 category, 
+                station,
                 profile,
                 recpriority, 
                 autoexpire,
@@ -769,7 +839,6 @@ class MythDatabase(object):
                 recgroup, 
                 dupmethod,
                 dupin, 
-                station,
                 seriesid, 
                 programid,
                 search, 
@@ -785,9 +854,9 @@ class MythDatabase(object):
                 parentid) 
             VALUES (
                 %s, %s, %s, %s, %s, %s, %s, 
-                %%s, %%s, %%s, 
-                %s, %s, %s, %s, %s, %s, 
-                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                %%s, %%s, %%s, %%s, %%s, %%s, 
+                %s, %s, %s, %s, 
+                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                 %s, %s, %s)""" % (
                 recordid, 
                 s.getScheduleType(),
@@ -796,11 +865,12 @@ class MythDatabase(object):
                 quote(mythdate2dbdate(s.startdate())), 
                 quote(mythtime2dbtime(s.endtime())),
                 quote(mythdate2dbdate(s.enddate())), 
-                #quote(s.title()),            #
+                #quote(s.title()),            # passed as args to execute(..) for encoding
                 #quote(s.subtitle()),         #
                 #quote(s.description()),      #
-                quote(s.category()),
-                quote(s.profile()),
+                #quote(s.category()),         #
+                #quote(s.station()),          #
+                #quote(s.getRecordingProfile()),
                 s.getPriority(), 
                 int(s.isAutoExpire()),
                 s.getMaxEpisodes(), 
@@ -810,7 +880,6 @@ class MythDatabase(object):
                 quote(s.getRecordingGroup()), 
                 s.getCheckForDupesUsing(),
                 s.getDupin(), 
-                quote(s.station()),
                 quote(seriesid),  
                 quote(programid),
                 int(s.search()), 
@@ -826,7 +895,11 @@ class MythDatabase(object):
                 int(s.parentid()))
 
         log.debug("sql = %s" % safe_str(sql))
-        args = (s.title(), s.subtitle(), s.description())
+        args = (s.title(), s.subtitle(), s.description(), s.category(), s.station(), s.getRecordingProfile())
+
+        if log.isEnabledFor(logging.DEBUG):
+            for i,arg in enumerate(args):
+                log.debug('Positional arg %d: %s' % (i,safe_str(arg)))
 
         c = self.conn.cursor(*cursorArgs)       
         try:
@@ -842,7 +915,7 @@ class MythDatabase(object):
                 s.setScheduleId(scheduleId)
                 log.debug('New scheduleId = %s' % scheduleId)
             finally:
-                c.close()
+                c2.close()
         return s
     
         # INSERT INTO `record` (

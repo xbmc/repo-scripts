@@ -30,7 +30,7 @@ from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.domain import Channel
 from mythbox.ui.schedules import ScheduleDialog
 from mythbox.ui.toolkit import BaseWindow, window_busy, Action
-from mythbox.util import catchall_ui, lirc_hack, run_async, catchall, ui_locked, ui_locked2
+from mythbox.util import catchall_ui, run_async, catchall, ui_locked, ui_locked2
 
 log = logging.getLogger('mythbox.ui')
 
@@ -51,12 +51,8 @@ class UpcomingRecordingsWindow(BaseWindow):
     
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
-        
-        self.settings = kwargs['settings']
-        self.translator = kwargs['translator']
-        self.platform = kwargs['platform']
-        self.fanArt = kwargs['fanArt']
-        self.mythChannelIconCache = kwargs['cachesByName']['mythChannelIconCache']
+        [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings','translator','platform','fanArt','cachesByName', 'upcoming', )]
+        self.mythChannelIconCache = self.cachesByName['mythChannelIconCache']
         
         self.programs = []                       # [RecordedProgram]
         self.channelsById = None                 # {int:Channel}
@@ -65,7 +61,6 @@ class UpcomingRecordingsWindow(BaseWindow):
         self.programsByListItem = odict.odict()  # {ListItem:Program}
         self.sortBy = self.settings.get('upcoming_sort_by')
         self.sortAscending = self.settings.getBoolean('upcoming_sort_ascending')
-        self.closed = False
         self.activeRenderToken = None
         
     @catchall_ui
@@ -77,7 +72,6 @@ class UpcomingRecordingsWindow(BaseWindow):
             self.refresh()
         
     @catchall_ui
-    @lirc_hack    
     def onClick(self, controlId):
         if controlId == ID_PROGRAMS_LISTBOX:
             self.onEditSchedule()
@@ -124,7 +118,6 @@ class UpcomingRecordingsWindow(BaseWindow):
             mythChannelIconCache=self.mythChannelIconCache).doModal()
             
     @catchall_ui
-    @lirc_hack            
     def onAction(self, action):
         #log.debug('Key got hit: %s   Current focus: %s' % (ui.toString(action), self.getFocusId()))
         if action.getId() in (Action.PREVIOUS_MENU, Action.PARENT_DIR,):
@@ -218,7 +211,7 @@ class UpcomingRecordingsWindow(BaseWindow):
         for (program, listItem) in self.listItemsByProgram.items()[:]:
             if self.closed or xbmc.abortRequested or myRenderToken != self.activeRenderToken: 
                 return
-            posterPath = self.fanArt.getRandomPoster(program)
+            posterPath = self.fanArt.pickPoster(program)
             if posterPath is None:
                 if self.channelsById[program.getChannelId()].getIconPath():
                     posterPath = self.mythChannelIconCache.get(self.channelsById[program.getChannelId()])

@@ -177,25 +177,7 @@
                 <textoffsetx>10</textoffsetx>
                 <texturefocus>input-focus.png</texturefocus>
                 <texturenofocus>input-nofocus.png</texturenofocus>
-            </control>
-            
-            <!--
-            TODO: Use slider when added to python support
-            <control type="sliderex" id="202">
-                <description>Recording Priority Slider</description>
-                <height>35</height>
-                <width>650</width>
-                <texturefocus>input-focus.png</texturefocus>
-                <texturenofocus>input-nofocus.png</texturenofocus>
-                <sliderwidth>100</sliderwidth>
-                <sliderheight>20</sliderheight>
-                <texturesliderbar>osd_slider_bg.png</texturesliderbar>
-                <textureslidernib>osd_slider_nibNF.png</textureslidernib>
-                <textureslidernibfocus>osd_slider_nibFO.png</textureslidernibfocus>
-                <font>font12</font>
-                <textoffsetx>10</textoffsetx>
-            </control>
-            -->
+            </control>            
              
             <control type="button" id="203">
                 <description>check for dupes using</description>   
@@ -330,6 +312,75 @@
                 <texturefocus>input-focus.png</texturefocus>
                 <texturenofocus>input-nofocus.png</texturenofocus>
             </control>
+
+            <control type="button" id="219">
+                <description>recording profile</description>
+                <label>SCRIPT1128</label>
+                <label2>$INFO[Window.Property(recordingProfile)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>
+ 
+            <control type="radiobutton" id="214">
+                <description>userjob1</description>
+                <label>SCRIPT1124</label>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="radiobutton" id="215">
+                <description>userjob2</description>
+                <label>SCRIPT1125</label>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+            
+            <control type="radiobutton" id="216">
+                <description>userjob3</description>
+                <label>SCRIPT1126</label>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+            
+            <control type="radiobutton" id="217">
+                <description>userjob4</description>
+                <label>SCRIPT1127</label>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
             
             <control type="radiobutton" id="212">
                 <description>schedule enabled</description>
@@ -347,7 +398,7 @@
         </control>
         
         <control type="grouplist" id="2000">
-            <description>Save Cancel Delete Buttons</description>
+            <description>Save Delete Buttons</description>
             <posx>710</posx>
             <posy>95</posy>
             <onleft>9000</onleft>

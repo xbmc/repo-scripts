@@ -1,6 +1,6 @@
 #
 #  MythBox for XBMC - http://mythbox.googlecode.com
-#  Copyright (C) 2010 analogue@yahoo.com
+#  Copyright (C) 2011 analogue@yahoo.com
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -22,7 +22,7 @@ from mythbox.mythtv.enums import TVState, TVState44, TVState58
 # MythTV Protcol Constants
 initVersion = 8
 initToken = ''
-separator = '[]:[]'
+separator = u'[]:[]'
 serverVersion = None
 
 
@@ -60,12 +60,21 @@ class BaseProtocol(object):
     def protocolToken(self):
         return ""
 
+    def mythVersion(self):
+        raise Exception, 'Abstract method'
+
+    def supportsStreaming(self, platform):
+        raise Exception, 'Abstract method'
+
 
 class Protocol40(BaseProtocol):
     
     def version(self):
         return 40
     
+    def mythVersion(self):
+        return '0.21'
+
     def recordFields(self):
         # Based on from https://github.com/MythTV/mythtv/blob/v0.23.1/mythtv/bindings/python/MythTV/MythData.py
         return [ 'title',        'subtitle',     'description',
@@ -102,9 +111,14 @@ class Protocol40(BaseProtocol):
     def genPixMapCommand(self):
         return ['QUERY_GENPIXMAP']        
 
+    def genQueryRecordingsCommand(self):
+        return ['QUERY_RECORDINGS Play']
+
     def genPixMapPreviewFilename(self, program):
         return program.getBareFilename() + '.640x360.png'
 
+    def supportsStreaming(self, platform):
+        return True
 
 class Protocol41(Protocol40):
     
@@ -192,11 +206,17 @@ class Protocol50(Protocol49):
     def version(self):
         return 50
 
+    def mythVersion(self):
+        return '0.22'
+
 
 class Protocol56(Protocol50):
     
     def version(self):
         return 56
+
+    def mythVersion(self):
+        return '0.23'
 
 
 class Protocol23056(Protocol56):
@@ -204,11 +224,17 @@ class Protocol23056(Protocol56):
     def version(self):
         return 23056
     
+    def mythVersion(self):
+        return '0.23.1'
+
 
 class Protocol57(Protocol56):
     
     def version(self):
         return 57
+
+    def mythVersion(self):
+        return '0.24'
 
     def recordFields(self):
         return ['title','subtitle','description',
@@ -231,6 +257,10 @@ class Protocol57(Protocol56):
 
     def getFileSize(self, program):
         return int(program.getField('filesize')) / 1024.0
+
+    def supportsStreaming(self, platform):
+        # Eden and up
+        return platform.xbmcVersion() >= 11.0 
 
 
 class Protocol58(Protocol57):
@@ -286,6 +316,7 @@ class Protocol63(Protocol62):
     def protocolToken(self):
         return "3875641D"
 
+
 class Protocol64(Protocol63):
     
     def version(self):
@@ -293,6 +324,20 @@ class Protocol64(Protocol63):
     
     def protocolToken(self):
         return "8675309J"
+
+
+class Protocol65(Protocol64):
+    
+    def version(self):
+        return 65
+    
+    def protocolToken(self):
+        return "D2BB94C2"
+
+    def genQueryRecordingsCommand(self): 
+        # technically the old query recs command works but actually causes sorting which would be redundant and may be removed in the future
+        return ['QUERY_RECORDINGS Unsorted']
+
 
 # Current rev in mythversion.h
 protocols = {
@@ -316,5 +361,6 @@ protocols = {
     61: Protocol61(),  # 0.24
     62: Protocol62(),  # 0.24
     63: Protocol63(),  # 0.24
-    64: Protocol64()   # 0.24
+    64: Protocol64(),  # 0.24
+    65: Protocol65()   # 0.24
 }    

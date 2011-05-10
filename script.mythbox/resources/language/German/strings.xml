@@ -27,7 +27,7 @@
   <string id="21">Myth TV</string>
   <string id="22">MySQL</string>
   <string id="23">Pfade</string>
-  <string id="24">Einstellungen testen</string>
+  <string id="24">Einstellungen testen..</string>
   <string id="25">Einstellungen erfolgreich gespeichert.</string>
   
   <string id="29">Einstellungen wurden veränderd. Einstellungen verlieren ?</string>
@@ -342,7 +342,7 @@
   <string id="411">Master Backend Hostname</string>
   <string id="412">Master Backend Port</string>
   <string id="413">Lokale Aufzeichnungs Vezeichniss(e)</string>
-  <string id="414"></string>
+
   <string id="415">Löschen bestätigen</string>
   <string id="416">Standort der Mythtv-Aufzeichnungen auf dem lokalen file-system.</string>
   <string id="417">Mehrfache Verzeichnisse können durch eine Komma (Linux/Mac) oder ein Semmiklon (Windows) angegeben werden.</string>
@@ -356,7 +356,7 @@
   <string id="425">Zwischenspeicher löschen</string>
   <string id="426">Zwischenspeicher erfolgreich gelöscht</string>
     
-  <string id="430">Teste Einstellungen</string>
+  <string id="430">Teste Einstellungen..</string>
   <string id="431">Einstellungen korrekt</string>
 
   <string id="440">Erweitert</string>
@@ -367,7 +367,7 @@
   <string id="445">aktivieren Sie diese Option</string>
   <string id="446">Komma separierte Liste mit öffentliche Twitter-Namen</string> 
   
-  <string id="450">XBMC Einstellungen</string>
+  <string id="450">XBMC Einstellungen..</string>
     
   <string id="460">Über</string>
 

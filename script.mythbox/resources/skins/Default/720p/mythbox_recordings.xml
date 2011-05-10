@@ -1,6 +1,6 @@
 <window>
-  <id>3006</id>
-  <defaultcontrol>600</defaultcontrol>
+  <id>3012</id>
+  <defaultcontrol>700</defaultcontrol>
   <type>window</type>
   <coordinates>
     <system>1</system>
@@ -73,189 +73,384 @@
             <visible>false</visible>
         </control>
 
+        <control type="group" id="3000">
+            <description>tables</description>
+<!--            <posx>0</posx>-->
+<!--            <posy>122</posy>-->
+            <itemgap>1</itemgap>
+
+<!-- Groups Header -->
+
+            <control type="image">
+                <description>table header</description>
+                <posx>315</posx>
+                <posy>140</posy>
+                <width>940</width>
+                <height>40</height>
+                <texture flipx="true">mb-header.png</texture>
+            </control>
+            
+            <control type="label">
+                <descriptin>num episodes</descriptin>
+                <posx>325</posx>
+                <posy>140</posy>
+                <width>140</width>
+                <height>35</height>
+                <font>font12</font>
+                <textcolor>ffddddff</textcolor>
+                <selectedcolor>FFe2ff43</selectedcolor>
+                <align>left</align>
+                <aligny>center</aligny>
+                <label>SCRIPT854</label>
+            </control>
+    
+            <control type="label">
+                <description>title</description>
+                <posx>520</posx>
+                <posy>140</posy>
+                <width>150</width>
+                <height>35</height>
+                <font>font12</font>
+                <textcolor>ffddddff</textcolor>
+                <selectedcolor>FFe2ff43</selectedcolor>
+                <align>left</align>
+                <aligny>center</aligny>
+                <label>SCRIPT212</label>
+            </control>
+    
+            <control type="label">
+                <description>episode</description>
+                <posx>1175</posx>
+                <posy>140</posy>
+                <width>80</width>
+                <height>35</height>
+                <font>font12</font>
+                <textcolor>ffddddff</textcolor>
+                <selectedcolor>FFe2ff43</selectedcolor>
+                <align>left</align>
+                <aligny>center</aligny>
+                <label>SCRIPT161</label>
+            </control>
+    
+<!--  Groups Listbox -->
+    
+            <control type="list" id="700">
+                <posx>315</posx>
+                <posy>180</posy>
+                <width>940</width>
+                <height>150</height>
+                <onleft>2000</onleft>
+                <onright>600</onright>
+                <onup>700</onup>
+                <ondown>700</ondown>
+                <!-- 
+                <scrolltime>0</scrolltime>
+                <preloaditems>10</preloaditems>
+                -->
+                 
+                <itemlayout height="30">
+    
+                    <control type="label">
+                        <descriptino>num episodes</descriptino>
+                        <posx>10</posx>
+                        <posy>0</posy>
+                        <width>340</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(num_episodes)]</label>
+                    </control>
+    
+                    <control type="label">
+                        <description>list item title</description>
+                        <posx>200</posx>
+                        <posy>0</posy>
+                        <width>640</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>DDFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(title)]</label>
+                    </control>
+    
+                    <control type="label">
+                        <description>list item episode</description>
+                        <posx>860</posx>
+                        <posy>0</posy>
+                        <width>80</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>DDFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(episode)]</label>
+                    </control>
+                    
+                </itemlayout>
+                
+                <focusedlayout height="30">
+                
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>940</width>
+                        <height>30</height>
+                        <texture border="3">input-focus.png</texture>
+                        <visible>Control.HasFocus(700)</visible>
+                    </control>
+    
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>940</width>
+                        <height>30</height>
+                        <texture border="3">input-nofocus.png</texture>
+                        <visible>!Control.HasFocus(700)</visible>
+                    </control>
+                
+                    <control type="label">
+                        <description>num episodes</description>
+                        <posx>10</posx>
+                        <posy>0</posy>
+                        <width>340</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(num_episodes)]</label>
+                    </control>
+    
+                    <control type="label">
+                        <description>list item title</description>
+                        <posx>200</posx>
+                        <posy>0</posy>
+                        <width>640</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>DDFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(title)]</label>
+                    </control>
+    
+                    <control type="label">
+                        <description>list item episode</description>
+                        <posx>860</posx>
+                        <posy>0</posy>
+                        <width>80</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>DDFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(episode)]</label>
+                    </control>
+                    
+                </focusedlayout>
+            </control>
+    
 <!-- Programs Table Header -->
-
-        <control type="image">
-            <description>table header</description>
-            <posx>315</posx>
-            <posy>140</posy>
-            <width>940</width>
-            <height>40</height>
-            <texture flipx="true">mb-header.png</texture>
-        </control>
-        
-        <control type="label">
-            <descriptin>date</descriptin>
-            <posx>325</posx>
-            <posy>140</posy>
-            <width>340</width>
-            <height>35</height>
-            <font>font12</font>
-            <textcolor>ffddddff</textcolor>
-            <selectedcolor>FFe2ff43</selectedcolor>
-            <align>left</align>
-            <aligny>center</aligny>
-            <label>SCRIPT211</label>
-        </control>
-
-        <control type="label">
-            <description>title</description>
-            <posx>520</posx>
-            <posy>140</posy>
-            <width>150</width>
-            <height>35</height>
-            <font>font12</font>
-            <textcolor>ffddddff</textcolor>
-            <selectedcolor>FFe2ff43</selectedcolor>
-            <align>left</align>
-            <aligny>center</aligny>
-            <label>SCRIPT212</label>
-        </control>
-
-        <control type="label">
-            <description>episode</description>
-            <posx>1175</posx>
-            <posy>140</posy>
-            <width>80</width>
-            <height>35</height>
-            <font>font12</font>
-            <textcolor>ffddddff</textcolor>
-            <selectedcolor>FFe2ff43</selectedcolor>
-            <align>left</align>
-            <aligny>center</aligny>
-            <label>SCRIPT161</label>
-        </control>
-
+    
+            <control type="image">
+                <description>table header</description>
+                <posx>315</posx>
+                <posy>340</posy>
+                <width>940</width>
+                <height>40</height>
+                <texture flipx="true">mb-header.png</texture>
+            </control>
+            
+            <control type="label">
+                <descriptin>date</descriptin>
+                <posx>325</posx>
+                <posy>340</posy>
+                <width>340</width>
+                <height>35</height>
+                <font>font12</font>
+                <textcolor>ffddddff</textcolor>
+                <selectedcolor>FFe2ff43</selectedcolor>
+                <align>left</align>
+                <aligny>center</aligny>
+                <label>SCRIPT211</label>
+            </control>
+    
+            <control type="label">
+                <description>title</description>
+                <posx>520</posx>
+                <posy>340</posy>
+                <width>150</width>
+                <height>35</height>
+                <font>font12</font>
+                <textcolor>ffddddff</textcolor>
+                <selectedcolor>FFe2ff43</selectedcolor>
+                <align>left</align>
+                <aligny>center</aligny>
+                <label>SCRIPT212</label>
+            </control>
+    
+            <control type="label">
+                <description>episode</description>
+                <posx>1175</posx>
+                <posy>340</posy>
+                <width>80</width>
+                <height>35</height>
+                <font>font12</font>
+                <textcolor>ffddddff</textcolor>
+                <selectedcolor>FFe2ff43</selectedcolor>
+                <align>left</align>
+                <aligny>center</aligny>
+                <label>SCRIPT161</label>
+            </control>
+    
 <!--  Programs Listbox -->
 
-        <control type="list" id="600">
-            <posx>315</posx>
-            <posy>180</posy>
-            <width>940</width>
-            <height>460</height>
-            <onleft>2000</onleft>
-<!--            <onright>6000</onright>-->
-            <onup>600</onup>
-            <ondown>600</ondown>
-            <viewtype label="Programs">wide</viewtype>
-<!--            <pagecontrol>6000</pagecontrol>-->
-            
-            <!-- 
-            <scrolltime>0</scrolltime>
-            <preloaditems>10</preloaditems>
-            -->
-             
-            <itemlayout height="30">
-
-                <control type="label">
-                    <descriptino>list item date and time</descriptino>
-                    <posx>10</posx>
-                    <posy>0</posy>
-                    <width>340</width>
-                    <height>30</height>
-                    <font>font12</font>
-                    <textcolor>FFFFFFFF</textcolor>
-                    <selectedcolor>FFe2ff43</selectedcolor>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <label>$INFO[ListItem.Property(date)]  $INFO[ListItem.Property(time)]</label>
-                </control>
-
-                <control type="label">
-                    <description>list item title</description>
-                    <posx>200</posx>
-                    <posy>0</posy>
-                    <width>640</width>
-                    <height>30</height>
-                    <font>font12</font>
-                    <textcolor>DDFFFFFF</textcolor>
-                    <selectedcolor>FFe2ff43</selectedcolor>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <label>$INFO[ListItem.Property(title)]</label>
-                </control>
-
-                <control type="label">
-                    <description>list item episode</description>
-                    <posx>860</posx>
-                    <posy>0</posy>
-                    <width>80</width>
-                    <height>30</height>
-                    <font>font12</font>
-                    <textcolor>DDFFFFFF</textcolor>
-                    <selectedcolor>FFe2ff43</selectedcolor>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <label>$INFO[ListItem.Property(episode)]</label>
-                </control>
+            <control type="image">
+                <posx>315</posx>
+                <posy>380</posy>
+                <width>940</width>
+                <height>250</height>
+                <aspectratio aligny="top">scale</aspectratio>
+                <texture diffuse="mb-diffuse-left.png">$INFO[Container(600).ListItem.Property(background)]</texture>
+                <fadetime>400</fadetime>
+            </control>
+    
+            <control type="list" id="600">
+                <posx>315</posx>
+                <posy>380</posy>
+                <width>940</width>
+                <height>250</height>
+                <onleft>700</onleft>
+                <onright>2000</onright>
+                <onup>600</onup>
+                <ondown>600</ondown>
+                <!-- 
+                <scrolltime>0</scrolltime>
+                <preloaditems>10</preloaditems>
+                -->
+                 
+                <itemlayout height="30">
+    
+                    <control type="label">
+                        <descriptino>list item date and time</descriptino>
+                        <posx>10</posx>
+                        <posy>0</posy>
+                        <width>340</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(date)]  $INFO[ListItem.Property(time)]</label>
+                    </control>
+    
+                    <control type="label">
+                        <description>list item title</description>
+                        <posx>200</posx>
+                        <posy>0</posy>
+                        <width>640</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>DDFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(title)]</label>
+                    </control>
+    
+                    <control type="label">
+                        <description>list item episode</description>
+                        <posx>860</posx>
+                        <posy>0</posy>
+                        <width>80</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>DDFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(episode)]</label>
+                    </control>
+                    
+                </itemlayout>
                 
-            </itemlayout>
-            
-            <focusedlayout height="30">
-            
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>940</width>
-                    <height>30</height>
-                    <texture border="3">input-focus.png</texture>
-                    <visible>Control.HasFocus(600)</visible>
-                </control>
-
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>940</width>
-                    <height>30</height>
-                    <texture border="3">input-nofocus.png</texture>
-                    <visible>!Control.HasFocus(600)</visible>
-                </control>
-            
-                <control type="label">
-                    <description>list item date and time</description>
-                    <posx>10</posx>
-                    <posy>0</posy>
-                    <width>340</width>
-                    <height>30</height>
-                    <font>font12</font>
-                    <textcolor>FFFFFFFF</textcolor>
-                    <selectedcolor>FFe2ff43</selectedcolor>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <label>$INFO[ListItem.Property(date)]  $INFO[ListItem.Property(time)]</label>
-                </control>
-
-                <control type="label">
-                    <description>list item title</description>
-                    <posx>200</posx>
-                    <posy>0</posy>
-                    <width>640</width>
-                    <height>30</height>
-                    <font>font12</font>
-                    <textcolor>DDFFFFFF</textcolor>
-                    <selectedcolor>FFe2ff43</selectedcolor>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <label>$INFO[ListItem.Property(title)]</label>
-                </control>
-
-                <control type="label">
-                    <description>list item episode</description>
-                    <posx>860</posx>
-                    <posy>0</posy>
-                    <width>80</width>
-                    <height>30</height>
-                    <font>font12</font>
-                    <textcolor>DDFFFFFF</textcolor>
-                    <selectedcolor>FFe2ff43</selectedcolor>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <label>$INFO[ListItem.Property(episode)]</label>
-                </control>
+                <focusedlayout height="30">
                 
-            </focusedlayout>
-        </control>
-                       
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>940</width>
+                        <height>30</height>
+                        <texture border="3">input-focus.png</texture>
+                        <visible>Control.HasFocus(600)</visible>
+                    </control>
+    
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>940</width>
+                        <height>30</height>
+                        <texture border="3">input-nofocus.png</texture>
+                        <visible>!Control.HasFocus(600)</visible>
+                    </control>
+                
+                    <control type="label">
+                        <description>list item date and time</description>
+                        <posx>10</posx>
+                        <posy>0</posy>
+                        <width>340</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(date)]  $INFO[ListItem.Property(time)]</label>
+                    </control>
+    
+                    <control type="label">
+                        <description>list item title</description>
+                        <posx>200</posx>
+                        <posy>0</posy>
+                        <width>640</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>DDFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(title)]</label>
+                    </control>
+    
+                    <control type="label">
+                        <description>list item episode</description>
+                        <posx>860</posx>
+                        <posy>0</posy>
+                        <width>80</width>
+                        <height>30</height>
+                        <font>font12</font>
+                        <textcolor>DDFFFFFF</textcolor>
+                        <selectedcolor>FFe2ff43</selectedcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Property(episode)]</label>
+                    </control>
+                    
+                </focusedlayout>
+            </control>
+
+        </control> <!-- group 3000 -->
+                               
         <control type="videowindow" id="4011">
             <posx>30</posx>
             <posy>60</posy>
@@ -367,25 +562,11 @@
                 <texturenofocus>button_nofocus.png</texturenofocus>
                 <pulseonselect>true</pulseonselect>
                 <onleft>600</onleft>
-                <onright>252</onright>
+                <onright>700</onright>
                 <onup>250</onup>
                 <ondown>250</ondown>
             </control>
-            <control type="togglebutton" id="252">
-                <description>Sort asc</description>
-                <posx>250</posx>
-                <posy>10</posy>
-                <label>-</label>
-				<texturefocus>mb-scroll-up-focus.png</texturefocus>
-				<texturenofocus>mb-scroll-up.png</texturenofocus>
-				<alttexturefocus>mb-scroll-down-focus.png</alttexturefocus>
-				<alttexturenofocus>mb-scroll-down.png</alttexturenofocus>                
-                <usealttexture>substring(Window.Property(sortAscending),true)</usealttexture>
-                <onleft>251</onleft>
-                <onright>600</onright>
-                <onup>250</onup>
-                <ondown>250</ondown>
-            </control>  
+            
             <control type="button" id="250">
                 <description>Refresh button</description>
                 <posx>0</posx>
@@ -400,7 +581,7 @@
                 <onup>251</onup>
                 <ondown>251</ondown>
                 <onleft>600</onleft>
-                <onright>600</onright>
+                <onright>700</onright>
             </control>
         </control>
             
@@ -413,6 +594,17 @@
             <texture background="false">$INFO[Container(600).ListItem.Property(poster)]</texture>
             <fadetime>400</fadetime>
         </control>
+
+        <control type="label">
+            <description>poster size</description>
+            <posx>40</posx>
+            <posy>590</posy>
+            <width>230</width>
+            <height>40</height>
+            <font>font10</font>
+            <textcolor>88FFFFFF</textcolor>
+            <label>$INFO[Container(600).ListItem.Property(posterSize)]</label>
+        </control>
   
         <control type="image">
             <posx>30</posx>
@@ -423,6 +615,7 @@
             <texture background="false" flipy="true" diffuse="diffuse_mirror2.png">$INFO[Container(600).ListItem.Property(poster)]</texture>
             <fadetime>400</fadetime>
         </control>
+        
     </control>
 
     <control type="multiimage">

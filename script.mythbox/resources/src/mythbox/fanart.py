@@ -36,7 +36,7 @@ import urllib
 import Queue
 
 from decorator import decorator
-from mythbox.util import synchronized, safe_str, run_async, max_threads, timed, requireDir
+from mythbox.util import synchronized, safe_str, run_async, max_threads, timed, requireDir, formatSize
 from mythbox.bus import Event
 
 log = logging.getLogger('mythbox.fanart')
@@ -70,12 +70,11 @@ class BaseFanartProvider(object):
     def getPosters(self, program):
         raise Exception, 'Abstract method'
     
-    def getRandomPoster(self, program):
-        posters = self.getPosters(program)
-        if posters:
-            return random.choice(posters)
-        else:
-            return None
+    def getBanners(self, program):
+        raise Exception, 'Abstract method'
+
+    def getBackgrounds(self, program):
+        raise Exception, 'Abstract method'
 
     def getSeasonAndEpisode(self, program):
         if self.nextProvider:
@@ -96,12 +95,16 @@ class NoOpFanartProvider(BaseFanartProvider):
 
     def getPosters(self, program):
         return []
-    
-    def getRandomPoster(self, program):
-        return None
+
+    def getBanners(self, program):
+        return []
+
+    def getBackgrounds(self, program):
+        return []
     
     def getSeasonAndEpisode(self, program):
         return None, None
+
 
 class PersistentFanartProvider(BaseFanartProvider):
     """Abstract base class which persists a dict (pcache) to disk across sessions"""
@@ -138,6 +141,11 @@ class PersistentFanartProvider(BaseFanartProvider):
     def close(self):
         super(PersistentFanartProvider, self).close()
         self.saveCache()
+        if log.isEnabledFor(logging.DEBUG):
+            try: 
+                log.debug('Cache size %s %s' % (os.path.split(self.pfilename)[1], formatSize(os.path.getsize(self.pfilename)/1000))) 
+            except: 
+                pass
         
 
 class OneStrikeAndYoureOutFanartProvider(PersistentFanartProvider):
@@ -167,7 +175,7 @@ class OneStrikeAndYoureOutFanartProvider(PersistentFanartProvider):
     @synchronized
     def strikeOut(self, key, program):
         if key in self.struckOut:
-            bucket = self.struckout[key]
+            bucket = self.struckOut[key]
         else:
             bucket = {'title':program.title()}
             self.struckOut[key] = bucket
@@ -182,6 +190,36 @@ class OneStrikeAndYoureOutFanartProvider(PersistentFanartProvider):
             if not posters:
                 self.strikeOut(key, program)
         return posters
+
+    @chain
+    def getBanners(self, program):
+        banners = []
+        key = self.createKey('getBanners', program) 
+        if not self.hasStruckOut(key):
+            banners = self.delegate.getBanners(program)
+            if not banners:
+                self.strikeOut(key, program)
+        return banners
+
+    @chain
+    def getBackgrounds(self, program):
+        return self._getStrikeOutable(program, 'getBackgrounds', self.delegate.getBackgrounds)
+#        backgrounds = []
+#        key = self.createKey('getBackgrounds', program) 
+#        if not self.hasStruckOut(key):
+#            backgrounds = self.delegate.getBackgrounds(program)
+#            if not backgrounds:
+#                self.strikeOut(key, program)
+#        return backgrounds
+
+    def _getStrikeOutable(self, program, methodName, delegateFunc):
+        results = []
+        key = self.createKey(methodName, program) 
+        if not self.hasStruckOut(key):
+            results = delegateFunc(program)
+            if not results:
+                self.strikeOut(key, program)
+        return results
 
     @chain
     def getSeasonAndEpisode(self, program):
@@ -214,17 +252,41 @@ class SpamSkippingFanartProvider(BaseFanartProvider):
         BaseFanartProvider.__init__(self, nextProvider)
     
     def getPosters(self, program):
-        if (program.title() in self.SPAM):
+        if program.title() in self.SPAM:
             return []
         if self.nextProvider:
             return self.nextProvider.getPosters(program)
-                
+
+    def getBanners(self, program):
+        if program.title() in self.SPAM:
+            return []
+        if self.nextProvider:
+            return self.nextProvider.getBanners(program)
+                        
+    def getBackgrounds(self, program):
+        if program.title() in self.SPAM:
+            return []
+        if self.nextProvider:
+            return self.nextProvider.getBackgrounds(program)
+                                
     def hasPosters(self, program):
-        if (program.title() in self.SPAM):
+        if program.title() in self.SPAM:
             return True
         return self.nextProvider.hasPosters(program)
+
+    def hasBanners(self, program):
+        if program.title() in self.SPAM:
+            return True
+        return self.nextProvider.hasBanners(program)
+
+    def hasBackgrounds(self, program):
+        if program.title() in self.SPAM:
+            return True
+        return self.nextProvider.hasBackgrounds(program)
         
     def getSeasonAndEpisode(self, program):
+        if program.title() in self.SPAM:
+            return None,None 
         return self.nextProvider.getSeasonAndEpisode(program)
        
         
@@ -246,9 +308,39 @@ class SuperFastFanartProvider(PersistentFanartProvider):
             if posters:  # cache returned poster 
                 self.imagePathsByKey[key] = posters
         return posters
-        
+
+    def getBanners(self, program):
+        # Different from posters in that it is ok for the
+        # list to be empty
+        banners = []
+        key = self.createKey('getBanners', program)
+        if key in self.imagePathsByKey:
+            banners = self.imagePathsByKey[key]
+        elif self.nextProvider:
+            banners = self.nextProvider.getBanners(program)
+            self.imagePathsByKey[key] = banners
+        return banners
+
+    def getBackgrounds(self, program):
+        # Different from posters in that it is ok for the
+        # list to be empty
+        backgrounds = []
+        key = self.createKey('getBackgrounds', program)
+        if key in self.imagePathsByKey:
+            backgrounds = self.imagePathsByKey[key]
+        elif self.nextProvider:
+            backgrounds = self.nextProvider.getBackgrounds(program)
+            self.imagePathsByKey[key] = backgrounds
+        return backgrounds
+
     def hasPosters(self, program):
         return self.createKey('getPosters', program) in self.imagePathsByKey
+        
+    def hasBanners(self, program):
+        return self.createKey('getBanners', program) in self.imagePathsByKey
+    
+    def hasBackgrounds(self, program):
+        return self.createKey('getBackgrounds', program) in self.imagePathsByKey
         
     def createKey(self, methodName, program):
         key = '%s-%s' % (methodName, safe_str(program.title()))
@@ -278,13 +370,13 @@ class HttpCachingFanartProvider(BaseFanartProvider):
         while not self.closeRequested:
             try:
                 if not self.workQueue.empty():
-                    log.debug('Work queue size: %d' % self.workQueue.qsize())
+                    log.debug('httpcache work queue size: %d' % self.workQueue.qsize())
                 workUnit = self.workQueue.get(block=True, timeout=1)
                 results = workUnit['results']
                 httpUrl = workUnit['httpUrl']
                 filePath = self.tryToCache(httpUrl)
                 if filePath:
-                    log.debug('Adding %s to results of size %d' % (filePath, len(results)))
+                    log.debug("Adding image %s as %s[%d]" % (filePath.split(os.sep)[-1], safe_str(workUnit['program'].title()), len(results)))
                     results.append(filePath)
             except Queue.Empty:
                 pass
@@ -295,11 +387,26 @@ class HttpCachingFanartProvider(BaseFanartProvider):
         posters = []
         if self.nextProvider:
             httpPosters = self.nextProvider.getPosters(program)
-            posters = self.cachePosters(httpPosters)
+            posters = self.cacheImages(httpPosters, program)
         return posters
 
-    def cachePosters(self, httpUrls):
-        '''Immediately retrieve the first URL and add the remaining to the 
+    def getBanners(self, program):
+        banners = []
+        if self.nextProvider:
+            httpBanners = self.nextProvider.getBanners(program)
+            banners = self.cacheImages(httpBanners, program)
+        return banners
+    
+    def getBackgrounds(self, program):
+        backgrounds = []
+        if self.nextProvider:
+            httpBackgrounds = self.nextProvider.getBackgrounds(program)
+            backgrounds = self.cacheImages(httpBackgrounds, program)
+        return backgrounds
+        
+    def cacheImages(self, httpUrls, program):
+        '''
+        Immediately retrieve the first URL and add the remaining to the 
         work queue so we can return *something* very quickly.
         '''
         filepaths = []
@@ -314,14 +421,14 @@ class HttpCachingFanartProvider(BaseFanartProvider):
         
         for nextUrl in remainingUrls:
             httpUrls.remove(nextUrl)
-            self.workQueue.put({'results' : filepaths, 'httpUrl' : nextUrl })
+            self.workQueue.put({'results' : filepaths, 'httpUrl' : nextUrl, 'program' : program })
         
         return filepaths
     
-    def tryToCache(self, poster):
-        if poster and poster[:4] == 'http':
+    def tryToCache(self, imageUrl):
+        if imageUrl and imageUrl[:4] == 'http':
             try:
-                filepath = self.httpCache.get(poster)
+                filepath = self.httpCache.get(imageUrl)
             except Exception, ioe:
                 log.exception(ioe)
                 filepath = None
@@ -365,6 +472,15 @@ class ImdbFanartProvider(BaseFanartProvider):
                 log.error('IMDB error looking up %s: %s' % (safe_str(program.title()), safe_str(str(e))))
         return posters
     
+    @chain
+    def getBanners(self, program):
+        return []
+
+    @chain
+    def getBackgrounds(self, program):
+        return []
+    
+    @chain    
     def getSeasonAndEpisode(self, program):
         return None,None
 
@@ -394,7 +510,7 @@ class TvdbFanartProvider(BaseFanartProvider):
                 # Example: tvdb['scrubs']['_banners']['poster']['680x1000']['35308']['_bannerpath']
                 #posterUrl = self.tvdb[program.title()]['_banners']['poster'].itervalues().next().itervalues().next()['_bannerpath']
                 
-                postersByDimension = self._queryTvDb(program.title()) 
+                postersByDimension = self._queryTvDb(program.title(), qtype='poster') 
                 for dimension in postersByDimension.keys():
                     #log.debug('key=%s' % dimension)
                     for id in postersByDimension[dimension].keys():
@@ -404,8 +520,38 @@ class TvdbFanartProvider(BaseFanartProvider):
                         posters.append(bannerPath)
                 log.debug('TVDB[%s] = %s' % (len(posters), str(program.title())))
             except Exception, e:
-                log.warn('TVDB errored out on "%s" with error "%s"' % (program.title(), str(e)))
+                log.warn('TVDB errored out on "%s" with error "%s"' % (safe_str(program.title()), safe_str(e)))
         return posters
+    
+    @chain
+    def getBanners(self, program):
+        banners = []
+        if not program.isMovie():
+            try:
+                bannersByType = self._queryTvDb(program.title(), qtype='series')
+                for subType in ['graphical', 'text', 'blank']:
+                    if subType in bannersByType:
+                        bannersById = bannersByType[subType]
+                        for id in bannersById.keys():
+                            banners.append(bannersById[id]['_bannerpath'])
+            except Exception, e:
+                log.warn('TVDB - no banners for %s - %s' % (safe_str(program.title()), safe_str(e)))
+        return banners
+
+    @chain
+    def getBackgrounds(self, program):
+        backgrounds = []
+        if not program.isMovie():
+            try:
+                backgroundsByDimension = self._queryTvDb(program.title(), qtype='fanart')
+                for knownDim in ['1280x720', '1920x1080']:
+                    if knownDim in backgroundsByDimension:
+                        backgroundsById = backgroundsByDimension[knownDim]
+                        for id in backgroundsById.keys():
+                            backgrounds.append(backgroundsById[id]['_bannerpath'])
+            except Exception, e:
+                log.debug('TVDB - no backgrounds for %s - %s' % (safe_str(program.title()), safe_str(e)))
+        return backgrounds
 
     def clear(self):
         super(TvdbFanartProvider, self).clear()        
@@ -414,8 +560,8 @@ class TvdbFanartProvider(BaseFanartProvider):
 
     # tvdb site rejects queries if > 2 per originating IP
     @max_threads(2)
-    def _queryTvDb(self, title):
-        return self.tvdb[title]['_banners']['poster']
+    def _queryTvDb(self, title, qtype):
+        return self.tvdb[title]['_banners'][qtype]
 
     @chain
     def getSeasonAndEpisode(self, program):
@@ -482,8 +628,19 @@ class TheMovieDbFanartProvider(BaseFanartProvider):
                 log.error('TMDB fanart search error: %s %s' % (program.title(), e))
         return posters
 
-
+    @chain
+    def getBanners(self, program):
+        return []
+    
+    @chain
+    def getBackgrounds(self, program):
+        return []
+    
+    
 class GoogleImageSearchProvider(BaseFanartProvider):
+    '''http://code.google.com/apis/imagesearch/v1/jsondevguide.html'''
+    
+    API_KEY = 'ABQIAAAAtSwHhE1Qf9mbLYNOFLH-DhT20V1GhzX5gQnCPfmaLAI2Lns2JRTbUFdk3MQzyqjPwjJDcQay_EVizw'
     
     def __init__(self, nextProvider=None):
         BaseFanartProvider.__init__(self, nextProvider)        
@@ -493,7 +650,7 @@ class GoogleImageSearchProvider(BaseFanartProvider):
     def getPosters(self, program):
         posters = []
         try:
-            url_values = urllib.urlencode({'v':'1.0', 'safe':'on', 'imgar':'t', 'q':program.title()}, doseq=True)
+            url_values = urllib.urlencode({'v':'1.0', 'safe':'moderate', 'rsz':'4', 'imgsz':'medium', 'key':self.API_KEY, 'q':program.title()}, doseq=True)
             searchUrl = 'http://ajax.googleapis.com/ajax/services/search/images?' + url_values
             req = urllib2.Request(searchUrl, headers={'Referer':'http://mythbox.googlecode.com'})
             resp = urllib2.urlopen(req)
@@ -505,14 +662,24 @@ class GoogleImageSearchProvider(BaseFanartProvider):
             #    log.debug('url = %s' % searchUrl)
             #    for result in obj['responseData']['results']: 
             #        log.debug(result['unescapedUrl'])            
-            
-            for i,result in enumerate(obj['responseData']['results']):
-                #log.debug('%d googleresult = %s' % (i, result['unescapedUrl']))
-                posters.append(result['unescapedUrl'])
+        
+            posters = [result['unescapedUrl'] for result in obj['responseData']['results'] if float(result['height'])/float(result['width']) > 1.0]
+            if len(posters) == 0:
+                log.debug('No images meet aspect ratio constaints for %s' % safe_str(program.title()))
+                posters.append(obj['responseData']['results'][0]['unescapedUrl'])
+        
         except Exception, e:
             log.exception('GOOGLE fanart search:  %s %s' % (safe_str(program.title()), str(e)))
         return posters
-        
+
+    @chain
+    def getBanners(self, program):
+        return []
+    
+    @chain
+    def getBackgrounds(self, program):
+        return []
+
 
 class TvRageProvider(NoOpFanartProvider):
 
@@ -610,7 +777,7 @@ class TvRageProvider(NoOpFanartProvider):
             if d in show.seasonsAndEpisodes:
                 return show.seasonsAndEpisodes[d]
             else:
-                log.debug('TVRage: No episode found matching airdate %s in %s episodes' % (oad, len(show.seasonsAndEpisodes)))
+                log.debug('TVRage: No episode found matching airdate %s in %s episodes of %s' % (oad, len(show.seasonsAndEpisodes), safe_str(program.title())))
                 return self.searchBySubtitle(program, show)
         except:
             # backwards compatibility for pickled shows w/o index. return None,None to force re-query
@@ -650,30 +817,49 @@ class FanArt(object):
         '''Return pair of strings'''
         return self.provider.getSeasonAndEpisode(program)
     
-    def getRandomPoster(self, program):
-        """
-        @type program: Program 
-        @return: returns path to image suitable as a boxcover that is shaped taller 
-                 than wide (portrait mode) with medium quality resolution
-                 (not for thumbnails). 
-        """
-        return self.provider.getRandomPoster(program)
+    def pickPoster(self, program):
+        posters = self.provider.getPosters(program)
+        if posters:
+            return random.choice(posters)
+    
+    def pickBanner(self, program):
+        banners = self.provider.getBanners(program)
+        if banners:
+            return random.choice(banners)
+        
+    def pickBackground(self, program):
+        backgrounds = self.provider.getBackgrounds(program)
+        if backgrounds:
+            return random.choice(backgrounds)
     
     def getPosters(self, program):
         return self.provider.getPosters(program)
 
+    def getBanners(self, program):
+        return self.provider.getBanners(program)
+    
+    def getBackgrounds(self, program):
+        return self.provider.getBackgrounds(program)
+
+    def hasBanners(self, program):
+        return self.provider.hasBanners(program)
+    
     def hasPosters(self, program):
         return self.provider.hasPosters(program)
+
+    def hasBackgrounds(self, program):
+        return self.provider.hasBackgrounds(program)
     
     def clear(self):
         self.provider.clear() 
-
+        
+    @timed    
     def shutdown(self):
         self.provider.close()
         
     def configure(self, settings):
         self.provider.close()
-        p = None
+        p = NoOpFanartProvider()
         if settings.getBoolean('fanart_google'): p = GoogleImageSearchProvider(p)
         if settings.getBoolean('fanart_imdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, ImdbFanartProvider(), p)
         if settings.getBoolean('fanart_tmdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, TheMovieDbFanartProvider(), p)

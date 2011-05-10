@@ -23,7 +23,8 @@ import mythbox.msg as m
 
 from mythbox.settings import MythSettings, SettingsException
 from mythbox.ui.toolkit import window_busy, BaseWindow, enterNumeric, enterText, Action
-from mythbox.util import catchall, lirc_hack, timed, safe_str
+from mythbox.util import catchall, timed, safe_str
+from mythbox.advanced import AdvancedSettings
 
 log = logging.getLogger('mythbox.ui')
 
@@ -96,8 +97,12 @@ class Setting(object):
         ok = False
         if self.type == str:
             ok, value = enterText(control=self.widget, validator=self.validator)
-        elif self.type == int:
-            ok, value = enterNumeric(control=self.widget, validator=self.validator)
+        elif self.type in (int, Seconds,):
+            ok, value = enterNumeric(control=self.widget, validator=self.validator, current=self.store.get(self.key))
+        elif self.type == NegativeSeconds:
+            ok, value = enterNumeric(control=self.widget, validator=self.validator, current= str(int(self.store.get(self.key)) * -1))
+            if value != '0':
+                value = '-' + value
         elif self.type == bool and type(self.widget) == xbmcgui.ControlRadioButton:
             ok, value = True, ['False', 'True'][self.widget.isSelected()]
         else:
@@ -105,6 +110,7 @@ class Setting(object):
 
         if ok:
             self.store.put(self.key, value)
+            self.render() # re-render since enterNumeric(...) doesn't handle special cases like Seconds
 
     def render(self):
         value = self.store.get(self.key)
@@ -114,6 +120,10 @@ class Setting(object):
                 self.widget.setLabel(label=self.widget.getLabel(), label2=value)
             elif self.type == int:
                 self.widget.setLabel(label=self.widget.getLabel(), label2=str(value))
+            elif self.type == Seconds:
+                self.widget.setLabel(label=self.widget.getLabel(), label2='%s seconds' % value)
+            elif self.type == NegativeSeconds:
+                self.widget.setLabel(label=self.widget.getLabel(), label2='%s seconds' % str(int(value) * -1))                
             else:
                 raise Exception('Dont know how to handle type %s in render()' % self.type)
         elif type(self.widget) == xbmcgui.ControlRadioButton:
@@ -124,23 +134,37 @@ class Setting(object):
         else:
             raise Exception('Unknown widget in render(): %s' % type(self.widget))
             
+class Seconds(object):
+    
+    def __init__(self, min, max):
+        self.min = min
+        self.max = max
+        
+    def validate(self, value):
+        try:
+            s = int(value)
+            if s < min or s > max:
+                raise SettingsException('out of bounds')
+        except Exception, e:
+            raise SettingsException(e.message)
+    
+class NegativeSeconds(object):
+    pass
 
 class SettingsWindow(BaseWindow):
     
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
-        self.settings = kwargs['settings']
-        self.translator = kwargs['translator']
-        self.platform = kwargs['platform']
-        self.fanArt = kwargs['fanArt']
-        self.cachesByName = kwargs['cachesByName']
+        [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings','translator','platform','fanArt','cachesByName',)]
         self.settingsMap = {}  # key = controlId,  value = Setting
         self.t = self.translator.get
-        
+        self.advanced = AdvancedSettings(platform=self.platform)
+        log.debug('Advanced settings:\n %s' % self.advanced)
+                 
     def register(self, setting):
         self.settingsMap[setting.widget.getId()] = setting
     
-    @timed   
+    @timed 
     def onInit(self):
         if not self.win:
             log.debug('onInit')
@@ -150,11 +174,15 @@ class SettingsWindow(BaseWindow):
             self.testSettingsButton = self.getControl(253)
             self.clearCacheButton = self.getControl(405)
             
+            self.streamingEnabledRadioButton = self.getControl(208)
+            self.recordingsButton = self.getControl(205) 
+            
             # MythTV Settings
             if hasattr(self.settings, 'master') and self.settings.master:
                 self.setWindowProperty('MasterBackendHostname', '%s / %s' % (self.settings.master.hostname, self.settings.master.ipAddress))
                 self.setWindowProperty('MasterBackendPort', str(self.settings.master.port))
-                
+            
+            self.register(Setting(self.settings, 'streaming_enabled', bool, None, self.getControl(208)))
             self.register(Setting(self.settings, 'paths_recordedprefix', str, ExternalizedSettingValidator(MythSettings.verifyRecordingDirs), self.getControl(205)))
             self.register(Setting(self.settings, 'confirm_on_delete', bool, None, self.getControl(206)))
             self.register(Setting(self.settings, 'aggressive_caching', bool, None, self.getControl(207)))
@@ -174,12 +202,20 @@ class SettingsWindow(BaseWindow):
             self.register(Setting(self.settings, 'fanart_google', bool, None, self.getControl(404)))
     
             # Advanced Settings
-            self.register(Setting(self.settings, 'lirc_hack', bool, None, self.getControl(501)))
             self.register(Setting(self.settings, 'logging_enabled', bool, None, self.getControl(502)))
             self.register(Setting(self.settings, 'feeds_twitter', str, None, self.getControl(503)))
+            self.setWindowProperty('debugLogLocation', self.translator.get(m.DEBUG_LOG_LOCATION) % self.platform.getDebugLog())
                         
+            # Playback settings
+            self.advanced.get = self.advanced.getSetting
+            self.advanced.put = self.advanced.setSetting
+            self.register(Setting(self.advanced, 'video/timeseekforward', Seconds, None, self.getControl(602)))
+            self.register(Setting(self.advanced, 'video/timeseekbackward', NegativeSeconds, None, self.getControl(603)))
+            self.register(Setting(self.advanced, 'video/timeseekforwardbig', Seconds, None, self.getControl(604)))
+            self.register(Setting(self.advanced, 'video/timeseekbackwardbig', NegativeSeconds, None, self.getControl(605)))
+
             self.render()
-        
+            
     @catchall    
     @window_busy
     def onClick(self, controlId):
@@ -189,7 +225,14 @@ class SettingsWindow(BaseWindow):
         mappedSetting = self.settingsMap.get(controlId)
         if mappedSetting:
             mappedSetting.readInput()
-            self.settings.save()
+            if mappedSetting.store == self.advanced:
+                self.advanced.put('video/usetimeseeking', 'true') # required for seek values to take effect
+                self.advanced.save()
+                log.debug(self.advanced)
+            else:
+                if self.streamingEnabledRadioButton == source: 
+                    self.renderStreaming()
+                self.settings.save()
         elif self.testSettingsButton == source: self.testSettings()
         elif self.clearCacheButton == source: self.clearCache()
         else: log.debug("nothing done onClick")
@@ -199,18 +242,24 @@ class SettingsWindow(BaseWindow):
         pass
             
     @catchall
-    @lirc_hack            
     def onAction(self, action):
         if action.getId() in (Action.PREVIOUS_MENU, Action.PARENT_DIR):
             self.close()
+
+    def renderStreaming(self):
+        # special mutual exclusion for handling of streaming enabled
+        self.recordingsButton.setEnabled(not self.streamingEnabledRadioButton.isSelected())
 
     @window_busy
     def render(self):
         for setting in self.settingsMap.values():
             log.debug('Rendering %s' % safe_str(setting.key))
             setting.render()
+
+        self.renderStreaming()
+                    
         import default
-        self.setWindowProperty('AboutText', "%s\n\n%s\n\n%s\n\n%s" % (default.__scriptname__, default.__author__, default.__url__, self.platform.getVersion()))
+        self.setWindowProperty('AboutText', "%s\n\n%s\n\n%s\n\n%s" % (default.__scriptname__, default.__author__, default.__url__, self.platform.addonVersion()))
         self.setWindowProperty('ReadmeText', '%s\n%s' % (
             open(os.path.join(self.platform.getScriptDir(), 'README'), 'r').read(),
             open(os.path.join(self.platform.getScriptDir(), 'FAQ'), 'r').read()))

@@ -190,6 +190,22 @@
                 <enable>false</enable>
             </control>
 
+            <control type="radiobutton" id="208">
+                <description>enable streaming</description>
+                <label>SCRIPT414</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
             <control type="button" id="205">
                 <description>local recording directories</description>
                 <label>SCRIPT413</label>
@@ -205,23 +221,6 @@
                 <label2></label2>
             </control>
 
-            <!--  
-            <control type="button" id="209">
-                <description>empty spot</description>
-                <label>SCRIPT414</label>
-                <width>950</width>
-                <height>35</height>
-                <align>left</align>
-                <font>font12</font>
-                <textoffsetx>10</textoffsetx>
-                <texturefocus border="7">list-focus.png</texturefocus>
-                <texturenofocus>-</texturenofocus>
-                <textcolor>88FFFFFF</textcolor>
-                <focusedcolor>ffffffff</focusedcolor>
-                <label2></label2>
-            </control>
-            -->
-            
             <control type="image" id="210">
                 <description>separator image</description>
                 <width>950</width>
@@ -263,6 +262,81 @@
             </control>
         </control>
 
+        <control type="grouplist" id="9006">
+            <description>Playback Settings</description>
+            <posx>300</posx>
+            <posy>135</posy>
+            <width>1100</width>
+            <height>550</height>
+            <itemgap>4</itemgap>
+            <onleft>259</onleft>
+            <onright>259</onright>
+            <ondown>9006</ondown>
+            <onup>9006</onup>
+            <visible>Control.HasFocus(259)|ControlGroup(9006).HasFocus()</visible>
+            <animation effect="fade" time="200">VisibleChange</animation>
+             
+            <control type="button" id="602">
+                <description>Seek forward</description>
+                <label>SCRIPT472</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="button" id="603">
+                <description>Seek backwards</description>
+                <label>SCRIPT473</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="button" id="604">
+                <description>big seek forward</description>
+                <label>SCRIPT474</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="button" id="605">
+                <description>big seek backward</description>
+                <label>SCRIPT475</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+        </control>
 
         <control type="grouplist" id="9002">
             <description>Fan Art Scraper Settings</description>
@@ -386,6 +460,7 @@
             <visible>Control.HasFocus(256)|ControlGroup(9004).HasFocus()</visible> 
             <animation effect="fade" time="200">VisibleChange</animation>
 
+<!-- 
             <control type="radiobutton" id="501">
                 <description>Enable lirc hack for repeated button presses</description>
                 <label>SCRIPT441</label>
@@ -402,6 +477,7 @@
                 <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
                 <enable>system.platform.linux</enable>
             </control>
+-->
 
             <control type="radiobutton" id="502">
                 <description>Enable debug logging</description>
@@ -584,6 +660,22 @@
             <animation effect="fade" time="200">VisibleChange</animation>
 	    </control>
       
+        <control type="button">
+            <description>Enable streaming help</description>
+            <posx>300</posx>
+            <posy>580</posy>
+            <height>50</height>
+            <width>900</width>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <textcolor>ffffffff</textcolor>
+            <label>SCRIPT480</label>
+            <visible>Control.HasFocus(208)</visible>
+            <texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+        </control>
+      
 	    <control type="label">
 	      	<description>mythtv recording dirs help1</description>
 	      	<posx>310</posx>
@@ -652,6 +744,22 @@
             <scroll>true</scroll>
         </control>
 
+        <control type="button">
+            <description>Playback:Skip Help x 4</description>
+            <posx>300</posx>
+            <posy>580</posy>
+            <height>50</height>
+            <width>900</width>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <textcolor>ffffffff</textcolor>
+            <label>SCRIPT471</label>
+            <visible>Control.HasFocus(602) | Control.HasFocus(603) | Control.HasFocus(604) | Control.HasFocus(605)</visible>
+            <texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+        </control>
+
 	    <control type="button">
 	      	<description>mysql port help</description>
 	      	<posx>300</posx>
@@ -700,9 +808,9 @@
             <animation effect="fade" time="200">VisibleChange</animation>
 	    </control>
 
-        <control type="label">
-            <description>lirc hack help1</description>
-            <posx>310</posx>
+        <control type="button">
+            <description>enable debug log help</description>
+            <posx>300</posx>
             <posy>580</posy>
             <height>50</height>
             <width>900</width>
@@ -710,28 +818,10 @@
             <aligny>center</aligny>
             <font>font12</font>
             <textcolor>ffffffff</textcolor>
-            <label>SCRIPT444</label>
-            <visible>Control.HasFocus(501)</visible>
+            <label>$INFO[Window.Property(debugLogLocation)]</label>
+            <visible>Control.HasFocus(502)</visible>
             <texturenofocus>-</texturenofocus>
             <animation effect="fade" time="200">VisibleChange</animation>
-            <scroll>true</scroll>
-        </control>
-
-        <control type="label">
-            <description>lirc hack help2</description>
-            <posx>310</posx>
-            <posy>610</posy>
-            <height>50</height>
-            <width>900</width>
-            <align>left</align>
-            <aligny>center</aligny>
-            <font>font12</font>
-            <textcolor>ffffffff</textcolor>
-            <label>SCRIPT445</label>
-            <visible>Control.HasFocus(501)</visible>
-            <texturenofocus>-</texturenofocus>
-            <animation effect="fade" time="200">VisibleChange</animation>
-            <scroll>true</scroll>
         </control>
 
         <control type="label">
@@ -855,12 +945,12 @@
             <onright>9000</onright>
             <onleft>9000</onleft>
             <onup>251</onup>
-            <ondown>254</ondown>
+            <ondown>259</ondown>
         </control>
         
-        <control type="button" id="254">
-            <description>Fan Art</description>
-            <label>SCRIPT420</label>
+        <control type="button" id="259">
+            <description>playback</description>
+            <label>SCRIPT470</label>
             <posx>0</posx>
             <posy>80</posy>
             <width>285</width>
@@ -872,7 +962,27 @@
             <texturenofocus>button_nofocus.png</texturenofocus>
             <pulseonselect>true</pulseonselect>
             <enable>!substring(Window.Property(busy),true)</enable>
+            <onright>9006</onright>
+            <onleft>9006</onleft>
             <onup>250</onup>
+            <ondown>254</ondown>
+        </control>
+        
+        <control type="button" id="254">
+            <description>Fan Art</description>
+            <label>SCRIPT420</label>
+            <posx>0</posx>
+            <posy>120</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onup>259</onup>
             <ondown>253</ondown>
             <onright>9002</onright>
             <onleft>9002</onleft>
@@ -882,7 +992,7 @@
             <description>Test Settings button</description>
             <label>SCRIPT430</label>
             <posx>0</posx>
-            <posy>120</posy>
+            <posy>160</posy>
             <width>285</width>
             <height>40</height>
             <align>left</align>
@@ -900,7 +1010,7 @@
             <description>Advanced button</description>
             <label>SCRIPT440</label>
             <posx>0</posx>
-            <posy>160</posy>
+            <posy>200</posy>
             <width>285</width>
             <height>40</height>
             <align>left</align>
@@ -920,7 +1030,7 @@
             <description>xbmc settings</description>
             <label>SCRIPT450</label>
             <posx>0</posx>
-            <posy>200</posy>
+            <posy>240</posy>
             <width>285</width>
             <height>40</height>
             <align>left</align>
@@ -941,7 +1051,7 @@
             <description>readme and faq</description>
             <label>SCRIPT455</label>
             <posx>0</posx>
-            <posy>240</posy>
+            <posy>280</posy>
             <width>285</width>
             <height>40</height>
             <align>left</align>
@@ -961,7 +1071,7 @@
             <description>about</description>
             <label>SCRIPT460</label>
             <posx>0</posx>
-            <posy>280</posy>
+            <posy>320</posy>
             <width>285</width>
             <height>40</height>
             <align>left</align>
@@ -974,6 +1084,7 @@
             <onup>258</onup>
             <ondown>251</ondown>
         </control>
+
     </control>
     
     <control type="multiimage">

@@ -19,9 +19,10 @@
 import logging
 import xbmc
 import xbmcgui
+import time
 
 from decorator import decorator
-from mythbox.util import timed, safe_str
+from mythbox.util import safe_str
 
 log = logging.getLogger('mythbox.ui')
 elog = logging.getLogger('mythbox.event')
@@ -54,6 +55,8 @@ class Action(object):
     ACTION_SCROLL_UP        = 111
     ACTION_SCROLL_DOWN      = 112
     CONTEXT_MENU            = 117  # TV Guide on MCE remote
+    HOME                    = 159  # kbd only
+    END                     = 160  # kbd only
 
 
 class Align(object):
@@ -219,7 +222,12 @@ class WindowMixin(object):
         if listItem and name and not value is None:
             listItem.setProperty(name, value)
         else:
-            log.warn('Setting listitem with a None: listItem=%s name=%s value=%s' % (listItem, name, value))
+            log.debug('Setting listitem with a None: listItem=%s name=%s value=%s' % (listItem, name, value))
+
+    def updateListItemProperty(self, listItem, name, value):
+        self.setListItemProperty(listItem, name, value)
+        # HACK: to force listitem update
+        listItem.setThumbnailImage('%s' + str(time.clock()))   
 
     def setWindowProperty(self, name, value):
         """
@@ -228,7 +236,26 @@ class WindowMixin(object):
         if self.win and name and not value is None:
             self.win.setProperty(name, value)
         else:
-            log.warn('Setting window property with a None: win=%s name=%s value=%s' % (self.win, name, value))
+            log.debug('Setting window property with a None: win=%s name=%s value=%s' % (self.win, name, value))
+
+    def selectListItemAtIndex(self, listbox, index):
+        ''''
+        ControlList.selectItem(index) is async. A subsequent call to ControlList.getSelectedPosition() 
+        does not guarantee that the index set in selectItem(...) will be returned. This here is a
+        little hack to wait until the the async msg is completed otherwise weird things happen :-)
+        '''
+        # TODO: guard against index > num list items
+        if index < 0: 
+            index = 0
+        listbox.selectItem(index)
+        maxtries = 100
+        cnt = 0
+        while listbox.getSelectedPosition() != index and cnt < maxtries:
+            cnt += 1
+            log.debug("waiting for item select to happen...%d" % cnt)
+            time.sleep(0.1)
+        if cnt == maxtries:
+            log.warn("timeout waiting for item select to happen")
 
 
 class BaseWindow(xbmcgui.WindowXML, WindowMixin):

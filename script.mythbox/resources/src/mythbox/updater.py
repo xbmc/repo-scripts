@@ -37,13 +37,13 @@ class UpdateChecker(object):
     @run_async
     def run(self):
         try:
-            response = urllib2.urlopen('%s_%s_%s.xml' % (self.updateUrl, self.platform.getVersion(), self.platform.getName()), None)
+            response = urllib2.urlopen('%s_%s_%s.xml' % (self.updateUrl, self.platform.addonVersion(), self.platform.getName()), None)
         except:
             pass
         
         # poke download counter one and only once
         try:
-            fname = os.path.join(self.platform.getCacheDir(), 'mythbox-' + self.platform.getVersion())
+            fname = os.path.join(self.platform.getCacheDir(), 'mythbox-' + self.platform.addonVersion())
             if not os.path.exists(fname):
                 filename, headers = urllib.urlretrieve(URL_MYTHBOX_DOWNLOAD_COUNTER, fname)
         except:

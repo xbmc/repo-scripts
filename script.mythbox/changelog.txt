@@ -1,3 +1,52 @@
+5/9/2011 - MythBox 1.0.3
+-----------------------------
+  New
+    - Recordings Window
+        - Issue 128 - Recordings grouped by title
+        - Wallpapers from TVDB/TMDB added as backdrop
+    
+    - Recording Schedules Window 
+        - Added # Recorded column
+        - Sortable by Title, # Recorded, or Priority
+    
+    - Recording Schedule Dialog
+        - Issue 155 - Added User Jobs
+        - Added Recording Profile 
+        
+    - TV Guide Window
+        - Selecting a program that is currently playing starts Live TV
+        - Selecting a program with a schedule edits the schedule
+        - Selecting a program with no schedule creates a schedule
+        - Added banners from TVDB to the program details (bottom)
+ 
+    - Watch TV Window
+        - Added banners from TVDB to each channel        
+
+    - Upcoming Recordings Window    
+        - Launches faster (smart caching)
+    
+    - Settings Window
+        - Issue 111 - Stream recordings directly from the backend by 
+          selecting MythTV > Enable Streaming
+        - Advanced tab - Log location add as help text
+        - Playback tab - Editable values for seeking during playback
+           * Small Skip Forward 
+           * Small Skip Backward
+           * Big Skip Forward
+           * Big Skip Backward
+          
+    - Removed dependency on ffmpeg for determining recording framerate 
+    - Google Image Search updated with API key and size restrictions
+    - Slovak translations - tnx Juraj Belobrad
+    
+  Fixed
+    - Issue 161 - schedule from TV Guide impossible if show category 
+      contains (french) accented characters
+    - Some 1080i ATSC recordings from a HD Homerun were incorrectly
+      getting commskipped due to incorrect fps detection
+    - Twitter newsfeed no longer renders linebreaks which were causing
+      multiline output
+	  
 1/25/2011 - MythBox 1.0.2
 -----------------------------
   New

@@ -200,3 +200,26 @@ Q16. What is the plan to support the new Confluence skin released in XBMC 9.11?
      MythBox user interface based on the PM3.HD skin, I am by no means aesthetically 
      gifted. If you've got the skills or think you're up to it, please get in touch 
      and lets get you commit access.
+ 
+---------------------------------------------------------------------------------
+Q17. How do I run the unit tests in MythBox's debug shell?
+
+     1. You have to be running MythBox directly as a clone of the hg repo, not as 
+        an installed addon:
+            $ cd ~/.xbmc/addons 
+            $ mv script.mythbox script.mythbox.installed
+            $ ln -s <dir where your mythbox hg repo is cloned> script.mythbox   
+     
+     2. Edit bootstrapper.py and add your hostname to bootstrapDebugShell()
+     3. Start up XBMC and launch MythBox
+     4. In a shell:      
+            $ telnet localhost 9999  (user/pw = mb/mb)
+              import unittest2
+              unittest2.TestProgram(
+                    module='mythboxtest.mythtv.test_domain', 
+                    defaultTest='JobTest', 
+                    exit=False, 
+                    verbosity=2)
+
+     Test output shows up in mythbox.log
+     

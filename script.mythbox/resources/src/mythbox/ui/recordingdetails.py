@@ -17,7 +17,6 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 import logging
-import os
 import xbmcgui
 import mythbox.msg as m
 
@@ -25,29 +24,25 @@ from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.conn import inject_conn
 from mythbox.mythtv.domain import StatusException
 from mythbox.mythtv.enums import JobType, JobStatus
-from mythbox.ui.player import MythPlayer, NoOpCommercialSkipper, TrackingCommercialSkipper
+from mythbox.ui.player import MountedPlayer, StreamingPlayer, NoOpCommercialSkipper, TrackingCommercialSkipper
 from mythbox.ui.schedules import ScheduleDialog
 from mythbox.ui.toolkit import Action, BaseWindow, window_busy
-from mythbox.util import safe_str, catchall, catchall_ui, run_async, lirc_hack, coalesce
+from mythbox.util import safe_str, catchall, catchall_ui, run_async, coalesce, to_kwargs
 
 log = logging.getLogger('mythbox.ui')
-
 
 class RecordingDetailsWindow(BaseWindow):
     
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
-        self.programIterator = kwargs['programIterator']
+        [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings', 'translator', 'platform', 'fanArt', 'cachesByName', 'programIterator',)]
+        [setattr(self,k,v) for k,v in self.cachesByName.iteritems() if k in ('mythChannelIconCache', 'mythThumbnailCache',)]
+        
+        self.t = self.translator.get
         self.program = self.programIterator.current() 
-        self.settings = kwargs['settings']
-        self.translator = kwargs['translator']
-        self.platform = kwargs['platform']
-        self.mythThumbnailCache = kwargs['mythThumbnailCache']
-        self.mythChannelIconCache = kwargs['mythChannelIconCache']
-        self.fanArt = kwargs['fanArt']
         self.isDeleted = False
         self.initialized = False
-        self.win = None
+        self.streaming = self.settings.getBoolean('streaming_enabled')
             
     @catchall_ui
     def onInit(self):
@@ -86,7 +81,7 @@ class RecordingDetailsWindow(BaseWindow):
     def delete(self):
         yes = True
         if self.settings.isConfirmOnDelete():
-            yes = xbmcgui.Dialog().yesno(self.translator.get(m.CONFIRMATION), self.translator.get(m.ASK_DELETE_RECORDING))
+            yes = xbmcgui.Dialog().yesno(self.t(m.CONFIRMATION), self.t(m.ASK_DELETE_RECORDING))
 
         @run_async
         @catchall
@@ -102,7 +97,7 @@ class RecordingDetailsWindow(BaseWindow):
     def rerecord(self):
         yes = True
         if self.settings.isConfirmOnDelete():
-            yes = xbmcgui.Dialog().yesno(self.translator.get(m.CONFIRMATION), self.translator.get(m.ASK_RERECORD_RECORDING))
+            yes = xbmcgui.Dialog().yesno(self.t(m.CONFIRMATION), self.t(m.ASK_RERECORD_RECORDING))
 
         @run_async
         @catchall
@@ -123,47 +118,69 @@ class RecordingDetailsWindow(BaseWindow):
             job.moveToFrontOfQueue()
             self.refresh()
         else:
-            xbmcgui.Dialog().ok(self.translator.get(m.ERROR), self.translator.get(m.JOB_NOT_FOUND)) 
+            xbmcgui.Dialog().ok(self.t(m.ERROR), self.t(m.JOB_NOT_FOUND)) 
 
-    def play(self):
-        p = MythPlayer(mythThumbnailCache=self.mythThumbnailCache, translator=self.translator)
+    @inject_conn
+    def canStream(self):
+        # TODO: Merge with duplicate method in RecordingDetailsWindow
+        if not self.conn().protocol.supportsStreaming(self.platform):
+            xbmcgui.Dialog().ok(self.t(m.ERROR), 
+                'Streaming from a MythTV %s backend to XBMC' % self.conn().protocol.mythVersion(), 
+                '%s is broken. Try playing again after deselecting' % self.platform.xbmcVersion(),
+                'MythBox > Settings > MythTV > Enable Streaming')
+            return False
+        return True
         
-        # TODO: Can't turn off commskip in myth://. I like my commskip w/ toasters better...
-        #from mythbox.ui.player import MythStreamingPlayer
-        #p = MythStreamingPlayer(mythThumbnailCache=self.mythThumbnailCache, settings=self.settings)
-        p.playRecording(self.program, NoOpCommercialSkipper(p, self.program, self.translator))
-        del p 
+    @catchall_ui
+    def play(self):
+        log.debug("Playing %s .." % safe_str(self.program.title()))
+        deps = to_kwargs(self, ['program', 'mythThumbnailCache', 'translator', 'settings', 'platform'])
+        
+        if self.streaming:
+            if not self.canStream():
+                return
+            # Play via myth://
+            p = StreamingPlayer(**deps)
+            p.playRecording(NoOpCommercialSkipper(p, self.program, self.translator))
+        else:
+            # Play via local fs
+            p = MountedPlayer(**deps)
+            p.playRecording(NoOpCommercialSkipper(p, self.program, self.translator))
+            del p 
     
     def playWithCommSkip(self):
-        p = MythPlayer(mythThumbnailCache=self.mythThumbnailCache, translator=self.translator)
+        log.debug("Playing with skip %s .." % safe_str(self.program.title()))
+        deps = to_kwargs(self, ['program', 'mythThumbnailCache', 'translator', 'settings', 'platform'])
         
-        # TODO: Can't turn off commskip in myth://. I like my commskip w/ toasters better...
-        #from mythbox.ui.player import MythStreamingPlayer
-        #p = MythStreamingPlayer(mythThumbnailCache=self.mythThumbnailCache, settings=self.settings)
-        
-        p.playRecording(self.program, TrackingCommercialSkipper(p, self.program, self.translator))
-        del p 
+        if self.streaming:
+            if not self.canStream():  
+                return
+            # Play via myth://
+            p = StreamingPlayer(**deps)
+            p.playRecording(NoOpCommercialSkipper(p, self.program, self.translator))
+        else:
+            # Play via local fs
+            p = MountedPlayer(**deps)
+            p.playRecording(TrackingCommercialSkipper(p, self.program, self.translator))
+            del p
         
     @inject_db
     def editSchedule(self):
         if self.program.getScheduleId() is None:
-            xbmcgui.Dialog().ok(self.translator.get(m.INFO), self.translator.get(m.ERR_NO_RECORDING_SCHEDULE))
+            xbmcgui.Dialog().ok(self.t(m.INFO), self.t(m.ERR_NO_RECORDING_SCHEDULE))
             return
     
         schedules = self.db().getRecordingSchedules(scheduleId=self.program.getScheduleId())
         if len(schedules) == 0:
-            xbmcgui.Dialog().ok(self.translator.get(m.INFO), self.translator.get(m.ERR_SCHEDULE_NOT_FOUND) % self.program.getScheduleId())
+            xbmcgui.Dialog().ok(self.t(m.INFO), self.t(m.ERR_SCHEDULE_NOT_FOUND) % self.program.getScheduleId())
             return 
 
         editScheduleDialog = ScheduleDialog(
             'mythbox_schedule_dialog.xml', 
             self.platform.getScriptDir(), 
             forceFallback=True,
-            schedule=schedules[0], 
-            translator=self.translator,
-            platform=self.platform,
-            settings=self.settings,
-            mythChannelIconCache=self.mythChannelIconCache)
+            schedule=schedules[0],
+            **to_kwargs(self, ['translator', 'platform', 'settings', 'mythChannelIconCache'])) 
         editScheduleDialog.doModal()
         if editScheduleDialog.shouldRefresh:
             self.render()
@@ -177,7 +194,6 @@ class RecordingDetailsWindow(BaseWindow):
         self.render()
                 
     @catchall_ui 
-    @lirc_hack
     def onAction(self, action):
         id = action.getId()
         if id in (Action.PREVIOUS_MENU, Action.PARENT_DIR):
@@ -187,13 +203,12 @@ class RecordingDetailsWindow(BaseWindow):
         elif id == Action.PAGE_DOWN:
             self.nextRecording()
         else: 
-            log.debug('action = %s  id = %s' % (action, action.getId()))
+            log.debug('unhandled action = %s  id = %s' % (action, action.getId()))
 
     def onFocus(self, controlId):
         pass
             
     @catchall_ui 
-    @lirc_hack   
     @window_busy
     def onClick(self, controlId):
         #log.debug('onClick %s ' % controlId)
@@ -206,18 +221,18 @@ class RecordingDetailsWindow(BaseWindow):
 
     @inject_conn
     def refresh(self):
-        refreshedProgram = self.conn().getRecording(self.program.getChannelId(), self.program.recstarttime()) #self.program.starttime())
+        refreshedProgram = self.conn().getRecording(self.program.getChannelId(), self.program.recstarttime())
         if refreshedProgram:
             self.program = refreshedProgram
             self.render()
         else:
-            raise Exception, self.translator.get(m.RECORDING_NOT_FOUND) % self.program.title() 
+            raise Exception, self.t(m.RECORDING_NOT_FOUND) % self.program.title() 
 
     @window_busy
     def render(self):
         self.renderDetail()
         self.renderThumbnail()
-        self.renderChannel()          # async
+        self.renderChannel()
         self.renderCommBreaks()       # async
         self.renderSeasonAndEpisode(self.program) # async
     
@@ -233,12 +248,10 @@ class RecordingDetailsWindow(BaseWindow):
         self.setWindowProperty('fileSize', s.formattedFileSize())
         self.setWindowProperty('autoExpire', (('No', 'Yes')[s.isAutoExpire()]))
         self.setWindowProperty('commBreaks', '...')     
-        self.setWindowProperty('recordingNofM', self.translator.get(m.RECORDING_N_OF_M) % (str(self.programIterator.index() + 1), str(self.programIterator.size())))  
+        self.setWindowProperty('recordingNofM', self.t(m.RECORDING_N_OF_M) % (str(self.programIterator.index() + 1), str(self.programIterator.size())))  
 
-    @run_async
     @catchall        
     @inject_db
-    @coalesce
     def renderChannel(self):
         channels = filter(lambda c: c.getChannelId() == self.program.getChannelId(), self.db().getChannels())
         if channels:
@@ -270,23 +283,27 @@ class RecordingDetailsWindow(BaseWindow):
                     self.setFocus(self.playSkipButton)
                 commBreaks = "%d" % len(self.program.getCommercials())
             else:
-                commBreaks = self.translator.get(m.NONE)
+                commBreaks = self.t(m.NONE)
         else:
             jobs = self.db().getJobs(program=self.program, jobType=JobType.COMMFLAG)
             if len(jobs) == 1:
                 job = jobs[0]
                 if job.jobStatus == JobStatus.QUEUED:
                     position, numJobs = job.getPositionInQueue() 
-                    commBreaks = self.translator.get(m.QUEUED_N_OF_M) % (position, numJobs)
+                    commBreaks = self.t(m.QUEUED_N_OF_M) % (position, numJobs)
                     if position != 1:
                         self.firstInQueueButton.setEnabled(True)
                 elif job.jobStatus == JobStatus.RUNNING:
                     try:
-                        commBreaks = self.translator.get(m.N_AT_M_FPS) % ('%d%%' % job.getPercentComplete(), '%2.0f' % job.getCommFlagRate())
+                        commBreaks = self.t(m.N_AT_M_FPS) % ('%d%%' % job.getPercentComplete(), '%2.0f' % job.getCommFlagRate())
                     except StatusException:
                         commBreaks = job.comment
                 else:                                    
                     commBreaks = job.formattedJobStatus()
+                    
+        if log.isEnabledFor(logging.DEBUG):
+            commBreaks += ' (%s)' % self.program.getFPS()
+        
         self.setWindowProperty('commBreaks', commBreaks)
 
     @run_async

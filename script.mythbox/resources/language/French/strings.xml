@@ -24,7 +24,7 @@
   <string id="21">Myth TV</string>
   <string id="22">MySQL</string>
   <string id="23">Chemins</string>
-  <string id="24">Test de la configuration</string>
+  <string id="24">Test de la configuration..</string>
   <string id="25">Configuration sauvegardée avec succès.</string>
 
   <string id="29">Configuration modifiée. Perte des changements non sauvegardés?</string>
@@ -370,7 +370,7 @@
   <string id="411">Nom d'Hôte du Backend Maître</string>
   <string id="412">Port du Backend Maître</string>
   <string id="413">Répertoire(s) local pour l'enregistrement</string>
-  <string id="414"></string>
+
   <string id="415">Confirmer lors de la Suppression</string>
   <string id="416">Emplacement des enregistrements MythTV en fichier local (répertoires montés si votre backend est déporté).</string>
   <string id="417">Les répertoires multiples peuvent être séparés par : avec Linux/Mac et un ; avec Windows.</string>
@@ -389,7 +389,7 @@
   <string id="426">Caches effacés avec succès</string>
   <string id="429">Activer TVRage.com</string>
       
-  <string id="430">Tester configuration</string>
+  <string id="430">Tester configuration..</string>
   <string id="431">Configuration OK</string>
 
   <string id="440">Avancé</string>
@@ -400,7 +400,7 @@
   <string id="445">alors activer ce palliatif pour consommer l'événement supplémentaire.</string>
   <string id="446">Liste séparée par des virgules de noms Twitter. Essayez en certains : cnnbrk,woot,thelittleidiot,wired,current...</string> 
   
-  <string id="450">Configuration XBMC</string>
+  <string id="450">Configuration XBMC..</string>
     
   <string id="460">A propos</string>
 

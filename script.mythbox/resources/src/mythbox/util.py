@@ -23,7 +23,6 @@ import Queue
 import re
 import sys
 import time
-import xbmc
 import xbmcgui
 
 from datetime import datetime, timedelta
@@ -38,9 +37,15 @@ elog = logging.getLogger('mythbox.event')
 
 #
 #  Thread local storage used by @inject_conn and @inject_db decorators
-#from odict import odict
-
+#
 threadlocals = {}   
+
+def to_kwargs(obj, attrNames):
+    '''Useful for building **kwargs dependencies by plucking the attributes by name from self'''
+    kwargs = {}
+    for attrName in attrNames:
+        kwargs[attrName] = getattr(obj, attrName)
+    return kwargs
 
 
 def requireDir(dir):
@@ -149,105 +154,6 @@ class BoundedEvictingQueue(object):
         
     def get(self):
         return self._queue.get(False, None)
-
-
-_lircEvents = BoundedEvictingQueue(2)
-
-
-@decorator
-def lirc_hack(func, *args, **kwargs):
-    """
-    With XBMC's integration with lirc on Linux, a single button press on the 
-    remote control sometimes generates two successive button presses instead.
-    For example, exiting a screen can accidentally exit the entire application.
-    This issues has been logged in XBMC's TRAC, but marked as a WON'T FIX.  
-    Whaddya gonna do?
-    
-    This hack is a workaround to consume the second button press if
-    - the difference in time between the two button presses is relatively close. 
-    - the buttons generating the events are those most likely to cause problems
-      - PREVIOUS_MENU
-      - PREVIOUS_ACTION
-      - ENTER
-    """
-    win = args[0]   # decorator always applies to a method on a Window
-    debug = elog.isEnabledFor(logging.DEBUG)
-    #if debug: elog.debug('lirc hack: Entered lirc_hack decorator - num events = %d @ %s' % (_lircEvents.qsize(), _lircEvents))
-    
-    def getKey(*args):
-        action = args[1]
-        if type(action) == int:
-            return action
-        else:
-            return action.getId()
-        
-    def interested(func, *args, **kwargs):
-        """
-        @return: True if this is a button press that causes problems if repeated
-        """
-        if debug:
-            elog.debug('lirc hack: Function name = %s' % func.__name__)
-            elog.debug('lirc hack: num args = %d' % len(args))
-            for i, arg in enumerate(args):
-                elog.debug(' lirc hack:   arg[%d] = %s' % (i, type(arg)))
-
-        if func.__name__ in ('onAction', 'onActionHook') :
-            action = args[1]
-            #log.debug('actionId = %s' % action.getId())
-            import mythbox.ui.toolkit as ui
-            if action.getId() in (ui.Action.PREVIOUS_MENU, ui.Action.PARENT_DIR, ui.Action.SELECT_ITEM):
-                return True
-        elif func.__name__ == 'onClick':
-            return True
-        else:
-            elog.warn('lirc hack: interested func name %s not valid' % func.__name__)
-            return False
-        
-    # Hack only applies to linux
-    if not win.platform.isUnix():
-        return func(*args, **kwargs)
-
-    # Lirc hack setting must be turned on via settings screen
-    if not win.settings.getBoolean('lirc_hack'):
-        return func(*args, **kwargs)
-    
-    # Filter out only events we're interested in 
-    if not interested(func, *args, **kwargs):
-        if debug:
-            elog.debug('lirc hack: not interested')
-        return func(*args, **kwargs)
-    
-    global _lircEvents
-    _lircEvents.put({'func': func.__name__, 'action': getKey(*args), 'time' : time.time()})
-        
-    # Hack requires at least two events
-    if not _lircEvents.full():
-        return func(*args, **kwargs)
-    
-    # TODO: Don't save all events
-    t1 = _lircEvents.get()
-    t2 = _lircEvents.get()
-    
-    if t1['action'] != t2['action']:
-        _lircEvents.put(t2)
-        if debug: elog.debug('lirc hack: not same action %s %s' % (t1['action'], t2['action']))
-        return func(*args, **kwargs)
-    elif t1['func'] in ('onClick') and t2['func'] in ('onAction', 'onActionHook'):
-        if debug: elog.debug('lirc hack: not same action but click/action combo')
-    else:
-        if debug: elog.debug('lirc hack: same action %s %s' % (t1['action'], t2['action']))
-         
-    diff = t2['time'] - t1['time']
-    if debug: elog.debug('lirchack diff: %s' % diff)
-    eatButtonPress = (diff < 1.0)
-    
-    if not eatButtonPress:
-        _lircEvents.put(t2)
-        if debug: elog.debug('lirc hack: not eating event %s ' % t2['action'])
-        return func(*args, **kwargs)
-    else:
-        log.debug('\n\n\n\t\tlirc hack consumed event with delta = %s\n\n' % diff)
-        return None
 
 
 __workersByName = odict()  # key = thread name, value = Thread
@@ -600,14 +506,14 @@ class NativeTranslator(object):
         @param id: translation id
         @type id: int
         @return: translated text
-        @rtype: string
+        @rtype: unicode
         """
         # if id is a string, assume no need to lookup translation
-        if type(id) is str:
+        if isinstance(id, basestring):
             return id
         else:
             return self.addon.getLocalizedString(id)
-    
+     
     def toList(self, someMap):
         """
         @param someMap: dict with translation ids as values. Keys are ignored

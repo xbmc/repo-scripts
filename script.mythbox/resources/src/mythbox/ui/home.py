@@ -17,8 +17,6 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 import logging
-import os
-
 import xbmc
 import xbmcgui
 import mythbox.msg as m
@@ -30,10 +28,12 @@ from mythbox.mythtv.domain import StatusException
 from mythbox.mythtv.enums import JobStatus, JobType
 from mythbox.mythtv.conn import inject_conn, inject_db, ConnectionFactory
 from mythbox.settings import SettingsException
-from mythbox.ui.player import MythPlayer, TrackingCommercialSkipper
+from mythbox.ui.player import MountedPlayer, TrackingCommercialSkipper,\
+    StreamingPlayer, NoOpCommercialSkipper
 from mythbox.ui.toolkit import BaseWindow, Action, window_busy, showPopup
-from mythbox.util import catchall_ui, catchall, lirc_hack, run_async, coalesce, safe_str 
-from mythbox.util import hasPendingWorkers, waitForWorkersToDie, formatSize
+from mythbox.util import catchall_ui, catchall, run_async, coalesce, safe_str 
+from mythbox.util import hasPendingWorkers, waitForWorkersToDie, formatSize, to_kwargs
+from mythbox.mythtv.publish import MythEventPublisher
 
 log = logging.getLogger('mythbox.ui')
 
@@ -46,17 +46,10 @@ class HomeWindow(BaseWindow):
     
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
-        self.dependencies = kwargs
-        self.settings     = kwargs['settings']
-        self.translator   = kwargs['translator']
-        self.platform     = kwargs['platform']
-        self.fanArt       = kwargs['fanArt']
-        self.bus          = kwargs['bus']
-        self.feedHose     = kwargs['feedHose']
-        self.mythThumbnailCache = kwargs['cachesByName']['mythThumbnailCache']
-        self.mythChannelIconCache = kwargs['cachesByName']['mythChannelIconCache']
-        self.httpCache = kwargs['cachesByName']['httpCache']
-        self.win = None
+        [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings', 'translator', 'platform', 'fanArt', 'cachesByName', 'bus', 'feedHose',)]
+        [setattr(self,k,v) for k,v in self.cachesByName.iteritems() if k in ('mythChannelIconCache', 'mythThumbnailCache', 'httpCache', 'domainCache')]
+
+        self.deps = kwargs
         self.lastFocusId = None
         self.shutdownPending = False
         self.bus.register(self)
@@ -100,7 +93,6 @@ class HomeWindow(BaseWindow):
         self.coverFlow.addItems(self.coverItems)
    
     @catchall_ui
-    @lirc_hack            
     def onAction(self, action):
         if self.shutdownPending:
             return
@@ -143,7 +135,6 @@ class HomeWindow(BaseWindow):
             self.conn().rerecordRecording(program)
 
     @catchall_ui
-    @lirc_hack    
     def onClick(self, controlId):
         try:
             self.dispatcher[controlId]()
@@ -170,17 +161,17 @@ class HomeWindow(BaseWindow):
                 self.close()
                 return False
             
-        if self.settingsOK:      
-            pool.pools['dbPool'] = pool.EvictingPool(MythDatabaseFactory(settings=self.settings, translator=self.translator), maxAgeSecs=10*60, reapEverySecs=10)
-            
-            # TODO: Conn pool is non-evicting (I think we have to maintain connections to backends so they don't go to sleep/suspend)
-            pool.pools['connPool'] = pool.Pool(ConnectionFactory(settings=self.settings, translator=self.translator, platform=self.platform, bus=self.bus))
-        
         if self.settingsOK:
+            pool.pools['dbPool'] = pool.EvictingPool(MythDatabaseFactory(**self.deps), maxAgeSecs=10*60, reapEverySecs=10)
+            pool.pools['connPool'] = pool.Pool(ConnectionFactory(**self.deps))
+            
             self.dumpBackendInfo()
-             
+            
+            self.publisher = MythEventPublisher(**self.deps)
+            self.publisher.startup()
+            
         return self.settingsOK
-    
+        
     @inject_db
     def dumpBackendInfo(self):
         backends = [self.db().getMasterBackend()]
@@ -208,6 +199,11 @@ class HomeWindow(BaseWindow):
         xbmc.log('Before bus.publish')
         self.bus.publish({'id':Event.SHUTDOWN})
         
+        try:
+            self.publisher.shutdown()
+        except:
+            log.exception('shutting down publisher')
+            
         xbmc.log('Before reaping')
         
         try:
@@ -250,34 +246,52 @@ class HomeWindow(BaseWindow):
         
     def goWatchTv(self):
         from mythbox.ui.livetv import LiveTvWindow 
-        LiveTvWindow('mythbox_livetv.xml', self.platform.getScriptDir(), **self.dependencies).doModal()
+        LiveTvWindow('mythbox_livetv.xml', self.platform.getScriptDir(), **self.deps).doModal()
+
+    @inject_conn
+    def canStream(self):
+        # TODO: Merge with duplicate method in RecordingDetailsWindow
+        if not self.conn().protocol.supportsStreaming(self.platform):
+            xbmcgui.Dialog().ok(self.translator.get(m.ERROR), 
+                'Streaming from a MythTV %s backend to XBMC' % self.conn().protocol.mythVersion(), 
+                '%s is broken. Try playing again after deselecting' % self.platform.xbmcVersion(),
+                'MythBox > Settings > MythTV > Enable Streaming')
+            return False
+        return True
 
     @window_busy
     def goPlayRecording(self):
-        p = MythPlayer(mythThumbnailCache=self.mythThumbnailCache, translator=self.translator)
         program=self.recordings[self.coverFlow.getSelectedPosition()]
-        p.playRecording(program, TrackingCommercialSkipper(p, program, self.translator))
-        del p 
+        
+        if self.settings.getBoolean('streaming_enabled'):
+            if not self.canStream():
+                return 
+            p = StreamingPlayer(program=program, **to_kwargs(self, ['settings', 'mythThumbnailCache', 'translator', 'platform']))
+            p.playRecording(NoOpCommercialSkipper())
+        else:    
+            p = MountedPlayer(program=program, **to_kwargs(self, ['mythThumbnailCache', 'translator', 'platform']))
+            p.playRecording(TrackingCommercialSkipper(p, program, self.translator))
+        del p
             
     def goWatchRecordings(self):
         from mythbox.ui.recordings import RecordingsWindow
-        RecordingsWindow('mythbox_recordings.xml', self.platform.getScriptDir(), **self.dependencies).doModal()
+        RecordingsWindow('mythbox_recordings.xml', self.platform.getScriptDir(), **self.deps).doModal()
         
     def goTvGuide(self):
         from tvguide import TvGuideWindow 
-        TvGuideWindow('mythbox_tvguide.xml', self.platform.getScriptDir(), **self.dependencies).doModal() 
+        TvGuideWindow('mythbox_tvguide.xml', self.platform.getScriptDir(), **self.deps).doModal() 
     
     def goRecordingSchedules(self):
         from schedules import SchedulesWindow 
-        SchedulesWindow('mythbox_schedules.xml', self.platform.getScriptDir(), **self.dependencies).doModal()
+        SchedulesWindow('mythbox_schedules.xml', self.platform.getScriptDir(), **self.deps).doModal()
             
     def goUpcomingRecordings(self):
         from upcoming import UpcomingRecordingsWindow
-        UpcomingRecordingsWindow('mythbox_upcoming.xml', self.platform.getScriptDir(), **self.dependencies).doModal()
+        UpcomingRecordingsWindow('mythbox_upcoming.xml', self.platform.getScriptDir(), **self.deps).doModal()
         
     def goSettings(self):
         from uisettings import SettingsWindow
-        SettingsWindow('mythbox_settings.xml', self.platform.getScriptDir(), **self.dependencies).doModal() 
+        SettingsWindow('mythbox_settings.xml', self.platform.getScriptDir(), **self.deps).doModal() 
 
     @window_busy
     def refresh(self):
@@ -301,7 +315,7 @@ class HomeWindow(BaseWindow):
     @inject_conn
     @coalesce
     def renderCoverFlow(self, exclude=None):
-        log.debug('>> renderCoverFlow begin')
+        log.debug('>>> renderCoverFlow begin')
         self.recordings = self.conn().getAllRecordings()
         
         if exclude:
@@ -316,17 +330,13 @@ class HomeWindow(BaseWindow):
             self.setListItemProperty(listItem, 'title', r.title())
             self.setListItemProperty(listItem, 'description', r.description())
             
-            cover = self.fanArt.getRandomPoster(r)
+            cover = self.fanArt.pickPoster(r)
             if not cover:
                 cover = self.mythThumbnailCache.get(r)
                 if not cover:
                     cover = 'mythbox-logo.png'
-            self.setListItemProperty(listItem, 'thumb', cover)
-            # WORKAROUND: 
-            #    Image associated with 'thumb' property won't update
-            #    unless we 'poke' the list item by calling setThumbnailImage(...)
-            #    with a bogus image
-            listItem.setThumbnailImage('OverlayHD.png') 
+            self.updateListItemProperty(listItem, 'thumb', cover)
+            
         log.debug('<<< renderCoverFlow end')
         
     @run_async
@@ -468,8 +478,13 @@ class HomeWindow(BaseWindow):
         entries = self.feedHose.getLatestEntries()
         if len(entries) > 0:
             for entry in entries:
-                t += '[COLOR=ffe2ff43]%s[/COLOR] [COLOR=white]%s[/COLOR]       ' % (entry.username, entry.text)
-            t = ' ' * 300 + t
+                t += u'[COLOR=ffe2ff43]%s[/COLOR] [COLOR=white]%s[/COLOR]       ' % (entry.username, entry.text)
+            t = (u' ' *300) + t
+        
+        t = t.replace('\n', '')
+        t = t.replace('\r', '')
+        t = t.replace('|', '')
+
         self.setWindowProperty('newsfeed', t)
         log.debug('renderNewsFeed exit')
         

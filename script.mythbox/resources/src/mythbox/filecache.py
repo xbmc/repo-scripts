@@ -101,8 +101,14 @@ class FileCache(object):
                 self.remove(fileUrl)
                 return None
         else:
-            log.debug('Cache HIT %s ' % safe_str(fileUrl))
-            
+            if log.isEnabledFor(logging.DEBUG):
+                if hasattr(fileUrl, 'title'):
+                    s = fileUrl.title()
+                elif hasattr(fileUrl, 'getChannelName'):
+                    s = fileUrl.getChannelName()
+                else:
+                    s = fileUrl
+                #log.debug('Cache HIT %s ' % safe_str(s))
         return filepath
 
     @sync_instance

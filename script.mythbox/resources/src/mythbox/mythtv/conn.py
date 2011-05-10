@@ -25,6 +25,7 @@ import thread
 import threading
 import time
 
+from threading import RLock
 from decorator import decorator
 from mythbox import pool
 from mythbox.bus import Event
@@ -32,7 +33,7 @@ from mythbox.mythtv import protocol
 from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.enums import TVState, Upcoming
 from mythbox.mythtv.protocol import ProtocolException
-from mythbox.util import timed, threadlocals, timed_cache, safe_str
+from mythbox.util import timed, threadlocals, timed_cache, safe_str, max_threads
 
 log     = logging.getLogger('mythbox.core')     # mythtv core logger
 wirelog = logging.getLogger('mythbox.wire')     # wire level protocol logger
@@ -56,9 +57,9 @@ def decodeLongLong(low32Bits, high32Bits):
     @return: Decodes two 32bit ints to a 64bit long
     @rtype: long
     """
-    if isinstance(low32Bits, str): 
+    if isinstance(low32Bits, basestring): 
         low32Bits = long(low32Bits)
-    if isinstance(high32Bits, str): 
+    if isinstance(high32Bits, basestring): 
         high32Bits = long(high32Bits)
     return low32Bits & 0xffffffffL | (high32Bits << 32)
 
@@ -137,7 +138,7 @@ class ServerException(Exception):
     """Thrown in response to error conditions from the mythtv backend"""
     pass
 
-
+  
 class Connection(object):
     """Connection to MythTV Backend.
     TODO: Fix quirkiness -- establishes new conn to slave if target backend isn't the master"""
@@ -151,6 +152,7 @@ class Connection(object):
         self.platform = platform
         self.protocol = None
         self.bus = bus
+        self.bus.register(self)  # interested in SCHEDULER_RAN event to invalidate upcoming recordings
         self._db = db
         self.db_init()
 
@@ -225,6 +227,9 @@ class Connection(object):
             
         if self._db:
             self._db.close()
+            
+        if self.bus:
+            self.bus.deregister(self)
                 
     @timed            
     def negotiateProtocol(self, s, clientVersion, versionToken):
@@ -269,7 +274,7 @@ class Connection(object):
         """
         backend = self.db().toBackend(backendHost)
         s = self.connect(announce=None, slaveBackend=backend.ipAddress)
-        self._sendMsg(s, self.protocol.buildAnnounceFileTransferCommand(self.platform.getHostname(),  filePath))
+        self._sendMsg(s, self.protocol.buildAnnounceFileTransferCommand('%s' % self.platform.getHostname(),  filePath))
         reply = self._readMsg(s)
         if not self._isOk(reply):
             raise ServerException('Backend filetransfer refused: %s' % reply)
@@ -674,10 +679,46 @@ class Connection(object):
             offset += self.protocol.recordSize()
         return scheduledRecordings
 
-        
-    @timed_cache(seconds=5)
-    @timed
+    upcomingLock = RLock()
+    upcomingCached = None
+    
+    def onEvent(self, event):
+        if event['id'] == Event.SCHEDULER_RAN:
+            Connection._invalidateUpcomingRecordings()
+
+    @classmethod
+    def _invalidateUpcomingRecordings(clazz):
+        if Connection.upcomingCached is not None:
+            try:
+                Connection.upcomingLock.acquire()
+                Connection.upcomingCached = None
+                log.debug('Invalidating cached upcoming recordings')
+            finally:
+                Connection.upcomingLock.release()
+
+    @classmethod
+    def _getUpcomingRecordings(clazz, conn):
+        try:
+            Connection.upcomingLock.acquire()
+            if Connection.upcomingCached == None:
+                Connection.upcomingCached = conn._internal_getUpcomingRecordings()
+            else:
+                log.debug('Returning cached upcoming recordings')
+            return Connection.upcomingCached[:]
+        finally:
+            Connection.upcomingLock.release()
+    
     def getUpcomingRecordings(self, filter=Upcoming.SCHEDULED):
+        '''
+        Serialize access to cached upcoming recordings since this is an expensive
+        operation for the backend and can also be data intensive (2MB+ for mine). 
+        Rely on events published on the bus to invalidate the data and only re-query
+        when needed.
+        '''
+        return [upcoming for upcoming in Connection._getUpcomingRecordings(self) if upcoming.getRecordingStatus() in filter]
+        
+    @timed
+    def _internal_getUpcomingRecordings(self):
         """
         @type filter: UPCOMING_*
         @rtype: RecordedProgram[]
@@ -734,8 +775,7 @@ class Connection(object):
                     self.platform,
                     self.protocol,
                     [self, None][self._db is None])
-            if program.getRecordingStatus() in filter:
-                upcoming.append(program)
+            upcoming.append(program)
             offset += self.protocol.recordSize()
         return upcoming
 
@@ -744,7 +784,7 @@ class Connection(object):
         """
         @return: RecordedProgram[]  (most recently recorded first)
         """
-        reply = self._sendRequest(self.cmdSock, ['QUERY_RECORDINGS Play'])   
+        reply = self._sendRequest(self.cmdSock, self.protocol.genQueryRecordingsCommand())   
         numPrograms = int(reply.pop(0))
         programs = [] 
         offset = 0
@@ -758,7 +798,8 @@ class Connection(object):
                 self.translator, 
                 self.platform,
                 self.protocol, 
-                [self, None][self._db is None])) 
+                [self, None][self._db is None],
+                [self._db, None][self._db is None])) 
             offset += recordSize
         programs = filter(lambda p: p.getRecordingGroup() != 'LiveTV', programs)
         programs.sort(key=RecordedProgram.starttimeAsTime, reverse=True)
@@ -778,7 +819,7 @@ class Connection(object):
         # TODO: Optimize so it doesn't get all recordings and filters locally
         programs = []
         offset = 0
-        reply = self._sendRequest(self.cmdSock, ['QUERY_RECORDINGS Play'])   
+        reply = self._sendRequest(self.cmdSock, self.protocol.genQueryRecordingsCommand())   
         numRows = int(reply.pop(0))
         
         recordingGroup = recordingGroup.upper()
@@ -802,7 +843,6 @@ class Connection(object):
         @type startTime: str or datetime.datetime
         @return: RecordedProgram or None if not found 
         """
-        log.debug(startTime)
         if isinstance(startTime, datetime.datetime):
             from mythbox.mythtv.domain import dbTime2MythTime
             startTime = dbTime2MythTime(startTime)
@@ -821,7 +861,6 @@ class Connection(object):
         Return the frame number of the bookmark as a long for the passed in program or 
         zero if no bookmark is found.
         """
-        #command = 'QUERY_BOOKMARK %s %s' %(program.getChannelId(), program.starttimets())
         command = 'QUERY_BOOKMARK %s %s' %(program.getChannelId(), program.recstarttimets())
         reply = self._sendRequest(self.cmdSock, [command])
         bookmarkFrame = decodeLongLong(int(reply[1]), int(reply[0])) 
@@ -835,7 +874,6 @@ class Connection(object):
         Raises ServerException on failure.
         """
         lowWord, highWord = encodeLongLong(frameNumber)
-        #command = 'SET_BOOKMARK %s %s %s %s' %(program.getChannelId(), program.starttimets(), highWord, lowWord)
         command = 'SET_BOOKMARK %s %s %s %s' %(program.getChannelId(), program.recstarttimets(), highWord, lowWord)
         reply = self._sendRequest(self.cmdSock, [command])
         
@@ -844,7 +882,7 @@ class Connection(object):
         elif reply[0] == 'FAILED':
             raise ServerException(
                 "Failed to save position in program '%s' to frame %s. Server response: %s" %(
-                program.title(), frameNumber, reply[0]))
+                safe_str(program.title()), frameNumber, reply[0]))
         else:
             raise ProtocolException('Unexpected return value: %s' % reply[0])
     
@@ -857,19 +895,22 @@ class Connection(object):
         """
         COMM_START = 4
         COMM_END   = 5
-        
+        commBreaks = []
         command = 'QUERY_COMMBREAK %s %s' %(program.getChannelId(), program.starttimets())
         reply = self._sendRequest(self.cmdSock, [command])
-        numRecs = int(reply[0])
-        commBreaks = []
-        
-        if numRecs == -1:
+
+        if len(reply) == 0:
             return commBreaks
+        
+        numRecs = int(reply[0])
+        
+        if numRecs in (-1,0,):
+            return commBreaks        
         
         if numRecs % 2 != 0:
             raise ClientException, 'Expected an even number of comm break records but got %s instead' % numRecs
         
-        fps = program.getFrameRate()
+        fps = program.getFPS()
         recSize = 3                      # marker, highByte, lowByte
         for i in xrange(0, numRecs, 2):  # skip by 2's - start/end come in pairs
             baseIndex = i * recSize
@@ -1018,6 +1059,7 @@ class Connection(object):
         by the backend.
         """
         log.debug('rescheduleNotify(schedule= %s)' % safe_str(schedule))
+        self.bus.publish({'id': Event.SCHEDULE_CHANGED})
         scheduleId = -1
         if schedule:
             scheduleId = schedule.getScheduleId()
@@ -1073,7 +1115,7 @@ class Connection(object):
             if numBytes:
                 filesize = min(numBytes, filesize)
             
-            maxBlockSize = 2000000 # 2MB
+            maxBlockSize = 20000000 # 20MB
             remainingBytes = filesize
             fh = file(destPath, 'w+b')
             maxReceived = 0
@@ -1115,35 +1157,32 @@ class Connection(object):
 
     def _buildMsg(self, msg):
         msg = protocol.separator.join(msg)
+        msg = msg.encode('utf-8')  # unicdoe -> str
         return '%-8d%s' % (len(msg), msg)
 
     def _readMsg(self, s):
-        retMsg = ''
-        try:
-            retMsg = self.recv_all(s, 8)
-            #wirelog.debug("REPLY: %s"%retMsg)
-            reply = ''
-            if retMsg.upper() == 'OK':
-                return 'OK'
-            wirelog.debug('retMsg: [%d] %s' % (len(retMsg), retMsg))
+        retMsg = self.recv_all(s, 8)
+        #wirelog.debug("REPLY: %s"%retMsg)
+        reply = u''
+        if retMsg.upper() == u'OK':
+            return u'OK'
+        #wirelog.debug('retMsg: [%d] %s' % (len(retMsg), safe_str(retMsg)))
 
-            n = 0
-            if len(retMsg) > 0:
-                n = int(retMsg)
+        n = 0
+        if len(retMsg) > 0:
+            n = int(retMsg)
 
-            #wirelog.debug("reply len: %d" % n)
-            i = 0
-            while i < n:
-                wirelog.debug (" i=%d n=%d " % (i,n))
-                reply += self.recv_all(s, n - i)
-                i = len(reply)
-                wirelog.debug("total read = %d" % i)
+        #wirelog.debug("reply len: %d" % n)
+        i = 0
+        while i < n:
+            #wirelog.debug (" i=%d n=%d " % (i,n))
+            r = self.recv_all(s, n - i)
+            reply += r.decode('utf-8')
+            i +=  len(r)
+            #wirelog.debug("total read = %d" % i)
 
-            wirelog.debug('read  <- %s' % safe_str(reply[:80]))
-            return reply.split(protocol.separator)
-        except:
-            log.exception('Error reading message: %s' % retMsg)
-            raise
+        #wirelog.debug('read  <- %s' % safe_str(reply[:80]))
+        return reply.split(protocol.separator)
 
     def recv_all(self, socket, bytes):
         """Receive an exact number of bytes.
@@ -1178,7 +1217,18 @@ class Connection(object):
     def _sendMsg(self, s, req):
         msg = self._buildMsg(req)
         wirelog.debug('write -> %s' % safe_str(msg[:80]))
-        s.send(msg)
+        try:
+            s.send(msg)
+        except Exception, e:
+            if str(e) == "(10053, 'Software caused connection abort')":
+                log.warn('Lost connection resetting')
+                try:
+                    self.close()
+                except Exception, e:
+                    log.warn('noclose')
+                self.db_init()
+                return
+            raise e    
             
     def _sendRequest(self, s, msg):
         self._sendMsg(s, msg)
@@ -1194,6 +1244,38 @@ class Connection(object):
             return False
         else:
             return msg[0].upper() == 'OK'
+
+
+class EventConnection(Connection):
+    '''Strictly for reading system events from the master backend'''
+     
+    def __init__(self, *args, **kwargs):
+        Connection.__init__(self, *args, **kwargs)
+
+    def connect(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(None)
+        s.connect((self.master.ipAddress, self.master.port))
+        if not protocol.serverVersion:
+            protocol.serverVersion = self.getServerVersion()
+        
+        try:
+            self.protocol = protocol.protocols[protocol.serverVersion]
+        except KeyError:
+            raise ProtocolException('Unsupported protocol: %s' % protocol.serverVersion)
+
+        self.negotiateProtocol(s, protocol.serverVersion, self.protocol.protocolToken())
+        self.annEvent(s)
+        return s
+
+    def readEvent(self):
+        '''Returns list of strings'''
+        return self._readMsg(self.cmdSock)
+        
+    def annEvent(self, cmdSock):
+        reply = self._sendRequest(cmdSock, ['ANN Playback %s 3' % self.platform.getHostname()])
+        if not self._isOk(reply):
+            raise ServerException, 'Backend announce with events refused: %s' % reply
 
 
 class ConnectionFactory(pool.PoolableFactory):

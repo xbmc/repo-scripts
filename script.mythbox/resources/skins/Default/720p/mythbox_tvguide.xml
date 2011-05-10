@@ -74,6 +74,15 @@
                 <!-- <colordiffuse>66FFFFFF</colordiffuse>  -->
                 <texture border="5" flipy="true" diffuse="mb-diffuse-mirror.png">black-back.png</texture>
             </control>
+
+            <control type="image">
+                <posx>615</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>120</height>
+                <aspectratio>scale</aspectratio>
+                <texture diffuse="mb-diffuse-left.png">$INFO[Window.Property(banner)]</texture>
+            </control>
             
             <control type="label">
                 <posy>0</posy>

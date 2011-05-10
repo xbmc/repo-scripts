@@ -33,7 +33,7 @@ To submit translations for your native language
   <string id="21">Myth TV</string>
   <string id="22">MySQL</string>
   <string id="23">Sökvägar</string>
-  <string id="24">Testa inställningar</string>
+  <string id="24">Testa inställningar..</string>
   <string id="25">Inställningarna sparades.</string>
   
   <string id="29">Inställningarna har ändrats. Strunta i ändringarna?</string>
@@ -397,7 +397,7 @@ To submit translations for your native language
   <string id="411">Huvud-backend värdnamn</string>
   <string id="412">Huvud-backend port</string>
   <string id="413">Lokal inspelningskatalog</string>
-  <string id="414"></string>
+
   <string id="415">Bekräfta borttagning</string>
   <string id="416">Lokal plats för MythTV-inspelningar (monterad disk om backend inte är lokal).</string>
   <string id="417">Flera kataloger kan avskiljas med kolon på Linux/Mac och medsemikolon på Windows.</string>
@@ -416,7 +416,7 @@ To submit translations for your native language
   <string id="426">Cache rensad</string>
   <string id="429">Slå på TVRage.com</string>
     
-  <string id="430">Testa inställningar</string>
+  <string id="430">Testa inställningar..</string>
   <string id="431">Inställningarna fungerar</string>
 
   <string id="440">Avancerat</string>
@@ -427,7 +427,7 @@ To submit translations for your native language
   <string id="445">slå då på denna tillfälliga lösning för att ta bort den extra tryckningen.</string>
   <string id="446">Kommaseparerad lista med publika Twitter-namn. Prova t.ex: cnnbrk, woot, thelittleidiot, wired, current...</string> 
   
-  <string id="450">XBMC-inställningar</string>
+  <string id="450">XBMC-inställningar..</string>
     
   <string id="460">Om</string>
 
