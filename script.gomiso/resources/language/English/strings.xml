@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>    
+    <string id="30901">General Settings</string>
+	<string id="30913">Submission options</string>
+	
+	<string id="30905">Username</string>
+	<string id="30906">Password</string>
+	<string id="30915">Submit after watching XX%</string>
+	<string id="30916">Connected</string>
+	<string id="30917">Cannot submit</string>
+	<string id="30918">Submitted</string>
+	<string id="30919">Watched on XBMC - Gomiso plugin</string>
+	<string id="30920">Display submission message</string>
+	<string id="30921">Authentification failed</string>
+</strings>

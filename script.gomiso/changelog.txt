@@ -1,0 +1,8 @@
+version 1.2 - Fixed the bug opening over and over again the setting page when authentification impossible
+				Removed simplejson library and use the XBMC module.
+				Displaying '*' instead of the plain password
+
+version 1.1	- Fixed the bug related to message hardcoded thanks to XBMC mailing list
+
+Version 1.0
+	- initial public release
