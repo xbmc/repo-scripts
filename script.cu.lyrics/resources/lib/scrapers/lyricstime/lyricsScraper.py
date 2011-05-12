@@ -152,10 +152,10 @@ class LyricsFetcher:
             url = "http://www.lyricstime.com/%s-%s-lyrics.html" % (song.artist.lower().replace(" ","-").replace(",","-"), song.title.lower().replace(" ","-").replace(",","-"), )
             song_search = urllib.urlopen(url.replace("--","-")).read()
             print "Search url: %s" % (url)
-            lyr = song_search.split('<div id="songlyrics" >')[1].split('</div>')[0]#.replace("<p>","").replace("</p>","").replace("<br />","")     
+            lyr = song_search.split('<div id="songlyrics" >')[1].split('</div>')[0]     
             lyr = self.clean_br_regex.sub( "\n", lyr ).strip()
             lyr = self.clean_lyrics_regex.sub( "", lyr ).strip()
-            lyr = self.normalize_lyrics_regex.sub( lambda m: unichr( int( m.group( 1 ) ) ), lyr ).encode( "UTF-8", "replace" ).decode( "UTF-8" )
+            lyr = self.normalize_lyrics_regex.sub( lambda m: unichr( int( m.group( 1 ) ) ), lyr.decode("ISO-8859-1") )
             lyr = u"\n".join( [ lyric.strip() for lyric in lyr.splitlines() ] )
             lyr = self.clean_info_regex.sub( "", lyr )     
             l.lyrics = lyr

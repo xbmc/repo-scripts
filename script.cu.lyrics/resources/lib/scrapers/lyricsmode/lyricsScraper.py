@@ -156,7 +156,7 @@ class LyricsFetcher:
             lyr = song_search.split("<div id='songlyrics_h' class='dn'>")[1].split('<!-- /SONG LYRICS -->')[0]
             lyr = self.clean_br_regex.sub( "\n", lyr ).strip()
             lyr = self.clean_lyrics_regex.sub( "", lyr ).strip()
-            lyr = self.normalize_lyrics_regex.sub( lambda m: unichr( int( m.group( 1 ) ) ), lyr ).encode( "UTF-8", "replace" ).decode( "UTF-8" )
+            lyr = self.normalize_lyrics_regex.sub( lambda m: unichr( int( m.group( 1 ) ) ), lyr.decode("ISO-8859-1") )
             lyr = u"\n".join( [ lyric.strip() for lyric in lyr.splitlines() ] )       
             l.lyrics = lyr
             l.source = __title__

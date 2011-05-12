@@ -1,3 +1,6 @@
+1.0.2
+- fixed: decode Lyricsmode and Lyricstime pages using 'decode("ISO-8859-1")', thx Anssi
+
 1.0.1
 - added: two more scrapers Lyricsmode and Lyricstime
 
