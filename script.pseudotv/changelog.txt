@@ -1,6 +1,17 @@
 Changelog
 
 
+1.2.0
+    The user can now specify how channels start: resume, follow the EPG (real-
+        time), or random.
+    Background updating of channels.
+    Fixed issues when used in Eden.
+    No longer sometimes crashes on exit.
+    Turns off repeat when exiting.
+    Added Spanish translation (thanks CyberXaz).
+    Updated the Night skin (thanks Steveb).
+
+
 1.1.0
     Added the channel configuration utility.
     Fixed a potential crash in the mp4 parser.

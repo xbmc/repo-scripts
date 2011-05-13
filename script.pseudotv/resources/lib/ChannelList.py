@@ -22,6 +22,9 @@ import time, threading
 import datetime
 import sys, re
 import random
+import httplib
+import base64
+
 
 from xml.dom.minidom import parse, parseString
 
@@ -40,17 +43,23 @@ class ChannelList:
         self.showGenreList = []
         self.movieGenreList = []
         self.showList = []
+        self.videoParser = VideoParser()
+        self.httpJSON = True
+        self.sleepTime = 0
+        self.exitThread = False
+        self.discoveredWebServer = False
 
 
     def setupList(self):
         self.channels = []
-        self.videoParser = VideoParser()
         self.findMaxChannels()
         self.channelResetSetting = int(REAL_SETTINGS.getSetting("ChannelResetSetting"))
         self.log('Channel Reset Setting is ' + str(self.channelResetSetting))
         self.forceReset = REAL_SETTINGS.getSetting('ForceChannelReset') == "true"
         self.log('Force Reset is ' + str(self.forceReset))
         self.updateDialog = xbmcgui.DialogProgress()
+        self.startMode = int(REAL_SETTINGS.getSetting("StartMode"))
+        self.log('Start Mode is ' + str(self.startMode))
         self.updateDialog.create("PseudoTV", "Updating channel list")
         self.updateDialog.update(0, "Updating channel list")
 
@@ -58,6 +67,11 @@ class ChannelList:
             self.lastResetTime = int(ADDON_SETTINGS.getSetting("LastResetTime"))
         except:
             self.lastResetTime = 0
+
+        try:
+            self.lastExitTime = int(ADDON_SETTINGS.getSetting("LastExitTime"))
+        except:
+            self.lastExitTime = int(time.time())
 
         # Go through all channels, create their arrays, and setup the new playlist
         for i in range(self.maxChannels):
@@ -109,6 +123,90 @@ class ChannelList:
                     self.maxChannels = i + 1
 
         self.log('findMaxChannels return ' + str(self.maxChannels))
+
+
+    def determineWebServer(self):
+        if self.discoveredWebServer:
+            return
+
+        self.discoveredWebServer = True
+        self.webPort = 8080
+        self.webUsername = ''
+        self.webPassword = ''
+        fle = xbmc.translatePath("special://profile/guisettings.xml")
+
+        try:
+            xml = open(fle, "r")
+        except:
+            self.log("determineWebServer Unable to open the settings file", xbmc.LOGERROR)
+            self.httpJSON = False
+            return
+
+        try:
+            dom = parse(xml)
+        except:
+            self.log('determineWebServer Unable to parse settings file', xbmc.LOGERROR)
+            self.httpJSON = False
+            return
+
+        xml.close()
+
+        try:
+            plname = dom.getElementsByTagName('webserver')
+            self.httpJSON = (plname[0].childNodes[0].nodeValue.lower() == 'true')
+            self.log('determineWebServer is ' + str(self.httpJSON))
+
+            if self.httpJSON == True:
+                plname = dom.getElementsByTagName('webserverport')
+                self.webPort = int(plname[0].childNodes[0].nodeValue)
+                self.log('determineWebServer port ' + str(self.webPort))
+                plname = dom.getElementsByTagName('webserverusername')
+                self.webUsername = plname[0].childNodes[0].nodeValue
+                self.log('determineWebServer username ' + self.webUsername)
+                plname = dom.getElementsByTagName('webserverpassword')
+                self.webPassword = plname[0].childNodes[0].nodeValue
+                self.log('determineWebServer password is ' + self.webPassword)
+        except:
+            return
+
+
+    # Code for sending JSON through http adapted from code by sffjunkie (forum.xbmc.org/showthread.php?t=92196)
+    def sendJSON(self, command):
+        self.log('sendJSON')
+        data = ''
+        usedhttp = False
+
+        self.determineWebServer()
+
+        # If there have been problems using the server, just skip the attempt and use executejsonrpc
+        if self.httpJSON == True:
+            payload = command.encode('utf-8')
+            headers = {'Content-Type': 'application/json-rpc; charset=utf-8'}
+
+            if self.webUsername != '':
+                userpass = base64.encodestring('%s:%s' % (self.webUsername, self.webPassword))[:-1]
+                headers['Authorization'] = 'Basic %s' % userpass
+
+            self.webPort = 8080
+
+            try:
+                conn = httplib.HTTPConnection('127.0.0.1', self.webPort)
+                conn.request('POST', '/jsonrpc', payload, headers)
+                response = conn.getresponse()
+
+                if response.status == 200:
+                    data = response.read()
+                    usedhttp = True
+
+                conn.close()
+            except:
+                pass
+
+        if usedhttp == False:
+            self.httpJSON = False
+            data = xbmc.executeJSONRPC(command)
+
+        return data
 
 
     def setupChannel(self, channel):
@@ -183,15 +281,28 @@ class ChannelList:
                     ADDON_SETTINGS.setSetting('Channel_' + str(channel) + '_time', '0')
                     ADDON_SETTINGS.setSetting('Channel_' + str(channel) + '_changed', 'False')
 
+        self.clearPlaylistHistory(channel)
+
         if chtype == 6:
             if chsetting2 == str(MODE_SERIAL):
                 self.channels[channel - 1].mode = MODE_SERIAL
 
+        # if there is no start mode in the channel mode flags, set it to the default
+        if self.channels[channel - 1].mode & MODE_STARTMODES == 0:
+            if self.startMode == 0:
+                self.channels[channel - 1].mode = MODE_RESUME
+            elif self.startMode == 1:
+                self.channels[channel - 1].mode = MODE_REALTIME
+            elif self.startMode == 2:
+                self.channels[channel - 1].mode = MODE_RANDOM
+
         if self.channels[channel - 1].mode & MODE_ALWAYSPAUSE > 0:
             self.channels[channel - 1].isPaused = True
 
-        if self.channels[channel - 1].mode & MODE_RESUME > 0:
-            self.channels[channel - 1].totalTimePlayed = 0
+        if self.channels[channel - 1].mode & MODE_RANDOM > 0:
+            self.channels[channel - 1].showTimeOffset = random.randint(0, self.channels[channel - 1].getTotalDuration())
+
+        if self.channels[channel - 1].mode & MODE_REALTIME > 0:
             chantime = 0
 
             try:
@@ -199,14 +310,60 @@ class ChannelList:
             except:
                 pass
 
-            self.channels[channel - 1].showTimeOffset = chantime
+            timedif = int(time.time()) - self.lastExitTime
+            self.channels[channel - 1].totalTimePlayed += timedif
 
-            while self.channels[channel - 1].showTimeOffset > self.channels[channel - 1].getCurrentDuration():
-                self.channels[channel - 1].showTimeOffset -= self.channels[channel - 1].getCurrentDuration()
-                self.channels[channel - 1].addShowPosition(1)
+        if self.channels[channel - 1].mode & MODE_RESUME > 0:
+            self.channels[channel - 1].showTimeOffset = self.channels[channel - 1].totalTimePlayed
+            self.channels[channel - 1].totalTimePlayed = 0
+
+        while self.channels[channel - 1].showTimeOffset > self.channels[channel - 1].getCurrentDuration():
+            self.channels[channel - 1].showTimeOffset -= self.channels[channel - 1].getCurrentDuration()
+            self.channels[channel - 1].addShowPosition(1)
 
         self.channels[channel - 1].name = self.getChannelName(chtype, chsetting1)
         return returnval
+
+
+    def clearPlaylistHistory(self, channel):
+        self.log("clearPlaylistHistory")
+
+        if self.channels[channel - 1].isValid == False:
+            self.log("channel not valid, ignoring")
+            return
+
+        # if we actually need to clear anything
+        if self.channels[channel - 1].totalTimePlayed > 60 * 60 * 24:
+            try:
+                fle = open(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u', 'w')
+            except:
+                self.log("clearPlaylistHistory Unable to open the smart playlist", xbmc.LOGERROR)
+                return
+
+            fle.write("#EXTM3U\n")
+            tottime = 0
+            timeremoved = 0
+
+            for i in range(self.channels[channel - 1].Playlist.size()):
+                tottime += self.channels[channel - 1].getItemDuration(i)
+
+                if tottime > (self.channels[channel - 1].totalTimePlayed - (60 * 60 * 24)):
+                    tmpstr = str(self.channels[channel - 1].getItemDuration(i)) + ','
+                    tmpstr += self.channels[channel - 1].getItemTitle(i) + "//" + self.channels[channel - 1].getItemEpisodeTitle(i) + "//" + self.channels[channel - 1].getItemDescription(i)
+                    tmpstr = tmpstr[:600]
+                    tmpstr = tmpstr.replace("\\n", " ").replace("\\r", " ").replace("\\\"", "\"")
+                    tmpstr = tmpstr + '\n' + self.channels[channel - 1].getItemFilename(i)
+                    fle.write("#EXTINF:" + tmpstr + "\n")
+                else:
+                    timeremoved = tottime
+
+            fle.close()
+
+            if timeremoved > 0:
+                self.channels[channel - 1].setPlaylist(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u')
+
+            self.channels[channel - 1].totalTimePlayed -= timeremoved
+
 
 
     def getChannelName(self, chtype, setting1):
@@ -257,7 +414,7 @@ class ChannelList:
 
 
     # Based on a smart playlist, create a normal playlist that can actually be used by us
-    def makeChannelList(self, channel, chtype, setting1, setting2):
+    def makeChannelList(self, channel, chtype, setting1, setting2, append = False):
         self.log('makeChannelList ' + str(channel))
 
         if chtype == 0:
@@ -292,12 +449,17 @@ class ChannelList:
             fileList = self.buildFileList(fle)
 
         try:
-            channelplaylist = open(CHANNELS_LOC + "channel_" + str(channel) + ".m3u", "w")
+            if append == True:
+                channelplaylist = open(CHANNELS_LOC + "channel_" + str(channel) + ".m3u", "r+")
+                channelplaylist.seek(0, 2)
+            else:
+                channelplaylist = open(CHANNELS_LOC + "channel_" + str(channel) + ".m3u", "w")
         except:
-            self.Error('Unable to open the cache file ' + CHANNELS_LOC + 'channel_' + str(channel) + '.m3u', xbmc.LOGERROR)
+            self.log('Unable to open the cache file ' + CHANNELS_LOC + 'channel_' + str(channel) + '.m3u', xbmc.LOGERROR)
             return False
 
-        channelplaylist.write("#EXTM3U\n")
+        if append == False:
+            channelplaylist.write("#EXTM3U\n")
 
         if len(fileList) == 0:
             self.log("Unable to get information about channel " + str(channel), xbmc.LOGERROR)
@@ -321,6 +483,23 @@ class ChannelList:
         channelplaylist.close()
         self.log('makeChannelList return')
         return True
+
+
+    def appendChannel(self, channel):
+        self.log("appendChannel")
+        chtype = 9999
+        chsetting1 = ''
+        chsetting2 = ''
+
+        try:
+            chtype = int(ADDON_SETTINGS.getSetting('Channel_' + str(channel) + '_type'))
+            chsetting1 = ADDON_SETTINGS.getSetting('Channel_' + str(channel) + '_1')
+            chsetting2 = ADDON_SETTINGS.getSetting('Channel_' + str(channel) + '_2')
+        except:
+            self.log("appendChannel unable to get channel settings")
+            return False
+
+        return self.makeChannelList(channel, chtype, chsetting1, chsetting2, True)
 
 
     def makeTypePlaylist(self, chtype, setting1, setting2):
@@ -380,6 +559,10 @@ class ChannelList:
         added = False
 
         for i in range(len(self.showList)):
+            if self.threadPause() == False:
+                fle.close()
+                return ''
+
             if self.showList[i][1].lower() == network:
                 theshow = self.cleanString(self.showList[i][0])
                 fle.write('    <rule field="tvshow" operator="is">' + theshow + '</rule>\n')
@@ -465,7 +648,7 @@ class ChannelList:
         except:
             self.Error('Unable to open the cache file ' + flename, xbmc.LOGERROR)
             return ''
-            
+
         self.writeXSPHeader(fle, "movies", self.getChannelName(2, studio))
         studio = self.cleanString(studio)
         fle.write('    <rule field="studio" operator="is">' + studio + '</rule>\n')
@@ -499,11 +682,17 @@ class ChannelList:
     def fillTVInfo(self):
         self.log("fillTVInfo")
         json_query = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"fields":["studio", "genre"]}, "id": 1}'
-        json_folder_detail = xbmc.executeJSONRPC(json_query)
-        self.log(json_folder_detail)
+        json_folder_detail = self.sendJSON(json_query)
+#        self.log(json_folder_detail)
         detail = re.compile( "{(.*?)}", re.DOTALL ).findall(json_folder_detail)
 
         for f in detail:
+            if self.threadPause() == False:
+                del self.networkList[:]
+                del self.showList[:]
+                del self.showGenreList[:]
+                break
+
             match = re.search('"studio" *: *"(.*?)",', f)
             network = ''
 
@@ -553,11 +742,17 @@ class ChannelList:
         self.log("fillMovieInfo")
         studioList = []
         json_query = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"fields":["studio", "genre"]}, "id": 1}'
-        json_folder_detail = xbmc.executeJSONRPC(json_query)
+        json_folder_detail = self.sendJSON(json_query)
 #        self.log(json_folder_detail)
         detail = re.compile( "{(.*?)}", re.DOTALL ).findall(json_folder_detail)
 
         for f in detail:
+            if self.threadPause() == False:
+                del self.movieGenreList[:]
+                del self.studioList[:]
+                del studioList[:]
+                break
+
             match = re.search('"genre" *: *"(.*?)",', f)
 
             if match:
@@ -642,12 +837,16 @@ class ChannelList:
     def buildFileList(self, dir_name, media_type="video", recursive="TRUE"):
         self.log("buildFileList")
         fileList = []
-        json_query = '{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "%s", "recursive": "%s", "fields":["duration","tagline","showtitle","album","artist","plot"]}, "id": 1}' % ( self.escapeDirJSON( dir_name ), media_type, recursive )
-        json_folder_detail = xbmc.executeJSONRPC(json_query)
+        json_query = '{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "%s", "fields":["duration","runtime","tagline","showtitle","album","artist","plot"]}, "id": 1}' % ( self.escapeDirJSON( dir_name ), media_type )
+        json_folder_detail = self.sendJSON(json_query)
         self.log(json_folder_detail)
         file_detail = re.compile( "{(.*?)}", re.DOTALL ).findall(json_folder_detail)
 
         for f in file_detail:
+            if self.threadPause() == False:
+                del fileList[:]
+                break
+
             match = re.search('"file" *: *"(.*?)",', f)
 
             if match:
@@ -663,7 +862,16 @@ class ChannelList:
                         dur = 0
 
                     if dur == 0:
-                        dur = self.videoParser.getVideoLength(match.group(1).replace("\\\\", "\\"))
+                        duration = re.search('"runtime" *: *"([0-9]*?)",', f)
+
+                        try:
+                            # Runtime is reported in minutes
+                            dur = int(duration.group(1)) * 60
+                        except:
+                            dur = 0
+
+                        if dur == 0:
+                            dur = self.videoParser.getVideoLength(match.group(1).replace("\\\\", "\\"))
 
                     try:
                         if dur > 0:
@@ -678,14 +886,14 @@ class ChannelList:
                                 theplot = plot.group(1)
 
                             # This is a TV show
-                            if showtitle != None:
+                            if showtitle != None and len(showtitle.group(1)) > 0:
                                 tmpstr += showtitle.group(1) + "//" + title.group(1) + "//" + theplot
                             else:
                                 tmpstr += title.group(1) + "//"
                                 album = re.search('"album" *: *"(.*?)"', f)
 
                                 # This is a movie
-                                if album == None:
+                                if album == None or len(album.group(1)) == 0:
                                     tagline = re.search('"tagline" *: *"(.*?)"', f)
 
                                     if tagline != None:
@@ -705,6 +913,7 @@ class ChannelList:
             else:
                 continue
 
+        self.videoParser.finish()
         return fileList
 
 
@@ -730,6 +939,16 @@ class ChannelList:
 
         self.log("buildMixedFileList returning")
         return fileList
+
+
+    def threadPause(self):
+        if threading.activeCount() > 1:
+            if self.exitThread == True:
+                return False
+
+            time.sleep(self.sleepTime)
+
+        return True
 
 
     def escapeDirJSON(self, dir_name):

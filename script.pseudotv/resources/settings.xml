@@ -9,5 +9,6 @@
         <setting id="ChannelResetSetting" type="enum" label="30004" values="Automatic|Daily|Weekly|Monthly|Never|Every Time" default="0"/>
     	<setting id="ShowChannelBug" type="bool" label="30006" default="false"/>
     	<setting id="ChannelLogoFolder" type="folder" source="auto" label="30010" default="special://home/addons/script.pseudotv/resources/images/"/>
+    	<setting id="StartMode" type="enum" label="30011" values="Resume|Real Time|Random" default="1" />
     </category>
 </settings>

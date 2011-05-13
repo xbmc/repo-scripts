@@ -93,5 +93,6 @@ Credits
 -------
 Developer: Jason102
 Code Additions: Sranshaft, TheOddLinguist
-Skins: Sranshaft, Zepfan
-Preset Playlists and Images: Jtucker1972
+Skins: Sranshaft, Zepfan, Steveb
+Preset Images: Jtucker1972
+Languages: CyberXaz

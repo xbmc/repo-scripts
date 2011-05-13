@@ -134,7 +134,7 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
             if curtime >= starttime and curtime <= endtime:
                 self.focusIndex = i
                 self.setFocus(self.channelButtons[2][i])
-                self.focusTime = starttime + 30
+                self.focusTime = int(time.time())
                 self.focusEndTime = endtime
                 break
 
@@ -541,7 +541,6 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
             showoffset = 0
 
         if pos != plpos:
-            self.MyOverlayWindow.channels[newchan - 1].setShowPosition(plpos)
             self.MyOverlayWindow.channels[newchan - 1].setShowPosition(plpos)
             self.MyOverlayWindow.channels[newchan - 1].setShowTime(0)
             self.MyOverlayWindow.channels[newchan - 1].setAccessTime(time.time())

@@ -1,6 +1,5 @@
 <window>
     <allowoverlay>no</allowoverlay>
-
     <coordinates>
         <system>1</system>
         <posx>0</posx>
@@ -9,133 +8,138 @@
 
     <controls>
         <control type="image" id="101">
-            <description>Background</description>
+            <description>Background Channel Change</description>
             <posx>0</posx>
             <posy>0</posy>
             <width>1280</width>
             <height>720</height>
-            <texture>pstvSolid.png</texture>
-            <colordiffuse>FF000000</colordiffuse>
-        </control>
-		
+            <texture>lowback.png</texture>
+        </control>		
 		<control type="image" id="103">
 			<description>Channel Bug</description>
-			<posx>220r</posx>
-			<posy>120r</posy>
-			<width>150</width>
-			<height>100</height>
+			<posx>1160</posx>
+			<posy>30</posy>
+			<width>100</width>
+			<height>58</height>
 			<aspectratio>keep</aspectratio>
-			<texture></texture>
 			<animation effect="fade" start="50" end="50" condition="True">Conditional</animation>
 		</control>
 
-        <control type="group" id="102">
-			<animation effect="fade" time="500">VisibleChange</animation>
-            
-			<!--HEADER-->
+	<control type="group" id="102">
+	<animation effect="fade" time="500">VisibleChange</animation>			
+		<control type="image">
+			<description>Background</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>PseudoBackground.png</texture>
+		</control>
+		<control type="label" id="502">
+			<description>Label Now Playing</description>
+			<posx>85</posx>
+			<posy>510</posy>
+			<width>260</width>
+			<height>20</height>
+			<font>LiberationSans_Regular_20</font>
+			<align>center</align>
+			<textcolor>selected</textcolor>
+			<shadowcolor>black</shadowcolor>
+		</control>			
+		<control type="label" id="503">
+			<description>Label Show Title</description>
+			<posx>400</posx>
+			<posy>510</posy>
+			<width>900</width>
+			<height>30</height>
+			<font>LiberationSans_Regular_40</font>
+			<align>left</align>
+			<textcolor>mainblue</textcolor>
+			<shadowcolor>black</shadowcolor>
+		</control>				
+		<control type="label" id="504">
+			<description>Label Episode Title</description>
+			<posx>400</posx>
+			<posy>555</posy>					
+			<width>900</width>
+			<height>20</height>
+			<font>LiberationSans_Regular_30</font>
+			<align>left</align>
+			<shadowcolor>black</shadowcolor>
+			<textcolor>white</textcolor>
+		</control>			
+		<control type="label" id="505">
+			<description>Label Show Description</description>
+			<posx>400</posx>
+			<posy>595</posy>
+			<width>835</width>
+			<height>60</height>
+			<font>LiberationSans_Regular_20</font>
+			<align>left</align>
+			<textcolor>grey</textcolor>
+			<wrapmultiline>true</wrapmultiline>
+		</control>
+		<control type="image" id="506">
+			<description>Show Channel Icon</description>
+			<posx>85</posx>
+			<posy>530</posy>
+			<width>260</width>
+			<height>150</height>
+			<aspectratio>scale</aspectratio>
+		</control>
+		<control type="image">
+			<description>Navigation Flag</description>
+			<posx>75</posx>
+			<posy>690</posy>
+			<width>271</width>
+			<height>28</height>
+			<texture>NavFlagInfo.png</texture>
+			<colordiffuse>selected</colordiffuse>
+		</control>
+		<control type="label">
+			<description>Time</description>
+			<posx>1270</posx>
+			<posy>0</posy>
+			<width>300</width>
+			<font>DejaVuSans_Bold_24</font>
+			<textcolor>mainblue</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<info>System.Time(hh:mm xx)</info>
+			<align>right</align>
+		</control>
 		
-			<include>Clock</include>
-		
-			<!--FOOTER-->
-			
-			<control type="image">
-				<posx>0</posx>
-				<posy>0</posy>
-				<width>1280</width>
-				<height>720</height>
-				<texture>pause-back1.png</texture>
-			</control>
-		
-			<control type="grouplist">
-				<posx>20</posx>
-				<posy>500</posy>
-				<width>810</width>
-				<orientation>vertical</orientation>
-				<itemgap>4</itemgap>
-			
-				<control type="label" id="502">
-					<description>Label Now Playing</description>
-					<width>810</width>
-					<height>26</height>
-					<font>DejaVuSans_Bold_24</font>
-					<textcolor>mainblue</textcolor>
-					<shadowcolor>black</shadowcolor>
-				</control>
-			
-				<control type="label" id="503">
-					<description>Label Show Title</description>
-					<width>810</width>
-					<height>20</height>
-					<font>LiberationSans_Regular_24</font>
-					<textcolor>white</textcolor>
-					<shadowcolor>black</shadowcolor>
-				</control>
-				
-				<control type="label" id="504">
-					<description>Label Show Title</description>
-					<width>810</width>
-					<height>20</height>
-					<font>LiberationSans_Regular_20</font>
-					<textcolor>grey2</textcolor>
-					<shadowcolor>black</shadowcolor>
-				</control>
-			</control>
-			
-			<control type="label" id="505">
-				<description>Label Show Description</description>
-				<posx>20</posx>
-				<posy>600</posy>
-				<width>930</width>
-				<height>50</height>
-				<font>LiberationSans_Regular_18</font>
-				<textcolor>white</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<align>left</align>
-				<wrapmultiline>true</wrapmultiline>
-			</control>
-			
-			<control type="image" id="506">
-				<description>Show Channel Icon</description>
-				<posx>960</posx>
-				<posy>540</posy>
-				<width>300</width>
-				<height>150</height>
-				<aspectratio>scale</aspectratio>
-			</control>
-			
-			<control type="progress">
-				<description>Progressbar</description>
-				<posx>100</posx>
-				<posy>690</posy>
-				<width>1080</width>
-				<height>19</height>
-				<texturebg>osd_progress_back1.png</texturebg>
-				<lefttexture>left.png</lefttexture>
-				<midtexture>mid.png</midtexture>
-				<righttexture>new_pause2.png</righttexture>
-				<info>Player.Progress</info>
-				<visible>true</visible>
-			</control>
-			
-			<control type="label">
-				<posx>90</posx>
-				<posy>688</posy>
-				<width>300</width>
-				<height>25</height>
-				<align>right</align> 
-				<font>LiberationSans_Regular_18</font>
-				<textcolor>mainblue</textcolor>
-				<label>[B]$INFO[VideoPlayer.Time][/B]</label>
-			</control>
-			<control type="label">
-				<posx>1190</posx>
-				<posy>688</posy>
-				<width>300</width>
-				<height>25</height>
-				<font>LiberationSans_Regular_18</font>
-				<textcolor>white</textcolor>
-				<label>[B]$INFO[VideoPlayer.Duration][/B]</label>
-			</control>
-		</control>	
+		<control type="progress">
+			<description>Progressbar</description>
+			<posx>485</posx>
+			<posy>690</posy>
+			<width>695</width>
+			<height>19</height>
+			<texturebg>osd/osd_progress_back1.png</texturebg>
+			<lefttexture>osd/left.png</lefttexture>
+			<midtexture>osd/mid.png</midtexture>
+			<righttexture>osd/new_pause2.png</righttexture>
+			<info>Player.Progress</info>
+			<visible>true</visible>
+		</control>			
+		<control type="label">
+			<posx>475</posx>
+			<posy>690</posy>
+			<width>80</width>
+			<height>25</height>
+			<align>right</align> 
+			<font>LiberationSans_Regular_18</font>
+			<textcolor>mainblue</textcolor>
+			<label>[B]$INFO[VideoPlayer.Time][/B]</label>
+		</control>
+		<control type="label">
+			<posx>1190</posx>
+			<posy>688</posy>
+			<width>300</width>
+			<height>25</height>
+			<font>LiberationSans_Regular_18</font>
+			<textcolor>white</textcolor>
+			<label>[B]$INFO[VideoPlayer.Duration][/B]</label>
+		</control>			
+	</control>
     </controls>
 </window>
