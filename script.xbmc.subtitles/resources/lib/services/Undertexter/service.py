@@ -14,25 +14,26 @@ debug_pretext = ""
 
 # subtitle pattern example:
 """
-                                            <a href="http://www.undertexter.se/?p=undertext&id=20093" alt="Julie & Julia (Julie and Julia)" title="Julie & Julia (Julie and Julia)"><b>
-                                            Julie & Julia (Julie and Julia)</b>
+<a href="http://www.engsub.net/86981/" alt=....
+or
+<a href="http://www.undertexter.se/22743/" alt="Dexter S05E01 - My Bad" title="Dexter S05E01 - My Bad"><b>
+                                            Dexter S05E01 - My Bad</b>
                                             </a></td>
                                         </tr>
                                         <tr>
-                                          <td colspan="2" align="left" valign="top" bgColor="#f2f2f2"  style="padding-top: 0px; padding-left: 4px; padding-right: 0px; padding-bottom: 0px; border-bottom: 1px solid rgb(153, 153, 153); border-color: #E1E1E1" >
+                                          <td colspan="2" align="left" valign="top" bgColor="#f9f9f9"  style="padding-top: 0px; padding-left: 4px; padding-right: 0px; padding-bottom: 0px; border-bottom: 1px solid rgb(153, 153, 153); border-color: #E1E1E1" >
                                             (1 cd)
-                                                                                        <br> <img src="bilder/spacer.gif" height="2"><br>
-
-                                            Nedladdningar: 316<br>
-                                            <img src="bilder/spacer.gif" height="3"><br>
-                                            Julie.&.Julia.2009.720p.BluRay.DTS.x264-EbP</td>
-                                        </tr>
-
+                                                                                        <br> <img src="http://www.undertexter.se/bilder/spacer.gif" height="2"><br>
+                                            Nedladdningar: 2328<br>
+                                            <img src="http://www.undertexter.se/bilder/spacer.gif" height="3"><br>
+                                            Dexter.S05E01.720p.HDTV.x264-ORENJI</td>
 """
-subtitle_pattern = "<a href=\"http://www.undertexter.se/\?p=[^ \r\n\t]*?&id=(\d{1,10})\" alt=\"[^\r\n\t]*?\" title=\"[^\r\n\t]*?\"><b>\
+sv_subtitle_pattern = "<a href=\"http://www.undertexter.se/(\d{1,10})/\" alt=\"[^\r\n\t]*?\" title=\"[^\r\n\t]*?\"><b>\
 [ \r\n]*?[^\r\n\t]*?</b>.{400,500}?\(1 cd\).{250,550}?[ \r\n]*([^\r\n\t]*?)</td>[ \r\n]*?[^\r\n\t]*?</tr>"
+# group(1) = id, group(2) = filename
 
-
+en_subtitle_pattern = "<a href=\"http://www.engsub.net/(\d{1,10})/\" alt=\"[^\r\n\t]*?\" title=\"[^\r\n\t]*?\"><b>\
+[ \r\n]*?[^\r\n\t]*?</b>.{400,500}?\(1 cd\).{250,550}?[ \r\n]*([^\r\n\t]*?)</td>[ \r\n]*?[^\r\n\t]*?</tr>"
 # group(1) = id, group(2) = filename
 
 
@@ -40,12 +41,13 @@ subtitle_pattern = "<a href=\"http://www.undertexter.se/\?p=[^ \r\n\t]*?&id=(\d{
 # Functions
 #====================================================================================================================
 
-
 def getallsubs(searchstring, languageshort, languagelong, subtitles_list):
     if languageshort == "sv":
         url = main_url + "?group1=on&p=soek&add=arkiv&submit=S%F6k&select2=&select3=&select=&str=" + urllib.quote_plus(searchstring)
+        subtitle_pattern = sv_subtitle_pattern
     if languageshort == "en":
         url = main_url + "?group1=on&p=eng_search&add=arkiv&submit=S%F6k&select2=&select3=&select=&str=" + urllib.quote_plus(searchstring)
+        subtitle_pattern = en_subtitle_pattern
     content = geturl(url)
     if content is not None:
         log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
@@ -124,7 +126,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     if string.lower(language) == "swedish":
         url = main_url + "laddatext.php?id=" + id
     if string.lower(language) == "english":
-        url = eng_download_url + "download.php?id=" + id
+        url = eng_download_url + "subtitle.php?id=" + id
     log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))
     content = geturl(url)
     if content is not None:
