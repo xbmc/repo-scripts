@@ -10,28 +10,73 @@ main_url = "http://swesub.nu/"
 # Regular expression patterns
 #====================================================================================================================
 
-# subtitle pattern example:
-"""
-<img src='e107_themes/memnockChristmasMod/images/bullet2.gif' alt='' style='vertical-align: middle' /> <b><a class='visit' href='download.php?view.23644'>A Christmas Carol - En julsaga</a></b><br /><div class='smalltext'><a href='download.php?list.'></a></div>Disney's.A.Christmas.Carol.2010.1080p.MKV.AC3.DTS....<br /><span class='smalltext'>Datum: söndag 28 november 2010 - 22:36:38</span><br /><br />
-"""
-subtitle_pattern = "<a class=\'visit\' href=\'download\.php\?view\.(\d{1,10})\'>[^\r\n\t]*?</a></b><br /><div class=\'smalltext\'><a href=\'download\.php\?list\.\'></a></div>([^\r\n\t]*?)<br /><span class=\'smalltext\'>"
+# direct link pattern example:
+"""http://swesub.nu/title/tt0389722/"""
+titleurl_pattern = 'http://swesub.nu/title/tt(\d{4,10})/'
+# group(1) = movienumber
+
+# find correct movie pattern example:
+"""<h2><a href="/title/tt0389722/">30 Days of Night (2007)</a></h2>"""
+title_pattern = '<h2><a href="/title/tt(\d{4,10})/">([^\r\n\t]*?) \((\d{4})\)</a></h2>'
+# group(1) = movienumber, group(2) = title, group(3) = year
+
+# videosubtitle pattern examples:
+"""<a href="/download/25182/" rel="nofollow" class="dxs">I Am Number Four 2011 PPVRiP-IFLIX  (1 cd)</a>"""
+"""<a href="/download/21581/" rel="nofollow" class="ssg">Avatar.2009.DVDRiP.XViD-iMBT (2 cd)</a>"""
+videosubtitle_pattern = '<a href="/download/(\d{1,10})/"[^\n\r\t>]*?>([^\n\r\t]*?)\(1 cd\)</a>'
 # group(1) = id, group(2) = filename
 
 #====================================================================================================================
 # Functions
 #====================================================================================================================
 
-
-def getallsubs(searchstring, languageshort, languagelong, subtitles_list):
-    url = main_url + "search.php?q=&r=0&s=S%F6k&in=" + urllib.quote_plus(searchstring) + "&ex=&ep=&be=" + urllib.quote_plus(searchstring) + "&adv=0"
-    content = geturl(url)
+def getallvideosubs(searchstring, file_original_path, movienumber, languageshort, languagelong, subtitles_list):
+    url = main_url + 'title/tt' + str(movienumber) + '/'
+    content, return_url = geturl(url)
     if content is not None:
-        log( __name__ ,"Getting '%s' subs ..." % (languageshort))
-        for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
+        for matches in re.finditer(videosubtitle_pattern, content, re.IGNORECASE | re.DOTALL):
             id = matches.group(1)
             filename = string.strip(matches.group(2))
-            log( __name__ ,"Subtitles found: %s (id = %s)" % (filename, id))
-            subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': filename, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+            if searchstring in filename:
+                log( __name__ ,"Subtitles found: %s (id = %s)" % (filename, id))
+                if isexactmatch(filename, os.path.basename(file_original_path)):
+                    subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': filename, 'sync': True, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+                else:
+                    subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': filename, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+
+
+def isexactmatch(subsfile, videofile):
+    match = re.match("(.*)\.", videofile)
+    if match:
+        videofile = string.lower(match.group(1))
+        subsfile = string.lower(subsfile)
+        log( __name__ ," comparing subtitle file with videofile to see if it is a match (sync):\nsubtitlesfile  = '%s'\nvideofile      = '%s'" % (string.lower(subsfile), string.lower(videofile)) )
+        if string.find(string.lower(subsfile),string.lower(videofile)) > -1:
+            log( __name__ ," found matching subtitle file, marking it as 'sync': '%s'" % (string.lower(subsfile)) )
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+def findtitlenumber(title, year):
+    movienumber = None
+    if year: # movie
+        url = main_url + '/?s=' + urllib.quote_plus('%s (%s)' % (title, year))
+    else: # tv show
+        url = main_url + '/?s=' + urllib.quote_plus(title)
+    content, return_url = geturl(url)
+    if content is not None:
+        match = re.search(titleurl_pattern, return_url, re.IGNORECASE | re.DOTALL)
+        if match:
+            movienumber = match.group(1)
+        else:
+            match = re.search(title_pattern, content, re.IGNORECASE | re.DOTALL)
+            if match:
+                if (string.lower(match.group(2)) == string.lower(title)):
+                    movienumber = match.group(1)
+    return movienumber
 
 
 def geturl(url):
@@ -42,31 +87,45 @@ def geturl(url):
     try:
         response = my_urlopener.open(url)
         content    = response.read()
+        return_url = response.geturl()
     except:
         log( __name__ ,"Failed to get url:%s" % (url))
         content    = None
-    return content
+        return_url = None
+    return content, return_url
 
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
     subtitles_list = []
     msg = ""
     if len(tvshow) == 0:
-        searchstring = title
+        movienumber = findtitlenumber(title, year)
+        if movienumber is not None:
+            log( __name__ ,"Movienumber found for: %s (%s)" % (title, year))
+            getallvideosubs('', file_original_path, movienumber, "sv", "Swedish", subtitles_list)
+        else:
+            log( __name__ ,"Movienumber not found for: %s (%s)" % (title, year))
     if len(tvshow) > 0:
-        searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
-    log( __name__ ,"Search string = %s" % (searchstring))
+        movienumber = findtitlenumber(tvshow, None)
+        if movienumber is not None:
+            log( __name__ ,"Movienumber found for: %s (%s)" % (title, year))
+            searchstring = "S%#02dE%#02d" % (int(season), int(episode))
+            getallvideosubs(searchstring, file_original_path, movienumber, "sv", "Swedish", subtitles_list)
+        else:
+            log( __name__ ,"Movienumber not found for: %s (%s)" % (title, year))
 
-    swedish = 0
-    if string.lower(lang1) == "swedish": swedish = 1
-    elif string.lower(lang2) == "swedish": swedish = 2
-    elif string.lower(lang3) == "swedish": swedish = 3
+#    log( __name__ ,"Search string = %s" % (searchstring))
 
-    if (swedish > 0):
-        getallsubs(searchstring, "sv", "Swedish", subtitles_list)
+#    swedish = 0
+#    if string.lower(lang1) == "swedish": swedish = 1
+#    elif string.lower(lang2) == "swedish": swedish = 2
+#    elif string.lower(lang3) == "swedish": swedish = 3
 
-    if (swedish == 0):
-        msg = "Won't work, Swesub.nu is only for Swedish subtitles."
+#    if (swedish > 0):
+#        getallsubs(searchstring, "sv", "Swedish", subtitles_list)
+
+#    if (swedish == 0):
+#        msg = "Won't work, Swesub.nu is only for Swedish subtitles."
 
     return subtitles_list, "", msg #standard output
 
@@ -74,9 +133,9 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
     id = subtitles_list[pos][ "id" ]
     language = subtitles_list[pos][ "language_name" ]
-    url = main_url + "request.php?" + id
+    url = main_url + "download/" + id + "/"
     log( __name__ ,"Fetching subtitles using url %s" % (url))
-    content = geturl(url)
+    content, return_url = geturl(url)
     if content is not None:
         header = content[:4]
         if header == 'Rar!':
@@ -84,7 +143,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             packed = True
         elif header == 'PK':
             local_tmp_file = os.path.join(tmp_sub_dir, "swesub.zip")
-            packed = True                   
+            packed = True
         else: # never found/downloaded an unpacked subtitles file, but just to be sure ...
             local_tmp_file = os.path.join(tmp_sub_dir, "swesub.srt") # assume unpacked subtitels file is an '.srt'
             subs_file = local_tmp_file
@@ -100,7 +159,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             files = os.listdir(tmp_sub_dir)
             init_filecount = len(files)
             max_mtime = 0
-            filecount = init_filecount                        
+            filecount = init_filecount
             # determine the newest file from tmp_sub_dir
             for file in files:
                 if (string.split(file,'.')[-1] in ['srt','sub','txt']):
@@ -125,11 +184,10 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             if waittime == 20:
                 log( __name__ ,"Failed to unpack subtitles in '%s'" % (tmp_sub_dir))
             else:
-                log( __name__ ,"Unpacked files in '%s'" % (tmp_sub_dir))        
+                log( __name__ ,"Unpacked files in '%s'" % (tmp_sub_dir))
                 for file in files:
                     # there could be more subtitle files in tmp_sub_dir, so make sure we get the newly created subtitle file
                     if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
-                        log( __name__ ,"Unpacked subtitles file '%s'" % (file))        
+                        log( __name__ ,"Unpacked subtitles file '%s'" % (file))
                         subs_file = os.path.join(tmp_sub_dir, file)
         return False, language, subs_file #standard output
-            

@@ -1,3 +1,8 @@
+2.9.5
+- added: Subscenter.org service, thanks Ori Varon
+- added: Asia-Team.net thx to Fran CM
+- fixed: Undertexter and Swesub
+
 2.9.4
 - added: New services PT-SUBS.net and OmniSubs.net, thx to highlandr
 - removed: Sratim service until API is sorted out
