@@ -1,3 +1,6 @@
+2.4.9
+- fixed: Subscenter service
+
 2.4.8
 - added: Subscenter.org service, thanks Ori Varon
 - added: Asia-Team.net thx to Fran CM
