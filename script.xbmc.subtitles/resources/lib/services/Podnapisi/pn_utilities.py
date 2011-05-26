@@ -116,10 +116,7 @@ class OSDBServer:
       name = tvshow                
     search_url1 = None
     search_url2 = None
-    name = urllib.quote(name.replace(" ","+"))
-    
-    search_url_base = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sXML=1&lang=0" % (name, "%s", str(year), str(season), str(episode))
-    
+    search_url_base = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sXML=1&lang=0" % (name.replace(" ","+"), "%s", str(year), str(season), str(episode))
     search_url = search_url_base % str(lang1)
     log( __name__ ,"%s - Language 1" % search_url)        
     if lang2!=lang1:
