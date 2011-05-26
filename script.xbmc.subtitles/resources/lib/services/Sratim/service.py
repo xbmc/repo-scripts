@@ -1,92 +1,108 @@
 # -*- coding: UTF-8 -*-
 
 #===============================================================================
-# Subscenter.org subtitles service.
-# Version: 1.1
+# Sratim.co.il subtitles service.
+# Version: 2.0
 #
 # Change log:
-# 1.1 - Fixed downloading of non-Hebrew subtitles.
+# 1.1 - Fixed bug with movie search: forgot to replace spaces with + signs.
+# 1.2 - Better handling of search timeout (no results returned instead of error)
+# 2.0 - Changed RE patterns and links to match new site layout (Thanks Shai Bentin!)
+#       Fixed TV show subtitles (now navigates site to find requested episode)
 #
 # Created by: Ori Varon
 #===============================================================================
 import os, re, xbmc, xbmcgui, string, time, urllib2
-from utilities import twotofull, toOpenSubtitles_two, log
+from utilities import toOpenSubtitles_two, log
 
-BASE_URL = "http://www.subscenter.org"
+BASE_URL = "http://www.sratim.co.il/"
 debug_pretext = ""
 
 #===============================================================================
 # Regular expression patterns
 #===============================================================================
 
-MULTI_RESULTS_PAGE_PATTERN = u"עמוד (?P<curr_page>\d*) \( סך הכל: (?P<total_pages>\d*) \)"
-SEARCH_RESULTS_PATTERN = "<div class=\"generalWindowRight\">.*?<a href=\"(?P<sid>.*?)\">"
+TV_SEARCH_RESULTS_PATTERN = "<td valign=\"top\"><a href=\"viewseries.php\?id=(\d+)"
+SEARCH_RESULTS_PATTERN = "<td valign=\"top\"><a href=\"view.php\?id=(\d+)"
+SUBTITLE_LIST_PATTERN = "downloadsubtitle\.php\?id=(?P<fid>\d*).*?subt_lang.*?title=\"(?P<language>.*?)\".*?subtitle_title.*?title=\"(?P<title>.*?)\""
+TV_SEASON_PATTERN = "seasonlink_(?P<slink>\d+).*?>(?P<snum>\d+)</a>"
+TV_EPISODE_PATTERN = "episodelink_(?P<elink>\d+).*?>(?P<enum>\d+)</a>"
 
 #===============================================================================
 # Private utility functions
 #===============================================================================
 
+# Returns the corresponding script language name for the Hebrew unicode language
+def sratimToScript(language):
+    languages = {
+        "עברית"     : "Hebrew",
+        "אנגלית"    : "English",
+        "ערבית"     : "Arabic",
+        "צרפתית"    : "French",
+        "גרמנית"    : "German",
+        "רוסית"     : "Russian",
+        "טורקית"    : "Turkish",
+        "ספרדית"    : "Spanish"
+    }
+    return languages[language]
+
 # Returns the content of the given URL. Used for both html and subtitle files.
 # Based on Titlovi's service.py
 def getURL(url):
-    # Fix URLs with spaces in them
-    url = url.replace(" ","%20")
     content = None
     log( __name__ ,"Getting url: %s" % (url))
     try:
         response = urllib2.urlopen(url)
         content = response.read()
     except:
-        log( __name__ ,"Failed to get url: %s" % (url))
-    # Second parameter is the filename
+        log( __name__ ,"Failed to get url:%s" % (url))
     return content
-
-def getURLfilename(url):
-    # Fix URLs with spaces in them
-    url = url.replace(" ","%20")
-    filename = None
-    log( __name__ ,"Getting url: %s" % (url))
-    try:
-        response = urllib2.urlopen(url)
-        filename = response.headers['Content-Disposition']
-        filename = filename[filename.index("filename="):]
-    except:
-        log( __name__ ,"Failed to get url: %s" % (url))
-    # Second parameter is the filename
-    return filename
 
 # The function receives a subtitles page id number, a list of user selected
 # languages and the current subtitles list and adds all found subtitles matching
 # the language selection to the subtitles list.
 def getAllSubtitles(subtitlePageID,languageList,subtitlesList):
     # Retrieve the subtitles page (html)
-    try:
-        subtitlePage = getURL(BASE_URL + subtitlePageID)
-    except:
-        # Didn't find the page - no such episode?
-        return
-    # Didn't find the page - no such episode?
-    if (not subtitlePage):
-        return
-    # Find subtitles dictionary declaration on page
-    tempStart = subtitlePage.index("subtitles_groups = ")
-    # Look for the following line break
-    tempEnd = subtitlePage.index("\n",subtitlePage.index("subtitles_groups = "))
-    toExec = "foundSubtitles = "+subtitlePage[tempStart+len("subtitles_groups = "):tempEnd]
-    # Remove junk at the end of the line
-    toExec = toExec[:toExec.rfind("}")+1]
-    exec(toExec)
-    log( __name__ ,"Built webpage dictionary")
-    for language in foundSubtitles.keys():
-        if (twotofull(language) in languageList): 
-            for translator in foundSubtitles[language]:
-                for quality in foundSubtitles[language][translator]:
-                    for rating in foundSubtitles[language][translator][quality]:
-                        subtitlesList.append({'rating': rating, 'sync': False,
-                            'filename': foundSubtitles[language][translator][quality][rating]["subtitle_version"],
-                            'subtitle_id': foundSubtitles[language][translator][quality][rating]["id"],
-                            'language_flag': 'flags/' + language + '.gif',
-                            'language_name': twotofull(language)}) 
+    subtitlePage = getURL(BASE_URL + "view.php?id=" + subtitlePageID + "&m=subtitles#")
+    
+    # Create a list of all subtitles found on page
+    foundSubtitles = re.findall(SUBTITLE_LIST_PATTERN, subtitlePage)
+    for (fid,language,title) in foundSubtitles:
+        # Check if the subtitles found match one of our languages was selected
+        # by the user
+        if (sratimToScript(language) in languageList):
+            subtitlesList.append({'rating': '0', 'sync': False,
+                                  'filename': title, 'subtitle_id': fid,
+                                  'language_flag': 'flags/' + \
+                                  toOpenSubtitles_two(sratimToScript(language)) + \
+                                  '.gif', 'language_name': sratimToScript(language)})
+
+# Same as getAllSubtitles() but receives season and episode numbers and find them.
+def getAllTVSubtitles(subtitlePageID,languageList,subtitlesList,season,episode):
+    # Retrieve the subtitles page (html)
+    subtitlePage = getURL(BASE_URL + "viewseries.php?id=" + subtitlePageID + "&m=subtitles#")
+    # Retrieve the requested season
+    foundSeasons = re.findall(TV_SEASON_PATTERN, subtitlePage)
+    for (season_link,season_num) in foundSeasons:
+        if (season_num == season):
+            # Retrieve the requested episode
+            subtitlePage = getURL(BASE_URL + "viewseries.php?id=" + subtitlePageID + "&m=subtitles&s="+str(season_link))
+            foundEpisodes = re.findall(TV_EPISODE_PATTERN, subtitlePage)
+            for (episode_link,episode_num) in foundEpisodes:
+                if (episode_num == episode):
+                    subtitlePage = getURL(BASE_URL + "viewseries.php?id=" + subtitlePageID + "&m=subtitles&s="+str(season_link)+"&e="+str(episode_link))
+                    # Create a list of all subtitles found on page
+                    foundSubtitles = re.findall(SUBTITLE_LIST_PATTERN, subtitlePage)
+                    for (fid,language,title) in foundSubtitles:
+                        # Check if the subtitles found match one of our languages was selected
+                        # by the user
+                        if (sratimToScript(language) in languageList):
+                            subtitlesList.append({'rating': '0', 'sync': False,
+                                                  'filename': title, 'subtitle_id': fid,
+                                                  'language_flag': 'flags/' + \
+                                                  toOpenSubtitles_two(sratimToScript(language)) + \
+                                                  '.gif', 'language_name': sratimToScript(language)})
+
 
 # Extracts the downloaded file and find a new sub/srt file to return.
 # Note that Sratim.co.il currently isn't hosting subtitles in .txt format but
@@ -159,39 +175,37 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     # List of user languages - easier to manipulate
     languageList = [lang1, lang2, lang3]
     msg = ""
-    # Check if tvshow and replace spaces with + in either case
+    # Check if searching for tv show or movie and build the search string
     if tvshow:
         searchString = tvshow.replace(" ","+")
     else:
         searchString = title.replace(" ","+")
-    log( __name__ ,"%s Search string = %s" % (debug_pretext, searchString.lower()))
+    log( __name__ ,"%s Search string = %s" % (debug_pretext, searchString))
 
     # Retrieve the search results (html)
-    searchResults = getURL(BASE_URL + "/he/subtitle/search/?q=" + searchString.lower())
+    searchResults = getURL(BASE_URL + "browse.php\?q=" + searchString)
     # Search most likely timed out, no results
     if (not searchResults):
         return subtitlesList, "", "Search timed out, please try again later."
 
-    # Look for subtitles page links
-    subtitleIDs = re.findall(SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
-    # Look for more subtitle pages
-    pages = re.search(MULTI_RESULTS_PAGE_PATTERN,unicode(searchResults,"utf-8"))
-    # If we found them look inside for subtitles page links
-    if (pages):
-        while (not (int(pages.group("curr_page"))) == int(pages.group("total_pages"))):
-            searchResults = getURL(BASE_URL + "/he/subtitle/search/?q="+searchString.lower()+"&page="+str(int(pages.group("curr_page"))+1))
-            tempSIDs = re.findall(SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
-            for sid in tempSIDs:
-                subtitleIDs.append(sid)
-            pages = re.search(MULTI_RESULTS_PAGE_PATTERN,unicode(searchResults,"utf-8"))
-    # Uniqify the list
-    subtitleIDs=list(set(subtitleIDs))
-    # If looking for tvshos try to append season and episode to url
+    # When searching for episode 1 Sratim.co.il returns episode 1,10,11,12 etc'
+    # so we need to catch with out pattern the episode and season numbers and
+    # only retrieve subtitles from the right result pages.
     if tvshow:
-        for i in range(len(subtitleIDs)):
-            subtitleIDs[i] += "/"+season+"/"+episode+"/"
-    for sid in subtitleIDs:
-        getAllSubtitles(sid,languageList,subtitlesList)
+        # Find sratim's subtitle page IDs
+        subtitleIDs = re.findall(TV_SEARCH_RESULTS_PATTERN,
+                                 unicode(searchResults,"utf-8"))
+        # Go over all the subtitle pages and add results to our list if season
+        # and episode match
+        for sid in subtitleIDs:
+            getAllTVSubtitles(sid,languageList,subtitlesList,season,episode)
+    else:
+        # Find sratim's subtitle page IDs
+        subtitleIDs = re.findall(SEARCH_RESULTS_PATTERN, searchResults)
+        # Go over all the subtitle pages and add results to our list
+        for sid in subtitleIDs:
+            getAllSubtitles(sid,languageList,subtitlesList)
+
     
     
     # Standard output -
@@ -211,16 +225,14 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 # session_id -> Same session_id returned in search function
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
     subtitle_id = subtitles_list[pos][ "subtitle_id" ]
-    filename = subtitles_list[pos][ "filename" ]
-    url = BASE_URL + "/subtitle/download/"+toOpenSubtitles_two(subtitles_list[pos][ "language_name" ])+"/"+str(subtitle_id)+"/?v="+filename
+    language = subtitles_list[pos][ "language_name" ]
+    url = BASE_URL + "downloadsubtitle.php?id=" + subtitle_id
     log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))
-    # Get the intended filename (don't know if it's zip or rar)
-    archive_name = getURLfilename(url)
     # Get the file content using geturl()
     content = getURL(url)
-    subs_file = ""
     if content:
-        local_tmp_file = os.path.join(tmp_sub_dir, archive_name)
+        # Going to write them to standrad zip file (always zips in sratim)
+        local_tmp_file = os.path.join(tmp_sub_dir, "zipsubs.zip")
         log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
         try:
             local_file_handle = open(local_tmp_file, "wb")
@@ -236,4 +248,4 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     # True iff the file is packed as zip: addon will automatically unpack it.
     # language of subtitles,
     # Name of subtitles file if not packed (or if we unpacked it ourselves)
-    return False, subtitles_list[pos][ "language_name" ], subs_file
+    return False, language, subs_file
