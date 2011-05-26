@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-  <setting type="lsep" label="30901" />
-  <setting id="Username" type="text" label="30905" default="" />
-  <setting id="Password" type="text" option="hidden" label="30906" default="" />
-
+	<setting type="lsep" label="30901" />
+	<setting id="Username" type="text" label="30905" default="" />
+	<setting id="Password" type="text" option="hidden" label="30906" default="" />
+	<setting id="Autostart" type="bool" label="30922" default="false" />
+	
 	<setting type="lsep" label="30913" />
-	<setting id="NotifyOnSubmit" type="bool" label="30920" default="true" />
+	<setting id="DisplayScreen" type="bool" label="30920" default="true" />
 	<setting id="VideoThreshold" type="enum" label="30915" values="25%|75%" default="1" />
+	<setting id="DisplayDefaultMessage" type="bool" label="30925" default="true" />
+	<setting id="DisplayMessage" type="text" label="30924" default="" visible= "eq(-1,false)" enable="eq(-1,false)"/>
 </settings>

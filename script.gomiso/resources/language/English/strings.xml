@@ -12,4 +12,8 @@
 	<string id="30919">Watched on XBMC - Gomiso plugin</string>
 	<string id="30920">Display submission message</string>
 	<string id="30921">Authentification failed</string>
+	<string id="30922">Autostart</string>
+	<string id="30923">Manually delete gomiso from autoexec.py</string>
+	<string id="30924">Submission message</string>
+	<string id="30925">Default submission message</string>
 </strings>

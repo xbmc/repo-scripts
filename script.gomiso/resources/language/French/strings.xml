@@ -12,4 +12,8 @@
 	<string id="30919">Regardé sur XBMC (extension Gomiso)</string>
 	<string id="30920">Afficher les messages quand soumit</string>
 	<string id="30921">Authentification impossible</string>
+	<string id="30922">Démarrage automatique</string>
+	<string id="30923">Effacer manuellement Gomiso de autoexec.py<string>
+	<string id="30924">Message de soumission</string>
+	<string id="30925">Message de soumission par défaut</string>
 </strings>
