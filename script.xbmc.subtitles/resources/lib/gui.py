@@ -56,12 +56,18 @@ class GUI( xbmcgui.WindowXMLDialog ):
     self.language_2     = languageTranslate(__settings__.getSetting( "Lang02" ), 4, 0)     # Full language 2  
     self.language_3     = languageTranslate(__settings__.getSetting( "Lang03" ), 4, 0)     # Full language 3
     self.tmp_sub_dir    = os.path.join( __profile__ ,"sub_tmp" )                           # Temporary subtitle extraction directory   
+    self.stream_sub_dir = os.path.join( __profile__ ,"sub_stream" )                        # Stream subtitle directory   
     def_movie_service   = __settings__.getSetting( "defmovieservice")                      # Default Movie service
     def_tv_service      = __settings__.getSetting( "deftvservice")                         # Default TV Show service
 
     self.getControl( 111 ).setVisible( False )                                             # check for existing subtitles and set to "True" if found    
 
     if (movieFullPath.find("http://") > -1 ):
+      if not xbmcvfs.exists(self.stream_sub_dir):
+        os.makedirs(self.stream_sub_dir)
+      else:
+        self.rem_files(self.stream_sub_dir)
+      self.sub_folder = self.stream_sub_dir
       self.temp = True
 
     elif (movieFullPath.find("rar://") > -1 ):
@@ -80,7 +86,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       if len(self.sub_folder) < 1 :
         self.sub_folder = os.path.dirname( movieFullPath )
 
-    if path and not self.rar:
+    if path and not self.rar and not self.temp:
       if self.sub_folder.find("smb://") > -1:
         if self.temp:
           dialog = xbmcgui.Dialog()

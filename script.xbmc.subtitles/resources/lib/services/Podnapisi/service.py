@@ -24,16 +24,16 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
   language3 = languageTranslate(lang3,0,1)  
   if set_temp : 
     hash_search = False
-    file_size = "000000000"
-    hashTry = "000000000000"
+    file_size   = "000000000"
+    SubHash     = "000000000000"
   else:
     try:
       file_size, SubHash   = xbmc.subHashAndFileSize(file_original_path)
       log( __name__ ,"xbmc module hash and size")
       hash_search = True
     except:  
-      file_size = ""
-      SubHash = ""
+      file_size   = ""
+      SubHash     = ""
       hash_search = False
   
   if file_size != "" and SubHash != "":

@@ -1,5 +1,9 @@
+2.9.9
+- fixed: typo that was crashing on streamed videos, thx Araluccl0 for making me look at this :)
+- added: set sub_stream folder as subtitle download location for streamed content
+
 2.9.8
-- fixed Podnapisi search
+- fixed: Podnapisi search
 
 2.9.7
 - fixed: non-Hebrew subtitles in Subscenter, thanks Ori Varon
