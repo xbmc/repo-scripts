@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.favourites" name="Favourites script" version="2.0.0" provider-name="CF2009, ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.0"/>
+	</requires>
+	<extension point="xbmc.python.library" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary>Favourites script</summary>
+		<description>Fetches item from your xbmc favourites to populate Home menu/submenu with custom buttons.</description>
+		<disclaimer>Needs skin support for it to be used properly</disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
