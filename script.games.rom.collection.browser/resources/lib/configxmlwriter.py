@@ -33,6 +33,7 @@ class ConfigXmlWriter:
 				
 		romCollectionsXml = self.tree.find('RomCollections')
 		
+		#HACK: remove all Rom Collections and create new
 		if(isEdit):
 			for romCollectionXml in romCollectionsXml.findall('RomCollection'):				
 				romCollectionsXml.remove(romCollectionXml)
@@ -49,17 +50,16 @@ class ConfigXmlWriter:
 			for romPath in romCollection.romPaths:
 				SubElement(romCollectionXml, 'romPath').text = str(romPath)
 				
+			SubElement(romCollectionXml, 'saveStatePath').text = romCollection.saveStatePath
+			SubElement(romCollectionXml, 'saveStateParams').text = romCollection.saveStateParams
+				
 			for mediaPath in romCollection.mediaPaths:								
 				SubElement(romCollectionXml, 'mediaPath', {'type' : mediaPath.fileType.name}).text = mediaPath.path
 				
+			SubElement(romCollectionXml, 'useEmuSolo').text = str(romCollection.useEmuSolo)
 			SubElement(romCollectionXml, 'ignoreOnScan').text = str(romCollection.ignoreOnScan)
 			SubElement(romCollectionXml, 'allowUpdate').text = str(romCollection.allowUpdate)
-			SubElement(romCollectionXml, 'descFilePerGame').text = str(romCollection.descFilePerGame)			
-			SubElement(romCollectionXml, 'searchGameByCRC').text = str(romCollection.searchGameByCRC)
-			SubElement(romCollectionXml, 'searchGameByCRCIgnoreRomName').text = str(romCollection.searchGameByCRCIgnoreRomName)
 			SubElement(romCollectionXml, 'useFoldernameAsGamename').text = str(romCollection.useFoldernameAsGamename)
-			SubElement(romCollectionXml, 'useFoldernameAsCRC').text = str(romCollection.useFoldernameAsCRC)
-			SubElement(romCollectionXml, 'useFilenameAsCRC').text = str(romCollection.useFilenameAsCRC)
 			SubElement(romCollectionXml, 'maxFolderDepth').text = str(romCollection.maxFolderDepth)
 			SubElement(romCollectionXml, 'doNotExtractZipFiles').text = str(romCollection.doNotExtractZipFiles)
 			SubElement(romCollectionXml, 'diskPrefix').text = str(romCollection.diskPrefix)
@@ -93,7 +93,9 @@ class ConfigXmlWriter:
 					if(scraperSite == None):
 						continue
 						
-					SubElement(romCollectionXml, 'scraper', {'name' : scraperSite.name, 'platform' : scraperSite.platformId})
+					#HACK: use replaceKey and -Value only from first scraper
+					firstScraper = scraperSite.scrapers[0]
+					SubElement(romCollectionXml, 'scraper', {'name' : scraperSite.name, 'platform' : scraperSite.platformId, 'replaceKeyString' : firstScraper.replaceKeyString, 'replaceValueString' : firstScraper.replaceValueString})
 					
 					#create Scraper element
 					scrapersXml = self.tree.find('Scrapers')
@@ -109,8 +111,22 @@ class ConfigXmlWriter:
 						
 					if not siteExists:
 						#HACK: this only covers the first scraper (for offline scrapers)
-						site = SubElement(scrapersXml, 'Site', {'name' : scraperSite.name})
-						SubElement(site, 'Scraper', {'parseInstruction' : scraperSite.scrapers[0].parseInstruction, 'source' : scraperSite.scrapers[0].source})
+						site = SubElement(scrapersXml, 'Site', 
+							{ 
+							'name' : scraperSite.name,
+							'descFilePerGame' : str(scraperSite.descFilePerGame),
+							'searchGameByCRC' : str(scraperSite.searchGameByCRC),
+							'useFoldernameAsCRC' : str(scraperSite.useFoldernameAsCRC),
+							'useFilenameAsCRC' : str(scraperSite.useFilenameAsCRC)
+							})
+																		
+						scraper = scraperSite.scrapers[0]
+						SubElement(site, 'Scraper', 
+							{ 
+							'parseInstruction' : scraper.parseInstruction,
+							'source' : scraper.source,
+							'encoding' : scraper.encoding
+							})
 			
 			if(not self.createNew):	
 				#in case of an update we have to create new options
@@ -120,7 +136,67 @@ class ConfigXmlWriter:
 				
 		success, message = self.writeFile()
 		return success, message
+	
+	
+	def writeScrapers(self, scrapers):
 		
+		Logutil.log('write scraper sites', util.LOG_LEVEL_INFO)
+				
+		scraperSitesXml = self.tree.find('Scrapers')
+				
+		#HACK: remove all scrapers and create new
+		for scraperSiteXml in scraperSitesXml.findall('Site'):				
+			scraperSitesXml.remove(scraperSiteXml)
+			
+		for scraperSite in scrapers.values():
+			
+			Logutil.log('write scraper site: ' +str(scraperSite.name), util.LOG_LEVEL_INFO)
+			
+			#Don't write None-Scraper
+			if(scraperSite.name == 'None'):
+				Logutil.log('None scraper will be skipped', util.LOG_LEVEL_INFO)
+				continue
+			
+			scraperSiteXml = SubElement(scraperSitesXml, 'Site', 
+					{ 
+					'name' : scraperSite.name,
+					'descFilePerGame' : str(scraperSite.descFilePerGame),
+					'searchGameByCRC' : str(scraperSite.searchGameByCRC),
+					'useFoldernameAsCRC' : str(scraperSite.useFoldernameAsCRC),
+					'useFilenameAsCRC' : str(scraperSite.useFilenameAsCRC)
+					})
+			
+			for scraper in scraperSite.scrapers:
+				
+				#check if we can use a relative path to parseInstructions
+				rcbScraperPath = os.path.join(util.RCBHOME, 'resources', 'scraper')
+				pathParts = os.path.split(scraper.parseInstruction)
+				if(pathParts[0].upper() == rcbScraperPath.upper()):
+					scraper.parseInstruction = pathParts[1]
+				
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+					{ 
+					'parseInstruction' : scraper.parseInstruction,
+					'source' : scraper.source,
+					'encoding' : scraper.encoding,
+					'returnUrl' : str(scraper.returnUrl)
+					})
+		
+		success, message = self.writeFile()
+		return success, message
+		
+		
+	def removeRomCollection(self, RCName):
+		configFile = util.getConfigXmlPath()
+		self.tree = ElementTree().parse(configFile)
+		romCollectionsXml = self.tree.find('RomCollections')
+		for romCollectionXml in romCollectionsXml.findall('RomCollection'):
+			name = romCollectionXml.attrib.get('name')
+			if(name == RCName):
+				romCollectionsXml.remove(romCollectionXml)	
+				
+		success, message = self.writeFile()
+		return success, message
 		
 	def addFileTypesForMame(self):
 		

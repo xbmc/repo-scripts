@@ -1,19 +1,16 @@
 
-import os, sys, shutil
 import xbmc, xbmcgui
-import string, glob, time, array
-import getpass, ntpath, re
+import string, glob, time, array, os, sys, shutil, re
 from pysqlite2 import dbapi2 as sqlite
+from threading import *
 
-import dbupdate
-from gamedatabase import *
-import helper, util, config
+import dbupdate, helper, launcher, util, config
+import dialogimportoptions, dialogcontextmenu
 from util import *
 from config import *
 from configxmlwriter import *
-
-from threading import *
-import dialogimportoptions, dialogeditrcbasic
+from configxmlupdater import *
+from gamedatabase import *
 
 
 #Action Codes
@@ -123,62 +120,6 @@ class ProgressDialogGUI:
 			self.dialog.close()
 
 
-class ContextMenuDialog(xbmcgui.WindowXMLDialog):
-	def __init__(self, *args, **kwargs):
-		# Don't put GUI sensitive stuff here (as the xml hasn't been read yet)
-		Logutil.log('init ContextMenu', util.LOG_LEVEL_INFO)
-		
-		self.gui = kwargs[ "gui" ]
-		
-		self.doModal()
-	
-	def onInit(self):
-		Logutil.log('onInit ContextMenu', util.LOG_LEVEL_INFO)		
-	
-	def onAction(self, action):
-		if (action.getId() in ACTION_CANCEL_DIALOG):
-			self.close()
-	
-	def onClick(self, controlID):
-		if (controlID == 5101): # Close window button
-			self.close()
-		elif (controlID == 5110): # Import games
-			self.close()
-			self.gui.updateDB()		
-		elif (controlID == 5111): # add Rom Collection			
-			self.close()
-			self.gui.addRomCollection()
-		elif (controlID == 5112): # edit Rom Collection (Basic)			
-			self.close()
-			constructorParam = 1
-			if(util.hasAddons()):
-				constructorParam = "PAL"
-			editRCdialog = dialogeditrcbasic.EditRCBasicDialog("script-RCB-editRCbasic.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self.gui)			
-			del editRCdialog
-			
-			self.config = Config()
-			self.config.readXml()
-			
-		elif (controlID == 5113): #Delete Rom			
-			self.close()
-			dialog = xbmcgui.Dialog()
-			if dialog.yesno("Delete Game", "Are you sure you want to delete this game?"):
-				pos = self.gui.getCurrentListPosition()
-				gameID = self.gui.getGameId(self.gui.gdb,pos)
-				self.gui.deleteGame(gameID)
-				self.gui.showGames()
-				if(pos > 0):
-					pos = pos - 1
-					self.gui.setFilterSelection(CONTROL_GAMES_GROUP_START, pos)
-				else:
-					self.gui.setFilterSelection(CONTROL_GAMES_GROUP_START, 0)
-		
-	
-	def onFocus(self, controlID):
-		pass
-
-
-
 class UIGameDB(xbmcgui.WindowXML):	
 	
 	gdb = None	
@@ -243,6 +184,9 @@ class UIGameDB(xbmcgui.WindowXML):
 		#check if we have an actual database
 		#create new one or alter existing one
 		doImport, errorMsg = self.gdb.checkDBStructure()
+		
+		#check if config.xml is up to date
+		returnCode, message = ConfigxmlUpdater().updateConfig(self)
 				
 		
 		self.quit = False
@@ -291,8 +235,8 @@ class UIGameDB(xbmcgui.WindowXML):
 		cachingOptionStr = self.Settings.getSetting(util.SETTING_RCB_CACHINGOPTION)
 		if(cachingOptionStr == 'CACHEALL'):
 			self.cachingOption = 0
-		elif(cachingOptionStr == 'CACHESELECTION'):
-			self.cachingOption = 1
+		#elif(cachingOptionStr == 'CACHESELECTION'):
+		#	self.cachingOption = 1
 		elif(cachingOptionStr == 'CACHEITEM'):
 			self.cachingOption = 2
 		elif(cachingOptionStr == 'CACHEITEMANDNEXT'):
@@ -460,21 +404,21 @@ class UIGameDB(xbmcgui.WindowXML):
 		self.selectedControlId = controlId
 		
 		
-	def updateControls(self):
+	def updateControls(self, rcDelete=False, rDelete=False):
 		
 		Logutil.log("Begin updateControls", util.LOG_LEVEL_DEBUG)
 		
 		#prepare FilterControls	
-		self.showConsoles()		
-		self.showGenre()		
-		self.showYear()
-		self.showPublisher()		
+		self.showConsoles(rcDelete, rDelete)		
+		self.showGenre(rcDelete, rDelete)		
+		self.showYear(rcDelete, rDelete)
+		self.showPublisher(rcDelete, rDelete)		
 		self.showCharacterFilter()
 		
 		Logutil.log("End updateControls", util.LOG_LEVEL_DEBUG)
 		
 		
-	def showConsoles(self):
+	def showConsoles(self, rcDelete=False, rDelete=False):
 		Logutil.log("Begin showConsoles" , util.LOG_LEVEL_DEBUG)
 				
 		showEntryAllItems = self.Settings.getSetting(util.SETTING_RCB_SHOWENTRYALLCONSOLES).upper() == 'TRUE'
@@ -486,38 +430,38 @@ class UIGameDB(xbmcgui.WindowXML):
 			consoleRow.append(romCollection.name)
 			consoles.append(consoleRow)
 		
-		self.selectedConsoleId = self.showFilterControl(None, CONTROL_CONSOLES, showEntryAllItems, consoles)
+		self.selectedConsoleId = self.showFilterControl(None, CONTROL_CONSOLES, showEntryAllItems, consoles, rcDelete, rDelete, True)
 		
 		Logutil.log("End showConsoles" , util.LOG_LEVEL_DEBUG)
 
 
-	def showGenre(self):
+	def showGenre(self, rcDelete=False, rDelete=False):
 		Logutil.log("Begin showGenre" , util.LOG_LEVEL_DEBUG)
 		
 		showEntryAllItems = self.Settings.getSetting(util.SETTING_RCB_SHOWENTRYALLGENRES).upper() == 'TRUE'
-		self.selectedGenreId = self.showFilterControl(Genre(self.gdb), CONTROL_GENRE, showEntryAllItems, None)
+		self.selectedGenreId = self.showFilterControl(Genre(self.gdb), CONTROL_GENRE, showEntryAllItems, None, rcDelete, rDelete)
 		
 		Logutil.log("End showGenre" , util.LOG_LEVEL_DEBUG)
 		
 	
-	def showYear(self):
+	def showYear(self, rcDelete=False, rDelete=False):
 		Logutil.log("Begin showYear" , util.LOG_LEVEL_DEBUG)
 		
 		showEntryAllItems = self.Settings.getSetting(util.SETTING_RCB_SHOWENTRYALLYEARS).upper() == 'TRUE'
-		self.selectedYearId = self.showFilterControl(Year(self.gdb), CONTROL_YEAR, showEntryAllItems, None)
+		self.selectedYearId = self.showFilterControl(Year(self.gdb), CONTROL_YEAR, showEntryAllItems, None, rcDelete, rDelete)
 		Logutil.log("End showYear" , util.LOG_LEVEL_DEBUG)
 		
 		
-	def showPublisher(self):
+	def showPublisher(self, rcDelete=False, rDelete=False):
 		Logutil.log("Begin showPublisher" , util.LOG_LEVEL_DEBUG)
 		
 		showEntryAllItems = self.Settings.getSetting(util.SETTING_RCB_SHOWENTRYALLPUBLISHER).upper() == 'TRUE'
-		self.selectedPublisherId = self.showFilterControl(Publisher(self.gdb), CONTROL_PUBLISHER, showEntryAllItems, None)
+		self.selectedPublisherId = self.showFilterControl(Publisher(self.gdb), CONTROL_PUBLISHER, showEntryAllItems, None, rcDelete, rDelete)
 		
 		Logutil.log("End showPublisher" , util.LOG_LEVEL_DEBUG)
 
 
-	def showFilterControl(self, dbo, controlId, showEntryAllItems, rows):
+	def showFilterControl(self, dbo, controlId, showEntryAllItems, rows, romCollectionDeleted=False, romsDeleted=False, handleConsole=False):
 		
 		Logutil.log("begin showFilterControl: " + str(controlId), util.LOG_LEVEL_DEBUG)
 				
@@ -540,11 +484,28 @@ class UIGameDB(xbmcgui.WindowXML):
 			items.append(xbmcgui.ListItem(row[util.ROW_NAME], str(row[util.ROW_ID]), "", ""))
 			
 		control.addItems(items)
+				
+		#return selected id if we are not in "delete rom collection" mode  
+		if((not romsDeleted and not romCollectionDeleted) or not handleConsole):
+			label2 = str(control.getSelectedItem().getLabel2())
+			return int(label2)
+				
+		rcSelected = False 
+		consoleCount = 0
+		newSelectedConsoleId = 0
 			
-		label2 = str(control.getSelectedItem().getLabel2())
-		return int(label2)		
-		
-		Logutil.log("End showFilterControl", util.LOG_LEVEL_DEBUG)
+		#get new index of selected rom collection
+		for romCollection in self.config.romCollections.values():
+			if(int(romCollection.id) == int(self.selectedConsoleId)):
+				rcSelected = True
+				newSelectedConsoleId = int(romCollection.id)
+			consoleCount += 1
+					
+		if(rcSelected == False):
+			#no RC selected
+			return 0
+		else:
+			return int(newSelectedConsoleId)
 			
 	
 	def showCharacterFilter(self):
@@ -650,7 +611,9 @@ class UIGameDB(xbmcgui.WindowXML):
 	
 	
 	def showGameInfo(self):
-		Logutil.log("Begin showGameInfo" , util.LOG_LEVEL_INFO)		
+		Logutil.log("Begin showGameInfo" , util.LOG_LEVEL_INFO)
+		
+		self.writeMsg("")	
 		
 		if(self.playVideoThread != None and self.playVideoThread.isAlive()):			
 			self.playVideoThreadStopped = True
@@ -708,7 +671,7 @@ class UIGameDB(xbmcgui.WindowXML):
 			self.player.stoppedByRCB = True
 			self.player.stop()
 		
-		helper.launchEmu(self.gdb, self, gameId, self.config, self.Settings)
+		launcher.launchEmu(self.gdb, self, gameId, self.config, self.Settings)
 		Logutil.log("End launchEmu" , util.LOG_LEVEL_INFO)
 		
 		
@@ -777,19 +740,74 @@ class UIGameDB(xbmcgui.WindowXML):
 		Logutil.log("End deleteGame" , util.LOG_LEVEL_INFO)
 	
 	
-	def cleanDB(self):
-		Logutil.log("Begin deleteGame" , util.LOG_LEVEL_INFO)
+	def deleteRCGames(self, rcID, rcDelete, rDelete):
+		Logutil.log("begin Delete Games" , util.LOG_LEVEL_INFO)
+		count = 0
 		
+		rcList = Game(self.gdb).getFilteredGames(rcID, 0, 0, 0, '0 = 0')
+		progressDialog = ProgressDialogGUI()
+		progressDialog.itemCount = len(rcList)
+		
+		if(rcList != None):
+			progDialogRCDelStat	= "Deleting Rom (%i / %i)" %(count, progressDialog.itemCount)	
+			progressDialog.writeMsg("Deleting Roms...", progDialogRCDelStat, "", count)
+			for items in rcList:
+				count = count + 1
+				progDialogRCDelStat	= "Deleting Rom (%i / %i)" %(count, progressDialog.itemCount)	
+				progressDialog.writeMsg("", progDialogRCDelStat, "",count)	
+				self.deleteGame(items[util.ROW_ID])
+					#time.sleep(.001)
+			if(len(rcList)>0):
+				progressDialog.writeMsg("", "Deleting Roms Complete", "",count)
+			else:
+				progressDialog.writeMsg("Deleting Roms Complete", "", "",count)
+			time.sleep(1)
+			self.gdb.commit()
+			self.config = Config()
+			self.config.readXml()
+			self.clearList()
+			self.rcb_playList.clear()
+			xbmc.sleep(util.WAITTIME_UPDATECONTROLS)
+			self.updateControls(rcDelete, rDelete)
+			if(rDelete):
+				self.selectedConsoleId = self.setFilterSelection(CONTROL_CONSOLES, self.selectedConsoleIndex)
+				self.setFilterSelection(CONTROL_GAMES_GROUP_START, 0)
+			self.showGames()
+
+		rcList = None
+		Logutil.log("end Delete Games" , util.LOG_LEVEL_INFO)
+	
+	
+	def cleanDB(self):
+		Logutil.log("Begin cleanDB" , util.LOG_LEVEL_INFO)
+
+		count = 0
+		removeCount = 0
 		list = File(self.gdb).getFilesList()
+		progressDialog2 = ProgressDialogGUI()
+		progressDialog2.itemCount = len(list)
+		progDialogCleanStat	= "Checking File (%i / %i)" %(count, progressDialog2.itemCount)	
+		progressDialog2.writeMsg("Cleaning Database...", progDialogCleanStat, "")
 		if(list != None):
-			for items in list:	
+			for items in list:
+				count = count + 1
+				progDialogCleanStat	= "Checking File (%i / %i)" %(count, progressDialog2.itemCount)	
+				progressDialog2.writeMsg("", progDialogCleanStat, "",count)	
 				if (os.path.exists(items[util.ROW_NAME]) != True):
 					if(items[util.FILE_fileTypeId] == 0):
-						self.gui.deleteGame(items[util.FILE_parentId])
+						self.deleteGame(items[util.FILE_parentId])
 					else:
-						File(self.gdb).deleteFileById(items[util.ROW_ID])
-						
-		Logutil.log("End deleteGame" , util.LOG_LEVEL_INFO)
+						File(self.gdb).deleteByFileId(items[util.ROW_ID])
+					removeCount = removeCount + 1
+				#time.sleep(.001)
+			progressDialog2.writeMsg("", "Compressing Database...", "",count)
+			self.gdb.compact()
+			time.sleep(.5)
+			progressDialog2.writeMsg("", "Database Clean-up Complete", "",count)
+			time.sleep(1)
+			self.showGames()
+		list = None
+		Logutil.log("End cleanDB" , util.LOG_LEVEL_INFO)
 	
 	
 	def addRomCollection(self):
@@ -801,7 +819,8 @@ class UIGameDB(xbmcgui.WindowXML):
 		rcIds = self.config.romCollections.keys()
 		rcIds.sort()
 		#read existing rom collection ids and names
-		for rcId in rcIds:
+		for rcId in rcIds:				
+			
 			#remove already configured consoles from the list			
 			if(self.config.romCollections[rcId].name in consoleList):
 				consoleList.remove(self.config.romCollections[rcId].name)
@@ -885,7 +904,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		constructorParam = 1
 		if(util.hasAddons()):
 			constructorParam = "PAL"
-		cm = ContextMenuDialog("script-RCB-contextmenu.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self)
+		cm = dialogcontextmenu.ContextMenuDialog("script-RCB-contextmenu.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self)
 		del cm
 				
 		
@@ -1435,6 +1454,13 @@ class UIGameDB(xbmcgui.WindowXML):
 					romCollection.scraperSites.append(site)
 			else:
 				
+				if(romCollection.name == 'MAME'):
+					romCollection.imagePlacing = ImagePlacing()
+					romCollection.imagePlacing.name = 'gameinfomamecabinet'
+					#MAME zip files contain several files but they must be passed to the emu as zip file
+					romCollection.doNotExtractZipFiles = True
+				
+				
 				romCollection.mediaPaths = []
 				
 				lastArtworkPath = ''
@@ -1493,6 +1519,8 @@ class UIGameDB(xbmcgui.WindowXML):
 					#create scraper
 					site = Site()
 					site.name = console
+					site.descFilePerGame = (descIndex == 0)
+					site.searchGameByCRC = True
 					scrapers = []
 					scraper = Scraper()
 					scraper.parseInstruction = parserPath
@@ -1613,7 +1641,11 @@ class UIGameDB(xbmcgui.WindowXML):
 			#HACK: There is an error with "\a" in autoexec.py on winidows, so we need "\A"
 			path = path.replace('\\addons', '\\Addons')
 		launchLine = 'xbmc.executescript("%s")' % path
-		fp = open(autoexecFile, 'r+')
+		try:
+			fp = open(autoexecFile, 'r+')
+		except:
+			Logutil.log("Error opening autoexec.py" , util.LOG_LEVEL_WARNING)
+			return
 		xbmcImported = False
 		alreadyCreated = False
 		for line in fp:
@@ -2026,6 +2058,7 @@ class UIGameDB(xbmcgui.WindowXML):
 	
 	
 	def writeMsg(self, msg, count=0):
+		
 		control = self.getControlById(CONTROL_LABEL_MSG)
 		if(control == None):
 			Logutil.log("RCB_WARNING: control == None in writeMsg", util.LOG_LEVEL_WARNING)

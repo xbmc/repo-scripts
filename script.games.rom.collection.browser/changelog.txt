@@ -1,137 +1,179 @@
+
+0.8.7 (05/2011)
+~~~~~~~~~~~~~
+General:
+  * removed option CACHESELECTION from caching options
+  
+Game Import:
+  * bugfix: error with handling [] in rom names
+
+0.8.6 (05/2011)
+~~~~~~~~~~~~~
+General:
+  * complete "Edit Rom Collection" dialog: access all settings via UI
+  * new dialog: "Edit Offline Scrapers"
+  * new option: "Delete Rom Collection"
+  * new option: "Clean database"
+  * bugfix: fixed "autoexec.py not found" error
+  * bugfix: set correct MAME properties when RC is created in local data mode
+
+Game Import:
+  * bugfix: using offline scrapers for MAME did not work
+
+0.8.5 (04/2011)
+~~~~~~~~~~~~~
+Game Import:
+  * code cleanup, little bug fixes, better error handling, ...
+  * moved properties from Rom Collection to Scraper:
+    descfilePerGame, searchGameByCRC, useFoldernameAsCRC, useFilenameAsCRC
+  * support regular expressions in diskPrefix
+  * stop import when all games are imported with multigame scrapers
+
+Game Launching:
+  * support direct launching of savestates
+    -> specify savestatePath and saveStateParams per Rom Collection
+    -> RCB checks if savestate exists and offers to launch the savestate
+  * new context menu option: Edit Game Command
+    -> save game specific command in database
+    -> replace %GAMECMD% with game specific command when launching the game
+  * moved useEmuSolo from Addon settings to Rom Collection properties (config.xml)
+  * new placholders in launchEmu: %ROMFILE%, %ROMNAME%, %GAME%, %ASKNUM%, %ASKTEXT%
+  * check for multi rom games in zip files before launching
+
 0.8.4 (04/2011)
 ~~~~~~~~~~~~~
 General:
-    * bugfix: Add Rom Collection does not increment ids greater than 10
+  * bug fix: adding more than 10 Rom Collections could cause database inconsistencies
 
 0.8.3 (04/2011)
 ~~~~~~~~~~~~~
 Game Import:
-    * encoding error workaround (Windows only)
+  * encoding error workaround (Windows only)
 
 0.8.2 (03/2011)
 ~~~~~~~~~~~~~
 General:
-    * new option: Delete Game
-    * bugfix: use uppercase "\Addon"-path in autoexec.py (Windows only)
+  * new option: Delete Game
+  * bugfix: use uppercase "\Addon"-path in autoexec.py (Windows only)
 
 Configuration:
-    * option "Edit Rom Collection" in context menu
-    * config wizard bugfixes and improvements
+  * option "Edit Rom Collection" in context menu
+  * config wizard bugfixes and improvements
 
 Game Import:
-    * background scraping: start scraping on XBMC startup
-    * encoding error fixes
-    * better error handling on encoding errors
+  * background scraping: start scraping on XBMC startup
+  * encoding error fixes
+  * better error handling on encoding errors
 
 0.8.1 (02/2011)
 ~~~~~~~~~~~~~
 General:
-    * rework of Confluence Thumbs view
+  * rework of Confluence Thumbs view
 
 Game Import:
-    * scraping options: automatic: accurate, automatic: guess matches, interactive: select matches    
-    * new import options dialog (select Rom Collection, scraping mode and scrapers)
-    * small fixes in MAME scraper
+  * scraping options: accurate, guess matches, select matches    
+  * new import options dialog (select Rom Collection, scraping mode and scrapers)
+  * small fixes in MAME scraper
 
 0.8.0 (01/2011)
 ~~~~~~~~~~~~~
 General:
-    * added context menu
-    * option "Add Rom Collection" available via context menu
-    * reworked Confluence views
+  * added context menu
+  * option "Add Rom Collection" available via context menu
+  * reworked Confluence views
 
 Game Import:
-    * new scraper: maws.mameworld.info
-    * rework of progress dialog (info about current scraper and current action)
-    * bugfix: stop import when action is canceled
+  * new scraper: maws.mameworld.info
+  * rework of progress dialog (info about current scraper and current action)
+  * bugfix: stop import when action is canceled
 
 Game Launching:
-    * detect games in zip and 7z archives and ask user which game to load
+  * detect games in zip and 7z archives and ask user which game to load
 
 0.7.11 (12/2010)
 ~~~~~~~~~~~~~
 General:
-    * prevent download of multiple images: check if file is available with different extension
-    * bugfix: fallback images did not work in previous versions
+  * no download of multiple images: check if file is available with different extension
+  * bugfix: fallback images did not work in previous versions
 
 Xbox related:
-    * bugfix: Launching games on xbox was broken
-    * set correct RomCollection-properties on xbox (create shortcuts, ...)
-    * complete configuration can be done with the wizard (for roms and Xbox-games)
+  * bugfix: Launching games on xbox was broken
+  * set correct RomCollection-properties on xbox (create shortcuts, ...)
+  * complete configuration can be done with the wizard (for roms and Xbox-games)
 
 0.7.10 (12/2010)
 ~~~~~~~~~~~~~
 Online Scraping
-    * improvements to sequel and subtitle handling
+  * improvements to sequel and subtitle handling
 
 0.7.9 (12/2010)
 ~~~~~~~~~~~~~
 Online Scraping
-    * scraping game information and artwork from various online sources
-    * current available scrapers: thegamesdb.net, giantbomb.com, mobygames.com
-    * scraped artwork types: boxfront, boxback, cartridge, screenshot and fanart
-    * create local nfo files while scraping
-    * option to reimport local nfo files (possibility to add or edit game properties)
-    * create info files about scrape results (missing artwork, missing description, wrong game name)
+  * scraping game information and artwork from various online sources
+  * current available scrapers: thegamesdb.net, giantbomb.com, mobygames.com
+  * scraped artwork types: boxfront, boxback, cartridge, screenshot and fanart
+  * create local nfo files while scraping
+  * option to reimport local nfo files (possibility to add or edit game properties)
+  * create info files about scrape results (missing game info, mismatches)
 
 Configuration
-    * startup configuration wizard (create config.xml with most common options)
-    * configure global settings via Addon Settings page
-    * refactoring of config.xml structure
-    * config.xml will be read at every start: no need to import settings anymore
+  * startup configuration wizard (create config.xml with most common options)
+  * configure global settings via Addon Settings page
+  * refactoring of config.xml structure
+  * config.xml will be read at every start: no need to import settings anymore
 
 0.6.1 (08/2010)
 ~~~~~~~~~~~~~
 UI and general behaviour
-    * fullscreen video browser
-    * implemented different caching options: CACHEALL, CACHEITEM, CACHEITEMANDNEXT
-    * added character filter: select games by first character
-    * skinning support: all game properties are available in the skin xml now
-    * delay videoplayback for one second: better behaviour when browsing the game list
-    * added log level as parameter to config.xml
-    * new option: preventUnfilteredSearch
-    * changed ordering in game list to case insensitive
-    * support for pgup, pgdn, home, end
-    * bugfix: don't restart video if we are already playing the current file
+  * fullscreen video browser
+  * implemented different caching options: CACHEALL, CACHEITEM, CACHEITEMANDNEXT
+  * added character filter: select games by first character
+  * skinning support: all game properties are available in the skin xml now
+  * delay videoplayback for one second: better behaviour when browsing the game list
+  * added log level as parameter to config.xml
+  * new option: preventUnfilteredSearch
+  * changed ordering in game list to case insensitive
+  * support for pgup, pgdn, home, end
+  * bugfix: don't restart video if we are already playing the current file
 
 Import
-    * restructuring import methods: scan large description files game by game
-    * importing games: progress update per game and not per rom collection
-    * use default values for all settings: may keep config.xml more simple
-    * check config.xml modification time at startup
-    * new option: using foldername as crc value (useFoldernameAsCRC)
-    * new option: using filename as crc value (useFilenameAsCRC)
-    * ignore case when searching for media files (works also on linux)
-    * limit number of subdirs when importing roms
-    * bugfix: non-ascii chars in filenames during import
-    * bugfix: unique constraint on game (name, romcollection)
-    * bugfix: handle crc with leading zero
-    * bugfix: handle game names with brackets []
+  * restructuring import methods: scan large description files game by game
+  * importing games: progress update per game and not per rom collection
+  * use default values for all settings: may keep config.xml more simple
+  * check config.xml modification time at startup
+  * new option: using foldername as crc value (useFoldernameAsCRC)
+  * new option: using filename as crc value (useFilenameAsCRC)
+  * ignore case when searching for media files (works also on linux)
+  * limit number of subdirs when importing roms
+  * bugfix: non-ascii chars in filenames during import
+  * bugfix: unique constraint on game (name, romcollection)
+  * bugfix: handle crc with leading zero
+  * bugfix: handle game names with brackets []
 
 Launching Games
-    * xbox support: launch emulators and xbox games
-    * xbox support: create cut files for xbox on the fly
-    * applaunch.sh supports MacOSX (thanks to ryosaeba87)
+  * xbox support: launch emulators and xbox games
+  * xbox support: create cut files for xbox on the fly
+  * applaunch.sh supports MacOSX (thanks to ryosaeba87)
 
 0.5.4 (08/2010)
 ~~~~~~~~~~~~~
-    * minimize XBMC before launching emulator
-    * maximize XBMC after exiting emulator
-    * using PAL as default resolution (addon could not find window xml file on 720p)
-    * new icon (thanks to freezy)
-    * hungarian translation (thanks to alanwww1)
+  * minimize XBMC before launching emulator
+  * maximize XBMC after exiting emulator
+  * using PAL as default resolution
+  * new icon (thanks to freezy)
+  * hungarian translation (thanks to alanwww1)
 
 0.5.3 (08/2010)
 ~~~~~~~~~~~~~
-    * initial Dharma version    
-    * same feature set as V0.5 - just Dharma compatible
+  * initial Dharma version    
+  * same feature set as V0.5 - just Dharma compatible
 
 V0.5 (05/2010)
 ~~~~~~~~~~~~~
 supports Camelot only
-    * filter games by console, genre, year and publisher
-    * launch roms with external emulator
-    * configure script via xml file
-    * simple but configurable description file parser
-    * view different images and videos per game
-    * view game plot and additional game properties
+  * filter games by console, genre, year and publisher
+  * launch roms with external emulator
+  * configure script via xml file
+  * simple but configurable description file parser
+  * view different images and videos per game
+  * view game plot and additional game properties

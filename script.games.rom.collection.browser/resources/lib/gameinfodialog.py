@@ -1,10 +1,9 @@
 
-import os, sys
 import xbmc, xbmcgui
-import dbupdate
-from gamedatabase import *
-import helper, util
+import os, sys
+import helper, util, dbupdate, launcher
 from util import *
+from gamedatabase import *
 
 
 ACTION_EXIT_SCRIPT = ( 10, )
@@ -363,7 +362,7 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		
 		Logutil.log("Begin launchEmu", util.LOG_LEVEL_INFO)				
 		
-		helper.launchEmu(self.gdb, self, self.selectedGameId)
+		launcher.launchEmu(self.gdb, self, self.selectedGameId, self.config, self.settings)
 		Logutil.log("End launchEmu", util.LOG_LEVEL_INFO)
 		
 	

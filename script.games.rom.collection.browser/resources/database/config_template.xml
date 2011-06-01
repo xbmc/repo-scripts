@@ -1,4 +1,4 @@
-<config>
+<config version="0.8.6">
   <RomCollections>
     
   </RomCollections>
@@ -279,21 +279,21 @@
     </fileTypeFor>
   </ImagePlacing>
   <Scrapers>
-    <Site name="local nfo">
+    <Site name="local nfo" descFilePerGame="True" searchGameByCRC="False">
       <Scraper parseInstruction="00 - local nfo.xml" source="nfo" />
     </Site>
-    <Site name="thevideogamedb.com">
+    <Site name="thevideogamedb.com" descFilePerGame="True" searchGameByCRC="true">
       <Scraper parseInstruction="01 - thevideogamedb.xml" source="http://thevideogamedb.com/API/GameDetail.aspx?apikey=%VGDBAPIKey%&amp;crc=%CRC%" />
     </Site>
-    <Site name="thegamesdb.net">
+    <Site name="thegamesdb.net" descFilePerGame="True" searchGameByCRC="False">
       <Scraper parseInstruction="02 - thegamesdb.xml" source="http://thegamesdb.net/api/GetGame.php?name=%GAME%" />
     </Site>
-    <Site name="giantbomb.com">
-      <Scraper parseInstruction="03.01 - giantbomb - search.xml" replaceKeyString="%REPLACEKEYS%" replaceValueString="%REPLACEVALUES%" returnUrl="true" source="http://api.giantbomb.com/search/?api_key=%GIANTBOMBAPIKey%&amp;query=%GAME%&amp;resources=game&amp;field_list=api_detail_url,name&amp;format=xml" />
+    <Site name="giantbomb.com" descFilePerGame="True" searchGameByCRC="False">
+      <Scraper parseInstruction="03.01 - giantbomb - search.xml" returnUrl="true" source="http://api.giantbomb.com/search/?api_key=%GIANTBOMBAPIKey%&amp;query=%GAME%&amp;resources=game&amp;field_list=api_detail_url,name&amp;format=xml" />
       <Scraper parseInstruction="03.02 - giantbomb - detail.xml" source="1" />
     </Site>
-    <Site name="mobygames.com">
-      <Scraper parseInstruction="04.01 - mobygames - gamesearch.xml" replaceKeyString="%REPLACEKEYS%" replaceValueString="%REPLACEVALUES%" returnUrl="true" source="http://www.mobygames.com/search/quick?game=%GAME%&amp;p=%PLATFORM%" />
+    <Site name="mobygames.com" descFilePerGame="True" searchGameByCRC="False">
+      <Scraper parseInstruction="04.01 - mobygames - gamesearch.xml" returnUrl="true" source="http://www.mobygames.com/search/quick?game=%GAME%&amp;p=%PLATFORM%" />
       <Scraper parseInstruction="04.02 - mobygames - details.xml" source="1" />
       <Scraper parseInstruction="04.03 - mobygames - coverlink.xml" returnUrl="true" source="1" />
       <Scraper parseInstruction="04.04 - mobygames - coverart.xml" source="2" />
@@ -301,7 +301,7 @@
       <Scraper parseInstruction="04.06 - mobygames - screenoriglink.xml" returnUrl="true" source="3" />
       <Scraper parseInstruction="04.07 - mobygames - screenshots.xml" source="4" />
     </Site>
-	<Site name="maws.mameworld.info">
+	<Site name="maws.mameworld.info" descFilePerGame="True" searchGameByCRC="False">
 	  <Scraper parseInstruction="06 - maws.xml" source="http://maws.mameworld.info/maws/romset/%GAME%" encoding='iso-8859-1'/>
 	</Site>
   </Scrapers>

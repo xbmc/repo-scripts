@@ -145,7 +145,13 @@ class Scraper:
 	platformId = 0
 	
 class Site:
-	name = ''
+	name = ''	
+	descFilePerGame = False
+	searchGameByCRC = True
+	searchGameByCRCIgnoreRomName = False
+	useFoldernameAsCRC = False
+	useFilenameAsCRC = False
+	
 	scrapers = None
 
 class RomCollection:
@@ -155,18 +161,16 @@ class RomCollection:
 	emulatorCmd = ''
 	emulatorParams = ''
 	romPaths = None
+	saveStatePath = ''
+	saveStateParams = ''
 	mediaPaths = None
 	scraperSites = None
 	imagePlacing = None
 	ignoreOnScan = False
-	allowUpdate = True	
-	searchGameByCRC = True
-	searchGameByCRCIgnoreRomName = False
-	useFoldernameAsCRC = False
-	useFilenameAsCRC = False
-	useFoldernameAsGamename = False
+	allowUpdate = True
+	useEmuSolo = False
 	maxFolderDepth = 99
-	descFilePerGame = False
+	useFoldernameAsGamename = False
 	doNotExtractZipFiles = False
 	diskPrefix = '_Disk'
 	xboxCreateShortcut = False
@@ -177,6 +181,7 @@ class RomCollection:
 class Config:
 		
 	romCollections = None
+	scraperSites = None
 	fileTypeIdsForGamelist = None
 	
 	tree = None
@@ -198,11 +203,17 @@ class Config:
 			Logutil.log('Could not read config.xml', util.LOG_LEVEL_ERROR)
 			return False, 'Could not read config.xml.'
 		
+		#Rom Collections
 		romCollections, errorMsg = self.readRomCollections(tree)
 		if(romCollections == None):
-			return False, errorMsg
-		
+			return False, errorMsg		
 		self.romCollections = romCollections
+		
+		#Scrapers
+		scrapers, errorMsg = self.readScrapers(tree)
+		if(scrapers == None):
+			return False, errorMsg		
+		self.scraperSites = scrapers
 				
 		self.fileTypeIdsForGamelist = self.getFileTypeIdsForGameList(romCollections)
 		
@@ -242,9 +253,10 @@ class Config:
 			try:
 				rc = romCollections[id]
 				Logutil.log('Error while adding RomCollection. Make sure that the id is unique.', util.LOG_LEVEL_ERROR)
-				return None, 'Rom Collection ids are not unique'
+				return None, 'Rom Collection ids are not unique.'
 			except:
 				pass
+			
 			romCollection.id = id
 			
 			#romPath
@@ -252,14 +264,16 @@ class Config:
 			romPathRows = romCollectionRow.findall('romPath')			
 			for romPathRow in romPathRows:
 				Logutil.log('Rom path: ' +str(romPathRow.text), util.LOG_LEVEL_INFO)
-				romCollection.romPaths.append(romPathRow.text)
+				if(romPathRow.text != None):
+					romCollection.romPaths.append(romPathRow.text)
 				
 			#mediaPath
 			romCollection.mediaPaths = []
 			mediaPathRows = romCollectionRow.findall('mediaPath')
 			for mediaPathRow in mediaPathRows:
 				mediaPath = MediaPath()
-				mediaPath.path = mediaPathRow.text
+				if(mediaPathRow.text != None):
+					mediaPath.path = mediaPathRow.text
 				Logutil.log('Media path: ' +str(mediaPathRow.text), util.LOG_LEVEL_INFO)
 				fileType, errorMsg = self.readFileType(mediaPathRow.attrib.get('type'), tree)
 				if(fileType == None):
@@ -288,9 +302,20 @@ class Config:
 				replaceValueString = scraperRow.attrib.get('replaceValueString')
 				if(replaceValueString == None):
 					replaceValueString = ''
+								
+				#elementtree version 1.2.7 does not support xpath like this: Scrapers/Site[@name="%s"] 
+				siteRow = None
+				siteRows = tree.findall('Scrapers/Site')
+				for element in siteRows:
+					if(element.attrib.get('name') == siteName):
+						siteRow = element
+						break
 				
-				
-				scraper, errorMsg = self.readScraper(siteName, platform, replaceKeyString, replaceValueString, tree)
+				if(siteRow == None):
+					Logutil.log('Configuration error. Site %s does not exist in config.xml' %siteName, util.LOG_LEVEL_ERROR)
+					return None, 'Configuration error. See xbmc.log for details'
+								
+				scraper, errorMsg = self.readScraper(siteRow, platform, replaceKeyString, replaceValueString, True, tree)
 				if(scraper == None):
 					return None, errorMsg
 				romCollection.scraperSites.append(scraper)
@@ -307,94 +332,98 @@ class Config:
 				romCollection.imagePlacing = fileTypeFor
 			
 			#all simple RomCollection properties
-			emulatorCmd = romCollectionRow.find('emulatorCmd')
-			if(emulatorCmd != None):
-				Logutil.log('Emulator cmd: ' +str(emulatorCmd.text), util.LOG_LEVEL_INFO)
-				romCollection.emulatorCmd = emulatorCmd.text
+			romCollection.emulatorCmd = self.readTextElement(romCollectionRow, 'emulatorCmd')
+			romCollection.emulatorParams = self.readTextElement(romCollectionRow, 'emulatorParams')
+			romCollection.saveStatePath = self.readTextElement(romCollectionRow, 'saveStatePath')
+			romCollection.saveStateParams = self.readTextElement(romCollectionRow, 'saveStateParams')
+						
+			ignoreOnScan = self.readTextElement(romCollectionRow, 'ignoreOnScan')
+			if(ignoreOnScan != ''):
+				romCollection.ignoreOnScan = ignoreOnScan.upper() == 'TRUE'
 			
-			emulatorParams = romCollectionRow.find('emulatorParams')
-			if(emulatorParams != None):
-				Logutil.log('Emulator params: ' +str(emulatorParams.text), util.LOG_LEVEL_INFO)
-				romCollection.emulatorParams = emulatorParams.text
+			allowUpdate = self.readTextElement(romCollectionRow, 'allowUpdate') 			
+			if(allowUpdate != ''):
+				romCollection.allowUpdate = allowUpdate.upper() == 'TRUE'
+				
+			useEmuSolo = self.readTextElement(romCollectionRow, 'useEmuSolo') 			
+			if(useEmuSolo != ''):
+				romCollection.useEmuSolo = useEmuSolo.upper() == 'TRUE'
 			
-			ignoreOnScan = romCollectionRow.find('ignoreOnScan')
-			if(ignoreOnScan != None):
-				romCollection.ignoreOnScan = ignoreOnScan.text.upper() == 'TRUE'
-				
-			allowUpdate = romCollectionRow.find('allowUpdate')
-			if(allowUpdate != None):
-				romCollection.allowUpdate = allowUpdate.text.upper() == 'TRUE'
-				
-			searchGameByCRC = romCollectionRow.find('searchGameByCRC')
-			if(searchGameByCRC != None):
-				romCollection.searchGameByCRC = searchGameByCRC.text.upper() == 'TRUE'
-				
-			searchGameByCRCIgnoreRomName = romCollectionRow.find('searchGameByCRCIgnoreRomName')
-			if(searchGameByCRCIgnoreRomName != None):
-				romCollection.searchGameByCRCIgnoreRomName = searchGameByCRCIgnoreRomName.text.upper() == 'TRUE'
-				
-			useFoldernameAsCRC = romCollectionRow.find('useFoldernameAsCRC')
-			if(useFoldernameAsCRC != None):
-				romCollection.useFoldernameAsCRC = useFoldernameAsCRC.text.upper() == 'TRUE'
-				
-			useFilenameAsCRC = romCollectionRow.find('useFilenameAsCRC')
-			if(useFilenameAsCRC != None):
-				romCollection.useFilenameAsCRC = useFilenameAsCRC.text.upper() == 'TRUE'
+			useFoldernameAsGamename = self.readTextElement(romCollectionRow, 'useFoldernameAsGamename')			
+			if(useFoldernameAsGamename != ''):
+				romCollection.useFoldernameAsGamename = useFoldernameAsGamename.upper() == 'TRUE'	
 			
-			useFoldernameAsGamename = romCollectionRow.find('useFoldernameAsGamename')
-			if(useFoldernameAsGamename != None):
-				romCollection.useFoldernameAsGamename = useFoldernameAsGamename.text.upper() == 'TRUE'	
+			maxFolderDepth = self.readTextElement(romCollectionRow, 'maxFolderDepth') 
+			if(maxFolderDepth != ''):
+				romCollection.maxFolderDepth = int(maxFolderDepth)
+				
+			doNotExtractZipFiles = self.readTextElement(romCollectionRow, 'doNotExtractZipFiles') 			
+			if(doNotExtractZipFiles != ''):
+				romCollection.doNotExtractZipFiles = doNotExtractZipFiles.upper() == 'TRUE'		
+				
+			romCollection.diskPrefix = self.readTextElement(romCollectionRow, 'diskPrefix')
+				
+			xboxCreateShortcut = self.readTextElement(romCollectionRow, 'xboxCreateShortcut')			
+			if(xboxCreateShortcut != ''):
+				romCollection.xboxCreateShortcut = xboxCreateShortcut.upper() == 'TRUE'
+				
+			xboxCreateShortcutAddRomfile = self.readTextElement(romCollectionRow, 'xboxCreateShortcutAddRomfile') 			
+			if(xboxCreateShortcutAddRomfile != ''):
+				romCollection.xboxCreateShortcutAddRomfile = xboxCreateShortcutAddRomfile.upper() == 'TRUE'
+				
+			xboxCreateShortcutUseShortGamename = self.readTextElement(romCollectionRow, 'xboxCreateShortcutUseShortGamename')			
+			if(xboxCreateShortcutUseShortGamename != ''):
+				romCollection.xboxCreateShortcutUseShortGamename = xboxCreateShortcutUseShortGamename.upper() == 'TRUE'
 			
-			maxFolderDepth = romCollectionRow.find('maxFolderDepth')
-			if(maxFolderDepth != None):
-				romCollection.maxFolderDepth = int(maxFolderDepth.text)
-				
-			descFilePerGame = romCollectionRow.find('descFilePerGame')
-			if(descFilePerGame != None):
-				romCollection.descFilePerGame = descFilePerGame.text.upper() == 'TRUE'
-				
-			doNotExtractZipFiles = romCollectionRow.find('doNotExtractZipFiles')
-			if(doNotExtractZipFiles != None):
-				romCollection.doNotExtractZipFiles = doNotExtractZipFiles.text.upper() == 'TRUE'		
-				
-			diskPrefix = romCollectionRow.find('diskPrefix')
-			if(diskPrefix != None):
-				romCollection.diskPrefix = diskPrefix.text							
-				
-			xboxCreateShortcut = romCollectionRow.find('xboxCreateShortcut')
-			if(xboxCreateShortcut != None):
-				romCollection.xboxCreateShortcut = xboxCreateShortcut.text.upper() == 'TRUE'
-				
-			xboxCreateShortcutAddRomfile = romCollectionRow.find('xboxCreateShortcutAddRomfile')
-			if(xboxCreateShortcutAddRomfile != None):
-				romCollection.xboxCreateShortcutAddRomfile = xboxCreateShortcutAddRomfile.text.upper() == 'TRUE'
-				
-			xboxCreateShortcutUseShortGamename = romCollectionRow.find('xboxCreateShortcutUseShortGamename')
-			if(xboxCreateShortcutUseShortGamename != None):
-				romCollection.xboxCreateShortcutUseShortGamename = xboxCreateShortcutUseShortGamename.text.upper() == 'TRUE'
-									
 			romCollections[id] = romCollection
 			
 		return romCollections, ''
 		
-			
-	def readScraper(self, siteName, platform, inReplaceKeyString, inReplaceValueString, tree):
 		
-		#elementtree version 1.2.7 does not support xpath like this: Scrapers/Site[@name="%s"] 
-		siteRow = None
+	def readScrapers(self, tree):
+		
+		sites = {}
+				
 		siteRows = tree.findall('Scrapers/Site')
-		for element in siteRows:
-			if(element.attrib.get('name') == siteName):
-				siteRow = element
-				break
+		for siteRow in siteRows:
+			site, errorMsg = self.readScraper(siteRow, '', '', '', False, tree)
+			if(site == None):
+				return None, errorMsg
+			
+			name = siteRow.attrib.get('name')
+			sites[name] = site
+
+		return sites, ''
 		
-		if(siteRow == None):
-			Logutil.log('Configuration error. Site %s does not exist in config.xml' %siteName, util.LOG_LEVEL_ERROR)
-			return None, 'Configuration error. See xbmc.log for details'
+			
+	def readScraper(self, siteRow, platform, inReplaceKeyString, inReplaceValueString, replaceValues, tree):
 		
 		site = Site()
-		site.name = siteName
+		site.name = siteRow.attrib.get('name')
+		Logutil.log('Scraper Site: ' +str(site.name), util.LOG_LEVEL_INFO)
 		site.platformId = platform
+		Logutil.log('Site platform: ' +platform, util.LOG_LEVEL_INFO)
+		
+		descFilePerGame = siteRow.attrib.get('descFilePerGame')
+		if(descFilePerGame != None and descFilePerGame != ''):
+			site.descFilePerGame = descFilePerGame.upper() == 'TRUE'
+			Logutil.log('Scraper descFilePerGame: ' +str(site.descFilePerGame), util.LOG_LEVEL_INFO)
+		
+		searchGameByCRC = siteRow.attrib.get('searchGameByCRC')
+		if(searchGameByCRC != None and searchGameByCRC != ''):
+			site.searchGameByCRC = searchGameByCRC.upper() == 'TRUE'
+			
+		searchGameByCRCIgnoreRomName = siteRow.attrib.get('searchGameByCRCIgnoreRomName')
+		if(searchGameByCRCIgnoreRomName != None and searchGameByCRCIgnoreRomName != ''):
+			site.searchGameByCRCIgnoreRomName = searchGameByCRCIgnoreRomName.upper() == 'TRUE'
+			
+		useFoldernameAsCRC = siteRow.attrib.get('useFoldernameAsCRC')
+		if(useFoldernameAsCRC != None and useFoldernameAsCRC != ''):
+			site.useFoldernameAsCRC = useFoldernameAsCRC.upper() == 'TRUE'
+			
+		useFilenameAsCRC = siteRow.attrib.get('useFilenameAsCRC')
+		if(useFilenameAsCRC != None and useFilenameAsCRC != ''):
+			site.useFilenameAsCRC = useFilenameAsCRC.upper() == 'TRUE'
 		
 		scrapers = []
 		
@@ -415,8 +444,10 @@ class Config:
 				scraper.parseInstruction = parseInstruction
 				
 			source = scraperRow.attrib.get('source')
-			if(source != None and source != ''):				
-				scraper.source = source.replace('%PLATFORM%', platform)
+			if(source != None and source != ''):
+				if(replaceValues):
+					source = source.replace('%PLATFORM%', platform)				
+				scraper.source = source
 			
 			encoding = scraperRow.attrib.get('encoding')
 			if(encoding != None and encoding != 'utf-8'):
@@ -426,13 +457,8 @@ class Config:
 			if(returnUrl != None and returnUrl != ''):
 				scraper.returnUrl = returnUrl.upper() == 'TRUE'
 				
-			replaceKeyString = scraperRow.attrib.get('replaceKeyString')
-			if(replaceKeyString != None and replaceKeyString != ''):
-				scraper.replaceKeyString = replaceKeyString.replace('%REPLACEKEYS%', inReplaceKeyString)
-				
-			replaceValueString = scraperRow.attrib.get('replaceValueString')
-			if(replaceValueString != None and replaceValueString != ''):
-				scraper.replaceValueString = replaceValueString.replace('%REPLACEVALUES%', inReplaceValueString)
+			scraper.replaceKeyString = inReplaceKeyString
+			scraper.replaceValueString = inReplaceValueString
 			
 			scrapers.append(scraper)
 			
@@ -552,4 +578,14 @@ class Config:
 					fileTypeIds.append(fileType.id)
 
 		return fileTypeIds
+	
+	
+	def readTextElement(self, parent, elementName):
+		element = parent.find(elementName)
+		if(element != None and element.text != None):
+			Logutil.log('%s: %s' %(elementName, element.text), util.LOG_LEVEL_INFO)
+			return element.text
+		else:
+			return ''
+	
 			

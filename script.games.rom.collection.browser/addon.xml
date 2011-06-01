@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="script.games.rom.collection.browser"
-  version="0.8.4"
+  version="0.8.7"
   name="Rom Collection Browser"
   provider-name="carabalb, jimyx17, malte">
   <requires>
@@ -12,40 +12,34 @@
   <extension point="xbmc.addon.metadata">
     <summary>Browse and launch roms and standalones</summary>
     <summary  lang="hu">Konzol játék ROM-ok böngészése</summary>
-    <description>Current features:
-    * scan your rom folders and import games to local database
-    * scrape artwork and meta data from various online sources
-    * import local available descriptions, artwork and videos
-    * browse games by console, genre, year and publisher
-    * launch roms and standalone games in solo or non-solo mode
-    * automatic video playback in video window
-    * fullscreen video browser
-    * game details page
-    * configurable description file parser
-
-Update from previous versions:
-    * older versions (0.6.1 and higher) will be updated automatically
-
-First use:
-    * in config wizard select platform, emulator command, path to roms and artwork
-    * online scraping scenario:
-    --> RCB will scrape game info and artwork from online sources
-    * data available locally:
-    --> tell RCB where to find artwork and game descriptions
-
-Note: if you choose online scraping scenario, RCB will try to create following sub folders below your artwork path: boxfront, boxback, cartridge, screenshot, fanart. Make sure that the user that runs xbmc has write access to this path.
+    <description>Import games:
+  * scan your rom folders and import games to local database
+  * scrape artwork and meta data from various online sources
+  * import local available descriptions, artwork and videos
+  * mix results from all scrapers
+  * supports background scraping at XBMC startup
+  * three scraping modes: accurate, guess matches, select matches
+  * configurable description file parser
+Browse games:
+  * browse games by console, genre, year and publisher
+  * automatic video playback in video window
+  * fullscreen video browser
+  * game details page
+  * dedicated MAME views to display cabinets and marquees
+Launch games:
+  * launch roms and standalone games in solo or non-solo mode
+  * detect games in zip and 7z archives and ask user which game to load
+  * direct launching of savestate files
 </description>
 
     <description lang="hu">Jelenlegi funkciók:
-    * játékok szűrése konzoltípus, műfaj, év és kiadó alapján
-    * rom-ok indítása külső emulátorral
-    * a program beállítása egy xml fájl segítségével
-    * egyszerű de testreszabható leírófájl-feldolgozó
-    * játékonként különböző képek és videók megjelenítése
-    * játéktartalom és kiegészítő információk megjelenítése
-    
-A program működéséhez előzetes beállítások szükségesek. Kérlek olvasd el a mellékelt config.xml fájlt vagy látogass el a http://code.google.com/p/romcollectionbrowser webhelyre a teljes dokumentációhoz.</description>
-
+  * játékok szűrése konzoltípus, műfaj, év és kiadó alapján
+  * rom-ok indítása külső emulátorral
+  * a program beállítása egy xml fájl segítségével
+  * egyszerű de testreszabható leírófájl-feldolgozó
+  * játékonként különböző képek és videók megjelenítése
+  * játéktartalom és kiegészítő információk megjelenítése
+</description>
         <license>GPL 2.0</license>
         <platform>all</platform>        
   </extension>

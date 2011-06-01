@@ -10,7 +10,7 @@ import time
 
 SCRIPTNAME = 'Rom Collection Browser'
 SCRIPTID = 'script.games.rom.collection.browser'
-CURRENT_SCRIPT_VERSION = "0.8.2"
+CURRENT_CONFIG_VERSION = "0.8.6"
 CURRENT_DB_VERSION = "0.7.4"
 ISTESTRUN = False
 
@@ -44,7 +44,6 @@ SETTING_RCB_CACHINGOPTION = 'rcb_cachingOption'
 SETTING_RCB_MEMDB = 'rcb_memDB'
 SETTING_RCB_FUZZYFACTOR = 'rcb_fuzzyFactor'
 SETTING_RCB_LOGLEVEL = 'rcb_logLevel'
-SETTING_RCB_USEEMUSOLO = 'rcb_useEmulatorSolo'
 SETTING_RCB_ESCAPECOMMAND = 'rcb_escapeEmulatorCommand'
 SETTING_RCB_CREATENFOFILE = 'rcb_createNfoWhileScraping'
 SETTING_RCB_ENABLEFULLREIMPORT = 'rcb_enableFullReimport'
@@ -88,6 +87,7 @@ RCBSETTING_lastSelectedCharacterIndex = 11
 
 
 GAME_description = 2
+GAME_gameCmd = 3
 GAME_romCollectionId = 5
 GAME_publisherId = 6
 GAME_developerId = 7
@@ -215,11 +215,9 @@ def getAddonDataPath():
     if(hasAddons()):        
         import xbmc
         path = xbmc.translatePath('special://profile/addon_data/%s' %(SCRIPTID))
-        #path = xbmc.translatePath('special://profile/addon_data/%s-%s' %(SCRIPTID, CURRENT_SCRIPT_VERSION))
     else:        
         import xbmc
         path = xbmc.translatePath('special://profile/script_data/%s' %(SCRIPTID))
-        #path = xbmc.translatePath('special://profile/script_data/%s-%s' %(SCRIPTID, CURRENT_SCRIPT_VERSION))
         
     if not os.path.exists(path):
         try:

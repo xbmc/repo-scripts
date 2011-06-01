@@ -4,7 +4,6 @@ import os, sys, shutil
 from pysqlite2 import dbapi2 as sqlite
 
 import util
-from configxmlupdater import *
 
 
 class GameDataBase:	
@@ -30,6 +29,8 @@ class GameDataBase:
 		print "close Connection"
 		self.connection.close()
 	
+	def compact(self):
+		self.cursor.execute("VACUUM")
 	def toMem(self):
 		try:
 			memDB = sqlite.connect(':memory:', check_same_thread = False)
@@ -104,10 +105,7 @@ class GameDataBase:
 			alterTableScript = str(os.path.join(self.sqlDir, alterTableScript))
 			
 			if os.path.isfile(alterTableScript):
-								
-				returnCode, message = ConfigxmlUpdater().createConfig(self, dbVersion)
-								
-				#backup MyGames.db							
+				#backup MyGames.db				
 				newFileName = self.dataBasePath +'.backup ' +dbVersion 
 				
 				if os.path.isfile(newFileName):					
@@ -145,7 +143,7 @@ class DataBaseObject:
 	def update(self, columns, args, id):
 		
 		if(len(columns) != len(args)):
-			#TODO raise Exception?			
+			util.Logutil.log("len columns != len args in gdb.update()", util.LOG_LEVEL_WARNING)			
 			return
 			
 		updateString = "Update %s SET " %self.tableName
@@ -243,6 +241,7 @@ class Game(DataBaseObject):
 	filterByNameAndRomCollectionId = "SELECT * FROM Game WHERE name = ? and romCollectionId = ?"
 	
 	deleteQuery = "DELETE FROM Game WHERE id = ?"
+	
 	def __init__(self, gdb):		
 		self.gdb = gdb
 		self.tableName = "Game"
@@ -257,7 +256,7 @@ class Game(DataBaseObject):
 	def getGameByNameAndRomCollectionId(self, name, romCollectionId):
 		game = self.getObjectByQuery(self.filterByNameAndRomCollectionId, (name, romCollectionId))
 		return game
-
+		
 	def delete(self, gameId):
 		self.deleteObjectByQuery(self.deleteQuery, (gameId,))
 

@@ -1,7 +1,8 @@
 <settings>
 	<category label="General">
 		<setting id="rcb_logLevel" label="Log level" type="labelenum" values="ERROR|WARNING|INFO|DEBUG" default="INFO"/>
-		<setting id="rcb_cachingOption" label="Caching option" type="labelenum" values="CACHEALL|CACHESELECTION|CACHEITEM|CACHEITEMANDNEXT" default="CACHEITEMANDNEXT"/>
+		<setting id="rcb_cachingOption" label="Caching option" type="labelenum" values="CACHEALL|CACHEITEM|CACHEITEMANDNEXT" default="CACHEITEMANDNEXT"/>
+		<!--<setting id="rcb_memDB" label="Load the DB into memory" value="false" type="bool" default="false"/>-->
 		<setting id="rcb_saveViewStateOnExit" label="Save viewstate on exit" type="bool" default="true"/>
 		<setting id="rcb_saveViewStateOnLaunchEmu" label="Save viewstate on launch emu" type="bool" default="true"/>
 	</category>
@@ -27,7 +28,6 @@
 	</category>
 	
 	<category label="Launch Games">
-		<setting id="rcb_useEmulatorSolo" label="Use emulator solo" value="false" type="bool" default="false"/>
 		<setting id="rcb_escapeEmulatorCommand" label="Escape emulator cmd" value="false" type="bool" default="false"/>
 	</category>
 	
