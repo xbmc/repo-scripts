@@ -1,3 +1,14 @@
+1.5.0
+  Added: New Scraper: 'The Atlantic: In Focus'
+  Removed: Scraper 'Boston.com: The Big Shot' - outdated
+  Added: Function and Setting for changing the aspect-ratio of the Pictures
+  Improved: Caching of HTML-Pages (much faster now)
+  Improved: Rewrote the multi-scraper-logic
+  Fixed: The Big Pictures Facebook-comment-change Announcement broke scraper
+  Fixed: The Big Pictures remove Hash at the end of the Description
+  Changed: The usage help is now replaced by a settings "help"-section
+  Cosmetic: more pep8 conformity
+  
 1.4.2
   Fixed: Error with external Python and os.makedirs(cachedir) with cachedir = "special://..."
   Fixed TheSacramentoBee wasn't able to get Photos

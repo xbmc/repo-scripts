@@ -1,5 +1,4 @@
 <window type="window" id="14000">
-    <defaultcontrol>100</defaultcontrol>
     <allowoverlay>no</allowoverlay>
     <controls>
         <control type="group">
@@ -20,14 +19,14 @@
                 <texture>loader.gif</texture>
             </control>
             <control type="label" id="102">
-                <description>"Image Loading may take a while"</description>
+                <description>"Loading may take a while"</description>
                 <posx>20</posx>
                 <posy>60</posy>
                 <width>1200</width>
                 <height>60</height>
                 <align>left</align>
                 <aligny>top</aligny>
-                <label>32001</label>
+                <label>$LOCALIZE[SCRIPT32001]</label>
                 <textcolor>FFAAAAAA</textcolor>
                 <font>font13</font>
             </control>
@@ -42,7 +41,7 @@
                 <preloaditems>10</preloaditems>
                 <itemlayout width="1280" height="720">
                     <control type="largeimage">
-                        <description>The Picture</description>
+                        <description>The Picture in ratio scale</description>
                         <posx>0</posx>
                         <posy>0</posy>
                         <width>1280</width>
@@ -50,6 +49,18 @@
                         <fadetime>200</fadetime>
                         <texture background="true">$INFO[ListItem.Icon]</texture>
                         <aspectratio>scale</aspectratio>
+                        <visible>StringCompare(ListItem.Property(aspectratio),scale)</visible>
+                    </control>
+                    <control type="largeimage">
+                        <description>The Picture in ratio keep</description>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>1280</width>
+                        <height>720</height>
+                        <fadetime>200</fadetime>
+                        <texture background="true">$INFO[ListItem.Icon]</texture>
+                        <aspectratio>keep</aspectratio>
+                        <visible>StringCompare(ListItem.Property(aspectratio),keep)</visible>
                     </control>
                     <control type="label">
                         <description>Label for the Source title</description>
@@ -61,7 +72,7 @@
                         <aligny>center</aligny>
                         <label>$INFO[ListItem.Property(Album)]</label>
                         <textcolor>FFDDDDDD</textcolor>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(show_info)]</visible>
                         <font>font13</font>
                     </control>
                     <control type="label">
@@ -74,7 +85,7 @@
                         <aligny>center</aligny>
                         <label>$INFO[ListItem.Label]</label>
                         <textcolor>FFDDDDDD</textcolor>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(show_info)]</visible>
                         <font>font13</font>
                     </control>
                     <control type="label">
@@ -87,13 +98,13 @@
                         <aligny>center</aligny>
                         <label>($INFO[ListItem.Property(duration)])</label>
                         <textcolor>FFDDDDDD</textcolor>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(show_info)]</visible>
                         <font>font13</font>
                     </control>
                 </itemlayout>
                 <focusedlayout width="1280" height="720">
                     <control type="largeimage">
-                        <description>The Picture</description>
+                        <description>The Picture in ratio scale</description>
                         <posx>0</posx>
                         <posy>0</posy>
                         <width>1280</width>
@@ -101,6 +112,18 @@
                         <fadetime>200</fadetime>
                         <texture background="true">$INFO[ListItem.Icon]</texture>
                         <aspectratio>scale</aspectratio>
+                        <visible>StringCompare(ListItem.Property(aspectratio),scale)</visible>
+                    </control>
+                    <control type="largeimage">
+                        <description>The Picture in ratio keep</description>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>1280</width>
+                        <height>720</height>
+                        <fadetime>200</fadetime>
+                        <texture background="true">$INFO[ListItem.Icon]</texture>
+                        <aspectratio>keep</aspectratio>
+                        <visible>StringCompare(ListItem.Property(aspectratio),keep)</visible>
                     </control>
                     <control type="image">
                         <description>Background for the Headline</description>
@@ -110,7 +133,7 @@
                         <height>64</height>
                         <texture border="0,0,20,0">HeaderBack.png</texture>
                         <colordiffuse>AAFFFFFF</colordiffuse>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(show_info)]</visible>
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="label">
@@ -123,7 +146,7 @@
                         <aligny>center</aligny>
                         <label>$INFO[ListItem.Property(Album)]</label>
                         <textcolor>FFDDDDDD</textcolor>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(show_info)]</visible>
                         <font>font13</font>
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
@@ -137,7 +160,7 @@
                         <aligny>center</aligny>
                         <label>$INFO[ListItem.Label]</label>
                         <textcolor>FFDDDDDD</textcolor>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(show_info)]</visible>
                         <font>font13</font>
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
@@ -151,7 +174,7 @@
                         <aligny>center</aligny>
                         <label>($INFO[ListItem.Property(duration)])</label>
                         <textcolor>FFDDDDDD</textcolor>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(show_info)]</visible>
                         <font>font13</font>
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
@@ -166,7 +189,7 @@
                         <width>80</width>
                         <height>80</height>
                         <texture>left.png</texture>
-                        <visible>$INFO[ListItem.Property(showInfo)] + Container(100).HasPrevious</visible>
+                        <visible>$INFO[ListItem.Property(show_info)] + Container(100).HasPrevious</visible>
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="image">
@@ -180,7 +203,7 @@
                         <width>80</width>
                         <height>80</height>
                         <texture>right.png</texture>
-                        <visible>$INFO[ListItem.Property(showInfo)] + Container(100).HasNext</visible>
+                        <visible>$INFO[ListItem.Property(show_info)] + Container(100).HasNext</visible>
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="image">
@@ -193,7 +216,7 @@
                         <width>1280</width>
                         <height>270</height>
                         <texture>DescriptionBack.png</texture>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(show_info)]</visible>
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="textbox">
@@ -212,32 +235,10 @@
                         <wrapmultiline>true</wrapmultiline>
                         <label>$INFO[ListItem.Label2]</label>
                         <textcolor>white</textcolor>
-                        <visible>$INFO[ListItem.Property(showInfo)]</visible>
+                        <visible>$INFO[ListItem.Property(show_info)]</visible>
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                 </focusedlayout>
-            </control>
-            <control type="image" id="104">
-                <description>Background for Usage Instructions</description>
-                <posx>450</posx>
-                <posy>232</posy>
-                <width>380</width>
-                <height>150</height>
-                <texture border="20">UsageBack.png</texture>
-                <colordiffuse>CCFFFFFF</colordiffuse>
-                <visible>true</visible>
-            </control>
-            <control type="textbox" id="103">
-                <description>Usage Instructions</description>
-                <posx>490</posx>
-                <posy>260</posy>
-                <width>300</width>
-                <height>100</height>
-                <align>center</align>
-                <aligny>top</aligny>
-                <textcolor>FFFFFFFF</textcolor>
-                <font>font13</font>
-                <visible>true</visible>
             </control>
         </control>
     </controls>

@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-  <!--LOADING-->
-  <string id="32001">Das Laden kann einige Zeit dauern...</string>
-  <!--DOWNLOAD-->
-  <string id="32020">Herunterladen</string>
-  <string id="32021">Album</string>
-  <string id="32022">Bild</string>
-  <!--Downloading [picturename] to [path].-->
-  <string id="32023">Lade</string>
-  <string id="32024">nach</string>
-  <string id="32025">von</string>
-  <!--Picture Mode -->
-  <string id="32030">Links + Rechts = Bild wechseln</string>
-  <string id="32031">Info = OSD an/aus</string>
-  <string id="32032">Kontext = Bilder herunterladen</string>
-  <!--Album Mode -->
-  <string id="32040">Links + Rechts = Album wechseln</string>
-  <string id="32041">Hoch + Runter = Quelle wechseln</string>
-  <string id="32042">Select = Album öffnen</string>
+    <!--LOADING-->
+    <string id="32001">Das Laden kann einige Zeit dauern...</string>
+    <!--DOWNLOAD-->
+    <string id="32020">Herunterladen</string>
+    <string id="32021">Album</string>
+    <string id="32022">Bild</string>
+    <!--Downloading [picturename] to [path].-->
+    <string id="32023">Lade</string>
+    <string id="32024">nach</string>
+    <string id="32025">von</string>
+    <!--Help-->
+    <string id="32040">Left + Right = Switch Album</string>
+    <string id="32041">Up + Down = Switch Source</string>
+    <string id="32042">Select = Enter Album</string>
+    <string id="32031">Info = Toggle Onscreen Info</string>
+    <string id="32032">Context = Download Photos</string>
+    <!-- Settings -->
+    <string id="32050">Seitenverhältnis (Wechsel mit 0-Taste)</string>
+    <string id="32051">scale</string>
+    <string id="32052">keep</string>
+    <!-- Settings Categories-->
+    <string id="32060">Hilfe</string>
+    <string id="32061">Einstellungen</string>  
 </strings>
