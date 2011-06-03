@@ -1,0 +1,62 @@
+2.0.0
+  Eden release
+
+1.5.0
+  Added: New Scraper: 'The Atlantic: In Focus'
+  Removed: Scraper 'Boston.com: The Big Shot' - outdated
+  Added: Function and Setting for changing the aspect-ratio of the Pictures
+  Improved: Caching of HTML-Pages (much faster now)
+  Improved: Rewrote the multi-scraper-logic
+  Fixed: The Big Pictures Facebook-comment-change Announcement broke scraper
+  Fixed: The Big Pictures remove Hash at the end of the Description
+  Changed: The usage help is now replaced by a settings "help"-section
+  Cosmetic: more pep8 conformity
+  
+1.4.2
+  Fixed: Error with external Python and os.makedirs(cachedir) with cachedir = "special://..."
+  Fixed TheSacramentoBee wasn't able to get Photos
+  Fixed WallStreetJournal wasn't able to get Photos
+
+1.4.1
+  Fixed: boston.com now needs a referer for the photosets
+  Improved: Better class Inheritance
+  Cosmetic: pep8 (except line length)
+  Improved: The german, english and french usage instructions (and shorten them)
+  Fixed: The Help now appears only on the first album or photoset
+
+1.4.0
+  Changed: Skin has a new Look - thanks to Jezz_X
+  Changed: Skin is now animated
+  Changed: Dedicated Usage-Help-Box (hides if any key is pressed)
+  Added: French Translation
+  Changed: Split Sourcename, Albumtitle and Picturetitle for different use in 3rd party Skins
+  Improved: The toggle "showInfo" stays now in its last state
+  Improved: Respect pep8 styleguide (except line length...)
+  Improved: Skin XML-File is now clean
+
+1.3.2
+  Changed: Don't use 'os.getcwd()'
+  Improved: author, name, id, version only at one place
+  Improved: Make it possible for skins to override the scripts skin (thanks to Jeroen)
+
+1.3.1
+  Fixed: Crash/Hang when using Alaska/Rapier-Skin
+
+1.3.0
+  Added: The possibility to get albums/images from more than one website (switch source)
+  Added: New Scraper 'Wallstreetjournal: The Photo Journal'
+  Added: New Scraper 'Boston.com: The Big Shot'
+  Added: New Scraper 'Sacramento Bee: The Frame'
+  Changed: The Layout and content of the help texts
+  Fixed: TBP-Scraper: Remove the image-number within the description text
+  Fixed: TBP-Scraper: removed #-sign at the end of the picture  
+  Improved: Changes to the icon.png (more padding)
+
+1.2.0
+  Ported to be dharma compatible by sphere (with permission of rwparris2)
+  Added: German Translation
+  Changed: Addon ported from plugin which called script to native script
+  Added: New icon.png
+  
+1.1.2
+  Released as plugin for camelot by rwparris2

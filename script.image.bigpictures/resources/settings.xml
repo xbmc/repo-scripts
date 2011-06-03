@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32060">
+        <setting type="lsep" label="" />
+        <setting type="lsep" label="32040" />
+        <setting type="lsep" label="32041" />
+        <setting type="lsep" label="32042" />
+        <setting type="lsep" label="32031" />
+        <setting type="lsep" label="32032" />        
+    </category>
+    <category label="32061">
+        <setting id="aspect_ratio" type="enum" label="32050" default="0" lvalues="32051|32052"/>
+    </category>
+</settings>

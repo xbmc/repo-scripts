@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!--LOADING-->
+    <string id="32001">Image loading may take a while...</string>
+    <!--DOWNLOAD-->
+    <string id="32020">Download</string>
+    <string id="32021">Album</string>
+    <string id="32022">Picture</string>
+    <!--Downloading [picturename] to [path].-->
+    <string id="32023">Downloading</string>
+    <string id="32024">to</string>
+    <string id="32025">of</string>
+    <!--Help-->
+    <string id="32040">Left + Right = Switch Album</string>
+    <string id="32041">Up + Down = Switch Source</string>
+    <string id="32042">Select = Enter Album</string>
+    <string id="32031">Info = Toggle Onscreen Info</string>
+    <string id="32032">Context = Download Photos</string>
+    <!-- Settings -->
+    <string id="32050">Aspect-Ratio (Toggle with 0-Key)</string>
+    <string id="32051">scale</string>
+    <string id="32052">keep</string>
+    <!-- Settings Categories-->
+    <string id="32060">Help</string>
+    <string id="32061">Settings</string>
+</strings>
