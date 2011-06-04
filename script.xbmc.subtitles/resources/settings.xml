@@ -45,7 +45,7 @@
       <setting id="Sratim" type="bool" label="Sratim.co.il" default="false"/>
       <setting id="LegendasZone" type="bool" label="Legendas-Zone.org" default="false"/>
       <setting id="LZuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30138" default=""/>
-      <setting id="LZpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30139" default=""/>    </category>
+      <setting id="LZpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30139" default=""/>
     </category>
     <category label="30106">
       <setting id="defmovieservice" type="fileenum" mask="/" label="30113" default="OpenSubtitles" values="/resources/lib/services" />
