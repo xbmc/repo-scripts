@@ -1,0 +1,14 @@
+<parserConfig>
+	<GameGrammar type="xml" root="results">
+		<Game>name</Game>
+		<SearchKey>name</SearchKey>
+		<ReleaseYear>expected_release_year</ReleaseYear>
+		<Url>site_detail_url</Url>
+		<Description>description</Description>		
+		<Genre>genres/genre/name</Genre>
+		<Developer>developers/company/name</Developer>
+		<Publisher>publishers/company/name</Publisher>
+		<!--<Filetypeboxfront>image/super_url</Filetypeboxfront>-->
+		<Filetypescreenshot>images/image/super_url</Filetypescreenshot>
+	</GameGrammar>
+</parserConfig>
