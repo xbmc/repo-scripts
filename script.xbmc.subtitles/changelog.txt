@@ -1,3 +1,7 @@
+2.5.1
+- added: extra regex for "sXXepXX"
+- added: New Service Legendas-Zone.org, thx HiGhLaNdR
+
 2.5.0
 - fixed: non-Hebrew subtitles in Subscenter, thanks Ori Varon
 - added: Sratim version 2.0 added, thanks Ori Varon
