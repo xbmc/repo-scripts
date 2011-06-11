@@ -22,12 +22,13 @@ import mythbox.msg as m
 
 from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.conn import inject_conn
-from mythbox.mythtv.domain import StatusException
+from mythbox.mythtv.domain import StatusException, Job
 from mythbox.mythtv.enums import JobType, JobStatus
 from mythbox.ui.player import MountedPlayer, StreamingPlayer, NoOpCommercialSkipper, TrackingCommercialSkipper
 from mythbox.ui.schedules import ScheduleDialog
 from mythbox.ui.toolkit import Action, BaseWindow, window_busy
 from mythbox.util import safe_str, catchall, catchall_ui, run_async, coalesce, to_kwargs
+from mythbox.ui import toolkit
 
 log = logging.getLogger('mythbox.ui')
 
@@ -36,14 +37,15 @@ class RecordingDetailsWindow(BaseWindow):
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
         [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings', 'translator', 'platform', 'fanArt', 'cachesByName', 'programIterator',)]
-        [setattr(self,k,v) for k,v in self.cachesByName.iteritems() if k in ('mythChannelIconCache', 'mythThumbnailCache',)]
+        [setattr(self,k,v) for k,v in self.cachesByName.iteritems() if k in ('mythChannelIconCache', 'mythThumbnailCache', 'domainCache')]
         
         self.t = self.translator.get
         self.program = self.programIterator.current() 
         self.isDeleted = False
         self.initialized = False
         self.streaming = self.settings.getBoolean('streaming_enabled')
-            
+        self.channels = None
+        
     @catchall_ui
     def onInit(self):
         if not self.initialized:
@@ -58,6 +60,7 @@ class RecordingDetailsWindow(BaseWindow):
             self.firstInQueueButton = self.getControl(254)
             self.refreshButton = self.getControl(255)
             self.editScheduleButton = self.getControl(256)
+            self.advancedButton = self.getControl(257)
             
             self.dispatcher = {
                 self.playButton.getId()        : self.play,
@@ -66,10 +69,41 @@ class RecordingDetailsWindow(BaseWindow):
                 self.rerecordButton.getId()    : self.rerecord,
                 self.firstInQueueButton.getId(): self.moveToFrontOfJobQueue,
                 self.refreshButton.getId()     : self.refresh,
-                self.editScheduleButton.getId(): self.editSchedule
+                self.editScheduleButton.getId(): self.editSchedule, #,
+                301:self.doCommFlag,
+                302:self.doTranscode,
+                303:self.doUserJob1,
+                304:self.doUserJob2,
+                305:self.doUserJob3,
+                306:self.doUserJob4
             }
             self.render()
         
+    def doCommFlag(self):
+        self.queueJob(JobType.COMMFLAG)
+    
+    def doTranscode(self):
+        self.queueJob(JobType.TRANSCODE)
+    
+    def doUserJob1(self):
+        self.queueJob(JobType.USERJOB & JobType.USERJOB1)
+    
+    def doUserJob2(self):
+        self.queueJob(JobType.USERJOB & JobType.USERJOB2)
+    
+    def doUserJob3(self):
+        self.queueJob(JobType.USERJOB & JobType.USERJOB3)
+    
+    def doUserJob4(self):
+        self.queueJob(JobType.USERJOB & JobType.USERJOB4)
+
+    @inject_db
+    def queueJob(self, jobType):
+        job = Job.fromProgram(self.program, jobType)
+        self.db().addJob(job)
+        numJobs = len(self.db().getJobs(jobStatus=JobStatus.QUEUED))
+        toolkit.showPopup('Job Queue', 'Queued as job %d of %d ' % (numJobs,numJobs), 5000)
+               
     @inject_db    
     def autoexpire(self):
         self.db().setRecordedAutoexpire(
@@ -193,11 +227,18 @@ class RecordingDetailsWindow(BaseWindow):
         self.program = self.programIterator.previous()
         self.render()
                 
-    @catchall_ui 
+    def isAdvancedBladeActive(self):
+        buttonIds = [self.firstInQueueButton.getId(),300,301,302,303,304,305,306]
+        return self.getFocusId() in buttonIds
+
+    @catchall_ui
     def onAction(self, action):
         id = action.getId()
         if id in (Action.PREVIOUS_MENU, Action.PARENT_DIR):
-            self.close()
+            if self.isAdvancedBladeActive():
+                self.setFocus(self.advancedButton)
+            else:
+                self.close()
         elif id == Action.PAGE_UP:
             self.previousRecording()
         elif id == Action.PAGE_DOWN:
@@ -231,8 +272,9 @@ class RecordingDetailsWindow(BaseWindow):
     @window_busy
     def render(self):
         self.renderDetail()
-        self.renderThumbnail()
         self.renderChannel()
+        self.renderThumbnail()
+        self.renderUserJobs()
         self.renderCommBreaks()       # async
         self.renderSeasonAndEpisode(self.program) # async
     
@@ -253,9 +295,13 @@ class RecordingDetailsWindow(BaseWindow):
     @catchall        
     @inject_db
     def renderChannel(self):
-        channels = filter(lambda c: c.getChannelId() == self.program.getChannelId(), self.db().getChannels())
-        if channels:
-            icon = self.mythChannelIconCache.get(channels.pop())
+        if not self.channels:
+            self.channels = {}
+            for c in self.domainCache.getChannels():
+                self.channels[c.getChannelId()] = c
+            
+        if self.program.getChannelId() in self.channels:
+            icon = self.mythChannelIconCache.get(self.channels[self.program.getChannelId()])
             if icon:
                 self.setWindowProperty('channelIcon', icon)
 
@@ -319,3 +365,21 @@ class RecordingDetailsWindow(BaseWindow):
             else:
                 log.debug('Program changed since spawning...recursing...')
                 self.renderSeasonAndEpisode(self.program)
+                
+    @inject_db
+    def renderUserJobs(self):
+        jobs = {
+            'UserJob1': {'control':303, 'descColumn':'UserJobDesc1'}, 
+            'UserJob2': {'control':304, 'descColumn':'UserJobDesc2'},
+            'UserJob3': {'control':305, 'descColumn':'UserJobDesc3'}, 
+            'UserJob4': {'control':306, 'descColumn':'UserJobDesc4'}
+        }
+        
+        for jobName in jobs.keys():
+            jobCommand = self.db().getMythSetting(jobName)
+            jobButton = self.getControl(jobs[jobName]['control'])
+            if jobCommand is None or len(jobCommand) == 0:
+                jobButton.setVisible(False)
+            else:
+                jobButton.setLabel(self.db().getMythSetting(jobs[jobName]['descColumn']))    
+                

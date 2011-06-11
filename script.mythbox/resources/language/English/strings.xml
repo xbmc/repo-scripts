@@ -411,7 +411,6 @@ To submit translations for your native language
   <string id="415">Confirm on Delete</string>
   <string id="416">Location of MythTV recordings on the local filesystem (mounted storage group dirs if your backend is remote).</string>
   <string id="417">Multiple directories can be separated with a colon on Linux/Mac or a semi-colon on Windows.</string>
-  <string id="418">FFMpeg comes bundled with MythBox for Mac and Windows.  Linux users must 'apt-get install ffmpeg'</string>
   <string id="419">Enable aggressive caching</string>
   <string id="427">Aggressively caches data at the expense of higher load on your backend and increased bandwidth usage.</string>
   <string id="428">Do NOT enable if you are connected to your MythTV backend over a wireless link.</string>

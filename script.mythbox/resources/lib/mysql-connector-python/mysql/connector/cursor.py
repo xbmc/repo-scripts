@@ -24,14 +24,19 @@
 """Cursor classes
 """
 
+import sys
 from collections import deque
 import weakref
+import re
 
 import constants
-import connection
 import protocol
 import errors
 import utils
+
+RE_SQL_COMMENT = re.compile("\/\*.*\*\/")
+RE_SQL_INSERT_VALUES = re.compile(r'\sVALUES\s*(\(.*\))', re.I)
+RE_SQL_INSERT_STMT = re.compile(r'INSERT\s+INTO', re.I)
 
 class CursorBase(object):
     """
@@ -313,8 +318,8 @@ class MySQLCursor(CursorBase):
         except errors.Error:
             raise
         except StandardError, e:
-            raise errors.InterfaceError(
-                "Failed executing the operation; %s" % e)
+            raise errors.InterfaceError, errors.InterfaceError(
+              "Failed executing the operation; %s" % e), sys.exc_info()[2]
         else:
             self._executed = stmt
             return self.rowcount
@@ -322,28 +327,42 @@ class MySQLCursor(CursorBase):
         return 0
     
     def executemany(self, operation, seq_params):
-        """Loops over seq_params and calls excute()"""
+        """Loops over seq_params and calls execute()
+        
+        INSERT statements are optimized by batching the data, that is
+        using the MySQL multiple rows syntax.
+        """
         if not operation:
             return 0
         if self.db().unread_result is True:
             raise errors.InternalError("Unread result found.")
         
-        rowcnt = 0
-        try:
+        # Optimize INSERTs by batching them
+        if re.match(RE_SQL_INSERT_STMT,operation):
+            opnocom = re.sub(RE_SQL_COMMENT,'',operation)
+            m = re.search(RE_SQL_INSERT_VALUES,opnocom)
+            fmt = m.group(1)
+            values = []
             for params in seq_params:
-                self.execute(operation, params)
-                if self._have_result:
-                    self.fetchall()
-                rowcnt += self.rowcount
-        except (ValueError,TypeError), e:
-            raise errors.InterfaceError(
-                "Failed executing the operation; %s" % e)
-        except:
-            # Raise whatever execute() raises
-            raise
-        
-        self.rowcount = rowcnt
-        return rowcnt
+                values.append(fmt % self._process_params(params))
+            operation = operation.replace(m.group(1),','.join(values),1)
+            self.execute(operation)
+        else:
+            rowcnt = 0
+            try:
+                for params in seq_params:
+                    self.execute(operation, params)
+                    if self._have_result:
+                        self.fetchall()
+                    rowcnt += self.rowcount
+            except (ValueError,TypeError), e:
+                raise errors.InterfaceError(
+                    "Failed executing the operation; %s" % e)
+            except:
+                # Raise whatever execute() raises
+                raise
+            self.rowcount = rowcnt
+        return self.rowcount
     
     def _set_more_results(self, flags):
         flag = constants.ServerFlag.MORE_RESULTS_EXISTS
@@ -360,7 +379,7 @@ class MySQLCursor(CursorBase):
         using callproc(), use next_proc_resultset() instead.
         """
         if self._more_results is True:
-            buf = self.db().protocol._recv_packet()
+            buf = self.db().protocol.conn.recv()
             res = self.db().protocol.handle_cmd_result(buf)
             self._reset_result()
             self._handle_result(res)
@@ -427,7 +446,7 @@ class MySQLCursor(CursorBase):
                 tmp.description = res[1]
                 tmp._handle_resultset()
                 self._results.append(tmp)
-                buf = self.db().protocol._recv_packet()
+                buf = self.db().protocol.conn.recv()
                 res = self.db().protocol.handle_cmd_result(buf)
             try:
                 select = "SELECT %s" % ','.join(argnames)
@@ -531,12 +550,16 @@ class MySQLCursor(CursorBase):
         if self._have_result is False:
             raise errors.InterfaceError("No result set to fetch from.")
         res = []
-        row = None
-        while self.db().unread_result:
-            row = self.fetchone()
-            if row:
-                res.append(row)
+        (rows, eof) = self.db().protocol.get_rows()
+        self.rowcount = len(rows)
+        for i in xrange(0,self.rowcount):
+            res.append(self._row_to_python(rows[i]))
+        self._handle_eof(eof)
         return res
+    
+    @property
+    def column_names(self):
+        return tuple( [d[0].decode('utf8') for d in self.description] )
         
     def __unicode__(self):
         fmt = "MySQLCursor: %s"
@@ -603,6 +626,33 @@ class MySQLCursorBuffered(MySQLCursor):
                 res.append(row)
 
         return res
-    
 
+class MySQLCursorRaw(MySQLCursor):
+
+    def fetchone(self):
+        row = self._fetch_row()
+        if row:
+            return row
+        return None
+    
+    def fetchall(self):
+        if self._have_result is False:
+            raise errors.InterfaceError("No result set to fetch from.")
+        (rows, eof) = self.db().protocol.get_rows()
+        self.rowcount = len(rows)
+        self._handle_eof(eof)
+        return rows
         
+class MySQLCursorBufferedRaw(MySQLCursorBuffered):
+    
+    def fetchone(self):
+        row = self._fetch_row()
+        if row:
+            return row
+        return None
+    
+    def fetchall(self):
+        if self._rows is None:
+            raise errors.InterfaceError("No result set to fetch from.")
+        return [ r for r in self._rows ]
+

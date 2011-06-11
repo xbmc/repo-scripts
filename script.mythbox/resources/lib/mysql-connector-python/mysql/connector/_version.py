@@ -1,5 +1,5 @@
 # MySQL Connector/Python - MySQL driver written in Python.
-# Copyright (c) 2009,2010, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2009,2011, Oracle and/or its affiliates. All rights reserved.
 # Use is subject to license terms. (See COPYING)
 
 # This program is free software; you can redistribute it and/or modify
@@ -25,4 +25,4 @@
 """
 
 # Next line is generated
-version = (0, 1, 5, 'devel', '')
+version = (0, 3, 2, 'devel', 292)

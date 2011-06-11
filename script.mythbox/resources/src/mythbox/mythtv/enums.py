@@ -427,10 +427,12 @@ class JobType:
     @see: Job.jobType
     """
     NONE         = 0x0000
+    
     SYSTEMJOB    = 0x00ff
     TRANSCODE    = 0x0001
     COMMFLAG     = 0x0002
     USERJOB      = 0xff00
+
     USERJOB1     = 0x0100
     USERJOB2     = 0x0200
     USERJOB3     = 0x0400

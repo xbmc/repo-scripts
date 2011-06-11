@@ -43,113 +43,10 @@
             <height>580</height>
             <texture border="50,0,0,45">vpanel1.png</texture>
         </control>
-        
+
         <control type="group">
             <posx>305</posx>
             <posy>140</posy>
-            
-            <control type="group" id="499">
-                <description>Recent recordings</description>
-                <posx>0</posx>
-                <posy>0</posy>
-                <onup>2000</onup>
-                <ondown>2000</ondown>
-                
-                <control type="grouplist">
-                    <visible>true</visible>
-                    <width>900</width>
-                    <height>250</height>
-                    <onup>2000</onup>
-                    <ondown>61</ondown>
-                    <usecontrolcoords>true</usecontrolcoords>
-                    <control type="wraplist" id="500">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>900</width>
-                        <height>250</height>
-                        <onleft>500</onleft>
-                        <onright>500</onright>
-                        <onup>2000</onup>
-                        <ondown>61</ondown>
-                        <viewtype label="31028">list</viewtype>
-                        <pagecontrol>61</pagecontrol>
-                        <scrolltime>200</scrolltime>
-                        <focusposition>2</focusposition>
-                        <orientation>horizontal</orientation>
-                        <itemlayout height="220" width="150">
-                            <control type="image">
-                                <posx>2</posx>
-                                <posy>0</posy>
-                                <width>150</width>
-                                <height>220</height>
-                                <aspectratio>scale</aspectratio>
-                                <bordertexture border="0">button-nofocus.png</bordertexture>
-                                <bordersize>5</bordersize>
-                                <texture background="false">$INFO[ListItem.Property(thumb)]</texture>
-                                <fadetime>400</fadetime>
-                            </control>
-                            <control type="image">
-                                <posx>2</posx>
-                                <posy>220</posy>
-                                <width>150</width>
-                                <height>220</height>
-                                <aspectratio>scale</aspectratio>
-                                <bordertexture border="5" flipy="true" diffuse="diffuse_mirror2.png">button-nofocus.png</bordertexture>
-                                <bordersize>5</bordersize>
-                                <texture background="false" flipy="true" diffuse="diffuse_mirror2.png">$INFO[ListItem.Property(thumb)]</texture>
-                                <fadetime>400</fadetime>
-                            </control>
-                        </itemlayout>
-    
-                        <focusedlayout height="220" width="150">
-                            <control type="image">
-                                <posx>2</posx>
-                                <posy>0</posy>
-                                <width>150</width>
-                                <height>220</height>
-                                <aspectratio>scale</aspectratio>
-                                <bordertexture border="5">mb-folder-focus.png</bordertexture>
-                                <bordersize>5</bordersize>
-                                <texture background="false" border="5">$INFO[ListItem.Property(thumb)]</texture>
-                                <animation reversible="false" effect="zoom" start="2,0,150,220" end="-8,-10,170,240" time="200">focus</animation>
-                                <animation reversible="false" effect="zoom" end="2,0,150,220" start="-8,-10,170,240" time="200">unfocus</animation>
-                                <fadetime>400</fadetime>
-                            </control>
-                            <control type="image">
-                                <posx>2</posx>
-                                <posy>220</posy>
-                                <width>150</width>
-                                <height>220</height>
-                                <aspectratio>stretch</aspectratio>
-                                <bordertexture border="5" flipy="true" diffuse="diffuse_mirror2.png">mb-folder-focus.png</bordertexture>
-                                <bordersize>5</bordersize>
-                                <texture background="false" flipy="true" diffuse="diffuse_mirror2.png">$INFO[ListItem.Property(thumb)]</texture>
-                                <animation reversible="false" effect="zoom" start="2,0,150,220" end="-8,-10,170,240" time="200">focus</animation>
-                                <animation reversible="false" effect="zoom" end="2,0,150,220" start="-8,-10,170,240" time="200">unfocus</animation>
-                                <fadetime>400</fadetime>
-                            </control>
-                        </focusedlayout>
-                    </control>
-                </control>
-                <control type="group">
-                    <visible>true</visible>
-                    <!-- VisibleFadeEffect -->
-                    <animation effect="fade" time="200">Visible</animation>
-                    <animation effect="fade" time="200">Hidden</animation>
-                    <control type="label">
-                        <posx>0</posx>
-                        <posy>255</posy>
-                        <width>900</width>
-                        <height>35</height>
-                        <font>font16</font>
-                        <textcolor>white</textcolor>
-                        <scroll>true</scroll>
-                        <align>center</align>
-                        <aligny>center</aligny>
-                        <label>[B]$INFO[Container(500).ListItem.Property(title)][/B] - $INFO[Container(500).ListItem.Property(description)]</label>
-                    </control>
-                </control>
-            </control>
             
 <!-- tuners table anchor -->
             
@@ -459,7 +356,164 @@
                 </control>
                 
             </control>
-        </control>                
+
+            <control type="group">
+                <visible>true</visible>
+                <!-- VisibleFadeEffect -->
+                <animation effect="fade" time="200">Visible</animation>
+                <animation effect="fade" time="200">Hidden</animation>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>255</posy>
+                    <width>900</width>
+                    <height>35</height>
+                    <font>font16</font>
+                    <textcolor>white</textcolor>
+                    <scroll>true</scroll>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <label>[B]$INFO[Container(500).ListItem.Property(title)][/B] - $INFO[Container(500).ListItem.Property(description)]</label>
+                </control>
+            </control>
+            
+            <control type="group" id="499">
+                <description>Recent recordings</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <onup>2000</onup>
+                <ondown>2000</ondown>
+                <defaultcontrol>500</defaultcontrol>
+                
+                <control type="group" id="300">
+                   <posx>151</posx>
+                   <posy>-200</posy>
+                   <defaultcontrol>301</defaultcontrol>
+                   <animation effect="slide" start="151,330" end="151,420" time="200" condition="Control.HasFocus(300)|Control.HasFocus(301)|Control.HasFocus(302)">Conditional</animation>
+                   <control type="image">
+                       <posx>0</posx>
+                       <posy>0</posy>
+                       <width>150</width>
+                       <height>80</height>
+                       <texture>black-back.png</texture>  <!--  border="10" -->
+                    </control>
+                    <control type="grouplist">
+                      <posx>0</posx>
+                      <posy>0</posy>
+                      <onup>500</onup>
+                      <ondown>500</ondown>
+                      <itemgap>0</itemgap>
+                      <onleft>500</onleft>
+                      <onright>500</onright>                      
+                      <control type="button" id="301">
+                          <description>Delete</description>
+                          <width>150</width>
+                          <label>Delete</label>
+                          <texturenofocus>button2-nofocus.png</texturenofocus>
+                          <texturefocus border="5">button-focus2.png</texturefocus>
+                          <align>center</align>
+                          <pulseonselect>true</pulseonselect>
+                          <onclick>SetFocus(500)</onclick>
+                          <onup>500</onup>
+                          <onleft>500</onleft>
+                          <onright>500</onright>
+                      </control>
+                      <control type="button" id="302">
+                          <description>Re-Record</description>
+                          <width>150</width>
+                          <texturenofocus>button2-nofocus.png</texturenofocus>
+                          <texturefocus border="5">button-focus2.png</texturefocus>
+                          <align>center</align>
+                          <pulseonselect>true</pulseonselect>
+                          <label>Re-Record</label>
+                          <onclick>SetFocus(500)</onclick>
+                          <ondown>500</ondown>
+                          <onleft>500</onleft>
+                          <onright>500</onright>
+                      </control>
+                    </control>
+                </control>
+                
+                <control type="grouplist">
+                    <visible>true</visible>
+                    <width>900</width>
+                    <height>250</height>
+                    <onup>2000</onup>
+<!--                    <ondown>61</ondown>-->
+                    <ondown>300</ondown>
+                    <usecontrolcoords>true</usecontrolcoords>
+                    <control type="wraplist" id="500">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>900</width>
+                        <height>250</height>
+                        <onleft>500</onleft>
+                        <onright>500</onright>
+                        <onup>2000</onup>
+                        <ondown>61</ondown>
+                        <viewtype label="31028">list</viewtype>
+                        <pagecontrol>61</pagecontrol>
+                        <scrolltime>200</scrolltime>
+                        <focusposition>2</focusposition>
+                        <orientation>horizontal</orientation>
+                        <itemlayout height="220" width="150">
+                            <control type="image">
+                                <posx>2</posx>
+                                <posy>0</posy>
+                                <width>150</width>
+                                <height>220</height>
+                                <aspectratio>scale</aspectratio>
+                                <bordertexture border="0">button-nofocus.png</bordertexture>
+                                <bordersize>5</bordersize>
+                                <texture background="false">$INFO[ListItem.Property(thumb)]</texture>
+                                <fadetime>400</fadetime>
+                            </control>
+                            <control type="image">
+                                <posx>2</posx>
+                                <posy>220</posy>
+                                <width>150</width>
+                                <height>220</height>
+                                <aspectratio>scale</aspectratio>
+                                <bordertexture border="5" flipy="true" diffuse="diffuse_mirror2.png">button-nofocus.png</bordertexture>
+                                <bordersize>5</bordersize>
+                                <texture background="false" flipy="true" diffuse="diffuse_mirror2.png">$INFO[ListItem.Property(thumb)]</texture>
+                                <fadetime>400</fadetime>
+                            </control>
+                        </itemlayout>
+    
+                        <focusedlayout height="220" width="150">
+                            <control type="image">
+                                <posx>2</posx>
+                                <posy>0</posy>
+                                <width>150</width>
+                                <height>220</height>
+                                <aspectratio>scale</aspectratio>
+                                <bordertexture border="5">mb-folder-focus.png</bordertexture>
+                                <bordersize>5</bordersize>
+                                <texture background="false" border="5">$INFO[ListItem.Property(thumb)]</texture>
+                                <animation reversible="false" effect="zoom" start="2,0,150,220" end="-8,-10,170,240" time="200">focus</animation>
+                                <animation reversible="false" effect="zoom" end="2,0,150,220" start="-8,-10,170,240" time="200">unfocus</animation>
+                                <fadetime>400</fadetime>
+                            </control>
+                            <control type="image">
+                                <posx>2</posx>
+                                <posy>220</posy>
+                                <width>150</width>
+                                <height>220</height>
+                                <aspectratio>stretch</aspectratio>
+                                <bordertexture border="5" flipy="true" diffuse="diffuse_mirror2.png">mb-folder-focus.png</bordertexture>
+                                <bordersize>5</bordersize>
+                                <texture background="false" flipy="true" diffuse="diffuse_mirror2.png">$INFO[ListItem.Property(thumb)]</texture>
+                                <animation reversible="false" effect="zoom" start="2,0,150,220" end="-8,-10,170,240" time="200">focus</animation>
+                                <animation reversible="false" effect="zoom" end="2,0,150,220" start="-8,-10,170,240" time="200">unfocus</animation>
+                                <fadetime>400</fadetime>
+                            </control>
+                        </focusedlayout>
+                    </control>
+                </control>
+            </control>
+
+
+        </control>
     </control>
 
     <!-- ============================================= -->

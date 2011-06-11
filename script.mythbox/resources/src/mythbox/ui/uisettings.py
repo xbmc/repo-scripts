@@ -259,7 +259,45 @@ class SettingsWindow(BaseWindow):
         self.renderStreaming()
                     
         import default
-        self.setWindowProperty('AboutText', "%s\n\n%s\n\n%s\n\n%s" % (default.__scriptname__, default.__author__, default.__url__, self.platform.addonVersion()))
+        about = "[B]%s[/B]\n\n%s\n\n%s\n\n%s\n\n\n\nMythBox would not be possible without the\nfollowing opensource software and services" % (default.__scriptname__, default.__author__, default.__url__, self.platform.addonVersion())
+        opensource = """
+        [B]Software[/B]
+        
+        BiDict
+        BeautifulSoup
+        Decorator
+        Eclipse
+        ElementTree
+        FeedParser
+        GNU/Linux
+        HTMLTestRunner
+        IMDBPy
+        Mockito
+        MythTV
+        MySQL-Connector-Python
+        ODict
+        PyDev for Eclipse
+        Python
+        Python-Twitter 
+        SimpleJSON
+        TheMovieDb Python API
+        TVDB Python API
+        TVRage Python API
+        Twisted
+        XBMC
+        
+        [B]Services[/B]
+        
+        Google Image Search
+        Google Code Project Hosting
+        Internet Movie Database
+        The Movie Database
+        TVDB
+        TVRage
+        Twitter
+        """
+        self.setWindowProperty('AboutText', about)
+        self.setWindowProperty('OpensourceText', opensource)
         self.setWindowProperty('ReadmeText', '%s\n%s' % (
             open(os.path.join(self.platform.getScriptDir(), 'README'), 'r').read(),
             open(os.path.join(self.platform.getScriptDir(), 'FAQ'), 'r').read()))

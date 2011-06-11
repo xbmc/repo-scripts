@@ -54,7 +54,7 @@ def packet_is_error(idx=0,label=None):
             
             try:
                 if pktdata and pktdata[4] == '\xff':
-                    MySQLProtocol.raise_error(pktdata)
+                    errors.raise_error(pktdata)
             except errors.Error:
                 raise
             except:
@@ -79,7 +79,7 @@ def packet_is_ok(idx=0,label=None):
                     return func(*args, **kwargs)
                 else:
                     raise
-            except Exception, e:
+            except:
                 raise errors.InterfaceError("Expected OK packet")
         return call
     return deco
@@ -147,33 +147,11 @@ class MySQLProtocol(MySQLProtocolBase):
         self.conn = conn
         self.pktnr = -1
     
-    @classmethod
-    def raise_error(cls, buf):
-        """Raise an errors.Error when buffer has a MySQL error"""
-        errno = errmsg = None
-        try:
-            buf = buf[5:]
-            (buf,errno) = utils.read_int(buf, 2)
-            if buf[0] != '\x23':
-                # Error without SQLState
-                errmsg = buf
-            else:
-                (buf,sqlstate) = utils.read_bytes(buf[1:],5)
-                errmsg = buf
-        except Exception, e:
-            raise errors.InterfaceError("Failed getting Error information (%r)"\
-                % e)
-        else:
-            raise errors.get_mysql_exception(errno,errmsg)
+    @property
+    def next_pktnr(self):
+        self.pktnr = self.pktnr + 1
+        return self.pktnr
     
-    def _recv_packet(self):
-        """Getting a packet from the MySQL server"""
-        buf = self.conn.recv()
-        if buf[4] == '\xff':
-            MySQLProtocol.raise_error(buf)
-        else:
-            return buf
-        
     def _scramble_password(self, passwd, seed):
         """Scramble a password ready to send to MySQL"""
         hash4 = None
@@ -188,11 +166,6 @@ class MySQLProtocol(MySQLProtocolBase):
             raise errors.InterfaceError('Failed scrambling password; %s' % e)
         
         return hash4
-    
-    def _pkt_make_header(self, pktlength, pktnr=None):
-        """Make the header for a MySQL packet"""
-        pktnr = pktnr or self.pktnr+1
-        return utils.int3store(pktlength) + utils.int1store(pktnr)
 
     def _prepare_auth(self, usr, pwd, db, flags, seed):
         
@@ -215,33 +188,51 @@ class MySQLProtocol(MySQLProtocolBase):
         return (_username, _password, _database)
 
     def _pkt_make_auth(self, username=None, password=None, database=None,
-        seed=None, charset=33, client_flags=0):
+        seed=None, charset=33, client_flags=0, max_allowed_packet=None):
         """Make a MySQL Authentication packet"""
         try:
             seed = seed or self.scramble
         except:
             raise errors.ProgrammingError('Seed missing')
         
+        if max_allowed_packet is None:
+            max_allowed_packet = 1073741824 # 1Gb
+        
         (_username, _password, _database) = self._prepare_auth(
             username, password, database, client_flags, seed)
         data =  utils.int4store(client_flags) +\
-                utils.int4store(10 * 1024 * 1024) +\
+                utils.int4store(max_allowed_packet) +\
                 utils.int1store(charset) +\
                 '\x00'*23 +\
                 _username +\
                 _password +\
                 _database
-            
-        header = self._pkt_make_header(len(data))
-        return header+data
+        return data
     
+    def _pkt_make_auth_ssl(self, username=None, password=None, database=None,
+            seed=None, charset=33, client_flags=0, max_allowed_packet=None):
+        try:
+            seed = seed or self.scramble
+        except:
+            raise errors.ProgrammingError('Seed missing')
+        
+        if max_allowed_packet is None:
+            max_allowed_packet = 1073741824 # 1Gb
+
+        (_username, _password, _database) = self._prepare_auth(
+                username, password, database, client_flags, seed)
+        data =  utils.int4store(client_flags) +\
+                    utils.int4store(max_allowed_packet) +\
+                    utils.int1store(charset) +\
+                    '\x00'*23
+        return data
+        
     def _pkt_make_command(self, command, argument=None):
         """Make a MySQL packet containing a command"""
         data = utils.int1store(command)
         if argument is not None:
             data += str(argument)
-        header = self._pkt_make_header(len(data))
-        return header+data
+        return data
     
     def _pkt_make_changeuser(self, username=None, password=None,
         database=None, charset=8, seed=None):
@@ -258,9 +249,7 @@ class MySQLProtocol(MySQLProtocolBase):
                 _password +\
                 _database +\
                 utils.int2store(charset)
-        
-        header = self._pkt_make_header(len(data))
-        return header+data
+        return data
         
     @set_pktnr(1)
     def _pkt_parse_handshake(self, buf):
@@ -335,7 +324,7 @@ class MySQLProtocol(MySQLProtocolBase):
         """Get the handshake from the MySQL server"""
         try:
             self.conn.open_connection()
-            buf = self._recv_packet()
+            buf = self.conn.recv()
             self.handle_handshake(buf)
         except:
             raise
@@ -344,12 +333,18 @@ class MySQLProtocol(MySQLProtocolBase):
         client_flags=0, charset=33):
         """Authenticate with the MySQL server
         """
+        if client_flags & ClientFlag.SSL:
+            pkt = self._pkt_make_auth_ssl(username=username,
+                password=password, database=database, charset=charset,
+                client_flags=client_flags)
+            self.conn.send(pkt,self.next_pktnr)
+            self.conn.switch_to_ssl()
+        
         pkt = self._pkt_make_auth(username=username, password=password,
             database=database, charset=charset,
             client_flags=client_flags)
-        
-        self.conn.send(pkt)
-        buf = self._recv_packet()
+        self.conn.send(pkt,self.next_pktnr)
+        buf = self.conn.recv()
         if buf[4] == '\xfe':
             raise errors.NotSupportedError(
               "Authentication with old (insecure) passwords "\
@@ -357,11 +352,7 @@ class MySQLProtocol(MySQLProtocolBase):
               "http://dev.mysql.com/doc/refman/5.1/en/password-hashing.html") 
         
         try:
-            if client_flags & ClientFlag.CONNECT_WITH_DB:
-                with_db = True
-            else:
-                with_db = False
-            if not with_db and database:
+            if not (client_flags & ClientFlag.CONNECT_WITH_DB) and database:
                 self.cmd_init_db(database)
         except:
             raise
@@ -413,10 +404,10 @@ class MySQLProtocol(MySQLProtocolBase):
             
         fields = []
         for i in xrange(0,nrflds):
-            buf = self._recv_packet()
+            buf = self.conn.recv()
             fields.append(self._pkt_parse_field(buf))
         
-        buf = self._recv_packet()
+        buf = self.conn.recv()
         eof = self._handle_eof(buf)
         return (nrflds, fields, eof)
             
@@ -436,8 +427,19 @@ class MySQLProtocol(MySQLProtocolBase):
                 break
             if i == cnt:
                 break
-            buf = self._recv_packet()
-            if buf[4] == '\xfe':
+            buf = self.conn.recv()
+            if buf[0:3] == '\xff\xff\xff':
+                data = buf[4:]
+                buf = self.conn.recv()
+                while buf[0:3] == '\xff\xff\xff':
+                    data += buf[4:]
+                    buf = self.conn.recv()
+                if buf[4] == '\xfe':
+                    eof = self._handle_eof(buf)
+                else:
+                    data += buf[4:]
+                rowdata = utils.read_lc_string_list(data)
+            elif buf[4] == '\xfe':
                 eof = self._handle_eof(buf)
                 rowdata = None
             else:
@@ -473,8 +475,8 @@ class MySQLProtocol(MySQLProtocolBase):
         fields = None
         try:
             pkt = self._pkt_make_command(ServerCmd.QUERY,query)
-            self.conn.send(pkt) # Errors handled in _handle_error()
-            return self.handle_cmd_result(self._recv_packet())
+            self.conn.send(pkt,self.next_pktnr)
+            return self.handle_cmd_result(self.conn.recv())
         except:
             raise
     
@@ -492,8 +494,8 @@ class MySQLProtocol(MySQLProtocolBase):
         Returns a dict() with OK-packet information.
         """
         pkt = self._pkt_make_command(ServerCmd.REFRESH, opts)
-        self.conn.send(pkt)
-        buf = self._recv_packet()
+        self.conn.send(pkt,self.next_pktnr)
+        buf = self.conn.recv()
         return self._handle_ok(buf)
 
     @reset_pktnr
@@ -503,7 +505,7 @@ class MySQLProtocol(MySQLProtocolBase):
         Returns the packet that was send.
         """
         pkt = self._pkt_make_command(ServerCmd.QUIT)
-        self.conn.send(pkt)
+        self.conn.send(pkt,self.next_pktnr)
         return pkt
 
     @reset_pktnr
@@ -515,8 +517,8 @@ class MySQLProtocol(MySQLProtocolBase):
         Returns a dict() with OK-packet information.
         """
         pkt = self._pkt_make_command(ServerCmd.INIT_DB, database)
-        self.conn.send(pkt)
-        buf = self._recv_packet()
+        self.conn.send(pkt,self.next_pktnr)
+        buf = self.conn.recv()
         return self._handle_ok(buf)
     
     @reset_pktnr
@@ -529,9 +531,9 @@ class MySQLProtocol(MySQLProtocolBase):
         Returns a dict() with OK-packet information.
         """
         pkt = self._pkt_make_command(ServerCmd.SHUTDOWN)
-        self.conn.send(pkt)
-        buf = self._recv_packet()
-        return self._handle_ok(buf)
+        self.conn.send(pkt,self.next_pktnr)
+        buf = self.conn.recv()
+        return self._handle_eof(buf)
     
     @reset_pktnr
     def cmd_statistics(self):
@@ -540,8 +542,8 @@ class MySQLProtocol(MySQLProtocolBase):
         Returns a dictionary with various statistical information.
         """
         pkt = self._pkt_make_command(ServerCmd.STATISTICS)
-        self.conn.send(pkt)
-        buf = self._recv_packet()
+        self.conn.send(pkt,self.next_pktnr)
+        buf = self.conn.recv()
         buf = buf[4:]
         errmsg = "Failed getting COM_STATISTICS information"
         res = {}
@@ -581,8 +583,8 @@ class MySQLProtocol(MySQLProtocolBase):
         """
         pkt = self._pkt_make_command(ServerCmd.PROCESS_KILL,
             utils.int4store(mypid))
-        self.conn.send(pkt)
-        buf = self._recv_packet()
+        self.conn.send(pkt,self.next_pktnr)
+        buf = self.conn.recv()
         return self._handle_ok(buf)
 
     @reset_pktnr
@@ -595,8 +597,8 @@ class MySQLProtocol(MySQLProtocolBase):
         Returns a dict() with EOF-packet information.
         """
         pkt = self._pkt_make_command(ServerCmd.DEBUG)
-        self.conn.send(pkt)
-        buf = self._recv_packet()
+        self.conn.send(pkt,self.next_pktnr)
+        buf = self.conn.recv()
         return self._handle_eof(buf)
 
     @reset_pktnr
@@ -609,8 +611,8 @@ class MySQLProtocol(MySQLProtocolBase):
         Returns a dict() with OK-packet information.
         """
         pkt = self._pkt_make_command(ServerCmd.PING)
-        self.conn.send(pkt)
-        buf = self._recv_packet()
+        self.conn.send(pkt,self.next_pktnr)
+        buf = self.conn.recv()
         return self._handle_ok(buf)
 
     @reset_pktnr
@@ -623,6 +625,6 @@ class MySQLProtocol(MySQLProtocolBase):
         
         pkt = self._pkt_make_changeuser(username=username, password=password,
             database=database, charset=_charset, seed=self.scramble)
-        self.conn.send(pkt)
-        buf = self._recv_packet()
+        self.conn.send(pkt,self.next_pktnr)
+        buf = self.conn.recv()
         return self._handle_ok(buf)

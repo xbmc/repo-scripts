@@ -1,3 +1,23 @@
+6/11/2011 - MythBox 1.0.4
+-----------------------------
+  New
+
+    - Issue 168 - User jobs, comm flagging, and transcoding can
+      be triggered via the Advanced button on the Recording
+      Details window 
+    - Jobs and Tuners table on the Home window update automatically
+      based on events from the master backend
+    - New artwork is checked for once a month if no artwork was 
+      previously available
+    - |<< and >>| buttons are mapped to go to the top/bottom of a list   
+    - Upgraded to mysql-connector-python 0.3.2
+    - Various caching optimizations
+    - Added blurb on the two different Commercial Skipping modes to
+      the FAQ as Q7.
+    
+  Fixed
+    - Issue 170 - Programs no longer sorted by title after a program is deleted
+
 5/9/2011 - MythBox 1.0.3
 -----------------------------
   New
@@ -68,9 +88,9 @@
     - Added Episode column to the recordings screen
     - TV Guide shows upcoming recordings in a different color
     - Readme and FAQ viewable from MythBox > Settings > Readme and FAQ
-    - Czech translations (tnx Pavel Mlčoch)
+    - Czech translations (tnx Pavel MlÄ�och)
     - Swedish translations (tnx Magnus Gustafsson)
-    - Polish translations (tnx Michał Sawicz)
+    - Polish translations (tnx MichaÅ‚ Sawicz)
         
   Fixed
     - Issue 136 - mythbox.log moved to standard log dir on Mac OSX

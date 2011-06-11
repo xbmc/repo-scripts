@@ -431,50 +431,6 @@ class NoOpCommercialSkipper(ICommercialSkipper):
 
     def onPlayBackEnded(self):
         pass
-    
-
-class EdlCommercialSkipper(ICommercialSkipper):
-    """
-    Creates an Mplayer compatible EDL skip file with the comm breaks 
-    retrieved from the mythbacked. Writes the file to the same directory
-    that the file being played resides in (thats where XBMC will be looking
-    for the file) with a .edl extension.
-    
-    EDL skip files are broken in xbmc (getTime() returning negative values) so
-    this is useless for now. 
-    
-    http://xbmc.org/trac/ticket/5048
-    """
-    def __init__(self, player, program, translator):
-        ICommercialSkipper.__init__(self, player, program, translator)
-        self._writeSkipFile()
-    
-    def onPlayBackStarted(self):
-        # Too late to build skip file; done in constructor
-        pass
-    
-    def onPlayBackStopped(self):
-        if self._edlFile:
-            os.remove(self._edlFile)
-
-    def onPlayBackEnded(self):
-        if self._edlFile:
-            os.remove(self._edlFile)
-    
-    def _writeSkipFile(self):
-        commBreaks = self.program.getCommercials()
-        contents = ''
-        if len(commBreaks) > 0:
-            for cb in commBreaks:
-                contents += '%.2f %.2f 0%s' %(cb.start, cb.end, os.linesep)
-            self._edlFile = self.program.getLocalPath()
-            lastDot = self._edlFile.rfind('.')
-            self._edlFile = self._edlFile[:lastDot] + ".edl"
-            log.debug('edl skip file = %s' % self._edlFile)
-            log.debug('edl skip file contents = \n%s' % contents)
-            f = open(self._edlFile, 'w')
-            f.write(contents)
-            f.close()
 
 
 class TrackingCommercialSkipper(ICommercialSkipper):

@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: mysql-connector-python
-Version: 0.1.5-devel
+Version: 0.3.2-devel
 Summary: MySQL driver written in Python
 Home-page: http://launchpad.net/myconnpy
 Author: Sun Microsystems, Inc.

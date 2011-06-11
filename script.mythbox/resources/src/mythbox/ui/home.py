@@ -39,6 +39,7 @@ log = logging.getLogger('mythbox.ui')
 
 ID_COVERFLOW_GROUP    = 499
 ID_COVERFLOW_WRAPLIST = 500
+ID_COVERFLOW_POPUP    = 300
 MAX_COVERFLOW         = 6
 
 
@@ -49,7 +50,9 @@ class HomeWindow(BaseWindow):
         [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings', 'translator', 'platform', 'fanArt', 'cachesByName', 'bus', 'feedHose',)]
         [setattr(self,k,v) for k,v in self.cachesByName.iteritems() if k in ('mythChannelIconCache', 'mythThumbnailCache', 'httpCache', 'domainCache')]
 
-        self.deps = kwargs
+        # merge cachesByName into deps dict
+        self.deps = dict(kwargs.items() + self.cachesByName.items())
+        self.t = self.translator.get
         self.lastFocusId = None
         self.shutdownPending = False
         self.bus.register(self)
@@ -65,6 +68,7 @@ class HomeWindow(BaseWindow):
             self.tunersListBox = self.getControl(249)
             self.jobsListBox = self.getControl(248)
             self.coverFlow = self.getControl(ID_COVERFLOW_WRAPLIST)
+            self.coverFlowPopup = self.getControl(ID_COVERFLOW_POPUP)
             
             # button ids -> funtion ptr
             self.dispatcher = {
@@ -75,6 +79,8 @@ class HomeWindow(BaseWindow):
                 254 : self.goUpcomingRecordings,
                 256 : self.goSettings,
                 255 : self.refreshOnInit,
+                300 : self.deleteRecording,
+                301 : self.rerecordRecording,
                 ID_COVERFLOW_WRAPLIST : self.goPlayRecording
             }
             
@@ -92,32 +98,39 @@ class HomeWindow(BaseWindow):
             self.coverItems.append(coverItem)
         self.coverFlow.addItems(self.coverItems)
    
+    def isCoverFlowPopupActive(self):
+        buttonIds = [ID_COVERFLOW_POPUP,301,302]
+        return self.getFocusId() in buttonIds
+    
     @catchall_ui
     def onAction(self, action):
         if self.shutdownPending:
             return
         
-        if action.getId() in (Action.PREVIOUS_MENU, Action.PARENT_DIR):
-            self.shutdown()
-            self.close()
-        elif action.getId() in (Action.CONTEXT_MENU,) and self.lastFocusId in (ID_COVERFLOW_GROUP, ID_COVERFLOW_WRAPLIST):
-            program = self.recordings[self.coverFlow.getSelectedPosition()]
-            selection = xbmcgui.Dialog().select(program.title(), [self.translator.get(m.DELETE), self.translator.get(m.RERECORD)])
-            if selection == 0:
-                self.deleteRecording()
-            elif selection == 1:
-                self.rerecordRecording()
+        id = action.getId()
+        
+        if id in (Action.PREVIOUS_MENU, Action.PARENT_DIR,):
+            if self.isCoverFlowPopupActive():
+                self.setFocus(self.coverFlow)
             else:
-                log.debug('dialog cancelled')
+                self.shutdown()
+                self.close()
+        
+        elif id == Action.CONTEXT_MENU and self.lastFocusId in (ID_COVERFLOW_GROUP, ID_COVERFLOW_WRAPLIST):
+            self.setFocus(self.coverFlowPopup)
+            
+        #elif id == Action.DOWN and self.lastFocusId == ID_COVERFLOW_WRAPLIST:
+        #    log.debug('activate popup menu') 
+        
         else:
-            pass #log.debug('Unhandled action: %s  lastFocusId = %s' % (action, self.lastFocusId))
+            pass #log.debug('Unhandled action: %s  lastFocusId = %s' % (id, self.lastFocusId))
 
     @window_busy
     @inject_conn
     def deleteRecording(self):
         yes = True
         if self.settings.isConfirmOnDelete():
-            yes = xbmcgui.Dialog().yesno(self.translator.get(m.CONFIRMATION), self.translator.get(m.ASK_DELETE_RECORDING))
+            yes = xbmcgui.Dialog().yesno(self.t(m.CONFIRMATION), self.t(m.ASK_DELETE_RECORDING))
             
         if yes:
             program = self.recordings[self.coverFlow.getSelectedPosition()]
@@ -128,7 +141,7 @@ class HomeWindow(BaseWindow):
     def rerecordRecording(self):
         yes = True
         if self.settings.isConfirmOnDelete():
-            yes = xbmcgui.Dialog().yesno(self.translator.get(m.CONFIRMATION), self.translator.get(m.ASK_RERECORD_RECORDING))
+            yes = xbmcgui.Dialog().yesno(self.t(m.CONFIRMATION), self.t(m.ASK_RERECORD_RECORDING))
             
         if yes:
             program = self.recordings[self.coverFlow.getSelectedPosition()]
@@ -151,7 +164,7 @@ class HomeWindow(BaseWindow):
             self.settings.verify()
             self.settingsOK = True
         except SettingsException, se:
-            showPopup(self.translator.get(m.ERROR), str(se), 7000)
+            showPopup(self.t(m.ERROR), safe_str(se), 7000)
             self.goSettings()
             try:
                 self.settings.verify() # TODO: optimize unnecessary re-verify
@@ -252,7 +265,7 @@ class HomeWindow(BaseWindow):
     def canStream(self):
         # TODO: Merge with duplicate method in RecordingDetailsWindow
         if not self.conn().protocol.supportsStreaming(self.platform):
-            xbmcgui.Dialog().ok(self.translator.get(m.ERROR), 
+            xbmcgui.Dialog().ok(self.t(m.ERROR), 
                 'Streaming from a MythTV %s backend to XBMC' % self.conn().protocol.mythVersion(), 
                 '%s is broken. Try playing again after deselecting' % self.platform.xbmcVersion(),
                 'MythBox > Settings > MythTV > Enable Streaming')
@@ -340,10 +353,10 @@ class HomeWindow(BaseWindow):
         log.debug('<<< renderCoverFlow end')
         
     @run_async
-    @inject_conn
+    @catchall
     @coalesce
     def renderTuners(self):
-        tuners = self.conn().getTuners()[:]
+        tuners = self.domainCache.getTuners()
         
         for t in tuners:
             t.listItem = xbmcgui.ListItem()
@@ -367,8 +380,8 @@ class HomeWindow(BaseWindow):
                     return cmp(r1.starttimeAsTime(), r2.starttimeAsTime())
                 
             def idleTunersLast(t1, t2):
-                t1Idle = t1.listItem.getProperty('status').startswith('Idle') # TODO: use translation
-                t2Idle = t2.listItem.getProperty('status').startswith('Idle') # TODO: use translation
+                t1Idle = t1.listItem.getProperty('status').startswith(self.t(m.IDLE))
+                t2Idle = t2.listItem.getProperty('status').startswith(self.t(m.IDLE))
 
                 if t1Idle and t2Idle:
                     return nextToRecordFirst(t1,t2)
@@ -384,6 +397,7 @@ class HomeWindow(BaseWindow):
         self.tunersListBox.addItems(map(lambda t: t.listItem, tuners))
 
     @run_async
+    @catchall
     @inject_db
     @coalesce
     def renderJobs(self):
@@ -424,7 +438,7 @@ class HomeWindow(BaseWindow):
                 status = u'%s %s%s. %s' % (t(m.COMM_FLAGGING), title, getHostInfo(j), getJobStats(j))
             elif j.jobType == JobType.TRANSCODE: 
                 status = u'%s %s' % (t(m.TRANSCODING), title)
-            else: 
+            else:
                 status = u'%s %s %s' % (j.formattedJobType(), t(m.PROCESSING), title)
                 
             self.setListItemProperty(listItem, 'status', status)
@@ -449,7 +463,8 @@ class HomeWindow(BaseWindow):
         
         self.jobsListBox.addItems(listItems)
                
-    @run_async     
+    @run_async
+    @catchall     
     @inject_conn
     @coalesce
     def renderStats(self):
@@ -489,9 +504,17 @@ class HomeWindow(BaseWindow):
         log.debug('renderNewsFeed exit')
         
     def onEvent(self, event):
-        log.debug('home window received event: %s' % event)
-        if event['id'] == Event.RECORDING_DELETED:
+        log.debug('ONEVENT: home window received event: %s' % event)
+        id = event['id']
+        
+        if id == Event.RECORDING_DELETED: # TODO: Add RECORDING_STARTED
             self.renderCoverFlow(exclude=event['program'])
-        elif event['id'] == Event.SETTING_CHANGED and event['tag'] == 'feeds_twitter':
+        
+        elif id == Event.SETTING_CHANGED and event['tag'] == 'feeds_twitter':
             self.renderNewsFeed()
-                            
+        
+        elif id in (Event.SCHEDULER_RAN, Event.SCHEDULE_CHANGED,):
+            self.renderTuners()
+            
+        elif id in (Event.COMMFLAG_START,):
+            self.renderJobs()

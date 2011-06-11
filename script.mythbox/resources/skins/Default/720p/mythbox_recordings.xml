@@ -118,6 +118,7 @@
                 <label>SCRIPT212</label>
             </control>
     
+            <!-- 
             <control type="label">
                 <description>episode</description>
                 <posx>1175</posx>
@@ -131,7 +132,8 @@
                 <aligny>center</aligny>
                 <label>SCRIPT161</label>
             </control>
-    
+            -->
+            
 <!--  Groups Listbox -->
     
             <control type="list" id="700">
@@ -322,6 +324,17 @@
                 <aspectratio aligny="top">scale</aspectratio>
                 <texture diffuse="mb-diffuse-left.png">$INFO[Container(600).ListItem.Property(background)]</texture>
                 <fadetime>400</fadetime>
+            </control>
+
+            <control type="label">
+                <description>DEBUG wallpaper size</description>
+                <posx>1180</posx>
+                <posy>610</posy>
+                <width>100</width>
+                <height>40</height>
+                <font>font10</font>
+                <textcolor>88FFFFFF</textcolor>
+                <label>$INFO[Container(600).ListItem.Property(wallpaperSize)]</label>
             </control>
     
             <control type="list" id="600">

@@ -251,13 +251,14 @@ class FileLiveTvPlayer(MountedPlayer):
         self._playbackCompletedLock = threading.Event()
         self._playbackCompletedLock.clear()
 
+ID_CHANNELS_LISTBOX = 600
 
 class LiveTvWindow(BaseWindow):
     
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
         [setattr(self,k,v) for k,v in kwargs.iteritems() if k in ('settings', 'translator', 'platform', 'fanArt', 'cachesByName',)]
-        [setattr(self,k,v) for k,v in self.cachesByName.iteritems() if k in ('mythChannelIconCache',)]
+        [setattr(self,k,v) for k,v in self.cachesByName.iteritems() if k in ('mythChannelIconCache', 'domainCache')]
          
         self.channels = None                     # Channels sorted and merged (if multiple tuners)
         self.channelsById = None                 # {int channelId:Channel}
@@ -273,7 +274,7 @@ class LiveTvWindow(BaseWindow):
     def onInit(self):
         if not self.win:
             self.win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
-            self.channelsListBox = self.getControl(600)
+            self.channelsListBox = self.getControl(ID_CHANNELS_LISTBOX)
             self.refreshButton = self.getControl(250)
         
         if self.programs:
@@ -303,22 +304,27 @@ class LiveTvWindow(BaseWindow):
             self.refresh()
              
     def onFocus(self, controlId):
-        log.debug('FOCUS %s' % controlId)
+        self.lastFocusId = controlId
             
     @catchall_ui
     def onAction(self, action):
+        id = action.getId()
         
-        if action.getId() in (Action.PREVIOUS_MENU, Action.PARENT_DIR):
+        if id in (Action.PREVIOUS_MENU, Action.PARENT_DIR,):
             self.closed = True
             self.settings.put('livetv_last_selected', str(self.channelsListBox.getSelectedPosition()))
             self.close()
             
-        elif action.getId() in (Action.UP, Action.DOWN, Action.PAGE_DOWN, Action.PAGE_UP, ):
+        elif id in (Action.UP, Action.DOWN, Action.PAGE_DOWN, Action.PAGE_UP, ):
             self.lastSelected = self.channelsListBox.getSelectedPosition()
             channel = self.listItem2Channel(self.channelsListBox.getSelectedItem())
             if channel.currentProgram and channel.needsPoster:
                 log.debug('Adding %s:%s to poster lookup q' % (channel.getChannelNumber(), safe_str(channel.currentProgram.title())))
                 [self.tvQueue, self.movieQueue][channel.currentProgram.isMovie()].append(channel)
+
+        elif id in (Action.ACTION_NEXT_ITEM, Action.ACTION_PREV_ITEM,):  # bottom, top
+            if self.lastFocusId == ID_CHANNELS_LISTBOX:
+                self.selectListItemAtIndex(self.channelsListBox, [0, self.channelsListBox.size()-1][id == Action.ACTION_NEXT_ITEM])
 
     def listIndex2Channel(self, i):
         return self.listItem2Channel(self.channelsListBox.getListItem(i))
@@ -348,10 +354,9 @@ class LiveTvWindow(BaseWindow):
             log.error(safe_str(e))
             xbmcgui.Dialog().ok(self.translator.get(m.ERROR), '', safe_str(e))
 
-    @inject_db
     def loadChannels(self):
-        if self.channels == None:
-            self.channels = Channel.mergeChannels(self.db().getChannels())
+        if self.channels is None:
+            self.channels = Channel.mergeChannels(self.domainCache.getChannels())
             self.channels.sort(key=Channel.getSortableChannelNumber)
             self.channelsById = odict()
             for c in self.channels:

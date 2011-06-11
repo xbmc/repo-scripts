@@ -24,18 +24,25 @@ log = logging.getLogger('mythbox.event')
 
 class Event(object):
     RECORDING_DELETED    = 'RECORDING_DELETED'  # keys: id, program
+    RECORDING_STARTED    = 'RECORDING_STARTED'  # keys: id
+    RECORDING_ENDED      = 'RECORDING_ENDED'    # keys: id
     SETTING_CHANGED      = 'SETTING_CHANGED'    # keys: id, tag, old, new
-    SHUTDOWN             = 'SHUDTOWN'           # keys: None
+    SHUTDOWN             = 'SHUTDOWN'           # keys: None
     SCHEDULER_RAN        = 'SCHEDULER_RAN'      # keys: None
-    SCHEDULE_CHANGED     = 'SCHEDULE CHANGED'   # keys: None    recording schedule added/deleted/updated
-
+    SCHEDULE_CHANGED     = 'SCHEDULE CHANGED'   # keys: None recording schedule added/deleted/updated
+    COMMFLAG_START       = 'COMMFLAG_START'     # [u'BACKEND_MESSAGE', u'COMMFLAG_START 4276 2011-06-02T17:00:00', u'empty']   
+    
+    
 class EventBus(object):
     
     def __init__(self):
         self.listeners = []
         
-    def register(self, listener):
-        self.listeners.append(listener)
+    def register(self, listener, firstDibs=False):
+        if firstDibs:
+            self.listeners.insert(0, listener)
+        else:
+            self.listeners.append(listener)
 
     def deregister(self, listener):
         try:

@@ -398,7 +398,6 @@ License: CC-BY
   <string id="415">Potwierdź usunięcie</string>
   <string id="416">Położenie nagrań MythTV w lokalnym systemie plików (zamontowane katalogi grup przechowywania, jeśli serwer jest zdalny).</string>
   <string id="417">Wiele katalogów oddzielonych dwukropkiem (Linux / MacOS) lub średnikiem (Windows).</string>
-  <string id="418">FFMpeg jest instalowany z MythBox w Windows i MacOS, użytkownicy Linuksa muszą zainstalować pakiet "ffmpeg".</string>
   <string id="419">Włącz agresywne buforowanie</string>
   <string id="427">Agresywnie buforuje dane kosztem obciążenia serwera i przepustowości sieci.</string>
   <string id="428">NIE włączać przy połączeniu bezprzewodowym.</string>

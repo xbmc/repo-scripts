@@ -33,7 +33,7 @@ import Queue
 from datetime import datetime, timedelta
 from mythbox.mythtv.conn import inject_conn
 from mythbox.mythtv.db import inject_db
-from mythbox.mythtv.domain import ScheduleFromProgram, Channel
+from mythbox.mythtv.domain import RecordingSchedule, Channel
 from mythbox.mythtv.enums import Upcoming
 from mythbox.ui.schedules import ScheduleDialog
 from mythbox.ui.toolkit import Action, Align, AspectRatio, window_busy
@@ -137,12 +137,11 @@ class TvGuideWindow(ui.BaseWindow):
         if event['id'] == Event.SCHEDULER_RAN:
             self._upcomingStale = True
             
-    @inject_conn            
     def upcomingByProgram(self):
         if self._upcomingStale:
             self._upcomingStale = False
             self._upcomingByProgram = {} 
-            for p in self.conn().getUpcomingRecordings(filter=Upcoming.SCHEDULED):
+            for p in self.domainCache.getUpcomingRecordings():
                 self._upcomingByProgram[p] = p
         return self._upcomingByProgram
         
@@ -202,7 +201,7 @@ class TvGuideWindow(ui.BaseWindow):
             self.guide_dy += (remainder / self.channelsPerPage)
 
             # retrieve, consolidate, and sort channels
-            self.channels = Channel.mergeChannels(self.db().getChannels())
+            self.channels = Channel.mergeChannels(self.domainCache.getChannels())
             self.channels.sort(key=Channel.getSortableChannelNumber)
             self.pager = Pager(len(self.channels), self.channelsPerPage)
             
@@ -393,7 +392,7 @@ class TvGuideWindow(ui.BaseWindow):
 
                 # new recording schedule
                 if schedule is None:
-                    schedule = ScheduleFromProgram(program, self.translator)
+                    schedule = RecordingSchedule.fromProgram(program, self.translator)
                 
                 d = ScheduleDialog(
                     'mythbox_schedule_dialog.xml',

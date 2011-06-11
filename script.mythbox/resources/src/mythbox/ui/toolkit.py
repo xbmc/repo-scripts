@@ -48,10 +48,10 @@ class Action(object):
     ACTION_SHOW_INFO        = 11
     PAUSE                   = 12
     STOP                    = 13
-    ACTION_NEXT_ITEM        = 14  # End on MCE remote
-    ACTION_PREV_ITEM        = 15  # Beginning on MCE remote
-    FORWARD                 = 77
-    REWIND                  = 78
+    ACTION_NEXT_ITEM        = 14  # Remote: >>|
+    ACTION_PREV_ITEM        = 15  # Remote: <<|
+    FORWARD                 = 77  # Remote: >>
+    REWIND                  = 78  # Remote: <<
     ACTION_SCROLL_UP        = 111
     ACTION_SCROLL_DOWN      = 112
     CONTEXT_MENU            = 117  # TV Guide on MCE remote
@@ -215,6 +215,12 @@ def setThumbnailImage(playlistItem, imagePath):
 
 class WindowMixin(object):
     
+    def getListItemProperty(self, listItem, name):
+        '''Workaround for default impl always returning a string even though value set was unicode.'''
+        p = listItem.getProperty(name)
+        if p is not None:
+            return p.decode('utf-8')
+        
     def setListItemProperty(self, listItem, name, value):
         """
         Convenience method to make sure None values don't get set on a listItem

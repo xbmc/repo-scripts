@@ -93,6 +93,15 @@ class BaseFanartProvider(object):
 
 class NoOpFanartProvider(BaseFanartProvider):
 
+    def hasPosters(self, program):
+        return False
+    
+    def hasBanners(self, program):
+        return False
+    
+    def hasBackgrounds(self, program):
+        return False
+    
     def getPosters(self, program):
         return []
 
@@ -156,11 +165,13 @@ class OneStrikeAndYoureOutFanartProvider(PersistentFanartProvider):
     the lookup process after <insert criteria here>.
     """
     
-    def __init__(self, platform, delegate, nextProvider=None):
+    def __init__(self, platform, delegate, nextProvider=None, filename=None):
         if not delegate:
             raise Exception('delegate cannot be None')
         oneStrikeDir = requireDir(os.path.join(platform.getCacheDir(), 'onestrike'))
-        PersistentFanartProvider.__init__(self, nextProvider, os.path.join(oneStrikeDir, '%s.pickle' % delegate.__class__.__name__))
+        if filename is None:
+            filename = '%s' % delegate.__class__.__name__
+        PersistentFanartProvider.__init__(self, nextProvider, os.path.join(oneStrikeDir, '%s.pickle' % filename))
         self.delegate = delegate
         self.struckOut = self.pcache
 
@@ -169,8 +180,27 @@ class OneStrikeAndYoureOutFanartProvider(PersistentFanartProvider):
         
     @synchronized
     def hasStruckOut(self, key):
-        # TODO: use timestamp to expire struckOut period so metadata doesn't become too stale
-        return key in self.struckOut
+        if not key in self.struckOut:
+            return False
+        
+        bucket = self.struckOut[key]
+        if 'timestamp' in bucket:
+            # remove program from penalty box if the last lookup failure was over 30 days ago
+            ts = bucket['timestamp']
+            now = datetime.datetime.now()
+            diff = now - ts
+            if diff < datetime.timedelta(days=30):
+                #log.debug('Strikeout stands for %s:%s' % (key,safe_str(bucket['title'])))
+                return True
+            
+            log.debug('** Strikeout expired for %s:%s' % (key,safe_str(bucket['title'])))
+            del self.struckOut[key]
+            return False
+        else:
+            # Support older versions before timestamp was introduced
+            log.debug('LEGACY: timestamp added for %s' % safe_str(bucket['title']))
+            bucket['timestamp'] = datetime.datetime.now()
+            return True
     
     @synchronized
     def strikeOut(self, key, program):
@@ -180,37 +210,39 @@ class OneStrikeAndYoureOutFanartProvider(PersistentFanartProvider):
             bucket = {'title':program.title()}
             self.struckOut[key] = bucket
         bucket['timestamp'] = datetime.datetime.now()
+
+    def hasPosters(self, program):
+        return self._hasStrikeOutable('getPosters', 'hasPosters', program)
     
+    def hasBanners(self, program):
+        return self._hasStrikeOutable('getBanners', 'hasBanners', program)
+
+    def hasBackgrounds(self, program):
+        return self._hasStrikeOutable('getBackgrounds', 'hasBackgrounds', program)
+
+    def _hasStrikeOutable(self, getterMethodName, hasMethodName, program):
+        key = self.createKey(getterMethodName, program)
+        if self.hasStruckOut(key):
+            if self.nextProvider:
+                hasMethod = getattr(self.nextProvider, hasMethodName)
+                return hasMethod(program)
+            else:
+                return False
+        else:
+            hasMethod = getattr(self.delegate, hasMethodName)
+            return hasMethod(program)
+
     @chain
     def getPosters(self, program):
-        posters = []
-        key = self.createKey('getPosters', program) 
-        if not self.hasStruckOut(key):
-            posters = self.delegate.getPosters(program)
-            if not posters:
-                self.strikeOut(key, program)
-        return posters
+        return self._getStrikeOutable(program, 'getPosters', self.delegate.getPosters)
 
     @chain
     def getBanners(self, program):
-        banners = []
-        key = self.createKey('getBanners', program) 
-        if not self.hasStruckOut(key):
-            banners = self.delegate.getBanners(program)
-            if not banners:
-                self.strikeOut(key, program)
-        return banners
+        return self._getStrikeOutable(program, 'getBanners', self.delegate.getBanners)
 
     @chain
     def getBackgrounds(self, program):
         return self._getStrikeOutable(program, 'getBackgrounds', self.delegate.getBackgrounds)
-#        backgrounds = []
-#        key = self.createKey('getBackgrounds', program) 
-#        if not self.hasStruckOut(key):
-#            backgrounds = self.delegate.getBackgrounds(program)
-#            if not backgrounds:
-#                self.strikeOut(key, program)
-#        return backgrounds
 
     def _getStrikeOutable(self, program, methodName, delegateFunc):
         results = []
@@ -232,6 +264,7 @@ class OneStrikeAndYoureOutFanartProvider(PersistentFanartProvider):
         return season, episode 
 
     def clear(self):
+        
         super(OneStrikeAndYoureOutFanartProvider, self).clear()
         self.delegate.clear()
 
@@ -292,9 +325,11 @@ class SpamSkippingFanartProvider(BaseFanartProvider):
         
 class SuperFastFanartProvider(PersistentFanartProvider):
     
-    def __init__(self, platform, nextProvider=None):
+    def __init__(self, platform, nextProvider=None, filename=None):
         cacheDir = requireDir(os.path.join(platform.getCacheDir(), 'superfast'))
-        PersistentFanartProvider.__init__(self, nextProvider, os.path.join(cacheDir, 'superfast.pickle'))
+        if filename is None:
+            filename = 'superfast'
+        PersistentFanartProvider.__init__(self, nextProvider, os.path.join(cacheDir, '%s.pickle' % filename))
         self.imagePathsByKey = self.pcache
 
     def getPosters(self, program):
@@ -794,8 +829,8 @@ class TvRageProvider(NoOpFanartProvider):
                 for en, episode in season.items():
                     if episode.title.lower() == subtitle.lower():
                         return str(sn), str(episode.number)
-            except KeyError:
-                log.debug('Key error')
+            except KeyError, ke:
+                log.debug('Key error: %s' % safe_str(ke))
                 pass # For cases where an entire season is missing, keep going...
     
         log.debug('TVRage: No episode of %s found matching subtitle %s' % (safe_str(program.title()), safe_str(subtitle)))        
@@ -857,17 +892,38 @@ class FanArt(object):
     def shutdown(self):
         self.provider.close()
         
+#    def configure(self, settings):
+#        self.provider.close()
+#        p = NoOpFanartProvider()
+#        if settings.getBoolean('fanart_google'): p = GoogleImageSearchProvider(p)
+#        if settings.getBoolean('fanart_imdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, ImdbFanartProvider(), p)
+#        if settings.getBoolean('fanart_tmdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, TheMovieDbFanartProvider(), p)
+#        if settings.getBoolean('fanart_tvdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, TvdbFanartProvider(self.platform), p)
+#        if settings.getBoolean('fanart_tvrage'): p = OneStrikeAndYoureOutFanartProvider(self.platform, TvRageProvider(self.platform), p) 
+#                        
+#        p = HttpCachingFanartProvider(self.httpCache, p)
+#        self.sffp = p = SuperFastFanartProvider(self.platform, p)
+#        p = SpamSkippingFanartProvider(p)
+#        self.provider = p
+
     def configure(self, settings):
         self.provider.close()
         p = NoOpFanartProvider()
-        if settings.getBoolean('fanart_google'): p = GoogleImageSearchProvider(p)
-        if settings.getBoolean('fanart_imdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, ImdbFanartProvider(), p)
-        if settings.getBoolean('fanart_tmdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, TheMovieDbFanartProvider(), p)
-        if settings.getBoolean('fanart_tvdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, TvdbFanartProvider(self.platform), p)
-        if settings.getBoolean('fanart_tvrage'): p = OneStrikeAndYoureOutFanartProvider(self.platform, TvRageProvider(self.platform), p) 
+        if settings.getBoolean('fanart_google'): p = SuperFastFanartProvider(self.platform, HttpCachingFanartProvider(self.httpCache, GoogleImageSearchProvider(p)), filename='google')
+        if settings.getBoolean('fanart_imdb')  : p = OneStrikeAndYoureOutFanartProvider(
+                                                                                        self.platform, 
+                                                                                        SuperFastFanartProvider(
+                                                                                                                self.platform, 
+                                                                                                                HttpCachingFanartProvider(self.httpCache, ImdbFanartProvider()), 
+                                                                                                                filename='imdb'), 
+                                                                                        p, 
+                                                                                        filename='imdb')
+        if settings.getBoolean('fanart_tmdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, SuperFastFanartProvider(self.platform, HttpCachingFanartProvider(self.httpCache, TheMovieDbFanartProvider()), filename='tmdb'), p, filename='tmdb')
+        if settings.getBoolean('fanart_tvdb')  : p = OneStrikeAndYoureOutFanartProvider(self.platform, SuperFastFanartProvider(self.platform, HttpCachingFanartProvider(self.httpCache, TvdbFanartProvider(self.platform)), filename='tvdb'),  p, filename='tvdb')
+        if settings.getBoolean('fanart_tvrage'): p = OneStrikeAndYoureOutFanartProvider(self.platform, SuperFastFanartProvider(self.platform, HttpCachingFanartProvider(self.httpCache, TvRageProvider(self.platform)), filename='tvrage'), p, filename='tvrage') 
                         
-        p = HttpCachingFanartProvider(self.httpCache, p)
-        self.sffp = p = SuperFastFanartProvider(self.platform, p)
+        #p = HttpCachingFanartProvider(self.httpCache, p)
+        #self.sffp = p = SuperFastFanartProvider(self.platform, p)
         p = SpamSkippingFanartProvider(p)
         self.provider = p
     

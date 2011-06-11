@@ -210,7 +210,8 @@ class MythSettings(object):
         slog.debug('verified settings')
 
     def verifyMythTVConnectivity(self):
-        db = MythDatabase(self, self.translator)
+        domainCache = None
+        db = MythDatabase(self, self.translator, domainCache)
         self.master = db.getMasterBackend()
         
         try:
@@ -223,7 +224,8 @@ class MythSettings(object):
     
     def verifyMySQLConnectivity(self):
         try:
-            db = MythDatabase(self, self.translator)
+            domainCache = None
+            db = MythDatabase(self, self.translator, domainCache)
             db.close()
             del db
         except Exception, ex:

@@ -615,27 +615,39 @@
 
             <control type="image">
                 <description>About Image</description>
+                <posx>200</posx>
                 <posy>10</posy>
-                <width>900</width>
+                <width>100</width>
                 <height>100</height>
                 <texture>mythbox-logo.png</texture>
                 <aspectratio>keep</aspectratio>
-                <align>center</align>
             </control>
-            
+
             <control type="textbox" id="502">
-                <description>textarea</description>
-                <posy>130</posy>
+                <description>about text</description>
+                <posy>10</posy>
                 <posx>10</posx>
-                <height>300</height>
+                <height>240</height>
                 <width>900</width>
                 <font>font12</font>
                 <align>center</align>
                 <textcolor>ffffffff</textcolor>
                 <shadowcolor>black</shadowcolor>
-<!--                <pagecontrol>501</pagecontrol>-->
-<!--                <autoscroll time="1000" delay="5000" repeat="5000">true</autoscroll>-->
                 <info>Window.Property(AboutText)</info>               
+            </control>
+            
+            <control type="textbox" id="504">
+                <description>opensource text</description>
+                <posy>260</posy>
+                <posx>10</posx>
+                <height>250</height>
+                <width>900</width>
+                <font>font12</font>
+                <align>center</align>
+                <textcolor>ffffffff</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <autoscroll time="2000" delay="2000" repeat="2000">true</autoscroll>
+                <info>Window.Property(OpensourceText)</info>               
             </control>
             
         </control>

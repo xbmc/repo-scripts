@@ -28,6 +28,19 @@ log = logging.getLogger('mythbox.core')
 
 class MythEventPublisher(object):
 
+    #  Before recording starts: 
+    #
+    #      [u'BACKEND_MESSAGE', u'SYSTEM_EVENT REC_PENDING SECS 120 CARDID 7 CHANID 4282 STARTTIME 2011-05-27T20:00:00 SENDER athena', u'empty']
+    #
+    #  Delete recording
+    #
+    #     [u'BACKEND_MESSAGE', u'RECORDING_LIST_CHANGE DELETE 1071 2011-05-27T15:30:00', u'empty']
+    #
+    #  Create/edit/delete schedule
+    #
+    #     [u'BACKEND_MESSAGE', u'SCHEDULE_CHANGE', u'empty']        
+    #
+    
     def __init__(self, *args, **kwargs):
         [setattr(self, k, v) for k,v in kwargs.items() if k in ['bus', 'settings','translator','platform']]
         self.closed = False
@@ -43,12 +56,21 @@ class MythEventPublisher(object):
         while not self.closed and not xbmc.abortRequested:
             try:
                 tokens = self.eventConn.readEvent()
-                #log.debug(tokens)
+                
+                if len(tokens) >= 2 and not tokens[1].startswith(u'UPDATE_FILE_SIZE'): 
+                    log.debug('EVENT: %s' % tokens)
+                
                 if len(tokens)>=3 and tokens[0] == 'BACKEND_MESSAGE':
-                    if tokens[1].startswith('SYSTEM_EVENT'):
-                        if 'SCHEDULER_RAN' in tokens[1]:
-                            log.debug('Publishing scheduler ran...')
-                            self.bus.publish({'id':Event.SCHEDULER_RAN})
+
+                    if tokens[1].startswith('SYSTEM_EVENT') and 'SCHEDULER_RAN' in tokens[1]:
+                        self.bus.publish({'id':Event.SCHEDULER_RAN})
+                            
+                    elif tokens[1].startswith('COMMFLAG_START'):
+                        self.bus.publish({'id':Event.COMMFLAG_START})
+                            
+                    elif tokens[1].startswith('SCHEDULE_CHANGE'):
+                        self.bus.publish({'id':Event.SCHEDULE_CHANGED}) 
+
             except Exception, e:
                 log.exception(e)
         log.debug('Exiting MythEventPublisher')

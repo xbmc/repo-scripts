@@ -15,27 +15,32 @@ Disclaimer
 !!!!!!!! EXPECT THING TO NOT WORK OR GO WRONG !!!!!!!!!!!!!!
 !!!! DO NOT USE IN PRODUCTION etc.. etc... !!!!!!!!!!!!!!!!!
 
-Ah, and make backups! :-)
+Ah, and make backups!
 
 Dependencies
 =====================
 
-* Python 2.4 or greater
+* Python 2.5 or greater
+* Python 3.1 or greater
 
 Connects to:
-* MySQL 4.1 or higher
+* MySQL 4.1 or greater
 * Will not work with MySQL servers using 'old passwords'!
-
 
 Installation
 =====================
 
-* Install MySQL Connector/Python:
+To install MySQL Connector/Python, first unpack the ZIP archive or
+'tar ball' you download:
 
-To install, you'll need Python 2.4 or greater.
-Then, execute following (with proper permissions):
+  shell> unzip mysql-connector-python-0.2.0-devel.zip
+    or
+  shell> tar xzf mysql-connector-python-0.2.0-devel.tar.gz
 
-  shell> python ./setup.py install
+Then simply execute the setup.py script with the 'install' argument:
+
+  shell> cd mysql-connector-python-0.2.0/
+  shell> python setup.py install
 
 setup.py will figure out which Python version you have and install the
 correct modules.
@@ -43,15 +48,16 @@ correct modules.
 Usage
 =====================
 
-* Check out the examples:
+There are examples provided for both Python v2 and v3. Please check
+the following directories which comes with the MySQL Connector/Python
+distribution:
 
-In the examples directory of the source distribution you will find config.py,
-edit this file and change the connection settings for your MySQL server.
-Once that done, you should be able to run the examples. If not, contact me!
+* For Python v2:  python2/examples/
+* For Python v3:  python3/examples/
 
- shell> ./engines.py
+Simply execute the examples as follows after installation:
 
-Python v3.1 users: The examples are in the py3k/ subdirectory.
+ shell> python engines.py
 
 Testing
 =====================
@@ -69,6 +75,6 @@ Report problems using LaunchPad's bug system here:
 Credits
 =====================
 
-* Andy Dustman - we owe you big time for MySQLdb!
-* Jess Balint - early development of native Python driver, helped a bit!
-* (long list to come!)
+* Andy Dustman - we owe you big time for MySQLdb
+* Jess Balint - early development of native Python driver, helped a bit
+* Everyone reporting bugs through Launchpad

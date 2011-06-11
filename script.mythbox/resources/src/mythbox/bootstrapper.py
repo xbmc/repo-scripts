@@ -97,12 +97,6 @@ class BootStrapper(object):
         from mythbox.util import requireDir
         requireDir(cacheDir)
         
-#        try:
-#            self.platform.getFFMpegPath(prompt=True)
-#        except Exception, e:
-#            self.failSilent = True
-#            raise e
-        
         self.log.info('MythBox %s Initialized' % self.platform.addonVersion())
 
     def bootstrapEventBus(self):

@@ -401,7 +401,6 @@ To submit translations for your native language
   <string id="415">Potvrzení smazání</string>
   <string id="416">Umístění nahrávek MythTV na místním souborovém systému (připojená skupina adresářů úložišť, jestliže je váš backend vzdálený).</string>
   <string id="417">Více adresářů může být odděleno čárkou pro systémy Linux/Mac nebo středníkem pro Windows.</string>
-  <string id="418">FFMpeg je pro Mac a Windows přibalen s MythBox.  Linuxoví uživatelé musí použít 'apt-get install ffmpeg'</string>
   <string id="419">Povolit agresivní vyrovnávací paměť</string>
   <string id="427">Data ukládané do agresivní vyrovnávací paměti zvyšují režii zvýšením zátěže backend serveru a zvyšují využití datového pásma.</string>
   <string id="428">NEPOUŽÍVEJTE při připojení k vašemu MythTV backend serveru přes bezdrátové spoje.</string>

@@ -401,7 +401,6 @@ To submit translations for your native language
   <string id="415">Bekräfta borttagning</string>
   <string id="416">Lokal plats för MythTV-inspelningar (monterad disk om backend inte är lokal).</string>
   <string id="417">Flera kataloger kan avskiljas med kolon på Linux/Mac och medsemikolon på Windows.</string>
-  <string id="418">FFMpeg kommer med MythBox på Mac och Windows.  Linux-användare måste göra 'apt-get install ffmpeg'</string>
   <string id="419">Slå på aggressiv cachning</string>
   <string id="427">Data cachas aggressivt på bekostnad av högre last på backend och högre användning av bandbredd.</string>
   <string id="428">Slå INTE på om du är ansluten till MythTV backend trådlöst.</string>

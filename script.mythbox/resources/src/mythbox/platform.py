@@ -81,7 +81,6 @@ class Platform(object):
     def addLibsToSysPath(self):
         '''Add 3rd party libs in ${scriptdir}/resources/lib to the PYTHONPATH'''
         libs = [
-            'pyxcoder', 
             'decorator', 
             'odict',
             'bidict', 
@@ -166,9 +165,6 @@ script data dir = %s
         s += bar
         return s
     
-    def getFFMpegPath(self, prompt=False):
-        return ''
-
     def getDefaultRecordingsDir(self):
         return ''
 
@@ -183,23 +179,6 @@ script data dir = %s
         s = u'XBMC.Notification(%s,%s,%s)' % (title, text, millis)
         xbmc.executebuiltin(s)
 
-    def requireFFMpeg(self, path):
-        if os.path.exists(path) and os.path.isfile(path):
-            return
-
-        dir, exe = os.path.split(path)
-        requireDir(dir)
-        
-        self.showPopup('Downloading FFMPEG', 'This may take a couple mins...hang tight', millis=10000)
-        filename, headers = urllib.urlretrieve(self.ffmpegUrl, path)
-            
-        if os.path.exists(path) and os.path.isfile(path):
-            os.chmod(path, stat.S_IRWXG|stat.S_IRWXO|stat.S_IRWXU)
-            self.showPopup('Downloading FFMPEG', 'All done!', millis=10000)
-            return
-        
-        raise Exception, 'FFMpeg could not be downloaded'
-
 
 class UnixPlatform(Platform):
 
@@ -212,15 +191,6 @@ class UnixPlatform(Platform):
     def isUnix(self):
         return True
         
-    def getFFMpegPath(self, prompt=False):
-        f = '/usr/bin/ffmpeg'
-        if os.path.exists(f) and os.path.isfile(f):
-            return f
-        else:
-            if prompt:
-                xbmcgui.Dialog().ok('Error', 'Please install ffmpeg.', 'Ubuntu/Debian: apt-get install ffmpeg')
-            raise Exception, 'ffmpeg not installed'
-
     def getDefaultRecordingsDir(self):
         return '/var/lib/mythtv/recordings'
 
@@ -235,16 +205,10 @@ class WindowsPlatform(Platform):
 
     def __init__(self, *args, **kwargs):
         Platform.__init__(self, *args, **kwargs)
-        self.ffmpegUrl = 'http://mythbox.googlecode.com/hg/resources/bin/win32/ffmpeg.exe'
     
     def getName(self):
         return "windows"
 
-    def getFFMpegPath(self, prompt=False):
-        path = os.path.join(self.getScriptDataDir(), 'ffmpeg.exe')
-        self.requireFFMpeg(path)
-        return path
-    
     def getDefaultRecordingsDir(self):
         return 'c:\\change\\me'
 
@@ -260,15 +224,9 @@ class MacPlatform(Platform):
 
     def __init__(self, *args, **kwargs):
         Platform.__init__(self, *args, **kwargs)
-        self.ffmpegUrl = 'http://mythbox.googlecode.com/hg/resources/bin/osx/ffmpeg'
         
     def getName(self):
         return 'mac'
-
-    def getFFMpegPath(self, prompt=False):
-        path = os.path.join(self.getScriptDataDir(), 'ffmpeg')
-        self.requireFFMpeg(path)
-        return path
 
     def getDefaultRecordingsDir(self):
         return '/change/me'
@@ -288,15 +246,6 @@ class IOSPlatform(Platform):
         
     def getName(self):
         return 'ios'
-
-    def getFFMpegPath(self, prompt=False):
-        f = '/usr/local/bin/ffmpeg'
-        if os.path.exists(f) and os.path.isfile(f):
-            return f
-        else:
-            if prompt:
-                xbmcgui.Dialog().ok('Error', 'Please install ffmpeg via Cydia', '1) Sections > Repositories > ModMyi.com > Install', '2) Sections > Multimedia > FFmpeg > Install')
-            raise Exception, 'ffmpeg not installed'
 
     def getDefaultRecordingsDir(self):
         return '/var/mobile'

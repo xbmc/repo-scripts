@@ -21,18 +21,14 @@ import logging
 import os
 import re
 import sre
-import tempfile
 import time
 
 import mythbox.msg as m
-from ffmpeg import FFMPEG
 from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.enums import CheckForDupesIn, CheckForDupesUsing, \
     EpisodeFilter, FlagMask, JobStatus, JobType, RecordingStatus, \
-    ScheduleType, Upcoming
-from mythbox.platform import WindowsPlatform
-from mythbox.ui.toolkit import showPopup
-from mythbox.util import timed, formatSeconds, formatSize, synchronized, requireDir, safe_str
+    ScheduleType
+from mythbox.util import formatSeconds, formatSize, safe_str
 from odict import odict
 
 log = logging.getLogger('mythbox.core')
@@ -1007,135 +1003,6 @@ class RecordedProgram(Program):
             self._fps = self.db().getFramerate(self)
         return self._fps
     
-#    def getFrameRate(self):
-#        if self.settings.getBoolean('streaming_enabled'):
-#            # framerate not needed when using streaming.
-#            # use an obviously invalid default so CommercialBreak objects 
-#            # can still be constructed to get number of breaks 
-#            return 29.97
-#        else:
-#            return self.getFrameRate1()
-        
-#    @timed
-#    @synchronized
-#    def getFrameRate1(self):
-#        """
-#        @rtype: float
-#        @note: cached 
-#        @note: most recordings are either 29.97 or 59.97
-#        @todo: GUIInfoManager.cpp - look at refs to GetFPS()
-#        """
-#        if not self._fps:
-#            
-#            ffmpeg_cache_dir=os.path.join(self._platform.getScriptDataDir(), 'cache', 'ffmpeg')
-#            requireDir(ffmpeg_cache_dir) 
-#                
-#            ffmpegParser = FFMPEG(
-#                ffmpeg=self._platform.getFFMpegPath(),
-#                closeFDs=(type(self._platform) != WindowsPlatform),  # WORKAROUND: close_fds borked on windows
-#                windows=(type(self._platform) == WindowsPlatform),   # WORKAROUND: let pyxcoder know we're on windows
-#                tempdir=ffmpeg_cache_dir,
-#                log=log)
-#            
-#            try:
-#                metadata = ffmpegParser.get_metadata(self.getLocalPath())
-#            except:
-#                log.exception('ffmpeg parsing failed')
-#                metadata = None
-#                
-#            log.debug('ffmpeg metadata for %s = %s' % (self.getLocalPath(), metadata))
-#            if metadata:
-#                self._fps = float(metadata.frame_rate)
-#
-#                # Hack for FFMPEG returning incorrect or conflicting framerates for specific types of video files
-#                for name, profile_data in self._fps_overrides.iteritems():
-#                    try:
-#                        if len([key for key,value in profile_data['tags'].iteritems() if getattr(metadata, key) == value]) == len(profile_data['tags']):  # all key/value pairs match
-#                            old_fps = self._fps
-#                            self._fps = profile_data['fps']
-#                            log.debug('FPS override %s activated for %s from %s to %s' % (name, safe_str(self.title()), old_fps, self._fps))
-#                            break
-#                    except:
-#                        log.exception('Blew up trying to test for fps overrides')
-#            else:
-#                self._fps = 29.97
-#                log.error("""Could not determine FPS for file %s so defaulting to %s FPS.
-#                             Make sure you have the ffmpeg executable in your path. 
-#                             Commercial skipping may be inaccurate""" % (self._fps, self.getLocalPath()))
-#                showPopup(self.translator.get(m.ERROR), 'FFMPEG error - comm skips may be incorrect')
-#            log.debug('FPS = %s' % self._fps)
-#        return self._fps
-
-#    @timed
-#    @inject_db
-#    @inject_conn
-#    def getFrameRate2(self):
-#        """
-#        Get framerate without the recording being accessible via the filesystem.
-#        @rtype: float
-#        @note: cached 
-#        @note: most recordings are either 29.97 or 59.97
-#        """
-#        
-#        #
-#        # TODO: Integrate for Issue 111
-#        #
-#        
-#        ffmpeg_cache_dir=os.path.join(self._platform.getScriptDataDir(), 'cache', 'ffmpeg')
-#        requireDir(ffmpeg_cache_dir) 
-#        
-#        if not self._fps:
-#            ffmpegParser = FFMPEG(
-#                ffmpeg=self._platform.getFFMpegPath(),
-#                closeFDs=(type(self._platform) != WindowsPlatform),  # WORKAROUND: close_fds borked on windows
-#                windows=(type(self._platform) == WindowsPlatform),   # WORKAROUND: let pyxcoder know we're on windows
-#                tempdir=ffmpeg_cache_dir,
-#                log=log)
-#            
-#            fileSink = os.path.join(ffmpeg_cache_dir, self.getBareFilename())           
-#            
-#            try:
-#                if not os.path.exists(os.path.join(ffmpeg_cache_dir, fileSink + ".out")):
-#                    log.debug('Saving recording fragment to: %s' % fileSink)
-#                    transferred = self.conn().transferFile(self.getFilename(), fileSink, self.db().toBackend(self.hostname()).ipAddress, numBytes=5000000)
-#    
-#                    if not transferred:
-#                        log.exception('Error', 'Transfer file fragment for %s failed' % safe_str(self.title()))
-#                        self._fps = 29.97
-#                        return self._fps
-#                    
-#                try:
-#                    metadata = ffmpegParser.get_metadata(fileSink)
-#                except:
-#                    log.exception('ffmpeg parsing failed')
-#                    metadata = None
-#                    
-#                log.debug('ffmpeg metadata for %s = %s' % (fileSink, metadata))
-#                if metadata:
-#                    self._fps = float(metadata.frame_rate)
-#
-#                    # Hack for FFMPEG returning incorrect or conflicting framerates for specific types of video files
-#                    for name, profile_data in self._fps_overrides.iteritems():
-#                        try:
-#                            if len([key for key,value in profile_data['tags'].iteritems() if getattr(metadata, key) == value]) == len(profile_data['tags']):  # all key/value pairs match
-#                                old_fps = self._fps
-#                                self._fps = profile_data['fps']
-#                                log.debug('FPS override %s activated for %s from %s to %s' % (name, safe_str(self.title()), old_fps, self._fps))
-#                                break
-#                        except:
-#                            log.exception('Blew up trying to test for fps overrides')
-#                else:
-#                    self._fps = 29.97
-#                    log.error("""Could not determine FPS for file %s so defaulting to %s FPS.
-#                                 Make sure you have the ffmpeg executable in your path. 
-#                                 Commercial skipping may be inaccurate""" % (self._fps, fileSink))
-#                    showPopup(self.translator.get(m.ERROR), 'FFMpeg could not determine framerate. Comm skip may be inaccurate')
-#            finally:
-#                if os.path.exists(fileSink):
-#                    os.remove(fileSink)
-#            log.debug('FPS = %s' % self._fps)
-#        return self._fps
-
     def formattedFileSize(self):
         """
         @return: filesize with MB or GB suffix
@@ -1165,188 +1032,12 @@ class RecordedProgram(Program):
             log.debug('data[%d] = %s' % (i,d))
 
 
-class Schedule(object):
-    """
-    Abstract base class to represent a recording schedule in the mythtv system.
-
-    This class is based on the Myth TV RECORD table.
-    """
-
-    def __init__(self, translator):
-        self.translator = translator
-
-    def getIconPath(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def starttime(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def startdate(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def endtime(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def enddate(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def title(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def subtitle(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def description(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def category(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def profile(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def getRecordingGroup(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def getCheckForDupesUsing(self):
-        raise NotImplementedError, "Abstract base class"
-
-    def getCheckForDupesIn(self):
-        raise NotImplementedError, "Abstract base class"
-
-    def getEpisodeFilter(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def getDupin(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def station(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def seriesid(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def programid(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def search(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def isAutoUserJob1(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def isAutoUserJob2(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def isAutoUserJob3(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def isAutoUserJob4(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def findday(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def findtime(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def findid(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def parentid(self):
-        raise NotImplementedError, "Abstract base class"
-    
-    def __repr__(self):
-        return "%s {recordid=%s, type=%s, title=%s, subtitle=%s, starttime=%s, endtime=%s startdate=%s, enddate=%s}" % (
-            type(self).__name__,
-            self.getScheduleId(),
-            self.formattedScheduleType(),
-            repr(self.title()),
-            repr(self.subtitle()),
-            self.starttime(),
-            self.endtime(),
-            self.startdate(),
-            self.enddate())
-
-    def startdateAsTime(self):
-        """
-        @rtype: datetime.datetime
-        """
-        sd = self.startdate()
-        return datetime.datetime(int(sd[0:4]), int(sd[4:6]), int(sd[6:8]), 0, 0)
-        
-    def formattedChannel(self):
-        text = u''
-        if self.getChannelNumber():
-            text += self.getChannelNumber()
-        if self.getCallSign():
-            text += u' - ' + self.getCallSign()
-        return text
-
-    def formattedDuplicateMethod(self):
-        return self.translator.get(CheckForDupesUsing.translations[self.getCheckForDupesUsing()()])
-    
-    def formattedDuplicateIn(self):
-        return self.translator.get(CheckForDupesIn.translations[self.getCheckForDupesIn()])
-    
-    def formattedStartDate(self):
-        value = u''
-        value += self.startdateAsTime().strftime("%a, %b %d")
-        return value
-    
-    def formattedTime(self):
-        startHours = int(self.starttime()[0:2])
-        startAMPM = "am"
-        if startHours > 12:
-            startAMPM = "pm"
-            startHours -= 12
-            
-        endHours = int(self.endtime()[0:2])
-        endAMPM = "am"
-        if endHours > 12:
-            endAMPM = "pm"
-            endHours -= 12
-        
-        text = "%s:%s%s - %s:%s%s"%(
-            startHours,
-            self.starttime()[2:4],
-            startAMPM,
-            endHours,
-            self.endtime()[2:4],
-            endAMPM)
-        
-        if self.startdate() != self.enddate():
-            text += " +1"
-        return text
-    
-    def formattedScheduleType(self):
-        return self.translator.get(ScheduleType.translations[self.getScheduleType()])
-    
-    def formattedScheduleTypeDescription(self):
-        return self.translator.get(ScheduleType.long_translations[self.getScheduleType()])
-    
-    def fullTitle(self):
-        """
-        @return: Title and subtitle
-        """
-        fullTitle = u''
-        if self.title():
-            fullTitle += self.title()
-        if self.subtitle() and not sre.match('^\s+$', self.subtitle()):
-            fullTitle += u' - ' + self.subtitle()
-        return fullTitle
-
-
-class RecordingSchedule(Schedule):
+class RecordingSchedule(object):
     """Recording schedule as persisted in the 'record' table."""
     
     def __init__(self, data, translator):
-        """
-        @param data: dict of data
-        @param translator: Translator
-        """
-        Schedule.__init__(self, translator)
-        self._data = data    
+        self._data = data # dict 
+        self.translator = translator
         
         if not 'icon' in self._data or not self._data['icon'] or self._data['icon'] == "none":
             self._data['icon'] = None
@@ -1363,6 +1054,12 @@ class RecordingSchedule(Schedule):
             self.startdate(),
             self.enddate(),
             self.numRecorded())
+
+    def __eq__(self, rhs):
+        return isinstance(rhs, RecordingSchedule) and self.getScheduleId() == rhs.getScheduleId()
+
+    def __hash__(self):
+        return hash(self.getScheduleId())
     
     def data(self):
         """
@@ -1805,61 +1502,126 @@ class RecordingSchedule(Schedule):
         """
         self._data['endoffset'] = minutes
     
-
-class ScheduleFromProgram(RecordingSchedule):
-    '''New Schedule seeded from a TVProgram.'''
-    
-    def __init__(self, program, translator):
-        RecordingSchedule.__init__(self, dict(), translator)
+    def startdateAsTime(self):
+        """
+        @rtype: datetime.datetime
+        """
+        sd = self.startdate()
+        return datetime.datetime(int(sd[0:4]), int(sd[4:6]), int(sd[6:8]), 0, 0)
         
-        self.data()['icon']          = program.getIconPath()
-        self.data()['title']         = program.data()['title']
-        self.data()['subtitle']      = program.data()['subtitle']
-        self.data()['description']   = program.data()['description']
-        self.data()['category']      = program.category()
-        self.data()['chanid']        = program.getChannelId()
-        self.data()['channum']       = program.getChannelNumber()  
-        self.data()['callsign']      = program.getCallSign()
-        self.data()['seriesid']      = program.seriesid()
-        self.data()['programid']     = program.programid()
-        self.data()['channame']      = program.getChannelName()
-        self.data()['recordid']      = None
-        self.data()['type']          = ScheduleType.CHANNEL
-        self.data()['startdate']     = program.starttime()[0:8]
-        self.data()['starttime']     = program.starttime()[8:14]
-        self.data()['enddate']       = program.endtime()[0:8]
-        self.data()['endtime']       = program.endtime()[8:14]
-        self.data()['profile']       = u'Default'
-        self.data()['recpriority']   = 0
-        self.data()['autoexpire']    = 0
-        self.data()['maxepisodes']   = 0
-        self.data()['maxnewest']     = 0
-        self.data()['startoffset']   = 0
-        self.data()['endoffset']     = 0
-        self.data()['recgroup']      = 'Default'
-        self.data()['dupmethod']     = CheckForDupesUsing.SUBTITLE
-        self.data()['dupin']         = CheckForDupesIn.ALL_RECORDINGS | EpisodeFilter.NONE
-        self.data()['station']       = self.getCallSign()
-        self.data()['search']        = '0'
-        self.data()['autotranscode'] = 0
-        self.data()['autocommflag']  = 0 
-        self.data()['autouserjob1']  = 0 
-        self.data()['autouserjob2']  = 0 
-        self.data()['autouserjob3']  = 0 
-        self.data()['autouserjob4']  = 0 
-        self.data()['findday']       = '0'
-        self.data()['findtime']      = '00:00:00'
-        self.data()['findid']        = '0'
-        self.data()['inactive']      = 0
-        self.data()['parentid']      = '0'
-        self.data()['numRecorded']   = 0
+    def formattedChannel(self):
+        text = u''
+        if self.getChannelNumber():
+            text += self.getChannelNumber()
+        if self.getCallSign():
+            text += u' - ' + self.getCallSign()
+        return text
+
+    def formattedDuplicateMethod(self):
+        return self.translator.get(CheckForDupesUsing.translations[self.getCheckForDupesUsing()()])
+    
+    def formattedDuplicateIn(self):
+        return self.translator.get(CheckForDupesIn.translations[self.getCheckForDupesIn()])
+    
+    def formattedStartDate(self):
+        value = u''
+        value += self.startdateAsTime().strftime("%a, %b %d")
+        return value
+    
+    def formattedTime(self):
+        startHours = int(self.starttime()[0:2])
+        startAMPM = "am"
+        if startHours > 12:
+            startAMPM = "pm"
+            startHours -= 12
+            
+        endHours = int(self.endtime()[0:2])
+        endAMPM = "am"
+        if endHours > 12:
+            endAMPM = "pm"
+            endHours -= 12
+        
+        text = "%s:%s%s - %s:%s%s"%(
+            startHours,
+            self.starttime()[2:4],
+            startAMPM,
+            endHours,
+            self.endtime()[2:4],
+            endAMPM)
+        
+        if self.startdate() != self.enddate():
+            text += " +1"
+        return text
+    
+    def formattedScheduleType(self):
+        return self.translator.get(ScheduleType.translations[self.getScheduleType()])
+    
+    def formattedScheduleTypeDescription(self):
+        return self.translator.get(ScheduleType.long_translations[self.getScheduleType()])
+    
+    def fullTitle(self):
+        """
+        @return: Title and subtitle
+        """
+        fullTitle = u''
+        if self.title():
+            fullTitle += self.title()
+        if self.subtitle() and not sre.match('^\s+$', self.subtitle()):
+            fullTitle += u' - ' + self.subtitle()
+        return fullTitle
+
+    @staticmethod
+    def fromProgram(program, translator):
+        data = {}
+        data['icon']          = program.getIconPath()
+        data['title']         = program.data()['title']
+        data['subtitle']      = program.data()['subtitle']
+        data['description']   = program.data()['description']
+        data['category']      = program.category()
+        data['chanid']        = program.getChannelId()
+        data['channum']       = program.getChannelNumber()  
+        data['callsign']      = program.getCallSign()
+        data['seriesid']      = program.seriesid()
+        data['programid']     = program.programid()
+        data['channame']      = program.getChannelName()
+        data['recordid']      = None
+        data['type']          = ScheduleType.CHANNEL
+        data['startdate']     = program.starttime()[0:8]
+        data['starttime']     = program.starttime()[8:14]
+        data['enddate']       = program.endtime()[0:8]
+        data['endtime']       = program.endtime()[8:14]
+        data['profile']       = u'Default'
+        data['recpriority']   = 0
+        data['autoexpire']    = 0
+        data['maxepisodes']   = 0
+        data['maxnewest']     = 0
+        data['startoffset']   = 0
+        data['endoffset']     = 0
+        data['recgroup']      = 'Default'
+        data['dupmethod']     = CheckForDupesUsing.SUBTITLE
+        data['dupin']         = CheckForDupesIn.ALL_RECORDINGS | EpisodeFilter.NONE
+        data['station']       = program.getCallSign()
+        data['search']        = '0'
+        data['autotranscode'] = 0
+        data['autocommflag']  = 0 
+        data['autouserjob1']  = 0 
+        data['autouserjob2']  = 0 
+        data['autouserjob3']  = 0 
+        data['autouserjob4']  = 0 
+        data['findday']       = '0'
+        data['findtime']      = '00:00:00'
+        data['findid']        = '0'
+        data['inactive']      = 0
+        data['parentid']      = '0'
+        data['numRecorded']   = 0
+        return RecordingSchedule(data, translator)
 
 
 class Tuner(object):
     """MythTV Tuner (aka encoder, recorder, card). Maps to the mythtv capturecard 
     database table."""
 
-    def __init__(self, tunerId, hostname, signalTimeout, channelTimeout, tunerType='', conn=None, db=None, translator=None):
+    def __init__(self, tunerId, hostname, signalTimeout, channelTimeout, tunerType, domainCache, conn=None, db=None, translator=None):
         """
         @param tunerId: unique tunerid as int
         @param hostname: physical hostname where tuner is located as string
@@ -1871,6 +1633,7 @@ class Tuner(object):
         self.hostname = hostname
         self.signalTimeout = signalTimeout
         self.channelTimeout = channelTimeout
+        self.domainCache = domainCache
         self.tunerType = tunerType  # HDHOMERUN, HDPVR, etc
         self._conn = conn
         self._db = db
@@ -1979,7 +1742,6 @@ class Tuner(object):
         result = filter(lambda c: c.getChannelNumber() == channel.getChannelNumber(), self.getChannels())
         return len(result) == 1
     
-    @inject_conn
     def getChannels(self):
         """
         @return: Channels this tuner can view
@@ -1987,7 +1749,7 @@ class Tuner(object):
         @attention: Cached value returned after first call.
         """
         if self._channels is None:
-            self._channels = filter(lambda c: c.getTunerId() == self.tunerId, self.conn().getChannels())
+            self._channels = filter(lambda c: c.getTunerId() == self.tunerId, self.domainCache.getChannels())
         return self._channels
     
     @inject_conn
@@ -2061,13 +1823,12 @@ class Tuner(object):
         h = '%d' % int(time.strftime('%I', lt)) 
         return '%s%s' % (h, time.strftime(':%M %p', lt))                    
             
-    @inject_conn    
     def getNextScheduledRecording(self):
         """
         @return: Next show that is scheduled to be recorded by this tuner
         @rtype: RecordedProgram or None
         """
-        upcoming = self.conn().getUpcomingRecordings(filter=Upcoming.SCHEDULED)
+        upcoming = self.domainCache.getUpcomingRecordings()
         upcoming = filter(lambda x: x.getTunerId() == self.tunerId, upcoming)
         upcoming.sort(key=lambda x: x.starttimeAsTime())
         if len(upcoming) > 0:
@@ -2084,13 +1845,27 @@ class Tuner(object):
             return backend
 
 
+class UserJob(object):
+    
+    def __init__(self, jobType, desc, command):
+        self.jobType = jobType  # Job.USERJOB[1|2|3|4]
+        self.desc = desc        # from SETTING table where data = UserJobDesc1..4  value = desc
+        self.command = command  # from SETTING table where data = UserJob1..4  value = command
+
+    def isActive(self):
+        return self.command is not None and self.desc is not None and len(self.command) > 0 and len(self.desc) > 0
+    
+    def __repr__(self):
+        return safe_str('UserJob type=%s desc=%s command=%s' % (self.jobType, self.desc, self.command))
+
+        
 class Job(object):
     """Represents a scheduled commercial flagging, transcoding, or user defined job."""
 
     def __init__(self, id, channelId, startTime, insertTime, 
                  jobType, cmds, flags, jobStatus, statusTime,
                  hostname, comment, scheduledRunTime, translator, 
-                 conn=None, db=None):
+                 domainCache, conn=None, db=None):
         """
         @type id: int
         @type channelId: int
@@ -2110,6 +1885,7 @@ class Job(object):
         """
         self._db = db
         self._conn = conn
+        self.domainCache = domainCache
         self.id = id
         self.channelId = channelId
         self.startTime = startTime
@@ -2123,6 +1899,25 @@ class Job(object):
         self.comment = comment
         self.scheduledRunTime = scheduledRunTime
         self.translator = translator
+
+    @classmethod
+    def fromProgram(cls, program, jobType):
+        job = Job(
+            id=None,
+            channelId=program.getChannelId(),
+            startTime=program.starttimeAsTime(),
+            insertTime=datetime.datetime.now(),
+            jobType=jobType,
+            cmds=None,
+            flags=None,
+            jobStatus=JobStatus.QUEUED,
+            statusTime=None,
+            hostname=u'',
+            comment=u'',
+            scheduledRunTime=datetime.datetime.now(),
+            translator=program.translator,
+            domainCache=None)
+        return job
 
     def db(self):
         return self._db
@@ -2140,10 +1935,19 @@ class Job(object):
         log.debug("Job     start time = %s" % self.startTime)
         return program.getChannelId() == self.channelId and \
                program.starttimeAsTime() == self.startTime
-            
-    def formattedJobType(self):
-        return self.translator.get(JobType.translations[self.jobType])
+
+    def getUserJobDesc(self):
+        return [userJob.desc for userJob in self.domainCache.getUserJobs() if userJob.jobType & JobType.USERJOB == self.jobType].pop()
     
+    def isUserJob(self):
+        return (self.jobType | JobType.USERJOB) == JobType.USERJOB
+                
+    def formattedJobType(self):
+        if not self.isUserJob():
+            return self.translator.get(JobType.translations[self.jobType])
+        else:
+            return self.getUserJobDesc() 
+        
     def formattedJobStatus(self):
         return self.translator.get(JobStatus.translations[self.jobStatus])
     
@@ -2202,7 +2006,7 @@ class Job(object):
         if currentPos == 1:
             log.warn('Job %d is already at the front of the queue' % self.id)
             
-        jobs = self.db().getJobs(jobType=JobType.COMMFLAG, jobStatus=JobStatus.QUEUED)
+        jobs = self.db().getJobs(jobStatus=JobStatus.QUEUED)
 
         self.scheduledRunTime = jobs[0].scheduledRunTime
         self.db().updateJobScheduledRunTime(self)            
@@ -2227,40 +2031,6 @@ class Job(object):
             self.formattedJobStatus(),
             self.scheduledRunTime)
 
-
-class MythUrl(object):
-    
-    pattern = re.compile('myth://([A-Za-z0-9\.]*):([0-9]*)(.*)')
-     
-    def __init__(self, url):
-        self.url = url
-        self.parsed = False
-        self.matches = None
-    
-    def match(self):
-        self.matches = MythUrl.pattern.match(self.url)
-        if self.matches:
-            log.debug('groups = %s' % len(self.matches.groups()))
-        self.parsed = True
-            
-    def hostname(self):
-        if not self.parsed: 
-            self.match()
-        if self.matches:
-            return self.matches.group(1)
-    
-    def port(self):
-        if not self.parsed: 
-            self.match()
-        if self.matches:
-            return self.matches.group(2)
-     
-    def path(self):
-        if not self.parsed: 
-            self.match()
-        if self.matches:
-            return self.matches.group(3)
-        
                 
 class Backend(object):
     

@@ -374,7 +374,6 @@
   <string id="415">Confirmer lors de la Suppression</string>
   <string id="416">Emplacement des enregistrements MythTV en fichier local (répertoires montés si votre backend est déporté).</string>
   <string id="417">Les répertoires multiples peuvent être séparés par : avec Linux/Mac et un ; avec Windows.</string>
-  <string id="418">FFMpeg est intégré avec MythBox pour Mac et Windows. Les utilisateurs Linux lancent 'apt-get install ffmpeg'</string>
   <string id="419">Activer la mise en cache aggressive</string>
   <string id="427">Mise en cache aggressive au maxi de la charge du backend et utilisation améliorée de la bande passante.</string>
   <string id="428">Ne PAS activer si vous êtes connecté à votre backend MythTV à l'aide d'une liaison sans fil.</string>

@@ -24,7 +24,12 @@
 """Python exceptions
 """
 
-# see dispatch_mysql_error method for errno ranges and smaller lists
+import logging
+import utils
+
+logger = logging.getLogger('myconnpy')
+
+# see get_mysql_exceptions method for errno ranges and smaller lists
 __programming_errors = (
     1083,1084,1090,1091,1093,1096,1097,1101,1102,1103,1107,1108,1110,1111,
     1113,1120,1124,1125,1128,1136,1366,1139,1140,1146,1149,)
@@ -57,30 +62,48 @@ def get_mysql_exception(errno,msg):
         exception = OperationalError
     
     return exception(msg,errno=errno)
-    
+
+def raise_error(buf):
+    """Raise an errors.Error when buffer has a MySQL error"""
+    errno = errmsg = None
+    try:
+        buf = buf[5:]
+        (buf,errno) = utils.read_int(buf, 2)
+        if buf[0] != '\x23':
+            # Error without SQLState
+            errmsg = buf
+        else:
+            (buf,sqlstate) = utils.read_bytes(buf[1:],5)
+            errmsg = buf
+    except Exception, e:
+        raise InterfaceError("Failed getting Error information (%r)"\
+            % e)
+    else:
+        raise get_mysql_exception(errno,errmsg)
+
 class ClientError(object):
     
     client_errors = {
         2000: "Unknown MySQL error",
-        2001: "Can't create UNIX socket (%d)",
-        2002: "Can't connect to local MySQL server through socket '%s' (%s)",
-        2003: "Can't connect to MySQL server on '%s' (%s)",
+        2001: "Can't create UNIX socket (%(socketaddr)d)",
+        2002: "Can't connect to local MySQL server through socket '%(socketaddr)s' (%(errno)s)",
+        2003: "Can't connect to MySQL server on '%(socketaddr)s' (%(errno)s)",
         2004: "Can't create TCP/IP socket (%s)",
-        2005: "Unknown MySQL server host '%s' (%s)",
+        2005: "Unknown MySQL server host '%(socketaddr)s' (%s)",
         2006: "MySQL server has gone away",
-        2007: "Protocol mismatch; server version = %d, client version = %d",
+        2007: "Protocol mismatch; server version = %(server_version)d, client version = %(client_version)d",
         2008: "MySQL client ran out of memory",
         2009: "Wrong host info",
         2010: "Localhost via UNIX socket",
-        2011: "%s via TCP/IP",
+        2011: "%(misc)s via TCP/IP",
         2012: "Error in server handshake",
         2013: "Lost connection to MySQL server during query",
         2014: "Commands out of sync; you can't run this command now",
-        2015: "Named pipe: %s",
-        2016: "Can't wait for named pipe to host: %s  pipe: %s (%d)",
-        2017: "Can't open named pipe to host: %s  pipe: %s (%d)",
-        2018: "Can't set state of named pipe to host: %s  pipe: %s (%d)",
-        2019: "Can't initialize character set %s (path: %s)",
+        2015: "Named pipe: %(socketaddr)s",
+        2016: "Can't wait for named pipe to host: %(host)s  pipe: %(socketaddr)s (%(errno)d)",
+        2017: "Can't open named pipe to host: %s  pipe: %s (%(errno)d)",
+        2018: "Can't set state of named pipe to host: %(host)s  pipe: %(socketaddr)s (%(errno)d)",
+        2019: "Can't initialize character set %(charset)s (path: %(misc)s)",
         2020: "Got packet bigger than 'max_allowed_packet' bytes",
         2021: "Embedded server",
         2022: "Error on SHOW SLAVE STATUS:",
@@ -116,7 +139,7 @@ class ClientError(object):
         2052: "Prepared statement contains no metadata",
         2053: "Attempt to read a row while there is no result set associated with the statement",
         2054: "This feature is not implemented yet",
-        2055: "Lost connection to MySQL server at '%s', system error: %d",
+        2055: "Lost connection to MySQL server at '%(socketaddr)s', system error: %(errno)d",
         2056: "Statement closed indirectly because of a preceeding %s() call",
         2057: "The number of columns in the result set differs from the number of bound buffers. You must reset the statement, rebind the result set columns, and execute the statement again",
     }
@@ -126,15 +149,20 @@ class ClientError(object):
     
     @classmethod
     def get_error_msg(cls,errno,values=None):
-        try:
-            m = cls.client_errors[errno]
-            try:
-                m = m % values
-            except:
-                pass
-            return m
-        except:
-            return "Unknown client error (wrong errno?)"
+        res = None
+        if cls.client_errors.has_key(errno):
+            if values is not None:
+                try:
+                    res = cls.client_errors[errno] % values
+                except:
+                    logger.debug("Missing values for errno %d" % errno)
+                    res = cls.client_errors[errno], "(missing values!)"
+            else:
+                res = cls.client_errors[errno]
+        if res is None:
+            res = "Unknown client error %d" % errno
+            logger.debug(res)
+        return res
 
 class Error(StandardError):
     

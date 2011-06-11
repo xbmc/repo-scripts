@@ -8,8 +8,9 @@ Q3. Where are the MythBox configuration settings stored?
 Q4. When is the next release coming out?
 Q5. How do I specify more than one recording directory in the settings?
 Q6. Where can I discuss MythBox online with other MythBox users?
-Q7. TODO: Placeholder
-Q8. (Linux Only) Why does XBMC act like I pressed a button twice on my remote control when I only pressed it once?
+Q7. Commercial skipping doesn't seem to be accurate when 'Enable Streaming'
+    is selected.  
+Q8. TODO: Placeholder
 Q9. Where is the source code?
 Q10. When are you going to add feature <insert your feature here> to MythBox?
 Q11. What sort of MythTV setup do you use with MythBox?
@@ -76,21 +77,19 @@ Q6. Where can I discuss MythBox online with other MythBox users?
 A6. Try the XBMC forums @ http://xbmc.org/forum/showthread.php?t=43115
 
 -------------------------------------------------------------------------------
-Q7. TODO: Placeholder 
+Q7. Commercial skipping doesn't seem to be accurate when 'Enable Streaming'
+    is selected.  
 
-A7. TODO: Placeholder
+A7. When 'Enable Streaming' is selected, commercials are skipped using XBMC's
+    built-in commercial skip support. I've found that there are some cases in
+    which this is not entirely accurate. If you deselect 'Enable Streaming', 
+    commercials will be skipped using MythBox's implementation which may
+    give you better results.
 
 -------------------------------------------------------------------------------
-Q8. (Linux Only) Why does XBMC act like I pressed a button twice on my remote
-    control when I only pressed it once?
+Q8. TODO: Placeholder
 
-A8. Known issue with XBMC - See http://trac.xbmc.org/ticket/4552 
-    (add your $.02 to the Trac ticket if you would like to see this fixed)
-    The workaround is to add <remoterepeat>700</remoterepeat> to your 
-    advancedsettings.xml. (A higher number for the delay may be required)
-    
-    More info on this issue be found here:  
-    http://xbmc.org/wiki/?title=Advancedsettings.xml#.3Cremoterepeat.3E
+A8. TODO: Placeholder
 
 -------------------------------------------------------------------------------
 Q9. Where is the source code?  
@@ -173,7 +172,7 @@ Q13. How do I fix a 'MySQL connection error 1043 bad handshake' error?
 Q14. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
 
      1. Edit /etc/mysql/my.cnf and change old_passwords=1 to old_passwords=0
-     2. Reset the password for the MythTV database (see Q14) and restart MythBox
+     2. Reset the password for the MythTV database (see Q13) and restart MythBox
 
 ---------------------------------------------------------------------------------     
 Q15. What is the difference between XBMC's myth:// protocol support and MythBox?     
@@ -191,7 +190,7 @@ Q15. What is the difference between XBMC's myth:// protocol support and MythBox?
      Tuners/Jobs/Load stats   Yes            No
      Detailed Recording Info  Yes            No
      Support for Confluence   No (help!)     Yes
-     Network streaming        Live TV only   Yes
+     Network streaming        Yes            Yes
 
 ---------------------------------------------------------------------------------     
 Q16. What is the plan to support the new Confluence skin released in XBMC 9.11?

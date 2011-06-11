@@ -346,7 +346,6 @@
   <string id="415">Löschen bestätigen</string>
   <string id="416">Standort der Mythtv-Aufzeichnungen auf dem lokalen file-system.</string>
   <string id="417">Mehrfache Verzeichnisse können durch eine Komma (Linux/Mac) oder ein Semmiklon (Windows) angegeben werden.</string>
-  <string id="418">FFMpeg kommt vorinstalliert mit Mythbox für Windows und Mac.  Linux Benutzer müssen den folgenden befehl ausführen 'apt-get install ffmpeg'</string>
   
   <string id="420">Bilder Galerie</string>
   <string id="421">Erlaube TVDB.com</string>

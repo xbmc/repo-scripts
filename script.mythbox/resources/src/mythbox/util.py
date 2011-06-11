@@ -233,11 +233,11 @@ def timed(func, *args, **kw):
         result = func(*args, **kw)
         t2 = time.time()
         diff = t2 - t1
-        if diff > 0.5:
+        if diff > 1.0:
             plog.warning("TIMER: %s took %2.2f seconds" % (func.__name__, diff))
         #elif diff > 0.1:
         else:
-            plog.debug("TIMER: %s took %2.2f seconds" % (func.__name__, diff))
+            pass # plog.debug("TIMER: %s took %2.2f seconds" % (func.__name__, diff))
         return result
     else:
         return func(*args, **kw)

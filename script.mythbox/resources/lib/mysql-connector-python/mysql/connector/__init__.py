@@ -34,19 +34,19 @@ paramstyle = 'pyformat'
 import _version
 __version__ = _version.version
 
-from mysql import MySQL
+from connection import MySQLConnection
 from errors import *
 from constants import FieldFlag, FieldType, CharacterSet,\
     RefreshOption, ClientFlag
 from dbapi import *
 
 def Connect(*args, **kwargs):
-    """Shortcut for creating a mysql.MySQL object."""
-    return MySQL(*args, **kwargs)
+    """Shortcut for creating a connection.MySQLConnection object."""
+    return MySQLConnection(*args, **kwargs)
 connect = Connect
 
 __all__ = [
-    'MySQL', 'Connect',
+    'MySQLConnection', 'Connect',
     
     # Some useful constants
     'FieldType','FieldFlag','ClientFlag','CharacterSet','RefreshOption',

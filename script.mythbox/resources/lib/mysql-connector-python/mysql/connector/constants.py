@@ -266,6 +266,39 @@ class ServerCmd(_constants):
     SET_OPTION      = 27
     STMT_FETCH      = 28
     DAEMON          = 29
+    
+    desc = {
+        'SLEEP': (0,'SLEEP'),
+        'QUIT': (1,'QUIT'),
+        'INIT_DB': (2,'INIT_DB'), 
+        'QUERY': (3,'QUERY'),
+        'FIELD_LIST': (4,'FIELD_LIST'),
+        'CREATE_DB': (5,'CREATE_DB'),
+        'DROP_DB': (6,'DROP_DB'),
+        'REFRESH': (7,'REFRESH'),
+        'SHUTDOWN': (8,'SHUTDOWN'),
+        'STATISTICS': (9,'STATISTICS'),
+        'PROCESS_INFO': (10,'PROCESS_INFO'),
+        'CONNECT': (11,'CONNECT'),
+        'PROCESS_KILL': (12,'PROCESS_KILL'),
+        'DEBUG': (13,'DEBUG'),
+        'PING': (14,'PING'),
+        'TIME': (15,'TIME'),
+        'DELAYED_INSERT': (16,'DELAYED_INSERT'),
+        'CHANGE_USER': (17,'CHANGE_USER'),
+        'BINLOG_DUMP': (18,'BINLOG_DUMP'),
+        'TABLE_DUMP': (19,'TABLE_DUMP'),
+        'CONNECT_OUT': (20,'CONNECT_OUT'),
+        'REGISTER_SLAVE': (21,'REGISTER_SLAVE'),
+        'STMT_PREPARE': (22,'STMT_PREPARE'),
+        'STMT_EXECUTE': (23,'STMT_EXECUTE'),
+        'STMT_SEND_LONG_DATA': (24,'STMT_SEND_LONG_DATA'),
+        'STMT_CLOSE': (25,'STMT_CLOSE'),
+        'STMT_RESET': (26,'STMT_RESET'),
+        'SET_OPTION': (27,'SET_OPTION'),
+        'STMT_FETCH': (28,'STMT_FETCH'),
+        'DAEMON': (29,'DAEMON'),
+    }
 
 class ClientFlag(_constantflags):
     """
@@ -645,8 +678,15 @@ class CharacterSet(_constants):
       
       Raises ProgrammingError when character set is not supported.
       
-      Returns a string.
+      Returns list (collation, charset, index)
       """
+      if isinstance(charset, int):
+          try:
+              c = cls.desc[charset]
+              return c[1], c[0], charset
+          except:
+              ProgrammingError("Character set ID '%s' unsupported." % (
+                charset))
       
       for cid, c in enumerate(cls.desc):
         if c is None:
@@ -657,11 +697,12 @@ class CharacterSet(_constants):
       raise ProgrammingError("Character set '%s' unsupported." % (charset))
     
     @classmethod
-    def get_charset_info(cls, name, collation=None):
+    def get_charset_info(cls, charset, collation=None):
         """Retrieves character set information as tuple using a name
         
         Retrieves character set and collation information based on the
-        given a valid name.
+        given a valid name. If charset is an integer, it will look up
+        the character set based on the MySQL's ID.
         
         Raises ProgrammingError when character set is not supported.
 
@@ -669,20 +710,29 @@ class CharacterSet(_constants):
         """
         idx = None
         
+        if isinstance(charset, int):
+            try:
+                c = cls.desc[charset]
+                return charset, c[0], c[1]
+            except:
+                ProgrammingError("Character set ID '%s' unsupported." % (
+                    charset))
+        
         if collation is None:
-          collation, charset, idx = cls.get_default_collation(name)
+          collation, charset, idx = cls.get_default_collation(charset)
         else:
           for cid, c in enumerate(cls.desc):
             if c is None:
               continue
-            if c[0] == name and c[1] == collation:
+            if c[0] == charset and c[1] == collation:
               idx = cid
               break
               
         if idx is not None:
-          return (idx,) + (name,collation)
+          return (idx,charset,collation)
         else:
-          raise ProgrammingError("Character set '%s' unsupported." % (name))
+          raise ProgrammingError("Character set '%s' unsupported." % (
+            charset))
         
     @classmethod
     def get_supported(cls):

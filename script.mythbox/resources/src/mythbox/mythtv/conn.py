@@ -25,7 +25,6 @@ import thread
 import threading
 import time
 
-from threading import RLock
 from decorator import decorator
 from mythbox import pool
 from mythbox.bus import Event
@@ -33,7 +32,7 @@ from mythbox.mythtv import protocol
 from mythbox.mythtv.db import inject_db
 from mythbox.mythtv.enums import TVState, Upcoming
 from mythbox.mythtv.protocol import ProtocolException
-from mythbox.util import timed, threadlocals, timed_cache, safe_str, max_threads
+from mythbox.util import timed, threadlocals, safe_str
 
 log     = logging.getLogger('mythbox.core')     # mythtv core logger
 wirelog = logging.getLogger('mythbox.wire')     # wire level protocol logger
@@ -296,14 +295,6 @@ class Connection(object):
         reply = self._sendRequest(self.cmdSock, [command])
         return reply
         # TODO: Unfinished!
-    
-    @inject_db
-    def getChannels(self):
-        """
-        @return: Viewable channels across all tuners.
-        @rtype: Channel[]
-        """
-        return self.db().getChannels()
     
     @inject_db
     def getTuners(self):
@@ -679,83 +670,13 @@ class Connection(object):
             offset += self.protocol.recordSize()
         return scheduledRecordings
 
-    upcomingLock = RLock()
-    upcomingCached = None
-    
     def onEvent(self, event):
-        if event['id'] == Event.SCHEDULER_RAN:
-            Connection._invalidateUpcomingRecordings()
-
-    @classmethod
-    def _invalidateUpcomingRecordings(clazz):
-        if Connection.upcomingCached is not None:
-            try:
-                Connection.upcomingLock.acquire()
-                Connection.upcomingCached = None
-                log.debug('Invalidating cached upcoming recordings')
-            finally:
-                Connection.upcomingLock.release()
-
-    @classmethod
-    def _getUpcomingRecordings(clazz, conn):
-        try:
-            Connection.upcomingLock.acquire()
-            if Connection.upcomingCached == None:
-                Connection.upcomingCached = conn._internal_getUpcomingRecordings()
-            else:
-                log.debug('Returning cached upcoming recordings')
-            return Connection.upcomingCached[:]
-        finally:
-            Connection.upcomingLock.release()
-    
-    def getUpcomingRecordings(self, filter=Upcoming.SCHEDULED):
-        '''
-        Serialize access to cached upcoming recordings since this is an expensive
-        operation for the backend and can also be data intensive (2MB+ for mine). 
-        Rely on events published on the bus to invalidate the data and only re-query
-        when needed.
-        '''
-        return [upcoming for upcoming in Connection._getUpcomingRecordings(self) if upcoming.getRecordingStatus() in filter]
+        pass
         
-    @timed
-    def _internal_getUpcomingRecordings(self):
+    def getUpcomingRecordings(self, filter=Upcoming.SCHEDULED):
         """
         @type filter: UPCOMING_*
         @rtype: RecordedProgram[]
-        
-        From mythweb:
-        
-        // Skip scheduled shows?
-        if (in_array($show->recstatus, array('WillRecord', 'ForceRecord'))) {
-            if (!$_SESSION['scheduled_recordings']['disp_scheduled'] || $_GET['skip_scheduled'])
-                continue;
-        }
-        // Skip conflicting shows?
-        elseif (in_array($show->recstatus, array('Conflict', 'Overlap'))) {
-            if (!$_SESSION['scheduled_recordings']['disp_conflicts'] || $_GET['skip_conflicts'])
-                continue;
-        }
-        // Skip duplicate or ignored shows?
-        elseif (in_array($show->recstatus, array('NeverRecord', 'PreviousRecording', 'CurrentRecording'))) {
-            if (!$_SESSION['scheduled_recordings']['disp_duplicates'] || $_GET['skip_duplicates'])
-                continue;
-        }
-        // Skip deactivated shows?
-        elseif ($show->recstatus != 'Recording') {
-            if (!$_SESSION['scheduled_recordings']['disp_deactivated'] || $_GET['skip_deactivated'])
-                continue;
-        }
-        // Show specific recgroup only
-        if (($_SESSION['scheduled_recordings']['disp_recgroup'] && $show->recgroup != $_SESSION['scheduled_recordings']['disp_recgroup'])
-            || ($_GET['recgroup'] && $show->recgroup != $_GET['recgroup']))
-            continue;
-        // Show specific title only
-        if (($_SESSION['scheduled_recordings']['disp_title'] && $show->title != $_SESSION['scheduled_recordings']['disp_title'])
-            || ($_GET['title'] && $show->title != $_GET['title']))
-            continue;
-        // Assign a reference to this show to the various arrays
-        $all_shows[] =& $Scheduled_Recordings[$callsign][$starttime][$key];
-        }
         """
         upcoming = []
         reply = self._sendRequest(self.cmdSock, ['QUERY_GETALLPENDING', '2'])
@@ -775,7 +696,8 @@ class Connection(object):
                     self.platform,
                     self.protocol,
                     [self, None][self._db is None])
-            upcoming.append(program)
+            if program.getRecordingStatus() in filter:
+                upcoming.append(program)
             offset += self.protocol.recordSize()
         return upcoming
 
@@ -1273,7 +1195,12 @@ class EventConnection(Connection):
         return self._readMsg(self.cmdSock)
         
     def annEvent(self, cmdSock):
-        reply = self._sendRequest(cmdSock, ['ANN Playback %s 3' % self.platform.getHostname()])
+        NO_EVENTS = 0 
+        ALL_EVENTS = 1
+        NO_SYSTEM_EVENTS = 2
+        ONLY_SYSTEM_EVENTS = 3
+        
+        reply = self._sendRequest(cmdSock, ['ANN Playback %s %d' % (self.platform.getHostname(), ALL_EVENTS)])
         if not self._isOk(reply):
             raise ServerException, 'Backend announce with events refused: %s' % reply
 

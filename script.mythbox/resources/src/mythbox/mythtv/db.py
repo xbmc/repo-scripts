@@ -18,20 +18,11 @@
 #
 import datetime
 import logging
+import mysql.connector as MySQLdb # pure python mysql client
 import odict
-from mythbox.mythtv.enums import RecordingStatus
-
-try:
-    # native mysql client libs
-    import MySQLdb  
-    cursorArgs = [MySQLdb.cursors.DictCursor]
-except:
-    # pure python mysql client
-    import mysql.connector as MySQLdb
-    cursorArgs = []
-    
 import string
 
+from mythbox.mythtv.enums import RecordingStatus, JobType
 from decorator import decorator
 from mythbox import pool
 from mythbox.pool import PoolableFactory
@@ -40,6 +31,7 @@ from mythbox.util import timed, threadlocals, safe_str
 log = logging.getLogger('mythbox.core')
 ilog = logging.getLogger('mythbox.inject')
 
+cursorArgs = []
 
 def mythtime2dbtime(mythtime):
     """Turn 001122 -> 00:11:22"""
@@ -63,9 +55,10 @@ class MythDatabaseFactory(PoolableFactory):
     def __init__(self, *args, **kwargs):
         self.settings = kwargs['settings']
         self.translator = kwargs['translator']
+        self.domainCache = kwargs['domainCache']
     
     def create(self):
-        db = MythDatabase(self.settings, self.translator)
+        db = MythDatabase(self.settings, self.translator, self.domainCache)
         return db
     
     def destroy(self, db):
@@ -99,17 +92,6 @@ def inject_db(func, *args, **kwargs):
         import threading
         threadlocals[tlsKey] = threading.local()
         ilog.debug('Allocating threading.local() to thread %d'  % tlsKey)
-                    
-#    try:
-#        self.db
-#        if self.db == None:
-#            raise AttributeError # force allocation
-#        ilog.debug('db accessor already bolted on')
-#    except AttributeError:
-#        ilog.debug('bolting on db accessor')
-#        def db_accessor():
-#            return threadlocals[thread.get_ident()].db 
-#        self.db = db_accessor  
 
     # Bolt-on getter method so client can access db.
     def db_accessor():
@@ -162,13 +144,11 @@ class MythDatabase(object):
     
     def __init__(self, *args, **kwargs):
         # Static data cached on demand
-        self._channels = None
-        self._tuners = None
         self._master = None
         self._slaves = None
         
-        if len(args) == 2:
-            self.initWithSettings(args[0], args[1])
+        if len(args) == 3:
+            self.initWithSettings(args[0], args[1], args[2])
         else:
             self.initWithDict(args[0])
     
@@ -185,9 +165,10 @@ class MythDatabase(object):
             port = int(self.settings['mysql_port']),
             connection_timeout = 60)
                 
-    def initWithSettings(self, settings, translator):
+    def initWithSettings(self, settings, translator, domainCache):
         self.settings = settings
         self.translator = translator
+        self.domainCache = domainCache
 
         log.debug("Initializing myth database connection")
         self.conn = MySQLdb.connect(
@@ -293,31 +274,30 @@ class MythDatabase(object):
         @return: cached list of viewable channels across all tuners.
         @rtype: Channel[]
         """
-        if not self._channels:
-            sql = """
-                select
-                    ch.chanid, 
-                    ch.channum, 
-                    ch.callsign, 
-                    ch.name, 
-                    ch.icon, 
-                    ci.cardid
-                from 
-                    channel ch,
-                    cardinput ci 
-                where 
-                    ch.channum is not null
-                    and ch.channum != ''
-                    and ch.visible = 1
-                    and ch.sourceid = ci.sourceid
-                order by 
-                    ch.chanid
-                """
-            self.cursor.execute(sql)
-            rows = map(lambda r: self.toDict(self.cursor, r), self.cursor.fetchall())
-            from mythbox.mythtv.domain import Channel
-            self._channels = map(lambda rd: Channel(rd), rows)
-        return self._channels
+        sql = """
+            select
+                ch.chanid, 
+                ch.channum, 
+                ch.callsign, 
+                ch.name, 
+                ch.icon, 
+                ci.cardid
+            from 
+                channel ch,
+                cardinput ci 
+            where 
+                ch.channum is not null
+                and ch.channum != ''
+                and ch.visible = 1
+                and ch.sourceid = ci.sourceid
+            order by 
+                ch.chanid
+            """
+        self.cursor.execute(sql)
+        rows = map(lambda r: self.toDict(self.cursor, r), self.cursor.fetchall())
+        from mythbox.mythtv.domain import Channel
+        channels = map(lambda rd: Channel(rd), rows)
+        return channels
 
     @inject_cursor
     def getRecordingProfileNames(self):
@@ -432,18 +412,18 @@ class MythDatabase(object):
                 log.debug('FPS duration %s' % row['fps_duration'])
                 
                 holder = float(row['fps_duration'])
-                if holder is not None:
+                if holder is not None and holder > 0:
                     fps = holder
-                    break
+                else:
+                    fps = float(row['fps_actual'])
             except TypeError, te:
                 log.warn('Decimal to float conversion failed for "%s" with error %s. Returning default of 29.97' % (fps, safe_str(te)))
-                break
         
         # since we're deriving an approximation from the recordedseek table, just fudge to the
         # most obvious correct values
         if fps >= 28.0 and fps <= 32.0:
             fps = float(29.97)
-        elif fps >= 58.0 and fps <= 62.0:
+        elif fps >= 57.0 and fps <= 62.0:
             fps = float(59.94)
         elif fps >= 22.0 and fps <= 26.0:
             fps = float(24.0)
@@ -456,36 +436,36 @@ class MythDatabase(object):
         @rtype: Tuner[] 
         @return: Cached tuners ordered by cardid
         """
-        if not self._tuners:
-            sql = """
-                select 
-                    cardid, 
-                    hostname, 
-                    signal_timeout, 
-                    channel_timeout, 
-                    cardtype
-                from   
-                    capturecard
-                order by 
-                    cardid
-                """
-            self._tuners = []
-            self.cursor.execute(sql)
-            
-            from mythbox.mythtv.domain import Tuner
+        sql = """
+            select 
+                cardid, 
+                hostname, 
+                signal_timeout, 
+                channel_timeout, 
+                cardtype
+            from   
+                capturecard
+            order by 
+                cardid
+            """
+        tuners = []
+        self.cursor.execute(sql)
+        
+        from mythbox.mythtv.domain import Tuner
 
-            for row in self.cursor.fetchall():
-                row = self.toDict(self.cursor, row)
-                self._tuners.append(Tuner(
-                    int(row['cardid']),
-                    row['hostname'],
-                    int(row['signal_timeout']),
-                    int(row['channel_timeout']),
-                    row['cardtype'],
-                    conn=None,
-                    db=self,   # TODO: Should be None. self is for unit tests
-                    translator=self.translator)) 
-        return self._tuners
+        for row in self.cursor.fetchall():
+            row = self.toDict(self.cursor, row)
+            tuners.append(Tuner(
+                int(row['cardid']),
+                row['hostname'],
+                int(row['signal_timeout']),
+                int(row['channel_timeout']),
+                row['cardtype'],
+                domainCache=self.domainCache,
+                conn=None,
+                db=self,   # TODO: Should be None. self is for unit tests
+                translator=self.translator)) 
+        return tuners
 
     @timed
     @inject_cursor
@@ -676,13 +656,58 @@ class MythDatabase(object):
         self.cursor.execute(sql, args)
         log.debug('Row count = %s' % self.cursor.rowcount)
 
+    def addJob(self, job):
+        '''Add a new job to the job queue'''        
+        sql = """INSERT INTO jobqueue (
+                    chanid,
+                    starttime,
+                    type,
+                    inserttime,
+                    hostname, 
+                    status,
+                    comment, 
+                    schedruntime)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+        
+        log.debug("sql = %s" % safe_str(sql))
+        args = (job.channelId, job.startTime, job.jobType, job.insertTime, job.hostname, job.jobStatus, job.comment, datetime.datetime.now(),)
+
+        if log.isEnabledFor(logging.DEBUG):
+            for i,arg in enumerate(args):
+                log.debug('Positional arg %d: %s' % (i,safe_str(arg)))
+
+        c = self.conn.cursor(*cursorArgs)       
+        try:
+            c.execute(sql, args)
+        finally:
+            c.close()
+
+        if job.id is None:
+            c2 = self.conn.cursor(*cursorArgs)
+            try:
+                c2.execute("select max(id) from jobqueue")
+                job.id = c2.fetchall()[0][0]
+                log.debug('New job id = %s' % job.id)
+            finally:
+                c2.close()
+ 
+    def getUserJobs(self):
+        '''Returns max of 4 user jobs defined in the SETTING table'''
+        from mythbox.mythtv.domain import UserJob
+        userJobs = []
+        types = [JobType.USERJOB1, JobType.USERJOB2, JobType.USERJOB3, JobType.USERJOB4]
+        keys = [('UserJob%d' % i, 'UserJobDesc%d' % i, types[i-1]) for i in xrange(1,5)]
+        for jobCommand, jobDesc, jobType in keys:            
+            userJobs.append(UserJob(jobType, self.getMythSetting(jobDesc), self.getMythSetting(jobCommand)))  
+        return userJobs
+    
     @inject_cursor
     def getJobs(self, program=None, jobType=None, jobStatus=None):
         """
-        Get jobs from the MythTV job queue matching a program, job type, and/or job status.
+        Get jobs from the MythTV job queue matching a program, job type, and/or job status in order of scheduled run time.
         
         @type program: RecordedProgram
-        @type jobType: int from enums.JobTye
+        @type jobType: int from enums.JobType
         @type jobStatus: int from enums.JobStatus
         @rtype: Job[]
         """
@@ -746,7 +771,8 @@ class MythDatabase(object):
                 hostname=row['hostname'],
                 comment=row['comment'],
                 scheduledRunTime=row['schedruntime'],
-                translator=self.translator))
+                translator=self.translator,
+                domainCache=self.domainCache))
         return jobs
 
     def setRecordingAutoexpire(self, program, shouldExpire):

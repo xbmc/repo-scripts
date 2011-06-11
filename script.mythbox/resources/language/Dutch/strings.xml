@@ -16,7 +16,6 @@
   <string id="12">Gebruiker</string>
   <string id="13">Wachtwoord</string>
   <string id="14">Opname mappen</string>
-  <string id="15">FFMpeg pad</string>
   <string id="16">Pad locale kopie</string> <!-- delete -->
   <string id="17">Bewaren</string>
   <string id="18">Myth TV - instellingen</string>
@@ -368,7 +367,6 @@
   <string id="415">Verwijderingen bevestigen</string>
   <string id="416">Locatie MythTV opnames op het lokale systeem, eventueel via gekoppelde storage groepen</string>
   <string id="417">Meerdere mappen scheiden met een ":" op Linux/Mac en een ";" op Windows</string>
-  <string id="418">Alleen linux users moeten zelf FFMpeg installeren</string>
   <string id="419">Aggresieve caching aanzetten</string>
   <string id="427">Cached data aggresiever maar geeft meer load op uw backend en gebruikt meer bandbreedte</string>
   <string id="428">Niet aanzetten als u met uw MythTV backend bent verbonden middels een wireless verbinding</string>

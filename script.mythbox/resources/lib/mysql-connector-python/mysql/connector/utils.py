@@ -26,6 +26,7 @@
 
 __MYSQL_DEBUG__ = False
 
+import constants
 import struct
 
 def intread(b):
@@ -89,17 +90,28 @@ def int4store(i):
     else:
         return struct.pack('<I',i)
 
+def int8store(i):
+    """
+    Takes an unsigned integer (4 bytes) and packs it as string.
+
+    Returns string.
+    """
+    if i < 0 or i > 18446744073709551616L:
+        raise ValueError('int4store requires 0 <= i <= 2^64')
+    else:
+        return struct.pack('<Q',i)
+
 def intstore(i):
     """
     Takes an unsigned integers and packs it as a string.
     
-    This function uses int1store, int2store, int3store and
-    int4store depending on the integer value.
+    This function uses int1store, int2store, int3store,
+    int4store or int8store depending on the integer value.
     
     returns string.
     """
-    if i < 0 or i > 4294967295L:
-        raise ValueError('intstore requires 0 <= i <= 4294967295')
+    if i < 0 or i > 18446744073709551616:
+        raise ValueError('intstore requires 0 <= i <= 2^64')
         
     if i <= 255:
         fs = int1store
@@ -107,8 +119,10 @@ def intstore(i):
         fs = int2store
     elif i <= 16777215:
         fs = int3store
-    else:
+    elif i <= 4294967295L:
         fs = int4store
+    else:
+        fs = int8store
         
     return fs(i)
 
@@ -136,7 +150,7 @@ def read_lc_string(buf):
   
     If the string is bigger than 250, then it looks like this:
     
-      <- 1b -><- 2/3/4 ->
+      <- 1b -><- 2/3/8 ->
       +------+-----------+-------------------------
       | type |  length   | a string goes here
       +------+-----------+-------------------------
@@ -146,7 +160,7 @@ def read_lc_string(buf):
       elif type == \xfd:
           length is code in next 3 bytes
       elif type == \xfe:
-          length is code in next 4 bytes
+          length is code in next 8 bytes
      
     NULL has a special value. If the buffer starts with \xfb then
     it's a NULL and we return None as value.
@@ -163,8 +177,13 @@ def read_lc_string(buf):
     if fst <= 250:
         l = fst
         return (buf[1+l:], buf[1:l+1])
-
-    lsize = fst - 250
+    elif fst == 252:
+        lsize = 2
+    elif fst == 253:
+        lsize = 3
+    if fst == 254:
+        lsize = 8
+    
     l = intread(buf[1:lsize+1])
     return (buf[lsize+l+1:], buf[lsize+1:l+lsize+1])
     
@@ -176,10 +195,32 @@ def read_lc_string_list(buf):
     strlst = []
     
     while buf:
-        (buf, b) = read_lc_string(buf)
-        strlst.append(b)
+        if buf[0] == '\xfb':
+            # NULL value
+            strlst.append(None)
+            buf = buf[1:]
+            continue
 
-    return strlst
+        l = lsize = 0
+        fst = ord(buf[0])
+
+        if fst <= 250:
+            l = fst
+            strlst.append(buf[1:l+1])
+            buf = buf[1+l:]
+            continue
+        elif fst == 252:
+            lsize = 2
+        elif fst == 253:
+            lsize = 3
+        if fst == 254:
+            lsize = 8
+
+        l = intread(buf[1:lsize+1])
+        strlst.append(buf[lsize+1:l+lsize+1])
+        buf = buf[lsize+l+1:]
+
+    return tuple(strlst)
 
 def read_string(buf, end=None, size=None):
     """
@@ -241,30 +282,33 @@ def read_lc_int(buf):
 #
 # For debugging
 #
-def _dump_buffer(buf, label=None):
-    import __main__
-    if not __main__.__dict__.has_key('__MYSQL_DEBUG__'):
-        return
-    else:
-        debug = __main__.__dict__['__MYSQL_DEBUG__']
-        
+def _digest_buffer(buf):
+    return ''.join([ "\\x%02x" % ord(c) for c in buf ])
+
+def digest_auth_packet(buf):
+    d = []
     try:
-        if debug:
-            if len(buf) == 0:
-                print "%s : EMPTY BUFFER" % label
-            import string
-            if debug == 1:
-                print "%s: %s" % (label,string.join( [ "%02x" % ord(c) for c in buf ], ' '))
-            elif debug == 2:
-                print "%s: %s" % (label,string.join( [ "\\x%02x" % ord(c) for c in buf ], ''))
-            elif debug > 2:
-                print "%s: " % label,
-                for c in buf:
-                    o = ord(c)
-                    if o >= 33 and o < 127:
-                        print "%s" % c,
-                    else:
-                        print "%02x" % o,
-                print
-    except:
-        raise
+        d = [
+            ('Cabilities (ClientFlags)',
+            constants.ClientFlag.get_bit_info(
+                struct.unpack("<I",buf[0:4])[0])),
+            ('Max packet size', struct.unpack("<I",buf[4:4+4])[0]),
+            ('Character set', constants.CharacterSet.get_info(
+                int(ord(buf[8:8+1])))[0]),
+        ]
+    except StandardError, e:
+        raise StandardError("Not an AUTH packet (%s)" % e)
+    else:
+        return d
+
+def digest_cmd_query(buf):
+    d = []
+    try:
+        d = [
+            ('Command', constants.ServerCmd.get_info(int(ord(buf[0])))),
+            ('Query', buf[1:]),
+        ]
+    except StandardError, e:
+        raise StandardError("Not a Query Command packet (%s)" % e)
+    else:
+        return d
