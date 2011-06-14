@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Service Legendas-Zone.org version 0.1.6
+# Service Legendas-Zone.org version 0.1.7
 # Code based on Undertext service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
@@ -8,6 +8,10 @@
 # http://www.teknorage.com
 # License: GPL v2
 #
+#
+# NEW on Service Legendas-Zone.org v0.1.7:
+# Changed 2 patterns that were crashing the plugin, now it works correctly.
+# Better builtin notifications for better information.
 #
 # NEW on Service Legendas-Zone.org v0.1.6:
 # Better search results with 3 types of searching. Single title, multi titles and IMDB search.
@@ -37,15 +41,19 @@ packext = ['rar', 'zip']
 """
 #details_pattern = "<b>CD\#:</b>\s(.+?)\s.+?<b>Hits:</b>\s(.+?)</b>.+?<b>Linguagem:</b>.+?border=\"0\"\salt=\"(.+?)\"\stitle"
 #subtitle_pattern = "onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
-subtitle_pattern = "<a\shref=\"legendas.php.+?amp;(.+?)\".+?[\r\n\t]+?.+?[\r\n\t]+?.+?onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
+subtitle_pattern = "<b><a\shref=\"legendas.php\?modo=detalhes&amp;(.+?)\".+?[\r\n\t]+?.+?[\r\n\t]+?.+?onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
 # group(1) = ID, group(2) = Name, group(3) = Hits, group(4) = Files, group(5) = Uploader
 multiple_results_pattern = "<td\salign=\"left\".+?<b><a\shref=\"legendas.php\?imdb=(.+?)&l=pt\"\stitle=\".+?\">.+?</td>"
 # group(1) = IMDB
-imdb_pattern = "<p><b>Popular\sTitles</b>\s\(Displaying.+?Results\)<table><tr>.+?<a\shref=\"\/title\/tt(.+?)\/\""
+imdb_pattern = "<p><b>Popular\sTitles</b>\s\(Displaying.+?Result.+?<table><tr>.+?<a\shref=\"\/title\/tt(.+?)\/\""
 # group(1) = IMDB
 #====================================================================================================================
 # Functions
 #====================================================================================================================
+def msg(text, timeout):
+	icon =  os.path.join(__cwd__,"icon.png")
+	xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,timeout,icon))
+
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
 
 	#Grabbing login and pass from xbmc settings
@@ -67,8 +75,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 	content = content.read()
 	if re.search(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) == None:
 		log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "Single Title"))
-		icon =  os.path.join(__cwd__,"icon.png")
-		xbmc.executebuiltin("XBMC.Notification(%s,%s,6000,%s)" % (__scriptname__,"Searching single title... Please wait!",icon))
+		msg("Searching Single Title... Please wait!", 6000)
 		while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 6:
 			for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 				hits = matches.group(3)
@@ -125,8 +132,8 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 						else:
 							if re.search(filesearch[1][:len(filesearch[1])-4], desc):
 								sync = True
-				filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
-				subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+				#filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
+				subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits': hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 			page = page + 1
 			url = main_url + "	legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 			content = opener.open(url)
@@ -142,8 +149,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 		maxsubs = re.findall(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
 		maxsubs = len(maxsubs)
 		if maxsubs < 10:
-			icon =  os.path.join(__cwd__,"icon.png")
-			xbmc.executebuiltin("XBMC.Notification(%s,%s,6000,%s)" % (__scriptname__,"Searching many titles... Please wait!",icon))
+			msg("Searching Many Title... Please wait!", 6000)
 			while re.search(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 				log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "Less Then 10 Titles"))
 				for resmatches in re.finditer(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
@@ -226,8 +232,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			page1 = 0
 			content1 = opener.open(main_url + "legendas.php?l=pt&imdb=" + imdb[0] + "&page=" + str(page1))
 			content1 = content1.read()
-			icon =  os.path.join(__cwd__,"icon.png")
-			xbmc.executebuiltin("XBMC.Notification(%s,%s,6000,%s)" % (__scriptname__,"Too many hits. Grabbing IMDB title!",icon))
+			msg("Too many hits. Grabbing IMDB title!", 6000)
 			while re.search(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 				log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "IMDB Title"))
 				for matches in re.finditer(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
@@ -294,7 +299,11 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 				#For DEBUG only uncomment next line
 
 
-	xbmc.executebuiltin("XBMC.Notification(%s,%s,6000,%s)" % (__scriptname__,"Finished searching!",icon))
+	if subtitles_list != []:
+		msg("Finished Searching. Choose One!", 3000)
+	else:
+		msg("No Results! Try Parent Dir Or Manual!", 4000)
+
 	#Bubble sort, to put syncs on top
 	for n in range(0,len(subtitles_list)):
 		for i in range(1, len(subtitles_list)):
@@ -391,6 +400,7 @@ def recursive_glob(treeroot, pattern):
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
 
+	msg("Downloading... Please Wait!", 6000)
 	id = subtitles_list[pos][ "id" ]
 	id = string.split(id,"=")
 	id = id[-1]
@@ -450,8 +460,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 						max_mtime =  mtime
 			init_max_mtime = max_mtime
 			time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
-			icon =  os.path.join(__cwd__,"icon.png")
-			xbmc.executebuiltin("XBMC.Notification(%s,%s,6000,%s)" % (__scriptname__,"Extracting Subtitles...",icon))
+			msg("Extracting Subtitles!", 6000)
 			xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
 			waittime  = 0
 			while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
@@ -469,6 +478,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 			if waittime == 20:
 				log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
 			else:
+				msg("Done Extracting!", 3000)
 				log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
 				searchrars = recursive_glob(tmp_sub_dir, packext)
 				searchrarcount = len(searchrars)
@@ -552,6 +562,6 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 						subs_file = sub_tmp[0]
 	
 		
-		
-	
+		msg("Playing Title!", 3000)
+
 		return False, language, subs_file #standard output

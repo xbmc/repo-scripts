@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 
-# Service LegendasDivx.com version 0.2.1
+# Service LegendasDivx.com version 0.2.3
 # Code based on Undertext service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
 # Bugs & Features to highlander@teknorage.com
 # http://www.teknorage.com
 # License: GPL v2
+#
+# NEW on Service LegendasDivx.com v0.2.3:
+# Fixed typo on the version.
+# Added built-in notifications.
 #
 # NEW on Service LegendasDivx.com v0.2.2:
 # Fixed pathnames using (os.sep). For sure :)
@@ -50,6 +54,7 @@ from utilities import log
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __settings__ = sys.modules[ "__main__" ].__settings__
+__cwd__        = sys.modules[ "__main__" ].__cwd__
 
 main_url = "http://www.legendasdivx.com/"
 debug_pretext = "LegendasDivx"
@@ -104,6 +109,10 @@ subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\
 #====================================================================================================================
 # Functions
 #====================================================================================================================
+def msg(text, timeout):
+	icon =  os.path.join(__cwd__,"icon.png")
+	xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,timeout,icon))
+
 
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
 
@@ -113,6 +122,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 
 	content = geturl(url)
 	log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
+	msg("Searching Title... Please wait!", 6000)
 	while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 6:
 		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 			hits = matches.group(5)
@@ -171,6 +181,11 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 		url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
 		content = geturl(url)
 
+	if subtitles_list != []:
+		msg("Finished Searching. Choose One!", 3000)
+	else:
+		msg("No Results! Try Parent Dir Or Manual!", 4000)
+		
 #	Bubble sort, to put syncs on top
 	for n in range(0,len(subtitles_list)):
 		for i in range(1, len(subtitles_list)):
@@ -267,6 +282,7 @@ def recursive_glob(treeroot, pattern):
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
 
+	msg("Downloading... Please Wait!", 6000)
 	id = subtitles_list[pos][ "id" ]
 	sync = subtitles_list[pos][ "sync" ]
 	log( __name__ ,"%s Fetching id using url %s" % (debug_pretext, id))
@@ -326,6 +342,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 						max_mtime =  mtime
 			init_max_mtime = max_mtime
 			time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
+			msg("Extracting... Please Wait!", 6000)
 			xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
 			waittime  = 0
 			while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
@@ -343,6 +360,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 			if waittime == 20:
 				log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
 			else:
+				msg("Done Extracting!", 3000)
 				log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
 				searchrars = recursive_glob(tmp_sub_dir, packext)
 				searchrarcount = len(searchrars)
@@ -422,5 +440,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 						if subs_file == tmp_sub_dir+"/": subs_file = ""
 					elif sub_tmp:
 						subs_file = sub_tmp[0]
-							
+		
+		msg("Playing Title!", 3000)
+
 		return False, language, subs_file #standard output

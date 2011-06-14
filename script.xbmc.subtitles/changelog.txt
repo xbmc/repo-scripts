@@ -1,5 +1,11 @@
+2.5.3
+- fixed: ordering of OpenSubtitles results, thx to cidus
+- fixed: Undertexter, it will now find Swedish subs
+- fixed: Legendas-Zone.org version 0.1.7
+- fixed: LegendasDivx.com v0.2.3
+
 2.5.2
-- quick fix for broken settings file
+- fixed: broken settings file
 
 2.5.1
 - added: extra regex for "sXXepXX"
