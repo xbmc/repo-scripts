@@ -14,9 +14,18 @@ debug_pretext = ""
 
 # subtitle pattern example:
 """
-<a href="http://www.engsub.net/86981/" alt=....
-or
-<a href="http://www.undertexter.se/22743/" alt="Dexter S05E01 - My Bad" title="Dexter S05E01 - My Bad"><b>
+sv:
+<a style="text-decoration: none;" title="Ladda ner undertext till 127 Hours " alt="Ladda ner undertext till 127 Hours " href="http://www.undertexter.se/laddatext.php?id=24255 ">
+      <img src="http://www.undertexter.se/bilder/ladda_codec_mini.gif" width="70" height="18" border="0" align="right"></a>
+                                            (1 cd)
+                                                                                        <br> <img src="http://www.undertexter.se/bilder/spacer.gif" height="2"><br>
+                                            Nedladdningar: 1154<br>
+                                            <img src="http://www.undertexter.se/bilder/spacer.gif" height="3"><br>
+                                            127 Hours_2010_HD_720p_x264_SAG_screener [mf34inc]</td>
+
+
+en:
+<a href="http://www.engsub.net/86981/" alt="Dexter S05E01 - My Bad" title="Dexter S05E01 - My Bad"><b>
                                             Dexter S05E01 - My Bad</b>
                                             </a></td>
                                         </tr>
@@ -28,8 +37,8 @@ or
                                             <img src="http://www.undertexter.se/bilder/spacer.gif" height="3"><br>
                                             Dexter.S05E01.720p.HDTV.x264-ORENJI</td>
 """
-sv_subtitle_pattern = "<a href=\"http://www.undertexter.se/(\d{1,10})/\" alt=\"[^\r\n\t]*?\" title=\"[^\r\n\t]*?\"><b>\
-[ \r\n]*?[^\r\n\t]*?</b>.{400,500}?\(1 cd\).{250,550}?[ \r\n]*([^\r\n\t]*?)</td>[ \r\n]*?[^\r\n\t]*?</tr>"
+sv_subtitle_pattern = "href=\"http://www.undertexter.se/laddatext.php\?id=(\d{1,10}) \">\
+[ \r\n]*?.{100,200}?\(1 cd\)[ \r\n]*?.{200,300}?height=\"3\"><br>[ \r\n]*?([^\r\n\t]*?)</td>"
 # group(1) = id, group(2) = filename
 
 en_subtitle_pattern = "<a href=\"http://www.engsub.net/(\d{1,10})/\" alt=\"[^\r\n\t]*?\" title=\"[^\r\n\t]*?\"><b>\

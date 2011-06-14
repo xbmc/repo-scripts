@@ -14,9 +14,6 @@ BASE_URL_XMLRPC = u"http://api.opensubtitles.org/xml-rpc"
 BASE_URL_HASH = u"http://www.opensubtitles.org/en/search/sublanguageid-%s/moviebytesize-%s/moviehash-%s/simplexml"
 BASE_URL_NAME = u"http://www.opensubtitles.com/en/search/sublanguageid-%s/moviename-%s/simplexml"
 
-def compare_columns(b,a):
-        return cmp( b["language_name"], a["language_name"] )  or cmp( a["sync"], b["sync"] ) 
-
 class OSDBServer:
 
 ###-------------------------- Merge Subtitles All -------------################
@@ -29,12 +26,13 @@ class OSDBServer:
         if item["format"].find( "srt" ) == 0 or item["format"].find( "sub" ) == 0:
           self.subtitles_list.append( item )
     if( len ( self.subtitles_list ) > 0 ):
-      self.subtitles_list = sorted(self.subtitles_list, compare_columns)
+      self.subtitles_list.sort(key=lambda x: [not x['sync'],x['lang_index']])
 
 ###-------------------------- Sort Subtitles  -------------################
 
   def sortsubtitles(self, subtitle, hashed, url_base):
     filename = movie = lang_name = subtitle_id = lang_id = link = ""
+    lang_index = 3
     flag_image = "-.gif"
     if subtitle.getElementsByTagName("releasename")[0].firstChild:
       filename = subtitle.getElementsByTagName("releasename")[0].firstChild.data
@@ -49,14 +47,19 @@ class OSDBServer:
       subtitle_id = subtitle.getElementsByTagName("idsubtitle")[0].firstChild.data
     if subtitle.getElementsByTagName("iso639")[0].firstChild:
       lang_id = subtitle.getElementsByTagName("iso639")[0].firstChild.data
-      flag_image = "flags/%s.gif" % (lang_id,)   
+      flag_image = "flags/%s.gif" % (lang_id,)
+      lang_index=0
+      for user_lang_id in self.langs_ids:
+        if user_lang_id == lang_id:
+          break
+        lang_index+=1
     if subtitle.getElementsByTagName("download")[0].firstChild:
       link = subtitle.getElementsByTagName("download")[0].firstChild.data
       link = url_base + link
     if subtitle.getElementsByTagName("subrating")[0].firstChild:
       rating = subtitle.getElementsByTagName("subrating")[0].firstChild.data
     
-    self.subtitles_hash_list.append({'filename':filename,'link':link,'language_name':lang_name,'language_id':lang_id,'language_flag':flag_image,'movie':movie,"ID":subtitle_id,"rating":str( int( rating[0] ) ),"format":format,"sync":hashed})
+    self.subtitles_hash_list.append({'lang_index':lang_index,'filename':filename,'link':link,'language_name':lang_name,'language_id':lang_id,'language_flag':flag_image,'movie':movie,"ID":subtitle_id,"rating":str( int( rating[0] ) ),"format":format,"sync":hashed})
     
       
   def get_results ( self, search_url ):
@@ -75,6 +78,7 @@ class OSDBServer:
     search_url2 = None
     self.subtitles_list =[]
     self.subtitles_hash_list = []
+    self.langs_ids = [languageTranslate(lang1,0,2), languageTranslate(lang2,0,2), languageTranslate(lang3,0,2)]
     language = languageTranslate(lang1,0,3)
     if lang1 != lang2:
       language += "," + languageTranslate(lang2,0,3)
