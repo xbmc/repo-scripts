@@ -37,15 +37,16 @@ class AVIChunk:
         data = thefile.read(4)
 
         try:
-            self.size = struct.unpack('i', data)[0]
+            self.size = struct.unpack('<i', data)[0]
         except:
             self.size = 0
 
         # Putting an upper limit on the chunk size, in case the file is corrupt
-        if self.size < 10000:
+        if self.size > 0 and self.size < 10000:
             self.chunk = thefile.read(self.size)
         else:
             self.chunk = ''
+            self.size = 0
 
 
 
@@ -64,7 +65,7 @@ class AVIList:
         data = thefile.read(4)
 
         try:
-            self.size = struct.unpack('i', data)[0]
+            self.size = struct.unpack('<i', data)[0]
         except:
             self.size = 0
 
@@ -131,7 +132,7 @@ class AVIParser:
             self.File = open(filename, "rb")
         except:
             self.log("Unable to open the file")
-            return
+            return 0
 
         dur = self.readHeader()
         self.File.close()
@@ -169,11 +170,15 @@ class AVIParser:
         # Stream list
         data = self.getChunkOrList()
 
+        if self.Header.dwStreams > 10:
+            self.Header.dwStreams = 10
+
         for i in range(self.Header.dwStreams):
             if data.datatype != 2:
                 self.log("Unable to find streams")
                 return 0
 
+            listsize = data.size
             # Stream chunk number 1, the stream header
             data = self.getChunkOrList()
 
@@ -190,8 +195,13 @@ class AVIParser:
 
             # If this isn't the video header, skip through the rest of these
             # stream chunks
-            while data.datatype == 1:
+            try:
+                if listsize - data.size - 12 > 0:
+                    self.File.seek(listsize - data.size - 12, 1)
+
                 data = self.getChunkOrList()
+            except:
+                self.log("Unable to seek")
 
         self.log("Video stream not found")
         return 0

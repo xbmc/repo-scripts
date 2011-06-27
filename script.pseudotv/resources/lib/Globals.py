@@ -110,7 +110,7 @@ ADDON_SETTINGS = Settings.Settings()
 REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
 ADDON_INFO = REAL_SETTINGS.getAddonInfo('path')
 
-VERSION = "1.2.0"
+VERSION = "1.2.1"
 
 TIMEOUT = 15 * 1000
 TOTAL_FILL_CHANNELS = 20

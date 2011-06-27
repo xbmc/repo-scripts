@@ -18,7 +18,7 @@
 
 import sys
 import os
-import xbmc
+import xbmc, xbmcgui
 import xbmcaddon
 
 from resources.lib.Globals import *
@@ -38,5 +38,26 @@ __cwd__        = __settings__.getAddonInfo('path')
 import resources.lib.Overlay as Overlay
 
 
-MyOverlayWindow = Overlay.TVOverlay("script.pseudotv.TVOverlay.xml", __cwd__, "default")
-del MyOverlayWindow
+shouldrestart = False
+
+if xbmc.executehttpapi("GetGuiSetting(1, services.webserver)")[4:] == "False":
+    try:
+        forcedserver = REAL_SETTINGS.getSetting("ForcedWebServer") == "True"
+    except:
+        forcedserver = False
+
+    if forcedserver == False:
+        dlg = xbmcgui.Dialog()
+        retval = dlg.yesno('PseudoTV', 'PseudoTV will run more efficiently with the web', 'server enabled.  Would you like to turn it on?')
+        REAL_SETTINGS.setSetting("ForcedWebServer", "True")
+
+        if retval:
+            xbmc.executehttpapi("SetGUISetting(3, services.webserverport, 8152)")
+            xbmc.executehttpapi("SetGUISetting(1, services.webserver, true)")
+            dlg.ok('PseudoTV', 'XBMC needs to shutdown in order to apply the', 'changes.')
+            xbmc.executebuiltin("RestartApp()")
+            shouldrestart = True
+
+if shouldrestart == False:
+    MyOverlayWindow = Overlay.TVOverlay("script.pseudotv.TVOverlay.xml", __cwd__, "default")
+    del MyOverlayWindow

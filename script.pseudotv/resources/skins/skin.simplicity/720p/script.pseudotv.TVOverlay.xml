@@ -14,8 +14,7 @@
             <posy>0</posy>
             <width>1280</width>
             <height>720</height>
-            <texture>pstvSolid.png</texture>
-            <colordiffuse>FF000000</colordiffuse>
+            <texture>lowback.png</texture>
         </control>
 		
 		<control type="image" id="103">
@@ -40,71 +39,74 @@
 			
 			<control type="image">
 				<posx>0</posx>
-				<posy>550</posy>
+				<posy>500</posy>
 				<width>1280</width>
-				<height>250</height>
-				<texture>pstvInfoWindow.png</texture>
+				<height>370</height>
+				<texture>infoback.png</texture>
 			</control>
 		
 			<control type="grouplist">
-				<posx>320</posx>
-				<posy>570</posy>
+				<posx>262</posx>
+				<posy>505</posy>
 				<width>1280</width>
 				<orientation>vertical</orientation>
 				<itemgap>4</itemgap>
 			
 				<control type="label" id="502">
 					<description>Label Now Playing</description>
-					<width>880</width>
+					<width>1280</width>
 					<height>20</height>
-					<font>font-24c</font>
+					<font>font30caps</font>
+					<textcolor>selected</textcolor>
 					<align>left</align>
-					<textcolor>white</textcolor>
 				</control>
+			</control>
 			
 				<control type="label" id="503">
 					<description>Label Show Title</description>
-					<width>950</width>
+					<posx>262</posx>
+					<posy>540</posy>
+					<width>900</width>
 					<height>30</height>
-					<font>font-35</font>
-					<align>left</align>
-					<textcolor>lightblue</textcolor>
+					<font>font35caps_title</font>
+					<textcolor>yellow</textcolor>
 				</control>
 				
 				<control type="label" id="504">
 					<description>Label Show Title</description>
-					<width>950</width>
+					<posx>262</posx>
+					<posy>575</posy>					
+					<width>900</width>
 					<height>20</height>
-					<font>font-30</font>
-					<align>left</align>
-					<textcolor>lightgrey</textcolor>
+					<font>font30caps_title</font>
+					<textcolor>white</textcolor>
 				</control>
-			</control>
 			
 			<control type="label" id="505">
 				<description>Label Show Description</description>
-				<posx>320</posx>
-				<posy>658</posy>
-				<width>950</width>
-				<height>45</height>
-         			<font>font-18</font>
-				<textcolor>white</textcolor>
+				<posx>262</posx>
+				<posy>610</posy>
+				<width>900</width>
+				<height>90</height>
+				<font>font24caps_title</font>
+				<textcolor>grey</textcolor>
 				<align>left</align>
 				<wrapmultiline>true</wrapmultiline>
 			</control>
 			
 			<control type="image" id="506">
 				<description>Show Channel Icon</description>
-				<posx>15</posx>
-				<posy>570</posy>
-				<width>300</width>
-				<height>150</height>
+				<posx>2</posx>
+				<posy>550</posy>
+				<width>240</width>
+				<height>130</height>
 				<aspectratio>scale</aspectratio>
+          			<colordiffuse>white</colordiffuse>
 			</control>
 			
 			<control type="progress">
 				<description>Progressbar</description>
-				<posx>35</posx>
+				<posx>75</posx>
 				<posy>50r</posy>
 				<width>300</width>
 				<height>8</height>
@@ -125,7 +127,7 @@
                 <textcolor>grey2</textcolor>
                 <shadowcolor>black</shadowcolor>
 				<visible>false</visible>
-            </control>
-		</control>	
+            </control>	
+	</control>
     </controls>
 </window>

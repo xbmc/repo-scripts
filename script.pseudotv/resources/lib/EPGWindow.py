@@ -353,7 +353,12 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
         lastaction = time.time() - self.lastActionTime
 
         if lastaction >= 2:
-            selectedbutton = self.getControl(controlid)
+            try:
+                selectedbutton = self.getControl(controlid)
+            except:
+                self.actionSemaphore.release()
+                self.log('onClick unknown controlid ' + str(controlid))
+                return
 
             for i in range(self.rowCount):
                 for x in range(len(self.channelButtons[i])):
@@ -539,6 +544,11 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
             timedif -= self.MyOverlayWindow.channels[newchan - 1].getItemDuration(pos) - showoffset
             pos = self.MyOverlayWindow.channels[newchan - 1].fixPlaylistIndex(pos + 1)
             showoffset = 0
+
+        if self.MyOverlayWindow.currentChannel == newchan:
+            if plpos == xbmc.PlayList(xbmc.PLAYLIST_MUSIC).getposition():
+                self.log('selectShow return current show')
+                return
 
         if pos != plpos:
             self.MyOverlayWindow.channels[newchan - 1].setShowPosition(plpos)

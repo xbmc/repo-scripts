@@ -50,7 +50,7 @@ class MyPlayer(xbmc.Player):
 
             if self.overlay.sleepTimeValue == 0:
                 self.overlay.sleepTimer = threading.Timer(1, self.overlay.sleepAction)
-    
+
             self.overlay.sleepTimeValue = 1
             self.overlay.startSleepTimer()
             self.stopped = True
@@ -159,7 +159,10 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         self.timeStarted = time.time()
         self.background.setVisible(False)
         self.startSleepTimer()
-        self.channelThread.start()
+
+        if self.channelResetSetting == "0":
+            self.channelThread.start()
+
         self.actionSemaphore.release()
         self.log('onInit return')
 
@@ -176,6 +179,8 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
         self.showChannelBug = REAL_SETTINGS.getSetting("ShowChannelBug") == "true"
         self.log('Show channel bug - ' + str(self.showChannelBug))
         self.forceReset = REAL_SETTINGS.getSetting('ForceChannelReset') == "true"
+        self.channelResetSetting = REAL_SETTINGS.getSetting('ChannelResetSetting')
+        self.log("Channel reset setting - " + str(self.channelResetSetting))
         self.channelLogos = xbmc.translatePath(REAL_SETTINGS.getSetting('ChannelLogoFolder'))
 
         if os.path.exists(self.channelLogos) == False:
@@ -287,7 +292,7 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
             self.log('Random on.  Disabling.')
             xbmc.PlayList(xbmc.PLAYLIST_MUSIC).unshuffle()
 
-        xbmc.executebuiltin("self.PlayerControl(repeatall)")
+        xbmc.executebuiltin("PlayerControl(repeatall)")
 
         timedif += (time.time() - self.channels[self.currentChannel - 1].lastAccessTime)
 
@@ -517,6 +522,9 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
                 self.inputChannel = -1
             else:
                 # Otherwise, show the EPG
+                if self.channelThread.isAlive():
+                    self.channelThread.pause()
+
                 if self.sleepTimeValue > 0:
                     if self.sleepTimer.isAlive():
                         self.sleepTimer.cancel()
@@ -525,6 +533,9 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
                 self.hideInfo()
                 self.newChannel = 0
                 self.myEPG.doModal()
+
+                if self.channelThread.isAlive():
+                    self.channelThread.unpause()
 
                 if self.newChannel != 0:
                     self.background.setVisible(True)
@@ -538,10 +549,14 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
             if self.showingInfo:
                 self.infoOffset -= 1
                 self.showInfo(10.0)
+            else:
+                xbmc.executebuiltin("PlayerControl(SmallSkipBackward)")
         elif action == ACTION_MOVE_RIGHT:
             if self.showingInfo:
                 self.infoOffset += 1
                 self.showInfo(10.0)
+            else:
+                xbmc.executebuiltin("PlayerControl(SmallSkipForward)")
         elif action == ACTION_PREVIOUS_MENU:
             if self.showingInfo:
                 self.hideInfo()
@@ -606,6 +621,13 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
     # cleanup and end
     def end(self):
         self.log('end')
+        self.background.setVisible(True)
+        xbmc.executebuiltin("PlayerControl(repeatoff)")
+
+        if self.Player.isPlaying():
+            # Prevent the player from setting the sleep timer
+            self.Player.stopped = True
+            self.Player.stop()
 
         try:
             if self.channelLabelTimer.isAlive():
@@ -630,11 +652,6 @@ class TVOverlay(xbmcgui.WindowXMLDialog):
             self.channelThread.shouldExit = True
             self.channelThread.chanlist.exitThread = True
             self.channelThread.join()
-
-        xbmc.executebuiltin("self.PlayerControl(repeatoff)")
-
-        if self.Player.isPlaying():
-            self.Player.stop()
 
         if self.timeStarted > 0:
             for i in range(self.maxChannels):

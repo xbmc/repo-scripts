@@ -85,7 +85,7 @@
 			<posy>530</posy>
 			<width>260</width>
 			<height>150</height>
-			<aspectratio>scale</aspectratio>
+			<aspectratio>keep</aspectratio>
 		</control>
 		<control type="image">
 			<description>Navigation Flag</description>

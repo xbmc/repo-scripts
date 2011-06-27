@@ -9,53 +9,43 @@
 
     <controls>
 		<!--BACKGROUND-->
-		
-		<control type="image">
-			<description>Background</description>
-			<posx>0</posx>
-			<posy>0</posy>
-			<width>1280</width>
-			<height>720</height>
-			<texture>PseudoBackground.png</texture>
+		<control type="group">
+			<include>CommonAppsBackground</include>
 		</control>
+		<control type="group">
+			<include>CommonAppsBlackwash</include>
+		</control>
+			
 		<control type="image">
 			<description>Right Border</description>
-			<posx>1185</posx>
-			<posy>100</posy>
-			<width>50</width>
-			<height>400</height>
+			<posx>1215</posx>
+			<posy>90</posy>
+			<width>10</width>
+			<height>360</height>
 			<texture border="5">pstvHeader.png</texture>
 		</control>
 		<control type="image">
 			<description>Bottom Border</description>
-			<posx>50</posx>
-			<posy>450</posy>
-			<width>1135</width>
-			<height>50</height>
+			<posx>105</posx>
+			<posy>440</posy>
+			<width>1110</width>
+			<height>10</height>
 			<texture border="5">pstvHeader.png</texture>
-		</control>
-		<control type="image">
-			<description>Logo</description>
-			<posx>63</posx>
-			<posy>3</posy>
-			<width>100</width>
-			<height>100</height>
-			<texture>EpgLogo.png</texture>
 		</control>
 		<control type="image">
 			<description>EPG Back</description>
-			<posx>400</posx>
-			<posy>150</posy>
+			<posx>430</posx>
+			<posy>140</posy>
 			<width>785</width>
 			<height>300</height>
 			<texture border="5">pstvHeader.png</texture>
-		</control>		
+		</control>	
 	
         <!--CHANNEL BUTTONS AND LABELS-->
 		
 		<control type="group">
-			<posx>50</posx>
-			<posy>100</posy>
+			<posx>105</posx>
+			<posy>90</posy>
 			<width>350</width>
 			<height>500</height>
 			
@@ -65,7 +55,7 @@
 				<description>Channel Header</description>
 				<posx>0</posx>
 				<posy>0</posy>
-				<width>350</width>
+				<width>325</width>
 				<height>50</height>
 				<texture border="5">pstvHeader.png</texture>
 			</control>			
@@ -73,14 +63,14 @@
 				<description>Date Label</description>
 				<posx>0</posx>
 				<posy>0</posy>
-				<width>350</width>
+				<width>325</width>
 				<height>50</height>
 				<label>Current Date</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>center</align>
 				<aligny>center</aligny>
-				<textcolor>selected</textcolor>
+				<textcolor>blue</textcolor>
 			</control>
 			
 			<!--CHANNEL 1-->
@@ -89,7 +79,7 @@
 				<description>Channel 1 Back</description>
 				<posx>0</posx>
 				<posy>50</posy>
-				<width>350</width>
+				<width>325</width>
 				<height>50</height>
 				<texture border="5">pstvHeader.png</texture>
 			</control>			
@@ -100,7 +90,7 @@
 				<width>300</width>
 				<height>50</height>
 				<label>Channel</label>
-				<font>LiberationSans_Regular_22</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>left</align>
 				<aligny>center</aligny>
@@ -113,7 +103,7 @@
 				<width>30</width>
 				<height>50</height>
 				<label>1</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>right</align>
 				<aligny>center</aligny>
@@ -127,7 +117,7 @@
 				<description>Channel 2 Back</description>
 				<posx>0</posx>
 				<posy>100</posy>
-				<width>350</width>
+				<width>325</width>
 				<height>50</height>
 				<texture border="5">pstvHeader.png</texture>
 			</control>			
@@ -138,7 +128,7 @@
 				<width>300</width>
 				<height>50</height>
 				<label>Channel</label>
-				<font>LiberationSans_Regular_22</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>left</align>
 				<aligny>center</aligny>
@@ -151,7 +141,7 @@
 				<width>30</width>
 				<height>50</height>
 				<label>2</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>right</align>
 				<aligny>center</aligny>
@@ -165,7 +155,7 @@
 				<description>Channel 3 Back</description>
 				<posx>0</posx>
 				<posy>150</posy>
-				<width>350</width>
+				<width>325</width>
 				<height>50</height>
 				<texture border="5">pstvHeader.png</texture>
 			</control>			
@@ -176,7 +166,7 @@
 				<width>300</width>
 				<height>50</height>
 				<label>Channel</label>
-				<font>LiberationSans_Regular_22</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>left</align>
 				<aligny>center</aligny>
@@ -189,7 +179,7 @@
 				<width>30</width>
 				<height>50</height>
 				<label>2</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>right</align>
 				<aligny>center</aligny>
@@ -203,7 +193,7 @@
 				<description>Channel 4 Back</description>
 				<posx>0</posx>
 				<posy>200</posy>
-				<width>350</width>
+				<width>325</width>
 				<height>50</height>
 				<texture border="5">pstvHeader.png</texture>
 			</control>			
@@ -214,7 +204,7 @@
 				<width>300</width>
 				<height>50</height>
 				<label>Channel</label>
-				<font>LiberationSans_Regular_22</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>left</align>
 				<aligny>center</aligny>
@@ -227,7 +217,7 @@
 				<width>30</width>
 				<height>50</height>
 				<label>4</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>right</align>
 				<aligny>center</aligny>
@@ -241,7 +231,7 @@
 				<description>Channel 5 Back</description>
 				<posx>0</posx>
 				<posy>250</posy>
-				<width>350</width>
+				<width>325</width>
 				<height>50</height>
 				<texture border="5">pstvHeader.png</texture>
 			</control>			
@@ -252,7 +242,7 @@
 				<width>300</width>
 				<height>50</height>
 				<label>Channel</label>
-				<font>LiberationSans_Regular_22</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>left</align>
 				<aligny>center</aligny>
@@ -265,7 +255,7 @@
 				<width>30</width>
 				<height>50</height>
 				<label>5</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>right</align>
 				<aligny>center</aligny>
@@ -279,7 +269,7 @@
 				<description>Channel 6 Back</description>
 				<posx>0</posx>
 				<posy>300</posy>
-				<width>350</width>
+				<width>325</width>
 				<height>50</height>
 				<texture border="5">pstvHeader.png</texture>
 			</control>			
@@ -290,7 +280,7 @@
 				<width>300</width>
 				<height>50</height>
 				<label>Channel</label>
-				<font>LiberationSans_Regular_22</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>left</align>
 				<aligny>center</aligny>
@@ -303,7 +293,7 @@
 				<width>30</width>
 				<height>50</height>
 				<label>2</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>right</align>
 				<aligny>center</aligny>
@@ -315,8 +305,8 @@
 		<!--LISTING HEADER AND TIME INFO-->
 		
 		<control type="group">
-			<posx>400</posx>
-			<posy>100</posy>
+			<posx>430</posx>
+			<posy>90</posy>
 			<width>785</width>
 			<height>500</height>			
 			<control type="image">
@@ -329,182 +319,160 @@
 			</control>			
 			<control type="label" id="101">
 				<description>Time 1 Label</description>
-				<posx>10</posx>
+				<posx>5</posx>
 				<posy>0</posy>
 				<width>261</width>
 				<height>50</height>
 				<label>Time 1</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>left</align>
 				<aligny>center</aligny>
-				<textcolor>selected</textcolor>
+				<textcolor>blue</textcolor>
 			</control>
 			<control type="label" id="102">
 				<description>Time 2 Label</description>
-				<posx>271</posx>
+				<posx>266</posx>
 				<posy>0</posy>
 				<width>261</width>
 				<height>50</height>
 				<label>Time 2</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>left</align>
 				<aligny>center</aligny>
-				<textcolor>selected</textcolor>
+				<textcolor>blue</textcolor>
 			</control>
 			<control type="label" id="103">
 				<description>Time 3 Label</description>
-				<posx>550</posx>
+				<posx>527</posx>
 				<posy>0</posy>
 				<width>261</width>
 				<height>50</height>
 				<label>Time 2</label>
-				<font>LiberationSans_Regular_20</font>
+				<font>font13</font>
 				<shadowcolor>black</shadowcolor>
 				<align>left</align>
 				<aligny>center</aligny>
-				<textcolor>selected</textcolor>
+				<textcolor>blue</textcolor>
 			</control>
 		</control>
 		
 		<!--TIME BAR-->
 		
-		<control type="image">
-			<posx>400</posx>
-			<posy>470</posy>
-			<width>785</width>
-			<height>10</height>
-			<texture border="5">pstvTimeBarBack.png</texture>
-			<colordiffuse>selected</colordiffuse>
-		</control>		
 		<control type="image" id="120">
-			<posx>400</posx>
-			<posy>498</posy>
+			<posx>430</posx>
+			<posy>140</posy>
 			<width>10</width>
-			<height>-350</height>
+			<height>300</height>
+			<aspectratio>keep</aspectratio>
 		</control>
 		
 		<!--SHOW LISTINGS-->
 		
 		<control type="button" id="100">
 			<visible>false</visible>			
-			<label>0xFFb4b4b4</label><!--un-focused text color-->			
-			<label2>0xFFFFFFFF</label2><!--focused text color-->
+			<label>0xFFFFFFFF</label><!--un-focused text color-->			
+			<label2>0xFF000000</label2><!--focused text color-->
 		</control>			
 		<control type="group" id="111">
-			<posx>401</posx>
-			<posy>151</posy>
+			<posx>431</posx>
+			<posy>141</posy>
 			<width>784</width>
 			<height>48</height>
 		</control>
 		<control type="group" id="112">
-			<posx>401</posx>
-			<posy>201</posy>
+			<posx>431</posx>
+			<posy>191</posy>
 			<width>784</width>
 			<height>48</height>
 		</control>
 		<control type="group" id="113">
-			<posx>401</posx>
-			<posy>251</posy>
+			<posx>431</posx>
+			<posy>241</posy>
 			<width>784</width>
 			<height>48</height>
 		</control>
 		<control type="group" id="114">
-			<posx>401</posx>
-			<posy>301</posy>
+			<posx>431</posx>
+			<posy>291</posy>
 			<width>784</width>
 			<height>48</height>
 		</control>
 		<control type="group" id="115">
-			<posx>401</posx>
-			<posy>351</posy>
+			<posx>431</posx>
+			<posy>341</posy>
 			<width>784</width>
 			<height>48</height>
 		</control>		
 		<control type="group" id="116">
-			<posx>401</posx>
-			<posy>401</posy>
+			<posx>431</posx>
+			<posy>391</posy>
 			<width>784</width>
 			<height>48</height>
 		</control>
 		
-		<!--INFO/LABEL-->
+		<!--CHANNEL INFO/LABEL-->
 			
 		<control type="label">
-			<description>Time</description>
-			<posx>1270</posx>
-			<posy>0</posy>
-			<width>300</width>
-			<font>DejaVuSans_Bold_24</font>
-			<textcolor>mainblue</textcolor>
-			<shadowcolor>black</shadowcolor>
-			<info>System.Time(hh:mm xx)</info>
-			<align>right</align>
+			<description>Time label</description>
+			<posx>1200</posx>
+			<include>ClockTextCommons</include>
 		</control>
 		<control type="label">
-			<description>Program Guide</description>
-			<posx>200</posx>
-			<posy>22</posy>		
-			<width>800</width>
-			<height>50</height>
-			<align>left</align>
-			<aligny>center</aligny>
-			<font>LiberationSans_Regular_Caps_38</font>
-			<label>[B]PROGRAM GUIDE[/B]</label>
-			<textcolor>mainblue</textcolor>
-			<shadowcolor>black</shadowcolor>
-		</control>		
-		<control type="image">
-			<description>Navigation Flag</description>
-			<posx>55</posx>
-			<posy>462</posy>
-			<width>336</width>
-			<height>28</height>
-			<texture>NavFlagEpg.png</texture>
-			<colordiffuse>selected</colordiffuse>
-		</control>		
+			<posx>130</posx>
+			<include>HeaderTextCommons</include>
+			<label>Program Guide</label>
+		</control>
+		<control type="label">
+			<posx>130</posx>
+			<posy>670</posy>
+			<include>HeaderTextCommons</include>
+			<label>PseudoTV</label>
+		</control>
 		<control type="label" id="500">
-			<description>Show Name Label</description>
-			<posx>400</posx>
-			<posy>510</posy>
-			<width>900</width>
+			<description>Show Title Label</description>
+			<posx>430</posx>
+			<posy>455</posy>
+			<width>800</width>
 			<height>25</height>
-			<font>LiberationSans_Regular_40</font>
-			<textcolor>mainblue</textcolor>
+			<font>font30</font>
+			<textcolor>white</textcolor>
 			<shadowcolor>black</shadowcolor>
 			<align>left</align>
 		</control>
 		<control type="label" id="501">
-			<description>Show Title Label</description>
-			<posx>400</posx>
-			<posy>555</posy>
-			<width>900</width>
+			<description>Episode Title Label</description>
+			<posx>430</posx>
+			<posy>490</posy>
+			<width>800</width>
 			<height>25</height>
-			<font>LiberationSans_Regular_30</font>>
-			<textcolor>white</textcolor>
+			<font>font13</font>>
+			<textcolor>orange</textcolor>
 			<shadowcolor>black</shadowcolor>
 			<align>left</align>
 		</control>		
 		<control type="label" id="502">
-			<description>Show Description Label</description>
-			<posx>400</posx>
-			<posy>595</posy>
-			<width>835</width>
+			<description>Episode Description Label</description>
+			<posx>430</posx>
+			<posy>520</posy>
+			<width>800</width>
 			<height>100</height>			
-			<font>LiberationSans_Regular_22</font>
-			<textcolor>grey</textcolor>
+			<font>font12</font>
+			<textcolor>grey2</textcolor>
 			<align>left</align>
 			<wrapmultiline>true</wrapmultiline>			
 		</control>			
 		<control type="image" id="503">
             <description>Show Channel Icon</description>
-            <posx>85</posx>
-			<posy>530</posy>
+            <posx>130</posx>
+			<posy>470</posy>
 			<width>260</width>
 			<height>150</height>
 			<aspectratio>keep</aspectratio>
-			<align>center</align>
+		</control>
+		<control type="group">
+			<include>AppsToSubBlades</include>
 		</control>
 			
     </controls>

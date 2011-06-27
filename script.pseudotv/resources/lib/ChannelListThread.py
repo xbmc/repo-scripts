@@ -36,6 +36,7 @@ class ChannelListThread(threading.Thread):
         sys.setcheckinterval(25)
         self.chanlist = ChannelList()
         self.chanlist.sleepTime = 0.1
+        self.paused = False
 
 
     def log(self, msg, level = xbmc.LOGDEBUG):
@@ -65,11 +66,17 @@ class ChannelListThread(threading.Thread):
                 curtotal = self.myOverlay.channels[i].getTotalDuration()
                 self.chanlist.appendChannel(i + 1)
 
-                if self.shouldExit == True:
-                    self.log("Closing thread")
-                    return
+                # A do-while loop for the paused state
+                while True:
+                    if self.shouldExit == True:
+                        self.log("Closing thread")
+                        return
 
-                time.sleep(2)
+                    time.sleep(2)
+
+                    if self.paused == False:
+                        break
+
                 self.myOverlay.channels[i].setPlaylist(CHANNELS_LOC + "channel_" + str(i + 1) + ".m3u")
 
                 if self.myOverlay.channels[i].getTotalDuration() > curtotal:
@@ -77,3 +84,10 @@ class ChannelListThread(threading.Thread):
 
         self.log("All channels up to date.  Exiting thread.")
 
+
+    def pause(self):
+        self.paused = True
+
+
+    def unpause(self):
+        self.paused = False

@@ -32,6 +32,7 @@ from Playlist import Playlist
 from Globals import *
 from Channel import Channel
 from VideoParser import VideoParser
+from FileLock import FileLock
 
 
 
@@ -44,6 +45,7 @@ class ChannelList:
         self.movieGenreList = []
         self.showList = []
         self.videoParser = VideoParser()
+        self.fileLock = FileLock()
         self.httpJSON = True
         self.sleepTime = 0
         self.exitThread = False
@@ -75,7 +77,7 @@ class ChannelList:
 
         # Go through all channels, create their arrays, and setup the new playlist
         for i in range(self.maxChannels):
-            self.updateDialog.update(i * 100 // self.maxChannels, "Updating channel " + str(i + 1))
+            self.updateDialog.update(i * 100 // self.maxChannels, "Updating channel " + str(i + 1), "waiting for file lock")
             self.channels.append(Channel())
 
             # If the user pressed cancel, stop everything and exit
@@ -84,6 +86,9 @@ class ChannelList:
                 self.updateDialog.close()
                 return None
 
+            # Block until the file is unlocked
+            # This also has the affect of removing any stray locks (given, after 15 seconds).
+            self.fileLock.isFileLocked(CHANNELS_LOC + 'channel_' + str(i + 1) + '.m3u', True)
             self.setupChannel(i + 1)
 
         REAL_SETTINGS.setSetting('ForceChannelReset', 'false')
@@ -155,7 +160,6 @@ class ChannelList:
             plname = dom.getElementsByTagName('webserver')
             self.httpJSON = (plname[0].childNodes[0].nodeValue.lower() == 'true')
             self.log('determineWebServer is ' + str(self.httpJSON))
-
             if self.httpJSON == True:
                 plname = dom.getElementsByTagName('webserverport')
                 self.webPort = int(plname[0].childNodes[0].nodeValue)
@@ -186,8 +190,6 @@ class ChannelList:
             if self.webUsername != '':
                 userpass = base64.encodestring('%s:%s' % (self.webUsername, self.webPassword))[:-1]
                 headers['Authorization'] = 'Basic %s' % userpass
-
-            self.webPort = 8080
 
             try:
                 conn = httplib.HTTPConnection('127.0.0.1', self.webPort)
@@ -272,6 +274,9 @@ class ChannelList:
                 pass
 
         if createlist or needsreset:
+            self.fileLock.lockFile(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u', True)
+            self.updateDialog.update((channel - 1) * 100 // self.maxChannels, "Updating channel " + str(channel), "adding videos")
+
             if self.makeChannelList(channel, chtype, chsetting1, chsetting2) == True:
                 if self.channels[channel - 1].setPlaylist(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u') == True:
                     self.channels[channel - 1].totalTimePlayed = 0
@@ -281,6 +286,9 @@ class ChannelList:
                     ADDON_SETTINGS.setSetting('Channel_' + str(channel) + '_time', '0')
                     ADDON_SETTINGS.setSetting('Channel_' + str(channel) + '_changed', 'False')
 
+            self.fileLock.unlockFile(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u')
+
+        self.updateDialog.update((channel - 1) * 100 // self.maxChannels, "Updating channel " + str(channel), "clearing history")
         self.clearPlaylistHistory(channel)
 
         if chtype == 6:
@@ -333,11 +341,12 @@ class ChannelList:
             return
 
         # if we actually need to clear anything
-        if self.channels[channel - 1].totalTimePlayed > 60 * 60 * 24:
+        if (self.channels[channel - 1].totalTimePlayed > 60 * 60 * 24) and self.fileLock.lockFile(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u'):
             try:
                 fle = open(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u', 'w')
             except:
                 self.log("clearPlaylistHistory Unable to open the smart playlist", xbmc.LOGERROR)
+                self.fileLock.unlockFile(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u')
                 return
 
             fle.write("#EXTM3U\n")
@@ -363,7 +372,7 @@ class ChannelList:
                 self.channels[channel - 1].setPlaylist(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u')
 
             self.channels[channel - 1].totalTimePlayed -= timeremoved
-
+            self.fileLock.unlockFile(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u')
 
 
     def getChannelName(self, chtype, setting1):
@@ -691,7 +700,7 @@ class ChannelList:
                 del self.networkList[:]
                 del self.showList[:]
                 del self.showGenreList[:]
-                break
+                return
 
             match = re.search('"studio" *: *"(.*?)",', f)
             network = ''
@@ -701,6 +710,12 @@ class ChannelList:
                 network = match.group(1).strip()
 
                 for item in self.networkList:
+                    if self.threadPause() == False:
+                        del self.networkList[:]
+                        del self.showList[:]
+                        del self.showGenreList[:]
+                        return
+
                     if item.lower() == network.lower():
                         found = True
                         break
@@ -724,6 +739,12 @@ class ChannelList:
                     curgenre = genre.lower().strip()
 
                     for g in self.showGenreList:
+                        if self.threadPause() == False:
+                            del self.networkList[:]
+                            del self.showList[:]
+                            del self.showGenreList[:]
+                            return
+
                         if curgenre == g.lower():
                             found = True
                             break

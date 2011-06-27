@@ -96,7 +96,13 @@ class MKVParser:
 
 
     def findHeader(self):
+        self.log("findHeader")
         filesize = self.getFileSize()
+        
+        if filesize == 0:
+            self.log("Empty file")
+            return 0
+
         data = self.getEBMLId()
 
         # Check for 1A 45 DF A3
@@ -150,10 +156,16 @@ class MKVParser:
 
 
     def getFileSize(self):
-        pos = self.File.tell()
-        self.File.seek(0, 2)
-        size = self.File.tell()
-        self.File.seek(pos, 0)
+        size = 0
+        
+        try:
+            pos = self.File.tell()
+            self.File.seek(0, 2)
+            size = self.File.tell()
+            self.File.seek(pos, 0)
+        except:
+            pass
+
         return size
 
 
@@ -164,7 +176,7 @@ class MKVParser:
 
     def getDataSize(self):
         data = self.File.read(1)
-        
+
         try:
             firstbyte = struct.unpack('>B', data)[0]
             datasize = firstbyte
@@ -174,7 +186,7 @@ class MKVParser:
                 if datasize >> (7 - i) == 1:
                     mask = mask ^ (1 << (7 - i))
                     break
-    
+
             datasize = datasize & mask
     
             if firstbyte >> 7 != 1:
@@ -191,7 +203,7 @@ class MKVParser:
 
     def getEBMLId(self):
         data = self.File.read(1)
-        
+
         try:
             firstbyte = struct.unpack('>B', data)[0]
             ID = firstbyte
