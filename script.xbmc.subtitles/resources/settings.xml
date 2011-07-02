@@ -43,6 +43,7 @@
       <setting id="Subscenter" type="bool" label="Subscenter.org" default="false"/>
       <setting id="AsiaTeam" type="bool" label="Asia-Team.net" default="false"/>
       <setting id="Sratim" type="bool" label="Sratim.co.il" default="false"/>
+      <setting id="SuperSubtitles" type="bool" label="SuperSubtitles (Feliratok.info)" default="false"/>
       <setting id="LegendasZone" type="bool" label="Legendas-Zone.org" default="false"/>
       <setting id="LZuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30138" default=""/>
       <setting id="LZpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30139" default=""/>

@@ -1,3 +1,7 @@
+2.5.4
+- fixed: OpenSubtitles search
+- added: SuperSubtitles service, thx kispaljr and mukka
+
 2.5.3
 - fixed: ordering of OpenSubtitles results, thx to cidus
 - fixed: Undertexter, it will now find Swedish subs
