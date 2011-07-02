@@ -1,3 +1,8 @@
+2.9.13
+- OpenSubtitles fix and re-factor search
+-- download first "sync" subtitle will attempt to download without bringing the window up, if unsuccessful it will work as usual
+- added: SuperSubtitles service, thx kispaljr and mukka
+
 2.9.12
 - fixed: ordering of OpenSubtitles results, thx to cidus
 - fixed: Undertexter, it will now find Swedish subs

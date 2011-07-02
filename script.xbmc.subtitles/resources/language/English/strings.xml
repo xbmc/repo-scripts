@@ -28,6 +28,8 @@
     <string id="761">You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration</string>
     <string id="762">Addon Settings</string>
     <string id="763">Auto downloading first 'sync' subtitle</string>
+    <string id="764">Downloading first 'sync' sub</string>
+    <string id="765">first 'sync' subtitle downloaded</string>
 
   <!-- Script Settings -->
 

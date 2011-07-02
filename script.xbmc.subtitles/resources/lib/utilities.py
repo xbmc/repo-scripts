@@ -137,4 +137,13 @@ def languageTranslate(lang, lang_from, lang_to):
       return x[lang_to]
 
 
-      
+class UserNotificationNotifier:
+  def __init__(self, title, initialMessage, time = -1):
+    self.__title = title
+    xbmc.executebuiltin("Notification(%s,%s,%i)" % (title, initialMessage, time))
+    
+  def update(self, message, time = -1):
+    xbmc.executebuiltin("Notification(%s,%s,-1)" % (self.__title, message, time))
+
+  def close(self, message, time = -1):
+    xbmc.executebuiltin("Notification(%s,%s,%i)" % (self.__title, message, time))    

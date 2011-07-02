@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*- 
 
-import sys
 import os
+import sys
+import xbmc
 import xmlrpclib
 from utilities import *
-import xbmc
-from xml.dom import minidom
-import urllib
 
-_ = sys.modules[ "__main__" ].__language__
+
+_              = sys.modules[ "__main__" ].__language__
+__scriptname__ = sys.modules[ "__main__" ].__scriptname__
 
 BASE_URL_XMLRPC = u"http://api.opensubtitles.org/xml-rpc"
-BASE_URL_HASH = u"http://www.opensubtitles.org/en/search/sublanguageid-%s/moviebytesize-%s/moviehash-%s/simplexml"
-BASE_URL_NAME = u"http://www.opensubtitles.com/en/search/sublanguageid-%s/moviename-%s/simplexml"
 
 class OSDBServer:
-
-###-------------------------- Merge Subtitles All -------------################
-
 
   def mergesubtitles( self ):
     self.subtitles_list = []
@@ -25,114 +20,56 @@ class OSDBServer:
       for item in self.subtitles_hash_list:
         if item["format"].find( "srt" ) == 0 or item["format"].find( "sub" ) == 0:
           self.subtitles_list.append( item )
+
     if( len ( self.subtitles_list ) > 0 ):
       self.subtitles_list.sort(key=lambda x: [not x['sync'],x['lang_index']])
 
-###-------------------------- Sort Subtitles  -------------################
-
-  def sortsubtitles(self, subtitle, hashed, url_base):
-    filename = movie = lang_name = subtitle_id = lang_id = link = ""
-    lang_index = 3
-    flag_image = "-.gif"
-    if subtitle.getElementsByTagName("releasename")[0].firstChild:
-      filename = subtitle.getElementsByTagName("releasename")[0].firstChild.data
-    if subtitle.getElementsByTagName("format")[0].firstChild:
-      format = subtitle.getElementsByTagName("format")[0].firstChild.data
-      filename = "%s.%s" % ( filename,format, )
-    if subtitle.getElementsByTagName("movie")[0].firstChild:
-      movie = subtitle.getElementsByTagName("movie")[0].firstChild.data
-    if subtitle.getElementsByTagName("language")[0].firstChild:
-      lang_name = subtitle.getElementsByTagName("language")[0].firstChild.data
-    if subtitle.getElementsByTagName("idsubtitle")[0].firstChild:
-      subtitle_id = subtitle.getElementsByTagName("idsubtitle")[0].firstChild.data
-    if subtitle.getElementsByTagName("iso639")[0].firstChild:
-      lang_id = subtitle.getElementsByTagName("iso639")[0].firstChild.data
-      flag_image = "flags/%s.gif" % (lang_id,)
-      lang_index=0
-      for user_lang_id in self.langs_ids:
-        if user_lang_id == lang_id:
-          break
-        lang_index+=1
-    if subtitle.getElementsByTagName("download")[0].firstChild:
-      link = subtitle.getElementsByTagName("download")[0].firstChild.data
-      link = url_base + link
-    if subtitle.getElementsByTagName("subrating")[0].firstChild:
-      rating = subtitle.getElementsByTagName("subrating")[0].firstChild.data
-    
-    self.subtitles_hash_list.append({'lang_index':lang_index,'filename':filename,'link':link,'language_name':lang_name,'language_id':lang_id,'language_flag':flag_image,'movie':movie,"ID":subtitle_id,"rating":str( int( rating[0] ) ),"format":format,"sync":hashed})
-    
-      
-  def get_results ( self, search_url ):
-    socket = urllib.urlopen( search_url )
-    log( __name__ , "Search url [ %s ]" % (search_url,))
-    result = socket.read()
-    socket.close()
-    return result                
-
-###-------------------------- Opensubtitles Search -------------################
-      
-
   def searchsubtitles( self, srch_string , lang1,lang2,lang3,hash_search, _hash = "000000000", size = "000000000"):
-    msg = ""
-    search_url1 = None
-    search_url2 = None
-    self.subtitles_list =[]
+    msg                      = ""
+    lang_index               = 3
+    searchlist               = []
     self.subtitles_hash_list = []
-    self.langs_ids = [languageTranslate(lang1,0,2), languageTranslate(lang2,0,2), languageTranslate(lang3,0,2)]
-    language = languageTranslate(lang1,0,3)
+    self.langs_ids           = [languageTranslate(lang1,0,2), languageTranslate(lang2,0,2), languageTranslate(lang3,0,2)]    
+    language                 = languageTranslate(lang1,0,3)
+    
     if lang1 != lang2:
       language += "," + languageTranslate(lang2,0,3)
-      search_url1 = BASE_URL_NAME % (languageTranslate(lang2,0,3),srch_string,)
     if lang3 != lang1 and lang3 != lang2:
       language += "," + languageTranslate(lang3,0,3)
-      search_url2 = BASE_URL_NAME % (languageTranslate(lang3,0,3),srch_string,)          
+  
+    self.server = xmlrpclib.Server( BASE_URL_XMLRPC, verbose=0 )
+    login = self.server.LogIn("", "", "en", __scriptname__.replace(" ","_"))
+  
+    self.osdb_token  = login[ "token" ]
+    log( __name__ ,"Token:[%s]" % str(self.osdb_token))
+  
     try:
-      if hash_search:
-        search_url = BASE_URL_HASH % (language,size, _hash,)
-        result = self.get_results( search_url )
-        test = True
-        if result.find('<?xml version=') < 0:
-          msg = _( 755 )
-        else:
-          xmldoc = minidom.parseString(result)
-          subtitles_alt = xmldoc.getElementsByTagName("subtitle")
-          if subtitles_alt:
-            url_base = xmldoc.childNodes[0].childNodes[1].firstChild.data
-            for subtitle in subtitles_alt:
-              self.sortsubtitles(subtitle, True, url_base)           
+      if ( self.osdb_token ) :
+        if hash_search:
+          searchlist.append({'sublanguageid':language, 'moviehash':_hash, 'moviebytesize':str( size ) })
+        searchlist.append({'sublanguageid':language, 'query':srch_string })
+        search = self.server.SearchSubtitles( self.osdb_token, searchlist )
+        if search["data"]:
+          for item in search["data"]:
+            if item["ISO639"]:
+              lang_index=0
+              for user_lang_id in self.langs_ids:
+                if user_lang_id == item["ISO639"]:
+                  break
+                lang_index+=1
+              flag_image = "flags/%s.gif" % item["ISO639"]
+            else:                                
+              flag_image = "-.gif"
 
-      if (not hash_search) or (not self.subtitles_hash_list):        
-        search_url = BASE_URL_NAME % (languageTranslate(lang1,0,3),srch_string,)
-        result = self.get_results( search_url )
-        if result.find('<?xml version=') < 0:
-          msg = _( 755 )
-        else:
-          xmldoc = minidom.parseString(result)
-          subtitles_alt = xmldoc.getElementsByTagName("subtitle")
+            if str(item["MatchedBy"]) == "moviehash":
+              sync = True
+            else:                                
+              sync = False
+
+            self.subtitles_hash_list.append({'lang_index':lang_index,'filename':item["SubFileName"],'link':item["ZipDownloadLink"],"language_name":item["LanguageName"],"language_flag":flag_image,"language_id":item["SubLanguageID"],"ID":item["IDSubtitle"],"rating":str( int( item["SubRating"][0] ) ),"format":item["SubFormat"],"sync":sync})
             
-          if search_url1 != None :
-            result = self.get_results( search_url1 )
-            if result.find('<?xml version=') < 0:
-              msg = _( 755 )
-            else:
-              xmldoc = minidom.parseString(result)
-              subtitles_alt += xmldoc.getElementsByTagName("subtitle")
-            
-          if search_url2 != None :
-            result = self.get_results( search_url2 )
-            if result.find('<?xml version=') < 0:
-              msg = _( 755 )
-            else:
-              xmldoc = minidom.parseString(result)
-              subtitles_alt += xmldoc.getElementsByTagName("subtitle")    
-              
-      if subtitles_alt:
-        url_base = xmldoc.childNodes[0].childNodes[1].firstChild.data
-        for subtitle in subtitles_alt:
-          self.sortsubtitles(subtitle, False, url_base)
-                    
     except:
-      pass
+      msg = "Error Searching For Subs"
     
     self.mergesubtitles()
     return self.subtitles_list, msg
