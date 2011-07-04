@@ -4,11 +4,11 @@ debug_pretext = "[Feliratok.hu] "
 
 def debuglog(msg):
     import xbmc
-    xbmc.output( debug_pretext + msg, level=xbmc.LOGDEBUG )     
+    xbmc.log( debug_pretext + msg, level=xbmc.LOGDEBUG )     
 
 def errorlog(msg):
     import xbmc
-    xbmc.output( debug_pretext + msg, level=xbmc.LOGERROR )     
+    xbmc.log( debug_pretext + msg, level=xbmc.LOGERROR )     
 
 def unpack_archive(archive_file, dst_dir):
     import xbmc

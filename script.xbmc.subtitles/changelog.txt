@@ -1,3 +1,7 @@
+2.9.14
+- fix: Service Legendas-Zone.org version 0.1.7
+- fix: Use xbmc.log()
+
 2.9.13
 - OpenSubtitles fix and re-factor search
 -- download first "sync" subtitle will attempt to download without bringing the window up, if unsuccessful it will work as usual

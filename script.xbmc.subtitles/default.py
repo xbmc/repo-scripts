@@ -19,7 +19,7 @@ sys.path.append (BASE_RESOURCE_PATH)
 
 from utilities import *
 
-xbmc.output("### [%s] - Version: %s" % (__scriptname__,__version__,),level=xbmc.LOGDEBUG )
+xbmc.log("### [%s] - Version: %s" % (__scriptname__,__version__,),level=xbmc.LOGDEBUG )
 
 if ( __name__ == "__main__" ):
           

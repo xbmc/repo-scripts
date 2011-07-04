@@ -79,7 +79,7 @@ LANGUAGES = (
 ###-------------------------  Log  ------------------###############
    
 def log(module,msg):
-  xbmc.output("### [%s-%s] - %s" % (__scriptname__,module,msg,),level=xbmc.LOGDEBUG ) 
+  xbmc.log("### [%s-%s] - %s" % (__scriptname__,module,msg,),level=xbmc.LOGDEBUG ) 
 
 ###-------------------------- match sub to file  -------------################        
 
