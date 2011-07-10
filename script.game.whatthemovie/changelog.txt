@@ -1,0 +1,12 @@
+0.9.0 Initial zip-release version
+- Login with your whatthemovie.com account
+- Solve, favourite, bookmark and rate shots
+- Show the next, next unsolved and next random Shot
+- Instantly go back to the last seen shot
+- Zoom the snapshot
+- Rate with number keys score:1-10 = key:1-0
+- Set random and navigation options
+- Jump automatically to the next or random next shot if your guess was right
+- Chose five Languages to see if you can enter the movietitle in this languages
+- Set hotkeys for the functions: guess, random, back, next, previous, jump, bookmark, favourite and solve
+- Configure the visibility of shot properties: posted by, solved, id, date, flags, tool- and navigation buttons
