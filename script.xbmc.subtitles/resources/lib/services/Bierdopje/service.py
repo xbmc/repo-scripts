@@ -4,7 +4,6 @@ import os, sys, re, xbmc, xbmcgui, string, urllib, xml.etree.ElementTree as XMLT
 from utilities import log
 
 _                = sys.modules[ "__main__" ].__language__
-__settings__     = sys.modules[ "__main__" ].__settings__
 __profile__      = sys.modules[ "__main__" ].__profile__
 
 apiurl           = "http://api.bierdopje.com/"

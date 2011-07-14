@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*- 
 
-import sys
 import os
-import xbmc
 import re
+import sys
+import xbmc
 import struct
+import xbmcvfs
+import shutil
+import xbmcgui
 
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
-
-###-------------------------  Languages  ------------------###############
 
 LANGUAGES = (
     
@@ -76,15 +77,7 @@ LANGUAGES = (
     ("Chinese (Simplified)"       , "17",       "zh",            "chi",                 "100") )
 
 
-###-------------------------  Log  ------------------###############
-   
-def log(module,msg):
-  xbmc.log("### [%s-%s] - %s" % (__scriptname__,module,msg,),level=xbmc.LOGDEBUG ) 
-
-###-------------------------- match sub to file  -------------################        
-
-def regex_tvshow(compare, file, sub = ""):
-  regex_expressions = [ '[Ss]([0-9]+)[][._-]*[Ee]([0-9]+)([^\\\\/]*)$',
+REGEX_EXPRESSIONS = [ '[Ss]([0-9]+)[][._-]*[Ee]([0-9]+)([^\\\\/]*)$',
                       '[\._ \-]([0-9]+)x([0-9]+)([^\\/]*)',                     # foo.1x09 
                       '[\._ \-]([0-9]+)([0-9][0-9])([\._ \-][^\\/]*)',          # foo.109
                       '([0-9]+)([0-9][0-9])([\._ \-][^\\/]*)',
@@ -96,11 +89,30 @@ def regex_tvshow(compare, file, sub = ""):
                       's([0-9]+)ep([0-9]+)[^\\/]*',                              #foo - s01ep03, foo - s1ep03
                       '[Ss]([0-9]+)[][ ._-]*[Ee]([0-9]+)([^\\\\/]*)$',
                       '[\\\\/\\._ \\[\\(-]([0-9]+)x([0-9]+)([^\\\\/]*)$'
-                      ]
+                     ]
+
+
+
+class UserNotificationNotifier:
+  def __init__(self, title, initialMessage, time = -1):
+    self.__title = title
+    xbmc.executebuiltin("Notification(%s,%s,%i)" % (title, initialMessage, time))
+    
+  def update(self, message, time = -1):
+    xbmc.executebuiltin("Notification(%s,%s,-1)" % (self.__title, message, time))
+
+  def close(self, message, time = -1):
+    xbmc.executebuiltin("Notification(%s,%s,%i)" % (self.__title, message, time)) 
+
+   
+def log(module,msg):
+  xbmc.log("### [%s-%s] - %s" % (__scriptname__,module,msg,),level=xbmc.LOGDEBUG ) 
+
+def regex_tvshow(compare, file, sub = ""):
   sub_info = ""
   tvshow = 0
   
-  for regex in regex_expressions:
+  for regex in REGEX_EXPRESSIONS:
     response_file = re.findall(regex, file)                  
     if len(response_file) > 0 : 
       print "Regex File Se: %s, Ep: %s," % (str(response_file[0][0]),str(response_file[0][1]),)
@@ -129,21 +141,59 @@ def regex_tvshow(compare, file, sub = ""):
   else:
     return "","",""    
 
-
-
 def languageTranslate(lang, lang_from, lang_to):
   for x in LANGUAGES:
     if lang == x[lang_from] :
       return x[lang_to]
 
-
-class UserNotificationNotifier:
-  def __init__(self, title, initialMessage, time = -1):
-    self.__title = title
-    xbmc.executebuiltin("Notification(%s,%s,%i)" % (title, initialMessage, time))
+def pause():
+  if not xbmc.getCondVisibility('Player.Paused'):
+    xbmc.Player().pause()
     
-  def update(self, message, time = -1):
-    xbmc.executebuiltin("Notification(%s,%s,-1)" % (self.__title, message, time))
+def unpause():
+  if xbmc.getCondVisibility('Player.Paused'):
+    xbmc.Player().pause()  
 
-  def close(self, message, time = -1):
-    xbmc.executebuiltin("Notification(%s,%s,%i)" % (self.__title, message, time))    
+def rem_files(directory):
+  try:
+    for root, dirs, files in os.walk(directory, topdown=False):
+      for items in dirs:
+        print os.path.join(root, items)
+        shutil.rmtree(os.path.join(root, items), ignore_errors=True, onerror=None)
+      print files
+      for name in files:
+        os.remove(os.path.join(root, name))
+  except:
+    try:
+      for root, dirs, files in os.walk(directory, topdown=False):
+        for items in dirs:
+          shutil.rmtree(os.path.join(root, items).decode("utf-8"), ignore_errors=True, onerror=None)
+        for name in files:
+          os.remove(os.path.join(root, name).decode("utf-8"))
+    except:
+      pass 
+      
+def copy_files( subtitle_file, file_path ):
+  subtitle_set = False
+  try:
+    xbmcvfs.copy(subtitle_file, file_path)
+    log( __name__ ,"vfs module copy %s -> %s" % (subtitle_file, file_path))
+    subtitle_set = True
+  except :
+    dialog = xbmcgui.Dialog()
+    selected = dialog.yesno( __scriptname__ , _( 748 ), _( 750 ),"" )
+    if selected == 1:
+      file_path = subtitle_file
+      subtitle_set = True
+
+  return subtitle_set, file_path
+
+def checkExistingSubs( subFolder, videoFile ):
+  sub_exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
+  list_files = os.listdir(subFolder)
+  file_name = os.path.splitext( os.path.basename( videoFile ) )[0]
+  for file in list_files:
+    if (os.path.splitext( file )[1] in sub_exts) and (file.startswith(file_name)):
+      return True
+      
+  return False

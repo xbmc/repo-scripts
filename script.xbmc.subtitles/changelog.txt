@@ -1,3 +1,7 @@
+2.9.15
+- fix: titulky.com service
+- fix: issues with auto search
+
 2.9.14
 - fix: Service Legendas-Zone.org version 0.1.7
 - fix: Use xbmc.log()

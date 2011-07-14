@@ -17,7 +17,7 @@ import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib, shu
 from utilities import log
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
-__settings__ = sys.modules[ "__main__" ].__settings__
+__addon__ = sys.modules[ "__main__" ].__addon__
 
 main_url = "http://www.pt-subs.net/site/"
 debug_pretext = "PT-SUBS"
@@ -40,8 +40,8 @@ subtitle_pattern = "<tr><td><a\shref=\"(.+?)\">(.+?)</a></td><td>(.+?)</td><td>(
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
 
 	#Grabbing login and pass from xbmc settings
-	username = __settings__.getSetting( "PTSuser" )
-	password = __settings__.getSetting( "PTSpass" )
+	username = __addon__.getSetting( "PTSuser" )
+	password = __addon__.getSetting( "PTSpass" )
 	cj = cookielib.CookieJar()
 	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 	opener.addheaders.append(('User-agent', 'Mozilla/4.0'))
@@ -225,8 +225,8 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	sync = subtitles_list[pos][ "sync" ]
 	log( __name__ ,"%s Fetching id using url %s" % (debug_pretext, id))
 	#Grabbing login and pass from xbmc settings
-	username = __settings__.getSetting( "PTSuser" )
-	password = __settings__.getSetting( "PTSpass" )
+	username = __addon__.getSetting( "PTSuser" )
+	password = __addon__.getSetting( "PTSpass" )
 	cj = cookielib.CookieJar()
 	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 	opener.addheaders.append(('User-agent', 'Mozilla/4.0'))

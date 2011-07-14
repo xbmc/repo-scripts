@@ -18,7 +18,7 @@ YEAR_MAX_ERROR = 1
 
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
-__settings__ = sys.modules[ "__main__" ].__settings__
+__addon__ = sys.modules[ "__main__" ].__addon__
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
 	cookie = LegendasLogin()
@@ -141,8 +141,8 @@ def LegendasLogin(cj=0):
 		cj = cookielib.CookieJar()
 		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 		urllib2.install_opener(opener)
-		username = __settings__.getSetting( "LTVuser" )
-		password = __settings__.getSetting( "LTVpass" )
+		username = __addon__.getSetting( "LTVuser" )
+		password = __addon__.getSetting( "LTVpass" )
 		login_data = urllib.urlencode({'txtLogin':username,'txtSenha':password})
 		request = urllib2.Request(base_url+'/login_verificar.php',login_data)
 		response = urllib2.urlopen(request).read()

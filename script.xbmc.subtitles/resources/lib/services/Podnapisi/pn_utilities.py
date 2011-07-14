@@ -17,8 +17,8 @@ except ImportError:
   from md5 import md5
   from sha256 import sha256
   
-_ = sys.modules[ "__main__" ].__language__
-__settings__   = sys.modules[ "__main__" ].__settings__
+_              = sys.modules[ "__main__" ].__language__
+__addon__      = sys.modules[ "__main__" ].__addon__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__    = sys.modules[ "__main__" ].__version__
 
@@ -73,11 +73,11 @@ class OSDBServer:
     try:
       init = podserver.initiate(USER_AGENT)
       hash = md5()
-      hash.update(__settings__.getSetting( "PNpass" ))
+      hash.update(__addon__.getSetting( "PNpass" ))
       password256 = sha256(str(hash.hexdigest()) + str(init['nonce'])).hexdigest()
       if str(init['status']) == "200":
         pod_session = init['session']
-        podserver.authenticate(pod_session, __settings__.getSetting( "PNuser" ), password256)
+        podserver.authenticate(pod_session, __addon__.getSetting( "PNuser" ), password256)
         podserver.setFilters(pod_session, True, lang , False)
         search = podserver.search(pod_session , hash_pod)
         if str(search['status']) == "200" and len(search['results']) > 0 :

@@ -4,7 +4,7 @@ import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib
 from utilities import log
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
-__settings__ = sys.modules[ "__main__" ].__settings__
+__addon__ = sys.modules[ "__main__" ].__addon__
 
 main_url = "http://www.italiansubs.net/"
 
@@ -75,8 +75,8 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     if len(tvshow) > 0:
         italian = 0
         if (string.lower(lang1) == "italian") or (string.lower(lang2) == "italian") or (string.lower(lang3) == "italian"):
-            username = __settings__.getSetting( "ITuser" )
-            password = __settings__.getSetting( "ITpass" )
+            username = __addon__.getSetting( "ITuser" )
+            password = __addon__.getSetting( "ITpass" )
             if login(username, password):
                 log( __name__ , " Login successful")
                 content= geturl(main_url + 'index.php?option=com_remository&Itemid=6')
@@ -126,8 +126,8 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
-    username = __settings__.getSetting( "ITuser" )
-    password = __settings__.getSetting( "ITpass" )
+    username = __addon__.getSetting( "ITuser" )
+    password = __addon__.getSetting( "ITpass" )
     if login(username, password):
         log( __name__ , " Login successful")
         id = subtitles_list[pos][ "id" ]
