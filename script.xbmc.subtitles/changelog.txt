@@ -1,3 +1,6 @@
+2.9.16
+- fix: detecting of existing subs will crash the script if on SMB://
+
 2.9.15
 - fix: titulky.com service
 - fix: issues with auto search

@@ -35,7 +35,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     self.on_run()
 
   def on_run( self ):
-    if not checkExistingSubs( self.sub_folder, self.file_original_path ):
+    if not checkExistingSubs( self.sub_folder, self.file_original_path, self.language_1, self.language_2, self.language_3 ):
       self.getControl( 111 ).setVisible( False )
     try:
       self.list_services()
