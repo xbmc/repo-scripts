@@ -8,16 +8,16 @@
     <string id="642">Vyhledávám titulky %s</string>
     <string id="646">Připojuji...</string>
     <string id="649">Stahuji titulky...</string>
-    <string id="652">Soubor s titulky je stažen a rozbalen</string>
+    <string id="652">Soubor s titulky byl stažen a rozbalen</string>
     <string id="653">Připojení selhalo</string>
     <string id="654">Chyba při rozbalování titulků</string>
     <string id="655">Titulky k dispozici lokálně</string>
     <string id="656">Služba neodpověděla do časového limitu</string>
-    <string id="657">No Subtitles Found!</string>    
+    <string id="657">Titulky nenalezeny!</string>
     <string id="744">titulků pro</string>
     <string id="747">Hledat pomocí názvu složky</string>
     <string id="748">Titulky nelze uložit do vybrané složky</string>
-    <string id="750">Chcete tyto titulky aktivovat dočasně_</string>
+    <string id="750">Chcete tyto titulky aktivovat dočasně?</string>
     <string id="751">Vložte název filmu (rok)</string>
     <string id="755">Server je přetížen, zkuste to prosím později</string>
     <string id="756">Přihlášení selhalo. Zkontroluje nastavení.</string>
@@ -26,7 +26,8 @@
     <string id="759">Vložte kontrolní kód</string>
     <string id="760">Dostupné služby</string>
     <string id="761">Pro stažení těchto titulků je třeba přihlášení,[CR]nastavte prosím přihlašovací údaje</string>
-
+    <string id="762">Nastavení</string>
+    <string id="763">Automaticky stáhnout první 'sync' titulky</string>
   <!-- Script Settings -->
   
     <string id="30100">Jakyky</string>
@@ -53,7 +54,16 @@
     <string id="30127">- Itasa heslo</string>
     <string id="30128">- Titulky jméno</string>
     <string id="30129">- Titulky heslo</string>
-  
+    <string id="30130">Pokud nejsou titulky nalezeny, použít jinou službu</string>
+    <string id="30131">Automaticky stáhnout první "sync" titulky</string>
+    <string id="30132">- LegendasDivx jméno</string>
+    <string id="30133">- LegendasDivx heslo</string>
+    <string id="30134">- PTSubs jméno</string>
+    <string id="30135">- PTSubs heslo</string>
+    <string id="30136">- OmniSubs jméno</string>
+    <string id="30137">- OmniSubs heslo</string>
+    <string id="30138">- LegendasZone jméno</string>
+    <string id="30139">- LegendasZone heslo</string>
   <!-- Languages  -->
   
     <string id="30201">Albanian</string>

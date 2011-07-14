@@ -15,25 +15,27 @@ _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
 __settings__ = sys.modules[ "__main__" ].__settings__
+
 """
-            <tr class="row2">
-                    <td><a href="Pulp-Fiction-118518.htm" >Pulp Fiction</a></td>
-          <td align="center"><a class="fixedTip" title="Pulp.Fiction.1994.720p.BluRay.x264-SiNNERS"><img src="img/ico/rel.gif" atl="release"/></a></td>        
-          <td>&nbsp;</td>
-          <td>1994</td>
-                    <td>18.11.2008</td>        
-          <td align="right">681</td>
-          <td>CZ</td>
-          <td>1</td>
-          <td align="right">8138.46MB</td>
-                    <td>
-                           <a href="" onclick="UD('119203');return false;" > aAaX</a>
-                      </td>
+<tr class="r1"> 
+                    <td><a href="Animal-Farm-96061.htm" >Animal Farm</a></td> 
+          <td align="center"><a class="fixedTip" title="Animal.Farm.1954.DVDRip.XViD.iNT-JoLLyRoGeR"><img src="css/new/verze-release.png" atl="release"/></a></td>        
+          <td>&nbsp;</td> 
+          <td>1954</td> 
+                    <td>15.2.2008</td>        
+          <td align="right">2415</td> 
+          <td><img alt="CZ" src="css/new/flag-CZ-small.gif" /></td> 
+          <td>1</td> 
+          <td align="right">699.16MB</td> 
+                    <td> 
+                           <a href="javascript:void(0)" onclick="UD('126284');return false;" > DaftXK</a> 
+                      </td> 
         </tr>
 
+
 """
 
-subtitle_pattern='..<tr class=\"row[12]\">\s+?<td?[= \w\"]+><a href=\"[\w-]+-(?P<id>\d+).htm\"[ ]?>(?P<title>[\w\- ]*)</a></td>\s+?<td?[= \w\"]+>(<a?[= \w\"]+title=\"(?P<sync>[,\{\}\w.\d \(\)\]\[-]+)\"><img?[= \w\\./"]+></a>)?</td>\s+?<td?[= \w\"]+>(?P<tvshow>[\w\;\&]+)</td>\s+<td?[= \w\"]+>(?P<year>\d+)</td>\s+<td?[= \w\"]+>[\w\;\&\.\d]+</td>\s+<td?[= \w\"]+>(?P<downloads>\d+)</td>\s+<td?[= \w\"]+>(?P<lang>\w{2})</td>\s+<td?[= \w\"]+>(?P<cds>\w+)</td>\s+<td?[= \w\"]+>(?P<size>[\w\.]+)MB</td>'
+subtitle_pattern='<tr class=\"r[12]*\">\s+<td[^>]*><a href=\"[\w-]+-(?P<id>\d+).htm\"[ ]?>(?P<title>[^<]+)</a></td>\s+?<td[^>]*>(<a?[= \w\"]+title=\"(?P<sync>[^\"]+)\"><img[^>]+></a>)?</td>\s+?<td[^>]*>(?P<tvshow>[^<]+)</td>\s+<td[^>]*>(?P<year>\d+)</td>\s+<td[^<]+</td>\s+<td[^>]*>(?P<downloads>\d+)</td>\s+<td?[^>]*><img alt=\"(?P<lang>\w{2})\"[^\>]+></td>\s+<td>(?P<cds>\w+)</td>\s+<td[^>]+>(?P<size>[\w\.]+)MB</td>\s+<td>\s+(<a[^<]+</a>)?(<i[^<]+</i>)?\s+</td>\s+</tr>'
 
 control_image_pattern='(secode.php\?[\w\d=]+)'
 session_id_pattern='secode.php\?PHPSESSID=([\w\d]+)'
@@ -43,7 +45,7 @@ countdown_pattern='CountDown\((\d+)\)'
 <a rel="nofollow" id="downlink" href="/idown.php?id=48504441">www.titulky.com/idown.php?id=48504441</a>
 """
 
-sublink_pattern='<a?[= \w\"]+href="([\w\.\?\d=/]+)\"'
+sublink_pattern='<a?[= \w\"]+href="([^\"]+)\"'
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
 	# need to filter titles like <Localized movie name> (<Movie name>)
 	br_index = title.find('(')
@@ -179,7 +181,7 @@ class TitulkyClient(object):
 		subtitles_list = []
 		max_downloads=1
 		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
-			# print matches.group('id') +' ' +matches.group('title')+' '+ str(matches.group('sync'))+' '+ matches.group('tvshow')+' '+ matches.group('year')+' '+ matches.group('downloads')+' '+ matches.group('lang')+' '+ matches.group('cds')+' '+matches.group('size')
+		#	print matches.group('id') +' ' +matches.group('title')+' '+ str(matches.group('sync'))+' '+ matches.group('tvshow')+' '+ matches.group('year')+' '+ matches.group('downloads')+' '+ matches.group('lang')+' '+ matches.group('cds')+' '+matches.group('size')
 			file_name = matches.group('sync')
 			if file_name == None: # if no sync info is found, just use title instead of None
 				file_name = matches.group('title') 

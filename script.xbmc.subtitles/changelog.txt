@@ -1,3 +1,6 @@
+2.5.5
+- fix: titulky.com service
+
 2.5.4
 - fixed: OpenSubtitles search
 - added: SuperSubtitles service, thx kispaljr and mukka
