@@ -1,3 +1,6 @@
+2.0.2
+- remove xbmcgui.lock() and xbmcgui.unlock()
+
 2.0.1
 - handle ACTION_NAV_BACK to close the script(id 92)
 - use xbmc.log()

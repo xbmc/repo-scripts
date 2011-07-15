@@ -52,7 +52,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 120 ).setVisible( controlId == 120 )
         page_control = ( controlId == 100 )
 
-        xbmcgui.unlock()
         xbmc.sleep( 5 )
         try:
             self.setFocus( self.getControl( controlId + page_control ) )
@@ -149,7 +148,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
     
     def show_lyrics( self, lyrics):
         try:
-            xbmcgui.lock()
             self.reset_controls()
             self.getControl( 100 ).setText( "" )
             self.getControl( 200 ).setLabel( "" )
@@ -172,7 +170,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self.getControl( 200 ).setLabel( lyrics.source )
             
         finally:
-            xbmcgui.unlock()
+            pass
 
     def show_prefetch_message(self, song):
         self.reset_controls()
@@ -180,7 +178,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.show_control( 100 )
     
     def show_choices( self, choices ):
-        xbmcgui.lock()
         for song in choices:
             self.getControl( 120 ).addItem( song[ 0 ] )
         self.getControl( 120 ).selectItem( 0 )
