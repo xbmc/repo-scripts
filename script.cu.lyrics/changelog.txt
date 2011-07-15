@@ -1,3 +1,7 @@
+2.0.1
+- handle ACTION_NAV_BACK to close the script(id 92)
+- use xbmc.log()
+
 2.0.0
 - fork for Eden
 - changed: "xbmc.python" version="1.0" to "2.0"

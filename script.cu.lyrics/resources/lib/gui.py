@@ -213,7 +213,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def onFocus( self, controlId ):
         self.controlId = controlId
-
+        
+    def onAction( self, action ):
+        if ( action.getId() in CANCEL_DIALOG):
+            self.close()
+            
     def getMyPlayer( self ):
         self.MyPlayer = MyPlayer( xbmc.PLAYER_CORE_PAPLAYER, function=self.myPlayerChanged )
         self.myPlayerChanged( 2 )
@@ -313,8 +317,6 @@ class MyPlayer( xbmc.Player ):
             print "%s::%s (%d) [%s]" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ])
             print traceback.format_exc(sys.exc_info()[2])
 
-def onAction( self, action ):
-    if ( action.getButtonCode() in CANCEL_DIALOG ):
-        self.exit_script()
+
         
         
