@@ -15,7 +15,7 @@ _URL = "https://mail.google.com/gmail/feed/atom"
 
 STATUS_LABEL   = 100
 EMAIL_LIST     = 120
-CANCEL_DIALOG  = ( 9, 10, 216, 247, 257, 275, 61467, 61448, )
+CANCEL_DIALOG  = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
 
 class GUI( xbmcgui.WindowXMLDialog ):
     
