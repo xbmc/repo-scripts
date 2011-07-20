@@ -1,19 +1,19 @@
-Parameters (separated by [B]&amp;[/B]) -
+Parameters (separated by &amp; ):
 
 limit=#         ; # to limit returned results (default=5)
-albums=True         ; True to return albums instead of songs (default=False)
-unplayed=True         ; True to return only items that have not been played (default=False)
-trailer=True         ; True to play the trailer (if available) (default=False)
+unplayed=True   ; True to return only items (not supported for albums) that have not been played (default=False)
+trailer=True    ; True to play the trailer (if available) (default=False)
 alarm=#         ; # number of minutes before running again (default=Off)
 
-For example -
+
+For example:
  
-XBMC.RunScript(script.randomitems,limit=10&amp;albums=False&amp;unplayed=True&amp;alarm=30)
+XBMC.RunScript(script.randomitems,limit=10&amp;unplayed=True&amp;alarm=30)
 
-will return 10 random, unplayed movies, episodes, songs and addons every 30 minutes.
+will return 10 random, unplayed movies, episodes, albums, songs and addons every 30 minutes.
 
 
-Labels -
+Labels:
 
 "RandomMovie.%d.Title"
 "RandomMovie.%d.Rating"
@@ -23,6 +23,7 @@ Labels -
 "RandomMovie.%d.Trailer"
 "RandomMovie.%d.Fanart"
 "RandomMovie.%d.Thumb"
+"RandomMovie.Count"
  
 "RandomEpisode.%d.ShowTitle"
 "RandomEpisode.%d.EpisodeTitle"
@@ -33,15 +34,26 @@ Labels -
 "RandomEpisode.%d.Path"
 "RandomEpisode.%d.Fanart"
 "RandomEpisode.%d.Thumb"
+"RandomEpisode.Count"
 
-"RandomSong.%d.Title" <!-- Returns the Song name when albums=False or Returns the Album name when albums=True -->
+"RandomAlbum.%d.Title"
+"RandomAlbum.%d.Year"
+"RandomAlbum.%d.Artist"
+"RandomAlbum.%d.Path"
+"RandomAlbum.%d.Fanart"
+"RandomAlbum.%d.Thumb"
+"RandomAlbum.%d.Rating"
+"RandomAlbum.Count"
+
+"RandomSong.%d.Title"
 "RandomSong.%d.Year"
 "RandomSong.%d.Artist"
-"RandomSong.%d.Album" <!-- Not used when albums=True so can be used as a visible condition for knowing what mode the script is in -->
+"RandomSong.%d.Album"
 "RandomSong.%d.Path"
 "RandomSong.%d.Fanart"
 "RandomSong.%d.Thumb"
 "RandomSong.%d.Rating"
+"RandomSong.Count"
 
 "RandomAddon.%d.Name"
 "RandomAddon.%d.Author"
@@ -50,9 +62,9 @@ Labels -
 "RandomAddon.%d.Path"
 "RandomAddon.%d.Fanart"
 "RandomAddon.%d.Thumb"
-"Addons.Count"
+"RandomAddon.Count"
 
 
-For more inforamtion and help please check -
+For more inforamtion and help please check:
 
 http://forum.xbmc.org/showthread.php?t=55907
