@@ -27,15 +27,18 @@ import time
 # Constants
 DOMAIN = "grooveshark.com"
 HOME_URL = "http://listen." + DOMAIN
-TOKEN_URL = "http://cowbell." + DOMAIN + "/more.php" #"https://cowbell." + DOMAIN + "/service.php"
-API_URL = "http://cowbell." + DOMAIN + "/more.php"
-SERVICE_URL = "http://cowbell." + DOMAIN + "/service.php"
+TOKEN_URL = "https://" + DOMAIN + "/more.php" #"https://cowbell." + DOMAIN + "/service.php"
+#API_URL = "http://cowbell." + DOMAIN + "/more.php"
+API_URL = "http://" + DOMAIN + "/more.php"
+SERVICE_URL = "http://" + DOMAIN + "/service.php"
 
 RANDOM_CHARS = "1234567890abcdef"
-
-CLIENT_NAME = "gslite" #htmlshark #jsqueue
-CLIENT_VERSION = "20101012.37" #"20100831.25"
-
+SECRET_KEY_JS = "bewareOfBearsharktopus"
+SECRET_KEY = "backToTheScienceLab"
+CLIENT_NAME = "gslite" #"gslite" #htmlshark #jsqueue
+#CLIENT_VERSION = "20101012.37" #"20100831.25"
+CLIENT_VERSION = "20110606"#.04"
+#CLIENT_VERSION = "20110718.01"
 RE_SESSION = re.compile('"sessionID":"\s*?([A-z0-9]+)"') #re.compile('sessionID:\s*?\'([A-z0-9]+)\',')
 
 
@@ -44,16 +47,28 @@ class Request:
 
     def __init__(self, api, parameters, method, type="default", clientVersion=None):
         """function: Initiates the Request"""
-        
+        print '############### Method: ' + str(method)
         if clientVersion != None:
             if float(clientVersion) < float(CLIENT_VERSION):
                 clientVersion = CLIENT_VERSION
         if clientVersion == None:
             clientVersion = CLIENT_VERSION
             
+        clientName = 'htmlshark'
+        if method == 'getStreamKeyFromSongIDEx':
+            clientName = 'jsqueue'
+            clientVersion = "20110606.04"
+        if method == 'getCommunicationToken' or type == "token":
+            clientName = 'htmlshark'
+        if method == 'getSearchResultsEx':
+            clientName = 'htmlshark'
+        if method == "albumGetSongs":
+             clientName = 'htmlshark'
+#        clientName = CLIENT_NAME
+        print '############### ' + clientName
         postData = {
             "header": {
-                "client": CLIENT_NAME,
+                "client": clientName,
                 "clientRevision": clientVersion,
                 "uuid": api._uuid,
                 "session": api._session},
@@ -61,17 +76,17 @@ class Request:
                 "privacy": 1,
             "parameters": parameters,
             "method": method}
-            
+        referer = "http://grooveshark.com/"#JSQueue.swf?20110718.01"
         headers = {
             "Content-Type": "application/json",
             "User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12 (.NET CLR 3.5.30729)",            
-            "Referer": "http://listen.grooveshark.com/main.swf?cowbell=fe87233106a6cef919a1294fb2c3c05f"
+            "Referer": referer
             }
 
         if "token" == type:
-            url = TOKEN_URL
+            url = TOKEN_URL + "?" + method
         else:
-            postData["header"]["token"] = api._generateToken(method)
+            postData["header"]["token"] = api._generateToken(method, clientName)
 
             if "service" == type:
                 url = SERVICE_URL + "?" + method
@@ -79,9 +94,10 @@ class Request:
                 url = API_URL + "?" + method
 
         postData = json.dumps(postData)
-        print url
+        print '########### ' + url
+        #print '############### ' + self._token
         #print headers
-        #print postData
+        print postData
         self._request = urllib2.Request(url, postData, headers)
 
     def send(self):
@@ -99,6 +115,7 @@ class Request:
         except KeyError:
             return response
         else:
+            print response
             raise StandardError("API error: " + response["fault"]["message"])
 
 
@@ -146,7 +163,7 @@ class JsonRPC:
 
     def _generateToken(self, method):
         """function: Make a token ready for a request header"""
-        if 1000 <= (time.time() - self._lastTokenTime):
+        if 1 <= (time.time() - self._lastTokenTime):
             self._token = self._getToken()
             self._lastTokenTime = time.time()
 
@@ -154,9 +171,11 @@ class JsonRPC:
         while 6 > len(randomChars):
             randomChars = randomChars + random.choice(RANDOM_CHARS)
 
+
         token = hashlib.sha1(method + ":" + self._token +
-                ":quitStealinMahShit:" + randomChars).hexdigest()
+                ":" + SECRET_KEY  + ":" + randomChars).hexdigest()
                 #:quitBasinYoBidnessPlanOnBuildingALargeUserbaseViaCopyrightInfringment:
+                #:quitStealinMahShit:
         return randomChars + token
 
     def _generateSecretKey(self, session):
@@ -165,6 +184,7 @@ class JsonRPC:
 
     def _getSession(self, html):
         """function: Parse a sessionId from some HTML"""
+        print "################# Getting session"
         html = RE_SESSION.search(html)
 
         if html:
@@ -194,10 +214,8 @@ class JsonRPC:
             "type": type}
 
         response = Request(self, parameters, "getSearchResultsEx").send()
-
-        return {
-            "query": query,
-            "songs": self._parseSongs(response["result"]["Return"])}
+        #print response
+        return response
 
     def getPopular(self):
         """function: Get popular songs from Grooveshark"""

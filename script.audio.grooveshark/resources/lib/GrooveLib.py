@@ -529,7 +529,9 @@ class GS_Search:
 		self.queryText = query
 		parameters = {
 			"query": query,
-			"type": type}
+			"type": "Songs",
+			"guts":0,
+			"ppOverride":"false"}
 		self.resultRaw = ''
 		self.resultRaw = gsapi.request(parameters, "getSearchResultsEx").send()
 		return self.resultRaw

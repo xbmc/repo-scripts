@@ -8,8 +8,10 @@ import traceback
 from gw import Request as Request
 from gw import JsonRPC as gwAPI
 
-CLIENT_NAME = "gslite" #htmlshark #jsqueue
-CLIENT_VERSION = "20101012.37" #"20100831.25"
+CLIENT_NAME = "jsqueue"#"gslite" #htmlshark #jsqueue
+CLIENT_VERSION = "20110606.04"#"20101012.37" #"20100831.25"
+SECRET_KEY_JS = "bewareOfBearsharktopus"
+SECRET_KEY = "backToTheScienceLab"
 
 RANDOM_CHARS = "1234567890abcdef"
 VALIDITY_SESSION = 172800 #2 days
@@ -42,7 +44,7 @@ class AuthRequest(Request):
 			clientVersion = CLIENT_VERSION
 		postData = {
 			"header": {
-				"client": CLIENT_NAME,
+				"client": "htmlshark",
 				"clientRevision": clientVersion,
 				"uuid": api._uuid,
 				"session": api._session},
@@ -54,10 +56,10 @@ class AuthRequest(Request):
 		headers = {
 			"Content-Type": "application/json",
 			"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12 (.NET CLR 3.5.30729)",			
-			"Referer": "http://listen.grooveshark.com/main.swf?cowbell=fe87233106a6cef919a1294fb2c3c05f"
+			"Referer": "http://grooveshark.com/"
 			}
-		url = 'https://cowbell.grooveshark.com/more.php?' + method
-		postData["header"]["token"] = api._generateToken(method)
+		url = 'https://grooveshark.com/more.php?' + method
+		postData["header"]["token"] = api._generateToken(method, "htmlshark")
 		postData = json.dumps(postData)
 		self._request = urllib2.Request(url, postData, headers)
 		
@@ -135,19 +137,26 @@ class GrooveAPI(gwAPI):
 	def isLoggedIn(self):
 		return self._isAuthenticated
 
-	def _generateToken(self, method):
+	def _generateToken(self, method, client = None):
 		#Overload _generateToken()
+		print '############### generateToken()' 
 		if (time.time() - self._lastTokenTime) >= VALIDITY_TOKEN:
 			self.debug('_generateToken(): Token has expired')
 			self._token = self._getToken()
+			print 'Token: ' + str(self._token)
 			self._lastTokenTime = time.time()
 			self.saveInstance()
+		if client == 'jsqueue':
+			secretKey = SECRET_KEY_JS
+		else:
+			secretKey = SECRET_KEY
+		print "Client: " + str(client) + ", key: " + str(secretKey)
 
 		randomChars = ""
 		while 6 > len(randomChars):
 			randomChars = randomChars + random.choice(RANDOM_CHARS)
 
-		token = sha.new(method + ":" + self._token + ":quitStealinMahShit:" + randomChars).hexdigest()
+		token = sha.new(method + ":" + self._token + ":" + secretKey  + ":" + randomChars).hexdigest()
 				#:quitBasinYoBidnessPlanOnBuildingALargeUserbaseViaCopyrightInfringment:
 
 		if (time.time() - self._lastSessionTime) >= VALIDITY_SESSION:

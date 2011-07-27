@@ -390,7 +390,7 @@ class Playlists(GS_Playlists):
 			if playlist.about == None:
 				l2 = ''
 			else:
-				l2 = str(playlist.about)
+				l2 = playlist.about
 			item = xbmcgui.ListItem (label=playlist.name, label2=l2, thumbnailImage=self.defaultCoverArt, iconImage=self.defaultCoverArt)
 			listItems.append(item)
 		return [self, listItems]
