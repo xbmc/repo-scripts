@@ -22,6 +22,7 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
+
 import resources.lib.pypredefcom as pypredefcomp
 
 #REMOTE_DBG = False
@@ -68,6 +69,13 @@ if ( __name__ == "__main__" ):
         Addon.setSetting( "doc_path", doc_path )
         # modules
         modules = [ "xbmc", "xbmcgui", "xbmcplugin", "xbmcaddon" ]
+
+        try:
+            import xbmcvfs
+            modules.append('xbmcvfs')
+        except ImportError:
+            pass
+
         # enumerate thru and print our help docs
         for count, module in enumerate( modules ):
             # set correct path

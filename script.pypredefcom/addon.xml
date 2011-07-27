@@ -17,9 +17,9 @@
 <!--  along with this program; if not, write to the Free Software -->
 <!--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA -->
 <!--==================================================================== -->
-<addon id="script.pypredefcom" name="PyDev Predefined Completions Creator" version="0.9.1" provider-name="jiminger.com">
+<addon id="script.pypredefcom" name="PyDev Predefined Completions Creator" version="2.0" provider-name="jiminger.com">
     <requires> 
-       <import addon="xbmc.python" version="1.0"/>
+       <import addon="xbmc.python" version="2.0"/>
     </requires>
     <extension point="xbmc.python.script" library="addon.py"/>
     <extension point="xbmc.addon.metadata">
