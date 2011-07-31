@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone='yes'?>
+<settings>
+    <!-- General -->
+    <category label="3200">
+        <!-- Login -->
+        <setting type="lsep" label="3201" />
+        <setting id="login" type="bool" label="3202" default="false" />
+        <setting id="username" type="text" label="3203" enable="eq(-1,true)" />
+        <setting id="password" type="text" label="3204" enable="eq(-2,true)" option="hidden" />
+        <!-- Random options -->
+        <setting type="lsep" label="3205" />
+        <setting id="difficulty" type="enum" label="3206" lvalues="3207|3208|3209" enable="eq(-4,true)"  default="0" />
+        <setting id="include_archive" type="bool" label="3210" enable="eq(-5,true)" default="false" />
+        <setting id="include_solved" type="bool" label="3211" enable="eq(-6,true)" default="false" />
+        <!-- Navi Options -->
+        <setting type="lsep" label="3229" />
+        <setting id="only_unsolved_nav" type="bool" label="3230" enable="eq(-8,true)" default="true" />
+    </category>
+    <!-- Look/Feel -->
+    <category label="3212">
+        <!-- Behaviour -->
+        <setting label="3218" type="lsep" />
+        <setting id="auto_jump_enabled" type="bool" label="3219" default="true" />
+        <setting id="auto_jump_to" type="enum" label="3232" lvalues="3233|3234" enable="eq(-1,true)"  default="0" />
+        <setting id="auto_jump_sleep" type="enum" label="3220" default="2" values="0|1|2|3|4|5" enable="eq(-2,true)" />
+        <!-- Look -->
+        <setting label="3213" type="lsep" />
+        <setting id="visible_posted_by" type="bool" label="3214" default="true" />
+        <setting id="visible_solved" type="bool" label="3215" default="true" />
+        <setting id="visible_shot_id" type="bool" label="3216" default="true" />
+        <setting id="visible_shot_date" type="bool" label="3217" default="true" />
+        <setting id="visible_shot_flags" type="bool" label="3221" default="true" />
+        <setting id="visible_shot_rating" type="bool" label="3231" default="true" />
+        <setting id="visible_tool_buttons" type="bool" label="3235" default="true" />
+        <setting id="visible_navigation_buttons" type="bool" label="3236" default="true" />
+    </category>
+    <!-- Hotkeys -->
+    <category label="3237">
+        <setting label="3238" type="lsep" />
+        <setting id="key_guess" type="enum" label="3000" lvalues="3239|3240|3241|3242|3243|3244|3245|3246|3247|3248|3249|3250|3251|3252|3253|3254|3255|3256" default="11" />
+        <setting id="key_random" type="enum" label="3001" lvalues="3239|3240|3241|3242|3243|3244|3245|3246|3247|3248|3249|3250|3251|3252|3253|3254|3255|3256" default="10" />
+        <setting id="key_back" type="enum" label="3002" lvalues="3239|3240|3241|3242|3243|3244|3245|3246|3247|3248|3249|3250|3251|3252|3253|3254|3255|3256" default="9" />
+        <setting id="key_next" type="enum" label="3260" lvalues="3239|3240|3241|3242|3243|3244|3245|3246|3247|3248|3249|3250|3251|3252|3253|3254|3255|3256" default="2" />
+        <setting id="key_prev" type="enum" label="3261" lvalues="3239|3240|3241|3242|3243|3244|3245|3246|3247|3248|3249|3250|3251|3252|3253|3254|3255|3256" default="1" />
+        <setting id="key_jump" type="enum" label="3262" lvalues="3239|3240|3241|3242|3243|3244|3245|3246|3247|3248|3249|3250|3251|3252|3253|3254|3255|3256" default="3" />
+        <setting id="key_book" type="enum" label="3263" lvalues="3239|3240|3241|3242|3243|3244|3245|3246|3247|3248|3249|3250|3251|3252|3253|3254|3255|3256" default="16" />
+        <setting id="key_fav" type="enum" label="3264" lvalues="3239|3240|3241|3242|3243|3244|3245|3246|3247|3248|3249|3250|3251|3252|3253|3254|3255|3256" default="17" />
+        <setting id="key_solve" type="enum" label="3265" lvalues="3239|3240|3241|3242|3243|3244|3245|3246|3247|3248|3249|3250|3251|3252|3253|3254|3255|3256" default="0" />
+    </category>
+    <!-- Flags -->
+    <category label="3222">
+        <setting label="3228" type="lsep" />
+        <setting id="flag1" type="labelenum" label="3223" values="am|bg|cn|de|dk|en|es|et|fi|fr|gr|hu|il|in|is|it|jp|kr|lt|lv|nl|no|pl|pt|ro|ru|se|tr|ua" default="de" />
+        <setting id="flag2" type="labelenum" label="3224" values="am|bg|cn|de|dk|en|es|et|fi|fr|gr|hu|il|in|is|it|jp|kr|lt|lv|nl|no|pl|pt|ro|ru|se|tr|ua" default="en" />
+        <setting id="flag3" type="labelenum" label="3225" values="am|bg|cn|de|dk|en|es|et|fi|fr|gr|hu|il|in|is|it|jp|kr|lt|lv|nl|no|pl|pt|ro|ru|se|tr|ua" default="fr" />
+        <setting id="flag4" type="labelenum" label="3226" values="am|bg|cn|de|dk|en|es|et|fi|fr|gr|hu|il|in|is|it|jp|kr|lt|lv|nl|no|pl|pt|ro|ru|se|tr|ua" default="es" />
+        <setting id="flag5" type="labelenum" label="3227" values="am|bg|cn|de|dk|en|es|et|fi|fr|gr|hu|il|in|is|it|jp|kr|lt|lv|nl|no|pl|pt|ro|ru|se|tr|ua" default="pt" />
+    </category>
+</settings>
