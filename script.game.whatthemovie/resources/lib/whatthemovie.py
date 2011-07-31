@@ -151,10 +151,12 @@ class WhatTheMovie(object):
             elif shot_request in self.shot['nav'].keys():
                 # fixme(sphere): replace with better logic
                 # if there is no shot_request in dict
-                if not self.shot['nav'][shot_request]: 
+                if not self.shot['nav'][shot_request]:
                     # check if it is a unsolved request and try without
-                    if shot_request[-9:] == '_unsolved' and self.shot['nav'][shot_request[:-9]]:
-                        resolved_shot_request = self.shot['nav'][shot_request[:-9]]
+                    if (shot_request[-9:] == '_unsolved'
+                        and self.shot['nav'][shot_request[:-9]]):
+                        request = shot_request[:-9]
+                        resolved_shot_request = self.shot['nav'][request]
                     else:
                         # else fallback to random
                         resolved_shot_request = 'random'
@@ -432,7 +434,7 @@ class WhatTheMovie(object):
         html = self.browser.response().read()
         tree = BeautifulSoup(html)
         box = tree.find('div', attrs={'class': 'box_white'})
-        r = ('>(?P<ff_score>[0-9]+) Feature Films.*'
-             '>(?P<all_score>[0-9]+) Snapshots')
+        r = ('>(?P<ff_score>[0-9]+) Feature Film.*'
+             '>(?P<all_score>[0-9]+) Snapshot')
         score = re.search(r, str(box.p)).groupdict()
         return score
