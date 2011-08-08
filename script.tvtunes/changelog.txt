@@ -1,0 +1,101 @@
+v1.0.6:
+- do not use the xbmc temp dir
+
+v1.0.5:
+- code cleanup
+
+v1.0.4:
+- fixed unicode tvshow name
+
+v1.0.3:
+- localize strings
+
+v1.0.2:
+- use json-rpc instead of http-api
+
+v1.0.1:
+- fixed copy theme to smb share
+
+v1.0.0:
+- updated code for xbmc eden
+
+v0.9.0:
+- added support for dvd iso folders (thanks to anarchintosh)
+
+v0.8.1:
+- localized settings.
+
+v0.8.0:
+- added solo mode, use this line with a button on dialogvideoinfo for tvshow:
+<onclick>XBMC.RunScript(script.tvtunes,mode=solo&tvpath=$INFO[ListItem.FilenameAndPath]&tvname=$INFO[ListItem.TVShowTitle])</onclick>
+probably won't work on episode level.
+
+v0.7.3
+- prevent theme script to be activated when browsing plugins
+
+v0.7.2
+- added Spanish translation. 
+
+v0.7.1
+- corrected float conversion error between linux and windows.
+
+v0.7.0
+- added support for protected smb share 'activate in settings'.
+
+v0.6.7:
+- fix theme playing on recently added episodes
+- fix error on start with volume parameter
+
+v0.6.6:
+- fix the video stopped by script exiting.
+
+v0.6.5:
+- changed log volume display (all in %)
+- changed container and playing conditions
+- log steps
+- now compense volume during theme playing (when going back to original volume, your volume change will be take in count)
+- fixed loop
+
+v0.6.0:
+- change volume setting
+- rewrite code
+- changed thread control
+- corrections on volume control, no only used when theme is playing
+- control if current playing is a theme for stop condtion
+- do not interrupt music playing if user is listen to music.
+- fixed theme not playinf when re enter the same show
+- fixed theme downloader was not playing full theme
+
+v0.5.3:
+- added sound setting decrease from 0 to 60 in setting, automatically raising when script exit.
+- moved running control into default.py
+
+v0.5.2:
+- fixed problem for flatten tvshow option
+- change the visible condition to : !"Window(10025).Property(TvTunesIsAlive)" it's "true" when script is running
+
+v0.5.1:
+- moved loop in addon setting.
+
+v0.5.0:
+- added backend to play theme when entering a show. this will play theme.mp3 in your tv show folder
+- Skinners informations:
+will automatically launch when browsing videolibrary, automaticaly end when playing video or exiting video library
+add this button in MyVideoNav.xml:
+
+	    <control type="button" id="9999">
+            <description>trigger</description>
+            <onfocus>XBMC.RunScript(script.TvTunes,backend=True&amploop=False)</onfocus>
+            <onfocus>SetFocus(50)</onfocus>
+            <texturenofocus>-</texturenofocus>
+            <texturefocus>-</texturefocus>
+        </control>	
+        
+change the defaultcontrol to 9999 (or id you want for this control) and put your previous defaultcontrol in SefFocus()
+loop can be True or False if you want or not to repeat the theme in loop while browsing in the tv show.
+
+you can also use this visible condition to prevent activating visualisation or music baground fanart:
+        !SubString(Window(10025).Property(TvTunesIsAlive),True)
+        
+v0.1.0:
+-initial release

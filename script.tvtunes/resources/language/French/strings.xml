@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="45001">Jouer le thème en boucle</string>
+	<string id="45002">baisser le volume pour la lecture</string>
+	<string id="45003">Utiliser un partage SMB protégé</string>	
+	<string id="45004">Nom d'utilisateur:</string>
+	<string id="45005">Mot de passe:</string>
+	<string id="45006"></string>
+	<string id="45007"></string>
+	<string id="45008"></string>
+	<string id="45009"></string>
+	<string id="45010"></string>
+	<string id="45011"></string>
+	<string id="45012"></string>
+	<string id="45013"></string>
+	<string id="45014"></string>
+	<string id="45015"></string>
+	
+	<string id="45050"></string>
+	<string id="45051"></string>
+	<string id="45052"></string>
+	<string id="45053"></string>
+</strings>

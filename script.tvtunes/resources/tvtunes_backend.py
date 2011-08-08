@@ -1,0 +1,153 @@
+# -*- coding: utf-8 -*-
+#Modules General
+import threading
+from traceback import print_exc
+import time
+import os
+#Modules XBMC
+import xbmc
+import xbmcgui
+import sys
+import xbmcvfs
+
+def log(msg):
+    xbmc.log( str( msg ),level=xbmc.LOGDEBUG )
+
+try:
+    # parse sys.argv for params
+    log( sys.argv[ 1 ] )
+    try:params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
+    except:
+        print_exc()
+        params = dict( sys.argv[ 1 ].split( "=" ))
+except:
+    # no params passed
+    print_exc()
+    params = {} 
+class mythread( threading.Thread ):
+    def __init__( self ):
+        threading.Thread.__init__( self )
+        self._stop = False
+        log( "### starting TvTunes Backend ###" )
+        self.newpath = ""
+        self.oldpath = ""
+        self.playpath = ""
+        self.loud = False
+        self.base_volume = self.get_volume()
+        
+        
+    def run( self ):
+        try:
+            while not self._stop:           # the code
+                if not xbmc.getCondVisibility( "Window.IsVisible(10025)"): self.stop()      #destroy threading
+
+                if xbmc.getCondVisibility( "Container.Content(Seasons)" ) or xbmc.getCondVisibility( "Container.Content(Episodes)" ) and not xbmc.Player().isPlaying() and "plugin://" not in xbmc.getInfoLabel( "ListItem.Path" ) and not xbmc.getInfoLabel( "container.folderpath" ) == "videodb://5/":
+                    self.newpath = xbmc.getInfoLabel( "ListItem.Path" )
+                    if not self.newpath == self.oldpath and not self.newpath == "" and not self.newpath == "videodb://2/2/":
+                        log( "### old path: %s" % self.oldpath )
+                        log( "### new path: %s" % self.newpath )
+                        self.oldpath = self.newpath
+                        if not xbmc.Player().isPlaying() : self.start_playing()
+                        else: log( "### player already playing" )
+
+                if xbmc.getInfoLabel( "Window(10025).Property(TvTunesIsAlive)" ) == "true" and not xbmc.Player().isPlaying():
+                    log( "### playing ends" )
+                    if self.loud: self.raise_volume()
+                    xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
+
+                if xbmc.getCondVisibility( "Container.Content(tvshows)" ) and self.playpath and not xbmc.getCondVisibility( "Window.IsVisible(12003)" ):
+                    log( "### reinit condition" )
+                    self.newpath = ""
+                    self.oldpath = ""
+                    self.playpath = ""
+                    log( "### stop playing" )
+                    xbmc.Player().stop()
+                    if self.loud: self.raise_volume()
+                    xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
+
+                time.sleep( .5 )
+        except:
+            print_exc()
+            self.stop()
+
+    def get_volume( self ):
+        try: volume = int(xbmc.getInfoLabel('player.volume').split(".")[0])
+        except: volume = int(xbmc.getInfoLabel('player.volume').split(",")[0])
+        log( "### current volume: %s%%" % (( 60 + volume )*(100/60.0)) )
+        return volume
+
+    def lower_volume( self ):
+        try:
+            self.base_volume = self.get_volume()
+            self.loud = True
+            vol = ((60+self.base_volume-int( params.get("downvolume", 0 )) )*(100/60.0))
+            if vol < 0 : vol = 0
+            log( "### volume goal: %s%% " % vol )
+            xbmc.executebuiltin('XBMC.SetVolume(%d)' % vol)
+            log( "### down volume to %d%%" % vol )
+        except:
+            print_exc()
+
+    def raise_volume( self ):
+        self.base_volume = self.get_volume()
+        vol = ((60+self.base_volume+int( params.get("downvolume", 0 )) )*(100/60.0))
+        log( "### volume goal : %s%% " % vol )
+        log( "### raise volume to %d%% " % vol )
+        xbmc.executebuiltin( 'XBMC.SetVolume(%d)' % vol )
+        self.loud = False
+
+    def start_playing( self ):
+        if params.get("smb", "false" ) == "true" and self.newpath.startswith("smb://") : 
+            log( "### Try authentification share" )
+            self.newpath = self.newpath.replace("smb://", "smb://%s:%s@" % (params.get("user", "guest" ) , params.get("password", "guest" )) )
+            log( "### %s" % self.newpath )
+
+        #######hack for TV shows stored as ripped disc folders
+        if 'VIDEO_TS' in str(self.newpath):
+            log( "### FOUND VIDEO_TS IN PATH: Correcting the path for DVDR tv shows" )
+            uppedpath = self._updir( self.newpath, 3 )
+            if xbmcvfs.exists( os.path.join ( uppedpath , "theme.mp3" )):
+                self.playpath = os.path.join ( uppedpath , "theme.mp3" )
+            else:
+                self.playpath = os.path.join ( self._updir(uppedpath,1) , "theme.mp3" )
+        #######end hack
+
+        elif xbmcvfs.exists( os.path.join ( self.newpath , "theme.mp3" ) ):
+            self.playpath = os.path.join ( self.newpath , "theme.mp3" )
+        elif xbmcvfs.exists(os.path.join(os.path.dirname( os.path.dirname( self.newpath ) ) , "theme.mp3")):
+            self.playpath = (os.path.join(os.path.dirname( os.path.dirname( self.newpath ) ) , "theme.mp3"))
+        else: self.playpath = False
+
+        if self.playpath:
+            if not self.loud: self.lower_volume()
+            xbmcgui.Window( 10025 ).setProperty( "TvTunesIsAlive", "true" )
+            log( "### start playing %s" % self.playpath )
+            xbmc.Player().play(self.playpath)
+            if params.get("loop", "false" ) == "true" : xbmc.executebuiltin('XBMC.PlayerControl(Repeat)')
+            else: xbmc.executebuiltin('XBMC.PlayerControl(RepeatOff)')
+
+        else: log( "### no theme found for %s or %s" % ( os.path.join( self.newpath , "theme.mp3" ) , os.path.join ( os.path.dirname( os.path.dirname ( self.newpath ) ) , "theme.mp3" ) ) )
+
+    def _updir(self, thepath, x):
+        # move up x directories on thepath
+        while x > 0:
+            x -= 1
+            thepath = (os.path.split(thepath))[0]
+        return thepath
+
+    def stop( self ):
+        if xbmc.getInfoLabel( "Window(10025).Property(TvTunesIsAlive)" ) == "true" and not xbmc.Player().isPlayingVideo(): 
+            log( "### stop playing" )
+            xbmc.Player().stop()
+        xbmcgui.Window( 10025 ).clearProperty('TvTunesIsRunning')
+        xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
+        
+        if self.loud: self.raise_volume()
+        log( "### Stopping TvTunes Backend ###" )
+        self._stop = True
+
+
+xbmcgui.Window( 10025 ).setProperty( "TvTunesIsRunning", "true" )
+thread = mythread()
+# start thread
+thread.start()
