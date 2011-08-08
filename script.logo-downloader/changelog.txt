@@ -1,0 +1,74 @@
+v3.0.3
+- do not use the xbmc temp dir
+
+v3.0.2
+- added some logging
+- code cleanup
+
+v3.0.1
+- fixed deprecation warning
+
+v3.0.0
+- updated code for eden
+
+v2.3.0
+- move to new fanart.tv API, also switch clearart and showthumb to download from fanart.tv
+- add readme file
+
+v2.2.0
+- add poster and banner (from www.tvdb.com) support (with custom naming) on bulk mode.
+- add poster and banner (from www.tvdb.com) support (with custom naming) on solo mode.
+example:
+<onclick>XBMC.RunScript(script.logo-downloader,mode=bulk,clearart=True,logo=True,showthumb=landscape.jpg,poster=poster.jpg,banner=banner.jpg)</onclick>
+
+v2.1.4
+- add custom naming. pass name in parameter instead of True / False
+
+v2.1.3
+- corrections for users with python 2.5 - thanks to Anssi(xbmc.org)
+
+v2.1.2
+- correction for nvfo change, now search for <tvdbid> and <id>.
+- add "no tvdb id found"
+
+v2.1.1
+- correct type of image selection.
+- add scan canceling
+
+v2.1.0
+- added thumb support in select dialog.
+- add summary totals
+
+v2.0.0
+- added xbmcstuff.com as source
+- added show thumb and clearart support (cache replace too)
+- rewritting the code
+- debug condition fit with the xbmc one, debug log appear if xbmc debug level == 2 
+- informations to integrate added:
+  # HOW TO USE / INTEGRATE IN SKIN 
+  #
+  # for automatically download the script from xbmc, include this in your addon.xml:
+  # 
+  #   <requires>
+  # 	<import addon="script.logo-downloader" version="2.0.0"/>
+  #   </requires>
+  #   
+  # for solo mode (usually used from videoinfodialog) , $INFO[ListItem.TVShowTitle] is required.
+  # exemple to launch:
+  # <onclick>XBMC.RunScript(script.logo-downloader,mode=solo,logo=True,clearart=True,showthumb=True,showname=$INFO[ListItem.TVShowTitle])</onclick>
+  # 
+  # for bulk mode, no particular info needed, just need a button to launch from where you want.
+  # exemple to launch:
+  # <onclick>XBMC.RunScript(script.logo-downloader,mode=bulk,clearart=True,logo=True,showthumb=True)</onclick>
+  # 
+  # you can replace boolean by skin settings to activate / deactivate images types.
+  
+v1.4.0
+- refetch a single logo now replace cache (will reload skin to take change immediately).
+
+v1.3.5 
+- change sqlite to http api to hit bd.
+
+v1.3.1 adding licence.txt 
+- start adaptation for official repository
+	
