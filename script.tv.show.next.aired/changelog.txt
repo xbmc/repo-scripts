@@ -1,0 +1,92 @@
+v3.0.2
+- code cleanup
+- use cached thumbnail
+
+v3.0.1
+- fixed deprecation warning
+
+v3.0.0
+- updated code for eden
+
+v2.1.2
+- correction for better handle when informations are missing
+
+v2.1.1
+- corrected TodayShow detection (to prevent that would have occured next year with month locale name)
+
+v2.1.0
+- added properties:
+"NextAired.TodayShow" contains a list of tvshow name aired to day, useful to do stringcompare to highlight show aired today when browsing library (example: "'The Big Bang Theory', "Grey's Anatomy", 'The Mentalist'" )
+"NextAired.%d.airday" contains day of airing (english day, example: "Friday")
+"NextAired.%d.shortime" contains time of airing (example: "08:00 pm")
+
+v2.0.1:
+- correct tvshow not found informations
+
+v2.0.0:
+- rewritted the code
+- now the script can be run silently ( option: silent=True )
+- script can be set as alarm and will relaunch automaticaly (silently) after XXX minutes (option: alarm=XXX )
+- example to launche the script silently with alarm :  XBMC.RunScript(script.tv.show.next.aired,silent=True&alarm=3600)
+- result are now ordered by next episode air date.
+- informations are stored for 6h, next launch after will automatically grab new info on TVrage.com
+- next aired data are pushed on skin properties (HOME window) and can be called from all views
+list of available property:
+totals:
+"NextAired.Total" -- number of next aired tvshow informations found
+"NextAired.TodayTotal" -- number of tvshow diffused today
+for each episode informations:
+%d is the number of the property (max is "NextAired.Total")
+"NextAired.%d.Today" -- True if the show is diffused today, False if not
+"NextAired.%d.ShowTitle"  -- Title of the tvshow (same as stored in db, useful for stringcompare)
+"NextAired.%d.NextDate"  -- Date of next episode ( example: "Jan/09/2011" )00:48:48 T:3768 M:710418432  NOTICE: ###04x01^Season 4, Episode 1^Jan/09/2011
+"NextAired.%d.NextTitle"  -- Title of the next episode, if not available, it show season/episode number like this: "Season 4, Episode 1"
+"NextAired.%d.NextNumber"  -- season/episode number (example: 04x01)
+"NextAired.%d.LatestDate"  -- same as next but for the latest
+"NextAired.%d.LatestTitle"  -- same as next but for the latest
+"NextAired.%d.LatestNumber"  -- same as next but for the latest         
+"NextAired.%d.Airtime"  -- day and time the show is diffused
+"NextAired.%d.Showpath"  -- path parent tvshow folder, useful to use stuff like logo, cleareart ...
+"NextAired.%d.Status"  -- Show season/tvshow status (example: "Returning Serie" , "Final Season", "New Serie")
+"NextAired.%d.ep_img"  -- Tvshow default xbmc thumb
+"NextAired.%d.Network"  -- network that diffuse the show (to use network label icon!)
+"NextAired.%d.Started"  -- return the date the show started (example: 'Sep/19/2010')
+"NextAired.%d.Classification"  -- don't know what it is ... can be "Scripted", don't know much, if someone can tell me ...
+"NextAired.%d.Genres"  -- Tvshow genre (TVrage classification, not library) (example: 'Drama | Family')
+"NextAired.%d.Premiered"  -- return the year (4digit) the show started
+"NextAired.%d.Country"  -- original country 
+"NextAired.%d.Runtime"  -- duration in minutes
+
+
+
+v1.1.0:
+- speed up the process
+v1.0.6:
+- submit to xbmc official repo
+- correction of parsing date error
+- add LICENSE.txt
+- change icon.png
+
+v1.0.5:
+- 21-07-2010:correct linux platform urllib bug
+
+v1.0.4:
+- 19-07-2010:change sql query, now use xbmchttp to get info.
+
+v1.0.3:
+- 17-07-2010:
+- fixed: windowxml resolution default to "720p"
+- changed: platform_libraries for addon script.module.pysqlite, only xbox include platform_libraries/win32
+- added: provides -> video to append in video mediatheque
+
+v1.0.2:
+- 11-07-2010: compatibility with pre-merge version
+ 
+v1.0.0
+- 06-07-2010: Initial commit
+
+
+
+
+
+

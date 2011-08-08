@@ -1,0 +1,737 @@
+<window id="2003">
+	<defaultcontrol always="true">9000</defaultcontrol>
+	<allowoverlay>no</allowoverlay>
+	<controls>
+		<control type="group">
+			<animation effect="slide" start="1100,0" end="0,0" time="400" tween="quadratic" easing="out">WindowOpen</animation>
+			<animation effect="slide" start="0,0" end="1100,0" time="400" tween="quadratic" easing="out" condition="!Skin.HasSetting(AnimeWindowXMLDialogClose)">conditional</animation>
+			<control type="image">
+				<posx>180</posx>
+				<posy>0</posy>
+				<width>1100</width>
+				<height>720</height>
+				<texture border="15,0,0,0" flipx="true">NextAired-MediaBladeSub.png</texture>
+			</control>
+			<control type="button">
+				<description>Close Window button</description>
+				<posx>230</posx>
+				<posy>0</posy>
+				<width>64</width>
+				<height>32</height>
+				<label>-</label>
+				<font>-</font>
+				<onclick>PreviousMenu</onclick>
+				<texturefocus>NextAired-DialogCloseButton-focus.png</texturefocus>
+				<texturenofocus>NextAired-DialogCloseButton.png</texturenofocus>
+				<onleft>9000</onleft>
+				<onright>9000</onright>
+				<onup>9000</onup>
+				<ondown>9000</ondown>
+				<visible>system.getbool(input.enablemouse)</visible>
+			</control>
+			<control type="group">
+				<animation effect="fade" delay="400" start="0" end="100" time="200">WindowOpen</animation>
+				<animation effect="fade" start="100" end="0" time="200" condition="!Skin.HasSetting(AnimeWindowXMLDialogClose)">conditional</animation>
+				<control type="label" id="210">
+					<description>header label</description>
+					<posx>210</posx>
+					<posy>50</posy>
+					<width>1030</width>
+					<height>30</height>
+					<font>font35_title</font>
+					<label>Next-Aired</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<textcolor>FFFFFFFF</textcolor>
+					<shadowcolor>FF000000</shadowcolor>
+				</control>
+				<control type="group">
+					<description>Container des épisodes to view banner</description>
+					<visible>Control.IsVisible(50) + ![Control.IsVisible(51) | Control.IsVisible(52)]</visible>
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<posy>90</posy>
+					<posx>210</posx>
+                  			<control type="list" id="50">
+                 				<description>Liste des épisodes</description>
+						<posx>177</posx>
+						<posy>10</posy>
+						<width>675</width>
+						<height>124</height>
+                       				<viewtype label="Banner">list</viewtype>
+						<scrolltime>200</scrolltime>
+						<pagecontrol>61</pagecontrol>
+						<onup>50</onup>
+						<ondown>50</ondown>
+						<onleft>Control.Move(50,-1)</onleft>
+						<onright>Control.Move(50,1)</onright>
+						<itemlayout height="124" width="675" />
+						<focusedlayout height="124" width="675" />
+					</control>
+					<control type="image">
+						<posx>177</posx>
+						<posy>10</posy>
+						<width>675</width>
+						<height>124</height>
+						<aspectratio>stretch</aspectratio>
+						<bordertexture border="5">NextAired-button-nofocus.png</bordertexture>
+						<bordersize>4</bordersize>
+						<texture background="true">$INFO[ListItem.Property(ep_img)]</texture>
+					</control>
+					<control type="image">
+						<posx>177</posx>
+						<posy>10</posy>
+						<width>400</width>
+						<height>100</height>
+						<aspectratio>stretch</aspectratio>
+						<texture>NextAired-GlassOverlay.png</texture>
+						<colordiffuse>AAFFFFFF</colordiffuse>
+						<visible>!IsEmpty(ListItem.Property(ep_img))</visible>
+					</control>
+					<control type="list" id="49">
+						<posx>95</posx>
+						<posy>160</posy>
+						<width>855</width>
+						<height>360</height>
+						<onleft>49</onleft>
+						<onright>49</onright>
+						<onup>9000</onup>
+						<ondown>61</ondown>
+						<pagecontrol>-</pagecontrol>
+						<scrolltime>0</scrolltime>
+						<itemlayout height="30">
+							<control type="label">
+								<posx>180</posx>
+								<posy>0</posy>
+								<width>200</width>
+								<height>30</height>
+								<font>font13_title</font>
+								<align>right</align>
+								<aligny>center</aligny>
+								<textcolor>FF0084ff</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<info>ListItem.Label</info>
+							</control>
+							<control type="label">
+								<posx>190</posx>
+								<posy>0</posy>
+								<width>665</width>
+								<height>30</height>
+								<font>font13</font>
+								<align>left</align>
+								<aligny>center</aligny>
+								<textcolor>FFFFFFFF</textcolor>
+								<selectedcolor>FFFFFFFF</selectedcolor>
+								<info>ListItem.Label2</info>
+							</control>
+						</itemlayout>
+						<focusedlayout height="30">
+							<control type="image">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>840</width>
+								<height>30</height>
+								<visible>Control.HasFocus(49)</visible>
+								<texture>NextAired-MenuItemFO.png</texture>
+								<animation effect="fade" time="300">Visible</animation>
+								<animation effect="fade" time="300">Hidden</animation>
+							</control>
+							<control type="label">
+								<posx>180</posx>
+								<posy>0</posy>
+								<width>200</width>
+								<height>30</height>
+								<font>font13_title</font>
+								<align>right</align>
+								<aligny>center</aligny>
+								<textcolor>FF0084ff</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<info>ListItem.Label</info>
+							</control>
+							<control type="label">
+								<posx>190</posx>
+								<posy>0</posy>
+								<width>665</width>
+								<height>30</height>
+								<font>font13</font>
+								<align>left</align>
+								<aligny>center</aligny>
+								<textcolor>FFFFFFFF</textcolor>
+								<selectedcolor>FFFFFFFF</selectedcolor>
+								<info>ListItem.Label2</info>
+							</control>
+						</focusedlayout>
+						<content>
+							<item>
+								<label>$LOCALIZE[20364]:</label>
+								<label2>ListItem.Property(Show Name)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Show Name))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT450]</label>
+								<label2>$INFO[ListItem.Property(Latest Episode)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Latest Episode))</visible>
+							</item>
+
+							<item>
+								<label>$LOCALIZE[SCRIPT451]</label>
+								<label2>$INFO[ListItem.Property(Next Episode)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Next Episode))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT452]</label>
+								<label2>$INFO[ListItem.Property(Airtime)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Airtime))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[2050]:</label>
+								<label2>$INFO[ListItem.Property(Runtime),, Minutes]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Runtime))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT453]</label>
+								<label2>$INFO[ListItem.Property(Network)], $INFO[ListItem.Property(Country),(,)]</label2>
+								<onclick>-</onclick>
+								<visible>![IsEmpty(ListItem.Property(Network)) | IsEmpty(ListItem.Property(Country))]</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[135]:</label>
+								<label2>$INFO[ListItem.Property(Genres)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Genres))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT454]</label>
+								<label2>$INFO[ListItem.Property(Show URL)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Show URL))</visible>
+							</item>
+						</content>
+					</control>
+				</control>
+				<control type="group">
+					<description>Container des épisodes to view poster</description>
+					<visible>Control.IsVisible(51) + ![Control.IsVisible(50) | Control.IsVisible(52)]</visible>
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<posy>90</posy>
+					<posx>210</posx>
+					<control type="list" id="51">
+						<description>Liste des épisodes</description>
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>270</width>
+						<height>380</height>
+						<viewtype label="Poster">list</viewtype>
+						<scrolltime>200</scrolltime>
+						<pagecontrol>61</pagecontrol>
+						<onup>51</onup>
+						<ondown>51</ondown>
+						<onleft>Control.Move(51,-1)</onleft>
+						<onright>Control.Move(51,1)</onright>
+						<itemlayout height="380" width="270" />
+						<focusedlayout height="380" width="270" />
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>270</width>
+						<height>380</height>
+						<aspectratio>stretch</aspectratio>
+						<bordertexture border="5">NextAired-button-nofocus.png</bordertexture>
+						<bordersize>4</bordersize>
+						<texture background="true">$INFO[ListItem.Property(ep_img)]</texture>
+					</control>
+					<control type="image">
+						<posx>4</posx>
+						<posy>4</posy>
+						<width>200</width>
+						<height>230</height>
+						<aspectratio>stretch</aspectratio>
+						<texture>NextAired-GlassOverlay.png</texture>
+						<colordiffuse>AAFFFFFF</colordiffuse>
+						<visible>!IsEmpty(ListItem.Property(ep_img))</visible>
+					</control>
+					<control type="list" id="49">
+						<posx>290</posx>
+						<posy>20</posy>
+						<width>740</width>
+						<height>330</height>
+						<onleft>49</onleft>
+						<onright>49</onright>
+						<onup>9000</onup>
+						<ondown>61</ondown>
+						<pagecontrol>-</pagecontrol>
+						<scrolltime>200</scrolltime>
+						<itemlayout height="30">
+							<control type="label">
+								<posx>165</posx>
+								<posy>0</posy>
+								<width>160</width>
+								<height>30</height>
+								<font>font13_title</font>
+								<align>right</align>
+								<aligny>center</aligny>
+								<textcolor>FF0084ff</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<info>ListItem.Label</info>
+							</control>
+							<control type="label">
+								<posx>175</posx>
+								<posy>0</posy>
+								<width>565</width>
+								<height>30</height>
+								<font>font13</font>
+								<align>left</align>
+								<aligny>center</aligny>
+								<textcolor>FFFFFFFF</textcolor>
+								<selectedcolor>FFFFFFFF</selectedcolor>
+								<info>ListItem.Label2</info>
+							</control>
+						</itemlayout>
+						<focusedlayout height="30">
+							<control type="image">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>740</width>
+								<height>30</height>
+								<visible>Control.HasFocus(49)</visible>
+								<texture>NextAired-MenuItemFO.png</texture>
+								<animation effect="fade" time="300">Visible</animation>
+								<animation effect="fade" time="300">Hidden</animation>
+							</control>
+							<control type="label">
+								<posx>165</posx>
+								<posy>0</posy>
+								<width>160</width>
+								<height>30</height>
+								<font>font13_title</font>
+								<align>right</align>
+								<aligny>center</aligny>
+								<textcolor>FF0084ff</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<info>ListItem.Label</info>
+							</control>
+							<control type="label">
+								<posx>175</posx>
+								<posy>0</posy>
+								<width>565</width>
+								<height>30</height>
+								<font>font13</font>
+								<align>left</align>
+								<aligny>center</aligny>
+								<textcolor>FFFFFFFF</textcolor>
+								<selectedcolor>FFFFFFFF</selectedcolor>
+								<info>ListItem.Label2</info>
+							</control>
+						</focusedlayout>
+						<content>
+							<item>
+								<label>$LOCALIZE[20364]:</label>
+								<label2>$INFO[ListItem.Property(Show Name)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Show Name))</visible>
+							</item>
+							<item>
+								<label>Latest Ep.:</label>
+								<label2>$INFO[ListItem.Property(Latest Episode)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Latest Episode))</visible>
+							</item>
+
+							<item>
+								<label>$LOCALIZE[SCRIPT451]</label>
+								<label2>$INFO[ListItem.Property(Next Episode)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Next Episode))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT452]</label>
+								<label2>$INFO[ListItem.Property(Airtime)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Airtime))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[2050]:</label>
+								<label2>$INFO[ListItem.Property(Runtime),, Minutes]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Runtime))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT453]</label>
+								<label2>$INFO[ListItem.Property(Network)], $INFO[ListItem.Property(Country),(,)]</label2>
+								<onclick>-</onclick>
+								<visible>![IsEmpty(ListItem.Property(Network)) | IsEmpty(ListItem.Property(Country))]</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[135]:</label>
+								<label2>$INFO[ListItem.Property(Genres)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Genres))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT454]</label>
+								<label2>$INFO[ListItem.Property(Show URL)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Show URL))</visible>
+							</item>
+						</content>
+					</control>
+				</control>
+				<control type="group">
+					<description>Container des épisodes to view wide</description>
+					<visible>Control.IsVisible(52) + ![Control.IsVisible(50) | Control.IsVisible(51)]</visible>
+					<animation effect="fade" time="300">Visible</animation>
+					<animation effect="fade" time="300">Hidden</animation>
+					<posy>90</posy>
+					<posx>210</posx>
+					<control type="list" id="52">
+						<description>Liste des épisodes</description>
+						<posx>177</posx>
+						<posy>10</posy>
+						<width>675</width>
+						<height>274</height>
+						<viewtype label="Wide">list</viewtype>
+						<scrolltime>200</scrolltime>
+						<pagecontrol>61</pagecontrol>
+						<onup>52</onup>
+						<ondown>52</ondown>
+						<onleft>Control.Move(52,-1)</onleft>
+						<onright>Control.Move(52,1)</onright>
+						<itemlayout height="274" width="675" />
+						<focusedlayout height="274" width="675" />
+					</control>
+					<control type="image">
+						<posx>177</posx>
+						<posy>10</posy>
+						<width>675</width>
+						<height>274</height>
+						<aspectratio>stretch</aspectratio>
+						<bordertexture border="5">NextAired-button-nofocus.png</bordertexture>
+						<bordersize>4</bordersize>
+						<texture background="true">$INFO[ListItem.Property(ep_img)]</texture>
+					</control>
+					<control type="image">
+						<posx>177</posx>
+						<posy>10</posy>
+						<width>400</width>
+						<height>250</height>
+						<aspectratio>stretch</aspectratio>
+						<texture>NextAired-GlassOverlay.png</texture>
+						<colordiffuse>AAFFFFFF</colordiffuse>
+						<visible>!IsEmpty(ListItem.Property(ep_img))</visible>
+					</control>
+					<control type="list" id="49">
+						<posx>95</posx>
+						<posy>290</posy>
+						<width>855</width>
+						<height>360</height>
+						<onleft>49</onleft>
+						<onright>49</onright>
+						<onup>9000</onup>
+						<ondown>61</ondown>
+						<pagecontrol>-</pagecontrol>
+						<scrolltime>0</scrolltime>
+						<itemlayout height="30">
+							<control type="label">
+								<posx>180</posx>
+								<posy>0</posy>
+								<width>200</width>
+								<height>30</height>
+								<font>font13_title</font>
+								<align>right</align>
+								<aligny>center</aligny>
+								<textcolor>FF0084ff</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<info>ListItem.Label</info>
+							</control>
+							<control type="label">
+								<posx>190</posx>
+								<posy>0</posy>
+								<width>665</width>
+								<height>30</height>
+								<font>font13</font>
+								<align>left</align>
+								<aligny>center</aligny>
+								<textcolor>FFFFFFFF</textcolor>
+								<selectedcolor>FFFFFFFF</selectedcolor>
+								<info>ListItem.Label2</info>
+							</control>
+						</itemlayout>
+						<focusedlayout height="30">
+							<control type="image">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>840</width>
+								<height>30</height>
+								<visible>Control.HasFocus(49)</visible>
+								<texture>NextAired-MenuItemFO.png</texture>
+								<animation effect="fade" time="300">Visible</animation>
+								<animation effect="fade" time="300">Hidden</animation>
+							</control>
+							<control type="label">
+								<posx>180</posx>
+								<posy>0</posy>
+								<width>200</width>
+								<height>30</height>
+								<font>font13_title</font>
+								<align>right</align>
+								<aligny>center</aligny>
+								<textcolor>FF0084ff</textcolor>
+								<selectedcolor>FFEB9E17</selectedcolor>
+								<info>ListItem.Label</info>
+							</control>
+							<control type="label">
+								<posx>190</posx>
+								<posy>0</posy>
+								<width>665</width>
+								<height>30</height>
+								<font>font13</font>
+								<align>left</align>
+								<aligny>center</aligny>
+								<textcolor>FFFFFFFF</textcolor>
+								<selectedcolor>FFFFFFFF</selectedcolor>
+								<info>ListItem.Label2</info>
+							</control>
+						</focusedlayout>
+						<content>
+							<item>
+								<label>$LOCALIZE[20364]:</label>
+								<label2>$INFO[ListItem.Property(Show Name)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Show Name))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT450]</label>
+								<label2>$INFO[ListItem.Property(Latest Episode)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Latest Episode))</visible>
+							</item>
+
+							<item>
+								<label>$LOCALIZE[SCRIPT451]</label>
+								<label2>$INFO[ListItem.Property(Next Episode)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Next Episode))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT452]</label>
+								<label2>$INFO[ListItem.Property(Airtime)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Airtime))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[2050]:</label>
+								<label2>$INFO[ListItem.Property(Runtime),, Minutes]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Runtime))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT453]</label>
+								<label2>$INFO[ListItem.Property(Network)], $INFO[ListItem.Property(Country),(,)]</label2>
+								<onclick>-</onclick>
+								<visible>![IsEmpty(ListItem.Property(Network)) | IsEmpty(ListItem.Property(Country))]</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[135]:</label>
+								<label2>$INFO[ListItem.Property(Genres)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Genres))</visible>
+							</item>
+							<item>
+								<label>$LOCALIZE[SCRIPT454]</label>
+								<label2>$INFO[ListItem.Property(Show URL)]</label2>
+								<onclick>-</onclick>
+								<visible>!IsEmpty(ListItem.Property(Show URL))</visible>
+							</item>
+						</content>
+					</control>
+				</control>
+				<control type="group">
+					<posy>510</posy>
+					<animation effect="slide" start="0,0" end="0,-25" time="200" condition="!Control.IsVisible(50) + Control.IsVisible(51)">conditional</animation>
+					<animation effect="slide" start="0,0" end="0,120" time="200" condition="!Control.IsVisible(50) + Control.IsVisible(52)">conditional</animation>
+					<control type="image">
+						<posx>210</posx>
+						<posy>-10</posy>
+						<width>1030</width>
+						<height>4</height>
+						<aspectratio>stretch</aspectratio>
+						<texture>NextAired-separator.png</texture>
+					</control>
+					<control type="label">
+						<posx>130r</posx>
+						<posy>0</posy>
+						<width>400</width>
+						<height>30</height>
+						<font>font13_title</font>
+						<textcolor>88FFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<scroll>true</scroll>
+						<align>right</align>
+						<aligny>center</aligny>
+						<label>[COLOR=FF0084ff]TV Show[/COLOR]$INFO[Container(50).CurrentPage, ( ]$INFO[Container(50).NumPages,/, )]</label>
+						<visible>Control.IsVisible(50)</visible>
+					</control>
+					<control type="label">
+						<posx>130r</posx>
+						<posy>0</posy>
+						<width>400</width>
+						<height>30</height>
+						<font>font13_title</font>
+						<textcolor>88FFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<scroll>true</scroll>
+						<align>right</align>
+						<aligny>center</aligny>
+						<label>[COLOR=FF0084ff]TV Show[/COLOR]$INFO[Container(51).CurrentPage, ( ]$INFO[Container(51).NumPages,/, )]</label>
+						<visible>Control.IsVisible(51)</visible>
+					</control>
+					<control type="label">
+						<posx>130r</posx>
+						<posy>0</posy>
+						<width>400</width>
+						<height>30</height>
+						<font>font13_title</font>
+						<textcolor>88FFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+						<scroll>true</scroll>
+						<align>right</align>
+						<aligny>center</aligny>
+						<label>[COLOR=FF0084ff]TV Show[/COLOR]$INFO[Container(52).CurrentPage, ( ]$INFO[Container(52).NumPages,/, )]</label>
+						<visible>Control.IsVisible(52)</visible>
+					</control>
+					<control type="spincontrol" id="61">
+						<description>Next page button</description>
+						<posx>120r</posx>
+						<posy>5</posy>
+						<width>33</width>
+						<height>22</height>
+						<subtype>page</subtype>
+						<reverse>yes</reverse>
+						<font>-</font>
+						<textcolor>-</textcolor>
+						<textureup>NextAired-scroll-up-2.png</textureup>
+						<texturedown>NextAired-scroll-down-2.png</texturedown>
+						<textureupfocus>NextAired-scroll-up-focus-2.png</textureupfocus>
+						<texturedownfocus>NextAired-scroll-down-focus-2.png</texturedownfocus>
+						<pulseonselect>no</pulseonselect>
+						<showonepage>true</showonepage>
+						<onleft>61</onleft>
+						<onright>61</onright>
+						<ondown>9000</ondown>
+						<onup>49</onup>
+					</control>
+				</control>
+				<control type="grouplist" id="9000">
+					<posx>210</posx>
+					<posy>660</posy>
+					<width>1030</width>
+					<height>40</height>
+					<itemgap>2</itemgap>
+					<align>center</align>
+					<orientation>horizontal</orientation>
+					<onleft>9000</onleft>
+					<onright>9000</onright>
+					<onup>61</onup>
+					<ondown>49</ondown>
+					<control type="button" id="2">
+						<description>View As button</description>
+						<height>40</height>
+						<width>170</width>
+						<textoffsetx>20</textoffsetx>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font12_title</font>
+						<texturefocus border="5">NextAired-button-focus.png</texturefocus>
+						<texturenofocus border="5">NextAired-button-nofocus.png</texturenofocus>
+						<pulseonselect>false</pulseonselect>
+						<label>-</label>
+					</control>
+					<control type="button" id="6">
+						<description>search</description>
+						<height>40</height>
+						<width>170</width>
+						<textoffsetx>20</textoffsetx>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font12_title</font>
+						<texturefocus border="5">NextAired-button-focus.png</texturefocus>
+						<texturenofocus border="5">NextAired-button-nofocus.png</texturenofocus>
+						<pulseonselect>false</pulseonselect>
+						<label>137</label>
+						<enable>false</enable><!-- desactiver pas encore implanter -->
+					</control>
+					<control type="button" id="8">
+						<description>Settings</description>
+						<height>40</height>
+						<width>170</width>
+						<textoffsetx>20</textoffsetx>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font12_title</font>
+						<texturefocus border="5">NextAired-button-focus.png</texturefocus>
+						<texturenofocus border="5">NextAired-button-nofocus.png</texturenofocus>
+						<pulseonselect>false</pulseonselect>
+						<label>5</label>
+					</control>
+					<control type="button" id="10">
+						<description>close</description>
+						<height>40</height>
+						<width>170</width>
+						<textoffsetx>20</textoffsetx>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font12_title</font>
+						<texturefocus border="5">NextAired-button-focus.png</texturefocus>
+						<texturenofocus border="5">NextAired-button-nofocus.png</texturenofocus>
+						<pulseonselect>false</pulseonselect>
+						<label>186</label>
+						<onclick>PreviousMenu</onclick>
+					</control>
+				</control>
+			</control>
+		</control>
+		<control type="image">
+			<posx>26r</posx>
+			<posy>0</posy>
+			<width>846</width>
+			<height>720</height>
+			<texture flipx="true">NextAired-HomeBlade.png</texture>
+			<animation effect="slide" start="26,0" end="0,0" time="300" tween="quadratic" easing="out">WindowOpen</animation>
+			<animation effect="slide" start="0,0" end="26,0" time="200" delay="200" tween="quadratic" easing="out">WindowClose</animation>
+		</control>
+		<control type="group">
+			<posx>140r</posx>
+			<posy>0</posy>
+			<animation effect="slide" start="0,0" end="-60,0" delay="0" time="300" condition="Window.IsVisible(MuteBug)">conditional</animation>
+			<animation effect="slide" start="0,0" end="210,0" delay="0" time="300" condition="Window.Next(Home) | Window.IsVisible(FullscreenVideo) | Window.IsVisible(Visualisation)">WindowClose</animation>
+			<animation effect="slide" start="210,0" end="0,0" delay="0" time="300" condition="Window.Previous(Home) | Window.IsVisible(FullscreenVideo) | Window.IsVisible(Visualisation)">WindowOpen</animation>
+			<control type="image">
+				<description>time background</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>150</width>
+				<height>35</height>
+				<texture flipx="true" border="32,0,0,0">NextAired-header.png</texture>
+			</control>
+			<control type="label">
+				<description>time label</description>
+				<posx>30</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>28</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>font12</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<label>$INFO[System.Time]</label>
+			</control>
+		</control>
+	</controls>
+</window>
