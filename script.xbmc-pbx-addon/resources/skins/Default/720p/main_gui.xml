@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window id="3000">
+    <defaultcontrol>120</defaultcontrol>
+    <controls>
+        <control type="image">
+            <description>background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>background.png</texture>
+        </control>
+ 
+      	<!--- GUI Header --->
+     	<control type="image">
+         <description>XBMC PBX Addon Logo</description>
+        	<posx>15</posx>
+        	<posy>0</posy>
+        	<width>90</width>
+        	<height>90</height>
+        	<texture>xbmc-pbx-addon.png</texture>
+      	</control>
+        <control type="radiobutton" id="110">
+            <description>CDR toggle button</description>
+            <posx>200</posx>
+            <posy>35</posy>
+            <width>250</width>
+            <align>left</align>
+            <!--<label>$LOCALIZE[30101]</label>-->
+            <font>special12</font>
+            <onleft>112</onleft>
+            <onright>111</onright>
+            <ondown>113</ondown>
+            <onclick>SetProperty(show_info,cdr)</onclick>
+            <selected>stringcompare(Window.Property(show_info),cdr) | Control.IsVisible(120)</selected>
+        </control>
+        <control type="radiobutton" id="111">
+            <description>VM toggle button</description>
+            <posx>470</posx>
+            <posy>35</posy>
+            <width>250</width>
+            <align>left</align>
+            <!--<label>$LOCALIZE[30102]</label>-->
+            <font>special12</font>
+            <onleft>110</onleft>
+            <onright>109</onright>
+            <ondown>113</ondown>
+            <onclick>SetProperty(show_info,vm)</onclick>
+            <selected>stringcompare(Window.Property(show_info),vm) | Control.IsVisible(121)</selected>
+        </control>
+        <control type="button" id="109">
+            <description>Refresh button</description>
+            <posx>740</posx>
+            <posy>35</posy>
+            <width>150</width>
+            <align>left</align>
+            <!--<label>$LOCALIZE[30107]</label>-->
+            <font>special12</font>
+            <onleft>111</onleft>
+            <onright>112</onright>
+            <ondown>113</ondown>
+        </control>
+        <control type="button" id="112">
+            <description>Settings button</description>
+            <posx>950</posx>
+            <posy>35</posy>
+            <width>150</width>
+            <align>left</align>
+            <!--<label>$LOCALIZE[30103]</label>-->
+            <font>special12</font>
+            <onleft>109</onleft>
+            <onright>110</onright>
+            <ondown>113</ondown>
+        </control>
+        
+        <!--- Content Panel --->
+        <control type="image" id="0">
+            <description>contentpanel slice</description>
+            <posx>0</posx>
+            <posy>90</posy>
+            <width>1279</width>
+            <height>630</height>
+            <texture>ContentPanel.png</texture>
+        </control>
+        <control type="group">
+            <description>CDR labels</description>
+            <posx>10</posx>
+            <posy>110</posy>
+            <width>1269</width>
+            <height>20</height>
+            <visible>stringcompare(Window.Property(show_info),cdr) | stringcompare(Window.Property(show_info),)</visible>
+            <control type="label" id="140">
+                <posx>5</posx>
+                <posy>0</posy>
+                <width>200</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30130]</label>-->
+            </control>
+            <control type="label" id="141">
+                <posx>215</posx>
+                <posy>0</posy>
+                <width>190</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30116]</label>-->
+            </control>
+            <control type="label" id="142">
+                <posx>415</posx>
+                <posy>0</posy>
+                <width>165</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30112]</label>-->
+            </control>
+            <control type="label" id="143">
+                <posx>590</posx>
+                <posy>0</posy>
+                <width>240</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30115]</label>-->
+            </control>
+            <control type="label" id="144">
+                <posx>840</posx>
+                <posy>0</posy>
+                <width>160</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30113]</label>-->
+            </control>
+            <control type="label" id="145">
+                <posx>1010</posx>
+                <posy>0</posy>
+                <width>135</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30125]</label>-->
+            </control>
+            <control type="label" id="146">
+                <posx>1155</posx>
+                <posy>0</posy>
+                <width>110</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30123]</label>-->
+            </control>
+        </control>
+        <control type="group">
+            <description>VM labels</description>
+            <posx>10</posx>
+            <posy>110</posy>
+            <width>1269</width>
+            <height>20</height>
+            <visible>stringcompare(Window.Property(show_info),vm)</visible>
+            <control type="label" id="161">
+                <posx>5</posx>
+                <posy>0</posy>
+                <width>200</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30159]</label>-->
+            </control>
+            <control type="label" id="162">
+                <posx>275</posx>
+                <posy>0</posy>
+                <width>460</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30157]</label>-->
+            </control>
+            <control type="label" id="163">
+                <posx>810</posx>
+                <posy>0</posy>
+                <width>245</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30155]</label>-->
+            </control>
+            <control type="label" id="164">
+                <posx>910</posx>
+                <posy>0</posy>
+                <width>265</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30151]</label>-->
+            </control>
+            <control type="label" id="165">
+                <posx>1120</posx>
+                <posy>0</posy>
+                <width>245</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFe2ff43</textcolor>
+                <aligny>center</aligny>
+                <align>left</align>
+                <!--<label>$LOCALIZE[30162]</label>-->
+            </control>
+        </control>
+        
+        <!--- Content Panel - List Container --->
+        <control type="group" id="113">
+            <posx>10</posx>
+            <posy>135</posy>
+            <width>1249</width>
+            <height>585</height>
+            <defaultcontrol>120</defaultcontrol>
+            <control type="list" id="120">
+                <description>CDR List Container</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1249</width>
+                <height>560</height>
+                <scrolltime>200</scrolltime>
+                <onup>120</onup>
+                <ondown>120</ondown>
+                <onright>190</onright>
+                <onleft>110</onleft>
+                <pagecontrol>190</pagecontrol>
+                <visible>stringcompare(Window.Property(show_info),cdr) | stringcompare(Window.Property(show_info),)</visible>
+                <itemlayout height="22">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>950</width>
+                        <height>24</height>
+                        <texture border="5">MenuItemNF.png</texture>
+                    </control>
+                    <control type="label">
+                        <posx>5</posx>
+                        <posy>0</posy>
+                        <width>200</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(start)</info>
+                    </control>
+                    <control type="label">
+                        <posx>215</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(channel)</info>
+                    </control>
+                    <control type="label">
+                        <posx>415</posx>
+                        <posy>0</posy>
+                        <width>165</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(src)</info>
+                    </control>
+                    <control type="label">
+                        <posx>590</posx>
+                        <posy>0</posy>
+                        <width>240</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(clid)</info>
+                    </control>
+                    <control type="label">
+                        <posx>840</posx>
+                        <posy>0</posy>
+                        <width>160</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(dst)</info>
+                    </control>
+                    <control type="label">
+                        <posx>1010</posx>
+                        <posy>0</posy>
+                        <width>135</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(disposition)</info>
+                    </control>
+                    <control type="label">
+                        <posx>1155</posx>
+                        <posy>0</posy>
+                        <width>110</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(duration)</info>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="22">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>1249</width>
+                        <height>24</height>
+                        <texture border="5">MenuItemNF.png</texture>
+                        <visible>!Control.HasFocus(120)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>1249</width>
+                        <height>24</height>
+                        <texture border="5">MenuItemFO.png</texture>
+                        <visible>Control.HasFocus(120)</visible>
+                    </control>
+                    <control type="label">
+                        <posx>5</posx>
+                        <posy>0</posy>
+                        <width>200</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(start)</info>
+                    </control>
+                    <control type="label">
+                        <posx>215</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(channel)</info>
+                    </control>
+                    <control type="label">
+                        <posx>415</posx>
+                        <posy>0</posy>
+                        <width>165</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(src)</info>
+                    </control>
+                    <control type="label">
+                        <posx>590</posx>
+                        <posy>0</posy>
+                        <width>240</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(clid)</info>
+                    </control>
+                    <control type="label">
+                        <posx>840</posx>
+                        <posy>0</posy>
+                        <width>160</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(dst)</info>
+                    </control>
+                    <control type="label">
+                        <posx>1010</posx>
+                        <posy>0</posy>
+                        <width>135</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(disposition)</info>
+                    </control>
+                    <control type="label">
+                        <posx>1155</posx>
+                        <posy>0</posy>
+                        <width>110</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(duration)</info>
+                    </control>
+                </focusedlayout>
+            </control>
+            <control type="list" id="121">
+                <description>VM List Container</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1249</width>
+                <height>560</height>
+                <scrolltime>200</scrolltime>
+                <onup>121</onup>
+                <ondown>121</ondown>
+                <onright>190</onright>
+                <onleft>110</onleft>
+                <pagecontrol>190</pagecontrol>
+                <visible>stringcompare(Window.Property(show_info),vm)</visible>
+                <itemlayout height="22">
+                    <control type="image">
+                        <width>1249</width>
+                        <height>24</height>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <texture border="5">MenuItemNF.png</texture>
+                    </control>
+                    <control type="label">
+                        <posx>05</posx>
+                        <posy>0</posy>
+                        <width>200</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(origtime)</info>
+                    </control>
+                    <control type="label">
+                        <posx>275</posx>
+                        <posy>0</posy>
+                        <width>400</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(callerid)</info>
+                    </control>
+                    <control type="label">
+                        <posx>810</posx>
+                        <posy>0</posy>
+                        <width>200</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(priority)</info>
+                    </control>
+                    <control type="label">
+                        <posx>910</posx>
+                        <posy>0</posy>
+                        <width>200</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(origmailbox)</info>
+                    </control>
+                    <control type="label">
+                        <posx>1120</posx>
+                        <posy>0</posy>
+                        <width>245</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(duration)</info>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="22">
+                    <control type="image">
+                        <width>1249</width>
+                        <height>24</height>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <texture border="5">MenuItemNF.png</texture>
+                        <visible>!Control.HasFocus(121)</visible>
+                    </control>
+                    <control type="image">
+                        <width>1249</width>
+                        <height>24</height>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <texture border="5">MenuItemFO.png</texture>
+                        <visible>Control.HasFocus(121)</visible>
+                    </control>
+                    <control type="label">
+                        <posx>05</posx>
+                        <posy>0</posy>
+                        <width>200</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(origtime)</info>
+                    </control>
+                    <control type="label">
+                        <posx>275</posx>
+                        <posy>0</posy>
+                        <width>400</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(callerid)</info>
+                    </control>
+                    <control type="label">
+                        <posx>810</posx>
+                        <posy>0</posy>
+                        <width>200</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(priority)</info>
+                    </control>
+                    <control type="label">
+                        <posx>910</posx>
+                        <posy>0</posy>
+                        <width>200</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(origmailbox)</info>
+                    </control>
+                    <control type="label">
+                        <posx>1120</posx>
+                        <posy>0</posy>
+                        <width>245</width>
+                        <height>20</height>
+                        <font>font12</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Property(duration)</info>
+                    </control>
+                </focusedlayout>
+            </control>
+        </control>
+        <control type="group">
+            <posx>1249</posx>
+            <posy>100</posy>
+            <control type="scrollbar" id="190">
+                <description>Scrollbar</description>
+                <posx>0</posx>
+                <posy>30</posy>
+                <width>20</width>
+                <height>580</height>
+                <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
+                <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
+                <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_Focus.png</texturesliderbarfocus>
+                <textureslidernib>ScrollBarV_Nib.png</textureslidernib>
+                <textureslidernibfocus>ScrollBarV_Nib_Focus.png</textureslidernibfocus>
+                <onleft>113</onleft>
+                <onright>113</onright>
+                <showonepage>false</showonepage>
+                <orientation>vertical</orientation>
+                <visible>Control.IsVisible(113)</visible>
+            </control>
+        </control>
+    </controls>
+</window>

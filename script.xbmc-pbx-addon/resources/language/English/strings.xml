@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30000">XBMC PBX Addon</string>
+    <string id="30001">Info</string>
+    <string id="30002">URL</string>
+    <string id="30003">Debug</string>
+
+    <!-- Script Settings related strings -->
+    <!-- Connection -->
+    <!-- Asterisk Manager Interface -->
+    <string id="30010">Connection</string>
+    <string id="30011">Asterisk Manager Interface (AMI)</string>
+    <string id="30012">Define here the connection information to AMI</string>
+    <string id="30013">PBX: AMI Hostname or IP Address</string>
+    <string id="30014">PBX: AMI Port</string>
+    <string id="30015">PBX: AMI Username</string>
+    <string id="30016">PBX: AMI Password</string>
+    <!-- Asterisk Inbound Calls -->
+    <string id="30020">Inbound Calls</string>
+    <string id="30021">Define here what to do on inbound calls</string>
+    <string id="30022">XBMC: Initiate upon Asterisk NewChannel State</string>
+    <string id="30023">XBMC: Initiate only if ALERT_INFO equals to:</string>
+    <string id="30024">XBMC: Show Caller ID notification</string>
+    <string id="30025">XBMC: Caller ID notification timeout</string>
+    <string id="30026">XBMC: Pause playing Video</string>
+    <string id="30027">PBX: Redirect calls if XBMC is playing Video</string>
+    <string id="30028">PBX: Redirect calls to context (name)</string>
+    <string id="30029">PBX: Redirect only if ALERT_INFO equals to:</string>
+    <!-- Asterisk Outbound Calls -->
+    <string id="30030">Outbound Calls</string>
+    <string id="30031">Define here what to do with outbound calls</string>
+    <string id="30032">PBX: Use extension</string>
+    <string id="30033">PBX: Use context</string>
+    <!-- CDR & VoiceMail -->
+    <string id="30040">CDR &amp; VoiceMail</string>
+    <string id="30041">Define here how to retrieve CDR and VoiceMail</string>
+    <string id="30042">XBMC: URL to xbmc-pbx-addon.php</string>
+    <string id="30043">XBMC: VoiceMail notification timeout</string>
+    <string id="30044">PBX: Mailbox number</string>
+    <string id="30045">PBX: VoiceMail Context</string>
+    <string id="30046">PBX: Audio Format</string>
+
+    <!-- GUI related strings -->
+    <!-- Notification popup -->
+    <string id="30050">Incoming Call</string>
+    <string id="30051">XBMC PBX Addon Error</string>
+    <string id="30052">Voice Mail Count</string>
+    <string id="30053">New messages: </string>
+    <!-- Dialog Progress -->
+    <string id="30061">Starting...</string>
+    <string id="30062">Skin Setup...</string>
+    <string id="30063">Fetching Back-end Info...</string>
+    <string id="30064">Displaying Back-end Info...</string>
+    <string id="30065">Done...</string>
+    <!-- Buttons and Labels -->
+    <string id="30101">Show CDR</string>
+    <string id="30102">Show Voice Mail</string>
+    <string id="30103">Settings</string>
+    <string id="30104">Initiate outgoing call to</string>
+    <string id="30105">Play Voice Mail?</string>
+    <string id="30106">Delete Voice Mail?</string>
+    <string id="30107">Refresh</string>
+    <!-- CDR -->
+    <string id="30110">Call Detail Record</string>
+    <string id="30111">Account Code</string>
+    <string id="30112">Source</string>
+    <string id="30113">Destination</string>
+    <string id="30114">Destination Context</string>
+    <string id="30115">Caller ID</string>
+    <string id="30116">Channel</string>
+    <string id="30117">Destination Channel</string>
+    <string id="30118">Last Application</string>
+    <string id="30119">Last Data</string>
+    <string id="30120">Start of call</string>
+    <string id="30121">Answer of call</string>
+    <string id="30122">End of call</string>
+    <string id="30123">Duration</string>
+    <string id="30124">Billing Seconds</string>
+    <string id="30125">Disposition</string>
+    <string id="30126">AMA Flags</string>
+    <string id="30127">Unique ID</string>
+    <string id="30129">User Field</string>
+    <string id="30130">Call Date</string>
+    <!-- VM -->
+    <string id="30150">Voice Mail</string>
+    <string id="30151">Mailbox</string>
+    <string id="30152">Context</string>
+    <string id="30153">Macro Context</string>
+    <string id="30154">Extension</string>
+    <string id="30155">Priority</string>
+    <string id="30156">Caller Channel</string>
+    <string id="30157">Caller ID</string>
+    <string id="30159">Date/Time</string>
+    <string id="30160">Category</string>
+    <string id="30161">Flag</string>
+    <string id="30162">Duration</string>
+    <string id="30163">Recording Index</string>
+    
+    <!-- First time use instructions -->
+    <string id="30171">-== First time use instructions ==-</string>
+    <string id="30172"></string>
+    <string id="30173">Make sure you followed all installation instructions from http://code.google.com/p/xbmc-pbx-addon/</string>
+    <string id="30174"></string>
+    <string id="30175">You will now be prompted to customize this Add-on settings.</string>
+    <string id="30176">If you already did it, you can just ignore it.</string>
+    <string id="30177">Once you finished, start this Add-on again. You will not see this screen again.</string>
+    <string id="30178"></string>
+    <string id="30179">Press any key to continue.</string>
+</strings>
