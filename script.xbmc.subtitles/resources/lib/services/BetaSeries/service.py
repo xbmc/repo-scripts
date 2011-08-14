@@ -35,10 +35,12 @@ def get_languages(languages):
 def geturl(url):
     log( __name__ , " Getting url: %s" % (url))
     try:
-        response = urllib2.urlopen(url)
+        import urllib
+        response = urllib.urlopen(url)
         content = response.read()
-    except:
-        log( __name__ , " Failed to get url:%s" % (url))
+    except Exception, inst: 
+        log( __name__ , " Failed to get url: %s" % (url))
+        log( __name__ , " Error: %s" % (inst))
         content = None
     return(content)
 
@@ -124,7 +126,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                             for item in items:
                                 subfile = item.childNodes[0].nodeValue
 
-                                #if os.path.splitext(subfile)[1] == '.zip': continue # Not supported yet ;)
+                                if os.path.splitext(subfile)[1] == '.zip': continue # Not supported yet ;)
                             
                                 search_string = "(s%#02de%#02d)|(%d%#02d)|(%dx%#02d)" % (int(season), int(episode),int(season), int(episode),int(season), int(episode))
                                 queryep = re.search(search_string, subfile, re.I)
@@ -175,6 +177,9 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     link = subtitles_list[pos][ "link" ]
     language = subtitles_list[pos][ "language_name" ]
     filename = subtitles_list[pos][ "filename" ]
+    log( __name__ ,"language: %s" % (language))
+    log( __name__ ,"filename: %s" % (filename))
+    subs_file = ""
     content = geturl(link)
     if content is not None:
         header = content[:4]
@@ -221,15 +226,18 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
                 filecount = len(files)
                 # determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
                 for file in files:
+                    log( __name__ ,"file inside: %s" % (file))
                     if (string.split(file,'.')[-1] in ['srt','sub','txt','ass']):
                         mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
                         if (mtime > max_mtime):
                             max_mtime =  mtime
+                        if filecount == (init_filecount + 1): filename = file
                 waittime  = waittime + 1
             if waittime == 20:
                 log( __name__ ," Failed to unpack subtitles in '%s'" % (tmp_sub_dir))
             else:
                 log( __name__ ,"Unpacked files in '%s'" % (tmp_sub_dir))
+                log( __name__ ,"Checking our file '%s'" % (os.path.join(tmp_sub_dir, filename)))
                 if os.path.exists(os.path.join(tmp_sub_dir, filename)):
                     file = str(os.path.normpath(os.path.join(tmp_sub_dir, filename)))
                     log( __name__ ,"selected file : '%s'" % ( file))
@@ -241,4 +249,4 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 
                     subs_file = file
 
-        return False, language, subs_file #standard output
+    return False, language, subs_file #standard output
