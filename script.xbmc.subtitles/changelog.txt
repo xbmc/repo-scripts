@@ -1,3 +1,9 @@
+2.9.18
+- fix: if movie is paused before running script, do not unpause after
+- fix: handle stack movies with more than 2 CD
+- fix: ITASA service login
+- fix: betaseries minor issue fix
+
 2.9.17
 - handle ACTION_NAV_BACK to close the script(id 92)
 

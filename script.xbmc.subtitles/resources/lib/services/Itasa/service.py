@@ -57,6 +57,7 @@ def login(username, password):
                 login_postdata = urllib.urlencode({'username': username, 'passwd': password, 'remember': 'yes', 'Submit': 'Login', 'remember': 'yes', 'option': 'com_user', 'task': 'login', 'silent': 'true', 'return': return_value, unique_name: unique_value} )
                 cj = cookielib.CookieJar()
                 my_opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+                my_opener.addheaders = [('Referer', main_url)]
                 urllib2.install_opener(my_opener)
                 request = urllib2.Request(main_url + 'index.php',login_postdata)
                 response = urllib2.urlopen(request).read()

@@ -149,6 +149,9 @@ def languageTranslate(lang, lang_from, lang_to):
 def pause():
   if not xbmc.getCondVisibility('Player.Paused'):
     xbmc.Player().pause()
+    return True
+  else:
+    return False  
     
 def unpause():
   if xbmc.getCondVisibility('Player.Paused'):
@@ -188,18 +191,3 @@ def copy_files( subtitle_file, file_path ):
 
   return subtitle_set, file_path
 
-def checkExistingSubs( subFolder, videoFile, lang1, lang2, lang3 ):
-  sub_exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
-  try:
-    list_files = os.listdir(subFolder)
-    file_name = os.path.splitext( os.path.basename( videoFile ) )[0]
-    for file in list_files:
-      if (os.path.splitext( file )[1] in sub_exts) and (file.startswith(file_name)):
-        return True
-  except:
-    for i in range(3):
-      for sub_ext in sub_exts:
-        exec("lang = languageTranslate(lang%s, 0, 2)" % (str(i+1)) )
-        if xbmcvfs.exists("%s.%s%s" % (os.path.join(subFolder,os.path.splitext( os.path.basename( videoFile ) )[0]),lang ,sub_ext,)):
-          return True
-  return False

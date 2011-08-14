@@ -26,21 +26,23 @@ from utilities import log, pause, unpause, UserNotificationNotifier
 log( __name__ ,"Version: %s" % __version__)
 
 if ( __name__ == "__main__" ):
+  __unpause__ = False
   ui = gui.GUI( "script-XBMC-Subtitles-main.xml" , __cwd__ , "Default")
   movieFullPath = ui.set_allparam()
   if (__addon__.getSetting( "auto_download" ) == "true") and (__addon__.getSetting( "auto_download_file" ) != os.path.basename( movieFullPath )):
     notification = UserNotificationNotifier(__scriptname__, __language__(764), 2000)    
     if not ui.Search_Subtitles(False):
-      pause()
+      __unpause__ = pause()
       ui.doModal()
     else:
       notification.close(__language__(765), 1000) 
   else:
-    pause() 
+    __unpause__ = pause() 
     ui.doModal()
         
   del ui
-  unpause()
+  if __unpause__:
+    unpause()
   sys.modules.clear()
 
 

@@ -35,7 +35,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     self.on_run()
 
   def on_run( self ):
-    if not checkExistingSubs( self.sub_folder, self.file_original_path, self.language_1, self.language_2, self.language_3 ):
+    if not xbmc.getCondVisibility("VideoPlayer.HasSubtitles"):
       self.getControl( 111 ).setVisible( False )
     try:
       self.list_services()
@@ -53,7 +53,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
   def set_allparam(self):       
     self.list           = []
     service_list        = []
-    self.stackSecond    = ""
+    self.stackPaths     = []
     service             = ""    
     self.newWindow      = True
     self.temp           = False
@@ -90,9 +90,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.sub_folder = os.path.dirname(os.path.dirname( movieFullPath ))
     
     elif ( movieFullPath.find("stack://") > -1 ):
-      movieFullPath, stackSecond = movieFullPath.split(" , ")
-      movieFullPath = movieFullPath[8:]
-      self.stackSecond = os.path.basename(stackSecond)
+      self.stackPath = movieFullPath.split(" , ")
+      movieFullPath = self.stackPath[0][8:]
       self.stack = True
 
     if not path:
@@ -103,7 +102,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       if self.sub_folder.find("smb://") > -1:
         if self.temp:
           dialog = xbmcgui.Dialog()
-          self.sub_folder = dialog.browse( 0, "Choose Subtitle folder", "files")
+          self.sub_folder = dialog.browse( 0, _( 766 ), "files")
         else:
           self.sub_folder = os.path.dirname( movieFullPath )
       else:
@@ -131,9 +130,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
           self.tvshow = title
         else:
           self.title, self.year = xbmc.getCleanMovieTitle( self.title )
-
-      else:
-        self.title = self.title  
     else:
       self.year = ""
 
@@ -356,14 +352,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
           else:
             if os.path.splitext( zip_entry )[1] in exts:
               movie_sub = True
-          if ( movie_sub or len(files) < 2 or int(episode) == int(self.episode) ):
+          if ( movie_sub or int(episode) == int(self.episode) ):
             if self.stack:
               try:
-                if (re.split("(?x)(?i)\CD(\d)", zip_entry)[1]) == (re.split("(?x)(?i)\CD(\d)", sub_filename)[1]):
-                  subtitle_file, file_path = self.create_name(zip_entry,sub_filename,subtitle_lang)          
-                elif (re.split("(?x)(?i)\CD(\d)", zip_entry)[1]) == (re.split("(?x)(?i)\CD(\d)", self.stackSecond)[1]):
-                  subtitle_file, file_path = self.create_name(zip_entry,self.stackSecond,subtitle_lang)                
-                subtitle_set,file_path = copy_files( subtitle_file, file_path ) 
+                for subName in self.stackPath:
+                  if (re.split("(?x)(?i)\CD(\d)", zip_entry)[1]) == (re.split("(?x)(?i)\CD(\d)", urllib.unquote ( subName ))[1]):
+                    subtitle_file, file_path = self.create_name(zip_entry,urllib.unquote ( subName ),subtitle_lang)                              
+                    subtitle_set,file_path = copy_files( subtitle_file, file_path ) 
                 if re.split("(?x)(?i)\CD(\d)", zip_entry)[1] == "1":
                   subToActivate = file_path
               except:
@@ -433,12 +428,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
     self.getControl( window_list ).addItem( listitem )    
 
   def keyboard(self, parent):
-    dir, self.year = xbmc.getCleanMovieTitle(os.path.split(os.path.split(self.file_original_path)[0])[1])
-    if self.rar:
-      tmp_dir = os.path.split(os.path.split(os.path.split(self.file_original_path)[0])[0])[1]
-      dir, self.year = xbmc.getCleanMovieTitle( tmp_dir )
+    dir, self.year = xbmc.getCleanMovieTitle(self.file_original_path, self.parsearch)
     if not parent:
-      kb = xbmc.Keyboard("%s ()" % (dir,), _( 751 ), False)
+      kb = xbmc.Keyboard("%s (%s)" % (dir,self.year,), _( 751 ), False)
       text = self.file_name
       kb.doModal()
       if (kb.isConfirmed()): text, self.year = xbmc.getCleanMovieTitle(kb.getText())
@@ -465,6 +457,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
           self.Download_Subtitles( int(selection) )
           
     elif controlId == SERVICES_LIST:
+      xbmc.executebuiltin("Skin.Reset(SubtitleSourceChooserVisible)")
       selection = str(self.list[self.getControl( SERVICES_LIST ).getSelectedPosition()]) 
       self.setFocusId( 120 )
    

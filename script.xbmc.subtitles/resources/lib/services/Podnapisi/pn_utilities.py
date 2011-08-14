@@ -44,12 +44,7 @@ class OSDBServer:
     if( len ( self.subtitles_name_list ) > 0 ):
       for item in self.subtitles_name_list:
         if item["format"].find( "srt" ) == 0 or item["format"].find( "sub" ) == 0:
-          if stack:
-            if item["no_files"] == 2:
-              self.subtitles_list.append( item )
-          else:
-            if item["no_files"] < 2:
-              self.subtitles_list.append( item )                
+          self.subtitles_list.append( item )                
 
     if( len ( self.subtitles_list ) > 0 ):
       self.subtitles_list = sorted(self.subtitles_list, compare_columns)
