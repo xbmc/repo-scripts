@@ -20,10 +20,10 @@ class Addon(object):
     def getSetting(self, id):
         raise NotImplementedError, 'Not ready yet!'
 
-    def openSettings(self, id, value):
+    def setSetting(self, id, value):
         raise NotImplementedError, 'Not ready yet!'
 
-    def setSetting(self):
+    def openSettings(self):
         pass
 
     def _setup(self, path):

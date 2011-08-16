@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.xbmcswift" name="xbmcswift" version="0.1.2" provider-name="Jonathan Beluch (jbel)">
+<addon id="script.module.xbmcswift" name="xbmcswift" version="0.1.3" provider-name="Jonathan Beluch (jbel)">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
   </requires>

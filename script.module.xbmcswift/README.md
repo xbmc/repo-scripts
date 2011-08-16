@@ -4,7 +4,7 @@ xbmcswift
 A micro framework to enable rapid development of XBMC plugins.
 
 ## Version
-0.1.2  
+0.1.3  
 Currently under heavy development. Will be adding some full documentation soon.
 
 

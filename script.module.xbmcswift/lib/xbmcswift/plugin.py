@@ -157,6 +157,10 @@ class Plugin(object):
             #return self._plugin.setSetting(key, pickle.dumps(val))
         return self._plugin.setSetting(id=key, value=val)
 
+    def open_settings(self):
+        '''Opens the settings dialog within XBMC'''
+        self._plugin.openSettings()
+
     def _make_listitem(self, label, label2='', iconImage='', thumbnail='',
                        path='', **options):
         li = xbmcgui.ListItem(label, label2=label2, iconImage=iconImage, thumbnailImage=thumbnail, path=path)
