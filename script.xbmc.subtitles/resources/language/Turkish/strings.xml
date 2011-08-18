@@ -36,7 +36,7 @@
     <string id="30102">İkincil Dil</string>
     <string id="30103">Servisleri Seçiniz</string>
     <string id="30104">- Podnapisi.net Kullanıcı Adı</string>
-    <string id="30105">- Podnapisi.net Şifresi</string>
+    <string id="30105">- Podnapisi.net Parola</string>
     <string id="30106">Gelişmiş Seçenekler</string>
     <string id="30107">Altyazıyı Film Klasörüne İndir</string>
     <string id="30108">- Özel Altyazı İndirme Yolunu Ayarla</string>
@@ -49,17 +49,23 @@
     <string id="30121">Dil Kodunu Dosya Adına Ekle </string>
     <string id="30122">Varsayılan Zaman Aşımını Ayarla</string>
     <string id="30123">- Legendas.TV Kullanıcı Adı</string>
-    <string id="30124">- Legendas.TV Şifresi</string>
+    <string id="30124">- Legendas.TV Parola</string>
     <string id="30125">Hash aramasını devre dışı bırak</string>
     <string id="30126">- Itasa Kullanıcı Adı</string>
-    <string id="30127">- Itasa Şifresi</string>
+    <string id="30127">- Itasa Parola</string>
     <string id="30128">- Titulky Kullanıcı Adı</string>
-    <string id="30129">- Titulky Şifresi</string>
+    <string id="30129">- Titulky Parola</string>
     <string id="30130">Eğer sonuç bulunamazsa mevcut olan sonraki serviste ara</string>
     <string id="30131">Otomatik olarak ilk 'sync' altyazıyı indir</string>
     <string id="30132">- LegendasDivx Kullanıcı Adı</string>
-    <string id="30133">- LegendasDivx Şifresi</string>
-  
+    <string id="30133">- LegendasDivx Parola</string>
+    <string id="30134">- PTSubs Kullanıcı Adı</string>
+    <string id="30135">- PTSubs Parola</string>
+    <string id="30136">- OmniSubs Kullanıcı Adı</string>
+    <string id="30137">- OmniSubs Parola</string>
+    <string id="30138">- LegendasZone Kullanıcı Adı</string>
+    <string id="30139">- LegendasZone Parola</string>
+     
   <!-- Languages  -->
        
     <string id="30201">Arnavutça</string>

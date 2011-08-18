@@ -1,3 +1,8 @@
+2.9.19
+- added: Napisy.me service, thx mrto
+- update: Turkish string, thx queeup
+- cosmetics: slowdown close animation
+
 2.9.18
 - fix: if movie is paused before running script, do not unpause after
 - fix: handle stack movies with more than 2 CD
