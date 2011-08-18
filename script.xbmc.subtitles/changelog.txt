@@ -1,3 +1,7 @@
+2.5.7
+- added: Napisy.me service, thx mrto
+- update: Turkish string, thx queeup
+
 2.5.6
 - fix: ITASA service login
 - fix: betaseries minor issue fix
