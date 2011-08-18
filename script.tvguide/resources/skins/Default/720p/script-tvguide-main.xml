@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+	<allowoverlay>no</allowoverlay>
+	<defaultcontrol always="false">1</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<!-- Background -->
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>tvguide-background.png</texture>
+		</control>
+
+        <control type="group">
+            <description>TV Guide group</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+
+            <!-- Date and time row -->
+            <control type="label" id="4000">
+                <description>Displays todays date</description>
+                <posx>0</posx>
+                <posy>25</posy>
+                <width>180</width>
+                <height>50</height>
+                <textcolor>ffffffff</textcolor>
+                <font>font13</font>
+                <align>center</align>
+                <aligny>center</aligny>
+            </control>
+            <control type="label" id="4001">
+                <description>1st half hour column</description>
+                <posx>180</posx>
+                <posy>25</posy>
+                <width>270</width>
+                <height>50</height>
+                <textcolor>ffffffff</textcolor>
+                <font>font13</font>
+                <aligny>center</aligny>
+            </control>
+            <control type="label" id="4002">
+                <description>2nd half hour column</description>
+                <posx>455</posx>
+                <posy>25</posy>
+                <width>270</width>
+                <height>50</height>
+                <textcolor>ffffffff</textcolor>
+                <font>font13</font>
+                <aligny>center</aligny>
+            </control>
+            <control type="label" id="4003">
+                <description>3rd half hour column</description>
+                <posx>730</posx>
+                <posy>25</posy>
+                <width>270</width>
+                <height>50</height>
+                <textcolor>ffffffff</textcolor>
+                <font>font13</font>
+                <aligny>center</aligny>
+            </control>
+            <control type="label" id="4004">
+                <description>4th half hour column</description>
+                <posx>1005</posx>
+                <posy>25</posy>
+                <width>270</width>
+                <height>50</height>
+                <textcolor>ffffffff</textcolor>
+                <font>font13</font>
+                <aligny>center</aligny>
+            </control>
+
+            <!-- Channels text column -->
+            <control type="group" id="4500">
+                <posx>0</posx>
+                <posy>75</posy>
+                <width>180</width>
+                <height>400</height>
+                <visible>true</visible>
+
+                <control type="label" id="4010">
+                    <description>1st channel</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                </control>
+                <control type="label" id="4011">
+                    <description>2nd channel</description>
+                    <posx>0</posx>
+                    <posy>50</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                </control>
+                <control type="label" id="4012">
+                    <description>3rd channel</description>
+                    <posx>0</posx>
+                    <posy>100</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                </control>
+                <control type="label" id="4013">
+                    <description>4th channel</description>
+                    <posx>0</posx>
+                    <posy>150</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                </control>
+                <control type="label" id="4014">
+                    <description>5th channel</description>
+                    <posx>0</posx>
+                    <posy>200</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                </control>
+                <control type="label" id="4015">
+                    <description>6th channel</description>
+                    <posx>0</posx>
+                    <posy>250</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                </control>
+                <control type="label" id="4016">
+                    <description>7th channel</description>
+                    <posx>0</posx>
+                    <posy>300</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                </control>
+                <control type="label" id="4017">
+                    <description>8th channel</description>
+                    <posx>0</posx>
+                    <posy>350</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                </control>
+            </control><!-- end group -->
+
+            <!-- Channels icon column -->
+            <control type="group" id="4501">
+                <posx>0</posx>
+                <posy>75</posy>
+                <width>180</width>
+                <height>400</height>
+                <visible>true</visible>
+
+                <control type="image" id="4110">
+                    <description>1st channel</description>
+                    <posx>10</posx>
+                    <posy>0</posy>
+                    <width>160</width>
+                    <height>45</height>
+                    <aspectratio>keep</aspectratio>
+                </control>
+                <control type="image" id="4111">
+                    <description>2nd channel</description>
+                    <posx>10</posx>
+                    <posy>50</posy>
+                    <width>160</width>
+                    <height>45</height>
+                    <aspectratio>keep</aspectratio>
+                </control>
+                <control type="image" id="4112">
+                    <description>3rd channel</description>
+                    <posx>10</posx>
+                    <posy>100</posy>
+                    <width>160</width>
+                    <height>45</height>
+                    <aspectratio>keep</aspectratio>
+                </control>
+                <control type="image" id="4113">
+                    <description>4th channel</description>
+                    <posx>10</posx>
+                    <posy>150</posy>
+                    <width>160</width>
+                    <height>45</height>
+                    <aspectratio>keep</aspectratio>
+                </control>
+                <control type="image" id="4114">
+                    <description>5th channel</description>
+                    <posx>10</posx>
+                    <posy>200</posy>
+                    <width>160</width>
+                    <height>45</height>
+                    <aspectratio>keep</aspectratio>
+                </control>
+                <control type="image" id="4115">
+                    <description>6th channel</description>
+                    <posx>10</posx>
+                    <posy>250</posy>
+                    <width>160</width>
+                    <height>45</height>
+                    <aspectratio>keep</aspectratio>
+                </control>
+                <control type="image" id="4116">
+                    <description>7th channel</description>
+                    <posx>10</posx>
+                    <posy>300</posy>
+                    <width>160</width>
+                    <height>45</height>
+                    <aspectratio>keep</aspectratio>
+                </control>
+                <control type="image" id="4117">
+                    <description>8th channel</description>
+                    <posx>10</posx>
+                    <posy>350</posy>
+                    <width>160</width>
+                    <height>45</height>
+                    <aspectratio>keep</aspectratio>
+                </control>
+            </control><!-- end group -->
+
+            <!-- Program description -->
+            <control type="label" id="4020">
+                <description>Program title</description>
+                <posx>30</posx>
+                <posy>510</posy>
+                <width>630</width>
+                <height>50</height>
+                <textcolor>ffffffff</textcolor>
+                <font>font13</font>
+                <aligny>center</aligny>
+                <visible>!Control.IsVisible(4200)</visible>
+            </control>
+            <control type="label" id="4021">
+                <description>Program time</description>
+                <posx>900</posx>
+                <posy>510</posy>
+                <width>240</width>
+                <height>50</height>
+                <textcolor>ffffffff</textcolor>
+                <font>font13</font>
+                <align>right</align>
+                <aligny>center</aligny>
+                <visible>!Control.IsVisible(4200)</visible>
+            </control>
+            <control type="textbox" id="4022">
+                <description>Program description</description>
+                <posx>30</posx>
+                <posy>550</posy>
+                <width>850</width>
+                <height>149</height>
+                <textcolor>ffffffff</textcolor>
+                <font>font13</font>
+                <wrapmultiline>true</wrapmultiline>
+                <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
+                <visible>!Control.IsVisible(4200)</visible>
+            </control>
+            <control type="image" id="4023">
+                <description>Program logo / Source logo</description>
+                <posx>930</posx>
+                <posy>530</posy>
+                <width>320</width>
+                <height>160</height>
+                <aspectratio>keep</aspectratio>
+                <fadetime>250</fadetime>
+                <visible>!Control.IsVisible(4200)</visible>
+            </control>
+
+            <control type="image" id="4100">
+                <posx>180</posx>
+                <posy>25</posy>
+                <width>2</width>
+                <height>488</height>
+                <texture>timebar.png</texture>
+            </control>
+
+            <!-- loading splash -->
+            <control type="label" id ="4200">
+                <posx>0</posx>
+                <posy>500</posy>
+                <width>1280</width>
+                <height>220</height>
+                <label>$ADDON[script.tvguide 30001]</label>
+                <textcolor>ffffffff</textcolor>
+                <font>font30</font>
+                <align>center</align>
+                <aligny>center</aligny>
+            </control>
+        </control><!-- id="5000" -->
+
+	</controls>
+</window>

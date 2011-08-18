@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<category label="30100">
+		<setting id="source" label="30101" type="labelenum" default="YouSee.tv"
+                 values="YouSee.tv|DR.dk|TVTID.dk|XMLTV" />
+
+        <setting id="youseetv.category" label="30102" type="labelenum" default="Danske"
+                 values="Mine kanaler|Danske|Filmkanaler|Grundpakken|Mellempakken|Fuldpakken|Nordiske|Engelske|Tyske|Latinske|Slaviske|Tyrkiske|Kurdiske|Arabiske|Asiatiske"
+                 visible="eq(-1,0)" />
+
+        <setting id="xmltv.file" label="30103" type="file" visible="eq(-2,3)" />
+	</category>
+</settings>
+
