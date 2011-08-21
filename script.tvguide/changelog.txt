@@ -1,0 +1,35 @@
+[B]Version 1.0.0 - 2011-08-17[/B]
+- Background loading of EPG data on XBMC startup (Only available in Eden)
+- Otherwise same as v. 0.3.0.
+
+[B]Version 0.3.0 - 2011-08-17[/B]
+- Major restructuring
+- Updated YouSee source to use official API
+- Added TVTID.dk as source
+- Added support for XMLTV as source
+- Dropped support for streaming channels
+
+[B]Version 0.2.3[/B]
+- Added loading screen
+- Renamed background image to avoid conflict with skin (fx. Alaska Revisited)
+
+[B]Version 0.2.2[/B]
+- Added icon and fanart based on http://downloadpsd.com/icons/old-style-retro-tv-free-icon-psd-2.html
+- Both back (backspace) and menu (esc) will exit the guide now
+
+[B]Version 0.2.1[/B]
+- Use danishaddons module version 1.1.0
+
+[B]Version 0.2.0[/B]
+- Added multiple sources for EPG data; defaults is YouSee.tv with logo support
+- Refactored navigation logic
+
+[B]Version 0.1.0[/B]
+- First public release
+- Basic functionality is in place, but needs fine tuning
+
+[B]Version 0.0.2[/B]
+- Test version
+
+[B]Version 0.0.1[/B]
+- Proof of concept

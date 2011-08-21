@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.tvguide"
+       name="TV Guide"
+       version="1.0.0"
+       provider-name="twinther [tommy@winther.nu]">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+        <import addon="script.module.elementtree" version="1.2.7"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py"/>
+    <extension point="xbmc.service" library="service.py" start="login" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Danish TV Guide</summary>
+        <summary lang="da">Dansk TV Guide</summary>
+        <description lang="en">The TV guide gives you an overview on whats on TV right now, so you don't have to change the channel away from XBMC![CR]EOG data can be retrieved from YouSee.tv, DR.dk, TvTid.dk or an XMLTV file[CR][CR]Navigate using the arrow keys and change page using channel + / -.</description>
+        <description lang="da">TV guiden giver dig et overblik over hvad der er på TV lige nu, så slipper du for at zappe væk fra XBMC![CR]EPG data kan indlæses fra YouSee.tv, DR.dk, TvTid.dk eller en XMLTV fil.[CR][CR]Naviger med piletasterne og skift side med kanal + og -</description>
+        <platform>all</platform>
+    </extension>
+</addon>
