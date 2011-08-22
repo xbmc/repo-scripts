@@ -518,6 +518,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     else:
       self.file_name = self.title   
     self.tvshow = ""
+    self.next = list(self.service_list)
     self.Search_Subtitles()
 
 ###-------------------------- Exit script  -------------################
@@ -545,6 +546,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.keyboard(True)
           else:
             self.service = selection
+            self.next = list(self.service_list)
             self.Search_Subtitles()
 
     elif controlId == 150:

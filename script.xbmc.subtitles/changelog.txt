@@ -1,3 +1,6 @@
+2.5.8
+- fixed: crash when auto searching next available service. thx schpitz
+
 2.5.7
 - added: Napisy.me service, thx mrto
 - update: Turkish string, thx queeup
