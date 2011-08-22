@@ -444,6 +444,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     else:
       self.file_name = self.title   
     self.tvshow = ""
+    self.next = list(self.service_list)
     self.Search_Subtitles() 
 
   def onClick( self, controlId ):
@@ -471,6 +472,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.on_run()        
       else:
         self.service = selection
+        self.next = list(self.service_list)
         self.Search_Subtitles()      
 
   def onFocus( self, controlId ):
