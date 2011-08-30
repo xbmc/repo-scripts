@@ -5,9 +5,9 @@
         <setting label="32095" type="lsep" />
         <setting type="sep" />
         <setting label="" type="lsep" />
+        <setting label="32036" type="folder" id="music_path" default="" source="auto" option="writeable" />
         <setting label="32018" type="folder" id="backup_path" default="" source="auto" option="writeable" />
         <setting label="32062" type="folder" id="unique_path" default="" source="auto" option="writeable" />
-        <setting label="32097" type="bool" id="enableresize" default="false" />
         <setting id="folder" type="enum" label="32019" lvalues="32054|32055" default="0"/>
         <setting type="sep" />
     </category>
@@ -31,7 +31,13 @@
         <setting label="Extra Settings" type="lsep" />
         <setting type="sep" />
         <setting label="" type="lsep" />
-        <setting label="32106" type="bool" id="usingdharma" default="true" />
+        <setting label="32106" type="bool" id="resizeondownload" default="false" />
+        <setting label="32112" type="bool" id="protectedshare" default="false" />
+        <setting label="32113" type="text" id="samba_user" enable="eq(-1,true)" default="" />
+        <setting label="32114" type="text" option="hidden" id="samba_pass" enable="eq(-2,true)" default="" />
         <setting type="sep" />
+        <setting label="32115" type="bool" id="notifybackground" default="true" />
+        <setting label="32116" type="bool" id="notifyatfinish" default="true" />
+        <setting label="32099" type="action"  action="RunScript($CWD/default.py,database)" />
     </category>
 </settings>
