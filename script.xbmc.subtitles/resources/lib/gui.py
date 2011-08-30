@@ -351,6 +351,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     files = os.listdir(self.tmp_sub_dir)
     sub_filename = os.path.basename( self.file_original_path )
     exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
+    subtitle_set = False
     if len(files) < 1 :
       self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
       if self.newWindow:  

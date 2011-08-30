@@ -16,7 +16,8 @@
       <setting id="Ondertitel" type="bool" label="Ondertitel.com (Movies and Dutch subs only)" default="false"/>
       <setting id="Bierdopje" type="bool" label="Bierdopje.com (TV Shows and Dutch/English subs only)" default="false"/>
       <setting id="Napiprojekt" type="bool" label="Napiprojekt.pl (Polish/English subs only)" default="false"/>
-      <setting id="Napisyme" type="bool" label="Napisy.me (Mostly Polish/English subs from napisy24.pl)" default="false"/>      
+      <setting id="Napisy24pl" type="bool" label="Napisy24.pl (Mostly Polish/English subs)" default="false"/>
+      <setting id="Napisyme" type="bool" label="Napisy.me (Mostly Polish/English subs from napisy24.pl database)" default="false"/>
       <setting id="LegendasTV" type="bool" label="Legendas.tv" default="false"/>
       <setting id="LTVuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30123" default=""/>
       <setting id="LTVpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30124" default=""/>              

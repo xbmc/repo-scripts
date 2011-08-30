@@ -99,8 +99,8 @@ class OSDBServer:
               flag_image = "flags/%s.gif" % (item["lang"],)
             else:                                                           
               flag_image = "-.gif"
-            link =  "http://www.podnapisi.net/ppodnapisi/download/i/%s" % str(item["id"])
-            
+
+            link = str(item["id"])
             if item['release'] == "":
               episode = item2["tvEpisode"]
               if str(episode) == "0":
@@ -190,7 +190,7 @@ class OSDBServer:
           if subtitle.getElementsByTagName("id")[0].firstChild:
             subtitle_id = subtitle.getElementsByTagName("id")[0].firstChild.data
           flag_image = "flags/%s.gif" % ( lang_name, )
-          link = "%s%s" % ( url_base,str(subtitle_id), )
+          link = str(subtitle_id)
           if subtitle.getElementsByTagName("cds")[0].firstChild:
             no_files = int(subtitle.getElementsByTagName("cds")[0].firstChild.data)
           self.subtitles_name_list.append({'filename':filename,'link':link,'language_name':twotofull(lang_name),'language_id':lang_id,'language_flag':flag_image,'movie':movie,"ID":subtitle_id,"rating":str(rating),"format":format,"sync":False, "no_files":no_files})
@@ -198,4 +198,31 @@ class OSDBServer:
       return self.subtitles_list
     except :
       return self.subtitles_list
+  
+  def download(self,pod_session,  id):
+    podserver = xmlrpclib.Server('http://ssp.podnapisi.net:8000')
+    user_agent = "%s_v%s" % (__scriptname__.replace(" ","_"),__version__ )
+    init = podserver.initiate(user_agent)
     
+    id_pod =[]
+    id_pod.append(str(id))    
+    username = __settings__.getSetting( "PNuser" )
+    password = __settings__.getSetting( "PNpass" )
+
+    hash = md5()
+    hash.update(password)
+    password = hash.hexdigest()
+    password256 = sha256.sha256(str(password) + str(init['nonce'])).hexdigest()
+    if str(init['status']) == "200":
+      pod_session = init['session']
+      auth = podserver.authenticate(pod_session, username, password256)
+      if auth['status'] == 300: 
+        log( __name__ ,"Authenticate [%s]" % "InvalidCredentials")
+      download = podserver.download(pod_session , id_pod)
+      if str(download['status']) == "200" and len(download['names']) > 0 :
+        download_item = download["names"][0]
+        if str(download["names"][0]['id']) == str(id):
+          return "http://www.podnapisi.net/static/podnapisi/%s" % download["names"][0]['filename']
+          
+    return None  
+  

@@ -69,12 +69,13 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
   return subtitles_list, "", "" #standard output
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
-  pod_url_parse = urllib.urlopen(subtitles_list[pos][ "link" ]).read()
-  url = "http://www.podnapisi.net/ppodnapisi/download/i/%s" % (pod_url_parse.split("/ppodnapisi/download/i/")[1].split('" title="')[0])  
-  local_file = open(zip_subs, "w" + "b")
-  f = urllib.urlopen(url)
-  local_file.write(f.read())
-  local_file.close()
+  osdb_server = OSDBServer()
+  url = osdb_server.download(session_id, subtitles_list[pos][ "link" ])
+  if url != None:
+    local_file = open(zip_subs, "w" + "b")
+    f = urllib.urlopen(url)
+    local_file.write(f.read())
+    local_file.close()
   
   language = subtitles_list[pos][ "language_name" ]
   return True,language, "" #standard output
