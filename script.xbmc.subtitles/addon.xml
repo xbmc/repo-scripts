@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmc.subtitles"
        name="XBMC Subtitles"
-       version="2.9.20"
+       version="2.9.21"
        provider-name="Amet, mr_blobby">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -15,15 +15,17 @@
     <summary lang="hu">XBMC feliratok</summary> 
     <summary lang="sr">XBMC Преводи</summary>
     <summary lang="nl">XBMC Ondertitels</summary>
-    <summary lang="bg">XBMC Субтитри</summary>    
-    <summary lang="pt">Legendas XBMC</summary>    
+    <summary lang="bg">XBMC Субтитри</summary>
+    <summary lang="pt">Legendas XBMC</summary>
+    <summary lang="pl">Napisy XBMC</summary>
     <description lang="en">Search and download subtitles from 20 websites:Bierdopje.com, Italiansubs.net, Legendas-Zone.org, LegendasDivx.com, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, PT-SUBS.NET, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com and Undertexter.se.Subtitle button on OSD needs to be activated and path set to XBMC Subtitles under System-> Skin-> Addon Scripts</description>
     <description lang="es">Busca y descarga subtítulos de:Bierdopje.com, Italiansubs.net, Legendas-Zone.org, LegendasDivx.com, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, PT-SUBS.NET, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com y Undertexter.se.El botón de subtitulos en el OSD debe ser añadido, y la ruta al addon debe ponerse en Sistema-> Skin-> Addons de Scripts</description>
     <description lang="hu">Film feliratok keresése letöltése az:Bierdopje.com, Italiansubs.net, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com és Undertexter.se webhelyekról.A dalszöveg OSD gombot aktiválni kell az elérési út megadásával a Beállítások -> Skin -> Szkriptek alatt.</description>
     <description lang="sr">Претражи и скини преводе са 19 веб страница:Bierdopje.com, Italiansubs.net, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Subscenter.org, Swesub.nu, Titlovi.com, Titulky.com и Undertexter.se.Дугме за преводе на OSD треба да се активира и изабере XBMC Subtitles у Систем-> Маска-> Скрипт додаци</description>
     <description lang="nl">Zoek en download ondertitels van 19 websites:Bierdopje.com, Italiansubs.net, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com en Undertexter.se.De ondertitel knop in het OSD scherm moet zijn geactiveerd met het pad naar XBMC Subtitles via Systeem-> Skin-> Addon Scripts.</description>
-    <description lang="bg"> Търси и сваляй субтитри от 19 уебсайта: Bierdopje.com, Italiansubs.net, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com и Undertexter.se. Бутонът за субтитри в OSD менюто над филма трябва да бъде активиран и пътя към приложението трябва да бъде указан, като и за двете отивате в менюто на Система(System)-> Кожа(Skin)-> Добавка(Addon Scripts)</description>     <platform>all</platform>
+    <description lang="bg"> Търси и сваляй субтитри от 19 уебсайта: Bierdopje.com, Italiansubs.net, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com и Undertexter.se. Бутонът за субтитри в OSD менюто над филма трябва да бъде активиран и пътя към приложението трябва да бъде указан, като и за двете отивате в менюто на Система(System)-> Кожа(Skin)-> Добавка(Addon Scripts)</description>
     <description lang="pt">Procura e download de legendas em 20 websites: Bierdopje.com, Italiansubs.net, Legendas-Zone.org, LegendasDivx.com, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, PT-SUBS.NET, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com e Undertexter.se. O botão das legendas deve ser adicionado no OSD e o caminho põe-se em Sistema-> Skin-> Addons de Scripts</description>
+    <description lang="pl">Szukaj i pobieraj napisy z ponad 20 serwisów: Argenteam.net, Asia-team.net, Bierdopje.com, Italiansubs.net, Legendas-Zone.org, LegendasDivx.com, Legendas.tv, Napiprojekt.pl, Napisy24.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, PT-SUBS.NET, Sratim.co.il, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Subscenter.org, Supersubtitlies, Swesub.nu, Titlovi.com, Titulky.com and Undertexter.se. Aby przycisk napisów w OSD był aktywny trzeba ustawić scieżkę do skryptu w System-> Skóra-> Wytyczka: skróty</description>
     <platform>all</platform>
   </extension>
 </addon>

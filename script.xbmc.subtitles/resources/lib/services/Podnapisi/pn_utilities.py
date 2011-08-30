@@ -82,7 +82,7 @@ class OSDBServer:
               flag_image = "flags/%s.gif" % (item["lang"],)
             else:                                                           
               flag_image = "-.gif"
-            link = "http://www.podnapisi.net/ppodnapisi/download/i/%s" % str(item["id"])
+            link = str(item["id"])
             if item['release'] == "":
               episode = search_item["tvEpisode"]
               if str(episode) == "0":
@@ -158,7 +158,7 @@ class OSDBServer:
           if subtitle.getElementsByTagName("id")[0].firstChild:
             subtitle_id = subtitle.getElementsByTagName("id")[0].firstChild.data
           flag_image = "flags/%s.gif" % ( lang_name, )
-          link = "%s%s" % ( url_base,str(subtitle_id), )
+          link = str(subtitle_id)
           if subtitle.getElementsByTagName("cds")[0].firstChild:
             no_files = int(subtitle.getElementsByTagName("cds")[0].firstChild.data)
           self.subtitles_name_list.append({'filename':filename,'link':link,'language_name':languageTranslate((lang_name),2,0),'language_id':lang_id,'language_flag':flag_image,'movie':movie,"ID":subtitle_id,"rating":str(rating),"format":format,"sync":False, "no_files":no_files})
@@ -167,6 +167,26 @@ class OSDBServer:
     except :
       return self.subtitles_list
   
+  def download(self,pod_session,  id):
+    podserver = xmlrpclib.Server('http://ssp.podnapisi.net:8000')  
+    init = podserver.initiate(USER_AGENT)
+    hash = md5()
+    hash.update(__addon__.getSetting( "PNpass" ))
+    id_pod =[]
+    id_pod.append(str(id))
+    password256 = sha256(str(hash.hexdigest()) + str(init['nonce'])).hexdigest()
+    if str(init['status']) == "200":
+      pod_session = init['session']
+      auth = podserver.authenticate(pod_session, __addon__.getSetting( "PNuser" ), password256)
+      if auth['status'] == 300: 
+        log( __name__ ,"Authenticate [%s]" % "InvalidCredentials")
+      download = podserver.download(pod_session , id_pod)
+      if str(download['status']) == "200" and len(download['names']) > 0 :
+        download_item = download["names"][0]
+        if str(download["names"][0]['id']) == str(id):
+          return "http://www.podnapisi.net/static/podnapisi/%s" % download["names"][0]['filename']
+          
+    return None  
   
   def fetch(self,url):
     socket = urllib.urlopen( url )
