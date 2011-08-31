@@ -1022,7 +1022,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             xbmc.executebuiltin( "ActivateWindow(busydialog)" )
             self.getControl( 120 ).reset()
             distant_artist = get_distant_artists()
-             local_artists = get_local_artists_db()
+            local_artists = get_local_artists_db()
             if distant_artist:
                 self.recognized_artists, self.local_artists = get_recognized( distant_artist , local_artists )
             self.populate_artist_list( self.recognized_artists )

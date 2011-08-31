@@ -161,7 +161,7 @@ def get_musicbrainz_artist_id( artist ):
             sortname = artist.sortName
         else: 
             xbmc.log( "[script.cdartmanager] - No Artist ID found for Artist: %s" % repr( artist ), xbmc.LOGDEBUG )
-        xbmc.sleep(900) # sleep for allowing proper use of webserver
+        xbmc.sleep(1000) # sleep for allowing proper use of webserver
         return name, id, sortname
     except WebServiceError, e:
         xbmc.log( "[script.cdartmanager] - Error: %s" % e, xbmc.LOGERROR )
