@@ -294,7 +294,7 @@ def check_local_albumartist( album_artist, local_artist_list, background ):
         name = artist["name"]
         artist_count += 1
         for local in local_artist_list:
-            if name == local["artist"]:
+            if name == local["label"]:
                 id = local["artistid"]
                 found = True
                 break

@@ -1,3 +1,6 @@
+1.5.2
+- fixed - copy and paste can be a real monster...
+
 1.5.1 
 - fixed - one little space ruins every thing...
 

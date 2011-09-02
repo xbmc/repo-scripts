@@ -3,11 +3,8 @@
 #to do:
 # -  
 # -  *add comments showing what local strings are being displayed   _(32002) = Search Artist
-# -  add log xbmc.log(ing, xbmc.LOGNOTICE )
-# -  insure mouse use works properly - at the moment it seems to break everything!
-# -  add user input(ie keyboard) to get more advanced searches
+# -  add log xbmc.log("", xbmc.LOGNOTICE )
 # -  add bulk uploading and downloading
-# -  add website
 #
 
 import urllib
