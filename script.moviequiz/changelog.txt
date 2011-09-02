@@ -1,3 +1,25 @@
+[B]Version 0.4.2 - 2011-08-31[/B]
+- Dropped support for MySQL for now (might add support again later with SQLAlchemy)
+- Fixed Retry option in Game Over screen
+- Minor UI tweaks
+
+[B]Version 0.4.1 - 2011-08-27[/B]
+- Added settings to enable and disable individual question types
+- Added global and local highscore support (highscores available at http://moviequiz.xbmc.info)
+- Added user selection on main screen
+- Added Bulgarian translation thanks to Plamen Petkov
+- Added French translation thanks to DanoneKiD
+- Tweaks to better work with different skins
+
+[B]Version 0.4.0 - 2011-07-24[/B]
+- Redesign main game screen
+- New question types
+  - What movie has the longest runtime?
+  - What actor is in movie besides other actor?
+  - Added sound effects
+- Added game type selection screen with option for unlimited, time limited and question limited game types
+- Added audio feedback for correct and wrong answers
+
 [B]Version 0.3.2 - 2011-04-17[/B]
 - Improved support for XBMC Eden nightly builds
 - Added support for Cinema Experience integration

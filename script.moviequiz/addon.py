@@ -1,12 +1,16 @@
-import xbmcaddon
+import sys
+
+def moviequiz_excepthook(type, value, traceback):
+    import xbmcgui
+    print 'Unhandled error:', type, value, traceback
+    xbmcgui.Dialog().ok('Unhandled exception', str(type), str(value), 'Exiting addon...')
+#    sys.exit(1)
+
+
+#sys.excepthook = moviequiz_excepthook
 
 from quizlib.gui import MenuGui
-
-if __name__ == '__main__':
-    addon = xbmcaddon.Addon(id = 'script.moviequiz')
-    path = addon.getAddonInfo('path')
-
-    w = MenuGui('script-moviequiz-menu.xml', path, addon = addon)
-    w.doModal()
-    del w
+w = MenuGui()
+w.doModal()
+del w
 

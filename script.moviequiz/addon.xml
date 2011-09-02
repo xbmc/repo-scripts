@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.moviequiz"
        name="Movie Quiz"
-       version="0.3.2"
+       version="0.4.2"
        provider-name="twinther [tommy@winther.nu]">
     <requires>
-        <import addon="xbmc.python"/>
-        <import addon="script.module.pysqlite" version="2.5.6"/>
-        <import addon="script.module.myconnpy" version="0.3.2"/>
+        <import addon="xbmc.python" version="1.0"/>
         <import addon="script.module.elementtree" version="1.2.7"/>
     </requires>
     <extension point="xbmc.python.script" library="addon.py"/>
@@ -25,7 +23,7 @@ http://forum.xbmc.org/showthread.php?t=92540</description>
 * Kan du se hvilken film der er tale om ud fra et ti sekunders klip?
 * Kender du skuespillerne på udseende?
 * Nogen ide om hvornår din favorit TV-serier blev sendt første gang?
-Du vil blive stille disse spørgsmål og mange flere, præsenteret pænt med film klip, billeder af skuespillere, covers, mv.
+Du vil få stillet disse spørgsmål og mange flere, præsenteret pænt med film klip, billeder af skuespillere, covers, mv.
 
 Mere information, kommentarer og hjælp på forummet:
 http://forum.xbmc.org/showthread.php?t=92540</description>

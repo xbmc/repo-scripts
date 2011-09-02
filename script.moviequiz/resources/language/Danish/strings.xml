@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="../../strings.xsd">
-    <!-- -->
+    <!-- General -->
     <string id="30000">Spørgsmål %d af %d</string>
-    <string id="30001">Rigtige:</string>
-    <string id="30002">Forkerte:</string>
+    <string id="30001">Score ialt:</string>
+    <string id="30002">Spørgsmålet:</string>
     <string id="30003">Spillet er slut</string>
     <string id="30004">Du fik %d af %d rigtige</string><!-- 1st %d is score, 2nd %d is total question -->
 
@@ -12,6 +12,29 @@
     <string id="30006">Sæson %s</string><!-- same value as id="20358" in main xbmc strings.xml -->
     <string id="30007">%e. %B %Y</string><!-- episode first aired date format: http://docs.python.org/library/time.html#time.strftime -->
     <string id="30008">[B]Indlæser[/B]</string>
+
+    <string id="30010">Velkommen til Movie Quiz, indtast venligst dit navn</string>
+
+    <string id="30011">Vis igen</string>
+    <string id="30012">Afslut</string>
+    <string id="30013">Din score:</string>
+
+    <string id="30014">Vælg spiller</string>
+    <string id="30015">Ny spiller</string>
+
+    <string id="30050">Advarsel</string>
+    <string id="30051">Alle film spørgsmål er slået fra,</string>
+    <string id="30052">Alle TV spørgsmål er slået fra,</string>
+    <string id="30053">så denne quiz type er ikke tilgængelig.</string>
+
+    <string id="30054">Data mangler!</string>
+    <string id="30055">For at spille Movie Quiz[CR]skal du have film eller TV shows</string>
+    <string id="30056">i din Video database.[CR]Se XBMC wiki for mere information.</string>
+
+    <string id="30057">Slet %s?</string>
+    <string id="30058">Dette vil slette brugeren og alle relaterede</string>
+    <string id="30059">highscores permanent!</string>
+
 
     <!-- Menu -->
     <string id="30100">Spil Film Quiz</string>
@@ -31,6 +54,10 @@
     <string id="30122">%d sæsoner</string><!-- %d is season count -->
     <string id="30123">%d afsnit</string><!-- %d is episodes count -->
 
+    <string id="30130">Et minut</string>
+    <string id="30131">%s minutter</string>
+    <string id="30132">%s spørgsmål</string>
+
     <!-- Movie Questions -->
     <string id="30400">Hvilken film er det?</string>
     <string id="30401">Hvilken film medvirker [B]%s[/B] ikke i?</string><!-- %s is actor name -->
@@ -45,6 +72,8 @@
     <string id="30410">Hvilken film er nyest?</string>
     <string id="30411">Hvilken film er ikke instrueret af [B]%s[/B]?</string><!-- %s is director name -->
     <string id="30412">Hvilken skuespiller medvirker i disse film?</string>
+    <string id="30413">Hvilken skuespiller medvirker i [B]%s[/B] udover [B]%s[/B]?</string><!-- 1st %s is movie title, 2nd %s is actor name -->
+    <string id="30414">Hvilken film er længst?</string>
 
     <!-- TV show Questions -->
     <string id="30450">Hvilken TV-serie er det?</string>
@@ -60,6 +89,8 @@
     <string id="30501">Film</string>
     <string id="30502">TV-serier</string>
     <string id="30503">Downloads</string>
+    <string id="30504">Highscore</string>
+    <string id="30505">Spørgsmål</string>
 
     <string id="30510">Begræns antallet af spørgsmål</string>
     <string id="30511">Spørgsmålsgrænse</string>
@@ -74,6 +105,59 @@
     <string id="30521">%d af %d mb. modtaget</string>
     <string id="30522">Nogle spørgsmål kræver ekstra lokale data,</string>
     <string id="30523">som kan hentes herunder:</string>
+    <string id="30524">Indsend scores til online highscore</string>
 
+    <string id="30550">Brug disse spørgsmål til film quiz</string>
+    <string id="30551">Brug disse spørgsmål til TV quiz</string>
+
+    <string id="30552">Hvilken film er dette?</string>
+    <string id="30553">Hvilken film medvirker skuespiller ikke i?</string>
+    <string id="30554">Hvilket år blev filmen udgivet?</string>
+    <string id="30555">Hvilken tagline hører til filmen?</string>
+    <string id="30556">Hvem var instruktør filmen?</string>
+    <string id="30557">Hvilket studiet udgav filmen?</string>
+    <string id="30558">Hvem er denne skuespiller?</string>
+    <string id="30559">Hvem spillede rollen i filmen?</string>
+    <string id="30560">Hvilken film er dette citat fra?</string>
+    <string id="30561">Hvilken film er nyest?</string>
+    <string id="30562">Hvilken film er ikke instrueret af?</string>
+    <string id="30563">Hvilken skuespiller medvirker i disse film?</string>
+    <string id="30564">Hvilken skuespiller medvirker i denne film udover anden skuespiller?</string>
+    <string id="30565">Hvilken film har længst spilletid?</string>
+
+    <string id="30580">Hvilken TV-serie er det?</string>
+    <string id="30581">Hvilken sæson er det?</string>
+    <string id="30582">Hvilket afsnit er det?</string>
+    <string id="30583">Hvornår blev TV-serien sendt først gang?</string>
+    <string id="30584">Hvem spiller rollen i TV-serien?</string>
+
+    <!-- Game type strings -->
+    <string id="30600">[B]Vælg Movie Quiz spil type[/B]</string>
+    <string id="30601">[B]Vælg TV Quiz spil type[/B]</string>
+    <string id="30602">Uendelig</string>
+    <string id="30603">Tidsbegrænset</string>
+    <string id="30604">Spørgsmålsbegrænset</string>
+    <string id="30605">Annuller</string>
+    <string id="30606">Spil</string>
+
+    <string id="30610">Ingen begræsning på spilletiden</string>
+    <string id="30611">Ingen begrænsning på antal spørgsmål</string>
+    <string id="30612">Afslut spillet ved hjælp af Afslut knappen</string>
+    <string id="30613">Spillet slutter efter</string>
+
+    <!-- Game over strings -->
+    <string id="30700">[B]Spillet er slut[/B]</string>
+    <string id="30701">Spil igen</string>
+    <string id="30702">Highscore</string>
+    <string id="30703">Lokal highscore</string>
+    <string id="30704">Hovedmenu</string>
+    <string id="30705">Uendelig</string>
+    <string id="30706">Grænse på %s spørgsmål</string>
+    <string id="30707">Grænse på et minut</string>
+    <string id="30708">Grænse på %s minutter</string>
+
+
+
+    <string id="39998">Udviklet af Tommy Winther</string>
     <string id="39999">Oversat af Tommy Winther</string>
 </strings>

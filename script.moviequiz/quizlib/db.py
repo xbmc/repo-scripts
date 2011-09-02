@@ -3,13 +3,12 @@ from xml.parsers.expat import ExpatError
 
 import os
 import xbmc
-import mysql.connector
 import glob
 
 try:
     # Used by Eden/external python
     from sqlite3 import dbapi2 as sqlite3
-except:
+except ImportError:
     # Used by Dharma/internal python
     from pysqlite2 import dbapi2 as sqlite3
 
@@ -23,9 +22,25 @@ class Database(object):
     def __del__(self):
         self.close()
 
+    def postInit(self):
+        self._fixMissingTVShowView()
+
+    def _fixMissingTVShowView(self):
+        self.conn.execute("""
+        CREATE VIEW IF NOT EXISTS tvshowview AS
+            SELECT tvshow.*, path.strPath AS strPath, NULLIF(COUNT(episode.c12), 0) AS totalCount, COUNT(files.playCount) AS watchedcount, NULLIF(COUNT(DISTINCT(episode.c12)), 0) AS totalSeasons
+            FROM tvshow
+                LEFT JOIN tvshowlinkpath ON tvshowlinkpath.idShow=tvshow.idShow
+                LEFT JOIN path ON path.idPath=tvshowlinkpath.idPath
+                LEFT JOIN tvshowlinkepisode ON tvshowlinkepisode.idShow=tvshow.idShow
+                LEFT JOIN episode ON episode.idEpisode=tvshowlinkepisode.idEpisode
+                LEFT JOIN files ON files.idFile=episode.idFile
+            GROUP BY tvshow.idShow;
+        """)
+
     def close(self):
         self.conn.close()
-        xbmc.log("Database closed")
+        print "Database closed"
 
     def fetchall(self, sql, parameters = tuple()):
         if not isinstance(parameters, tuple):
@@ -93,73 +108,12 @@ class Database(object):
         return int(row['cnt']) > 0
 
 #
-# MySQL
-#
-
-class MySQLDatabase(Database):
-    def __init__(self, settings):
-        Database.__init__(self)
-
-        self.conn = mysql.connector.connect(
-            host = settings['host'],
-            user = settings['user'],
-            passwd = settings['pass'],
-            db = settings['name']
-            )
-
-        xbmc.log("MySQLDatabase opened")
-
-    def hasMovies(self):
-        row = self.fetchone("SELECT COUNT(table_name) AS cnt FROM information_schema.tables WHERE table_name='movieview'")
-        if int(row['cnt']) > 0:
-            return Database.hasMovies(self)
-        else:
-            return False
-
-    def hasTVShows(self):
-        row = self.fetchone("SELECT COUNT(table_name) AS cnt FROM information_schema.tables WHERE table_name='tvshowview'")
-        if int(row['cnt']) > 0:
-            return Database.hasTVShows(self)
-        else:
-            return False
-
-    def _createCursor(self):
-        return self.conn.cursor(cursor_class = MySQLCursorDict)
-
-    def _prepareParameters(self, parameters):
-        return map(str, parameters)
-
-    def _prepareSql(self, sql):
-        sql = sql.replace('%', '%%')
-        sql = sql.replace('?', '%s')
-        sql = sql.replace('random()', 'rand()')
-        return sql
-
-class MySQLCursorDict(mysql.connector.cursor.MySQLCursor):
-    def fetchone(self):
-        row = self._fetch_row()
-        if row:
-            return dict(zip(self.column_names, self._row_to_python(row)))
-        return None
-
-    def fetchall(self):
-        if self._have_result is False:
-            raise DbException("No result set to fetch from.")
-        res = []
-        (rows, eof) = self.db().protocol.get_rows()
-        self.rowcount = len(rows)
-        for i in xrange(0,self.rowcount):
-            res.append(dict(zip(self.column_names, self._row_to_python(rows[i]))))
-        self._handle_eof(eof)
-        return res
-
-#
 # SQLite
 #
 
 class SQLiteDatabase(Database):
     def __init__(self, settings):
-        Database.__init__(self)
+        super(SQLiteDatabase, self).__init__()
         found = True
         db_file = None
 
@@ -181,8 +135,10 @@ class SQLiteDatabase(Database):
 
         xbmc.log("Connecting to SQLite database file: %s" % db_file)
         self.conn = sqlite3.connect(db_file, check_same_thread = False)
-        self.conn.row_factory = self._sqlite_dict_factory
+        self.conn.row_factory = _sqlite_dict_factory
         xbmc.log("SQLiteDatabase opened")
+
+        super(SQLiteDatabase, self).postInit()
 
     def hasMovies(self):
         row = self.fetchone("SELECT COUNT(*) AS cnt FROM sqlite_master WHERE name='movieview'")
@@ -198,15 +154,16 @@ class SQLiteDatabase(Database):
         else:
             return False
 
-    def _sqlite_dict_factory(self, cursor, row):
-        d = {}
-        for idx, col in enumerate(cursor.description):
-            dot = col[0].find('.') + 1
-            if dot != -1:
-                d[col[0][dot:]] = row[idx]
-            else:
-                d[col[0]] = row[idx]
-        return d
+def _sqlite_dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        dot = col[0].find('.') + 1
+        if dot != -1:
+            d[col[0][dot:]] = row[idx]
+        else:
+            d[col[0]] = row[idx]
+    return d
+
 
 class DbException(Exception):
     def __init__(self, sql):
@@ -218,11 +175,11 @@ def connect():
     xbmc.log("Loaded DB settings: %s" % settings)
 
     if settings.has_key('type') and settings['type'] is not None and settings['type'].lower() == 'mysql':
-        return MySQLDatabase(settings)
+        raise DbException('MySQL database is not supported')
     else:
         return SQLiteDatabase(settings)
 
-        
+
 def _loadSettings():
     settings = {
         'type' : 'sqlite3',
@@ -251,4 +208,6 @@ def _loadSettings():
            xbmc.log("Unable to parse advancedsettings.xml")
 
     return settings
-    
+
+
+

@@ -2,11 +2,10 @@ TODOs and suggestions in no particular order
 
 - DVD ISO's plays menu instead of movie
 - Add support for global statistics, eg. "lifetime" correct/incorrect answers and such
+- Multiplayer support
 
 Movie Question suggestions:
-* Which actor was also in movie xy besides actor z?
 * How many movies do you have for year xy?
-- Which movie of this 4 is the longest (runtime)?
 - Which movie of this 4 is the shortest (runtime)?
 - Which of this Movie is not a <genre>-Movie? (very easy)
 - What role does <actor> play in <movie>?

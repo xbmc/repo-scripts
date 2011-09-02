@@ -8,18 +8,15 @@ import re
 class TenSecondPlayer(xbmc.Player):
     """TenSecondPlayer is a subclass of xbmc.Player that stops playback after about ten seconds."""
 
-    def __init__(self, database = None):
+    def __init__(self):
         """
         Creates and instance of TenSecondPlayer.
-        
-        Keyword arguments;
-        database - db.Database instance for loading and saving XBMC bookmark information
         """
-        xbmc.Player.__init__(self)
+        super(TenSecondPlayer, self).__init__()
         xbmc.log(">> TenSecondPlayer.__init__()")
         self.tenSecondTimer = None
 
-        self.database = database
+        self.database = db.connect()
         self.bookmark = None
         self.startingPlayback = False
 
@@ -27,6 +24,11 @@ class TenSecondPlayer(xbmc.Player):
         self.lastFile = None
         self.lastIdFile = None
         self.lastStartTime = None
+
+        self.playBackEventReceived = False
+
+    def __del__(self):
+        self.database.close()
 
     def replay(self):
         xbmc.log(">> TenSecondPlayer.replay()")
@@ -45,7 +47,7 @@ class TenSecondPlayer(xbmc.Player):
         threading.Timer(0.5, self._delayedStop).start()
         if self.tenSecondTimer is not None:
             self.tenSecondTimer.cancel()
-    
+
     def _delayedStop(self):
         """
         Stops playback by calling xbmc.Player.stop()
@@ -92,10 +94,11 @@ class TenSecondPlayer(xbmc.Player):
         except db.DbException:
             self.bookmark = {'idFile' : idFile}
 
+        self.playBackEventReceived = False
         self.play(item = file, windowed = True)
 
         retries = 0
-        while not self.isPlaying() and retries < 20:
+        while not self.playBackEventReceived and retries < 20:
             xbmc.sleep(250) # keep sleeping to get onPlayBackStarted() event
             retries += 1
         xbmc.log(">> TenSecondPlayer.playWindowed() - end")
@@ -136,6 +139,7 @@ class TenSecondPlayer(xbmc.Player):
 
     def onPlayBackStarted(self):
         xbmc.log(">> TenSecondPlayer.onPlayBackStarted()")
+        self.playBackEventReceived = True
 
         if self.lastStartTime is not None:
             startTime = self.lastStartTime
@@ -156,6 +160,8 @@ class TenSecondPlayer(xbmc.Player):
 
     def onPlayBackStopped(self):
         xbmc.log(">> TenSecondPlayer.onPlayBackStopped()")
+        self.playBackEventReceived = True
+
         if self.tenSecondTimer is not None:
             self.tenSecondTimer.cancel()
 

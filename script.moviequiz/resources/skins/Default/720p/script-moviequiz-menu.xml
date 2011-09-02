@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<window id="5000">
+<window id="5001">
     <allowoverlay>no</allowoverlay>
     <defaultcontrol always="false">4001</defaultcontrol>
     <coordinates>
@@ -27,8 +27,9 @@
             <height>256</height>
             <texturefocus>quiz-button-movie.png</texturefocus>
             <texturenofocus>quiz-button-movie.png</texturenofocus>
-            <onleft>4000</onleft>
+            <onleft>4003</onleft>
             <onright>4002</onright>
+            <ondown>6001</ondown>
             <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4001)">Conditional</animation>
         </control>
         <control type="label">
@@ -52,6 +53,7 @@
             <texturenofocus>quiz-button-tvshows.png</texturenofocus>
             <onleft>4001</onleft>
             <onright>4003</onright>
+            <ondown>6001</ondown>
             <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4002)">Conditional</animation>
         </control>
         <control type="label">
@@ -65,29 +67,6 @@
             <font>font30</font>
         </control>
 
-        <control type="button" id="4000">
-            <description>Settings</description>
-            <posx>112</posx>
-            <posy>490</posy>
-            <width>96</width>
-            <height>96</height>
-            <texturefocus>quiz-button-radio.png</texturefocus>
-            <texturenofocus>quiz-button-radio.png</texturenofocus>
-            <onleft>4003</onleft>
-            <onright>4001</onright>
-            <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4000)">Conditional</animation>
-        </control>
-        <control type="button">
-            <posx>34</posx>
-            <posy>590</posy>
-            <width>256</width>
-            <height>40</height>
-            <label>$ADDON[script.moviequiz 30102]</label>
-            <align>center</align>
-            <textcolor>ffffffff</textcolor>
-            <font>font13</font>
-        </control>
-
         <control type="button" id="4003">
             <description>Exit</description>
             <posx>1072</posx>
@@ -97,7 +76,7 @@
             <texturefocus>quiz-button-theater.png</texturefocus>
             <texturenofocus>quiz-button-theater.png</texturenofocus>
             <onleft>4002</onleft>
-            <onright>4000</onright>
+            <onright>4001</onright>
             <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4003)">Conditional</animation>
         </control>
         <control type="label">
@@ -123,40 +102,86 @@
             <scrollsuffix>  *  </scrollsuffix>
         </control>
 
-        <control type="image">
-            <posx>230</posx>
-            <posy>580</posy>
-            <width>820</width>
-            <height>80</height>
-            <texture>quiz-button-background.png</texture>
-        </control>
         <control type="label">
-            <description>note about lockup</description>
-            <posx>230</posx>
+            <description>Play as</description>
+            <posx>415</posx>
             <posy>580</posy>
-            <width>820</width>
-            <height>80</height>
+            <width>450</width>
+            <height>40</height>
+            <textcolor>ffffffff</textcolor>
             <font>font13</font>
             <align>center</align>
-            <textcolor>ffffffff</textcolor>
-            <wrapmultiline>true</wrapmultiline>
-            <label>[B]Warning! There is a known bug in XBMC 10.x that affects this addon
-and is causing XBMC to lockups and crash. It is fixed for XBMC 11.0.
-See http://trac.xbmc.org/ticket/11290 for details.[/B]</label>
-
+            <label>[B]$ADDON[script.moviequiz 30014][/B]</label>
         </control>
-
         <control type="image">
-            <description>Activate glasspane when addon settings are visible</description>
-            <posx>0</posx>
-            <posy>0</posy>
-            <width>1280</width>
-            <height>720</height>
-            <texture>quiz-background-glass.png</texture>
-            <animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
-            <visible>Window.IsVisible(140)</visible>
+            <posx>740</posx>
+            <posy>620</posy>
+            <width>30</width>
+            <height>40</height>
+            <texture>quiz-raquo.png</texture>
         </control>
-
+        <control type="image">
+            <posx>510</posx>
+            <posy>620</posy>
+            <width>30</width>
+            <height>40</height>
+            <texture>quiz-laquo.png</texture>
+        </control>
+        <control type="wraplist" id="6001">
+            <posx>340</posx>
+            <posy>620</posy>
+            <width>600</width>
+            <height>40</height>
+            <onup>4001</onup>
+            <viewtype label="list">list</viewtype>
+            <orientation>horizontal</orientation>
+            <scrolltime>200</scrolltime>
+            <visible>true</visible>
+            <focusposition>1</focusposition>
+            <itemlayout width="200" height="40">
+                <control type="label">
+                    <posx>100</posx>
+                    <posy>0</posy>
+                    <width>200</width>
+                    <height>40</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <info>ListItem.Label</info>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                </control>
+            </itemlayout>
+            <focusedlayout width="200" height="40">
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>200</width>
+                    <height>40</height>
+                    <texture>quiz-button-nofocus.png</texture>
+                    <visible>!Control.HasFocus(6001)</visible>
+                    <colordiffuse>ff000000</colordiffuse>
+                </control>
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>200</width>
+                    <height>40</height>
+                    <texture>quiz-background-glass.png</texture>
+                    <visible>Control.HasFocus(6001)</visible>
+                </control>
+                <control type="label">
+                    <posx>100</posx>
+                    <posy>0</posy>
+                    <width>200</width>
+                    <height>40</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <label>[B]$INFO[ListItem.Label][/B]</label>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                </control>
+            </focusedlayout>
+        </control>
 
     </controls>
 </window>

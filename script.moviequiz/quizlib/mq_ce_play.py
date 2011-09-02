@@ -1,9 +1,7 @@
 import xbmc
-import xbmcaddon
 
+from quizlib.game import QuestionLimitedGame
 from quizlib.gui import QuizGui
-
-ADDON_ID = 'script.moviequiz'
 
 def runCinemaExperience(type, automatic, maxRating, genre, questionLimit):
     """
@@ -18,9 +16,8 @@ def runCinemaExperience(type, automatic, maxRating, genre, questionLimit):
     """
     xbmc.log("Starting Movie Quiz in Cinema Experience mode with params: type=%s, automatic=%s, maxRating=%s, genre=%s, questionLimit=%d"
         % (type, automatic, maxRating, genre, questionLimit))
-    addon = xbmcaddon.Addon(id = ADDON_ID)
-    path = addon.getAddonInfo('path')
-    w = QuizGui('script-moviequiz-main.xml', path, addon=addon, interactive=not automatic, type=type, questionLimit=questionLimit, maxRating=maxRating)
+    game = QuestionLimitedGame(type, -1, not automatic, questionLimit)
+    w = QuizGui(game)
     w.doModal()
     del w
     
