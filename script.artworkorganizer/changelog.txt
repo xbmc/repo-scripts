@@ -1,0 +1,17 @@
+v0.1.0
+- initial release
+
+v0.0.5
+- fixed json query when compactoutput was set to false
+
+v0.0.4
+- use item name for filename
+
+v0.0.3
+- use xbmcvfs.mkdir
+
+v0.0.2
+- added support for musicvideos
+
+v0.0.1
+- initial release
