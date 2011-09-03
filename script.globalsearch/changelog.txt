@@ -1,0 +1,32 @@
+v0.1.0
+- initial release
+
+v0.0.6 (beta 6)
+- fixed json query when compactoutput was set to false
+
+v0.0.5 (beta 5)
+- fixed hidden item showed up on info dialog
+
+v0.0.4 (beta 4)
+- speed up list creation
+- fixed issue with + in searchstring
+- fixed issue with brackets in searchstring
+- added key actions to close the context and info dialog
+- added writer info for movies
+- sort items by title
+- simplified code for searching episodes
+
+v0.0.3 (beta 3)
+- added mediaflags
+
+v0.0.2 (beta 2)
+- use less strict regex matching
+- don't use a window property to pass the searchstring
+- added 'find album' option to songs context menu
+- remove unneeded regex match in play_album code
+- use built-in python method to clear the playlist
+- simplified code to pass listitem to infodialog
+- made infodialog fully skinnable
+
+v0.0.1 (beta 1)
+- initial beta

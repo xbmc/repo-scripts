@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.globalsearch" name="Global Search" version="0.1.0" provider-name="ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Search your library.</summary>
+		<description>This addon can find any item in your video and music library.</description>
+		<platform>all</platform>
+	</extension>
+</addon>

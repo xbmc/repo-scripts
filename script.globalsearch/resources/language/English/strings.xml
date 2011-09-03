@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="32000">General</string>
+	<string id="32001">Search Movies</string>
+	<string id="32002">Search TV Shows</string>
+	<string id="32003">Search Episodes</string>
+	<string id="32004">Search Music Videos</string>
+	<string id="32005">Search Artists</string>
+	<string id="32006">Search Abums</string>
+	<string id="32007">Search Songs</string>
+	<string id="32101">Enter search string</string>
+	<string id="32201">Find all seasons and episodes</string>
+	<string id="32202">Find all albums and songs</string>
+	<string id="32203">Browse album</string>
+	<string id="32204">Season information</string>
+	<string id="32205">Play trailer</string>
+	<string id="32206">Find album</string>
+	<string id="32299">NEW SEARCH</string>
+</strings>
+
+
