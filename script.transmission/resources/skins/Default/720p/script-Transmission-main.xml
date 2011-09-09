@@ -1,19 +1,13 @@
 <window>
-	<defaultcontrol>20</defaultcontrol>
+	<defaultcontrol always="true">11</defaultcontrol>
+	<allowoverlays>false</allowoverlays>
 	<coordinates>
 		<system>1</system>
 		<posx>120</posx>
 		<posy>70</posy>
 	</coordinates>
 	<controls>
-		<control type="image">
-			<description>backdrop</description>
-			<posx>-20</posx>
-			<posy>-20</posy>
-			<width>1000</width>
-			<height>576</height>
-			<texture>black.png</texture>
-		</control>
+
 		<control type="image">
 			<posx>-10</posx>
 			<posy>-8</posy>
@@ -44,97 +38,118 @@
 				<posx>0</posx>
 				<posy>0</posy>
 				<height>70</height>
-				<width>110</width>
+				<width>120</width>
 				<align>center</align>
 				<aligny>top</aligny>
 				<textoffsety>45</textoffsety>
 				<label>SCRIPT101</label>
+				<font>font12_title</font>
 				<onright>20</onright>
 				<ondown>12</ondown>
-                <onup>17</onup>
+				<onup>17</onup>
+				<texturefocus>add-focus.png</texturefocus>
+				<texturenofocus>add-nofocus.png</texturenofocus>
 			</control>
 			<control type="button" id="12">
 				<description>Remove torrent</description>
 				<posx>0</posx>
-				<posy>70</posy>
+				<posy>75</posy>
 				<height>70</height>
-				<width>110</width>
+				<width>120</width>
 				<align>center</align>
 				<aligny>top</aligny>
 				<textoffsety>45</textoffsety>
 				<label>SCRIPT102</label>
+				<font>font12_title</font>
 				<onright>20</onright>
 				<onup>11</onup>
 				<ondown>13</ondown>
+				<texturefocus>remove-focus.png</texturefocus>
+				<texturenofocus>remove-nofocus.png</texturenofocus>
 			</control>
 			<control type="button" id="13">
 				<description>Stop torrent</description>
 				<posx>0</posx>
 				<posy>150</posy>
 				<height>70</height>
-				<width>110</width>
+				<width>122</width>
 				<align>center</align>
 				<aligny>top</aligny>
 				<textoffsety>45</textoffsety>
 				<label>SCRIPT103</label>
+				<font>font12_title</font>
 				<onright>20</onright>
 				<onup>12</onup>
 				<ondown>14</ondown>
+				<texturefocus>stop-focus.png</texturefocus>
+				<texturenofocus>stop-nofocus.png</texturenofocus>
 			</control>
 			<control type="button" id="14">
 				<description>Start torrent</description>
 				<posx>0</posx>
-				<posy>220</posy>
+				<posy>225</posy>
 				<height>70</height>
-				<width>110</width>
+				<width>120</width>
 				<align>center</align>
 				<aligny>top</aligny>
 				<textoffsety>45</textoffsety>
 				<label>SCRIPT104</label>
+				<font>font12_title</font>
 				<onright>20</onright>
 				<onup>13</onup>
 				<ondown>15</ondown>
+				<texturefocus>start-focus.png</texturefocus>
+				<texturenofocus>start-nofocus.png</texturenofocus>
 			</control>
 			<control type="button" id="15">
 				<description>Stop all torrents</description>
 				<posx>0</posx>
 				<posy>300</posy>
 				<height>70</height>
-				<width>110</width>
+				<width>120</width>
 				<align>center</align>
 				<aligny>top</aligny>
 				<textoffsety>45</textoffsety>
 				<label>SCRIPT105</label>
+				<font>font12_title</font>
 				<onright>20</onright>
 				<onup>14</onup>
 				<ondown>16</ondown>
+				<texturefocus>stopall-focus.png</texturefocus>
+				<texturenofocus>stopall-nofocus.png</texturenofocus>
 			</control>
 			<control type="button" id="16">
 				<description>Start all torrents</description>
 				<posx>0</posx>
-				<posy>370</posy>
+				<posy>375 </posy>
 				<height>70</height>
-				<width>110</width>
+				<width>120</width>
 				<align>center</align>
 				<aligny>top</aligny>
 				<textoffsety>45</textoffsety>
 				<label>SCRIPT106</label>
+				<font>font12_title</font>
 				<onright>20</onright>
 				<onup>15</onup>
 				<ondown>17</ondown>
+				<texturefocus>startall-focus.png</texturefocus>
+				<texturenofocus>startall-nofocus.png</texturenofocus>
 			</control>
 			<control type="button" id="17">
 				<description>Exit</description>
 				<posx>0</posx>
 				<posy>450</posy>
 				<height>70</height>
-				<width>110</width>
+				<width>120</width>
 				<align>center</align>
 				<aligny>top</aligny>
 				<textoffsety>45</textoffsety>
 				<label>SCRIPT107</label>
+				<font>font12_title</font>
 				<onright>20</onright>
 				<onup>16</onup>
+				<texturefocus>exit-focus.png</texturefocus>
+				<texturenofocus>exit-nofocus.png</texturenofocus>
                 <ondown>11</ondown>
 			</control>
 		</control>

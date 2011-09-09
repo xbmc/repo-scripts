@@ -6,7 +6,6 @@ import sys
 import base64
 import xbmc
 import xbmcgui
-import transmissionrpc
 from basictypes.bytes import Bytes
 from repeater import Repeater
 
@@ -19,10 +18,12 @@ KEY_KEYBOARD_ESC = 61467
 EXIT_SCRIPT = ( 6, 10, 247, 275, 61467, 216, 257, 61448, )
 CANCEL_DIALOG = EXIT_SCRIPT + ( 216, 257, 61448, )
 
+
 class TransmissionGUI(xbmcgui.WindowXMLDialog):
     def __init__(self, strXMLname, strFallbackPath, strDefaultName, bforeFallback=0):
         self.list = {}
         self.torrents = {}
+        self.repeater = None
     def onInit(self):
         p = xbmcgui.DialogProgress()
         p.create(_(0), _(1)) # 'Transmission', 'Connecting to Transmission'
@@ -32,24 +33,39 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
             'user': __settings__.getSetting('rpc_user'),
             'password': __settings__.getSetting('rpc_password')
         }
+        import transmissionrpc
         try:
-            self.transmission = transmissionrpc.transmission.Client(**params)
-        except transmissionrpc.transmission.TransmissionError:
+            self.transmission = transmissionrpc.Client(**params)
+        except:
             p.close()
+            self.close()
             d = xbmcgui.Dialog()
             (type, e, traceback) = sys.exc_info()
-            d.ok(_(2), e.message) # 'Transmission Error'
-            self.close()
+
+            message = _(9000) # Unexpected error
+            if type is transmissionrpc.TransmissionError:
+                if e.original:
+                    if e.original.code is 401:
+                        message = _(9002) # Invalid auth
+                    else:
+                        message = _(9001) # Unable to connect
+                if d.yesno(_(2), message, _(3)):
+                    __settings__.openSettings()
+            elif type is ValueError:
+                # In python 2.4, urllib2.HTTPDigestAuthHandler will barf up a lung
+                # if auth fails and the server wants non-digest authentication
+                message = _(9002) # Invalid auth
+                if d.yesno(_(2), message, _(3)):
+                    __settings__.openSettings()
+            else:
+                message = _(9000) # Unexpected error
+                d.ok(_(2), message)
+
             return False
         p.close()
         self.updateTorrents()
         self.repeater = Repeater(1.0, self.updateTorrents)
         self.repeater.start()
-    def shutDown(self):
-        print "terminating repeater"
-        self.repeater.stop()
-        print "closing transmission gui"
-        self.close()
     def updateTorrents(self):
         list = self.getControl(20)
         torrents = self.transmission.info()
@@ -85,23 +101,20 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
             list.reset()
             for id, item in self.list.iteritems():
                 list.addItem(item)
-#    def onAction(self, action):
-#        buttonCode =  action.getButtonCode()
-#        actionID   =  action.getId()
-#        if (buttonCode == KEY_BUTTON_BACK or buttonCode == KEY_KEYBOARD_ESC):
-#            self.shutDown()
+        list.setEnabled(bool(torrents))
 
-    def exit_script( self, restart=False ):
-        self.shutDown()
-        #self.close()
-        
     def onClick(self, controlID):
         list = self.getControl(20)
         if (controlID == 11):
             # Add torrent
             d = xbmcgui.Dialog()
-            f = d.browse(1, _(0), 'files', '.torrent')
-            self.transmission.add_url(f)
+            filename = d.browse(1, _(0), 'files', '.torrent')
+            try:
+                f = open(filename, 'r')
+                data = base64.b64encode(f.read())
+                self.transmission.add(data)
+            except:
+                pass
         if (controlID == 12):
             # Remove selected torrent
             item = list.getSelectedItem()
@@ -127,7 +140,7 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
             self.transmission.start(self.torrents.keys())
         if (controlID == 17):
             # Exit button
-            self.shutDown()
+            self.close()
         if (controlID == 20):
             # A torrent was chosen, show details
             item = list.getSelectedItem()
@@ -139,14 +152,16 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
         pass
 
     def onAction( self, action ):
-        print str(action.getButtonCode())
         if ( action.getButtonCode() in CANCEL_DIALOG ):
-            print str(action.getButtonCode())
-            self.exit_script() 
+            self.close()
+    def close(self):
+        if self.repeater:
+            self.repeater.stop()
+        super(TransmissionGUI, self).close()
+
 
 class TorrentInfoGUI(xbmcgui.WindowXMLDialog):
     def __init__(self, strXMLname, strFallbackPath, strDefaultName, bforeFallback=0):
-        help(xbmcgui)
         self.transmission = None
         self.torrent_id = None
         self.list = {}
@@ -162,7 +177,7 @@ class TorrentInfoGUI(xbmcgui.WindowXMLDialog):
         labelStatus = self.getControl(2)
         torrent = self.transmission.info()[self.torrent_id]
         files = self.transmission.get_files(self.torrent_id)[self.torrent_id]
-        
+
         statusline = "[%(status)s] %(down)s down (%(pct).2f%%), %(up)s up (Ratio: %(ratio).2f)" % \
             {'down': Bytes.format(torrent.downloadedEver), 'pct': torrent.progress, \
             'up': Bytes.format(torrent.uploadedEver), 'ratio': torrent.ratio, \
@@ -170,11 +185,11 @@ class TorrentInfoGUI(xbmcgui.WindowXMLDialog):
         if torrent.status is 'downloading':
             statusline += " ETA: %(eta)s" % \
                     {'eta': torrent.eta}
-        
+
         labelName.setLabel(torrent.name)
         labelStatus.setLabel(statusline)
         pbar.setPercent(torrent.progress)
-        
+
         for i, file in files.iteritems():
             if i not in self.list:
                 # Create a new list item
@@ -198,6 +213,3 @@ class TorrentInfoGUI(xbmcgui.WindowXMLDialog):
         pass
     def onFocus(self, controlID):
         pass
-        
-        
-       

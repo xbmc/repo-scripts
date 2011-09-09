@@ -1,3 +1,11 @@
+Version 0.6.0
+	* Added icons to buttons (submitted by aivs@yandex.ru)
+	* Added Russian language support (submitted by aivs@yandex.ru)
+	* Added Catalan language support (submitted by Carles F. Julià <chaos.ct@gmail.com>)
+	* Fixed adding torrents when the client is not on the same machine as the server
+	* Disabled the torrent list when empty to avoid confusion
+	* Improved connection error handling
+	* Updated transmissionrpc library to 0.7
 Version 0.5.2
 	* Added error handling on connection failure
 	* Added a torrent detail view for viewing the progress of individual files

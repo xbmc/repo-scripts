@@ -4,6 +4,7 @@
     
     <string id="1">Connecting to Transmission</string>
     <string id="2">Transmission Error</string>
+    <string id="3">Open settings dialog?</string>
     
     <!-- Buttons -->
     <string id="101">Add</string>
@@ -20,4 +21,9 @@
     <string id="1002">Port</string>
     <string id="1003">User</string>
     <string id="1004">Password</string>
+
+    <!-- Errors -->
+    <string id="9000">An unexpected error occurred</string>
+    <string id="9001">Could not connect to Transmission</string>
+    <string id="9002">Invalid username or password</string>
 </strings>

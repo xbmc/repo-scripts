@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
-# 2008-07, Erik Svensson <erik.public@gmail.com>
+# Copyright (c) 2008-2010 Erik Svensson <erik.public@gmail.com>
+# Licensed under the MIT license.
 
-import socket, datetime
-import constants
-from constants import logger
+import socket, datetime, logging
+import transmissionrpc.constants as constants
+from transmissionrpc.constants import LOGGER
 
 UNITS = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB']
 
 def format_size(size):
-    s = float(size)
+    """
+    Format byte size into IEC prefixes, B, KiB, MiB ...
+    """
+    size = float(size)
     i = 0
     while size >= 1024.0 and i < len(UNITS):
         i += 1
@@ -16,53 +20,73 @@ def format_size(size):
     return (size, UNITS[i])
 
 def format_speed(size):
+    """
+    Format bytes per second speed into IEC prefixes, B/s, KiB/s, MiB/s ...
+    """
     (size, unit) = format_size(size)
     return (size, unit + '/s')
 
 def format_timedelta(delta):
+    """
+    Format datetime.timedelta into <days> <hours>:<mminutes>:<seconds>.
+    """
     minutes, seconds = divmod(delta.seconds, 60)
     hours, minutes = divmod(minutes, 60)
     return '%d %02d:%02d:%02d' % (delta.days, hours, minutes, seconds)
 
 def format_timestamp(timestamp):
+    """
+    Format unix timestamp into ISO date format.
+    """
     if timestamp > 0:
-        dt = datetime.datetime.fromtimestamp(timestamp)
-        return dt.isoformat(' ')
+        dt_timestamp = datetime.datetime.fromtimestamp(timestamp)
+        return dt_timestamp.isoformat(' ')
     else:
         return '-'
 
 class INetAddressError(Exception):
+    """
+    Error parsing / generating a internet address.
+    """
     pass
 
 def inet_address(address, default_port, default_address='localhost'):
+    """
+    Parse internet address.
+    """
     addr = address.split(':')
     if len(addr) == 1:
         try:
             port = int(addr[0])
             addr = default_address
-        except:
+        except ValueError:
             addr = addr[0]
             port = default_port
     elif len(addr) == 2:
-        port = int(addr[1])
+        try:
+            port = int(addr[1])
+        except ValueError:
+            raise INetAddressError('Invalid address "%s".' % address)
         if len(addr[0]) == 0:
             addr = default_address
         else:
             addr = addr[0]
     else:
-        addr = default_address
-        port = default_port
+        raise INetAddressError('Invalid address "%s".' % address)
     try:
         socket.getaddrinfo(addr, port, socket.AF_INET, socket.SOCK_STREAM)
-    except socket.gaierror, e:
+    except socket.gaierror:
         raise INetAddressError('Cannot look up address "%s".' % address)
     return (addr, port)
 
 def rpc_bool(arg):
+    """
+    Convert between Python boolean and Transmission RPC boolean.
+    """
     if isinstance(arg, (str, unicode)):
         try:
             arg = bool(int(arg))
-        except:
+        except ValueError:
             arg = arg.lower() in [u'true', u'yes']
     if bool(arg):
         return 1
@@ -79,12 +103,21 @@ TR_TYPE_MAP = {
 }
 
 def make_python_name(name):
+    """
+    Convert Transmission RPC name to python compatible name.
+    """
     return name.replace('-', '_')
 
 def make_rpc_name(name):
+    """
+    Convert python compatible name to Transmission RPC name.
+    """
     return name.replace('_', '-')
 
 def argument_value_convert(method, argument, value, rpc_version):
+    """
+    Check and fix Transmission RPC issues with regards to methods, arguments and values.
+    """
     if method in ('torrent-add', 'torrent-get', 'torrent-set'):
         args = constants.TORRENT_ARGS[method[-3:]]
     elif method in ('session-get', 'session-set'):
@@ -105,7 +138,7 @@ def argument_value_convert(method, argument, value, rpc_version):
                 replacement = info[4]
             if invalid_version:
                 if replacement:
-                    logger.warning(
+                    LOGGER.warning(
                         'Replacing requested argument "%s" with "%s".'
                         % (argument, replacement))
                     argument = replacement
@@ -120,6 +153,9 @@ def argument_value_convert(method, argument, value, rpc_version):
                          (argument, method))
 
 def get_arguments(method, rpc_version):
+    """
+    Get arguments for method in specified Transmission RPC version.
+    """
     if method in ('torrent-add', 'torrent-get', 'torrent-set'):
         args = constants.TORRENT_ARGS[method[-3:]]
     elif method in ('session-get', 'session-set'):
@@ -136,3 +172,17 @@ def get_arguments(method, rpc_version):
         if valid_version:
             accessible.append(argument)
     return accessible
+
+def add_stdout_logger(level='debug'):
+    """
+    Add a stdout target for the transmissionrpc logging.
+    """
+    levels = {'debug': logging.DEBUG, 'info': logging.INFO, 'warning': logging.WARNING, 'error': logging.ERROR}
+    
+    trpc_logger = logging.getLogger('transmissionrpc')
+    loghandler = logging.StreamHandler()
+    if level in levels.keys():
+        loglevel = levels[level]
+        trpc_logger.setLevel(loglevel)
+        loghandler.setLevel(loglevel)
+    trpc_logger.addHandler(loghandler)

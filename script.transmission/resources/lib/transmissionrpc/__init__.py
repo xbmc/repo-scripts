@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
-# 2008-08, Erik Svensson <erik.public@gmail.com>
+# Copyright (c) 2008-2010 Erik Svensson <erik.public@gmail.com>
+# Licensed under the MIT license.
 
-from constants import *
-from transmission import TransmissionError, Torrent, Session, Client
+from transmissionrpc.constants import DEFAULT_PORT, DEFAULT_TIMEOUT, STATUS, PRIORITY, RATIO_LIMIT, LOGGER
+from transmissionrpc.error import TransmissionError, HTTPHandlerError
+from transmissionrpc.httphandler import HTTPHandler, DefaultHTTPHandler
+from transmissionrpc.torrent import Torrent
+from transmissionrpc.session import Session
+from transmissionrpc.client import Client
+from transmissionrpc.utils import add_stdout_logger
 
 __author__    = u'Erik Svensson <erik.public@gmail.com>'
-__version__   = u'0.3'
-__copyright__ = u'Copyright (c) 2008 Erik Svensson'
+__version__   = u'0.7'
+__copyright__ = u'Copyright (c) 2008-2010 Erik Svensson'
 __license__   = u'MIT'
