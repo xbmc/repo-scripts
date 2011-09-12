@@ -5,6 +5,7 @@
         <setting id="first_time_use" type="bool" default="true" visible="false"/>
         <setting id="info" type="text" label="30002" default="http://code.google.com/p/xbmc-pbx-addon/" enable="false"/>
         <setting id="xbmc_debug" type="bool" label="30003" default="false"/>
+        <setting id="xbmc_bgservice" type="bool" label="30004" default="false"/>
     </category>
     <category label="30010">
         <!-- Connection -->

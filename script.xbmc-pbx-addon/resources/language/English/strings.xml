@@ -4,6 +4,7 @@
     <string id="30001">Info</string>
     <string id="30002">URL</string>
     <string id="30003">Debug</string>
+    <string id="30004">Disable background service</string>
 
     <!-- Script Settings related strings -->
     <!-- Connection -->

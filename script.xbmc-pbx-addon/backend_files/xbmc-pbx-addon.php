@@ -12,7 +12,7 @@ $__addon__              = "XBMC PBX Addon";
 $__addon_id__           = "script.xbmc-pbx-addon";
 $__author__             = "hmronline";
 $__url__                = "http://code.google.com/p/xbmc-pbx-addon/";
-$__version__            = "0.0.7";
+$__version__            = "0.0.8";
 
 
 // ************************************************************************************************************
@@ -92,6 +92,9 @@ elseif (isset($_GET["cdr"]) || isset($_GET["vm"])) {
     $xmldoc->formatOutput = true;
     $xmlroot = $xmldoc->createElement("pbx");
     $xmldoc->appendChild($xmlroot);
+    $node = $xmldoc->createElement("version");
+    $node->appendChild($xmldoc->createTextNode($__version__));
+    $xmlroot->appendChild($node);
     if (isset($_GET["cdr"])) {
         //
         // Call Detail Records (CDR)

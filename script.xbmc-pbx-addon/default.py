@@ -12,7 +12,7 @@ __addon__       = "XBMC PBX Addon"
 __addon_id__    = "script.xbmc-pbx-addon"
 __author__      = "hmronline"
 __url__         = "http://code.google.com/p/xbmc-pbx-addon/"
-__version__     = "0.0.7"
+__version__     = "0.0.8"
 
 # Modules
 import sys, os
@@ -24,12 +24,6 @@ xbmc.log("[%s]: Version %s\n" % (__addon__,__version__))
 
 # Get environment OS
 __os__          = os.environ.get( "OS", "win32" )
-# Check to see if using a 64bit version of Linux
-if re.match("Linux", __os__):
-        import platform
-        env2 = platform.machine()
-        if(env2 == "x86_64"):
-                __os__ = "Linux64"
 xbmc.log("[%s]: XBMC for %s\n" % (__addon__,__os__))
 
 __language__    = xbmcaddon.Addon(__addon_id__).getLocalizedString
@@ -117,14 +111,18 @@ class MainGUI(xbmcgui.WindowXML):
         log("> getInfo()")
         settings = xbmcaddon.Addon(__addon_id__)
         manager_host_port = settings.getSetting("asterisk_manager_host"),int(settings.getSetting("asterisk_manager_port"))
-        pbx = Manager(manager_host_port,settings.getSetting("asterisk_manager_user"),settings.getSetting("asterisk_manager_pass"))
+        manager_user = settings.getSetting("asterisk_manager_user")
+        manager_pass = settings.getSetting("asterisk_manager_pass")
+        asterisk_vm_mailbox = settings.getSetting("asterisk_vm_mailbox")
+        asterisk_vm_context = settings.getSetting("asterisk_vm_context")
+        str_url = settings.getSetting("asterisk_info_url")
+        del settings
+        pbx = Manager(manager_host_port,manager_user,manager_pass)
         asterisk_version = str(pbx.Command("core show version")[1])
         del pbx
         log(">> " + asterisk_version)
-        str_url = settings.getSetting("asterisk_info_url")
-        str_url = str_url +"?vm&cdr&mailbox="+ settings.getSetting("asterisk_vm_mailbox")
-        str_url = str_url +"&vmcontext="+ settings.getSetting("asterisk_vm_context")
-        del settings
+        str_url = str_url +"?vm&cdr&mailbox="+ asterisk_vm_mailbox
+        str_url = str_url +"&vmcontext="+ asterisk_vm_context
         if (self.DEBUG):
             log(">> " + str_url)
         f = urllib.urlopen(str_url)
@@ -137,6 +135,9 @@ class MainGUI(xbmcgui.WindowXML):
     #####################################################################################################
     def showInfo(self):
         log("> showInfo()")
+        backend_version = "unknown"
+        for node in self.dom.getElementsByTagName('version'):
+            backend_version = node.firstChild.data
         options = {"cdr":120,"vm":121}
         if (__os__ == 'xbox'): xbmcgui.lock()
         for option in options.keys():
@@ -154,6 +155,12 @@ class MainGUI(xbmcgui.WindowXML):
                 del listitem
         if (__os__ == 'xbox'): xbmcgui.unlock()
         del self.dom
+        if (backend_version != __version__):
+            log(">> Version mismatch!: Frontend is " + __version__ + " while Backend is " + backend_version)
+            xbmc_notification = "You have to update the backend!"
+            xbmc_img = xbmc.translatePath(os.path.join(RESOURCE_PATH,'media','xbmc-pbx-addon.png'))
+            log(">> Notification: " + xbmc_notification)
+            xbmc.executebuiltin("XBMC.Notification("+ __language__(30051) +","+ xbmc_notification +","+ str(15*1000) +","+ xbmc_img +")")
 
     #####################################################################################################
     def onAction(self,action):
