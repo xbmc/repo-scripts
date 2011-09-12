@@ -9,6 +9,9 @@
                  visible="eq(-1,0)" />
 
         <setting id="xmltv.file" label="30103" type="file" visible="eq(-2,3)" />
+
+        <setting type="sep" />
+        <setting label="30104" type="action" action="RunScript($CWD/clear_cache.py)" />
 	</category>
 </settings>
 

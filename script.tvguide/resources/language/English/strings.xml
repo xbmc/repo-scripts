@@ -7,5 +7,12 @@
     <string id="30101">Source</string>
     <string id="30102">Show channels from category</string>
     <string id="30103">XMLTV file</string>
+    <string id="30104">Clear cache...</string>
+    <string id="30105">Done!</string>
+
+    <string id="30110">Oops, sorry about that!</string>
+    <string id="30111">It was not possible to load program data,</string>
+    <string id="30112">please try again later...</string>
+
 </strings>
 

@@ -1,3 +1,9 @@
+[B]Version 1.0.1 - 2011-09-10[/B]
+- Made paging of channels more logical to navigate
+- Better handling of errors if EPG data is unavailable
+- Improved visual feedback while loading
+- Added option in settings to clear cached EPG data (useful if you change source)
+
 [B]Version 1.0.0 - 2011-08-17[/B]
 - Background loading of EPG data on XBMC startup (Only available in Eden)
 - Otherwise same as v. 0.3.0.

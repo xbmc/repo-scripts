@@ -182,6 +182,7 @@
                     <width>160</width>
                     <height>45</height>
                     <aspectratio>keep</aspectratio>
+                    <fadetime>500</fadetime>
                 </control>
                 <control type="image" id="4111">
                     <description>2nd channel</description>
@@ -190,6 +191,7 @@
                     <width>160</width>
                     <height>45</height>
                     <aspectratio>keep</aspectratio>
+                    <fadetime>500</fadetime>
                 </control>
                 <control type="image" id="4112">
                     <description>3rd channel</description>
@@ -198,6 +200,7 @@
                     <width>160</width>
                     <height>45</height>
                     <aspectratio>keep</aspectratio>
+                    <fadetime>500</fadetime>
                 </control>
                 <control type="image" id="4113">
                     <description>4th channel</description>
@@ -206,6 +209,7 @@
                     <width>160</width>
                     <height>45</height>
                     <aspectratio>keep</aspectratio>
+                    <fadetime>500</fadetime>
                 </control>
                 <control type="image" id="4114">
                     <description>5th channel</description>
@@ -214,6 +218,7 @@
                     <width>160</width>
                     <height>45</height>
                     <aspectratio>keep</aspectratio>
+                    <fadetime>500</fadetime>
                 </control>
                 <control type="image" id="4115">
                     <description>6th channel</description>
@@ -222,6 +227,7 @@
                     <width>160</width>
                     <height>45</height>
                     <aspectratio>keep</aspectratio>
+                    <fadetime>500</fadetime>
                 </control>
                 <control type="image" id="4116">
                     <description>7th channel</description>
@@ -230,6 +236,7 @@
                     <width>160</width>
                     <height>45</height>
                     <aspectratio>keep</aspectratio>
+                    <fadetime>500</fadetime>
                 </control>
                 <control type="image" id="4117">
                     <description>8th channel</description>
@@ -238,6 +245,7 @@
                     <width>160</width>
                     <height>45</height>
                     <aspectratio>keep</aspectratio>
+                    <fadetime>500</fadetime>
                 </control>
             </control><!-- end group -->
 
@@ -296,17 +304,35 @@
                 <texture>timebar.png</texture>
             </control>
 
-            <!-- loading splash -->
-            <control type="label" id ="4200">
-                <posx>0</posx>
-                <posy>500</posy>
-                <width>1280</width>
-                <height>220</height>
-                <label>$ADDON[script.tvguide 30001]</label>
-                <textcolor>ffffffff</textcolor>
-                <font>font30</font>
-                <align>center</align>
-                <aligny>center</aligny>
+
+            <control type="group" id="4200">
+                <posx>350</posx>
+                <posy>580</posy>
+                <width>580</width>
+                <height>60</height>
+
+                <control type="progress" id="4201">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>580</width>
+                    <height>60</height>
+                    <texturebg>cell-bg.png</texturebg>
+                    <lefttexture />
+                    <midtexture>cell-bg-selected.png</midtexture>
+                    <righttexture />
+                </control>
+                <control type="label">
+                    <description>loading splash</description>
+                    <posx>0</posx>
+                    <posy>10</posy>
+                    <width>580</width>
+                    <height>40</height>
+                    <label>$ADDON[script.tvguide 30001]</label>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font30</font>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                </control>
             </control>
         </control><!-- id="5000" -->
 
