@@ -1,0 +1,18 @@
+
+[xbmc-now-playing]
+exten => s,1,Answer()
+exten => s,n,Noop(----------------------------)
+exten => s,n,Noop(XBMC PBX Addon - Now Playing)
+exten => s,n,Noop(----------------------------)
+exten => s,n,Noop(--> Video Title: ${xbmc_video_title})
+exten => s,n,Noop(--> Remaining Time: ${xbmc_remaining_time})
+exten => s,n,Wait(2)
+exten => s,n,Set(CHANNEL(language)=en)
+exten => s,n,Playback(please-hang-up-and-try-again)
+exten => s,n,Playback(on)
+exten => s,n,Playback(approximately)
+exten => s,n,SayNumber(${xbmc_remaining_time})
+exten => s,n,Playback(minutes)
+exten => s,n,Playback(tt-monkeys)
+exten => s,n,Hangup()
+
