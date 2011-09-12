@@ -15,7 +15,7 @@ class Channel(object):
         self.title = title
         self.logo = logo
 
-    def __str__(self):
+    def __repr__(self):
         return 'Channel(id=%s, title=%s, logo=%s)' \
                % (self.id, self.title, self.logo)
 
@@ -29,7 +29,7 @@ class Program(object):
         self.imageLarge = imageLarge
         self.imageSmall = imageSmall
 
-    def __str__(self):
+    def __repr__(self):
         return 'Program(channel=%s, title=%s, startDate=%s, endDate=%s, description=%s, imageLarge=%s, imageSmall=%s)' % \
             (self.channel, self.title, self.startDate, self.endDate, self.description, self.imageLarge, self.imageSmall)
 
@@ -53,11 +53,18 @@ class Source(object):
         except OSError:
             cacheHit = False
 
+        channelList = None
         if not cacheHit:
-            channelList = self._getChannelList()
-            pickle.dump(channelList, open(cacheFile, 'w'))
+            try:
+                channelList = self._getChannelList()
+                pickle.dump(channelList, open(cacheFile, 'w'))
+            except Exception, ex:
+                print "Unable to get channel list\n" + str(ex)
         else:
             channelList = pickle.load(open(cacheFile))
+
+        if channelList:
+            print "Loaded %d channels" % len(channelList)
 
         return channelList
 
@@ -68,17 +75,26 @@ class Source(object):
         id = str(channel.id).replace('/', '')
         cacheFile = os.path.join(self.cachePath, self.KEY + '-' + id + '.programlist')
 
+        print cacheFile
+
         try:
             cachedOn = datetime.datetime.fromtimestamp(os.path.getmtime(cacheFile))
             cacheHit = cachedOn.day == datetime.datetime.now().day
         except OSError:
             cacheHit = False
 
+        programList = None
         if not cacheHit:
-            programList = self._getProgramList(channel)
-            pickle.dump(programList, open(cacheFile, 'w'))
+            try:
+                programList = self._getProgramList(channel)
+                pickle.dump(programList, open(cacheFile, 'w'))
+            except Exception, ex:
+                print "Unable to get program list for channel: " + channel + "\n" + str(ex)
         else:
             programList = pickle.load(open(cacheFile))
+
+        if programList:
+            print "Loaded %d programs for channel %s" % (len(programList), channel.id)
 
         return programList
     
@@ -230,9 +246,15 @@ class XMLTVSource(Source):
     KEY = 'xmltv'
 
     def __init__(self, settings):
-        Source.__init__(self, settings, True)
         self.xmlTvFile = settings['xmltv.file']
         self.time = time.time()
+        try:
+            doc = self._loadXml()
+            hasChannelIcons = doc.find('channel/icon') is not None
+        except Exception:
+            hasChannelIcons = False
+
+        super(XMLTVSource, self).__init__(settings, hasChannelIcons)
 
         # calculate nearest hour
         self.time -= self.time % 3600
@@ -241,7 +263,10 @@ class XMLTVSource(Source):
         doc = self._loadXml()
         channelList = list()
         for channel in doc.findall('channel'):
-            c = Channel(id = channel.get('id'), title = channel.findtext('display-name'), logo = channel.find('icon').get('src'))
+            logo = None
+            if channel.find('icon'):
+                logo = channel.find('icon').get('src')
+            c = Channel(id = channel.get('id'), title = channel.findtext('display-name'), logo = logo)
             channelList.append(c)
 
         return channelList
