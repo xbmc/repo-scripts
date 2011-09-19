@@ -12,7 +12,7 @@ __addon__       = "XBMC PBX Addon"
 __addon_id__    = "script.xbmc-pbx-addon"
 __author__      = "hmronline"
 __url__         = "http://code.google.com/p/xbmc-pbx-addon/"
-__version__     = "1.0.8"
+__version__     = "1.0.9"
 
 # Modules
 import sys, os
@@ -67,8 +67,17 @@ class get_incoming_call(object):
     def NewChannel(self,pbx,event):
         settings = xbmcaddon.Addon(__addon_id__)
         DEBUG = settings.getSetting("xbmc_debug")
-        arr_chan_states = ['Down','Ring']
-        asterisk_chan_state = str(arr_chan_states[int(settings.getSetting("asterisk_chan_state"))])
+        arr_chan_states = ['Down','Ring','Auto']
+        asterisk_chan_state = settings.getSetting("asterisk_chan_state")
+        if (asterisk_chan_state == "2"):
+            if (self.asterisk_series == "1.4"):
+                # Asterisk 1.4
+                asterisk_chan_state = "0"
+            else:
+                # Asterisk 1.6+
+                asterisk_chan_state = "1"
+            settings.setSetting("asterisk_chan_state",asterisk_chan_state)
+        asterisk_chan_state = str(arr_chan_states[int(asterisk_chan_state)])
         del settings
         self.DEBUG = False
         if (DEBUG == "true"):
@@ -235,8 +244,8 @@ try:
         pbx = Manager(manager_host_port,manager_user,manager_pass)
         asterisk_version = str(pbx.Command("core show version")[1])
         asterisk_series = asterisk_version[9:12]
+        log(">> Asterisk " + asterisk_series)
         if (DEBUG == "true"): log(">> " + asterisk_version)
-        log(">> Asterisk: " + asterisk_series)
         vm_count = str(pbx.MailboxCount(vm)[0])
         xbmc_notification = __language__(30053) + vm_count
         xbmc_img = xbmc.translatePath(os.path.join(RESOURCE_PATH,'media','xbmc-pbx-addon.png'))

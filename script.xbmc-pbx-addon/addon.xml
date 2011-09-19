@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <addon id="script.xbmc-pbx-addon"
     name="XBMC PBX Addon" 
-    version="1.0.8" 
+    version="1.0.9" 
     provider-name="hmronline">
     <requires>
         <import addon="xbmc.python" version="2.0"/>

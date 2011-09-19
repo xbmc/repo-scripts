@@ -1,5 +1,12 @@
 = Changelog =
 
+== 1.0.9 ==
+  * Restored autoexec.py which is still needed for Dharma;
+  * Added option to Auto-select NewChannel State setting based on Asterisk Version;
+  * Added the ability to call back numbers from the voicemail list;
+  * Added a Dialpad (keyboard input) to initiate phone calls;
+  * Some other minor changes;
+
 == 1.0.8 ==
   * Updated images (fanart and icons) to comply with this guideline: http://wiki.xbmc.org/index.php?title=Add-ons_for_XBMC_%28Development%29
   * Removed (unnecessary) check for Linux64 that was causing trouble with XBMC Eden(-pre). Thanks freebs (XBMC Forum member);

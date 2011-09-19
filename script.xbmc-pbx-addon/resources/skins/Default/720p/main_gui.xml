@@ -57,18 +57,30 @@
             <!--<label>$LOCALIZE[30107]</label>-->
             <font>special12</font>
             <onleft>111</onleft>
+            <onright>108</onright>
+            <ondown>113</ondown>
+        </control>
+        <control type="button" id="108">
+            <description>Dialer button</description>
+            <posx>940</posx>
+            <posy>35</posy>
+            <width>150</width>
+            <align>left</align>
+            <!--<label>$LOCALIZE[30108]</label>-->
+            <font>special12</font>
+            <onleft>109</onleft>
             <onright>112</onright>
             <ondown>113</ondown>
         </control>
         <control type="button" id="112">
             <description>Settings button</description>
-            <posx>950</posx>
+            <posx>1110</posx>
             <posy>35</posy>
             <width>150</width>
             <align>left</align>
             <!--<label>$LOCALIZE[30103]</label>-->
             <font>special12</font>
-            <onleft>109</onleft>
+            <onleft>108</onleft>
             <onright>110</onright>
             <ondown>113</ondown>
         </control>

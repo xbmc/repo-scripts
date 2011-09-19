@@ -12,7 +12,7 @@ __addon__       = "XBMC PBX Addon"
 __addon_id__    = "script.xbmc-pbx-addon"
 __author__      = "hmronline"
 __url__         = "http://code.google.com/p/xbmc-pbx-addon/"
-__version__     = "1.0.8"
+__version__     = "1.0.9"
 
 # Modules
 import sys, os
@@ -88,9 +88,10 @@ class MainGUI(xbmcgui.WindowXML):
     def skinSetup(self):
         log("> skinSetup()")
         if (__os__ == 'xbox'): xbmcgui.lock()
-        self.getControl(109).setLabel(__language__(30107))  # CDR toggle button
         self.getControl(110).setLabel(__language__(30101))  # CDR toggle button
         self.getControl(111).setLabel(__language__(30102))  # VM toggle button
+        self.getControl(109).setLabel(__language__(30107))  # Refresh button
+        self.getControl(108).setLabel(__language__(30108))  # Dialer button
         self.getControl(112).setLabel(__language__(30103))  # Settings button
         self.getControl(140).setLabel(__language__(30130))  # CDR - start
         self.getControl(141).setLabel(__language__(30116))  # CDR - channel
@@ -119,8 +120,10 @@ class MainGUI(xbmcgui.WindowXML):
         del settings
         pbx = Manager(manager_host_port,manager_user,manager_pass)
         asterisk_version = str(pbx.Command("core show version")[1])
+        asterisk_series = asterisk_version[9:12]
         del pbx
-        log(">> " + asterisk_version)
+        log(">> Asterisk " + asterisk_series)
+        if (DEBUG): log(">> " + asterisk_version)
         str_url = str_url +"?vm&cdr&mailbox="+ asterisk_vm_mailbox
         str_url = str_url +"&vmcontext="+ asterisk_vm_context
         if (self.DEBUG):
@@ -191,15 +194,32 @@ class MainGUI(xbmcgui.WindowXML):
                 dialog = xbmcgui.Dialog()
                 if (dialog.yesno(__addon__,__language__(30105))):
                     self.play_voice_mail(recindex)
+                else:
+                    # Callback
+                    del dialog
+                    number_to_call = self.getControl(121).getSelectedItem().getProperty("callerid")
+                    number_to_call = number_to_call.split('<')[0]
+                    if (number_to_call != ""):
+                        dialog = xbmcgui.Dialog()
+                        if (dialog.yesno(__addon__,__language__(30104) + " '" + number_to_call + "'?")):
+                            self.make_outgoing_call(number_to_call)
                 del dialog
+        # Refresh
+        elif (controlId == 109):
+            self.onInit()
+        # Dialer
+        elif (controlId == 108):
+            kb = xbmc.Keyboard('',__language__(30108))
+            kb.doModal()
+            if (kb.isConfirmed()):
+                number_to_call = kb.getText()
+                if (number_to_call != ""):
+                    self.make_outgoing_call(number_to_call)
         # Settings
         elif (controlId == 112):
             settings = xbmcaddon.Addon(__addon_id__)
             settings.openSettings()
             del settings
-            self.onInit()
-        # Refresh
-        elif (controlId == 109):
             self.onInit()
 
     def onFocus(self,controlId):
@@ -243,6 +263,7 @@ class MainGUI(xbmcgui.WindowXML):
         if (self.url_vm != ""):
             dialog = xbmcgui.Dialog()
             if (dialog.yesno(__addon__,__language__(30106))):
+                # Delete Voice Mail
                 self.delete_voice_mail()
                 self.onInit()
             del dialog
