@@ -12,7 +12,7 @@ $__addon__              = "XBMC PBX Addon";
 $__addon_id__           = "script.xbmc-pbx-addon";
 $__author__             = "hmronline";
 $__url__                = "http://code.google.com/p/xbmc-pbx-addon/";
-$__version__            = "0.0.8";
+$__version__            = "0.0.9";
 
 
 // ************************************************************************************************************

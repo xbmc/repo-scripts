@@ -38,7 +38,7 @@
         <!-- Asterisk Inbound calls related settings -->
         <setting id="separator" type="lsep" label="30020"/>
         <setting id="xbmc_oncall" type="text" label="30021" default="" enable="false"/>
-        <setting id="asterisk_chan_state" type="enum" label="30022" values="Down|Ring" default="1"/>
+        <setting id="asterisk_chan_state" type="enum" label="30022" values="Down|Ring|Auto" default="2"/>
         <setting id="asterisk_cid_alert_info" type="text" label="30023" default=""/>
         <setting id="xbmc_oncall_notification" type="bool" label="30024" default="true"/>
         <setting id="xbmc_oncall_notification_timeout" type="enum" label="30025" values="5|10|15|20|25|30" default="2"/>
