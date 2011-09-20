@@ -1,3 +1,9 @@
+v3.0.3
+- adjusted to latest json-rpc changes
+- fixed tv show title in info dialog
+- fixed closing the script
+- fixed json query when compactoutput was set to false
+
 v3.0.2
 - code cleanup
 - use cached thumbnail

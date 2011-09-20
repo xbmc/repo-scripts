@@ -187,7 +187,7 @@ class NextAired:
         self.count = 0
         self.current_show_data = []
         self.canceled = self.get_list("canceled.db")
-        if not self.listing(): close("error listing")
+        if not self.listing(): self.close("error listing")
         self.total_show = len(self.TVlist)
         log( "###canceled list: %s " % self.canceled )
 
@@ -260,19 +260,21 @@ class NextAired:
 
     def listing(self):
         # json statement for tv shows
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"fields": ["file", "thumbnail"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file", "thumbnail"], "sort": { "method": "label" } }, "id": 1}')
         json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         log( json_response )
         self.TVlist = []
         for tvshowitem in json_response:
             log( tvshowitem )
-            findtvshowname = re.search( '"label":"(.*?)","', tvshowitem )
+            findtvshowname = re.search( '"label": ?"(.*?)",["\n]', tvshowitem )
             if findtvshowname:
                 tvshowname = ( findtvshowname.group(1) )
-                findpath = re.search( '"file":"(.*?)","', tvshowitem )
+                findpath = re.search( '"file": ?"(.*?)",["\n]', tvshowitem )
                 if findpath:
                     path = (findpath.group(1))
-                findthumbnail = re.search( '"thumbnail":"(.*?)","', tvshowitem )
+                else:
+                    path = ''
+                findthumbnail = re.search( '"thumbnail": ?"(.*?)",["\n]', tvshowitem )
                 if findthumbnail:
                     thumbnail = (findthumbnail.group(1))
                 else:

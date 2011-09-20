@@ -164,7 +164,7 @@
 						<content>
 							<item>
 								<label>$LOCALIZE[20364]:</label>
-								<label2>ListItem.Property(Show Name)]</label2>
+								<label2>$INFO[ListItem.Property(Show Name)]</label2>
 								<onclick>-</onclick>
 								<visible>!IsEmpty(ListItem.Property(Show Name))</visible>
 							</item>
