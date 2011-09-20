@@ -182,17 +182,17 @@ class TvTunes:
     def listing(self):
         # on recup la liste des series en biblio
         # json statement for tv shows
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"fields": ["file"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file"], "sort": { "method": "label" } }, "id": 1}')
         json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         log( json_response )
         TVlist = []
         for tvshowitem in json_response:
             log( tvshowitem )
-            findtvshowname = re.search( '"label":"(.*?)","', tvshowitem )
+            findtvshowname = re.search( '"label": ?"(.*?)",["\n]', tvshowitem )
             if findtvshowname:
                 tvshowname = ( findtvshowname.group(1) )
                 tvshow = unicodedata.normalize('NFKD', unicode(unicode(tvshowname, 'utf-8'))).encode('ascii','ignore')
-                findpath = re.search( '"file":"(.*?)","', tvshowitem )
+                findpath = re.search( '"file": ?"(.*?)",["\n]', tvshowitem )
                 if findpath:
                     path = (findpath.group(1))
                     TVlist.append( ( tvshow , path ) )

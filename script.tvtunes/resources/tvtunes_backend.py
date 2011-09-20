@@ -102,6 +102,10 @@ class mythread( threading.Thread ):
             self.newpath = self.newpath.replace("smb://", "smb://%s:%s@" % (params.get("user", "guest" ) , params.get("password", "guest" )) )
             log( "### %s" % self.newpath )
 
+        #######hack for episodes stored as rar files
+        if 'rar://' in str(self.newpath):
+            self.newpath = self.newpath.replace("rar://","")
+        
         #######hack for TV shows stored as ripped disc folders
         if 'VIDEO_TS' in str(self.newpath):
             log( "### FOUND VIDEO_TS IN PATH: Correcting the path for DVDR tv shows" )

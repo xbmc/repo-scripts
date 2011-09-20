@@ -1,3 +1,10 @@
+v1.0.8:
+- adjusted to latest json-rpc changes
+
+v1.0.7:
+- add support for rar files
+- fixed json query when compactoutput was set to false
+
 v1.0.6:
 - do not use the xbmc temp dir
 
