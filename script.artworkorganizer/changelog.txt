@@ -1,3 +1,10 @@
+v0.1.2
+- adjusted to latest json-rpc changes
+- added option for episode and season thumbs
+
+v0.1.1
+- fix utf-8 error
+
 v0.1.0
 - initial release
 
