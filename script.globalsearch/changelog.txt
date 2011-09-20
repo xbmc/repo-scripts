@@ -1,3 +1,7 @@
+v0.1.1
+- adjusted to latest json-rpc changes
+- fixed fetching of streamdetails
+
 v0.1.0
 - initial release
 
