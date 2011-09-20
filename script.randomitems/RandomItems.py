@@ -8,7 +8,13 @@ import xbmc, xbmcgui, xbmcaddon
 import re, sys, os, random
 import xml.dom.minidom
 
-__scriptID__ = "script.randomitems"
+__addon__    = xbmcaddon.Addon()
+__addonid__ = __addon__.getAddonInfo('id')
+__addonversion__ = __addon__.getAddonInfo('version')
+
+def log(txt):
+    message = 'script.randomitems: %s' % txt
+    xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 class Main:
     # grab the home window
@@ -47,7 +53,7 @@ class Main:
         # only run if user/skinner preference
         if ( not self.ALARM ): return
         # set the alarms command
-        command = "XBMC.RunScript(%s,limit=%d&unplayed=%s&trailer=%s&alarm=%d)" % ( __scriptID__, self.LIMIT, str( self.UNPLAYED ), str( self.PLAY_TRAILER ), self.ALARM, )
+        command = "XBMC.RunScript(%s,limit=%d&unplayed=%s&trailer=%s&alarm=%d)" % ( __addonid__, self.LIMIT, str( self.UNPLAYED ), str( self.PLAY_TRAILER ), self.ALARM, )
         xbmc.executebuiltin( "AlarmClock(RandomItems,%s,%d,true)" % ( command, self.ALARM, ) )
 
     def __init__( self ):
@@ -70,7 +76,7 @@ class Main:
 
     def _fetch_movie_info( self ):
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"fields": ["playcount", "year", "plot", "runtime", "fanart", "thumbnail", "file", "trailer", "rating"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["playcount", "year", "plot", "runtime", "fanart", "thumbnail", "file", "trailer", "rating"] }, "id": 1}')
         # separate the records
         json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         json_response.pop(0)
@@ -89,55 +95,55 @@ class Main:
             json_response.remove( item )
             # find values
             if self.UNPLAYED == "True":
-                findplaycount = re.search( '"playcount":(.*?),"', item )
+                findplaycount = re.search( '"playcount": ?(.*?),"', item )
                 if findplaycount:
                     playcount = findplaycount.group(1)
                     if int( playcount ) > 0:
                         count = count - 1
                         continue
-            findtitle = re.search( '"label":"(.*?)","', item )
+            findtitle = re.search( '"label": ?"(.*?)",["\n]', item )
             if findtitle:
                 title = findtitle.group(1)
             else:
                 title = ''
-            findrating = re.search( '"rating":(.*?),"', item )
+            findrating = re.search( '"rating": ?(.*?),"', item )
             if findrating:
                 rating = '%.1f' % float( findrating.group(1) )
             else:
                 rating = ''
-            findyear = re.search( '"year":(.*)', item )
+            findyear = re.search( '"year": ?(.*)', item )
             if findyear:
                 year = findyear.group(1)
             else:
                 year = ''
-            findplot = re.search( '"plot":"(.*?)","', item )
+            findplot = re.search( '"plot": ?"(.*?)",["\n]', item )
             if findplot:
                 plot = findplot.group(1)
             else:
                 plot = ''
-            findrunningtime = re.search( '"runtime":"(.*?)","', item )
+            findrunningtime = re.search( '"runtime": ?"(.*?)",["\n]', item )
             if findrunningtime:
                 runningtime = findrunningtime.group(1)
             else:
                 runningtime = ''
-            findpath = re.search( '"file":"(.*?)","', item )
+            findpath = re.search( '"file": ?"(.*?)",["\n]', item )
             if findpath:
                 path = findpath.group(1)
             else:
                 path = ''
-            findtrailer = re.search( '"trailer":"(.*?)","', item )
+            findtrailer = re.search( '"trailer": ?"(.*?)",["\n]', item )
             if findtrailer:
                 trailer = findtrailer.group(1)
                 if self.PLAY_TRAILER == "True":
                     path = trailer
             else:
                 trailer = ''
-            findfanart = re.search( '"fanart":"(.*?)","', item )
+            findfanart = re.search( '"fanart": ?"(.*?)",["\n]', item )
             if findfanart:
                 fanart = findfanart.group(1)
             else:
                 fanart = ''
-            findthumb = re.search( '"thumbnail":"(.*?)","', item )
+            findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', item )
             if findthumb:
                 thumb = findthumb.group(1)
             else:
@@ -157,7 +163,7 @@ class Main:
     def _fetch_episode_info( self ):
         # query the database
         tvshowid = 2
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "fields": ["playcount", "season", "episode", "showtitle", "plot", "fanart", "thumbnail", "file", "rating"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["playcount", "season", "episode", "showtitle", "plot", "fanart", "thumbnail", "file", "rating"] }, "id": 1}')
         # separate the records
         json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         json_response.pop(0)
@@ -176,53 +182,53 @@ class Main:
             json_response.remove( item )
             # find values
             if self.UNPLAYED == "True":
-                findplaycount = re.search( '"playcount":(.*?),"', item )
+                findplaycount = re.search( '"playcount": ?(.*?),"', item )
                 if findplaycount:
                     playcount = findplaycount.group(1)
                     if int( playcount ) > 0:
                         count = count - 1
                         continue
-            findtitle = re.search( '"label":"(.*?)","', item )
+            findtitle = re.search( '"label": ?"(.*?)",["\n]', item )
             if findtitle:
                 title = findtitle.group(1)
             else:
                 title = ''
-            findshowtitle = re.search( '"showtitle":"(.*?)","', item )
+            findshowtitle = re.search( '"showtitle": ?"(.*?)",["\n]', item )
             if findshowtitle:
                 showtitle = findshowtitle.group(1)
             else:
                 showtitle = ''
-            findseason = re.search( '"season":(.*?),"', item )
+            findseason = re.search( '"season": ?(.*?),"', item )
             if findseason:
                 season = findseason.group(1)
             else:
                 season = ''
-            findepisode = re.search( '"episode":(.*?),"', item )
+            findepisode = re.search( '"episode": ?(.*?),"', item )
             if findepisode:
                 episode = findepisode.group(1)
             else:
                 episode = ''
-            findrating = re.search( '"rating":(.*?),"', item )
+            findrating = re.search( '"rating": ?(.*?),"', item )
             if findrating:
                 rating = "%.1f" % float( findrating.group(1) )
             else:
                 rating = ''
-            findplot = re.search( '"plot":"(.*?)","', item )
+            findplot = re.search( '"plot": ?"(.*?)",["\n]', item )
             if findplot:
                 plot = findplot.group(1)
             else:
                 plot = ''
-            findpath = re.search( '"file":"(.*?)","', item )
+            findpath = re.search( '"file": ?"(.*?)",["\n]', item )
             if findpath:
                 path = findpath.group(1)
             else:
                 path = ''
-            findfanart = re.search( '"fanart":"(.*?)","', item )
+            findfanart = re.search( '"fanart": ?"(.*?)",["\n]', item )
             if findfanart:
                 fanart = findfanart.group(1)
             else:
                 fanart = ''
-            findthumb = re.search( '"thumbnail":"(.*?)"', item )
+            findthumb = re.search( '"thumbnail": ?"(.*?)"', item )
             if findthumb:
                 thumb = findthumb.group(1)
             else:
@@ -243,7 +249,7 @@ class Main:
 
     def _fetch_album_info( self ):
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"fields": ["artist", "year", "thumbnail", "fanart", "rating"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["artist", "year", "thumbnail", "fanart", "rating"] }, "id": 1}')
         # separate the records
         json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         json_response.pop(0)
@@ -262,45 +268,45 @@ class Main:
             json_response.remove( item )
             # find values
 #            if self.UNPLAYED == "True":
-#                findplaycount = re.search( '"playcount":(.*?),"', item )
+#                findplaycount = re.search( '"playcount": ?(.*?),"', item )
 #                if findplaycount:
 #                    playcount = findplaycount.group(1)
 #                    if int( playcount ) > 0:
 #                        count = count - 1
 #                        continue
-            findtitle = re.search( '"label":"(.*?)","', item )
+            findtitle = re.search( '"label": ?"(.*?)",["\n]', item )
             if findtitle:
                 title = findtitle.group(1)
             else:
                 title = ''
-            findrating = re.search( '"rating":(.*?),"', item )
+            findrating = re.search( '"rating": ?(.*?),"', item )
             if findrating:
                 rating = findrating.group(1)
                 if rating == '48':
                     rating = ''
             else:
                 rating = ''
-            findyear = re.search( '"year":(.*)', item )
+            findyear = re.search( '"year": ?(.*)', item )
             if findyear:
                 year = findyear.group(1)
             else:
                 year = ''
-            findartist = re.search( '"artist":"(.*?)","', item )
+            findartist = re.search( '"artist": ?"(.*?)",["\n]', item )
             if findartist:
                 artist = findartist.group(1)
             else:
                 artist = ''
-            findpath = re.search( '"albumid":(.*?),"', item )
+            findpath = re.search( '"albumid": ?(.*?),"', item )
             if findpath:
-                path = 'XBMC.RunScript(' + __scriptID__ + ',albumid=' + findpath.group(1) + ')'
+                path = 'XBMC.RunScript(' + __addonid__ + ',albumid=' + findpath.group(1) + ')'
             else:
                 path = ''
-            findfanart = re.search( '"fanart":"(.*?)","', item )
+            findfanart = re.search( '"fanart": ?"(.*?)",["\n]', item )
             if findfanart:
                 fanart = findfanart.group(1)
             else:
                 fanart = ''
-            findthumb = re.search( '"thumbnail":"(.*?)","', item )
+            findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', item )
             if findthumb:
                 thumb = findthumb.group(1)
             else:
@@ -317,7 +323,7 @@ class Main:
 
     def _fetch_song_info( self ):
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"fields": ["playcount", "artist", "album", "year", "file", "thumbnail", "fanart", "rating"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["playcount", "artist", "album", "year", "file", "thumbnail", "fanart", "rating"] }, "id": 1}')
         # separate the records
         json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         json_response.pop(0)
@@ -336,48 +342,48 @@ class Main:
             json_response.remove( item )
             # find values
             if self.UNPLAYED == "True":
-                findplaycount = re.search( '"playcount":(.*?),"', item )
+                findplaycount = re.search( '"playcount": ?(.*?),"', item )
                 if findplaycount:
                     playcount = findplaycount.group(1)
                     if int( playcount ) > 0:
                         count = count - 1
                         continue
-            findtitle = re.search( '"label":"(.*?)","', item )
+            findtitle = re.search( '"label": ?"(.*?)",["\n]', item )
             if findtitle:
                 title = findtitle.group(1)
             else:
                 title = ''
-            findrating = re.search( '"rating":(.*?),"', item )
+            findrating = re.search( '"rating": ?(.*?),"', item )
             if findrating:
                 rating = str( int( findrating.group(1) ) - 48)
             else:
                 rating = ''
-            findyear = re.search( '"year":(.*)', item )
+            findyear = re.search( '"year": ?(.*)', item )
             if findyear:
                 year = findyear.group(1)
             else:
                 year = ''
-            findartist = re.search( '"artist":"(.*?)","', item )
+            findartist = re.search( '"artist": ?"(.*?)",["\n]', item )
             if findartist:
                 artist = findartist.group(1)
             else:
                 artist = ''
-            findalbum = re.search( '"album":"(.*?)","', item )
+            findalbum = re.search( '"album": ?"(.*?)",["\n]', item )
             if findalbum:
                 album = findalbum.group(1)
             else:
                 album = ''
-            findpath = re.search( '"file":"(.*?)","', item )
+            findpath = re.search( '"file": ?"(.*?)",["\n]', item )
             if findpath:
                 path = findpath.group(1)
             else:
                 path = ''
-            findfanart = re.search( '"fanart":"(.*?)","', item )
+            findfanart = re.search( '"fanart": ?"(.*?)",["\n]', item )
             if findfanart:
                 fanart = findfanart.group(1)
             else:
                 fanart = ''
-            findthumb = re.search( '"thumbnail":"(.*?)","', item )
+            findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', item )
             if findthumb:
                 thumb = findthumb.group(1)
             else:
@@ -442,7 +448,7 @@ class Main:
 
     def _Play_Album( self, ID ):
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"fields": ["file", "fanart"], "albumid":%s }, "id": 1}' % ID)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["file", "fanart"], "albumid":%s }, "id": 1}' % ID)
         # separate the records
         json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         json_response.pop(0)
@@ -453,12 +459,12 @@ class Main:
         # enumerate thru our records
         for item in json_response:
             # find values
-            findsongpath = re.search( '"file":"(.*?)","label"', item )
+            findsongpath = re.search( '"file": ?"(.*?)",["\n]label"', item )
             if findsongpath:
                 song = findsongpath.group(1)
             else:
                 song = ''
-            findfanart = re.search( '"fanart":"(.*?)","file"', item )
+            findfanart = re.search( '"fanart": ?"(.*?)",["\n]file"', item )
             if findfanart:
                 fanart = findfanart.group(1)
             else:
@@ -473,4 +479,6 @@ class Main:
         xbmc.Player().play( playlist )
 
 if ( __name__ == "__main__" ):
-    Main()
+        log('script version %s started' % __addonversion__)
+        Main()
+log('script stopped')
