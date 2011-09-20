@@ -26,5 +26,12 @@
 	<string id="32124">Downloading:</string>
 	<string id="32125">Getting info...</string>
 	<string id="32126">Error copying file</string>
+	<string id="32127">No characterart found!</string>
+	<string id="32128">logo</string>
+	<string id="32129">clearart</string>
+	<string id="32130">characterart</string>
+	<string id="32131">showthumb</string>
+	<string id="32132">banner</string>
+	<string id="32133">poster</string>
 </strings>
 

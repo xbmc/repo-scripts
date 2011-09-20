@@ -1,3 +1,18 @@
+v3.0.6
+- adjusted to latest json-rpc changes
+- fixed copy image to the right thumbnail cache folder
+- delete cached dds version of image
+- ommit select dialog when searching for only one type of images 
+- show notification instead of ok dialog when image is downloaded
+
+v3.0.5
+- localized some hardcoded strings
+- updated code for v4 of the fanart.tv api
+- added support for characterart
+
+v3.0.4
+- fixed json query when compactoutput was set to false
+
 v3.0.3
 - do not use the xbmc temp dir
 
