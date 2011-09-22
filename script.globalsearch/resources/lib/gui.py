@@ -873,7 +873,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"z], "sort": { "method": "label" }, "artistid":%s }, "id": 1}' % self.artistid)
         else:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"], "sort": { "method": "label" } }, "id": 1}')
-            log('BUG %s' % json_query)
         json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         for albumitem in json_response:
             if self.fetch_albumssongs == 'true':

@@ -1,3 +1,8 @@
+v0.1.2
+- removed some debug logging
+- added Portuguese (Brazil) translation
+- added Italian translation
+
 v0.1.1
 - adjusted to latest json-rpc changes
 - fixed fetching of streamdetails
