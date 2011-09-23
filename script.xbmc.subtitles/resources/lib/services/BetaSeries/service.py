@@ -100,7 +100,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                 
                 #time.sleep(1)
                 subtitles = dom.getElementsByTagName('subtitle')
-
+                log( __name__ , "nb sub found: '%s'" % (len(subtitles)))
                 for subtitle in subtitles:
                     url = subtitle.getElementsByTagName('url')[0].childNodes[0]
                     url = url.nodeValue
@@ -124,7 +124,9 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                             items = content.getElementsByTagName('item')
 
                             for item in items:
+                                if len(item.childNodes) < 1 : continue
                                 subfile = item.childNodes[0].nodeValue
+                                
 
                                 if os.path.splitext(subfile)[1] == '.zip': continue # Not supported yet ;)
                             
@@ -165,8 +167,10 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                     else:
                         #log( __name__ , "sub found ('%s')" % (filename))
                         subtitles_list.append({'filename': filename,'link': url,'language_name': twotofull(language),'language_id':"0",'language_flag':'flags/' + language + '.gif',"rating":rating,"sync": False})
+                    
 
-            except:
+            except Exception, inst:
+                log( __name__ , " Error: %s" % (inst))
                 return subtitles_list, "", msg #standard output
 
     return subtitles_list, "", msg #standard output

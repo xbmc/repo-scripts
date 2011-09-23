@@ -1,3 +1,6 @@
+2.5.10
+- fixed: error due to some BetaSeries API change, thx darknao
+
 2.5.9
 - fixed: podnapisi download
 - added: Napisy24.pl, thx mrto
