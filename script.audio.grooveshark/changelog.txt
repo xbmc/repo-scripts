@@ -1,3 +1,9 @@
+0.4.3:
+
+ - Fixed a bug (change in the API) that prevented song name, albun etc. from being displayed correctly in search results.
+ - Updated the Danish translation. Thanks mrdominuzq.
+ - Added Portuguese (Brazil). Thanks Wanilton.
+
 0.4.2:
 
  - Fixed API changes.

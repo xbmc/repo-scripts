@@ -30,13 +30,18 @@ class GS_Song:
 		"""function: Parses raw track data from Grooveshark"""
 		try:	
 			self.id = data["SongID"]
-			self.name = data["Name"]
+			try:
+				self.name = data["Name"]
+			except:
+				self.name = data['SongName']
 			self.artistName = data["ArtistName"]
 			self.artistID = data["ArtistID"]
    			self.albumName = data["AlbumName"]
    			self.albumID = data["AlbumID"]
    			self.verified = False
 		except: # Otherwise assume only songID was supplied in data
+			print data
+			traceback.print_exc()
 			self.id = data
 
 		self.year = None
