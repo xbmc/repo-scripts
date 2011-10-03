@@ -24,7 +24,7 @@ def retrieve_album_details( album_id ):
     album = {}
     try:
         xbmc.executehttpapi( "SetResponseFormat()" )
-        xbmc.executehttpapi( "SetResponseFormat(OpenField,)" )
+        xbmc.executehttpapi( "SetResponseFormat(OpenField;)" )
         httpapi_album_detail_query="""SELECT DISTINCT strAlbum, strArtist, idAlbum  FROM albumview WHERE idAlbum="%s" AND strAlbum !=''""" % album_id 
         album_title, artist_name, album_localid, dummy = xbmc.executehttpapi("QueryMusicDatabase(%s)" % urllib.quote_plus( httpapi_album_detail_query ), ).split( "</field>" )
         album['title'] = album_title

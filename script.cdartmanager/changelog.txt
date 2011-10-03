@@ -1,3 +1,7 @@
+1.5.3 
+- fixed HTTP-API database access
+- fixed error when artist name or album title contains a double quote
+
 1.5.2
 - fixed - copy and paste can be a real monster...
 

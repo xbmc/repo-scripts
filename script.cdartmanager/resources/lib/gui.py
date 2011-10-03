@@ -860,7 +860,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         fn = os.path.join( destination, (  ( album["artist"].replace("/", "").replace("'","") ) + " - " + ( album["title"].replace("/","").replace("'","") ) + ".png").lower())
                     xbmc.log( "[script.cdartmanager] - Destination Path: %s" % destination, xbmc.LOGNOTICE )
                     if not exists(destination):
-                        os.makedirs(destination)
+                        os.makedirs( destination )
                     xbmc.log( "[script.cdartmanager] - Filename: %s" % fn, xbmc.LOGNOTICE )
                     if exists(fn):
                         xbmc.log( "[script.cdartmanager] - ################## cdART Not being copied, File exists: %s" % fn, xbmc.LOGNOTICE )
