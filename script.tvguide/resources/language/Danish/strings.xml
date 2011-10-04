@@ -9,9 +9,22 @@
     <string id="30103">XMLTV fil</string>
     <string id="30104">Slet midlertidige filer...</string>
     <string id="30105">Færdig!</string>
+    <string id="30106">Vis notifikation før udvalgte programmer starter</string>
+    <string id="30107">Brug program billede som baggrund</string>
+    <string id="30108">Slet alle påmindelser...</string>
+    <string id="30109">Husk at slette midlertidige filer, når du skifter kilde</string>
+    <string id="30110">Opdater program information når XBMC starter</string>
 
-    <string id="30110">Ups, det er pinligt!</string>
-    <string id="30111">Det var ikke muligt at indlæse program data,</string>
-    <string id="30112">prøv igen senere...</string>
+    <string id="30150">Ups, det er pinligt!</string>
+    <string id="30151">Det var ikke muligt at indlæse program data,</string>
+    <string id="30152">prøv igen senere...</string>
+
+    <string id="30200">på [B]%s[/B] om 5 minutter...</string>
+
+    <string id="30300">Se %s</string>
+    <string id="30301">Påmind</string>
+    <string id="30302">Påmind ikke</string>
+    <string id="30303">Annuller</string>
+
 </strings>
  

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+	<allowoverlay>no</allowoverlay>
+	<defaultcontrol always="false">4000</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+
+        <control type="image">
+            <posx>375</posx>
+            <posy>280</posy>
+            <width>530</width>
+            <height>90</height>
+            <texture>tvguide-glasspane.png</texture>
+        </control>
+
+        <control type="button" id="4000">
+            <posx>395</posx>
+            <posy>300</posy>
+            <width>150</width>
+            <height>50</height>
+            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <onleft>4002</onleft>
+            <onright>4001</onright>
+            <align>center</align>
+            <alingy>center</alingy>
+            <font>font13</font>
+            <color>ffffffff</color>
+        </control>
+
+        <control type="button" id="4001">
+            <posx>565</posx>
+            <posy>300</posy>
+            <width>150</width>
+            <height>50</height>
+            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <onleft>4000</onleft>
+            <onright>4002</onright>
+            <align>center</align>
+            <alingy>center</alingy>
+            <font>font13</font>
+            <color>ffffffff</color>
+        </control>
+
+        <control type="button" id="4002">
+            <posx>735</posx>
+            <posy>300</posy>
+            <width>150</width>
+            <height>50</height>
+            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <onleft>4001</onleft>
+            <onright>4000</onright>
+            <align>center</align>
+            <alingy>center</alingy>
+            <font>font13</font>
+            <color>ffffffff</color>
+            <label>$ADDON[script.tvguide 30303]</label>
+        </control>
+
+    </controls>
+</window>

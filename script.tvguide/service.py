@@ -1,13 +1,11 @@
 import addon
+import notification
 import xbmc
 
-xbmc.log("Updating TVGuide [script.tvguide] channel list caches...")
-channelList = addon.SOURCE.getChannelList()
+if addon.SETTINGS['cache.data.on.xbmc.startup'] == 'true':
+    addon.SOURCE.updateChannelAndProgramListCaches()
 
-for channel in channelList:
-    xbmc.log("Updating TVGuide [script.tvguide] program list caches for channel " + channel.title + "...")
-    addon.SOURCE.getProgramList(channel)
-
-xbmc.log("Done updating TVGuide [script.tvguide] caches.")
-
-
+if addon.SETTINGS['notifications.enabled'] == 'true':
+    n = notification.Notification(addon.SOURCE, addon.ADDON.getAddonInfo('path'),
+        xbmc.translatePath(addon.ADDON.getAddonInfo('profile')))
+    n.scheduleNotifications()

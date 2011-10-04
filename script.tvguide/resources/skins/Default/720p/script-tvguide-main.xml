@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
 	<allowoverlay>no</allowoverlay>
-	<defaultcontrol always="false">1</defaultcontrol>
 	<coordinates>
 		<system>1</system>
 		<posx>0</posx>
@@ -9,13 +8,21 @@
 	</coordinates>
 	<controls>
 		<!-- Background -->
-		<control type="image">
+		<control type="image" id="4600">
 			<posx>0</posx>
 			<posy>0</posy>
 			<width>1280</width>
 			<height>720</height>
-			<texture>tvguide-background.png</texture>
+            <texture>tvguide-background-default.jpg</texture>
+            <fadetime>500</fadetime>
 		</control>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>tvguide-background.png</texture>
+        </control>
 
         <control type="group">
             <description>TV Guide group</description>
@@ -25,62 +32,70 @@
             <height>720</height>
 
             <!-- Date and time row -->
-            <control type="label" id="4000">
-                <description>Displays todays date</description>
+            <control type="group">
                 <posx>0</posx>
-                <posy>25</posy>
-                <width>180</width>
+                <posy>10</posy>
+                <width>1280</width>
                 <height>50</height>
-                <textcolor>ffffffff</textcolor>
-                <font>font13</font>
-                <align>center</align>
-                <aligny>center</aligny>
-            </control>
-            <control type="label" id="4001">
-                <description>1st half hour column</description>
-                <posx>180</posx>
-                <posy>25</posy>
-                <width>270</width>
-                <height>50</height>
-                <textcolor>ffffffff</textcolor>
-                <font>font13</font>
-                <aligny>center</aligny>
-            </control>
-            <control type="label" id="4002">
-                <description>2nd half hour column</description>
-                <posx>455</posx>
-                <posy>25</posy>
-                <width>270</width>
-                <height>50</height>
-                <textcolor>ffffffff</textcolor>
-                <font>font13</font>
-                <aligny>center</aligny>
-            </control>
-            <control type="label" id="4003">
-                <description>3rd half hour column</description>
-                <posx>730</posx>
-                <posy>25</posy>
-                <width>270</width>
-                <height>50</height>
-                <textcolor>ffffffff</textcolor>
-                <font>font13</font>
-                <aligny>center</aligny>
-            </control>
-            <control type="label" id="4004">
-                <description>4th half hour column</description>
-                <posx>1005</posx>
-                <posy>25</posy>
-                <width>270</width>
-                <height>50</height>
-                <textcolor>ffffffff</textcolor>
-                <font>font13</font>
-                <aligny>center</aligny>
+                <visible>true</visible>
+
+                <control type="label" id="4000">
+                    <description>Displays todays date</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                </control>
+                <control type="label" id="4001">
+                    <description>1st half hour column</description>
+                    <posx>180</posx>
+                    <posy>0</posy>
+                    <width>270</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <aligny>center</aligny>
+                </control>
+                <control type="label" id="4002">
+                    <description>2nd half hour column</description>
+                    <posx>455</posx>
+                    <posy>0</posy>
+                    <width>270</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <aligny>center</aligny>
+                </control>
+                <control type="label" id="4003">
+                    <description>3rd half hour column</description>
+                    <posx>730</posx>
+                    <posy>0</posy>
+                    <width>270</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <aligny>center</aligny>
+                </control>
+                <control type="label" id="4004">
+                    <description>4th half hour column</description>
+                    <posx>1005</posx>
+                    <posy>0</posy>
+                    <width>270</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <aligny>center</aligny>
+                </control>
             </control>
 
             <!-- Channels text column -->
             <control type="group" id="4500">
                 <posx>0</posx>
-                <posy>75</posy>
+                <posy>60</posy>
                 <width>180</width>
                 <height>400</height>
                 <visible>true</visible>
@@ -165,12 +180,22 @@
                     <font>font13</font>
                     <align>center</align>
                 </control>
+                <control type="label" id="4018">
+                    <description>9th channel</description>
+                    <posx>0</posx>
+                    <posy>400</posy>
+                    <width>180</width>
+                    <height>50</height>
+                    <textcolor>ffffffff</textcolor>
+                    <font>font13</font>
+                    <align>center</align>
+                </control>
             </control><!-- end group -->
 
             <!-- Channels icon column -->
             <control type="group" id="4501">
                 <posx>0</posx>
-                <posy>75</posy>
+                <posy>60</posy>
                 <width>180</width>
                 <height>400</height>
                 <visible>true</visible>
@@ -247,9 +272,26 @@
                     <aspectratio>keep</aspectratio>
                     <fadetime>500</fadetime>
                 </control>
+                <control type="image" id="4118">
+                    <description>9th channel</description>
+                    <posx>10</posx>
+                    <posy>400</posy>
+                    <width>160</width>
+                    <height>45</height>
+                    <aspectratio>keep</aspectratio>
+                    <fadetime>500</fadetime>
+                </control>
             </control><!-- end group -->
 
             <!-- Program description -->
+            <!--<control type="image" id="4117">-->
+                <!--<description>glasspane</description>-->
+                <!--<posx>0</posx>-->
+                <!--<posy>500</posy>-->
+                <!--<width>1280</width>-->
+                <!--<height>220</height>-->
+                <!--<texture>tvguide-glasspane.png</texture>-->
+            <!--</control>-->
             <control type="label" id="4020">
                 <description>Program title</description>
                 <posx>30</posx>
@@ -292,15 +334,15 @@
                 <width>320</width>
                 <height>160</height>
                 <aspectratio>keep</aspectratio>
-                <fadetime>250</fadetime>
+                <fadetime>500</fadetime>
                 <visible>!Control.IsVisible(4200)</visible>
             </control>
 
             <control type="image" id="4100">
                 <posx>180</posx>
-                <posy>25</posy>
+                <posy>0</posy>
                 <width>2</width>
-                <height>488</height>
+                <height>515</height>
                 <texture>timebar.png</texture>
             </control>
 

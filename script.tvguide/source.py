@@ -7,17 +7,37 @@ from elementtree import ElementTree
 from strings import *
 import ysapi
 
+import xbmc
+import xbmcgui
 import pickle
 
+STREAM_DR1 = 'rtmp://rtmplive.dr.dk/live/livedr01astream3'
+STREAM_DR2 = 'rtmp://rtmplive.dr.dk/live/livedr02astream3'
+STREAM_DR_UPDATE = 'rtmp://rtmplive.dr.dk/live/livedr03astream3'
+STREAM_DR_K = 'rtmp://rtmplive.dr.dk/live/livedr04astream3'
+STREAM_DR_RAMASJANG = 'rtmp://rtmplive.dr.dk/live/livedr05astream3'
+STREAM_DR_HD = 'rtmp://livetv.gss.dr.dk/live/livedr06astream3'
+STREAM_24_NORDJYSKE = 'mms://stream.nordjyske.dk/24nordjyske - Full Broadcast Quality'
+
 class Channel(object):
-    def __init__(self, id, title, logo = None):
+    def __init__(self, id, title, logo = None, streamUrl = None):
         self.id = id
         self.title = title
         self.logo = logo
+        self.streamUrl = streamUrl
+
+    def isPlayable(self):
+        return hasattr(self, 'streamUrl') and self.streamUrl
+
+    def play(self):
+        print "Playing %s" % self.streamUrl
+#        item = xbmcgui.ListItem(path = self.streamUrl)
+#        item.setProperty('IsLive', 'true')
+        xbmc.Player().play(item = self.streamUrl + ' live=1')
 
     def __repr__(self):
-        return 'Channel(id=%s, title=%s, logo=%s)' \
-               % (self.id, self.title, self.logo)
+        return 'Channel(id=%s, title=%s, logo=%s, streamUrl=%s)' \
+               % (self.id, self.title, self.logo, self.streamUrl)
 
 class Program(object):
     def __init__(self, channel, title, startDate, endDate, description, imageLarge = None, imageSmall=None):
@@ -36,13 +56,24 @@ class Program(object):
 
 class Source(object):
     KEY = "undefiend"
-    
+    STREAMS = {}
+
     def __init__(self, settings, hasChannelIcons):
         self.channelIcons = hasChannelIcons
         self.cachePath = settings['cache.path']
 
     def hasChannelIcons(self):
         return self.channelIcons
+
+    def updateChannelAndProgramListCaches(self):
+        print "[script.tvguide] Updating channel list caches..."
+        channelList = self.getChannelList()
+
+        for channel in channelList:
+            print "[script.tvguide] Updating program list caches for channel " + channel.title.decode('iso-8859-1') + "..."
+            self.getProgramList(channel)
+
+        print "[script.tvguide] Done updating caches."
 
     def getChannelList(self):
         cacheFile = os.path.join(self.cachePath, self.KEY + '.channellist')
@@ -57,14 +88,18 @@ class Source(object):
         if not cacheHit:
             try:
                 channelList = self._getChannelList()
+                for channel in channelList:
+                    if self.STREAMS.has_key(channel.id):
+                        channel.streamUrl = self.STREAMS[channel.id]
+                        
                 pickle.dump(channelList, open(cacheFile, 'w'))
             except Exception, ex:
-                print "Unable to get channel list\n" + str(ex)
+                print "[script.tvguide] Unable to get channel list\n" + str(ex)
         else:
-            channelList = pickle.load(open(cacheFile))
-
-        if channelList:
-            print "Loaded %d channels" % len(channelList)
+            try:
+                channelList = pickle.load(open(cacheFile))
+            except Exception:
+                pass
 
         return channelList
 
@@ -74,8 +109,6 @@ class Source(object):
     def getProgramList(self, channel):
         id = str(channel.id).replace('/', '')
         cacheFile = os.path.join(self.cachePath, self.KEY + '-' + id + '.programlist')
-
-        print cacheFile
 
         try:
             cachedOn = datetime.datetime.fromtimestamp(os.path.getmtime(cacheFile))
@@ -89,12 +122,9 @@ class Source(object):
                 programList = self._getProgramList(channel)
                 pickle.dump(programList, open(cacheFile, 'w'))
             except Exception, ex:
-                print "Unable to get program list for channel: " + channel + "\n" + str(ex)
+                print "[script.tvguide] Unable to get program list for channel: " + channel + "\n" + str(ex)
         else:
             programList = pickle.load(open(cacheFile))
-
-        if programList:
-            print "Loaded %d programs for channel %s" % (len(programList), channel.id)
 
         return programList
     
@@ -110,9 +140,17 @@ class Source(object):
 
 class DrDkSource(Source):
     KEY = 'drdk'
-
     CHANNELS_URL = 'http://www.dr.dk/tjenester/programoversigt/dbservice.ashx/getChannels?type=tv'
     PROGRAMS_URL = 'http://www.dr.dk/tjenester/programoversigt/dbservice.ashx/getSchedule?channel_source_url=%s&broadcastDate=%s'
+
+    STREAMS = {
+        'dr.dk/mas/whatson/channel/DR1' : STREAM_DR1,
+        'dr.dk/mas/whatson/channel/DR2' : STREAM_DR2,
+        'dr.dk/external/ritzau/channel/dru' : STREAM_DR_UPDATE,
+        'dr.dk/mas/whatson/channel/TVR' : STREAM_DR_RAMASJANG,
+        'dr.dk/mas/whatson/channel/TVK' : STREAM_DR_K,
+        'dr.dk/mas/whatson/channel/TV' : STREAM_DR_HD
+    }
 
     def __init__(self, settings):
         Source.__init__(self, settings, False)
@@ -151,8 +189,14 @@ class DrDkSource(Source):
 class YouSeeTvSource(Source):
     KEY = 'youseetv'
 
-    CHANNELS_URL = 'http://yousee.tv'
-    PROGRAMS_URL = 'http://yousee.tv/feeds/tvguide/getprogrammes/?channel=%s'
+    STREAMS = {
+        1 : STREAM_DR1,
+        2 : STREAM_DR2,
+        889 : STREAM_DR_UPDATE,
+        505: STREAM_DR_RAMASJANG,
+        504 : STREAM_DR_K,
+        503 : STREAM_DR_HD
+    }
 
     def __init__(self, settings):
         Source.__init__(self, settings, True)
@@ -201,6 +245,15 @@ class TvTidSource(Source):
     BASE_URL = 'http://tvtid.tv2.dk%s'
     FETCH_URL = BASE_URL % '/js/fetch.js.php/from-%d.js'
 
+    STREAMS = {
+        11825154 : STREAM_DR1,
+        11823606 : STREAM_DR2,
+        11841417 : STREAM_DR_UPDATE,
+        25995179 : STREAM_DR_RAMASJANG,
+        26000893 : STREAM_DR_K,
+        26005640 : STREAM_DR_HD
+    }
+
     def __init__(self, settings):
         Source.__init__(self, settings, True)
         self.time = time.time()
@@ -214,6 +267,7 @@ class TvTidSource(Source):
 
         channelList = list()
         for channel in json['channels']:
+            print str(channel['id']) + " - " + channel['name'].encode('utf-8', 'replace')
             logoFile = self.BASE_URL % channel['logo']
 
             c = Channel(id = channel['id'], title = channel['name'], logo = logoFile)

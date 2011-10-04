@@ -1,3 +1,6 @@
 script.pseudotv/.git
 script.module.xbmcswift/.git
 script.extrafanartdownloader/.git
+script.tvguide/.git
+script.tvguide/.gitignore
+script.tvguide/.idea

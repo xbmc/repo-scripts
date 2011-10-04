@@ -73,10 +73,7 @@ class YouSeeTVGuideApi(YouSeeApi):
 
 if __name__ == '__main__':
     api = YouSeeTVGuideApi()
-    json = api.channels()
-
-    #api = YouSeeMovieApi()
-    #print api.moviesInGenre('action')['movies'][0]
+    json = api.programs(1)
 
     s = simplejson.dumps(json, sort_keys=True, indent='    ')
     print '\n'.join([l.rstrip() for l in  s.splitlines()])
