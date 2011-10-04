@@ -1,3 +1,7 @@
+2.5.1
+- fixed error when artist name or album title contains a double quote
+- fixed changes made in XBMC(json-rpc)
+
 2.5.0
 - clean up excess logging comments, cosmetics
 - Changed major version number for Pre-Eden Version

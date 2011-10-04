@@ -117,9 +117,9 @@
   <string id="32112"></string>
   <string id="32113"></string>
   <string id="32114"></string>
-  <string id="32115">Melding Geven Gedurende Database Bouwen op de Achtergrond</string>
-  <string id="32116">Melding Geven na Bouwen van Database op de Achtergrond (weergeven voor 2 seconden)</string>
+  <string id="32115">Melding geven gedurende database obuwen op de achtergrond</string>
+  <string id="32116">Melding geven na Bouwen van database op de achtergrond (weergeven voor 2 seconden)</string>
   <string id="32117">Database Bouwen Compleet</string>
-  <string id="32118">Background Database building in progress...  Exiting Script...</string>
-  <string id="32119">Stopping Background Database Building</string>
+  <string id="32118">Bezig met bouwen database op de achtergrond...  script beindingen...</string>
+  <string id="32119">Stoppen met bouwen van database op de achtergrond</string>
 </strings>

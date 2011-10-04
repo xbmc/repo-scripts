@@ -27,8 +27,8 @@ def get_musicbrainz_with_singles( album_title, artist, e_count ):
     xbmc.log( "[script.cdartmanager] - Retieving MusicBrainz Info - Including Singles", xbmc.LOGDEBUG )
     xbmc.log( "[script.cdartmanager] - Artist: %s" % repr(artist), xbmc.LOGDEBUG )
     xbmc.log( "[script.cdartmanager] - Album: %s" % repr(album_title), xbmc.LOGDEBUG )
-    #artist = artist.replace(" & "," ")
-    #album_title = album_title.replace(" & "," ")
+    artist = artist.replace('"','?')
+    album_title = album_title.replace('"','?')
     try:
         q = """'"%s" AND artist:"%s"'""" % (album_title, artist)
         filter = ReleaseGroupFilter( query=q, limit=1)
@@ -52,14 +52,20 @@ def get_musicbrainz_with_singles( album_title, artist, e_count ):
     except WebServiceError, e:
         xbmc.log( "[script.cdartmanager] - Error: %s" % e, xbmc.LOGERROR )
         web_error = "%s" % e
-        if int( web_error.replace( "HTTP Error ", "").replace( ":", "") ) == 503 and count < 5:
-            xbmc.sleep( 2000 ) # give the musicbrainz server a 2 second break hopefully it will recover
-            count += 1
-            album = album = get_musicbrainz_with_singles( album_title, artist, count ) # try again
-        elif int( web_error.replace( "HTTP Error ", "").replace( ":", "") ) == 503 and count > 5:
-            xbmc.log( "[script.cdartmanager] - Script being blocked, attempted 5 tries with 2 second pauses", xbmc.LOGDEBUG )
-            count = 0
-        else:
+        try:
+            if int( web_error.replace( "HTTP Error ", "").replace( ":", "") ) == 503 and count < 5:
+                xbmc.sleep( 2000 ) # give the musicbrainz server a 2 second break hopefully it will recover
+                count += 1
+                album = album = get_musicbrainz_with_singles( album_title, artist, count ) # try again
+            elif int( web_error.replace( "HTTP Error ", "").replace( ":", "") ) == 503 and count > 5:
+                xbmc.log( "[script.cdartmanager] - Script being blocked, attempted 5 tries with 2 second pauses", xbmc.LOGDEBUG )
+                count = 0
+            else:
+                album["artist"] = ""
+                album["artist_id"] = ""
+                album["id"] = ""
+                album["title"] = ""
+        except:
             album["artist"] = ""
             album["artist_id"] = ""
             album["id"] = ""
@@ -74,8 +80,8 @@ def get_musicbrainz_album( album_title, artist, e_count ):
     xbmc.log( "[script.cdartmanager] - Retieving MusicBrainz Info - Not including Singles", xbmc.LOGDEBUG )
     xbmc.log( "[script.cdartmanager] - Artist: %s" % repr(artist), xbmc.LOGDEBUG )
     xbmc.log( "[script.cdartmanager] - Album: %s" % repr(album_title), xbmc.LOGDEBUG )
-    #artist = artist.replace(" & "," ")
-    #album_title = album_title.replace(" & "," ")
+    artist = artist.replace('"','?')
+    album_title = album_title.replace('"','?')
     try:
         q = """'"%s" AND artist:"%s" NOT type:"Single"'""" % (album_title, artist)
         filter = ReleaseGroupFilter( query=q, limit=1)
@@ -97,16 +103,22 @@ def get_musicbrainz_album( album_title, artist, e_count ):
     except WebServiceError, e:
         xbmc.log( "[script.cdartmanager] - Error: %s" % e, xbmc.LOGERROR )
         web_error = "%s" % e
-        if int( web_error.replace( "HTTP Error ", "").replace( ":", "") ) == 503 and count < 5:
-            xbmc.sleep( 2000 ) # give the musicbrainz server a 2 second break hopefully it will recover
-            count += 1
-            album = get_musicbrainz_album( album_title, artist, count ) # try again
-        elif int( web_error.replace( "HTTP Error ", "").replace( ":", "") ) == 503 and count > 5:
-            xbmc.log( "[script.cdartmanager] - Script being blocked, attempted 5 tries with 2 second pauses", xbmc.LOGDEBUG )
-            count = 0
-        else:
-            xbmc.sleep( 1000 ) # sleep for allowing proper use of webserver
-            album = get_musicbrainz_with_singles( album_title, artist, 0 )
+        try:
+            if int( web_error.replace( "HTTP Error ", "").replace( ":", "") ) == 503 and count < 5:
+                xbmc.sleep( 2000 ) # give the musicbrainz server a 2 second break hopefully it will recover
+                count += 1
+                album = get_musicbrainz_album( album_title, artist, count ) # try again
+            elif int( web_error.replace( "HTTP Error ", "").replace( ":", "") ) == 503 and count > 5:
+                xbmc.log( "[script.cdartmanager] - Script being blocked, attempted 5 tries with 2 second pauses", xbmc.LOGDEBUG )
+                count = 0
+            else:
+                xbmc.sleep( 1000 ) # sleep for allowing proper use of webserver
+                album = get_musicbrainz_with_singles( album_title, artist, 0 )
+        except:
+            album["artist"] = ""
+            album["artist_id"] = ""
+            album["id"] = ""
+            album["title"] = ""
     count = 0
     xbmc.sleep( 1000 ) # sleep for allowing proper use of webserver
     return album
