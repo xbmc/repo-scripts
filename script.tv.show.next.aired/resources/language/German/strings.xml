@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="450">TV Programm</string>
+	<string id="32101">TV Show - Next Aired</string>
+	<string id="32102">Hole Informationen...</string>
+	<string id="32103">ABGEBROCHEN</string>
+	<string id="32104">Operation vom Benutzer abgebrochen.</string>
+	<string id="45000">Anzeige</string>
+	<string id="45001">Vorschaubild-Typ</string>
+	<string id="45002">Banner herunterladen (Logo Downloader erforderlich)</string>
+	<string id="45003">Logos herunterladen (Logo Downloader erforderlich)</string>
+	<string id="45004">Hintergrund Fanart aktivieren</string>
+	<string id="45005">16:9 Vorschaubiler aktivieren</string>
+	<string id="45006">16:9 Vorschaubilder herunterladen (Logo Downloader erforderlich)</string>
+</strings>
+
