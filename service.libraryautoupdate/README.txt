@@ -1,0 +1,1 @@
+Using the new xbmc services extension point this script should now run as needed once configured. Enjoy. 
