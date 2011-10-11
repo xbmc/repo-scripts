@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.extrafanartdownloader" name="Extrafanart Downloader" version="0.3.6" provider-name="paddycarey">
+<addon id="script.extrafanartdownloader" name="Extrafanart Downloader" version="0.3.7" provider-name="paddycarey/putneyj">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.elementtree" version="1.2.7"/>
   </requires>
   <extension point="xbmc.python.script" library="default.py">
     <provides>executable</provides>
@@ -10,12 +9,17 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Download extrafanart for all TV shows and Movies</summary>
 	<summary lang="nl">Download extrafanart voor alle TV series en Films</summary>
-    <description lang="en">Download extrafanart for all TV shows and Movies in your library.[CR]For this to work your skins needs to support the extrafanart.[CR]
-	TV Shows: Each TV Show must have its own folder where an 'extrafanart' subfolder will be created.[CR]
-	Movies: Each movie must have its own folder where an 'extrafanart' subfolder will be created.</description>
-	<description lang="nl">Download extrafanart voor alle TV series en Films in jou bibliotheek.[CR]Dit werkt enkel als de skin extrafanart ondersteund.[CR]
-	TV Series: Elke TV Series moet zijn eigen folder hebben waar een 'extrafanart' folder zal worden aangemaakt.[CR]
-	Films: Elke Film moet zijn eigen folder hebben waar een 'extrafanart' folder zal worden aangemaakt.[CR]
+    <description lang="en">Download extrafanart for all TV shows and Movies in your library.[CR]
+	For this to work your skins needs to support the extrafanart.[CR]
+	Remark:[CR]Each TV Show / Movie must have its own folder where an 'extrafanart' subfolder will be created.[CR]
+	Extrafanart sources:[CR]TV Shows (thetvdb.com)[CR]Movies (themoviedb.org)[CR]
+	Skin integration:[CR]See readme file
+	</description>
+	<description lang="nl">Download extrafanart voor alle TV series en Films in jou bibliotheek.[CR]
+	Dit werkt enkel als de skin extrafanart ondersteund.[CR]
+	Opmerking:[CR]Elke TV Serie / Film moet zijn eigen folder hebben waar een 'extrafanart' folder zal worden aangemaakt.[CR]
+	Extrafanart bronnen:[CR]TV Series (thetvdb.com)[CR]Films (themoviedb.org)[CR]
+	Skin integratie:[CR]Zie readme bestand
 	</description>
     <platform>all</platform>
   </extension>
