@@ -10,8 +10,14 @@
 
         <setting id="xmltv.file" label="30103" type="file" visible="eq(-2,3)" />
 
+        <setting type="lsep" label="30109" />
+
+        <setting type="sep" />
+        <setting id="program.background.enabled" label="30107" type="bool" default="true" />
+
         <setting type="sep" />
         <setting label="30104" type="action" action="RunScript($CWD/clear_cache.py)" />
+
 	</category>
 </settings>
 

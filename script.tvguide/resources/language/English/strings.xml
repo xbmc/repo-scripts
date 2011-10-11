@@ -9,10 +9,21 @@
     <string id="30103">XMLTV file</string>
     <string id="30104">Clear cache...</string>
     <string id="30105">Done!</string>
+    <string id="30106">Show notification before selected programs start</string>
+    <string id="30107">Use program image as background</string>
+    <string id="30108">Clear all reminders...</string>
+    <string id="30109">Remember to clear the cache when you change source</string>
+    <string id="30110">Update program information on XBMC startup</string>
 
-    <string id="30110">Oops, sorry about that!</string>
-    <string id="30111">It was not possible to load program data,</string>
-    <string id="30112">please try again later...</string>
+    <string id="30150">Oops, sorry about that!</string>
+    <string id="30151">It was not possible to load program data,</string>
+    <string id="30152">please try again later...</string>
 
+    <string id="30200">on [B]%s[/B] in 5 minutes...</string>
+
+    <string id="30300">Watch %s</string>
+    <string id="30301">Remind</string>
+    <string id="30302">Don't remind</string>
+    <string id="30303">Cancel</string>
 </strings>
 

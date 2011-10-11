@@ -19,7 +19,7 @@ KEY_INFO = 11
 KEY_NAV_BACK = 92
 KEY_CONTEXT_MENU = 117
 
-CHANNELS_PER_PAGE = 8
+CHANNELS_PER_PAGE = 9
 
 CELL_HEIGHT = 50
 CELL_WIDTH = 275
@@ -28,8 +28,10 @@ CELL_WIDTH_CHANNELS = 180
 HALF_HOUR = datetime.timedelta(minutes = 30)
 
 ADDON = xbmcaddon.Addon(id = 'script.tvguide')
-TEXTURE_BUTTON_NOFOCUS = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'cell-bg.png')
-TEXTURE_BUTTON_FOCUS = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'cell-bg-selected.png')
+TEXTURE_BUTTON_NOFOCUS = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'tvguide-program-grey.png')
+TEXTURE_BUTTON_FOCUS = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'tvguide-program-grey-focus.png')
+TEXTURE_BUTTON_NOFOCUS_NOTIFY = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'tvguide-program-red.png')
+TEXTURE_BUTTON_FOCUS_NOTIFY = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'tvguide-program-red-focus.png')
 
 class TVGuide(xbmcgui.WindowXML):
     C_MAIN_TITLE = 4020
@@ -38,13 +40,17 @@ class TVGuide(xbmcgui.WindowXML):
     C_MAIN_IMAGE = 4023
     C_MAIN_LOADING = 4200
     C_MAIN_LOADING_PROGRESS = 4201
+    C_MAIN_BACKGROUND = 4600
 
     def __new__(cls, source):
         return super(TVGuide, cls).__new__(cls, 'script-tvguide-main.xml', ADDON.getAddonInfo('path'))
 
     def __init__(self,  source):
+        """
+        @param source: the source of EPG data
+        @type source: source.Source
+        """
         super(TVGuide, self).__init__()
-
         self.source = source
         self.controlToProgramMap = {}
         self.focusX = 0
@@ -93,17 +99,20 @@ class TVGuide(xbmcgui.WindowXML):
 
     def onClick(self, controlId):
         program = self.controlToProgramMap[controlId]
-        if program.imageLarge is not None:
-            d = TVGuideInfo(program)
-            d.doModal()
-            del d
+
+        d = PopupMenu(program)
+        d.doModal()
+        buttonClicked = d.buttonClicked
+        del d
+
+        if buttonClicked == PopupMenu.C_POPUP_PLAY:
+            program.channel.play()
 
     def onFocus(self, controlId):
         controlInFocus = self.getControl(controlId)
         (left, top) = controlInFocus.getPosition()
         if left > self.focusX or left + controlInFocus.getWidth() < self.focusX:
             self.focusX = left
-
 
         program = self.controlToProgramMap[controlId]
 
@@ -113,6 +122,9 @@ class TVGuide(xbmcgui.WindowXML):
 
         if program.imageSmall is not None:
             self.getControl(self.C_MAIN_IMAGE).setImage(program.imageSmall)
+
+        if ADDON.getSetting('program.background.enabled') == 'true' and program.imageLarge is not None:
+            self.getControl(self.C_MAIN_BACKGROUND).setImage(program.imageLarge)
 
     def _left(self, currentX, currentY):
         control = self._findControlOnLeft(currentX, currentY)
@@ -158,7 +170,7 @@ class TVGuide(xbmcgui.WindowXML):
         self.page = self.onRedrawEPG(self.page+ 1, self.date)
         return self._findControlBelow(0)
 
-    def onRedrawEPG(self, page, startTime):
+    def onRedrawEPG(self, page, startTime, autoChangeFocus = True):
         oldControltoProgramMap = self.controlToProgramMap.copy()
         self.controlToProgramMap.clear()
 
@@ -223,13 +235,14 @@ class TVGuide(xbmcgui.WindowXML):
                 if cellWidth > 1:
                     control = xbmcgui.ControlButton(
                         cellStart,
-                        25 + CELL_HEIGHT * (1 + idx),
-                        cellWidth,
-                        CELL_HEIGHT,
+                        60 + CELL_HEIGHT * idx,
+                        cellWidth - 2,
+                        CELL_HEIGHT - 2,
                         program.title,
                         noFocusTexture = TEXTURE_BUTTON_NOFOCUS,
                         focusTexture = TEXTURE_BUTTON_FOCUS
                     )
+
                     controlsToAdd.append([control, program])
 
 
@@ -244,7 +257,7 @@ class TVGuide(xbmcgui.WindowXML):
         try:
             self.getFocus()
         except TypeError:
-            if len(self.controlToProgramMap.keys()) > 0:
+            if len(self.controlToProgramMap.keys()) > 0 and autoChangeFocus:
                 self.setFocus(self.getControl(self.controlToProgramMap.keys()[0]))
 
         self.getControl(self.C_MAIN_LOADING).setVisible(False)
@@ -343,24 +356,33 @@ class TVGuide(xbmcgui.WindowXML):
 
 
 
-class TVGuideInfo(xbmcgui.WindowXMLDialog):
-    C_INFO_IMAGE = 4000
+class PopupMenu(xbmcgui.WindowXMLDialog):
+    C_POPUP_PLAY = 4000
+    C_POPUP_CANCEL = 4001
 
     def __new__(cls, program):
-        return super(TVGuideInfo, cls).__new__(cls, 'script-tvguide-info.xml', ADDON.getAddonInfo('path'))
+        return super(PopupMenu, cls).__new__(cls, 'script-tvguide-menu.xml', ADDON.getAddonInfo('path'))
 
     def __init__(self, program):
-        super(TVGuideInfo, self).__init__()
+        super(PopupMenu, self).__init__()
         self.program = program
-            
+        self.buttonClicked = None
+
     def onInit(self):
-        self.getControl(self.C_INFO_IMAGE).setImage(self.program.imageLarge)
+        playControl = self.getControl(self.C_POPUP_PLAY)
+        playControl.setLabel(strings(WATCH_CHANNEL, self.program.channel.title))
+        if not self.program.channel.isPlayable():
+            playControl.setEnabled(False)
+            self.setFocusId(self.C_POPUP_CANCEL)
 
     def onAction(self, action):
-        self.close()
+        if action.getId() in [KEY_BACK, KEY_MENU, KEY_NAV_BACK]:
+            self.close()
+            return
 
     def onClick(self, controlId):
-        pass
+        self.buttonClicked = controlId
+        self.close()
 
     def onFocus(self, controlId):
         pass
