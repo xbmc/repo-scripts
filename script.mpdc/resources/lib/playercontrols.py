@@ -17,7 +17,8 @@ ctrls = {
 		'single1':['SingleOnNF.png','SingleOnFO.png'],
 		'consume':['ConsumeOffNF.png','ConsumeOffFO.png'],
 		'consume0':['ConsumeOffNF.png','ConsumeOffFO.png'],
-		'consume1':['ConsumeOnNF.png','ConsumeOnFO.png']
+		'consume1':['ConsumeOnNF.png','ConsumeOnFO.png'],
+		'outputs':['OSDAudioNF.png','OSDAudioFO.png']
 	},
 	'PM3.HD': {
 		'prev':['PlayerControls-PrevNF.png','PlayerControls-PrevFO.png'],
@@ -58,6 +59,9 @@ ctrls = {
 		'consume1':['player-repeatall-nofocus.png','player-repeatall-focus.png']
 	}
 }
+
+pl_ctrl_types = ['random','repeat','single','consume']
+
 class Controls(object):
 	def __init__(self,theme):
 		self._theme=theme
@@ -81,9 +85,13 @@ class Controls(object):
 		ctr
 	def init_playback_controls(self,listview):
 		listview.addItems([self._create_control('prev'),self._create_control('stop'),self._create_control('pause'),self._create_control('next')])
-	def init_player_controls(self,listview):
-		listview.addItems([self._create_control('random'),self._create_control('repeat'),self._create_control('single'),self._create_control('consume')])
-	
+
+	def init_player_controls(self,listview,status):
+		for key in pl_ctrl_types:
+			if key in status:
+				listview.addItem(self._create_control(key))
+		listview.addItem(self._create_control('outputs'))
+
 	def update_playback_controls(self,listview,status):
 		item = listview.getListItem(2)
 		state = status['state']
@@ -100,10 +108,11 @@ class Controls(object):
 		for i in range(0,listview.size()):
 			item = listview.getListItem(i)
 			name = item.getProperty('label')
-			img = self._get_image(name+status[name])
-			item.setProperty('state',status[name])
-			item.setIconImage(img[0])
-			item.setThumbnailImage(img[1])
+			if name in pl_ctrl_types:
+				img = self._get_image(name+status[name])
+				item.setProperty('state',status[name])
+				item.setIconImage(img[0])
+				item.setThumbnailImage(img[1])
 			
 			
 		

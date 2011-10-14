@@ -361,10 +361,12 @@ class MPDClient(object):
         return sock
 
     def _connect_tcp(self, host, port):
-        try:
-            flags = socket.AI_ADDRCONFIG
-        except AttributeError:
-            flags = 0
+        flags = 0
+	# fix for AppleTV v2 devices
+	#try:
+        #    flags = socket.AI_ADDRCONFIG
+        #except AttributeError:
+        #    flags = 0
         msg = "getaddrinfo returns an empty list"
         for res in socket.getaddrinfo(host, port, socket.AF_UNSPEC,
                                       socket.SOCK_STREAM, socket.IPPROTO_TCP,

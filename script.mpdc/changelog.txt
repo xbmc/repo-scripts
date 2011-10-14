@@ -1,3 +1,8 @@
+[B]2.0.5[/B]
+- fixed: unable to start/connect on appletv boxes
+- fixed: handling backspace keys
+- added: server outputs are listed, can be enabled/disabled
+- added: volume control buttons - for cases when volUP/volDOWN do not work (appletv)
 [B]2.0.4[/B]
 - released for eden
 [B]1.0.4[/B]
