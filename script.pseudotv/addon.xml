@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon
     id="script.pseudotv"
-	version="1.2.1"
+	version="2.0.0"
 	name="PseudoTV"
 	provider-name="Jason Anderson">
 
@@ -17,7 +17,9 @@
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<minversion>35647</minversion>
-		<summary>Channel surfing for your video library</summary>
-		<description>PseudoTV acts similar to normal broadcast or cable TV, complete with multiple preset and user-defined channels and an EPG.</description>
+		<summary lang="en">Channel surfing for your video library</summary>
+		<summary lang="nl">Zenderlijst voor jouw video bibliotheek</summary>
+		<description lang="en">PseudoTV acts similar to normal broadcast or cable TV, complete with multiple preset and user-defined channels and an EPG.</description>
+		<description lang="nl">PseudoTV gedraagt zich vergelijkbaar als een normale TV zender, compleet met standaard en instelbare kanalen en EPG (TV gids).</description>
 	</extension>
 </addon>

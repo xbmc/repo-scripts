@@ -1,0 +1,414 @@
+<window>
+    <allowoverlay>no</allowoverlay>
+    <zorder>1</zorder>
+	<defaultcontrol>120</defaultcontrol>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+
+	<include>dialogOpen</include>
+	
+    <controls>
+		<control type="group">
+			<posx>272</posx>
+			<posy>70</posy>
+			
+			<control type="image">
+				<description>Background</description>
+				<width>737</width>
+				<height>560</height>
+				<include>dialogWindow</include>
+			</control>
+			
+			<control type="label">
+				<description>heading label</description>
+				<width>669</width>
+				<label>Channel Rules</label>
+				<include>dialog_Windowtitle</include>
+			</control>
+			
+			<control type="image">
+				<posx>19</posx>
+				<posy>124</posy>
+				<width>700</width>
+				<include>dialog_Separator</include>
+			</control>
+			
+			<control type="image">
+				<posx>19</posx>
+				<posy>460</posy>
+				<width>700</width>
+				<include>dialog_Separator</include>
+			</control>
+			
+			<control type="group">
+				<posx>34</posx>
+				<posy>480</posy>
+				<control type="button" id="901">
+					<description>Defaults Button</description>
+					<posx>547</posx>
+					<onup>102</onup>
+					<ondown>102</ondown>
+					<include>dialog_Button</include>
+					<onclick>PreviousMenu</onclick>
+					<label>Close</label>
+					<visible>Control.IsVisible(102)</visible>
+				</control>
+				<control type="button" id="114">
+					<description>Rules Button</description>
+					<posx>4</posx>
+					<onup>111</onup>
+					<onleft>113</onleft>
+					<onright>112</onright>
+					<ondown>111</ondown>
+					<include>dialog_Button</include>
+					<label>Rules</label>
+					<visible>Control.IsVisible(106)</visible>
+				</control>
+				<control type="button" id="112">
+					<description>OK Button</description>
+					<posx>414</posx>
+					<onup>110</onup>
+					<onleft>114</onleft>
+					<onright>113</onright>
+					<ondown>110</ondown>
+					<include>dialog_Button</include>
+					<label>OK</label>
+					<visible>Control.IsVisible(106)</visible>
+				</control>
+				<control type="button" id="113">
+					<description>Cancel Button</description>
+					<posx>547</posx>
+					<onup>111</onup>
+					<onleft>112</onleft>
+					<onright>114</onright>
+					<ondown>111</ondown>
+					<include>dialog_Button</include>
+					<label>Cancel</label>
+					<visible>Control.IsVisible(106)</visible>
+				</control>
+			</control>
+        </control>
+
+        <control type="group" id="105">
+            <posx>291</posx>
+			<posy>195</posy>
+			
+			<control type="image">
+				<posx>0</posx>
+				<posy>-42</posy>
+				<width>700</width>
+				<include>dialog_Separator</include>
+				<visible>!Control.IsVisible(130)</visible>
+			</control>
+			
+			<control type="label">
+                <posx>0</posx>
+                <posy>-44</posy>
+                <width>160</width>
+                <height>42</height>
+                <label>Rules</label>
+				<include>dialog_Label-bold</include>
+				<visible>!Control.IsVisible(130)</visible>
+            </control>
+			
+			<control type="group" id="104">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>700</width>
+				<height>336</height>
+
+                <control type="button" id="120">
+                    <description>Rule Entry 1</description>
+                    <posy>-2</posy>
+					<width>700</width>
+					<height>42</height>
+					<textcolor>Color4</textcolor>
+					<focusedcolor>Color1</focusedcolor>
+					<font>small</font>
+					<textoffsetx>15</textoffsetx>
+					<aligny>center</aligny>
+					<texturefocus>dialogs/list-focus.png</texturefocus>
+					<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+                    <ondown>121</ondown>
+                    <visible allowhiddenfocus="true">Control.HasFocus(120) | ![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,120)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="121">
+                    <description>Rule Entry 2</description>
+                    <posy>40</posy>
+					<width>700</width>
+					<height>42</height>
+					<textcolor>Color4</textcolor>
+					<focusedcolor>Color1</focusedcolor>
+					<font>small</font>
+					<textoffsetx>15</textoffsetx>
+					<aligny>center</aligny>
+					<texturefocus>dialogs/list-focus.png</texturefocus>
+					<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+                    <onup>120</onup>
+                    <ondown>122</ondown>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,121)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="122">
+                    <description>Rule Entry 3</description>
+                    <posy>82</posy>
+					<width>700</width>
+					<height>42</height>
+					<textcolor>Color4</textcolor>
+					<focusedcolor>Color1</focusedcolor>
+					<font>small</font>
+					<textoffsetx>15</textoffsetx>
+					<aligny>center</aligny>
+					<texturefocus>dialogs/list-focus.png</texturefocus>
+					<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+                    <onup>121</onup>
+                    <ondown>123</ondown>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,122)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="123">
+                    <description>Rule Entry 4</description>
+                    <posy>124</posy>
+					<width>700</width>
+					<height>42</height>
+					<textcolor>Color4</textcolor>
+					<focusedcolor>Color1</focusedcolor>
+					<font>small</font>
+					<textoffsetx>15</textoffsetx>
+					<aligny>center</aligny>
+					<texturefocus>dialogs/list-focus.png</texturefocus>
+					<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+                    <onup>122</onup>
+                    <ondown>124</ondown>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,123)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="124">
+                    <description>Rule Entry 5</description>
+                    <posy>166</posy>
+					<width>700</width>
+					<height>42</height>
+					<textcolor>Color4</textcolor>
+					<focusedcolor>Color1</focusedcolor>
+					<font>small</font>
+					<textoffsetx>15</textoffsetx>
+					<aligny>center</aligny>
+					<texturefocus>dialogs/list-focus.png</texturefocus>
+					<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+                    <onup>123</onup>
+                    <ondown>125</ondown>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,124)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="125">
+                    <description>Rule Entry 6</description>
+                    <posy>208</posy>
+					<width>700</width>
+					<height>42</height>
+					<textcolor>Color4</textcolor>
+					<focusedcolor>Color1</focusedcolor>
+					<font>small</font>
+					<textoffsetx>15</textoffsetx>
+					<aligny>center</aligny>
+					<texturefocus>dialogs/list-focus.png</texturefocus>
+					<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+                    <onup>124</onup>
+                    <ondown>126</ondown>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,125)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="126">
+                    <description>Rule Entry 7</description>
+                    <posy>250</posy>
+					<width>700</width>
+					<height>42</height>
+					<textcolor>Color4</textcolor>
+					<focusedcolor>Color1</focusedcolor>
+					<font>small</font>
+					<textoffsetx>15</textoffsetx>
+					<aligny>center</aligny>
+					<texturefocus>dialogs/list-focus.png</texturefocus>
+					<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+                    <onup>125</onup>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,126)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="130">
+                    <description>Rule for editing</description>
+                    <posy>-44</posy>
+					<width>700</width>
+					<height>42</height>
+					<textcolor>Color4</textcolor>
+					<focusedcolor>Color1</focusedcolor>
+					<font>small</font>
+					<textoffsetx>15</textoffsetx>
+					<align>center</align>
+					<aligny>center</aligny>
+					<textoffsetx>15</textoffsetx>
+					<texturefocus>dialogs/list-focus.png</texturefocus>
+					<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+                    <ondown>131</ondown>
+					<onright>131</onright>
+                    <onclick>SetProperty(itempress,100)</onclick>
+                    <onclick>SetFocus(120)</onclick>
+                    <visible allowhiddenfocus="true">Control.HasFocus(130) | StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)</visible>
+                </control>
+				
+				<control type="grouplist" id="102">
+                    <description>Controls for editing</description>
+                    <posx>0</posx>
+					<posy>-2</posy>
+					<width>700</width>
+					<height>336</height>
+					<itemgap>0</itemgap>
+					<orientation>vertical</orientation>
+					<visible>StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)</visible>
+					<onup>130</onup>
+					<ondown>130</ondown>
+
+                    <control type="button" id="131">
+                        <posy>0</posy>
+						<width>700</width>
+						<height>42</height>
+						<align>center</align>
+						<textcolor>Color4</textcolor>
+						<focusedcolor>Color1</focusedcolor>
+						<font>small</font>
+						<textoffsetx>15</textoffsetx>
+						<align>center</align>
+						<aligny>center</aligny>
+						<texturefocus>dialogs/list-focus.png</texturefocus>
+						<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+						<onup>130</onup>
+                        <ondown>160</ondown>
+                    </control>
+					
+					<control type="label" id="150">
+						<description>Rule Option 1 Label</description>
+						<posx>15</posx>
+						<posy>40</posy>
+						<width>700</width>
+						<height>42</height>
+						<include>dialog_Label-bold</include>
+					</control>
+					
+					<control type="button" id="160">
+						<description>Rule Option 1</description>
+						<posy>82</posy>
+						<width>700</width>
+						<height>42</height>
+						<textcolor>Color4</textcolor>
+						<focusedcolor>Color1</focusedcolor>
+						<font>small</font>
+						<textoffsetx>15</textoffsetx>
+						<aligny>center</aligny>
+						<texturefocus>dialogs/list-focus.png</texturefocus>
+						<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+						<onup>131</onup>
+                        <ondown>161</ondown>
+						<onleft>130</onleft>
+						<onright>901</onright>
+					</control>
+
+                    <control type="label" id="151">
+						<description>Rule Option 2 Label</description>
+                        <posx>15</posx>
+						<posy>124</posy>
+						<width>700</width>
+						<height>42</height>
+						<include>dialog_Label-bold</include>
+                    </control>
+					
+					<control type="button" id="161">
+						<description>Rule Option 2</description>
+						<posy>166</posy>
+						<width>700</width>
+						<height>42</height>
+						<textcolor>Color4</textcolor>
+						<focusedcolor>Color1</focusedcolor>
+						<font>small</font>
+						<textoffsetx>15</textoffsetx>
+						<aligny>center</aligny>
+						<texturefocus>dialogs/list-focus.png</texturefocus>
+						<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+						<onup>160</onup>
+						<ondown>162</ondown>
+						<onleft>130</onleft>
+						<onright>901</onright>
+					</control>
+
+                    <control type="label" id="152">
+                        <description>Rule Option 3 Label</description>
+                        <posx>15</posx>
+						<posy>208</posy>
+						<width>700</width>
+						<height>42</height>
+						<include>dialog_Label-bold</include>
+                    </control>
+					
+					<control type="button" id="162">
+						<description>Rule Option 3</description>
+						<posy>250</posy>
+						<width>700</width>
+						<height>42</height>
+						<textcolor>Color4</textcolor>
+						<focusedcolor>Color1</focusedcolor>
+						<font>small</font>
+						<textoffsetx>15</textoffsetx>
+						<aligny>center</aligny>
+						<texturefocus>dialogs/list-focus.png</texturefocus>
+						<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+						<onup>161</onup>
+						<ondown>163</ondown>
+						<onleft>130</onleft>
+						<onright>901</onright>
+					</control>
+
+                    <control type="label" id="153">
+                        <description>Rule Option 4 Label</description>
+                        <posx>15</posx>
+						<posy>292</posy>
+						<width>700</width>
+						<height>42</height>
+						<include>dialog_Label-bold</include>
+                    </control>
+					
+					<control type="button" id="163">
+						<description>Rule Option 4</description>
+						<posy>334</posy>
+						<width>700</width>
+						<height>42</height>
+						<textcolor>Color4</textcolor>
+						<focusedcolor>Color1</focusedcolor>
+						<font>small</font>
+						<textoffsetx>15</textoffsetx>
+						<aligny>center</aligny>
+						<texturefocus>dialogs/list-focus.png</texturefocus>
+						<texturenofocus>dialogs/list-nofocus.png</texturenofocus>
+						<onup>162</onup>
+						<ondown>130</ondown>
+					</control>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

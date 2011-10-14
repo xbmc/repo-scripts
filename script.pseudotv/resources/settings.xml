@@ -1,14 +1,23 @@
 <settings>
     <category label="30000">
     	<setting label="30007" type="lsep"/>
-    	<setting type="action" label="30008" action="RunScript($CWD/resources/lib/config.py)"/>
+    	<setting type="action" label="30008" action="RunScript($CWD/config.py)"/>
     	<setting label="30009" type="lsep"/>
         <setting id="AutoOff" type="enum" label="30001" values="Disable|30|60|90|120|150|180|210|240" default="6"/>
-        <setting id="InfoOnChange" type="bool" label="30003" default="true"/>
         <setting id="ForceChannelReset" type="bool" label="30002" default="false"/>
         <setting id="ChannelResetSetting" type="enum" label="30004" values="Automatic|Daily|Weekly|Monthly|Never|Every Time" default="0"/>
+    	<setting id="StartMode" type="enum" label="30011" values="Resume|Real Time|Random" default="1" />
+    	<setting id="ThreadMode" type="enum" label="30012" values="On|Minimum Use|Off" default="0" />
+    	<setting id="ChannelSharing" type="bool" label="30015" default="false"/>
+    	<setting id="SettingsFolder" subsetting = "true" type="folder" source="auto" visible="eq(-1,true)" label="30013" default="" />
+    </category>
+
+    <category label="30020">
+        <setting id="InfoOnChange" type="bool" label="30003" default="true"/>
     	<setting id="ShowChannelBug" type="bool" label="30006" default="false"/>
     	<setting id="ChannelLogoFolder" type="folder" source="auto" label="30010" default="special://home/addons/script.pseudotv/resources/images/"/>
-    	<setting id="StartMode" type="enum" label="30011" values="Resume|Real Time|Random" default="1" />
+    	<setting id="ClockMode" type="enum" label="30014" default="0" values="12 Hour|24 Hour"/>
+    	<setting id="EnableComingUp" type="bool" label="30016" default="true"/>
+    	<setting id="HideClips" type="bool" label="30017" default="true"/>
     </category>
 </settings>

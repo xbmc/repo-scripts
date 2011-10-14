@@ -19,23 +19,27 @@
 import xbmc, xbmcaddon
 import sys, re, os
 import time
+import Globals
 
+from FileAccess import FileLock, FileAccess
 
-ADDON_ID = 'script.pseudotv'
-REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
 
 
 class Settings:
     def __init__(self):
-        self.logfile = xbmc.translatePath('special://profile/addon_data/' + ADDON_ID + '/settings2.xml')
+        self.logfile = xbmc.translatePath(os.path.join(Globals.SETTINGS_LOC, 'settings2.xml'))
         self.currentSettings = []
-        self.loadSettings()
 
 
     def loadSettings(self):
-        if os.path.exists(self.logfile):
+        if Globals.GlobalFileLock.lockFile(self.logfile) == False:
+            self.log("Unable to lock the settings file before loading it")
+
+        del self.currentSettings[:]
+
+        if FileAccess.exists(self.logfile):
             try:
-                fle = open(self.logfile, "r")
+                fle = FileAccess.open(self.logfile, "r")
                 curset = fle.readlines()
                 fle.close()
             except:
@@ -50,12 +54,17 @@ class Settings:
                     if val:
                         self.currentSettings.append([name.group(1), val.group(1)])
 
+        Globals.GlobalFileLock.unlockFile(self.logfile)
+
 
     def log(self, msg, level = xbmc.LOGDEBUG):
-        xbmc.log('Settings: ' + msg, level)
+        Globals.log('Settings: ' + msg, level)
 
 
-    def getSetting(self, name):
+    def getSetting(self, name, force = False):
+        if force:
+            self.loadSettings()
+
         result = self.getSettingNew(name)
 
         if result is None:
@@ -74,7 +83,7 @@ class Settings:
 
     def realGetSetting(self, name):
         try:
-            val = REAL_SETTINGS.getSetting(name)
+            val = Globals.REAL_SETTINGS.getSetting(name)
             return val
         except:
             return ''
@@ -96,16 +105,21 @@ class Settings:
 
 
     def writeSettings(self):
+        if Globals.GlobalFileLock.lockFile(self.logfile) == False:
+            self.log("Unable to lock the settings file before writing it")
+
         try:
-            fle = open(self.logfile, "w")
+            fle = FileAccess.open(self.logfile, "w")
         except:
             self.log("Unable to open the file for writing")
             return
 
-        fle.write("<settings>\n")
+        flewrite = "<settings>\n"
 
         for i in range(len(self.currentSettings)):
-            fle.write('    <setting id="' + self.currentSettings[i][0] + '" value="' + self.currentSettings[i][1] + '" />\n')
+            flewrite += '    <setting id="' + self.currentSettings[i][0] + '" value="' + self.currentSettings[i][1] + '" />\n'
 
-        fle.write('</settings>\n')
+        flewrite += '</settings>\n'
+        fle.write(flewrite)
         fle.close()
+        Globals.GlobalFileLock.unlockFile(self.logfile)

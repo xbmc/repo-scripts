@@ -19,6 +19,8 @@
 import xbmc
 import os, struct
 
+from resources.lib.FileAccess import FileAccess
+
 
 
 class AVIChunk:
@@ -129,7 +131,7 @@ class AVIParser:
         self.log("determineLength " + filename)
 
         try:
-            self.File = open(filename, "rb")
+            self.File = FileAccess.open(filename, "rb")
         except:
             self.log("Unable to open the file")
             return 0

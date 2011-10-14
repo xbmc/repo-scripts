@@ -18,6 +18,7 @@
 
 from Playlist import Playlist
 from Globals import *
+from Rules import *
 
 
 
@@ -32,7 +33,11 @@ class Channel:
         self.fileName = ''
         self.isPaused = False
         self.isValid = False
+        self.isRandom = False
         self.mode = 0
+        self.ruleList = []
+        self.channelNumber = 0
+        self.isSetup = False
 
 
     def log(self, msg):
@@ -41,6 +46,30 @@ class Channel:
 
     def setPlaylist(self, filename):
         return self.Playlist.load(filename)
+
+
+    def loadRules(self, channel):
+        del self.ruleList[:]
+        listrules = RulesList()
+        self.channelNumber = channel
+
+        try:
+            rulecount = int(ADDON_SETTINGS.getSetting('Channel_' + str(channel) + '_rulecount'))
+
+            for i in range(rulecount):
+                ruleid = int(ADDON_SETTINGS.getSetting('Channel_' + str(channel) + '_rule_' + str(i + 1) + '_id'))
+
+                for rule in listrules.ruleList:
+                    if rule.getId() == ruleid:
+                        self.ruleList.append(rule.copy())
+
+                        for x in range(rule.getOptionCount()):
+                            self.ruleList[-1].optionValues[x] = ADDON_SETTINGS.getSetting('Channel_' + str(channel) + '_rule_' + str(i + 1) + '_opt_' + str(x + 1))
+
+                        self.log("Added rule - " + self.ruleList[-1].getTitle())
+                        break
+        except:
+            self.ruleList = []
 
 
     def setPaused(self, paused):

@@ -20,6 +20,8 @@ import xbmcgui, xbmc
 import threading
 import time
 
+from FileAccess import FileAccess
+
 
 
 class PlaylistItem:
@@ -111,40 +113,48 @@ class Playlist:
         self.totalDuration = 0
 
 
-    def log(self, msg):
-        xbmc.log('XBTV - Playlist: ' + msg)
+    def log(self, msg, level = xbmc.LOGDEBUG):
+        xbmc.log('script.pseudotv-Playlist: ' + msg, level)
 
 
     def load(self, filename):
+        self.log("load " + filename)
         self.processingSemaphore.acquire()
         self.clear()
 
         try:
-            fle = open(filename, 'r')
+            fle = FileAccess.open(filename, 'r')
         except IOError:
             self.log('Unable to open the file: ' + filename)
             self.processingSemaphore.release()
             return False
 
         # find and read the header
-        line = fle.readline()
+        lines = fle.readlines()
+        fle.close()
+        realindex = -1
 
-        while len(line) > 0:
-            if line == '#EXTM3U\n':
+        for i in range(len(lines)):
+            if lines[i] == '#EXTM3U\n':
+                realindex = i
                 break
 
-            line = fle.readline()
-        else:
-            fle.close()
+        if realindex == -1:
             self.log('Unable to find playlist header for the file: ' + filename)
             self.processingSemaphore.release()
             return False
 
-        line = fle.readline()
-
         # past the header, so get the info
-        while len(line) > 0:
+        for i in range(len(lines)):
             time.sleep(0)
+
+            if realindex + 1 >= len(lines):
+                break
+
+            if len(self.itemlist) > 4096:
+                break
+
+            line = lines[realindex]
 
             if line[:8] == '#EXTINF:':
                 tmpitem = PlaylistItem()
@@ -164,23 +174,39 @@ class Playlist:
                             tmpitem.description = tmpitem.episodetitle[index + 2:]
                             tmpitem.episodetitle = tmpitem.episodetitle[:index]
 
-                line = fle.readline()
-
-                if len(line) == 0:
-                    del tmpitem
-                    break
-
-                tmpitem.filename = line[:-1]
+                realindex += 1
+                tmpitem.filename = lines[realindex][:-1]
                 self.itemlist.append(tmpitem)
                 self.totalDuration += tmpitem.duration
 
-            line = fle.readline()
-
-        fle.close()
-
-        if len(self.itemlist) == 0:
-            self.processingSemaphore.release()
-            return False
+            realindex += 1
 
         self.processingSemaphore.release()
+
+        if len(self.itemlist) == 0:
+            return False
+
         return True
+
+
+    def save(self, filename):
+        self.log("save " + filename)
+        try:
+            fle = FileAccess.open(filename, 'w')
+        except:
+            self.log("save Unable to open the smart playlist", xbmc.LOGERROR)
+            return
+
+        flewrite = "#EXTM3U\n"
+
+        for i in range(self.size()):
+            tmpstr = str(self.getduration(i)) + ','
+            tmpstr += self.getTitle(i) + "//" + self.getepisodetitle(i) + "//" + self.getdescription(i)
+            tmpstr = tmpstr[:600]
+            tmpstr = tmpstr.replace("\\n", " ").replace("\\r", " ").replace("\\\"", "\"")
+            tmpstr = tmpstr + '\n' + self.getfilename(i)
+            flewrite += "#EXTINF:" + tmpstr + "\n"
+
+        fle.write(flewrite)
+        fle.close()
+

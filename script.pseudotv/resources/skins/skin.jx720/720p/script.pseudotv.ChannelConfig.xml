@@ -160,13 +160,14 @@
                 </focusedlayout>
             </control>
         </control>
-
+		
+		<!-- Controls for configuring a single channel -->
         <control type="group" id="106">
-            <width>650</width>
-            <height>400</height>
+            <width>950</width>
+            <height>660</height>
             <control type="label" id="104">
                 <posx>230</posx>
-                <posy>130</posy>
+                <posy>135</posy>
                 <width>200</width>
                 <height>40</height>
                 <textcolor>blue</textcolor>
@@ -193,14 +194,7 @@
                 <aligny>center</aligny>
                 <align>right</align>
                 <label></label>
-            </control>
-			<control type="image">
-				<posx>215</posx>
-                <posy>170</posy>
-                <width>640</width>
-                <height>45</height>						
-                <texture border="10">list-nofocus.png</texture>
-            </control>
+            </control>			
             <control type="button" id="110">
                 <posx>930</posx>
                 <posy>178</posy>
@@ -211,6 +205,13 @@
                 <onleft>111</onleft>
                 <onright>111</onright>
 				<onup>113</onup>				
+            </control>
+			<control type="image">
+				<posx>215</posx>
+                <posy>170</posy>
+                <width>640</width>
+                <height>45</height>						
+                <texture border="10">list-nofocus.png</texture>
             </control>
 			<control type="button" id="111">
                 <posx>965</posx>
@@ -236,7 +237,7 @@
 				<width>200</width>
 				<height>45</height>
 				<label>OK</label> 				
-				<onup>110</onup>
+				<onup>114</onup>
 				<ondown>113</ondown>
 				<align>center</align>
 			</control>			
@@ -248,10 +249,20 @@
 				<label>Cancel</label> 				
 				<onup>112</onup>
 				<ondown>110</ondown>
-
 				<align>center</align>
-			</control>			
+			</control>
+			<control type="button" id="114">
+                <posx>865</posx>
+                <posy>480</posy>
+                <width>200</width>
+                <height>50</height>
+                <label>Channel Rules</label>
+                <onup>110</onup>
+                <ondown>112</ondown>
+                <align>center</align>
+            </control>
         </control>
+		
 		
         <!-- Controls for type Custom Playlist -->
         
@@ -279,7 +290,7 @@
 				<texturefocus border="10">list-focus.png</texturefocus>
 				<texturenofocus border="10">list-nofocus.png</texturenofocus>
                 <onup>110</onup>
-				<ondown>112</ondown>				
+				<ondown>114</ondown>				
             </control>
         </control>
 
@@ -329,7 +340,7 @@
                 <texturefocus>sortdown-focus.png</texturefocus>
                 <texturenofocus>sortdown-nofocus.png</texturenofocus>
                 <onup>110</onup>
-				<ondown>112</ondown>
+				<ondown>114</ondown>
                 <onleft>141</onleft>
                 <onright>141</onright>
             </control>
@@ -341,7 +352,7 @@
                 <texturefocus>sortup-focus.png</texturefocus>
                 <texturenofocus>sortup-nofocus.png</texturenofocus>
                 <onup>111</onup>
-				<ondown>113</ondown>
+				<ondown>114</ondown>
                 <onleft>140</onleft>
                 <onright>140</onright>
             </control>
@@ -393,7 +404,7 @@
                 <texturefocus>sortdown-focus.png</texturefocus>
                 <texturenofocus>sortdown-nofocus.png</texturenofocus>
                 <onup>110</onup>
-				<ondown>112</ondown>
+				<ondown>114</ondown>
                 <onleft>151</onleft>
                 <onright>151</onright>
             </control>
@@ -405,7 +416,7 @@
                 <texturefocus>sortup-focus.png</texturefocus>
                 <texturenofocus>sortup-nofocus.png</texturenofocus>
                 <onup>111</onup>
-				<ondown>113</ondown>
+				<ondown>114</ondown>
                 <onleft>150</onleft>
                 <onright>150</onright>
             </control>
@@ -457,7 +468,7 @@
                 <texturefocus>sortdown-focus.png</texturefocus>
                 <texturenofocus>sortdown-nofocus.png</texturenofocus>
                 <onup>110</onup>
-				<ondown>112</ondown>
+				<ondown>114</ondown>
                 <onleft>161</onleft>
                 <onright>161</onright>
             </control>
@@ -469,7 +480,7 @@
                 <texturefocus>sortup-focus.png</texturefocus>
                 <texturenofocus>sortup-nofocus.png</texturenofocus>
                 <onup>111</onup>
-				<ondown>113</ondown>
+				<ondown>114</ondown>
                 <onleft>160</onleft>
                 <onright>160</onright>
             </control>
@@ -521,7 +532,7 @@
                 <texturefocus>sortdown-focus.png</texturefocus>
                 <texturenofocus>sortdown-nofocus.png</texturenofocus>
                 <onup>110</onup>
-				<ondown>112</ondown>
+				<ondown>114</ondown>
                 <onleft>171</onleft>
                 <onright>171</onright>
             </control>
@@ -533,7 +544,7 @@
                 <texturefocus>sortup-focus.png</texturefocus>
                 <texturenofocus>sortup-nofocus.png</texturenofocus>
                 <onup>111</onup>
-				<ondown>112</ondown>
+				<ondown>114</ondown>
                 <onleft>170</onleft>
                 <onright>170</onright>
             </control>
@@ -585,7 +596,7 @@
                 <texturefocus>sortdown-focus.png</texturefocus>
                 <texturenofocus>sortdown-nofocus.png</texturenofocus>
                 <onup>110</onup>
-				<ondown>112</ondown>
+				<ondown>114</ondown>
                 <onleft>181</onleft>
                 <onright>181</onright>
             </control>
@@ -597,7 +608,7 @@
                 <texturefocus>sortup-focus.png</texturefocus>
                 <texturenofocus>sortup-nofocus.png</texturenofocus>
                 <onup>111</onup>
-				<ondown>113</ondown>
+				<ondown>114</ondown>
                 <onleft>180</onleft>
                 <onright>180</onright>
             </control>
@@ -676,9 +687,40 @@
 				<texturefocus border="10">list-focus.png</texturefocus>
 				<texturenofocus border="10">list-nofocus.png</texturenofocus>
 				<onup>190</onup>
-				<ondown>112</ondown>
-				<label>Serial Mode:</label>
+				<ondown>114</ondown>
+				<label>Show in Order:</label>
 			</control>          
+        </control>
+		
+		<!-- Controls for type Directory -->
+        <control type="group" id="127">           
+            <width>640</width>
+            <height>400</height>
+
+            <control type="label">
+                <posx>230</posx>
+                <posy>215</posy>
+                <width>200</width>
+                <height>40</height>
+                <label>Directory:</label>
+                <aligny>center</aligny>
+                <align>left</align>
+            </control>
+
+            <control type="button" id="200">
+                <posx>215</posx>
+                <posy>215</posy>
+                <width>640</width>
+                <height>45</height>
+				<texturefocus border="10">list-focus.png</texturefocus>
+				<texturenofocus border="10">list-nofocus.png</texturenofocus>
+                <focusedcolor>black</focusedcolor>
+				<textoffsetx>120</textoffsetx>
+				<align>right</align>
+				<aligny>center</aligny>
+                <onup>110</onup>
+                <ondown>114</ondown>
+            </control>
         </control>
     </controls>
 </window>

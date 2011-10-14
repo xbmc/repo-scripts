@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<smartplaylist type="episodes">
-    <name>Drama TV</name>
-    <match>one</match>
-    <rule field="genre" operator="is">Drama</rule>
-    <limit>50</limit>
-    <order direction="ascending">random</order>
-</smartplaylist>

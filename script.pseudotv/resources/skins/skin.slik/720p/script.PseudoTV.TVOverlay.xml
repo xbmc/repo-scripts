@@ -1,0 +1,211 @@
+<window>
+    <allowoverlay>no</allowoverlay>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+
+    <controls>
+        <control type="image" id="101">
+            <description>Background</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>pstvSolid.png</texture>
+            <colordiffuse>FF000000</colordiffuse>
+        </control>
+		
+		<control type="image" id="103">
+			<description>Channel Bug</description>
+			<posx>220r</posx>
+			<posy>120r</posy>
+			<width>150</width>
+			<height>100</height>
+			<aspectratio>keep</aspectratio>
+			<texture></texture>
+			<animation effect="fade" start="50" end="50" condition="True">Conditional</animation>
+		</control>
+
+        <control type="group" id="102">
+			<animation effect="fade" time="500">VisibleChange</animation>
+            
+			<!--HEADER-->
+		
+			<include>WindowHeader</include>
+		
+			<control type="image">
+				<posx>20</posx>
+				<posy>5</posy>
+				<width>40</width>
+				<height>35</height>
+				<aspectratio>keep</aspectratio>
+				<texture>icon_video.png</texture>
+			</control>
+		
+			<control type="label">
+				<description>Header label</description>
+				<posx>70</posx>
+				<posy>5</posy>
+				<width>400</width>
+				<height>35</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>font13</font>
+				<textcolor>white</textcolor>
+				<label>PSEUDOTV</label>
+			</control>
+			
+			<!--FOOTER-->
+			
+			<control type="image">
+				<posx>0</posx>
+				<posy>445</posy>
+				<width>1280</width>
+				<height>285</height>
+				<texture>black-back.png</texture>
+			</control>
+		
+			<control type="grouplist">
+				<posx>400</posx>
+				<posy>470</posy>
+				<width>810</width>
+				<orientation>vertical</orientation>
+				<itemgap>4</itemgap>
+			
+				<control type="label" id="502">
+					<description>Show Name Label</description>
+					<width>810</width>
+					<height>20</height>
+					<font>font11</font>
+					<textcolor>white</textcolor>
+				</control>
+			
+				<control type="label" id="503">
+					<description>Show Title Label</description>
+					<width>810</width>
+					<height>20</height>
+					<font>font18</font>
+					<textcolor>white</textcolor>
+				</control>
+				
+				<control type="label" id="504">
+					<description>Show Title Label</description>
+					<width>810</width>
+					<height>20</height>
+					<font>font11</font>
+					<textcolor>blue</textcolor>
+				</control>
+			</control>
+			
+			<control type="label" id="505">
+				<description>Show Description Label</description>
+				<posx>400</posx>
+				<posy>550</posy>
+				<width>810</width>
+				<height>50</height>
+				<font>font11</font>
+				<textcolor>grey2</textcolor>
+				<align>left</align>
+				<wrapmultiline>true</wrapmultiline>
+			</control>
+			
+			<control type="progress">
+				<description>Progressbar</description>
+				<posx>400</posx>
+				<posy>640</posy>
+				<width>810</width>
+				<height>8</height>
+				<info>Player.Progress</info>
+			</control>
+		
+			<control type="image" id="506">
+				<description>Show Channel Icon</description>
+				<posx>75</posx>
+				<posy>470</posy>
+				<width>300</width>
+				<height>150</height>
+				<aspectratio>scale</aspectratio>
+			</control>
+			
+			<control type="group">
+				<posx>0</posx>
+				<posy>660</posy>
+				<control type="image">
+					<posx>0</posx>
+					<posy>10</posy>
+					<width>1280</width>
+					<height>50</height>
+					<texture>Footer.png</texture>
+				</control>
+				<control type="grouplist">
+					<description>Media Codec Flagging Images</description>
+					<posx>20</posx>
+					<posy>17</posy>
+					<width>620</width>
+					<itemgap>5</itemgap>
+					<orientation>horizontal</orientation>
+					<control type="image">
+						<description>Video rez Image</description>
+						<width>60</width>
+						<height>40</height>
+						<aspectratio align="right">keep</aspectratio>
+						<texture>$INFO[VideoPlayer.VideoResolution,flagging/video/,.png]</texture>
+					</control>
+					<control type="image">
+						<description>Common Codec Image</description>
+						<width>90</width>
+						<height>40</height>
+						<aspectratio align="left">keep</aspectratio>
+						<texture>$INFO[VideoPlayer.VideoCodec,flagging/video/,.png]</texture>
+						<!-- Don't show if its one of the 500 divx codecs -->
+						<visible>![substring(VideoPlayer.VideoCodec,div,left) | stringcompare(VideoPlayer.VideoCodec,dx50)]</visible>
+					</control>
+					<control type="image">
+						<description>Divx Codec Image</description>
+						<width>90</width>
+						<height>40</height>
+						<aspectratio align="left">keep</aspectratio>
+						<texture>flagging/video/divx.png</texture>
+						<visible>[substring(VideoPlayer.VideoCodec,div,left) | stringcompare(VideoPlayer.VideoCodec,dx50)]</visible>
+					</control>
+					<control type="image">
+						<description>Audio Codec Image</description>
+						<width>90</width>
+						<height>40</height>
+						<aspectratio align="right">keep</aspectratio>
+						<texture>$INFO[VideoPlayer.AudioCodec,flagging/audio/,.png]</texture>
+					</control>
+					<control type="image">
+						<description>Audio Channels Image</description>
+						<width>60</width>
+						<height>40</height>
+						<aspectratio align="left">keep</aspectratio>
+						<texture>$INFO[VideoPlayer.AudioChannels,flagging/audio/,.png]</texture>
+					</control>
+					<control type="image">
+						<description>Aspectratio Image</description>
+						<width>60</width>
+						<height>40</height>
+						<aspectratio align="left">keep</aspectratio>
+						<texture>$INFO[VideoPlayer.VideoAspect,flagging/aspectratio/,.png]</texture>
+					</control>
+				</control>
+				<control type="label">
+					<description>time label</description>
+					<posx>1250</posx>
+					<posy>5</posy>
+					<width>620</width>
+					<height>25</height>
+					<label>$INFO[Player.Time]$INFO[Player.Duration, / ]</label>
+					<align>right</align>
+					<aligny>bottom</aligny>
+					<font>font35_Numeric</font>
+					<textcolor>black</textcolor>
+				</control>
+			</control>
+		</control>	
+    </controls>
+</window>

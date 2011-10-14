@@ -1,0 +1,348 @@
+<window>
+    <allowoverlay>no</allowoverlay>
+    <zorder>1</zorder>
+    <defaultcontrol>120</defaultcontrol>
+    <animation effect="fade" time="200" start="0" end="100">WindowOpen</animation>
+    <animation effect="fade" time="200" start="100" end="0">WindowClose</animation>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+
+    <controls>
+        <control type="image">
+            <posx>340</posx>
+            <posy>160</posy>
+            <width>600</width>
+            <height>350</height>
+            <description>Background</description>
+            <texture border="15,15,15,15">pstvBorder.png</texture>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+        </control>
+
+        <control type="image">
+            <posx>490</posx>
+            <posy>180</posy>
+            <width>300</width>
+            <height>50</height>
+            <texture border="2,2,2,2">pstvBorder2.png</texture>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+        </control>
+
+        <control type="label">
+            <posx>340</posx>
+            <posy>190</posy>
+            <width>600</width>
+            <height>30</height>
+            <label>Channel Rules</label>
+			<font>font13_title</font>
+            <textcolor>FF000000</textcolor>
+            <aligny>center</aligny>
+            <align>center</align>
+        </control>
+
+        <control type="group" id="105">
+            <posx>340</posx>
+            <posy>240</posy>
+            <width>600</width>
+            <height>320</height>
+
+            <control type="image">
+                <posx>30</posx>
+                <posy>0</posy>
+                <width>540</width>
+                <height>240</height>
+                <texture border="2,2,2,2">pstvBorder2.png</texture>
+                <colordiffuse>FFFFFFFF</colordiffuse>
+            </control>
+
+            <control type="group" id="104">
+                <control type="button" id="120">
+                    <description>Rule Entry 1</description>
+                    <posx>30</posx>
+                    <posy>0</posy>
+                    <textcolor>FF000000</textcolor>
+                    <ondown>121</ondown>
+                    <width>540</width>
+                    <height>30</height>
+                    <visible allowhiddenfocus="true">Control.HasFocus(120) | ![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,120)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="121">
+                    <description>Rule Entry 2</description>
+                    <posx>30</posx>
+                    <posy>35</posy>
+                    <textcolor>FF000000</textcolor>
+                    <onup>120</onup>
+                    <ondown>122</ondown>
+                    <width>540</width>
+                    <height>30</height>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,121)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="122">
+                    <description>Rule Entry 3</description>
+                    <posx>30</posx>
+                    <posy>70</posy>
+                    <textcolor>FF000000</textcolor>
+                    <onup>121</onup>
+                    <ondown>123</ondown>
+                    <width>540</width>
+                    <height>30</height>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,122)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="123">
+                    <description>Rule Entry 4</description>
+                    <posx>30</posx>
+                    <posy>105</posy>
+                    <textcolor>FF000000</textcolor>
+                    <onup>122</onup>
+                    <ondown>124</ondown>
+                    <width>540</width>
+                    <height>30</height>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,123)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="124">
+                    <description>Rule Entry 5</description>
+                    <posx>30</posx>
+                    <posy>140</posy>
+                    <textcolor>FF000000</textcolor>
+                    <onup>123</onup>
+                    <ondown>125</ondown>
+                    <width>540</width>
+                    <height>30</height>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,124)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="125">
+                    <description>Rule Entry 6</description>
+                    <posx>30</posx>
+                    <posy>175</posy>
+                    <textcolor>FF000000</textcolor>
+                    <onup>124</onup>
+                    <ondown>126</ondown>
+                    <width>540</width>
+                    <height>30</height>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,125)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="126">
+                    <description>Rule Entry 7</description>
+                    <posx>30</posx>
+                    <posy>210</posy>
+                    <textcolor>FF000000</textcolor>
+                    <onup>125</onup>
+                    <width>540</width>
+                    <height>30</height>
+                    <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
+                    <onclick>SetProperty(itempress,126)</onclick>
+                    <onclick>SetFocus(130)</onclick>
+                </control>
+
+                <control type="button" id="130">
+                    <description>Rule for editing</description>
+                    <posx>30</posx>
+                    <posy>0</posy>
+                    <textcolor>FF000000</textcolor>
+                    <ondown>102</ondown>
+                    <width>540</width>
+                    <height>30</height>
+                    <onclick>SetProperty(itempress,100)</onclick>
+                    <onclick>SetFocus(120)</onclick>
+                    <visible allowhiddenfocus="true">Control.HasFocus(130) | StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)</visible>
+
+                    <animation condition="StringCompare(Window.Property(itempress),121)" reversible="false">
+                        <effect type="slide" start="0,35" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),122)" reversible="false">
+                        <effect type="slide" start="0,70" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),123)" reversible="false">
+                        <effect type="slide" start="0,105" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),124)" reversible="false">
+                        <effect type="slide" start="0,140" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),125)" reversible="false">
+                        <effect type="slide" start="0,175" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),126)" reversible="false">
+                        <effect type="slide" start="0,210" time="500" />
+                    </animation>
+                </control>
+
+                <control type="group" id="102">
+                    <description>Controls for editing</description>
+                    <posx>30</posx>
+                    <posy>30</posy>
+                    <width>540</width>
+                    <height>210</height>
+                    <visible>StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)</visible>
+
+                    <animation condition="StringCompare(Window.Property(itempress),120)" reversible="false">
+                        <effect type="slide" start="0,30" time="500" />
+                        <effect type="zoom" start="100,0" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),121)" reversible="false">
+                        <effect type="slide" start="0,65" time="500" />
+                        <effect type="zoom" start="100,0" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),122)" reversible="false">
+                        <effect type="slide" start="0,100" time="500" />
+                        <effect type="zoom" start="100,0" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),123)" reversible="false">
+                        <effect type="slide" start="0,135" time="500" />
+                        <effect type="zoom" start="100,0" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),124)" reversible="false">
+                        <effect type="slide" start="0,170" time="500" />
+                        <effect type="zoom" start="100,0" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),125)" reversible="false">
+                        <effect type="slide" start="0,205" time="500" />
+                        <effect type="zoom" start="100,0" time="500" />
+                    </animation>
+
+                    <animation condition="StringCompare(Window.Property(itempress),126)" reversible="false">
+                        <effect type="slide" start="0,240" time="500" />
+                        <effect type="zoom" start="100,0" time="500" />
+                    </animation>
+
+                    <control type="image">
+                        <description>Border for editing controls</description>
+                        <posx>5</posx>
+                        <posy>5</posy>
+                        <width>530</width>
+                        <height>200</height>
+                        <description>Background</description>
+                        <texture border="2,2,2,2">pstvBorder2.png</texture>
+                        <colordiffuse>FFFFFFFF</colordiffuse>
+                    </control>
+
+                    <control type="button" id="131">
+                        <posx>10</posx>
+                        <posy>10</posy>
+                        <width>520</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <textcolor>FF000000</textcolor>
+                        <onup>130</onup>
+                        <ondown>160</ondown>
+                    </control>
+
+                    <control type="label" id="150">
+                        <posx>10</posx>
+                        <posy>50</posy>
+                        <width>260</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <textcolor>FF000000</textcolor>
+                    </control>
+
+                    <control type="label" id="151">
+                        <posx>270</posx>
+                        <posy>50</posy>
+                        <width>260</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <textcolor>FF000000</textcolor>
+                    </control>
+
+
+                    <control type="label" id="152">
+                        <posx>10</posx>
+                        <posy>130</posy>
+                        <width>260</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <textcolor>FF000000</textcolor>
+                    </control>
+
+                    <control type="label" id="153">
+                        <posx>270</posx>
+                        <posy>130</posy>
+                        <width>260</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <textcolor>FF000000</textcolor>
+                    </control>
+
+                    <control type="button" id="160">
+                        <posx>30</posx>
+                        <posy>90</posy>
+                        <width>230</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <onup>131</onup>
+                        <ondown>162</ondown>
+                        <onright>161</onright>
+                        <textcolor>FF000000</textcolor>
+                    </control>
+
+                    <control type="button" id="161">
+                        <posx>280</posx>
+                        <posy>90</posy>
+                        <width>230</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <onup>131</onup>
+                        <ondown>163</ondown>
+                        <onleft>160</onleft>
+                        <onright>162</onright>
+                        <textcolor>FF000000</textcolor>
+                    </control>
+
+                    <control type="button" id="162">
+                        <posx>30</posx>
+                        <posy>170</posy>
+                        <width>230</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <onup>160</onup>
+                        <onright>163</onright>
+                        <onleft>161</onleft>
+                        <textcolor>FF000000</textcolor>
+                    </control>
+
+                    <control type="button" id="163">
+                        <posx>280</posx>
+                        <posy>170</posy>
+                        <width>230</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <onup>161</onup>
+                        <onleft>162</onleft>
+                        <textcolor>FF000000</textcolor>
+                    </control>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

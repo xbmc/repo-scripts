@@ -26,21 +26,21 @@
 				<description>heading label</description>
 				<width>669</width>
 				<label>Channel Configuration</label>
-				<include>dialogHeading</include>
+				<include>dialog_Windowtitle</include>
 			</control>
 			
 			<control type="image">
 				<posx>19</posx>
 				<posy>124</posy>
 				<width>700</width>
-				<include>dialogSeparator</include>
+				<include>dialog_Separator</include>
 			</control>
 			
 			<control type="image">
 				<posx>19</posx>
 				<posy>460</posy>
 				<width>700</width>
-				<include>dialogSeparator</include>
+				<include>dialog_Separator</include>
 			</control>
 			
 			<control type="group">
@@ -51,20 +51,30 @@
 					<posx>547</posx>
 					<onup>102</onup>
 					<ondown>102</ondown>
-					<include>dialogButton</include>
+					<include>dialog_Button</include>
 					<onclick>PreviousMenu</onclick>
 					<label>Close</label>
 					<visible>Control.IsVisible(102)</visible>
 				</control>
-				
+				<control type="button" id="114">
+					<description>Rules Button</description>
+					<posx>4</posx>
+					<onup>111</onup>
+					<onleft>113</onleft>
+					<onright>112</onright>
+					<ondown>111</ondown>
+					<include>dialog_Button</include>
+					<label>Rules</label>
+					<visible>Control.IsVisible(106)</visible>
+				</control>
 				<control type="button" id="112">
 					<description>OK Button</description>
 					<posx>414</posx>
 					<onup>110</onup>
-					<onleft>113</onleft>
+					<onleft>114</onleft>
 					<onright>113</onright>
 					<ondown>110</ondown>
-					<include>dialogButton</include>
+					<include>dialog_Button</include>
 					<label>OK</label>
 					<visible>Control.IsVisible(106)</visible>
 				</control>
@@ -73,9 +83,9 @@
 					<posx>547</posx>
 					<onup>111</onup>
 					<onleft>112</onleft>
-					<onright>112</onright>
+					<onright>114</onright>
 					<ondown>111</ondown>
-					<include>dialogButton</include>
+					<include>dialog_Button</include>
 					<label>Cancel</label>
 					<visible>Control.IsVisible(106)</visible>
 				</control>
@@ -92,7 +102,7 @@
 				<posx>0</posx>
 				<posy>-42</posy>
 				<width>700</width>
-				<include>dialogSeparator</include>
+				<include>dialog_Separator</include>
 			</control>
 			
 			<control type="label">
@@ -101,7 +111,7 @@
                 <width>160</width>
                 <height>42</height>
                 <label>Channel</label>
-				<include>dialogLabelBold</include>
+				<include>dialog_Label-bold</include>
             </control>
 
             <control type="label">
@@ -110,7 +120,7 @@
                 <width>160</width>
                 <height>42</height>
                 <label>Content</label>
-				<include>dialogLabelBold</include>
+				<include>dialog_Label-bold</include>
             </control>
 			
 			<control type="list" id="102">
@@ -118,7 +128,7 @@
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>700</width>
-				<height>335</height>
+				<height>336</height>
                 <onup>102</onup>
                 <ondown>102</ondown>
                 <onright>901</onright>
@@ -714,8 +724,8 @@
             </control>
 
             <control type="radiobutton" id="194">
-                <posx>400</posx>
-                <posy>43</posy>
+                <posx>700</posx>
+                <posy>64</posy>
                 <textureradiofocus>dialogs/radioOn.png</textureradiofocus>
 				<textureradionofocus>dialogs/radioOff.png</textureradionofocus>
 				<radioheight>24</radioheight>
@@ -723,6 +733,46 @@
                 <label></label>
                 <onup>190</onup>
                 <ondown>112</ondown>
+            </control>
+        </control>
+		
+		<!-- Controls for type Custom Playlist -->
+        <control type="group" id="127">
+            <posx>291</posx>
+            <posy>237</posy>
+            <width>669</width>
+            
+			<control type="image">
+				<posx>0</posx>
+                <posy>0</posy>
+				<width>700</width>
+				<height>42</height>
+				<texture border="3">dialogs/list-nofocus.png</texture>
+			</control>
+			
+            <control type="label">
+                <posx>15</posx>
+                <posy>-2</posy>
+                <width>200</width>
+                <height>42</height>
+                <textcolor>Color4</textcolor>
+				<font>small</font>
+                <aligny>center</aligny>
+                <align>left</align>
+				<label>Directory:</label>
+            </control>
+
+            <control type="button" id="200">
+                <posx>200</posx>
+                <posy>-2</posy>
+                <width>480</width>
+                <height>42</height>
+                <textcolor>Color4</textcolor>
+				<font>small</font>
+                <aligny>center</aligny>
+                <align>left</align>
+                <onup>110</onup>
+				<ondown>114</ondown>
             </control>
         </control>
     </controls>

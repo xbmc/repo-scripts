@@ -1,13 +1,20 @@
 <strings>
     <string id="30000">General</string>
     <string id="30001">Auto-off Timer(in minutes)</string>
-    <string id="30002">Force reset on next start</string>
+    <string id="30002">Force channel reset on next start</string>
     <string id="30003">Show info when changing channels</string>
     <string id="30004">Time between channel resets</string>
-	<string id="30006">Always show channel logo</string>
+    <string id="30006">Always show channel logo</string>
     <string id="30007">Configure Channels</string>
     <string id="30008">Open Channel Configuration</string>
     <string id="30009">Other Settings</string>
     <string id="30010">Channel Logo Folder</string>
     <string id="30011">Default channel times at startup</string>
+    <string id="30012">Background Updating</string>
+    <string id="30013">Shared Channels Folder</string>
+    <string id="30014">Clock Display</string>
+    <string id="30015">Enable Channel Sharing</string>
+    <string id="30016">Show Coming Up Next box</string>
+    <string id="30017">Hide very short videos</string>
+    <string id="30020">Visuals</string>
 </strings>

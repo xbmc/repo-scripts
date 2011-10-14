@@ -2,106 +2,115 @@
     <allowoverlay>no</allowoverlay>
 
     <coordinates>
-        <system>1</system>
-        <posx>0</posx>
-        <posy>0</posy>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
     </coordinates>
     
     <controls>    
         <control type="image" id="101">
-            <description>Background</description>
-            <posx>0</posx>
+			<description>Background</description>
+			<posx>0</posx>
             <posy>0</posy>
-            <width>1280</width>
-            <height>720</height>
-            <texture>pstvSolid.png</texture>
-            <colordiffuse>FF000000</colordiffuse>
-        </control>
+			<width>1280</width>
+			<height>720</height>
+			<texture>pstvSolid.png</texture>
+			<colordiffuse>FF000000</colordiffuse>
+		</control>
 		
 		<control type="image" id="103">
-            <description>Channel Bug</description>
-            <posx>220r</posx>
-            <posy>120r</posy>
-            <width>150</width>
-            <height>100</height>
-    		<aspectratio>keep</aspectratio>
+			<description>Channel Bug</description>
+			<posx>220r</posx>
+			<posy>120r</posy>
+			<width>150</width>
+			<height>100</height>
+			<aspectratio>keep</aspectratio>
 			<texture></texture>
-            <!--<colordiffuse>FF000000</colordiffuse>-->
 			<animation effect="fade" start="40" end="40" condition="True">Conditional</animation>
         </control>
 		
 		<control type="group" id="102">
+			<posy>300</posy>
+			<include>transition_OSD</include>
+		
 			<control type="image">
 				<description>Info Background</description>
-				<posx>0</posx>
-				<posy>300</posy>
-				<width>1280</width>
+				<include>screenwidth</include>
 				<height>200</height>
-				<texture>pstvInfoBottom.png</texture>
-				<!--<animation effect="fade" start="0" end="100" delay="200" time="500" condition="Control.IsVisible(120)">Conditional</animation>-->
+				<texture>OSD/infoOverlayTop.png</texture>
 			</control>
-        
-			<control type="image">
-				<description>Info Background</description>
-				<posx>0</posx>
-				<posy>500</posy>
-				<width>1280</width>
-				<height>220</height>
-				<texture>pstvInfoTop.png</texture>
-			</control>
-        
+               
 			<control type="label" id="502">
 				<description>Now watching</description>
 				<posx>200</posx>
-				<posy>450</posy>
+				<posy>152</posy>
 				<width>840</width>
 				<label>Now watching</label>
-				<textcolor>title</textcolor>
-				<font>pagelabel</font>
-				<!--<animation effect="fade" start="0" end="100" delay="200" time="1000" condition="Control.IsVisible(120)">Conditional</animation>-->
+				<font>osd3</font>
+				<textcolor>Color3</textcolor>
+			</control>
+        
+			<control type="image">
+				<description>Info Background</description>
+				<posy>200</posy>
+				<height>220</height>
+				<include>screenwidth</include>
+				<aspectratio>stretch</aspectratio>
+				<texture border="0,1,0,11">OSD/infoOverlay.png</texture>
 			</control>  
         
 			<!--HIGHLIGHTED SHOW INFORMATION-->
         
 			<control type="group">
-				<posx>200</posx>
-				<posy>520</posy>
+				<posy>223</posy>
+				
 				<control type="label" id="503">
 					<description>Show Name Label</description>
-					<posy>0</posy>
-					<width>1040</width>
-					<label>Show Name</label>
-					<textcolor>title</textcolor>
-					<include>Heading1</include>
+					<posx>200</posx>
+					<width>970</width>
+					<label>$INFO[VideoPlayer.Title]</label>
+					<font>osd1</font>
+					<textcolor>Color1</textcolor>
 				</control>
 				<control type="label" id="504">
 					<description>Show Title Label</description>
+					<posx>200</posx>
 					<posy>34</posy>
 					<width>1040</width>
 					<label>[B]Show Title[/B]</label>
-					<align>left</align>
-					<include>Heading3</include>
+					<include>info_Sub</include>
 				</control>
 				<control type="label" id="505">
+					<posx>200</posx>
 					<posy>70</posy>
-					<width>1040</width>
 					<height>40</height>
-					<align>left</align>
-					<aligny>top</aligny>
-					<label>Show Description</label>
-					<textcolor>Color1</textcolor>
-					<font>description</font>
+					<include>description_OSD</include>
 					<wrapmultiline>true</wrapmultiline>
 				</control>
-			</control>
-        
-			<control type="image" id="506">
-				<description>Channel Logo</description>
-				<posx>40</posx>
-				<posy>520</posy>
-				<width>130</width>
-				<height>75</height>
+				<control type="image" id="506">
+					<description>Channel Logo</description>
+					<posx>40</posx>
+					<aspectratio align="center">keep</aspectratio>
+					<include>flag_Channel-play</include>
+				</control>
+				<control type="label">
+					<posx>40r</posx>
+					<posy>34</posy>
+					<width>1000</width>
+					<align>right</align>
+					<label>$INFO[Player.Time,, / ]$INFO[Player.Duration]</label>
+					<font>osd2</font>
+					<textcolor>Color2</textcolor>
+				</control>
+				<control type="image">
+					<posx>1180</posx>
+					<posy>-14</posy>
+					<width>64</width>
+					<height>64</height>
+					<aspectratio align="center">keep</aspectratio>
+					<include>flag_HD-play</include>
+				</control>
 			</control>
 		</control>
-    </controls>
+	</controls>
 </window>

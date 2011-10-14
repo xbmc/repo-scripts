@@ -1,0 +1,307 @@
+<window>
+    <allowoverlay>no</allowoverlay>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <controls>
+
+    <control type="image" id="101">
+		<visible>false</visible>
+		<posx>-10</posx>
+		<posy>-10</posy>
+		<width>1</width>
+		<height>1</height>
+		<texture>-</texture>
+	</control>		
+	<control type="image" id="103">
+		<description>Channel Bug</description>
+		<posx>1170</posx>
+		<posy>650</posy>
+		<width>100</width>
+		<height>57</height>
+		<aspectratio>keep</aspectratio>
+		<animation effect="fade" start="50" end="50" condition="True">Conditional</animation>
+	</control>
+		
+	<control type="group" id="102">
+		<animation effect="fade" time="500">VisibleChange</animation>										
+		<control type="group">
+			<posx>83</posx>
+			<posy>450</posy>
+			<control type="group">
+				<control type="image">
+					<description>background top image</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1114</width>
+					<height>56</height>
+					<texture>osd_background_top.png</texture>
+					<animation effect="fade" start="100" end="80" condition="Skin.HasSetting(BackgroundVisibilty_High)">Conditional</animation>
+					<animation effect="fade" start="100" end="90" condition="Skin.HasSetting(BackgroundVisibilty_Med)">Conditional</animation>
+				</control>				
+			</control>			
+			<control type="group">
+				<posx>0</posx>
+				<posy>56</posy>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1114</width>
+					<height>147</height>
+					<texture>osd_picture_background_center.png</texture>
+					<animation effect="fade" start="100" end="80" condition="Skin.HasSetting(BackgroundVisibilty_High)">Conditional</animation>
+					<animation effect="fade" start="100" end="90" condition="Skin.HasSetting(BackgroundVisibilty_Med)">Conditional</animation>
+				</control>
+				<control type="group">					
+					<posx>25</posx>
+					<posy>8</posy>
+					<control type="group">
+						<posx>958</posx>
+						<posy>-56</posy>
+						<include>Common_Clock_Short</include>
+					</control>
+					<control type="group">
+						<posx>0</posx>
+						<posy>105</posy>
+						<control type="label">
+							<description>Elapsed Time Label</description>
+							<posx>0</posx>
+							<posy>0</posy>
+							<font>font23</font>
+							<textcolor>white</textcolor>
+							<info>Player.Time</info>
+							<width>117</width>
+							<height>20</height>
+							<aligny>center</aligny>
+							<align>left</align>
+						</control>
+						<control type="progress">
+							<description>Progressbar</description>
+							<posx>117</posx>
+							<posy>5</posy>
+							<width>830</width>
+							<height>14</height>
+							<info>Player.Progress</info>
+							<overlaytexture>-</overlaytexture>
+						</control>
+						<control type="label">
+							<description>Total Time Label</description>
+							<posx>1064</posx>
+							<posy>0</posy>
+							<font>font23</font>
+							<textcolor>white</textcolor>
+							<info>Player.Duration</info>
+							<width>117</width>
+							<height>20</height>
+							<aligny>center</aligny>
+							<align>right</align>
+						</control>
+					</control>
+				</control>
+			</control>
+			<control type="group">
+				<posx>0</posx>
+				<posy>203</posy>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1114</width>
+					<height>56</height>
+					<texture>osd_background_bottom.png</texture>
+					<animation effect="fade" start="100" end="80" condition="Skin.HasSetting(BackgroundVisibilty_High)">Conditional</animation>
+					<animation effect="fade" start="100" end="90" condition="Skin.HasSetting(BackgroundVisibilty_Med)">Conditional</animation>
+				</control>
+				<control type="label">
+					<description>Finishes label</description>
+					<posx>1089</posx>
+					<posy>4</posy>
+					<width>580</width>
+					<height>44</height>
+					<font>font21</font>
+					<label>[COLOR grey]$LOCALIZE[31098]: [/COLOR]$INFO[Player.FinishTime]</label>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textcolor>white</textcolor>
+				</control>												
+			</control>	
+		</control>				
+		<control type="label" id="502">
+			<description>Label Now Playing</description>
+			<posx>100</posx>
+			<posy>462</posy>
+			<width>160</width>
+			<height>40</height>
+			<font>font13</font>
+			<align>left</align>
+			<textcolor>yellow</textcolor>
+			<shadowcolor>black</shadowcolor>				
+		</control>		
+		<control type="grouplist">
+			<include>Window_OpenClose_Animation</include>
+			<posx>270</posx>
+    		<posy>460</posy>
+    		<width>810</width>
+    		<height>40</height>
+    		<orientation>horizontal</orientation>
+    		<itemgap>8</itemgap>
+			<control type="label" id="503">
+				<description>Label Show Title</description>
+				<width min="50" max="500">auto</width>
+				<height>40</height>
+				<font>light23b</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<scroll>auto</scroll>
+			</control>
+			<control type="label">
+    			<width min="5" max="10">auto</width>
+    			<height>40</height>
+    			<label>:</label>
+    			<font>light23b</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+    		</control>			
+			<control type="label" id="504">
+				<description>Label Episode Title</description>
+				<width min="50" max="405">auto</width>
+				<height>40</height>
+				<font>light23</font>>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<scroll>auto</scroll>
+			</control>	
+		</control>	
+			<control type="label" id="505">
+				<description>Label Show Description</description>
+				<posx>270</posx>
+				<posy>515</posy>
+				<width>915</width>
+				<height>75</height>			
+				<font>font21</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<align>justify</align>
+				<wrapmultiline>true</wrapmultiline>	
+			</control>
+			<control type="image" id="506">
+				<description>Show Channel Icon</description>
+				<posx>100</posx>
+				<posy>520</posy>
+				<width>150</width>
+				<height>87</height>
+				<aspectratio>keep</aspectratio>
+				<align>center</align>				
+			</control>						
+
+		<control type="grouplist">
+			<posx>130</posx>
+			<posy>665</posy>
+			<width>930</width>
+			<height>210</height>
+			<itemgap>15</itemgap>
+			<orientation>horizontal</orientation>
+			<control type="image">
+				<description>Video rez Image</description>
+				<width>90</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[VideoPlayer.VideoResolution,flagging/video/,.png]</texture>
+				<colordiffuse>white</colordiffuse>
+				<visible>!IsEmpty(VideoPlayer.VideoResolution)</visible>
+			</control>
+			<control type="image">
+				<description>Common Codec Image</description>
+				<width>90</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[VideoPlayer.VideoCodec,flagging/video/,.png]</texture>
+				<colordiffuse>white</colordiffuse>
+				<!-- Don't show if its one of the 500 divx codecs -->
+				<visible>![substring(VideoPlayer.VideoCodec,div,left) | stringcompare(VideoPlayer.VideoCodec,dx50)]</visible>
+			</control>
+			<control type="image">
+				<description>Divx Codec Image</description>
+				<width>90</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>flagging/video/divx.png</texture>
+				<colordiffuse>white</colordiffuse>
+				<visible>[substring(VideoPlayer.VideoCodec,div,left) | stringcompare(VideoPlayer.VideoCodec,dx50)]</visible>
+			</control>
+			<control type="image">
+				<description>Bluray Image</description>
+				<width>90</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>flagging/video/bluray.png</texture>
+				<colordiffuse>white</colordiffuse>
+				<visible>[substring(VideoPlayer.FilenameAndPath,bluray) | substring(VideoPlayer.FilenameAndPath,bdrip)]</visible>
+			</control>
+			<control type="image">
+				<description>HDDVD Image</description>
+				<width>90</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>flagging/video/hddvd.png</texture>
+				<colordiffuse>white</colordiffuse>
+				<visible>substring(VideoPlayer.FilenameAndPath,hddvd)</visible>
+				</control>
+			<control type="image">
+				<description>DVD Image</description>
+				<width>90</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>flagging/video/dvd.png</texture>
+				<colordiffuse>white</colordiffuse>
+				<visible>[substring(VideoPlayer.FilenameAndPath,dvd) + ![substring(VideoPlayer.FilenameAndPath,hddvd) | substring(VideoPlayer.FilenameAndPath,bluray) | substring(VideoPlayer.FilenameAndPath,bdrip)]]</visible>
+			</control>
+			<control type="image">
+				<description>TV Types Image</description>
+				<width>90</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>flagging/video/TV.png</texture>
+				<colordiffuse>white</colordiffuse>
+				<visible>[substring(VideoPlayer.FilenameAndPath,pdtv) | substring(VideoPlayer.FilenameAndPath,hdtv) | substring(VideoPlayer.FilenameAndPath,dsr)]</visible>
+			</control>
+			<control type="image">
+				<description>VHS Image</description>
+				<width>90</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>flagging/video/vhs.png</texture>
+				<colordiffuse>white</colordiffuse>
+				<visible>substring(VideoPlayer.FilenameAndPath,vhs)</visible>
+			</control>
+			<control type="image">
+				<description>Aspectratio Image</description>
+				<width>60</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[VideoPlayer.VideoAspect,flagging/aspectratio/,.png]</texture>
+				<colordiffuse>white</colordiffuse>
+				<visible>!IsEmpty(VideoPlayer.VideoAspect)</visible>
+			</control>
+			<control type="image">
+				<description>Audio Codec Image</description>
+				<width>80</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[VideoPlayer.AudioCodec,flagging/audio/,.png]</texture>
+				<colordiffuse>white</colordiffuse>
+			</control>
+			<control type="image">
+				<description>Audio Channel Image</description>
+				<width>60</width>
+				<height>33</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[VideoPlayer.AudioChannels,flagging/audio/,.png]</texture>
+				<colordiffuse>white</colordiffuse>
+				<visible>!IsEmpty(VideoPlayer.AudioChannels)</visible>
+			</control>
+		</control>		
+	</control>			
+    </controls>
+</window>

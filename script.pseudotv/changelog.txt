@@ -1,6 +1,23 @@
 Changelog
 
 
+2.0.0
+    New advanced channel rule system.
+    Share channels between multiple systems.
+    Addition of Dutch language (thanks Machine-Sanctum).
+    Support for MOV file parsing.
+    Multiple thread deletion issues fixed.
+    Background channel loading.
+    EPG bugs fixed.
+    Support for directory-type channels.
+    Select mode for background channel thread.
+    EPG drawing optimization.
+    Select between 12-hour and 24-hour clock.
+    Better channel creation for first-time users.
+    Much better time accuracy between restarts.
+    Added Xeebo skin (thanks Steveb).
+
+
 1.2.1
     Now ask the user to enable the webserver if it isn't on.
     Fix to use the proper webserver port.

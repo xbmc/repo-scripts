@@ -650,7 +650,7 @@
                 <width>200</width>
                 <height>30</height>
                 <textcolor>FF000000</textcolor>
-                <label>Serial Mode:</label>
+                <label>Show in Order:</label>
                 <aligny>center</aligny>
                 <align>left</align>
             </control>
