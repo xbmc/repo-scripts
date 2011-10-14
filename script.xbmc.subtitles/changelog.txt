@@ -1,3 +1,6 @@
+2.5.11
+- fixed: Sratim service, thx orivar
+
 2.5.10
 - fixed: error due to some BetaSeries API change, thx darknao
 
