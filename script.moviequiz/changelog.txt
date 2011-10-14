@@ -1,3 +1,15 @@
+[B]Version 0.4.4 - 2011-09-27[/B]
+- Improved checks for invalid settings that could cause lock-ups and crashes
+- Improved question logic error handling
+- Improved visual feedback while loading
+
+[B]Version 0.4.3 - 2011-09-19[/B]
+- [B]You must re-download IMDB files[/B], due to speed-optimizations in lookups
+- By popular demand: re-added MySQL support
+- New question type
+  - What TV show is this quote from?
+- Fanart from http://wallpapers.brothersoft.com/hollywood-96405.html
+
 [B]Version 0.4.2 - 2011-08-31[/B]
 - Dropped support for MySQL for now (might add support again later with SQLAlchemy)
 - Fixed Retry option in Game Over screen

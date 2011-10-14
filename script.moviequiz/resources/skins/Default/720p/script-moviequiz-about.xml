@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="5300" type="dialog">
+    <allowoverlay>no</allowoverlay>
+    <visible>true</visible>
+    <defaultcontrol always="true">4000</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <animation effect="fade" start="100" end="0" time="200">WindowClose</animation> 
+    <controls>
+
+        <control type="image">
+            <posx>0</posx>
+            <posy>200</posy>
+            <width>1280</width>
+            <height>400</height>
+            <texture>quiz-gametype-background.png</texture>
+        </control>
+
+        <control type="group">
+            <posx>300</posx>
+            <posy>200</posy>
+            <width>680</width>a
+            <height>400</height>
+            <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+
+            <control type="textbox" id="4000">
+                <posx>0</posx>
+                <posy>10</posy>
+                <width>680</width>
+                <height>380</height>
+                <textcolor>ffffffff</textcolor>
+                <font>font13</font>
+                <wrapmultiline>true</wrapmultiline>
+                <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
+            </control>
+
+        </control>
+
+    </controls>
+</window>

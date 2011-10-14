@@ -5,6 +5,12 @@ import xbmc
 import os
 import re
 
+try:
+    import xbmcvfs
+    XBMC_VFS_AVAILABLE = True
+except ImportError:
+    XBMC_VFS_AVAILABLE = False
+
 class TenSecondPlayer(xbmc.Player):
     """TenSecondPlayer is a subclass of xbmc.Player that stops playback after about ten seconds."""
 
@@ -12,11 +18,11 @@ class TenSecondPlayer(xbmc.Player):
         """
         Creates and instance of TenSecondPlayer.
         """
-        super(TenSecondPlayer, self).__init__()
+        xbmc.Player.__init__(self)
         xbmc.log(">> TenSecondPlayer.__init__()")
         self.tenSecondTimer = None
 
-        self.database = db.connect()
+        self.database = db.Database.connect()
         self.bookmark = None
         self.startingPlayback = False
 
@@ -27,8 +33,10 @@ class TenSecondPlayer(xbmc.Player):
 
         self.playBackEventReceived = False
 
-    def __del__(self):
-        self.database.close()
+    def close(self):
+        if hasattr(self, 'database') and self.database:
+            self.database.close()
+            print "TenSecondPlayer closed"
 
     def replay(self):
         xbmc.log(">> TenSecondPlayer.replay()")
@@ -70,6 +78,10 @@ class TenSecondPlayer(xbmc.Player):
         xbmc.log(">> TenSecondPlayer.playWindowed()")
         self.startingPlayback = True
 
+        if XBMC_VFS_AVAILABLE and not xbmcvfs.exists(file):
+            xbmc.log(">> TenSecondPlayer - file not found: %s" % file)
+            return False
+
         self.lastFile = file
         self.lastIdFile= idFile
 
@@ -87,12 +99,9 @@ class TenSecondPlayer(xbmc.Player):
             #todo file = self._getRandomDvdVob(file)
 
         # Get bookmark details, so we can restore after playback
-        try:
-            self.bookmark = self.database.fetchone("""
-                SELECT idBookmark, timeInSeconds FROM bookmark WHERE idFile = ?
-            """, idFile)
-        except db.DbException:
-            self.bookmark = {'idFile' : idFile}
+        self.bookmark = self.database.getVideoBookmark(idFile)
+
+        xbmc.log(">> TenSecondPlayer.playWindowed() - about to play file %s" % file)
 
         self.playBackEventReceived = False
         self.play(item = file, windowed = True)
@@ -101,7 +110,9 @@ class TenSecondPlayer(xbmc.Player):
         while not self.playBackEventReceived and retries < 20:
             xbmc.sleep(250) # keep sleeping to get onPlayBackStarted() event
             retries += 1
+
         xbmc.log(">> TenSecondPlayer.playWindowed() - end")
+        return True
 
     def _getRandomDvdVob(self, ifoFile):
         xbmc.log(">> TenSecondPlayer._getRandomDvdVob() - ifoFile = %s" % ifoFile)
@@ -168,18 +179,4 @@ class TenSecondPlayer(xbmc.Player):
         # Restore bookmark details
         if self.bookmark is not None:
             xbmc.sleep(1000) # Delay to allow XBMC to store the bookmark before we reset it
-            if self.bookmark.has_key('idFile'):
-                try:
-                    self.database.execute("""
-                        DELETE FROM bookmark WHERE idFile = ?
-                    """, self.bookmark['idFile'])
-                except db.DbException:
-                    pass
-            else:
-                try:
-                    self.database.execute("""
-                        UPDATE bookmark SET timeInSeconds = ? WHERE idBookmark = ?
-                    """, (self.bookmark['timeInSeconds'], self.bookmark['idBookmark']))
-                except db.DbException:
-                    pass
-
+            self.database.resetVideoBookmark(self.bookmark)

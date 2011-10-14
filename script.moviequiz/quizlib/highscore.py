@@ -16,14 +16,27 @@ except ImportError:
 
 class HighscoreDatabase(object):
     def getHighscores(self, game):
+        """
+        @type game: quizlib.game.Game
+        @param game: game instance
+        """
         raise
 
     def getHighscoresNear(self, game, highscoreId):
+        """
+        @type game: quizlib.game.Game
+        @param game: game instance
+        @type highscoreId: int
+        @param highscoreId: the highscoreId to get highscores near
+        """
         raise
 
 class GlobalHighscoreDatabase(HighscoreDatabase):
     STATUS_OK = 'OK'
     SERVICE_URL = 'http://moviequiz.xbmc.info/service.json.php'
+
+    def __init__(self, addonVersion):
+        self.addonVersion = addonVersion
 
     def addHighscore(self, nickname, game):
         if game.getPoints() <= 0:
@@ -38,7 +51,9 @@ class GlobalHighscoreDatabase(HighscoreDatabase):
                 'nickname' : nickname,
                 'score' : game.getPoints(),
                 'correctAnswers' : game.getCorrectAnswers(),
-                'numberOfQuestions' : game.getTotalAnswers()
+                'numberOfQuestions' : game.getTotalAnswers(),
+                'addonVersion' : self.addonVersion,
+                'xbmcVersion' : xbmc.getInfoLabel('System.BuildVersion')
             }
         }
 
@@ -95,12 +110,10 @@ class LocalHighscoreDatabase(HighscoreDatabase):
 
         self._createTables()
 
-    def __del__(self):
-        self.close()
-
     def close(self):
-        self.conn.close()
-
+        if hasattr(self, 'conn') and self.conn is not None:
+            self.conn.close()
+            print "LocalHighscoreDatabase closed"
         
     def addHighscore(self, game):
         if game.getPoints() <= 0:

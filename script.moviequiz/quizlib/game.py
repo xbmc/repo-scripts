@@ -1,12 +1,9 @@
 import datetime
-import xbmcaddon
 
 from strings import *
 
 GAMETYPE_MOVIE = "movie"
 GAMETYPE_TVSHOW = "tvshow"
-
-ADDON = xbmcaddon.Addon(id = 'script.moviequiz')
 
 class Game(object):
     def __init__(self, type, userId, interactive):
@@ -54,15 +51,6 @@ class Game(object):
     def getUserId(self):
         return self.userId
 
-    def onlyUseWatchedMovies(self):
-        return ADDON.getSetting('only.watched.movies') == 'true'
-
-    def getMaxRating(self):
-        if self.type == GAMETYPE_MOVIE and ADDON.getSetting('movie.rating.limit.enabled') == 'true':
-            return ADDON.getSetting('movie.rating.limit')
-        elif self.type == GAMETYPE_TVSHOW and ADDON.getSetting('tvshow.rating.limit.enabled') == 'true':
-            return ADDON.getSetting('tvshow.rating.limit')
-
     def isInteractive(self):
         return self.interactive
 
@@ -95,9 +83,9 @@ class QuestionLimitedGame(Game):
     def getStatsString(self):
         questionsLeft = self.questionLimit - self.questionCount
         if not questionsLeft:
-            return "Last question"
+            return strings(G_LAST_QUESTION)
         else:
-            return str(questionsLeft) + " questions left"
+            return strings(G_X_QUESTIONS_LEFT, questionsLeft)
 
     def getGameType(self):
         return 'question-limited'
@@ -118,7 +106,8 @@ class TimeLimitedGame(Game):
         return self._minutesLeft() >= self.timeLimitMinutes
 
     def getStatsString(self):
-        return str(self.timeLimitMinutes - self._minutesLeft()) + " mins. left"
+        minutesLeft = self.timeLimitMinutes - self._minutesLeft()
+        return strings(G_X_MINUTES_LEFT, minutesLeft)
 
     def _minutesLeft(self):
         delta = datetime.datetime.now() - self.startTime

@@ -31,10 +31,8 @@
             <description>visibility marker for three photos group</description>
         </control>
         <control type="label" id="5007">
-            <description>visibility marker for replay button</description>
+            <description>visibility marker for cover image</description>
         </control>
-
-
 
         <!-- Background -->
         <control type="largeimage" id="4500">
@@ -43,7 +41,7 @@
             <posy>0</posy>
             <width>1280</width>
             <height>720</height>
-            <texture>quiz-background.png</texture>
+            <texture>quiz-background-movie.jpg</texture>
             <fadetime>1000</fadetime>
         </control>
 
@@ -97,14 +95,27 @@
                 <width>758</width>
                 <height>422</height>
             </control>
+
+            <control type="label" id="4800">
+                <posx>0</posx>
+                <posy>206</posy>
+                <width>788</width>
+                <height>40</height>
+                <font>font30</font>
+                <textcolor>ffffffff</textcolor>
+                <label>File not found</label>
+                <align>center</align>
+                <aligny>center</aligny>
+            </control>
+
         </control>
 
         <!-- quote group -->
         <control type="group">
-            <posx>246</posx>
-            <posy>24</posy>
-            <width>788</width>
-            <height>452</height>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
             <visible>!Control.IsVisible(5004)</visible>
             <animation effect="fade" start="100" end="0" time="1000">Hidden</animation>
             <animation effect="fade" start="0" end="100" time="1000">Visible</animation>
@@ -112,30 +123,16 @@
             <control type="image">
                 <posx>0</posx>
                 <posy>0</posy>
-                <width>788</width>
-                <height>452</height>
-                <texture>quiz-video-background.png</texture>
-            </control>
-            <control type="image">
-                <posx>20</posx>
-                <posy>15</posy>
-                <width>100</width>
-                <height>73</height>
-                <texture>quiz-start-quote.png</texture>
-            </control>
-            <control type="image">
-                <posx>660</posx>
-                <posy>365</posy>
-                <width>100</width>
-                <height>73</height>
-                <texture>quiz-end-quote.png</texture>
+                <width>1280</width>
+                <height>720</height>
+                <texture>quiz-background-quote.jpg</texture>
             </control>
             <control type="textbox" id="4600">
-                <posx>50</posx>
-                <posy>100</posy>
-                <width>690</width>
-                <height>260</height>
-                <textcolor>ffffffff</textcolor>
+                <posx>270</posx>
+                <posy>260</posy>
+                <width>700</width>
+                <height>250</height>
+                <textcolor>ff000000</textcolor>
                 <font>font30</font>
                 <wrapmultiline>true</wrapmultiline>
                 <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
@@ -144,112 +141,141 @@
 
         <!-- three photos group -->
         <control type="group" id="4700">
-            <posx>246</posx>
-            <posy>50</posy>
-            <width>788</width>
-            <height>450</height>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
             <visible>!Control.IsVisible(5006)</visible>
 
             <control type="image">
                 <posx>0</posx>
                 <posy>0</posy>
-                <width>788</width>
-                <height>410</height>
-                <texture>quiz-background-glass.png</texture>
+                <width>1280</width>
+                <height>720</height>
+                <texture>quiz-background-3photos.jpg</texture>
             </control>
 
-            <control type="group">
+            <control type="image">
+                <posx>275</posx>
+                <posy>95</posy>
+                <width>235</width>
+                <height>370</height>
+                <texture>quiz-background-glass.png</texture>
+            </control>
+            <control type="image" id="4701">
                 <description>photo #1</description>
-                <posx>10</posx>
-                <posy>15</posy>
-                <width>250</width>
-                <height>375</height>
+                <posx>275</posx>
+                <posy>95</posy>
+                <width>235</width>
+                <height>330</height>
+                <aspectratio>keep</aspectratio>
+                <fadetime>1000</fadetime>
                 <visible>Control.IsVisible(4700)</visible>
                 <animation effect="fade" start="100" end="0" time="1000">Hidden</animation>
                 <animation effect="fade" start="0" end="100" time="500">Visible</animation>
-
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>250</width>
-                    <height>375</height>
-                    <texture>quiz-photo-background.png</texture>
-                </control>
-                <control type="image" id="4701">
-                    <posx>10</posx>
-                    <posy>10</posy>
-                    <width>230</width>
-                    <height>355</height>
-                    <aspectratio>keep</aspectratio>
-                </control>
+            </control>
+            <control type="label" id="4711">
+                <posx>275</posx>
+                <posy>425</posy>
+                <width>235</width>
+                <height>40</height>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <scroll>true</scroll>
             </control>
 
-            <control type="group">
+            <control type="image">
+                <posx>525</posx>
+                <posy>95</posy>
+                <width>235</width>
+                <height>370</height>
+                <texture>quiz-background-glass.png</texture>
+            </control>
+            <control type="image" id="4702">
                 <description>photo #2</description>
-                <posx>270</posx>
-                <posy>15</posy>
-                <width>250</width>
-                <height>375</height>
+                <posx>525</posx>
+                <posy>95</posy>
+                <width>235</width>
+                <height>330</height>
+                <aspectratio>keep</aspectratio>
+                <fadetime>1000</fadetime>
                 <visible>Control.IsVisible(4700)</visible>
                 <animation effect="fade" start="100" end="0" delay="250" time="1000">Hidden</animation>
                 <animation effect="fade" start="0" end="100" delay="250" time="500">Visible</animation>
-
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>250</width>
-                    <height>375</height>
-                    <texture>quiz-photo-background.png</texture>
-                </control>
-                <control type="image" id="4702">
-                    <posx>10</posx>
-                    <posy>10</posy>
-                    <width>230</width>
-                    <height>355</height>
-                    <aspectratio>keep</aspectratio>
-                </control>
+            </control>
+            <control type="label" id="4712">
+                <posx>525</posx>
+                <posy>425</posy>
+                <width>235</width>
+                <height>40</height>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <scroll>true</scroll>
             </control>
 
-            <control type="group">
+            <control type="image">
+                <posx>775</posx>
+                <posy>95</posy>
+                <width>235</width>
+                <height>370</height>
+                <font>font13</font>
+                <texture>quiz-background-glass.png</texture>
+            </control>
+            <control type="image" id="4703">
                 <description>photo #3</description>
-                <posx>530</posx>
-                <posy>15</posy>
-                <width>250</width>
-                <height>375</height>
+                <posx>775</posx>
+                <posy>95</posy>
+                <width>235</width>
+                <height>330</height>
+                <aspectratio>keep</aspectratio>
+                <fadetime>1000</fadetime>
                 <visible>Control.IsVisible(4700)</visible>
                 <animation effect="fade" start="100" end="0" delay="500" time="1000">Hidden</animation>
                 <animation effect="fade" start="0" end="100" delay="500" time="500">Visible</animation>
-
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>250</width>
-                    <height>375</height>
-                    <texture>quiz-photo-background.png</texture>
-                </control>
-                <control type="image" id="4703">
-                    <posx>10</posx>
-                    <posy>10</posy>
-                    <width>230</width>
-                    <height>355</height>
-                    <aspectratio>keep</aspectratio>
-                </control>
+            </control>
+            <control type="label" id="4713">
+                <posx>775</posx>
+                <posy>425</posy>
+                <width>235</width>
+                <height>40</height>
+                <textcolor>ffffffff</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <scroll>true</scroll>
             </control>
         </control>
 
-        <control type="image">
-            <description>loading background</description>
+        <!--<control type="image">-->
+            <!--<description>Loading glasspane</description>-->
+            <!--<posx>0</posx>-->
+            <!--<posy>245</posy>-->
+            <!--<width>1280</width>-->
+            <!--<height>64</height>-->
+            <!--<texture>quiz-background-glass.png</texture>-->
+            <!--<visible>Control.IsVisible(5005)</visible>-->
+            <!--<animation effect="fade" start="0" end="100" time="500" delay="500">Visible</animation>-->
+            <!--<animation effect="fade" start="100" end="0" time="500">Hidden</animation>-->
+        <!--</control>-->
+        <control type="progress" id="4020">
+            <description>Loading glasspane</description>
             <posx>0</posx>
             <posy>245</posy>
             <width>1280</width>
             <height>64</height>
-            <texture>quiz-background-glass.png</texture>
+            <texturebg>quiz-background-glass.png</texturebg>
+            <lefttexture />
+            <midtexture>quiz-background-glass.png</midtexture>
+            <righttexture />
             <visible>Control.IsVisible(5005)</visible>
             <animation effect="fade" start="0" end="100" time="500" delay="500">Visible</animation>
             <animation effect="fade" start="100" end="0" time="500">Hidden</animation>
         </control>
         <control type="label">
-            <description>loading label</description>
+            <description>Loading text</description>
             <posx>470</posx>
             <posy>245</posy>
             <width>340</width>
@@ -260,11 +286,11 @@
             <textcolor>ffffffff</textcolor>
             <label>$ADDON[script.moviequiz 30008]</label>
             <visible>Control.IsVisible(5005)</visible>
-            <animation type="Visible">
+            <animation type="Visible" reversible="false">
                 <effect type="fade" start="0" end="100" time="500" delay="500" />
                 <effect type="slide" start="-100,0" end="0,0" time="500" delay="500" />
             </animation>
-            <animation type="Hidden">
+            <animation type="Hidden" reversible="false">
                 <effect type="fade" start="100" end="0" time="500"/>
                 <effect type="slide" start="0,0" end="100,0" time="500" />
             </animation>
@@ -276,6 +302,9 @@
             <posy>500</posy>
             <width>230</width>
             <height>210</height>
+            <animation type="WindowOpen">
+                <effect type="slide" start="-250,0" time="500" />
+            </animation>
 
             <control type="image">
                 <description>Glasspane for question and answers</description>
@@ -302,6 +331,7 @@
                 <posy>10</posy>
                 <width>100</width>
                 <height>40</height>
+                <label>0.0</label>
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
                 <align>right</align>
@@ -323,6 +353,7 @@
                 <posy>50</posy>
                 <width>50</width>
                 <height>40</height>
+                <label>10.0</label>
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
                 <align>right</align>
@@ -351,7 +382,7 @@
                 <label>$ADDON[script.moviequiz 30011]</label>
                 <align>center</align>
                 <onright>4011</onright>
-                <visible>Control.IsVisible(5007)</visible>
+                <enable>!Control.IsVisible(5000) + !Control.IsVisible(4800)</enable>
             </control>
             <control type="button" id="4011">
                 <description>Exit quiz</description>
@@ -377,6 +408,9 @@
             <posy>500</posy>
             <width>1020</width>
             <height>210</height>
+            <animation type="WindowOpen">
+                <effect type="slide" start="0,220" time="500" />
+            </animation>
 
             <control type="image">
                 <description>Correct answer</description>
@@ -427,13 +461,14 @@
                 <description>Answer 1</description>
                 <posx>0</posx>
                 <posy>40</posy>
-                <width>860</width>
+                <width>1020</width>
                 <height>40</height>
                 <textoffsetx>55</textoffsetx>
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
                 <texturefocus>quiz-button-background.png</texturefocus>
                 <texturenofocus />
+                <scroll>true</scroll>
                 <onup>4003</onup>
                 <ondown>4001</ondown>
                 <onleft>4011</onleft>
@@ -451,11 +486,12 @@
                 <description>Answer 2</description>
                 <posx>0</posx>
                 <posy>80</posy>
-                <width>860</width>
+                <width>1020</width>
                 <height>40</height>
                 <textoffsetx>55</textoffsetx>
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
+                <scroll>true</scroll>
                 <texturefocus>quiz-button-background.png</texturefocus>
                 <texturenofocus />
                 <onup>4000</onup>
@@ -475,11 +511,12 @@
                 <description>Answer 3</description>
                 <posx>0</posx>
                 <posy>120</posy>
-                <width>860</width>
+                <width>1020</width>
                 <height>40</height>
                 <textoffsetx>55</textoffsetx>
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
+                <scroll>true</scroll>
                 <texturefocus>quiz-button-background.png</texturefocus>
                 <texturenofocus />
                 <onup>4001</onup>
@@ -499,11 +536,12 @@
                 <description>Answer 4</description>
                 <posx>0</posx>
                 <posy>160</posy>
-                <width>860</width>
+                <width>1020</width>
                 <height>40</height>
                 <textoffsetx>55</textoffsetx>
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
+                <scroll>true</scroll>
                 <texturefocus>quiz-button-background.png</texturefocus>
                 <texturenofocus />
                 <onup>4002</onup>
@@ -528,6 +566,10 @@
             <width>173</width>
             <height>260</height>
             <aspectratio>keep</aspectratio>
+            <fadetime>500</fadetime>
+            <visible>!Control.IsVisible(5007)</visible>
+            <animation effect="slide" start="200,0" time="500">Visible</animation>
+            <animation effect="slide" end="200,0" time="500">Hidden</animation>
         </control>
     </controls>
 </window>

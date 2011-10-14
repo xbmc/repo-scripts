@@ -28,18 +28,30 @@
     <string id="30053">så denne quiz type er ikke tilgængelig.</string>
 
     <string id="30054">Data mangler!</string>
-    <string id="30055">For at spille Movie Quiz[CR]skal du have film eller TV shows</string>
-    <string id="30056">i din Video database.[CR]Se XBMC wiki for mere information.</string>
+    <string id="30055">For at spille Movie Quiz skal du have film eller </string>
+    <string id="30056">TV shows i din Video database.</string>
+    <string id="30057">Se XBMC wiki for mere information.</string>
 
-    <string id="30057">Slet %s?</string>
-    <string id="30058">Dette vil slette brugeren og alle relaterede</string>
-    <string id="30059">highscores permanent!</string>
+    <string id="30058">Slet %s?</string>
+    <string id="30059">Dette vil slette brugeren og alle relaterede</string>
+    <string id="30060">highscores permanent!</string>
 
+    <string id="30061">Ingen af dine film eller TV-serier er markeret</string>
+    <string id="30062">som set, så [I]Brug kun sete film[/I]</string>
+    <string id="30063">[I] til spørgsmålene[/I] indstillingen er slået fra.</string>
+
+    <string id="30064">Ingen af dine film har en MPAA rating, så</string>
+    <string id="30065">[I]Begræns udvalget af film baseret på MPAA rating[/I]</string>
+    <string id="30066">indstillingen er slået fra.</string>
+
+    <string id="30067">Ingen af dine TV-serier har en Content rating, så</string>
+    <string id="30068">[I]Begræns udvalget af TV-serier baseret på Content rating[/I]</string>
+    <string id="30069">indstillingen er slået fra.</string>
 
     <!-- Menu -->
     <string id="30100">Spil Film Quiz</string>
     <string id="30101">Spil TV Quiz</string>
-    <string id="30102">Indstillinger</string>
+    <string id="30102">Information</string>
     <string id="30103">Afslut</string>
 
     <string id="30110">[B]Filmsamlingen i tal[/B]</string>
@@ -57,6 +69,10 @@
     <string id="30130">Et minut</string>
     <string id="30131">%s minutter</string>
     <string id="30132">%s spørgsmål</string>
+
+    <string id="30133">%d spørgsmål tilbage</string>
+    <string id="30134">Sidste spørgsmål</string>
+    <string id="30135">%d min. tilbage</string>
 
     <!-- Movie Questions -->
     <string id="30400">Hvilken film er det?</string>
@@ -83,6 +99,7 @@
     <string id="30454">Hvornår blev [B]%s[/B] sendt første gang?</string><!-- %s is tvshow title -->
     <string id="30455">Hvem spiller [B]%s[/B] i [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
     <string id="30456">Hvem ligger stemme til [B]%s[/B] i [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+    <string id="30457">Hvilken TV-serie er dette citat fra??</string>
 
     <!-- Settings strings -->
     <string id="30500">Generelt</string>
@@ -130,6 +147,7 @@
     <string id="30582">Hvilket afsnit er det?</string>
     <string id="30583">Hvornår blev TV-serien sendt først gang?</string>
     <string id="30584">Hvem spiller rollen i TV-serien?</string>
+    <string id="30585">Hvilken TV-serie er dette citat fra?</string>
 
     <!-- Game type strings -->
     <string id="30600">[B]Vælg Movie Quiz spil type[/B]</string>
@@ -155,8 +173,6 @@
     <string id="30706">Grænse på %s spørgsmål</string>
     <string id="30707">Grænse på et minut</string>
     <string id="30708">Grænse på %s minutter</string>
-
-
 
     <string id="39998">Udviklet af Tommy Winther</string>
     <string id="39999">Oversat af Tommy Winther</string>

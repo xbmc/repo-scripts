@@ -7,8 +7,8 @@
         <posx>0</posx>
         <posy>0</posy>
     </coordinates>
-    <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
-    <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+    <animation effect="fade" start="0" end="100" time="500">WindowOpen</animation>
+    <animation effect="fade" start="100" end="0" time="500">WindowClose</animation>
     <controls>
         <!-- Background -->
         <control type="image">
@@ -27,7 +27,7 @@
             <height>256</height>
             <texturefocus>quiz-button-movie.png</texturefocus>
             <texturenofocus>quiz-button-movie.png</texturenofocus>
-            <onleft>4003</onleft>
+            <onleft>4000</onleft>
             <onright>4002</onright>
             <ondown>6001</ondown>
             <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4001)">Conditional</animation>
@@ -67,6 +67,29 @@
             <font>font30</font>
         </control>
 
+        <control type="button" id="4000">
+            <description>About</description>
+            <posx>112</posx>
+            <posy>490</posy>
+            <width>96</width>
+            <height>96</height>
+            <texturefocus>quiz-button-radio.png</texturefocus>
+            <texturenofocus>quiz-button-radio.png</texturenofocus>
+            <onleft>4003</onleft>
+            <onright>4001</onright>
+            <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4000)">Conditional</animation>
+        </control>
+        <control type="label">
+            <posx>34</posx>
+            <posy>590</posy>
+            <width>256</width>
+            <height>40</height>
+            <label>$ADDON[script.moviequiz 30102]</label>
+            <align>center</align>
+            <textcolor>ffffffff</textcolor>
+            <font>font13</font>
+        </control>
+
         <control type="button" id="4003">
             <description>Exit</description>
             <posx>1072</posx>
@@ -76,7 +99,7 @@
             <texturefocus>quiz-button-theater.png</texturefocus>
             <texturenofocus>quiz-button-theater.png</texturenofocus>
             <onleft>4002</onleft>
-            <onright>4001</onright>
+            <onright>4000</onright>
             <animation effect="fade" start="100" end="50" time="400" condition="!Control.HasFocus(4003)">Conditional</animation>
         </control>
         <control type="label">

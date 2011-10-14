@@ -1,4 +1,6 @@
-import sys
+import os
+import xbmc
+import xbmcaddon
 
 def moviequiz_excepthook(type, value, traceback):
     import xbmcgui
@@ -8,6 +10,11 @@ def moviequiz_excepthook(type, value, traceback):
 
 
 #sys.excepthook = moviequiz_excepthook
+
+# Make sure data dir exists
+ADDON = xbmcaddon.Addon(id = 'script.moviequiz')
+if not os.path.exists(xbmc.translatePath(ADDON.getAddonInfo('profile'))):
+    os.makedirs(xbmc.translatePath(ADDON.getAddonInfo('profile')))
 
 from quizlib.gui import MenuGui
 w = MenuGui()

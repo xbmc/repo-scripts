@@ -4,7 +4,7 @@
     <!-- General -->
     <string id="30000">Question %d of %d</string>
     <string id="30001">Total Score:</string>
-    <string id="30002">Question value:</string>
+    <string id="30002">Question:</string>
     <string id="30003">Game Over</string>
     <string id="30004">You scored %d of %d</string><!-- 1st %d is score, 2nd %d is total question -->
 
@@ -22,25 +22,37 @@
     <string id="30014">Choose player</string>
     <string id="30015">Add player</string>
 
-
     <string id="30050">Warning</string>
     <string id="30051">All movie questions types are disabled,</string>
     <string id="30052">All TV show questions types are disabled,</string>
     <string id="30053">so this quiz type is not available.</string>
 
     <string id="30054">Missing requirements!</string>
-    <string id="30055">To play the Movie Quiz you must[CR]have some movies or TV shows</string>
-    <string id="30056">in your Video library. See the[CR]XBMC wiki for information.</string>
-    
-    <string id="30057">Delete %s?</string>
-    <string id="30058">This will delete the user and all related</string>
-    <string id="30059">highscores permanently!</string>
+    <string id="30055">To play the Movie Quiz you must have some movies</string>
+    <string id="30056">or TV shows in your Video library.</string>
+    <string id="30057">See the XBMC wiki for information.</string>
 
+    
+    <string id="30058">Delete %s?</string>
+    <string id="30059">This will delete the user and all related</string>
+    <string id="30060">highscores permanently!</string>
+
+    <string id="30061">None of your movies or TV shows are marked</string>
+    <string id="30062">as watched, so the [I]Only use watched movies[/I]</string>
+    <string id="30063">[I]in the questions[/I] setting will be disabled.</string>
+
+    <string id="30064">None of your movies has a MPAA rating, so the</string>
+    <string id="30065">[I]Limit movie selection based on MPAA rating[/I]</string>
+    <string id="30066">setting will be disabled.</string>
+
+    <string id="30067">None of your movies has a Content rating, so the</string>
+    <string id="30068">[I]Limit TV show selection based on Content rating[/I]</string>
+    <string id="30069">setting will be disabled.</string>
 
     <!-- Menu -->
     <string id="30100">Play Movie Quiz</string>
     <string id="30101">Play TV Quiz</string>
-    <string id="30102">Settings</string>
+    <string id="30102">Information</string>
     <string id="30103">Exit</string>
 
     <string id="30110">[B]Movie collection trivia[/B]</string>
@@ -58,6 +70,10 @@
     <string id="30130">One minute</string>
     <string id="30131">%s minutes</string>
     <string id="30132">%s questions</string>
+
+    <string id="30133">%d questions left</string>
+    <string id="30134">Last question</string>
+    <string id="30135">%d mins. left</string>
 
     <!-- Movie Questions -->
     <string id="30400">What movie is this?</string>
@@ -84,6 +100,7 @@
     <string id="30454">When was [B]%s[/B] first aired?</string><!-- %s is tvshow title -->
     <string id="30455">Who plays [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
     <string id="30456">Who voices [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
+    <string id="30457">What TV show is this quote from?</string>
 
     <!-- Settings strings -->
     <string id="30500">General</string>
@@ -131,6 +148,7 @@
     <string id="30582">What episode is this?</string>
     <string id="30583">When was TV show first aired?</string>
     <string id="30584">Who played role in TV show?</string>
+    <string id="30585">What TV show is this quote from?</string>
 
     <!-- Game type strings -->
     <string id="30600">[B]Choose Movie Quiz game type[/B]</string>
@@ -156,8 +174,6 @@
     <string id="30706">%s questions limit</string>
     <string id="30707">one minute time limit</string>
     <string id="30708">%s minuts time limit</string>
-
-
 
     <string id="39998">Developed by Tommy Winther</string>
     <string id="39999">Translated by Tommy Winther</string>

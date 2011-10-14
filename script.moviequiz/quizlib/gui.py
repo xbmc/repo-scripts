@@ -1,15 +1,18 @@
 import threading
 import os
 import re
+import time
 
 import xbmc
 import xbmcgui
+import datetime
 
 import game
 import question
 import player
 import db
 import highscore
+
 from strings import *
 
 # Constants from [xbmc]/xbmc/guilib/Key.h
@@ -20,20 +23,53 @@ REMOTE_2 = 60
 REMOTE_3 = 61
 REMOTE_4 = 62
 
-ADDON = xbmcaddon.Addon(id = 'script.moviequiz')
-
 RESOURCES_PATH = os.path.join(ADDON.getAddonInfo('path'), 'resources', )
 AUDIO_CORRECT = os.path.join(RESOURCES_PATH, 'audio', 'correct.wav')
 AUDIO_WRONG = os.path.join(RESOURCES_PATH, 'audio', 'wrong.wav')
-BACKGROUND_MOVIE = os.path.join(RESOURCES_PATH, 'skins', 'Default', 'media', 'quiz-background.png')
-BACKGROUND_TV = os.path.join(RESOURCES_PATH, 'skins', 'Default', 'media', 'quiz-background-tvshows.png')
+BACKGROUND_MOVIE = os.path.join(RESOURCES_PATH, 'skins', 'Default', 'media', 'quiz-background-movie.jpg')
+BACKGROUND_TV = os.path.join(RESOURCES_PATH, 'skins', 'Default', 'media', 'quiz-background-tvshows.jpg')
 NO_PHOTO_IMAGE = os.path.join(RESOURCES_PATH, 'skins', 'Default', 'media', 'quiz-no-photo.png')
+
+MPAA_RATINGS = ['R', 'Rated R', 'PG-13', 'Rated PG-13', 'PG', 'Rated PG', 'G', 'Rated G']
+CONTENT_RATINGS = ['TV-MA', 'TV-14', 'TV-PG', 'TV-G', 'TV-Y7-FV', 'TV-Y7', 'TV-Y']
+
+class LoadingGui(xbmcgui.WindowXMLDialog):
+    def __new__(cls, menuGui):
+        return super(LoadingGui, cls).__new__(cls, 'script-moviequiz-loading.xml', ADDON.getAddonInfo('path'))
+
+    def __init__(self, menuGui):
+        super(LoadingGui, self).__init__()
+        self.menuGui = menuGui
+
+    def onInit(self):
+        startTime = datetime.datetime.now()
+        self.menuGui.loadTrivia()
+        question.IMDB.loadData()
+
+        delta = datetime.datetime.now() - startTime
+        if delta.seconds < 2:
+            xbmc.sleep(1000 * (2 - delta.seconds))
+        self.close()
+
+    def onAction(self, action):
+        if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
+            self.close()
+
+    #noinspection PyUnusedLocal
+    def onClick(self, controlId):
+        pass
+
+    #noinspection PyUnusedLocal
+    def onFocus(self, controlId):
+        pass
+
+
 
 class MenuGui(xbmcgui.WindowXML):
 
     C_MENU_MOVIE_QUIZ = 4001
     C_MENU_TVSHOW_QUIZ = 4002
-    C_MENU_SETTINGS = 4000
+    C_MENU_ABOUT = 4000
     C_MENU_EXIT = 4003
     C_MENU_COLLECTION_TRIVIA = 6000
     C_MENU_USER_SELECT = 6001
@@ -43,61 +79,48 @@ class MenuGui(xbmcgui.WindowXML):
 
     def __init__(self):
         super(MenuGui, self).__init__()
-    
+        self.trivia = None
+        self.database = db.Database.connect()
+    def close(self):
+        self.database.close()
+        super(MenuGui, self).close()
+
     def onInit(self):
-        trivia = [strings(M_DEVELOPED_BY), strings(M_TRANSLATED_BY)]
+        if not self.trivia:
+            loadingGui = LoadingGui(self)
+            loadingGui.doModal()
+            del loadingGui
 
-        database = db.connect()
-
-        if not database.hasMovies():
-            self.getControl(self.C_MENU_MOVIE_QUIZ).setEnabled(False)
-        else:
-            if not question.isAnyMovieQuestionsEnabled():
-                self.getControl(self.C_MENU_MOVIE_QUIZ).setEnabled(False)
-
-            movies = database.fetchone('SELECT COUNT(*) AS count, (SUM(c11) / 60) AS total_hours FROM movie')
-            actors = database.fetchone('SELECT COUNT(DISTINCT idActor) AS count FROM actorlinkmovie')
-            directors = database.fetchone('SELECT COUNT(DISTINCT idDirector) AS count FROM directorlinkmovie')
-            studios = database.fetchone('SELECT COUNT(idStudio) AS count FROM studio')
-
-            trivia += [
-                    strings(M_MOVIE_COLLECTION_TRIVIA),
-                    strings(M_MOVIE_COUNT) % movies['count'],
-                    strings(M_ACTOR_COUNT) % actors['count'],
-                    strings(M_DIRECTOR_COUNT) % directors['count'],
-                    strings(M_STUDIO_COUNT) % studios['count'],
-                    strings(M_HOURS_OF_ENTERTAINMENT) % int(movies['total_hours'])
-            ]
-
-
-        if not database.hasTVShows():
-            self.getControl(self.C_MENU_TVSHOW_QUIZ).setEnabled(False)
-        else:
-            if not question.isAnyTVShowQuestionsEnabled():
-                self.getControl(self.C_MENU_TVSHOW_QUIZ).setEnabled(False)
-                
-            shows = database.fetchone('SELECT COUNT(*) AS count FROM tvshow')
-            seasons = database.fetchone('SELECT SUM(season_count) AS count FROM (SELECT idShow, COUNT(DISTINCT c12) AS season_count from episodeview GROUP BY idShow) AS tbl')
-            episodes = database.fetchone('SELECT COUNT(*) AS count FROM episode')
-
-            trivia += [
-                strings(M_TVSHOW_COLLECTION_TRIVIA),
-                strings(M_TVSHOW_COUNT) % shows['count'],
-                strings(M_SEASON_COUNT) % seasons['count'],
-                strings(M_EPISODE_COUNT) % episodes['count']
-            ]
-
-
-        if not database.hasMovies() and not database.hasTVShows():
-            # Missing requirements
+        # Check preconditions
+        if not self.database.hasMovies() and not self.database.hasTVShows():
+            # Must have at least one movie or tvshow
             xbmcgui.Dialog().ok(strings(E_REQUIREMENTS_MISSING), strings(E_REQUIREMENTS_MISSING_LINE1),
-                strings(E_REQUIREMENTS_MISSING_LINE2))
+                strings(E_REQUIREMENTS_MISSING_LINE2), strings(E_REQUIREMENTS_MISSING_LINE3))
             self.close()
+            return
 
+        if not self.database.isAnyVideosWatched() and ADDON.getSetting(SETT_ONLY_WATCHED_MOVIES) == 'true':
+            # Only watched movies requires at least one watched video files
+            xbmcgui.Dialog().ok(strings(E_REQUIREMENTS_MISSING), strings(E_ONLY_WATCHED_LINE1),
+                strings(E_ONLY_WATCHED_LINE2), strings(E_ONLY_WATCHED_LINE3))
+            ADDON.setSetting(SETT_ONLY_WATCHED_MOVIES, 'false')
 
-        database.close()
+        if not self.database.isAnyMPAARatingsAvailable() and ADDON.getSetting(SETT_MOVIE_RATING_LIMIT_ENABLED) == 'true':
+            # MPAA rating requires ratings to be available in database
+            xbmcgui.Dialog().ok(strings(E_REQUIREMENTS_MISSING), strings(E_MOVIE_RATING_LIMIT_LINE1),
+                strings(E_MOVIE_RATING_LIMIT_LINE2), strings(E_MOVIE_RATING_LIMIT_LINE3))
+            ADDON.setSetting(SETT_MOVIE_RATING_LIMIT_ENABLED, 'false')
 
-        label = '  *  '.join(trivia)
+        if not self.database.isAnyContentRatingsAvailable() and ADDON.getSetting(SETT_TVSHOW_RATING_LIMIT_ENABLED) == 'true':
+            # Content rating requires ratings to be available in database
+            xbmcgui.Dialog().ok(strings(E_REQUIREMENTS_MISSING), strings(E_TVSHOW_RATING_LIMIT_LINE1),
+                strings(E_TVSHOW_RATING_LIMIT_LINE2), strings(E_TVSHOW_RATING_LIMIT_LINE3))
+            ADDON.setSetting(SETT_TVSHOW_RATING_LIMIT_ENABLED, 'false')
+
+        self.getControl(self.C_MENU_MOVIE_QUIZ).setEnabled(bool(self.database.hasMovies() and question.isAnyMovieQuestionsEnabled()))
+        self.getControl(self.C_MENU_TVSHOW_QUIZ).setEnabled(bool(self.database.hasTVShows() and question.isAnyTVShowQuestionsEnabled()))
+
+        label = '  *  '.join(self.trivia)
         self.getControl(self.C_MENU_COLLECTION_TRIVIA).setLabel(label)
 
         self.onUpdateUserSelectList()
@@ -108,11 +131,47 @@ class MenuGui(xbmcgui.WindowXML):
         if not question.isAnyTVShowQuestionsEnabled():
             xbmcgui.Dialog().ok(strings(E_WARNING), strings(E_ALL_TVSHOW_QUESTIONS_DISABLED), strings(E_QUIZ_TYPE_NOT_AVAILABLE))
 
+    def loadTrivia(self):
+        self.trivia = ['Movie Quiz v.' + ADDON.getAddonInfo('version'),
+                       strings(M_DEVELOPED_BY), strings(M_TRANSLATED_BY)]
+
+        if self.database.hasMovies():
+            movies = self.database.fetchone('SELECT COUNT(*) AS count, (SUM(c11) / 60) AS total_hours FROM movie')
+            actors = self.database.fetchone('SELECT COUNT(DISTINCT idActor) AS count FROM actorlinkmovie')
+            directors = self.database.fetchone('SELECT COUNT(DISTINCT idDirector) AS count FROM directorlinkmovie')
+            studios = self.database.fetchone('SELECT COUNT(idStudio) AS count FROM studio')
+
+            self.trivia += [
+                    strings(M_MOVIE_COLLECTION_TRIVIA),
+                    strings(M_MOVIE_COUNT) % movies['count'],
+                    strings(M_ACTOR_COUNT) % actors['count'],
+                    strings(M_DIRECTOR_COUNT) % directors['count'],
+                    strings(M_STUDIO_COUNT) % studios['count'],
+                    strings(M_HOURS_OF_ENTERTAINMENT) % int(movies['total_hours'])
+            ]
+
+
+        if self.database.hasTVShows():
+            shows = self.database.fetchone('SELECT COUNT(*) AS count FROM tvshow')
+            seasons = self.database.fetchone('SELECT SUM(season_count) AS count FROM (SELECT idShow, COUNT(DISTINCT c12) AS season_count from episodeview GROUP BY idShow) AS tbl')
+            episodes = self.database.fetchone('SELECT COUNT(*) AS count FROM episode')
+
+            self.trivia += [
+                strings(M_TVSHOW_COLLECTION_TRIVIA),
+                strings(M_TVSHOW_COUNT) % shows['count'],
+                strings(M_SEASON_COUNT) % seasons['count'],
+                strings(M_EPISODE_COUNT) % episodes['count']
+            ]
+
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
             self.close()
 
     def onClick(self, controlId):
+        """
+        @param controlId: id of the control that was clicked
+        @type controlId: int
+        """
         listControl = self.getControl(self.C_MENU_USER_SELECT)
         item = listControl.getSelectedItem()
 
@@ -126,8 +185,10 @@ class MenuGui(xbmcgui.WindowXML):
             w.doModal()
             del w
 
-        elif controlId == self.C_MENU_SETTINGS:
-            ADDON.openSettings()
+        elif controlId == self.C_MENU_ABOUT:
+            w = AboutDialog()
+            w.doModal()
+            del w
 
         elif controlId == self.C_MENU_EXIT:
             self.close()
@@ -283,11 +344,41 @@ class GameTypeDialog(xbmcgui.WindowXMLDialog):
     def onFocus(self, controlId):
         pass
 
+
+class AboutDialog(xbmcgui.WindowXMLDialog):
+
+    def __new__(cls):
+        return super(AboutDialog, cls).__new__(cls, 'script-moviequiz-about.xml', ADDON.getAddonInfo('path'))
+
+    def __init__(self):
+        super(AboutDialog, self).__init__()
+
+    def onInit(self):
+        f = open(ADDON.getAddonInfo('changelog'))
+        changelog = f.read()
+        f.close()
+
+        self.getControl(4000).setText(changelog)
+
+    def onAction(self, action):
+        if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
+            self.close()
+
+    #noinspection PyUnusedLocal
+    def onClick(self, controlId):
+        self.close()
+
+    #noinspection PyUnusedLocal
+    def onFocus(self, controlId):
+        pass
+
+
 class QuizGui(xbmcgui.WindowXML):
     C_MAIN_FIRST_ANSWER = 4000
     C_MAIN_LAST_ANSWER = 4003
     C_MAIN_REPLAY = 4010
     C_MAIN_EXIT = 4011
+    C_MAIN_LOADING = 4020
     C_MAIN_CORRECT_SCORE = 4101
     C_MAIN_INCORRECT_SCORE = 4103
     C_MAIN_QUESTION_COUNT = 4104
@@ -300,6 +391,10 @@ class QuizGui(xbmcgui.WindowXML):
     C_MAIN_PHOTO_1 = 4701
     C_MAIN_PHOTO_2 = 4702
     C_MAIN_PHOTO_3 = 4703
+    C_MAIN_PHOTO_LABEL_1 = 4711
+    C_MAIN_PHOTO_LABEL_2 = 4712
+    C_MAIN_PHOTO_LABEL_3 = 4713
+    C_MAIN_VIDEO_FILE_NOT_FOUND = 4800
     C_MAIN_VIDEO_VISIBILITY = 5000
     C_MAIN_PHOTO_VISIBILITY = 5001
     C_MAIN_QUOTE_VISIBILITY = 5004
@@ -307,7 +402,11 @@ class QuizGui(xbmcgui.WindowXML):
     C_MAIN_CORRECT_VISIBILITY = 5002
     C_MAIN_INCORRECT_VISIBILITY = 5003
     C_MAIN_LOADING_VISIBILITY = 5005
-    C_MAIN_REPLAY_BUTTON_VISIBILITY = 5007
+    C_MAIN_COVER_IMAGE_VISIBILITY = 5007
+
+    STATE_LOADING = 1
+    STATE_PLAYING = 2
+    STATE_GAME_OVER = 3
 
     def __new__(cls, gameInstance):
         return super(QuizGui, cls).__new__(cls, 'script-moviequiz-main.xml', ADDON.getAddonInfo('path'))
@@ -327,19 +426,33 @@ class QuizGui(xbmcgui.WindowXML):
         else:
             self.defaultBackground = BACKGROUND_MOVIE
 
-        self.database = db.connect()
+        ratings = None
+        if gameInstance.getType() == game.GAMETYPE_MOVIE and ADDON.getSetting('movie.rating.limit.enabled') == 'true':
+            idx = MPAA_RATINGS.index(ADDON.getSetting('movie.rating.limit'))
+            ratings = MPAA_RATINGS[idx:]
+
+        elif gameInstance.getType() == game.GAMETYPE_TVSHOW and ADDON.getSetting('tvshow.rating.limit.enabled') == 'true':
+            idx = CONTENT_RATINGS.index(ADDON.getSetting('tvshow.rating.limit'))
+            ratings = CONTENT_RATINGS[idx:]
+
+        onlyUsedWatched = ADDON.getSetting(SETT_ONLY_WATCHED_MOVIES) == 'true'
+
+        self.database = db.Database.connect(ratings, onlyUsedWatched)
         self.player = player.TenSecondPlayer()
 
         self.questionPointsThread = None
         self.questionPoints = 0
         self.question = None
         self.previousQuestions = []
-        self.isLoading = False
+        self.lastClickTime = -1
+
+        self.uiState = self.STATE_LOADING
 
     def onInit(self):
         if self.gameInstance.getType() == game.GAMETYPE_TVSHOW:
             self.getControl(self.C_MAIN_MOVIE_BACKGROUND).setImage(self.defaultBackground)
 
+        xbmc.sleep(500) # Opening animation
         self.onNewGame()
 
     def onNewGame(self):
@@ -349,13 +462,15 @@ class QuizGui(xbmcgui.WindowXML):
         self.questionPoints = 0
         self.question = None
         self.previousQuestions = []
-        self.isLoading = False
+        self.uiState = self.STATE_LOADING
 
         self.onNewQuestion()
 
     def close(self):
-        if self.player and self.player.isPlaying():
-            self.player.stop()
+        if self.player:
+            if self.player.isPlaying():
+                self.player.stop()
+            self.player.close()
         self.database.close()
         super(QuizGui, self).close()
         
@@ -363,7 +478,7 @@ class QuizGui(xbmcgui.WindowXML):
         if action.getId() == ACTION_PARENT_DIR or action.getId() == ACTION_PREVIOUS_MENU:
             self.onGameOver()
 
-        if self.isLoading:
+        if self.uiState == self.STATE_LOADING:
             return
         elif action.getId() == REMOTE_1:
             self.setFocusId(self.C_MAIN_FIRST_ANSWER)
@@ -380,13 +495,19 @@ class QuizGui(xbmcgui.WindowXML):
 
 
     def onClick(self, controlId):
+        difference = time.time() - self.lastClickTime
+        self.lastClickTime = time.time()
+        if difference < 0.7:
+            xbmc.log("Ignoring key-repeat onClick")
+            return
+
         if not self.gameInstance.isInteractive():
             return # ignore
         elif controlId == self.C_MAIN_EXIT:
             self.onGameOver()
-        elif self.isLoading:
+        elif self.uiState == self.STATE_LOADING:
             return # ignore the rest while we are loading
-        elif self.question and (controlId >= self.C_MAIN_FIRST_ANSWER and controlId <= self.C_MAIN_LAST_ANSWER):
+        elif self.question and (self.C_MAIN_FIRST_ANSWER <= controlId <= self.C_MAIN_LAST_ANSWER):
             answer = self.question.getAnswer(controlId - self.C_MAIN_FIRST_ANSWER)
             self.onQuestionAnswered(answer)
         elif controlId == self.C_MAIN_REPLAY:
@@ -396,6 +517,10 @@ class QuizGui(xbmcgui.WindowXML):
         self.onThumbChanged(controlId)
 
     def onGameOver(self):
+        if self.uiState == self.STATE_GAME_OVER:
+            return # ignore multiple invocations
+        self.uiState = self.STATE_GAME_OVER
+
         if self.questionPointsThread is not None:
            self.questionPointsThread.cancel()
 
@@ -409,9 +534,12 @@ class QuizGui(xbmcgui.WindowXML):
             self.onGameOver()
             return
 
-        self.isLoading = True
+        self.uiState = self.STATE_LOADING
         self.getControl(self.C_MAIN_LOADING_VISIBILITY).setVisible(True)
         self.question = self._getNewQuestion()
+        if not self.question:
+            self.onGameOver()
+            return
         self.getControl(self.C_MAIN_QUESTION_LABEL).setLabel(self.question.getText())
 
         answers = self.question.getAnswers()
@@ -438,36 +566,35 @@ class QuizGui(xbmcgui.WindowXML):
 
         correctAnswer = self.question.getCorrectAnswer()
         displayType = self.question.getDisplayType()
-        if displayType is None:
-            self.onVisibilityChanged()
-
-        elif isinstance(displayType, question.VideoDisplayType):
-            self.onVisibilityChanged(video = True)
+        if isinstance(displayType, question.VideoDisplayType):
+            self.getControl(self.C_MAIN_VIDEO_FILE_NOT_FOUND).setVisible(False)
             xbmc.sleep(1500) # give skin animation time to execute
-            self.player.playWindowed(displayType.getVideoFile(), correctAnswer.idFile)
+            if not self.player.playWindowed(displayType.getVideoFile(), correctAnswer.idFile):
+                self.getControl(self.C_MAIN_VIDEO_FILE_NOT_FOUND).setVisible(True)
 
         elif isinstance(displayType, question.PhotoDisplayType):
             self.getControl(self.C_MAIN_PHOTO).setImage(displayType.getPhotoFile())
-            self.onVisibilityChanged(photo = True)
 
         elif isinstance(displayType, question.ThreePhotoDisplayType):
-            self.getControl(self.C_MAIN_PHOTO_1).setImage(displayType.getPhotoFile(0))
-            self.getControl(self.C_MAIN_PHOTO_2).setImage(displayType.getPhotoFile(1))
-            self.getControl(self.C_MAIN_PHOTO_3).setImage(displayType.getPhotoFile(2))
-            self.onVisibilityChanged(threePhotos = True)
+            self.getControl(self.C_MAIN_PHOTO_1).setImage(displayType.getPhotoFile(0)[0])
+            self.getControl(self.C_MAIN_PHOTO_LABEL_1).setLabel(displayType.getPhotoFile(0)[1])
+            self.getControl(self.C_MAIN_PHOTO_2).setImage(displayType.getPhotoFile(1)[0])
+            self.getControl(self.C_MAIN_PHOTO_LABEL_2).setLabel(displayType.getPhotoFile(1)[1])
+            self.getControl(self.C_MAIN_PHOTO_3).setImage(displayType.getPhotoFile(2)[0])
+            self.getControl(self.C_MAIN_PHOTO_LABEL_3).setLabel(displayType.getPhotoFile(2)[1])
 
         elif isinstance(displayType, question.QuoteDisplayType):
             quoteText = displayType.getQuoteText()
             quoteText = self._obfuscateQuote(quoteText)
             self.getControl(self.C_MAIN_QUOTE_LABEL).setText(quoteText)
-            self.onVisibilityChanged(quote = True)
 
+        self.onVisibilityChanged(displayType)
 
         if not self.gameInstance.isInteractive():
             # answers correctly in ten seconds
             threading.Timer(10.0, self._answer_correctly).start()
 
-        self.isLoading = False
+        self.uiState = self.STATE_PLAYING
         self.getControl(self.C_MAIN_LOADING_VISIBILITY).setVisible(False)
 
         self.questionPoints = None
@@ -476,8 +603,11 @@ class QuizGui(xbmcgui.WindowXML):
     def _getNewQuestion(self):
         retries = 0
         q = None
-        while retries < 100:
+        while retries < 100 and self.uiState == self.STATE_LOADING:
+            xbmc.sleep(10) # give XBMC time to process other events
             retries += 1
+
+            self.getControl(self.C_MAIN_LOADING).setPercent(retries)
 
             q = question.getRandomQuestion(self.gameInstance, self.database)
             if q is None:
@@ -521,7 +651,11 @@ class QuizGui(xbmcgui.WindowXML):
         self.onQuestionAnswered(answer)
 
     def onQuestionAnswered(self, answer):
-        print "onQuestionAnswered(..)"
+        """
+        @param answer: the chosen answer by the user
+        @type answer: Answer
+        """
+        xbmc.log("onQuestionAnswered(..)")
         if self.questionPointsThread is not None:
            self.questionPointsThread.cancel()
 
@@ -543,6 +677,7 @@ class QuizGui(xbmcgui.WindowXML):
                 if answer.correct:
                     self.getControl(self.C_MAIN_FIRST_ANSWER + idx).setLabel('[B]%s[/B]' % answer.text)
                     self.setFocusId(self.C_MAIN_FIRST_ANSWER + idx)
+                    self.onThumbChanged(self.C_MAIN_FIRST_ANSWER + idx)
                 else:
                     self.getControl(self.C_MAIN_FIRST_ANSWER + idx).setLabel(textColor='0x88888888')
 
@@ -567,17 +702,17 @@ class QuizGui(xbmcgui.WindowXML):
         if controlId is None:
             controlId = self.getFocusId()
 
-        if controlId >= self.C_MAIN_FIRST_ANSWER or controlId <= self.C_MAIN_LAST_ANSWER:
+        if self.C_MAIN_FIRST_ANSWER <= controlId <= self.C_MAIN_LAST_ANSWER:
             answer = self.question.getAnswer(controlId - self.C_MAIN_FIRST_ANSWER)
             coverImage = self.getControl(self.C_MAIN_COVER_IMAGE)
             if answer is not None and answer.coverFile is not None and os.path.exists(answer.coverFile):
-                coverImage.setVisible(True)
+                self.getControl(self.C_MAIN_COVER_IMAGE_VISIBILITY).setVisible(False)
                 coverImage.setImage(answer.coverFile)
             elif answer is not None and answer.coverFile is not None :
-                coverImage.setVisible(True)
+                self.getControl(self.C_MAIN_COVER_IMAGE_VISIBILITY).setVisible(False)
                 coverImage.setImage(NO_PHOTO_IMAGE)
             else:
-                coverImage.setVisible(False)
+                self.getControl(self.C_MAIN_COVER_IMAGE_VISIBILITY).setVisible(True)
 
     def onQuestionAnswerFeedbackTimer(self):
         """
@@ -589,18 +724,23 @@ class QuizGui(xbmcgui.WindowXML):
         self.getControl(self.C_MAIN_CORRECT_VISIBILITY).setVisible(True)
         self.getControl(self.C_MAIN_INCORRECT_VISIBILITY).setVisible(True)
 
-    def onVisibilityChanged(self, video = False, photo = False, quote = False, threePhotos = False):
-        """Visibility is inverted in skin
+    def onVisibilityChanged(self, displayType = None):
         """
-        self.getControl(self.C_MAIN_VIDEO_VISIBILITY).setVisible(not video)
-        self.getControl(self.C_MAIN_PHOTO_VISIBILITY).setVisible(not photo)
-        self.getControl(self.C_MAIN_QUOTE_VISIBILITY).setVisible(not quote)
-        self.getControl(self.C_MAIN_THREE_PHOTOS_VISIBILITY).setVisible(not threePhotos)
-        
-        self.getControl(self.C_MAIN_REPLAY_BUTTON_VISIBILITY).setEnabled(video)
+        @type displayType: quizlib.question.DisplayType
+        @param displayType: the type of display required by the current question
+        """
+        self.getControl(self.C_MAIN_VIDEO_VISIBILITY).setVisible(not isinstance(displayType, question.VideoDisplayType))
+        self.getControl(self.C_MAIN_PHOTO_VISIBILITY).setVisible(not isinstance(displayType, question.PhotoDisplayType))
+        self.getControl(self.C_MAIN_QUOTE_VISIBILITY).setVisible(not isinstance(displayType, question.QuoteDisplayType))
+        self.getControl(self.C_MAIN_THREE_PHOTOS_VISIBILITY).setVisible(not isinstance(displayType, question.ThreePhotoDisplayType))
+
 
     def _obfuscateQuote(self, quote):
         names = list()
+
+        for m in re.finditer('(\[.*?\])', quote, re.DOTALL):
+            quote = quote.replace(m.group(1), '')
+
         for m in re.finditer('(.*?:)', quote):
             name = m.group(1)
             if not name in names:
@@ -642,6 +782,7 @@ class GameOverDialog(xbmcgui.WindowXMLDialog):
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
             self.close()
+            self.parentWindow.close()
 
     def onClick(self, controlId):
         if controlId == self.C_GAMEOVER_RETRY:
@@ -690,7 +831,7 @@ class GameOverDialog(xbmcgui.WindowXMLDialog):
             listControl.addItem(item)
 
         # Global highscore
-        globalHighscore = highscore.GlobalHighscoreDatabase()
+        globalHighscore = highscore.GlobalHighscoreDatabase(ADDON.getAddonInfo('version'))
         if ADDON.getSetting('submit.highscores') == 'true':
             newHighscoreId = globalHighscore.addHighscore(name, self.game)
         else:
