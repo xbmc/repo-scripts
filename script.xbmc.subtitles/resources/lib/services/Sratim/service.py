@@ -2,13 +2,14 @@
 
 #===============================================================================
 # Sratim.co.il subtitles service.
-# Version: 2.0
+# Version: 2.1
 #
 # Change log:
 # 1.1 - Fixed bug with movie search: forgot to replace spaces with + signs.
 # 1.2 - Better handling of search timeout (no results returned instead of error)
 # 2.0 - Changed RE patterns and links to match new site layout (Thanks Shai Bentin!)
 #       Fixed TV show subtitles (now navigates site to find requested episode)
+# 2.1 - Changed RE patterns again due to layout change (Thanks BBLN for also suggesting different fix).
 #
 # Created by: Ori Varon
 #===============================================================================
@@ -22,8 +23,8 @@ debug_pretext = ""
 # Regular expression patterns
 #===============================================================================
 
-TV_SEARCH_RESULTS_PATTERN = "<td valign=\"top\"><a href=\"viewseries.php\?id=(\d+)"
-SEARCH_RESULTS_PATTERN = "<td valign=\"top\"><a href=\"view.php\?id=(\d+)"
+TV_SEARCH_RESULTS_PATTERN = "<div style=\"\"><a href=\"viewseries.php\?id=(\d+)"
+SEARCH_RESULTS_PATTERN = "<div style=\"\"><a href=\"view.php\?id=(\d+)"
 SUBTITLE_LIST_PATTERN = "downloadsubtitle\.php\?id=(?P<fid>\d*).*?subt_lang.*?title=\"(?P<language>.*?)\".*?subtitle_title.*?title=\"(?P<title>.*?)\""
 TV_SEASON_PATTERN = "seasonlink_(?P<slink>\d+).*?>(?P<snum>\d+)</a>"
 TV_EPISODE_PATTERN = "episodelink_(?P<elink>\d+).*?>(?P<enum>\d+)</a>"
