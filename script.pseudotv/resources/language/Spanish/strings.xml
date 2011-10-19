@@ -1,0 +1,13 @@
+<strings>
+    <string id="30000">General</string>
+    <string id="30001">Temporizador de apagado(en minutos)</string>
+    <string id="30002">Forzar reset en el siguiente inicio</string>
+    <string id="30003">Mostrar info al cambiar de canal</string>
+    <string id="30004">Tiempo entre reseteo del canal</string>
+    <string id="30006">Siempre mostrar el logo del canal</string>
+    <string id="30007">Configurar canal</string>
+    <string id="30008">Abrir configuracion de canal</string>
+    <string id="30009">Otras opciones</string>
+    <string id="30010">Carpeta Logos de canales</string>
+    <string id="30011">El tiempo de canal por defecto en el arranque</string>
+</strings>

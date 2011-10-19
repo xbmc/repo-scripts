@@ -1,0 +1,62 @@
+<window>
+	<allowoverlay>no</allowoverlay>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>	
+		<control type="image" id="103">
+			<description>Channel Bug</description>
+			<posx>1110</posx>
+			<posy>635</posy>
+			<width>130</width>
+			<height>75</height>
+			<aspectratio>keep</aspectratio>
+			<colordiffuse>66FFFFFF</colordiffuse>
+		</control>		
+		<control type="group" id="102">
+			<control type="group">
+				<visible>false</visible>
+				<control type="image" id="101">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+					<texture>-</texture>
+				</control>
+				<control type="label" id="502">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+				</control>
+				<control type="label" id="503">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+				</control>
+				<control type="label" id="504">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+				</control>
+				<control type="label" id="505">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+				</control>
+				<control type="image" id="506">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+					<texture>-</texture>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

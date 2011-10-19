@@ -1,0 +1,119 @@
+Changelog
+
+
+2.0.0
+    New advanced channel rule system.
+    Share channels between multiple systems.
+    Addition of Dutch language (thanks Machine-Sanctum).
+    Support for MOV file parsing.
+    Multiple thread deletion issues fixed.
+    Background channel loading.
+    EPG bugs fixed.
+    Support for directory-type channels.
+    Select mode for background channel thread.
+    EPG drawing optimization.
+    Select between 12-hour and 24-hour clock.
+    Better channel creation for first-time users.
+    Much better time accuracy between restarts.
+    Added Xeebo skin (thanks Steveb).
+
+
+1.2.1
+    Now ask the user to enable the webserver if it isn't on.
+    Fix to use the proper webserver port.
+    Update to the Night skin (thanks Steveb).
+    Added the Simplicity skin (thanks Zepfan).
+    Several small performance improvements.
+    Shift 30 seconds forward or backward by using the left and right arrow keys.
+    Many random fixes.
+
+
+1.2.0
+    The user can now specify how channels start: resume, follow the EPG (real-
+        time), or random.
+    Background updating of channels.
+    Fixed issues when used in Eden.
+    No longer sometimes crashes on exit.
+    Turns off repeat when exiting.
+    Added Spanish translation (thanks CyberXaz).
+    Updated the Night skin (thanks Steveb).
+
+
+1.1.0
+    Added the channel configuration utility.
+    Fixed a potential crash in the mp4 parser.
+    Separated the channel creation code into a different module.
+    Changed a few of the configuration strings.
+    Added the ability to refresh channels on every start.
+    Improved the channel changing speed.
+    Resume a channel at the proper time when switching between channels.
+    Allow the user to specify a directory for channel logos.
+    Allow the use of the OSD.
+    Added an FLV parser.
+    New skins from Zepfan.
+    Fixed a problem with shows not being resumed properly from the EPG.
+    Gave skinners the ability to change the EPG button text color.
+    Updates to nearly all skins (thanks Zepfan and Sranshaft).
+
+
+1.0.1
+    Able to use the Previous Menu key to exit.
+    Update to the Refocus skin from Sranshaft.
+
+
+1.0.0
+    Crazy jump in version to 1.0 because I can.
+    Turn off shuffling if it's on.
+    Playlist parsing is completely minidom now.
+    Manually shuffle playlists when the order is random.
+    Allow the stop button inside of the 2 second window.
+    Added the Confluence skin (thanks Sranshaft).
+    Added the Transparency skin (thanks Zepfan).
+    Now have channel icons for most presets (thanks jtucker1972).
+    Fixed an uncaught exception in video parsers.
+    Works if onClick isn't called in the EPG.
+
+
+0.2.0
+    New default skin (thanks to Sranshaft)
+    Added an info window (again, Sranshaft).
+    There is now a PseudoTV icon (thanks bridgman).
+    Channel icons.
+    Control over button placement put into the skin.
+    Start the script on the previously viewed channel.
+    EPG speed improvement.
+    Support mixed playlists.
+    Support for future JSON modification.
+
+
+0.1.5
+    Resolved the problem with not resuming the channel properly.
+    Fixed the issue introduced in 0.1.4 that prevending gathering information
+        on Windows systems.
+    Put several of the controls into the hands of the skinners.
+
+
+0.1.4
+    New method of scanning channels (thanks to TheOddLinguist) that correctly
+        uses movie sets and TV show-type playlists.
+    Display music video information in the EPG.
+
+
+0.1.3
+    There was an issue where XBMC woukd sometimes return a float when an int
+        was expected, resulting in a type error and a freeze.
+    Sometimes the EPG wouldn't properly select or display the correct show.
+    The EPG would sometimes stop scrolling.
+    Changed the EPG to left-shift the time offsets.
+
+
+0.1.2
+    Windows systems experienced freezes...but no more!
+    There was also an issue getting the duration of an episode.
+
+
+0.1.1
+    Fixed a freeze when there are unexpected things in the smart playlist.
+    
+
+0.1.0 (Initial alpha version)

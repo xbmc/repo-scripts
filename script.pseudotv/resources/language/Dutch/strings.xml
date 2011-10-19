@@ -1,0 +1,13 @@
+<strings>
+    <string id="30000">Algemeen</string>
+    <string id="30001">Auto. uit Timer (in minuten)</string>
+    <string id="30002">Speelijst herladen forceren bij volgende start</string>
+    <string id="30003">Information tonen bij overschakelen zenders</string>
+    <string id="30004">Tijd tussen zender resets</string>
+    <string id="30006">Altijd zender logo tonen</string>
+    <string id="30007">Zenders Configureren</string>
+    <string id="30008">Open Zender Configuratie</string>
+    <string id="30009">Andere Instellingen</string>
+    <string id="30010">Zender Logo Folder</string>
+    <string id="30011">Standaard zender tijden bij opstarten</string>
+</strings>

@@ -1,0 +1,133 @@
+<window>
+    <allowoverlay>no</allowoverlay>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+
+    <controls>
+        <control type="image" id="101">
+            <description>Background</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>lowback.png</texture>
+        </control>
+		
+		<control type="image" id="103">
+			<description>Channel Bug</description>
+			<posx>220r</posx>
+			<posy>120r</posy>
+			<width>150</width>
+			<height>100</height>
+			<aspectratio>keep</aspectratio>
+			<texture></texture>
+			<animation effect="fade" start="50" end="50" condition="True">Conditional</animation>
+		</control>
+
+        <control type="group" id="102">
+			<animation effect="fade" time="500">VisibleChange</animation>
+            
+			<!--HEADER-->
+		
+			<include>Clock</include>
+		
+			<!--FOOTER-->
+			
+			<control type="image">
+				<posx>0</posx>
+				<posy>500</posy>
+				<width>1280</width>
+				<height>370</height>
+				<texture>infoback.png</texture>
+			</control>
+		
+			<control type="grouplist">
+				<posx>262</posx>
+				<posy>505</posy>
+				<width>1280</width>
+				<orientation>vertical</orientation>
+				<itemgap>4</itemgap>
+			
+				<control type="label" id="502">
+					<description>Label Now Playing</description>
+					<width>1280</width>
+					<height>20</height>
+					<font>font30caps</font>
+					<textcolor>selected</textcolor>
+					<align>left</align>
+				</control>
+			</control>
+			
+				<control type="label" id="503">
+					<description>Label Show Title</description>
+					<posx>262</posx>
+					<posy>540</posy>
+					<width>900</width>
+					<height>30</height>
+					<font>font35caps_title</font>
+					<textcolor>yellow</textcolor>
+				</control>
+				
+				<control type="label" id="504">
+					<description>Label Show Title</description>
+					<posx>262</posx>
+					<posy>575</posy>					
+					<width>900</width>
+					<height>20</height>
+					<font>font30caps_title</font>
+					<textcolor>white</textcolor>
+				</control>
+			
+			<control type="label" id="505">
+				<description>Label Show Description</description>
+				<posx>262</posx>
+				<posy>610</posy>
+				<width>900</width>
+				<height>90</height>
+				<font>font24caps_title</font>
+				<textcolor>grey</textcolor>
+				<align>left</align>
+				<wrapmultiline>true</wrapmultiline>
+			</control>
+			
+			<control type="image" id="506">
+				<description>Show Channel Icon</description>
+				<posx>2</posx>
+				<posy>550</posy>
+				<width>240</width>
+				<height>130</height>
+				<aspectratio>scale</aspectratio>
+          			<colordiffuse>white</colordiffuse>
+			</control>
+			
+			<control type="progress">
+				<description>Progressbar</description>
+				<posx>75</posx>
+				<posy>50r</posy>
+				<width>300</width>
+				<height>8</height>
+				<info>Player.Progress</info>
+				<visible>false</visible>
+			</control>
+			
+			<control type="label">
+                <description>Current Video End Time</description>
+                <posx>50r</posx>
+                <posy>50r</posy>
+                <width>890</width>
+                <height>20</height>
+                <label>[COLOR=blue]$LOCALIZE[31049][/COLOR] : $INFO[Player.FinishTime]</label>
+                <align>right</align>
+                <aligny>center</aligny>
+                <font>font12_title</font>
+                <textcolor>grey2</textcolor>
+                <shadowcolor>black</shadowcolor>
+				<visible>false</visible>
+            </control>	
+	</control>
+    </controls>
+</window>

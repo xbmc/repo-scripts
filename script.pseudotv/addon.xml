@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon
+    id="script.pseudotv"
+	version="2.0.0"
+	name="PseudoTV"
+	provider-name="Jason Anderson">
+
+	<requires>
+		<import addon="xbmc.python" version="2.0"/>
+	</requires>
+
+	<extension point="xbmc.python.script"
+        defaultresolution="720p"
+        defaultresolutionwide="720p"
+		library="default.py"/>
+
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<minversion>35647</minversion>
+		<summary lang="en">Channel surfing for your video library</summary>
+		<summary lang="nl">Zenderlijst voor jouw video bibliotheek</summary>
+		<description lang="en">PseudoTV acts similar to normal broadcast or cable TV, complete with multiple preset and user-defined channels and an EPG.</description>
+		<description lang="nl">PseudoTV gedraagt zich vergelijkbaar als een normale TV zender, compleet met standaard en instelbare kanalen en EPG (TV gids).</description>
+	</extension>
+</addon>

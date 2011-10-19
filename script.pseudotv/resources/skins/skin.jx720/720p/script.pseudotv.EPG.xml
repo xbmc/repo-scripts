@@ -1,0 +1,479 @@
+<window>
+    <allowoverlay>no</allowoverlay>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+
+    <controls>
+		<!--BACKGROUND-->
+		<control type="group">
+			<include>CommonAppsBackground</include>
+		</control>
+		<control type="group">
+			<include>CommonAppsBlackwash</include>
+		</control>
+			
+		<control type="image">
+			<description>Right Border</description>
+			<posx>1215</posx>
+			<posy>90</posy>
+			<width>10</width>
+			<height>360</height>
+			<texture border="5">pstvHeader.png</texture>
+		</control>
+		<control type="image">
+			<description>Bottom Border</description>
+			<posx>105</posx>
+			<posy>440</posy>
+			<width>1110</width>
+			<height>10</height>
+			<texture border="5">pstvHeader.png</texture>
+		</control>
+		<control type="image">
+			<description>EPG Back</description>
+			<posx>430</posx>
+			<posy>140</posy>
+			<width>785</width>
+			<height>300</height>
+			<texture border="5">pstvHeader.png</texture>
+		</control>	
+	
+        <!--CHANNEL BUTTONS AND LABELS-->
+		
+		<control type="group">
+			<posx>105</posx>
+			<posy>90</posy>
+			<width>350</width>
+			<height>500</height>
+			
+			<!--CHANNEL HEADER-->
+			
+			<control type="image">
+				<description>Channel Header</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>325</width>
+				<height>50</height>
+				<texture border="5">pstvHeader.png</texture>
+			</control>			
+			<control type="label" id="104">
+				<description>Date Label</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>325</width>
+				<height>50</height>
+				<label>Current Date</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textcolor>blue</textcolor>
+			</control>
+			
+			<!--CHANNEL 1-->
+			
+			<control type="image">
+				<description>Channel 1 Back</description>
+				<posx>0</posx>
+				<posy>50</posy>
+				<width>325</width>
+				<height>50</height>
+				<texture border="5">pstvHeader.png</texture>
+			</control>			
+			<control type="label" id="301">
+				<description>Channel 1 Name</description>
+				<posx>60</posx>
+				<posy>50</posy>
+				<width>270</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="311">
+				<description>Channel 1 Number</description>
+				<posx>40</posx>
+				<posy>50</posy>
+				<width>30</width>
+				<height>50</height>
+				<label>1</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<visible>true</visible>
+			</control>
+			
+			<!-- CHANNEL 2 -->
+			
+			<control type="image">
+				<description>Channel 2 Back</description>
+				<posx>0</posx>
+				<posy>100</posy>
+				<width>325</width>
+				<height>50</height>
+				<texture border="5">pstvHeader.png</texture>
+			</control>			
+			<control type="label" id="302">
+				<description>Channel 2 Name</description>
+				<posx>60</posx>
+				<posy>100</posy>
+				<width>270</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="312">
+				<description>Channel 2 Number</description>
+				<posx>40</posx>
+				<posy>100</posy>
+				<width>30</width>
+				<height>50</height>
+				<label>2</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<visible>true</visible>
+			</control>
+			
+			<!-- CHANNEL 3 -->
+			
+			<control type="image">
+				<description>Channel 3 Back</description>
+				<posx>0</posx>
+				<posy>150</posy>
+				<width>325</width>
+				<height>50</height>
+				<texture border="5">pstvHeader.png</texture>
+			</control>			
+			<control type="label" id="303">
+				<description>Channel 3 Name</description>
+				<posx>60</posx>
+				<posy>150</posy>
+				<width>270</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="313">
+				<description>Channel 3 Number</description>
+				<posx>40</posx>
+				<posy>150</posy>
+				<width>30</width>
+				<height>50</height>
+				<label>2</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<visible>true</visible>
+			</control>
+			
+			<!-- CHANNEL 4 -->
+			
+			<control type="image">
+				<description>Channel 4 Back</description>
+				<posx>0</posx>
+				<posy>200</posy>
+				<width>325</width>
+				<height>50</height>
+				<texture border="5">pstvHeader.png</texture>
+			</control>			
+			<control type="label" id="304">
+				<description>Channel 4 Name</description>
+				<posx>60</posx>
+				<posy>200</posy>
+				<width>270</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="314">
+				<description>Channel 4 Number</description>
+				<posx>40</posx>
+				<posy>200</posy>
+				<width>30</width>
+				<height>50</height>
+				<label>4</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<visible>true</visible>
+			</control>
+			
+			<!-- CHANNEL 5 -->
+			
+			<control type="image">
+				<description>Channel 5 Back</description>
+				<posx>0</posx>
+				<posy>250</posy>
+				<width>325</width>
+				<height>50</height>
+				<texture border="5">pstvHeader.png</texture>
+			</control>			
+			<control type="label" id="305">
+				<description>Channel 5 Name</description>
+				<posx>60</posx>
+				<posy>250</posy>
+				<width>270</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="315">
+				<description>Channel 5 Number</description>
+				<posx>40</posx>
+				<posy>250</posy>
+				<width>30</width>
+				<height>50</height>
+				<label>5</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<visible>true</visible>
+			</control>
+			
+			<!-- CHANNEL 6 -->
+			
+			<control type="image">
+				<description>Channel 6 Back</description>
+				<posx>0</posx>
+				<posy>300</posy>
+				<width>325</width>
+				<height>50</height>
+				<texture border="5">pstvHeader.png</texture>
+			</control>			
+			<control type="label" id="306">
+				<description>Channel 6 Name</description>
+				<posx>60</posx>
+				<posy>300</posy>
+				<width>270</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="316">
+				<description>Channel 6 Number</description>
+				<posx>40</posx>
+				<posy>300</posy>
+				<width>30</width>
+				<height>50</height>
+				<label>2</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<visible>true</visible>
+			</control>
+        </control>
+		
+		<!--LISTING HEADER AND TIME INFO-->
+		
+		<control type="group">
+			<posx>430</posx>
+			<posy>90</posy>
+			<width>785</width>
+			<height>500</height>			
+			<control type="image">
+				<description>Channel Header</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>785</width>
+				<height>50</height>
+				<texture border="5">pstvHeader.png</texture>
+			</control>			
+			<control type="label" id="101">
+				<description>Time 1 Label</description>
+				<posx>5</posx>
+				<posy>0</posy>
+				<width>261</width>
+				<height>50</height>
+				<label>Time 1</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>blue</textcolor>
+			</control>
+			<control type="label" id="102">
+				<description>Time 2 Label</description>
+				<posx>266</posx>
+				<posy>0</posy>
+				<width>261</width>
+				<height>50</height>
+				<label>Time 2</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>blue</textcolor>
+			</control>
+			<control type="label" id="103">
+				<description>Time 3 Label</description>
+				<posx>527</posx>
+				<posy>0</posy>
+				<width>261</width>
+				<height>50</height>
+				<label>Time 2</label>
+				<font>font13</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>blue</textcolor>
+			</control>
+		</control>
+		
+		<!--TIME BAR-->
+		
+		<control type="image" id="120">
+			<posx>430</posx>
+			<posy>140</posy>
+			<width>10</width>
+			<height>300</height>
+			<aspectratio>keep</aspectratio>
+		</control>
+		
+		<!--SHOW LISTINGS-->
+		
+		<control type="button" id="100">
+			<visible>false</visible>			
+			<label>0xFFFFFFFF</label><!--un-focused text color-->			
+			<label2>0xFF000000</label2><!--focused text color-->
+		</control>			
+		<control type="group" id="111">
+			<posx>431</posx>
+			<posy>141</posy>
+			<width>784</width>
+			<height>48</height>
+		</control>
+		<control type="group" id="112">
+			<posx>431</posx>
+			<posy>191</posy>
+			<width>784</width>
+			<height>48</height>
+		</control>
+		<control type="group" id="113">
+			<posx>431</posx>
+			<posy>241</posy>
+			<width>784</width>
+			<height>48</height>
+		</control>
+		<control type="group" id="114">
+			<posx>431</posx>
+			<posy>291</posy>
+			<width>784</width>
+			<height>48</height>
+		</control>
+		<control type="group" id="115">
+			<posx>431</posx>
+			<posy>341</posy>
+			<width>784</width>
+			<height>48</height>
+		</control>		
+		<control type="group" id="116">
+			<posx>431</posx>
+			<posy>391</posy>
+			<width>784</width>
+			<height>48</height>
+		</control>
+		
+		<!--CHANNEL INFO/LABEL-->
+			
+		<control type="label">
+			<description>Time label</description>
+			<posx>1200</posx>
+			<include>ClockTextCommons</include>
+		</control>
+		<control type="label">
+			<posx>130</posx>
+			<include>HeaderTextCommons</include>
+			<label>Program Guide</label>
+		</control>
+		<control type="label">
+			<posx>130</posx>
+			<posy>670</posy>
+			<include>HeaderTextCommons</include>
+			<label>PseudoTV</label>
+		</control>
+		<control type="label" id="500">
+			<description>Show Title Label</description>
+			<posx>430</posx>
+			<posy>455</posy>
+			<width>800</width>
+			<height>25</height>
+			<font>font30</font>
+			<textcolor>white</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<align>left</align>
+		</control>
+		<control type="label" id="501">
+			<description>Episode Title Label</description>
+			<posx>430</posx>
+			<posy>490</posy>
+			<width>800</width>
+			<height>25</height>
+			<font>font13</font>>
+			<textcolor>orange</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<align>left</align>
+		</control>		
+		<control type="label" id="502">
+			<description>Episode Description Label</description>
+			<posx>430</posx>
+			<posy>520</posy>
+			<width>800</width>
+			<height>100</height>			
+			<font>font12</font>
+			<textcolor>grey2</textcolor>
+			<align>left</align>
+			<wrapmultiline>true</wrapmultiline>			
+		</control>			
+		<control type="image" id="503">
+            <description>Show Channel Icon</description>
+            <posx>130</posx>
+			<posy>470</posy>
+			<width>260</width>
+			<height>150</height>
+			<aspectratio>keep</aspectratio>
+		</control>
+		<control type="group">
+			<include>AppsToSubBlades</include>
+		</control>
+			
+    </controls>
+</window>

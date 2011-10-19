@@ -1,0 +1,420 @@
+<window>
+    <allowoverlay>no</allowoverlay>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+	
+	<include>dialogOpen</include>
+    
+    <controls>    
+		<include>global_Background</include>
+		<include>global_Includes</include>
+		
+		<control type="label">
+            <include>PageLabel</include>
+            <label>pseudo[COLOR=Color2]tv[/COLOR]</label>
+        </control>
+        
+        <!--CLOCK-->
+        
+        <control type="label" id="200">
+            <posx>25r</posx>
+            <label>[B]$INFO[System.Time][/B]</label>
+            <include>toast_Top</include>
+            <animation type="WindowOpen">
+                <effect type="rotatex" time="600" center="0,0" start="380" end="0" tween="cubic" easing="out" />
+                <effect type="fade" time="400" center="640,360" start="0" end="100" />
+            </animation>
+            <animation type="WindowClose">
+                <effect type="fade" time="250" center="640,360" start="100" end="0" />
+            </animation>
+        </control>
+        
+        <control type="label" id="200">
+            <posx>25r</posx>
+            <label>$INFO[System.Date]</label>
+            <include>toast_Bottom</include>
+            <animation type="WindowOpen">
+                <effect type="rotatex" time="600" center="0,0" start="380" end="0" tween="cubic" easing="out" />
+                <effect type="fade" time="400" center="640,360" start="0" end="100" />
+            </animation>
+            <animation type="WindowClose">
+                <effect type="fade" time="250" center="640,360" start="100" end="0" />
+            </animation>
+        </control>
+        
+        <!--HIGHLIGHTED SHOW INFORMATION-->
+        
+        <control type="grouplist">
+            <posx>360</posx>
+            <posy>500</posy>
+			<width>860</width>
+			<height>180</height>
+			<orientation>vertical</orientation>
+			<itemgap>4</itemgap>
+            <include>transition_Container</include>
+			
+            <control type="label" id="500">
+                <description>Show Name Label</description>
+                <width>860</width>
+                <label>Show Name</label>
+                <font>osd1</font>
+                <textcolor>Color1</textcolor>
+            </control>
+            <control type="label" id="501">
+                <description>Show Title Label</description>
+                <width>860</width>
+                <label>Show Title</label>
+                <align>left</align>
+				<include>info_Sub</include>
+            </control>
+            <control type="label" id="502">
+                <width>860</width>
+                <height>120</height>
+                <align>left</align>
+                <aligny>top</aligny>
+                <label>Show Description</label>
+                <textcolor>Color1</textcolor>
+                <font>description</font>
+                <wrapmultiline>true</wrapmultiline>
+            </control>
+        </control>
+		
+		<!--CHANNEL LOGO-->
+        
+        <control type="image" id="503">
+            <description>Channel Logo</description>
+            <posx>60</posx>
+            <posy>500</posy>
+            <width>200</width>
+            <height>150</height>
+            <aspectratio>keep</aspectratio>
+        </control>
+        
+        <!--CHANNEL LISTINGS-->
+
+        <control type="image">
+            <description>Channel 1 Background</description>
+            <posx>40</posx>
+            <posy>200</posy>
+            <width>280</width>
+            <height>40</height>
+            <texture>pstvChannel.png</texture>
+        </control>
+        
+        <control type="image">
+            <description>Channel 2 Background</description>
+            <posx>40</posx>
+            <posy>245</posy>
+            <width>280</width>
+            <height>40</height>
+            <texture>pstvChannel.png</texture>
+        </control>
+        
+        <control type="image">
+            <description>Channel 3 Background</description>
+            <posx>40</posx>
+            <posy>290</posy>
+            <width>280</width>
+            <height>40</height>
+            <texture>pstvChannel.png</texture>
+        </control>
+        
+        <control type="image">
+            <description>Channel 4 Background</description>
+            <posx>40</posx>
+            <posy>335</posy>
+            <width>280</width>
+            <height>40</height>
+            <texture>pstvChannel.png</texture>
+        </control>
+        
+        <control type="image">
+            <description>Channel 5 Background</description>
+            <posx>40</posx>
+            <posy>380</posy>
+            <width>280</width>
+            <height>40</height>
+            <texture>pstvChannel.png</texture>
+        </control>
+		
+		<control type="image">
+            <description>Channel 6 Background</description>
+            <posx>40</posx>
+            <posy>425</posy>
+            <width>280</width>
+            <height>40</height>
+            <texture>pstvChannel.png</texture>
+        </control>
+
+        <control type="label" id="301">
+            <description>Channel 1 Label</description>
+            <posx>90</posx>
+            <posy>200</posy>
+            <width>280</width>
+            <height>40</height>
+            <label>Channel 1</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+		
+		<control type="label" id="311">
+            <description>Channel 1 Number</description>
+            <posx>60</posx>
+            <posy>200</posy>
+            <width>30</width>
+            <height>40</height>
+            <label>1</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+
+        <control type="label" id="302">
+            <description>Channel 2 Label</description>
+            <posx>90</posx>
+            <posy>245</posy>
+            <width>280</width>
+            <height>40</height>
+            <label>Channel 2</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+		
+		<control type="label" id="312">
+            <description>Channel 2 Number</description>
+            <posx>60</posx>
+            <posy>245</posy>
+            <width>30</width>
+            <height>40</height>
+            <label>2</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+
+        <control type="label" id="303">
+            <description>Channel 3 Label</description>
+            <posx>90</posx>
+            <posy>290</posy>
+            <width>280</width>
+            <height>40</height>
+            <label>Channel 3</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+		
+		<control type="label" id="313">
+            <description>Channel 3 Number</description>
+            <posx>60</posx>
+            <posy>290</posy>
+            <width>30</width>
+            <height>40</height>
+            <label>3</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+
+        <control type="label" id="304">
+            <description>Channel 4 Label</description>
+            <posx>90</posx>
+            <posy>335</posy>
+            <width>280</width>
+            <height>40</height>
+            <label>Channel 4</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+		
+		<control type="label" id="314">
+            <description>Channel 4 Number</description>
+            <posx>60</posx>
+            <posy>335</posy>
+            <width>30</width>
+            <height>40</height>
+            <label>4</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+
+        <control type="label" id="305">
+            <description>Channel 5 Label</description>
+            <posx>90</posx>
+            <posy>380</posy>
+            <width>280</width>
+            <height>40</height>
+            <label>Channel 5</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+		
+		<control type="label" id="315">
+            <description>Channel 5 Number</description>
+            <posx>60</posx>
+            <posy>380</posy>
+            <width>30</width>
+            <height>40</height>
+            <label>5</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+		
+		<control type="label" id="306">
+            <description>Channel 6 Label</description>
+            <posx>90</posx>
+            <posy>425</posy>
+            <width>280</width>
+            <height>40</height>
+            <label>Channel 5</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+		
+		<control type="label" id="316">
+            <description>Channel 5 Number</description>
+            <posx>60</posx>
+            <posy>425</posy>
+            <width>30</width>
+            <height>40</height>
+            <label>5</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <aligny>center</aligny>
+        </control>
+        
+        <!--TIME LINES-->
+        
+        <control type="group" id="111">
+            <description>Show Listings - Channel 1</description>
+            <posx>320</posx>
+            <posy>200</posy>
+            <width>980</width>
+            <height>40</height>
+        </control>
+        
+        <control type="group" id="112">
+            <description>Show Listings - Channel 2</description>
+            <posx>320</posx>
+            <posy>245</posy>
+            <width>980</width>
+            <height>40</height>
+        </control>
+
+        <control type="group" id="113">
+            <description>Show Listings - Channel 3</description>
+            <posx>320</posx>
+            <posy>290</posy>
+            <width>980</width>
+            <height>40</height>
+        </control>
+
+        <control type="group" id="114">
+            <description>Show Listings - Channel 4</description>
+            <posx>320</posx>
+            <posy>335</posy>
+            <width>980</width>
+            <height>40</height>
+        </control>
+
+        <control type="group" id="115">
+            <description>Show Listings - Channel 5</description>
+            <posx>320</posx>
+            <posy>380</posy>
+            <width>980</width>
+            <height>40</height>
+        </control>
+		
+		<control type="group" id="116">
+            <description>Show Listings - Channel 6</description>
+            <posx>320</posx>
+            <posy>425</posy>
+            <width>980</width>
+            <height>40</height>
+        </control>
+		
+		<!--TIME BAR-->
+		
+		<control type="image" id="120">
+            <description>Time Bar</description>
+            <posx>320</posx>
+            <posy>200</posy>
+            <width>22</width>
+            <height>265</height>
+        </control>
+        
+        <!--SIDEBAR FADE-->
+        
+        <control type="image">
+            <description>Sidebar Fade</description>
+            <posx>220</posx>
+            <posy>0</posy>
+            <width>100</width>
+            <height>720</height>
+            <texture>settings/separator.png</texture>
+        </control>
+        
+        <!--TIME LABELS-->
+        
+        <control type="label" id="101">
+            <description>Time 1 Label</description>
+            <posx>360</posx>
+            <posy>160</posy>
+            <width>312</width>
+            <height>20</height>
+            <label>Time 1</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <textcolor>Color2</textcolor>
+        </control>
+
+        <control type="label" id="102">
+            <description>Time 2 Label</description>
+            <posx>664</posx>
+            <posy>160</posy>
+            <width>312</width>
+            <height>20</height>
+            <label>Time 2</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <textcolor>Color2</textcolor>
+        </control>
+
+        <control type="label" id="103">
+            <description>Time 3 Label</description>
+            <posx>984</posx>
+            <posy>160</posy>
+            <width>312</width>
+            <height>20</height>
+            <label>Time 3</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <textcolor>Color2</textcolor>
+        </control>
+        
+        <!--DATE LABEL-->
+        
+        <control type="label" id="104">
+            <description>Date Label</description>
+            <posx>60</posx>
+            <posy>160</posy>
+            <width>312</width>
+            <height>20</height>
+            <label>Current Date</label>
+            <font>smallCaps</font>
+            <align>left</align>
+            <textcolor>Color2</textcolor>
+        </control>
+    </controls>
+</window>
