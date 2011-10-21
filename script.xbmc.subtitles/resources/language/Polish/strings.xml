@@ -35,7 +35,7 @@
     <string id="30101">Pierwszy język</string>
     <string id="30102">Drugi język</string>
     <string id="30103">Wybierz serwis</string>
-    <string id="30104">- Podnapisi.net nazwa urzytkownika</string>
+    <string id="30104">- Podnapisi.net nazwa użytkownika</string>
     <string id="30105">- Podnapisi.net hasło</string>
     <string id="30106">Opcje zaawansowane</string>
     <string id="30107">Pobierz napisy do katalogu z filmem</string>
@@ -48,22 +48,22 @@
     <string id="30119">Szukaj używając folderu nadrzędnego</string>
     <string id="30121">Dodaj symbol języka do pliku napisów</string>
     <string id="30122">Domyślny timeout</string>
-    <string id="30123">- Legendas.TV nazwa urzytkownika</string>
+    <string id="30123">- Legendas.TV nazwa użytkownika</string>
     <string id="30124">- Legendas.TV hasło</string>
     <string id="30125">Wyłącz szukanie wg. hash'a</string>
-    <string id="30126">- Itasa nazwa urzytkownika</string>
+    <string id="30126">- Itasa nazwa użytkownika</string>
     <string id="30127">- Itasa hasło</string>
-    <string id="30128">- Titulky nazwa urzytkownika</string>
+    <string id="30128">- Titulky nazwa użytkownika</string>
     <string id="30129">- Titulky hasło</string>
     <string id="30130">Przeszukaj nastepny serwis jeżeli poprzedni nie zawiera napisów</string>
     <string id="30131">Pobierz automatycznie pierwsze zsynchronizowane napisy</string>
-    <string id="30132">- LegendasDivx nazwa urzytkownika</string>
+    <string id="30132">- LegendasDivx nazwa użytkownika</string>
     <string id="30133">- LegendasDivx hasło</string>
-    <string id="30134">- PTSubs nazwa urzytkownika</string>
+    <string id="30134">- PTSubs nazwa użytkownika</string>
     <string id="30135">- PTSubs hasło</string>
-    <string id="30136">- OmniSubs nazwa urzytkownika</string>
+    <string id="30136">- OmniSubs nazwa użytkownika</string>
     <string id="30137">- OmniSubs hasło</string>
-    <string id="30138">- LegendasZone nazwa urzytkownika</string>
+    <string id="30138">- LegendasZone nazwa użytkownika</string>
     <string id="30139">- LegendasZone hasło</string>
 
   <!-- Languages  -->    

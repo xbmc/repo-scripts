@@ -12,7 +12,7 @@ from utilities import log, twotofull
 _ = sys.modules[ "__main__" ].__language__
 
 main_url = "http://napisy24.pl/search.php?str="
-down_url = "http://napisy.me/download/sr/"
+down_url = "http://napisy.me/download/mdvd/"
 
 subtitle_pattern = 'a href=\"/download/(\d+)/\"><strong>(.+?)</strong></a>'
 
