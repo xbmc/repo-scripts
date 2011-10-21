@@ -1,3 +1,7 @@
+2.9.24
+- fixed: Napisy24pl, thx mrto
+- fixed: Sratim service
+
 2.9.23
 - fixed: Sratim service, thx orivar
 

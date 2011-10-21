@@ -7,12 +7,12 @@
 # mrto
 
 import urllib2, re, string, xbmc, sys, os
-from utilities import log, twotofull
+from utilities import log, languageTranslate
 
 _ = sys.modules[ "__main__" ].__language__
 
 main_url = "http://napisy24.pl/search.php?str="
-down_url = "http://napisy.me/download/sr/"
+down_url = "http://napisy.me/download/mdvd"
 
 subtitle_pattern = 'a href=\"/download/(\d+)/\"><strong>(.+?)</strong></a>'
 
@@ -38,7 +38,7 @@ def getallsubs(content, title, subtitles_list, file_original_path, stack):
         link = "%s%s/" % (down_url, numer_napisu)
         log( __name__ ,"Subtitles found: %s %s (link=%s)" % (tytul, wydanie, link))
         obraz_flagi = "flags/%s.gif" % (jezyk)
-        lang = twotofull(jezyk)
+        lang = languageTranslate(jezyk,2,0)
         tytul_pelny = '%s %s' % (tytul, wydanie)
         wydanie_sclean = wydanie.replace(" ","")
         wydanie_clean = wydanie_sclean.replace(",",";")
