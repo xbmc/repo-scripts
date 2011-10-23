@@ -1,0 +1,38 @@
+This script will automatically download all of the fanart for every
+	TV show (thetvdb.com)
+	Movie (themoviedb.org)
+in your XBMC library and place it in an 'extrafanart' directory to be used by skins which support this feature.
+
+The script also supports a 'solo mode' which allows it to be run from inside a skin and download the fanart for only 1 tv show or movie at a time.
+
+Current Features:
+	- TV Extrafanart
+	- Movie Extrafanart
+	- Skin integration: Bulk mode (download all extrafanart for every tv show/movie)
+	- Skin integration: Solo mode (download all extrafanart for only one tv show/movie)
+	- Limit fanart by: maximum amount/ minimum rating / language used
+	- Centralized fanart folder to be used as multi-image background folder
+	- Fanart download backup folder
+	
+Todos:
+	- Music fanart
+
+Skins using this Add-On:
+	Dharma 10.1
+	- Cirrus Extended (made by Butchabay)
+    - Aeon Showmmix (made by ZombyRobot)
+	- Aeon Nox (made by Big Noid) ![patched by: Machine-Sanctum]
+
+----------------------------------------------------------------------------------------------
+To run the script in bulk mode simply click on it in the 'Addons' or 'Programs' menu in XBMC.
+You can change the settings if you wish in the addon settings page.
+
+This script has some different run modes. Please check the files as described below.
+
+Code for skin intergration:
+Check "resources/docs/runscript.txt"
+
+Real world code example Dharma10.1:
+Check "resources/docs/dharma.xml"
+
+
