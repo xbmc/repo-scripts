@@ -1,7 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
-    <category label="General">
-		<setting id="moviefanart" type="bool" label="36001" default="true"/>
-		<setting id="tvfanart" type="bool" label="36002" default="true"/>
+    <category label="36021">
+        <setting type="sep" />
+        <setting label="36022" type="lsep" />
+        <setting type="sep" />
+        <setting label="" type="lsep" />
+        <setting label="36012" id="background" type="bool"  default="false"/>
+        <setting type="sep" />
+        <setting label="36030" id="centralize_enable" type="bool"  default="false"/>
+        <setting label="36029" id="centralfolder_split" type="bool" subsetting= "true" enable="false" default="false" visible="eq(-1,true)"/>
+        <setting label="36031" id="centralfolder_movies" subsetting="true" type="folder"  default="" source="auto" option="writeable" enable="eq(-2,true)" visible="eq(-2,true)"/>
+        <setting label="36032" id="centralfolder_tvshows" subsetting="true" type="folder"  default="" source="auto" option="writeable" enable="eq(-3,true)" visible="eq(-3,true)"/>
+        <setting type="sep" />
+        <setting label="36033" id="limit_extrafanart" type="bool" default="false"/>
+        <setting label="36034" id="limit_extrafanart_max" subsetting="true" type="slider" enable="eq(-1,true)" visible="eq(-1,true)"  range="5,5,100" default="20" option="int" />
+        <setting label="36035" id="limit_extrafanart_rating" subsetting="true" type="slider" enable="eq(-2,true)" visible="eq(-2,true)"  range="0,10" default="5" option="int" />
+        <setting label="36036" id="limit_language" subsetting="true" type="bool" enable="eq(-3,true)" visible="eq(-3,true)" default="true" />
+        <setting label="36063" id="limit_notext" subsetting="true" type="bool" enable="eq(-4,true)" visible="eq(-4,true)" default="true" />
+    </category>
+    
+<!-- Plugin settings: Movie section -->
+    <category label="36051">
+        <setting type="sep" />
+        <setting label="36052" type="lsep" />
+        <setting type="sep" />
+        <setting label="36010" type="bool" id="movie_enable" default="true" />
+        <setting label="36108" type="bool" id="movie_poster" subsetting= "true" enable="eq(-1,true)" default="false" visible="false" />
+        <setting label="36101" type="bool" id="movie_fanart" subsetting= "true"  enable="eq(-2,true)" default="true" visible="false" />
+        <setting label="36102" type="bool" id="movie_extrafanart" subsetting= "true"  enable="eq(-3,true)" default="false" visible="false" />
+        <setting label="36110" type="bool" id="movie_extrathumb" subsetting= "true"  enable="eq(-4,true)" default="false" visible="false" />
+        <setting label="36106" type="bool" id="movie_logo" subsetting= "true"  enable="eq(-5,true)" default="false" visible="false" />
+    </category>
+    
+<!-- Plugin settings: TV Show section -->
+    <category label="36061">
+        <setting type="sep" />
+        <setting label="36062" type="lsep" />
+        <setting type="sep" />
+        <setting label="36010" type="bool" id="tvshow_enable" default="true" />
+        <setting label="36101" type="bool" id="tvshow_fanart" subsetting= "true"  enable="eq(-1,true)" default="false" visible="false" />
+        <setting label="36102" type="bool" id="tvshow_extrafanart" subsetting= "true"  enable="eq(-2,true)" default="false" visible="false" />
+        <setting label="36005" type="bool" id="tvshow_clearart" subsetting= "true"  enable="eq(-3,true)" default="false" visible="false" />
+        <setting label="36106" type="bool" id="tvshow_logo" subsetting= "true"  enable="eq(-4,true)" default="false" visible="false" />
+        <setting label="36108" type="bool" id="tvshow_poster" subsetting= "true"  enable="eq(-5,true)" default="false" visible="false" />
+        <setting label="36103" type="bool" id="tvshow_showbanner" subsetting= "true"  enable="eq(-6,true)" default="false" visible="false" />
+        <setting label="36104" type="bool" id="tvshow_seasonbanner" subsetting= "true"  enable="eq(-7,true)" default="false" visible="false" />
+        <setting label="36107" type="bool" id="tvshow_characterart" subsetting= "true"  enable="eq(-8,true)" default="false" visible="false" />
+
+    </category>
+    
+<!-- Plugin settings: Music section -->
+<!--    <category label="36071">
+        <setting type="sep" />
+        <setting label="36072" type="lsep" />
+        <setting type="sep" />
+        <setting label="36010" type="bool" id="music_enable" default="false" />
+        <setting label="36102" type="bool" id="music_extrafanart" subsetting= "true"  enable="eq(-1,true)" default="false" />
+        <setting label="36105" type="bool" id="music_clearart" subsetting= "true"  enable="eq(-2,true)" default="false" />
+        <setting label="36106" type="bool" id="music_logo" subsetting= "true" enable="eq(-3,true)" default="false" />
+    </category> -->
+    
+<!-- Plugin settings: Advanced section -->
+    <category label="36081">
+        <setting type="sep" />
+        <setting label="36086" type="lsep" />
+        <setting type="sep" />
+        <setting label="36200" id="use_cache" type="bool"  default="false"/>
+        <setting label="36202" type="lsep" visible="eq(-1,true)"/>
+        <setting label="36201" id="cache_directory" subsetting="true" type="folder"  default="" source="auto" option="writeable" enable="eq(-2,true)" visible="eq(-2,true)"/>   
     </category>
 </settings>

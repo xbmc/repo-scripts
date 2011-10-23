@@ -1,12 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <strings>
     <!-- Plugin settings -->
-    <string id="36001">Download movie fanart</string>
-    <string id="36002">Download tv fanart</string>
-    <string id="36003">Checking for extrafanart</string>
-    <string id="36004">Cleaning up</string>
-    <string id="36005">Checking for extrafanart</string>
-    <string id="36006">Downloading extrafanart</string>
-    <string id="36009">Finished</string>
-    <string id="36010">extrafanart downloaded</string>
+        <string id="36001">Download Movie fanart</string>
+        <string id="36002">Download TV Shows fanart</string>
+        <string id="36003">Checking for extrafanart</string>
+        <string id="36004">Cleaning up</string>
+        <string id="36005">Checking for extrafanart</string>
+        <string id="36006">Downloading extrafanart</string>
+        <string id="36007">Add-on aborted</string>
+        <string id="36008">Network error detected</string>
+        <string id="36009">Finished</string>
+        <string id="36010">Enable downloading</string>
+        <string id="36011">extrafanart centralized</string>
+        <string id="36012">Run in background</string>
+        <string id="36013">extrafanart downloaded</string>
+        <string id="36029">Central Folders Split Into Titles</string>	
+        <string id="36030">Centralize fanart</string>
+        <string id="36031">Central Movie fanart directory</string>
+        <string id="36032">Central TV fanart directory</string>
+        <string id="36033">Limit download: Extrafanart</string>
+        <string id="36034">Maximum downloads per title</string>
+        <string id="36035">Minimum rating</string>
+        <string id="36036">Current language only</string>
+        <string id="36037">No settings found!</string>
+        <string id="36038">Select your preferences and press OK to save</string>
+
+    <!-- Plugin settings: General section -->
+        <string id="36021">General settings</string>
+        <string id="36022">General settings used in Extrafanart Downloader</string>
+
+    <!-- Plugin settings: Movie section -->
+        <string id="36051">Movies</string>
+        <string id="36052">Options for downloading Movie artwork</string>
+
+    <!-- Plugin settings: TV Show section -->
+        <string id="36061">TV Shows</string>
+        <string id="36062">Options for downloading TV Show artwork</string>
+        <string id="36063">Exclude fanart that has text</string>
+
+    <!-- Plugin settings: Music section -->
+<string id="36071">Music</string>
+        <string id="36072">Options for downloading Music artwork</string>
+
+    <!-- Plugin settings: Advanced settings section -->   
+        <string id="36081">Advanced settings</string>
+        <string id="36086">Some advanced settings to be used</string>
+        <string id="36200">Keep backup of all downloaded fanart</string>
+        <string id="36201">Backup folder</string>
+        <string id="36202">[I]Warning: folder can increase to considerable size[/I]</string>
+
+    <!-- Plugin settings: Image types -->
+        <string id="36101">Fanart</string>
+        <string id="36102">Extrafanart</string>
+        <string id="36103">Show Banners</string>
+        <string id="36104">Season Banners</string>
+        <string id="36105">ClearArt</string>
+        <string id="36106">Logo</string>
+        <string id="36107">Character Art</string>
+        <string id="36108">Poster</string>
+        <string id="36109">Thumb</string>
+        <string id="36110">Extrathumbs</string>
+
+    <!-- Messages settings: Possible messages to use -->
+        <string id="32121">Please help us to get more art on</string>
+        <string id="32123">http://fanart.tv</string>
+        <string id="32123">http://www.thetvdb.com/</string>
+        <string id="32124">http://www.themoviedb.org/</string>
+        <string id="32125">Not Found</string>
+        <string id="32126">No logo found!</string>
+        <string id="32127">No clearart found!</string>
+        <string id="32128">No show thumb found!</string>
+        <string id="32129">No banner found!</string>
+        <string id="32130">No fanart found!</string>
+        <string id="32131">No extrafanart found!</string>
+        <string id="32132">No season banner found!</string>
+        <string id="32133">No characterart found!</string>
+        <string id="32134">choose what to download</string>
+        <string id="32135">Canceled</string>
+        <string id="32136">Download canceled by user</string>
+        <string id="32137">Which one to download ?</string>
+        <string id="32138">Downloading:</string>
+        <string id="32139">Getting info...</string>
+        <string id="32140">Error copying file</string>
 </strings>

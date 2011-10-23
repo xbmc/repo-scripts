@@ -1,53 +1,45 @@
-This script will automatically download all of the fanart for every TV show (thetvdb.com) and movie (themoviedb.org) in your XBMC library and place it in an 'extrafanart' directory to be used by skins which support this feature.
+This script will automatically download all of the fanart for every:
+    TV show (thetvdb.com)
+    Movie (themoviedb.org)
+in your XBMC library and place it in an 'extrafanart' directory to be used by skins which support this feature.
 
 The script also supports a 'solo mode' which allows it to be run from inside a skin and download the fanart for only 1 tv show or movie at a time.
 
-This script requires an xbmc nightly build of September 21st or later
+Eden 11.0:
+    The script can now be downloaded from the official repo XBMC-repo (pre-Eden)
+    This script requires an xbmc nightly build of September 21st or later
+    Current stable version : 0.4.0
 
 Current Features:
-- TV fanart
-- Movie fanart
-- Bulk mode (download all extrafanart for every tv show/movie)
-- Solo mode (download all extrafanart for only one tv show/movie)
-- Eden support (Master branch)
-- Dharma support (Dharma branch)
-
+    - TV Extrafanart
+    - Movie Extrafanart
+    - Skin integration: Bulk mode (download all extrafanart for every tv show/movie)
+    - Skin integration: Solo mode (download all extrafanart for only one tv show/movie)
+    - Limit fanart by: maximum amount/ minimum rating / language used
+    - Centralized fanart folder to be used as multi-image background folder
+    - Fanart download backup folder
+    
 Todos:
-- Music fanart
+    - Music fanart
 
-The script can now be downloaded from the official repo for eden-pre.
+Skins using this Add-On:
+    Eden 11.0
+    - Aeon Nox (made by Big Noid)
+    - Cirrus Extended (made by Butchabay)
+    - Transparency [T!] (made by Ronie)
 
-To run the script in bulk mode simply click on it in the 'Addons' or 'Programs' menu in XBMC.  You can change the settings if you wish in the addon settings page.
+----------------------------------------------------------------------------------------------
+To run the script in bulk mode simply click on it in the 'Addons' or 'Programs' menu in XBMC.
+You can change the settings if you wish in the addon settings page.
 
-If you wish to run the script in solo mode you can do so by calling the script with 2 arguments.
-The first must be either 'movie' or 'tvshow' and the second should be the name of the movie or show, e.g.
+This script has some different run modes. Please check the files as described below.
 
-Code to run script:
+Code for skin intergration:
+Check "resources/docs/runscript.txt"
 
-	XBMC.runscript(script.extrafanartdownloader, mediatype=tvshow, medianame=House)
-or
-	XBMC.runscript(script.extrafanartdownloader, mediatype=movie, medianame=50 First Dates)
+Real world code example Dharma10.1 (available in Dharma version):
+Check "resources/docs/dharma.xml"
 
+Real world code example Eden 11.0 (available in Eden version):
+Check "resources/docs/pre-eden.xml"
 
-Real world code example Dharma10.1:
-  <item id="10">
-	<description>Get Extrafanart</description>
-	<label>$LOCALIZE[31316]</label>
-	<onclick>XBMC.RunScript(script.extrafanartdownloader, mediatype=tvshow, medianame=$INFO[ListItem.TVShowTitle])</onclick>
-	<visible>Container.Content(tvshows)+system.hasaddon(script.extrafanartdownloader)</visible>
-  </item>
-  <item id="11">
-	<description>Get Extrafanart</description>
-	<label>$LOCALIZE[31316]</label>
-	<onclick>XBMC.RunScript(script.extrafanartdownloader, mediatype=movie, medianame=$INFO[ListItem.Title])</onclick>
-	<visible>Container.Content(movies)+system.hasaddon(script.extrafanartdownloader)</visible>
-  </item>
-
-Real world code example pre-Eden 11.0:
-  <item id="10">
-	<description>Get Extrafanart</description>
-	<label>$LOCALIZE[31316]</label>
-	<onclick condition="Container.Content(tvshows)">XBMC.RunScript(script.extrafanartdownloader, mediatype=tvshow, medianame=$INFO[ListItem.TVShowTitle])</onclick>
-	<onclick condition="Container.Content(movies)">XBMC.RunScript(script.extrafanartdownloader, mediatype=movie, medianame=$INFO[ListItem.Title])</onclick>
-	<visible>[Container.Content(tvshows)|Container.Content(movies)]+system.hasaddon(script.extrafanartdownloader)</visible>
-  </item> 
