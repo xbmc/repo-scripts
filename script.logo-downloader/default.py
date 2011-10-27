@@ -18,11 +18,11 @@ __useragent__    = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gec
 
 SOURCEPATH = __cwd__
 RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) )
+THUMBS_CACHE_PATH = os.path.join( xbmc.translatePath( "special://profile/" ), "Thumbnails/Video" )
 DIALOG_DOWNLOAD = xbmcgui.DialogProgress()
 ACTION_PREVIOUS_MENU = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
 sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
-from file_item import Thumbnails
-thumbnails = Thumbnails()
+
 
 def log(msg):
     xbmc.log( str( msg ),level=xbmc.LOGDEBUG )
@@ -56,7 +56,6 @@ def get_html_source( url , save=False):
 
 class downloader:
     def __init__(self):
-        log( "### logo downloader initializing..." )
         if not xbmcvfs.exists( xbmc.translatePath( 'special://profile/addon_data/%s/temp' % __addonid__ ) ):
             os.makedirs( xbmc.translatePath( 'special://profile/addon_data/%s/temp' % __addonid__ ) )
         self.clearart = False
@@ -65,6 +64,9 @@ class downloader:
         self.show_thumb = False
         self.banner = False
         self.poster = False
+        self.default_banner = False
+        self.default_poster = False
+        self.default_show_thumb = False
         self.mode = ""
         self.error = ""
         self.reinit()
@@ -79,7 +81,7 @@ class downloader:
         except:   log( "### no arg3" )
         try: log( "### arg 4: %s" % sys.argv[4] )
         except:   log( "### no arg4" )
-        try: log( "arg 5: %s" % sys.argv[5] )
+        try: log( "### arg 5: %s" % sys.argv[5] )
         except:   log( "### no arg5" )
         try: log( "### arg 6: %s" % sys.argv[6] )
         except:   log( "### no arg6" )
@@ -88,36 +90,86 @@ class downloader:
         try: log( "### arg 8: %s" % sys.argv[8] )
         except:   log( "### no arg8" )
 
-        for item in sys.argv:
-            match = re.search("mode=(.*)" , item)
-            if match: self.mode = match.group(1)
-            match = re.search("clearart=(.*)" , item)
-            if match: 
-                if not match.group(1) == "False": self.clearart = match.group(1)
+        if sys.argv == ['']:
+            log( "### script run by user" )
+            self.banner = __addon__.getSetting('banner')
+            if self.banner == "true":
+                self.banner = "banner.jpg"
+            else:
+                self.banner = False
+            self.characterart = __addon__.getSetting('characterart')
+            if self.characterart == "true":
+                self.characterart = "character.png"
+            else:
+                self.characterart = False
+            self.clearart = __addon__.getSetting('clearart')
+            if self.clearart == "true":
+                self.clearart = "clearart.png"
+            else:
+                self.clearart = False
+            self.logo = __addon__.getSetting('logo')
+            if self.logo == "true":
+                self.logo = "logo.png"
+            else:
+                self.logo = False
+            self.poster = __addon__.getSetting('poster')
+            if self.poster == "true":
+                self.poster = "poster.jpg"
+            else:
+                self.poster = False
+            self.show_thumb = __addon__.getSetting('show_thumb')
+            if self.show_thumb == "true":
+                self.show_thumb = "landscape.jpg"
+            else:
+                self.show_thumb = False
+            self.download_thumb = __addon__.getSetting('download_thumb')
+            if self.download_thumb == "true":
+                self.default_thumb = __addon__.getSetting('default_thumb')
+                if self.default_thumb == "Banner":
+                    self.default_banner = True            
+                    self.banner = "banner.jpg"
+                elif self.default_thumb == "Poster":
+                    self.default_poster = True              
+                    self.poster = "poster.jpg"
+                elif self.default_show_thumb == "ShowThumb":
+                    self.default_show_thumb = True             
+                    self.show_thumb = "landscape.jpg"
+            self.mode = "bulk"
+            log( "### download_thumb:%s ###" % self.download_thumb )
+            log( "### default_thumb:%s ###" % self.default_thumb )
+
+        else:
+            log( "### script run by skin" )
+            for item in sys.argv:
+                match = re.search("mode=(.*)" , item)
+                if match: self.mode = match.group(1)
+                match = re.search("clearart=(.*)" , item)
+                if match: 
+                    if not match.group(1) == "False": self.clearart = match.group(1)
+                    else: pass
+                match = re.search("characterart=(.*)" , item)
+                if match: 
+                    if not match.group(1) == "False": self.characterart = match.group(1)
+                    else: pass
+                match = re.search("logo=(.*)" , item)
+                if match: 
+                    if not match.group(1) == "False": self.logo = match.group(1)
+                    else: pass
+                match = re.search("showthumb=(.*)" , item)
+                if match:
+                    if not match.group(1) == "False": self.show_thumb = match.group(1)
+                    else: pass
+                match = re.search("showname=" , item)
+                if match: self.show_name = item.replace( "showname=" , "" )
                 else: pass
-            match = re.search("characterart=(.*)" , item)
-            if match: 
-                if not match.group(1) == "False": self.characterart = match.group(1)
-                else: pass
-            match = re.search("logo=(.*)" , item)
-            if match: 
-                if not match.group(1) == "False": self.logo = match.group(1)
-                else: pass
-            match = re.search("showthumb=(.*)" , item)
-            if match:
-                if not match.group(1) == "False": self.show_thumb = match.group(1)
-                else: pass
-            match = re.search("showname=" , item)
-            if match: self.show_name = item.replace( "showname=" , "" )
-            else: pass
-            match = re.search("banner=(.*)" , item)
-            if match: 
-                if not match.group(1) == "False": self.banner = match.group(1)
-                else: pass
-            match = re.search("poster=(.*)" , item)
-            if match: 
-                if not match.group(1) == "False": self.poster = match.group(1)
-                else: pass
+                match = re.search("banner=(.*)" , item)
+                if match: 
+                    if not match.group(1) == "False": self.banner = match.group(1)
+                    else: pass
+                match = re.search("poster=(.*)" , item)
+                if match: 
+                    if not match.group(1) == "False": self.poster = match.group(1)
+                    else: pass
 
         if self.mode == "solo": 
             log( "### Start Solo Mode" )
@@ -201,9 +253,11 @@ class downloader:
         self.TV_listing()
         processeditems = 0
 
+        log( "### banner:%s ###" % self.banner )
         log( "### clearart:%s ###" % self.clearart )
         log( "### characterart:%s ###" % self.characterart )
         log( "### logo:%s ###" % self.logo )
+        log( "### poster:%s ###" % self.poster )
         log( "### show_thumb:%s ###" % self.show_thumb )
 
         for currentshow in self.TVlist:
@@ -245,15 +299,13 @@ class downloader:
                     self.image_url = False
                     self.filename = False
 
-#                 if self.clearart or self.show_thumb: 
-#                     log( "### get xbmcstuff xml"
-#                     self.get_xbmcstuff_xml()
-
                 if self.clearart:
                     log( "### Search clearart for %s" % self.show_name )
                     if self.clearart == "True": self.filename = "clearart.png"
                     else: self.filename = self.clearart
                     if not xbmcvfs.exists( os.path.join( self.show_path , self.filename ) ):
+                        log( "### get lockstock xml" )
+                        self.get_lockstock_xml()
                         if self.search_clearart():
                             log( "### found clearart for %s" % self.show_name )
                             if self.download_image():
@@ -272,6 +324,8 @@ class downloader:
                     if self.characterart == "True": self.filename = "character.png"
                     else: self.filename = self.characterart
                     if not xbmcvfs.exists( os.path.join( self.show_path , self.filename ) ):
+                        log( "### get lockstock xml" )
+                        self.get_lockstock_xml()
                         if self.search_characterart():
                             log( "### found characterart for %s" % self.show_name )
                             if self.download_image():
@@ -290,6 +344,8 @@ class downloader:
                     if self.show_thumb == "True": self.filename = "folder.jpg"
                     else: self.filename = self.show_thumb
                     if not xbmcvfs.exists( os.path.join( self.show_path , self.filename ) ):
+                        log( "### get lockstock xml" )
+                        self.get_lockstock_xml()
                         if self.search_show_thumb():
                             log( "### found show thumb for %s" % self.show_name )
                             if self.download_image():
@@ -313,7 +369,7 @@ class downloader:
                     else: self.filename = self.poster
                     if not xbmcvfs.exists( os.path.join( self.show_path , self.filename ) ):
                         if self.search_poster():
-                            log( "### found show thumb for %s" % self.show_name )
+                            log( "### found poster for %s" % self.show_name )
                             if self.download_image():
                                 self.poster_download = self.poster_download +1
                                 log( "### poster downloaded for %s" % self.show_name )
@@ -331,7 +387,7 @@ class downloader:
                     else: self.filename = self.banner
                     if not xbmcvfs.exists( os.path.join( self.show_path , self.filename ) ):
                         if self.search_banner():
-                            log( "### found show thumb for %s" % self.show_name )
+                            log( "### found banner for %s" % self.show_name )
                             if self.download_image():
                                 self.banner_download = self.banner_download +1
                                 log( "### banner downloaded for %s" % self.show_name )
@@ -423,7 +479,6 @@ class downloader:
         except: log( "### xbmcstuff_xml:" )
 
     def TV_listing(self):
-        # json statement for tv shows
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file", "imdbnumber"], "sort": { "method": "label" } }, "id": 1}')
         json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         self.TVlist = []
@@ -453,7 +508,7 @@ class downloader:
             findtvshowname = re.search( '"label": ?"(.*?)",["\n]', tvshowitem )
             if findtvshowname:
                 tvshowname = (findtvshowname.group(1))
-                tvshowmatch = re.search( '.*' + self.show_name + '.*', tvshowname, re.I )
+                tvshowmatch = re.search( '.*' + self.show_name.replace('(','[(]').replace(')','[)]').replace('+','[+]') + '.*', tvshowname, re.I )
                 if tvshowmatch:
                     log( "### tv show: %s" % tvshowitem )
                     findpath = re.search( '"file": ?"(.*?)",["\n]', tvshowitem )
@@ -504,9 +559,6 @@ class downloader:
     def get_lockstock_xml(self):
         self.lockstock_xml = get_html_source( "http://fanart.tv/api/fanart.php?v=4&id=" + str( self.tvdbid ) )
         log( "### lockstock: %s" % self.lockstock_xml )
-
-#     def get_xbmcstuff_xml(self):
-#         self.xbmcstuff_xml = get_html_source ("http://www.xbmcstuff.com/tv_scraper.php?&id_scraper=p7iuVTQXQWGyWXPS&size=big&thetvdb=" + str( self.tvdbid ) )
 
     def get_tvdb_xml(self):
         self.tvdb_xml = get_html_source ("http://www.thetvdb.com/api/F90E687D789D7F7C/series/%s/banners.xml" % str( self.tvdbid ) )
@@ -568,6 +620,11 @@ class downloader:
                     self.image_list.append("http://www.thetvdb.com/banners/" + i)
             if self.mode == "bulk" : self.image_url = "http://www.thetvdb.com/banners/" + match[0]
             return True
+        else:
+            log( "### No poster found !" )
+            if self.mode == "solo": xbmcgui.Dialog().ok(__language__(32116) , __language__(32135) )
+            self.image_list = False
+            return False
 
     def search_banner( self ):
         match = re.findall("<BannerPath>(.*?)</BannerPath>\s+<BannerType>series</BannerType>" , self.tvdb_xml)
@@ -578,6 +635,11 @@ class downloader:
                     self.image_list.append("http://www.thetvdb.com/banners/" + i)
             if self.mode == "bulk" : self.image_url = "http://www.thetvdb.com/banners/" + match[0]
             return True
+        else:
+            log( "### No banner found !" )
+            if self.mode == "solo": xbmcgui.Dialog().ok(__language__(32116) , __language__(32134) )
+            self.image_list = False
+            return False
 
     def choice_type(self):
         select = xbmcgui.Dialog().select(__language__(32120) , self.type_list)
@@ -595,24 +657,14 @@ class downloader:
             return True
 
     def choose_image(self):
-        #select = xbmcgui.Dialog().select(__language__(32123) , self.image_list)
         log( "### image list: %s" % self.image_list )
         self.image_url = MyDialog(self.image_list)
         if self.image_url: return True
         else: return False
-#         if select == -1: 
-#             log( "### Canceled by user" )
-#             xbmcgui.Dialog().ok(__language__(32121) , __language__(32122) )
-#             self.image_url = False
-#             return False
-#         else:
-#             self.image_url = self.image_list[select]
-#             return True
 
     def erase_current_cache(self):
         try: 
-            if not self.filename == "folder.jpg": cached_thumb = thumbnails.get_cached_video_thumb( os.path.join( self.show_path , self.filename )).replace( "/Video" , "").replace("tbn" , "png")
-            else: cached_thumb = thumbnails.get_cached_video_thumb(self.show_path)
+            cached_thumb = self.get_cached_thumb(self.show_path, self.filename)
             log( "### cache %s" % cached_thumb )
             if xbmcvfs.exists( cached_thumb.replace("png" , "dds").replace("jpg" , "dds") ):
                 xbmcvfs.delete( cached_thumb.replace("png" , "dds").replace("jpg" , "dds") )
@@ -620,19 +672,33 @@ class downloader:
             if copy:
                 xbmc.executebuiltin( 'XBMC.ReloadSkin()' )
                 xbmc.executebuiltin( "Notification(" + __language__(32103) + "," + __language__(32104) + ")" )
-                pass
             else:
                 log( "### failed to copy to cached thumb" )
         except :
             print_exc()
             log( "### cache erasing error" )
 
+    def get_cached_thumb( self, path, filename ):
+        if path.startswith( "stack://" ):
+            path = strPath[ 8 : ].split( " , " )[ 0 ]
+        if filename == "folder.jpg":
+            cachedthumb = xbmc.getCacheThumbName( path )
+            thumbpath = os.path.join( THUMBS_CACHE_PATH, cachedthumb[0], cachedthumb )
+        else:
+            cachedthumb = xbmc.getCacheThumbName( os.path.join( path, filename ) )
+            if ".jpg" in filename:
+                cachedthumb = cachedthumb.replace("tbn" , "jpg")
+            elif ".png" in filename:
+                cachedthumb = cachedthumb.replace("tbn" , "png")      
+            thumbpath = os.path.join( THUMBS_CACHE_PATH, cachedthumb[0], cachedthumb ).replace( "/Video" , "")    
+        return thumbpath
+
     def download_image( self ):
         DIALOG_DOWNLOAD.create( __language__(32107), __language__(32124) + ' ' + self.show_name , __language__(32125) )
         tmpdestination = xbmc.translatePath( 'special://profile/addon_data/%s/temp/%s' % ( __addonid__ , self.filename ) )
         destination = os.path.join( self.show_path , self.filename )
-        log( "### download :" + self.image_url )
-        log( "### path: " + repr(destination).strip("'u") )
+        log( "### download: %s" % self.image_url )
+        log( "### path: %s" % repr(destination).strip("'u") )
 
         try:
             def _report_hook( count, blocksize, totalsize ):
@@ -659,6 +725,23 @@ class downloader:
                     xbmcvfs.delete(tmpdestination)
                     DIALOG_DOWNLOAD.close()
                     return False
+
+                if self.default_banner and self.filename == "banner.jpg":
+                    copy_default = True
+                elif self.default_poster and self.filename == "poster.jpg":
+                    copy_default = True
+                elif self.default_show_thumb and self.filename == "landscape.jpg":
+                    copy_default = True
+                else:                
+                    copy_default = False
+                if copy_default:
+                    destination = os.path.join( self.show_path , "folder.jpg" )
+                    copy = xbmcvfs.copy(tmpdestination, destination)
+                    if copy:
+                        log( "### copy to default thumb successful" )
+                    else:
+                        log( "### copy to default thumb failed" )
+
                 xbmcvfs.delete(tmpdestination)
                 if self.mode == "solo": self.erase_current_cache()
                 return True
@@ -697,19 +780,12 @@ class MainGui( xbmcgui.WindowXMLDialog ):
         self.setFocus(self.img_list)
 
     def onAction(self, action):
-        #Close the script
         if action in ACTION_PREVIOUS_MENU:
             self.close() 
 
     def onClick(self, controlID):
         log( "### control: %s" % controlID )
-        """
-            Notice: onClick not onControl
-            Notice: it gives the ID of the control not the control object
-        """
-        #List actions
         if controlID == 6 or controlID == 3: 
-            #Return selected item
             num = self.img_list.getSelectedPosition()
             log( "### position: %s" % num )
             self.selected_url = self.img_list.getSelectedItem().getLabel2()

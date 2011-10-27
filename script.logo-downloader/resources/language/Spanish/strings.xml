@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="32101">ERROR</string>
+	<string id="32102">Sitio inaccesible</string>
+	<string id="32103">Éxito</string>
+	<string id="32104">Descarga completa</string>
+	<string id="32105">Error descargando el fichero</string>
+	<string id="32106">id de Thetvdb no encontrada!</string>
+	<string id="32107">LOGO DOWNLOADER</string>
+	<string id="32108">comprobando base de datos...</string>
+	<string id="32109">CANCELADO</string>
+	<string id="32110">Operación cancelada por el usuario.</string>
+	<string id="32111">RESUMEN</string>
+	<string id="32112">SERIES</string>
+	<string id="32113">LOGO DOWNLOADER TE NECESITA</string>
+	<string id="32114">Por favor, ayudanos a subir más imágenes en</string>
+	<string id="32115">http://fanart.tv / www.tvdb.com</string>
+	<string id="32116">No encontrado</string>
+	<string id="32117">No se encontraron logos!</string>
+	<string id="32118">No se encontró cleararts!</string>
+	<string id="32119">No se encontraron posters!</string>
+	<string id="32120">escoge que quieres descargar</string>
+	<string id="32121">Cancelado</string>
+	<string id="32122">Descarga cancelada por el usuario</string>
+	<string id="32123">¿Cual deseas descargar?</string>
+	<string id="32124">Descargando:</string>
+	<string id="32125">Buscando info...</string>
+	<string id="32126">Error copiando el fichero</string>
+	<string id="32127">No se han encontradon characterarts!</string>
+	<string id="32128">logo</string>
+	<string id="32129">clearart</string>
+	<string id="32130">characterart</string>
+	<string id="32131">showthumb</string>
+	<string id="32132">banner</string>
+	<string id="32133">poster</string>
+</strings>

@@ -33,5 +33,15 @@
 	<string id="32131">showthumb</string>
 	<string id="32132">banner</string>
 	<string id="32133">poster</string>
+	<string id="32134">No banner found!</string>
+	<string id="32135">No poster found!</string>
+	<string id="32201">Download Banner (banner.jpg)</string>
+	<string id="32202">Download CharacterArt (character.png)</string>
+	<string id="32203">Download ClearArt (clearart.png)</string>
+	<string id="32204">Download Logo (logo.png)</string>
+	<string id="32205">Download Poster (poster.jpg)</string>
+	<string id="32206">Download ShowThumb (landscape.jpg)</string>
+	<string id="32207">Replace default thumb (folder.jpg)</string>
+	<string id="32208">- With:</string>
 </strings>
 
