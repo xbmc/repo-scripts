@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
+  <setting id="ReScan" type="action" label="45007" action="RunScript(script.tv.show.next.aired,force=True)"/>
   <setting type="lsep" label="45000" />
   <setting id="ThumbType" type="enum" label="45001" default="0" values="Thumb|Banner|Logo" />
   <setting id="DownloadBanners" type="action" subsetting="true" label="45002" action="RunScript(script.logo-downloader,mode=bulk,clearart=False,logo=False,showthumb=False,poster=False,banner=banner.jpg)" visible="gt(-1,0) + lt(-1,2)" />

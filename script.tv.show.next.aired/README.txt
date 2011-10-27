@@ -45,7 +45,7 @@ Total		(number of running shows)
 TodayTotal	(number of shows aired today)
 TodayShow	(list of shows aired today)
 
-use !IsEmpty(Window(Home).Property(NextAired.Label)) as a visible condition!
+use !IsEmpty(Window(Home).Property(NextAired.NextDate)) as a visible condition!
 
 
 example code:
@@ -83,13 +83,17 @@ a list of required id's:
 204 - container / shows aired on friday
 205 - container / shows aired on saturday
 206 - container / shows aired on sunday
-
+8 - in case all the containers above are empty, we set focus to this id
 
 a list of available infolabels:
 ListItem.Label		(tv show name)
 ListItem.Thumb		(tv show thumb)
 ListItem.Property(*)	(see above)
 
+totals are available using the window properties listed above.
+
+Window(home).Property(NextAired.TodayDate)		(todays date)
+Window(home).Property(NextAired.%d.Date)		(date for the lists, eg NextAired.1.Date will show the date for monday)
 
 a list of available infolabels, related to the available add-on settings:
 Window(home).Property(TVGuide.ThumbType)		(thumb type selected by the user: 0=poster, 1=banner, 2=logo)

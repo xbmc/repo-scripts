@@ -1,3 +1,19 @@
+v4.1.1
+- update readme
+
+v4.1.0
+- added canceled show info
+- added localization for date formats
+- added date properties for each weekday
+- updated tv guide showing only shows running in the current week
+- bugfixes
+
+v4.0.2
+- fixed issue when shows aires on multiple days
+- fixed issue when certain info is unavailable on tvrage
+- fixed issue where 16:9 showthumb would stick if no landscape.jpg was found
+- fixed TodayTotal would return empty
+
 v4.0.1
 - added readme for skinners
 

@@ -29,6 +29,7 @@
 					<aspectratio>scale</aspectratio>
 					<texture background="true">$INFO[Container(200).ListItem.Property(Fanart)]</texture>
 					<visible>Control.HasFocus(200) | !IsEmpty(Window(Home).property(TVGuide.MondayList))</visible>
+					<fadetime>600</fadetime>
 					<animation effect="fade" time="600">Visible</animation>
 					<animation effect="fade" time="600">Hidden</animation>
 				</control>
@@ -40,6 +41,7 @@
 					<aspectratio>scale</aspectratio>
 					<texture background="true">$INFO[Container(201).ListItem.Property(Fanart)]</texture>
 					<visible>Control.HasFocus(201) | !IsEmpty(Window(Home).property(TVGuide.TuesdayList))</visible>
+					<fadetime>600</fadetime>
 					<animation effect="fade" time="600">Visible</animation>
 					<animation effect="fade" time="600">Hidden</animation>
 				</control>
@@ -51,6 +53,7 @@
 					<aspectratio>scale</aspectratio>
 					<texture background="true">$INFO[Container(202).ListItem.Property(Fanart)]</texture>
 					<visible>Control.HasFocus(202) | !IsEmpty(Window(Home).property(TVGuide.WednesdayList))</visible>
+					<fadetime>600</fadetime>
 					<animation effect="fade" time="600">Visible</animation>
 					<animation effect="fade" time="600">Hidden</animation>
 				</control>
@@ -62,6 +65,7 @@
 					<aspectratio>scale</aspectratio>
 					<texture background="true">$INFO[Container(203).ListItem.Property(Fanart)]</texture>
 					<visible>Control.HasFocus(203) | !IsEmpty(Window(Home).property(TVGuide.ThursdayList))</visible>
+					<fadetime>600</fadetime>
 					<animation effect="fade" time="600">Visible</animation>
 					<animation effect="fade" time="600">Hidden</animation>
 				</control>
@@ -73,6 +77,7 @@
 					<aspectratio>scale</aspectratio>
 					<texture background="true">$INFO[Container(204).ListItem.Property(Fanart)]</texture>
 					<visible>Control.HasFocus(204) | !IsEmpty(Window(Home).property(TVGuide.FridayList))</visible>
+					<fadetime>600</fadetime>
 					<animation effect="fade" time="600">Visible</animation>
 					<animation effect="fade" time="600">Hidden</animation>
 				</control>
@@ -95,6 +100,7 @@
 					<aspectratio>scale</aspectratio>
 					<texture background="true">$INFO[Container(206).ListItem.Property(Fanart)]</texture>
 					<visible>Control.HasFocus(206) | !IsEmpty(Window(Home).property(TVGuide.SundayList))</visible>
+					<fadetime>600</fadetime>
 					<animation effect="fade" time="600">Visible</animation>
 					<animation effect="fade" time="600">Hidden</animation>
 				</control>
@@ -1414,6 +1420,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true">$INFO[Container(200).ListItem.Property(Fanart)]</texture>
 					<visible>![Control.IsVisible(2001) + !stringcompare(Control.GetLabel(2001),empty.png)]</visible>
 				</control>
@@ -1423,6 +1430,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true" fallback="empty.png">$INFO[Container(200).ListItem.Property(Path),,landscape.jpg]</texture>
 					<visible>!IsEmpty(Window(Home).Property(TVGuide.PreviewThumbs))</visible>
 				</control>
@@ -1519,6 +1527,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true">$INFO[Container(201).ListItem.Property(Fanart)]</texture>
 					<visible>![Control.IsVisible(2011) + !stringcompare(Control.GetLabel(2011),empty.png)]</visible>
 				</control>
@@ -1528,6 +1537,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true" fallback="empty.png">$INFO[Container(201).ListItem.Property(Path),,landscape.jpg]</texture>
 					<visible>!IsEmpty(Window(Home).Property(TVGuide.PreviewThumbs))</visible>
 				</control>
@@ -1624,6 +1634,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true">$INFO[Container(202).ListItem.Property(Fanart)]</texture>
 					<visible>![Control.IsVisible(2021) + !stringcompare(Control.GetLabel(2021),empty.png)]</visible>
 				</control>
@@ -1633,6 +1644,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true" fallback="empty.png">$INFO[Container(202).ListItem.Property(Path),,landscape.jpg]</texture>
 					<visible>!IsEmpty(Window(Home).Property(TVGuide.PreviewThumbs))</visible>
 				</control>
@@ -1730,6 +1742,7 @@
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
 					<texture background="true">$INFO[Container(203).ListItem.Property(Fanart)]</texture>
+					<fadetime>600</fadetime>
 					<visible>![Control.IsVisible(2031) + !stringcompare(Control.GetLabel(2031),empty.png)]</visible>
 				</control>
 				<control type="image" id="2031">
@@ -1738,6 +1751,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true" fallback="empty.png">$INFO[Container(203).ListItem.Property(Path),,landscape.jpg]</texture>
 					<visible>!IsEmpty(Window(Home).Property(TVGuide.PreviewThumbs))</visible>
 				</control>
@@ -1834,6 +1848,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true">$INFO[Container(204).ListItem.Property(Fanart)]</texture>
 					<visible>![Control.IsVisible(2041) + !stringcompare(Control.GetLabel(2041),empty.png)]</visible>
 				</control>
@@ -1843,6 +1858,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true" fallback="empty.png">$INFO[Container(204).ListItem.Property(Path),,landscape.jpg]</texture>
 					<visible>!IsEmpty(Window(Home).Property(TVGuide.PreviewThumbs))</visible>
 				</control>
@@ -1939,6 +1955,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true">$INFO[Container(205).ListItem.Property(Fanart)]</texture>
 					<visible>![Control.IsVisible(2051) + !stringcompare(Control.GetLabel(2051),empty.png)]</visible>
 				</control>
@@ -1948,6 +1965,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true" fallback="empty.png">$INFO[Container(205).ListItem.Property(Path),,landscape.jpg]</texture>
 					<visible>!IsEmpty(Window(Home).Property(TVGuide.PreviewThumbs))</visible>
 				</control>
@@ -2044,6 +2062,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true">$INFO[Container(206).ListItem.Property(Fanart)]</texture>
 					<visible>![Control.IsVisible(2061) + !stringcompare(Control.GetLabel(2021),empty.png)]</visible>
 				</control>
@@ -2053,6 +2072,7 @@
 					<width>302</width>
 					<height>170</height>
 					<aspectratio>stretch</aspectratio>
+					<fadetime>600</fadetime>
 					<texture background="true" fallback="empty.png">$INFO[Container(206).ListItem.Property(Path),,landscape.jpg]</texture>
 					<visible>!IsEmpty(Window(Home).Property(TVGuide.PreviewThumbs))</visible>
 				</control>

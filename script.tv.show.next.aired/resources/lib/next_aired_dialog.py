@@ -1,9 +1,13 @@
-from datetime import date
 from traceback import print_exc
-import xbmc, xbmcgui, xbmcaddon
+from time import mktime
+from datetime import date
+import xbmc, xbmcgui, xbmcaddon, time
 
 __addon__ = xbmcaddon.Addon()
 __cwd__ = __addon__.getAddonInfo('path')
+
+def log(msg):
+    xbmc.log( str( msg ),level=xbmc.LOGDEBUG )
 
 class Gui( xbmcgui.WindowXML ):
     def __init__(self, *args, **kwargs):
@@ -25,18 +29,41 @@ class Gui( xbmcgui.WindowXML ):
         self.settingsOpen = False
         self.listitems = {'Monday':[],'Tuesday':[],'Wednesday':[],'Thursday':[],'Friday':[],'Saturday':[],'Sunday':[]}
         self.days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-        self.weekday = date.today().weekday()
+        self.today = date.today()
+        self.weekday = self.today.weekday()
         self.dayname = self.days[self.weekday]
         self.set_properties()
         self.fill_containers()
         self.set_focus()
-
+                    
     def set_properties(self):
         for item in self.nextlist:
-            listitem, airday = self.setLabels('listitem', item, True)
-            airdays = airday.split(', ')
+            try:
+                airdays = item.get("Airtime").split(" at ")[0].split(', ')
+            except:
+                continue
             for day in airdays:
-                self.listitems[day].append(listitem)
+                listitem = self.setLabels('listitem', item, True)
+                nextdate = item.get("RFC3339" , "" )[:10]
+                if len(nextdate) == 10:
+                    if self.is_in_current_week(nextdate):
+                        self.listitems[day].append(listitem)
+                else:
+                    nextdate = listitem.getProperty('NextDate')
+                    if len(nextdate) == 11:
+                        if self.is_in_current_week(nextdate, True):
+                            self.listitems[day].append(listitem)
+                
+    def is_in_current_week(self, strdate, alt = False):
+        if alt:
+            showdate = date.fromtimestamp( mktime( time.strptime( strdate, '%b/%d/%Y' ) ) )
+        else:
+            showdate = date.fromtimestamp( mktime( time.strptime( strdate, '%Y-%m-%d' ) ) )
+        weekrange = int( ( showdate - self.today ).days )
+        if weekrange >= 0 and weekrange <= 6:
+            return True
+        else:
+            return False
 
     def fill_containers(self):
         for count, day in enumerate (self.days):
@@ -52,7 +79,7 @@ class Gui( xbmcgui.WindowXML ):
                     dayFound = True
                     break
             if dayFound == False:
-                self.setFocus( self.getControl( 9000 ) )
+                self.setFocus( self.getControl( 8 ) )
         else:
             self.setFocus( self.getControl( 200 + self.weekday ) )
 
