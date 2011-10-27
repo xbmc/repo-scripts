@@ -1,12 +1,17 @@
-import xbmc, xbmcgui, os, sys
-from xbmcgui import Window
+import os, sys
+import xbmc, xbmcgui, xbmcaddon
 from xml.dom.minidom import parseString
 
-class Main:
-    # grab the home window
-    WINDOW = Window ( 10000 )
+__addon__ = xbmcaddon.Addon()
+__addonversion__ = __addon__.getAddonInfo('version')
 
+def log(txt):
+    message = 'script.favourites: %s' % txt
+    xbmc.log(msg=message, level=xbmc.LOGDEBUG)
+    
+class Main:
     def __init__( self ):
+        self.WINDOW = xbmcgui.Window( 10000 )
         self._clear_properties()
         self._read_file()
         self._parse_String()
@@ -42,11 +47,12 @@ class Main:
         for self.doc in self.favourites:
             self.fav_path = self.doc.childNodes [ 0 ].nodeValue
             # add return 
-            if 'RunScript' not in self.fav_path: self.fav_path = self.fav_path.replace( ')', ',return)' )
+            if 'RunScript' not in self.fav_path: 
+                self.fav_path = self.fav_path.rstrip(')')
+                self.fav_path = self.fav_path + ',return)'
             if (sys.argv[ 1 ] == 'playlists=play'):
                 if 'playlists/music' in self.fav_path: self.fav_path = self.fav_path.replace( 'ActivateWindow(10502,', 'PlayMedia(' )
                 if 'playlists/video' in self.fav_path: self.fav_path = self.fav_path.replace( 'ActivateWindow(10025,', 'PlayMedia(' )
-            print 'playlists :' + sys.argv[ 1 ]
             # set properties
             self.WINDOW.setProperty( "favourite.%d.path" % ( count + 1, ) , self.fav_path )
             self.WINDOW.setProperty( "favourite.%d.name" % ( count + 1, ) , self.doc.attributes [ 'name' ].nodeValue )
@@ -55,4 +61,6 @@ class Main:
             count = count+1
 
 if ( __name__ == "__main__" ):
-    Main()
+        log('script version %s started' % __addonversion__)
+        Main()
+log('script stopped')

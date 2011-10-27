@@ -1,3 +1,6 @@
+v2.0.1
+- fixed: don't add return before each bracket
+
 v2.0.0
 - version bump for eden
 
