@@ -1,3 +1,6 @@
+v3.0.9
+- fixed script when default thumb was disabled
+
 v3.0.8
 - change script into program addon
 - added addon settings

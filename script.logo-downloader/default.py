@@ -123,6 +123,7 @@ class downloader:
             else:
                 self.show_thumb = False
             self.download_thumb = __addon__.getSetting('download_thumb')
+            log( "### download_thumb:%s ###" % self.download_thumb )
             if self.download_thumb == "true":
                 self.default_thumb = __addon__.getSetting('default_thumb')
                 if self.default_thumb == "Banner":
@@ -134,9 +135,8 @@ class downloader:
                 elif self.default_show_thumb == "ShowThumb":
                     self.default_show_thumb = True             
                     self.show_thumb = "landscape.jpg"
+                log( "### default_thumb:%s ###" % self.default_thumb )
             self.mode = "bulk"
-            log( "### download_thumb:%s ###" % self.download_thumb )
-            log( "### default_thumb:%s ###" % self.default_thumb )
 
         else:
             log( "### script run by skin" )
