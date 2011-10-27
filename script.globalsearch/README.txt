@@ -5,11 +5,26 @@ INFORMATION FOR SKINNERS
 
 
 CONTENTS:
+0. Running the addon 
 I. Infolabels available in script-globalsearch-main.xml
 II. Infolabels available in script-globalsearch-infodialog.xml
 III. Control id's used in script-globalsearch-main.xml
 IV. Control id's used in script-globalsearch-infodialog.xml
 V. Control id's used in script-globalsearch-contextmenu.xml
+
+
+
+0. Running the addon
+------------------
+The addon can be run in two ways:
+- the user executes the addon
+- the script executes the addon: RunScript(script.globalsearch)
+
+You can specify which categories should be searched (this overrides the user preferences set in the addon settings):
+RunScript(script.globalsearch,movies=true)
+RunScript(script.globalsearch,tvshows=true&amp;musicvideos=true&amp;songs=true)
+
+available options: movies, tvshows, episodes, musicvideos, artists, albums, songs
 
 
 

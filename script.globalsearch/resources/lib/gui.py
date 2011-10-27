@@ -24,6 +24,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         xbmcgui.WindowXMLDialog.__init__( self )
         self.searchstring = kwargs[ "searchstring" ].replace('(','[(]').replace(')','[)]').replace('+','[+]')
         log('script version %s started' % __addonversion__)
+        self.nextsearch = False
 
 
     def onInit( self ):
@@ -31,7 +32,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self._close()
         else:
             self._hide_controls()
-            self._load_settings()
+            if not self.nextsearch:
+                self._parse_argv()
+                if self.params == {}:
+                    self._load_settings()
             self._reset_variables()
             self._init_variables()
             self._fetch_items()
@@ -77,6 +81,20 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 161 ).reset()
         self.getControl( 171 ).reset()
         self.getControl( 181 ).reset()
+
+
+    def _parse_argv( self ):
+        try:
+            self.params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
+        except:
+            self.params = {}
+        self.movies = self.params.get( "movies", "" )
+        self.tvshows = self.params.get( "tvshows", "" )
+        self.episodes = self.params.get( "episodes", "" )
+        self.musicvideos = self.params.get( "musicvideos", "" )
+        self.artists = self.params.get( "artists", "" )
+        self.albums = self.params.get( "albums", "" )
+        self.songs = self.params.get( "songs", "" )
 
 
     def _load_settings( self ):
