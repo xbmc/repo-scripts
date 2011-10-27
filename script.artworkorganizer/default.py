@@ -13,10 +13,10 @@ def log(txt):
     xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 
-def clean_filename(tmp_filename):
+def clean_filename(filename):
     illegal_char = '<>:"/\|?*'
     for char in illegal_char:
-        filename = tmp_filename.replace( char , '' )
+        filename = filename.replace( char , '' )
     return filename
 
 

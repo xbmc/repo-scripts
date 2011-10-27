@@ -1,3 +1,6 @@
+v0.1.3
+- fixed replace illegal characters in filenames
+
 v0.1.2
 - adjusted to latest json-rpc changes
 - added option for episode and season thumbs
