@@ -1,3 +1,4 @@
+
 How to use this addon in your skin:
 
 
@@ -21,22 +22,44 @@ In MusicVisualisation.xml:
 	<posy>0</posy>
 	<width>1280</width>
 	<height>720</height>
-	<imagepath background="true">$INFO[Window.Property(ArtistSlideshow)]</imagepath>
+	<imagepath background="true">$INFO[Window(Visualisation).Property(ArtistSlideshow)]</imagepath>
 	<aspectratio>keep</aspectratio>
 	<timeperimage>5000</timeperimage>
 	<fadetime>2000</fadetime>
 	<randomize>true</randomize>
 	<animation effect="fade" start="0" end="100" time="300">Visible</animation>
 	<animation effect="fade" start="100" end="0" time="300">Hidden</animation>
-	<visible>IsEmpty(Window.Property(ArtistSlideshowRefresh))</visible>
+	<visible>IsEmpty(Window(Visualisation).Property(ArtistSlideshowRefresh))</visible>
 </control>
 
 
+You can also start this script at startup instead:
+- RunScript(script.artistslideshow,daemon=True)
+this will keep the script running all the time.
 
-The script provide two properties to the skin:
-- Window.Property(ArtistSlideshow) 
+
+The script provides these properties to the skin:
+
+- Window(Visualisation).Property(ArtistSlideshow)
 This is the path to the directory containing the downloaded images for the currently playing artist
-- Window.Property(ArtistSlideshowRefresh)
+
+- Window(Visualisation).Property(ArtistSlideshowRefresh)
 This can be used to fade out/fade in the slideshow when the path is refreshed.
 The path will refresh after all images for a certain artist have been downloaded.
-This is needed since xbmc will not automatically pick up any new images once the multiimage have been loaded.
+This is needed since xbmc will not automatically pick up any new images after the multiimage control has been loaded.
+
+- Window(Visualisation).Property(ArtistSlideshowRunning)
+This one is used internally by the script to check if it is already running.
+There's no need to use this property in your skin.
+
+- Window(Visualisation).Property(ArtistSlideshow.ArtistBiography)
+Artist biography from last.fm
+
+- Window(Visualisation).Property(ArtistSlideshow.%d.SimilarName)
+- Window(Visualisation).Property(ArtistSlideshow.%d.SimilarThumb)
+Similar artists
+
+- Window(Visualisation).Property(ArtistSlideshow.%d.AlbumName)
+- Window(Visualisation).Property(ArtistSlideshow.%d.AlbumThumb)
+Albums by the artist
+

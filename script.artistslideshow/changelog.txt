@@ -1,3 +1,28 @@
+v1.1.2
+- added option to download additional artist info
+- use elementtree script module
+
+v1.1.1
+- added option to download images from htbackdrops.com
+
+v1.1.0
+- code refactoring
+
+v1.0.4
+- do not use the xbmc temp dir
+
+v1.0.3
+- allow the script to run without music playing
+
+v1.0.2
+- store images in addon_data
+
+v1.0.1
+- use xbmcvfs.mkdir
+
+v1.0.0
+- initial release
+
 v0.0.4 (beta 4)
 - added settings to specify minimal image width and height
 
