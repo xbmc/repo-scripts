@@ -2,7 +2,7 @@
 <addon
 	id="script.extrafanartdownloader"
 	name="Extrafanart Downloader"
-	version="0.2.0"
+	version="0.2.1"
 	provider-name="paddycarey, putneyj, Machine-Sanctum">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
@@ -12,21 +12,13 @@
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Download extrafanart for all TV shows and Movies</summary>
-	<summary lang="nl">Download extrafanart voor alle TV series en Films</summary>
+    <summary lang="en">Downloads Artwork for TV shows and Movies in your library</summary>
     <description lang="en">
-	Download extrafanart for all TV shows and Movies in your library.[CR]
-	For this to work your skins needs to support the extrafanart.[CR]
-	Remark:[CR]Each TV Show / Movie must have its own folder where an 'extrafanart' subfolder will be created.[CR]
-	Extrafanart sources:[CR]TV Shows (thetvdb.com)[CR]Movies (themoviedb.org)[CR]
+	Downloads Extrafanart, Extrathumbs for TV shows and Movies in your library.[CR]
+    For this to work your skins needs to support these features.[CR]
+	Remark:[CR]Each TV Show / Movie must have its own folder where an 'extrafanart' or 'extrathumbs' subfolder will be created.[CR]
+	Artwork sources:[CR]TV Shows (thetvdb.com)[CR]Movies (themoviedb.org)[CR]
 	Skin integration:[CR]See readme file
-	</description>
-	<description lang="nl">
-	Download extrafanart voor alle TV series en Films in jou bibliotheek.[CR]
-	Dit werkt enkel als de skin extrafanart ondersteund.[CR]
-	Opmerking:[CR]Elke TV Serie / Film moet zijn eigen folder hebben waar een 'extrafanart' folder zal worden aangemaakt.[CR]
-	Extrafanart bronnen:[CR]TV Series (thetvdb.com)[CR]Films (themoviedb.org)[CR]
-	Skin integratie:[CR]Zie readme bestand
 	</description>
     <platform>all</platform>
   </extension>

@@ -27,8 +27,10 @@ class TVDBProvider(BaseProvider):
                 info['language'] = image.findtext('Language')
                 if image.findtext('BannerType2'):
                     x,y = image.findtext('BannerType2').split('x')
+                    info['BannerType'] = image.findtext('BannerType')
                     info['height'] = int(x)
                     info['width'] = int(y)
+                    info['size'] = 'original'
                 info['series_name'] = image.findtext('SeriesName') == 'true'
                 if image.findtext('RatingCount') and int(image.findtext('RatingCount')) >= 1:
                     info['rating'] = float(image.findtext('Rating'))

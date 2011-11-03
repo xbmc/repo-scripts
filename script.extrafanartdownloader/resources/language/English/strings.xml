@@ -3,19 +3,19 @@
     <!-- Plugin settings -->
         <string id="36001">Download Movie fanart</string>
         <string id="36002">Download TV Shows fanart</string>
-        <string id="36003">Checking for extrafanart</string>
+        <string id="36003">-</string>
         <string id="36004">Cleaning up</string>
-        <string id="36005">Checking for extrafanart</string>
-        <string id="36006">Downloading extrafanart</string>
+        <string id="36005">Checking for artwork</string>
+        <string id="36006">Downloading</string>
         <string id="36007">Add-on aborted</string>
         <string id="36008">Network error detected</string>
         <string id="36009">Finished</string>
         <string id="36010">Enable downloading</string>
         <string id="36011">extrafanart centralized</string>
         <string id="36012">Run in background</string>
-        <string id="36013">extrafanart downloaded</string>
+        <string id="36013">artwork downloaded</string>
         <string id="36029">Central Folders Split Into Titles</string>	
-        <string id="36030">Centralize fanart</string>
+        <string id="36030">Centralize fanart [I](Can be used for fanart slideshow)[/I] </string>
         <string id="36031">Central Movie fanart directory</string>
         <string id="36032">Central TV fanart directory</string>
         <string id="36033">Limit download: Extrafanart</string>
