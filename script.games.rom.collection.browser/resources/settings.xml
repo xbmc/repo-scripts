@@ -1,5 +1,6 @@
 <settings>
 	<category label="General">
+		<setting id="rcb_skin" label="RCB skin" type="labelenum" values="Confluence|Night|Simplicity" default="Confluence"/>
 		<setting id="rcb_logLevel" label="Log level" type="labelenum" values="ERROR|WARNING|INFO|DEBUG" default="INFO"/>
 		<setting id="rcb_cachingOption" label="Caching option" type="labelenum" values="CACHEALL|CACHEITEM|CACHEITEMANDNEXT" default="CACHEITEMANDNEXT"/>
 		<!--<setting id="rcb_memDB" label="Load the DB into memory" value="false" type="bool" default="false"/>-->
@@ -19,6 +20,7 @@
 	</category>
 	
 	<category label="Browse Games">
+		<setting id="rcb_showFavoriteStars" label="Show stars for favorites" type="bool" default="true"/>
 		<setting id="rcb_showEntryAllConsoles" label="Show filter All Consoles" type="bool" default="true"/>
 		<setting id="rcb_showEntryAllGenres" label="Show filter All Genres" type="bool" default="true"/>
 		<setting id="rcb_showEntryAllYears" label="Show filter All Years" type="bool" default="true"/>
@@ -32,5 +34,9 @@
 	</category>
 	
 	<setting id="rcb_view_mode" visible="false" value="" type="text"/>
+	<setting id="rcb_launchOnStartup" visible="false" type="bool" default="false"/>
+	<setting id="rcb_scrapeOnStartupAction" visible="false" type="labelenum" values="update|cancel|nothing" default="nothing"/>
+	<setting id="rcb_favoritesSelected" visible="false" type="bool" default="false"/>
+	<setting id="rcb_searchText" visible="false" value="" type="text"/>
 
 </settings>

@@ -1,4 +1,4 @@
-# Copyright (C) 2010 Malte Loepmann (maloep@googlemail.com)
+# Copyright (C) 2011 Malte Loepmann (maloep@googlemail.com)
 #
 # This program is free software; you can redistribute it and/or modify it under the terms 
 # of the GNU General Public License as published by the Free Software Foundation; 
@@ -22,12 +22,16 @@ import os
 import sys
 import re
 
-
 # Shared resources
-import xbmcaddon
-addon = xbmcaddon.Addon(id='script.games.rom.collection.browser')
-BASE_RESOURCE_PATH = os.path.join(addon.getAddonInfo('path'), "resources" )
-
+addonPath = ''
+try:
+	import xbmcaddon
+	addon = xbmcaddon.Addon(id='script.games.rom.collection.browser')
+	addonPath = addon.getAddonInfo('path')
+except:
+	addonPath = os.getcwd()
+		
+BASE_RESOURCE_PATH = os.path.join(addonPath, "resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib", "pyparsing" ) )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib", "pyscraper" ) )
@@ -38,10 +42,13 @@ env = ( os.environ.get( "OS", "win32" ), "win32", )[ os.environ.get( "OS", "win3
 
 # Check to see if using a 64bit version of Linux
 if re.match("Linux", env):
-	import platform
-	env2 = platform.machine()
-	if(env2 == "x86_64"):
-		env = "Linux64"
+	try:
+		import platform
+		env2 = platform.machine()
+		if(env2 == "x86_64"):
+			env = "Linux64"
+	except:
+		pass
 
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "platform_libraries", env ) )
 

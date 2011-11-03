@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="script.games.rom.collection.browser"
-  version="0.8.7"
+  version="0.9.3"
   name="Rom Collection Browser"
   provider-name="carabalb, jimyx17, malte">
   <requires>
@@ -22,6 +22,8 @@
   * configurable description file parser
 Browse games:
   * browse games by console, genre, year and publisher
+  * mark games as favorites
+  * search games by name
   * automatic video playback in video window
   * fullscreen video browser
   * game details page

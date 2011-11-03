@@ -40,7 +40,8 @@ CONTROL_BUTTON_ADDMEDIAPATH = 5500
 
 
 #Browse Games
-CONTROL_LIST_IMAGEPLACING = 5320
+CONTROL_LIST_IMAGEPLACING_MAIN = 5320
+CONTROL_LIST_IMAGEPLACING_INFO = 5340
 
 #Launch Games
 CONTROL_BUTTON_EMUCMD = 5220
@@ -91,8 +92,14 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		imagePlacingRows = self.gui.config.tree.findall('ImagePlacing/fileTypeFor')
 		for imagePlacing in imagePlacingRows:
 			Logutil.log('add image placing: ' +str(imagePlacing.attrib.get('name')), util.LOG_LEVEL_INFO)
-			self.imagePlacingList.append(imagePlacing.attrib.get('name'))
-		self.addItemsToList(CONTROL_LIST_IMAGEPLACING, self.imagePlacingList)
+			option = imagePlacing.attrib.get('name')
+			try:
+				option = config.imagePlacingDict[option]
+			except:
+				pass
+			self.imagePlacingList.append(option)
+		self.addItemsToList(CONTROL_LIST_IMAGEPLACING_MAIN, self.imagePlacingList)
+		self.addItemsToList(CONTROL_LIST_IMAGEPLACING_INFO, self.imagePlacingList)
 		
 		self.updateRomCollectionControls()
 		
@@ -119,6 +126,9 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 						
 			configWriter = ConfigXmlWriter(False)
 			success, message = configWriter.writeRomCollections(self.romCollections, True)
+			
+			if not success:
+				xbmcgui.Dialog().ok('Configuration Error', message)
 			self.close()
 			
 		#Cancel
@@ -143,12 +153,15 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 			self.updateMediaPathControls()
 			
 		elif (controlID == CONTROL_BUTTON_EMUCMD):
-			dialog = xbmcgui.Dialog()
-			
-			emulatorPath = dialog.browse(1, '%s Emulator' %self.selectedRomCollection.name, 'files')
-			if(emulatorPath == ''):
-				return
-						
+			if (self.selectedRomCollection.name == 'Linux' or self.selectedRomCollection.name == 'Macintosh' or self.selectedRomCollection.name == 'Windows'):
+				emulatorPath = self.editTextProperty(CONTROL_BUTTON_EMUCMD, 'emulator command')
+			else:	
+				dialog = xbmcgui.Dialog()
+				
+				emulatorPath = dialog.browse(1, '%s Emulator' %self.selectedRomCollection.name, 'files')
+				if(emulatorPath == ''):
+					return
+							
 			self.selectedRomCollection.emulatorCmd = emulatorPath
 			control = self.getControlById(CONTROL_BUTTON_EMUCMD)
 			control.setLabel(emulatorPath)
@@ -277,7 +290,19 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		self.selectScrapersInList(self.selectedRomCollection.scraperSites, self.availableScrapers)
 		
 		#Browse Games
-		self.selectItemInList(self.selectedRomCollection.imagePlacing.name, CONTROL_LIST_IMAGEPLACING)
+		optionMain = self.selectedRomCollection.imagePlacingMain.name
+		try:
+			optionMain = config.imagePlacingDict[optionMain]
+		except:
+			pass
+		self.selectItemInList(optionMain, CONTROL_LIST_IMAGEPLACING_MAIN)
+		
+		optionInfo = self.selectedRomCollection.imagePlacingInfo.name
+		try:
+			optionInfo = config.imagePlacingDict[optionInfo]
+		except:			
+			pass		
+		self.selectItemInList(optionInfo, CONTROL_LIST_IMAGEPLACING_INFO)
 		
 		#Launch Games
 		control = self.getControlById(CONTROL_BUTTON_EMUCMD)		
@@ -334,26 +359,34 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		control = self.getControlById(CONTROL_BUTTON_USEFOLDERASGAMENAME)
 		self.selectedRomCollection.useFoldernameAsGamename = bool(control.isSelected())
 		
-		#Scraper
-		try:
-			platformId = config.consoleDict[self.selectedRomCollection.name]
-		except:
-			platformId = '0'
-		
 		sites = []
-		sites = self.addScraperToSiteList(CONTROL_LIST_SCRAPER1, platformId, sites, self.selectedRomCollection)
-		sites = self.addScraperToSiteList(CONTROL_LIST_SCRAPER2, platformId, sites, self.selectedRomCollection)
-		sites = self.addScraperToSiteList(CONTROL_LIST_SCRAPER3, platformId, sites, self.selectedRomCollection)
+		sites = self.addScraperToSiteList(CONTROL_LIST_SCRAPER1, sites, self.selectedRomCollection)
+		sites = self.addScraperToSiteList(CONTROL_LIST_SCRAPER2, sites, self.selectedRomCollection)
+		sites = self.addScraperToSiteList(CONTROL_LIST_SCRAPER3, sites, self.selectedRomCollection)
 			
 		self.selectedRomCollection.scraperSites = sites		
 		
-		#Image Placing
-		control = self.getControlById(CONTROL_LIST_IMAGEPLACING)
+		#Image Placing Main
+		control = self.getControlById(CONTROL_LIST_IMAGEPLACING_MAIN)
 		imgPlacingItem = control.getSelectedItem()
 		imgPlacingName = imgPlacingItem.getLabel()
-		
+		#HACK search key by value
+		for item in config.imagePlacingDict.items():
+			if(item[1] == imgPlacingName):
+				imgPlacingName = item[0]
 		imgPlacing, errorMsg = self.gui.config.readImagePlacing(imgPlacingName, self.gui.config.tree)
-		self.selectedRomCollection.imagePlacing = imgPlacing
+		self.selectedRomCollection.imagePlacingMain = imgPlacing
+		
+		#Image Placing Info
+		control = self.getControlById(CONTROL_LIST_IMAGEPLACING_INFO)
+		imgPlacingItem = control.getSelectedItem()
+		imgPlacingName = imgPlacingItem.getLabel()
+		#HACK search key by value
+		for item in config.imagePlacingDict.items():
+			if(item[1] == imgPlacingName):
+				imgPlacingName = item[0]
+		imgPlacing, errorMsg = self.gui.config.readImagePlacing(imgPlacingName, self.gui.config.tree)
+		self.selectedRomCollection.imagePlacingInfo = imgPlacing
 		
 		control = self.getControlById(CONTROL_BUTTON_USEEMUSOLO)
 		self.selectedRomCollection.useEmuSolo = bool(control.isSelected())
@@ -481,14 +514,18 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		
 		mediaType = mediaTypeList[mediaTypeIndex]
 		mediaType = mediaType.replace(' (video)', '')
-					
+				
+		mediaPathComplete = self.editPathWithFileMask(CONTROL_BUTTON_MEDIAPATH, '%s Path' %mediaType, CONTROL_BUTTON_MEDIAFILEMASK)
+		#TODO: use default value in editFilemask
+		control = self.getControlById(CONTROL_BUTTON_MEDIAFILEMASK)
+		control.setLabel('%GAME%.*')
+		mediaPathComplete = self.editFilemask(CONTROL_BUTTON_MEDIAFILEMASK, 'media filemask', mediaPathComplete)
+		
 		mediaPath = MediaPath()
 		fileType = FileType()
 		fileType.name = mediaType
 		mediaPath.fileType = fileType
-		
-		#TODO: Enter path and mask per wizard? Auto fill mask?
-		
+		mediaPath.path = mediaPathComplete
 		self.selectedRomCollection.mediaPaths.append(mediaPath)			
 		
 		control = self.getControlById(CONTROL_LIST_MEDIATYPES)
@@ -544,7 +581,7 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 			self.selectItemInList('None', CONTROL_LIST_SCRAPER3)
 			
 			
-	def addScraperToSiteList(self, controlId, platformId, sites, romCollection):				
+	def addScraperToSiteList(self, controlId, sites, romCollection):				
 
 		Logutil.log('addScraperToSiteList', util.LOG_LEVEL_INFO)
 		
@@ -560,10 +597,6 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 			if(site.name == scraper):
 				sites.append(site)
 				return sites
-				
-		
-		if(scraper != 'mobygames.com'):
-			platformId = '0'
 		
 		siteRow = None
 		siteRows = self.gui.config.tree.findall('Scrapers/Site')
@@ -576,7 +609,7 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 			xbmcgui.Dialog().ok('Configuration Error', 'Site %s does not exist in config.xml' %scraper)
 			return None
 		
-		site, errorMsg = self.gui.config.readScraper(siteRow, platformId, '', '', True, self.gui.config.tree)
+		site, errorMsg = self.gui.config.readScraper(siteRow, romCollection.name, '', '', True, self.gui.config.tree)
 		if(site != None):
 			sites.append(site)
 			

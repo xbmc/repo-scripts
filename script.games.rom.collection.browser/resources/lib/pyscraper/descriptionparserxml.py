@@ -37,7 +37,7 @@ class DescriptionParserXml:
 		rootElementXPath = self.grammarNode.attrib.get('root')
 		rootElements = tree.findall(rootElementXPath)
 		if(rootElements == None):
-			return None				
+			return None
 		
 		resultList = []
 		
@@ -134,65 +134,64 @@ class DescriptionParserXml:
 		return resultAsDict			
 
 			
-	def parseElement(self, tree):
+	def parseElement(self, sourceTree):
 		#single result as dictionary
-		result = {}					
+		result = {}
 		
-		for node in self.grammarNode:
+		for parserNode in self.grammarNode:
 			
-			resultKey = node.tag
-			xpath = node.text
-			root = tree
-			#print "Looking for: " +str(resultKey)
-			#print "using xpath: " +str(nodeValue)
+			resultKey = parserNode.tag
+			xpath = parserNode.text
+			sourceRoot = sourceTree
 				
 			if(xpath == None):
 				continue
 			
 			#check if xpath uses attributes for searching
 			parts = xpath.split('[@')
+			
 			if(len(parts) == 2):
-				elements = root.findall(parts[0])
-				for element in elements:
-					rest = str(parts[1])
-					attribnameIndex = rest.find('="')
-					attribname = rest[0:attribnameIndex]
-					searchedvalue = rest[attribnameIndex +2: rest.find('"', attribnameIndex +2)]					
-					attribute = element.attrib.get(attribname)
-					
-					parts = xpath.split(']/')
-					xpath = parts[1]
-					root = element
-					break
-					"""
-					newelements = element.findall(parts[1])					
-					for newelement in newelements:
-						print newelement.text
-					
-					if(attribute == searchedvalue):
-						print str(element)
-					"""
-			
-			#check if xpath targets an attribute 
-			parts = xpath.split('/@')
-			if(len(parts) > 2):
-				print("Usage error: wrong xpath! Only 1 attribute allowed")
-							
-			#check only the first part without attribute (elementtree does not support attributes as target)			
-			elements = root.findall(parts[0])
-			
-			resultValues = []
-			for element in elements:
-				#if search for attribute
-				if(len(parts) > 1):
-					attribute = element.attrib.get(parts[1])
-					resultValues.append(attribute)
-					#print "found attribute: " +attribute
-				else:
-					if(element.text != None):
-						resultValues.append(element.text.encode('utf-8'))					
-					#print "found result: " +element.text
+				xpathRest = str(parts[1])
+				attribnameIndex = xpathRest.find('="')
+				searchedattribname = xpathRest[0:attribnameIndex]
+				searchedvalue = xpathRest[attribnameIndex +2: xpathRest.find('"', attribnameIndex +2)]
 				
+				resultValues = []
+				sourceElements = sourceRoot.findall(parts[0])
+				for sourceElement in sourceElements:
+					attribute = sourceElement.attrib.get(searchedattribname)
+					if(attribute != searchedvalue):
+						continue
+										
+					if xpath.find(']/') != -1:
+						parts = xpath.split(']/')
+						attribute = sourceElement.attrib.get(parts[1])
+						resultValues.append(attribute)
+					else:
+						resultValues.append(sourceElement.text)
+			else:
+				#check if xpath targets an attribute 
+				parts = xpath.split('/@')
+				if(len(parts) > 2):
+					print("Usage error: wrong xpath! Only 1 attribute allowed")
+					continue
+				
+				resultValues = []
+				
+				#check only the first part without attribute (elementtree does not support attributes as target)			
+				elements = sourceRoot.findall(parts[0])
+								
+				for element in elements:
+					#if search for attribute
+					if(len(parts) > 1):
+						attribute = element.attrib.get(parts[1])
+						resultValues.append(attribute)
+						#print "found attribute: " +attribute
+					else:
+						if(element.text != None):
+							resultValues.append(element.text.encode('utf-8'))					
+						#print "found result: " +element.text
+			
 			try:
 				resultEntry = result[resultKey]
 				resultEntry.append(resultValues)

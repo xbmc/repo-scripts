@@ -1,14 +1,22 @@
 
 import xbmc, xbmcgui
 import util
-import dialogeditromcollection, dialogeditscraper, dialogdeleteromcollection
+import dialogeditromcollection, dialogeditscraper, dialogdeleteromcollection, config
+from gamedatabase import *
 from util import *
+from config import *
 
 ACTION_EXIT_SCRIPT = (10,)
 ACTION_CANCEL_DIALOG = ACTION_EXIT_SCRIPT + (9,)
 
+CONTROL_BUTTON_SETFAVORITE_GAME = 5118
+CONTROL_BUTTON_SETFAVORITE_SELECTION = 5119
 
 class ContextMenuDialog(xbmcgui.WindowXMLDialog):
+		
+	selectedGame = None
+	gameRow = None
+		
 	def __init__(self, *args, **kwargs):
 		# Don't put GUI sensitive stuff here (as the xml hasn't been read yet)
 		Logutil.log('init ContextMenu', util.LOG_LEVEL_INFO)
@@ -18,7 +26,22 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 		self.doModal()
 	
 	def onInit(self):
-		Logutil.log('onInit ContextMenu', util.LOG_LEVEL_INFO)		
+		Logutil.log('onInit ContextMenu', util.LOG_LEVEL_INFO)
+		
+		pos = self.gui.getCurrentListPosition()
+		if(pos != -1):
+			self.selectedGame, self.gameRow = self.gui.getGameByPosition(self.gui.gdb, pos)
+			
+		#set mark favorite text
+		if(self.gameRow != None):
+			if(self.gameRow[util.GAME_isFavorite] == 1):
+				buttonMarkFavorite = self.getControlById(CONTROL_BUTTON_SETFAVORITE_GAME)
+				if(buttonMarkFavorite != None):
+					buttonMarkFavorite.setLabel('Remove Game From Favorites')
+				buttonMarkFavorite = self.getControlById(CONTROL_BUTTON_SETFAVORITE_SELECTION)
+				if(buttonMarkFavorite != None):
+					buttonMarkFavorite.setLabel('Remove Selection From Favorites')
+			
 	
 	def onAction(self, action):
 		if (action.getId() in ACTION_CANCEL_DIALOG):
@@ -58,17 +81,11 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 		elif (controlID == 5113): #Edit Game Command			
 			self.close()
 			
-			pos = self.gui.getCurrentListPosition()
-			if(pos == -1):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Edit Game Command Error', "Can't load selected Game")
-				return					
-				
-			selectedGame, gameRow = self.gui.getGameByPosition(self.gui.gdb, pos)
-			if(selectedGame == None or gameRow == None):
+			if(self.selectedGame == None or self.gameRow == None):
 				xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Edit Game Command Error', "Can't load selected Game")
 				return
 
-			command = gameRow[util.GAME_gameCmd]
+			command = self.gameRow[util.GAME_gameCmd]
 			
 			keyboard = xbmc.Keyboard()
 			keyboard.setHeading('Enter Game Command')
@@ -77,12 +94,53 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			keyboard.doModal()
 			if (keyboard.isConfirmed()):
 				command = keyboard.getText()
-				
-				Logutil.log("Updating game '%s' with command '%s'" %(str(gameRow[util.ROW_NAME]), command), util.LOG_LEVEL_INFO)
-				Game(self.gui.gdb).update(('gameCmd',), (command,), gameRow[util.ROW_ID])
+				Logutil.log("Updating game '%s' with command '%s'" %(str(self.gameRow[util.ROW_NAME]), command), util.LOG_LEVEL_INFO)
+				Game(self.gui.gdb).update(('gameCmd',), (command,), self.gameRow[util.ROW_ID])
 				self.gui.gdb.commit()
+				
+		elif (controlID == 5118): #(Un)Mark as Favorite
+			self.close()
+						
+			if(self.selectedGame == None or self.gameRow == None):
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Add To Favorites Error', "Can't load selected Game")
+				return
+						
+			isFavorite = 1
+			if(self.gameRow[util.GAME_isFavorite] == 1):
+				isFavorite = 0
+			
+			Logutil.log("Updating game '%s' set isFavorite = %s" %(str(self.gameRow[util.ROW_NAME]), str(isFavorite)), util.LOG_LEVEL_INFO)
+			Game(self.gui.gdb).update(('isFavorite',), (isFavorite,), self.gameRow[util.ROW_ID])
+			self.gui.gdb.commit()
+						
+			if(isFavorite == 0):
+				isFavorite = ''
+			self.selectedGame.setProperty('isfavorite', str(isFavorite))
+			
+		elif (controlID == 5119): #(Un)Mark as Favorite
+			self.close()
+						
+			if(self.selectedGame == None or self.gameRow == None):
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Add To Favorites Error', "Can't load selected Game")
+				return
+						
+			isFavorite = 1
+			if(self.gameRow[util.GAME_isFavorite] == 1):
+				isFavorite = 0
+			
+			listSize = self.gui.getListSize()
+			for i in range(0, listSize):
+				
+				selectedGame, gameRow = self.gui.getGameByPosition(self.gui.gdb, i)
+			
+				Logutil.log("Updating game '%s' set isFavorite = %s" %(str(gameRow[util.ROW_NAME]), str(isFavorite)), util.LOG_LEVEL_INFO)
+				Game(self.gui.gdb).update(('isFavorite',), (isFavorite,), gameRow[util.ROW_ID])
+				selectedGame.setProperty('isfavorite', str(isFavorite))
+			self.gui.gdb.commit()
 			
 		elif (controlID == 5114): #Delete Rom
+			self.close()
+			
 			pos = self.gui.getCurrentListPosition()
 			if(pos == -1):
 				xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Delete Game Error', "Can't delete selected Game")
@@ -119,4 +177,13 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 	
 	def onFocus(self, controlID):
 		pass
+
+
+	def getControlById(self, controlId):
+		try:
+			control = self.getControl(controlId)
+		except Exception, (exc):
+			return None
+		
+		return control
 

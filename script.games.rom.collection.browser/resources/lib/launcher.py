@@ -37,8 +37,13 @@ def launchEmu(gdb, gui, gameId, config, settings):
 		
 	if (romCollection.useEmuSolo):
 		
-		#try to create autoexec.py
-		writeAutoexec(gdb)
+		#check if we should use xbmc.service (Eden) or autoexec.py (Dharma)
+		if(not gui.useRCBService):
+			#try to create autoexec.py
+			writeAutoexec(gdb)
+		else:
+			#communicate with service via settings
+			settings.setSetting(util.SETTING_RCB_LAUNCHONSTARTUP, 'true')
 
 		# Remember selection
 		gui.saveViewState(False)
@@ -154,6 +159,8 @@ def buildCmd(filenameRows, romCollection, gameRow, escapeCmd):
 					emuCommandLine = re.escape(emuCommandLine)				
 				
 				if (os.environ.get( "OS", "xbox" ) == "xbox"):
+					cmd = replacePlaceholdersInParams(emuCommandLine, rom, romCollection, gameRow, escapeCmd)
+				elif (romCollection.name == 'Linux' or romCollection.name == 'Macintosh' or romCollection.name == 'Windows'):
 					cmd = replacePlaceholdersInParams(emuCommandLine, rom, romCollection, gameRow, escapeCmd)
 				else:
 					cmd = '\"' +emuCommandLine +'\" ' +emuParams.replace('%I%', str(fileindex))
@@ -350,7 +357,7 @@ def replacePlaceholdersInParams(emuParams, rom, romCollection, gameRow, escapeCm
 def writeAutoexec(gdb):
 	# Backup original autoexec.py		
 	autoexec = util.getAutoexecPath()
-	doBackup(gdb, autoexec)			
+	backupAutoexec(gdb, autoexec)
 
 	# Write new autoexec.py
 	try:
@@ -369,8 +376,8 @@ def writeAutoexec(gdb):
 		return
 	
 	
-def doBackup(gdb, fName):
-	Logutil.log("Begin launcher.doBackup", util.LOG_LEVEL_INFO)
+def backupAutoexec(gdb, fName):
+	Logutil.log("Begin launcher.backupAutoexec", util.LOG_LEVEL_INFO)
 
 	if os.path.isfile(fName):			
 		newFileName = os.path.join(util.getAddonDataPath(), 'autoexec.py.bak') 			
@@ -387,13 +394,13 @@ def doBackup(gdb, fName):
 		
 		rcbSetting = helper.getRCBSetting(gdb)
 		if (rcbSetting == None):
-			Logutil.log("rcbSetting == None in doBackup", util.LOG_LEVEL_WARNING)
+			Logutil.log("rcbSetting == None in backupAutoexec", util.LOG_LEVEL_WARNING)
 			return
 		
 		RCBSetting(gdb).update(('autoexecBackupPath',), (newFileName,), rcbSetting[util.ROW_ID])
 		gdb.commit()
 		
-	Logutil.log("End launcher.doBackup", util.LOG_LEVEL_INFO)
+	Logutil.log("End launcher.backupAutoexec", util.LOG_LEVEL_INFO)
 		
 
 def launchXbox(gui, gdb, cmd, romCollection, filenameRows):
@@ -533,9 +540,10 @@ def getNames7z(filepath):
 	
 	try:
 		import py7zlib
-	except:
+	except Exception, (exc):
 		xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Error launching .7z file.', 'Please check XBMC.log for details.')
 		Logutil.log("You have tried to launch a .7z file but you are missing required libraries to extract the file. You can download the latest RCB version from RCBs project page. It contains all required libraries.", util.LOG_LEVEL_ERROR)
+		Logutil.log("Error: " +str(exc), util.LOG_LEVEL_ERROR)
 		return None
 	
 	fp = open(str(filepath), 'rb')

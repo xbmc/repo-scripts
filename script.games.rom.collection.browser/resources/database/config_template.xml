@@ -1,4 +1,4 @@
-<config version="0.8.6">
+<config version="0.9.0">
   <RomCollections>
     
   </RomCollections>
@@ -82,22 +82,6 @@
 	  <fileTypeForMainView1>publisher</fileTypeForMainView1>
 	  <fileTypeForMainView2>romcollection</fileTypeForMainView2>
 	  <fileTypeForMainView3>developer</fileTypeForMainView3>
-      <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
-	  <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
-	  <fileTypeForGameInfoViewBackground>action</fileTypeForGameInfoViewBackground>	  
-      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>action</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
-      <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
-	  <fileTypeForGameInfoView2>title</fileTypeForGameInfoView2>
-      <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
-      <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
-	  <fileTypeForGameInfoView4>action</fileTypeForGameInfoView4>
-	  <fileTypeForGameInfoView4>title</fileTypeForGameInfoView4>
     </fileTypeFor>
     <fileTypeFor name="gameinfobigVideo">
       <fileTypeForGameList>boxfront</fileTypeForGameList>
@@ -122,22 +106,6 @@
 	  <fileTypeForMainView2>romcollection</fileTypeForMainView2>
 	  <fileTypeForMainView3>developer</fileTypeForMainView3>
       <fileTypeForMainViewVideoFullscreen>gameplay</fileTypeForMainViewVideoFullscreen>
-      <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
-	  <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
-	  <fileTypeForGameInfoViewBackground>action</fileTypeForGameInfoViewBackground>	  
-      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>action</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
-      <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
-	  <fileTypeForGameInfoView2>title</fileTypeForGameInfoView2>
-      <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
-      <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
-	  <fileTypeForGameInfoView4>action</fileTypeForGameInfoView4>
-	  <fileTypeForGameInfoView4>title</fileTypeForGameInfoView4>
     </fileTypeFor>
     <fileTypeFor name="gameinfosmall">
       <fileTypeForGameList>boxfront</fileTypeForGameList>
@@ -163,22 +131,6 @@
 	  <fileTypeForMainView1>publisher</fileTypeForMainView1>
 	  <fileTypeForMainView2>romcollection</fileTypeForMainView2>
 	  <fileTypeForMainView3>developer</fileTypeForMainView3>
-      <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
-	  <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
-	  <fileTypeForGameInfoViewBackground>action</fileTypeForGameInfoViewBackground>	  
-      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>action</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
-      <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
-	  <fileTypeForGameInfoView2>title</fileTypeForGameInfoView2>
-      <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
-      <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
-	  <fileTypeForGameInfoView4>action</fileTypeForGameInfoView4>
-	  <fileTypeForGameInfoView4>title</fileTypeForGameInfoView4>
     </fileTypeFor>
     <fileTypeFor name="gameinfosmallVideo">
       <fileTypeForGameList>boxfront</fileTypeForGameList>
@@ -206,22 +158,6 @@
 	  <fileTypeForMainView3>developer</fileTypeForMainView3>
       <fileTypeForMainViewVideoWindowSmall>gameplay</fileTypeForMainViewVideoWindowSmall>
       <fileTypeForMainViewVideoFullscreen>gameplay</fileTypeForMainViewVideoFullscreen>
-      <fileTypeForGameInfoViewBackground>fanart</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
-	  <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
-	  <fileTypeForGameInfoViewBackground>action</fileTypeForGameInfoViewBackground>	  
-      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
-	  <fileTypeForGameInfoViewGamelist>action</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
-      <fileTypeForGameInfoView2>boxback</fileTypeForGameInfoView2>
-	  <fileTypeForGameInfoView2>title</fileTypeForGameInfoView2>
-      <fileTypeForGameInfoView3>cartridge</fileTypeForGameInfoView3>
-      <fileTypeForGameInfoView4>screenshot</fileTypeForGameInfoView4>
-	  <fileTypeForGameInfoView4>action</fileTypeForGameInfoView4>
-	  <fileTypeForGameInfoView4>title</fileTypeForGameInfoView4>
     </fileTypeFor>
 	<fileTypeFor name="gameinfomamemarquee">
       <fileTypeForGameList>marquee</fileTypeForGameList>
@@ -239,16 +175,6 @@
       <fileTypeForMainView1>publisher</fileTypeForMainView1>
       <fileTypeForMainView2>romcollection</fileTypeForMainView2>
       <fileTypeForMainView3>developer</fileTypeForMainView3>
-      <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
-      <fileTypeForGameInfoView2>action</fileTypeForGameInfoView2>
-      <fileTypeForGameInfoView3>title</fileTypeForGameInfoView3>
-      <fileTypeForGameInfoView4>cabinet</fileTypeForGameInfoView4>
     </fileTypeFor>
     <fileTypeFor name="gameinfomamecabinet">
       <fileTypeForGameList>cabinet</fileTypeForGameList>
@@ -266,16 +192,6 @@
       <fileTypeForMainView1>publisher</fileTypeForMainView1>
       <fileTypeForMainView2>romcollection</fileTypeForMainView2>
       <fileTypeForMainView3>developer</fileTypeForMainView3>
-      <fileTypeForGameInfoViewBackground>title</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>boxfront</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewBackground>screenshot</fileTypeForGameInfoViewBackground>
-      <fileTypeForGameInfoViewGamelist>boxfront</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoViewGamelist>title</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoViewGamelist>screenshot</fileTypeForGameInfoViewGamelist>
-      <fileTypeForGameInfoView1>boxfront</fileTypeForGameInfoView1>
-      <fileTypeForGameInfoView2>action</fileTypeForGameInfoView2>
-      <fileTypeForGameInfoView3>title</fileTypeForGameInfoView3>
-      <fileTypeForGameInfoView4>cabinet</fileTypeForGameInfoView4>
     </fileTypeFor>
   </ImagePlacing>
   <Scrapers>
@@ -286,7 +202,7 @@
       <Scraper parseInstruction="01 - thevideogamedb.xml" source="http://thevideogamedb.com/API/GameDetail.aspx?apikey=%VGDBAPIKey%&amp;crc=%CRC%" />
     </Site>
     <Site name="thegamesdb.net" descFilePerGame="True" searchGameByCRC="False">
-      <Scraper parseInstruction="02 - thegamesdb.xml" source="http://thegamesdb.net/api/GetGame.php?name=%GAME%" />
+      <Scraper parseInstruction="02 - thegamesdb.xml" source="http://thegamesdb.net/api/GetGame.php?name=%GAME%&amp;platform=%PLATFORM%" />
     </Site>
     <Site name="giantbomb.com" descFilePerGame="True" searchGameByCRC="False">
       <Scraper parseInstruction="03.01 - giantbomb - search.xml" returnUrl="true" source="http://api.giantbomb.com/search/?api_key=%GIANTBOMBAPIKey%&amp;query=%GAME%&amp;resources=game&amp;field_list=api_detail_url,name&amp;format=xml" />

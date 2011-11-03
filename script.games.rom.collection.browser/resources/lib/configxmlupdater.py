@@ -1,10 +1,10 @@
 
 
 import os, sys, shutil
-from pysqlite2 import dbapi2 as sqlite
-from gamedatabase import *
+
 from util import *
 import util
+from gamedatabase import *
 from elementtree.ElementTree import *
 from config import ImagePlacing
 
@@ -28,7 +28,7 @@ class ConfigxmlUpdater:
 		self.tree = tree
 	
 		configVersion = tree.attrib.get('version')
-		Logutil.log('Reading version from config.xml: ' +str(configVersion), util.LOG_LEVEL_INFO)
+		Logutil.log('Reading config version from config.xml: ' +str(configVersion), util.LOG_LEVEL_INFO)
 		if(configVersion == None):
 			#set to previous version
 			configVersion = '0.7.4'
@@ -53,6 +53,19 @@ class ConfigxmlUpdater:
 		
 		if(configVersion == '0.7.4'):
 			success, message = self.update_074_to_086()
+			configVersion = '0.8.6'
+			if(not success):
+				return False, message			
+			
+		if(configVersion == '0.8.6'):
+			success, message = self.update_086_to_0810()
+			configVersion = '0.8.10'
+			if(not success):
+				return False, message
+			
+		if(configVersion == '0.8.10'):
+			success, message = self.update_0810_to_090()
+			configVersion = '0.9.0'
 			if(not success):
 				return False, message
 		
@@ -127,6 +140,35 @@ class ConfigxmlUpdater:
 		
 		return True, ''
 	
+	
+	def update_086_to_0810(self):
+		#reflect changes to thegamesdb.net
+		scraperSitesXml = self.tree.findall('Scrapers/Site')
+		for scraperSiteXml in scraperSitesXml:			
+			siteName = scraperSiteXml.attrib.get('name')
+			if(siteName == 'thegamesdb.net'):
+				scraperXml = scraperSiteXml.find('Scraper')
+				scraperXml.attrib['source'] = "http://thegamesdb.net/api/GetGame.php?name=%GAME%&platform=%PLATFORM%"
+				break
+		
+		return True, ''
+	
+	
+	def update_0810_to_090(self):
+		#change imagePlacing elements
+		romCollectionsXml = self.tree.findall('RomCollections/RomCollection')
+		for romCollectionXml in romCollectionsXml:
+			#read value from old element
+			imagePlacingValue = self.readTextElement(romCollectionXml, 'imagePlacing')
+			#write with new name			
+			SubElement(romCollectionXml, 'imagePlacingMain').text = imagePlacingValue
+			SubElement(romCollectionXml, 'imagePlacingInfo').text = imagePlacingValue
+			
+			#remove old element
+			self.removeElement(romCollectionXml, 'imagePlacing')
+		
+		return True, '' 
+			
 	
 	#TODO use same as in config
 	def readTextElement(self, parent, elementName):
