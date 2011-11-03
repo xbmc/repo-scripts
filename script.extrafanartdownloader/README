@@ -8,11 +8,12 @@ The script also supports a 'solo mode' which allows it to be run from inside a s
 Eden 11.0:
     The script can now be downloaded from the official repo XBMC-repo (pre-Eden)
     This script requires an xbmc nightly build of September 21st or later
-    Current stable version : 0.4.0
+    Current stable version : 0.4.1
 
 Current Features:
-    - TV Extrafanart
-    - Movie Extrafanart
+    - TV ExtraFanart
+    - Movie ExtraFanart
+    - Movie ExtraThumbs
     - Skin integration: Bulk mode (download all extrafanart for every tv show/movie)
     - Skin integration: Solo mode (download all extrafanart for only one tv show/movie)
     - Limit fanart by: maximum amount/ minimum rating / language used
@@ -27,6 +28,7 @@ Skins using this Add-On:
     - Aeon Nox (made by Big Noid)
     - Cirrus Extended (made by Butchabay)
     - Transparency [T!] (made by Ronie)
+    - Aeon MQ3 (made my MarcosQui)
 
 ----------------------------------------------------------------------------------------------
 To run the script in bulk mode simply click on it in the 'Addons' or 'Programs' menu in XBMC.
@@ -36,9 +38,6 @@ This script has some different run modes. Please check the files as described be
 
 Code for skin intergration:
 Check "resources/docs/runscript.txt"
-
-Real world code example Dharma10.1 (available in Dharma version):
-Check "resources/docs/dharma.xml"
 
 Real world code example Eden 11.0 (available in Eden version):
 Check "resources/docs/pre-eden.xml"

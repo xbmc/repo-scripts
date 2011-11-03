@@ -1,19 +1,24 @@
+[B]0.4.1[/B]
+- Added: Extrathumbs support for Movies
+- Fixed: New TMDB image locations on site
+         Advisable is to delete all existing movie extrafanart folders
+
 [B]0.4.0[/B]
-- Added silent downloading in background
-- Added Extrafanart limiter (maximum fanart/language/no text) 
-- Added download backup folder for fanart
-- More extensive error checking
-- More extensive debug logging
-- Updated skin integration examples
-- Open Settings on first run
+- Added: silent downloading in background
+- Added: Extrafanart limiter (maximum fanart/language/no text) 
+- Added: Download backup folder for fanart
+- Added: More extensive error checking
+- Added: More extensive debug logging
+- Added: Open Settings on first run
+- Updated: Skin integration examples
 
 [B]0.3.8[/B]
-- Added option to centralize fanart storage
+- Added: option to centralize fanart storage
 - Splitting code into libraries
 
 [B]0.3.7[/B]
-- Added skin integration options (see readme file)
+- Added: Skin integration options (see readme file)
 
 [B]0.3.6[/B]
 - Initial commit
-- Added to official XBMC-repo
+- Initial version for official XBMC-repo
