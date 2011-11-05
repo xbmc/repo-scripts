@@ -6,7 +6,7 @@
 
 import xbmc, xbmcgui, xbmcaddon
 import re, sys, os, random
-import xml.dom.minidom
+from elementtree import ElementTree as xmltree
 
 __addon__    = xbmcaddon.Addon()
 __addonid__ = __addon__.getAddonInfo('id')
@@ -24,16 +24,18 @@ class Main:
         # reset totals property for visible condition
         self.WINDOW.clearProperty( "RandomMovie.Count" )
         self.WINDOW.clearProperty( "RandomEpisode.Count" )
+        self.WINDOW.clearProperty( "RandomMusicVideo.Count" )
         self.WINDOW.clearProperty( "RandomSong.Count" )
         self.WINDOW.clearProperty( "RandomAlbum.Count" )
         self.WINDOW.clearProperty( "RandomAddon.Count" )
         # we clear title for visible condition
         for count in range( self.LIMIT ):
-            self.WINDOW.clearProperty( "RandomMovie.%d.Title" % ( count ) )
-            self.WINDOW.clearProperty( "RandomEpisode.%d.Title" % ( count ) )
-            self.WINDOW.clearProperty( "RandomSong.%d.Title" % ( count ) )
-            self.WINDOW.clearProperty( "RandomAlbum.%d.Title" % ( count ) )
-            self.WINDOW.clearProperty( "RandomAddon.%d.Name" % ( count ) )
+            self.WINDOW.clearProperty( "RandomMovie.%d.Title" % ( count + 1 ) )
+            self.WINDOW.clearProperty( "RandomEpisode.%d.Title" % ( count + 1 ) )
+            self.WINDOW.clearProperty( "RandomMusicVideo.%d.Title" % ( count + 1 ) )
+            self.WINDOW.clearProperty( "RandomSong.%d.Title" % ( count + 1 ) )
+            self.WINDOW.clearProperty( "RandomAlbum.%d.Title" % ( count + 1 ) )
+            self.WINDOW.clearProperty( "RandomAddon.%d.Name" % ( count + 1 ) )
 
     def _parse_argv( self ):
         try:
@@ -70,6 +72,7 @@ class Main:
             # fetch media info
             self._fetch_movie_info()
             self._fetch_episode_info()
+            self._fetch_musicvideo_info()
             self._fetch_album_info()
             self._fetch_song_info()
             self._fetch_addon_info()
@@ -200,12 +203,12 @@ class Main:
                 showtitle = ''
             findseason = re.search( '"season": ?(.*?),"', item )
             if findseason:
-                season = findseason.group(1)
+                season = "%.2d" % float( findseason.group(1) )
             else:
                 season = ''
             findepisode = re.search( '"episode": ?(.*?),"', item )
             if findepisode:
-                episode = findepisode.group(1)
+                episode = "%.2d" % float( findepisode.group(1) )
             else:
                 episode = ''
             findrating = re.search( '"rating": ?(.*?),"', item )
@@ -246,6 +249,84 @@ class Main:
             self.WINDOW.setProperty( "RandomEpisode.%d.Fanart" % ( count ), fanart )
             self.WINDOW.setProperty( "RandomEpisode.%d.Thumb" % ( count ), thumb )
             self.WINDOW.setProperty( "RandomEpisode.Count", total )
+
+    def _fetch_musicvideo_info( self ):
+        # query the database
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["artist", "playcount", "year", "plot", "runtime", "fanart", "thumbnail", "file"] }, "id": 1}')
+        # separate the records
+        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
+        json_response.pop(0)
+        # get total value
+        total = str( len( json_response ) )
+        # enumerate thru our records
+        count = 0
+        while count < self.LIMIT:
+            count += 1
+            # check if we don't run out of items before LIMIT is reached
+            if len( json_response ) == 0:
+                return
+            # select a random item
+            item = random.choice( json_response )
+            # remove the item from our list
+            json_response.remove( item )
+            # find values
+            if self.UNPLAYED == "True":
+                findplaycount = re.search( '"playcount": ?(.*?),"', item )
+                if findplaycount:
+                    playcount = findplaycount.group(1)
+                    if int( playcount ) > 0:
+                        count = count - 1
+                        continue
+            findtitle = re.search( '"label": ?"(.*?)",["\n]', item )
+            if findtitle:
+                title = findtitle.group(1)
+            else:
+                title = ''
+            findyear = re.search( '"year": ?(.*)', item )
+            if findyear:
+                year = findyear.group(1)
+            else:
+                year = ''
+            findplot = re.search( '"plot": ?"(.*?)",["\n]', item )
+            if findplot:
+                plot = findplot.group(1)
+            else:
+                plot = ''
+            findrunningtime = re.search( '"runtime": ?"(.*?)",["\n]', item )
+            if findrunningtime:
+                runningtime = findrunningtime.group(1)
+            else:
+                runningtime = ''
+            findpath = re.search( '"file": ?"(.*?)",["\n]', item )
+            if findpath:
+                path = findpath.group(1)
+            else:
+                path = ''
+            findartist = re.search( '"artist": ?"(.*?)",["\n]', item )
+            if findartist:
+                artist = findartist.group(1)
+            else:
+                artist = ''
+            findfanart = re.search( '"fanart": ?"(.*?)",["\n]', item )
+            if findfanart:
+                fanart = findfanart.group(1)
+            else:
+                fanart = ''
+            findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', item )
+            if findthumb:
+                thumb = findthumb.group(1)
+            else:
+                thumb = ''
+            # set our properties
+            self.WINDOW.setProperty( "RandomMusicVideo.%d.Title" % ( count ), title )
+            self.WINDOW.setProperty( "RandomMusicVideo.%d.Year" % ( count ), year)
+            self.WINDOW.setProperty( "RandomMusicVideo.%d.Plot" % ( count ), plot )
+            self.WINDOW.setProperty( "RandomMusicVideo.%d.RunningTime" % ( count ), runningtime )
+            self.WINDOW.setProperty( "RandomMusicVideo.%d.Path" % ( count ), path )
+            self.WINDOW.setProperty( "RandomMusicVideo.%d.Fanart" % ( count ), fanart )
+            self.WINDOW.setProperty( "RandomMusicVideo.%d.Artist" % ( count ), artist )
+            self.WINDOW.setProperty( "RandomMusicVideo.%d.Thumb" % ( count ), thumb )
+            self.WINDOW.setProperty( "RandomMusicVideo.Count", total )
 
     def _fetch_album_info( self ):
         # query the database
@@ -412,17 +493,19 @@ class Main:
                 addonfile = os.path.join(addonpath, item, 'addon.xml')
                 if os.path.exists(addonfile):
                     # find addon id
-                    addonfilecontents = xml.dom.minidom.parse(addonfile)
-                    for addonentry in addonfilecontents.getElementsByTagName("addon"): 
-                        addonid = addonentry.getAttribute("id")
+                    addonfilecontents = xmltree.parse(addonfile).getroot()
+                    for element in addonfilecontents.getiterator():
+                       if element.tag == "addon":
+                           addonid = element.attrib.get('id')
+                       elif element.tag == "provides":
+                           addonprovides = element.text
                     # find plugins and scripts
                     try:
                         addontype = xbmcaddon.Addon(id=addonid).getAddonInfo('type')
                         if (addontype == 'xbmc.python.script') or (addontype == 'xbmc.python.pluginsource'):
-                            addonlist.append(addonid)
+                            addonlist.append( (addonid, addonprovides) )
                     except:
                         pass
-                    addonfilecontents.unlink()
         # get total value
         total = str( len( addonlist ) )
         # count thru our addons
@@ -437,13 +520,14 @@ class Main:
             # remove the item from our list
             addonlist.remove(addonid)
             # set properties
-            self.WINDOW.setProperty( "RandomAddon.%d.Name" % ( count ), xbmcaddon.Addon(id=addonid).getAddonInfo('name') )
-            self.WINDOW.setProperty( "RandomAddon.%d.Author" % ( count ), xbmcaddon.Addon(id=addonid).getAddonInfo('author') )
-            self.WINDOW.setProperty( "RandomAddon.%d.Summary" % ( count ), xbmcaddon.Addon(id=addonid).getAddonInfo('summary') )
-            self.WINDOW.setProperty( "RandomAddon.%d.Version" % ( count ), xbmcaddon.Addon(id=addonid).getAddonInfo('version') )
-            self.WINDOW.setProperty( "RandomAddon.%d.Path" % ( count ), xbmcaddon.Addon(id=addonid).getAddonInfo('id') )
-            self.WINDOW.setProperty( "RandomAddon.%d.Fanart" % ( count ), xbmcaddon.Addon(id=addonid).getAddonInfo('fanart') )
-            self.WINDOW.setProperty( "RandomAddon.%d.Thumb" % ( count ), xbmcaddon.Addon(id=addonid).getAddonInfo('icon') )
+            self.WINDOW.setProperty( "RandomAddon.%d.Name" % ( count ), xbmcaddon.Addon(id=addonid[0]).getAddonInfo('name') )
+            self.WINDOW.setProperty( "RandomAddon.%d.Author" % ( count ), xbmcaddon.Addon(id=addonid[0]).getAddonInfo('author') )
+            self.WINDOW.setProperty( "RandomAddon.%d.Summary" % ( count ), xbmcaddon.Addon(id=addonid[0]).getAddonInfo('summary') )
+            self.WINDOW.setProperty( "RandomAddon.%d.Version" % ( count ), xbmcaddon.Addon(id=addonid[0]).getAddonInfo('version') )
+            self.WINDOW.setProperty( "RandomAddon.%d.Path" % ( count ), xbmcaddon.Addon(id=addonid[0]).getAddonInfo('id') )
+            self.WINDOW.setProperty( "RandomAddon.%d.Fanart" % ( count ), xbmcaddon.Addon(id=addonid[0]).getAddonInfo('fanart') )
+            self.WINDOW.setProperty( "RandomAddon.%d.Thumb" % ( count ), xbmcaddon.Addon(id=addonid[0]).getAddonInfo('icon') )
+            self.WINDOW.setProperty( "RandomAddon.%d.Type" % ( count ), addonid[1] )
             self.WINDOW.setProperty( "RandomAddon.Count", total )
 
     def _Play_Album( self, ID ):
