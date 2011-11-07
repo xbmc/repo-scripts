@@ -1,3 +1,11 @@
+1.5.1
+  New plugin-way for scrapers
+  Fixed: Wallstreetjournal Scraper
+  Fixed: Sacramento Bee Scraper
+  Fixed: Visible-conditions in Eden
+  Fixed: Back-key in Eden
+  Code Improvements
+
 1.5.0
   Added: New Scraper: 'The Atlantic: In Focus'
   Removed: Scraper 'Boston.com: The Big Shot' - outdated

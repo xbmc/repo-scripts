@@ -1,11 +1,10 @@
 import sys
+import os
 
 import xbmcgui
 import imageDownloader
 import xbmcaddon
 import xbmc
-
-from scrapers import aif, sbb, tbp, wsj
 
 Addon = sys.modules['__main__'].Addon
 getLS = Addon.getLocalizedString
@@ -28,11 +27,18 @@ class GUI(xbmcgui.WindowXML):
     ACTION_0 = [58]
 
     def __init__(self, xmlFilename, scriptPath, defaultSkin, defaultRes):
-        self.SOURCES = list()
-        self.SOURCES.append(tbp.Scraper())
-        self.SOURCES.append(aif.Scraper())
-        self.SOURCES.append(sbb.Scraper())
-        self.SOURCES.append(wsj.Scraper())
+        self.getScraper()
+
+    def getScraper(self):
+        addon_path = xbmc.translatePath(Addon.getAddonInfo('path'))
+        res_path = os.path.join(addon_path, 'resources', 'lib')
+        scrapers_path = os.path.join(res_path, 'scrapers')
+        scrapers = [f[:-3] for f in os.listdir(scrapers_path) \
+                    if f.endswith('.py')]
+        sys.path.append(res_path)
+        sys.path.append(scrapers_path)
+        imported_modules = [__import__(scraper) for scraper in scrapers]
+        self.SOURCES = [m.register() for m in imported_modules]
 
     def onInit(self):
         self.show_info = 'true'
@@ -129,8 +135,8 @@ class GUI(xbmcgui.WindowXML):
 
     def showPhotos(self):
         link = self.getProperty('link')
-        photos = self.Source.getPhotos(link)
         self.getControl(self.CONTROL_MAIN_IMAGE).reset()
+        photos = self.Source.getPhotos(link)
         self.showItems(photos, 'photo')
 
     def showAlbums(self):

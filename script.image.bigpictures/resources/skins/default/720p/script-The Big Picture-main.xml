@@ -179,7 +179,7 @@
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="image">
-                    <description>Arrow left</description>
+						<description>Arrow left</description>
                         <animation type="Focus">
                             <effect type="slide" start="-50,0" end="0" time="100" delay="2000"/>
                             <effect type="fade" start="0" end="100" time="100" delay="2000"/>
@@ -193,7 +193,7 @@
                         <animation effect="fade" time="200">VisibleChange</animation>
                     </control>
                     <control type="image">
-                    <description>Arrow right</description>
+						<description>Arrow right</description>
                         <animation type="Focus">
                             <effect type="slide" start="50,0" end="0" time="100" delay="2000"/>
                             <effect type="fade" start="0" end="100" time="100" delay="2000"/>
