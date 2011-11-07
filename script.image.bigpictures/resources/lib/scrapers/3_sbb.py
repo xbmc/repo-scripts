@@ -1,16 +1,16 @@
-from parent import ScraperParent
-from BeautifulSoup import BeautifulSoup
+from scraper import ScraperPlugin
 
 
-class Scraper(ScraperParent):
+class Scraper(ScraperPlugin):
 
     NAME = 'Sacramento Bee: The Frame'
 
     def getAlbums(self):
         url = 'http://blogs.sacbee.com/photos/'
-        tree = BeautifulSoup(self.getCachedURL(url))
+        tree = self.getCachedTree(url)
         self.albums = list()
-        storyNodes = tree.findAll('div', 'entry-asset asset hentry story')
+        storyNodes = tree.findAll('div',
+                                  'entry-asset asset hnews hentry story')
         for node in storyNodes:
             title = node.find('a').string
             link = node.find('a')['href']
@@ -25,7 +25,7 @@ class Scraper(ScraperParent):
         return self.albums
 
     def getPhotos(self, url):
-        tree = BeautifulSoup(self.getCachedURL(url))
+        tree = self.getCachedTree(url)
         title = tree.find('div', 'asset-name entry-title title').a.string
         self.photos = list()
         style = 'background: rgb(224, 224, 224); width: 982px; padding: 4px;'
@@ -45,3 +45,7 @@ class Scraper(ScraperParent):
                                 'pic': pic,
                                 'description': description})
         return self.photos
+
+
+def register():
+    return Scraper()

@@ -1,3 +1,11 @@
+2.0.1
+  New plugin-way for scrapers
+  Fixed: Wallstreetjournal Scraper
+  Fixed: Sacramento Bee Scraper
+  Fixed: Visible-conditions in Eden
+  Fixed: Back-key in Eden
+  Code Improvements
+
 2.0.0
   Eden release
 

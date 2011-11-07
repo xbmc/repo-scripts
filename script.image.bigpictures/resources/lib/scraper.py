@@ -3,17 +3,18 @@ import os
 import sys
 import time
 import re
+from BeautifulSoup import BeautifulSoup
 from zlib import crc32
 
 scriptname = sys.modules['__main__'].__scriptname__
 cachedir = sys.modules['__main__'].__cachedir__
 
 
-class ScraperParent:
+class ScraperPlugin(object):
 
     NAME = str()
 
-    def getCachedURL(self, url, referer=None):
+    def getCachedTree(self, url, referer=None):
         print '[SCRIPT][%s] attempting to open %s' % (scriptname, url)
         ua = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0) ' \
              'Gecko/20100101 Firefox/4.0'
@@ -47,7 +48,8 @@ class ScraperParent:
             sock = open(cachefilefullpath, 'r')
             link = sock.read()
         sock.close()
-        return link
+        tree = BeautifulSoup(link)
+        return tree
 
     def cleanHTML(self, s):
         """The 2nd half of this removes HTML tags.
@@ -64,6 +66,7 @@ class ScraperParent:
         s = s.replace('&#39;', '\'')  # replace html-encoded double-quotes
         s = s.replace('&#8217;', '\'')  # replace html-encoded single-quotes
         s = s.replace('&#8221;', '"')  # replace html-encoded double-quotes
+        s = s.replace('&#8211;', '-')  # replace html-encoded double-quotes
         s = re.sub('# *$', '', s)  # remove hash at the end
         s = s.strip()
         return s

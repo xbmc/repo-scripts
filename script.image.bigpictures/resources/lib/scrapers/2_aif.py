@@ -1,15 +1,14 @@
-from parent import ScraperParent
+from scraper import ScraperPlugin
 import re
-from BeautifulSoup import BeautifulSoup
 
 
-class Scraper(ScraperParent):
+class Scraper(ScraperPlugin):
 
     NAME = 'The Atlantic: In Focus'
 
     def getAlbums(self):
         url = 'http://www.theatlantic.com/infocus/'
-        tree = BeautifulSoup(self.getCachedURL(url))
+        tree = self.getCachedTree(url)
         self.albums = list()
         storyNodes = tree.findAll('div', 'articleContent')
         imgNodes = tree.findAll('span', 'if1280')
@@ -30,7 +29,7 @@ class Scraper(ScraperParent):
         return self.albums
 
     def getPhotos(self, url):
-        tree = BeautifulSoup(self.getCachedURL(url))
+        tree = self.getCachedTree(url)
         title = tree.find('h1', 'headline').string
         self.photos = list()
         photoNodes = tree.findAll('span', {'class': 'if1024'})
@@ -42,3 +41,7 @@ class Scraper(ScraperParent):
                                 'pic': pic,
                                 'description': description})
         return self.photos
+
+
+def register():
+    return Scraper()
