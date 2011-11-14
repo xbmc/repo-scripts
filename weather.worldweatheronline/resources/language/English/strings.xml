@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!-- Script Settings -->
+
+    <string id="30100">Location Setup</string>
+    <string id="30110">Change Location 1</string>
+    <string id="30111">Change Location 2</string>
+    <string id="30112">Change Location 3</string>
+</strings>

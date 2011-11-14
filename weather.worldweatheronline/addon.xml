@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="weather.worldweatheronline"
+       name="weather.worldweatheronline"
+       version="1.0.1"
+       provider-name="Team XBMC">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.weather"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en"></summary>
+    <description lang="en"></description>
+    <platform>all</platform>
+  </extension>
+</addon>
