@@ -5,13 +5,13 @@ import xbmc
 
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 
-DAYS = { "Mon": xbmc.getLocalizedString( 11 ), 
-         "Tue": xbmc.getLocalizedString( 12 ), 
-         "Wed": xbmc.getLocalizedString( 13 ), 
-         "Thu": xbmc.getLocalizedString( 14 ), 
-         "Fri": xbmc.getLocalizedString( 15 ), 
-         "Sat": xbmc.getLocalizedString( 16 ), 
-         "Sun": xbmc.getLocalizedString( 17 )}
+DAYS = { 1: xbmc.getLocalizedString( 11 ), 
+         2: xbmc.getLocalizedString( 12 ), 
+         3: xbmc.getLocalizedString( 13 ), 
+         4: xbmc.getLocalizedString( 14 ), 
+         5: xbmc.getLocalizedString( 15 ), 
+         6: xbmc.getLocalizedString( 16 ), 
+         0: xbmc.getLocalizedString( 17 )}
          
 WEATHER_CODES = { '395' : '42',   # Moderate or heavy snow in area with thunder
                   '392' : '14',   # Patchy light snow in area with thunder

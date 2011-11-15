@@ -86,7 +86,7 @@ def refresh_locations():
   else:
     set_property('Location3'   , "")
 
-  set_property('Locations',str(locations))      # set total number of location, XBMC needs this
+  set_property('Locations',str(locations))      # set total number of locations, XBMC needs this
 
 def fetch(url):
   log("fetch data from 'worldweatheronline.com'")
@@ -126,7 +126,7 @@ def forecast(city):
   i = 0  
   for day in weather:
     date = strptime(get_elements(day,"date"), '%Y-%m-%d')
-    set_property("Day%i.Title"       % i , DAYS[strftime('%a', date)])              # Day of the week
+    set_property("Day%i.Title"       % i , DAYS[int(strftime('%w', date))])         # Day of the week
     set_property("Day%i.HighTemp"    % i , get_elements(day,"tempMaxC"))            # Max Temp for that day, C only XBMC will do the conversion
     set_property("Day%i.LowTemp"     % i , get_elements(day,"tempMinC"))            # Min temperature for that day, C only XBMC will do the conversion
     set_property("Day%i.Outlook"     % i , get_elements(day,"weatherDesc"))         # days condition in words
@@ -158,7 +158,7 @@ elif sys.argv[1] == "1" or sys.argv[1] == "2" or sys.argv[1] == "3":            
     clear_properties()   
 
 refresh_locations()
-set_property("WeatherProvider", "World Weather Online")                           # set name of the provider, this will be visible in the Weather page
+set_property("WeatherProvider", "WorldWeatherOnline.com")                          # set name of the provider, this will be visible in the Weather page
 
 
 

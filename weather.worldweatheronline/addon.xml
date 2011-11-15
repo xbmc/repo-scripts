@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="weather.worldweatheronline"
-       name="weather.worldweatheronline"
-       version="1.0.1"
+       name="World Weather Online"
+       version="1.0.2"
        provider-name="Team XBMC">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -9,8 +9,8 @@
   <extension point="xbmc.python.weather"
              library="default.py" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en"></summary>
-    <description lang="en"></description>
+    <summary lang="en">Weather information from http://www.worldweatheronline.com</summary>
+    <description lang="en">World Weather Online provides global weather forecast and weather content for websites, businesses and travel industry. They specialize in worldwide City and Town, Sailing, Hill and Mountain, Ski and Sports weather. They cover over 2 million worldwide cities. Their weather forecast is trusted and used from SME's to large corporate clients.</description>
     <platform>all</platform>
   </extension>
 </addon>
