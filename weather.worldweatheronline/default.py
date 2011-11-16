@@ -55,6 +55,9 @@ def clear_properties():
     set_property("Current.winddirection"   , "")
     set_property("Current.OutlookIcon"     , "")
     set_property("Current.FanartCode"      , "")
+    set_property("Current.FeelsLike"       , "")
+    set_property("Current.DewPoint"        , "")
+    
     for i in range(4):
       set_property("Day%i.Title"       % i , "")
       set_property("Day%i.HighTemp"    % i , "")
@@ -110,27 +113,32 @@ def location(string):
 
 def forecast(city):
   log("get forecast for '%s'" % (city,))
-  query   = fetch( LOCATION_URL % (city, NUMBER_OF_DAYS, DEVELOPER_KEY))
-  current = query.getElementsByTagName("current_condition")[0]
-
+  query    = fetch( LOCATION_URL % (city, NUMBER_OF_DAYS, DEVELOPER_KEY))
+  current  = query.getElementsByTagName("current_condition")[0]
+  celsius  = get_elements(current,"temp_C")
+  humidity = get_elements(current,"humidity")
+  wind     = get_elements(current,"windspeedKmph")
+  code     = get_elements(current,"weatherCode")
+  
   set_property("Current.Condition"       , get_elements(current,"weatherDesc"))     # current condition in words
-  set_property("Current.Temperature"     , get_elements(current,"temp_C"))          # temp in C, no need to set F, XBMC will convert it
-  set_property("Current.Wind"            , get_elements(current,"windspeedKmph"))   # wind speed in Km/h, no need for mph as XBMC will do the conversion
-  set_property("Current.Humidity"        , get_elements(current,"humidity"))        # Humidity in %
-  set_property("Current.winddirection"   , get_elements(current,"winddir16Point"))  # wind direction 
-  code = get_elements(current,"weatherCode")
+  set_property("Current.Temperature"     , celsius)                                 # temp in C, no need to set F, XBMC will convert it
+  set_property("Current.Wind"            , wind)                                    # wind speed in Km/h, no need for mph as XBMC will do the conversion
+  set_property("Current.Humidity"        , humidity)                                # Humidity in %
+  set_property("Current.winddirection"   , get_elements(current,"winddir16Point"))  # wind direction
+  set_property("Current.FeelsLike"       , getFeelsLike(int(celsius), int(wind)))   # Feels like
+  set_property("Current.DewPoint"        , getDewPoint(int(celsius), int(humidity)))# Dew Point
   set_property("Current.OutlookIcon"     , "%s.png" % WEATHER_CODES[code])          # condition icon, utilities.py has more on this 
   set_property("Current.FanartCode"      , WEATHER_CODES[code])                     # fanart icon, utilities.py has more on this
   
   weather = query.getElementsByTagName("weather")
   i = 0  
   for day in weather:
+    code = get_elements(day,"weatherCode")
     date = strptime(get_elements(day,"date"), '%Y-%m-%d')
     set_property("Day%i.Title"       % i , DAYS[int(strftime('%w', date))])         # Day of the week
     set_property("Day%i.HighTemp"    % i , get_elements(day,"tempMaxC"))            # Max Temp for that day, C only XBMC will do the conversion
     set_property("Day%i.LowTemp"     % i , get_elements(day,"tempMinC"))            # Min temperature for that day, C only XBMC will do the conversion
-    set_property("Day%i.Outlook"     % i , get_elements(day,"weatherDesc"))         # days condition in words
-    code = get_elements(day,"weatherCode")    
+    set_property("Day%i.Outlook"     % i , get_elements(day,"weatherDesc"))         # days condition in words    
     set_property("Day%i.OutlookIcon" % i , "%s.png" % WEATHER_CODES[code])          # condition icon, utilities.py has more on this
     set_property("Day%i.FanartCode"  % i , WEATHER_CODES[code])                     # fanart icon, utilities.py has more on this
     i += 1
