@@ -10,9 +10,20 @@ import urllib2, re, string, xbmc, sys, os
 from utilities import log, languageTranslate
 
 _ = sys.modules[ "__main__" ].__language__
+__addon__ = sys.modules[ "__main__" ].__addon__
+
+if __addon__.getSetting( "Napisyme_type" ) == "0":
+    subtitle_type = "sr"
+elif __addon__.getSetting( "Napisyme_type" ) == "1":
+    subtitle_type = "tmp"
+elif __addon__.getSetting( "Napisyme_type" ) == "2":
+    subtitle_type = "mdvd"
+elif __addon__.getSetting( "Napisyme_type" ) == "3":
+    subtitle_type = "mpl2"
 
 main_url = "http://napisy.me/search.php?str="
-down_url = "http://napisy.me/download/sr/"
+base_download_url = "http://napisy.me/download/"
+down_url = "%s%s/" % (base_download_url, subtitle_type)
 
 subtitle_pattern = 'alt="(.+?)" border="0" />[\r\n\t ]+?</div>[\r\n\t ]+?<div class="title">[\r\n\t ]+?<a href="javascript:void\(0\);" onclick="javascript:pobierzNapis\(\'(.+?)\'\);" title="Wydanie: (.+?)" class="vtip">[ \r\n]*?                                (.+?)[ \r\n]*?</a>'
 

@@ -10,9 +10,20 @@ import urllib2, re, string, xbmc, sys, os
 from utilities import log, languageTranslate
 
 _ = sys.modules[ "__main__" ].__language__
+__addon__ = sys.modules[ "__main__" ].__addon__
+
+if __addon__.getSetting( "Napisy24_type" ) == "0":
+    subtitle_type = "sr"
+elif __addon__.getSetting( "Napisy24_type" ) == "1":
+    subtitle_type = "tmp"
+elif __addon__.getSetting( "Napisy24_type" ) == "2":
+    subtitle_type = "mdvd"
+elif __addon__.getSetting( "Napisy24_type" ) == "3":
+    subtitle_type = "mpl2"
 
 main_url = "http://napisy24.pl/search.php?str="
-down_url = "http://napisy.me/download/mdvd/"
+base_download_url = "http://napisy.me/download/"
+down_url = "%s%s/" % (base_download_url, subtitle_type)
 
 subtitle_pattern = 'a href=\"/download/(\d+)/\"><strong>(.+?)</strong></a>'
 

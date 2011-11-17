@@ -68,7 +68,12 @@
     <string id="30137">- OmniSubs Password</string>
     <string id="30138">- LegendasZone Username</string>
     <string id="30139">- LegendasZone Password</string>
-  
+    <string id="30140">- Choose subs type:</string>
+    <string id="30141">SubRip</string>
+    <string id="30142">TMPlayer</string>
+    <string id="30143">MicroDVD</string>
+    <string id="30144">MPl2</string>
+    
   <!-- Languages  -->
   
     <string id="30201">Albanian</string>
