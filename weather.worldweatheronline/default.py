@@ -57,6 +57,7 @@ def clear_properties():
     set_property("Current.FanartCode"      , "")
     set_property("Current.FeelsLike"       , "")
     set_property("Current.DewPoint"        , "")
+    set_property("Current.UVIndex"         , "")
     
     for i in range(4):
       set_property("Day%i.Title"       % i , "")
@@ -119,17 +120,23 @@ def forecast(city):
   humidity = get_elements(current,"humidity")
   wind     = get_elements(current,"windspeedKmph")
   code     = get_elements(current,"weatherCode")
+  desc     = get_elements(current,"weatherDesc")
   
-  set_property("Current.Condition"       , get_elements(current,"weatherDesc"))     # current condition in words
+  set_property("Current.Condition"       , desc)                                    # current condition in words
   set_property("Current.Temperature"     , celsius)                                 # temp in C, no need to set F, XBMC will convert it
   set_property("Current.Wind"            , wind)                                    # wind speed in Km/h, no need for mph as XBMC will do the conversion
   set_property("Current.Humidity"        , humidity)                                # Humidity in %
   set_property("Current.winddirection"   , get_elements(current,"winddir16Point"))  # wind direction
   set_property("Current.FeelsLike"       , getFeelsLike(int(celsius), int(wind)))   # Feels like
   set_property("Current.DewPoint"        , getDewPoint(int(celsius), int(humidity)))# Dew Point
-  set_property("Current.OutlookIcon"     , "%s.png" % WEATHER_CODES[code])          # condition icon, utilities.py has more on this 
-  set_property("Current.FanartCode"      , WEATHER_CODES[code])                     # fanart icon, utilities.py has more on this
-  
+  if (desc.startswith("Clear")):                                                    # condition icon, utilities.py has more on this
+    set_property("Current.OutlookIcon"     , "%s.png" % "31")                       # fanart icon, utilities.py has more on this
+    set_property("Current.FanartCode"      , "31")                                  # check for "Clear" and set the night image
+  else:                                                                             # otherwise set sunny one
+    set_property("Current.OutlookIcon"     , "%s.png" % WEATHER_CODES[code])        # 
+    set_property("Current.FanartCode"      , WEATHER_CODES[code])                   # 
+  set_property("Current.UVIndex"         , "")                                      # UV Index, not in WWO so we set blank 
+
   weather = query.getElementsByTagName("weather")
   i = 0  
   for day in weather:
