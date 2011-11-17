@@ -4,15 +4,15 @@
     <!-- Türkçe -->
 
     <string id="610">Ara </string>
-    <string id="612">Elle arama dizisi düzenleme</string>
+    <string id="612">El ile arama dizesi gir</string>
     <string id="642">%s Altyazı aranıyor</string>
     <string id="646">Bağlanıyor...</string>
     <string id="649">Altyazılar indiriliyor...</string>
-    <string id="652">Alt yazı dosyası indirildi ve açıldı</string>
+    <string id="652">Altyazı dosyası indirildi ve açıldı</string>
     <string id="653">Bağlantı hatası</string>
     <string id="654">Altyazı açma hatası</string>
     <string id="655">Yerel altyazı mevcut</string>
-    <string id="656">Servis zaman aşımı süresi içinde yanıt vermedi</string>
+    <string id="656">Hizmet zaman aşımı süresi içinde yanıt vermedi</string>
     <string id="657">Altyazı Bulunamadı!</string>
     <string id="744">için altyazılar bulundu</string>
     <string id="747">Üst Klasörleri Kullanarak Ara</string>
@@ -24,26 +24,26 @@
     <string id="757">Sunucu resim kodunun tekrar girilmesini gerektiriyor</string>
     <string id="758">Lütfen bildirim alanına bakın</string> 
     <string id="759">Bildirim alanıdaki resim kodunu girin</string>
-    <string id="760">Mevcut Servisler</string>        
+    <string id="760">Mevcut Hizmetler</string>        
     <string id="761">Bu altyazıları indirebilmek için giriş yapmalısınız,[CR]eklenti yapılandırmasında ayarlarınızı doğrulayın</string>
     <string id="762">Eklenti Ayarları</string>
     <string id="763">Otomatik olarak ilk 'sync' altyazıyı indir</string>
 
   <!-- Script Settings -->
 
-    <string id="30100">Dilleri Seçiniz</string>
-    <string id="30101">Tercih Edilen Dil</string>
+    <string id="30100">Diller</string>
+    <string id="30101">Birincil Dil</string>
     <string id="30102">İkincil Dil</string>
-    <string id="30103">Servisleri Seçiniz</string>
+    <string id="30103">Hizmetler</string>
     <string id="30104">- Podnapisi.net Kullanıcı Adı</string>
     <string id="30105">- Podnapisi.net Parola</string>
     <string id="30106">Gelişmiş Seçenekler</string>
     <string id="30107">Altyazıyı Film Klasörüne İndir</string>
     <string id="30108">- Özel Altyazı İndirme Yolunu Ayarla</string>
-    <string id="30110">Elle Arama Dizisi Girme</string>
+    <string id="30110">El İle Arama Dizesi Gir</string>
     <string id="30111">Üçüncü Dil</string>  
-    <string id="30113">Varsayılan Film Servisini Seç</string>
-    <string id="30114">Varsayılan Dizi Servisini Seç</string>
+    <string id="30113">Varsayılan Film Hizmetini Seç</string>
+    <string id="30114">Varsayılan Dizi Hizmetini Seç</string>
     <string id="30118">Sonuç sayfasında dosya adını göster</string>
     <string id="30119">Üst Klasörleri Kullanarak Ara</string>
     <string id="30121">Dil Kodunu Dosya Adına Ekle </string>
@@ -55,7 +55,7 @@
     <string id="30127">- Itasa Parola</string>
     <string id="30128">- Titulky Kullanıcı Adı</string>
     <string id="30129">- Titulky Parola</string>
-    <string id="30130">Eğer sonuç bulunamazsa mevcut olan sonraki serviste ara</string>
+    <string id="30130">Eğer sonuç bulunamazsa mevcut olan sonraki hizmette ara</string>
     <string id="30131">Otomatik olarak ilk 'sync' altyazıyı indir</string>
     <string id="30132">- LegendasDivx Kullanıcı Adı</string>
     <string id="30133">- LegendasDivx Parola</string>

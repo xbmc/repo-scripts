@@ -16,36 +16,6 @@ __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
 __settings__ = sys.modules[ "__main__" ].__settings__
 
-"""
-<tr class="r1"> 
-                    <td><a href="Animal-Farm-96061.htm" >Animal Farm</a></td> 
-          <td align="center"><a class="fixedTip" title="Animal.Farm.1954.DVDRip.XViD.iNT-JoLLyRoGeR"><img src="css/new/verze-release.png" atl="release"/></a></td>        
-          <td>&nbsp;</td> 
-          <td>1954</td> 
-                    <td>15.2.2008</td>        
-          <td align="right">2415</td> 
-          <td><img alt="CZ" src="css/new/flag-CZ-small.gif" /></td> 
-          <td>1</td> 
-          <td align="right">699.16MB</td> 
-                    <td> 
-                           <a href="javascript:void(0)" onclick="UD('126284');return false;" > DaftXK</a> 
-                      </td> 
-        </tr>
-
-
-"""
-
-subtitle_pattern='<tr class=\"r[12]*\">\s+<td[^>]*><a href=\"[\w-]+-(?P<id>\d+).htm\"[ ]?>(?P<title>[^<]+)</a></td>\s+?<td[^>]*>(<a?[= \w\"]+title=\"(?P<sync>[^\"]+)\"><img[^>]+></a>)?</td>\s+?<td[^>]*>(?P<tvshow>[^<]+)</td>\s+<td[^>]*>(?P<year>\d+)</td>\s+<td[^<]+</td>\s+<td[^>]*>(?P<downloads>\d+)</td>\s+<td?[^>]*><img alt=\"(?P<lang>\w{2})\"[^\>]+></td>\s+<td>(?P<cds>\w+)</td>\s+<td[^>]+>(?P<size>[\w\.]+)MB</td>\s+<td>\s+(<a[^<]+</a>)?(<i[^<]+</i>)?\s+</td>\s+</tr>'
-
-control_image_pattern='(secode.php\?[\w\d=]+)'
-session_id_pattern='secode.php\?PHPSESSID=([\w\d]+)'
-countdown_pattern='CountDown\((\d+)\)'
-
-"""
-<a rel="nofollow" id="downlink" href="/idown.php?id=48504441">www.titulky.com/idown.php?id=48504441</a>
-"""
-
-sublink_pattern='<a?[= \w\"]+href="([^\"]+)\"'
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
 	# need to filter titles like <Localized movie name> (<Movie name>)
 	br_index = title.find('(')
@@ -163,6 +133,7 @@ class TitulkyClient(object):
 			response = urllib2.urlopen(request).read()
 			log(__name__,'Got response')
 			return not response.find('BadLogin')>-1
+
 	def search_subtitles(self, file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ):
 		url = self.server_url+'/index.php?'+urllib.urlencode({'Fulltext':title,'FindUser':''})
 		if not (tvshow == None or tvshow == ''):
@@ -172,7 +143,7 @@ class TitulkyClient(object):
 		try:
 			file_size='%.2f' % (float(os.path.getsize(file_original_path))/(1024*1024))
 		except:
-			file_size=''
+			file_size='-1'
 		log(__name__,'Opening %s' % (url))
 		response = urllib2.urlopen(req)
 		content = response.read()
@@ -180,52 +151,86 @@ class TitulkyClient(object):
 		log(__name__,'Done')
 		subtitles_list = []
 		max_downloads=1
-		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
-		#	print matches.group('id') +' ' +matches.group('title')+' '+ str(matches.group('sync'))+' '+ matches.group('tvshow')+' '+ matches.group('year')+' '+ matches.group('downloads')+' '+ matches.group('lang')+' '+ matches.group('cds')+' '+matches.group('size')
-			file_name = matches.group('sync')
-			if file_name == None: # if no sync info is found, just use title instead of None
-				file_name = matches.group('title') 
-			flag_image = "flags/%s.gif" % (lang2_opensubtitles(matches.group('lang')))
-			sync = False
-			matches_sync=matches.group('sync')
-			if not matches_sync == None and file_original_path.find(matches_sync) > -1:
-				sync = True
-			if file_size==matches.group('size'):
-				sync = True
+		log(__name__,'Searching for subtitles')
+		for row in re.finditer('<tr class=\"r(.+?)</tr>', content, re.IGNORECASE | re.DOTALL):
+			item = {}
+			log(__name__,'New subtitle found')
 			try:
-				downloads = int(matches.group('downloads'))
+				item['ID'] = re.search('[^<]+<td[^<]+<a href=\"[\w-]+-(?P<data>\d+).htm\"',row.group(1),re.IGNORECASE | re.DOTALL ).group('data')
+				item['title'] = re.search('[^<]+<td[^<]+<a[^>]+>(<div[^>]+>)?(?P<data>[^<]+)',row.group(1),re.IGNORECASE | re.DOTALL ).group('data')
+				item['sync'] = ''
+				sync_found = re.search('((.+?)</td>)[^>]+>[^<]*<a(.+?)title=\"(?P<data>[^\"]+)',row.group(1),re.IGNORECASE | re.DOTALL )
+				if sync_found:
+					item['sync'] = sync_found.group('data')
+				item['tvshow'] = re.search('((.+?)</td>){2}[^>]+>(?P<data>[^<]+)',row.group(1),re.IGNORECASE | re.DOTALL ).group('data')
+				item['year'] = re.search('((.+?)</td>){3}[^>]+>(?P<data>[^<]+)',row.group(1),re.IGNORECASE | re.DOTALL ).group('data')
+				item['downloads'] = re.search('((.+?)</td>){5}[^>]+>(?P<data>[^<]+)',row.group(1),re.IGNORECASE | re.DOTALL ).group('data')
+				item['lang'] = re.search('((.+?)</td>){6}[^>]+><img alt=\"(?P<data>\w{2})\"',row.group(1),re.IGNORECASE | re.DOTALL ).group('data')
+				item['numberOfDiscs'] = re.search('((.+?)</td>){7}[^>]+>(?P<data>[^<]+)',row.group(1),re.IGNORECASE | re.DOTALL ).group('data')
+				item['size'] = re.search('((.+?)</td>){8}[^>]+>(?P<data>[\d\.]+)',row.group(1),re.IGNORECASE | re.DOTALL ).group('data')
+			except:
+				log(__name__,'Exception when parsing subtitle, all I got is  %s' % str(item))
+				continue
+			if item['sync'] == '': # if no sync info is found, just use title instead of None
+				item['filename'] = item['title']
+			else:
+				item['filename'] = item['sync']
+			item['language_flag'] = "flags/%s.gif" % (lang2_opensubtitles(item['lang']))
+			
+			sync = False
+			if not item['sync'] == '' and file_original_path.find(item['sync']) > -1:
+				log(__name__,'found sync : filename match')
+				sync = True
+			if file_size==item['size']:
+				log(__name__,'found sync : size match')
+				sync = True
+			item['sync'] = sync
+			
+			try:
+				downloads = int(item['downloads'])
 				if downloads>max_downloads:
 					max_downloads=downloads
 			except:
 				downloads=0
+			item['downloads'] = downloads
+			
 			if not year == '':
-				if not matches.group('year') == year:
+				if not item['year'] == year:
+					log(__name__,'year does not match, ignoring %s' % str(item))
 					continue
-			lang = lang_titulky2xbmclang(matches.group('lang'))
-			if lang == lang1 or lang == lang2 or lang == lang3:
-				subtitles_list.append( { 'title' : matches.group('title'), 'year' : matches.group('year'), "filename" : file_name, 'language_name' : lang_titulky2xbmclang(matches.group('lang')), 'ID' : matches.group('id'), "mediaType" : 'mediaType', "numberOfDiscs" : '1', "downloads" : downloads, "sync" : sync, "rating" :'0', "language_flag":flag_image } )
+			lang = lang_titulky2xbmclang(item['lang'])
+			
+			item['language_name'] = lang
+			item['mediaType'] = 'mediaType'
+			item['rating'] = '0'
+			
+			if lang in [lang1,lang2,lang3]:
+				subtitles_list.append(item)
+			else:
+				log(__name__,'language does not match, ignoring %s' % str(item))
 		# computing ratings is based on downloads
 		for subtitle in subtitles_list:
 			subtitle['rating'] = str((subtitle['downloads']*10/max_downloads))
 		return subtitles_list
+
 	def get_cannot_download_error(self,content):
 		if content.find('CHYBA') > -1:
 			return True
 
 	def get_waittime(self,content):
-		for matches in re.finditer(countdown_pattern, content, re.IGNORECASE | re.DOTALL):
+		for matches in re.finditer('CountDown\((\d+)\)', content, re.IGNORECASE | re.DOTALL):
 			return int(matches.group(1))
 
 	def get_link(self,content):
-		for matches in re.finditer(sublink_pattern, content, re.IGNORECASE | re.DOTALL):
+		for matches in re.finditer('<a?[= \w\"]+href="([^\"]+)\"', content, re.IGNORECASE | re.DOTALL):
 			return str(matches.group(1))
 
 	def _get_session_id(self,content):
-		for matches in re.finditer(session_id_pattern, content, re.IGNORECASE | re.DOTALL):
+		for matches in re.finditer('secode.php\?PHPSESSID=([\w\d]+)', content, re.IGNORECASE | re.DOTALL):
 			return str(matches.group(1))
 
 	def get_control_image(self,content):
-		for matches in re.finditer(control_image_pattern, content, re.IGNORECASE | re.DOTALL):
+		for matches in re.finditer('(secode.php\?[\w\d=]+)', content, re.IGNORECASE | re.DOTALL):
 			return '/'+str(matches.group(1))
 		return None
 
