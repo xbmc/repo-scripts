@@ -109,7 +109,10 @@ def location(string):
   query   = fetch( SEARCH_URL % (DEVELOPER_KEY, string))
   locations = query.getElementsByTagName("result")
   for location in locations:
-    loc.append("%s,%s" % (get_elements(location, "areaName"), get_elements(location, "country")))
+    try:
+      loc.append("%s,%s,%s" % (get_elements(location, "areaName"), get_elements(location, "region"), get_elements(location, "country")))
+    except:
+      loc.append("%s,%s" % (get_elements(location, "areaName"), get_elements(location, "country")))
   return loc
 
 def forecast(city):

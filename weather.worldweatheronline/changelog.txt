@@ -1,3 +1,6 @@
+1.0.5
+- fix: display region/state if it exists
+
 1.0.4
 - set UV Index to blank
 - handle sunny/clear properly
