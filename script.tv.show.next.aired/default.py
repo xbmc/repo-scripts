@@ -1,9 +1,11 @@
-import os, sys, re, time, socket, urllib
+from time import strptime, time, mktime
+import os, sys, re, socket, urllib, locale, simplejson
 from traceback import print_exc
 from datetime import datetime, date, timedelta, tzinfo
 from dateutil import tz
-from time import mktime
-import xbmc, xbmcgui, xbmcaddon, xbmcvfs, locale
+import xbmc, xbmcgui, xbmcaddon, xbmcvfs
+# http://mail.python.org/pipermail/python-list/2009-June/596197.html
+import _strptime
 
 __addon__     = xbmcaddon.Addon()
 __settings__  = xbmcaddon.Addon( "script.tv.show.next.aired" )
@@ -67,13 +69,22 @@ class NextAired:
             __settings__.setSetting ( id = "AddonVersion", value = "%s" % __version__ )
             self.FORCEUPDATE = True
         if self.BACKEND:
-            self.run_daemon()
+            self.run_backend()
         else:
             self.update_data()
             if self.SILENT == "":
                 self.show_gui()
             else:
-                self._set_alarm()
+                oldweekday = date.today().weekday()
+                while (not xbmc.abortRequested):
+                    xbmc.sleep(1000)
+                    newweekday = date.today().weekday()
+                    if newweekday != oldweekday:
+                        oldweekday = newweekday
+                        self.FORCEUPDATE = True
+                        log( "### it's midnight, force update" )
+                        self.update_data()
+                self.close("xbmc is closing, stop script")
 
     def _parse_argv( self ):
         try:
@@ -90,10 +101,10 @@ class NextAired:
         dbfile = os.path.join( DATA_PATH , "next_aired.db" )
         if xbmcvfs.exists(dbfile):
             if self.FORCEUPDATE:
-                log( "### scanning was previously canceled, rescanning..." )
+                log( "### update forced, rescanning..." )
                 __settings__.setSetting(id="ForceUpdate", value="false")
                 self.scan_info()
-            elif time.time() - os.path.getmtime(dbfile) > 86400:
+            elif time() - os.path.getmtime(dbfile) > 86400:
                 log( "### db more than 24h old, rescanning..." )
                 self.scan_info()
             else: 
@@ -143,6 +154,7 @@ class NextAired:
             current_show["path"] = show[1]
             current_show["thumbnail"] = show[2]
             current_show["fanart"] = show[3]
+            current_show["dbid"] = show[4]
             self.get_show_info( current_show )
             self.update_show_datetime( current_show )
             log( current_show )
@@ -157,29 +169,17 @@ class NextAired:
 
     def listing(self):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file", "thumbnail", "fanart"], "sort": { "method": "label" } }, "id": 1}')
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
+        json_response = simplejson.loads(json_query)
         log("### %s" % json_response)
         self.TVlist = []
-        for tvshowitem in json_response:
-            findtvshowname = re.search( '"label": ?"(.*?)",["\n]', tvshowitem )
-            if findtvshowname:
-                tvshowname = ( findtvshowname.group(1) )
-                findpath = re.search( '"file": ?"(.*?)",["\n]', tvshowitem )
-                if findpath:
-                    path = (findpath.group(1))
-                else:
-                    path = ''
-                findthumbnail = re.search( '"thumbnail": ?"(.*?)",["\n]', tvshowitem )
-                if findthumbnail:
-                    thumbnail = (findthumbnail.group(1))
-                else:
-                    thumbnail = ''
-                findfanart = re.search( '"fanart": ?"(.*?)",["\n]', tvshowitem )
-                if findfanart:
-                    fanart = (findfanart.group(1))
-                else:
-                    fanart = ""
-                self.TVlist.append( ( tvshowname , path, thumbnail, fanart ) )
+        if json_response['result'].has_key('tvshows'):
+            for item in json_response['result']['tvshows']:
+                tvshowname = item['label']
+                path = item['file']
+                thumbnail = item['thumbnail']
+                fanart = item['fanart']
+                dbid = 'videodb://2/2/' + str(item['tvshowid']) + '/'
+                self.TVlist.append( ( tvshowname , path, thumbnail, fanart, dbid ) )
         log( "### list: %s" % self.TVlist )
         return self.TVlist
 
@@ -194,7 +194,7 @@ class NextAired:
         if result:
             for item in result:
                 current_show[item[0].replace("<pre>" , "")] = item[1]
-                
+
     def update_show_datetime(self, current_show):
         nextdate = current_show.get( "RFC3339" , "" )
         process = True
@@ -220,7 +220,7 @@ class NextAired:
             except:
                 log( "### error splitting next date (2)" )
             timeoffset = timedelta( hours = offset * int( timezone[0] ), minutes = offset * int ( timezone[1] ) )
-            date = datetime.fromtimestamp( mktime( time.strptime( strdate, '%Y-%m-%dT%H:%M:%S' ) ) )
+            date = datetime.fromtimestamp( mktime( strptime( strdate, '%Y-%m-%dT%H:%M:%S' ) ) )
             date = date.replace(tzinfo=tz.tzoffset(None, ( offset * 3600 * int( timezone[0] ) ) + ( offset * 60 * int ( timezone[1] ) )))
             log( '### nextdate %s' % date.isoformat() )
             datelocal = date.astimezone(tz.tzlocal())
@@ -238,8 +238,9 @@ class NextAired:
                 except:
                     log( "### error splitting airtime" )
                 for count, day in enumerate (airdays):
-                    index = self.days.index(day)
-                    airdays[count] = self.days[index + weekdaydiff]
+                    if day in self.days:
+                        index = self.days.index(day)
+                        airdays[count] = self.days[index + weekdaydiff]
                 airday = ', '.join(airdays)
             if self.ampm:
                 current_show["Airtime"] = airday + " at " + datelocal.strftime('%I:%M %p')
@@ -257,6 +258,8 @@ class NextAired:
     def check_today_show(self):
         self.todayshow = 0
         self.todaylist = []
+        self.date = date.today()
+        self.datestr = str(self.date)
         log( self.datestr )
         for show in self.nextlist:
             log( "################" )
@@ -265,7 +268,6 @@ class NextAired:
                 self.todayshow = self.todayshow + 1
                 self.todaylist.append(show.get("localname"))
                 log( "TODAY" )
-                show["Today"] = "True"
             log( "### %s" % show.get("Next Episode", "")  )
             log( "### %s" % show.get("RFC3339", "no rfc") )
             log( str(show.get("RFC3339", "")[:10]) )
@@ -301,6 +303,15 @@ class NextAired:
         self.WINDOW.setProperty("NextAired.Total" , str(len(self.nextlist)))
         self.WINDOW.setProperty("NextAired.TodayTotal" , str(self.todayshow))
         self.WINDOW.setProperty("NextAired.TodayShow" , str(self.todaylist).strip("[]"))
+        for count in range( len(self.nextlist) ):
+            self.WINDOW.clearProperty("NextAired.%d.Label" % ( count + 1, ))
+        self.count = 0
+        for current_show in self.nextlist:
+            if current_show.get("RFC3339" , "" )[:10] == self.datestr:
+                self.count += 1
+                self.set_labels('windowpropertytoday', current_show)
+
+    def show_gui(self):
         for count in range(0, 7):
             if count - self.weekday == 0:
                 self.WINDOW.setProperty("NextAired.TodayDate", self.date.strftime('%x'))
@@ -308,53 +319,11 @@ class NextAired:
             elif count - self.weekday > 0:
                 self.WINDOW.setProperty("NextAired.%d.Date" % ( count + 1 ), ( self.date + timedelta( days = ( count - self.weekday ) ) ).strftime('%x'))
             else:
-                self.WINDOW.setProperty("NextAired.%d.Date" % ( count + 1 ), ( self.date + timedelta( days = ( ( 7 - self.weekday ) + count ) ) ).strftime('%x'))        
-        # DEPRECATED
-        for count in range( len(self.nextlist) ):
-            self.WINDOW.clearProperty("NextAired.%d.ShowTitle" % ( count + 1, ))
-        for count, current_show in enumerate( self.nextlist ):
-            self.WINDOW.setProperty("NextAired.%d.Today" % ( count + 1, ), current_show.get( "Today" , "False"))
-            self.WINDOW.setProperty("NextAired.%d.ShowTitle" % ( count + 1, ), current_show.get( "localname", ""))
-            self.WINDOW.setProperty("NextAired.%d.NextDate" % ( count + 1, ), current_show.get( "NextDate", ""))
-            self.WINDOW.setProperty("NextAired.%d.NextTitle" % ( count + 1, ), current_show.get( "NextTitle", ""))
-            self.WINDOW.setProperty("NextAired.%d.NextNumber" % ( count + 1, ), current_show.get( "NextNumber", ""))
-            try:
-                latest = current_show.get("Latest Episode","").split("^")
-                latest.extend(['',''])
-                self.WINDOW.setProperty("NextAired.%d.LatestDate" % ( count + 1, ), latest[2] or "")
-                self.WINDOW.setProperty("NextAired.%d.LatestTitle" % ( count + 1, ), latest[1] or "")
-                self.WINDOW.setProperty("NextAired.%d.LatestNumber" % ( count + 1, ), latest[0] or "")
-            except:
-                print_exc()
-            self.WINDOW.setProperty("NextAired.%d.Airtime" % ( count + 1, ), current_show.get("Airtime", "")) 
-            self.WINDOW.setProperty("NextAired.%d.Showpath" % ( count + 1, ), current_show.get("path", ""))
-            self.WINDOW.setProperty("NextAired.%d.Status" % ( count + 1, ), current_show.get("Status", ""))
-            self.WINDOW.setProperty("NextAired.%d.ep_img" % ( count + 1, ), current_show.get("ep_img", ""))
-            self.WINDOW.setProperty("NextAired.%d.Network" % ( count + 1, ), current_show.get("Network", ""))
-            self.WINDOW.setProperty("NextAired.%d.Started" % ( count + 1, ), current_show.get("Started", ""))
-            self.WINDOW.setProperty("NextAired.%d.Classification" % ( count + 1, ), current_show.get("Classification", ""))
-            self.WINDOW.setProperty("NextAired.%d.Genres" % ( count + 1, ), current_show.get("Genres", ""))
-            self.WINDOW.setProperty("NextAired.%d.Premiered" % ( count + 1, ), current_show.get("Premiered", ""))
-            self.WINDOW.setProperty("NextAired.%d.Country" % ( count + 1, ), current_show.get("Country", ""))
-            self.WINDOW.setProperty("NextAired.%d.Runtime" % ( count + 1, ), current_show.get("Runtime", ""))
-            self.WINDOW.setProperty("NextAired.%d.Fanart" % ( count + 1, ), current_show.get("Fanart", ""))
-            try:
-                airday, shortime = current_show.get("Airtime", "  at  " ).split(" at ")
-                self.WINDOW.setProperty("NextAired.%d.airday" % ( count + 1, ), airday)
-                self.WINDOW.setProperty("NextAired.%d.shortime" % ( count + 1, ), shortime)
-            except:
-                log( "### %s" % current_show.get("Airtime", "  at  "))
-
-    def show_gui(self):
+                self.WINDOW.setProperty("NextAired.%d.Date" % ( count + 1 ), ( self.date + timedelta( days = ( ( 7 - self.weekday ) + count ) ) ).strftime('%x'))
         import next_aired_dialog
         next_aired_dialog.MyDialog(self.nextlist, self.set_labels)
 
-    def _set_alarm( self ):
-        log( "### Alarm enabled" )
-        command = "XBMC.RunScript(%s,silent=True)" % ( os.path.join( __cwd__, __file__ ) )
-        xbmc.executebuiltin( "AlarmClock(NextAired,%s,1200,true)" % command )
-
-    def run_daemon(self):
+    def run_backend(self):
         self._stop = False
         self.previousitem = ''
         self.complete_show_data = self.get_list("next_aired.db")
@@ -375,10 +344,13 @@ class NextAired:
                 self.WINDOW.clearProperty("NextAired.Label")
                 self._stop = True
 
-    def set_labels(self, label, item, return_items = False ):
-        if label == "windowproperty":
+    def set_labels(self, infolabel, item, return_items = False ):
+        if (infolabel == 'windowproperty') or (infolabel == 'windowpropertytoday'):
             label = xbmcgui.Window( 10000 )
-            prefix = 'NextAired.'
+            if infolabel == "windowproperty":
+                prefix = 'NextAired.'
+            else:
+                prefix = 'NextAired.' + str(self.count) + '.'
             label.setProperty(prefix + "Label", item.get("localname", ""))
             label.setProperty(prefix + "Thumb", item.get("ep_img", ""))
         else:
@@ -388,6 +360,7 @@ class NextAired:
             label.setThumbnailImage(item.get("ep_img", ""))
         label.setProperty(prefix + "AirTime", item.get("Airtime", ""))
         label.setProperty(prefix + "Path", item.get("path", ""))
+        label.setProperty(prefix + "Library", item.get("dbid", ""))
         label.setProperty(prefix + "Status", item.get("Status", ""))
         label.setProperty(prefix + "Network", item.get("Network", ""))
         label.setProperty(prefix + "Started", item.get("Started", ""))
@@ -404,11 +377,19 @@ class NextAired:
         label.setProperty(prefix + "NextDate", item.get("NextDate", ""))
         label.setProperty(prefix + "NextTitle", item.get("NextTitle", ""))
         label.setProperty(prefix + "NextNumber", item.get("NextNumber", ""))
+        nextnumber = item.get("NextNumber","").split("x")
+        nextnumber.extend([''])
+        label.setProperty(prefix + "NextEpisodeNumber", nextnumber[1])
+        label.setProperty(prefix + "NextSeasonNumber", nextnumber[0])
         latest = item.get("Latest Episode","").split("^")
         latest.extend(['',''])
         label.setProperty(prefix + "LatestDate", latest[2])
         label.setProperty(prefix + "LatestTitle", latest[1])
         label.setProperty(prefix + "LatestNumber", latest[0])
+        latestnumber = latest[0].split("x")
+        latestnumber.extend([''])
+        label.setProperty(prefix + "LatestEpisodeNumber", latestnumber[1])
+        label.setProperty(prefix + "LatestSeasonNumber", latestnumber[0])
         daytime = item.get("Airtime","").split(" at ")
         daytime.extend([''])
         label.setProperty(prefix + "AirDay", daytime[0])

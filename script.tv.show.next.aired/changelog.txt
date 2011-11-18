@@ -1,3 +1,15 @@
+v4.1.4
+- added library path property
+- use simplejson instead of regex
+
+v4.1.3
+- fixed issue when no airday is provided
+- added NextEpisodeNumber, NextSeasonNumber, LatestEpisodeNumber, LatestSeasonNumber
+
+v4.1.2
+- automatically update the database every day at midnight
+- NextAired.%d.Foo now only sets properties for shows airing today
+
 v4.1.1
 - update readme
 
