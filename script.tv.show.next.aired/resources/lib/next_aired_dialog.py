@@ -87,6 +87,11 @@ class Gui( xbmcgui.WindowXML ):
         if controlID == 8:
             self.settingsOpen = True
             __addon__.openSettings()
+        elif controlID in ( 200, 201, 202, 203, 204, 205, 206, ):
+            listitem = self.getControl( controlID ).getSelectedItem()
+            library = listitem.getProperty('Library')
+            self.close()
+            xbmc.executebuiltin('ActivateWindow(Videos,' + library + ',return)')
 
     def onFocus(self, controlID):
         pass
