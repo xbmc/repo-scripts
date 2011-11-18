@@ -1,3 +1,13 @@
+v1.0.11
+- use simplejson
+
+v1.0.10:
+- replace illegal characters in filename
+
+v1.0.9:
+- added option for custom path
+- make it a program addon
+
 v1.0.8:
 - adjusted to latest json-rpc changes
 
@@ -34,7 +44,7 @@ v0.8.1:
 
 v0.8.0:
 - added solo mode, use this line with a button on dialogvideoinfo for tvshow:
-<onclick>XBMC.RunScript(script.tvtunes,mode=solo&tvpath=$INFO[ListItem.FilenameAndPath]&tvname=$INFO[ListItem.TVShowTitle])</onclick>
+<onclick>XBMC.RunScript(script.tvtunes,mode=solo&path=$INFO[ListItem.FilenameAndPath]&name=$INFO[ListItem.TVShowTitle])</onclick>
 probably won't work on episode level.
 
 v0.7.3

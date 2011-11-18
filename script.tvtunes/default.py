@@ -22,8 +22,10 @@ log( "### version: %s" % __version__ )
 
 try:
     # parse sys.argv for params
-    try:params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
-    except:params = dict( sys.argv[ 1 ].split( "=" ))
+    try:
+        params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
+    except:
+        params = dict( sys.argv[ 1 ].split( "=" ))
 except:
     # no params passed
     params = {}
@@ -41,9 +43,9 @@ if params.get("backend", False ):
         xbmc.executebuiltin('XBMC.RunScript(%s,loop=%s&downvolume=%s&smb=%s&user=%s&password=%s)' % (os.path.join( RESOURCES_PATH , "tvtunes_backend.py"), loop , downvolume , smb , username , password))
 
 elif params.get("mode", False ) == "solo":
-    log( params )
+    log( "### params %s" % params )
     xbmc.executebuiltin('XBMC.RunScript(%s,mode=solo&name=%s&path=%s)' % (os.path.join( RESOURCES_PATH , "tvtunes_scraper.py") , params.get("tvname", False ) , params.get("tvpath", False ) ) )
 
 else: 
-    log( " %s v%s" % ( __addon__.getAddonInfo("id") , __addon__.getAddonInfo("version") ) )
+    log( "### %s v%s" % ( __addon__.getAddonInfo("id") , __addon__.getAddonInfo("version") ) )
     xbmc.executebuiltin('XBMC.RunScript(%s)' % os.path.join( RESOURCES_PATH , "tvtunes_scraper.py"))

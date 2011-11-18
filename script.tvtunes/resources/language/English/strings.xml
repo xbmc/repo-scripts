@@ -22,4 +22,6 @@
 	<string id="45003">Use Protected SMB share</string>	
 	<string id="45004">Username:</string>
 	<string id="45005">Password:</string>
+	<string id="45006">Store tunes in a custom path</string>
+	<string id="45007">Path:</string>
 </strings>

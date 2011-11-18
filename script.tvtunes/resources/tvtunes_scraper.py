@@ -4,6 +4,7 @@ import urllib
 import os
 from traceback import print_exc
 import re
+import simplejson
 import unicodedata
 import xbmc  
 import xbmcaddon
@@ -20,7 +21,6 @@ def log(msg):
 
 try:
     # parse sys.argv for params
-    log( sys.argv[ 1 ] )
     try:params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
     except:
         print_exc()
@@ -59,23 +59,34 @@ class TvTunes:
         self.search_url = "http://www.televisiontunes.com/search.php?searWords=%s&Send=Search"
         self.download_url = "http://www.televisiontunes.com/download.php?f=%s"
         self.theme_file = "theme.mp3"
+        self.enable_custom_path = __addon__.getSetting("custom_path_enable")
+        if self.enable_custom_path == "true":
+            self.custom_path = __addon__.getSetting("custom_path")
         self.TVlist = self.listing()
         self.DIALOG_PROGRESS = xbmcgui.DialogProgress()
         self.ERASE = xbmcgui.Dialog().yesno(__language__(32103),__language__(32104))
         self.DIALOG_PROGRESS.create( __language__(32105) , __language__(32106) )
-        if params.get("mode", "false" ) == "solo" : self.scan(params.get("name", "" ),params.get("path", "false" ))
-        else: self.scan()
+        if params.get("mode", "false" ) == "solo":
+            if self.enable_custom_path == "true":
+                self.scan(params.get("name", "" ),self.custom_path)
+            else:
+                self.scan(params.get("name", "" ),params.get("path", "false" ))
+        else:
+            self.scan()
 
     def scan(self , cur_name=False , cur_path=False):
         count = 0
         if cur_name and cur_path: 
-            log( "solo mode" )
+            log( "### solo mode" )
+
+            log("####################### %s" % cur_name )
+            log("####################### %s" % cur_path )
             self.TVlist = [[cur_name,cur_path.encode('utf-8')]]
         total = len(self.TVlist)
         for show in self.TVlist:
             count = count + 1
             if not self.ERASE and xbmcvfs.exists(os.path.join(show[1],"theme.mp3")):
-                log( "### %s already exists, ERASE is set to %s" % (os.path.join(show[1],"theme.mp3"), [False,True][self.ERASE] ) )
+                log( "### %s already exists, ERASE is set to %s" % ( os.path.join(show[1],"theme.mp3"), [False,True][self.ERASE] ) )
             else:
                 self.DIALOG_PROGRESS.update( (count*100)/total , __language__(32107) + ' ' + show[0] , "")
                 if self.DIALOG_PROGRESS.iscanceled():
@@ -91,23 +102,26 @@ class TvTunes:
     def download(self , theme_url , path):
         log( "### download :" + theme_url )
         tmpdestination = xbmc.translatePath( 'special://profile/addon_data/%s/temp/%s' % ( __addonid__ , self.theme_file ) )
-        destination = os.path.join( path , self.theme_file)
+        destination = os.path.join( path , self.theme_file )
         try:
             def _report_hook( count, blocksize, totalsize ):
                 percent = int( float( count * blocksize * 100 ) / totalsize )
                 strProgressBar = str( percent )
                 self.DIALOG_PROGRESS.update( percent , __language__(32110) + ' ' + theme_url , __language__(32111) + ' ' + destination )
-            if xbmcvfs.exists(path):
-                fp , h = urllib.urlretrieve( theme_url , tmpdestination , _report_hook )
-                log( h )
-                copy = xbmcvfs.copy(tmpdestination, destination)
-                if copy:
-                    log( "### copy successful" )
-                else:
-                    log( "### copy failed" )
-                xbmcvfs.delete(tmpdestination)
-                return True
-            else : log( "problem with path: %s" % destination )
+            if not xbmcvfs.exists(path):
+                try:
+                    xbmcvfs.mkdir(path)
+                except:
+                    log( "problem with path: %s" % destination )
+            fp , h = urllib.urlretrieve( theme_url , tmpdestination , _report_hook )
+            log( h )
+            copy = xbmcvfs.copy(tmpdestination, destination)
+            if copy:
+                log( "### copy successful" )
+            else:
+                log( "### copy failed" )
+            xbmcvfs.delete(tmpdestination)
+            return True
         except :
             log( "### Theme download Failed !!!" )
             print_exc()
@@ -150,8 +164,6 @@ class TvTunes:
 
     def search_theme_list(self , showname):
         log( "### Search for %s" % showname )
-        ### on nettoie le nom des caract pas cool (type ": , ; , ...")
-        showname = showname.replace(":","")
         theme_list = []
         next = True
         url = self.search_url % urllib.quote_plus(showname)
@@ -183,19 +195,17 @@ class TvTunes:
         # on recup la liste des series en biblio
         # json statement for tv shows
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file"], "sort": { "method": "label" } }, "id": 1}')
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
+        json_response = simplejson.loads(json_query)
         log( json_response )
         TVlist = []
-        for tvshowitem in json_response:
-            log( tvshowitem )
-            findtvshowname = re.search( '"label": ?"(.*?)",["\n]', tvshowitem )
-            if findtvshowname:
-                tvshowname = ( findtvshowname.group(1) )
-                tvshow = unicodedata.normalize('NFKD', unicode(unicode(tvshowname, 'utf-8'))).encode('ascii','ignore')
-                findpath = re.search( '"file": ?"(.*?)",["\n]', tvshowitem )
-                if findpath:
-                    path = (findpath.group(1))
-                    TVlist.append( ( tvshow , path ) )
+        if json_response['result'].has_key('tvshows'):
+            for item in json_response['result']['tvshows']:
+                tvshow = item['label'].replace(":","")
+                if self.enable_custom_path == "true":
+                    path = self.custom_path + (tvshow)
+                else:
+                    path = item['file']
+                TVlist.append( ( tvshow , path ) )
         return TVlist   
               
 if ( __name__ == "__main__" ):

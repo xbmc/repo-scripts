@@ -9,6 +9,9 @@ import xbmc
 import xbmcgui
 import sys
 import xbmcvfs
+import xbmcaddon
+
+__addon__     = xbmcaddon.Addon(id='script.tvtunes')
 
 def log(msg):
     xbmc.log( str( msg ),level=xbmc.LOGDEBUG )
@@ -33,6 +36,9 @@ class mythread( threading.Thread ):
         self.oldpath = ""
         self.playpath = ""
         self.loud = False
+        self.enable_custom_path = __addon__.getSetting("custom_path_enable")
+        if self.enable_custom_path == "true":
+            self.custom_path = __addon__.getSetting("custom_path")
         self.base_volume = self.get_volume()
         
         
@@ -42,7 +48,10 @@ class mythread( threading.Thread ):
                 if not xbmc.getCondVisibility( "Window.IsVisible(10025)"): self.stop()      #destroy threading
 
                 if xbmc.getCondVisibility( "Container.Content(Seasons)" ) or xbmc.getCondVisibility( "Container.Content(Episodes)" ) and not xbmc.Player().isPlaying() and "plugin://" not in xbmc.getInfoLabel( "ListItem.Path" ) and not xbmc.getInfoLabel( "container.folderpath" ) == "videodb://5/":
-                    self.newpath = xbmc.getInfoLabel( "ListItem.Path" )
+                    if self.enable_custom_path == "true":
+                        self.newpath = self.custom_path + xbmc.getInfoLabel( "ListItem.TVShowTitle" )
+                    else:
+                        self.newpath = xbmc.getInfoLabel( "ListItem.Path" )
                     if not self.newpath == self.oldpath and not self.newpath == "" and not self.newpath == "videodb://2/2/":
                         log( "### old path: %s" % self.oldpath )
                         log( "### new path: %s" % self.newpath )
