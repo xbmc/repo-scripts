@@ -1,3 +1,9 @@
+v3.1.0
+- added clear setting
+
+v3.0.0
+- added set favourites dialog
+
 v2.0.1
 - fixed: don't add return before each bracket
 
