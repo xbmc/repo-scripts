@@ -30,6 +30,16 @@ except:
     print_exc()
     params = {} 
 
+def _unicode( text, encoding='utf-8' ):
+    try: text = unicode( text, encoding )
+    except: pass
+    return text
+
+def normalize_string( text ):
+    try: text = unicodedata.normalize( 'NFKD', _unicode( text ) ).encode( 'ascii', 'ignore' )
+    except: pass
+    return text
+
 def get_html_source( url , save=False):
     """ fetch the html source """
     class AppURLopener(urllib.FancyURLopener):
@@ -201,6 +211,7 @@ class TvTunes:
         if json_response['result'].has_key('tvshows'):
             for item in json_response['result']['tvshows']:
                 tvshow = item['label'].replace(":","")
+                tvshow = normalize_string( tvshow )
                 if self.enable_custom_path == "true":
                     path = self.custom_path + (tvshow)
                 else:
