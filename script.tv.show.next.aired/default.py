@@ -1,5 +1,5 @@
 from time import strptime, time, mktime
-import os, sys, re, socket, urllib, locale, simplejson
+import os, sys, re, socket, urllib, locale, unicodedata, simplejson
 from traceback import print_exc
 from datetime import datetime, date, timedelta, tzinfo
 from dateutil import tz
@@ -54,6 +54,16 @@ def get_html_source(url , save=False):
             print_exc()
             log( "### ERROR opening page %s ---%s---" % ( url , succeed) )
     return ""
+
+def _unicode( text, encoding='utf-8' ):
+    try: text = unicode( text, encoding )
+    except: pass
+    return text
+
+def normalize_string( text ):
+    try: text = unicodedata.normalize( 'NFKD', _unicode( text ) ).encode( 'ascii', 'ignore' )
+    except: pass
+    return text
 
 class NextAired:
     def __init__(self):
@@ -175,6 +185,7 @@ class NextAired:
         if json_response['result'].has_key('tvshows'):
             for item in json_response['result']['tvshows']:
                 tvshowname = item['label']
+                tvshowname = normalize_string( tvshowname )
                 path = item['file']
                 thumbnail = item['thumbnail']
                 fanart = item['fanart']
