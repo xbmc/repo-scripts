@@ -1,0 +1,26 @@
+v0.1.0
+- initial release
+
+v0.0.5 (beta 5)
+- allow script to be called with options 
+
+v0.0.4 (beta 4)
+- add rating property for movies and episodes
+
+v0.0.3 (beta 3)
+- add support for movies
+- re-wrote code
+- renamed window properties
+- clean quotes and returns
+- add studio property for episodes
+
+v0.0.2 (beta 2)
+- changed: use 2 digit season and episode numbers
+- added: EpisodeNo property (sxxexx)
+- fixed: partially watched episode didn't show up if it was the first episode of season 1
+- added: IsResumable property for partially watched indication
+- added: tv show thumbnail
+- added: season thumbnail
+
+v0.0.1 (beta 1)
+- initial beta
