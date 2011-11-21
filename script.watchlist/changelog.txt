@@ -1,3 +1,9 @@
+v0.1.2
+- added path property for albums
+
+v0.1.1
+- added most played albums
+
 v0.1.0
 - initial release
 

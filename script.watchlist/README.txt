@@ -14,6 +14,7 @@ CONTENTS:
 This script will return:
 - a list containing the first unwatched episode of TV Shows you are watching.
 - a list of movies that are partially watched.
+- a list of most played albums
 
 The episode list is sorted by watch date of the previous episode:
 if you've watched 'South Park' yesterday and 'House' the day before,
@@ -21,11 +22,12 @@ if you've watched 'South Park' yesterday and 'House' the day before,
 
 The movie list is also sorted by watch date.
 
+The album list is sorted by playcount.
 
 2. Running the addon:
 ---------------------
 run the script with the options you need:
-RunScript(script.watchlist,movies=true&amp;episodes=true&amp;limit=25)
+RunScript(script.watchlist,movies=true&amp;episodes=true&amp;albums=true&amp;limit=25)
 
 
 3. Available infolabels:
@@ -57,4 +59,15 @@ WatchList_Episode.%d.Thumb		- episode thumbnail
 WatchList_Episode.%d.SeasonThumb	- season thumbnail
 WatchList_Episode.%d.TvshowThumb	- tv show thumbnail
 WatchList_Episode.%d.Fanart		- tv show fanart
-WatchList_Episode.%d.IsResumable	- indicates if it's a partially watched episode (True/False)  
+WatchList_Episode.%d.IsResumable	- indicates if it's a partially watched episode (True/False)
+
+WatchList_Album.%d.Label		- name of the album
+WatchList_Album.%d.Artist		- album artist
+WatchList_Album.%d.Genre		- album genre
+WatchList_Album.%d.Year			- year of release
+WatchList_Album.%d.Album_Label		- recordlabel
+WatchList_Album.%d.Album_Description	- album review
+WatchList_Album.%d.Rating		- rating of the album
+WatchList_Album.%d.Thumb		- album thumbnail
+WatchList_Album.%d.Fanart		- artist fanart
+WatchList_Album.%d.Path			- can be used to play the album: <onclick>$INFO[Window(Home).Property(WatchList_Album.%d.Path)]</onclick>
