@@ -1,3 +1,6 @@
+v4.1.7
+- don't set the locale for all categories to OS-speficic setting
+
 v4.1.6
 - fix unicode issue
 - removed unnecessary closing of the dialog after click on a tv show 

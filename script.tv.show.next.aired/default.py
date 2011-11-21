@@ -1,5 +1,5 @@
 from time import strptime, time, mktime
-import os, sys, re, socket, urllib, locale, unicodedata, simplejson
+import os, sys, re, socket, urllib, unicodedata, simplejson
 from traceback import print_exc
 from datetime import datetime, date, timedelta, tzinfo
 from dateutil import tz
@@ -20,9 +20,6 @@ __useragent__ = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/
 DATA_PATH = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ), __addonid__ )
 RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) )
 sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
-
-# Does not work properly on OS X
-locale.setlocale(locale.LC_ALL, "")
 
 if not xbmcvfs.exists(DATA_PATH):
     xbmcvfs.mkdir(DATA_PATH)
