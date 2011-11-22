@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Title/Credit strings -->
+    <string id="32000">%s 애드온 관리자</string>
+    <string id="32002">nuka1195, brightsr</string>
+
+    <!-- Alert messages -->
+    <string id="32100">기상 특보</string>
+
+    <!-- Installation script strings -->
+    <string id="32200">설치 경로 탐색</string>
+    <string id="32202">'%s'을 다음 경로로 다운로드 중 :</string>
+    <string id="32204">'%s'을 다음 경로로 압축해제 중 :</string>
+    
+    <string id="32207">지도 패키지 선택 :</string>
+    <string id="32208">대형 지도 패키지 30mb (720x486)</string>
+    <string id="32209">소형 지도 패키지 10mb (256x173)</string>
+    <string id="32210">대형</string>
+    <string id="32211">소형</string>
+    
+    <string id="32220">'%s'이 다음 경로로 성공적으로 설치되었습니다 :</string>
+    <string id="32221">'%s'을 다음 경로로 압축해제 중 오류 발생 :</string>
+    <string id="32222">'%s'을 다음 경로로 다운로드 중 오류 발생 :</string>
+    <string id="32223">'%s'설치가 취소되었습니다!</string>
+
+    <string id="32230">설치 실패</string>
+    <string id="32231">설치 완료</string>
+
+    <!-- Misc strings -->
+    <string id="32300">마일</string>
+    <string id="32301">마일</string>
+    <string id="32302">킬로미터</string>
+    <string id="32303">킬로미터</string>
+
+    <!-- Settings category strings -->
+    <string id="32400">애드온/패키지</string>
+    <string id="32410">기타 설정</string>
+    <string id="32420">지도/레이더 종류</string>
+    <string id="32430">기상예보 설정</string>
+
+    <!-- Settings strings -->
+    <string id="32500">텍스트 번역 (Babelfish)</string>
+    <string id="32510">지도 리스트 #1 종류</string>
+    <string id="32520">지도 리스트 #2 종류</string>
+    <string id="32530">지도 리스트 #3 종류</string>
+    <string id="32540">사용자 정의 지도/레이더 파일</string>
+    <string id="32550">기상 특보 알림</string>
+    <string id="32551">끔</string>
+    <string id="32552">모든 특보</string>
+    <string id="32553">적색 특보만</string>
+    <string id="32554">적색 및 황색 특보만</string>
+    <string id="32560">- 새로운 특보만 알림</string>
+    <string id="32570">지도 아이콘 팩 설치 (10mb-30mb)</string>
+    <string id="32580">- 알림 지속 시간</string>
+    <string id="32581">10 초</string>
+    <string id="32582">20 초</string>
+    <string id="32583">30 초</string>
+    <string id="32584">45 초</string>
+    <string id="32585">1 분</string>
+    <string id="32586">2 분</string>
+    <string id="32587">5 분</string>
+    <string id="32588">10 분</string>
+
+    <!-- map lists long -->
+    <string id="32600">없음</string>
+    <string id="32601">Local</string>
+    <string id="32602">Weather Details (Alaska)</string>
+    <string id="32603">Weather Details (Current Weather)</string>
+    <string id="32604">Weather Details (Doppler Radar)</string>
+    <string id="32605">Weather Details (Extended Forecasts)</string>
+    <string id="32606">Weather Details (Hawaii)</string>
+    <string id="32607">Weather Details (Satellite - US)</string>
+    <string id="32608">Weather Details (Satellite - World)</string>
+    <string id="32609">Weather Details (Severe Alerts - US)</string>
+    <string id="32610">Weather Details (Severe Alerts - Regional)</string>
+    <string id="32611">Weather Details (Short Term Forecast)</string>
+    <string id="32612">Weather Details (Weekly Planner)</string>
+    <string id="32613">Weather Details (US Regions - Current)</string>
+    <string id="32614">Weather Details (US Regions - Forecasts)</string>
+    <string id="32615">Weather Details (US Regions - Central)</string>
+    <string id="32616">Weather Details (US Regions - East Central)</string>
+    <string id="32617">Weather Details (US Regions - Midwest)</string>
+    <string id="32618">Weather Details (US Regions - North Central)</string>
+    <string id="32619">Weather Details (US Regions - Northeast)</string>
+    <string id="32620">Weather Details (US Regions - Northwest)</string>
+    <string id="32621">Weather Details (US Regions - South Central)</string>
+    <string id="32622">Weather Details (US Regions - Southeast)</string>
+    <string id="32623">Weather Details (US Regions - Southwest)</string>
+    <string id="32624">Weather Details (US Regions - West )</string>
+    <string id="32625">Weather Details (US Regions - West Central)</string>
+    <string id="32626">Weather Details (World - Africa &amp; Mid East)</string>
+    <string id="32627">Weather Details (World - Asia)</string>
+    <string id="32628">Weather Details (World - Australia)</string>
+    <string id="32629">Weather Details (World - Central America)</string>
+    <string id="32630">Weather Details (World - Europe)</string>
+    <string id="32631">Weather Details (World - North America)</string>
+    <string id="32632">Weather Details (World - Pacific)</string>
+    <string id="32633">Weather Details (World - Polar)</string>
+    <string id="32634">Weather Details (World - South America)</string>
+    <string id="32635">Outdoor Activity (Lawn and Garden)</string>
+    <string id="32636">Outdoor Activity (Aviation)</string>
+    <string id="32637">Outdoor Activity (Boat &amp; Beach)</string>
+    <string id="32638">Outdoor Activity (Business Travel)</string>
+    <string id="32639">Outdoor Activity (Driving)</string>
+    <string id="32640">Outdoor Activity (Fall Foliage)</string>
+    <string id="32641">Outdoor Activity (Golf)</string>
+    <string id="32642">Outdoor Activity (Outdoors)</string>
+    <string id="32643">Outdoor Activity (Oceans)</string>
+    <string id="32644">Outdoor Activity (Pets)</string>
+    <string id="32645">Outdoor Activity (Ski)</string>
+    <string id="32646">Outdoor Activity (Special Events)</string>
+    <string id="32647">Outdoor Activity (Sporting Events)</string>
+    <string id="32648">Outdoor Activity (Vacation Planner)</string>
+    <string id="32649">Outdoor Activity (Weddings - Spring)</string>
+    <string id="32650">Outdoor Activity (Weddings - Summer)</string>
+    <string id="32651">Outdoor Activity (Weddings - Fall)</string>
+    <string id="32652">Outdoor Activity (Weddings - Winter)</string>
+    <string id="32653">Outdoor Activity (Holidays)</string>
+    <string id="32654">Health &amp; Safety (Aches &amp; Pains)</string>
+    <string id="32655">Health &amp; Safety (Air Quality)</string>
+    <string id="32656">Health &amp; Safety (Allergies)</string>
+    <string id="32657">Health &amp; Safety (Cold &amp; Flu)</string>
+    <string id="32658">Health &amp; Safety (Earthquake Reports)</string>
+    <string id="32659">Health &amp; Safety (Home Planner)</string>
+    <string id="32660">Health &amp; Safety (Schoolday)</string>
+    <string id="32661">Health &amp; Safety (Severe Weather Alerts)</string>
+    <string id="32662">Health &amp; Safety (Skin Protection)</string>
+    <string id="32663">Health &amp; Safety (Fitness)</string>
+    <string id="32664">User Defined - (Maps &amp; Radars)</string>
+
+    <!-- map lists short -->
+    <string id="32800">None</string>
+    <string id="32801">Local</string>
+    <string id="32802">Alaska</string>
+    <string id="32803">Current Weather</string>
+    <string id="32804">Doppler Radar</string>
+    <string id="32805">Ext. Forecasts</string>
+    <string id="32806">Hawaii</string>
+    <string id="32807">Sat. - US</string>
+    <string id="32808">Sat. - World</string>
+    <string id="32809">Sev. Alerts - US</string>
+    <string id="32810">Sev. Alerts - Reg</string>
+    <string id="32811">Short Term Fore.</string>
+    <string id="32812">Weekly Planner</string>
+    <string id="32813">US - Current</string>
+    <string id="32814">US - Forecasts</string>
+    <string id="32815">US - Central</string>
+    <string id="32816">US - East Central</string>
+    <string id="32817">US - Midwest</string>
+    <string id="32818">US - North Central</string>
+    <string id="32819">US - Northeast</string>
+    <string id="32820">US - Northwest</string>
+    <string id="32821">US - South Central</string>
+    <string id="32822">US - Southeast</string>
+    <string id="32823">US - Southwest</string>
+    <string id="32824">US - West</string>
+    <string id="32825">US - West Central</string>
+    <string id="32826">World - Afr &amp; Mid E</string>
+    <string id="32827">World - Asia</string>
+    <string id="32828">World - Australia</string>
+    <string id="32829">World - C. America</string>
+    <string id="32830">World - Europe</string>
+    <string id="32831">World - N. America</string>
+    <string id="32832">World - Pacific</string>
+    <string id="32833">World - Polar</string>
+    <string id="32834">World - S. America</string>
+    <string id="32835">Lawn &amp; Garden</string>
+    <string id="32836">Aviation</string>
+    <string id="32837">Boat &amp; Beach</string>
+    <string id="32838">Bus. Travel</string>
+    <string id="32839">Driving</string>
+    <string id="32840">Fall Foliage</string>
+    <string id="32841">Golf</string>
+    <string id="32842">Outdoors</string>
+    <string id="32843">Oceans</string>
+    <string id="32844">Pets</string>
+    <string id="32845">Ski</string>
+    <string id="32846">Special Events</string>
+    <string id="32847">Sporting Events</string>
+    <string id="32848">Vac Planner</string>
+    <string id="32849">Wedd. - Spring</string>
+    <string id="32850">Wedd. - Summer</string>
+    <string id="32851">Wedd. - Fall</string>
+    <string id="32852">Wedd. - Winter</string>
+    <string id="32853">Holidays</string>
+    <string id="32854">Aches &amp; Pains</string>
+    <string id="32855">Air Quality</string>
+    <string id="32856">Allergies</string>
+    <string id="32857">Cold &amp; Flu</string>
+    <string id="32858">Earthquake Report</string>
+    <string id="32859">Home Planner</string>
+    <string id="32860">Schoolday</string>
+    <string id="32861">Weather Alerts</string>
+    <string id="32862">Skin Protection</string>
+    <string id="32863">Fitness</string>
+    <string id="32864">User Defined</string>
+
+    <!-- Alternative Provider strings -->
+	<string id="32901">Location #1</string>
+	<string id="32902">Provider</string>
+	<string id="32903">Location</string>
+	<string id="32904">Change Location</string>
+	<string id="32905">Location #2</string>
+	<string id="32906">Location #3</string>
+
+	<!-- Alternative Provider Lists -->
+	<string id="32951">Accuweather.com Global</string>
+	<string id="32952">NOAA (US Only)</string>
+
+
+	<!-- Misc. -->
+	<string id="32981">Accuweather.com 언어</string>
+
+	<!-- Languages -->
+	<string id="32701">Arabic</string>
+	<string id="32702">Castellano</string>
+	<string id="32703">Catalan</string>
+	<string id="32704">Chinese(SIM)</string>
+	<string id="32705">Chinese(Taiwan)</string>
+	<string id="32706">Chinese(HK)</string>
+	<string id="32707">Czech</string>
+	<string id="32708">Danish</string>
+	<string id="32709">Dutch</string>
+	<string id="32799">English</string>
+	<string id="32710">Finnish</string>
+	<string id="32711">French(Canada)</string>
+	<string id="32712">Frehch</string>
+	<string id="32713">German</string>
+	<string id="32714">Greek</string>
+	<string id="32715">Hebrew</string>                                
+	<string id="32716">Hindi</string>
+	<string id="32717">Hungarian</string>
+	<string id="32718">Italian</string>
+	<string id="32719">Japanese</string>
+	<string id="32720">Korean</string>
+	<string id="32721">Norwegian</string>
+	<string id="32722">Polish</string>
+	<string id="32723">Portuguese(Brazil)</string>
+	<string id="32724">Portuguese</string>
+	<string id="32725">Romanian</string>
+	<string id="32726">Russian</string>
+	<string id="32727">Slovenian</string>
+	<string id="32728">Spanish</string>
+	<string id="32729">Spanish(Latin)</string>
+	<string id="32730">Swedish</string>
+	<string id="32731">Turkish</string>
+
+</strings>
