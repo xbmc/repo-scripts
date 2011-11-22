@@ -27,17 +27,17 @@ import time
 # Constants
 DOMAIN = "grooveshark.com"
 HOME_URL = "http://listen." + DOMAIN
-TOKEN_URL = "https://" + DOMAIN + "/more.php" #"https://cowbell." + DOMAIN + "/service.php"
+TOKEN_URL = "https://cowbell." + DOMAIN + "/more.php" #"https://cowbell." + DOMAIN + "/service.php"
 #API_URL = "http://cowbell." + DOMAIN + "/more.php"
 API_URL = "http://" + DOMAIN + "/more.php"
-SERVICE_URL = "http://" + DOMAIN + "/service.php"
+SERVICE_URL = "http://cowbell." + DOMAIN + "/service.php"
 
 RANDOM_CHARS = "1234567890abcdef"
-SECRET_KEY_JS = "bewareOfBearsharktopus"
-SECRET_KEY = "backToTheScienceLab"
-CLIENT_NAME = "gslite" #"gslite" #htmlshark #jsqueue
+SECRET_KEY_JS = "theTicketsAreNowDiamonds"
+SECRET_KEY = "imOnAHorse"
+CLIENT_NAME = "jsqueue" #"gslite" #htmlshark #jsqueue
 #CLIENT_VERSION = "20101012.37" #"20100831.25"
-CLIENT_VERSION = "20110606"#.04"
+CLIENT_VERSION = "20110906"#.04"
 #CLIENT_VERSION = "20110718.01"
 RE_SESSION = re.compile('"sessionID":"\s*?([A-z0-9]+)"') #re.compile('sessionID:\s*?\'([A-z0-9]+)\',')
 
@@ -57,7 +57,8 @@ class Request:
         clientName = 'htmlshark'
         if method == 'getStreamKeyFromSongIDEx':
             clientName = 'jsqueue'
-            clientVersion = "20110606.04"
+            clientVersion = "20110906"
+            #clientVersion = "20110906"
         if method == 'getCommunicationToken' or type == "token":
             clientName = 'htmlshark'
         if method == 'getSearchResultsEx':
@@ -72,7 +73,7 @@ class Request:
                 "clientRevision": clientVersion,
                 "uuid": api._uuid,
                 "session": api._session},
-                "country": {"IPR":"1021", "ID":"223", "CC1":"0", "CC2":"0", "CC3":"0", "CC4":"2147483648"},
+                "country":{"ID":"57","CC1":"72057594037927936","CC2":"0","CC3":"0","CC4":"0","IPR":"9157"},
                 "privacy": 1,
             "parameters": parameters,
             "method": method}

@@ -1,6 +1,10 @@
+0.4.4:
+ - Fixed API changes
+ - Title, album, etc. is shown as "Now playing" instead of merely stream.php
+
 0.4.3:
 
- - Fixed a bug (change in the API) that prevented song name, albun etc. from being displayed correctly in search results.
+ - Fixed a bug (change in the API) that prevented song name, album etc. from being displayed correctly in search results.
  - Updated the Danish translation. Thanks mrdominuzq.
  - Added Portuguese (Brazil). Thanks Wanilton.
 

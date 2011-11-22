@@ -9,13 +9,14 @@ from gw import Request as Request
 from gw import JsonRPC as gwAPI
 
 CLIENT_NAME = "jsqueue"#"gslite" #htmlshark #jsqueue
-CLIENT_VERSION = "20110606.04"#"20101012.37" #"20100831.25"
-SECRET_KEY_JS = "bewareOfBearsharktopus"
-SECRET_KEY = "backToTheScienceLab"
+CLIENT_VERSION = "20110906"#"20101012.37" #"20100831.25"
+SECRET_KEY_JS = "theTicketsAreNowDiamonds"
+SECRET_KEY = "imOnAHorse"
+COUNTRY = '"country":{"ID":"57","CC1":"72057594037927936","CC2":"0","CC3":"0","CC4":"0","IPR":"9157"}'
 
 RANDOM_CHARS = "1234567890abcdef"
 VALIDITY_SESSION = 172800 #2 days
-VALIDITY_TOKEN = 1000 # ca. 16 min.
+VALIDITY_TOKEN = 1#1000 # ca. 16 min.
 
 class LoginTokensExceededError(Exception):
 	def __init__(self):
@@ -48,7 +49,7 @@ class AuthRequest(Request):
 				"clientRevision": clientVersion,
 				"uuid": api._uuid,
 				"session": api._session},
-				"country": {"IPR":"1021", "ID":"223", "CC1":"0", "CC2":"0", "CC3":"0", "CC4":"2147483648"},
+				"country":{"ID":"57","CC1":"72057594037927936","CC2":"0","CC3":"0","CC4":"0","IPR":"9157"},
 				"privacy": 1,
 			"parameters": parameters,
 			"method": method}
@@ -278,8 +279,10 @@ class GrooveAPI(gwAPI):
 			"songID": songID,
 			"prefetch": False,
 			"mobile": False, 
-			"country": {"IPR":"1021","ID":"223", "CC1":"0", "CC2":"0", "CC3":"0", "CC4":"2147483648"}
+			"country":{"ID":"57","CC1":"72057594037927936","CC2":"0","CC3":"0","CC4":"0","IPR":"9157"}
 			}
+			#"country": {"IPR":"1021","ID":"223", "CC1":"0", "CC2":"0", "CC3":"0", "CC4":"2147483648"}
+
 		response = Request(self, parameters,"getStreamKeyFromSongIDEx").send()
 		try:
 			streamKey = response["result"]["streamKey"]
@@ -288,8 +291,10 @@ class GrooveAPI(gwAPI):
 			postData = {"streamKey": streamKey}
 			postData = urllib.urlencode(postData)
 			url = "http://" + streamServer + "/stream.php?" + str(postData)
+			print "############# Song URL: " + url
 			return url
 		except:
+			print "############# Didn't get an URL #############"
 			traceback.print_exc()
 			return ''
 		

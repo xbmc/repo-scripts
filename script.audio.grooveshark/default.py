@@ -113,7 +113,7 @@ else:
 				url = gs.getStreamURL(str(songId))
 				if url != "":
 					listitem=xbmcgui.ListItem(label='music', path=url)
-					listitem.setInfo(type='Music', infoLabels = {'url': url})
+					listitem.setInfo(type='Music', infoLabels = {'url': url, 'title': get('songName'), 'artist': get('artistName'), 'album': get('albumName')})
 					listitem.setProperty('mimetype', 'audio/mpeg')
 					if options == 'radio':
 						print 'GrooveShark: Radio mode'
