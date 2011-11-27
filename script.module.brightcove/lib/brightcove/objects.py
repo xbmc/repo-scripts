@@ -69,23 +69,28 @@ class LogoOverlay(APIObject):
         return '<LogoOverlay id=\'{0}\'>'.format(self.id)
 
 
-def item_collection_factory(item_class):
-    class ItemCollection(APIObject):
-        _fields = ['total_count', 'items', 'page_number', 'page_size']
-        _item_class = item_class
-        items = ListField(item_class)
+class ItemCollection(APIObject):
+    '''Abstract ItemCollection class. Shouldn't be used directly.'''
+    _fields = ['total_count', 'items', 'page_number', 'page_size']
+    _item_class = None  # Override this
+    items = None  # Override this: ListField(item_class)
 
-        def __repr__(self):
-            return '<ItemCollection<{0}>>' .format(self._item_class)
+    def __iter__(self):
+        for item in self.items:
+            yield item
 
-        def __iter__(self):
-            for item in self.items:
-                yield item
 
-    return ItemCollection
+class VideoItemCollection(ItemCollection):
+    _item_class = Video
+    items = ListField(Video)
+
+
+class PlaylistItemCollection(ItemCollection):
+    _item_class = Playlist
+    items = ListField(Playlist)
+
 
 # Enums
-
 SortByType = enum('PUBLISH_DATE', 'CREATION_DATE', 'MODIFIED_DATE',
                   'PLAYS_TOTAL', 'PLAYS_TRAILING_WEEK')
 

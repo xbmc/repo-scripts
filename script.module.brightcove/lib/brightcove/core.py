@@ -1,9 +1,17 @@
+'''Contains core classes and functions for creating and manipulating API
+objects.
+
+'''
+import urllib
 from datetime import datetime
-from urllib import urlencode, urlopen
 
 
 def get_item(resp, cls):
-    '''Takes a dict and a class and callthe cls with the **kwargs.'''
+    '''Converts a response dictionary to a class instance.
+
+    Returns cls(**resp).
+    
+    '''
     try:
         params = dict((str(key), val) for key, val in resp.items())
     except AttributeError:
@@ -13,27 +21,35 @@ def get_item(resp, cls):
 
 
 class Connection(object):
+    '''Augments requests to the API with the auth token.'''
     def __init__(self, token):
         self.token = token
 
     def _request(self, url, data=None):
-        conn = urlopen(url, data)
+        '''Returns a response for the given url and data.'''
+        conn = urllib.urlopen(url, data)
         resp = conn.read()
-        write_file(url, conn.info(), resp)
         conn.close()
         return resp
 
     def get_request(self, url, params=None):
+        '''Returns a response for a given url and an optional dictionary of
+        query string parameters.
+
+        This method calls urlencode on the params and augments params with the
+        auth token.
+
+        '''
         if params is None:
             params = {}
         params.update({'token': self.token})
-        data = urlencode(params)
+        data = urllib.urlencode(params)
         url = '%s?%s' % (url, data)
-
         return self._request(url)
 
 
 class Field(object):
+    '''Basic API Field subclass.'''
     def __init__(self, help=None):
         self.help = help
 
@@ -44,6 +60,7 @@ class Field(object):
 
 
 class DateTimeField(Field):
+    '''Handles conversion from milliseconds to python datetime.'''
     def to_python(self, value):
         return datetime.fromtimestamp(int(value) / 1000)
 
@@ -52,6 +69,7 @@ class DateTimeField(Field):
 
 
 class ListField(Field):
+    '''A field composed of a python list of another Field instance.'''
     def __init__(self, item_cls, help=None):
         self.help = help
         self.item_cls = item_cls
