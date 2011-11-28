@@ -1,0 +1,31 @@
+Extrafanart Downloader: Script functions
+
+These are the available script function for skin integration can be called from with in the skin
+The script searches in the XBMC library for the corresponding values as described below.
+
+Code to run script solo:
+	XBMC.RunScript(script.extrafanartdownloader, mediatype=?, medianame=?)
+
+Code to run script solo with GUI:
+	XBMC.RunScript(script.extrafanartdownloader, mode=gui, mediatype=?, medianame=?)
+    
+Code to run script bulk mode:
+	XBMC.runscript(script.extrafanartdownloader)
+			-> downloads according to add-on settings	
+	
+	XBMC.runscript(script.extrafanartdownloader, mediatype=?)
+			-> downloads according to media type
+
+Available options "mediatype=?":
+	mediatype=movie
+	mediatype=tvshow
+
+Available options "mode=?"
+    mode=gui (this is at the moment the custom mode available.)
+    For bulk/solo do not provide "mode=?"
+    
+Available options "medianame=?":
+	Any name/title that fits the corresponding "mediatype="
+			-> example: "mediatype=movie" "medianame=Avatar"
+			-> example: "mediatype=tvshow" "medianame=House"
+

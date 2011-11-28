@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon
+	id="script.artwork.downloader"
+	name="Artwork Downloader"
+	version="1.0.0"
+	provider-name="paddycarey, putneyj, Machine-Sanctum"
+    >
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.elementtree"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="startup|login"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Downloads Artwork for TV shows and Movies in your library</summary>
+    <description lang="en">
+	Downloads all available artwork for TV shows and Movies in your library. Check the options for supported artwork[CR]
+	Artwork sources:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Remark:[CR]Check your skin to see what type of artwork is supported![CR]Each TV Show/Movie must have its own folder![CR]
+	Skin integration:[CR]See readme file
+	</description>
+    <disclaimer>For bugs, requests or general questions visit the Artwork Downloader thread on the XBMC forum.</disclaimer>
+    <platform>all</platform>
+  </extension>
+</addon>
