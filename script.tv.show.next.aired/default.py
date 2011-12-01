@@ -21,6 +21,9 @@ DATA_PATH = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ),
 RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) )
 sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
 
+# Get localized date format
+DATE_FORMAT = xbmc.getRegion('dateshort').lower()
+
 if not xbmcvfs.exists(DATA_PATH):
     xbmcvfs.mkdir(DATA_PATH)
 
@@ -39,13 +42,16 @@ def get_html_source(url , save=False):
     succeed = 0
     while succeed < 5:
         try:
-            urllib.urlcleanup()
-            sock = urllib.urlopen(url)
-            htmlsource = sock.read()
-            if save: file( os.path.join( CACHE_PATH , save ) , "w" ).write( htmlsource )
-            sock.close()
-            succeed = 5
-            return htmlsource
+            if (not xbmc.abortRequested):
+                urllib.urlcleanup()
+                sock = urllib.urlopen(url)
+                htmlsource = sock.read()
+                if save: file( os.path.join( CACHE_PATH , save ) , "w" ).write( htmlsource )
+                sock.close()
+                succeed = 5
+                return htmlsource
+            else:
+                self.close("xbmc exit")
         except:
             succeed = succeed + 1
             print_exc()
@@ -163,7 +169,7 @@ class NextAired:
             current_show["fanart"] = show[3]
             current_show["dbid"] = show[4]
             self.get_show_info( current_show )
-            self.update_show_datetime( current_show )
+            self.localize_show_datetime( current_show )
             log( current_show )
             if current_show.get("Status") == "Canceled/Ended":
                 self.canceled.append(current_show)
@@ -203,7 +209,7 @@ class NextAired:
             for item in result:
                 current_show[item[0].replace("<pre>" , "")] = item[1]
 
-    def update_show_datetime(self, current_show):
+    def localize_show_datetime(self, current_show):
         nextdate = current_show.get( "RFC3339" , "" )
         process = True
         if len(nextdate) > 23:
@@ -261,7 +267,15 @@ class NextAired:
                 next = ['','','']
             current_show["NextNumber"] = next[0]
             current_show["NextTitle"] = next[1]
-            current_show["NextDate"] = datelocal.strftime('%x')
+            current_show["NextDate"] = datelocal.strftime(DATE_FORMAT)
+        latest = current_show.get("Latest Episode","").split("^")
+        latest.extend(['',''])
+        if len(latest[2]) == 11:
+            date = datetime.fromtimestamp( mktime( strptime( latest[2], '%b/%d/%Y' ) ) )
+            latest[2] = date.strftime(DATE_FORMAT)
+        current_show["LatestNumber"] = latest[0]
+        current_show["LatestTitle"] = latest[1]
+        current_show["LatestDate"] = latest[2]   
 
     def check_today_show(self):
         self.todayshow = 0
@@ -322,12 +336,12 @@ class NextAired:
     def show_gui(self):
         for count in range(0, 7):
             if count - self.weekday == 0:
-                self.WINDOW.setProperty("NextAired.TodayDate", self.date.strftime('%x'))
-                self.WINDOW.setProperty("NextAired.%d.Date" % ( count + 1 ), self.date.strftime('%x'))
+                self.WINDOW.setProperty("NextAired.TodayDate", self.date.strftime(DATE_FORMAT))
+                self.WINDOW.setProperty("NextAired.%d.Date" % ( count + 1 ), self.date.strftime(DATE_FORMAT))
             elif count - self.weekday > 0:
-                self.WINDOW.setProperty("NextAired.%d.Date" % ( count + 1 ), ( self.date + timedelta( days = ( count - self.weekday ) ) ).strftime('%x'))
+                self.WINDOW.setProperty("NextAired.%d.Date" % ( count + 1 ), ( self.date + timedelta( days = ( count - self.weekday ) ) ).strftime(DATE_FORMAT))
             else:
-                self.WINDOW.setProperty("NextAired.%d.Date" % ( count + 1 ), ( self.date + timedelta( days = ( ( 7 - self.weekday ) + count ) ) ).strftime('%x'))
+                self.WINDOW.setProperty("NextAired.%d.Date" % ( count + 1 ), ( self.date + timedelta( days = ( ( 7 - self.weekday ) + count ) ) ).strftime(DATE_FORMAT))
         import next_aired_dialog
         next_aired_dialog.MyDialog(self.nextlist, self.set_labels)
 
@@ -389,12 +403,10 @@ class NextAired:
         nextnumber.extend([''])
         label.setProperty(prefix + "NextEpisodeNumber", nextnumber[1])
         label.setProperty(prefix + "NextSeasonNumber", nextnumber[0])
-        latest = item.get("Latest Episode","").split("^")
-        latest.extend(['',''])
-        label.setProperty(prefix + "LatestDate", latest[2])
-        label.setProperty(prefix + "LatestTitle", latest[1])
-        label.setProperty(prefix + "LatestNumber", latest[0])
-        latestnumber = latest[0].split("x")
+        label.setProperty(prefix + "LatestDate", item.get("LatestDate", ""))
+        label.setProperty(prefix + "LatestTitle", item.get("LatestTitle", ""))
+        label.setProperty(prefix + "LatestNumber", item.get("LatestNumber", ""))
+        latestnumber = item.get("LatestNumber", "").split("x")
         latestnumber.extend([''])
         label.setProperty(prefix + "LatestEpisodeNumber", latestnumber[1])
         label.setProperty(prefix + "LatestSeasonNumber", latestnumber[0])

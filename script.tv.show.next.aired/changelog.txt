@@ -1,3 +1,12 @@
+v4.1.10
+- don't block xbmc on exit
+
+v4.1.9
+- localized latest date
+
+v4.1.8
+- use XBMC's getRegion method for localized date format
+
 v4.1.7
 - don't set the locale for all categories to OS-speficic setting
 
