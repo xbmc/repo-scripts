@@ -31,13 +31,19 @@ class GUI(xbmcgui.WindowXML):
 
     def getScraper(self):
         addon_path = xbmc.translatePath(Addon.getAddonInfo('path'))
+        print 'TBP: addon_path: %s' % repr(addon_path)
         res_path = os.path.join(addon_path, 'resources', 'lib')
+        print 'TBP: res_path: %s' % repr(res_path)
         scrapers_path = os.path.join(res_path, 'scrapers')
+        print 'TBP: scrapers_path: %s' % repr(scrapers_path)
         scrapers = [f[:-3] for f in os.listdir(scrapers_path) \
                     if f.endswith('.py')]
-        sys.path.append(res_path)
-        sys.path.append(scrapers_path)
+        print 'TBP: scrapers: %s' % repr(scrapers)
+        sys.path.insert(0, res_path)
+        sys.path.insert(0, scrapers_path)
+        print 'TBP: path: %s' % repr(sys.path)
         imported_modules = [__import__(scraper) for scraper in scrapers]
+        print 'TBP: imported_modules: %s' % repr(imported_modules)
         self.SOURCES = [m.register() for m in imported_modules]
 
     def onInit(self):
