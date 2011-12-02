@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.image.bigpictures" name="The Big Picture" version="1.5.1" provider-name="sphere">
+<addon id="script.image.bigpictures" name="The Big Picture" version="1.5.2" provider-name="sphere">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
