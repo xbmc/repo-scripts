@@ -1,3 +1,6 @@
+2.5.15
+- fixed: Subcenter, thx orivar
+
 2.5.14
 - fixed searching for some tvshows in Titulky.com service, thx Libor
 
