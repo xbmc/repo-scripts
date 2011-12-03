@@ -2,15 +2,16 @@
 
 #===============================================================================
 # Subscenter.org subtitles service.
-# Version: 1.1
+# Version: 1.2
 #
 # Change log:
 # 1.1 - Fixed downloading of non-Hebrew subtitles.
+# 1.2 - Added key field for download URL
 #
 # Created by: Ori Varon
 #===============================================================================
 import os, re, xbmc, xbmcgui, string, time, urllib2
-from utilities import twotofull, toOpenSubtitles_two, log
+from utilities import languageTranslate, log
 
 BASE_URL = "http://www.subscenter.org"
 debug_pretext = ""
@@ -78,7 +79,7 @@ def getAllSubtitles(subtitlePageID,languageList,subtitlesList):
     exec(toExec)
     log( __name__ ,"Built webpage dictionary")
     for language in foundSubtitles.keys():
-        if (twotofull(language) in languageList): 
+        if (languageTranslate(language, 2, 0) in languageList): 
             for translator in foundSubtitles[language]:
                 for quality in foundSubtitles[language][translator]:
                     for rating in foundSubtitles[language][translator][quality]:
@@ -86,7 +87,8 @@ def getAllSubtitles(subtitlePageID,languageList,subtitlesList):
                             'filename': foundSubtitles[language][translator][quality][rating]["subtitle_version"],
                             'subtitle_id': foundSubtitles[language][translator][quality][rating]["id"],
                             'language_flag': 'flags/' + language + '.gif',
-                            'language_name': twotofull(language)}) 
+                            'language_name': languageTranslate(language, 2, 0),
+                            'key': foundSubtitles[language][translator][quality][rating]["key"]})
 
 # Extracts the downloaded file and find a new sub/srt file to return.
 # Note that Sratim.co.il currently isn't hosting subtitles in .txt format but
@@ -212,7 +214,8 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
     subtitle_id = subtitles_list[pos][ "subtitle_id" ]
     filename = subtitles_list[pos][ "filename" ]
-    url = BASE_URL + "/subtitle/download/"+toOpenSubtitles_two(subtitles_list[pos][ "language_name" ])+"/"+str(subtitle_id)+"/?v="+filename
+    url = BASE_URL + "/subtitle/download/"+languageTranslate(subtitles_list[pos][ "language_name" ], 0, 2)+"/"+str(subtitle_id)+"/?v="+filename
+    key = subtitles_list[pos][ "key" ]
     log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))
     # Get the intended filename (don't know if it's zip or rar)
     archive_name = getURLfilename(url)

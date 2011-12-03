@@ -1,3 +1,6 @@
+2.9.28
+- fixed Subcenter Service
+
 2.9.27
 - fixed searching for some tvshows in Titulky.com service, thx Libor
 

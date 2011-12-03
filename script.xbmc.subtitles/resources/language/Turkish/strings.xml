@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
 
     <!-- Türkçe -->
@@ -68,7 +68,12 @@
     <string id="30137">- OmniSubs Parola</string>
     <string id="30138">- LegendasZone Kullanıcı Adı</string>
     <string id="30139">- LegendasZone Parola</string>
-     
+    <string id="30140">- Altyazı türünü seç:</string>
+    <string id="30141">SubRip</string>
+    <string id="30142">TMPlayer</string>
+    <string id="30143">MicroDVD</string>
+    <string id="30144">MPl2</string>
+    
   <!-- Languages  -->
        
     <string id="30201">Arnavutça</string>
