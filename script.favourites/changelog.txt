@@ -1,3 +1,15 @@
+v3.2.1
+- use select dialog with id 6
+- added french translation
+- bugfixes
+
+
+v3.2.0
+- added readme
+- added french localization (thanks to Rififi77)
+- select dialog now uses id 6
+- fixed escape problems with paths on Windows
+
 v3.1.0
 - added clear setting
 

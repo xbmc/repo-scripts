@@ -78,51 +78,82 @@ class Main:
                 count = count+1
         # Else show select dialog
         else:
-            self.favList = [__language__(451)]
-            self.favProperties = []
-            for favourite in self.favourites:
-                fav_path = favourite.childNodes [ 0 ].nodeValue
-                fav_play = False
-                # add return 
-                if 'RunScript' not in fav_path: 
-                    fav_path = fav_path.rstrip(')')
-                    fav_path = fav_path + ',return)'
+            MyDialog(self.favourites, self.PROPERTY)
+                
+class MainGui( xbmcgui.WindowXMLDialog ):
+    def __init__( self, *args, **kwargs ):
+        xbmcgui.WindowXMLDialog.__init__( self )
+        self.listing = kwargs.get( "listing" )
+        self.property = kwargs.get( "property" )
+
+    def onInit(self):
+        try:
+            self.fav_list = self.getControl(6)
+            self.getControl(3).setVisible(False)
+        except:
+            print_exc()
+            self.fav_list = self.getControl(3)
+
+        self.getControl(5).setVisible(False)
+        self.getControl(1).setLabel(xbmc.getLocalizedString(1036))
+
+        self.fav_list.addItem( xbmcgui.ListItem( __language__(451) ) )
+
+        for favourite in self.listing :
+            listitem = xbmcgui.ListItem( favourite.attributes[ 'name' ].nodeValue )
+            try:
+                listitem.setIconImage( favourite.attributes[ 'thumb' ].nodeValue )
+                listitem.setProperty( "Icon", favourite.attributes[ 'thumb' ].nodeValue )
+            except: pass
+            fav_path = favourite.childNodes [ 0 ].nodeValue
+            if 'RunScript' not in fav_path: 
+                fav_path = fav_path.rstrip(')')
+                fav_path = fav_path + ',return)'
+            listitem.setProperty( "Path", fav_path )
+            self.fav_list.addItem( listitem )
+        self.setFocus(self.fav_list)
+
+    def onAction(self, action):
+        if action in ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, ):
+            self.close()
+
+    def onClick(self, controlID):
+        log( "### control: %s" % controlID )
+        if controlID == 6 or controlID == 3: 
+            num = self.fav_list.getSelectedPosition()
+            log( "### position: %s" % num )
+            if num > 0:
+                fav_path = self.fav_list.getSelectedItem().getProperty( "Path" )
                 if 'playlists/music' in fav_path or 'playlists/video' in fav_path:
-                    fav_play = True
-                self.favList.append(favourite.attributes[ 'name' ].nodeValue)
-                try: fav_thumb = favourite.attributes[ 'thumb' ].nodeValue
-                except: fav_thumb = ""
-                self.favProperties.append([fav_path, fav_thumb, fav_play])
-            self._show_dialog()
-  
-    def _show_dialog(self):
-        if len(self.favList) > 0:
-            dialog = xbmcgui.Dialog()
-            try: retIndex = dialog.select(xbmc.getLocalizedString(1036), self.favList)
-            except: retIndex = -1
-            if retIndex > 0:
-                fav_path = self.favProperties[retIndex-1][0]
-                if (self.favProperties[retIndex-1][2]):
-                    retBool = dialog.yesno(xbmc.getLocalizedString(559), __language__(450))
+                    retBool = xbmcgui.Dialog().yesno(xbmc.getLocalizedString(559), __language__(450))
                     if retBool:
                         if 'playlists/music' in fav_path:
                             fav_path = fav_path.replace( 'ActivateWindow(10502,', 'PlayMedia(' )
                         else:
-                            fav_path = fav_path.replace( 'ActivateWindow(10025,', 'PlayMedia(' )  
-                # sleep to ensure smooth open/close animations
+                            fav_path = fav_path.replace( 'ActivateWindow(10025,', 'PlayMedia(' )
+                xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Path", ), fav_path.encode('string-escape'), ) )
+                xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Label", ), self.fav_list.getSelectedItem().getLabel(), ) )
+                fav_icon = self.fav_list.getSelectedItem().getProperty( "Icon" )
+                if fav_icon:
+                    xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Icon", ), fav_icon, ) )
                 xbmc.sleep(300)
-                xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.PROPERTY, "Path", ), fav_path.encode('utf-8'), ) )
-                xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.PROPERTY, "Label", ), self.favList[retIndex].encode('utf-8'), ) )
-                xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.PROPERTY, "Icon", ), self.favProperties[retIndex-1][1].encode('utf-8'), ) )
-            elif retIndex == 0:
-                # sleep to ensure smooth open/close animations
-                xbmc.sleep(300)
-                xbmc.executebuiltin( 'Skin.Reset(%s)' % '%s.%s' % ( self.PROPERTY, "Path", ) )
-                xbmc.executebuiltin( 'Skin.Reset(%s)' % '%s.%s' % ( self.PROPERTY, "Label", ) )
-                xbmc.executebuiltin( 'Skin.Reset(%s)' % '%s.%s' % ( self.PROPERTY, "Icon", ) )
+                self.close()
+            else:
+                xbmc.executebuiltin( 'Skin.Reset(%s)' % '%s.%s' % ( self.property, "Path", ) )
+                xbmc.executebuiltin( 'Skin.Reset(%s)' % '%s.%s' % ( self.property, "Label", ) )
+                xbmc.executebuiltin( 'Skin.Reset(%s)' % '%s.%s' % ( self.property, "Icon", ) )
+                xbmc.sleep(300) 
+                self.close()
 
+    def onFocus(self, controlID):
+        pass
+                
+def MyDialog(fav_list, property):
+    w = MainGui( "DialogSelect.xml", __cwd__, listing=fav_list, property=property )
+    w.doModal()
+    del w
 
 if ( __name__ == "__main__" ):
-        log('script version %s started' % __addonversion__)
-        Main()
+    log('script version %s started' % __addonversion__)
+    Main()
 log('script stopped')
