@@ -7,11 +7,11 @@
 	<string id="32104">Operation vom Benutzer abgebrochen.</string>
 	<string id="45000">Anzeige</string>
 	<string id="45001">Vorschaubild-Typ</string>
-	<string id="45002">Banner herunterladen (Logo Downloader erforderlich)</string>
-	<string id="45003">Logos herunterladen (Logo Downloader erforderlich)</string>
+	<string id="45002">Banner herunterladen (Artwork Downloader erforderlich)</string>
+	<string id="45003">Logos herunterladen (Artwork Downloader erforderlich)</string>
 	<string id="45004">Hintergrund Fanart aktivieren</string>
 	<string id="45005">16:9 Vorschaubiler aktivieren</string>
-	<string id="45006">16:9 Vorschaubilder herunterladen (Logo Downloader erforderlich)</string>
+	<string id="45006">16:9 Vorschaubilder herunterladen (Artwork Downloader erforderlich)</string>
 	<string id="45007">TV Guide Daten neu laden</string>
 </strings>
 

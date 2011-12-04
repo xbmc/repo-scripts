@@ -1,3 +1,9 @@
+v4.1.12
+- use artwork downloader instead of logo downloader
+
+v4.1.11
+- fixed error if latest date is before 1970
+
 v4.1.10
 - don't block xbmc on exit
 

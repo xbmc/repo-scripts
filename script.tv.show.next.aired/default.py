@@ -271,7 +271,8 @@ class NextAired:
         latest = current_show.get("Latest Episode","").split("^")
         latest.extend(['',''])
         if len(latest[2]) == 11:
-            date = datetime.fromtimestamp( mktime( strptime( latest[2], '%b/%d/%Y' ) ) )
+            latesttime = strptime( latest[2], '%b/%d/%Y' )
+            date = datetime(latesttime[0],latesttime[1],latesttime[2])
             latest[2] = date.strftime(DATE_FORMAT)
         current_show["LatestNumber"] = latest[0]
         current_show["LatestTitle"] = latest[1]

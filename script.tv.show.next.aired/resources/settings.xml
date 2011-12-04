@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-  <setting id="ReScan" type="action" label="45007" action="RunScript(script.tv.show.next.aired,force=True)"/>
-  <setting type="lsep" label="45000" />
-  <setting id="ThumbType" type="enum" label="45001" default="0" values="Thumb|Banner|Logo" />
-  <setting id="DownloadBanners" type="action" subsetting="true" label="45002" action="RunScript(script.logo-downloader,mode=bulk,clearart=False,logo=False,showthumb=False,poster=False,banner=banner.jpg)" visible="gt(-1,0) + lt(-1,2)" />
-  <setting id="DownloadLogos" type="action" subsetting="true" label="45003" action="RunScript(script.logo-downloader,mode=bulk,clearart=False,logo=True,showthumb=False,poster=False,banner=False)" visible="gt(-2,1) + lt(-2,3)" />
-  <setting id="BackgroundFanart" type="bool" label="45004" default="False" />
-  <setting id="PreviewThumbs" type="bool" label="45005" default="False" />
-  <setting id="DownloadPreviewThumbs" type="action" subsetting="true" label="45006" action="RunScript(script.logo-downloader,mode=bulk,clearart=False,logo=False,showthumb=landscape.jpg,poster=False,banner=False)" visible="eq(-1,true)" />
+	<setting id="ReScan" type="action" label="45007" action="RunScript(script.tv.show.next.aired,force=True)"/>
+	<setting type="lsep" label="45000" />
+	<setting id="ThumbType" type="enum" label="45001" default="0" values="Thumb|Banner|Logo" />
+	<setting id="DownloadBanners" type="action" subsetting="true" label="45002" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,banner)" visible="gt(-1,0) + lt(-1,2)" />
+	<setting id="DownloadLogos" type="action" subsetting="true" label="45003" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,clearlogo)" visible="gt(-2,1) + lt(-2,3)" />
+	<setting id="BackgroundFanart" type="bool" label="45004" default="False" />
+	<setting id="PreviewThumbs" type="bool" label="45005" default="False" />
+	<setting id="DownloadPreviewThumbs" type="action" subsetting="true" label="45006" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,tvthumb)" visible="eq(-1,true)" />
 </settings>

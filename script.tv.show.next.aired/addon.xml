@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.tv.show.next.aired"
        name="TV Show - Next Aired"
-       version="4.1.10"
+       version="4.1.12"
        provider-name="Ppic, Frost, ronie, `Black">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -16,7 +16,6 @@
     <summary lang="en">Get info for TV Shows Next Aired.</summary>
     <summary lang="fr">Récupère les dates de diffusions de vos séries</summary>
     <description lang="en">Get info for TV Shows Next Aired. You'll never miss one again.</description>
-    <description lang="fr">Ce script interroge votre médiathèque puis vas récupérer les infos sur les prochaines diffusions de vos séries.
-    vous n'en manquerez plus aucune.</description>
+    <description lang="fr">Ce script interroge votre médiathèque puis vas récupérer les infos sur les prochaines diffusions de vos séries. vous n'en manquerez plus aucune.</description>
   </extension>
 </addon>
