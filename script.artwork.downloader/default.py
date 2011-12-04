@@ -1,4 +1,4 @@
-### import
+﻿### import
 import re
 import os
 import time
@@ -7,6 +7,7 @@ import xbmc
 import xbmcaddon
 import platform
 import xbmcgui
+import urllib
 from traceback import print_exc
 
 ### import libraries
@@ -58,8 +59,8 @@ def cleanup(self):
     if self.settings.notify:
         log('Notify on finished/error enabled')
         self.settings.background = False
-    if xbmc.Player().isPlayingVideo():
-        #log('Silent finish because of playing a video')
+    if xbmc.Player().isPlayingVideo() or self.silent:
+        log('Silent finish because of playing a video or silent mode')
         self.settings.background = True
     if not self.settings.failcount < self.settings.failthreshold:
         log('Network error detected, script aborted', xbmc.LOGERROR)
@@ -77,7 +78,6 @@ def cleanup(self):
 class Main:
     def __init__(self):
         initial_vars(self) 
-        self.settings._exist()      # Check if settings.xml exists and correct version
         self.settings._get()        # Get settings from settings.xml
         self.settings._get_limit() # Get settings from settings.xml
         self.settings._check()      # Check if there are some faulty combinations present
@@ -86,33 +86,49 @@ class Main:
         self.settings._artype_list()# Fill out the GUI and Arttype lists with enabled options
         runmode_args(self)          # Check for script call methods
         if initialise(self):
+            # Check for silent background mode
             if self.silent:
-                self.settings.background = 'true'
-                self.settings.notify = 'true'
+                log('Silent mode')
+                self.settings.background = True
+                self.settings.notify = False
+            # Check for gui mode
             elif self.mode == 'gui':
                 log('set dialog true')
                 self.settings.background = False
                 self.settings.notify = False
             dialog('create', line1 = __localize__(32008), background = self.settings.background)
+            # Check if mediatype is specified
             if not self.mediatype == '':
+                # Check if medianame is specified
                 if not self.medianame == '':
                     if self.mode == 'gui':
-                        # 'Mode check is at the end of: 'def download_artwork'
+                        # GUI mode check is at the end of: 'def download_artwork'
                         solo_mode(self, self.mediatype, self.medianame)
                     else:
                         solo_mode(self, self.mediatype, self.medianame)
+                # No medianame specified
                 else:
                     if self.mediatype == 'movie':
                         self.Medialist = media_listing('movie')
                         log("Bulk mode: movie")
+                        self.settings.movie_enable = 'true'
+                        self.settings.tvshow_enable = 'false'
                         download_artwork(self, self.Medialist, self.movie_providers)
                     elif self.mediatype == 'tvshow':
+                        self.settings.movie_enable = 'false'
+                        self.settings.tvshow_enable = 'true'
                         self.Medialist = media_listing('tvshow')
                         log("Bulk mode: TV Shows")
                         download_artwork(self, self.Medialist, self.tv_providers)
                     elif self.mediatype == 'music':
                         log('Bulk mode: Music not yet implemented', xbmc.LOGNOTICE)
+            # No mediatype is specified
             else:
+                # activate both movie/tvshow for custom run
+                if self.mode == 'custom':
+                    self.settings.movie_enable = True
+                    self.settings.tvshow_enable = True
+                # Normal oprations check
                 if self.settings.movie_enable:
                     self.Medialist = media_listing('movie')
                     self.mediatype = 'movie'
@@ -174,7 +190,7 @@ def runmode_args(self):
     except:   log( "## no arg3" )
     try: log( "## arg 4: %s" % sys.argv[4] )
     except:   log( "## no arg4" )
-    try: log( "arg 5: %s" % sys.argv[5] )
+    try: log( "## arg 5: %s" % sys.argv[5] )
     except:   log( "## no arg5" )
     try: log( "## arg 6: %s" % sys.argv[6] )
     except:   log( "## no arg6" )
@@ -182,21 +198,25 @@ def runmode_args(self):
     except:   log( "## no arg7" )
     try: log( "## arg 8: %s" % sys.argv[8] )
     except:   log( "## no arg8" )
-
+    try: log( "## arg 9: %s" % sys.argv[9] )
+    except:   log( "## no arg8" )
+    try: log( "## arg 10: %s" % sys.argv[10] )
+    except:   log( "## no arg8" )
 
 ### solo mode
 def solo_mode(self, itemtype, itemname):
+    # activate both movie/tvshow for custom r
+    if self.mode == 'custom':
+        self.settings.movie_enable = True
+        self.settings.tvshow_enable = True
     if itemtype == 'movie':
         log("## Solo mode: Movie...")
         self.Medialist = media_listing('movie')
     elif itemtype == 'tvshow':
         self.Medialist = media_listing('tvshow')
         log("## Solo mode: TV Show...")
-    elif itemtype == 'music':
-        self.Medialist = media_listing('music')
-        log("## Solo mode: Music...")
     else:
-        log("Error: type must be one of 'movie', 'tvshow' or 'music', aborting", xbmc.LOGERROR)
+        log("Error: type must be one of 'movie', 'tvshow', aborting", xbmc.LOGERROR)
         return False
     log('Retrieving fanart for: %s' % itemname)
     for currentitem in self.Medialist:
@@ -214,8 +234,8 @@ def solo_mode(self, itemtype, itemname):
            
 ### load settings and initialise needed directories
 def initialise(self):
+    log("## Checking for downloading mode...")
     for item in sys.argv:
-        log("## Checking for downloading mode...")
         # Check for download mode
         match = re.search("silent=(.*)" , item)
         if match:
@@ -233,8 +253,6 @@ def initialise(self):
             else:
                 log('Error: invalid mediatype, must be one of movie, tvshow or music', xbmc.LOGERROR)
                 return False
-        else:
-            pass
         # Check for medianame
         match = re.search("medianame=" , item)
         if match:
@@ -249,7 +267,8 @@ def initialise(self):
         return False
     else:
         return True 
-   
+
+
 ### download media fanart
 def download_artwork(self, media_list, providers):
     self.processeditems = 0
@@ -268,6 +287,9 @@ def download_artwork(self, media_list, providers):
             self.media_path = os.path.split(currentmedia["path"])[0].rsplit(' , ', 1)[1]
         except:
             self.media_path = os.path.split(currentmedia["path"])[0]
+        # Fixes problems with rared movies
+        if self.media_path.startswith("rar"):
+            self.media_path = os.path.split(urllib.url2pathname(self.media_path.replace("rar://","")))[0]
         # Declare some vars
         self.media_id = currentmedia["id"]
         self.media_name = currentmedia["name"]
@@ -286,22 +308,12 @@ def download_artwork(self, media_list, providers):
         self.target_artworkdir.append(artwork_dir)
         self.target_extrafanartdirs.append(extrafanart_dir)
         self.target_extrathumbsdirs.append(extrathumbs_dir)
-        ### Check if using the centralize option
+        # Check if using the centralize option
         if self.settings.centralize_enable:
             if self.mediatype == 'tvshow':
-                if not self.settings.centralfolder_tvshows == '':
-                    self.target_extrafanartdirs.append(self.settings.centralfolder_tvshows)
-                else:
-                    log('Error: Central fanart enabled but TV Show folder not set, skipping', xbmc.LOGERROR)
+                self.target_extrafanartdirs.append(self.settings.centralfolder_tvshows)
             elif self.mediatype == 'movie':
-                if not self.settings.centralfolder_movies == '':
-                    self.target_extrafanartdirs.append(self.settings.centralfolder_movies)
-                else:
-                    log('Error: Central fanart enabled but movies folder not set, skipping', xbmc.LOGERROR)
-        ### Check if using the cache option
-        self.targets = self.target_extrafanartdirs[:]
-        if self.settings.backup_enabled and not self.settings.backup_path == '':
-            self.targets.append(self.settings.backup_path)
+                self.target_extrafanartdirs.append(self.settings.centralfolder_movies)
         # Check for id used by source sites
         if self.mode == 'gui' and ((self.media_id == '') or (self.mediatype == 'tvshow' and self.media_id.startswith('tt'))):
             dialog('close', background = self.settings.background)
@@ -310,6 +322,7 @@ def download_artwork(self, media_list, providers):
             log('%s: No ID found, skipping' % self.media_name, xbmc.LOGNOTICE)
         elif self.mediatype == 'tvshow' and self.media_id.startswith('tt'):
             log('%s: IMDB ID found for TV show, skipping' % self.media_name, xbmc.LOGNOTICE)
+        # If correct ID found continue
         else:
             self.temp_image_list = []
             self.image_list = []
@@ -366,10 +379,40 @@ def download_artwork(self, media_list, providers):
                 if self.mode == 'gui':
                     log('here goes gui mode')
                     _gui_solomode(self)
+                if self.mode == 'custom':
+                    log('here goes custom mode')
+                    _custom_process(self)
                 else:
                     _download_process(self)
         log('Finished processing media: %s' % self.media_name, xbmc.LOGDEBUG)
         self.processeditems = self.processeditems + 1
+
+### Processes the custom mode downloading of files
+def _custom_process(self):
+    if self.settings.movie_enable and self.mediatype == 'movie':
+        for arttypes in self.settings.movie_arttype_list:
+            for item in sys.argv:
+                if item == arttypes['art_type']:
+                    if arttypes['art_type'] == 'extrafanart':
+                        _download_art(self, arttypes['art_type'], 'fanart', arttypes['filename'], self.target_extrafanartdirs,  arttypes['gui_string'])
+                    elif arttypes['art_type'] == 'defaultthumb':
+                        _download_art(self, arttypes['art_type'], 'poster', arttypes['filename'], self.target_artworkdir,  arttypes['gui_string'])    
+                    elif arttypes['art_type'] == 'extrathumbs':
+                        _download_art(self, arttypes['art_type'], 'thumb', arttypes['filename'], self.target_extrathumbsdirs,  arttypes['gui_string'])
+                    else:
+                        _download_art(self, arttypes['art_type'], arttypes['art_type'], arttypes['filename'], self.target_artworkdir,  arttypes['gui_string'])
+
+    if self.settings.tvshow_enable and self.mediatype == 'tvshow':
+        for arttypes in self.settings.tvshow_arttype_list:
+            for item in sys.argv:
+                if item == arttypes['art_type']:
+                    if arttypes['art_type'] == 'extrafanart':
+                        _download_art(self, arttypes['art_type'], 'fanart', arttypes['filename'], self.target_extrafanartdirs,  arttypes['gui_string'])
+                    elif arttypes['art_type'] == 'defaultthumb':
+                        _download_art(self, arttypes['art_type'],  str.lower(self.settings.tvshow_defaultthumb_type), arttypes['filename'], self.target_artworkdir,  arttypes['gui_string'])
+                    else:
+                        _download_art(self, arttypes['art_type'], arttypes['art_type'], arttypes['filename'], self.target_artworkdir,  arttypes['gui_string'])
+
 
 ### Processes the bulk/solo mode downloading of files
 def _download_process(self):
@@ -377,23 +420,23 @@ def _download_process(self):
         for arttypes in self.settings.movie_arttype_list:
             if arttypes['bulk_enabled']:
                 if arttypes['art_type'] == 'extrafanart':
-                    _download_art(self, arttypes['art_type'], 'fanart', arttypes['filename'], self.target_extrafanartdirs, self.targets, arttypes['gui_string'])
+                    _download_art(self, arttypes['art_type'], 'fanart', arttypes['filename'], self.target_extrafanartdirs,  arttypes['gui_string'])
                 elif arttypes['art_type'] == 'defaultthumb':
-                    _download_art(self, 'poster', 'poster', arttypes['filename'], self.target_artworkdir, self.targets, arttypes['gui_string'])    
+                    _download_art(self, arttypes['art_type'], 'poster', arttypes['filename'], self.target_artworkdir,  arttypes['gui_string'])    
                 elif arttypes['art_type'] == 'extrathumbs':
-                    _download_art(self, arttypes['art_type'], 'thumb', arttypes['filename'], self.target_extrathumbsdirs, self.targets, arttypes['gui_string'])
+                    _download_art(self, arttypes['art_type'], 'thumb', arttypes['filename'], self.target_extrathumbsdirs,  arttypes['gui_string'])
                 else:
-                    _download_art(self, arttypes['art_type'], arttypes['art_type'], arttypes['filename'], self.target_artworkdir, self.targets, arttypes['gui_string'])
+                    _download_art(self, arttypes['art_type'], arttypes['art_type'], arttypes['filename'], self.target_artworkdir,  arttypes['gui_string'])
 
     if self.settings.tvshow_enable and self.mediatype == 'tvshow':
         for arttypes in self.settings.tvshow_arttype_list:
             if arttypes['bulk_enabled']:
                 if arttypes['art_type'] == 'extrafanart':
-                    _download_art(self, arttypes['art_type'], 'fanart', arttypes['filename'], self.target_extrafanartdirs, self.targets, arttypes['gui_string'])
+                    _download_art(self, arttypes['art_type'], 'fanart', arttypes['filename'], self.target_extrafanartdirs,  arttypes['gui_string'])
                 elif arttypes['art_type'] == 'defaultthumb':
-                    _download_art(self, arttypes['art_type'],  str.lower(self.settings.tvshow_defaultthumb_type), arttypes['filename'], self.target_artworkdir, self.targets, arttypes['gui_string'])
+                    _download_art(self, arttypes['art_type'],  str.lower(self.settings.tvshow_defaultthumb_type), arttypes['filename'], self.target_artworkdir,  arttypes['gui_string'])
                 else:
-                    _download_art(self, arttypes['art_type'], arttypes['art_type'], arttypes['filename'], self.target_artworkdir, self.targets, arttypes['gui_string'])
+                    _download_art(self, arttypes['art_type'], arttypes['art_type'], arttypes['filename'], self.target_artworkdir,  arttypes['gui_string'])
 
 
 ### Retrieves imagelist for GUI solo mode
@@ -420,7 +463,7 @@ def _gui_solomode_imagelist(self, art_type, image_type):
 
 
 ### Artwork downloading
-def _download_art_solo(self, art_type, image_type, filename, targetdirs, targets, msg):
+def _download_art_solo(self, art_type, image_type, filename, targetdirs, msg):
     log('Starting with processing: %s' %art_type)
     self._download_art_succes = False
     self.settings.failcount = 0
@@ -463,7 +506,7 @@ def _download_art_solo(self, art_type, image_type, filename, targetdirs, targets
 
 
 ### Artwork downloading
-def _download_art(self, art_type, image_type, filename, targetdirs, targets, msg):
+def _download_art(self, art_type, image_type, filename, targetdirs, msg):
     log('Starting with processing: %s' %art_type)
     self.settings.failcount = 0
     current_artwork = 0
@@ -552,7 +595,7 @@ def _gui_solomode(self):
     # Download the selected image
     if self.gui_imagelist:
         if _choose_image(self):
-            _download_art_solo(self, self.gui_selected_type, self.gui_selected_type, self.gui_selected_filename, self.target_artworkdir, self.targets, self.gui_selected_msg)
+            _download_art_solo(self, self.gui_selected_type, self.gui_selected_type, self.gui_selected_filename, self.target_artworkdir, self.gui_selected_msg)
             if not self._download_art_succes:
                 xbmcgui.Dialog().ok(__localize__(32006) , __localize__(32007) )
     if not self.gui_imagelist and not self.gui_selected_type == '':
@@ -563,7 +606,7 @@ def _gui_solomode(self):
     else:
         log('cancelled')
         xbmcgui.Dialog().ok(__localize__(32017) , __localize__(32018) )
-        
+
 # This creates the art type selection dialog. The string id is the selection constraint for what type has been chosen.
 def _choice_type(self):
     select = xbmcgui.Dialog().select(__addonname__ + ': ' + __localize__(32015) , self.GUI_type_list)
@@ -589,16 +632,16 @@ def _choice_type(self):
                     return True
         else:
             return False
-        
+
 def _choose_image(self):
     log( "### image list: %s" % self.gui_imagelist)
     self.image_url = MyDialog(self.gui_imagelist)
     if self.image_url:
         return True
     else:
-        return False    
+        return False
 
-    
+
 class MainGui( xbmcgui.WindowXMLDialog ):
     def __init__( self, *args, **kwargs ):
         xbmcgui.WindowXMLDialog.__init__( self )
@@ -630,7 +673,7 @@ class MainGui( xbmcgui.WindowXMLDialog ):
     def onAction(self, action):
         if action in ACTION_PREVIOUS_MENU:
             self.close()
-   
+
 
     def onClick(self, controlID):
         log( "### control: %s" % controlID )
@@ -651,9 +694,8 @@ def MyDialog(tv_list):
         print_exc()
         return False
     del w
-    
-    
-        
+
+
 ### Start of script
 if (__name__ == "__main__"):
     log("######## Extrafanart Downloader: Initializing...............................")

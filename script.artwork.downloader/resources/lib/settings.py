@@ -54,12 +54,9 @@ class _settings:
         self.tvshow_defaultthumb_type    = __addon__.getSetting("tvshow_defaultthumb_type")
         
         self.centralize_enable      = __addon__.getSetting("centralize_enable") == 'true'
-        self.centralfolder_split    = __addon__.getSetting("centralfolder_split")
         self.centralfolder_movies   = __addon__.getSetting("centralfolder_movies")
         self.centralfolder_tvshows  = __addon__.getSetting("centralfolder_tvshows")
 
-        self.backup_enabled         = __addon__.getSetting("backup_enabled") == 'true'
-        self.backup_path            = __addon__.getSetting("backup_path")
         self.background             = __addon__.getSetting("background") == 'true'
         self.notify                 = __addon__.getSetting("notify") == 'true'
         self.service_startup        = __addon__.getSetting("service_startup") == 'true'
@@ -68,13 +65,18 @@ class _settings:
         self.files_overwrite        = __addon__.getSetting("files_overwrite") == 'true'
         self.xbmc_caching_enabled   = __addon__.getSetting("xbmc_caching_enabled") == 'true'
         
+        # temporary force these to false
+        self.tvshow_seasonposter    = False
+        self.tvshow_seasonbanner    = False
+        self.tvshow_seasonthumbs    = False
+        
     def _get_limit(self):    
-        self.limit_artwork = __addon__.getSetting("limit_artwork") == 'true'
+        self.limit_artwork              = __addon__.getSetting("limit_artwork") == 'true'
         self.limit_extrafanart_max      = int(__addon__.getSetting("limit_extrafanart_max").rstrip('0').rstrip('.'))
         self.limit_extrafanart_rating   = int(__addon__.getSetting("limit_extrafanart_rating").rstrip('0').rstrip('.'))
         self.limit_size_moviefanart     = int(__addon__.getSetting("limit_size_moviefanart"))
         self.limit_size_tvshowfanart    = int(__addon__.getSetting("limit_size_tvshowfanart"))
-        self.limit_extrathumbs          = self.limit_artwork
+        self.limit_extrathumbs          = 'true'
         self.limit_extrathumbs_max      = 4
         self.limit_artwork_max          = 1
         self.limit_language             = __addon__.getSetting("limit_language") == 'true'
@@ -116,6 +118,7 @@ class _settings:
         log('##')
         log('## TV Show Artwork         = %s' % str(self.tvshow_enable))
         log('## - Poster                = %s' % str(self.tvshow_poster))
+        log('## - Season Poster         = %s' % str(self.tvshow_seasonposter))
         log('## - Fanart                = %s' % str(self.tvshow_fanart))
         log('## - ExtraFanart           = %s' % str(self.tvshow_extrafanart))
         log('## - Clearart              = %s' % str(self.tvshow_clearart))
@@ -142,33 +145,10 @@ class _settings:
         log('## - Language              = %s' % str(self.limit_language))
         log('## - Fanart with no text   = %s' % str(self.limit_notext))
         log('##')
-        log('## Backup fanart           = %s' % str(self.backup_enabled))
-        log('## Backup folder           = %s' % str(self.backup_path))
         log('## XBMC caching enabled    = %s' % str(self.xbmc_caching_enabled))
         log('##')
         log('## End of Settings...')
 
-    ### Check if settings.xml exist and version check
-    def _exist(self):
-        first_run = True
-        while first_run:
-            # no settings.xml found
-            if not os.path.isfile(settings_file):
-                dialog('okdialog', line1 = __localize__(32001), line2 = __localize__(32021))
-                log('## Settings.xml file not found. Opening settings window.')
-                __addon__.openSettings()
-                time.sleep(1)
-                __addon__.setSetting(id="addon_version", value=__version__)
-            # different version settings.xml found
-            if os.path.isfile(settings_file) and __addon__.getSetting("addon_version") <> __version__:
-                dialog('okdialog', line1 = __localize__(32002), line2 = __localize__(32021))
-                log('## Addon version is different. Opening settings window.')
-                __addon__.openSettings()
-                __addon__.setSetting(id="addon_version", value=__version__)
-            else:
-                first_run = False
-        __addon__.setSetting(id="addon_version", value=__version__)
-        log('## Correct version of settings.xml file found. Continue with initializing.')
 
     ### Create list for Artwork types to download
     def _artype_list(self):
@@ -227,7 +207,7 @@ class _settings:
         info['bulk_enabled']    = self.movie_defaultthumb
         info['solo_enabled']    = 'true'
         info['gui_string']      = __localize__(32133)
-        info['art_type']        = 'poster'
+        info['art_type']        = 'defaultthumb'
         info['filename']        = 'folder.jpg'
         self.movie_arttype_list.append(info)
 
@@ -326,21 +306,17 @@ class _settings:
         info['gui_string']      = __localize__(32133)
         info['art_type']        = 'defaultthumb'
         info['filename']        = 'folder.jpg'
-        self.tvshow_arttype_list.append(info)        
-        
-            
+        self.tvshow_arttype_list.append(info)
+
+
     ### Check for faulty setting combinations
-    def _check(self):    
+    def _check(self):
         settings_faulty = True
-        check_sections = check_movie = check_tvshow = check_centralize = check_cache = True
         while settings_faulty:
+            settings_faulty = True
+            check_movie = check_tvshow = check_centralize = True
             # re-check settings after posible change
-            self._get()        
-            # Check if artwork section enabled
-            if not (self.movie_enable or self.tvshow_enable):
-                check_sections = False
-                log('Setting check: No artwork section enabled')
-            else: check_sections = True
+            self._get()
             # Check if faulty setting in movie section
             if self.movie_enable:
                 if not self.movie_fanart and not self.movie_extrafanart and not self.movie_extrathumbs and not self.movie_poster and not self.movie_defaultthumb:
@@ -359,18 +335,12 @@ class _settings:
                     check_centralize = False
                     log('Setting check: No centralized folder chosen')
                 else: check_centralize = True
-            # Check if faulty setting in cache section
-            if self.backup_enabled:
-                if self.backup_path == '':
-                    check_cache = False
-                    log('Setting check: No cache folder chosen')
-                else: check_cache = True
             # Compare all setting check
-            if check_sections and check_movie and check_tvshow and check_centralize and check_cache:
+            if check_movie and check_tvshow and check_centralize:
                 settings_faulty = False
             else: settings_faulty = True
             # Faulty setting found
             if settings_faulty:
                 log('Faulty setting combination found')
                 dialog('okdialog', line1 = __localize__(32003), line2 = __localize__(32004))
-                __addon__.openSettings()        
+                __addon__.openSettings()

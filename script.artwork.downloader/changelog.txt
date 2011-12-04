@@ -1,3 +1,10 @@
+[B]1.0.1[/B]
+- Added: Ability for skinners to run a custom mode specifying artwork types
+	see /resources/docs/runscript.txt
+- Fixed: Downloading logos in overwrite all mode
+- Fixed: Problems with folder creation for .rar media
+- Removed: Version/settings.xml check
+
 [B]1.0.0[/B]
 - Name change: Extrafanart Downloader -> Artwork Downloader
 - Fixed: Refactored JSON query to prevent reg-ex problems

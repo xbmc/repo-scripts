@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <strings>
     <!-- Add-on messages id=32001 to 32030 -->
-        <string id="32001">No settings found!</string>
+        <string id="32001">-</string>
         <string id="32002">Different settings version found!</string>
         <string id="32003">Faulty/empty settings combination found!</string>
         <string id="32004">Select your preferences and press OK to save</string>
@@ -21,7 +21,7 @@
         <string id="32018">Download canceled by user</string>
         <string id="32019">Which one to download?</string>
         <string id="32020">Downloaded</string>
-        <string id="32021">Select your preferences and press OK to save</string>
+        <string id="32021">-</string>
         <string id="32022">not found!</string>
         <string id="32023">Run add-on at start-up / login</string>
         <string id="32024">Run add-on as a service</string>
@@ -73,9 +73,9 @@
     <!-- Add-on settings: Advanced settings section id=32101 to 32020 -->   
         <string id="32101">Advanced settings</string>
         <string id="32102">[B]Some more advanced settings to be used[/B]</string>
-        <string id="32103">Keep backup of all downloaded fanart</string>
-        <string id="32104">Backup folder</string>
-        <string id="32105">[I]Warning: folder can increase to considerable size [/I]</string>
+        <string id="32103">-</string>
+        <string id="32104">-</string>
+        <string id="32105">-</string>
         <string id="32106">Use XBMC pre-caching [I](caches images to thumnails folder while downloading) [/I]</string>
         <string id="32107">-</string>
         <string id="32108">-</string>
@@ -126,5 +126,5 @@
         <string id="32191">[I]For bugs, requests or general questions visit the [/I]</string>
         <string id="32192">[I]  Artwork Downloader thread on the XBMC forum. [/I]</string>
         <string id="32189">Thanks to:</string>
-        <string id="32190">Team XBMC and the devs of the other addons on which this was based.</string>
+        <string id="32190">Team XBMC and the authors of the other addons on which this was based.</string>
 </strings>
