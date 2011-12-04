@@ -1,4 +1,4 @@
-import sys, re, datetime
+import sys, re, datetime, simplejson
 import xbmc, xbmcgui
 import contextmenu, infodialog
 
@@ -13,11 +13,9 @@ ACTION_OSD = ( 122, )
 ACTION_SHOW_GUI = ( 18, )
 ACTION_SHOW_INFO = ( 11, )
 
-
 def log(txt):
     message = 'script.globalsearch: %s' % txt
     xbmc.log(msg=message, level=xbmc.LOGDEBUG)
-
 
 class GUI( xbmcgui.WindowXMLDialog ):
     def __init__( self, *args, **kwargs ):
@@ -25,7 +23,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.searchstring = kwargs[ "searchstring" ].replace('(','[(]').replace(')','[)]').replace('+','[+]')
         log('script version %s started' % __addonversion__)
         self.nextsearch = False
-
 
     def onInit( self ):
         if self.searchstring == '':
@@ -39,7 +36,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self._reset_variables()
             self._init_variables()
             self._fetch_items()
-
 
     def _fetch_items( self ):
         if self.movies == 'true':
@@ -56,8 +52,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self._fetch_albums()
         if self.songs == 'true':
             self._fetch_songs()
-        self._setfocus()
-
+        self._check_focus()
 
     def _hide_controls( self ):
         self.getControl( 119 ).setVisible( False )
@@ -71,7 +66,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 198 ).setVisible( False )
         self.getControl( 199 ).setVisible( False )
 
-
     def _reset_controls( self ):
         self.getControl( 111 ).reset()
         self.getControl( 121 ).reset()
@@ -81,7 +75,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 161 ).reset()
         self.getControl( 171 ).reset()
         self.getControl( 181 ).reset()
-
 
     def _parse_argv( self ):
         try:
@@ -96,7 +89,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.albums = self.params.get( "albums", "" )
         self.songs = self.params.get( "songs", "" )
 
-
     def _load_settings( self ):
         self.movies = __addon__.getSetting( "movies" )
         self.tvshows = __addon__.getSetting( "tvshows" )
@@ -106,18 +98,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.albums = __addon__.getSetting( "albums" )
         self.songs = __addon__.getSetting( "songs" )
 
-
     def _reset_variables( self ):
-        self.foundmovies= 'false'
-        self.foundtvshows= 'false'
-        self.foundseasons= 'false'
-        self.foundepisodes= 'false'
-        self.foundmusicvideos= 'false'
-        self.foundartists= 'false'
-        self.foundalbums= 'false'
-        self.foundsongs= 'false'
+        self.focusset= 'false'
         self.getControl( 190 ).setLabel( '[B]' + xbmc.getLocalizedString(194) + '[/B]' )
-
 
     def _init_variables( self ):
         self.fetch_seasonepisodes = 'false'
@@ -128,150 +111,68 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.Player = MyPlayer()
         self.Player.gui = self
 
-
     def _fetch_movies( self ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(342) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "mpaa", "director", "writer"], "sort": { "method": "label" } }, "id": 1}')
-        json_temp = json_query.replace('}]}','').replace('}]','').replace('"}','"').replace('\n\t\t\t\t\t\t}','').replace('}\n\t\t\t\t\t]\n\t\t\t\t}','').replace(']\n\t\t\t\t}','')
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_temp)
-        for movieitem in json_response:
-            findmoviename = re.search( '"label": ?"(.*?)",["\n]', movieitem )
-            if findmoviename:
-                moviename = (findmoviename.group(1))
-                moviematch = re.search( '.*' + self.searchstring + '.*', moviename, re.I )
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('movies')):
+            for item in json_response['result']['movies']:
+                movie = item['label']
+                moviematch = re.search( '.*' + self.searchstring + '.*', movie, re.I )
                 if moviematch:
                     count = count + 1
-                    movie = (moviematch.group(0))
-                    finddirector = re.search( '"director": ?"(.*?)",["\n]', movieitem )
-                    if finddirector:
-                        director = (finddirector.group(1))
-                    else:
-                        director = ""
-                    findwriter = re.search( '"writer": ?"(.*?)",["\n]', movieitem )
-                    if findwriter:
-                        writer = (findwriter.group(1))
-                    else:
-                        writer = ""
-                    findfanart = re.search( '"fanart": ?"(.*?)",["\n]', movieitem )
-                    if findfanart:
-                        fanart = (findfanart.group(1))
-                    else:
-                        fanart = ""
-                    findpath = re.search( '"file": ?"(.*?)",["\n]', movieitem )
-                    if findpath:
-                        path = (findpath.group(1))
-                    else:
-                        path = ""
-                    findgenre = re.search( '"genre": ?"(.*?)",["\n]', movieitem )
-                    if findgenre:
-                        genre = (findgenre.group(1))
-                    else:
-                        genre = ""
-                    findmpaa = re.search( '"mpaa": ?"(.*?)",["\n]', movieitem )
-                    if findmpaa:
-                        mpaa = (findmpaa.group(1))
-                    else:
-                        mpaa = ""
-                    findplaycount = re.search( '"playcount": ?(.*?),["\n]', movieitem )
-                    if findplaycount:
-                        playcount = (findplaycount.group(1))
-                    else:
-                        playcount = ""
-                    findplot = re.search( '"plot": ?"(.*?)",["\n]', movieitem )
-                    if findplot:
-                        plot = (findplot.group(1))
-                    else:
-                        plot = ""
-                    findoutline = re.search( '"plotoutline": ?"(.*?)",["\n]', movieitem )
-                    if findoutline:
-                        outline = (findoutline.group(1))
-                    else:
-                        outline = ""
-                    findrating = re.search( '"rating": ?(.*?),["\n]', movieitem )
-                    if findrating:
-                        rating = findrating.group(1)
-                        rating = str( round( float(rating),1 ) )
-                    else:
-                        rating = ""
-                    findruntime = re.search( '"runtime": ?"(.*?)",["\n]', movieitem )
-                    if findruntime:
-                        runtime = (findruntime.group(1))
-                    else:
-                        runtime = ""
-                    findstudio = re.search( '"studio": ?"(.*?)",["\n]', movieitem )
-                    if findstudio:
-                        studio = (findstudio.group(1))
-                    else:
-                        studio = ""
-                    findtagline = re.search( '"tagline": ?"(.*?)",["\n]', movieitem )
-                    if findtagline:
-                        tagline = (findtagline.group(1))
-                    else:
-                        tagline = ""
-                    findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', movieitem )
-                    if findthumb:
-                        thumb = (findthumb.group(1))
-                    else:
-                        thumb = ""
-                    findtrailer = re.search( '"trailer": ?"(.*?)",["\n]', movieitem )
-                    if findtrailer:
-                        trailer = (findtrailer.group(1))
-                    else:
-                        trailer = ""
-                    findaudiochannels = re.search( '"channels": ?(.*?),["\n]', movieitem )
-                    if findaudiochannels:
-                        audiochannels = (findaudiochannels.group(1))
-                    else:
-                        audiochannels = ""
-                    findaudiocodec = re.search( '"codec": ?"(.*?)",["\n]', movieitem )
-                    if findaudiocodec:
-                        audiocodec = (findaudiocodec.group(1))
-                    else:
-                        audiocodec = ""
-                    findvideoaspect = re.search( '"aspect": ?(.*?),["\n]', movieitem )
-                    if findvideoaspect:
-                        aspect = (findvideoaspect.group(1))
-                        if float(aspect) <= 1.4859:
-                            videoaspect = str(1.33)
-                        elif float(aspect) <= 1.7190:
-                            videoaspect = str(1.66)
-                        elif float(aspect) <= 1.8147:
-                            videoaspect = str(1.78)
-                        elif float(aspect) <= 2.0174:
-                            videoaspect = str(1.85)
-                        elif float(aspect) <= 2.2738:
-                            videoaspect = str(2.20)
+                    director = item['director']
+                    writer = item['writer']
+                    fanart = item['fanart']
+                    path = item['file']
+                    genre = item['genre']
+                    mpaa = item['mpaa']
+                    playcount = str(item['playcount'])
+                    plot = item['plot']
+                    outline = item['plotoutline']
+                    rating = str(round(float(item['rating']),1))
+                    runtime = item['runtime']
+                    studio = item['studio']
+                    tagline = item['tagline']
+                    thumb = item['thumbnail']
+                    trailer = item['trailer']
+                    year = str(item['year'])
+                    if item['streamdetails'] != None:
+                        audiochannels = str(item['streamdetails']['audio'][0]['channels'])
+                        audiocodec = str(item['streamdetails']['audio'][0]['codec'])
+                        videocodec = str(item['streamdetails']['video'][0]['codec'])
+                        aspect = float(item['streamdetails']['video'][0]['aspect'])
+                        if aspect <= 1.4859:
+                            videoaspect = '1.33'
+                        elif aspect <= 1.7190:
+                            videoaspect = '1.66'
+                        elif aspect <= 1.8147:
+                            videoaspect = '1.78'
+                        elif aspect <= 2.0174:
+                            videoaspect = '1.85'
+                        elif aspect <= 2.2738:
+                            videoaspect = '2.20'
                         else:
-                            videoaspect = str(2.35)
-                    else:
-                        videoaspect = ""
-                    findvideoresolution = re.search( '"height": ?(.*?),["\n]', movieitem )
-                    if findvideoresolution:
-                        height = (findvideoresolution.group(1))
-                        if int(height) <= 480:
-                            videoresolution = str(480)
-                        elif int(height) <= 544:
-                            videoresolution = str(540)
-                        elif int(height) <= 576:
-                            videoresolution = str(576)
-                        elif int(height) <= 720:
-                            videoresolution = str(720)
+                            videoaspect = '2.35'
+                        resolution = item['streamdetails']['video'][0]['height']
+                        if resolution <= 480:
+                            videoresolution = '480'
+                        elif resolution <= 544:
+                            videoresolution = '540'
+                        elif resolution <= 576:
+                            videoresolution = '576'
+                        elif resolution <= 720:
+                            videoresolution = '720'
                         else:
-                            videoresolution = str(1080)
+                            videoresolution = '1080'
                     else:
-                        videoresolution = ""
-                    findvideocodec = re.search( '"aspect":.*?\n?\t{0,7}"codec": ?"(.*?)",["\n]', movieitem )
-                    if findvideocodec:
-                        videocodec = (findvideocodec.group(1))
-                    else:
-                        videocodec = ""
-                    findyear = re.search( '"year": ?(.*)', movieitem )
-                    if findyear:
-                        year = (findyear.group(1))
-                    else:
-                        year = ""
+                        audiochannels = ''
+                        audiocodec = ''
+                        videocodec = ''
+                        aspect = ''
+                        resolution = ''
                     listitem = xbmcgui.ListItem(label=movie, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "fanart_image", fanart )
@@ -297,89 +198,36 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     listitems.append(listitem)
         self.getControl( 111 ).addItems( listitems )
         if count > 0:
-            self.foundmovies= 'true'
             self.getControl( 110 ).setLabel( str(count) )
             self.getControl( 119 ).setVisible( True )
-        else:
-            self.foundmovies= 'false'
-
+            if self.focusset == 'false':
+                self.setFocus( self.getControl( 111 ) )
+                self.focusset = 'true'
 
     def _fetch_tvshows( self ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20343) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["genre", "studio", "premiered", "plot", "fanart", "thumbnail", "playcount", "year", "mpaa", "episode", "rating"], "sort": { "method": "label" } }, "id": 1}')
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
-        for tvshowitem in json_response:
-            findtvshowname = re.search( '"label": ?"(.*?)",["\n]', tvshowitem )
-            if findtvshowname:
-                tvshowname = (findtvshowname.group(1))
-                tvshowmatch = re.search( '.*' + self.searchstring + '.*', tvshowname, re.I )
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
+            for item in json_response['result']['tvshows']:
+                tvshow = item['label']
+                tvshowmatch = re.search( '.*' + self.searchstring + '.*', tvshow, re.I )
                 if tvshowmatch:
                     count = count + 1
-                    tvshow = (tvshowmatch.group(0))
-                    findepisode = re.search( '"episode": ?(.*?),["\n]', tvshowitem )
-                    if findepisode:
-                        episode = (findepisode.group(1))
-                    else:
-                        episode = ""
-                    findfanart = re.search( '"fanart": ?"(.*?)",["\n]', tvshowitem )
-                    if findfanart:
-                        fanart = (findfanart.group(1))
-                    else:
-                        fanart = ""
-                    findgenre = re.search( '"genre": ?"(.*?)",["\n]', tvshowitem )
-                    if findgenre:
-                        genre = (findgenre.group(1))
-                    else:
-                        genre = ""
-                    findmpaa = re.search( '"mpaa": ?"(.*?)",["\n]', tvshowitem )
-                    if findmpaa:
-                        mpaa = (findmpaa.group(1))
-                    else:
-                        mpaa = ""
-                    findplaycount = re.search( '"playcount": ?(.*?),["\n]', tvshowitem )
-                    if findplaycount:
-                        playcount = (findplaycount.group(1))
-                    else:
-                        playcount = ""
-                    findplot = re.search( '"plot": ?"(.*?)",["\n]', tvshowitem )
-                    if findplot:
-                        plot = (findplot.group(1))
-                    else:
-                        plot = ""
-                    findpremiered = re.search( '"premiered": ?"(.*?)",["\n]', tvshowitem )
-                    if findpremiered:
-                        premiered = (findpremiered.group(1))
-                    else:
-                        premiered = ""
-                    findrating = re.search( '"rating": ?(.*?),["\n]', tvshowitem )
-                    if findrating:
-                        rating = (findrating.group(1))
-                        rating = str( round( float(rating),1 ) )
-                    else:
-                        rating = ""
-                    findstudio = re.search( '"studio": ?"(.*?)",["\n]', tvshowitem )
-                    if findstudio:
-                        studio = (findstudio.group(1))
-                    else:
-                        studio = ""
-                    findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', tvshowitem )
-                    if findthumb:
-                        thumb = (findthumb.group(1))
-                    else:
-                        thumb = ""
-                    findpath = re.search( '"tvshowid": ?(.*?),["\n]', tvshowitem )
-                    if findpath:
-                        path = (findpath.group(1))
-                        path = 'videodb://2/2/' + path + '/'
-                    else:
-                        path = ""
-                    findyear = re.search( '"year": ?(.*)', tvshowitem )
-                    if findyear:
-                        year = (findyear.group(1))
-                    else:
-                        year = ""
+                    episode = str(item['episode'])
+                    fanart = item['fanart']
+                    genre = item['genre']
+                    mpaa = item['mpaa']
+                    playcount = str(item['playcount'])
+                    plot = item['plot']
+                    premiered = item['premiered']
+                    rating = str(round(float(item['rating']),1))
+                    studio = item['studio']
+                    thumb = item['thumbnail']
+                    path = path = 'videodb://2/2/' + str(item['tvshowid']) + '/'
+                    year = str(item['year'])
                     listitem = xbmcgui.ListItem(label=tvshow, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "episode", episode )
@@ -396,58 +244,30 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     listitems.append(listitem)
         self.getControl( 121 ).addItems( listitems )
         if count > 0:
-            self.foundtvshows= 'true'
             self.getControl( 120 ).setLabel( str(count) )
             self.getControl( 129 ).setVisible( True )
-        else:
-            self.foundtvshows= 'false'
-
+            if self.focusset == 'false':
+                self.setFocus( self.getControl( 121 ) )
+                self.focusset = 'true'
 
     def _fetch_seasons( self ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20343) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["showtitle", "season", "fanart", "thumbnail", "playcount", "episode"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
-        for seasonitem in json_response:
-            findtvshowname = re.search( '"showtitle": ?"(.*?)",["\n]', seasonitem )
-            if findtvshowname:
-                tvshowname = (findtvshowname.group(1))
-                tvshowmatch = re.search( '.*' + self.searchstring + '.*', tvshowname, re.I )
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('seasons')):
+            for item in json_response['result']['seasons']:
+                tvshow = item['showtitle']
+                tvshowmatch = re.search( '.*' + self.searchstring + '.*', tvshow, re.I )
                 if tvshowmatch:
                     count = count + 1
-                    tvshow = (tvshowmatch.group(0))
-                    findepisode = re.search( '"episode": ?(.*?),["\n]', seasonitem )
-                    if findepisode:
-                        episode = (findepisode.group(1))
-                    else:
-                        episode = ""
-                    findfanart = re.search( '"fanart": ?"(.*?)",["\n]', seasonitem )
-                    if findfanart:
-                        fanart = (findfanart.group(1))
-                    else:
-                        fanart = ""
-                    findpath = re.search( '"season": ?(.*?),["\n]', seasonitem )
-                    if findpath:
-                        path = (findpath.group(1))
-                        path = 'videodb://2/2/' + self.tvshowid + '/' + path + '/'
-                    else:
-                        path = ""
-                    findseason = re.search( '"label": ?"(.*?)",["\n]', seasonitem )
-                    if findseason:
-                        season = (findseason.group(1))
-                    else:
-                        season = ""
-                    findplaycount = re.search( '"playcount": ?(.*?),["\n]', seasonitem )
-                    if findplaycount:
-                        playcount = (findplaycount.group(1))
-                    else:
-                        playcount = ""
-                    findthumb = re.search( '"thumbnail": ?"(.*?)"', seasonitem )
-                    if findthumb:
-                        thumb = (findthumb.group(1))
-                    else:
-                        thumb = ""
+                    episode = str(item['episode'])
+                    fanart = item['fanart']
+                    path = 'videodb://2/2/' + self.tvshowid + '/' + str(item['season']) + '/'
+                    season = item['label']
+                    playcount = str(item['playcount'])
+                    thumb = item['thumbnail']
                     listitem = xbmcgui.ListItem(label=season, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "episode", episode )
@@ -461,9 +281,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.foundseasons= 'true'
             self.getControl( 130 ).setLabel( str(count) )
             self.getControl( 139 ).setVisible( True )
-        else:
-            self.foundseasons= 'false'
-
+            if self.focusset == 'false':
+                self.setFocus( self.getControl( 131 ) )
+                self.focusset = 'true'
 
     def _fetch_episodes( self ):
         listitems = []
@@ -473,137 +293,67 @@ class GUI( xbmcgui.WindowXMLDialog ):
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["streamdetails", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
         else:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["streamdetails", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating"], "sort": { "method": "label" } }, "id": 1}')
-        json_temp = json_query.replace('}]}','').replace('}],"v',',"v').replace('\n\t\t\t\t\t\t}','').replace('}\n\t\t\t\t\t]\n\t\t\t\t}','').replace(']\n\t\t\t\t}','')
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_temp)
-        for episodeitem in json_response:
-            if self.fetch_seasonepisodes == 'true':
-                findepisodename = re.search( '"showtitle": ?"(.*?)",["\n]', episodeitem )
-            else:
-                findepisodename = re.search( '"label": ?"(.*?)",["\n]', episodeitem )
-            if findepisodename:
-                episodename = (findepisodename.group(1))
-                episodematch = re.search( '.*' + self.searchstring + '.*', episodename, re.I )
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('episodes')):
+            for item in json_response['result']['episodes']:
+                if self.fetch_seasonepisodes == 'true':
+                    episode = item['showtitle']
+                else:
+                    episode = item['label']
+                episodematch = re.search( '.*' + self.searchstring + '.*', episode, re.I )
                 if episodematch:
                     count = count + 1
                     if self.fetch_seasonepisodes == 'true':
-                        tvshowname = (episodematch.group(0))
+                        tvshowname = episode
+                        episode = item['label']
                     else:
-                        episode = (episodematch.group(0))
-                    finddirector = re.search( '"director": ?"(.*?)",["\n]', episodeitem )
-                    if finddirector:
-                        director = (finddirector.group(1))
-                    else:
-                        director = ""
-                    findfanart = re.search( '"fanart": ?"(.*?)",["\n]', episodeitem )
-                    if findfanart:
-                        fanart = (findfanart.group(1))
-                    else:
-                        fanart = ""
-                    findepisodenumber = re.search( '"episode": ?(.*?),["\n]', episodeitem )
-                    if findepisodenumber:
-                        episodenumber = (findepisodenumber.group(1))
-                    else:
-                        episodenumber = ""
-                    findpath = re.search( '"file": ?"(.*?)",["\n]', episodeitem )
-                    if findpath:
-                        path = (findpath.group(1))
-                    else:
-                        path = ""
-                    findpremiered = re.search( '"firstaired": ?"(.*?)",["\n]', episodeitem )
-                    if findpremiered:
-                        premiered = (findpremiered.group(1))
-                    else:
-                        premiered = ""
-                    findplot = re.search( '"plot": ?"(.*?)",["\n]', episodeitem )
-                    if findplot:
-                        plot = (findplot.group(1))
-                    else:
-                        plot = ""
-                    findrating = re.search( '"rating": ?(.*?),["\n]', episodeitem )
-                    if findrating:
-                        rating = (findrating.group(1))
-                        rating = str( round( float(rating),1 ) )
-                    else:
-                        rating = ""
-                    findruntime = re.search( '"runtime": ?"(.*?)",["\n]', episodeitem )
-                    if findruntime:
-                        runtime = (findruntime.group(1))
-                    else:
-                        runtime = ""
-                    findseason = re.search( '"season": ?(.*?),["\n]', episodeitem )
-                    if findseason:
-                        seasonnumber = (findseason.group(1))
-                    else:
-                        seasonnumber = ""
-                    if self.fetch_seasonepisodes == 'true':
-                        findepisode = re.search( '"label": ?"(.*?)",["\n]', episodeitem )
-                        if findepisode:
-                            episode = (findepisode.group(1))
+                        tvshowname = item['showtitle']
+                    director = item['director']
+                    fanart = item['fanart']
+                    episodenumber = "%.2d" % float(item['episode'])
+                    path = item['file']
+                    plot = item['plot']
+                    runtime = item['runtime']
+                    premiered = item['firstaired']
+                    rating = str(round(float(item['rating']),1))
+                    seasonnumber = "%.2d" % float(item['season'])
+                    playcount = str(item['playcount'])
+                    thumb = item['thumbnail']
+                    fanart = item['fanart']
+                    if item['streamdetails'] != None:
+                        audiochannels = str(item['streamdetails']['audio'][0]['channels'])
+                        audiocodec = str(item['streamdetails']['audio'][0]['codec'])
+                        videocodec = str(item['streamdetails']['video'][0]['codec'])
+                        aspect = float(item['streamdetails']['video'][0]['aspect'])
+                        if aspect <= 1.4859:
+                            videoaspect = '1.33'
+                        elif aspect <= 1.7190:
+                            videoaspect = '1.66'
+                        elif aspect <= 1.8147:
+                            videoaspect = '1.78'
+                        elif aspect <= 2.0174:
+                            videoaspect = '1.85'
+                        elif aspect <= 2.2738:
+                            videoaspect = '2.20'
                         else:
-                            episode = ""
-                    else:
-                        findtvshowname = re.search( '"showtitle": ?"(.*?)",["\n]', episodeitem )
-                        if findtvshowname:
-                            tvshowname = (findtvshowname.group(1))
+                            videoaspect = '2.35'
+                        resolution = item['streamdetails']['video'][0]['height']
+                        if resolution <= 480:
+                            videoresolution = '480'
+                        elif resolution <= 544:
+                            videoresolution = '540'
+                        elif resolution <= 576:
+                            videoresolution = '576'
+                        elif resolution <= 720:
+                            videoresolution = '720'
                         else:
-                            tvshowname = ""
-                    findplaycount = re.search( '"playcount": ?(.*?),["\n]', episodeitem )
-                    if findplaycount:
-                        playcount = (findplaycount.group(1))
+                            videoresolution = '1080'
                     else:
-                        playcount = ""
-                    findthumb = re.search( '"thumbnail": ?"(.*?)"', episodeitem )
-                    if findthumb:
-                        thumb = (findthumb.group(1))
-                    else:
-                        thumb = ""
-                    findaudiochannels = re.search( '"channels": ?(.*?),["\n]', episodeitem )
-                    if findaudiochannels:
-                        audiochannels = (findaudiochannels.group(1))
-                    else:
-                        audiochannels = ""
-                    findaudiocodec = re.search( '"codec": ?"(.*?)",["\n]', episodeitem )
-                    if findaudiocodec:
-                        audiocodec = (findaudiocodec.group(1))
-                    else:
-                        audiocodec = ""
-                    findvideoaspect = re.search( '"aspect": ?(.*?),["\n]', episodeitem )
-                    if findvideoaspect:
-                        aspect = (findvideoaspect.group(1))
-                        if float(aspect) <= 1.4859:
-                            videoaspect = str(1.33)
-                        elif float(aspect) <= 1.7190:
-                            videoaspect = str(1.66)
-                        elif float(aspect) <= 1.8147:
-                            videoaspect = str(1.78)
-                        elif float(aspect) <= 2.0174:
-                            videoaspect = str(1.85)
-                        elif float(aspect) <= 2.2738:
-                            videoaspect = str(2.20)
-                        else:
-                            videoaspect = str(2.35)
-                    else:
-                        videoaspect = ""
-                    findvideoresolution = re.search( '"height": ?(.*?),["\n]', episodeitem )
-                    if findvideoresolution:
-                        height = (findvideoresolution.group(1))
-                        if int(height) <= 480:
-                            videoresolution = str(480)
-                        elif int(height) <= 544:
-                            videoresolution = str(540)
-                        elif int(height) <= 576:
-                            videoresolution = str(576)
-                        elif int(height) <= 720:
-                            videoresolution = str(720)
-                        else:
-                            videoresolution = str(1080)
-                    else:
-                        videoresolution = ""
-                    findvideocodec = re.search( '"aspect":.*?\n?\t{0,7}"codec": ?"(.*?)",["\n]', episodeitem )
-                    if findvideocodec:
-                        videocodec = (findvideocodec.group(1))
-                    else:
-                        videocodec = ""
+                        audiochannels = ''
+                        audiocodec = ''
+                        videocodec = ''
+                        aspect = ''
+                        resolution = ''
                     listitem = xbmcgui.ListItem(label=episode, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "episode", episodenumber )
@@ -625,138 +375,73 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     listitems.append(listitem)
         self.getControl( 141 ).addItems( listitems )
         if count > 0:
-            self.foundepisodes= 'true'
             self.getControl( 140 ).setLabel( str(count) )
             self.getControl( 149 ).setVisible( True )
-        else:
-            self.foundepisodes= 'false'
-
+            if self.focusset == 'false':
+                self.setFocus( self.getControl( 141 ) )
+                self.focusset = 'true'
 
     def _fetch_musicvideos( self ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20389) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["streamdetails", "runtime", "genre", "studio", "artist", "album", "year", "plot", "fanart", "thumbnail", "file", "playcount", "director"], "sort": { "method": "label" } }, "id": 1}')
-        json_temp = json_query.replace('}]}','').replace('}]','').replace('"}','"').replace('\n\t\t\t\t\t\t}','').replace('}\n\t\t\t\t\t]\n\t\t\t\t}','').replace(']\n\t\t\t\t}','')
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_temp)
-        for musicvideoitem in json_response:
-            findmusicvideoname = re.search( '"label": ?"(.*?)",["\n]', musicvideoitem )
-            if findmusicvideoname:
-                musicvideoname = (findmusicvideoname.group(1))
-                musicvideomatch = re.search( '.*' + self.searchstring + '.*', musicvideoname, re.I )
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('musicvideos')):
+            for item in json_response['result']['musicvideos']:
+                musicvideo = item['label']
+                musicvideomatch = re.search( '.*' + self.searchstring + '.*', musicvideo, re.I )
                 if musicvideomatch:
                     count = count + 1
-                    musicvideo = (musicvideomatch.group(0))
-                    findalbum = re.search( '"album": ?"(.*?)",["\n]', musicvideoitem )
-                    if findalbum:
-                        album = (findalbum.group(1))
-                    else:
-                        album = ""
-                    findartist = re.search( '"artist": ?"(.*?)",["\n]', musicvideoitem )
-                    if findartist:
-                        artist = (findartist.group(1))
-                    else:
-                        artist = ""
-                    finddirector = re.search( '"director": ?"(.*?)",["\n]', musicvideoitem )
-                    if finddirector:
-                        director = (finddirector.group(1))
-                    else:
-                        director = ""
-                    findfanart = re.search( '"fanart": ?"(.*?)",["\n]', musicvideoitem )
-                    if findfanart:
-                        fanart = (findfanart.group(1))
-                    else:
-                        fanart = ""
-                    findpath = re.search( '"file": ?"(.*?)",["\n]', musicvideoitem )
-                    if findpath:
-                        path = (findpath.group(1))
-                    else:
-                        path = ""
-                    findgenre = re.search( '"genre": ?"(.*?)",["\n]', musicvideoitem )
-                    if findgenre:
-                        genre = (findgenre.group(1))
-                    else:
-                        genre = ""
-                    findplot = re.search( '"plot": ?"(.*?)",["\n]', musicvideoitem )
-                    if findplot:
-                        plot = (findplot.group(1))
-                    else:
-                        plot = ""
-                    findduration = re.search( '"duration": ?(.*?),["\n]', musicvideoitem )
-                    if findduration:
-                        duration = (findduration.group(1))
-                        duration = str(datetime.timedelta(seconds=int(duration)))
+                    album = item['album']
+                    artist = item['artist']
+                    director = item['director']
+                    fanart = item['fanart']
+                    path = item['file']
+                    genre = item['genre']
+                    plot = item['plot']
+                    studio = item['studio']
+                    thumb = item['thumbnail']
+                    playcount = str(item['playcount'])
+                    year = str(item['year'])
+                    if item['streamdetails'] != None:
+                        audiochannels = str(item['streamdetails']['audio'][0]['channels'])
+                        audiocodec = str(item['streamdetails']['audio'][0]['codec'])
+                        videocodec = str(item['streamdetails']['video'][0]['codec'])
+                        aspect = float(item['streamdetails']['video'][0]['aspect'])
+                        if aspect <= 1.4859:
+                            videoaspect = '1.33'
+                        elif aspect <= 1.7190:
+                            videoaspect = '1.66'
+                        elif aspect <= 1.8147:
+                            videoaspect = '1.78'
+                        elif aspect <= 2.0174:
+                            videoaspect = '1.85'
+                        elif aspect <= 2.2738:
+                            videoaspect = '2.20'
+                        else:
+                            videoaspect = '2.35'
+                        resolution = item['streamdetails']['video'][0]['height']
+                        if resolution <= 480:
+                            videoresolution = '480'
+                        elif resolution <= 544:
+                            videoresolution = '540'
+                        elif resolution <= 576:
+                            videoresolution = '576'
+                        elif resolution <= 720:
+                            videoresolution = '720'
+                        else:
+                            videoresolution = '1080'
+                        duration = str(datetime.timedelta(seconds=int(item['streamdetails']['video'][0]['duration'])))
                         if duration[0] == '0':
                             duration = duration[2:]
                     else:
-                        duration = ""
-                    findstudio = re.search( '"studio": ?"(.*?)",["\n]', musicvideoitem )
-                    if findstudio:
-                        studio = (findstudio.group(1))
-                    else:
-                        studio = ""
-                    findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', musicvideoitem )
-                    if findthumb:
-                        thumb = (findthumb.group(1))
-                    else:
-                        thumb = ""
-                    findplaycount = re.search( '"playcount": ?(.*?),["\n]', musicvideoitem )
-                    if findplaycount:
-                        playcount = (findplaycount.group(1))
-                    else:
-                        playcount = ""
-                    findaudiochannels = re.search( '"channels": ?(.*?),["\n]', musicvideoitem )
-                    if findaudiochannels:
-                        audiochannels = (findaudiochannels.group(1))
-                    else:
-                        audiochannels = ""
-                    findaudiocodec = re.search( '"codec": ?"(.*?)",["\n]', musicvideoitem )
-                    if findaudiocodec:
-                        audiocodec = (findaudiocodec.group(1))
-                    else:
-                        audiocodec = ""
-                    findvideoaspect = re.search( '"aspect": ?(.*?),["\n]', musicvideoitem )
-                    if findvideoaspect:
-                        aspect = (findvideoaspect.group(1))
-                        if float(aspect) <= 1.4859:
-                            videoaspect = str(1.33)
-                        elif float(aspect) <= 1.7190:
-                            videoaspect = str(1.66)
-                        elif float(aspect) <= 1.8147:
-                            videoaspect = str(1.78)
-                        elif float(aspect) <= 2.0174:
-                            videoaspect = str(1.85)
-                        elif float(aspect) <= 2.2738:
-                            videoaspect = str(2.20)
-                        else:
-                            videoaspect = str(2.35)
-                    else:
-                        videoaspect = ""
-                    findvideoresolution = re.search( '"height": ?(.*?),["\n]', musicvideoitem )
-                    if findvideoresolution:
-                        height = (findvideoresolution.group(1))
-                        if int(height) <= 480:
-                            videoresolution = str(480)
-                        elif int(height) <= 544:
-                            videoresolution = str(540)
-                        elif int(height) <= 576:
-                            videoresolution = str(576)
-                        elif int(height) <= 720:
-                            videoresolution = str(720)
-                        else:
-                            videoresolution = str(1080)
-                    else:
-                        videoresolution = ""
-                    findvideocodec = re.search( '"aspect":.*?\n?\t{0,7}"codec": ?"(.*?)",["\n]', musicvideoitem )
-                    if findvideocodec:
-                        videocodec = (findvideocodec.group(1))
-                    else:
-                        videocodec = ""
-                    findyear = re.search( '"year": ?(.*)', musicvideoitem )
-                    if findyear:
-                        year = (findyear.group(1))
-                    else:
-                        year = ""
+                        audiochannels = ''
+                        audiocodec = ''
+                        videocodec = ''
+                        aspect = ''
+                        resolution = ''
+                        duration = ''
                     listitem = xbmcgui.ListItem(label=musicvideo, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "album", album )
@@ -778,88 +463,36 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     listitems.append(listitem)
         self.getControl( 151 ).addItems( listitems )
         if count > 0:
-            self.foundmusicvideos= 'true'
             self.getControl( 150 ).setLabel( str(count) )
             self.getControl( 159 ).setVisible( True )
-        else:
-            self.foundmusicvideos= 'false'
-
+            if self.focusset == 'false':
+                self.setFocus( self.getControl( 151 ) )
+                self.focusset = 'true'
 
     def _fetch_artists( self ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(133) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": ["genre", "description", "fanart", "thumbnail", "formed", "disbanded", "born", "yearsactive", "died", "mood", "style"], "sort": { "method": "label" } }, "id": 1}')
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
-        for artistitem in json_response:
-            findartistname = re.search( '"artist": ?"(.*?)",["\n]', artistitem )
-            if findartistname:
-                artistname = (findartistname.group(1))
-                artistmatch = re.search( '.*' + self.searchstring + '.*', artistname, re.I )
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('artists')):
+            for item in json_response['result']['artists']:
+                artist = item['label']
+                artistmatch = re.search( '.*' + self.searchstring + '.*', artist, re.I )
                 if artistmatch:
                     count = count + 1
-                    artist = (artistmatch.group(0))
-                    findpath = re.search( '"artistid": ?(.*?),["\n]', artistitem )
-                    if findpath:
-                        path = (findpath.group(1))
-                        path = 'musicdb://2/' + path + '/'
-                    else:
-                        path = ""
-                    findborn = re.search( '"born": ?"(.*?)",["\n]', artistitem )
-                    if findborn:
-                        born = (findborn.group(1))
-                    else:
-                        born = ""
-                    finddescription = re.search( '"description": ?"(.*?)",["\n]', artistitem )
-                    if finddescription:
-                        description = (finddescription.group(1))
-                    else:
-                        description = ""
-                    finddied = re.search( '"died": ?"(.*?)",["\n]', artistitem )
-                    if finddied:
-                        died = (finddied.group(1))
-                    else:
-                        died = ""
-                    finddisbanded = re.search( '"disbanded": ?"(.*?)",["\n]', artistitem )
-                    if finddisbanded:
-                        disbanded = (finddisbanded.group(1))
-                    else:
-                        disbanded = ""
-                    findfanart = re.search( '"fanart": ?"(.*?)",["\n]', artistitem )
-                    if findfanart:
-                        fanart = (findfanart.group(1))
-                    else:
-                        fanart = ""
-                    findformed = re.search( '"formed": ?"(.*?)",["\n]', artistitem )
-                    if findformed:
-                        formed = (findformed.group(1))
-                    else:
-                        formed = ""
-                    findgenre = re.search( '"genre": ?"(.*?)",["\n]', artistitem )
-                    if findgenre:
-                        genre = (findgenre.group(1))
-                    else:
-                        genre = ""
-                    findmood = re.search( '"mood": ?"(.*?)",["\n]', artistitem )
-                    if findmood:
-                        mood = (findmood.group(1))
-                    else:
-                        mood = ""
-                    findstyle = re.search( '"style": ?"(.*?)",["\n]', artistitem )
-                    if findstyle:
-                        style = (findstyle.group(1))
-                    else:
-                        style = ""
-                    findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', artistitem )
-                    if findthumb:
-                        thumb = (findthumb.group(1))
-                    else:
-                        thumb = ""
-                    findyearsactive = re.search( '"yearsactive": ?"(.*?)"', artistitem )
-                    if findyearsactive:
-                        yearsactive = (findyearsactive.group(1))
-                    else:
-                        yearsactive = ""
+                    path = 'musicdb://2/' + str(item['artistid']) + '/'
+                    born = item['born']
+                    description = item['description']
+                    died = item['died']
+                    disbanded = item['disbanded']
+                    fanart = item['fanart']
+                    formed = item['formed']
+                    genre = item['genre']
+                    mood = item['mood']
+                    style = item['style']
+                    thumb = item['thumbnail']
+                    yearsactive = item['yearsactive']
                     listitem = xbmcgui.ListItem(label=artist, iconImage='DefaultArtist.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "artist_born", born )
@@ -876,117 +509,53 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     listitems.append(listitem)
         self.getControl( 161 ).addItems( listitems )
         if count > 0:
-            self.foundartists= 'true'
             self.getControl( 160 ).setLabel( str(count) )
             self.getControl( 169 ).setVisible( True )
-        else:
-            self.foundartists= 'false'
-
+            if self.focusset == 'false':
+                self.setFocus( self.getControl( 161 ) )
+                self.focusset = 'true'
 
     def _fetch_albums( self ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(132) + '[/B]' )
         count = 0
         if self.fetch_albumssongs == 'true':
-            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"z], "sort": { "method": "label" }, "artistid":%s }, "id": 1}' % self.artistid)
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"], "sort": { "method": "label" }, "artistid":%s }, "id": 1}' % self.artistid)
         else:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"], "sort": { "method": "label" } }, "id": 1}')
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
-        for albumitem in json_response:
-            if self.fetch_albumssongs == 'true':
-                findalbumname = re.search( '"artist": ?"(.*?)",["\n]', albumitem )
-            else:
-                findalbumname = re.search( '"label": ?"(.*?)",["\n]', albumitem )
-            if findalbumname:
-                albumname = (findalbumname.group(1))
-                albummatch = re.search( '.*' + self.searchstring + '.*', albumname, re.I )
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('albums')):
+            for item in json_response['result']['albums']:
+                if self.fetch_albumssongs == 'true':
+                    album = item['artist']
+                else:
+                    album = item['label']
+                albummatch = re.search( '.*' + self.searchstring + '.*', album, re.I )
                 if albummatch:
                     count = count + 1
                     if self.fetch_albumssongs == 'true':
-                        artist = (albummatch.group(0))
+                        artist = album
+                        album = item['label']
                     else:
-                        album = (albummatch.group(0))
-                    if self.fetch_albumssongs == 'true':
-                        findalbum = re.search( '"label": ?"(.*?)",["\n]', albumitem )
-                        if findalbum:
-                            album = (findalbum.group(1))
-                        else:
-                            album = ""
-                    else:
-                        findartist = re.search( '"artist": ?"(.*?)",["\n]', albumitem )
-                        if findartist:
-                            artist = (findartist.group(1))
-                            if self.fetch_songalbum == 'true':
-                                if not artist == self.artistname:
-                                    count = count - 1
-                                    return
-                        else:
-                            artist = ""
-                    findpath = re.search( '"albumid": ?(.*?),["\n]', albumitem )
-                    if findpath:
-                        path = (findpath.group(1))
-                        path = 'musicdb://3/' + path + '/'
-                    else:
-                        path = ""
-                    findlabel = re.search( '"albumlabel": ?"(.*?)",["\n]', albumitem )
-                    if findlabel:
-                        label = (findlabel.group(1))
-                    else:
-                        label = ""
-                    finddescription = re.search( '"description": ?"(.*?)",["\n]', albumitem )
-                    if finddescription:
-                        description = (finddescription.group(1))
-                    else:
-                        description = ""
-                    findfanart = re.search( '"fanart": ?"(.*?)",["\n]', albumitem )
-                    if findfanart:
-                        fanart = (findfanart.group(1))
-                    else:
-                        fanart = ""
-                    findgenre = re.search( '"genre": ?"(.*?)",["\n]', albumitem )
-                    if findgenre:
-                        genre = (findgenre.group(1))
-                    else:
-                        genre = ""
-                    findmood = re.search( '"mood": ?"(.*?)",["\n]', albumitem )
-                    if findmood:
-                        mood = (findmood.group(1))
-                    else:
-                        mood = ""
-                    findrating = re.search( '"rating": ?(.*?),["\n]', albumitem )
-                    if findrating:
-                        rating = (findrating.group(1))
-                        if rating == '48':
-                            rating = ""
-                        else:
-                            rating = (findrating.group(1))
-                    else:
+                        artist = item['artist']
+                        if self.fetch_songalbum == 'true':
+                            if not artist == self.artistname:
+                                count = count - 1
+                                return
+                    path = 'musicdb://3/' + str(item['albumid']) + '/'
+                    label = item['albumlabel']
+                    description = item['description']
+                    fanart = item['fanart']
+                    genre = item['genre']
+                    mood = item['mood']
+                    rating = str(item['rating'])
+                    if rating == '48':
                         rating = ""
-                    findstyle = re.search( '"style": ?"(.*?)",["\n]', albumitem )
-                    if findstyle:
-                        style = (findstyle.group(1))
-                    else:
-                        style = ""
-                    findtheme = re.search( '"theme": ?"(.*?)",["\n]', albumitem )
-                    if findtheme:
-                        theme = (findtheme.group(1))
-                    else:
-                        theme = ""
-                    findtype = re.search( '"type": ?"(.*?)",["\n]', albumitem )
-                    if findtype:
-                        albumtype = (findtype.group(1))
-                    else:
-                        albumtype = ""
-                    findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', albumitem )
-                    if findthumb:
-                        thumb = (findthumb.group(1))
-                    else:
-                        thumb = ""
-                    findyear = re.search( '"year": ?(.*)', albumitem )
-                    if findyear:
-                        year = (findyear.group(1))
-                    else:
-                        year = ""
+                    style = item['style']
+                    theme = item['theme']
+                    albumtype = item['type']
+                    thumb = item['thumbnail']
+                    year = str(item['year'])
                     listitem = xbmcgui.ListItem(label=album, iconImage='DefaultAlbumCover.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "artist", artist )
@@ -1004,12 +573,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     listitems.append(listitem)
         self.getControl( 171 ).addItems( listitems )
         if count > 0:
-            self.foundalbums= 'true'
             self.getControl( 170 ).setLabel( str(count) )
             self.getControl( 179 ).setVisible( True )
-        else:
-            self.foundalbums= 'false'
-
+            if self.focusset == 'false':
+                self.setFocus( self.getControl( 171 ) )
+                self.focusset = 'true'
 
     def _fetch_songs( self ):
         listitems = []
@@ -1019,92 +587,34 @@ class GUI( xbmcgui.WindowXMLDialog ):
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["artist", "album", "genre", "duration", "year", "file", "thumbnail", "fanart", "comment", "rating", "track", "playcount"], "sort": { "method": "label" }, "artistid":%s }, "id": 1}' % self.artistid)
         else:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["artist", "album", "genre", "duration", "year", "file", "thumbnail", "fanart", "comment", "rating", "track", "playcount"], "sort": { "method": "label" } }, "id": 1}')
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
-        for songitem in json_response:
-            if self.fetch_albumssongs == 'true':
-                findsongname = re.search( '"artist": ?"(.*?)",["\n]', songitem )
-            else:
-                findsongname = re.search( '"label": ?"(.*?)",["\n]', songitem )
-            if findsongname:
-                songname = (findsongname.group(1))
-                songmatch = re.search( '.*' + self.searchstring + '.*', songname, re.I )
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
+            for item in json_response['result']['songs']:
+                if self.fetch_albumssongs == 'true':
+                    song = item['artist']
+                else:
+                    song = item['label']
+                songmatch = re.search( '.*' + self.searchstring + '.*', song, re.I )
                 if songmatch:
                     count = count + 1
                     if self.fetch_albumssongs == 'true':
-                        artist = (songmatch.group(0))
+                        artist = song
+                        song = item['label']
                     else:
-                        song = (songmatch.group(0))
-                    findalbum = re.search( '"album": ?"(.*?)",["\n]', songitem )
-                    if findalbum:
-                        album = (findalbum.group(1))
-                    else:
-                        album = ""
-                    if self.fetch_albumssongs == 'true':
-                        findsong = re.search( '"label": ?"(.*?)",["\n]', songitem )
-                        if findsong:
-                            song = (findsong.group(1))
-                        else:
-                            song = ""
-                    else:
-                        findartist = re.search( '"artist": ?"(.*?)",["\n]', songitem )
-                        if findartist:
-                            artist = (findartist.group(1))
-                        else:
-                            artist = ""
-                    findcomment = re.search( '"comment": ?"(.*?)",["\n]', songitem )
-                    if findcomment:
-                        comment = (findcomment.group(1))
-                    else:
-                        comment = ""
-                    findduration = re.search( '"duration": ?(.*?),["\n]', songitem )
-                    if findduration:
-                        duration = (findduration.group(1))
-                        duration = str(datetime.timedelta(seconds=int(duration)))
-                        if duration[0] == '0':
-                            duration = duration[2:]
-                    else:
-                        duration = ""
-                    findfanart = re.search( '"fanart": ?"(.*?)",["\n]', songitem )
-                    if findfanart:
-                        fanart = (findfanart.group(1))
-                    else:
-                        fanart = ""
-                    findpath = re.search( '"file": ?"(.*?)",["\n]', songitem )
-                    if findpath:
-                        path = (findpath.group(1))
-                    else:
-                        path = ""
-                    findgenre = re.search( '"genre": ?"(.*?)",["\n]', songitem )
-                    if findgenre:
-                        genre = (findgenre.group(1))
-                    else:
-                        genre = ""
-                    findthumb = re.search( '"thumbnail": ?"(.*?)",["\n]', songitem )
-                    if findthumb:
-                        thumb = (findthumb.group(1))
-                    else:
-                        thumb = ""
-                    findtrack = re.search( '"track": ?(.*?),["\n]', songitem )
-                    if findtrack:
-                        track = (findtrack.group(1))
-                    else:
-                        track = ""
-                    findplaycount = re.search( '"playcount": ?(.*?),["\n]', songitem )
-                    if findplaycount:
-                        playcount = (findplaycount.group(1))
-                    else:
-                        playcount = ""
-                    findrating = re.search( '"rating": ?(.*?),["\n]', songitem )
-                    if findrating:
-                        rating = (findrating.group(1))
-                        rating = str( int(rating) - 48)
-                    else:
-                        rating = ""
-                    findyear = re.search( '"year": ?(.*)', songitem )
-                    if findyear:
-                        year = (findyear.group(1))
-                    else:
-                        year = ""
+                        artist = item['artist']
+                    album = item['album']
+                    comment = item['comment']
+                    duration = str(datetime.timedelta(seconds=int(item['duration'])))
+                    if duration[0] == '0':
+                        duration = duration[2:]
+                    fanart = item['fanart']
+                    path = item['file']
+                    genre = item['genre']
+                    thumb = item['thumbnail']
+                    track = str(item['track'])
+                    playcount = str(item['playcount'])
+                    rating = str(int(item['rating'])-48)
+                    year = str(item['year'])
                     listitem = xbmcgui.ListItem(label=song, iconImage='DefaultAlbumCover.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "artist", artist )
@@ -1121,12 +631,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     listitems.append(listitem)
         self.getControl( 181 ).addItems( listitems )
         if count > 0:
-            self.foundsongs= 'true'
             self.getControl( 180 ).setLabel( str(count) )
             self.getControl( 189 ).setVisible( True )
-        else:
-            self.foundsongs= 'false'
-
+            if self.focusset == 'false':
+                self.setFocus( self.getControl( 181 ) )
+                self.focusset = 'true'
 
     def _getTvshow_SeasonsEpisodes( self ):
         self.fetch_seasonepisodes = 'true'
@@ -1138,9 +647,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self._reset_controls()
         self._fetch_seasons()
         self._fetch_episodes()
-        self._setfocus()
+        self._check_focus()
         self.fetch_seasonepisodes = 'false'
-
 
     def _getArtist_AlbumsSongs( self ):
         self.fetch_albumssongs = 'true'
@@ -1152,9 +660,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self._reset_controls()
         self._fetch_albums()
         self._fetch_songs()
-        self._setfocus()
+        self._check_focus()
         self.fetch_albumssongs = 'false'
-
 
     def _getSong_Album( self ):
         self.fetch_songalbum = 'true'
@@ -1165,61 +672,48 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self._hide_controls()
         self._reset_controls()
         self._fetch_albums()
-        self._setfocus()
+        self._check_focus()
         self.fetch_songalbum = 'false'
-
 
     def _play_video( self, path ):
         self._close()
         xbmc.Player().play( path )
 
-
     def _play_audio( self, path, listitem ):
         self._close()
         xbmc.Player().play( path, listitem )
-
 
     def _play_trailer( self ):
         self.playingtrailer = 'true'
         self.getControl( 100 ).setVisible( False )
         self.Player.play( self.trailer )
 
-
     def _trailerstopped( self ):
         self.getControl( 100 ).setVisible( True )
         self.playingtrailer = 'false'
 
-
     def _play_album( self ):
         self._close()
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["file", "fanart"], "sort": { "method": "track" }, "albumid":%s }, "id": 1}' % self.albumid)
-        json_response = re.compile( "{(.*?)}", re.DOTALL ).findall(json_query)
         playlist = xbmc.PlayList(0)
         playlist.clear()
-        for songitem in json_response:
-            findsongpath = re.search( '"file": ?"(.*?)",["\n]', songitem )
-            if findsongpath:
-                song = (findsongpath.group(1))
-                findfanart = re.search( '"fanart": ?"(.*?)",["\n]', songitem )
-                if findfanart:
-                    fanart = (findfanart.group(1))
-                else:
-                    fanart = ""
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["file", "fanart"], "sort": { "method": "track" }, "albumid":%s }, "id": 1}' % self.albumid)
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
+            for item in json_response['result']['songs']:
+                song = item['file']
+                fanart = item['fanart']
                 listitem = xbmcgui.ListItem()
                 listitem.setProperty( "fanart_image", fanart )
                 playlist.add( url=song, listitem=listitem )
         xbmc.Player().play( playlist )
 
-
     def _browse_video( self, path ):
         self._close()
         xbmc.executebuiltin('ActivateWindow(Videos,' + path + ',return)')
 
-
     def _browse_audio( self, path ):
         self._close()
         xbmc.executebuiltin('ActivateWindow(MusicLibrary,' + path + ',return)')
-
 
     def _browse_album( self ):
         listitem = self.getControl( 171 ).getSelectedItem()
@@ -1227,31 +721,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self._close()
         xbmc.executebuiltin('ActivateWindow(MusicLibrary,' + path + ',return)')
 
-
-    def _setfocus( self ):
+    def _check_focus( self ):
         self.getControl( 190 ).setLabel( '' )
         self.getControl( 191 ).setLabel( '' )
-        if self.foundmovies == 'true':
-            self.setFocus( self.getControl( 111 ) )
-        elif self.foundtvshows == 'true':
-            self.setFocus( self.getControl( 121 ) )
-        elif self.foundseasons == 'true':
-            self.setFocus( self.getControl( 131 ) )
-        elif self.foundepisodes == 'true':
-            self.setFocus( self.getControl( 141 ) )
-        elif self.foundmusicvideos == 'true':
-            self.setFocus( self.getControl( 151 ) )
-        elif self.foundartists == 'true':
-            self.setFocus( self.getControl( 161 ) )
-        elif self.foundalbums == 'true':
-            self.setFocus( self.getControl( 171 ) )
-        elif self.foundsongs == 'true':
-            self.setFocus( self.getControl( 181 ) )
-        else:
+        if self.focusset == 'false':
             self.getControl( 199 ).setVisible( True )
             self.setFocus( self.getControl( 198 ) )
         self.getControl( 198 ).setVisible( True )
-
 
     def _showContextMenu( self ):
         labels = ()
@@ -1294,7 +770,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if context_menu.selection is not None:
             functions[ context_menu.selection ]()
         del context_menu
-
 
     def _showInfo( self ):
         items = []
@@ -1368,7 +843,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self._play_audio(path, listitem)
         del info_dialog
 
-
     def _newSearch( self ):
         keyboard = xbmc.Keyboard( '', __language__(32101), False )
         keyboard.doModal()
@@ -1376,7 +850,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.searchstring = keyboard.getText()
             self._reset_controls()
             self.onInit()
-
 
     def onClick( self, controlId ):
         if controlId == 111:
@@ -1414,7 +887,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         elif controlId == 198:
             self._newSearch()
 
-
     def onAction( self, action ):
         if action in ACTION_CANCEL_DIALOG:
             if self.playingtrailer == 'false':
@@ -1434,21 +906,16 @@ class GUI( xbmcgui.WindowXMLDialog ):
         elif action in ACTION_SHOW_INFO:
             self._showInfo()
 
-
     def _close( self ):
             log('script stopped')
             self.close()
-
 
 class MyPlayer(xbmc.Player):
     def __init__(self):
         xbmc.Player.__init__( self )
 
-
     def onPlayBackEnded( self ):
-       self.gui._trailerstopped()
-
+        self.gui._trailerstopped()
 
     def onPlayBackStopped( self ):
-       self.gui._trailerstopped()
-
+        self.gui._trailerstopped()
