@@ -1,0 +1,48 @@
+MySQL Connector/Python - Release Notes / ChangeLog
+Copyright (c) 2009,2011, Oracle and/or its affiliates. All rights reserved.
+Use is subject to license terms. (See COPYING)
+
+-----------------------------------------------------------------------
+0.3.2
+-----------------------------------------------------------------------
+Bugs fixed:
+o lp:701081 - Doesn't install with Python 2.4
+
+-----------------------------------------------------------------------
+0.3.1
+-----------------------------------------------------------------------
+Bugs fixed:
+o lp:695514 - Infinite recursion when setting connection client_flags
+o lp:691836 - Incorrect substitution by cursor.execute when tuple args
+  contains '%s'
+
+-----------------------------------------------------------------------
+0.3.0
+-----------------------------------------------------------------------
+Highlights:
+o Python v2.4 support is back.
+o Support for compressed protocol.
+o Support for SSL connections (when Python's ssl module is available)
+o Support for packets which are bigger than 16MB.
+o Max allowed packetsize defaults to 1GB.
+o Some performance improvements.
+
+Changes:
+o Changing code in python2/ and some unittest code to support Python v2.4.
+o Max allowed packetsize is now set to the default of 1GB when authenticating.
+o It was not possible to read and send big packets (>=16MB).
+o (Py2) MySQLConnection.recv() has been refactor and simplified.
+o (Py3) MySQLConnection.recv() refactored to use bytearray() instead
+  of doing string like operations with bytes.
+o Adding utils.int8store()
+o Fixing utils.read_lc_string() to read big strings.
+o (Py3) Optimized utils.read_lc_string_list() using memoryview
+o (Py3) Refactored utils.read_lc_int()
+o Adding support for the MySQL compressed protocol. To use you need to set
+the client constants.ClientFlag.COMPRESS
+o Supporting SSL connections when Python's ssl module is available. SSL
+certificates and keys can be given during connection using the ssl_ca, ssl_cert, ssl_key=None arguments for MySQLConnection.connect().
+
+
+Bugs fixed:
+
