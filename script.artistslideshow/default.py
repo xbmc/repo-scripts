@@ -9,13 +9,66 @@
 # *  Last.fm:      http://www.last.fm/
 # *  htbackdrops:  http://www.htbackdrops.com/
 
-import urllib, re, os, sys, time, unicodedata
+import urllib, re, os, sys, time, unicodedata, socket
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 from elementtree import ElementTree as xmltree
 
 __addon__        = xbmcaddon.Addon()
 __addonname__    = __addon__.getAddonInfo('id')
 __addonversion__ = __addon__.getAddonInfo('version')
+
+socket.setdefaulttimeout(10)
+
+LANGUAGES = (
+    # Full Language name[0]     podnapisi[1]  ISO 639-1[2]   ISO 639-1 Code[3]   Script Setting Language[4]
+    ("Albanian"                   , "29",       "sq",            "alb",                 "0"  ),
+    ("Arabic"                     , "12",       "ar",            "ara",                 "1"  ),
+    ("Belarusian"                 , "0" ,       "hy",            "arm",                 "2"  ),
+    ("Bosnian"                    , "10",       "bs",            "bos",                 "3"  ),
+    ("Bulgarian"                  , "33",       "bg",            "bul",                 "4"  ),
+    ("Catalan"                    , "53",       "ca",            "cat",                 "5"  ),
+    ("Chinese"                    , "17",       "zh",            "chi",                 "6"  ),
+    ("Croatian"                   , "38",       "hr",            "hrv",                 "7"  ),
+    ("Czech"                      , "7",        "cs",            "cze",                 "8"  ),
+    ("Danish"                     , "24",       "da",            "dan",                 "9"  ),
+    ("Dutch"                      , "23",       "nl",            "dut",                 "10" ),
+    ("English"                    , "2",        "en",            "eng",                 "11" ),
+    ("Estonian"                   , "20",       "et",            "est",                 "12" ),
+    ("Persian"                    , "52",       "fa",            "per",                 "13" ),
+    ("Finnish"                    , "31",       "fi",            "fin",                 "14" ),
+    ("French"                     , "8",        "fr",            "fre",                 "15" ),
+    ("German"                     , "5",        "de",            "ger",                 "16" ),
+    ("Greek"                      , "16",       "el",            "ell",                 "17" ),
+    ("Hebrew"                     , "22",       "he",            "heb",                 "18" ),
+    ("Hindi"                      , "42",       "hi",            "hin",                 "19" ),
+    ("Hungarian"                  , "15",       "hu",            "hun",                 "20" ),
+    ("Icelandic"                  , "6",        "is",            "ice",                 "21" ),
+    ("Indonesian"                 , "0",        "id",            "ind",                 "22" ),
+    ("Italian"                    , "9",        "it",            "ita",                 "23" ),
+    ("Japanese"                   , "11",       "ja",            "jpn",                 "24" ),
+    ("Korean"                     , "4",        "ko",            "kor",                 "25" ),
+    ("Latvian"                    , "21",       "lv",            "lav",                 "26" ),
+    ("Lithuanian"                 , "0",        "lt",            "lit",                 "27" ),
+    ("Macedonian"                 , "35",       "mk",            "mac",                 "28" ),
+    ("Norwegian"                  , "3",        "no",            "nor",                 "29" ),
+    ("Polish"                     , "26",       "pl",            "pol",                 "30" ),
+    ("Portuguese"                 , "32",       "pt",            "por",                 "31" ),
+    ("PortugueseBrazil"           , "48",       "pb",            "pob",                 "32" ),
+    ("Romanian"                   , "13",       "ro",            "rum",                 "33" ),
+    ("Russian"                    , "27",       "ru",            "rus",                 "34" ),
+    ("Serbian"                    , "36",       "sr",            "scc",                 "35" ),
+    ("Slovak"                     , "37",       "sk",            "slo",                 "36" ),
+    ("Slovenian"                  , "1",        "sl",            "slv",                 "37" ),
+    ("Spanish"                    , "28",       "es",            "spa",                 "38" ),
+    ("Swedish"                    , "25",       "sv",            "swe",                 "39" ),
+    ("Thai"                       , "0",        "th",            "tha",                 "40" ),
+    ("Turkish"                    , "30",       "tr",            "tur",                 "41" ),
+    ("Ukrainian"                  , "46",       "uk",            "ukr",                 "42" ),
+    ("Vietnamese"                 , "51",       "vi",            "vie",                 "43" ),
+    ("Farsi"                      , "52",       "fa",            "per",                 "13" ),
+    ("Portuguese (Brazil)"        , "48",       "pb",            "pob",                 "32" ),
+    ("Portuguese-BR"              , "48",       "pb",            "pob",                 "32" ),
+    ("Brazilian"                  , "48",       "pb",            "pob",                 "32" ) )
 
 def log(txt):
     message = 'script.artistslideshow: %s' % txt
@@ -40,14 +93,15 @@ def cleanText(text):
     return text.strip()
         
 def download(src, dst):
-    tmpname = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % ( __addonname__ , xbmc.getCacheThumbName(src) ))
-    if xbmcvfs.exists(tmpname):
-        xbmcvfs.delete(tmpname)
-    urllib.urlretrieve(src, tmpname)
-    if os.path.getsize(tmpname) > 999:
-        xbmcvfs.rename(tmpname, dst)
-    else:
-        xbmcvfs.delete(tmpname)
+    if (not xbmc.abortRequested):
+        tmpname = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % ( __addonname__ , xbmc.getCacheThumbName(src) ))
+        if xbmcvfs.exists(tmpname):
+            xbmcvfs.delete(tmpname)
+        urllib.urlretrieve(src, tmpname)
+        if os.path.getsize(tmpname) > 999:
+            xbmcvfs.rename(tmpname, dst)
+        else:
+            xbmcvfs.delete(tmpname)
 
 class Main:
     def __init__( self ):
@@ -111,7 +165,12 @@ class Main:
         self.LASTFM = __addon__.getSetting( "lastfm" )
         self.HTBACKDROPS = __addon__.getSetting( "htbackdrops" )
         self.ARTISTINFO = __addon__.getSetting( "artistinfo" )
-
+        self.LANGUAGE = __addon__.getSetting( "language" )
+        for language in LANGUAGES:
+            if self.LANGUAGE == language[4]:
+                self.LANGUAGE = language[2]
+                log('language = %s' % self.LANGUAGE)
+                break
 
     def _init_vars( self ):
         self.WINDOW = xbmcgui.Window( 12006 )
@@ -191,9 +250,9 @@ class Main:
             log('finished downloading images')
             self.DownloadedAllImages = True
             self.WINDOW.setProperty("ArtistSlideshowRefresh", "True")
-            time.sleep(0.5)
+            time.sleep(0.3)
             self.WINDOW.clearProperty("ArtistSlideshow")
-            time.sleep(0.1)
+            time.sleep(0.3)
             self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
             self.WINDOW.clearProperty("ArtistSlideshowRefresh")
 
@@ -218,7 +277,7 @@ class Main:
 
     def _get_artistinfo( self ):
         site = "lastfm"
-        self.url = self.LastfmURL + '&method=artist.getInfo&artist=' + self.NAME.replace('&','%26').replace(' ','+')
+        self.url = self.LastfmURL + '&method=artist.getInfo&artist=' + self.NAME.replace('&','%26').replace(' ','+') + '&lang=' + self.LANGUAGE
         bio = self._get_data(site, 'bio')
         if bio == []:
             self.biography = ''
