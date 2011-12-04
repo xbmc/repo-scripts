@@ -14,7 +14,7 @@ def log(txt):
 
 
 def clean_filename(filename):
-    illegal_char = '<>:"/\|?*'
+    illegal_char = '^<>:"/\|?*'
     for char in illegal_char:
         filename = filename.replace( char , '' )
     return filename
@@ -402,7 +402,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32006) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32007) + ': ' + str( count + 1 ) )
                 findname = re.search( '"label": ?"(.*?)",["\n]', item )
                 if findname:
                     name = (findname.group(1))
@@ -441,7 +441,7 @@ class Main:
                 log('script cancelled')
                 return
             processeditems = processeditems + 1
-            self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32006) + ': ' + str( count + 1 ) )
+            self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32008) + ': ' + str( count + 1 ) )
             findname = re.search( '"label": ?"(.*?)",["\n]', item )
             if findname:
                 name = (findname.group(1))
@@ -491,7 +491,7 @@ class Main:
                 log('script cancelled')
                 return
             processeditems = processeditems + 1
-            self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32007) + ': ' + str( count + 1 ) )
+            self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32009) + ': ' + str( count + 1 ) )
             findname = re.search( '"label": ?"(.*?)",["\n]', item )
             if findname:
                 name = (findname.group(1))
@@ -530,7 +530,7 @@ class Main:
                 log('script cancelled')
                 return
             processeditems = processeditems + 1
-            self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32008) + ': ' + str( count + 1 ) )
+            self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32010) + ': ' + str( count + 1 ) )
             findname = re.search( '"artist": ?"(.*?)",["\n]', item )
             if findname:
                 name = (findname.group(1))
@@ -564,7 +564,7 @@ class Main:
                 log('script cancelled')
                 return
             processeditems = processeditems + 1
-            self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32009) + ': ' + str( count + 1 ) )
+            self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32011) + ': ' + str( count + 1 ) )
             findname = re.search( '"label": ?"(.*?)",["\n]', item )
             if findname:
                 name = (findname.group(1))
