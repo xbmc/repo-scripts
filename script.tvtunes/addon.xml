@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.tvtunes"
        name="TvTunes"
-       version="1.0.12"
+       version="1.0.13"
        provider-name="Ppic, ronie">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -15,15 +15,12 @@
     <platform>all</platform>
     <summary lang="en">Get and play your Tv shows sound Theme</summary>
     <summary lang="fr">Récupérez et écoutez les génériques des séries de votre bibliothèque</summary>
-	<summary lang="es">Descarga y reproduce las bandas sonoras de las series de tu biblioteca</summary>
-    <description lang="en">This script will help you to get theme of your tvshow library from www.televisiontunes.com
-    it will save them in theme.mp3 file in each of your tvshow folder then they will be play while browsing your tvshow library when you enter the tvshow folder (need your skin to be compatible for this feature)</description>
-    <description lang="fr">Ce script vous aidera à télécharger vos génériques de série depuis www.televisiontunes.com
-    Il les enregistrera dans un fichier theme.mp3 dans vos répertoires de série, ils seront ensuite joué lorsque vous entrerez dans la série correspondante (cette fonctionalité requiert une skin compatible</description>
-	<description lang="es">Este script te ayudará a buscar la banda sonora de tus series en www.televisiontunes.com
-se guardará un fichero theme.mp3 en el directorio de tu serie y será reproducido mientras navegas por dentro de la carpeta de la serie. (Necesitas una skin compatible para esta funcionalidad)</description>
+    <summary lang="es">Descarga y reproduce las bandas sonoras de las series de tu biblioteca</summary>
+    <description lang="en">This script will help you to get theme of your tvshow library from www.televisiontunes.com it will save them in theme.mp3 file in each of your tvshow folder then they will be play while browsing your tvshow library when you enter the tvshow folder (need your skin to be compatible for this feature)</description>
+    <description lang="fr">Ce script vous aidera à télécharger vos génériques de série depuis www.televisiontunes.com Il les enregistrera dans un fichier theme.mp3 dans vos répertoires de série, ils seront ensuite joué lorsque vous entrerez dans la série correspondante (cette fonctionalité requiert une skin compatible</description>
+    <description lang="es">Este script te ayudará a buscar la banda sonora de tus series en www.televisiontunes.com se guardará un fichero theme.mp3 en el directorio de tu serie y será reproducido mientras navegas por dentro de la carpeta de la serie. (Necesitas una skin compatible para esta funcionalidad)</description>
     <disclaimer lang="en">Skinners, please see changelog.txt to know how to integrate it in your skin</disclaimer>
     <disclaimer lang="fr">Skinneurs, lisez le changelog.txt pour obtenir les infos pour l'intégrer à votre skin</disclaimer>
-	<disclaimer lang="es">Skinners, por favor, revisad changelog.txt para saber como integrarlo en vuestras skins</disclaimer>
+    <disclaimer lang="es">Skinners, por favor, revisad changelog.txt para saber como integrarlo en vuestras skins</disclaimer>
   </extension>
 </addon>

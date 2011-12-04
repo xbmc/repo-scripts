@@ -1,3 +1,6 @@
+v1.0.13
+- clean up addon.xml
+
 v1.0.12
 - fix unicode issue
 
