@@ -17,11 +17,13 @@
     Version 0.8
 '''
 import platform
-import xbmc
+import xbmc, xbmcaddon
 try: import xbmcvfs
 except: import xbmcvfsdummy as xbmcvfs
 
-dbg = False
+settings = xbmcaddon.Addon(id='script.common.plugin.cache')
+language = settings.getLocalizedString
+dbg = settings.getSetting("debug") == "true"
 dbglevel = 3
 
 def run():
@@ -33,6 +35,6 @@ def run():
 
 if __name__ == "__main__":
 	# ARM should run in instance mode, not as a service.
-	if not xbmc.getCondVisibility('system.platform.ios'):
+	if not xbmc.getCondVisibility('system.platform.ios') and settings.getSetting("autostart") == "true":
 		import StorageServer
 		run()

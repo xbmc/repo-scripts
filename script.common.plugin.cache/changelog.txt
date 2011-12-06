@@ -1,2 +1,5 @@
-[B]Version 0.8 (Beta)[/B]
+[B]Version 0.9.0[/B]
+- Better stability
+
+[B]Version 0.8.0[/B]
 - Initial public test run.
