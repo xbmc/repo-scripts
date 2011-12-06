@@ -1,0 +1,10 @@
+[B]Todo:[/B]
+
+[B]Version 0.9.0[/B]
+- Downloader autohides while playback is in the foreground.
+- Downloader supports RTMP streams.
+- Move to front of functionality
+
+[B]Version 0.8.0 (Beta)[/B]
+- Initial public test run.
+

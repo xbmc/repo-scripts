@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.simple.downloader"
+       name="Simple downloader for xbmc plugins."
+       version="0.9.0"
+       provider-name="TheCollective">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Simple downloader for xbmc plugins.</summary>
+  </extension>
+  <extension point="xbmc.python.module"
+	     library="lib" />
+</addon>
