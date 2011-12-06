@@ -16,20 +16,27 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import sys, urllib2, re, inspect
+import sys, urllib2, re, io, inspect
 
-class CommonFunctions():
-	
+class CommonFunctions():	
 	def __init__(self):
-		self.plugin = "CommonFunctions-0.8"
-		self.USERAGENT = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.2.8) Gecko/20100722 Firefox/3.6.8"
+		self.version = "0.9.0"
+		self.plugin = "CommonFunctions-" + self.version
+		print self.plugin
 
+		self.USERAGENT = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.2.8) Gecko/20100722 Firefox/3.6.8"
 
 		if sys.modules[ "__main__" ].xbmc:
 			self.xbmc = sys.modules["__main__"].xbmc
 		else:
 			import xbmc
 			self.xbmc = xbmc
+
+		if sys.modules[ "__main__" ].xbmcgui:
+			self.xbmcgui = sys.modules["__main__"].xbmcgui
+		else:
+			import xbmcgui
+			self.xbmcgui = xbmcgui
 
 		if sys.modules[ "__main__" ].dbglevel:
 			self.dbglevel = sys.modules[ "__main__" ].dbglevel
@@ -40,6 +47,63 @@ class CommonFunctions():
 			self.dbg = sys.modules[ "__main__" ].dbg
 		else:
 			self.dbg = True
+
+		if sys.modules[ "__main__" ].plugin:
+			self.plugin = sys.modules[ "__main__" ].plugin
+
+	# This function raises a keyboard for user input
+	def getUserInput(self, title = "Input", default="", hidden=False):
+		result = None
+
+		# Fix for when this functions is called with default=None
+		if not default:
+			default = ""
+
+		keyboard = self.xbmc.Keyboard(default, title)
+		keyboard.setHiddenInput(hidden)
+		keyboard.doModal()
+
+		if keyboard.isConfirmed():
+			result = keyboard.getText()
+		
+		return result
+
+	# This function raises a keyboard for user input
+	def getUserInputNumbers(self, title = "Input", default="", hidden=False):
+		result = None
+
+		# Fix for when this functions is called with default=None
+		if not default:
+			default = ""
+
+		keyboard = self.xbmcgui.Dialog()
+		result = keyboard.numeric(0, title, default)
+		
+		return result
+
+	# Converts the request url passed on by xbmc to the plugin into a dict of key-value pairs
+	def getParameters(self, parameterString):
+		commands = {}
+		splitCommands = parameterString[parameterString.find('?')+1:].split('&')
+
+		for command in splitCommands:
+			if (len(command) > 0):
+				splitCommand = command.split('=')
+				key = splitCommand[0]
+				value = splitCommand[1]
+				commands[key] = value
+
+		return commands
+
+	def replaceHtmlCodes(self, str):
+		str = str.strip()
+		str = str.replace("&amp;", "&")
+		str = str.replace("&quot;", '"')
+		str = str.replace("&hellip;", "...")
+		str = str.replace("&gt;",">")
+		str = str.replace("&lt;","<")
+		str = str.replace("&#39;","'")
+		return str
 
 	def stripTags(self, html):
 		sub_start = html.find("<")
@@ -62,9 +126,9 @@ class CommonFunctions():
 
 		while pos < end and pos != -1:
 			tend = html.find(endstr, end + len(endstr))
-                        if tend != -1:
-                                end = tend
-                        pos = html.find("<" + name, pos + 1)
+			if tend != -1:
+				end = tend
+			pos = html.find("<" + name, pos + 1)
 			self.log("loop: " + str(start) + " < " + str(end) + " pos = " + str(pos), 8)
 
 		self.log("start: %s, end: %s" % ( start + len(match), end), 2)
@@ -72,25 +136,25 @@ class CommonFunctions():
 			html = ""
 		elif start > -1 and end > -1:
 			html = html[start + len(match):end]
-		#elif end > -1:
-		#	html = html[:end]
-		#elif start > -1:
-		#	html = html[start + len(match):]
+		elif end > -1:
+			html = html[:end]
+		elif start > -1:
+			html = html[start + len(match):]
 
-		self.log("done html length: " + str(len(html)) + ", content: " + html, 2)
+		self.log("done html length: " + str(len(html)), 2)
 		return html
 
 	def getDOMAttributes(self, lst):
 		self.log("", 2)
 		ret = []
 		for tmp in lst:
-			if tmp.find('="') > -1:
-				tmp = tmp[:tmp.find('="')]
-
-			if tmp.find('=\'') > -1:
-				tmp = tmp[:tmp.find('=\'')]
-
 			cont_char = tmp[0]
+			if tmp.find('="', tmp.find(cont_char, 1)) > -1:
+				tmp = tmp[:tmp.find('="', tmp.find(cont_char, 1))]
+
+			if tmp.find('=\'', tmp.find(cont_char, 1)) > -1:
+				tmp = tmp[:tmp.find('=\'', tmp.find(cont_char, 1))]
+
 			tmp = tmp[1:]
 			if tmp.rfind(cont_char) > -1:
 				tmp = tmp[:tmp.rfind(cont_char)]
@@ -165,12 +229,13 @@ class CommonFunctions():
 				self.log("Getting element content for %s matches " % len(lst), 2)
 				lst2 = []
 				for match in lst:
+					self.log("Getting element content for %s" % match, 4)
 					temp = self.getDOMContent(item, name, match).strip()
-					item = item[item.find(match + temp) + len(match + temp):]
+					item = item[item.find(temp, item.find(match)) + len(temp):]
 					lst2.append(temp)
-					self.log(lst, 3)
-					self.log(match, 3)
-					self.log(lst2, 3)
+					self.log(lst, 4)
+					self.log(match, 4)
+					self.log(lst2, 4)
 				lst = lst2
 			ret_lst += lst
 
@@ -219,12 +284,52 @@ class CommonFunctions():
 
 			ret_obj["status"] = 500
 			return ret_obj
+
+		except urllib2.URLError, e:
+			err = str(e)
+			self.common.log("URLError : " + err)
+
+			time.sleep(3)
+			params["error"] = str(int(get("error", "0")) + 1)
+			ret_obj = self._fetchPage(params)
+			return ret_obj
+
+	# This function implements a horrible hack related to python 2.4's terrible unicode handling. 
+	def makeAscii(self, str):
+		if sys.hexversion >= 0x02050000:
+			return str
+		try:
+			return str.encode('ascii')
+		except:
+			print self.plugin + " Hit except on : " + repr(str)
+			s = ""
+			for i in str:
+				try:
+					i.encode("ascii", "ignore")
+				except:
+					continue
+				else:
+					s += i
+			return s
+
+	def openFile(self, filepath, options = "w"):
+		if options.find("b") == -1: # Toggle binary mode on failure
+			alternate = options + "b"
+		else:
+			alternate = options.replace("b", "")
+
+		try:
+			return io.open(filepath, options)
+		except:
+			return io.open(filepath, alternate)
 	
 	def log(self, description, level = 0):
 		if self.dbg and self.dbglevel > level:
 			# Funny stuff..
 			# [1][3] needed for calls from scrapeShow
-			if isinstance(description, str):
-				self.xbmc.log("[%s] %s : '%s'" % (self.plugin, inspect.stack()[1][3], description.encode("utf8", "ignore")), self.xbmc.LOGNOTICE)
-			else:
+			#print repr(inspect.stack())
+			try:
+				self.xbmc.log("[%s] %s : '%s'" % (self.plugin, inspect.stack()[1][3], description.encode("utf-8", "ignore")), self.xbmc.LOGNOTICE)
+			except:
 				self.xbmc.log("[%s] %s : '%s'" % (self.plugin, inspect.stack()[1][3], description), self.xbmc.LOGNOTICE)
+
