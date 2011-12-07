@@ -1,0 +1,18 @@
+
+
+[B]Thanks for trying the Movie Quiz, I hope you are enjoying it.[/B]
+
+I initially started working on the addon in January 2011, when my girlfriend got they idea for guessing a movie based on a random clip. Since then it has evolved into many questions for both movies and tv shows as well as features such as online highscores, etc.
+
+I am continuously improving on it and always glad to get feedback, so please don't hesitate to contact me. You can use the XBMC forums or if you understand Danish you may want to visit my blog, which also has information on the other Danish addons I am working on.
+
+Online highscores: [B]http://moviequiz.xbmc.info[/B]
+
+My blog: [B]http://tommy.winther.nu[/B]
+
+Movie Quiz thread: [B]http://forum.xbmc.org/showthread.php?t=92540[/B]
+
+
+Until next time,
+Tommy Winther
+2011.11.13

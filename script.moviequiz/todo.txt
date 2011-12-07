@@ -1,0 +1,19 @@
+TODOs and suggestions in no particular order
+
+- Error message when we are unable to find additional questions
+- DVD ISO's plays menu instead of movie
+- Multiplayer support
+
+Movie Question suggestions:
+* How many movies do you have for year xy?
+- Which movie of this 4 is the shortest (runtime)?
+- Which of this Movie is not a <genre>-Movie? (very easy)
+- What role does <actor> play in <movie>?
+
+- In what movie does <actor> play <role>?
+- What actor stars in these three movies?
+- What year was these three movies released?
+- What movie is these three actors starring?
+
+TV Question:
+- When was season first aired?
