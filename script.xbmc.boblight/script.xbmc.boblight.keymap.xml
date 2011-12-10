@@ -1,9 +1,0 @@
-<keymap>
-  <fullscreenvideo>
-    <keyboard>
-      <b>Addon.OpenSettings(script.xbmc.boblight)</b> <!-- shortcut key b to boblight settings -->
-      <B>Addon.OpenSettings(script.xbmc.boblight)</B> <!-- shortcut key B to boblight settings -->
-    </keyboard>
-  </fullscreenvideo>
-</keymap>
-

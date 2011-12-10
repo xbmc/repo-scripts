@@ -50,7 +50,7 @@ def process_boblight():
   capture = xbmc.RenderCapture()
   capture.capture(capture_width, capture_height, xbmc.CAPTURE_FLAG_CONTINUOUS)
   while not xbmc.abortRequested:
-    if settings_checkForNewSettings():
+    if settings_checkForNewSettings() or not bob_ping():
       reconnectBoblight()
       settings_setup()					#after reconnect reload settings
     if settings_getBobDisable():

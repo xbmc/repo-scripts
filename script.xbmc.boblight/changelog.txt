@@ -1,0 +1,5 @@
+1.0.1
+- ping boblightd and reconnect if connection is lost
+
+1.0.0
+- initial addon release

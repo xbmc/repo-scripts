@@ -199,3 +199,9 @@ def bob_geterror():
   if g_boblightLoaded:
     ret = c_char_p(g_libboblight.boblight_geterror(g_bobHandle)).value
   return ret
+
+def bob_ping():
+  ret = False
+  if g_boblightLoaded and g_connected:
+    ret = c_int(g_libboblight.boblight_ping(g_bobHandle, None)).value == 1
+  return ret
