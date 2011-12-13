@@ -2,12 +2,12 @@
 <addon
 	id="script.artwork.downloader"
 	name="Artwork Downloader"
-	version="1.0.1"
-	provider-name="paddycarey, putneyj, Machine-Sanctum"
+	version="1.0.2"
+	provider-name="paddycarey, putneyj, Martijn Kaijser"
     >
   <requires>
     <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.elementtree"/>
+    <import addon="script.module.elementtree" version="1.2.7"/>
     <import addon="script.module.simplejson" version="2.0.10"/>
   </requires>
   <extension point="xbmc.python.script" library="default.py">

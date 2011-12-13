@@ -26,6 +26,8 @@ Current Features:
         * Clearart
         * Characterart
         * Logo
+        * Thumb
+        * Season Thumb
         * Banner
         * Season Banners
 
@@ -37,15 +39,10 @@ Current Features:
         * Image size
         
     - Skin integration:
-        * Bulk mode: Downloads all in settings enabled artwork for every tv show/movie.
-        * Solo mode: Downloads all in settings enabled for only one tv show/movie.
-        * GUI mode:  User can select what artwork to download. Does not use any limit or setttings from the add-on.
+        * For available options see /resorces/docs/runscript.txt
 
     - Centralized fanart:
         * Can be used for multi-image background slideshow
-    
-    - Fanart download backup folder
-        * Temporary disabled!!
     
 Todos:
     - Music fanart
@@ -59,6 +56,7 @@ Skins using this Add-On:
     - Xperience (made by Black)
     - reFocus (made by Jeroen)
     - Convergence (made by Mudislander)
+    - Backrow (by Sharpe)
 
 ----------------------------------------------------------------------------------------------
 To run the script in bulk mode simply click on it in the 'Addons' or 'Programs' menu in XBMC.

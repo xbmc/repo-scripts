@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <strings>
     <!-- Add-on messages id=32001 to 32030 -->
-        <string id="32001">-</string>
-        <string id="32002">Different settings version found!</string>
+        <string id="32001">Please help get more art or donate on:</string>
+        <string id="32002">Run add-on at time: (24h)</string>
         <string id="32003">Faulty/empty settings combination found!</string>
         <string id="32004">Select your preferences and press OK to save</string>
         <string id="32005">Cleaning up</string>
@@ -16,16 +16,16 @@
         <string id="32013">Enable downloading</string>
         <string id="32014">extrafanart centralized</string>
         <string id="32015">Choose what to download</string>
-        <string id="32016">artwork downloaded</string>
+        <string id="32016">downloaded</string>
         <string id="32017">Cancelled</string>
         <string id="32018">Download canceled by user</string>
         <string id="32019">Which one to download?</string>
         <string id="32020">Downloaded</string>
-        <string id="32021">-</string>
+        <string id="32021">Processing Artwork</string>
         <string id="32022">not found!</string>
         <string id="32023">Run add-on at start-up / login</string>
         <string id="32024">Run add-on as a service</string>
-        <string id="32025">Time interval (hours)</string>
+        <string id="32025">-</string>
         <string id="32026">24</string>
         <string id="32027">36</string>
         <string id="32028">48</string>
@@ -71,7 +71,7 @@
         <string id="32092">[B]Options for downloading Music artwork[/B]</string>
 
     <!-- Add-on settings: Advanced settings section id=32101 to 32020 -->   
-        <string id="32101">Advanced settings</string>
+        <string id="32101">Advanced</string>
         <string id="32102">[B]Some more advanced settings to be used[/B]</string>
         <string id="32103">-</string>
         <string id="32104">-</string>
@@ -118,11 +118,11 @@
         <string id="32181">Info</string>
         <string id="32182">Please donate or contribute to the following sites to show your support:</string>
         <string id="32183">[I]www.xbmc.org[/I] </string>
-        <string id="32184">[I]www.fanart.tv[/I] </string>
+        <string id="32184">[I]fanart.tv[/I] </string>
         <string id="32185">[I]www.thetvdb.com[/I] </string>
         <string id="32186">[I]www.themoviedb.org[/I] </string>
         <string id="32187">Add-on authors:</string>
-        <string id="32188">[I]paddycarey, machine-sanctum, putneyj [/I] </string>
+        <string id="32188">[I]paddycarey, Martijn Kaijser, putneyj [/I] </string>
         <string id="32191">[I]For bugs, requests or general questions visit the [/I]</string>
         <string id="32192">[I]  Artwork Downloader thread on the XBMC forum. [/I]</string>
         <string id="32189">Thanks to:</string>

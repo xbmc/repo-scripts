@@ -58,7 +58,7 @@ class fileops:
                 log("Deleted (%s): %s" % (reason, path), xbmc.LOGNOTICE)
                 isdeleted = True
         if not isdeleted:
-            log("Ignoring (%s): %s" % (reason, filename), xbmc.LOGINFO)
+            log("Ignoring (%s): %s" % (reason, filename))
 
     ### erase old cache file and copy new one
     def erase_current_cache(self,filename):
@@ -104,55 +104,34 @@ class fileops:
             log("Copied successfully: %s" % targetpath)
 
     # download file
-    def _downloadfile(self, url, filename, targetdirs, files_overwrite):
+    def _downloadfile(self, url, filename, targetdirs, media_name):
 
         """
-        Download url to filename and place in all targetdirs.  If file
-        already exists in any of the targetdirs it is copied from there
-        to the others instead of being downloaded again.
+        Download url to filename and place in all targetdirs.
         """
 
-        fileexists = []
-        filenotexistspaths = []
-        for targetdir in targetdirs:
-            path = os.path.join(targetdir, filename)
-            if files_overwrite:
-                fileexists.append(False)
-                filenotexistspaths.append(path)
+        try:
+            temppath = os.path.join(self.tempdir, filename)
+            url = url.replace(" ", "%20")
+            tempfile = open(temppath, "wb")
+            response = urllib2.urlopen(url)
+            tempfile.write(response.read())
+            tempfile.close()
+            response.close()
+        except HTTPError, e:
+            if e.code == 404:
+                raise HTTP404Error(url)
             else:
-                if self._exists(path):
-                    fileexists.append(True)
-                    existspath = path
-                else:
-                    fileexists.append(False)
-                    filenotexistspaths.append(path)
-        if not True in fileexists:
-            try:
-                temppath = os.path.join(self.tempdir, filename)
-                url = url.replace(" ", "%20")
-                tempfile = open(temppath, "wb")
-                response = urllib2.urlopen(url)
-                tempfile.write(response.read())
-                tempfile.close()
-                response.close()
-            except HTTPError, e:
-                if e.code == 404:
-                    raise HTTP404Error(url)
-                else:
-                    raise DownloadError(str(e))
-            except URLError:
-                raise HTTPTimeout(url)
-            except socket.timeout, e:
-                raise HTTPTimeout(url)
-            else:
-                log("Downloaded successfully: %s" % filename, xbmc.LOGNOTICE)
-                self.downloadcount = self.downloadcount + 1
-                for filenotexistspath in filenotexistspaths:
-                    self._copyfile(temppath, filenotexistspath)
-                    if self.settings.xbmc_caching_enabled:
-                        self.erase_current_cache(filenotexistspath)
-        elif not False in fileexists:
-            log("Ignoring (Exists in all target directories): %s" % filename, xbmc.LOGINFO)
+                raise DownloadError(str(e))
+        except URLError:
+            raise HTTPTimeout(url)
+        except socket.timeout, e:
+            raise HTTPTimeout(url)
         else:
-            for filenotexistspath in filenotexistspaths:
-                self._copyfile(existspath, filenotexistspath)
+            log("Downloaded (%s): %s" % (media_name, filename), xbmc.LOGNOTICE)
+            self.downloadcount = self.downloadcount + 1
+            for targetdir in targetdirs:
+                targetpath = os.path.join(targetdir, filename)
+                self._copyfile(temppath, targetpath)
+                if self.settings.xbmc_caching_enabled:
+                    self.erase_current_cache(targetpath)

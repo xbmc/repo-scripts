@@ -61,7 +61,7 @@ class _settings:
         self.notify                 = __addon__.getSetting("notify") == 'true'
         self.service_startup        = __addon__.getSetting("service_startup") == 'true'
         self.service_enable         = __addon__.getSetting("service_enable") == 'true'
-        self.service_time           = __addon__.getSetting("service_time")
+        self.service_runtime        = __addon__.getSetting("service_runtime")
         self.files_overwrite        = __addon__.getSetting("files_overwrite") == 'true'
         self.xbmc_caching_enabled   = __addon__.getSetting("xbmc_caching_enabled") == 'true'
         
@@ -92,9 +92,7 @@ class _settings:
         self.api_timedelay              = 5
         self.mediatype                  = ''
         self.medianame                  = ''
-        self.count_tvshow_extrafanart   = 0
-        self.count_movie_extrafanart    = 0
-        self.count_movie_extrathumbs    = 0
+
 
     ### Log settings in debug mode
     def _initiallog(self):
@@ -104,7 +102,7 @@ class _settings:
         log('## - Notify                = %s' % str(self.notify))
         log('## Run at startup / login  = %s' % str(self.service_startup))
         log('## Run as service          = %s' % str(self.service_enable))
-        log('## - Time interval         = %s' % str(self.service_time))
+        log('## - Time                  = %s' % str(self.service_runtime))
         log('## Overwrite all files     = %s' % str(self.files_overwrite))
         log('##')
         log('## Movie Artwork           = %s' % str(self.movie_enable))

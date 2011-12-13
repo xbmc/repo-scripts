@@ -3,6 +3,7 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 import platform
+import unicodedata
 
 
 """
@@ -24,17 +25,38 @@ dialog = xbmcgui.DialogProgress()
 timeout = 20
 socket.setdefaulttimeout(timeout)
 
+
+# Fixes unicode problems
+def _unicode( text, encoding='utf-8' ):
+    try: text = unicode( text, encoding )
+    except: pass
+    return text
+
+def _normalize_string( text ):
+    try: text = unicodedata.normalize( 'NFKD', _unicode( text ) ).encode( 'ascii', 'ignore' )
+    except: pass
+    return text
+
 def _log(txt, severity=xbmc.LOGDEBUG):
 
     """Log to txt xbmc.log at specified severity"""
     try:
-        message = 'Artwork Downloader: %s' % txt
+        message = ('Artwork Downloader: %s' % txt)
         xbmc.log(msg=message, level=severity)
-    except:
-        xbmc.log('ASCII character error')
+    except UnicodeEncodeError:
+        try:
+            message = _normalize_string('Artwork Downloader: %s' % txt)
+            xbmc.log(msg=message, level=severity)
+        except:
+            message = ('Artwork Downloader: UnicodeEncodeError')
+            xbmc.log(msg=message, level=xbmc.LOGWARNING)
 
 
-def _dialog(action, percentage = 0, line1 = '', line2 = '', line3 = '', background = False):
+def _dialog(action, percentage = 0, line0 = '', line1 = '', line2 = '', line3 = '', background = False):
+    if not line0 == '':
+        line0 = __addonname__ + line0
+    else:
+        line0 = __addonname__
     if not background:
         if action == 'create':
             dialog.create(__addonname__, line1, line2, line3)
@@ -48,11 +70,11 @@ def _dialog(action, percentage = 0, line1 = '', line2 = '', line3 = '', backgrou
             else:
                 return False
         if action == 'okdialog':
-            xbmcgui.Dialog().ok(__addonname__, line1, line2, line3)
+            xbmcgui.Dialog().ok(line0, line1, line2, line3)
     if background:
         if (action == 'create' or action == 'okdialog'):
             if line2 == '':
                 msg = line1
             else:
                 msg = line1 + ': ' + line2
-            xbmc.executebuiltin("XBMC.Notification(%s, %s, 7500, %s)" % (__addonname__, msg, __icon__))
+            xbmc.executebuiltin("XBMC.Notification(%s, %s, 7500, %s)" % (line0, msg, __icon__))

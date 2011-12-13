@@ -61,7 +61,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number fanart reached: %s' % downloaded_artwork
+            reason = 'Max number fanart reached: %s' % self.settings.limit_artwork_max
             limited = True
         elif self.settings.limit_artwork and 'height' in artwork and (mediatype == 'movie' and artwork['height'] < self.settings.limit_size_moviefanart) or (mediatype == 'tvshow' and artwork['height'] < self.settings.limit_size_tvshowfanart):
             reason = 'Size was to small: %s' % artwork['height'] 
@@ -101,7 +101,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_extrathumbs_max:
-            reason = 'Max number extrathumbs reached: %s' % downloaded_artwork
+            reason = 'Max number extrathumbs reached: %s' % self.settings.limit_extrathumbs_max
             limited = True
         elif self.settings.limit_extrathumbs and 'height' in artwork and artwork['height'] < int('169'):
             reason = 'Size was to small: %s' % artwork['height']
@@ -112,7 +112,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number poster reached: %s' % downloaded_artwork
+            reason = 'Max number poster reached: %s' % self.settings.limit_artwork_max
             limited = True
         elif self.settings.limit_extrathumbs and 'height' in artwork and artwork['height'] < int('169'):
             reason = 'Size was to small: %s' % artwork['height']
@@ -126,7 +126,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number seasonposter reached: %s' % downloaded_artwork
+            reason = 'Max number seasonposter reached: %s' % self.settings.limit_artwork_max
             limited = True
         elif self.settings.limit_extrathumbs and 'height' in artwork and artwork['height'] < int('169'):
             reason = 'Size was to small: %s' % artwork['height']
@@ -140,7 +140,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number banner reached: %s' % downloaded_artwork
+            reason = 'Max number banner reached: %s' % self.settings.limit_artwork_max
             limited = True
         elif self.settings.limit_artwork and 'rating' in artwork and artwork['rating'] < self.settings.limit_extrafanart_rating:
             reason = 'Rating too low: %s' % artwork['rating']
@@ -157,7 +157,7 @@ class apply_filters:
             reason = 'No season'
             limited = True
         elif downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number seasonbanner reached: %s' % downloaded_artwork
+            reason = 'Max number seasonbanner reached: %s' % self.settings.limit_artwork_max
             limited = True
         elif self.settings.limit_artwork and 'rating' in artwork and artwork['rating'] < self.settings.limit_extrafanart_rating:
             reason = 'Rating too low: %s' % artwork['rating']
@@ -171,7 +171,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number logos reached: %s' % downloaded_artwork
+            reason = 'Max number logos reached: %s' % self.settings.limit_artwork_max
             limited = True
         return [limited, reason]
         
@@ -179,7 +179,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number clearart reached: %s' % downloaded_artwork
+            reason = 'Max number clearart reached: %s' % self.settings.limit_artwork_max
             limited = True
         return [limited, reason]
 
@@ -187,7 +187,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number characterart reached: %s' % downloaded_artwork
+            reason = 'Max number characterart reached: %s' % self.settings.limit_artwork_max
             limited = True
         return [limited, reason]
         
@@ -195,7 +195,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number tvthumb reached: %s' % downloaded_artwork
+            reason = 'Max number tvthumb reached: %s' % self.settings.limit_artwork_max
             limited = True
         return [limited, reason]
         
@@ -203,7 +203,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number seasonthumb reached: %s' % downloaded_artwork
+            reason = 'Max number seasonthumb reached: %s' % self.settings.limit_artwork_max
             limited = True
         return [limited, reason]
 
@@ -211,7 +211,7 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number defaultthumb reached: %s' % downloaded_artwork
+            reason = 'Max number defaultthumb reached: %s' % self.settings.limit_artwork_max
             limited = True
         return [limited, reason]        
 
@@ -219,6 +219,6 @@ class apply_filters:
         limited = False
         reason = ''
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number discart reached: %s' % downloaded_artwork
+            reason = 'Max number discart reached: %s' % self.settings.limit_artwork_max
             limited = True
         return [limited, reason]

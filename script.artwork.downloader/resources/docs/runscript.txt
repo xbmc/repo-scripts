@@ -61,4 +61,5 @@ Available options "<art_type>"
     Movie: poster, fanart, extrafanart, extrathumbs, defaultthumb
     TV Show: poster, fanart, extrafanart, clearart, clearlogo, tvthumb, banner, characterart, defaultthumb
 	NOTE: when chosen 'clearlogo'  this will download 'logo.png'
+	NOTE: 'defaultthumb' is 'folder.jpg'
 

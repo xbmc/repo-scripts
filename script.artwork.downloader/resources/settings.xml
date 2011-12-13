@@ -10,7 +10,7 @@
         <setting type="sep" />
         <setting label="32023" id="service_startup" type="bool" default="false"/>
         <setting label="32024" id="service_enable" type="bool" default="false"/>
-        <setting label="32025" id="service_time" subsetting="true" type="labelenum" lvalues="32028|32027|32026"  default="24" enable="eq(-1,true)" visible="eq(-1,true)"/>
+        <setting label="32002" id="service_runtime" subsetting="true" type="enum" values="00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23" default="00" enable="eq(-1,true)" visible="eq(-1,true)"/>
         <setting label="32029" type="text" subsetting="true" enable="false"/>
         <setting type="sep" />
     </category>
