@@ -1,3 +1,6 @@
+v3.0.7
+- ignore possible encoding errors
+
 v3.0.6
 - use simplejson instead of regex
 
