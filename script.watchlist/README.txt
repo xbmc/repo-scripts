@@ -24,6 +24,7 @@ The movie list is also sorted by watch date.
 
 The album list is sorted by playcount.
 
+
 2. Running the addon:
 ---------------------
 run the script with the options you need:
@@ -71,3 +72,7 @@ WatchList_Album.%d.Rating		- rating of the album
 WatchList_Album.%d.Thumb		- album thumbnail
 WatchList_Album.%d.Fanart		- artist fanart
 WatchList_Album.%d.Path			- can be used to play the album: <onclick>$INFO[Window(Home).Property(WatchList_Album.%d.Path)]</onclick>
+
+
+WatchList_Running			- used by the script internally to check if it's already running
+

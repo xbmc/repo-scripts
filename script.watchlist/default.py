@@ -22,23 +22,13 @@ class Main:
         if self.ALBUMID:
             self._play_album( self.ALBUMID )
         else:
-            if self.MOVIES == 'true':
-                self._fetch_movies()
-            if self.EPISODES == 'true':
-                self._fetch_tvshows()
-                self._fetch_episodes()
-            if self.ALBUMS == 'true':
-                self._fetch_songs()
-                self._fetch_albums()
-            if self.MOVIES == 'true':
-                self._clear_movie_properties()
-                self._set_movie_properties()
-            if self.EPISODES == 'true':
-                self._clear_episode_properties()
-                self._set_episode_properties()
-            if self.ALBUMS == 'true':
-                self._clear_album_properties()
-                self._set_album_properties()
+            # clear our property, if another instance is already running it should stop now
+            self.WINDOW.clearProperty('WatchList_Running')
+            self._fetch_info()
+            # give a possible other instance some time to notice the empty property
+            xbmc.sleep(2000)
+            self.WINDOW.setProperty('WatchList_Running', 'True')
+            self._daemon()
 
     def _parse_argv( self ):
         try:
@@ -53,10 +43,31 @@ class Main:
 
     def _init_vars( self ):
         self.WINDOW = xbmcgui.Window( 10000 )
+        self.Player = MyPlayer( action = self._update )
+
+    def _fetch_info( self ):
+        if self.MOVIES == 'true':
+            self._fetch_movies()
+        if self.EPISODES == 'true':
+            self._fetch_tvshows()
+            self._fetch_episodes()
+        if self.ALBUMS == 'true':
+            self._fetch_songs()
+            self._fetch_albums()
+        if self.MOVIES == 'true':
+            self._clear_movie_properties()
+            self._set_movie_properties()
+        if self.EPISODES == 'true':
+            self._clear_episode_properties()
+            self._set_episode_properties()
+        if self.ALBUMS == 'true':
+            self._clear_album_properties()
+            self._set_album_properties()
 
     def _fetch_movies( self ):
         self.movies = []
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["resume", "genre", "studio", "tagline", "runtime", "fanart", "thumbnail", "file", "plot", "plotoutline", "year", "lastplayed", "rating"]}, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if json_response['result'].has_key('movies'):
             for item in json_response['result']['movies']:
@@ -75,12 +86,14 @@ class Main:
                     path = item['file']
                     rating = str(round(float(item['rating']),1))
                     if item.has_key('resume'):
-                        # catch exceptions where the lastplayed isn't returned
+                        # catch exceptions where the lastplayed isn't returned by json-rpc (bug?)
                         lastplayed = item['lastplayed']
                     else:
                         lastplayed = ''
-                    if not lastplayed == "":
+                    if lastplayed == '':
                         # catch exceptions where the item has been partially played, but playdate wasn't stored in the db
+                        lastplayed = '0'
+                    else:
                         datetime = strptime(lastplayed, "%Y-%m-%d %H:%M:%S")
                         lastplayed = str(mktime(datetime))
                     self.movies.append((lastplayed, label, year, genre, studio, plot, plotoutline, tagline, runtime, fanart, thumbnail, path, rating))
@@ -90,6 +103,7 @@ class Main:
     def _fetch_tvshows( self ):
         self.tvshows = []
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["studio", "thumbnail"]}, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if json_response['result'].has_key('tvshows'):
             for item in json_response['result']['tvshows']:
@@ -101,6 +115,7 @@ class Main:
 
     def _fetch_seasonthumb( self, tvshowid, seasonnumber ):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["season", "thumbnail"], "tvshowid":%s }, "id": 1}' % tvshowid)
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if json_response['result'].has_key('seasons'):
             for item in json_response['result']['seasons']:
@@ -114,20 +129,23 @@ class Main:
         for tvshow in self.tvshows:
             lastplayed = ""
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"properties": ["playcount", "plot", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "lastplayed", "rating"], "sort": {"method": "episode"}, "tvshowid":%s}, "id": 1}' % tvshow[0])
+            json_query = unicode(json_query, 'utf-8', errors='ignore')
             json_response = simplejson.loads(json_query)
             if json_response['result'].has_key('episodes'):
                 for item in json_response['result']['episodes']:
                     playcount = item['playcount']
                     if playcount != 0:
-                        # this item has been watched, record play date (we need it for sorting the final list) and continue to next item
+                        # this episode has been watched, record play date (we need it for sorting the final list) and continue to next episode
                         lastplayed = item['lastplayed']
-                        if not lastplayed == "":
-                            # catch exceptions where the item has been played, but playdate wasn't stored in the db
+                        if lastplayed == '':
+                            # catch exceptions where the episode has been played, but playdate wasn't stored in the db
+                            lastplayed = '0'
+                        else:
                             datetime = strptime(lastplayed, "%Y-%m-%d %H:%M:%S")
                             lastplayed = str(mktime(datetime))
                         continue
                     else:
-                        # this is the first unwatched item, check if it's partially watched
+                        # this is the first unwatched episode, check if the episode is partially watched
                         playdate = item['lastplayed']
                         if (lastplayed == "") and (playdate == ""):
                             # it's a tv show with 0 watched episodes, continue to the next tv show
@@ -144,7 +162,7 @@ class Main:
                             showtitle = item['showtitle']
                             rating = str(round(float(item['rating']),1))
                             episodeno = "s%se%s" % ( season,  episode, )
-                            if not playdate == "":
+                            if not playdate == '':
                                 # if the episode is partially watched, use it's playdate for sorting
                                 datetime = strptime(playdate, "%Y-%m-%d %H:%M:%S")
                                 lastplayed = str(mktime(datetime))
@@ -164,8 +182,9 @@ class Main:
         self.albumsids = {}
         previousid = ''
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["playcount", "albumid"], "sort": { "method": "album" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        if json_response['result'].has_key('songs'):
+        if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
             for item in json_response['result']['songs']:
                 albumid = item['albumid']
                 if albumid != '':
@@ -192,6 +211,7 @@ class Main:
         for count, albumid in enumerate( self.albumsids ):
             count += 1
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params": {"properties": ["description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "rating"], "albumid":%s }, "id": 1}' % albumid[0])
+            json_query = unicode(json_query, 'utf-8', errors='ignore')
             json_response = simplejson.loads(json_query)
             if json_response['result'].has_key('albumdetails'):
                 item = json_response['result']['albumdetails']
@@ -214,6 +234,7 @@ class Main:
 
     def _play_album( self, ID ):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["file", "fanart"], "albumid":%s }, "id": 1}' % ID)
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         # create a playlist
         playlist = xbmc.PlayList(0)
@@ -231,6 +252,15 @@ class Main:
                 playlist.add( url=song, listitem=listitem )
             # play the playlist
             xbmc.Player().play( playlist )
+
+    def _daemon( self ):
+        # keep running until xbmc exits or another instance is started
+        while (not xbmc.abortRequested) and self.WINDOW.getProperty('WatchList_Running') == 'True':
+            xbmc.sleep(1000)
+        if xbmc.abortRequested:
+            log('script stopped: xbmc quit')
+        else:
+            log('script stopped: new script instance started')
 
     def _clear_movie_properties( self ):
         for count in range( int(self.LIMIT) ):
@@ -304,7 +334,23 @@ class Main:
                 # stop here if our list contains more items
                 break
 
+    def _update( self ):
+        log('playback stopped')
+        xbmc.sleep(500)
+        self._fetch_info()
+
+
+class MyPlayer(xbmc.Player):
+    def __init__( self, *args, **kwargs ):
+        xbmc.Player.__init__( self )
+        self.action = kwargs[ "action" ]
+
+    def onPlayBackEnded( self ):
+        self.action()
+
+    def onPlayBackStopped( self ):
+        self.action()
+
 if ( __name__ == "__main__" ):
         log('script version %s started' % __addonversion__)
         Main()
-log('script stopped')
