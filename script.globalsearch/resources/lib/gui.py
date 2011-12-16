@@ -19,8 +19,8 @@ def log(txt):
 
 class GUI( xbmcgui.WindowXMLDialog ):
     def __init__( self, *args, **kwargs ):
-        xbmcgui.WindowXMLDialog.__init__( self )
-        self.searchstring = kwargs[ "searchstring" ].replace('(','[(]').replace(')','[)]').replace('+','[+]')
+#        xbmcgui.WindowXMLDialog.__init__( self )
+        self.searchstring = kwargs[ "searchstring" ].replace('(', '[(]').replace(')', '[)]').replace('+', '[+]')
         log('script version %s started' % __addonversion__)
         self.nextsearch = False
 
@@ -116,6 +116,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(342) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "mpaa", "director", "writer"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('movies')):
             for item in json_response['result']['movies']:
@@ -139,40 +140,43 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     thumb = item['thumbnail']
                     trailer = item['trailer']
                     year = str(item['year'])
-                    if item['streamdetails'] != None:
+                    if item['streamdetails'] != None and item['streamdetails'].has_key('audio'):
                         audiochannels = str(item['streamdetails']['audio'][0]['channels'])
                         audiocodec = str(item['streamdetails']['audio'][0]['codec'])
+                    else:
+                        audiochannels = ''
+                        audiocodec = ''
+                    if item['streamdetails'] != None and item['streamdetails'].has_key('video'):
                         videocodec = str(item['streamdetails']['video'][0]['codec'])
-                        aspect = float(item['streamdetails']['video'][0]['aspect'])
-                        if aspect <= 1.4859:
+                        videoaspect = float(item['streamdetails']['video'][0]['aspect'])
+                        if videoaspect <= 1.4859:
                             videoaspect = '1.33'
-                        elif aspect <= 1.7190:
+                        elif videoaspect <= 1.7190:
                             videoaspect = '1.66'
-                        elif aspect <= 1.8147:
+                        elif videoaspect <= 1.8147:
                             videoaspect = '1.78'
-                        elif aspect <= 2.0174:
+                        elif videoaspect <= 2.0174:
                             videoaspect = '1.85'
-                        elif aspect <= 2.2738:
+                        elif videoaspect <= 2.2738:
                             videoaspect = '2.20'
                         else:
                             videoaspect = '2.35'
-                        resolution = item['streamdetails']['video'][0]['height']
-                        if resolution <= 480:
+                        videowidth = item['streamdetails']['video'][0]['width']
+                        videoheight = item['streamdetails']['video'][0]['height']
+                        if videowidth <= 720 and videoheight <= 480:
                             videoresolution = '480'
-                        elif resolution <= 544:
-                            videoresolution = '540'
-                        elif resolution <= 576:
+                        elif videowidth <= 768 and videoheight <= 576:
                             videoresolution = '576'
-                        elif resolution <= 720:
+                        elif videowidth <= 960 and videoheight <= 544:
+                            videoresolution = '540'
+                        elif videowidth <= 1280 and videoheight <= 720:
                             videoresolution = '720'
                         else:
                             videoresolution = '1080'
                     else:
-                        audiochannels = ''
-                        audiocodec = ''
                         videocodec = ''
-                        aspect = ''
-                        resolution = ''
+                        videoaspect = ''
+                        videoresolution = ''
                     listitem = xbmcgui.ListItem(label=movie, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "fanart_image", fanart )
@@ -209,6 +213,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20343) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["genre", "studio", "premiered", "plot", "fanart", "thumbnail", "playcount", "year", "mpaa", "episode", "rating"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
             for item in json_response['result']['tvshows']:
@@ -255,6 +260,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20343) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["showtitle", "season", "fanart", "thumbnail", "playcount", "episode"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('seasons')):
             for item in json_response['result']['seasons']:
@@ -293,6 +299,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["streamdetails", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
         else:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["streamdetails", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('episodes')):
             for item in json_response['result']['episodes']:
@@ -320,40 +327,43 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     playcount = str(item['playcount'])
                     thumb = item['thumbnail']
                     fanart = item['fanart']
-                    if item['streamdetails'] != None:
+                    if item['streamdetails'] != None and item['streamdetails'].has_key('audio'):
                         audiochannels = str(item['streamdetails']['audio'][0]['channels'])
                         audiocodec = str(item['streamdetails']['audio'][0]['codec'])
+                    else:
+                        audiochannels = ''
+                        audiocodec = ''
+                    if item['streamdetails'] != None and item['streamdetails'].has_key('video'):
                         videocodec = str(item['streamdetails']['video'][0]['codec'])
-                        aspect = float(item['streamdetails']['video'][0]['aspect'])
-                        if aspect <= 1.4859:
+                        videoaspect = float(item['streamdetails']['video'][0]['aspect'])
+                        if videoaspect <= 1.4859:
                             videoaspect = '1.33'
-                        elif aspect <= 1.7190:
+                        elif videoaspect <= 1.7190:
                             videoaspect = '1.66'
-                        elif aspect <= 1.8147:
+                        elif videoaspect <= 1.8147:
                             videoaspect = '1.78'
-                        elif aspect <= 2.0174:
+                        elif videoaspect <= 2.0174:
                             videoaspect = '1.85'
-                        elif aspect <= 2.2738:
+                        elif videoaspect <= 2.2738:
                             videoaspect = '2.20'
                         else:
                             videoaspect = '2.35'
-                        resolution = item['streamdetails']['video'][0]['height']
-                        if resolution <= 480:
+                        videowidth = item['streamdetails']['video'][0]['width']
+                        videoheight = item['streamdetails']['video'][0]['height']
+                        if videowidth <= 720 and videoheight <= 480:
                             videoresolution = '480'
-                        elif resolution <= 544:
-                            videoresolution = '540'
-                        elif resolution <= 576:
+                        elif videowidth <= 768 and videoheight <= 576:
                             videoresolution = '576'
-                        elif resolution <= 720:
+                        elif videowidth <= 960 and videoheight <= 544:
+                            videoresolution = '540'
+                        elif videowidth <= 1280 and videoheight <= 720:
                             videoresolution = '720'
                         else:
                             videoresolution = '1080'
                     else:
-                        audiochannels = ''
-                        audiocodec = ''
                         videocodec = ''
-                        aspect = ''
-                        resolution = ''
+                        videoaspect = ''
+                        videoresolution = ''
                     listitem = xbmcgui.ListItem(label=episode, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
                     listitem.setProperty( "episode", episodenumber )
@@ -386,12 +396,15 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20389) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["streamdetails", "runtime", "genre", "studio", "artist", "album", "year", "plot", "fanart", "thumbnail", "file", "playcount", "director"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('musicvideos')):
             for item in json_response['result']['musicvideos']:
+                log(item)
                 musicvideo = item['label']
                 musicvideomatch = re.search( '.*' + self.searchstring + '.*', musicvideo, re.I )
                 if musicvideomatch:
+                    log("match")
                     count = count + 1
                     album = item['album']
                     artist = item['artist']
@@ -404,31 +417,36 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     thumb = item['thumbnail']
                     playcount = str(item['playcount'])
                     year = str(item['year'])
-                    if item['streamdetails'] != None:
+                    if item['streamdetails'] != None and item['streamdetails'].has_key('audio'):
                         audiochannels = str(item['streamdetails']['audio'][0]['channels'])
                         audiocodec = str(item['streamdetails']['audio'][0]['codec'])
+                    else:
+                        audiochannels = ''
+                        audiocodec = ''
+                    if item['streamdetails'] != None and item['streamdetails'].has_key('video'):
                         videocodec = str(item['streamdetails']['video'][0]['codec'])
-                        aspect = float(item['streamdetails']['video'][0]['aspect'])
-                        if aspect <= 1.4859:
+                        videoaspect = float(item['streamdetails']['video'][0]['aspect'])
+                        if videoaspect <= 1.4859:
                             videoaspect = '1.33'
-                        elif aspect <= 1.7190:
+                        elif videoaspect <= 1.7190:
                             videoaspect = '1.66'
-                        elif aspect <= 1.8147:
+                        elif videoaspect <= 1.8147:
                             videoaspect = '1.78'
-                        elif aspect <= 2.0174:
+                        elif videoaspect <= 2.0174:
                             videoaspect = '1.85'
-                        elif aspect <= 2.2738:
+                        elif videoaspect <= 2.2738:
                             videoaspect = '2.20'
                         else:
                             videoaspect = '2.35'
-                        resolution = item['streamdetails']['video'][0]['height']
-                        if resolution <= 480:
+                        videowidth = item['streamdetails']['video'][0]['width']
+                        videoheight = item['streamdetails']['video'][0]['height']
+                        if videowidth <= 720 and videoheight <= 480:
                             videoresolution = '480'
-                        elif resolution <= 544:
-                            videoresolution = '540'
-                        elif resolution <= 576:
+                        elif videowidth <= 768 and videoheight <= 576:
                             videoresolution = '576'
-                        elif resolution <= 720:
+                        elif videowidth <= 960 and videoheight <= 544:
+                            videoresolution = '540'
+                        elif videowidth <= 1280 and videoheight <= 720:
                             videoresolution = '720'
                         else:
                             videoresolution = '1080'
@@ -436,11 +454,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         if duration[0] == '0':
                             duration = duration[2:]
                     else:
-                        audiochannels = ''
-                        audiocodec = ''
                         videocodec = ''
-                        aspect = ''
-                        resolution = ''
+                        videoaspect = ''
+                        videoresolution = ''
                         duration = ''
                     listitem = xbmcgui.ListItem(label=musicvideo, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                     listitem.setProperty( "icon", thumb )
@@ -474,6 +490,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(133) + '[/B]' )
         count = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": ["genre", "description", "fanart", "thumbnail", "formed", "disbanded", "born", "yearsactive", "died", "mood", "style"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('artists')):
             for item in json_response['result']['artists']:
@@ -523,6 +540,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"], "sort": { "method": "label" }, "artistid":%s }, "id": 1}' % self.artistid)
         else:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('albums')):
             for item in json_response['result']['albums']:
@@ -587,6 +605,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["artist", "album", "genre", "duration", "year", "file", "thumbnail", "fanart", "comment", "rating", "track", "playcount"], "sort": { "method": "label" }, "artistid":%s }, "id": 1}' % self.artistid)
         else:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["artist", "album", "genre", "duration", "year", "file", "thumbnail", "fanart", "comment", "rating", "track", "playcount"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
             for item in json_response['result']['songs']:
@@ -697,6 +716,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         playlist = xbmc.PlayList(0)
         playlist.clear()
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["file", "fanart"], "sort": { "method": "track" }, "albumid":%s }, "id": 1}' % self.albumid)
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
             for item in json_response['result']['songs']:

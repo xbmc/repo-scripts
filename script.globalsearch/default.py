@@ -17,8 +17,8 @@ if ( __name__ == "__main__" ):
     if ( keyboard.isConfirmed() ):
         searchstring = keyboard.getText()
         import gui
-        window = "main"
-        ui = gui.GUI( "script-globalsearch-main.xml" , __cwd__, "Default", searchstring=searchstring )
+#        window = "main"
+        ui = gui.GUI( "script-globalsearch-main.xml", __cwd__, "Default", searchstring=searchstring )
         ui.doModal()
         del ui
         sys.modules.clear()
