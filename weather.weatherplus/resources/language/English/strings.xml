@@ -2,7 +2,7 @@
 <strings>
     <!-- Title/Credit strings -->
     <string id="32000">%s Addon Manager</string>
-    <string id="32002">nuka1195</string>
+    <string id="32002">brightsr, nuka1195</string>
 
     <!-- Alert messages -->
     <string id="32100">Weather Alert</string>
@@ -41,8 +41,11 @@
 	<string id="32450">Video</string>
 
     <!-- Settings strings -->
-    <string id="32500">Translate text (Babelfish)</string>
-    <string id="32510">Map List #1 category</string>
+    <string id="32500">Translation</string>
+    <string id="32501">Translator</string>		
+    <string id="32502">Babelfish</string>
+    <string id="32503">Google</string>
+	<string id="32510">Map List #1 category</string>
     <string id="32520">Map List #2 category</string>
     <string id="32530">Map List #3 category</string>
     <string id="32540">User defined maps/radars file</string>
@@ -200,18 +203,19 @@
     <string id="32863">Fitness</string>
     <string id="32864">User Defined</string>
 
-    <!-- Alternative Provider strings -->
-	<string id="32901">Location #1</string>
+    	<!-- Alternative Provider strings -->
+	<string id="32901">Location 1</string>
 	<string id="32902">Provider</string>
 	<string id="32903">Location Name</string>
 	<string id="32904">Run Location Selector</string>
-	<string id="32905">Location #2</string>
-	<string id="32906">Location #3</string>
+	<string id="32905">Location 2</string>
+	<string id="32906">Location 3</string>
 
 	<!-- Alternative Provider Lists -->
 	<string id="32951">Accuweather.com Global</string>
 	<string id="32952">NOAA (US Only)</string>
 	<string id="32953">Weather.com</string>
+	<string id="32954">Wunderground.com</string>
 
 	<!-- Video Option -->
 	<string id="32961">Run Video Selector (Only for US)</string>
@@ -255,5 +259,6 @@
 	<string id="32729">Spanish(Latin)</string>
 	<string id="32730">Swedish</string>
 	<string id="32731">Turkish</string>
+	<string id="32732">Auto</string>
 				
 </strings>

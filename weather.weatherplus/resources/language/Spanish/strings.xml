@@ -39,7 +39,8 @@
     <string id="32430">Opciones de pronóstico</string>
 
     <!-- Settings strings -->
-    <string id="32500">Traducir texto (Babelfish)</string>
+    <string id="32500">Traducción</string>
+    <string id="32501">Traductor</string>		
     <string id="32510">Lista de mapas categoría #1</string>
     <string id="32520">Lista de mapas categoría #2</string>
     <string id="32530">Lista de mapas categoría #3</string>
@@ -196,12 +197,12 @@
     <string id="32864">Definido por el usuario</string>
 
 	<!-- Alternative Provider strings -->
-	<string id="32901">Location #1</string>
-	<string id="32902">Provider</string>
-	<string id="32903">Location</string>
-	<string id="32904">Change Location</string>
-	<string id="32905">Location #2</string>
-	<string id="32906">Location #3</string>
+	<string id="32901">Ubicación #1</string>
+	<string id="32902">Proveedor</string>
+	<string id="32903">Ubicación</string>
+	<string id="32904">Configuración de la ubicación</string>
+	<string id="32905">Ubicación #2</string>
+	<string id="32906">Ubicación #3</string>
 
 	<!-- Alternative Provider Lists -->
 	<string id="32951">Accuweather.com Global</string>
