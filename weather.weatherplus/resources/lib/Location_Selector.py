@@ -40,7 +40,7 @@ def _fetch_data( base_url, cookie=None ):
                 return ""
         except:
             # oops print error message
-            print "ERROR: %s::%s (%d) - %s" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
+            print "ERROR: %s (%d) - %s" % ( sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
             # some unknown error, return ""
             return ""
 
@@ -68,6 +68,8 @@ class Main:
 						location_name += [ loca[2] ]
 					elif ( provider == "1" or provider == "2" ):
 						location_name += [ loca[1] ]
+					elif ( provider == "3" ):
+						location_name += [ loca[0] ]
 				select = dialog.select(xbmc.getLocalizedString(396), location_name)
 				if ( select != -1 ):
 					self.location = location[ select ]
@@ -76,7 +78,9 @@ class Main:
 						__Settings__.setSetting( "code%s_%s" % ( loc, int(provider)+1 ), self.location[0] + " " + self.location[1] )
 					elif ( provider == "1" or provider == "2" ):
 						__Settings__.setSetting( "code%s_%s" % ( loc, int(provider)+1 ), self.location[0] )
-				__Settings__.openSettings()
+					elif ( provider == "3" ):
+						__Settings__.setSetting( "code%s_%s" % ( loc, int(provider)+1 ), self.location[1] )
+				# __Settings__.openSettings()
 	
 	def _fetch_location(self, userInput, provider):
 		location = []
@@ -102,6 +106,13 @@ class Main:
 			pattern_location = "id=\"(.+?)\" type=\"[0-9]\">(.+?)</loc>"
 			xmlSource = _fetch_data ( "http://xoap.weather.com/search/search?where=%s" % userInput.replace(" ","+") )
 			location = re.findall( pattern_location, xmlSource )
+		elif (provider == "3"):
+			pattern_name = "name\"[:] \"(.+?)\""
+			pattern_code = "l\"[:] \"(.+?)\""
+			htmlSource = _fetch_data ( "http://autocomplete.wunderground.com/aq?query=%s" % userInput.replace(" ","+") )
+			name = re.findall( pattern_name, htmlSource )
+			code = re.findall( pattern_code, htmlSource )
+			location = [ ( name[i], code[i] ) for i in range(0, len(name)) ]					
 		return location
 
 Main( loc=sys.argv[ 1 ].split( "=" )[ 1 ] )

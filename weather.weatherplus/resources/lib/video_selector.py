@@ -23,7 +23,7 @@ class Main:
 		if ( video_num != -1 ):
 			slot = video_num + 1
 		else:
-			__Settings__.openSettings()
+			#__Settings__.openSettings()
 			return
 		channel = dialog.select("Choose a Channel", ["Weather.com", "ABC", "CBS", "FOX", "NBC"])
 		if ( channel == 0 ):
@@ -179,7 +179,7 @@ class Main:
 			__Settings__.setSetting( "video%d" % slot, video_list[video] )
 			__Settings__.setSetting( "video%d_url" % slot, "" )
 
-		__Settings__.openSettings()
+		#__Settings__.openSettings()
 
 	
 Main()

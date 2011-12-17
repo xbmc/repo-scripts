@@ -2,7 +2,7 @@
 <strings>
     <!-- Title/Credit strings -->
     <string id="32000">%s 애드온 관리자</string>
-    <string id="32002">nuka1195, brightsr</string>
+    <string id="32002">brightsr, nuka1195</string>
 
     <!-- Alert messages -->
     <string id="32100">기상 특보</string>
@@ -39,7 +39,8 @@
     <string id="32430">기상예보 설정</string>
 
     <!-- Settings strings -->
-    <string id="32500">텍스트 번역 (Babelfish)</string>
+    <string id="32500">번역</string>
+    <string id="32501">번역기</string>		
     <string id="32510">지도 리스트 #1 종류</string>
     <string id="32520">지도 리스트 #2 종류</string>
     <string id="32530">지도 리스트 #3 종류</string>
@@ -196,20 +197,25 @@
     <string id="32864">User Defined</string>
 
     <!-- Alternative Provider strings -->
-	<string id="32901">Location #1</string>
-	<string id="32902">Provider</string>
-	<string id="32903">Location</string>
-	<string id="32904">Change Location</string>
-	<string id="32905">Location #2</string>
-	<string id="32906">Location #3</string>
+	<string id="32901">위치 1</string>
+	<string id="32902">제공자</string>
+	<string id="32903">위치</string>
+	<string id="32904">위치 설정하기</string>
+	<string id="32905">위치 2</string>
+	<string id="32906">위치 3</string>
 
 	<!-- Alternative Provider Lists -->
 	<string id="32951">Accuweather.com Global</string>
-	<string id="32952">NOAA (US Only)</string>
+	<string id="32952">NOAA (미국 지역만 가능)</string>
 
+	<!-- Video Option -->
+	<string id="32961">비디오 선택기 실행(미국만 해당)</string>
+	<string id="32962">비디오 #1</string>
+	<string id="32963">비디오 #2</string>
+	<string id="32964">비디오 #3</string>
 
 	<!-- Misc. -->
-	<string id="32981">Accuweather.com 언어</string>
+	<string id="32981">Accuweather.com 언어 설정</string>
 
 	<!-- Languages -->
 	<string id="32701">Arabic</string>
@@ -232,7 +238,7 @@
 	<string id="32717">Hungarian</string>
 	<string id="32718">Italian</string>
 	<string id="32719">Japanese</string>
-	<string id="32720">Korean</string>
+	<string id="32720">한국어</string>
 	<string id="32721">Norwegian</string>
 	<string id="32722">Polish</string>
 	<string id="32723">Portuguese(Brazil)</string>
