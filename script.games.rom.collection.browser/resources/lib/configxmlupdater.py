@@ -46,7 +46,7 @@ class ConfigxmlUpdater:
 			try:
 				shutil.copy(str(self.configFile), str(newFileName))
 			except Exception, (exc):
-				return -1, "Error: Cannot backup config.xml: " +str(exc)
+				return False, "Error: Cannot backup config.xml: " +str(exc)
 		
 		#write current version to config
 		self.tree.attrib['version'] = util.CURRENT_CONFIG_VERSION
@@ -69,6 +69,12 @@ class ConfigxmlUpdater:
 			if(not success):
 				return False, message
 		
+		if(configVersion == '0.9.0'):
+			success, message = self.update_090_to_095()
+			configVersion = '0.9.5'
+			if(not success):
+				return False, message
+			
 		#write file
 		success, message = self.writeFile()	
 				
@@ -86,10 +92,10 @@ class ConfigxmlUpdater:
 			if(siteName == 'local nfo'):
 				scraperSiteXml.attrib['descFilePerGame'] = 'True'
 				scraperSiteXml.attrib['searchGameByCRC'] = 'False'
-			elif(siteName == 'thevideogamedb.com'):
-				scraperSiteXml.attrib['descFilePerGame'] = 'True'
-				scraperSiteXml.attrib['searchGameByCRC'] = 'True'
 			elif(siteName == 'thegamesdb.net'):
+				scraperSiteXml.attrib['descFilePerGame'] = 'True'
+				scraperSiteXml.attrib['searchGameByCRC'] = 'False'
+			elif(siteName == 'archive.vg'):
 				scraperSiteXml.attrib['descFilePerGame'] = 'True'
 				scraperSiteXml.attrib['searchGameByCRC'] = 'False'
 			elif(siteName == 'giantbomb.com'):
@@ -167,6 +173,39 @@ class ConfigxmlUpdater:
 			#remove old element
 			self.removeElement(romCollectionXml, 'imagePlacing')
 		
+		return True, ''
+	
+	
+	def update_090_to_095(self):
+		#change imagePlacing elements
+		scraperSitesXml = self.tree.findall('Scrapers/Site')
+		archiveFound = False
+		for scraperSiteXml in scraperSitesXml:			
+			siteName = scraperSiteXml.attrib.get('name')
+			if(siteName == 'archive.vg'):
+				return True, ''
+		
+		scrapersXml = self.tree.find('Scrapers')
+		scraperSiteXml = SubElement(scrapersXml, 'Site', 
+			{ 
+			'name' : 'archive.vg', 
+			'descFilePerGame' : 'True',
+			'searchGameByCRC' : 'False'			
+			})
+		scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+			{ 
+			'parseInstruction' : '05.01 - archive - search.xml',
+			'source' : 'http://api.archive.vg/1.0/Archive.search/%ARCHIVEAPIKEY%/%GAME%',
+			'encoding' : 'iso-8859-1',
+			'returnUrl' : 'true'
+			})
+		scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+			{ 
+			'parseInstruction' : '05.02 - archive - detail.xml',
+			'source' : '1',
+			'encoding' : 'iso-8859-1'			
+			})
+				
 		return True, '' 
 			
 	

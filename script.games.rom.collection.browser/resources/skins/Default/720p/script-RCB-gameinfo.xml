@@ -1,6 +1,5 @@
 <window>
 	<allowoverlay>no</allowoverlay>
-	<defaultcontrol always="false">3000</defaultcontrol>
 	<coordinates>
 	        <system>1</system>
         	<posx>0</posx>
@@ -45,18 +44,20 @@
 			<!-- gameinfoviewgamelist -->
 			<control type="group" id="1000">
 				<control type="wraplist" id="59">
-					<posx>30</posx>
-					<posy>50</posy>
-					<width>680</width>
-					<height>300</height>
-					<onleft>1000</onleft>
-					<onright>1000</onright>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>0</width>
+					<height>0</height>
+					<onleft>3000</onleft>
+					<onright>3000</onright>
 					<onup>3000</onup>
 					<ondown>3000</ondown>
-					<scrolltime>200</scrolltime>					
-				</control>
+					<scrolltime>200</scrolltime>
+					<itemlayout height="0" width="0"/>
+					<focusedlayout height="0" width="0">						
+					</focusedlayout>
+				</control>				
 			</control>
-			
 			
 			<!-- Game info -->
 			<control type="group">
@@ -483,11 +484,29 @@
 				<textoffsetx></textoffsetx>
 				<textoffsety></textoffsety>
 				<pulseonselect></pulseonselect>
-				<onup>8100</onup>
-				<ondown>8100</ondown>
+				<onup>3001</onup>
+				<ondown>3001</ondown>
 				<onleft>8100</onleft>
 				<onright>8100</onright>
 			</control>
+			
+			<control type="button" id="3001">
+				<description>autoplay video</description>
+				<onup>3000</onup>
+				<ondown>3000</ondown>
+				<onleft>3000</onleft>
+				<onright>3000</onright>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>0</width>
+				<height>0</height>
+				<texturefocus></texturefocus>
+				<texturenofocus></texturenofocus>
+				<visible>!IsEmpty(ListItem.Property(autoplayvideoinfo)) + !IsEmpty(ListItem.Property(gameplayinfo))</visible>
+				<animation delay="500" effect="fade" start="100" end="100">Focus</animation>
+				<onfocus>XBMC.PlayMedia($INFO[ListItem.Property(gameplayinfo)],1)</onfocus>
+			</control>
+			
 			<control type="label" id="4000">
 				<description>Messages</description>
 				<posx>10</posx>

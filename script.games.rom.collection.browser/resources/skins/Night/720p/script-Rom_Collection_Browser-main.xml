@@ -81,7 +81,7 @@
 				<width>1680</width>
 				<onup>50</onup>
 				<ondown>50</ondown>
-				<onleft>900</onleft>
+				<onleft>500</onleft>
 				<onright>2</onright>
 				<scrolltime>0</scrolltime>
 				<viewtype label="Files">list</viewtype>
@@ -226,7 +226,7 @@
 					<width>1500</width>
 					<onleft>51</onleft>
 					<onright>51</onright>
-					<onup>900</onup>
+					<onup>500</onup>
 					<ondown>2</ondown>
 					<viewtype label="3D Landscape">list</viewtype>
 					<orientation>horizontal</orientation>
@@ -475,7 +475,8 @@
 						<posy>0</posy>
 						<width>436</width>
 						<height>244</height>
-						<texture background="true" diffuse="showcase-diffuse.png" fallback="missing.jpg">$INFO[ListItem.Property(background)]</texture>
+						<visible>!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))</visible>
+						<texture background="true" diffuse="showcase-diffuse.png" fallback="missing.jpg">$INFO[ListItem.Property(gameinfobig)]</texture>
 						<fadetime>400</fadetime>
 						<aspectratio>stretch</aspectratio>
 						<animation type="WindowOpen" reversible="false">
@@ -487,6 +488,33 @@
 						</animation>
 						<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
 					</control>
+					<!-- videowindowbig -->
+					<control type="videowindow">
+						<animation type="WindowOpen" reversible="false">
+							<effect type="slide" start="0,100" end="0,0" time="400" tween="cubic" easing="out" />
+							<effect type="fade" start="0" end="100" time="400" />
+						</animation>
+						<animation type="WindowClose" reversible="false">
+							<effect type="fade" start="100" end="0" time="400" />
+						</animation>
+						<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+						<description>video control</description>
+						<posx>20</posx>
+						<posy>0</posy>
+						<width>436</width>
+						<height>244</height>											
+						<visible>!IsEmpty(ListItem.Property(videosizebig)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
+					</control>
+					<control type="button">
+						<description>click absorber</description>
+						<posx>20</posx>
+						<posy>0</posy>
+						<width>436</width>
+						<height>244</height>
+						<texturefocus></texturefocus>
+						<texturenofocus></texturenofocus>
+						<visible>!IsEmpty(ListItem.Property(videosizebig))</visible>
+					</control>	
 					<control type="wraplist" id="52">
 						<posx>-70</posx>
 						<posy>220</posy>
@@ -494,7 +522,7 @@
 						<width>1380</width>
 						<onleft>52</onleft>
 						<onright>52</onright>
-						<onup>900</onup>
+						<onup>500</onup>
 						<ondown>2</ondown>
 						<viewtype label="Showcase">list</viewtype>
 						<orientation>horizontal</orientation>
@@ -510,89 +538,101 @@
 							<effect type="fade" time="400" start="100" end="0" />
 						</animation>
 						<itemlayout width="150" height="245">
-						<control type="group">
-							<posx>0</posx>
-							<posy>180</posy>
-							<control type="image">
+							<control type="group">
 								<posx>0</posx>
-								<posy>0</posy>
-								<width>150</width>
-								<height>260</height>
-								<aspectratio align="center" aligny="bottom">keep</aspectratio>
-								<texture background="true">$INFO[ListItem.Icon]</texture>
-								<bordertexture border="5">button-nofocus.png</bordertexture>
-								<bordersize>5</bordersize>
-								<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								<posy>180</posy>
+								<control type="image">
+									<posx>0</posx>
+									<posy>0</posy>
+									<width>150</width>
+									<height>260</height>
+									<aspectratio align="center" aligny="bottom">keep</aspectratio>
+									<texture background="true">$INFO[ListItem.Icon]</texture>
+									<bordertexture border="5">button-nofocus.png</bordertexture>
+									<bordersize>5</bordersize>
+									<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="image">
+									<posx>0</posx>
+									<posy>260</posy>
+									<width>150</width>
+									<height>260</height>
+									<aspectratio align="center" aligny="top">keep</aspectratio>
+									<texture background="true" flipy="true">$INFO[ListItem.Icon]</texture>
+									<bordertexture border="5">button-nofocus.png</bordertexture>
+									<bordersize>5</bordersize>
+									<animation effect="fade" start="30" end="30" time="0" condition="true">Conditional</animation>
+									<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="image">
+									<posx>-45</posx>
+									<posy>250</posy>
+									<width>100</width>
+									<height>25</height>
+									<texture>rcb-star.png</texture>					
+									<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+									<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
 							</control>
-							<control type="image">
+						</itemlayout>
+						<focusedlayout width="250" height="500">
+							<control type="group">
 								<posx>0</posx>
-								<posy>260</posy>
-								<width>150</width>
-								<height>260</height>
-								<aspectratio align="center" aligny="top">keep</aspectratio>
-								<texture background="true" flipy="true">$INFO[ListItem.Icon]</texture>
-								<bordertexture border="5">button-nofocus.png</bordertexture>
-								<bordersize>5</bordersize>
-								<animation effect="fade" start="30" end="30" time="0" condition="true">Conditional</animation>
-								<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								<posy>160</posy>
+								<control type="image">
+									<posx>0</posx>
+									<posy>0</posy>
+									<width>250</width>
+									<height>300</height>
+									<aspectratio align="center" aligny="bottom">keep</aspectratio>
+									<texture background="true">$INFO[ListItem.Icon]</texture>
+									<bordertexture border="5">pic_border.png</bordertexture>
+									<bordersize>5</bordersize>
+									<animation type="Focus" reversible="false">
+										<effect type="zoom" center="80,238" start="81" end="100" time="400" tween="back" easing="out" />
+									</animation>
+									<animation effect="fade" start="100" end="0" time="150" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="image">
+									<posx>0</posx>
+									<posy>300</posy>
+									<width>250</width>
+									<height>300</height>
+									<aspectratio align="center" aligny="top">keep</aspectratio>
+									<texture background="true" flipy="true">$INFO[ListItem.Icon]</texture>
+									<bordertexture border="5">pic_border.png</bordertexture>
+									<bordersize>5</bordersize>
+									<animation type="Focus" reversible="false">
+										<effect type="zoom" center="80,238" start="81" end="100" time="400" tween="back" easing="out" />
+									</animation>
+									<animation effect="fade" start="30" end="30" time="0" condition="true">Conditional</animation>
+									<animation effect="fade" start="100" end="0" time="150" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="image">
+									<posx>-45</posx>
+									<posy>290</posy>
+									<width>100</width>
+									<height>25</height>
+									<texture>rcb-star.png</texture>					
+									<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+									<animation effect="fade" start="100" end="0" time="150" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="button">
+									<description>Autoplay video</description>
+									<posx>0</posx>
+									<posy>0</posy>
+									<width>0</width>
+									<height>0</height>
+									<texturefocus></texturefocus>
+									<texturenofocus></texturenofocus>
+									<visible>!IsEmpty(ListItem.Property(autoplayvideomain)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
+									<animation delay="300" effect="fade" start="100" end="100">Focus</animation>
+									<onfocus>XBMC.PlayMedia($INFO[ListItem.Property(gameplaymain)],1)</onfocus>
+								</control>
 							</control>
-							<control type="image">
-								<posx>-45</posx>
-								<posy>250</posy>
-								<width>100</width>
-								<height>25</height>
-								<texture>rcb-star.png</texture>					
-								<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
-								<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
-							</control>
-						</control>
-					</itemlayout>
-					<focusedlayout width="250" height="500">
-						<control type="group">
-							<posx>0</posx>
-							<posy>160</posy>
-							<control type="image">
-								<posx>0</posx>
-								<posy>0</posy>
-								<width>250</width>
-								<height>300</height>
-								<aspectratio align="center" aligny="bottom">keep</aspectratio>
-								<texture background="true">$INFO[ListItem.Icon]</texture>
-								<bordertexture border="5">pic_border.png</bordertexture>
-								<bordersize>5</bordersize>
-								<animation type="Focus" reversible="false">
-									<effect type="zoom" center="80,238" start="81" end="100" time="400" tween="back" easing="out" />
-								</animation>
-								<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
-							</control>
-							<control type="image">
-								<posx>0</posx>
-								<posy>300</posy>
-								<width>250</width>
-								<height>300</height>
-								<aspectratio align="center" aligny="top">keep</aspectratio>
-								<texture background="true" flipy="true">$INFO[ListItem.Icon]</texture>
-								<bordertexture border="5">pic_border.png</bordertexture>
-								<bordersize>5</bordersize>
-								<animation type="Focus" reversible="false">
-									<effect type="zoom" center="80,238" start="81" end="100" time="400" tween="back" easing="out" />
-								</animation>
-								<animation effect="fade" start="30" end="30" time="0" condition="true">Conditional</animation>
-								<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
-							</control>
-							<control type="image">
-								<posx>-45</posx>
-								<posy>290</posy>
-								<width>100</width>
-								<height>25</height>
-								<texture>rcb-star.png</texture>					
-								<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
-								<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
-							</control>
-						</control>
-					</focusedlayout>
-				</control>											
-			</control>								
+						</focusedlayout>
+					</control>											
+				</control>								
 				
 				<control type="group">
 					<visible>Control.IsVisible(52)</visible>
@@ -807,7 +847,7 @@
 				<width>1400</width><!-- 1400 -->
 				<onleft>55</onleft>
 				<onright>55</onright>
-				<onup>900</onup>
+				<onup>500</onup>
 				<ondown>2</ondown>
 				<viewtype label="Poster">list</viewtype>
 				<orientation>horizontal</orientation>
@@ -1063,7 +1103,7 @@
 					<width>1400</width><!-- 1400 -->
 					<onleft>56</onleft>
 					<onright>56</onright>
-					<onup>900</onup>
+					<onup>500</onup>
 					<ondown>2</ondown>
 					<viewtype label="Slide">list</viewtype>
 					<orientation>horizontal</orientation>

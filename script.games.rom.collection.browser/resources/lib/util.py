@@ -10,7 +10,7 @@ import time
 
 SCRIPTNAME = 'Rom Collection Browser'
 SCRIPTID = 'script.games.rom.collection.browser'
-CURRENT_CONFIG_VERSION = "0.9.0"
+CURRENT_CONFIG_VERSION = "0.9.5"
 CURRENT_DB_VERSION = "0.7.4"
 ISTESTRUN = False
 
@@ -24,6 +24,8 @@ WAITTIME_UPDATECONTROLS = 100
 WAITTIME_ONACTION = 50
 #don't call onAction if last call was not more than x ms before (we need higher values on xbox)
 WAITTIME_ONACTION_XBOX = 600
+#use a little delay before applying filter settings
+WAITTIME_APPLY_FILTERS = 500
 
 
 LOG_LEVEL_ERROR = 0

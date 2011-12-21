@@ -7,91 +7,113 @@ from elementtree.ElementTree import *
 
 
 consoleDict = {
-			#name, mobygames-id, thegamesdb platform name
-			'Other' : ['0', ''],
-			'3DO' : ['35', '3DO'],
-			'Amiga' : ['19', ''],
-			'Amiga CD32' : ['56', ''],
-			'Amstrad CPC' : ['60', ''],
-			'Apple II' : ['31', ''],
-			'Atari 2600' : ['28', 'Atari 2600'],
-			'Atari 5200' : ['33', 'Atari 5200'],
-			'Atari 7800' : ['34', 'Atari 7800'],
-			'Atari 8-bit' : ['39', ''],
-			'Atari ST' : ['24', ''],
-			'BBC Micro' : ['92', ''],
-			'BREW' : ['63', ''],
-			'CD-i' : ['73', ''], 
-			'Channel F' : ['76', ''],  
-			'ColecoVision' : ['29', 'Colecovision'],
-			'Commodore 128' : ['61', ''],
-			'Commodore 64' : ['27', ''],
-			'Commodore PET/CBM' : ['77', ''],  
-			'DoJa' : ['72', ''],
-			'DOS' : ['2', ''],
-			'Dragon 32/64' : ['79', ''],  
-			'Dreamcast' : ['8', 'Sega Dreamcast'],
-			'Electron' : ['93', ''],
-			'ExEn' : ['70', ''],
-			'Game Boy' : ['10', 'Nintendo Gameboy'],
-			'Game Boy Advance' : ['12', 'Nintendo Gameboy Advance'],  
-			'Game Boy Color' : ['11', ''],
-			'GameCube' : ['14', 'Nintendo GameCube'],
-			'Game Gear' : ['25', 'Sega Game Gear'],
-			'Genesis' : ['16', 'Sega Genesis'],
-			'Gizmondo' : ['55', ''],
-			'Intellivision' : ['30', 'Intellivision'],
-			'Jaguar' : ['17', ''],
-			'Linux' : ['1', ''],
-			'Lynx' : ['18', ''],
-			'Macintosh' : ['74', 'Mac OS'],
-			'MAME' : ['0', 'Arcade'],
-			'Mophun' : ['71', ''],
-			'MSX' : ['57', ''],
-			'Neo Geo' : ['36', 'NeoGeo'],
-			'Neo Geo CD' : ['54', ''],
-			'Neo Geo Pocket' : ['52', ''],
-			'Neo Geo Pocket Color' : ['53', ''],  
-			'NES' : ['22', 'Nintendo Entertainment System (NES)'],
-			'N-Gage' : ['32', ''],
-			'Nintendo 64' : ['9', 'Nintendo 64'],  
-			'Nintendo DS' : ['44', 'Nintendo DS'],
-			'Nintendo DSi' : ['87', ''],
-			'Odyssey' : ['75', ''],
-			'Odyssey 2' : ['78', ''],
-			'PC-88' : ['94', ''],
-			'PC-98' : ['95', ''],
-			'PC Booter' : ['4', ''],
-			'PC-FX' : ['59', ''],
-			'PlayStation' : ['6', 'Sony Playstation'],  
-			'PlayStation 2' : ['7', 'Sony Playstation 2'],
-			'PlayStation 3' : ['81', 'Sony Playstation 3'],
-			'PSP' : ['46', 'Sony PSP'],
-			'SEGA 32X' : ['21', 'Sega 32X'],  
-			'SEGA CD' : ['20', 'Sega CD'],
-			'SEGA Master System' : ['26', 'Sega Master System'],  
-			'SEGA Saturn' : ['23', 'Sega Saturn'],
-			'SNES' : ['15', 'Super Nintendo (SNES)'],
-			'Spectravideo' : ['85', ''],
-			'TI-99/4A' : ['47', ''],
-			'TRS-80' : ['58', ''],
-			'TRS-80 CoCo' : ['62', ''],  
-			'TurboGrafx-16' : ['40', 'TurboGrafx 16'],
-			'TurboGrafx CD' : ['45', ''],
-			'Vectrex' : ['37', ''],
-			'VIC-20' : ['43', ''],
-			'Virtual Boy' : ['38', ''],  
-			'V.Smile' : ['42', ''],
-			'Wii' : ['82', 'Nintendo Wii'],
-			'Windows' : ['3', 'PC'], 
-			'Windows 3.x' : ['5', ''],
-			'WonderSwan' : ['48', ''],
-			'WonderSwan Color' : ['49', ''],  
-			'Xbox' : ['13', 'Microsoft Xbox'],
-			'Xbox 360' : ['69', 'Microsoft Xbox 360'],
-			'Zeebo' : ['88', ''],
-			'Zodiac' : ['68', ''],
-			'ZX Spectr' : ['41', '']}
+			#name, mobygames-id, thegamesdb, archive vg
+			'Other' : ['0', '', ''],
+			'3DO' : ['35', '3DO', '3do'],
+			'Amiga' : ['19', '', 'amiga'],
+			'Amiga CD32' : ['56', '', 'cd32'],
+			'Amstrad CPC' : ['60', '', 'cpc'],
+			'Apple II' : ['31', '', 'appleii'],
+			'Atari 2600' : ['28', 'Atari 2600', 'atari2600'],
+			'Atari 5200' : ['33', 'Atari 5200', 'atari5200'],
+			'Atari 7800' : ['34', 'Atari 7800', 'atari7800'],
+			'Atari 8-bit' : ['39', '', 'atari8bit'],
+			'Atari ST' : ['24', '', 'ast'],
+			'BBC Micro' : ['92', '', 'bbc'],
+			'BREW' : ['63', '', ''],
+			'CD-i' : ['73', '', 'cdi'], 
+			'Channel F' : ['76', '', 'channelf'],  
+			'ColecoVision' : ['29', 'Colecovision', 'colecovision'],
+			'Commodore 128' : ['61', '', ''],
+			'Commodore 64' : ['27', '', 'c64'],
+			'Commodore PET/CBM' : ['77', '', 'pet'],  
+			'DoJa' : ['72', '', ''],
+			'DOS' : ['2', '', ''],
+			'Dragon 32/64' : ['79', '', ''],  
+			'Dreamcast' : ['8', 'Sega Dreamcast', 'dreamcast'],
+			'Electron' : ['93', '', ''],
+			'ExEn' : ['70', '', ''],
+			'Game Boy' : ['10', 'Nintendo Gameboy', 'gameboy'],
+			'Game Boy Advance' : ['12', 'Nintendo Gameboy Advance', 'gba'],  
+			'Game Boy Color' : ['11', '', 'gbc'],
+			'GameCube' : ['14', 'Nintendo GameCube', 'gamecube'],
+			'Game Gear' : ['25', 'Sega Game Gear', 'gamegear'],
+			'Genesis' : ['16', 'Sega Genesis', 'genesis'],
+			'Gizmondo' : ['55', '', 'gizmondo'],
+			'Intellivision' : ['30', 'Intellivision', 'intellivision'],
+			'Jaguar' : ['17', '', 'jaguar'],
+			'Linux' : ['1', '', ''],
+			'Lynx' : ['18', '', 'lynx'],
+			'Macintosh' : ['74', 'Mac OS', ''],
+			'MAME' : ['0', 'Arcade', ''],
+			'Mophun' : ['71', '', ''],
+			'MSX' : ['57', '', 'msx'],
+			'Neo Geo' : ['36', 'NeoGeo', 'neo'],
+			'Neo Geo CD' : ['54', '', 'neogeocd'],
+			'Neo Geo Pocket' : ['52', '', ''],
+			'Neo Geo Pocket Color' : ['53', '', 'ngpc'],  
+			'NES' : ['22', 'Nintendo Entertainment System (NES)', 'nes'],
+			'N-Gage' : ['32', '', 'ngage'],
+			'Nintendo 64' : ['9', 'Nintendo 64', 'n64'],  
+			'Nintendo DS' : ['44', 'Nintendo DS', ''],
+			'Nintendo DSi' : ['87', '', ''],
+			'Odyssey' : ['75', '', 'odyssey'],
+			'Odyssey 2' : ['78', '', 'odyssey2'],
+			'PC-88' : ['94', '', 'pc88'],
+			'PC-98' : ['95', '', 'pc98'],
+			'PC Booter' : ['4', '', ''],
+			'PC-FX' : ['59', '', 'pcfx'],
+			'PlayStation' : ['6', 'Sony Playstation', 'ps'],  
+			'PlayStation 2' : ['7', 'Sony Playstation 2', 'ps2'],
+			'PlayStation 3' : ['81', 'Sony Playstation 3', ''],
+			'PSP' : ['46', 'Sony PSP', ''],
+			'SEGA 32X' : ['21', 'Sega 32X', 'sega32x'],  
+			'SEGA CD' : ['20', 'Sega CD', 'segacd'],
+			'SEGA Master System' : ['26', 'Sega Master System', 'sms'],  
+			'SEGA Saturn' : ['23', 'Sega Saturn', 'saturn'],
+			'SNES' : ['15', 'Super Nintendo (SNES)', 'snes', 'snes'],
+			'Spectravideo' : ['85', '', ''],
+			'TI-99/4A' : ['47', '', 'ti99'],
+			'TRS-80' : ['58', '', ''],
+			'TRS-80 CoCo' : ['62', '', ''],  
+			'TurboGrafx-16' : ['40', 'TurboGrafx 16', 'tg16'],
+			'TurboGrafx CD' : ['45', '', ''],
+			'Vectrex' : ['37', '', 'vectrex'],
+			'VIC-20' : ['43', '', 'vic20'],
+			'Virtual Boy' : ['38', '', 'virtualboy'],  
+			'V.Smile' : ['42', '', ''],
+			'Wii' : ['82', 'Nintendo Wii', ''],
+			'Windows' : ['3', 'PC', ''], 
+			'Windows 3.x' : ['5', '', ''],
+			'WonderSwan' : ['48', '', 'wonderswan'],
+			'WonderSwan Color' : ['49', '', ''],  
+			'Xbox' : ['13', 'Microsoft Xbox', 'xbox'],
+			'Xbox 360' : ['69', 'Microsoft Xbox 360', ''],
+			'Zeebo' : ['88', '', ''],
+			'Zodiac' : ['68', '', 'zod'],
+			'ZX Spectr' : ['41', '', '']}
+
+
+def getPlatformByRomCollection(source, romCollectionName):
+	platform = ''
+	if(source.find('mobygames.com') != -1):
+		try:
+			platform = consoleDict[romCollectionName][0]
+		except:
+			Logutil.log('Could not find platform name for Rom Collection %s' %romCollectionName, util.LOG_LEVEL_WARNING)
+	elif(source.find('thegamesdb.net') != -1):
+		try:
+			platform = consoleDict[romCollectionName][1]
+		except:
+			Logutil.log('Could not find platform name for Rom Collection %s' %romCollectionName, util.LOG_LEVEL_WARNING)
+	elif(source.find('archive.vg') != -1):
+		try:
+			platform = consoleDict[romCollectionName][2]
+		except:
+			Logutil.log('Could not find platform name for Rom Collection %s' %romCollectionName, util.LOG_LEVEL_WARNING)
+	
+	return platform
+
 			
 imagePlacingDict = {'gameinfobig' : 'one big',
 					'gameinfobigVideo' : 'one big or video',
@@ -164,6 +186,8 @@ class RomCollection:
 	scraperSites = None
 	imagePlacingMain = None
 	imagePlacingInfo = None
+	autoplayVideoMain = True
+	autoplayVideoInfo = True
 	ignoreOnScan = False
 	allowUpdate = True
 	useEmuSolo = False
@@ -354,6 +378,14 @@ class Config:
 			useEmuSolo = self.readTextElement(romCollectionRow, 'useEmuSolo') 			
 			if(useEmuSolo != ''):
 				romCollection.useEmuSolo = useEmuSolo.upper() == 'TRUE'
+				
+			autoplayVideoMain = self.readTextElement(romCollectionRow, 'autoplayVideoMain')
+			if(autoplayVideoMain != ''):
+				romCollection.autoplayVideoMain = autoplayVideoMain.upper() == 'TRUE'
+				
+			autoplayVideoInfo = self.readTextElement(romCollectionRow, 'autoplayVideoInfo')
+			if(autoplayVideoInfo != ''):
+				romCollection.autoplayVideoInfo = autoplayVideoInfo.upper() == 'TRUE'
 			
 			useFoldernameAsGamename = self.readTextElement(romCollectionRow, 'useFoldernameAsGamename')			
 			if(useFoldernameAsGamename != ''):
@@ -450,18 +482,7 @@ class Config:
 			source = scraperRow.attrib.get('source')
 			if(source != None and source != ''):
 				if(replaceValues):
-					platform = ''
-					if(source.find('mobygames.com') != -1):
-						try:
-							platform = consoleDict[romCollectionName][0]
-						except:
-							Logutil.log('Could not find platform name for Rom Collection %s' %romCollectionName, util.LOG_LEVEL_WARNING)
-					elif(source.find('thegamesdb.net') != -1):
-						try:
-							platform = consoleDict[romCollectionName][1]
-						except:
-							Logutil.log('Could not find platform name for Rom Collection %s' %romCollectionName, util.LOG_LEVEL_WARNING)
-											
+					platform = getPlatformByRomCollection(source, romCollectionName)
 					platform = urllib.quote(platform, safe='')
 					source = source.replace('%PLATFORM%', platform)
 				scraper.source = source
@@ -582,9 +603,11 @@ class Config:
 			for fileType in romCollection.imagePlacingMain.fileTypesForGameListSelected:
 				if(fileTypeIds.count(fileType.id) == 0):
 					fileTypeIds.append(fileType.id)
-			for fileType in romCollection.imagePlacingMain.fileTypesForMainViewVideoFullscreen:
-				if(fileTypeIds.count(fileType.id) == 0):
-					fileTypeIds.append(fileType.id)
+			
+			#fullscreen video
+			fileType, errorMsg = self.readFileType('gameplay', self.tree)
+			if(fileType != None):
+				fileTypeIds.append(fileType.id)
 
 		return fileTypeIds
 	

@@ -4,7 +4,7 @@
 		<Platform>system</Platform>
 		<Region>releases/release/country</Region>
 		<Genre replaceInResultKey=" &gt;" replaceInResultValue="," >genre</Genre>
-		<ReleaseYear>releases/release/date</ReleaseYear>
+		<ReleaseYear dateFormat="epoch">releases/release/date</ReleaseYear>
 		<Developer>developer</Developer>
 		<Publisher>releases/release/company</Publisher>		
 		<Description>description</Description>

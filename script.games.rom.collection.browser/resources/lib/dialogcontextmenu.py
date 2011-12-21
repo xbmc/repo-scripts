@@ -60,23 +60,23 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			self.close()
 			constructorParam = 1
 			if(util.hasAddons()):
-				constructorParam = "PAL"
+				constructorParam = "720p"
 			editRCdialog = dialogeditromcollection.EditRomCollectionDialog("script-RCB-editromcollection.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self.gui)			
 			del editRCdialog
 			
-			self.config = Config()
-			self.config.readXml()
+			self.gui.config = Config()
+			self.gui.config.readXml()
 			
 		elif (controlID == 5117): # edit scraper			
 			self.close()
 			constructorParam = 1
 			if(util.hasAddons()):
-				constructorParam = "PAL"
+				constructorParam = "720p"
 			editscraperdialog = dialogeditscraper.EditOfflineScraper("script-RCB-editscraper.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self.gui)			
 			del editscraperdialog
 			
-			self.config = Config()
-			self.config.readXml()
+			self.gui.config = Config()
+			self.gui.readXml()
 		
 		elif (controlID == 5113): #Edit Game Command			
 			self.close()
@@ -161,7 +161,7 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			
 			constructorParam = 1
 			if(util.hasAddons()):
-				constructorParam = "PAL"
+				constructorParam = "720p"
 			removeRCDialog = dialogdeleteromcollection.RemoveRCDialog("script-RCB-removeRC.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self.gui)			
 			rDelStat = removeRCDialog.getDeleteStatus()
 			if(rDelStat):

@@ -64,6 +64,8 @@ class ConfigXmlWriter:
 			SubElement(romCollectionXml, 'useEmuSolo').text = str(romCollection.useEmuSolo)
 			SubElement(romCollectionXml, 'ignoreOnScan').text = str(romCollection.ignoreOnScan)
 			SubElement(romCollectionXml, 'allowUpdate').text = str(romCollection.allowUpdate)
+			SubElement(romCollectionXml, 'autoplayVideoMain').text = str(romCollection.autoplayVideoMain)
+			SubElement(romCollectionXml, 'autoplayVideoInfo').text = str(romCollection.autoplayVideoInfo)
 			SubElement(romCollectionXml, 'useFoldernameAsGamename').text = str(romCollection.useFoldernameAsGamename)
 			SubElement(romCollectionXml, 'maxFolderDepth').text = str(romCollection.maxFolderDepth)
 			SubElement(romCollectionXml, 'doNotExtractZipFiles').text = str(romCollection.doNotExtractZipFiles)
@@ -89,13 +91,11 @@ class ConfigXmlWriter:
 					return False, message
 				SubElement(romCollectionXml, 'imagePlacingInfo').text = romCollection.imagePlacingInfo.name 
 			else:
-				SubElement(romCollectionXml, 'imagePlacingInfo').text = 'gameinfobig'
+				SubElement(romCollectionXml, 'imagePlacingInfo').text = 'gameinfosmall'
 			
 			if(romCollection.scraperSites == None or len(romCollection.scraperSites) == 0):
-				#TODO: enable again when site is more complete and responses are faster
-				#SubElement(romCollectionXml, 'scraper', {'name' : 'thevideogamedb.com'})
 				SubElement(romCollectionXml, 'scraper', {'name' : 'thegamesdb.net', 'replaceKeyString' : '', 'replaceValueString' : ''})
-				SubElement(romCollectionXml, 'scraper', {'name' : 'giantbomb.com', 'replaceKeyString' : '', 'replaceValueString' : ''})
+				SubElement(romCollectionXml, 'scraper', {'name' : 'archive.vg', 'replaceKeyString' : '', 'replaceValueString' : ''})
 				SubElement(romCollectionXml, 'scraper', {'name' : 'mobygames.com', 'replaceKeyString' : '', 'replaceValueString' : ''})
 			else:
 				for scraperSite in romCollection.scraperSites:

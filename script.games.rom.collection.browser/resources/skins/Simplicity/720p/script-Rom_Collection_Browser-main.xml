@@ -122,7 +122,7 @@
 								<bordertexture border="4">thumbborder-thin.png</bordertexture>
 								<bordersize>4</bordersize>
 								<texture background="true">$INFO[ListItem.ActualIcon]</texture>		
-								<animation reversible="false" effect="zoom" end="140" center="auto" time="300">Focus</animation> 
+								<animation reversible="false" effect="zoom" end="140" center="auto" time="150">Focus</animation> 
 							</control>
 							<control type="image">
 								<posx>-58</posx>
@@ -131,8 +131,20 @@
 								<height>25</height>
 								<texture>rcb-star.png</texture>					
 								<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
-							</control>							
-						</control>
+							</control>
+							<control type="button">
+								<description>Autoplay video</description>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>0</width>
+								<height>0</height>
+								<texturefocus></texturefocus>
+								<texturenofocus></texturenofocus>
+								<visible>!IsEmpty(ListItem.Property(autoplayvideomain)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
+								<animation delay="300" effect="fade" start="100" end="100">Focus</animation>
+								<onfocus>XBMC.PlayMedia($INFO[ListItem.Property(gameplaymain)],1)</onfocus>
+							</control>
+						</control>						
 					</focusedlayout>
 				</control>
 				<control type="scrollbar" id="60">
@@ -223,7 +235,7 @@
 						<posy>18</posy>
 						<width>380</width>
 						<height>220</height>
-						<visible>!Player.HasVideo</visible>
+						<visible>!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))</visible>
 						<texture>$INFO[ListItem.Property(gameinfobig)]</texture>
 						<bordertexture border="2">thumbborder-thin.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -244,7 +256,7 @@
 						<posy>18</posy>
 						<width>380</width>
 						<height>220</height>											
-						<visible>!IsEmpty(ListItem.Property(videosizebig))</visible>
+						<visible>!IsEmpty(ListItem.Property(videosizebig)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
 					</control>
 					<control type="button">
 						<animation type="WindowOpen" reversible="false">
@@ -263,38 +275,7 @@
 						<texturefocus></texturefocus>
 						<texturenofocus></texturenofocus>
 						<visible>!IsEmpty(ListItem.Property(videosizebig))</visible>
-					</control>					
-					<!--<control type="button" id="2900"> 
-						<animation type="WindowOpen" reversible="false">
-							<effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="500" />
-							<effect type="fade" start="0" end="100" time="500" />
-						</animation>
-						<animation type="WindowClose" reversible="false">
-							<effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="500" />
-							<effect type="fade" start="100" end="0" time="500" />
-						</animation>
-						<description>Play Fullscreen</description>
-						<posx>90</posx>
-						<posy>235</posy>
-						<width>150</width>
-						<height>20</height>
-						<visible>!IsEmpty(ListItem.Property(videofullscreen))</visible>
-						<colordiffuse>DDFFFFFF</colordiffuse>
-						<texturefocus>rcb-button-focus.png</texturefocus>
-						<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-						<label>Play Video Fullscreen</label>
-						<font>Simplicity_font12</font>					
-						<textcolor>DDFFFFFF</textcolor>
-						<disabledcolor>80FFFFFF</disabledcolor>
-						<align>center</align>
-						<aligny>center</aligny>						
-						<onup>500</onup>
-						<ondown>3100</ondown>
-						<onleft>500</onleft>
-						<onright>2200</onright>
-					</control>-->
-					
-					
+					</control>
 					<!-- gameinfoupperleft -->
 					<control type="image" id="2400">
 						<animation type="WindowOpen" reversible="false">
@@ -309,7 +290,8 @@
 						<posx>15</posx>
 						<posy>15</posy>
 						<width>150</width>
-						<height>110</height>						
+						<height>110</height>
+						<visible>[!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))] | !IsEmpty(ListItem.Property(videosizesmall))</visible>
 						<texture>$INFO[ListItem.Property(gameinfoupperleft)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -328,7 +310,8 @@
 						<posx>165</posx>
 						<posy>15</posy>
 						<width>150</width>
-						<height>110</height>						
+						<height>110</height>
+						<visible>[!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))] | !IsEmpty(ListItem.Property(videosizesmall))</visible>
 						<texture>$INFO[ListItem.Property(gameinfoupperright)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -367,12 +350,11 @@
 						<posy>125</posy>
 						<width>150</width>
 						<height>110</height>
-						<visible>!Player.HasVideo</visible>
+						<visible>!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))</visible>
 						<texture>$INFO[ListItem.Property(gameinfolowerright)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
 					</control>
-					
 					<!-- gameinfoupper -->
 					<control type="image" id="2710">
 						<animation type="WindowOpen" reversible="false">
@@ -406,7 +388,8 @@
 						<posx>15</posx>
 						<posy>125</posy>
 						<width>300</width>
-						<height>110</height>						
+						<height>110</height>
+						<visible>[!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))]</visible>
 						<texture>$INFO[ListItem.Property(gameinfolower)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -425,7 +408,8 @@
 						<posx>15</posx>
 						<posy>15</posy>
 						<width>150</width>
-						<height>220</height>						
+						<height>220</height>
+						<visible>[!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))]</visible>
 						<texture>$INFO[ListItem.Property(gameinfoleft)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -465,7 +449,7 @@
 						<posy>125</posy>
 						<width>150</width>
 						<height>110</height>												
-						<visible>!IsEmpty(ListItem.Property(videosizesmall))</visible>						
+						<visible>!IsEmpty(ListItem.Property(videosizesmall)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>						
 					</control>
 					
 					<control type="button">
@@ -687,6 +671,18 @@
 								<texture>rcb-star.png</texture>					
 								<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
 							</control>
+							<control type="button">
+								<description>Autoplay video</description>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>0</width>
+								<height>0</height>
+								<texturefocus></texturefocus>
+								<texturenofocus></texturenofocus>
+								<visible>!IsEmpty(ListItem.Property(autoplayvideomain)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
+								<animation delay="300" effect="fade" start="100" end="100">Focus</animation>								
+								<onfocus>XBMC.PlayMedia($INFO[ListItem.Property(gameplaymain)],1)</onfocus>
+							</control>
 						</focusedlayout>
 					</control>
 					<control type="scrollbar" id="61">
@@ -719,7 +715,7 @@
 						<posy>5</posy>
 						<width>410</width>
 						<height>290</height>										
-						<visible>!Player.HasVideo</visible>
+						<visible>!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))</visible>
 						<texture>$INFO[ListItem.Property(gameinfobig)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -731,7 +727,7 @@
 						<posy>5</posy>
 						<width>410</width>
 						<height>290</height>	
-						<visible>!IsEmpty(ListItem.Property(videosizebig))</visible>
+						<visible>!IsEmpty(ListItem.Property(videosizebig)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
 					</control>
 					
 					<control type="button">
@@ -743,28 +739,7 @@
 						<texturefocus></texturefocus>
 						<texturenofocus></texturenofocus>
 						<visible>!IsEmpty(ListItem.Property(videosizebig))</visible>
-					</control>					
-					<!--<control type="button" id="2901"> 
-						<description>Play Fullscreen</description>
-						<posx>110</posx>
-						<posy>280</posy>
-						<width>150</width>
-						<height>20</height>
-						<visible>!IsEmpty(ListItem.Property(videofullscreen))</visible>
-						<colordiffuse>DDFFFFFF</colordiffuse>
-						<texturefocus>rcb-button-focus.png</texturefocus>
-						<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-						<label>Play Video Fullscreen</label>
-						<font>Simplicity_font12</font>						
-						<textcolor>DDFFFFFF</textcolor>
-						<disabledcolor>80FFFFFF</disabledcolor>
-						<align>center</align>
-						<aligny>center</aligny>						
-						<onup>500</onup>
-						<ondown>3100</ondown>
-						<onleft>500</onleft>
-						<onright>2200</onright>
-					</control>-->
+					</control>
 					
 					<!-- gameinfoupperleft -->
 					<control type="image" id="2401">
@@ -773,6 +748,7 @@
 						<posy>45</posy>
 						<width>165</width>
 						<height>115</height>
+						<visible>[!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))] | !IsEmpty(ListItem.Property(videosizesmall))</visible>
 						<texture>$INFO[ListItem.Property(gameinfoupperleft)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -783,7 +759,8 @@
 						<posx>180</posx>
 						<posy>45</posy>
 						<width>165</width>
-						<height>115</height>						
+						<height>115</height>
+						<visible>[!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))] | !IsEmpty(ListItem.Property(videosizesmall))</visible>
 						<texture>$INFO[ListItem.Property(gameinfoupperright)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -794,7 +771,7 @@
 						<posx>15</posx>
 						<posy>160</posy>
 						<width>165</width>
-						<height>115</height>						
+						<height>115</height>
 						<texture>$INFO[ListItem.Property(gameinfolowerleft)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -806,7 +783,7 @@
 						<posy>160</posy>
 						<width>165</width>
 						<height>115</height>
-						<visible>!Player.HasVideo</visible>
+						<visible>!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))</visible>
 						<texture>$INFO[ListItem.Property(gameinfolowerright)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -829,7 +806,8 @@
 						<posx>15</posx>
 						<posy>160</posy>
 						<width>330</width>
-						<height>115</height>						
+						<height>115</height>
+						<visible>[!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))]</visible>
 						<texture>$INFO[ListItem.Property(gameinfolower)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -840,7 +818,8 @@
 						<posx>15</posx>
 						<posy>45</posy>
 						<width>165</width>
-						<height>230</height>						
+						<height>230</height>
+						<visible>[!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))]</visible>
 						<texture>$INFO[ListItem.Property(gameinfoleft)]</texture>
 						<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
 						<bordersize>2</bordersize>
@@ -864,7 +843,7 @@
 						<posy>160</posy>
 						<width>165</width>
 						<height>115</height>												
-						<visible>!IsEmpty(ListItem.Property(videosizesmall))</visible>
+						<visible>!IsEmpty(ListItem.Property(videosizesmall)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
 					</control>
 					<control type="button">
 						<description>video absorber</description>

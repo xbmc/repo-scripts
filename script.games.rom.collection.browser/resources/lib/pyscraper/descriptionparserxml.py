@@ -101,7 +101,13 @@ class DescriptionParserXml:
 							if(appendResultWith != None):
 								newValue = newValue + appendResultWith
 							if(dateFormat != None):
-								newValue = time.strptime(newValue, dateFormat)
+								if(dateFormat == 'epoch'):
+									try:
+										newValue = time.gmtime(int(newValue))
+									except:
+										print 'error converting timestamp: ' +str(newValue) 
+								else:
+									newValue = time.strptime(newValue, dateFormat)
 							itemList[i] = newValue
 						except Exception, (exc):
 							print "Error while handling appendResultTo: " +str(exc)

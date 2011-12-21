@@ -15,6 +15,7 @@ ACTION_MOVEMENT_DOWN = ( 4, )
 ACTION_MOVEMENT = ( 1, 2, 3, 4, )
 
 CONTROL_BUTTON_PLAYGAME = 3000
+CONTROL_BUTTON_PLAYVIDEO = 3001
 
 CONTROL_GAME_LIST_GROUP = 1000
 CONTROL_GAME_LIST = 59
@@ -49,6 +50,7 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		self.selectedGameIndex = kwargs[ "selectedGameIndex" ]		
 		self.selectedControlIdMainView = kwargs["controlIdMainView"]		
 		self.fileDict = kwargs["fileDict"]
+		self.fileTypeGameplay = kwargs["fileTypeGameplay"]
 		
 		self.doModal()
 		
@@ -59,13 +61,14 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		
 		self.showGameList()
 		
-		control = self.getControlById(CONTROL_GAME_LIST_GROUP)
-		if(control == None):
-			return
-			
-		#self.setFocus(control)
-		#self.selectedControlId = CONTROL_GAME_LIST_GROUP
-		#self.setCurrentListPosition(self.selectedGameIndex)
+		control = self.getControlById(CONTROL_BUTTON_PLAYVIDEO)
+		if(control != None and xbmc.getCondVisibility("Control.IsVisible(%i)" %CONTROL_BUTTON_PLAYVIDEO)):
+			xbmc.sleep(util.WAITTIME_UPDATECONTROLS)
+			self.setFocus(control)
+		else:
+			control = self.getControlById(CONTROL_BUTTON_PLAYGAME)
+			if(control != None):
+				self.setFocus(control)
 		
 		xbmc.sleep(util.WAITTIME_UPDATECONTROLS)
 		self.showGameInfo()
@@ -107,36 +110,46 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 				
 		self.writeMsg("loading games...")
 		
-		xbmcgui.lock()
-		
 		self.clearList()
 		
-		game = Game(self.gdb).getObjectById(self.selectedGameId)
-		item = xbmcgui.ListItem(game[util.ROW_NAME], str(game[util.ROW_ID]), '', '')
-		item.setProperty('gameId', str(game[util.ROW_ID]))
-		self.addItem(item, False)
+		gameRow = Game(self.gdb).getObjectById(self.selectedGameId)
 		
-		"""
-		for game in games:
-			
-			romCollection = None
-			try:
-				romCollection = self.config.romCollections[str(game[util.GAME_romCollectionId])]
-			except:
-				Logutil.log('Cannot get rom collection with id: ' +str(game[util.GAME_romCollectionId]), util.LOG_LEVEL_ERROR)
-			
-			images = helper.getFilesByControl_Cached(self.gdb, romCollection.imagePlacing.fileTypesForGameInfoViewGamelist, game[util.ROW_ID], game[util.GAME_publisherId], game[util.GAME_developerId], game[util.GAME_romCollectionId], self.fileDict)
-			if(images != None and len(images) != 0):
-				image = images[0]
-			else:
-				image = ""			
-			item = xbmcgui.ListItem(game[util.ROW_NAME], str(game[util.ROW_ID]), image, '')
-			item.setProperty('gameId', str(game[util.ROW_ID]))
-			self.addItem(item, False)
-		"""
+		fileDict = self.getFileDictByGameRow(self.gdb, gameRow)
+		
+		romCollection = None
+		try:
+			romCollection = self.config.romCollections[str(gameRow[util.GAME_romCollectionId])]
+		except:
+			Logutil.log('Cannot get rom collection with id: ' +str(gameRow[util.GAME_romCollectionId]), util.LOG_LEVEL_ERROR)
+		
+		imageGameList = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForGameList, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		imageGameListSelected = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForGameListSelected, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		
+		item = xbmcgui.ListItem(gameRow[util.ROW_NAME], str(gameRow[util.ROW_ID]), imageGameList, imageGameListSelected)
+		item.setProperty('gameId', str(gameRow[util.ROW_ID]))
+				
+		#check if we should use autoplay video
+		if(romCollection.autoplayVideoInfo):
+			item.setProperty('autoplayvideoinfo', 'true')
+		else:
+			item.setProperty('autoplayvideoinfo', '')
+		
+		#get video window size
+		if (romCollection.imagePlacingInfo.name.startswith('gameinfosmall')):
+			item.setProperty('videosizesmall', 'small')
+			item.setProperty('videosizebig', '')
+		else:
+			item.setProperty('videosizebig', 'big')
+			item.setProperty('videosizesmall', '')
+						
+		videos = helper.getFilesByControl_Cached(self.gdb, (self.fileTypeGameplay,), gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		if(videos != None and len(videos) != 0):
+			video = videos[0]
+			item.setProperty('gameplayinfo', video)
+		
+		self.addItem(item, False)
 				
 		xbmc.executebuiltin("Container.SortDirection")
-		xbmcgui.unlock()
 		self.writeMsg("")
 		
 		Logutil.log("End showGameList", util.LOG_LEVEL_INFO)
@@ -185,13 +198,25 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		selectedGame.setProperty('genre', genreString)
 		
 		selectedGame.setProperty('maxplayers', self.getGameProperty(gameRow[util.GAME_maxPlayers]))				
-		selectedGame.setProperty('rating', self.getGameProperty(gameRow[util.GAME_rating]))		
+		selectedGame.setProperty('rating', self.getGameProperty(gameRow[util.GAME_rating]))
+		selectedGame.setProperty('votes', self.getGameProperty(gameRow[util.GAME_numVotes]))		
 		selectedGame.setProperty('url', self.getGameProperty(gameRow[util.GAME_url]))
 		selectedGame.setProperty('region', self.getGameProperty(gameRow[util.GAME_region]))
-		selectedGame.setProperty('media', self.getGameProperty(gameRow[util.GAME_media]))					
+		selectedGame.setProperty('media', self.getGameProperty(gameRow[util.GAME_media]))
+		selectedGame.setProperty('perspective', self.getGameProperty(gameRow[util.GAME_perspective]))					
 		selectedGame.setProperty('controllertype', self.getGameProperty(gameRow[util.GAME_controllerType]))
-		selectedGame.setProperty('isfavorite', self.getGameProperty(gameRow[util.GAME_isFavorite]))
+		selectedGame.setProperty('originaltitle', self.getGameProperty(gameRow[util.GAME_originalTitle]))
+		selectedGame.setProperty('alternatetitle', self.getGameProperty(gameRow[util.GAME_alternateTitle]))
+		selectedGame.setProperty('translatedby', self.getGameProperty(gameRow[util.GAME_translatedBy]))
+		selectedGame.setProperty('version', self.getGameProperty(gameRow[util.GAME_version]))
+			
 		selectedGame.setProperty('playcount', self.getGameProperty(gameRow[util.GAME_launchCount]))
+		
+		isFavorite = self.getGameProperty(gameRow[util.GAME_isFavorite])
+		if(isFavorite == '1'):
+			selectedGame.setProperty('isfavorite', '1')
+		else:
+			selectedGame.setProperty('isfavorite', '')		
 		
 		description = gameRow[util.GAME_description]
 		if(description == None):
@@ -206,6 +231,13 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		except:
 			Logutil.log('Cannot get rom collection with id: ' +str(gameRow[util.GAME_romCollectionId]), util.LOG_LEVEL_ERROR)
 				
+		try:			
+			selectedGame.setProperty('romcollection', romCollection.name)			
+			selectedGame.setProperty('console', romCollection.name)
+		except:
+			pass
+		
+		imageGameInfoBackground = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForMainViewBackground, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 		
 		imageGameInfoBig = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForMainViewGameInfoBig, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 		imageGameInfoUpperLeft = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForMainViewGameInfoUpperLeft, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
@@ -217,7 +249,12 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		imageGameInfoLower = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForMainViewGameInfoLower, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 		imageGameInfoLeft = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForMainViewGameInfoLeft, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 		imageGameInfoRight = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForMainViewGameInfoRight, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		
+		imageGameInfo1 = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForMainView1, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		imageGameInfo2 = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForMainView2, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
+		imageGameInfo3 = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForMainView3, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 				
+		selectedGame.setProperty(util.IMAGE_CONTROL_BACKGROUND, imageGameInfoBackground)
 		selectedGame.setProperty(util.IMAGE_CONTROL_GAMEINFO_BIG, imageGameInfoBig)
 		selectedGame.setProperty(util.IMAGE_CONTROL_GAMEINFO_UPPERLEFT, imageGameInfoUpperLeft)
 		selectedGame.setProperty(util.IMAGE_CONTROL_GAMEINFO_UPPERRIGHT, imageGameInfoUpperRight)
@@ -227,18 +264,9 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		selectedGame.setProperty(util.IMAGE_CONTROL_GAMEINFO_LOWER, imageGameInfoLower)
 		selectedGame.setProperty(util.IMAGE_CONTROL_GAMEINFO_LEFT, imageGameInfoLeft)
 		selectedGame.setProperty(util.IMAGE_CONTROL_GAMEINFO_RIGHT, imageGameInfoRight)
-				
-		videos = helper.getFilesByControl_Cached(self.gdb, romCollection.imagePlacingInfo.fileTypesForMainViewVideoWindowBig, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)		
-		if(videos != None and len(videos) != 0):
-			selectedGame.setProperty('videosizebig', 'big')
-		else:
-			videos = helper.getFilesByControl_Cached(self.gdb, romCollection.imagePlacingInfo.fileTypesForMainViewVideoWindowSmall, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)		
-			if(videos != None and len(videos) != 0):
-				selectedGame.setProperty('videosizesmall', 'small')
-		
-		if(videos != None and len(videos) != 0):
-			video = videos[0]
-			xbmc.Player().play(video, selectedGame, True)
+		selectedGame.setProperty(util.IMAGE_CONTROL_1, imageGameInfo1)
+		selectedGame.setProperty(util.IMAGE_CONTROL_2, imageGameInfo2)
+		selectedGame.setProperty(util.IMAGE_CONTROL_3, imageGameInfo3)
 		
 		Logutil.log("End showGameInfo", util.LOG_LEVEL_INFO)
 		

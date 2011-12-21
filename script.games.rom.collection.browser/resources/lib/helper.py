@@ -21,7 +21,7 @@ def getFilesByControl_Cached(gdb, fileTypes, gameId, publisherId, developerId, r
 	
 	mediaFiles = []
 	for fileType in fileTypes:
-		Logutil.log("fileType: " +str(fileType), util.LOG_LEVEL_DEBUG)
+		Logutil.log("fileType: " +str(fileType.name), util.LOG_LEVEL_DEBUG)
 		
 		parentId = None
 					

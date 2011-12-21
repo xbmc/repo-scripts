@@ -1,3 +1,55 @@
+0.9.7 (12/2011)
+~~~~~~~~~~~~~
+General:
+  * bugfix: loading skin files with PAL resolution might have failed
+
+Browse Games:
+  * bugfix: imageplacing option "Four small" did not work in Eden
+
+0.9.6 (12/2011)
+~~~~~~~~~~~~~
+General:
+  * bugfix: config was not updated after Edit Rom Collection
+
+Import Games:
+  * new scraper: local artwork - don't scrape anything, just check for local artwork
+
+Browse Games:  
+  * add video support to MAME views
+  * Night skin: set focus on console filter when accessing filter controls
+
+0.9.5 (12/2011)
+~~~~~~~~~~~~~
+Import Games:
+  * add archive.vg scraper to config.xml
+
+Browse Games
+  * move autoplay video from script to skin
+    * add new options to "Edit Rom Collection" dialog: autoplay video
+    * remove imageplacing options with video support
+  * improvement of browsing and list loading performance
+  * more filter control interaction: all filter controls will be updated from left to right
+  * add video support to Night showcase view
+  * stop video when changing filters or launch context menu
+  * bugfix: fullscreen video now works auto video playback is turned on
+  * bugfix: game name does not change after video playback is stopped in game info dialog
+  
+
+0.9.4 (11/2011)
+~~~~~~~~~~~~~
+General:
+  * little refactoring of startup code (better timing and more stability)
+  * don't crash when import zlib fails (not available with some python 2.6 distributions)
+
+Import Games:
+  * new scraper: http://archive.vg
+
+Browse Games
+  * filter control interaction: update Genre, Year and Publisher filter when console is changed
+  * short delay before applying filter selection
+  * add background and extraImage1, 2, 3 to game info dialog
+  * add console, version, perspective to game info dialog
+
 0.9.3 (10/2011)
 ~~~~~~~~~~~~~
 Browse Games:
@@ -15,7 +67,8 @@ Import Games:
   * MAME scraper: revert change from 0.9.1
 
 Browse Games:
-  * re-add video in game info window
+  * refactor game info window
+    * video in game info window
   * add skin selection in addon settings: choose between Confluence, Night and Simplicity
 
 0.9.1 (08/2011)

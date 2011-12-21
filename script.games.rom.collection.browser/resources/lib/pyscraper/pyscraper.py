@@ -1,5 +1,5 @@
 
-
+import config
 from config import *
 from gamedatabase import *
 from descriptionparserfactory import *
@@ -16,7 +16,7 @@ class PyScraper:
 	def __init__(self):
 		pass
 
-	def scrapeResults(self, results, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, romFile, fuzzyFactor, updateOption):		
+	def scrapeResults(self, results, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, romFile, fuzzyFactor, updateOption, romCollection):		
 		Logutil.log("using parser file: " +scraper.parseInstruction, util.LOG_LEVEL_DEBUG)		
 		Logutil.log("using game description: " +scraper.source, util.LOG_LEVEL_DEBUG)
 		
@@ -42,14 +42,14 @@ class PyScraper:
 			Logutil.log('Using nfoFile: ' +str(nfoFile), util.LOG_LEVEL_INFO)
 			scraperSource = nfoFile
 														
-		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc, fuzzyFactor, updateOption)
+		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc, fuzzyFactor, updateOption, romCollection)
 		
 		if(tempResults == None):
 			if(scraper.returnUrl):
 				urlsFromPreviousScrapers.append('')
 			return results, urlsFromPreviousScrapers, True
 		
-		if(scraper.returnUrl):			
+		if(scraper.returnUrl):
 			try:								
 				tempUrl = self.resolveParseResult(tempResults, 'url')
 				urlsFromPreviousScrapers.append(tempUrl)
@@ -77,7 +77,7 @@ class PyScraper:
 	
 	
 	
-	def parseDescriptionFile(self, scraper, scraperSource, gamenameFromFile, foldername, crc, fuzzyFactor, updateOption):
+	def parseDescriptionFile(self, scraper, scraperSource, gamenameFromFile, foldername, crc, fuzzyFactor, updateOption, romCollection):
 			
 		try:				
 			#replace configurable tokens
@@ -130,11 +130,11 @@ class PyScraper:
 			Logutil.log("Parser complains about: " +str(exc), util.LOG_LEVEL_WARNING)
 			return None			
 
-		results = self.getBestResults(results, gamenameFromFile, fuzzyFactor, updateOption)
+		results = self.getBestResults(results, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection)
 		return results
 	
 	
-	def getBestResults(self, results, gamenameFromFile, fuzzyFactor, updateOption):		
+	def getBestResults(self, results, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection):
 		
 		digits = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1']
 		romes = ['X', 'IX', 'VIII', 'VII', 'VI', 'V', 'IV', 'III', 'II', 'I']
@@ -143,7 +143,7 @@ class PyScraper:
 			Logutil.log('Searching for game: ' +gamenameFromFile, util.LOG_LEVEL_INFO)
 			Logutil.log('%s results found. Try to find best match.' %str(len(results)), util.LOG_LEVEL_INFO)						
 			
-			result, highestRatio = self.matchGamename(results, gamenameFromFile, digits, romes, False)
+			result, highestRatio = self.matchGamename(results, gamenameFromFile, digits, romes, False, scraperSource, romCollection)
 			bestMatchingGame = self.resolveParseResult(result, 'SearchKey')
 			
 			if(highestRatio != 1.0):
@@ -198,7 +198,7 @@ class PyScraper:
 			return None
 
 
-	def matchGamename(self, results, gamenameFromFile, digits, romes, checkSubtitle):
+	def matchGamename(self, results, gamenameFromFile, digits, romes, checkSubtitle, scraperSource, romCollection):
 		
 		highestRatio = 0.0
 		bestIndex = 0		
@@ -206,6 +206,14 @@ class PyScraper:
 		for i in range(0, len(results)):
 			result = results[i]
 			try:
+				#check if the result has the correct platform (if needed)
+				platformSearchKey = self.resolveParseResult(result, 'PlatformSearchKey')
+				if(platformSearchKey != ''):
+					platform = config.getPlatformByRomCollection(scraperSource, romCollection.name)
+					if(platform != platformSearchKey):
+						Logutil.log('Platform mismatch. %s != %s. Result will be skipped.' %(platform, platformSearchKey), util.LOG_LEVEL_INFO)
+						continue
+				
 				searchKey = self.resolveParseResult(result, 'SearchKey')
 				#keep it for later reference
 				origSearchKey = searchKey
