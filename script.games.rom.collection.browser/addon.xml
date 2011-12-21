@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="script.games.rom.collection.browser"
-  version="0.8.9"
+  version="1.0.0"
   name="Rom Collection Browser"
   provider-name="carabalb, jimyx17, malte">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
     <import addon="script.module.elementtree" version="1.2.7"/>
+	<import addon="service.rom.collection.browser" version="0.1.0"/>
   </requires>
   <extension point="xbmc.python.script" library="default.py"></extension>
   <extension point="xbmc.addon.metadata">
-    <summary>Browse and launch roms and standalones</summary>
+    <summary>Browse and launch games in XBMC</summary>
     <summary  lang="hu">Konzol játék ROM-ok böngészése</summary>
-    <description>Import games:
+    <description>With this Addon you can browse and launch emulator roms and standalone games in XBMC. See the wiki page for more information: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.
+
+Import games:
   * scan your rom folders and import games to local database
   * scrape artwork and meta data from various online sources
   * import local available descriptions, artwork and videos
@@ -22,6 +25,8 @@
   * configurable description file parser
 Browse games:
   * browse games by console, genre, year and publisher
+  * mark games as favorites
+  * search games by name
   * automatic video playback in video window
   * fullscreen video browser
   * game details page

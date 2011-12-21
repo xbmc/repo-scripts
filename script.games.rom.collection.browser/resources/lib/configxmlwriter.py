@@ -53,12 +53,19 @@ class ConfigXmlWriter:
 			SubElement(romCollectionXml, 'saveStatePath').text = romCollection.saveStatePath
 			SubElement(romCollectionXml, 'saveStateParams').text = romCollection.saveStateParams
 				
-			for mediaPath in romCollection.mediaPaths:								
+			for mediaPath in romCollection.mediaPaths:
+				
+				success, message = self.searchConfigObjects('FileTypes/FileType', mediaPath.fileType.name, 'FileType')
+				if(not success):
+					return False, message								
+												
 				SubElement(romCollectionXml, 'mediaPath', {'type' : mediaPath.fileType.name}).text = mediaPath.path
 				
 			SubElement(romCollectionXml, 'useEmuSolo').text = str(romCollection.useEmuSolo)
 			SubElement(romCollectionXml, 'ignoreOnScan').text = str(romCollection.ignoreOnScan)
 			SubElement(romCollectionXml, 'allowUpdate').text = str(romCollection.allowUpdate)
+			SubElement(romCollectionXml, 'autoplayVideoMain').text = str(romCollection.autoplayVideoMain)
+			SubElement(romCollectionXml, 'autoplayVideoInfo').text = str(romCollection.autoplayVideoInfo)
 			SubElement(romCollectionXml, 'useFoldernameAsGamename').text = str(romCollection.useFoldernameAsGamename)
 			SubElement(romCollectionXml, 'maxFolderDepth').text = str(romCollection.maxFolderDepth)
 			SubElement(romCollectionXml, 'doNotExtractZipFiles').text = str(romCollection.doNotExtractZipFiles)
@@ -70,23 +77,26 @@ class ConfigXmlWriter:
 				SubElement(romCollectionXml, 'xboxCreateShortcutUseShortGamename').text = str(romCollection.xboxCreateShortcutUseShortGamename)
 				
 			#image placing
-			if(romCollection.imagePlacing != None and romCollection.imagePlacing.name != ''):
-				SubElement(romCollectionXml, 'imagePlacing').text = romCollection.imagePlacing.name 
+			if(romCollection.imagePlacingMain != None and romCollection.imagePlacingMain.name != ''):
+				success, message = self.searchConfigObjects('ImagePlacing/fileTypeFor', romCollection.imagePlacingMain.name, 'ImagePlacing')
+				if(not success):
+					return False, message
+				SubElement(romCollectionXml, 'imagePlacingMain').text = romCollection.imagePlacingMain.name 
 			else:
-				SubElement(romCollectionXml, 'imagePlacing').text = 'gameinfobig'
-			
-			mobyConsoleId = '0'
-			try:
-				mobyConsoleId = config.consoleDict[romCollection.name]
-			except:
-				pass
+				SubElement(romCollectionXml, 'imagePlacingMain').text = 'gameinfobig'
+				
+			if(romCollection.imagePlacingInfo != None and romCollection.imagePlacingInfo.name != ''):
+				success, message = self.searchConfigObjects('ImagePlacing/fileTypeFor', romCollection.imagePlacingInfo.name, 'ImagePlacing')
+				if(not success):
+					return False, message
+				SubElement(romCollectionXml, 'imagePlacingInfo').text = romCollection.imagePlacingInfo.name 
+			else:
+				SubElement(romCollectionXml, 'imagePlacingInfo').text = 'gameinfosmall'
 			
 			if(romCollection.scraperSites == None or len(romCollection.scraperSites) == 0):
-				#TODO: enable again when site is more complete and responses are faster
-				#SubElement(romCollectionXml, 'scraper', {'name' : 'thevideogamedb.com'})
 				SubElement(romCollectionXml, 'scraper', {'name' : 'thegamesdb.net', 'replaceKeyString' : '', 'replaceValueString' : ''})
-				SubElement(romCollectionXml, 'scraper', {'name' : 'giantbomb.com', 'replaceKeyString' : '', 'replaceValueString' : ''})
-				SubElement(romCollectionXml, 'scraper', {'name' : 'mobygames.com', 'replaceKeyString' : '', 'replaceValueString' : '', 'platform' : mobyConsoleId})
+				SubElement(romCollectionXml, 'scraper', {'name' : 'archive.vg', 'replaceKeyString' : '', 'replaceValueString' : ''})
+				SubElement(romCollectionXml, 'scraper', {'name' : 'mobygames.com', 'replaceKeyString' : '', 'replaceValueString' : ''})
 			else:
 				for scraperSite in romCollection.scraperSites:
 				
@@ -95,7 +105,7 @@ class ConfigXmlWriter:
 						
 					#HACK: use replaceKey and -Value only from first scraper
 					firstScraper = scraperSite.scrapers[0]
-					SubElement(romCollectionXml, 'scraper', {'name' : scraperSite.name, 'platform' : scraperSite.platformId, 'replaceKeyString' : firstScraper.replaceKeyString, 'replaceValueString' : firstScraper.replaceValueString})
+					SubElement(romCollectionXml, 'scraper', {'name' : scraperSite.name, 'replaceKeyString' : firstScraper.replaceKeyString, 'replaceValueString' : firstScraper.replaceValueString})
 					
 					#create Scraper element
 					scrapersXml = self.tree.find('Scrapers')
@@ -184,7 +194,22 @@ class ConfigXmlWriter:
 		
 		success, message = self.writeFile()
 		return success, message
+	
+	
+	def searchConfigObjects(self, xPath, nameToCompare, objectType):		
+		objects = self.tree.findall(xPath)
+		objectFound = False
+		for obj in objects:
+			objectName = obj.attrib.get('name')
+			if(objectName == nameToCompare):
+				objectFound = True
+				break
 		
+		if(not objectFound):
+			return False, '%s %s could not be found in config.xml' %(objectType, nameToCompare)
+		
+		return True, ''
+	
 		
 	def removeRomCollection(self, RCName):
 		configFile = util.getConfigXmlPath()
@@ -269,14 +294,6 @@ class ConfigXmlWriter:
 			SubElement(fileTypeFor, 'fileTypeForMainViewGameInfoUpperLeft').text = 'title'
 			SubElement(fileTypeFor, 'fileTypeForMainViewGameInfoUpperRight').text = 'action'
 			SubElement(fileTypeFor, 'fileTypeForMainViewGameInfoLower').text = 'marquee'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoViewBackground').text = 'boxfront'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoViewBackground').text = 'title'			
-			SubElement(fileTypeFor, 'fileTypeForGameInfoViewBackground').text = 'action'			
-			SubElement(fileTypeFor, 'fileTypeForGameInfoViewGamelist').text = 'boxfront'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoView1').text = 'title'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoView2').text = 'action'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoView3').text = 'cabinet'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoView4').text = 'marquee'
 			
 		if not marqueeExists:
 			fileTypeFor = SubElement(imagePlacingXml, 'fileTypeFor', {'name' : 'gameinfomamemarquee'})
@@ -292,14 +309,6 @@ class ConfigXmlWriter:
 			SubElement(fileTypeFor, 'fileTypeForMainViewGameInfoLeft').text = 'cabinet'
 			SubElement(fileTypeFor, 'fileTypeForMainViewGameInfoUpperRight').text = 'action'
 			SubElement(fileTypeFor, 'fileTypeForMainViewGameInfoLowerRight').text = 'title'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoViewBackground').text = 'boxfront'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoViewBackground').text = 'title'			
-			SubElement(fileTypeFor, 'fileTypeForGameInfoViewBackground').text = 'action'			
-			SubElement(fileTypeFor, 'fileTypeForGameInfoViewGamelist').text = 'boxfront'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoView1').text = 'title'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoView2').text = 'action'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoView3').text = 'cabinet'
-			SubElement(fileTypeFor, 'fileTypeForGameInfoView4').text = 'marquee'
 		
 						
 	def writeFile(self):

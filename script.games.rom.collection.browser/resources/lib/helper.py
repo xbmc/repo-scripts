@@ -21,7 +21,7 @@ def getFilesByControl_Cached(gdb, fileTypes, gameId, publisherId, developerId, r
 	
 	mediaFiles = []
 	for fileType in fileTypes:
-		Logutil.log("fileType: " +str(fileType), util.LOG_LEVEL_DEBUG)
+		Logutil.log("fileType: " +str(fileType.name), util.LOG_LEVEL_DEBUG)
 		
 		parentId = None
 					
@@ -95,11 +95,13 @@ def getRCBSetting(gdb):
 		
 		
 
-def buildLikeStatement(selectedCharacter):
+def buildLikeStatement(selectedCharacter, searchTerm):
 	Logutil.log("helper.buildLikeStatement", util.LOG_LEVEL_INFO)
 	
-	if (selectedCharacter == 'All'):		
-		return "0 = 0"
+	likeStatement = ''
+	
+	if (selectedCharacter == 'All'):
+		likeStatement = "0 = 0"
 	elif (selectedCharacter == '0-9'):
 		
 		likeStatement = '('
@@ -109,9 +111,11 @@ def buildLikeStatement(selectedCharacter):
 				likeStatement += ' or '
 		
 		likeStatement += ')'
-				
-		return likeStatement
 	else:		
-		return "name LIKE '%s'" %(selectedCharacter +'%')
-
+		likeStatement = "name LIKE '%s'" %(selectedCharacter +'%')
+	
+	if(searchTerm != ''):
+		likeStatement += " AND name LIKE '%s'" %('%' +searchTerm +'%')
+	
+	return likeStatement
 		

@@ -160,6 +160,8 @@ def buildCmd(filenameRows, romCollection, gameRow, escapeCmd):
 				
 				if (os.environ.get( "OS", "xbox" ) == "xbox"):
 					cmd = replacePlaceholdersInParams(emuCommandLine, rom, romCollection, gameRow, escapeCmd)
+				elif (romCollection.name == 'Linux' or romCollection.name == 'Macintosh' or romCollection.name == 'Windows'):
+					cmd = replacePlaceholdersInParams(emuCommandLine, rom, romCollection, gameRow, escapeCmd)
 				else:
 					cmd = '\"' +emuCommandLine +'\" ' +emuParams.replace('%I%', str(fileindex))
 			else:
@@ -538,9 +540,10 @@ def getNames7z(filepath):
 	
 	try:
 		import py7zlib
-	except:
+	except Exception, (exc):
 		xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Error launching .7z file.', 'Please check XBMC.log for details.')
 		Logutil.log("You have tried to launch a .7z file but you are missing required libraries to extract the file. You can download the latest RCB version from RCBs project page. It contains all required libraries.", util.LOG_LEVEL_ERROR)
+		Logutil.log("Error: " +str(exc), util.LOG_LEVEL_ERROR)
 		return None
 	
 	fp = open(str(filepath), 'rb')

@@ -2,6 +2,7 @@
 import xbmc, xbmcgui
 
 import util, config
+from config import *
 from util import *
 
 ACTION_MOVEMENT_UP = (3,)
@@ -24,6 +25,8 @@ CONTROL_LIST_SCRAPER3 = 5290
 
 CONTROL_BUTTON_RC_DOWN = 5211
 CONTROL_BUTTON_RC_UP = 5212
+
+CONTROL_BUTTON_OVERWRITESETTINGS = 5330
 
 
 class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
@@ -66,11 +69,14 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		#use scraper config of first non-MAME rom collection
 		for rcId in self.gui.config.romCollections.keys():
 			romCollection = self.gui.config.romCollections[rcId]
-			if romCollection.name != 'MAME':
+			if romCollection.name != 'MAME' or len(self.gui.config.romCollections) == 1:
 				sitesInRomCollection = romCollection.scraperSites
 				break
 			
 		self.selectScrapersInList(sitesInRomCollection, sitesInList)
+		
+		#set overwrite flag to false
+		xbmc.executebuiltin('Skin.Reset(%s)' %util.SETTING_RCB_OVERWRITEIMPORTOPTIONS)		
 			
 	
 	def onAction(self, action):
@@ -103,10 +109,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 			#get selected Rom Collection
 			for rcId in self.gui.config.romCollections.keys():
 				romCollection = self.gui.config.romCollections[rcId]
-				if(selectedRomCollection == 'All' and romCollection.name != 'MAME'):
-					sitesInRomCollection = romCollection.scraperSites
-					break
-				elif romCollection.name == selectedRomCollection:
+				if((selectedRomCollection == 'All' and romCollection.name != 'MAME')  or len(self.gui.config.romCollections) == 1 or romCollection.name == selectedRomCollection):
 					sitesInRomCollection = romCollection.scraperSites
 					break
 				
@@ -147,7 +150,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 	
 	def getAvailableScrapers(self):
 		#Scrapers
-		sitesInList = ['None']		
+		sitesInList = ['None', 'local artwork']
 		#get all scrapers
 		scrapers = self.gui.config.tree.findall('Scrapers/Site')
 		for scraper in scrapers:
@@ -168,7 +171,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 			self.selectScraperInList(sitesInList, sitesInRomCollection[1].name, CONTROL_LIST_SCRAPER2)
 		else:
 			self.selectScraperInList(sitesInList, 'None', CONTROL_LIST_SCRAPER2)
-		if(len(sitesInRomCollection) >= 2):
+		if(len(sitesInRomCollection) >= 3):
 			self.selectScraperInList(sitesInList, sitesInRomCollection[2].name, CONTROL_LIST_SCRAPER3)
 		else:
 			self.selectScraperInList(sitesInList, 'None', CONTROL_LIST_SCRAPER3)
@@ -216,26 +219,25 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 				if(romCollection.name == selectedRC):
 					romCollections[romCollection.id] = romCollection
 					break
-				
+		
+		#check if we should use configured scrapers
+		control = self.getControlById(CONTROL_BUTTON_OVERWRITESETTINGS)
+		if(not control.isSelected()):
+			return romCollections, True
 		
 		#TODO ignore offline scrapers
 		for rcId in romCollections.keys():
 			
-			romCollection = self.gui.config.romCollections[rcId]
-			
-			try:
-				platformId = config.consoleDict[romCollection.name]
-			except:
-				platformId = '0'
+			romCollection = self.gui.config.romCollections[rcId]						
 			
 			sites = []
-			sites, statusOk = self.addScraperToRomCollection(CONTROL_LIST_SCRAPER1, platformId, sites, romCollection)
+			sites, statusOk = self.addScraperToRomCollection(CONTROL_LIST_SCRAPER1, sites, romCollection)
 			if not statusOk:
 				return None, False 			
-			sites, statusOk = self.addScraperToRomCollection(CONTROL_LIST_SCRAPER2, platformId, sites, romCollection)
+			sites, statusOk = self.addScraperToRomCollection(CONTROL_LIST_SCRAPER2, sites, romCollection)
 			if not statusOk:
 				return None, False
-			sites, statusOk = self.addScraperToRomCollection(CONTROL_LIST_SCRAPER3, platformId, sites, romCollection)
+			sites, statusOk = self.addScraperToRomCollection(CONTROL_LIST_SCRAPER3, sites, romCollection)
 			if not statusOk:
 				return None, False
 				
@@ -245,7 +247,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		return romCollections, True
 	
 	
-	def addScraperToRomCollection(self, controlId, platformId, sites, romCollection):				
+	def addScraperToRomCollection(self, controlId, sites, romCollection):				
 		
 		control = self.getControlById(controlId)
 		scraperItem = control.getSelectedItem()
@@ -257,7 +259,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		#HACK: don't use other scrapers than MAME and local nfo for MAME collections
 		#HACK2: check if scraper name contains mame
 		if(romCollection.name == 'MAME'):
-			if(scraper != 'local nfo' and not bool(re.search('(?i)mame', scraper))):
+			if(scraper != 'local nfo' and scraper != 'local artwork' and not bool(re.search('(?i)mame', scraper))):
 				scraper = 'maws.mameworld.info'
 				
 		siteRow = None
@@ -266,19 +268,26 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 			if(element.attrib.get('name') == scraper):
 				siteRow = element
 				break
-		
-		if(siteRow == None):
-			xbmcgui.Dialog().ok('Configuration Error', 'Site %s does not exist in config.xml' %scraper)
-			return None, False
 				
-		site, errorMsg = self.gui.config.readScraper(siteRow, platformId, '', '', True, self.gui.config.tree)
+		if(scraper != 'local artwork'):
+			if(siteRow == None):
+				xbmcgui.Dialog().ok('Configuration Error', 'Site %s does not exist in config.xml' %scraper)
+				return None, False
+			site, errorMsg = self.gui.config.readScraper(siteRow, romCollection.name, '', '', True, self.gui.config.tree)
+		else:
+			site = Site()
+			site.name = scraper
+			site.descFilePerGame = True
 						
 		if(site != None):
-			#check first scraper if it is an online or offline scraper
-			firstScraper = site.scrapers[0]
-			if(firstScraper.source != 'nfo' and not firstScraper.source.startswith('http') and site.name != romCollection.name):			
-				xbmcgui.Dialog().ok('Configuration Error', 'Scraper %s cannot be used with' %site.name, 'Rom Collection %s' %romCollection.name)
-				return None, False
+			#check if first scraper is an online or offline scraper
+			if(site.scrapers != None):
+				firstScraper = site.scrapers[0]
+				if(firstScraper.source != 'nfo' and not firstScraper.source.startswith('http') and site.name != romCollection.name):			
+					xbmcgui.Dialog().ok('Configuration Error', "Trying to scrape %s games with %s scraper." %(site.name, romCollection.name), 
+									"(Options 'All' and 'Overwrite scraper settings'",
+									"can't be used together with offline scrapers.)")
+					return None, False
 			
 			sites.append(site)
 			

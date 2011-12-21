@@ -100,18 +100,35 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 			
 		elif (controlID == CONTROL_BUTTON_GAMEDESCPATH):
 			
-			gamedescPathComplete = self.editPathWithFileMask(CONTROL_BUTTON_GAMEDESCPATH, '%s game desc path' %self.selectedOfflineScraper.name, CONTROL_BUTTON_GAMEDESCMASK)
-			if(gamedescPathComplete != ''):
+			#check value of descfilepergame
+			control = self.getControlById(CONTROL_BUTTON_DESCPERGAME)
+			if(control.isSelected()):
+				gamedescPathComplete = self.editPathWithFileMask(CONTROL_BUTTON_GAMEDESCPATH, '%s game desc path' %self.selectedOfflineScraper.name, CONTROL_BUTTON_GAMEDESCMASK)
+				if(gamedescPathComplete != ''):
+					#HACK: only use source and parser from 1st scraper
+					if(len(self.selectedOfflineScraper.scrapers) >= 1):			
+						self.selectedOfflineScraper.scrapers[0].source = gamedescPathComplete
+			else:
+				dialog = xbmcgui.Dialog()
+				gamedescPath = dialog.browse(1, '%s Game description' %self.selectedOfflineScraper.name, 'files', '', False, False, self.selectedOfflineScraper.scrapers[0].source)
+				if(gamedescPath == ''):
+					return
 				
-				#HACK: only use source and parser from 1st scraper
-				if(len(self.selectedOfflineScraper.scrapers) >= 1):			
-					self.selectedOfflineScraper.scrapers[0].source = gamedescPathComplete
+				if(len(self.selectedOfflineScraper.scrapers) >= 1):
+					self.selectedOfflineScraper.scrapers[0].source = gamedescPath
+
+				control = self.getControlById(CONTROL_BUTTON_GAMEDESCPATH)
+				control.setLabel(gamedescPath)
 		
 		elif (controlID == CONTROL_BUTTON_GAMEDESCMASK):
 			
 			if(len(self.selectedOfflineScraper.scrapers) >= 1):
 				self.selectedOfflineScraper.scrapers[0].source = self.editFilemask(CONTROL_BUTTON_GAMEDESCMASK, 'game desc filemask', self.selectedOfflineScraper.scrapers[0].source)
 			
+		elif (controlID == CONTROL_BUTTON_DESCPERGAME):
+			#set value of gamedesc path and mask
+			self.toggleGameDescPath()
+		
 		elif (controlID == CONTROL_BUTTON_PARSEINSTRUCTION):
 			
 			dialog = xbmcgui.Dialog()
@@ -128,14 +145,31 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 				
 		elif (controlID == CONTROL_BUTTON_ADDSCRAPER):
 			
-			name = ''
+			#get list of all rc names that are not in use
+			names = []
+			for romCollection in self.gui.config.romCollections.values():
+				scraperInUse = False
+				for scraper in self.gui.config.scraperSites:
+					print 'scraper = ' +scraper
+					if(romCollection.name == scraper):
+						scraperInUse = True
+						break
+				
+				if not scraperInUse:
+					names.append(romCollection.name)
 			
-			keyboard = xbmc.Keyboard()
-			keyboard.setHeading('Enter scraper name')
-			keyboard.doModal()
-			if (keyboard.isConfirmed()):
-				name = keyboard.getText()
+			dialog = xbmcgui.Dialog()
 			
+			if(len(names) == 0):
+				dialog.ok(util.SCRIPTNAME, 'There already are scrapers for all Rom Collections', 'Edit or delete an existing scraper')
+				return
+						
+			#select name
+			scraperIndex = dialog.select('Select scraper name', names)
+			if(scraperIndex == -1):
+				return						
+			
+			name = names[scraperIndex]
 			if(name == ''):
 				return
 			
@@ -143,14 +177,31 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 			site.name = name
 			site.scrapers = []
 			scraper = Scraper()
-			scraper.encoding = 'iso-8859-1'
-			site.scrapers.append(scraper)
-			self.scraperSites[name] = site
+			scraper.encoding = 'iso-8859-1'			
+						
+			#select game desc
+			gamedescPath = dialog.browse(1, '%s Game description' %name, 'files')
+			if(gamedescPath == ''):
+				return
 			
+			scraper.source = gamedescPath
+			
+			#select parse instruction
+			parseInstruction = dialog.browse(1, '%s parse instruction' %self.selectedOfflineScraper.name, 'files')
+			if(parseInstruction == ''):
+				return
+			
+			scraper.parseInstruction = parseInstruction
+			
+			
+			site.scrapers.append(scraper)
+			self.scraperSites[name] = site				
+			
+			#add scraper to list
 			control = self.getControlById(CONTROL_LIST_SCRAPERS)
 			item = xbmcgui.ListItem(name, '', '', '')
 			control.addItem(item)
-			
+						
 			self.selectItemInList(name, CONTROL_LIST_SCRAPERS)
 			
 			if(self.selectedOfflineScraper != None):
@@ -226,6 +277,8 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 		if(firstScraper == None):
 			firstScraper = Scraper()
 		
+		
+		"""
 		pathParts = os.path.split(firstScraper.source)
 		scraperSource = pathParts[0]
 		scraperFileMask = pathParts[1]
@@ -234,13 +287,25 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 		control.setLabel(scraperSource)
 		
 		control = self.getControlById(CONTROL_BUTTON_GAMEDESCMASK)
-		control.setLabel(scraperFileMask)
+		if(selectedSite.descFilePerGame):
+			control.setLabel(scraperFileMask)
+		else:
+			control.setLabel('')
+		"""
 		
 		control = self.getControlById(CONTROL_BUTTON_PARSEINSTRUCTION)
 		control.setLabel(firstScraper.parseInstruction)
 		
 		control = self.getControlById(CONTROL_BUTTON_DESCPERGAME)
 		control.setSelected(selectedSite.descFilePerGame)
+		#set skin setting for game desc file mask control
+		if(selectedSite.descFilePerGame):
+			xbmc.executebuiltin('Skin.SetBool(%s)' %util.SETTING_RCB_EDITSCRAPER_DESCFILEPERGAME)
+		else:
+			xbmc.executebuiltin('Skin.Reset(%s)' %util.SETTING_RCB_EDITSCRAPER_DESCFILEPERGAME)
+			
+		#set value of game desc path and mask
+		self.toggleGameDescPath()
 		
 		control = self.getControlById(CONTROL_BUTTON_SEARCHBYCRC)
 		control.setSelected(selectedSite.searchGameByCRC)
@@ -270,5 +335,24 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 		#use filename as crc
 		control = self.getControlById(CONTROL_BUTTON_USEFILEASCRC)
 		self.selectedOfflineScraper.useFilenameAsCRC = bool(control.isSelected())
+		
+		
+	def toggleGameDescPath(self):
+		
+		if(len(self.selectedOfflineScraper.scrapers) >= 1):
+			pathComplete = self.selectedOfflineScraper.scrapers[0].source
+			pathParts = os.path.split(pathComplete)
+	
+			controlPath = self.getControlById(CONTROL_BUTTON_GAMEDESCPATH)
+			controlMask = self.getControlById(CONTROL_BUTTON_GAMEDESCMASK)
+			
+			#check value of descfilepergame
+			controlDescPerGame = self.getControlById(CONTROL_BUTTON_DESCPERGAME)
+			if(controlDescPerGame.isSelected()):				
+				controlPath.setLabel(pathParts[0])
+				controlMask.setLabel(pathParts[1])
+			else:
+				controlPath.setLabel(pathComplete)
+				controlMask.setLabel('')
 		
 		
