@@ -11,7 +11,7 @@
 #***********************************************************************
 
 from utilities import printlog, _fetch_data
-import re, md5, time
+import re, hashlib, time, urllib2
 
 def _create_video( country="", continent="" ):
 	# Korea
@@ -225,7 +225,7 @@ def _create_video( country="", continent="" ):
 		    key = "9b673b13fa4682ed14c3cfa5af5310274b514c4133e9b3a81e6e3aba00912564"
 		    hextime = "%x" % time.time()
 		    hextime += "0" * ( len( hextime ) - 8 )
-		    token = md5.new( key + "/webhd/" + ID + hextime ).hexdigest() + "/" + hextime
+		    token = hashlib.md5( key + "/webhd/" + ID + hextime ).hexdigest() + "/" + hextime
 		    url = "http://www.wat.tv/get/webhd/" + ID + "?token=" + token + "&context=swf2&getURL=1&version=WIN%2010,3,183,5&lieu=tf1" 
 		    # print url
 		    url = _fetch_data( url, )

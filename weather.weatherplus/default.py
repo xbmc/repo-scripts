@@ -12,7 +12,7 @@
 import xbmc
 
 __plugin__ = "Weather Plus"
-__version__ = "3.0.0"
+__version__ = "3.0.1"
 
 xbmc.log( "[PLUGIN] '%s: Version - %s' initialized!" % ( __plugin__, __version__ ), xbmc.LOGNOTICE )     
 
