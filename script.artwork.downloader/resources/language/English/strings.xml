@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <strings>
     <!-- Add-on messages id=32001 to 32030 -->
-        <string id="32001">Please help get more art or donate on:</string>
-        <string id="32002">Run add-on at time: (24h)</string>
+        <string id="32001">Please help get more artwork or donate on:</string>
+        <string id="32002">Scheduled run at time: (24h)</string>
         <string id="32003">Faulty/empty settings combination found!</string>
         <string id="32004">Select your preferences and press OK to save</string>
         <string id="32005">Cleaning up</string>
@@ -26,11 +26,11 @@
         <string id="32023">Run add-on at start-up / login</string>
         <string id="32024">Run add-on as a service</string>
         <string id="32025">-</string>
-        <string id="32026">24</string>
-        <string id="32027">36</string>
-        <string id="32028">48</string>
+        <string id="32026">-</string>
+        <string id="32027">-</string>
+        <string id="32028">-</string>
         <string id="32029">[I](After changes are made you must restart XBMC) [/I]</string>
-        <string id="32030">No ID found for looking up artwork</string>
+        <string id="32030">No provider ID found for looking up artwork</string>
 
     <!-- Add-on settings: General section id=32031 to 32050 -->
         <string id="32031">General settings</string>
@@ -38,7 +38,7 @@
         <string id="32033">Run in background</string>        
         <string id="32034">Show dialog on finished/errors</string>
         <string id="32035">Overwrite all existing artwork [I](will be automaticly disabled after downloading)[/I] </string>
-        <string id="32036">Centralize fanart [I](Can be used for fanart slideshow)[/I] </string>
+        <string id="32036">Centralize extrafanart [I](Can be used for extrafanart slideshow)[/I] </string>
         <string id="32037">Central TV fanart directory</string>
         <string id="32038">Central Movie fanart directory</string>
         <string id="32039">-</string>

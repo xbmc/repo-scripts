@@ -7,7 +7,7 @@
 		<description>Get Artwork</description>
 		<label>$LOCALIZE[31316]</label>
 		<onclick condition="Container.Content(tvshows)">XBMC.RunScript(script.artwork.downloader, mediatype=tvshow, medianame=$INFO[ListItem.TVShowTitle])</onclick>
-		<onclick condition="Container.Content(movies)">XBMC.RunScript(script.artwork.downloader, mediatype=movie, medianame=$INFO[ListItem.Title])</onclick>
+		<onclick condition="Container.Content(movies)">XBMC.RunScript(script.artwork.downloader, mediatype=movie, medianame=$INFO[ListItem.Title],mediapath=$INFO[ListItem.Path])</onclick>
 		<visible>[Container.Content(tvshows)|Container.Content(movies)]+system.hasaddon(script.artwork.downloader)</visible>
 	</item>
 		  
@@ -18,7 +18,7 @@
 		<description>Get Artwork</description>
 		<label>$LOCALIZE[31316]</label>
 		<onclick condition="Container.Content(tvshows)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=tvshow, medianame=$INFO[ListItem.TVShowTitle])</onclick>
-		<onclick condition="Container.Content(movies)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=movie, medianame=$INFO[ListItem.Title])</onclick>
+		<onclick condition="Container.Content(movies)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=movie, medianame=$INFO[ListItem.Title],mediapath=$INFO[ListItem.Path])</onclick>
 		<visible>[Container.Content(tvshows)|Container.Content(movies)]+system.hasaddon(script.artwork.downloader)</visible>
 	</item>
 

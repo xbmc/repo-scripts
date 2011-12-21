@@ -57,6 +57,7 @@ Skins using this Add-On:
     - reFocus (made by Jeroen)
     - Convergence (made by Mudislander)
     - Backrow (by Sharpe)
+    - Glass (by Ronan/Frost/Kbalist)
 
 ----------------------------------------------------------------------------------------------
 To run the script in bulk mode simply click on it in the 'Addons' or 'Programs' menu in XBMC.

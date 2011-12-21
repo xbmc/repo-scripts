@@ -1,3 +1,4 @@
+import os
 import re
 import xbmc
 import urllib
@@ -10,7 +11,6 @@ from resources.lib.utils import _log as log
 
 # Retrieve JSON list
 def _media_listing(media_type):
-        
         log('Using JSON for retrieving %s info' %media_type)
         Medialist = []
         if media_type == 'tvshow':
@@ -21,7 +21,7 @@ def _media_listing(media_type):
                 for item in jsonobject['result']['tvshows']:
                     Media = {}
                     Media['name'] = item['label']
-                    Media['path'] = item['file']
+                    Media['path'] = _media_path(item['file'])
                     Media['id'] = item['imdbnumber']
                     Media['tvshowid'] = item['tvshowid']
                     ### Search for season numbers
@@ -41,10 +41,22 @@ def _media_listing(media_type):
                 for item in jsonobject['result']['movies']:
                     Media = {}
                     Media['name'] = item['label']
-                    Media['path'] = item['file']
+                    Media['path'] = _media_path(item['file'])
                     Media['id'] = item['imdbnumber']
                     Media['movieid'] = item['movieid']
                     Medialist.append(Media)
         else:
             log('No JSON results found')
         return Medialist
+
+
+def _media_path(path):
+    # Check for stacked movies
+    try:
+        path = os.path.split(path)[0].rsplit(' , ', 1)[1]
+    except:
+        path = os.path.split(path)[0]
+    # Fixes problems with rared movies
+    if path.startswith("rar"):
+        path = os.path.split(urllib.url2pathname(path.replace("rar://","")))[0]
+    return path

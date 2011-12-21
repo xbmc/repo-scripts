@@ -14,9 +14,13 @@ Code to run script solo:
 
     XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=?, medianame=?)
             -> Runs using the GUI dialog. No add-on settings applied
+
+    XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=?, medianame=?,mediapath=?)
+            -> Runs using the GUI dialog. No add-on settings applied. 'mediapath'is meant for movies but can work for tvshows to.
     
     XBMC.runscript(script.artwork.downloader, mode=custom, mediatype=?,medianame=?,<art_type>,<art_type>,<art_type>)
             -> downloads according to specified art_type. Use as many as you like. Only add-on limits apply
+
 
 
 Code to run script bulk mode:
@@ -51,6 +55,7 @@ Available options "mode=?"
 Available options "medianame=?":
     Any name/title that fits the corresponding "mediatype="
             -> example: mediatype=movie, medianame=$INFO[ListItem.Title]
+            -> example: mediatype=movie, medianame=$INFO[ListItem.Title], mediapath=$INFO[ListItem.Path]
             -> example: mediatype=movie, medianame=Avatar
             -> example: mediatype=tvshow, medianame=$INFO[ListItem.TVShowTitle]
             -> example: mediatype=tvshow, medianame=House

@@ -78,3 +78,13 @@ def _dialog(action, percentage = 0, line0 = '', line1 = '', line2 = '', line3 = 
             else:
                 msg = line1 + ': ' + line2
             xbmc.executebuiltin("XBMC.Notification(%s, %s, 7500, %s)" % (line0, msg, __icon__))
+
+# order preserving and get unique entry
+def _getUniq(seq):
+    seen = []
+    result = []
+    for item in seq:
+        if item in seen: continue
+        seen.append(item)
+        result.append(item)
+    return result
