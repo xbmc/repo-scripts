@@ -1,4 +1,8 @@
-﻿v.3.0.0 (v.2.8.0)
+﻿v.2.8.1
+- Added : [Accuweather.com] Chance of precipitation
+- Fixed : [Accuweather.com] Current temperatures were not converted to F
+
+v.2.8.0
 - Added : Multi-threading supported
 - Added : [Video] Bulgaria - Meteotv.bg
 - Added : [Video] Poland - TVN
@@ -26,10 +30,6 @@
 - Fixed : Local maps of South America, Australia, New Zealand
 - Fixed : Location name was not refreshed
 - Fixed : Minor bugs
-
-
-v.2.7.2
-- Version changed for eden-pre repo
 
 v.2.5.2
 - Fixed : [NOAA.gov] Daily.%d.ShortWindDirection

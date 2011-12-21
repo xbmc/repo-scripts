@@ -443,7 +443,6 @@ class Main:
             maps_path, legend_path = _fetch_images( ( maps[ 0 ], [], maps[ 2 ], ) )
         # now set our window properties so multi image will display images 1==success, 2==failure
         self._set_maps_path( ( maps_path == "" ) + 1, maps_path, legend_path )
-	print "*"*100
 
     def _set_alerts( self, alerts, alertsrss, alertsnotify, alertscolor, alertscount ):
 	alertscolor = {"1":"red", "2":"orange", "3":"yellow"}.get(alertscolor, "")
@@ -667,7 +666,7 @@ class Main:
             self.WEATHER_WINDOW.setProperty( "36Hour.%d.TemperatureColor" % ( day + 1, ), forecast[ 3 ].lower() )
             self.WEATHER_WINDOW.setProperty( "36Hour.%d.TemperatureHeading" % ( day + 1, ), ( xbmc.getLocalizedString( 393 ), xbmc.getLocalizedString( 391 ), )[ forecast[ 3 ] == "Low" ] )
             self.WEATHER_WINDOW.setProperty( "36Hour.%d.Temperature" % ( day + 1, ), forecast[ 4 ] )
-            self.WEATHER_WINDOW.setProperty( "36Hour.%d.Precipitation" % ( day + 1, ), "" )
+            self.WEATHER_WINDOW.setProperty( "36Hour.%d.Precipitation" % ( day + 1, ), forecast[ 6 ] )
             self.WEATHER_WINDOW.setProperty( "36Hour.%d.Forecast" % ( day + 1, ), forecast[ 7 ] )
             self.WEATHER_WINDOW.setProperty( "36Hour.%d.DaylightTitle" % ( day + 1, ), forecast[ 8 ].replace( "Sunrise", xbmc.getLocalizedString( 33027 ) ).replace( "Sunset", xbmc.getLocalizedString( 33028 ) ) )
             self.WEATHER_WINDOW.setProperty( "36Hour.%d.DaylightTime" % ( day + 1, ), forecast[ 9 ] )
@@ -793,7 +792,7 @@ class Main:
             self.WEATHER_WINDOW.setProperty( "Daily.%d.Outlook" % ( count + 1, ), forecast[ 3 ] )
             self.WEATHER_WINDOW.setProperty( "Daily.%d.HighTemperature" % ( count + 1, ), forecast[ 4 ] )
             self.WEATHER_WINDOW.setProperty( "Daily.%d.LowTemperature" % ( count + 1, ), forecast[ 5 ] )
-            self.WEATHER_WINDOW.setProperty( "Daily.%d.Precipitation" % ( count + 1, ), "N/A" )
+            self.WEATHER_WINDOW.setProperty( "Daily.%d.Precipitation" % ( count + 1, ), forecast[ 6 ] )
             self.WEATHER_WINDOW.setProperty( "Daily.%d.WindDirection" % ( count + 1, ), forecast[ 7 ] )
             self.WEATHER_WINDOW.setProperty( "Daily.%d.WindSpeed" % ( count + 1, ), forecast[ 8 ] )
             self.WEATHER_WINDOW.setProperty( "Daily.%d.ShortWindDirection" % ( count + 1, ), forecast[ 9 ] )
@@ -810,7 +809,7 @@ class Main:
 		self.WEATHER_WINDOW.setProperty( "Weekend.%d.Outlook" % ( weekend, ), forecast[ 3 ] )
 		self.WEATHER_WINDOW.setProperty( "Weekend.%d.HighTemperature" % ( weekend, ), forecast[ 4 ] )
 		self.WEATHER_WINDOW.setProperty( "Weekend.%d.LowTemperature" % ( weekend, ), forecast[ 5 ] )
-		self.WEATHER_WINDOW.setProperty( "Weekend.%d.Precipitation" % ( weekend, ), "N/A" )
+		self.WEATHER_WINDOW.setProperty( "Weekend.%d.Precipitation" % ( weekend, ), forecast[ 6 ] )
 		self.WEATHER_WINDOW.setProperty( "Weekend.%d.Wind" % ( weekend, ), "%s %s" % ( forecast[ 9 ], forecast [ 8 ] ) )
 		self.WEATHER_WINDOW.setProperty( "Weekend.%d.UV" % ( weekend, ), forecast[ 12 ] )
 		self.WEATHER_WINDOW.setProperty( "Weekend.%d.Humidity" % ( weekend, ), "N/A" )
