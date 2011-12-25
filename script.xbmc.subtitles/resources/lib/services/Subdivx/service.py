@@ -36,7 +36,7 @@ subtitle_pattern =  "<div\sid=\"buscador_detalle_sub\">(.+?)</div><div\sid=\"bus
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list):
     page = 1
     if languageshort == "es":
-        url = main_url + "index.php?accion=5&masdesc=&oxdown=1&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)
+        url = main_url + "index.php?accion=5&masdesc=&oxfecha=2&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)
 
     content = geturl(url)
     log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
@@ -61,7 +61,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
             log( __name__ ,"%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, id))
             subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'sync': sync, 'id' : id, 'server' : server, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
         page = page + 1
-        url = main_url + "index.php?accion=5&masdesc=&oxdown=1&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)
+        url = main_url + "index.php?accion=5&masdesc=&oxfecha=2&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)
         content = geturl(url)
 
     # Bubble sort, to put syncs on top
