@@ -2,11 +2,12 @@
 
 #===============================================================================
 # Subscenter.org subtitles service.
-# Version: 1.2
+# Version: 1.3
 #
 # Change log:
 # 1.1 - Fixed downloading of non-Hebrew subtitles.
 # 1.2 - Added key field for download URL
+# 1.3 - Fixed null values in website dictionary (changed to None)
 #
 # Created by: Ori Varon
 #===============================================================================
@@ -76,6 +77,8 @@ def getAllSubtitles(subtitlePageID,languageList,subtitlesList):
     toExec = "foundSubtitles = "+subtitlePage[tempStart+len("subtitles_groups = "):tempEnd]
     # Remove junk at the end of the line
     toExec = toExec[:toExec.rfind("}")+1]
+    # Replace "null" with "None"
+    toExec = toExec.replace("null","None")
     exec(toExec)
     log( __name__ ,"Built webpage dictionary")
     for language in foundSubtitles.keys():
