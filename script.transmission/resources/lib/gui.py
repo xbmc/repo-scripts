@@ -4,10 +4,12 @@
 import os
 import sys
 import base64
+import urllib2
 import xbmc
 import xbmcgui
 from basictypes.bytes import Bytes
 from repeater import Repeater
+import search
 
 _ = sys.modules[ "__main__" ].__language__
 __settings__ = sys.modules[ "__main__" ].__settings__
@@ -39,7 +41,6 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
         except:
             p.close()
             self.close()
-            d = xbmcgui.Dialog()
             (type, e, traceback) = sys.exc_info()
 
             message = _(9000) # Unexpected error
@@ -49,17 +50,17 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
                         message = _(9002) # Invalid auth
                     else:
                         message = _(9001) # Unable to connect
-                if d.yesno(_(2), message, _(3)):
+                if xbmcgui.Dialog().yesno(_(2), message, _(3)):
                     __settings__.openSettings()
             elif type is ValueError:
                 # In python 2.4, urllib2.HTTPDigestAuthHandler will barf up a lung
                 # if auth fails and the server wants non-digest authentication
                 message = _(9002) # Invalid auth
-                if d.yesno(_(2), message, _(3)):
+                if xbmcgui.Dialog().yesno(_(2), message, _(3)):
                     __settings__.openSettings()
             else:
                 message = _(9000) # Unexpected error
-                d.ok(_(2), message)
+                xbmcgui.Dialog().ok(_(2), message)
 
             return False
         p.close()
@@ -107,14 +108,53 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
         list = self.getControl(20)
         if (controlID == 11):
             # Add torrent
-            d = xbmcgui.Dialog()
-            filename = d.browse(1, _(0), 'files', '.torrent')
-            try:
-                f = open(filename, 'r')
-                data = base64.b64encode(f.read())
-                self.transmission.add(data)
-            except:
-                pass
+            engines = [
+                (_(200), None),
+                (_(201), search.BTJunkie),
+                (_(202), search.TPB),
+                (_(203), search.Mininova),
+                (_(204), search.TorrentReactor),
+            ]
+            selected = xbmcgui.Dialog().select(_(0), [i[0] for i in engines])
+            if selected < 0:
+                return
+            engine = engines[selected][1]
+            if not engine:
+                filename = xbmcgui.Dialog().browse(1, _(0), 'files', '.torrent')
+                try:
+                    f = open(filename, 'r')
+                    data = base64.b64encode(f.read())
+                    self.transmission.add(data)
+                except:
+                    pass
+            else:
+                kb = xbmc.Keyboard('', engines[selected][0])
+                kb.doModal()
+                if not kb.isConfirmed():
+                    return
+                terms = kb.getText()
+                p = xbmcgui.DialogProgress()
+                p.create(_(0), _(290))
+                try:
+                    results = engine().search(terms)
+                except:
+                    p.close()
+                    xbmcgui.Dialog().ok(_(0), _(292))
+                    return
+                p.close()
+                if not results:
+                    xbmcgui.Dialog().ok(_(0), _(291))
+                    return
+                selected = xbmcgui.Dialog().select(_(0), ['[S:%d L:%d] %s' % (t['seeds'], t['leechers'], t['name']) for t in results])
+                if selected < 0:
+                    return
+                try:
+                    f = urllib2.urlopen(results[selected]['url'])
+                    data = base64.b64encode(f.read())
+                    self.transmission.add(data)
+                except:
+                    xbmcgui.Dialog().ok(_(0), _(293))
+                    return
         if (controlID == 12):
             # Remove selected torrent
             item = list.getSelectedItem()
@@ -130,7 +170,6 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
             # Start selected torrent
             item = list.getSelectedItem()
             if item:
-                t = int(item.getProperty('TorrentID'))
                 self.transmission.start(int(item.getProperty('TorrentID')))
         if (controlID == 15):
             # Stop all torrents

@@ -1,3 +1,6 @@
+Version 0.6.1
+	* Add torrent button now supports various search sites as well as adding
+	  locally downloaded .torrent files
 Version 0.6.0
 	* Added icons to buttons (submitted by aivs@yandex.ru)
 	* Added Russian language support (submitted by aivs@yandex.ru)
