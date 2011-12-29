@@ -53,7 +53,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
   def set_allparam(self):       
     self.list           = []
     service_list        = []
-    self.stackPaths     = []
+    self.stackPath      = []
     service             = ""    
     self.newWindow      = True
     self.temp           = False
@@ -358,7 +358,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
               try:
                 for subName in self.stackPath:
                   if (re.split("(?x)(?i)\CD(\d)", zip_entry)[1]) == (re.split("(?x)(?i)\CD(\d)", urllib.unquote ( subName ))[1]):
-                    subtitle_file, file_path = self.create_name(zip_entry,urllib.unquote ( subName ),subtitle_lang)                              
+                    subtitle_file, file_path = self.create_name(zip_entry,urllib.unquote ( os.path.basename(subName[8:]) ),subtitle_lang)
                     subtitle_set,file_path = copy_files( subtitle_file, file_path ) 
                 if re.split("(?x)(?i)\CD(\d)", zip_entry)[1] == "1":
                   subToActivate = file_path

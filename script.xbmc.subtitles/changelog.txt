@@ -1,3 +1,6 @@
+2.9.30
+- fix: stacked movie subs were not saved properly
+
 2.9.29
 - fix: Subscenter service version 1.3 - Fixed null values in website dictionary, thx orivar
 - fix: Subdivix, thx Enric Godes
