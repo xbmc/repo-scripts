@@ -1,0 +1,271 @@
+<window>
+  <defaultcontrol>200</defaultcontrol>
+  <coordinates>
+    <system>1</system>
+    <posx>0</posx>
+    <posy>0</posy>
+  </coordinates>
+  <controls>
+    <control type="group">
+      <posx>100</posx>
+      <posy>10</posy>
+      <control type="image" id="101">
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>1090</width>
+        <height>700</height>
+        <texture border="40">forum-browser-panel.png</texture>
+        <colordiffuse>FF222222</colordiffuse>
+      </control>
+             
+      <control type="image" id="251">
+            <description>page header tab icon</description>
+            <posx>20</posx>
+            <posy>4</posy>
+            <width>1057</width>
+            <height>113</height>
+            <texture>forum-browser-title-background.png</texture>
+      </control>
+      <control type="label" id="103">
+        <description>textarea</description>
+        <posx>20</posx>
+        <posy>30</posy>
+        <width>218</width>
+        <height>60</height>
+        <font>font13_title</font>
+        <textcolor>black</textcolor>
+        <aligny>center</aligny>
+        <align>center</align>
+        <label>Post Reply</label>
+        <wrapmultiline>true</wrapmultiline>
+      </control>
+      <control type="button" id="110">
+        <description>Close Button</description>
+        <posx>1036</posx>
+        <posy>15</posy>
+        <width>32</width>
+        <height>28</height>
+        <texturefocus>forum-browser-close-button-focus.png</texturefocus>
+        <texturenofocus>forum-browser-close-button.png</texturenofocus>
+        <visible>system.getbool(input.enablemouse)</visible>
+        <onclick>PreviousMenu</onclick>
+      </control>
+      <control type="image">
+            <description>page header tab icon</description>
+            <posx>20</posx>
+            <posy>4</posy>
+            <width>1057</width>
+            <height>113</height>
+            <texture>forum-browser-overlay.png</texture>
+      </control>
+      <control type="label" id="104">
+       <description>Title</description>
+       <posx>280</posx>
+       <posy>40</posy>
+       <width>750</width>
+       <height>40</height>
+        <font>font18</font>
+        <textcolor>black</textcolor>
+        <aligny>center</aligny>
+        <align>center</align>
+        <label>No Title</label>
+        <wrapmultiline>true</wrapmultiline>
+      </control>
+      <control type="button" id="200">
+       <description>The Button</description>
+       <onleft>200</onleft>
+       <onright>200</onright>
+       <onup>200</onup>
+       <ondown>200</ondown>
+       <posx>-500</posx>
+       <posy>-500</posy>
+       <width>10</width>
+       <height>10</height>
+       <visible>true</visible>
+       <colordiffuse>FFFFFFFF</colordiffuse>
+       <font>font18</font>
+       <align>center</align>
+       <textcolor>FFFFFFFF</textcolor>
+       <disabledcolor>80555555</disabledcolor>
+      </control>
+      <!--
+      <control type="button" id="104">
+       <description>The Button</description>
+       <onleft>104</onleft>
+       <onright>104</onright>
+       <onup>123</onup>
+       <ondown>121</ondown>
+       <posx>280</posx>
+       <posy>40</posy>
+       <width>750</width>
+       <height>40</height>
+       <visible>true</visible>
+       <colordiffuse>FFFFFFFF</colordiffuse>
+       <texturefocus border="10">forum-browser-button-focus.png</texturefocus>
+       <texturenofocus  border="10">forum-browser-button-nofocus.png</texturenofocus>
+       <font>font18</font>
+       <align>center</align>
+       <label>Set Title</label>
+      </control>
+      
+      <control type="radiobutton" id="200">
+	      <description>Edit Button</description>
+	      <onleft>202</onleft>
+	      <onright>202</onright>
+	      <onup>104</onup>
+	      <ondown>123</ondown>
+	      <posx>30</posx>
+	      <posy>397</posy>
+	      <width>330</width>
+	      <height>40</height>
+	      <visible>true</visible>
+	      <colordiffuse>FFFFFFFF</colordiffuse>
+	      <texturefocus>forum-browser-button-focus.png</texturefocus>
+	      <texturenofocus>forum-browser-button-nofocus.png</texturenofocus>
+	      <font>font18</font>
+	      <textcolor>FFFFFFFF</textcolor>
+	      <disabledcolor>80FFFFFF</disabledcolor>
+	      <align>center</align>
+	      <label>Edit</label>
+      </control>
+      
+      <control type="button" id="202">
+       <description>The Button</description>
+       <onleft>200</onleft>
+       <onright>200</onright>
+       <onup>121</onup>
+       <ondown>123</ondown>
+       <posx>738</posx>
+       <posy>397</posy>
+       <width>330</width>
+       <height>40</height>
+       <visible>true</visible>
+       <colordiffuse>FFFFFFFF</colordiffuse>
+       <font>font18</font>
+       <align>center</align>
+       <texturefocus border="10">forum-browser-button-focus.png</texturefocus>
+       <texturenofocus border="10">forum-browser-button-nofocus.png</texturenofocus>
+       <textcolor>FFFFFFFF</textcolor>
+       <disabledcolor>80555555</disabledcolor>
+       <label>$LOCALIZE[SCRIPT3008]</label>
+      </control>
+      -->
+      <control type="image" id="351">
+        <posx>17</posx>
+        <posy>398</posy>
+        <width>1063</width>
+        <height>274</height>
+        <texture>forum-browser-editBackground.png</texture>
+      </control>
+      
+      <control type="textbox" id="122">
+        <posx>25</posx>
+        <posy>405</posy>
+        <width>1025</width>
+        <height>258</height>
+        <pagecontrol>123</pagecontrol>
+        <description>My first text box control</description>
+        <visible>true</visible>
+        <colordiffuse>FFFF0000</colordiffuse>
+        <font>font12</font>
+        <scroll>true</scroll>
+        <textcolor>FF000000</textcolor>
+        <!--<autoscroll delay="1000" time="500" repeat="1000">true</autoscroll>-->
+      </control>
+      <control type="image">
+        <description>page header tab icon</description>
+        <posx>17</posx>
+        <posy>398</posy>
+        <width>1063</width>
+        <height>274</height>
+        <texture>forum-browser-text-overlay.png</texture>
+      </control>
+      <control type="scrollbar" id="123">
+         <description>scroll bar indicator for lists</description>
+         <posx>1055</posx>
+         <posy>405</posy>
+         <width>12</width>
+         <height>258</height>
+         <onleft>202</onleft>
+         <onright>202</onright>
+         <onup>123</onup>
+         <ondown>123</ondown>
+         <texturesliderbackground border="6">forum-browser-scroll_back.png</texturesliderbackground>
+         <texturesliderbar border="6">forum-browser-scroll_dark.png</texturesliderbar>
+         <texturesliderbarfocus border="6">forum-browser-scroll_mid.png</texturesliderbarfocus>
+         <textureslidernib>-</textureslidernib>
+         <textureslidernibfocus>-</textureslidernibfocus>
+         <orientation>vertical</orientation>
+         <showonepage>false</showonepage>
+         <visible>Control.IsVisible(122)</visible>
+      </control>
+     
+      <control type="image" id="300">
+        <posx>20</posx>
+        <posy>120</posy>
+        <width>1060</width>
+        <height>2</height>
+        <texture>forum-browser-separator.png</texture>
+      </control>
+      <control type="image" id="301">
+        <posx>20</posx>
+        <posy>394</posy>
+        <width>1060</width>
+        <height>2</height>
+        <texture>forum-browser-separator.png</texture>
+      </control>      
+      <control type="image" id="302">
+        <posx>20</posx>
+        <posy>445</posy>
+        <width>1060</width>
+        <height>2</height>
+        <texture>forum-browser-separator.png</texture>
+        <visible>false</visible>
+      </control>
+      
+      <control type="image">
+            <description>listbg</description>
+            <posx>15</posx>
+            <posy>122</posy>
+            <width>1066</width>
+            <height>270</height>
+            <colordiffuse>FF000000</colordiffuse>
+            <texture>forum-browser-text-background.png</texture>
+      </control>
+
+      <!-- ** Required ** Do not change <id> or <type> -->
+      <control type="textbox" id="120">
+        <posx>20</posx>
+        <posy>132</posy>
+        <width>1040</width>
+        <height>250</height>
+        <!--<pagecontrol>121</pagecontrol>-->
+        <description>My first text box control</description>
+        <visible>true</visible>
+        <colordiffuse>FFFF0000</colordiffuse>
+        <font>font12</font>
+        <textcolor>FFFFFFFF</textcolor>
+      </control>
+      <!--<control type="scrollbar" id="121">
+         <description>scroll bar indicator for lists</description>
+         <posx>1055</posx>
+         <posy>132</posy>
+         <width>12</width>
+         <height>250</height>
+         <onleft>121</onleft>
+         <onright>121</onright>
+         <onup>121</onup>
+         <ondown>121</ondown>
+         <texturesliderbackground border="6">forum-browser-scroll_back.png</texturesliderbackground>
+         <texturesliderbar border="6">forum-browser-scroll_dark.png</texturesliderbar>
+         <texturesliderbarfocus border="6">forum-browser-scroll_mid.png</texturesliderbarfocus>
+         <textureslidernib>-</textureslidernib>
+         <textureslidernibfocus>-</textureslidernibfocus>
+         <orientation>vertical</orientation>
+         <showonepage>false</showonepage>
+         <visible>Control.IsVisible(120)</visible>
+      </control>-->
+
+    </control>
+  </controls>
+</window>

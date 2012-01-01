@@ -1,0 +1,14 @@
+# Parsing data for forums.boxee.tv
+import:forum.xbmc.org
+# The URLs
+url:base=http://forums.boxee.tv/
+
+# The filters
+filter:forums=(?<!</a>|<td>)(?:<a href="forumdisplay.php\?).*?f=(?P<forumid>\d+)">(?P<title>.*?)</a>.*?(?:(?:<div class="smallfont">(?P<description>.*?)</div>)|<td class="alt2">.*?</td>).*?</tr>
+
+filter:post=<table\s.*?id="post(?P<postid>\d+).*?<!-- status icon and date -->.*?(?P<date>(?:(?:[\w\d-]+)|(?:\w+\s\d+\w+,\s\d+)),\s\d+:\d+\s\w+).*?<!-- / status icon and date -->.*?(?:<img src="(?P<avatar>image.php\?u=\d+&amp;dateline=\d+)" width=".+?</a></td>)?<td nowrap="nowrap">.*?href="member.php.*?u=(?P<userid>\d+)">.*?(?P<user>\w+?)</.*?</div><div class="smallfont">(?P<status>.+?)</div>.+?<!-- icon and title -->.*?(?:(?:<strong>(?P<title>.*?)</strong>)|(?:</div>)).*?<!-- / icon and title -->.*?<!-- message -->(?P<message>.*?)<!-- / message -->
+theme:window_bg=FF104601
+theme:title_bg=FF8CC641
+theme:title_fg=FFFFFFFF
+theme:desc_fg=FF000000
+theme:post_code=FF005500

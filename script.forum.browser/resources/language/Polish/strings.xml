@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- All %s must remain -->
+    <string id="30000">Ogólne</string>
+    <string id="30001">Otwórz wątek od najnowszych postu</string>
+    <string id="30002">Reverse postów Sortuj</string>
+    <string id="30003">Język</string>
+    
+    <string id="30050">Błąd</string>
+    <string id="30051">Opcje</string>
+    <string id="30052">Gotowe</string>
+    <string id="30053">Proszę spróbować ponownie</string>
+    
+    <string id="30100">Logowanie</string>
+    <string id="30101">Otwieranie URL</string>
+    <string id="30102">Odbieranie danych</string>
+    <string id="30103">Analizowanie dancyh</string>
+    <string id="30105">Akceptuję</string>
+    <string id="30106">Wysyłam</string> 
+    <string id="30107">Czekaj %s sekund</string>
+    
+    <string id="30110">Pierwsza strona</string>
+    <string id="30111">Ostatnia strona</string>
+    <string id="30112">Najnowszy post.</string>
+    <string id="30113">Najstarszy post</string>
+    <string id="30114">Idź do...</string>
+    <string id="30115">Idź do strony numer</string>
+    <string id="30116">Wprowadź numer strony</string>
+    
+    <string id="30120">Tytuł postu</string>
+    <string id="30122">Usuń linię</string>
+    <string id="30123">Wprowadź tekst</string>
+    <string id="30124">Edytuj linię</string>
+    <string id="30125">Wprowadź tytuł postu</string>
+    <string id="30126">Dodaję post</string>
+    <string id="30127">Dodaję post. Proszę czekać...</string>
+    
+    <string id="30130">Posty</string>
+    <string id="30131">Błąd pobierania postów</string>
+    <string id="30132">Proszę spróbować ponownie...</string>
+    <string id="30133">Błąd wypełniania listy postów</string>
+    <string id="30134">Cytuj</string>
+    <string id="30135">Tłumacz - powered by Google</string>
+    <string id="30136">Zobacz obrazy</string>
+    <string id="30137">Zobacz adres obrazka</string>
+    <string id="30138">Podążaj za linkiem z wątku</string>
+    <string id="30139">Podążaj za linkiem z postu</string>
+    <string id="30140">Pobierz link</string>
+    <string id="30141">Usuń post</string>
+    <string id="30142">ID postu</string>
+    <string id="30143">ID wątku</string>
+    <string id="30144">Wybierz źródło docelowe</string>
+    <string id="30145">Pobieranie pliku</string>
+    <string id="30146">Pobrano plik: </string>
+    <string id="30147">Typ: %s</string>
+    <string id="30148">Pobieranie obrazków</string>
+    <string id="30149">Usuwanie</string>
+    <string id="30150">Usuwanie postu. Proszę czekać...</string>
+    
+    <string id="30160">Wątki</string>
+    <string id="30161">Błąd pobierania wątków.</string>
+    <string id="30162">Ostatni post:</string>
+    <string id="30163">Błąd wypełniania listy wątków.</string>
+    
+    <string id="30170">Forum</string>
+    <string id="30171">Błąd pobierania forum.</string>
+    <string id="30172">Brak opisu.</string>
+    <string id="30173">Sub-Forum</string>
+    <string id="30174">Błąd wypełniania listy forum.</string>
+    <string id="30175">Subskrypcje</string>
+    <string id="30176">Prywatne Wiadomości</string>
+    
+    <string id="30180">Cytat:</string>
+    <string id="30181">Oryginał napisał:</string>
+    <string id="30182">Link:</string>
+    <string id="30183">Kod:</string>
+    <string id="30184">PHP kod:</string>
+    <string id="30185">HTML kod:</string>
+    
+    <string id="30200">Wybierz forum</string>
+    <string id="30201">Wprowadź login</string>
+    <string id="30202">Wprowadź hasło</string>
+    <string id="30203">Ustawienia ogólne</string>
+    <string id="30204">Ustaw loginy</string>
+    <string id="30205">Pobieranie</string>
+    <string id="30206">Pobieranie %s</string>
+    
+    <string id="3000">Wstecz</string> <!-- Previous -->
+    <string id="3001">Następna</string>
+    <string id="3002">Odpowiedz</string>
+    <string id="3003">Ustawienia</string>
+    <string id="3004">Subskrypcje</string>
+    <string id="3005">Zmień forum</string>
+    <string id="3006">Dodaj linię</string>
+    <string id="3007">Dodaj linijki</string>
+    <string id="3008">Wyślij post</string>
+    <string id="3009">Wiadomości</string>
+    
+    
+</strings>
