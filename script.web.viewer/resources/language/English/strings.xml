@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- All %s must remain in string but can change position -->
+    <string id="30000">General</string>
+    <string id="30001">Add Submit Button If Missing</string>
+    <string id="30002">Goto URL option edits current URL</string>
+    <string id="30003">Simple Controls (ie ATV2, Boxee)</string>
+    
+    <string id="30100">Error loading page.</string>
+    <string id="30101">Processing Data</string>
+    <string id="30102">Redirecting</string>
+    <string id="30103">Opening Page</string>
+    <string id="30104">Reading Data</string>
+    <string id="30105">Submitting Form</string>
+    <string id="30106">Reading Result</string>
+    <string id="30107">Waiting</string>
+    <string id="30108">Waiting for threads to close...</string>
+    <string id="30109">Done</string>
+    
+    <string id="30110">Options</string>  
+    <string id="30111">Enter URL</string>
+    <string id="30112">History</string>
+    <string id="30113">File</string>
+    <string id="30114">Download File?</string>
+    <string id="30115">Type: %s</string>
+    <string id="30116">Multi-Select</string>
+    <string id="30117">Select File</string>
+    <string id="30118">Select</string>
+    <string id="30119">%s Selected</string>
+    
+    <string id="30120">Add Bookmark</string>
+    <string id="30121">Manage Bookmarks</string>
+    <string id="30122">Bookmarks Menu</string>
+    <string id="30123">Enter Title</string>
+    <string id="30124">Select A Bookmark To Delete</string>
+    <string id="30125">Really?</string>
+    <string id="30126">Remove Bookmark:</string>
+    <string id="30127">%s?</string><!--  Example: Remove Bookmark: %s? where %s is bookmark title -->
+    <string id="30128">Save Link</string>
+    <string id="30129">Downloading</string>
+    <string id="30130">Downloaded File</string>
+    <string id="30131">Go To URL</string>
+    <string id="30132">Bookmarks</string>
+    <string id="30133">Settings</string>
+    <string id="30134">Open Link</string>
+    <string id="30135">Save Link</string>
+    <string id="30136">View Link Image</string>
+    <string id="30137">View Target Image</string>
+    <string id="30138">View Image</string>
+    <string id="30139">Save Image</string>
+    <string id="30140">Submit Form</string>
+    <string id="30141">Preferences</string>
+    <string id="30142">Set Home/Start Page</string>
+    <string id="30143">Home/Start Page Set To:</string>
+    <string id="30144">File %s of %s</string><!-- Example: File 2 of 9 -->
+    <string id="30145">Downloading %s</string>
+    <string id="30146">Help</string>
+    <string id="30147">Submit</string>
+    <string id="30148">Close Web Viewer?</string>
+    
+    <string id="30149">Search Google</string>
+    <string id="30150">Enter Search Terms</string>
+    
+    <string id="30151">Unknown URL Type</string>
+    <string id="30152">Web Viewer cannot open links of type:</string>
+    
+    <string id="30153">Search Page</string>
+    <string id="30154">Not Found</string>
+    <string id="30155">Match Not Found</string>
+    <string id="30156">Try again from top of page?</string>
+    
+    <string id="30157">View Page Source</string>
+    <string id="30158">Back</string>
+    <string id="30159">Forward</string>
+    <string id="30160">Refresh</string>
+    <string id="30161">Exit Web Viewer</string>
+
+</strings>
