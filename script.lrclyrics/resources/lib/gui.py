@@ -236,7 +236,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def onAction( self, action ):
         actionId = action.getId()
-        if ( actionId in ACTION_EXIT_SCRIPT ):
+        if ( actionId in CANCEL_DIALOG ):
             self.exit_script()
 
     def get_artist_from_filename( self, filename ):

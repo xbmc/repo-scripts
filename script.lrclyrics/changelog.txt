@@ -1,4 +1,7 @@
-﻿[B]1.3.3 (2010.10.13)[/B]
+﻿[B]1.3.4 (2012.01.03)[/B]
+fixed: ATV2 not able to exit lyrics window while song is playing. Added handling for ATV2 menu button.
+
+[B]1.3.3 (2010.10.13)[/B]
 added: settings to load same name lyrics from sub folder
 
 [B]1.3.2 (2010.10.12)[/B]
