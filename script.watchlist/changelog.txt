@@ -1,3 +1,6 @@
+v0.1.8
+- script will now update only if necessary
+
 v0.1.7
 - ignore possible unicode errors
 - stop previous script instance if a new one is created

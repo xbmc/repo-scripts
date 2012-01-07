@@ -43,7 +43,7 @@ class Main:
 
     def _init_vars( self ):
         self.WINDOW = xbmcgui.Window( 10000 )
-        self.Player = MyPlayer( action = self._update )
+        self.Player = MyPlayer( action = self._update, movies = ( self.MOVIES == 'true' ), episodes = ( self.EPISODES == 'true' ), albums = ( self.ALBUMS == 'true' ) )
 
     def _fetch_info( self ):
         if self.MOVIES == 'true':
@@ -334,23 +334,79 @@ class Main:
                 # stop here if our list contains more items
                 break
 
-    def _update( self ):
+    def _update( self, type ):
         log('playback stopped')
-        xbmc.sleep(500)
-        self._fetch_info()
-
+        xbmc.sleep(1000)
+        if type == 'movie':
+            self._fetch_movies()
+            self._clear_movie_properties()
+            self._set_movie_properties()
+        elif type == 'episode':
+            self._fetch_tvshows()
+            self._fetch_episodes()
+            self._clear_episode_properties()
+            self._set_episode_properties()
+        elif type == 'album':
+            self._fetch_songs()
+            self._fetch_albums()
+            self._clear_album_properties()
+            self._set_album_properties()
 
 class MyPlayer(xbmc.Player):
     def __init__( self, *args, **kwargs ):
         xbmc.Player.__init__( self )
         self.action = kwargs[ "action" ]
+        self.movies = kwargs[ "movies" ]
+        self.episodes = kwargs[ "episodes" ]
+        self.albums = kwargs[ "albums" ]
+        self.substrings = [ '-trailer', 'http://' ]
+        self.initValues()
+        
+    def onPlayBackStarted( self ):
+        if ( self.isPlayingAudio() ):
+            self.audioPlaycount += 1
+        else:
+            if xbmc.getCondVisibility( 'VideoPlayer.Content(movies)' ):
+                filename = ''
+                isMovie = True
+                try:
+                    filename = self.getPlayingFile()
+                except:
+                    pass
+                if filename != '':
+                    for string in self.substrings:
+                        if string in filename:
+                            isMovie = False
+                            break
+                if isMovie: self.videoPlaylist.append( 'movie' )
+            elif xbmc.getCondVisibility( 'VideoPlayer.Content(episodes)' ):
+                self.videoPlaylist.append( 'episode' )
 
     def onPlayBackEnded( self ):
-        self.action()
+        # If an audio file, movie or episode was played, update watch list
+        if self.audioPlaycount > 1 and self.albums:
+            self.action( 'album' )
+        if 'movie' in self.videoPlaylist and self.movies:
+            self.action( 'movie' )
+        if 'episode' in self.videoPlaylist and self.episodes:
+            self.action( 'episode' )
+        self.initValues()
 
     def onPlayBackStopped( self ):
-        self.action()
-
+        # If at least one audio file was played completely (playcount update)
+        # or if a movie or episode is in the playlist, update watch list
+        if self.audioPlaycount > 1 and self.albums:
+            self.action( 'album' )
+        if 'movie' in self.videoPlaylist and self.movies:
+            self.action( 'movie' )
+        if 'episode' in self.videoPlaylist and self.episodes:
+            self.action( 'episode' )
+        self.initValues()
+            
+    def initValues( self ):
+        self.videoPlaylist = [];
+        self.audioPlaycount = 0;
+                
 if ( __name__ == "__main__" ):
         log('script version %s started' % __addonversion__)
         Main()
