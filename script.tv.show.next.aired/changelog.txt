@@ -1,3 +1,11 @@
+v4.1.14
+- fixed index error while shifting airdays
+- added german summary & description
+- don't append Airtime when none was provided
+
+v4.1.13
+- ignore possible encoding errors
+
 v4.1.12
 - use artwork downloader instead of logo downloader
 

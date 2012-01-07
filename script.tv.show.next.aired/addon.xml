@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.tv.show.next.aired"
        name="TV Show - Next Aired"
-       version="4.1.12"
+       version="4.1.14"
        provider-name="Ppic, Frost, ronie, `Black">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -13,8 +13,10 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
+    <summary lang="de">Erhalten Sie Infos über die nächsten Ausstrahlungstermine Ihrer Serien.</summary>
     <summary lang="en">Get info for TV Shows Next Aired.</summary>
     <summary lang="fr">Récupère les dates de diffusions de vos séries</summary>
+    <description lang="de">TV Show Next Aired liefert Termin-Informationen über die anstehenden Episoden der Serien aus der Datenbank. Dazu gibt es eine Wochenansicht mit allen in der nächsten Woche laufenden Episoden sowie (bei vorhandenem Skin Support) die direkte Integration der Informationen in die Ansichten des jeweiligen Skins. Sie werden nie wieder eine Folge verpassen.</description>
     <description lang="en">Get info for TV Shows Next Aired. You'll never miss one again.</description>
     <description lang="fr">Ce script interroge votre médiathèque puis vas récupérer les infos sur les prochaines diffusions de vos séries. vous n'en manquerez plus aucune.</description>
   </extension>

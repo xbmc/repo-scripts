@@ -182,6 +182,7 @@ class NextAired:
 
     def listing(self):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file", "thumbnail", "fanart"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         log("### %s" % json_response)
         self.TVlist = []
@@ -241,6 +242,10 @@ class NextAired:
             log( '### nextdate with local time zone %s' % datelocal.isoformat() )
             current_show["RFC3339"] = datelocal.isoformat()
             weekdaydiff = datelocal.weekday() - date.weekday()
+            if weekdaydiff == -1:
+                weekdaydiff = 6
+            elif weekdaydiff == -6:
+                weekdaydiff = 1
             try:
                 airday = current_show.get("Airtime").split(" at ")[0]
             except:
@@ -253,13 +258,14 @@ class NextAired:
                     log( "### error splitting airtime" )
                 for count, day in enumerate (airdays):
                     if day in self.days:
-                        index = self.days.index(day)
-                        airdays[count] = self.days[index + weekdaydiff]
+                        newindex = (self.days.index(day) + weekdaydiff) % 7
+                        airdays[count] = self.days[newindex]
                 airday = ', '.join(airdays)
-            if self.ampm:
-                current_show["Airtime"] = airday + " at " + datelocal.strftime('%I:%M %p')
-            else:
-                current_show["Airtime"] = airday + " at " + datelocal.strftime('%H:%M')
+            if airday != "":
+                if self.ampm:
+                    current_show["Airtime"] = airday + " at " + datelocal.strftime('%I:%M %p')
+                else:
+                    current_show["Airtime"] = airday + " at " + datelocal.strftime('%H:%M')
             try:
                 next = current_show.get("Next Episode").split("^")
                 next.extend(['',''])
