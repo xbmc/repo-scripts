@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="0">Transmission</string>
+
+    <!-- Buttons -->
+    <string id="101">Hozzáadás</string>
+    <string id="102">Eltávolítás</string>
+    <string id="103">Pillanatmegállítás</string>
+    <string id="104">Kezdés</string>
+    <string id="105">Pillanatmegállítás mindre</string>
+    <string id="106">Mindegyik kezdése</string>
+    <string id="107">Kilépés</string>
+
+    <!-- Settings -->
+    <string id="1000">RPC beállítások</string>
+    <string id="1001">Host</string>
+    <string id="1002">Port</string>
+    <string id="1003">Felhasználó</string>
+    <string id="1004">Jelszó</string>
+</strings>
