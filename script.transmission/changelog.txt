@@ -1,3 +1,5 @@
+Version 0.6.2
+	* Updated transmissionrpc library to 0.8 (Now supports Transmission 2.40+)
 Version 0.6.1
 	* Add torrent button now supports various search sites as well as adding
 	  locally downloaded .torrent files
