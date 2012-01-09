@@ -157,7 +157,12 @@ class LyricsFetcher:
             lyr = self.clean_br_regex.sub( "\n", lyr ).strip()
             lyr = self.clean_lyrics_regex.sub( "", lyr ).strip()
             lyr = self.normalize_lyrics_regex.sub( lambda m: unichr( int( m.group( 1 ) ) ), lyr.decode("ISO-8859-1") )
-            lyr = u"\n".join( [ lyric.strip() for lyric in lyr.splitlines() ] )       
+            lir = []
+            for line in lyr.splitlines():
+              line.strip()
+              if line.find("Lyrics from:") < 0:
+                lir.append(line)
+            lyr = u"\n".join( lir )       
             l.lyrics = lyr
             l.source = __title__
             return l, None            

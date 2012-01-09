@@ -148,9 +148,9 @@ class LyricsFetcher:
         print "SCRAPER-DEBUG-lyricstime: LyricsFetcher.get_lyrics_thread %s" % (song)
         l = lyrics.Lyrics()
         l.song = song
-        try: # below is borowed from XBMC Lyrics
-            url = "http://www.lyricstime.com/%s-%s-lyrics.html" % (song.artist.lower().replace(" ","-").replace(",","-"), song.title.lower().replace(" ","-").replace(",","-"), )
-            song_search = urllib.urlopen(url.replace("--","-")).read()
+        try: # ***** parser - changing this changes search string
+            url = "http://www.lyricstime.com/%s-%s-lyrics.html" % (song.artist.lower().replace(" ","-").replace(",","-").replace("'","-").replace("&","-").replace("and","-"), song.title.lower().replace(" ","-").replace(",","-").replace("'","-").replace("&","-"), )
+            song_search = urllib.urlopen(url.replace("---","-").replace("--","-")).read()
             print "Search url: %s" % (url)
             lyr = song_search.split('<div id="songlyrics" >')[1].split('</div>')[0]     
             lyr = self.clean_br_regex.sub( "\n", lyr ).strip()
@@ -163,5 +163,4 @@ class LyricsFetcher:
             return l, None            
         except:
             print "%s::%s (%d) [%s]" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ])
-            return None, __language__(30004) % (__title__)      
-
+            return None, __language__(30004) % (__title__)
