@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<!-- 
+To submit translations for your native language
+
+1. Create a copy of this file
+2. Replace all english terms with your native equivalent
+3. Email the file to analogue@yahoo.com or create an issue on the googlecode issue tracker.
+-->
+
+<strings>
+  <string id="0">Myth TV</string>
+  <string id="1">Titta på tv</string>
+  <string id="2">Titta på inspelningar (denna skärm skrivs om)</string>
+  <string id="3">Programlista</string>
+  <string id="4">Kommande inspelningar</string>
+  <string id="5">Status</string>
+  <string id="6">Inställningar</string>
+  <string id="7">Primär server IP/namn</string>
+  <string id="8">Port</string>
+  <string id="9">Statusport</string>
+  <string id="10">Protokollversion</string>
+  <string id="11">Databasnamn</string>
+  <string id="12">Användare</string>
+  <string id="13">Lösenord</string>
+  <string id="14">Inspelningskatalog</string>
+  <string id="15"></string>
+  <string id="16"></string>
+  <string id="17">Spara</string>
+  <string id="18">Myth TV - Inställningar</string>
+  <string id="19">Myth TV - Inställningar för MySQL</string>
+  <string id="20">Myth TV - Sökvägar</string>
+  <string id="21">Myth TV</string>
+  <string id="22">MySQL</string>
+  <string id="23">Sökvägar</string>
+  <string id="24">Testa inställningar..</string>
+  <string id="25">Inställningarna sparades.</string>
+  
+  <string id="29">Inställningarna har ändrats. Strunta i ändringarna?</string>
+  <string id="30">Ogiltigt heltal.</string>
+  <string id="31">Kunde inte ansluta till primär Myth TV-server.</string>
+  <string id="32">Kunde inte ansluta till MySQL-databas.</string>
+  <string id="33">Inställningarna fungerar.</string>
+  <string id="34">Inställningarna saknar '%s'-markör.</string>
+  <string id="35">Kan inte hitta inställningsfil.</string>
+  <string id="36">Inställningsfilen är för gammal - slår ihop med förvalda värden.</string>
+  <string id="37">MySQL-server IP/namn</string>
+  <string id="38">Ordna efter: Datum stigande</string>
+  <string id="39">Ordna efter: Namn stigande</string>
+  <string id="40">Namn</string>
+  <string id="41">Kanal</string>
+  <string id="42">Orig.sändning</string>
+  <string id="43">Sändningsdatum</string>
+  <string id="44">Beskrivning</string>
+  
+  <!-- Strings -->
+  <string id="26">Information</string>
+  <string id="27">Fel</string>
+  <string id="28">Bekräfta</string>
+  <string id="45">Okänd</string>
+  <string id="65">Är du säker på att du vill ta bort inspelningen?</string>
+  <string id="51">Är du säker på att du vill spela in inspelningen igen?</string>
+  
+  
+  
+  <string id="46">Inte tillgänglig</string>
+  <string id="47">Inspelningsdetaljer</string>
+  <string id="48">Spela</string>
+  <string id="49">Spara</string>
+  <string id="50">Rensa</string>
+  
+  <string id="52">Ta bort</string>
+  <string id="53">Uppdatera</string>
+  <string id="54">Hittar inte sändning '%s' på '%s'.</string>
+  <string id="55">Buffertstorlek för LiveTV (KB)</string>
+  <string id="56">Kategori</string>
+  <string id="57">Rensa automatiskt</string>
+  <string id="58">Ja</string>
+  <string id="59">Nej</string>
+  <string id="60">Filstorlek</string>
+  <string id="61">KB</string>
+  <string id="62">MB</string>
+  <string id="63">GB</string>
+  <string id="64">bytes</string>
+  
+  <string id="66">Filkopiering klar.</string>
+  <string id="67">Filkopiering misslyckades.</string>
+  <string id="68">Kopiera sändningen till lokal hårddisk?</string>
+  <string id="69">Ordna efter: Datum fallande</string>
+  <string id="70">Ordna efter: Namn fallande</string>
+  <string id="71">Mottagarstatus</string>
+  <string id="72">Schema</string>
+  <string id="73">Datorinformation</string>
+  <string id="74">Ange FQDN eller IP-adress för den primära Myth TV-servern.</string>
+  <string id="75">Kan inte tolka statusinformation från servern.</string>
+  <string id="76">Kvarvarande utrymme</string>
+  <string id="77">Totalt utrymme</string>
+  <string id="78">Använt utrymme</string>
+  <string id="79">1 minut</string>
+  <string id="80">5 minuter</string>
+  <string id="81">15 minuter</string>
+  <string id="82">Lagringsutrymme</string>
+  <string id="83">Medellast</string>
+  <string id="84">Nästa %d sändningar som är schemalagda.</string>
+  <string id="85">Kan inte hämta skärmdump från server.</string>
+  <string id="86">Dina inställningar är för gamla eller saknas. Se över dina inställningar.</string>
+  <string id="87">Noteringar</string>
+  
+  
+  <!-- enums.RecordingStatus -->
+  <string id="88">Sändningen spelades in men togs bort innan det var klart</string>
+  <string id="89">Sändningen spelades in men avbröts innan det var klart</string>
+  <string id="90">Sändningen spelades in</string>
+  <string id="91">Sändningen spelas in</string>
+  <string id="92">Sändningen kommer att spelas in</string>
+  <string id="93">Okänd status för denna sändning</string>
+  <string id="94">Sändningen ställdes om manuellt till att inte spelas in</string>
+  <string id="95">Avsnittet har spelats in tidigare</string>
+  <string id="96">Avsnittet har spelats in tidigare och finns tillgängligt</string>
+  <string id="97">Avsnittet kommer att spelas in vid ett tidigare tillfälle</string>
+  <string id="98">Gränsen för antalet inspelningar har uppnåtts</string>
+  <string id="99">Schemalagd för inspelning men avbröts manuellt</string>
+  <string id="100">En sändning med högre prioritet kommer spelas in</string>
+  <string id="101">Avsnittet kommer att spelas in vid ett senare tillfälle</string>
+  <string id="102">Avsnittet är en repris och kommer inte spelas in</string>
+  <string id="103">Det här hanteras av en annan schemaläggning för samma sändning</string>
+  <string id="104">Lagringsutrymmet räcker inte för att spela in denna sändning</string>
+  <string id="105">Mottagaren var upptagen vid denna inspelning</string>
+  
+  
+  <string id="106">Vill du att reklam skall hoppas över automatiskt?</string>
+  <string id="107">Programlista</string>
+  <string id="108">Inga uppgifter</string>
+  <string id="109">Protokollversionsfel: %s</string>
+  <string id="110">Inspelningsscheman</string>
+  
+  <!-- enums.ScheduleType -->
+  <string id="111">Enstaka</string>
+  <string id="112">Varje dag</string>
+  <string id="113">Kanal</string>
+  <string id="114">Alltid</string>
+  <string id="115">Varje vecka</string>
+  <string id="116">Hitta en</string>
+  <string id="117">Åsidosätt</string>
+  <string id="118">Spela inte in</string>
+  
+  
+  <string id="119">Spela in varje dag</string>
+  <string id="120">Spela in varje vecka</string>
+  <string id="121">Detaljer för inspelningsschema - "%s"</string>
+  <string id="122">Inspelningsschemat finns inte längre.</string>
+  <string id="123">Typ</string>
+  <string id="124">Profil</string>
+  <string id="125">Grupp</string>
+  <string id="126">Prioritet</string>
+  <string id="127">Dubbletter i</string>
+  <string id="128">Kontrollmetod</string>
+  <string id="129">Markera reklam</string>
+  <string id="130">Rensa automatiskt</string>
+  <string id="131">Spela in ny, ta bort gammal</string>
+  <string id="132">Antal att spara</string>
+  <string id="133">Start Offset</string>
+  <string id="134">End Offset</string>
+  
+  <!-- enums.ScheduleType.long_translations -->
+  <string id="135">Bara denna sändning</string>
+  <string id="136">Dagligen vid denna tid</string>
+  <string id="137">När som helst på denna kanal</string>
+  <string id="138">När som helst på alla kanaler</string>
+  <string id="139">Denna tid varje vecka</string>
+  <string id="140">Hitta en sändning</string>
+  <string id="141">(Åsidosätt) Spela in just denna sändning</string>
+  <string id="142">(Åsidosätt) Spela inte in just denna visning</string>
+  <string id="143">En gång om dagen</string>
+  <string id="144">En gång i veckan</string>
+  
+  <!-- enums.CheckForDupesUsing -->
+  <string id="145">Inget</string>
+  <string id="146">Underrubrik</string>
+  <string id="147">Beskrivning</string>
+  <string id="148">Underrubrik och beskrivning</string>
+  <string id="200">Underrubrik sen beskrivning</string>
+  
+  <!-- enums.CheckForDupesIn -->
+  <string id="149">Nuvarande inspelningar</string>
+  <string id="150">Tidigare inspelningar</string>
+  <string id="153">Alla inspelningar</string>
+  
+  <!-- enums.EpisodeFilter -->
+  <string id="201">Inget</string>
+  <string id="152">Bara nya avsnitt</string>
+  <string id="151">Uteslut repriser</string>
+  <string id="202">Uteslut sammanfattande avsnitt</string>
+  <string id="203">Uteslut repriser och sammanfattande avsnitt</string>      
+
+  <!-- enums.JobType -->
+  <string id="250">Inget</string>
+  <string id="251">System</string>
+  <string id="252">Omkodning</string>
+  <string id="253">Markera reklam</string>
+  <string id="254">Användarjobb</string>
+  <string id="255">Användarjobb 1</string>
+  <string id="256">Användarjobb 2</string>
+  <string id="257">Användarjobb 3</string>
+  <string id="258">Användarjobb 4</string>
+
+  <!-- enums.JobStatus -->
+  <string id="260">Okänd</string>
+  <string id="261">Köad</string>
+  <string id="262">Väntande</string>
+  <string id="263">Startar</string>
+  <string id="264">Pågår</string>
+  <string id="265">Avslutar</string>
+  <string id="266">Pausad</string>
+  <string id="267">Försöker igen</string>
+  <string id="268">Felar</string>
+  <string id="269">Avbryter</string>
+  <string id="270">Klar (felaktig status!)</string>
+  <string id="271">Klar</string>
+  <string id="272">Avbruten</string>
+  <string id="273">Felaktig</string>
+  <string id="274">Inställd</string>
+  
+  
+  <string id="154">Värdet måste vara &gt;= %d</string>
+  <string id="155">Värdet måste vara &lt;= %d</string>
+  <string id="156">Välj ett värde</string>
+  <string id="157">Ta bort schemaläggningen permanent?</string>
+  <string id="158">Ändringarna sparades.</string>
+  <string id="159">Inspelningsgrupp</string>
+  <string id="160">Programnamn</string>
+  <string id="161">Avsnitt</string>
+  <string id="162">LiveTV väntar på mottagaren</string>
+  <string id="163">Start Page ID</string>
+  <string id="164">Spelare för LiveTV</string>
+  <string id="165">Spelare för inspelningar</string>
+  <string id="166">Spela in LiveTV</string>
+  <string id="167">Spela in LiveTV längd</string>
+  <string id="168">Spela in igen</string>
+  <string id="169">Spela+hoppa</string>
+  
+  
+  <!--  Common -->
+  <string id="210">Uppdatera</string>
+  <string id="211">[B]Datum[/B]</string>
+  <string id="212">[B]Namn[/B]</string>
+
+  <!-- Screen Titles -->
+  <string id="295">[B]Inställningar[/B]</string>
+
+  
+  <!-- Home Screen -->
+  <string id="300">Titta på inspelningar</string>
+  <string id="301">Titta på tv</string>
+  <string id="302">Programlista</string>
+  <string id="303">Inspelningsschema</string>              
+  <string id="304">Kommande inspelningar</string>
+  <string id="305">Inställningar</string>
+  
+  <string id="310">[B]Mottagare[/B]</string>
+  <string id="311">[B]Status[/B]</string>
+  <string id="312">[B]Jobb[/B]</string>
+  
+  <string id="313">Reklammarkering</string>
+  <string id="314">Omkodar</string>
+  <string id="315">behandlar</string>
+  <string id="316">Väntar på reklammarkering</string>
+  <string id="317">Väntar på omkodning</string>
+  <string id="318">Väntar på att köra %s på %s</string>
+    
+  <string id="319">Vilar</string>
+  <string id="320">Nästa inspelning %s börjar %s</string>
+  <string id="321">Tittar på %s på %s. Programmet slutar %s.</string> 
+  <string id="322">Tittar på förinspelad video</string>    
+  <string id="323">Tittar på och spelar in %s på %s tills %s</string>
+  <string id="324">Spelar in %s på %s tills %s</string>
+  <string id="325">Upptagen</string>
+  <string id="326">Okänd mottagarstatus %d</string>
+      
+  <!-- Watch Recordings Screen -->
+  <string id="500">[B]Inspelningar[/B]</string>
+
+
+  <!-- Recording Details Screen -->
+  <string id="600">[B]Inspelningsdetaljer[/B]</string>
+  <string id="601">Spela</string>
+  <string id="602">Spela + hoppa</string>
+  <string id="603">Ta bort</string>
+  <string id="604">Spela in igen</string>
+  <string id="605">Ändra schema</string>
+  <string id="606">Först i kön</string>
+  
+  <string id="610">Namn</string>
+  <string id="611">Beskrivning</string>
+  <string id="612">Sändningsdatum</string>
+  <string id="613">Kanal</string>
+  <string id="614">Kategori</string>
+  <string id="615">Urspr. sändningsdatum</string>
+  <string id="616">Storlek</string>
+  <string id="617">Reklamavbrott</string>
+  
+  <string id="630">Hittar inte jobb</string>
+  <string id="631">Laddar...</string>
+  <string id="632">Ingen</string>
+  <string id="633">Köade %d av %d</string>
+  <string id="634">Slutförde %s med %s fps</string>
+  <string id="635">på</string>
+  <string id="636">Hittade inte inspelning %s.</string>
+  <string id="637">%s med %s fps</string>
+  <string id="638">Spelar in %s av %s</string>
+  
+  
+  <!-- Watch TV Screen -->
+  <string id="700">[B]Titta på tv[/B]</string>
+  <string id="701">Alla mottagare är upptagna.</string>
+  <string id="702">Alla mottagare för kanal %s är upptagna.</string>
+
+
+  <!-- Player -->
+  <string id="750">Återupptar vid %s</string>
+  <string id="751">Hoppar över reklam %s</string>
+  <string id="752">Spolar fram genom reklam %s</string>
+
+  <!-- TV Guide Screen -->
+  <string id="800">[B]Programlista[/B]</string>
+  <string id="801">Ingen programlista är tillgänglig.</string>
+
+
+  <!-- Recordings Screen -->
+  <string id="850">Datum</string>
+  <string id="851">Namn</string>
+  <string id="852">Urspr. sändningsdatum</string>
+  <string id="853">Sortera</string>  
+  
+  <!-- Recording Schedules Screen -->
+  <string id="900">[B]Inspelningsschema[/B]</string>
+  <string id="901">[B]Namn[/B]</string>
+  <string id="902">[B]Typ[/B]</string>
+  <string id="903">[B]Prioritet[/B]</string>
+  <string id="904">[B]Kanal[/B]</string>
+    
+  
+  <!-- Upcoming Recording Screen -->
+  <string id="1000">[B]Kommande inspelningar[/B]</string>
+  <string id="1001">[B]Datum[/B]</string>
+  <string id="1002">[B]Namn[/B]</string>
+  <string id="1003">[B]Starttid[/B]</string>
+  <string id="1004">[B]Kanal[/B]</string>
+  <string id="1005">[B]Mottagare[/B]</string>
+  
+  <string id="1010">Inget inspelningsschema för denna sändning</string>
+  <string id="1011">Hittade inte inspelningsschema %d</string>
+  <string id="1012">Idag</string>
+  <string id="1013">Imorgon</string>  
+
+  <!-- Create/Edit schedule dialog -->
+  <string id="1100">Nytt inspelningsschema</string>
+  <string id="1101">Ändra inspelningsschema</string>
+  
+  <string id="1102">Spela in</string>
+  <string id="1103">Prioritet</string>
+  <string id="1104">Sök efter dubbletter genom</string>
+  <string id="1105">Sök efter dubbletter i</string>
+  <string id="1106">Avsnittsfilter</string>
+  <string id="1107">Markera reklam automatiskt</string>
+  <string id="1108">Rensa automatiskt</string>
+  <string id="1109">Omkoda automatiskt</string>
+  <string id="1110">Spara högst</string>
+  <string id="1111">Spela in nya och ta bort gamla</string>
+  <string id="1112">Börja inspelning</string>
+  <string id="1113">Avsluta inspelning</string>
+  <string id="1114">Inspelningsschema påslaget</string>
+  <string id="1115">%d avsnitt</string>
+  <string id="1116">Alla avsnitt</string>
+  <string id="1117">%d minut(er) tidigare</string>
+  <string id="1118">På klockslag</string>
+  <string id="1119">%d minut(er) senare</string>  
+  <string id="1123">Värdet måste vara mellan %d och %d</string>
+  
+  <string id="1120">Spara</string>
+  <string id="1121">Avbryt</string>
+  <string id="1122">Ta bort</string>
+  
+  
+  <!-- Settings Screen -->
+  <string id="400">MySQL DB</string>
+  <string id="401">Värdnamn</string>
+  <string id="402">Port</string>
+  <string id="403">Databasnamn</string>
+  <string id="404">Användare</string>
+  <string id="405">Lösenord</string>
+  <string id="406">Förvald port är 3306</string>
+  <string id="407">Förvalt databasnamn är mythconverg</string>
+  <string id="408">Förvald användare är mythtv</string>
+            
+  <string id="410">MythTV</string>
+  <string id="411">Huvud-backend värdnamn</string>
+  <string id="412">Huvud-backend port</string>
+  <string id="413">Lokal inspelningskatalog</string>
+
+  <string id="415">Bekräfta borttagning</string>
+  <string id="416">Lokal plats för MythTV-inspelningar (monterad disk om backend inte är lokal).</string>
+  <string id="417">Flera kataloger kan avskiljas med kolon på Linux/Mac och medsemikolon på Windows.</string>
+  <string id="419">Slå på aggressiv cachning</string>
+  <string id="427">Data cachas aggressivt på bekostnad av högre last på backend och högre användning av bandbredd.</string>
+  <string id="428">Slå INTE på om du är ansluten till MythTV backend trådlöst.</string>
+  
+    
+  <string id="420">Fan Art</string>
+  <string id="421">Slå på TVDB.com</string>
+  <string id="422">Slå på TheMovieDB.org</string>
+  <string id="423">Slå på IMDB.com</string>
+  <string id="424">Slå på Google Image Search</string>
+  <string id="425">Rensa cache</string>
+  <string id="426">Cache rensad</string>
+  <string id="429">Slå på TVRage.com</string>
+    
+  <string id="430">Testa inställningar..</string>
+  <string id="431">Inställningarna fungerar</string>
+
+  <string id="440">Avancerat</string>
+  <string id="441">Slå på lirc hack för upprepade knapptryckningar</string>
+  <string id="442">Slå på debug-loggning</string>
+  <string id="443">Twitter-uppdateringar</string>
+  <string id="444">Om du använder en fjärrkontroll och ibland får dubbla tryckningar</string>
+  <string id="445">slå då på denna tillfälliga lösning för att ta bort den extra tryckningen.</string>
+  <string id="446">Kommaseparerad lista med publika Twitter-namn. Prova t.ex: cnnbrk, woot, thelittleidiot, wired, current...</string> 
+  
+  <string id="450">XBMC-inställningar..</string>
+    
+  <string id="460">Om</string>
+
+  
+</strings>

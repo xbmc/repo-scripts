@@ -1,0 +1,80 @@
+
+MySQL Connector/Python                          MySQL driver written in Python
+==============================================================================
+Copyright (c) 2009,2010, Oracle and/or its affiliates. All rights reserved.
+Use is subject to license terms. (See COPYING)
+
+MySQL Connector/Python is implementing the MySQL Client/Server protocol
+completely in Python. This means you don't have to compile anything or MySQL
+(client library) doesn't even have to be installed on the machine.
+
+Disclaimer
+=====================
+
+!!!!!!!!!!! THIS IS STILL IN DEVELOPMENT !!!!!!!!!!!!!!!!!!!
+!!!!!!!! EXPECT THING TO NOT WORK OR GO WRONG !!!!!!!!!!!!!!
+!!!! DO NOT USE IN PRODUCTION etc.. etc... !!!!!!!!!!!!!!!!!
+
+Ah, and make backups!
+
+Dependencies
+=====================
+
+* Python 2.5 or greater
+* Python 3.1 or greater
+
+Connects to:
+* MySQL 4.1 or greater
+* Will not work with MySQL servers using 'old passwords'!
+
+Installation
+=====================
+
+To install MySQL Connector/Python, first unpack the ZIP archive or
+'tar ball' you download:
+
+  shell> unzip mysql-connector-python-0.2.0-devel.zip
+    or
+  shell> tar xzf mysql-connector-python-0.2.0-devel.tar.gz
+
+Then simply execute the setup.py script with the 'install' argument:
+
+  shell> cd mysql-connector-python-0.2.0/
+  shell> python setup.py install
+
+setup.py will figure out which Python version you have and install the
+correct modules.
+
+Usage
+=====================
+
+There are examples provided for both Python v2 and v3. Please check
+the following directories which comes with the MySQL Connector/Python
+distribution:
+
+* For Python v2:  python2/examples/
+* For Python v3:  python3/examples/
+
+Simply execute the examples as follows after installation:
+
+ shell> python engines.py
+
+Testing
+=====================
+
+Unit tests are provided and can be run using the unittests.py script. Mind
+that you best edit the file so the connection parameters are correct for your
+MySQL Server.
+
+Report problems
+=====================
+
+Report problems using LaunchPad's bug system here:
+  https://bugs.launchpad.net/myconnpy
+
+Credits
+=====================
+
+* Andy Dustman - we owe you big time for MySQLdb
+* Jess Balint - early development of native Python driver, helped a bit
+* Everyone reporting bugs through Launchpad

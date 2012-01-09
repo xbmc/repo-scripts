@@ -1,0 +1,22 @@
+<window id="3011">
+    <animation effect="fade" time="100">WindowOpen</animation>
+    <animation effect="fade" time="200">WindowClose</animation>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <controls>
+        <control type="group">
+            <posx>384</posx>
+            <posy>296</posy>
+            <control type="image">
+                <description>splash image</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <texture border="20">mythbox.png</texture>
+		        <animation effect="fade" time="500">WindowOpen</animation>
+            </control>
+        </control>
+    </controls>
+</window>

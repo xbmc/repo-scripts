@@ -1,0 +1,456 @@
+<window id="3010">
+    <defaultcontrol>201</defaultcontrol>
+    <animation effect="fade" time="200">WindowOpen</animation>
+    <animation effect="fade" time="200">WindowClose</animation>
+    <coordinates>
+        <system>1</system>
+        <posx>190</posx>
+        <posy>95</posy>
+    </coordinates>
+    <controls>
+        
+        <control type="image">
+            <description>dialog background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>880</width>
+            <height>530</height>
+            <texture border="40">mb-DialogBack.png</texture>
+            <aspectratio>stretch</aspectratio>
+        </control>
+        
+        <control type="image">
+            <description>dialog border image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>880</width>
+            <height>530</height>
+            <texture border="40">DialogFront.png</texture>
+            <aspectratio>stretch</aspectratio>
+        </control>
+        
+        <control type="label">
+            <description>Dialog Heading</description>
+            <posx>40</posx>
+            <posy>40</posy>
+            <width>650</width>
+            <align>center</align>
+            <font>font20</font>
+            <info>Window.Property(heading)</info>
+        </control>
+        
+        <control type="image" id="2">
+            <description>separator image</description>
+            <posx>40</posx>
+            <posy>75</posy>
+            <width>650</width>
+            <height>2</height>
+            <texture>separator.png</texture>
+        </control>
+
+        <!-- SECTION 2 ROW 1-->
+        
+        <control type="button">
+            <description>Channel Label</description>
+            <posx>40</posx>
+            <posy>80</posy>
+            <width>650</width>
+            <align>left</align>
+            <font>font11</font>
+            <texturefocus>-</texturefocus>
+            <texturenofocus>-</texturenofocus>
+            <label>$INFO[Window.Property(channel)]</label>
+        </control>
+        
+        <control type="label">
+            <description>Title Label</description>
+            <posx>150</posx>
+            <posy>100</posy>
+            <width>400</width>
+            <align>center</align>
+            <font>font20</font>
+            <texturefocus>-</texturefocus>
+            <texturenofocus>-</texturenofocus>
+            <label>$INFO[Window.Property(title)]</label>
+        </control>
+        
+        <control type="button">
+            <description>Station Label</description>
+            <posx>40</posx>
+            <posy>80</posy>
+            <width>650</width>
+            <align>right</align>
+            <font>font11</font>
+            <texturefocus>-</texturefocus>
+            <texturenofocus>-</texturenofocus>
+            <label>$INFO[Window.Property(station)]</label>
+        </control>
+        
+        <!-- SECTION 2 ROW 2 -->
+        
+        <control type="button">
+            <description>Start Date Label</description>
+            <posx>40</posx>
+            <posy>110</posy>
+            <width>650</width>
+            <align>left</align>
+            <font>font10</font>
+            <texturefocus>-</texturefocus>
+            <texturenofocus>-</texturenofocus>
+            <label>$INFO[Window.Property(startDate)]</label>
+        </control>
+        
+        <control type="button">
+            <description>Start Time Label</description>
+            <posx>40</posx>
+            <posy>110</posy>
+            <width>650</width>
+            <align>right</align>
+            <font>font10</font>
+            <texturefocus>-</texturefocus>
+            <texturenofocus>-</texturenofocus>
+            <label>$INFO[Window.Property(startTime)]</label>
+        </control>
+        
+        <control type="image" id="3">
+            <description>separator image</description>
+            <posx>40</posx>
+            <posy>150</posy>
+            <width>650</width>
+            <width>380</width>
+            <height>2</height>
+            <texture>separator.png</texture>
+        </control>
+        
+        <!--  SECTION 3 -->
+        
+        <control type="spincontrol" id="900">
+            <description>page label</description>
+            <posx>830</posx>
+            <posy>450</posy>
+            <subtype>page</subtype>
+            <font>font12</font>
+            <textcolor>ffffffff</textcolor>
+            <texturefocus>-</texturefocus>
+            <texturenofocus>-</texturenofocus>
+            <textureup>-</textureup>
+            <textureupfocus>-</textureupfocus>
+            <texturedown>-</texturedown>
+            <texturedownfocus>-</texturedownfocus>
+            <showonepage>true</showonepage>
+        </control>
+        
+        <control type="grouplist" id="9000">
+            <description>Recording Options</description>
+            <posx>45</posx>
+            <posy>165</posy>
+            <width>650</width>
+            <height>310</height>
+            <itemgap>4</itemgap>
+            <pagecontrol>900</pagecontrol>
+            <onleft>2000</onleft>
+            <onright>2000</onright>
+            <ondown>9000</ondown>
+            <onup>9000</onup>
+            
+            <control type="button" id="201">
+                <description>schedule type</description>
+                <label>SCRIPT1102</label>
+                <label2>$INFO[Window.Property(scheduleType)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>
+            
+            <control type="button" id="202">
+                <description>schedule priority</description>
+                <label>SCRIPT1103</label>
+                <label2>$INFO[Window.Property(priority)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>            
+             
+            <control type="button" id="203">
+                <description>check for dupes using</description>   
+                <label>SCRIPT1104</label>
+                <label2>$INFO[Window.Property(checkForDupesUsing)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>
+            
+            <control type="button" id="204">
+                <description>check for dupes in</description>
+                <label>SCRIPT1105</label>
+                <label2>$INFO[Window.Property(checkForDupesIn)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>
+
+            <control type="button" id="208">
+                <description>episode filter</description>
+                <label>SCRIPT1106</label>
+                <label2>$INFO[Window.Property(episodeFilter)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>
+            
+            <control type="radiobutton" id="205">
+                <description>autoflag commercials</description>
+                <label>SCRIPT1107</label>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+            
+            <control type="radiobutton" id="207">
+                <description>autoexpire</description>
+                <label>SCRIPT1108</label>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="radiobutton" id="218">
+                <description>autotranscode</description>
+                <label>SCRIPT1109</label>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="button" id="206">
+                <description>keep at most</description>
+                <label>SCRIPT1110</label>
+                <label2>$INFO[Window.Property(maxEpisodes)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>
+
+            <control type="radiobutton" id="213">
+                <description>Record New and Expire Old CheckBox</description>
+                <label>SCRIPT1111</label>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="button" id="209">
+                <description>start recording</description>
+                <label>SCRIPT1112</label>
+                <label2>$INFO[Window.Property(startEarly)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>
+
+            <control type="button" id="210">
+                <description>end recording</description>
+                <label>SCRIPT1113</label>
+                <label2>$INFO[Window.Property(endLate)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>
+
+            <control type="button" id="219">
+                <description>recording profile</description>
+                <label>SCRIPT1128</label>
+                <label2>$INFO[Window.Property(recordingProfile)]</label2>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+            </control>
+ 
+            <control type="radiobutton" id="214">
+                <description>userjob1</description>
+                <label>SCRIPT1124</label>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="radiobutton" id="215">
+                <description>userjob2</description>
+                <label>SCRIPT1125</label>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+            
+            <control type="radiobutton" id="216">
+                <description>userjob3</description>
+                <label>SCRIPT1126</label>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+            
+            <control type="radiobutton" id="217">
+                <description>userjob4</description>
+                <label>SCRIPT1127</label>
+                <width>650</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+            
+            <control type="radiobutton" id="212">
+                <description>schedule enabled</description>
+                <label>SCRIPT1114</label>
+                <width>650</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus>input-focus.png</texturefocus>
+                <texturenofocus>input-nofocus.png</texturenofocus>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+        </control>
+        
+        <control type="grouplist" id="2000">
+            <description>Save Delete Buttons</description>
+            <posx>710</posx>
+            <posy>95</posy>
+            <onleft>9000</onleft>
+            <onright>9000</onright>
+            <ondown>2000</ondown>
+            <onup>2000</onup>
+            
+            <control type="button" id="250">
+                <description>save</description>
+                <label>SCRIPT1120</label>
+                <width>120</width>
+                <height>35</height>
+                <align>center</align>
+                <texturenofocus>button2-nofocus.png</texturenofocus>
+                <texturefocus border="5">button-focus2.png</texturefocus>
+            </control>
+
+            <control type="button" id="251">
+                <description>delete</description>
+                <label>SCRIPT1122</label>
+                <width>120</width>
+                <height>35</height>
+                <align>center</align>
+                <texturenofocus>button2-nofocus.png</texturenofocus>
+                <texturefocus border="5">button-focus2.png</texturefocus>
+            </control>
+            
+            <control type="button" id="252">
+                <description>cancel</description>
+                <label>SCRIPT1121</label>
+                <width>120</width>
+                <height>35</height>
+                <align>center</align>
+                <texturenofocus>button2-nofocus.png</texturenofocus>
+                <texturefocus border="5">button-focus2.png</texturefocus>
+            </control>
+            
+            <control type="image">
+                <description>empty spacer</description>
+                <width>120</width>
+                <height>40</height>
+            </control>
+	        
+	        <control type="image">
+	            <width>120</width>
+	            <height>120</height>
+	            <texture background="false">-</texture>
+	            <info>Window.Property(channel_logo)</info>
+                <aspectratio>keep</aspectratio>	            
+	            <fadetime>400</fadetime>
+	        </control>
+            
+        </control>
+    </controls>
+</window>
