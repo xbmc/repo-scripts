@@ -12,3 +12,7 @@
 - now runs as a service instead of needing the autoexec.py file
 
 - removed sample autoexec.py
+
+[B]Version 0.3.9[/B]
+ 
+- running video and music scans side by side never really worked. Now checks if scan is running and waits until complete before running the next scan. 
