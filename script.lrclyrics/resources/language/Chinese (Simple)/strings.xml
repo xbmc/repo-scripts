@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC歌词</string>
+    <string id="30000">文件</string>
+    <string id="30001">歌词未找到！</string>
+
+    <!-- Settings labels -->
+    <string id="30100">刮削器</string>
+    <string id="30101">保存歌词</string>
+    <string id="30102">保存目录</string>
+    <string id="30103"></string>
+    <string id="30104">保存歌词文件到歌手目录</string>
+    <string id="30105">歌词平滑滚动</string>
+    <string id="30106">仅使用文件名查找</string>
+    <string id="30107">文件名格式</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">读取同名歌词文件于子目录</string>
+    <string id="30112">- 子目录名</string>
+</strings>
