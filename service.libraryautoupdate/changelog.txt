@@ -16,3 +16,7 @@
 [B]Version 0.3.9[/B]
  
 - running video and music scans side by side never really worked. Now checks if scan is running and waits until complete before running the next scan. 
+
+[B]Version 0.4.0[/B]
+
+- Had a user suggestion to allow for a manual launch of the process as well as the service. Since the service point will ALWAYS launch on startup the manual option will kick off the library update process. 
