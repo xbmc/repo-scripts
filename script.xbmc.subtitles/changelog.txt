@@ -1,3 +1,8 @@
+2.9.31
+- fix: Subdivx, thx Enric Godes
+- updated: Bulgarian translation, thx NEOhidra
+- fix: Napisy24pl service, thx mrto
+
 2.9.30
 - fix: stacked movie subs were not saved properly
 

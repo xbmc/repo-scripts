@@ -76,9 +76,14 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
       url = '%s%s+%sx%s' % (main_url, tvshow_plus, season_full, episode_full)
     else:
       original_title = xbmc.getInfoLabel("VideoPlayer.OriginalTitle")
-      log( __name__ ,"Original title: [%s]" % (original_title))
-      movie_title_plus = original_title.replace(" ","+")
-      url = '%s%s' % (main_url, movie_title_plus)
+      if len(original_title) == 0:
+        log( __name__ ,"Original title not set")
+        movie_title_plus = title.replace(" ","+")
+        url = '%s%s' % (main_url, movie_title_plus)
+      else:
+        log( __name__ ,"Original title: [%s]" % (original_title))
+        movie_title_plus = original_title.replace(" ","+")
+        url = '%s%s' % (main_url, movie_title_plus)
     log( __name__ , "Pobieram z [ %s ]" % (url))     
     response = urllib2.urlopen(url)
     content = response.read()

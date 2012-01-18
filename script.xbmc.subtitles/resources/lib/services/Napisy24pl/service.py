@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 
-# Attention this is a Frankenstein Monster. Patched from other pieces of code,
-# ugly and may not work at all. Feel free to improve, change anything.
-# I do not know how to code, especially in Python, at all. 
+# Frankenstein Monster v 2.0
+# Feel free to improve, change anything.
 # Credits to amet, Guilherme Jardim, and many more.
 # mrto
 
 import urllib2, re, string, xbmc, sys, os
 from utilities import log, languageTranslate
+from BeautifulSoup import BeautifulSoup
 
 _ = sys.modules[ "__main__" ].__language__
 __addon__ = sys.modules[ "__main__" ].__addon__
@@ -25,69 +25,102 @@ main_url = "http://napisy24.pl/search.php?str="
 base_download_url = "http://napisy.me/download/"
 down_url = "%s%s/" % (base_download_url, subtitle_type)
 
-subtitle_pattern = 'a href=\"/download/(\d+)/\"><strong>(.+?)</strong></a>'
-
-def getallsubs(content, title, subtitles_list, file_original_path, stack):
-    nr_lista = 0
-    wydanie_re = '<td.+?>(.+?)<br />'
-    rozmiar_re = 'Rozmiar pliku: <strong>(.+?)</strong>'
-    ocena_re = 'rednia ocena: (\d\,\d\d)<br />'
-    jezyk_re = '<img src="images/ico_flag_(..)_2.png" alt="'
-    ilosc_plyt_re = '<td.+?style="text-align: center;">[\r\n\t ]+?(\d)[\r\n\t ]+?</td>'
-    wydanie_lista = re.findall(wydanie_re, content)
-    jezyk_lista = re.findall(jezyk_re, content)
-    rozmiar_lista = re.findall(rozmiar_re, content)
-    ocena_lista = re.findall(ocena_re, content)
-    ilosc_plyt_lista = re.findall(ilosc_plyt_re, content)
-    for matches in re.finditer(subtitle_pattern, content):
-        numer_napisu, tytul = matches.groups()
-        wydanie = wydanie_lista[nr_lista]
-        ocena = ocena_lista[nr_lista]
-        jezyk = jezyk_lista[nr_lista]
-        ilosc_plyt = ilosc_plyt_lista[nr_lista]
-        nr_lista +=1
-        link = "%s%s/" % (down_url, numer_napisu)
-        log( __name__ ,"Subtitles found: %s %s (link=%s)" % (tytul, wydanie, link))
-        obraz_flagi = "flags/%s.gif" % (jezyk)
-        lang = languageTranslate(jezyk,2,0)
-        tytul_pelny = '%s %s' % (tytul, wydanie)
-        wydanie_sclean = wydanie.replace(" ","")
-        wydanie_clean = wydanie_sclean.replace(",",";")
-        wydanie_srednik = '%s;' % (wydanie_clean)
-        for wydania in re.finditer('(.+?);', wydanie_srednik):
-            wydania = wydania.group()
-            wydania_clean = wydania.replace(";","")
-            wydania_upper = wydania_clean.upper()
-            filepatch_upper = file_original_path.upper()
-            if wydania_upper in filepatch_upper:
-                sync_value = True
+def getallsubs(content, title, subtitles_list, file_original_path, stack, lang1, lang2, lang3):
+    soup = BeautifulSoup(content)
+    subs = soup("tr")
+    sub_str = str(subs[1:])
+    first_row = True
+    for row in subs[1:]:
+        sub_number_re = 'a href=\"/download/(\d+)/\"><strong>'
+        title_re = '<a href="/download/\d+?/"><strong>(.+?)</strong></a>'
+        release_re = '<td>(.+?)<br />|<td.+?>(.+?)<br />'
+        rating_re = 'rednia ocena: (\d\,\d\d)<br />'
+        lang_re = '<img src="images/ico_flag_(..)_2.png" alt="'
+        disc_amount_re = '<td.+?style="text-align: center;">[\r\n\t ]+?(\d)[\r\n\t ]+?</td>'
+        video_file_size_re = 'Rozmiar pliku: <strong>(\d+?)</strong>'
+        video_file_size_re_multi = 'Rozmiar pliku:<br />- CD1: <strong>(\d+?)</strong>'
+        archive_re = '<a href="/download/archiwum/(\d+?)/">'
+        row_str = str(row)
+        archive = re.findall(archive_re, row_str)
+        if len(archive) == 0:
+            if first_row == True:
+                sub_number = re.findall(sub_number_re, row_str)
+                subtitle = re.findall(title_re, row_str)
+                release = re.findall(release_re, row_str)
+                disc_amount = re.findall(disc_amount_re, row_str)
+                first_row = False
             else:
-                sync_value = False
-        ocena_dot = ocena.replace(",",".")
-        if ocena_dot == '0.00':
-            sub_rating = '0'
-        else:
-            sub_rating = int(round(float(ocena_dot) * 1.666,0))
+                file_size, SubHash = xbmc.subHashAndFileSize(file_original_path)
+                if disc_amount[0] > '1':
+                    video_file_size = re.findall(video_file_size_re_multi, row_str)
+                else:
+                    video_file_size = re.findall(video_file_size_re, row_str)
                 
-        if stack == True:
-            if ilosc_plyt == '1':
-                log( __name__ ,"Stacked file nonstacked subs")
-            else:
-                subtitles_list.append({'filename': tytul_pelny, 'sync': sync_value, 'link': link, 'language_flag': obraz_flagi, 'language_name': lang,'rating': '%s' % (sub_rating)})
-        else:
-            if  ilosc_plyt == '1':
-                subtitles_list.append({'filename': tytul_pelny, 'sync': sync_value, 'link': link, 'language_flag': obraz_flagi, 'language_name': lang,'rating':'%s' % (sub_rating)})
-            else:
-                log( __name__ ,"Nonstacked file stacked subs")
+                if len(video_file_size) == 0:
+                    video_file_size.append('0')
+                    sync_value = False
+                else:
+                    video_file_size = unicode(video_file_size[0], "UTF-8")
+                    video_file_size = video_file_size.replace(u"\u00A0", "")
+                    if file_size == video_file_size:
+                        sync_value = True
+                    else:
+                        sync_value = False
+
+                rating = re.findall(rating_re, row_str)
+                language = re.findall(lang_re, row_str)
+                
+                if len(language) > 0:
+                    first_row = True
+                    link = "%s%s/" % (down_url, sub_number[0])
+                    log( __name__ ,"Subtitles found: %s %s (link=%s)" % (subtitle[0], release, link))
+
+                    flag_pic = "flags/%s.gif" % (language[0])
+                    lang = languageTranslate(language[0],2,0)
+
+                    if lang == lang1 or lang == lang2 or lang == lang3:
+                        
+                        for rel in re.findall("\'(.*?)\'", str(release)):
+
+                            rel = rel.replace(",",":").replace(" ","")
+
+                            if len(rel) > 1:
+                                rel_semicolon = "%s;" % (rel)
+                                for rel_sync in re.findall('(.+?);', rel_semicolon):
+                                    if rel_sync.upper() in file_original_path.upper():
+                                        sync_value = True
+
+                        filename_release = "%s - %s" % (subtitle[0], rel_semicolon)
+
+                        rating_dot = rating[0].replace(",",".")
+                        if rating_dot == '0.00':
+                            sub_rating = '0'
+                        else:
+                            sub_rating = int(round(float(rating_dot) * 1.666,0))
+
+                        if stack == False:
+                            if disc_amount[0] > '1':
+                                log( __name__ ,"Nonstacked video file - stacked subs")
+                            else:
+                                subtitles_list.append({'filename': filename_release, 'sync': sync_value, 'link': link, 'language_flag': flag_pic, 'language_name': lang,'rating': '%s' % (sub_rating)})
+                        else:
+                            if disc_amount[0] > '1':
+                                subtitles_list.append({'filename': filename_release, 'sync': sync_value, 'link': link, 'language_flag': flag_pic, 'language_name': lang,'rating': '%s' % (sub_rating)})
+                            else:
+                                log( __name__ ,"Stacked video file - nonstacked subs")
+                    else:
+                        continue
+                else:
+                    continue
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
     subtitles_list = []
     msg = ""
     if len(tvshow) > 0:
-      for rok in re.finditer(' \(\d\d\d\d\)', tvshow):
-          rok = rok.group()
-          if len(rok) > 0:
-              tvshow = tvshow.replace(rok, "")
+      for year in re.finditer(' \(\d\d\d\d\)', tvshow):
+          year = year.group()
+          if len(year) > 0:
+              tvshow = tvshow.replace(year, "")
           else:
               continue
       tvshow_plus = tvshow.replace(" ","+")
@@ -102,26 +135,40 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
       url = '%s%s+%sx%s' % (main_url, tvshow_plus, season_full, episode_full)
     else:
       original_title = xbmc.getInfoLabel("VideoPlayer.OriginalTitle")
-      log( __name__ ,"Original title: [%s]" % (original_title))
-      movie_title_plus = original_title.replace(" ","+")
-      url = '%s%s' % (main_url, movie_title_plus)
-    log( __name__ , "Pobieram z [ %s ]" % (url))     
+      if len(original_title) == 0:
+        log( __name__ ,"Original title not set")
+        movie_title_plus = title.replace(" ","+")
+        url = '%s%s' % (main_url, movie_title_plus)
+      else:
+        log( __name__ ,"Original title: [%s]" % (original_title))
+        movie_title_plus = original_title.replace(" ","+")
+        url = '%s%s' % (main_url, movie_title_plus)
+    log( __name__ , "Fetching from [ %s ]" % (url))
     response = urllib2.urlopen(url)
     content = response.read()
-    getallsubs(content, title, subtitles_list, file_original_path, stack)
+    re_pages_string = 'postAction%3DszukajZaawansowane">(\d)</a>'
+    page_nr = re.findall(re_pages_string, content)
+    getallsubs(content, title, subtitles_list, file_original_path, stack, lang1, lang2, lang3)
+    for i in page_nr:
+        main_url_pages = 'http://napisy24.pl/szukaj/&stronaArch=1&strona='
+        rest_url = '%26postAction%3DszukajZaawansowane'
+        url_2 = '%s%s&szukajNapis=%s%s' % (main_url_pages, i, title, rest_url)
+        response = urllib2.urlopen(url_2)
+        content = response.read()    
+        getallsubs(content, title, subtitles_list, file_original_path, stack, lang1, lang2, lang3)
     return subtitles_list, "", "" #standard output
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
     import urllib
     f = urllib.urlopen(subtitles_list[pos][ "link" ])
     language = subtitles_list[pos][ "language_name" ]
-   
+
     local_tmp_file = os.path.join(tmp_sub_dir, "zipsubs.zip")
     log( __name__ ,"Saving subtitles to '%s'" % (local_tmp_file))
     
     local_file = open(zip_subs, "w" + "b")
     local_file.write(f.read())
     local_file.close()
-   
+
     return True,language, "" #standard output
 
