@@ -9,7 +9,7 @@ __plugin__ = 'Web Viewer'
 __author__ = 'ruuk (Rick Phillips)'
 __url__ = 'http://code.google.com/p/webviewer-xbmc/'
 __date__ = '12-27-2011'
-__version__ = '0.8.0'
+__version__ = '0.8.1'
 __addon__ = xbmcaddon.Addon(id='script.web.viewer')
 __language__ = __addon__.getLocalizedString
 
@@ -2139,10 +2139,11 @@ if __name__ == '__main__':
 	#start_url = 'http://forum.xbmc.org'
 	#start_url='http://www.cs.tut.fi/~jkorpela/forms/file.html'
 	start_url = ''
-	try: start_url = sys.argv[0]
+	try: start_url = sys.argv[1]
 	except: pass
 	
 	if not start_url: start_url = getHome() or 'http://wiki.xbmc.org/index.php?title=XBMC_Online_Manual'
+	print start_url
 	apath = xbmc.translatePath(__addon__.getAddonInfo('path'))
 	if not os.path.exists(os.path.join(apath,'resources','skins','Default','720p','script-webviewer-page.xml')):
 		apath = 'Q:\\scripts\\.modules\\script.web.viewer\\' #for XBMC4Xbox when used as a module

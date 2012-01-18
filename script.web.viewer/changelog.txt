@@ -1,6 +1,10 @@
 Web Viewer Changelog
 
-Current Version : 0.8.0
+Current Version : 0.8.1
+
+*** 0.8.1 ***
+
+Fixed bug causing page load to fail when launched as a skin shortcut
 
 *** 0.8.0 ***
 
