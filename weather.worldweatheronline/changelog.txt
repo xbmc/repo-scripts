@@ -1,3 +1,6 @@
+1.0.6
+- fix: some cities would error on fetch, it all works if I would RTFM
+
 1.0.5
 - fix: display region/state if it exists
 

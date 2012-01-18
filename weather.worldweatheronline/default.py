@@ -38,7 +38,7 @@ from utilities import *
 
 DEVELOPER_KEY  = "75b745967f114856110511"
 NUMBER_OF_DAYS = 4
-SEARCH_URL     = "http://www.worldweatheronline.com/feed/search.ashx?key=%s&query=%s&format=xml"
+SEARCH_URL     = "http://free.worldweatheronline.com/feed/search.ashx?key=%s&query=%s&format=xml"
 LOCATION_URL   = "http://free.worldweatheronline.com/feed/weather.ashx?q=%s&format=xml&num_of_days=%i&key=%s"
 
 WEATHER_WINDOW = xbmcgui.Window( 12600 )
