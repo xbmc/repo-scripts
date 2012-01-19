@@ -14,6 +14,11 @@
     <string id="30108">Slet alle påmindelser...</string>
     <string id="30109">Husk at slette midlertidige filer, når du skifter kilde</string>
     <string id="30110">Opdater program information når XBMC starter</string>
+    <string id="30111">Afspil kanaler via YouSee web-tv addon</string>
+    <string id="30112">Påmindelser</string>
+    <string id="30113">Afspil kanaler via Danish Live TV addon</string>
+    <string id="30114">Opstart</string>
+    <string id="30115">- slet midlertidige filer først</string>
 
     <string id="30150">Ups, det er pinligt!</string>
     <string id="30151">Det var ikke muligt at indlæse program data,</string>
@@ -25,6 +30,30 @@
     <string id="30301">Påmind</string>
     <string id="30302">Påmind ikke</string>
     <string id="30303">Annuller</string>
+    <string id="30304">Vælg stream fil</string>
+    <string id="30305">Du kan vælge din egen .strm fil som skal afspilles, når du vælger at se denne kanal.</string>
+    <string id="30306">Fjern stream fil</string>
 
+    <string id="30400">TV guiden er indstillet til at streame TV via YouSee</string>
+    <string id="30401">web-tv, men denne addon er ikke installeret.</string>
+    <string id="30402">Streaming via denne addon deaktiveres nu.</string>
+
+    <string id="30403">TV guiden er indstillet til at streame TV via Danish</string>
+    <string id="30404">Live TV, men denne addon er ikke installeret.</string>
+    <string id="30405">Streaming via denne addon deaktiveres nu.</string>
+
+    <string id="99980">Game over, man! [I]Game over![/I]</string>
+    <string id="99981">You can't handle the truth!</string>
+    <string id="99982">Danger Will Robinson</string>
+    <string id="99983">Why does it cry, Sméagol?</string>
+    <string id="99984">Houston, we have a problem...</string>
+    <string id="99985">E.T. phone home</string>
+
+    <string id="99990">Der er desværre opstået en fejl i addon'en.</string>
+    <string id="99991">Du kan hjælpe med at løse fejlen ved at indsende en</string>
+    <string id="99992">fejlrapport. Der sendes ikke personlige oplysninger.</string>
+    <string id="99993">Indsend fejlrapport</string>
+    <string id="99994">Indsend ikke</string>
+    <string id="99995">Tak!</string>
 </strings>
  

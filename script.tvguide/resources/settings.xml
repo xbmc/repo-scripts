@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
-	<category label="30100">
+	<category label="30101">
 		<setting id="source" label="30101" type="labelenum" default="YouSee.tv"
                  values="YouSee.tv|DR.dk|TVTID.dk|XMLTV" />
 
@@ -8,19 +8,30 @@
                  values="Mine kanaler|Danske|Filmkanaler|Grundpakken|Mellempakken|Fuldpakken|Nordiske|Engelske|Tyske|Latinske|Slaviske|Tyrkiske|Kurdiske|Arabiske|Asiatiske"
                  visible="eq(-1,0)" />
 
-        <setting id="xmltv.file" label="30103" type="file" visible="eq(-2,3)" />
+        <setting id="youseewebtv.playback" label="30111" type="bool" default="true"
+                 visible="eq(-2,0)" />
+        <setting id="danishlivetv.playback" label="30113" type="bool" default="true"
+                 visible="eq(-3,1) | eq(-3,2) | eq(-1,false)" />
+        <setting id="program.background.enabled" label="30107" type="bool" default="true" visible="eq(-4,0)"/>
 
+        <setting id="xmltv.file" label="30103" type="file" visible="eq(-5,3)" />
+
+
+        <setting type="sep" />
         <setting type="lsep" label="30109" />
-
-        <setting type="sep" />
-        <setting id="notifications.enabled" label="30106" type="bool" default="true" />
-        <setting id="cache.data.on.xbmc.startup" label="30110" type="bool" default="true" />
-        <setting id="program.background.enabled" label="30107" type="bool" default="true" />
-
-        <setting type="sep" />
         <setting label="30104" type="action" action="RunScript($CWD/clear_cache.py)" />
-        <setting label="30108" type="action" action="RunScript($CWD/notification.py)" />
 
 	</category>
+
+    <category label="30114">
+        <setting id="cache.data.on.xbmc.startup" label="30110" type="bool" default="true" />
+        <setting id="clear.cache.on.xbmc.startup" label="30115" type="bool" default="false" visible="eq(-1,true)"/>
+
+    </category>
+
+    <category label="30112">
+        <setting id="notifications.enabled" label="30106" type="bool" default="true" />
+        <setting label="30108" type="action" action="RunScript($CWD/notification.py)" />
+    </category>
 </settings>
 

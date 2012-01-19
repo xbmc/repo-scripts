@@ -4,62 +4,126 @@
 	<defaultcontrol always="false">4000</defaultcontrol>
 	<coordinates>
 		<system>1</system>
-		<posx>0</posx>
+		<posx>1000</posx>
 		<posy>0</posy>
 	</coordinates>
-	<controls>
+    <animation effect="slide" start="280,0" end="0,0" time="250">WindowOpen</animation>
+    <animation effect="slide" start="0,0" end="280,0" time="250">WindowClose</animation>
+    <controls>
 
         <control type="image">
-            <posx>375</posx>
-            <posy>280</posy>
-            <width>530</width>
-            <height>90</height>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>280</width>
+            <height>720</height>
+            <texture>tvguide-glasspane.png</texture>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>280</width>
+            <height>720</height>
             <texture>tvguide-glasspane.png</texture>
         </control>
 
+        <control type="image" id="4100">
+            <posx>20</posx>
+            <posy>20</posy>
+            <width>240</width>
+            <height>80</height>
+            <aspectratio>keep</aspectratio>
+        </control>
+        <control type="label" id="4101">
+            <posx>20</posx>
+            <posy>50</posy>
+            <width>240</width>
+            <height>50</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <textcolor>ffffffff</textcolor>
+        </control>
+
         <control type="button" id="4000">
-            <posx>395</posx>
-            <posy>300</posy>
-            <width>150</width>
+            <posx>20</posx>
+            <posy>120</posy>
+            <width>240</width>
             <height>50</height>
             <texturefocus>tvguide-program-grey-focus.png</texturefocus>
             <texturenofocus>tvguide-program-grey.png</texturenofocus>
-            <onleft>4002</onleft>
-            <onright>4001</onright>
+            <onup>4003</onup>
+            <ondown>4001</ondown>
             <align>center</align>
-            <alingy>center</alingy>
+            <aligny>center</aligny>
             <font>font13</font>
-            <color>ffffffff</color>
+            <textcolor>ffffffff</textcolor>
         </control>
 
         <control type="button" id="4001">
-            <posx>565</posx>
-            <posy>300</posy>
-            <width>150</width>
+            <posx>20</posx>
+            <posy>190</posy>
+            <width>240</width>
             <height>50</height>
             <texturefocus>tvguide-program-grey-focus.png</texturefocus>
             <texturenofocus>tvguide-program-grey.png</texturenofocus>
-            <onleft>4000</onleft>
-            <onright>4002</onright>
+            <onup>4000</onup>
+            <ondown>4002</ondown>
             <align>center</align>
-            <alingy>center</alingy>
+            <aligny>center</aligny>
             <font>font13</font>
-            <color>ffffffff</color>
+            <textcolor>ffffffff</textcolor>
+            <label>$ADDON[script.tvguide 30304]</label>
+        </control>
+        <control type="label">
+            <posx>20</posx>
+            <posy>260</posy>
+            <width>240</width>
+            <height>200</height>
+            <font>font13</font>
+            <textcolor>ffffffff</textcolor>
+            <label>$ADDON[script.tvguide 30305]</label>
+            <wrapmultiline>true</wrapmultiline>
         </control>
 
+        <control type="label" id="4102">
+            <posx>20</posx>
+            <posy>420</posy>
+            <width>240</width>
+            <height>50</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <textcolor>ffffffff</textcolor>
+        </control>
         <control type="button" id="4002">
-            <posx>735</posx>
-            <posy>300</posy>
-            <width>150</width>
+            <posx>20</posx>
+            <posy>460</posy>
+            <width>240</width>
             <height>50</height>
             <texturefocus>tvguide-program-grey-focus.png</texturefocus>
             <texturenofocus>tvguide-program-grey.png</texturenofocus>
-            <onleft>4001</onleft>
-            <onright>4000</onright>
+            <onup>4001</onup>
+            <ondown>4003</ondown>
             <align>center</align>
-            <alingy>center</alingy>
+            <aligny>center</aligny>
             <font>font13</font>
-            <color>ffffffff</color>
+            <textcolor>ffffffff</textcolor>
+        </control>
+
+
+        <control type="button" id="4003">
+            <posx>20</posx>
+            <posy>650</posy>
+            <width>240</width>
+            <height>50</height>
+            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <onup>4002</onup>
+            <ondown>4000</ondown>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <textcolor>ffffffff</textcolor>
             <label>$ADDON[script.tvguide 30303]</label>
         </control>
 

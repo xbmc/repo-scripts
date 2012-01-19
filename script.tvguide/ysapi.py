@@ -1,7 +1,25 @@
-"""
-https://docs.google.com/document/d/1_rs5BXklnLqGS6g6eAjevVHsPafv4PXDCi_dAM2b7G0/edit?pli=1
-"""
-
+#
+#      Copyright (C) 2012 Tommy Winther
+#      http://tommy.winther.nu
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this Program; see the file LICENSE.txt.  If not, write to
+#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+#
+#
+# https://docs.google.com/document/d/1_rs5BXklnLqGS6g6eAjevVHsPafv4PXDCi_dAM2b7G0/edit?pli=1
+#
 import cookielib
 import urllib2
 import simplejson
@@ -60,14 +78,24 @@ class YouSeeTVGuideApi(YouSeeApi):
         """
         return self._invoke(AREA_TVGUIDE, 'categories')
 
-    def programs(self, channelId, offset = 0):
+    def programs(self, channelId, offset = None, tvdate = None):
         """
         Returns program list
+
+        @param:channel_id (optional)
+        @param: offset (optional) default -1 (yesterday)
+        @param: tvdate (optional) format: yyyy-mm-dd (overrides offset)
+        @type: tvdate datetime.datetime
         """
-        return self._invoke(AREA_TVGUIDE, 'programs', {
-            'channel_id' : channelId,
-            'offset' : 0
-        })
+
+        params = dict()
+        params['channel_id'] = channelId
+        if tvdate is not None:
+            params['tvdate'] = tvdate.strftime('%Y-%m-%d')
+        elif offset is not None:
+            params['offset'] = offset
+
+        return self._invoke(AREA_TVGUIDE, 'programs', params)
 
 
 

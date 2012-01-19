@@ -358,9 +358,9 @@
                     <posy>0</posy>
                     <width>580</width>
                     <height>60</height>
-                    <texturebg>cell-bg.png</texturebg>
+                    <texturebg>tvguide-program-grey.png</texturebg>
                     <lefttexture />
-                    <midtexture>cell-bg-selected.png</midtexture>
+                    <midtexture>tvguide-program-grey-focus.png</midtexture>
                     <righttexture />
                 </control>
                 <control type="label">

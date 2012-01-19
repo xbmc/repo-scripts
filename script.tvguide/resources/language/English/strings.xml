@@ -14,6 +14,11 @@
     <string id="30108">Clear all reminders...</string>
     <string id="30109">Remember to clear the cache when you change source</string>
     <string id="30110">Update program information on XBMC startup</string>
+    <string id="30111">Play channels using the YouSee web-tv addon</string>
+    <string id="30112">Notifications</string>
+    <string id="30113">Play channels using the Danish Live TV addon</string>
+    <string id="30114">Startup</string>
+    <string id="30115">- clear cache first</string>
 
     <string id="30150">Oops, sorry about that!</string>
     <string id="30151">It was not possible to load program data,</string>
@@ -25,5 +30,21 @@
     <string id="30301">Remind</string>
     <string id="30302">Don't remind</string>
     <string id="30303">Cancel</string>
+    <string id="30304">Choose stream file</string>
+    <string id="30305">You can choose your own .strm file to play, when you want to watch this channel.</string>
+    <string id="30306">Remove stream file</string>
+    <string id="99980">Game over, man! [I]Game over![/I]</string>
+    <string id="99981">You can't handle the truth!</string>
+    <string id="99982">Danger Will Robinson</string>
+    <string id="99983">Why does it cry, Sméagol?</string>
+    <string id="99984">Houston, we have a problem...</string>
+    <string id="99985">E.T. phone home</string>
+
+    <string id="99990">Unfortunately an error occurred in the addon.</string>
+    <string id="99991">You can help with fixing the problem by submitting</string>
+    <string id="99992">an error report. No personal information is sent.</string>
+    <string id="99993">Submit error report</string>
+    <string id="99994">Don't submit</string>
+    <string id="99995">Thank you!</string>
 </strings>
 
