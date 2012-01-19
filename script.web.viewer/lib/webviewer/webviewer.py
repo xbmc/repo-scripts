@@ -8,8 +8,8 @@ import mechanize, threading
 __plugin__ = 'Web Viewer'
 __author__ = 'ruuk (Rick Phillips)'
 __url__ = 'http://code.google.com/p/webviewer-xbmc/'
-__date__ = '12-27-2011'
-__version__ = '0.8.1'
+__date__ = '01-19-2011'
+__version__ = '0.8.2'
 __addon__ = xbmcaddon.Addon(id='script.web.viewer')
 __language__ = __addon__.getLocalizedString
 
@@ -40,13 +40,21 @@ ACTION_CONTEXT_MENU = 117
 #Actually it's show codec info but I'm using in a threaded callback
 ACTION_RUN_IN_MAIN = 27
 
+import locale
+loc = locale.getdefaultlocale()
+print loc
+ENCODING = loc[1] or 'utf-8'
+
+def ENCODE(string):
+	return string.encode(ENCODING,'replace')
+
 def ERROR(message):
 	errtext = sys.exc_info()[1]
 	print 'WEBVIEWER - %s::%s (%d) - %s' % (message, sys.exc_info()[2].tb_frame.f_code.co_name, sys.exc_info()[2].tb_lineno, errtext)
 	return str(errtext)
 	
 def LOG(message):
-	print 'WEBVIEWER: %s' % message
+	print 'WEBVIEWER: %s' % ENCODE(str(message))
 
 def clearDirFiles(filepath):
 	if not os.path.exists(filepath): return
@@ -76,7 +84,7 @@ class WebReader:
 		#self.browser.addheaders = [('User-agent','Mozilla/5.0 (X11; Linux i686; rv:2.0.1) Gecko/20100101 Firefox/4.0.1')]
 		
 	def getWebPage(self, url, callback=None):
-		print url
+		LOG(url)
 		if not callback: callback = self.fakeCallback
 		resData = ResponseData(url)
 		id = ''
@@ -158,7 +166,11 @@ class WebReader:
 					if c == submit_control: break
 					ct += 1 
 		if not callback(5, __language__(30105)): return None
-		res = self.browser.submit(nr=ct)
+		try:
+			res = self.browser.submit(nr=ct)
+		except:
+			self.browser.back()
+			return None
 		if not callback(60, __language__(30106)): return None
 		html = res.read()
 		resData = self.checkRedirect(ResponseData(res.geturl(), data=html), callback=callback) #@UnusedVariable
@@ -441,7 +453,7 @@ class WebPage:
 	def getForm(self, url=None, name=None, action=None, index=None):
 		if url:
 			if not re.match(url, self.url): return None
-			print 'URL MATCH: %s' % self.url
+			LOG('URL MATCH: %s' % self.url)
 		if name:
 			idx = 0
 			for f in self.forms:
@@ -454,10 +466,10 @@ class WebPage:
 			idx = 0
 			for f in self.forms:
 				if action in f.form.action:
-					print 'ACTION MATCH: %s' % action
+					LOG('ACTION MATCH: %s' % action)
 					if index != None:
 						if index != idx:
-							print 'WRONG INDEX: %s instead of %s' % (idx, index)
+							LOG('WRONG INDEX: %s instead of %s' % (idx, index))
 							idx += 1
 							continue
 					return f
@@ -471,10 +483,10 @@ class WebPage:
 	def matches(self, url_regex=None, html_regex=None):
 		if not url_regex and not html_regex: return False
 		if url_regex and not re.match(url_regex, self.url):
-			print 'AUTOCLOSE: NO URL MATCH'
+			LOG('AUTOCLOSE: NO URL MATCH')
 			return False
 		if html_regex and not re.match(html_regex, self.html):
-			print 'AUTOCLOSE: NO HTML MATCH'
+			LOG('AUTOCLOSE: NO HTML MATCH')
 			return False
 		return True
 	
@@ -545,7 +557,7 @@ class Link(PageElement, LinkBase):
 			text = match.group('text')
 			image_m = HC.imageFilter.search(text)
 			if image_m:
-				self.image = image_m.group('url')
+				self.image = fullURL(self.baseUrl,image_m.group('url'))
 				alt_m = re.search('alt="([^"]+?)"', image_m.group(0))
 				if alt_m: text = alt_m.group(1)
 			text = HC.tagFilter.sub('', text).strip()
@@ -555,7 +567,7 @@ class Link(PageElement, LinkBase):
 	def processURL(self):
 		if not self.url: return
 		self.url = self.url.replace('&amp;', '&')
-		self._isImage = bool(re.search('http://.+?\.(?:jpg|png|gif|bmp)', self.url))
+		self._isImage = bool(re.search('http://.+?\.(?:jpg|png|gif|bmp)$', self.url))
 		if self._isImage: return
 			
 	def urlShow(self):
@@ -1095,13 +1107,13 @@ class ViewerWindow(BaseWindow):
 		self.selected = None
 		self.lastPos = 0
 		self.page = page
-		xbmcgui.lock()
-		try:
-			self.hideLists()
-			self.getImages()
-			self.getLinks()
-		finally:
-			xbmcgui.unlock()
+		#xbmcgui.lock()
+		#try:
+		self.hideLists()
+		self.getImages()
+		self.getLinks()
+		#finally:
+			#xbmcgui.unlock()
 		self.displayPage() 
 		#self.endProgress()
 	
@@ -1173,11 +1185,11 @@ class ViewerWindow(BaseWindow):
 		
 	def selectElement(self, element=None):
 		if element: self.currentElementIndex = element.elementIndex
-		xbmcgui.lock()
+		#xbmcgui.lock()
 		try:
 			element = self.currentElement()
 			if not element:
-				xbmcgui.unlock()
+				#xbmcgui.unlock()
 				return
 			itemIndex = self.pageList.getSelectedPosition()
 			item = self.pageList.getListItem(element.lineNumber)
@@ -1207,8 +1219,9 @@ class ViewerWindow(BaseWindow):
 			self.pageList.setDisplay(one + two)
 			#item.setProperty('selected',element.type)
 			self.elementChanged()
-		finally:
-			xbmcgui.unlock()
+		except:
+			raise
+			#xbmcgui.unlock()
 	
 	def currentElement(self):
 		if not self.page: return None
@@ -1219,7 +1232,7 @@ class ViewerWindow(BaseWindow):
 		element = self.currentElement()
 		if not element: return
 		try:
-			xbmcgui.lock()
+			#xbmcgui.lock()
 			if element.type == PE_LINK:
 				if self.linkList.getSelectedPosition() != element.typeIndex: self.linkList.selectItem(element.typeIndex)
 				self.controlList.setVisible(False)
@@ -1239,8 +1252,9 @@ class ViewerWindow(BaseWindow):
 				self.linkList.setVisible(False)
 				self.imageList.setVisible(False)
 				self.controlList.setVisible(True)
-		finally:
-			xbmcgui.unlock()
+		except:
+			raise
+			#xbmcgui.unlock()
 	
 	def hideLists(self):
 		self.linkList.setVisible(False)
@@ -1357,7 +1371,7 @@ class ViewerWindow(BaseWindow):
 		try:
 			idx = int(idx)
 		except:
-			print 'error', idx
+			LOG('error', idx)
 			return None
 		if idx < 0: return None
 		if idx >= len(self.form.controls):
@@ -1442,7 +1456,7 @@ class ViewerWindow(BaseWindow):
 		LOG('displayPage() - START')
 		disp, title = self.page.forDisplayWithIDs()
 		self.baseDisplay = disp
-		xbmcgui.lock()
+		#xbmcgui.lock()
 		self.hideLists()
 		self.history.updateCurrent(self.page.url, title)
 		try:
@@ -1465,8 +1479,9 @@ class ViewerWindow(BaseWindow):
 				old, disp = disp.split('[CR]', 1)
 				index += len(self.idFilter.sub('', old)) + 4
 			plist.update()
-		finally:
-			xbmcgui.unlock()
+		except:
+			raise
+			#xbmcgui.unlock()
 		self.currentElementIndex = 0
 		if self.line:
 			self.pageList.selectItem(self.line)
@@ -1475,7 +1490,7 @@ class ViewerWindow(BaseWindow):
 		
 		self.selectionChanged(self.pageList.getSelectedPosition(), -1)
 		for fd in self.autoForms:
-			print fd
+			LOG(fd)
 			f = self.page.getForm(url=fd.get('url'), name=fd.get('name'), action=fd.get('action'), index=fd.get('index'))
 			if f:
 				submit = fd.get('autosubmit') == 'true'
@@ -1508,8 +1523,10 @@ class ViewerWindow(BaseWindow):
 		for link in self.page.links():
 			item = xbmcgui.ListItem(link.text or link.url, link.urlShow())
 			if link.isImage():
+				LOG(link.fullURL())
 				item.setIconImage(link.fullURL())
 			elif link.image:
+				LOG(link.image)
 				item.setIconImage(link.image)
 			else:
 				item.setIconImage('webviewer-link.png')
@@ -1669,12 +1686,12 @@ class ViewerWindow(BaseWindow):
 		element = self.currentElement()
 		index = element.displayPageIndex - item.index
 		disp = disp[0:index] + disp[index:].replace(self.cTags[element.type], self.selectedCTag, 1)
-		try:
-			xbmcgui.lock()
-			self.pageList.setDisplay(disp)
-			self.elementChanged()
-		finally:
-			xbmcgui.unlock()
+		#try:
+			#xbmcgui.lock()
+		self.pageList.setDisplay(disp)
+		self.elementChanged()
+		#finally:
+			#xbmcgui.unlock()
 	
 	def bookmarks(self):
 		options = [__language__(30120), __language__(30121), '-                         -']
@@ -1987,7 +2004,7 @@ class Downloader:
 	def progCallback(self, read, total):
 		if self.prog.iscanceled(): return False
 		pct = ((float(read) / total) * (self.file_pct)) + (self.file_pct * self.current)
-		self.prog.update(pct)
+		self.prog.update(int(pct))
 		return True
 		
 	def downloadURLs(self, targetdir, urllist, ext='', opener=urllib2.urlopen):
@@ -2045,7 +2062,10 @@ class Downloader:
 		if not target: return #do something else eventually if we need to
 		if not callback: callback = self.fakeCallback
 		urlObj = opener(url)
-		size = int(urlObj.info().get("content-length", -1))
+		try:
+			size = int(urlObj.info().get("content-length", -1))
+		except:
+			size = 1
 		ftype = urlObj.info().get("content-type", '')
 		outfile = open(target, 'wb')
 		read = 0
@@ -2143,7 +2163,7 @@ if __name__ == '__main__':
 	except: pass
 	
 	if not start_url: start_url = getHome() or 'http://wiki.xbmc.org/index.php?title=XBMC_Online_Manual'
-	print start_url
+	LOG(start_url)
 	apath = xbmc.translatePath(__addon__.getAddonInfo('path'))
 	if not os.path.exists(os.path.join(apath,'resources','skins','Default','720p','script-webviewer-page.xml')):
 		apath = 'Q:\\scripts\\.modules\\script.web.viewer\\' #for XBMC4Xbox when used as a module

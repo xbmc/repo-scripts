@@ -1,6 +1,20 @@
 Web Viewer Changelog
 
-Current Version : 0.8.1
+Current Version : 0.8.2
+
+*** 0.8.2 ***
+
+Encode log entries
+Remove xbmcgui.lock()/xbmcgui.unlock() to get rid of the annoying xbmc.log messages :)
+Fixed bug with viewing images
+Fixed a bug causing webviewer to lock on nonsense urls
+Fixed bug with link list failing to display link images with relative URLs
+Fixed a bug with improperly identifying links URLs with imbedded image URLs as being links to images
+Improved message/error logging
+Added fanart.jpg:   (anyone wants to make something better, feel free =] )
+  Made with some free images - attribution: 
+    Image: Danilo Rizzuti / FreeDigitalPhotos.net
+    Image: suphakit73 / FreeDigitalPhotos.net
 
 *** 0.8.1 ***
 
