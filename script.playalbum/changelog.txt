@@ -1,0 +1,10 @@
+v0.0.3:
+- use simplejson
+- fix fetching album id
+- add logging
+
+v0.0.2:
+- adjusted to latest json-rpc changes
+
+v 0.0.1:
+- initial release
