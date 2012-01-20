@@ -1,3 +1,6 @@
+v1.1.5
+- blank window property a little longer
+
 v1.1.4
 - make sure we don't block xbmc on exit
 
