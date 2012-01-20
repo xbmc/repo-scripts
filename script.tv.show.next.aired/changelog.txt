@@ -1,3 +1,6 @@
+v4.1.15
+- fix issue with single character day/month in dateshort
+
 v4.1.14
 - fixed index error while shifting airdays
 - added german summary & description

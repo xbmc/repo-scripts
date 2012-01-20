@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="450">TV-tablå</string>
+	<string id="32101">TV Show - Next Aired</string>
+	<string id="32102">Hämtar information...</string>
+	<string id="32103">AVBRUTEN</string>
+	<string id="32104">Hämtning avbruten av användaren.</string>
+	<string id="45000">Visa</string>
+	<string id="45001">Miniatyrtyp</string>
+	<string id="45002">Ladda ned banners (kräver Artwork Downloader)</string>
+	<string id="45003">Ladda ned logotyper (kräver Artwork Downloader)</string>
+	<string id="45004">Aktivera bakgrundsfanart</string>
+	<string id="45005">Aktivera 16:9-miniatyrer</string>
+	<string id="45006">Ladda ned 16:9-miniatyrer (kräver Artwork Downloader)</string>
+	<string id="45007">Uppdatera tablå</string>
+</strings> 
+

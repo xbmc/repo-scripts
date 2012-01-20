@@ -23,6 +23,10 @@ sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
 
 # Get localized date format
 DATE_FORMAT = xbmc.getRegion('dateshort').lower()
+if DATE_FORMAT[0] == 'd':
+    DATE_FORMAT = '%d-%m-%y'
+elif DATE_FORMAT[0] == 'm':
+    DATE_FORMAT = '%m-%d-%y'
 
 if not xbmcvfs.exists(DATA_PATH):
     xbmcvfs.mkdir(DATA_PATH)
@@ -34,6 +38,7 @@ def footprints():
     log( "### %s starting ..." % __addonname__ )
     log( "### author: %s" % __author__ )
     log( "### version: %s" % __version__ )
+    log( "### dateformat: %s" % DATE_FORMAT)
 
 def get_html_source(url , save=False):
     class AppURLopener(urllib.FancyURLopener):
