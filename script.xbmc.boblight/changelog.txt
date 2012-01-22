@@ -1,3 +1,6 @@
+1.0.2
+- changed icon to something we own the copyright for
+
 1.0.1
 - ping boblightd and reconnect if connection is lost
 
