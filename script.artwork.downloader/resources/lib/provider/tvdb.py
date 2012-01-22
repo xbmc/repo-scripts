@@ -1,9 +1,10 @@
-from resources.lib.provider.base import BaseProvider
+#import libraries
 from resources.lib.script_exceptions import NoFanartError
 from resources.lib.utils import _log as log
+from resources.lib.utils import _get_xml as get_xml
 from elementtree import ElementTree as ET
 
-class TVDBProvider(BaseProvider):
+class TVDBProvider():
     """
     Setup provider for TheTVDB.com
     """
@@ -13,12 +14,11 @@ class TVDBProvider(BaseProvider):
         self.url = 'http://www.thetvdb.com/api/%s/series/%s/banners.xml'
         self.url_prefix = 'http://www.thetvdb.com/banners/'
 
-
     def get_image_list(self, media_id):
         xml_url = self.url % (self.api_key, media_id)
-        log('API: %s ' % xml_url)
+        log('API:               %s ' % xml_url)
         image_list = []
-        data = self.get_xml(xml_url)
+        data = get_xml(xml_url)
         tree = ET.fromstring(data)
         for image in tree.findall('Banner'):
             info = {}
@@ -30,23 +30,23 @@ class TVDBProvider(BaseProvider):
                     info['preview'] = self.url_prefix + image.findtext('BannerPath')
                 info['language'] = image.findtext('Language')
                 info['id'] = image.findtext('id')
-                info['size'] = ''
-                info['type'] = ''
                 # process fanarts
                 if image.findtext('BannerType') == 'fanart':
-                    info['type'] = 'fanart'
+                    info['type'] = ['fanart','extrafanart']
                 # process posters
                 elif image.findtext('BannerType') == 'poster':
-                    info['type'] = 'poster'
+                    info['type'] = ['poster']
                 # process banners
                 elif image.findtext('BannerType') == 'series' and image.findtext('BannerType2') == 'graphical':
-                    info['type'] = 'banner'
+                    info['type'] = ['banner']
                 # process seasonposters
                 elif image.findtext('BannerType') == 'season' and image.findtext('BannerType2') == 'season':
-                    info['type'] = 'seasonposter'
+                    info['type'] = ['seasonposter']
                 # process seasonbanners
                 elif image.findtext('BannerType') == 'season' and image.findtext('BannerType2') == 'seasonwide':
-                    info['type'] = 'seasonbanner'
+                    info['type'] = ['seasonbanner']
+                else:
+                    info['type'] = ['']
                 # convert image size ...x... in Bannertype2
                 if image.findtext('BannerType2'):
                     try:
@@ -60,21 +60,23 @@ class TVDBProvider(BaseProvider):
                 info['series_name'] = image.findtext('SeriesName') == 'true'
 
                 # find image ratings
-                if image.findtext('RatingCount') and int(image.findtext('RatingCount')) >= 1:
-                    info['rating'] = float(image.findtext('Rating'))
+                if int(image.findtext('RatingCount')) >= 1:
+                    info['rating'] = float( "%.1f" % float( image.findtext('Rating')) ) #output string with one decimal
+                    info['votes'] = image.findtext('RatingCount')
                 else:
-                    info['rating'] = 0
+                    info['rating'] = 'n/a'
+                    info['votes'] = 'n/a'
 
                 # find season info
-                if image.findtext('Season') and int(image.findtext('Season')) >= 0:
-                    season = image.findtext('season')
-                    seasonxx = "%.2d" % int(image.findtext('Season')) #ouput is double digit int
-                    if seasonxx == '00':
-                        info['season'] = '-specials'
-                    else:
-                        info['season'] = str(seasonxx)
-                else:
-                    info['season'] = 'NA'
+                if image.findtext('Season') != '':
+                    info['season'] = image.findtext('Season')
+                # Create Gui string to display
+                info['generalinfo'] = 'Language: %s  |  Rating: %s  |  Votes: %s  |  ' %( info['language'], info['rating'], info['votes'] )
+                if 'season'in info:
+                    info['generalinfo'] += 'Season: %s  |  ' %( info['season'] )
+                if 'height' in info:
+                    info['generalinfo'] += 'Size: %sx%s  |  ' %( info['height'], info['width'] )
+
             if info:
                 image_list.append(info)
         if image_list == []:

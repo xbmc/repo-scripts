@@ -2,27 +2,51 @@
 <addon
 	id="script.artwork.downloader"
 	name="Artwork Downloader"
-	version="1.0.3"
-	provider-name="paddycarey, putneyj, Martijn Kaijser"
+	version="1.0.4"
+	provider-name="paddycarey, putneyj, Martijn"
     >
   <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.elementtree" version="1.2.7"/>
-    <import addon="script.module.simplejson" version="2.0.10"/>
+    <import addon="xbmc.python"                 version="2.0"/>
+    <import addon="script.module.elementtree"   version="1.2.7"/>
+    <import addon="script.module.simplejson"    version="2.0.10"/>
   </requires>
-  <extension point="xbmc.python.script" library="default.py">
+  <extension point="xbmc.python.script"         library="default.py">
     <provides>executable</provides>
   </extension>
-  <extension point="xbmc.service" library="service.py" start="startup|login"/>
+  <extension point="xbmc.service" library="service.py" start="login"/>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Downloads Artwork for TV shows and Movies in your library</summary>
+    <summary lang="en">Downloads Artwork for TV shows, Movies and Musicvideos in your library</summary>
+    <summary lang="nl">Download Artwork voor TV series, Films en Muziekvideos in jouw bibliotheek</summary>
+    <summary lang="pl">Pobiera grafiki dla Seriali TV, Filmów i Teledysków z twojej biblioteki</summary>
+    <summary lang="de">Lade Artworks für Filme, Serien und Musikvideos deiner Bibliothek herunter</summary>
     <description lang="en">
-	Downloads all available artwork for TV shows and Movies in your library. Check the options for supported artwork[CR]
+	Downloads all available artwork for TV shows, Movies and Musicvideos in your library. Check the options for supported artwork[CR]
 	Artwork sources:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
 	Remark:[CR]Check your skin to see what type of artwork is supported![CR]Each TV Show/Movie must have its own folder![CR]
 	Skin integration:[CR]See readme file
 	</description>
-    <disclaimer>For bugs, requests or general questions visit the Artwork Downloader thread on the XBMC forum.</disclaimer>
+    <description lang="nl">
+	Download alle beschikbare artwork voor TV series, Films en Muziekvideos in jouw bibliotheek. Bekijk de opties voor ondersteunde artwork[CR]
+	Artwork bronnen:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Opmerking:[CR]Controleer jouw skin om te bepalen welke artwork deze ondersteund![CR]Elke TV serie/Film moet zich in zijn eigen folder bevinden![CR]
+	Skin integratie:[CR]Kijk in de readme bestand
+	</description>
+    <description lang="pl">
+	Pobiera wszystkie dostępne grafiki dla Seriali TV, Filmów i Teledysków z twojej biblioteki. Sprawdź w opcjach obsługiwane rodzaje grafik.[CR]
+	Źródła grafik:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Uwaga:[CR]Sprawdź w dokumentacji używanej skóry, jakie grafiki obsługuje![CR]Każdy Serial TV / Film musi być w osobnym folderze![CR]
+	Integracja ze skórami:[CR]Zobacz plik readme
+	</description>
+    <description lang="de">
+	Lädt alle verfügbaren Artworks für Serien, Filme und Musikvideos deiner Bibliothek herunter. Prüfe die Optionen für verfügbare Artwork-Arten.[CR]
+	Artwork-Quellen:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Hinweis:[CR]Prüfe die Infos deines Skins um zu sehen welche Artwork-Arten er unterstützt![CR]Jede Serie/jeder Film muss in einem eigenem Ordner liegen![CR]
+	Skin-Integration:[CR]Siehe readme-Datei
+	</description>
+    <disclaimer lang="en">For bugs, requests or general questions visit the Artwork Downloader thread on the XBMC forum.</disclaimer>
+    <disclaimer lang="nl">Voor fouten, verzoeken of algemene vragen kan je terecht op Artwork Downloader thread op het XBMC forum.</disclaimer>
+    <disclaimer lang="pl">By zgłosić błąd, prośbę lub zadać pytanie odwiedź wątek poświęcony Artwork Downladerowi na forum XBMC.</disclaimer>
+    <disclaimer lang="de">Für Fehler, Vorschläge oder alggemeine Fragen, besuche das Artwork Downloader-Thema im XBMC-Forum (englisch).</disclaimer>
     <platform>all</platform>
   </extension>
 </addon>

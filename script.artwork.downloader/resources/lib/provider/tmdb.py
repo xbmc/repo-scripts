@@ -1,50 +1,152 @@
-from resources.lib.provider.base import BaseProvider
+#import modules
+import xbmc
+
+### import libraries
 from resources.lib.script_exceptions import NoFanartError, ItemNotFoundError
 from resources.lib.utils import _log as log
+from resources.lib.utils import _normalize_string as normalize
+from resources.lib.utils import _get_xml as get_xml
+from resources.lib.utils import _get_json as get_json
 from resources.lib import language
 from elementtree import ElementTree as ET
 
-class TMDBProvider(BaseProvider):
+
+class TMDBProvider():
 
     def __init__(self):
         self.name = 'TMDB'
         self.api_key = '4be68d7eab1fbd1b6fd8a3b80a65a95e'
-        self.api_limits = True
-        self.url = "http://api.themoviedb.org/2.1/Movie.getImages/" + language.get_abbrev() + "/xml/%s/%s"
+        self.url = "http://api.themoviedb.org/3/movie/%s/images?api_key=%s"
+        self.imageurl = "http://cf2.imgobject.com/t/p/"
 
     def get_image_list(self, media_id):
-        xml_url = self.url % (self.api_key, media_id)
-        log('API: %s ' % xml_url)
+        data = get_json(self.url %(media_id, self.api_key))
         image_list = []
-        data = self.get_xml(xml_url)
-        tree = ET.fromstring(data)
-        tree = tree.findall('movies')[0]
+        # Get fanart
         try:
-            tree = tree.findall('movie')[0]
-        except IndexError:
-            raise ItemNotFoundError(media_id)
+            for item in data['backdrops']:
+                info = {}
+                info['url'] = self.imageurl + 'original' + item['file_path']    # Original image url
+                info['preview'] = self.imageurl + 'w300' + item['file_path']    # Create a preview url for later use
+                info['id'] = item['file_path'].lstrip('/').replace('.jpg', '')  # Strip filename to get an ID
+                info['type'] = ['fanart','extrafanart']                         # Set standard to 'fanart'
+                info['height'] = item['height']
+                info['width'] = item['width']
+                #info['aspect_ratio'] = item['aspect_ratio']                    # Who knows when we may need it
+
+                # Convert the 'None' value to default 'n/a'
+                if item['iso_639_1']:
+                    info['language'] = item['iso_639_1']
+                else:
+                    info['language'] = 'n/a'
+
+                # find image ratings
+                if int(item['vote_count']) >= 1:
+                    info['rating'] = float( "%.1f" % float( item['vote_count']) ) #output string with one decimal
+                    info['votes'] = item['vote_count']
+                else:
+                    info['rating'] = 'n/a'
+                    info['votes'] = 'n/a'
+
+                # Create Gui string to display
+                info['generalinfo'] = 'Language: %s  |  Rating: %s  |  Votes: %s  |  Size: %sx%s  |  ' %(info['language'], info['rating'], info['votes'], info['width'],info['height'])
+
+                if info:
+                    image_list.append(info)
+        except Exception, e:
+            log( 'Problem report: %s' %str( e ), xbmc.LOGNOTICE )
+        # Get thumbs
+        try:
+            for item in data['backdrops']:
+                info = {}
+                info['url'] = self.imageurl + 'w780' + item['file_path']    # Original image url
+                info['preview'] = self.imageurl + 'w300' + item['file_path']    # Create a preview url for later use
+                info['id'] = item['file_path'].lstrip('/').replace('.jpg', '')  # Strip filename to get an ID
+                info['type'] = ['thumb','extrathumbs']                          # Set standard to 'fanart'
+                info['height'] = item['height']
+                info['width'] = item['width']
+                #info['aspect_ratio'] = item['aspect_ratio']                    # Who knows when we may need it
+
+                # Convert the 'None' value to default 'n/a'
+                if item['iso_639_1']:
+                    info['language'] = item['iso_639_1']
+                else:
+                    info['language'] = 'n/a'
+
+                # find image ratings
+                if int(item['vote_count']) >= 1:
+                    info['rating'] = float( "%.1f" % float( item['vote_count']) ) #output string with one decimal
+                    info['votes'] = item['vote_count']
+                else:
+                    info['rating'] = 'n/a'
+                    info['votes'] = 'n/a'
+
+                # Create Gui string to display
+                info['generalinfo'] = 'Language: %s  |  Rating: %s  |  Votes: %s  |  Size: %sx%s  |  ' %(info['language'], info['rating'], info['votes'], info['width'],info['height'])
+
+                if info:
+                    image_list.append(info)
+        except Exception, e:
+            log( 'Problem report: %s' %str( e ), xbmc.LOGNOTICE )
+        # Get posters
+        try:
+            for item in data['posters']:
+                info = {}
+                info['url'] = self.imageurl + 'original' + item['file_path']    # Original image url
+                info['preview'] = self.imageurl + 'w185' + item['file_path']    # Create a preview url for later use
+                info['id'] = item['file_path'].lstrip('/').replace('.jpg', '')  # Strip filename to get an ID
+                info['type'] = ['poster']                                         # Set standard to 'fanart'
+                info['height'] = item['height']
+                info['width'] = item['width']
+                #info['aspect_ratio'] = item['aspect_ratio']                    # Who knows when we may need it
+
+                # Convert the 'None' value to default 'n/a'
+                if item['iso_639_1']:
+                    info['language'] = item['iso_639_1']
+                else:
+                    info['language'] = 'n/a'
+
+                # find image ratings
+                if int(item['vote_count']) >= 1:
+                    info['rating'] = float( "%.1f" % float( item['vote_count']) ) #output string with one decimal
+                    info['votes'] = item['vote_count']
+                else:
+                    info['rating'] = 'n/a'
+                    info['votes'] = 'n/a'
+
+                # Create Gui string to display
+                info['generalinfo'] = 'Language: %s  |  Rating: %s  |  Votes: %s  |  Size: %sx%s  |  ' %(info['language'], info['rating'], info['votes'], info['width'],info['height'])
+
+                if info:
+                    image_list.append(info)
+        except Exception, e:
+            log( 'Problem report: %s' %str( e ), xbmc.LOGNOTICE )
+        if image_list == []:
+            raise NoFanartError(media_id)
         else:
-            tree = tree.findall('images')[0]
-            for imagetype in ['poster', 'backdrop']:
-                for image in tree.findall(imagetype):
-                    for sizes in image:
-                        info = {}
-                        info['id'] = image.get('id')
-                        info['type'] = ''
-                        if imagetype == 'backdrop' and sizes.get('size') == 'original':
-                            info['type'] = 'fanart'
-                        elif imagetype == 'backdrop' and sizes.get('size') == 'poster':
-                            info['type'] = 'thumb'
-                        elif imagetype == 'poster' and sizes.get('size') == 'original':
-                            info['type'] = 'poster'
-                        if not info['type'] == '' and sizes.get('size') == 'thumb':
-                            info['preview'] = sizes.get('url')
-                        info['url'] = sizes.get('url')
-                        info['height'] = int(sizes.get('height'))
-                        info['width'] = int(sizes.get('width'))
-                        if info:
-                            image_list.append(info)
-            if image_list == []:
-                raise NoFanartError(media_id)
-            else:
-                return image_list
+            return image_list
+
+
+def _search_movie(medianame,year=''):
+    medianame = normalize(medianame)
+    log('TMDB API search criteria: Title[''%s''] | Year[''%s'']' % (medianame,year) )
+    illegal_char = ' -<>:"/\|?*%'
+    for char in illegal_char:
+        medianame = medianame.replace( char , '+' ).replace( '++', '+' ).replace( '+++', '+' )
+    api_key = '4be68d7eab1fbd1b6fd8a3b80a65a95e'
+    json_url = 'http://api.themoviedb.org/3/search/movie?query=%s+%s&api_key=%s' %( medianame, year, api_key )
+    tmdb_id = ''
+    log('TMDB API search:   %s ' % json_url)
+    try:
+        data = get_json(json_url)
+        for item in data['results']:
+            if item['id']:
+                tmdb_id = item['id']
+                break
+    except Exception, e:
+        log( str( e ), xbmc.LOGERROR )
+    if tmdb_id == '':
+        log('TMDB API search found no ID', xbmc.LOGNOTICE)
+    else:
+        log('TMDB API search found ID: %s' %tmdb_id, xbmc.LOGNOTICE)
+    return tmdb_id

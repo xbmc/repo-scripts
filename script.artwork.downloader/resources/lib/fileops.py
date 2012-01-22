@@ -1,8 +1,11 @@
+#import modules
 import os
 import socket
 import urllib2
 import xbmc
 import xbmcvfs
+
+### import libraries
 from traceback import print_exc
 from resources.lib.script_exceptions import CopyError, DownloadError, CreateDirectoryError, HTTP404Error, HTTPTimeout, ItemNotFoundError
 from urllib2 import HTTPError, URLError
@@ -13,7 +16,7 @@ THUMBS_CACHE_PATH = xbmc.translatePath( "special://profile/Thumbnails/Video" )
 
 
 ### adjust default timeout to stop script hanging
-timeout = 20
+timeout = 10
 socket.setdefaulttimeout(timeout)
 
 class fileops:
@@ -29,7 +32,7 @@ class fileops:
 
         log("Setting up fileops")
         self.settings = _settings()
-        self.settings._get()
+        self.settings._get_general()
         self._exists = lambda path: xbmcvfs.exists(path)
         self._rmdir = lambda path: xbmcvfs.rmdir(path)
         self._mkdir = lambda path: xbmcvfs.mkdir(path)
@@ -49,16 +52,16 @@ class fileops:
         return xbmcvfs.copy(source, target)
 
     ### Delete file from all targetdirs
-    def _delete_file_in_dirs(self, filename, targetdirs, reason):
+    def _delete_file_in_dirs(self, filename, targetdirs, reason, media_name = '' ):
         isdeleted = False
         for targetdir in targetdirs:
             path = os.path.join(targetdir, filename)
             if self._exists(path):
                 self._delete(path)
-                log("Deleted (%s): %s" % (reason, path), xbmc.LOGNOTICE)
+                log("[%s] Deleted (%s): %s" % (media_name, reason, path), xbmc.LOGNOTICE)
                 isdeleted = True
         if not isdeleted:
-            log("Ignoring (%s): %s" % (reason, filename))
+            log("[%s] Ignoring (%s): %s" % (media_name, reason, filename))
 
     ### erase old cache file and copy new one
     def erase_current_cache(self,filename):
@@ -93,7 +96,7 @@ class fileops:
         return thumbpath         
 
     # copy filen from temp to final location
-    def _copyfile(self, sourcepath, targetpath):
+    def _copyfile(self, sourcepath, targetpath, media_name = ''):
         targetdir = os.path.dirname(targetpath)
         if not self._exists(targetdir):
             if not self._mkdir(targetdir):
@@ -101,10 +104,10 @@ class fileops:
         if not self._copy(sourcepath, targetpath):
             raise CopyError(targetpath)
         else:
-            log("Copied successfully: %s" % targetpath)
+            log("[%s] Copied successfully: %s" % (media_name, targetpath) )
 
     # download file
-    def _downloadfile(self, url, filename, targetdirs, media_name):
+    def _downloadfile(self, url, filename, targetdirs, media_name, mode = ""):
 
         """
         Download url to filename and place in all targetdirs.
@@ -127,11 +130,13 @@ class fileops:
             raise HTTPTimeout(url)
         except socket.timeout, e:
             raise HTTPTimeout(url)
+        except Exception, e:
+            log( str( e ), xbmc.LOGNOTICE )
         else:
-            log("Downloaded (%s): %s" % (media_name, filename), xbmc.LOGNOTICE)
-            self.downloadcount = self.downloadcount + 1
+            log("[%s] Downloaded: %s" % (media_name, filename), xbmc.LOGNOTICE)
+            self.downloadcount += 1
             for targetdir in targetdirs:
                 targetpath = os.path.join(targetdir, filename)
-                self._copyfile(temppath, targetpath)
-                if self.settings.xbmc_caching_enabled:
+                self._copyfile(temppath, targetpath, media_name)
+                if self.settings.xbmc_caching_enabled or mode in ['gui','customgui']:
                     self.erase_current_cache(targetpath)

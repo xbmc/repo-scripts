@@ -1,3 +1,25 @@
+[B]1.0.4[/B]
+- Fixed: After doing ID conversion it skipped that movie
+- Fixed: Some mayor bug that no ones has noticed so far
+- Fixed: When no exact title match was found it downloaded the entire library
+- Fixed: Close progress dialog before opening the image selection window
+- Changed: Reverted old change of using image ID from tmdb as filename. This is not available any more in new API v3
+- Changed: Use the new TMDB API v3
+- Changed: Use smaller image in GUI dialog for faster loading of images (when posible)
+- Changed: You can now set preferred language. Will always use English as fallback
+- Changed: Show yes/no dialog for faulty settings instead of looping
+- Changed: Only start service when user is logged in (requires minimal XBMC beta2)
+- Added: Polish translation (thx cienislaw)
+- Added: Dutch translation (thx Martijn)
+- Added: German translation (thx Suven)
+- Added: Download report is accessible from the add-on settings window
+- Added: Download report is accessible from the yes/no dialog when finished (not when background/silent/custom run)
+- Added: Extra info to gui dialog (language, rating, votes, season and size)
+- Added: Ratings for movie artwork 
+- Added: Now tries to look up the 'tmdb ID' if no 'imdb ID' is found and retrieves artwork using that
+- Added: Added musicvideo section that uses the title to search for artwork on TMDB
+         Needs extra argument from skin (see runscript.txt)
+
 [B]1.0.3[/B]
 - Fixed: Error below limit check
 - Fixed: Custom download for specific movie artwork only

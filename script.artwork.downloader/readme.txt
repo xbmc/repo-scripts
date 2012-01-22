@@ -31,6 +31,12 @@ Current Features:
         * Banner
         * Season Banners
 
+    - Musicvideos
+        * Poster
+        * Fanart
+        * Extrafanart
+        * Extrathumbs
+
     - Limit artwork on (when available):
         * Maximum number of extrafanart
         * Rating

@@ -10,6 +10,7 @@ class XmlError(BaseError): pass
 class MediatypeError(BaseError): pass
 class DeleteError(BaseError): pass
 class CreateDirectoryError(BaseError): pass
+class HTTP400Error(BaseError): pass
 class HTTP404Error(BaseError): pass
 class HTTP503Error(BaseError): pass
 class HTTPTimeout(BaseError): pass
