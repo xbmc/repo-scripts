@@ -22,5 +22,6 @@
 	Skin integration:[CR]See readme file
 	</description>
     <platform>all</platform>
+    <broken>Too much work to maintain and merged into Artwork Downloader</broken>
   </extension>
 </addon>
