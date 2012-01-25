@@ -169,12 +169,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def parser_lyrics( self, lyrics):
         self.pOverlay = []
         tag = re.compile('\[(\d+):(\d\d)(\.\d+|)\]')
-        if ( "\r\n" in lyrics ):
-            sep = "\r\n"
-        else:
-            # XBMC textbox does not handle "\r", so replace it with "\n"
-            sep = "\n"
-            lyrics = lyrics.replace( "\r" , "\n" )
+        lyrics = lyrics.replace( "\r\n" , "\n" )
+        sep = "\n"
         for x in lyrics.split( sep ):
             match1 = tag.match( x )
             times = []
