@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.lrclyrics"
        name="LRC Lyrics"
-       version="1.3.4"
+       version="1.3.5"
        provider-name="Taxigps">
   <requires>
     <import addon="xbmc.python" version="1.0"/>

@@ -1,4 +1,7 @@
-﻿[B]1.3.4 (2012.01.03)[/B]
+﻿[B]1.3.5 (2012.01.25)[/B]
+fixed: can't split some lyrics at right point
+
+[B]1.3.4 (2012.01.03)[/B]
 fixed: ATV2 not able to exit lyrics window while song is playing. Added handling for ATV2 menu button.
 
 [B]1.3.3 (2010.10.13)[/B]
