@@ -205,6 +205,7 @@ class TvTunes:
         # on recup la liste des series en biblio
         # json statement for tv shows
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         log( json_response )
         TVlist = []

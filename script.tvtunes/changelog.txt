@@ -1,3 +1,9 @@
+v1.0.15
+- fix browsing smb shares in addon settings
+
+v1.0.14
+- ignore possible encoding errors
+
 v1.0.13
 - clean up addon.xml
 
