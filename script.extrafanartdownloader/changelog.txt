@@ -1,3 +1,6 @@
+[B]0.4.2[/B]
+- Broken: Too much work to maintain and merged into Artwork Downloader
+
 [B]0.4.1[/B]
 - Added: Extrathumbs support for Movies
 - Fixed: New TMDB image locations on site
