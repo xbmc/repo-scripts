@@ -1,3 +1,15 @@
+2.0.3
+  Added: New Scraper "TotallyCoolPix.com"
+  Added: New Scraper "Time.com: LightBox - Closeup"
+  Changed: How using 'keep' as default aspect-ratio (press 0 or set in settings to change)
+  Fixed: html codes in title from some "Atlantic in focus" albums
+  Changed: The spinning loading animation logic
+  Fixed: ATV2-Remote Keymaps
+
+
+2.0.2
+  Fixed import error
+
 2.0.1
   New plugin-way for scrapers
   Fixed: Wallstreetjournal Scraper

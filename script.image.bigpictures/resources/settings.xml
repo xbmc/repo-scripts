@@ -9,6 +9,6 @@
         <setting type="lsep" label="32032" />        
     </category>
     <category label="32061">
-        <setting id="aspect_ratio" type="enum" label="32050" default="0" lvalues="32051|32052"/>
+        <setting id="aspect_ratio2" type="enum" label="32050" default="1" lvalues="32051|32052"/>
     </category>
 </settings>

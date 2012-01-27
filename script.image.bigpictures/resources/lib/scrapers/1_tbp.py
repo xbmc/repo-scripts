@@ -41,7 +41,7 @@ class Scraper(ScraperPlugin):
     def getPhotos(self, url):
         referer = 'http://www.boston.com/bigpicture/'
         tree = self.getCachedTree(url, referer)
-        title = tree.find('div', 'headDiv2').h2.a.string
+        title = tree.find('h2').a.string
         self.photos = list()
         photoNodes = tree.findAll('div', {'class':
                                           re.compile('bpImageTop|bpBoth')})
