@@ -1,3 +1,7 @@
+[B]1.0.5[/B]
+- Added: Use commoncache module to decrease API load on providers
+- Added: TV Show seasonbanners "seasonx-banner.jpg"
+
 [B]1.0.4[/B]
 - Fixed: After doing ID conversion it skipped that movie
 - Fixed: Some mayor bug that no ones has noticed so far

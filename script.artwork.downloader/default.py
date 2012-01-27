@@ -19,6 +19,7 @@ __addonpath__   = __addon__.getAddonInfo('path')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('profile') )
 __icon__        = __addon__.getAddonInfo('icon')
 __localize__    = __addon__.getLocalizedString
+dbg = False # Set to false if you don't want debugging for commoncache function
 
 ### import libraries
 from traceback import print_exc
@@ -494,12 +495,12 @@ class Main:
         log('* Image type: %s' %art_type)
         self.settings.failcount = 0
         seasonfile_presents = []
-        current_artwork = 0 # Used in progras dialog
-        limit_counter = 0   # Used for limiting on number
-        pref_language = language.get_abbrev()         # get abbreviation
-        i = 0               # Set loop counter
-        imagefound = False  # Set found image false
-        imageignore = False      # Set ignaore image false
+        current_artwork = 0                     # Used in progras dialog
+        limit_counter = 0                       # Used for limiting on number
+        pref_language = language.get_abbrev()   # get abbreviation
+        i = 0                                   # Set loop counter
+        imagefound = False                      # Set found image false
+        imageignore = False                     # Set ignaore image false
         final_image_list = []
         if self.mode in ['gui', 'customgui'] and not art_type in ['extrafanart', 'extrathumbs']:
             final_image_list.append(self.image_item)
@@ -600,6 +601,9 @@ class Main:
                                             self.failed_items.append('[%s] Skipping %s - Below limit setting' % (self.media_name,art_type) )
                 # Counter to make the loop twice when nothing found
                 i += 1
+                # Not loop when preferred language is English because that the same as the backup
+                if pref_language == 'en':
+                    i += 2
             # Add to failed items if 0
             if current_artwork == 0:
                 self.failed_items.append('[%s] No %s found' % (self.media_name,art_type) )
