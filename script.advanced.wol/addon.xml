@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.advanced.wol"
+       name="Advanced Wake On Lan"
+       version="1.0.0"
+       provider-name="mandark">
+  <requires>
+        <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.service"
+             library="autostart.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Wake up a sleeping computer using Wake-On-Lan</summary>
+    <description lang="en">Sends a WOL magic packet to a remote computer using its ethernet MAC address and displays a notification if and when the computer is available.
+------------------------
+The Addon can be launched manually from the Programs-section of XBMC (and thus added to your favourites, etc.), and can also be configured in the addon-settings to autostart with XBMC, thus waking up your remote computer when XBMC starts.
+------------------------
+Additionally another command (e.g. activate a specific window) can be handed to the script as a parameter. It then launches that command either immediately or not until the remote computer is available. Behaviour can be set by a second parameter:
+  - False: launch immediately (default)
+  - True: wait for remote computer
+
+As an example, you could add the following entry to your favourites.xml:
+  &quot;RunScript(&amp;quot;script.advanced.wol&amp;quot;,ActivateWindow(MyVideoLibrary),True)&quot;
+This would attempt to wake the remote computer configured in the &quot;Advanced Wake On Lan&quot;-Settings, wait until it is awake, and only then launch the XBMC-Video-Library.
+
+This feature is especially useful, if you want to launch your remote computer, when entering a specific menu-item in XBMC.
+------------------------
+You can also pass the Host/IP and MAC-Address of the Remote Computer to the script as the third parameter, bypassing the config in the addon-settings. E.g.:
+  &quot;RunScript(&amp;quot;script.advanced.wol&amp;quot;,,,my-server@50:E5:49:B5:61:34)&quot;
+
+This is useful, if you have more then one remote computer you want to wake independently.</description>
+    <disclaimer lang="en">Uses XBMC-builtin-command &quot;WakeOnLan&quot; to send the wakeup-packet, and the GNU-licensed &quot;python-ping&quot;-script to determine the status of the server. Please see the file &quot;ping.py&quot; for infos on the latter one.</disclaimer>
+    <platform>all</platform>
+  </extension>
+</addon>

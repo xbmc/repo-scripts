@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="50000">Ethernet MAC-address</string>
+    <string id="50001">IP-address or hostname</string>
+    <string id="50002">Timeout (in seconds)</string>
+    <string id="50003">Wake on XBMC-start</string>
+    <string id="60000">Waking up %hostorip%...</string>
+    <string id="60001">Waiting for %hostorip% to wake up...</string>
+    <string id="60002">%timecount% of %timeout% seconds</string>
+    <string id="60003">%hostorip% did not wake up!</string>
+    <string id="60004">%hostorip% is awake!</string>
+    <string id="60005">SOCKET ERROR</string>
+    <string id="60006">Host %hostorip% could not be resolved.</string>
+    <string id="60007">Launching command...</string>
+</strings>

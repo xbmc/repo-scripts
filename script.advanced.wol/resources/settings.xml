@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="macaddress" type="text" label="50000" default="00:25:11:c4:fb:8a" />
+    <setting id="hostorip" type="text" label="50001" default="my-server" />
+    <setting id="timeout" type="labelenum" label="50002" values="10|20|30|40|50|60|120" default="30" />
+    <setting id="autostart" type="bool" label="50003"  default="false" />
+</settings>
