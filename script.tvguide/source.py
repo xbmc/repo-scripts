@@ -28,6 +28,7 @@ import ysapi
 
 import xbmc
 import xbmcgui
+import xbmcvfs
 import pickle
 from sqlite3 import dbapi2 as sqlite3
 
@@ -88,8 +89,7 @@ class Source(object):
     STREAMS = {}
     SOURCE_DB = 'source.db'
 
-    def __init__(self, settings, hasChannelIcons):
-        self.channelIcons = hasChannelIcons
+    def __init__(self, settings):
         self.cachePath = settings['cache.path']
         self.playbackUsingDanishLiveTV = False
 
@@ -108,9 +108,6 @@ class Source(object):
 
     def __del__(self):
         self.conn.close()
-
-    def hasChannelIcons(self):
-        return self.channelIcons
 
     def updateChannelAndProgramListCaches(self):
         xbmc.log("[script.tvguide] Updating channel list caches...", xbmc.LOGDEBUG)
@@ -141,7 +138,7 @@ class Source(object):
                 xbmc.log('[script.tvguide] Exception while loading cached channel list')
 
         if not cacheHit or not channelList:
-            xbmc.log('[script.tvguide] Caching channel list...')
+            xbmc.log('[script.tvguide] Caching channel list...', xbmc.LOGDEBUG)
             try:
                 channelList = self._getChannelList()
             except Exception as ex:
@@ -162,19 +159,23 @@ class Source(object):
         return None
 
     def getProgramList(self, channel, date):
-        id = str(channel.id).replace('/', '')
+        if type(channel.id) in [str, unicode]:
+            id = channel.id.encode('utf-8', errors='ignore')
+        else:
+            id = str(channel.id)
+
         dateString = date.strftime('%Y%m%d')
-        cacheFile = os.path.join(self.cachePath, '%s-%s-%s.programlist' % (self.KEY, id, dateString))
+        cacheFile = os.path.join(self.cachePath, '%s-%s-%s.programlist' % (self.KEY, id.replace('/', ''), dateString))
 
         programList = None
         if os.path.exists(cacheFile):
             try:
                 programList = pickle.load(open(cacheFile))
             except Exception:
-                xbmc.log('[script.tvguide] Exception while loading cached program list for channel %s' % channel.id)
+                xbmc.log('[script.tvguide] Exception while loading cached program list for channel %s' % id)
 
         if not programList:
-            xbmc.log('[script.tvguide] Caching program list for channel %s...' % channel.id)
+            xbmc.log('[script.tvguide] Caching program list for channel %s...' % id, xbmc.LOGDEBUG)
             try:
                 programList = self._getProgramList(channel, date)
                 pickle.dump(programList, open(cacheFile, 'w'))
@@ -252,7 +253,7 @@ class DrDkSource(Source):
     }
 
     def __init__(self, settings):
-        Source.__init__(self, settings, False)
+        Source.__init__(self, settings)
 
     def _getChannelList(self):
         jsonChannels = simplejson.loads(self._downloadUrl(self.CHANNELS_URL))
@@ -297,7 +298,7 @@ class YouSeeTvSource(Source):
     }
 
     def __init__(self, settings):
-        Source.__init__(self, settings, True)
+        Source.__init__(self, settings)
         self.date = datetime.datetime.today()
         self.channelCategory = settings['youseetv.category']
         self.ysApi = ysapi.YouSeeTVGuideApi()
@@ -349,7 +350,6 @@ class YouSeeTvSource(Source):
 
 
 class TvTidSource(Source):
-    # http://tvtid.tv2.dk/js/fetch.js.php/from-1291057200.js
     KEY = 'tvtiddk'
 
     BASE_URL = 'http://tvtid.tv2.dk%s'
@@ -366,7 +366,7 @@ class TvTidSource(Source):
     }
 
     def __init__(self, settings):
-        Source.__init__(self, settings, True)
+        Source.__init__(self, settings)
 
     def _getChannelList(self):
         response = self._downloadUrl(self.CHANNELS_URL)
@@ -389,13 +389,18 @@ class TvTidSource(Source):
         @return:
         """
         dateString = date.strftime('%Y%m%d')
-        cacheFile = os.path.join(self.cachePath, '%s-%s-%s.programlist.source' % (self.KEY, id, dateString))
-        if not os.path.exists(cacheFile):
+        cacheFile = os.path.join(self.cachePath, '%s-%s-%s.programlist.source' % (self.KEY, channel.id, dateString))
+        json = None
+        if os.path.exists(cacheFile):
+            try:
+                json = pickle.load(open(cacheFile))
+            except Exception:
+                pass
+
+        if not os.path.exists(cacheFile) or json is None:
             response = self._downloadUrl(self.PROGRAMS_URL % date.strftime('%Y%m%d'))
             json = simplejson.loads(response)
             pickle.dump(json, open(cacheFile, 'w'))
-        else:
-            json = pickle.load(open(cacheFile))
 
 
         # assume we always find a channel
@@ -420,15 +425,15 @@ class XMLTVSource(Source):
     }
 
     def __init__(self, settings):
-        self.xmlTvFile = settings['xmltv.file']
+        self.logoFolder = settings['xmltv.logo.folder']
         self.time = time.time()
-        try:
-            doc = self._loadXml()
-            hasChannelIcons = doc.find('channel/icon') is not None
-        except Exception:
-            hasChannelIcons = False
 
-        super(XMLTVSource, self).__init__(settings, hasChannelIcons)
+        super(XMLTVSource, self).__init__(settings)
+
+        self.xmlTvFile = os.path.join(self.cachePath, '%s.xmltv' % self.KEY)
+        if xbmcvfs.exists(settings['xmltv.file']):
+            xbmc.log('[script.tvguide] Caching XMLTV file...')
+            xbmcvfs.copy(settings['xmltv.file'], self.xmlTvFile)
 
         # calculate nearest hour
         self.time -= self.time % 3600
@@ -437,10 +442,15 @@ class XMLTVSource(Source):
         doc = self._loadXml()
         channelList = list()
         for channel in doc.findall('channel'):
+            title = channel.findtext('display-name')
             logo = None
+            if self.logoFolder:
+                logoFile = os.path.join(self.logoFolder, title + '.png')
+                if xbmcvfs.exists(logoFile):
+                    logo = logoFile
             if channel.find('icon'):
                 logo = channel.find('icon').get('src')
-            c = Channel(id = channel.get('id'), title = channel.findtext('display-name'), logo = logo)
+            c = Channel(id = channel.get('id'), title = title, logo = logo)
             channelList.append(c)
 
         return channelList

@@ -15,7 +15,7 @@
         <setting id="program.background.enabled" label="30107" type="bool" default="true" visible="eq(-4,0)"/>
 
         <setting id="xmltv.file" label="30103" type="file" visible="eq(-5,3)" />
-
+        <setting id="xmltv.logo.folder" label="30116" type="folder" visible="eq(-6,3)"/>
 
         <setting type="sep" />
         <setting type="lsep" label="30109" />

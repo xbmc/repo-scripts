@@ -1,3 +1,10 @@
+[B]Version 1.2.1 - 2012-01-27[/B]
+- Added option to load channel icons from a folder when using XMLTV as source
+  Logos must be png's and named <channel name>.png
+- Added support for loading XMLTV files from network shares
+  Add your shares in XBMC's File manager
+- Fixed a number of small annoying bugs
+
 [B]Version 1.2.0 - 2012-01-19[/B]
 - Fixed a rendering problem when the source contains more than one day of programs
 - Improved handling of programs in the future

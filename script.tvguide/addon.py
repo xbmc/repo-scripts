@@ -38,6 +38,7 @@ try:
     SETTINGS = {
         'cache.path' : xbmc.translatePath(ADDON.getAddonInfo('profile')),
         'xmltv.file' : ADDON.getSetting('xmltv.file'),
+        'xmltv.logo.folder' : ADDON.getSetting('xmltv.logo.folder'),
         'youseetv.category' : ADDON.getSetting('youseetv.category'),
         'youseewebtv.playback' : ADDON.getSetting('youseewebtv.playback'),
         'danishlivetv.playback' : ADDON.getSetting('danishlivetv.playback'),
