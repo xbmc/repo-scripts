@@ -1,12 +1,16 @@
-''' 
+'''
      StorageServer override.
      Version: 1.0
 '''
 
+
 class StorageServer():
-    def cacheFunction(self, funct = False, *args):
+    def __init__(self, table=False):
+        return None
+
+    def cacheFunction(self, funct=False, *args):
         return funct(*args)
-    
+
     def set(self, name, data):
         return ""
 

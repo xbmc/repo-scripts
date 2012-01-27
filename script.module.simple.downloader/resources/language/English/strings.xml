@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
     <!-- Plugin settings strings -->
-    <string id="30207">Download Location</string>
-    <string id="30218">General</string>
-    <string id="30265">Timeout (in seconds)</string>
+    <string id="101">Notification length</string>
+    <string id="102">Hide progress during playback</string>
 
     <!-- messages -->
-    <string id="30600">Error</string>
-    <string id="30604">Download complete</string>
-    <string id="30605">Preparing download</string>
-    <string id="30607">Skipping download</string>
-    <string id="30611">Download folder not set</string>
-    <string id="30619">rtmpdump binary not found</string>
-    <string id="30624">Downloading</string>
-    <string id="30625">Download Failed</string>
+    <string id="201">Preparing download</string>
+    <string id="202">Downloading</string>
+    <string id="203">Download complete</string>
+    <string id="204">Download Failed</string>
+
+    <!-- errors -->
+    <string id="301">Error</string>
+    <string id="302">vlc/mplayer/rtmpdump binary not found</string>
 </strings>

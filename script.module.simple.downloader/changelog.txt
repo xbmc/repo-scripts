@@ -1,10 +1,19 @@
 [B]Todo:[/B]
 
+[B]Version 0.9.1[/B]
+- Added asynchronous option to download (async is used by default)
+- Added movieItemToPosition
+- Added isRTMPInstalled
+- Added isVLCInstalled
+- Added isMPlayerInstalled
+- Made the progress window larger
+- Added support for mms and rtsp servers
+- Removed language and settings dependencies
+
 [B]Version 0.9.0[/B]
-- Downloader autohides while playback is in the foreground.
-- Downloader supports RTMP streams.
+- Downloader autohides while playback is in the foreground
+- Downloader supports RTMP streams
 - Move to front of functionality
 
 [B]Version 0.8.0 (Beta)[/B]
-- Initial public test run.
-
+- Initial public test run
