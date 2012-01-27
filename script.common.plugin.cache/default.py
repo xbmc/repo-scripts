@@ -6,7 +6,7 @@
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -16,25 +16,29 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Version 0.8
 '''
-import platform
-import xbmc, xbmcaddon
-try: import xbmcvfs
-except: import xbmcvfsdummy as xbmcvfs
+import sys
+import xbmc
+import xbmcaddon
+try:
+    import xbmcvfs
+except:
+    import xbmcvfsdummy as xbmcvfs
 
 settings = xbmcaddon.Addon(id='script.common.plugin.cache')
 language = settings.getLocalizedString
 dbg = settings.getSetting("debug") == "true"
 dbglevel = 3
 
+
 def run():
-	s = StorageServer.StorageServer()
-	print " StorageServer Module loaded RUN"
-	print s.plugin + " Starting server"
-	s.run()
-	return True
+    s = StorageServer.StorageServer(False)
+    print " StorageServer Module loaded RUN"
+    print s.plugin + " Starting server"
+    s.run()
+    return True
 
 if __name__ == "__main__":
-	# ARM should run in instance mode, not as a service.
-	if not xbmc.getCondVisibility('system.platform.ios') and settings.getSetting("autostart") == "true":
-		import StorageServer
-		run()
+    if not xbmc.getCondVisibility('system.platform.ios') and settings.getSetting("autostart") == "true":
+        sys.path = [settings.getAddonInfo('path') + "/lib"] + sys.path
+        import StorageServer
+        run()
