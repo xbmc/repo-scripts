@@ -1,5 +1,8 @@
-[B]Version 0.9.0[/B]
+[B]Version 0.9.1[/B]
 - Stability and more functions
+- Add cookie support to fetchPage.
+- Add getCookieInfoAsHTML.
+- Add POST and Refering capabilities to fetchPage
 
-[B]Version 0.8.0[/B]
+[B]Version 0.9.0[/B]
 - Initial public test run.
