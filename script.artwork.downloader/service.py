@@ -27,13 +27,13 @@ def autostart():
         xbmcaddon.Addon().setSetting(id="files_overwrite", value='false')
         settings = _settings()
         settings._get_general()
-        tempdir = os.path.join(__addondir__, 'temp')
+        addondir = xbmc.translatePath( utils.__addon__.getAddonInfo('profile') )
+        tempdir = os.path.join(addondir, 'temp')
         service_runtime  = str(settings.service_runtime + ':00')
-        log('## Service - Run at startup: %s'%settings.service_startup, xbmc.LOGNOTICE)        
-        log('## Service - Delayed startup: %s minutes'%settings.service_startupdelay, xbmc.LOGNOTICE)   
-        log('## Service - Run as service: %s'%settings.service_enable, xbmc.LOGNOTICE)
-        log('## Service - Time: %s'%service_runtime, xbmc.LOGNOTICE)
-        log("##########........................")
+        log('Service - Run at startup: %s'%settings.service_startup, xbmc.LOGNOTICE)        
+        log('Service - Delayed startup: %s minutes'%settings.service_startupdelay, xbmc.LOGNOTICE)   
+        log('Service - Run as service: %s'%settings.service_enable, xbmc.LOGNOTICE)
+        log('Service - Time: %s'%service_runtime, xbmc.LOGNOTICE)
         # Check if tempdir exists and remove it
         if xbmcvfs.exists(tempdir):
             xbmcvfs.rmdir(tempdir)
@@ -57,9 +57,4 @@ def autostart():
                         log('Addon already running, scheduled run aborted', xbmc.LOGNOTICE)
 
 if (__name__ == "__main__"):
-    log("######## Extrafanart Downloader Service: Initializing........................")
-    log('## Add-on ID   = %s' % str(__addonid__))
-    log('## Add-on Name = %s' % str(__addonname__))
-    log('## Authors     = %s' % str(__author__))
-    log('## Version     = %s' % str(__version__))
     autostart()

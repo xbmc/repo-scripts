@@ -1,3 +1,6 @@
+[B]1.0.6[/B]
+- Revert 1.0.5
+
 [B]1.0.5[/B]
 - Added: Use commoncache module to decrease API load on providers
 - Added: TV Show seasonbanners "seasonx-banner.jpg"

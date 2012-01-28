@@ -21,14 +21,6 @@ from urllib2 import HTTPError, URLError, urlopen
 from resources.lib.script_exceptions import *
 #HTTP404Error, HTTP503Error, DownloadError, HTTPTimeout
 
-# Commoncache plugin import
-try:
-    import StorageServer
-except:
-    import storageserverdummy as StorageServer
-
-cache = StorageServer.StorageServer("ArtworkDownloader",24)
-
 ### adjust default timeout to stop script hanging
 timeout = 20
 socket.setdefaulttimeout(timeout)
@@ -111,17 +103,8 @@ def _getUniq(seq):
         result.append( item )
     return result
 
-# Retrieve JSON data from cache function
-def _get_json(url):
-    result = cache.cacheFunction( _get_json_new, url )
-    if len(result) == 0:
-        result = []
-        return result
-    else:
-        return result[0]
-
 # Retrieve JSON data from site
-def _get_json_new(url):
+def _get_json(url):
     _log('API: %s'% url)
     try:
         request = urllib2.Request(url)
@@ -137,29 +120,20 @@ def _get_json_new(url):
         else:
             raise DownloadError(str(e))
     except:
-        json_string = []
+        json_string = ''
     try:
         parsed_json = simplejson.loads(json_string)
     except:
-        parsed_json = []
-    return [parsed_json]
-
-# Retrieve XML data from cache function
-def _get_xml(url):
-    result = cache.cacheFunction( _get_xml_new, url )
-    if len(result) == 0:
-        result = []
-        return result
-    else:
-        return result[0]
+        parsed_json = ''
+    return parsed_json
 
 # Retrieve XML data from site
-def _get_xml_new(url):
+def _get_xml(url):
     try:
         client  = urlopen(url)
         data    = client.read()
         client.close()
-        return [data]
+        return data
     except HTTPError, e:
         if e.code   == 404:
             raise HTTP404Error( url )
