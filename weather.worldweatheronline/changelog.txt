@@ -1,3 +1,6 @@
+1.0.7
+- added Simplified Chinese translation
+
 1.0.6
 - fix: some cities would error on fetch, it all works if I would RTFM
 
