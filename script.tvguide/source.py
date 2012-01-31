@@ -160,7 +160,7 @@ class Source(object):
 
     def getProgramList(self, channel, date):
         if type(channel.id) in [str, unicode]:
-            id = channel.id.encode('utf-8', errors='ignore')
+            id = channel.id.encode('utf-8', 'ignore')
         else:
             id = str(channel.id)
 
