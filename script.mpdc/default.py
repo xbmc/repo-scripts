@@ -27,7 +27,7 @@ ACTION_CLOSE = [9,10,92]
 STATUS = 100
 SETTINGS = 101
 sys.path.append( os.path.join ( __addon__.getAddonInfo('path'), 'resources','lib') )
-import gui,xbmpc
+import xbmpc
 import mpdcdialog as dialog
 STATUS_ON='on'
 STATUS_OFF='off'
@@ -122,6 +122,7 @@ class SelectMPDProfile ( xbmcgui.WindowXMLDialog ) :
 		if controlId == SERVER_LIST:
 			seekid = self.getControl( SERVER_LIST ).getSelectedItem().getProperty('id')
 			if self.getControl( SERVER_LIST ).getSelectedItem().getProperty('stat') == STATUS_ON:
+				import gui
 				ui = gui.GUI( 'mpd-client-main.xml',__addon__.getAddonInfo('path'), self.skin,seekid)
 				ui.doModal()
 				del ui
@@ -134,6 +135,7 @@ current_skin=str(xbmc.getSkinDir().lower())
 #	skin = 'transparency'
 skip_selector = __addon__.getSetting('skip-selector')
 if 'true' == skip_selector:
+	import gui
 	ui = gui.GUI( 'mpd-client-main.xml',__addon__.getAddonInfo('path'), skin,'0')
 	ui.doModal()
 	del ui

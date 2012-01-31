@@ -166,7 +166,8 @@ class MPDClient(object):
             raise IteratingError("Cannot use fetch_%s while iterating" %
                                  command)
         if not self._pending:
-            raise PendingCommandError("No pending commands to fetch")
+	    return
+	    #raise PendingCommandError("No pending commands to fetch")
         if self._pending[0] != command:
             raise PendingCommandError("%s is not the currently "
                                       "pending command" % command)

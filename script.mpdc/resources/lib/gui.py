@@ -20,7 +20,7 @@
 # */
 import sys,os,time,re,traceback,threading
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin
-import pmpd,xbmpc,albumart,playercontrols
+import pmpd,xbmpc,albumart,playercontrols,cache
 import mpdcdialog as dialog
 __scriptid__ = 'script.mpdc'
 __addon__ = xbmcaddon.Addon(id=__scriptid__)
@@ -157,6 +157,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		self.mpd_pass = self.addon.getSetting(self.profile_id+'_mpd_pass')
 		self.fb_indexes = []
 		self.ab_indexes = []
+		self.cache = cache.MPDCache(__addon__)
 		if self.mpd_pass == '':
 			self.mpd_pass = None
 		self.is_play_stream = False
@@ -341,10 +342,12 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 				self.getControl(SONG_INFO_ATRIST).setLabel(current['file'])
 			else:
 				self.getControl(SONG_INFO_ATRIST).setLabel(current['artist']+' - '+current['title'])
-			if current['date']=='':
-				self.getControl(SONG_INFO_ALBUM).setLabel(current['album'])
-			else:
+			if isinstance(current['date'],str) and len(current['date']) > 3:
 				self.getControl(SONG_INFO_ALBUM).setLabel(current['album']+' ('+current['date'][:4]+')')
+			elif isinstance(current['date'],list) and len(current['date']) > 0:
+				self.getControl(SONG_INFO_ALBUM).setLabel(current['album']+' ('+current['date'][0][:4]+')')
+			else:
+				self.getControl(SONG_INFO_ALBUM).setLabel(current['album'])
 		if not self.album_fetch_enabled:
 			return
 		album_image = self.art_fetcher.get_image_file_name(current['artist'],current['album'],current['file'])
@@ -367,13 +370,16 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			client = self.client
 		if artist_item==None:
 			self.getControl(ARTIST_BROWSER).reset()
-			#artists = self.client.list('artist')
-			#artists.sort()
+			artists = self.cache.getArtists()
+			if [] == artists:
+				artists = self.client.list('artist')
+				artists.sort()
+				self.cache.putArtists(artists)
 			listitem = xbmcgui.ListItem(label='..')
 			listitem.setIconImage('DefaultFolderBack.png')
 			listitem.setProperty('type','')
 			self.getControl(ARTIST_BROWSER).addItem(listitem)			
-			for item in self.client.list('artist'):
+			for item in artists:
 				if not item=='':
 					listitem = xbmcgui.ListItem(label=item)
 					listitem.setProperty('artist',item)
@@ -452,7 +458,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 		self.getControl(PLAYLIST_BROWSER).reset()
 		self.playlists = []
 		try:
-			self.playlists = client.listplaylists()
+			self.playlists = sorted(client.listplaylists(), key=lambda pls: pls['playlist'])
 		except:
 			#in case server does not support this command
 			pass
@@ -515,6 +521,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 	def _update_file_browser(self,browser_item=None,client=None,back=False):
 		select_index = 0
 		index = self.getControl(FILE_BROWSER).getSelectedPosition()
+		firstitem= None
 		if client==None:
 			client = self.client
 		if browser_item == None:
@@ -523,7 +530,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			listitem = xbmcgui.ListItem( label='..')
 			listitem.setProperty('directory','')
 			listitem.setIconImage('DefaultFolderBack.png')
-			self.getControl(FILE_BROWSER).addItem(listitem)
+			firstitem = listitem
 		elif browser_item.getProperty('type') == 'file':
 			return
 		else:
@@ -538,21 +545,29 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			listitem = xbmcgui.ListItem( label='..')
 			listitem.setProperty('directory',os.path.dirname(uri))
 			listitem.setIconImage('DefaultFolderBack.png')
-			self.getControl(FILE_BROWSER).addItem(listitem)
+			firstitem = listitem
+		file_items = []
+		dir_items = []
 		for item in dirs:
 			if 'directory' in item:
 				listitem = xbmcgui.ListItem( label=os.path.basename(item['directory']))
 				listitem.setProperty('type','directory')
 				listitem.setProperty('directory',item['directory'])
 				listitem.setIconImage('DefaultFolder.png')
-				self.getControl(FILE_BROWSER).addItem(listitem)
+				dir_items.append(listitem)
 			elif 'file' in item:
 				listitem = xbmcgui.ListItem( label=os.path.basename(item['file']))
 				listitem.setProperty('type','file')
 				listitem.setProperty('directory',os.path.dirname(item['file']))
 				listitem.setProperty('file',item['file'])
 				listitem.setIconImage('DefaultAudio.png')
-				self.getControl(FILE_BROWSER).addItem(listitem)
+				file_items.append(listitem)
+		dir_items = sorted(dir_items,key=lambda i:i.getLabel())
+		if not firstitem == None:
+			dir_items.insert(0,firstitem)
+		for i in sorted(file_items,key=lambda i:i.getLabel()):
+			dir_items.append(i)
+		self.getControl(FILE_BROWSER).addItems(dir_items)
 		self.getControl(FILE_BROWSER).selectItem(select_index)
 
 	def _handle_time_changes(self,poller_client,status):
@@ -603,6 +618,7 @@ class GUI ( xbmcgui.WindowXMLDialog ) :
 			if change == 'stored_playlist':
 				self._update_playlist_browser(poller_client)
 			if change == 'database':
+				self.cache.clear()
 				self._update_file_browser(client=poller_client)
 				self._update_artist_browser(client=poller_client)
 			if change == 'playlist':

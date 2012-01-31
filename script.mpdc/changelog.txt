@@ -1,3 +1,7 @@
+[B]2.0.6[/B]
+- fixed: queue does not get updated on MPD 16.x
+- added: simple caching of artist list
+- fixed: sorting of playlists,artists,files
 [B]2.0.5[/B]
 - fixed: unable to start/connect on appletv boxes
 - fixed: handling backspace keys

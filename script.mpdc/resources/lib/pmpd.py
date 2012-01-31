@@ -94,8 +94,8 @@ class PMPDClient(object):
 				pass
 			try:
 				print 'waiting for time poller thread'
+				self.time_event.set()
 				if self.time_thread.isAlive():
-					self.time_event.set()
 					self.time_thread.join(3)
 					self.time_event=None
 				print 'done'
@@ -128,6 +128,7 @@ class PMPDClient(object):
 	def _poll(self):
 		while 1:			
 			try:
+#				print 'polling IDLE'
 				self.poller.send_idle()
 				select.select([self.poller],[],[],1)
 				changes = self.poller.fetch_idle()
@@ -136,7 +137,7 @@ class PMPDClient(object):
 #				traceback.print_exc()
 				return
 			try:
-				if not self.callback == None:
+				if not self.callback == None and not changes == None:
 					self.callback(self.poller,changes)
 			except:
 #				print "callback error"
