@@ -1,5 +1,6 @@
 #import modules
 import xbmc
+import sys
 
 ### import libraries
 from resources.lib.script_exceptions import NoFanartError, ItemNotFoundError
@@ -9,7 +10,10 @@ from resources.lib.utils import _get_xml as get_xml
 from resources.lib.utils import _get_json as get_json
 from resources.lib import language
 from elementtree import ElementTree as ET
+from operator import itemgetter
 
+### get addon info
+__localize__    = ( sys.modules[ "__main__" ].__localize__ )
 
 class TMDBProvider():
 
@@ -42,14 +46,14 @@ class TMDBProvider():
 
                 # find image ratings
                 if int(item['vote_count']) >= 1:
-                    info['rating'] = float( "%.1f" % float( item['vote_count']) ) #output string with one decimal
+                    info['rating'] = float( "%.1f" % float( item['vote_average']) ) #output string with one decimal
                     info['votes'] = item['vote_count']
                 else:
                     info['rating'] = 'n/a'
                     info['votes'] = 'n/a'
 
                 # Create Gui string to display
-                info['generalinfo'] = 'Language: %s  |  Rating: %s  |  Votes: %s  |  Size: %sx%s  |  ' %(info['language'], info['rating'], info['votes'], info['width'],info['height'])
+                info['generalinfo'] = '%s: %s  |  %s: %s  |  %s: %s  |  %s: %sx%s  |  ' %( __localize__(32141), info['language'], __localize__(32142), info['rating'], __localize__(32143), info['votes'], __localize__(32145), info['width'], info['height'])
 
                 if info:
                     image_list.append(info)
@@ -75,14 +79,14 @@ class TMDBProvider():
 
                 # find image ratings
                 if int(item['vote_count']) >= 1:
-                    info['rating'] = float( "%.1f" % float( item['vote_count']) ) #output string with one decimal
+                    info['rating'] = float( "%.1f" % float( item['vote_average']) ) #output string with one decimal
                     info['votes'] = item['vote_count']
                 else:
                     info['rating'] = 'n/a'
                     info['votes'] = 'n/a'
 
                 # Create Gui string to display
-                info['generalinfo'] = 'Language: %s  |  Rating: %s  |  Votes: %s  |  Size: %sx%s  |  ' %(info['language'], info['rating'], info['votes'], info['width'],info['height'])
+                info['generalinfo'] = '%s: %s  |  %s: %s  |  %s: %s  |  %s: %sx%s  |  ' %( __localize__(32141), info['language'], __localize__(32142), info['rating'], __localize__(32143), info['votes'], __localize__(32145), info['width'], info['height'])
 
                 if info:
                     image_list.append(info)
@@ -108,14 +112,14 @@ class TMDBProvider():
 
                 # find image ratings
                 if int(item['vote_count']) >= 1:
-                    info['rating'] = float( "%.1f" % float( item['vote_count']) ) #output string with one decimal
+                    info['rating'] = float( "%.1f" % float( item['vote_average']) ) #output string with one decimal
                     info['votes'] = item['vote_count']
                 else:
                     info['rating'] = 'n/a'
                     info['votes'] = 'n/a'
 
                 # Create Gui string to display
-                info['generalinfo'] = 'Language: %s  |  Rating: %s  |  Votes: %s  |  Size: %sx%s  |  ' %(info['language'], info['rating'], info['votes'], info['width'],info['height'])
+                info['generalinfo'] = '%s: %s  |  %s: %s  |  %s: %s  |  %s: %sx%s  |  ' %( __localize__(32141), info['language'], __localize__(32142), info['rating'], __localize__(32143), info['votes'], __localize__(32145), info['width'], info['height'])
 
                 if info:
                     image_list.append(info)
@@ -124,6 +128,9 @@ class TMDBProvider():
         if image_list == []:
             raise NoFanartError(media_id)
         else:
+            # Sort the list before return. Last sort method is primary
+            image_list = sorted(image_list, key=itemgetter('rating'), reverse=True)
+            image_list = sorted(image_list, key=itemgetter('language'))
             return image_list
 
 

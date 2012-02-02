@@ -99,12 +99,12 @@
         <string id="32133">-</string>
         <string id="32134">Seizoen miniatuur 16:9</string>
 
-    <!-- Add-on messages: Image types not found id=32141 to 32160 -->
-        <string id="32141">-</string>
-        <string id="32142">-</string>
-        <string id="32143">-</string>
-        <string id="32144">-</string>
-        <string id="32145">-</string>
+    <!-- Add-on messages: -->
+        <string id="32141">Taal</string>
+        <string id="32142">Waardering</string>
+        <string id="32143">Stemmen</string>
+        <string id="32144">Seizoen</string>
+        <string id="32145">Grootte</string>
         <string id="32146">-</string>
         <string id="32147">-</string>
         <string id="32148">-</string>

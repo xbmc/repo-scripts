@@ -1,8 +1,15 @@
+#import modules
+import sys
+
 #import libraries
 from resources.lib.script_exceptions import NoFanartError
 from resources.lib.utils import _log as log
 from resources.lib.utils import _get_xml as get_xml
 from elementtree import ElementTree as ET
+from operator import itemgetter
+
+### get addon info
+__localize__    = ( sys.modules[ "__main__" ].__localize__ )
 
 class TVDBProvider():
     """
@@ -16,7 +23,6 @@ class TVDBProvider():
 
     def get_image_list(self, media_id):
         xml_url = self.url % (self.api_key, media_id)
-        log('API:               %s ' % xml_url)
         image_list = []
         data = get_xml(xml_url)
         tree = ET.fromstring(data)
@@ -68,18 +74,25 @@ class TVDBProvider():
                     info['votes'] = 'n/a'
 
                 # find season info
-                if image.findtext('Season') != '':
+                if image.findtext('Season'):
                     info['season'] = image.findtext('Season')
+                else:
+                    info['season'] = 'n/a'
+
                 # Create Gui string to display
-                info['generalinfo'] = 'Language: %s  |  Rating: %s  |  Votes: %s  |  ' %( info['language'], info['rating'], info['votes'] )
-                if 'season'in info:
-                    info['generalinfo'] += 'Season: %s  |  ' %( info['season'] )
+                info['generalinfo'] = '%s: %s  |  %s: %s  |  %s: %s  |  ' %( __localize__(32141), info['language'], __localize__(32142), info['rating'], __localize__(32143), info['votes'] )
+                if info['season'] != 'n/a':
+                    info['generalinfo'] += '%s: %s  |  ' %( __localize__(32144), info['season'] )
                 if 'height' in info:
-                    info['generalinfo'] += 'Size: %sx%s  |  ' %( info['height'], info['width'] )
+                    info['generalinfo'] += '%s: %sx%s  |  ' %( __localize__(32145), info['height'], info['width'] )
 
             if info:
                 image_list.append(info)
         if image_list == []:
             raise NoFanartError(media_id)
         else:
+            # Sort the list before return. Last sort method is primary
+            image_list = sorted(image_list, key=itemgetter('rating'), reverse=True)
+            image_list = sorted(image_list, key=itemgetter('season'))
+            image_list = sorted(image_list, key=itemgetter('language'))
             return image_list

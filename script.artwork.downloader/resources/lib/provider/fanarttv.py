@@ -1,10 +1,16 @@
+#import modules
+import sys
+import urllib
+
 ### import libraries
 from resources.lib.provider.base import BaseProvider
 from resources.lib.script_exceptions import NoFanartError, ItemNotFoundError
 from resources.lib.utils import _log as log
 from resources.lib.utils import _get_xml as get_xml
 from elementtree import ElementTree as ET
-import urllib
+
+### get addon info
+__localize__    = ( sys.modules[ "__main__" ].__localize__ )
 
 class FTV_TVProvider():
 
@@ -49,7 +55,7 @@ class FTV_TVProvider():
                     info['generalinfo'] = 'Language: %s , Likes: %s   ' %(info['language'], info['likes'])
                     '''
                     # Create Gui string to display
-                    info['generalinfo'] = 'Language: %s  |  Rating: %s   ' %(info['language'], info['rating'])
+                    info['generalinfo'] = '%s: %s  |  %s: %s   ' %( __localize__(32141), info['language'], __localize__(32142), info['rating'])
                     if info:
                         image_list.append(info)
         if image_list == []:
@@ -84,7 +90,7 @@ class FTV_MovieProvider():
                     info['language'] = image.get('lang')
                     info['likes'] = image.get('likes')
                     # Create Gui string to display
-                    info['generalinfo'] = 'Language: %s  |  Likes: %s   ' %(info['language'], info['likes'])
+                    info['generalinfo'] = '%s: %s  |  %s: %s   ' %( __localize__(32141), info['language'], __localize__(32143), info['likes'] )
                     if info:            
                         image_list.append(info)
         if image_list == []:

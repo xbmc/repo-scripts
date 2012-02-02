@@ -1,5 +1,10 @@
+[B]1.0.7[/B]
+- Changed: Revert 1.0.6 because dependencies are now met. Meaning options from 1.0.5 are now active
+- Fixed: Limit TMDB by rating not by number of votes
+
 [B]1.0.6[/B]
-- Revert 1.0.5
+
+- Fixed: Revert 1.0.5 because dependencies were not met yet
 
 [B]1.0.5[/B]
 - Added: Use commoncache module to decrease API load on providers

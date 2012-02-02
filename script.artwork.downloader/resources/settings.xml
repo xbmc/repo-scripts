@@ -60,7 +60,7 @@
         <setting label="32127" type="bool"      id="tvshow_characterart"        subsetting="true" enable="eq(-6,true)"  default="false" />
         <setting label="32126" type="bool"      id="tvshow_logo"                subsetting="true" enable="eq(-7,true)"  default="true" />
         <setting label="32123" type="bool"      id="tvshow_showbanner"          subsetting="true" enable="eq(-8,true)"  default="true" />
-        <setting label="32124" type="bool"      id="tvshow_seasonbanner"        subsetting="true" enable="false"        default="false" />
+        <setting label="32124" type="bool"      id="tvshow_seasonbanner"        subsetting="true" enable="eq(-9,true)"  default="false" />
         <setting label="32130" type="bool"      id="tvshow_thumb"               subsetting="true" enable="eq(-10,true)" default="true" />
         <setting label="32134" type="bool"      id="tvshow_seasonthumbs"        subsetting="true" enable="false"        default="false" />
     </category>

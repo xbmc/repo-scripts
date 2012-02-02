@@ -2,7 +2,10 @@
 import os
 import xbmc
 import urllib
-import simplejson
+try:
+    import json as simplejson
+except:
+    import simplejson
 
 ### import libraries
 from resources.lib.utils import _normalize_string as normalize_string

@@ -53,17 +53,8 @@ Current Features:
 Todos:
     - Music fanart
 
-Skins using this Add-On:
-    Eden 11.0
-    - Aeon Nox (made by Big Noid)
-    - Cirrus Extended (made by Butchabay)
-    - Transparency [T!] (made by ronie)
-    - Aeon MQ3 (made by MarcosQui)
-    - Xperience (made by Black)
-    - reFocus (made by Jeroen)
-    - Convergence (made by Mudislander)
-    - Backrow (by Sharpe)
-    - Glass (by Ronan/Frost/Kbalist)
+Skins using this Add-On in XBMC Eden 11.0:
+    - See skin features wiki or skin support threads
 
 ----------------------------------------------------------------------------------------------
 To run the script in bulk mode simply click on it in the 'Addons' or 'Programs' menu in XBMC.

@@ -2,7 +2,7 @@
 <!-- These are just examples of how the script can be called from with in the skin --> 
 <!-- The examples are taken from the Aeon Nox(pre-Eden11.0) skin made by Big Noid -->
 
-<!-- Calling the script to download extrafanart for just one movie/tvshow using the add-on settings--> 
+<!-- Calling the script to download extrafanart for just one movie/tvshow using the add-on settings --> 
 	<item id="8">
 		<description>Get Artwork</description>
 		<label>$LOCALIZE[31316]</label>
@@ -12,9 +12,9 @@
 	</item>
 		  
 
-<!-- Calling the script to download extrafanart for just one movie/tvshow with GUI mode so user can select the artwork he wants-->
-<!-- You can also use a yes/no button to call GUI mode or automatic solo downloading-->
-	<item id="8">
+    <!-- Calling the script to download extrafanart for just one movie/tvshow with GUI mode so user can select the artwork he wants -->
+    <!-- You can also use a yes/no button to call GUI mode or automatic solo downloading -->
+    <item id="8">
 		<description>Get Artwork</description>
 		<label>$LOCALIZE[31316]</label>
 		<onclick condition="Container.Content(tvshows)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=tvshow, medianame=$INFO[ListItem.TVShowTitle])</onclick>
@@ -22,11 +22,21 @@
 		<visible>[Container.Content(tvshows)|Container.Content(movies)]+system.hasaddon(script.artwork.downloader)</visible>
 	</item>
 
+    <!-- seasonx-banner.jpg  seasonx-poster.jpg   x = single digit season number -->
+    <!-- how to use tvshow banners/posters with season folders present           -->
+    <imagepath background="true">$INFO[ListItem.Path]$INFO[ListItem.Season,../season,-banner.jpg]</imagepath>
+    <imagepath background="true">$INFO[ListItem.Path]$INFO[ListItem.Season,../season,-poster.jpg]</imagepath>
+    <imagepath background="true">$INFO[Player.Folderpath]$INFO[VideoPlayer.Season,../season,-banner.jpg]</imagepath>
+    <imagepath background="true">$INFO[Player.Folderpath]$INFO[VideoPlayer.Season,../season,-posters.jpg]</imagepath>
 
-    
+    <!-- how to use tvshow banners/posters with NO season folders present -->
+    <imagepath background="true">$INFO[ListItem.Path]$INFO[ListItem.Season,season,-banner.jpg]</imagepath>
+    <imagepath background="true">$INFO[ListItem.Path]$INFO[ListItem.Season,season,-poster.jpg]</imagepath>
+    <imagepath background="true">$INFO[Player.Folderpath]$INFO[VideoPlayer.Season,season,-banner.jpg]</imagepath>
+    <imagepath background="true">$INFO[Player.Folderpath]$INFO[VideoPlayer.Season,season,-posters.jpg]</imagepath>
 
           
- <!-- Showing off the extrafanart as a slideshow -->
+    <!-- Showing off the extrafanart as a slideshow -->
 	<control type="multiimage">
 		<posx>715</posx>
 		<posy>404</posy>

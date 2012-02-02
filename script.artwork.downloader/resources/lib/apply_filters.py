@@ -133,7 +133,7 @@ class apply_filters:
             reason = 'Size was to small: %s' % artwork['height']
             limited = True
         # Correct language
-        elif self.settings.limit_artwork and not artwork['language'] in [ language, 'n/a' ]:
+        elif self.settings.limit_artwork and not artwork['language'] in [ language ]:
             reason = "Doesn't match preferred language: %s" % pref_language
             limited = True
         return [limited, reason]
@@ -150,7 +150,7 @@ class apply_filters:
             reason = 'Size was to small: %s' % artwork['height']
             limited = True
         # Correct language
-        elif self.settings.limit_artwork and not artwork['language'] in [ language, 'n/a' ]:
+        elif self.settings.limit_artwork and not artwork['language'] in [ language ]:
             reason = "Doesn't match preferred language: %s" % pref_language
             limited = True
         return [limited, reason]
@@ -167,7 +167,7 @@ class apply_filters:
             reason = 'Rating too low: %s' % artwork['rating']
             limited = True
         # Correct language
-        elif self.settings.limit_artwork and not artwork['language'] in [ language, 'n/a' ]:
+        elif self.settings.limit_artwork and not artwork['language'] in [ language ]:
             reason = "Doesn't match preferred language: %s" % pref_language
             limited = True
         return [limited, reason]
@@ -188,7 +188,7 @@ class apply_filters:
             reason = 'Rating too low: %s' % artwork['rating']
             limited = True
         # Correct language
-        elif self.settings.limit_artwork and not artwork['language'] in [ language, 'n/a' ]:
+        elif self.settings.limit_artwork and not artwork['language'] in [ language ]:
             reason = "Doesn't match preferred language: %s" % pref_language
             limited = True
         return [limited, reason]

@@ -9,3 +9,5 @@ script.module.parsedom/.hg
 script.common.plugin.cache/.hg
 script.image.bigpictures/.git
 script.module.simple.downloader/.hg
+script.artwork.downloader/.git
+script.artwork.downloader/.gitignore
