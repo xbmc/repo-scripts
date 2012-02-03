@@ -3,26 +3,38 @@ import xbmc
 import xbmcaddon
                 
 class AutoUpdater:
-    Addon = xbmcaddon.Addon(id='service.libraryautoupdate')
+    addon_id = "service.libraryautoupdate"
+    Addon = xbmcaddon.Addon(addon_id)
+    datadir = "special://userdata/addon_data/" + addon_id + "/"
     
     def runProgram(self):
-        #set last run to 0 so it will run the first time
-        self.last_run = 0
-        
+        #setup the timer amounts
+        timer_amounts = {}
+        timer_amounts['0'] = 1
+        timer_amounts['1'] = 2
+        timer_amounts['2'] = 5
+        timer_amounts['3'] = 10
+        timer_amounts['4'] = 15
+        timer_amounts['5'] = 24
+           
+        #check if we should delay the first run
+        if(int(self.Addon.getSetting("startup_delay")) != 0):
+            self.readLastRun()
+            
+            #check if we would have run an update anyway
+            if(time.time() >= self.last_run + (timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60)):
+                #trick system by subtracting the timer amount then adding a delay (now - timer + delay = nextrun)
+                self.last_run = time.time() - (timer_amounts[self.Addon.getSetting('timer_amount')] * 60 *60) + (int(self.Addon.getSetting("startup_delay")) * 60)
+                self.writeLastRun()
+                xbmc.log("Setting delay at " + self.Addon.getSetting("startup_delay") + " minute")
+            
         while(not xbmc.abortRequested):
             now = time.time()
             sleep_time = 10
-            
-            timer_amounts = {}
-            timer_amounts['0'] = 1
-            timer_amounts['1'] = 2
-            timer_amounts['2'] = 5
-            timer_amounts['3'] = 10
-            timer_amounts['4'] = 15
-            timer_amounts['5'] = 24
+            self.readLastRun()
 
             #check if we should run an update
-            if(now > self.last_run + (timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60)):
+            if(now >= self.last_run + (timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60)):
 
                 #make sure player isn't running
                 if(xbmc.Player().isPlaying() == False):
@@ -31,8 +43,6 @@ class AutoUpdater:
 
                         self.runUpdates()
 
-                        #reset the last run timer    
-                        self.last_run = now
                         xbmc.log("Update Library will run again in " + str(timer_amounts[self.Addon.getSetting("timer_amount")]) + " hours")
                         
                 else:
@@ -62,5 +72,26 @@ class AutoUpdater:
                             
             xbmc.log('Update Music')
             xbmc.executebuiltin('UpdateLibrary(music)')
-           
+
+        #reset the last run timer    
+        self.last_run = time.time()
+        self.writeLastRun()
+
+    def readLastRun(self):
+        
+        try:
+            f = open(xbmc.translatePath(self.datadir + "last_run.txt"),"r")
+            self.last_run = float(f.read())
+            f.close()
+        except IOError:
+            #the file doesn't exist, most likely first time running
+            self.last_run = 0
+        
+
+    def writeLastRun(self):
+        f = open(xbmc.translatePath(self.datadir + "last_run.txt"),"w")
+        
+        #write out the value for the last time the program ran
+        f.write(str(self.last_run));
+        f.close();
 

@@ -3,4 +3,5 @@
     <setting id="timer_amount" type="enum" values="1|2|5|10|15|24" label="30000" default="2" />
     <setting id="update_video" type="bool" label="30001" default="true" />
     <setting id="update_music" type="bool" label="30002" default="false" />
+	<setting id="startup_delay" type="enum" values="0|1|2|3|4|5" label="30003" default="0" />
 </settings>

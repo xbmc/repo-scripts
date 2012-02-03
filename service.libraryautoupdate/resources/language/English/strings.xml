@@ -4,4 +4,5 @@
     <string id="30000">Amount of time between updates (hours)</string>
     <string id="30001">Update Video Library</string>
     <string id="30002">Update Music Library</string>
+	<string id="30003">Startup Delay (minutes)</string>
 </strings>
