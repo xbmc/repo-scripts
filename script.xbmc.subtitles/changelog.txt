@@ -1,3 +1,8 @@
+2.9.32
+- added: Chinese (Simple) localization , thanks taxigps
+- added: new service , Shooter. thanks taxigps
+- fix: name temp subs "temp_sub"
+
 2.9.31
 - fix: Subdivx, thx Enric Godes
 - updated: Bulgarian translation, thx NEOhidra

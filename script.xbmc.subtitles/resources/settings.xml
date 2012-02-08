@@ -6,6 +6,7 @@
       <setting id="Lang03" type="enum" label="30111" default="11" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246" />
     </category>
     <category label="30103">
+      <setting id="Shooter" type="bool" label="Shooter.cn (Chinese and English subs only)" default="false"/>
       <setting id="Sublight" type="bool" label="Sublight.si" default="false"/>
       <setting id="Podnapisi" type="bool" label="Podnapisi.net" default="true"/>
       <setting id="PNuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30104" default=""/>

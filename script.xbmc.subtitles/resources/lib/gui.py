@@ -302,7 +302,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       files_list = [(file_from,file_to)]
       # If the subtitle's extension sub, check if an idx file exists and if so
       # add it to the list
-      if ((sub_ext == ".sub") and (os.path.exists(file[:-3]+"idx"))):
+      if ((sub_ext == ".sub") and (os.path.exists(unicode(file[:-3]+"idx", 'utf-8')))):
           log( __name__ ,"found .sub+.idx pair %s + %s" % (file_from,file_from[:-3]+"idx"))
           files_list.append((file_from[:-3]+"idx",file_to[:-3]+"idx"))
       for cur_file_from, cur_file_to in files_list:
@@ -388,10 +388,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( window_list ).selectItem( 0 )
 
   def create_name(self,zip_entry,sub_filename,subtitle_lang): 
-    if (__addon__.getSetting( "lang_to_end" ) == "true"):
-      file_name = "%s.%s%s" % ( os.path.splitext( sub_filename )[0], subtitle_lang, os.path.splitext( zip_entry )[1] )
+    if self.temp:
+      name = "temp_sub"
     else:
-      file_name = "%s%s" % ( os.path.splitext( sub_filename )[0], os.path.splitext( zip_entry )[1] )
+      name = os.path.splitext( sub_filename )[0]
+    if (__addon__.getSetting( "lang_to_end" ) == "true"):
+      file_name = "%s.%s%s" % ( name, subtitle_lang, os.path.splitext( zip_entry )[1] )
+    else:
+      file_name = "%s%s" % ( name, os.path.splitext( zip_entry )[1] )
     return os.path.join(self.tmp_sub_dir, zip_entry), os.path.join(self.sub_folder, file_name)
 
   def list_services( self ):
