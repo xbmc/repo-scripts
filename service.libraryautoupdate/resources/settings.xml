@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
-    <setting id="timer_amount" type="enum" values="1|2|5|10|15|24" label="30000" default="2" />
-    <setting id="update_video" type="bool" label="30001" default="true" />
-    <setting id="update_music" type="bool" label="30002" default="false" />
-	<setting id="startup_delay" type="enum" values="0|1|2|3|4|5" label="30003" default="0" />
+	<category id="general" label="30000">
+	    <setting id="update_video" type="bool" label="30002" default="true" />
+	    <setting id="update_music" type="bool" label="30003" default="false" />
+		<setting id="run_during_playback" type="bool" label="30008" default="false" />
+	</category>
+	<category id="advanced" label="30005">
+		<setting id="use_advanced_timer" type="bool" label="30006" default="false"/>
+		<setting id="timer_amount" type="enum" values="1|2|5|10|15|24" label="30001" default="2" enable="!eq(-1,true)" />
+		<setting id="startup_delay" type="enum" values="0|1|2|3|4|5" label="30004" default="0" enable="!eq(-2,true)" />
+		<setting id="cron_expression" type="text" label="30007" enable="eq(-3,true)" default="0 * * * *" />
+	</category>
 </settings>

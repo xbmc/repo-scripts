@@ -25,3 +25,9 @@
 
 -added extra setting for a "startup delay" timer. This will only affect the addon when xbmc starts. 
 -the last running time is now set to a variable so that manual updates will reset the timer, and system resets will start the service where it left off
+
+[B]Version 0.5.0[/B]
+
+-major changes to settings, split them by General and Timer category
+-Advanced timer functions now add the ability to do cron-like scheduling of the update process
+-option to skip during media playback or run the update anyway
