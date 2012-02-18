@@ -34,6 +34,9 @@ def launchEmu(gdb, gui, gameId, config, settings):
 	
 	escapeCmd = settings.getSetting(util.SETTING_RCB_ESCAPECOMMAND).upper() == 'TRUE'
 	cmd = buildCmd(filenameRows, romCollection, gameRow, escapeCmd)
+	if(cmd == ''):
+		Logutil.log('No cmd created. Game will not be launched.', util.LOG_LEVEL_INFO)
+		return
 		
 	if (romCollection.useEmuSolo):
 		
@@ -143,12 +146,11 @@ def buildCmd(filenameRows, romCollection, gameRow, escapeCmd):
 		# If it's a .7z file
 		# Don't extract zip files in case of savestate handling
 		filext = rom.split('.')[-1]
-		roms = []
+		roms = [rom]
 		if filext in compressedExtensions and not romCollection.doNotExtractZipFiles and stateFile == '':
 			roms = handleCompressedFile(filext, rom, romCollection, emuParams)
-		
-		if len(roms) == 0:
-			roms = [rom]
+			if len(roms) == 0:
+				return ""
 		
 		del rom
 		

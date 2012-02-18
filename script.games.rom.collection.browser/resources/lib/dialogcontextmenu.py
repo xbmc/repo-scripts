@@ -2,13 +2,13 @@
 import xbmc, xbmcgui
 import util
 import dialogeditromcollection, dialogeditscraper, dialogdeleteromcollection, config
+import nfowriter, wizardconfigxml
+from nfowriter import *
 from gamedatabase import *
 from util import *
 from config import *
 
-ACTION_EXIT_SCRIPT = (10,)
-ACTION_CANCEL_DIALOG = ACTION_EXIT_SCRIPT + (9,)
-
+ACTION_CANCEL_DIALOG = (9,10,51,92,110)
 CONTROL_BUTTON_SETFAVORITE_GAME = 5118
 CONTROL_BUTTON_SETFAVORITE_SELECTION = 5119
 
@@ -55,12 +55,21 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			self.gui.updateDB()		
 		elif (controlID == 5111): # add Rom Collection			
 			self.close()
-			self.gui.addRomCollection()
+			wizardconfigxml.ConfigXmlWizard().addRomCollection(self.gui.config)
+			
+			#update self.config
+			statusOk, errorMsg = self.gui.config.readXml()
+			if(statusOk == False):
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Error reading config.xml.', errorMsg)
+				Logutil.log('Error reading config.xml: ' +errorMsg, util.LOG_LEVEL_INFO)
+				return False, 'Error reading config.xml: ' +errorMsg
+			
+			#import Games
+			self.gui.updateDB()
+			
 		elif (controlID == 5112): # edit Rom Collection			
 			self.close()
-			constructorParam = 1
-			if(util.hasAddons()):
-				constructorParam = "720p"
+			constructorParam = "720p"
 			editRCdialog = dialogeditromcollection.EditRomCollectionDialog("script-RCB-editromcollection.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self.gui)			
 			del editRCdialog
 			
@@ -68,15 +77,13 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			self.gui.config.readXml()
 			
 		elif (controlID == 5117): # edit scraper			
-			self.close()
-			constructorParam = 1
-			if(util.hasAddons()):
-				constructorParam = "720p"
+			self.close()			
+			constructorParam = "720p"
 			editscraperdialog = dialogeditscraper.EditOfflineScraper("script-RCB-editscraper.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self.gui)			
 			del editscraperdialog
 			
 			self.gui.config = Config()
-			self.gui.readXml()
+			self.gui.config.readXml()
 		
 		elif (controlID == 5113): #Edit Game Command			
 			self.close()
@@ -138,6 +145,10 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 				selectedGame.setProperty('isfavorite', str(isFavorite))
 			self.gui.gdb.commit()
 			
+		elif (controlID == 5120): #Export nfo files			
+			self.close()
+			nfowriter.NfoWriter().exportLibrary(self.gui)
+			
 		elif (controlID == 5114): #Delete Rom
 			self.close()
 			
@@ -158,10 +169,8 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 		
 		elif (controlID == 5115): #Remove Rom Collection			
 			self.close()
-			
-			constructorParam = 1
-			if(util.hasAddons()):
-				constructorParam = "720p"
+						
+			constructorParam = "720p"
 			removeRCDialog = dialogdeleteromcollection.RemoveRCDialog("script-RCB-removeRC.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self.gui)			
 			rDelStat = removeRCDialog.getDeleteStatus()
 			if(rDelStat):

@@ -5,16 +5,12 @@ import time
 
 import xbmc
 import xbmcgui
-
+import xbmcaddon
 
 # Shared resources
 addonPath = ''
-try:
-	import xbmcaddon
-	addon = xbmcaddon.Addon(id='script.games.rom.collection.browser')
-	addonPath = addon.getAddonInfo('path')
-except:
-	addonPath = os.getcwd()
+addon = xbmcaddon.Addon(id='script.games.rom.collection.browser')
+addonPath = addon.getAddonInfo('path')
 		
 BASE_RESOURCE_PATH = os.path.join(addonPath, "resources" )
 

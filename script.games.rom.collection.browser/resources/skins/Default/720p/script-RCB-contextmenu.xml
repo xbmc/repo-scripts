@@ -36,13 +36,13 @@
 			<posx>0</posx>
 			<posy>0</posy>
 			<width>400</width>
-			<height>364</height>
+			<height>402</height>
 			<texture border="45,0,45,0">rcb-DialogContextMiddle.png</texture>
 		</control>
 		<control type="image">
 			<description>background bottom image</description>
 			<posx>0</posx>
-			<posy>364</posy>
+			<posy>402</posy>
 			<width>400</width>
 			<texture border="45,0,45,49">rcb-DialogContextBottom.png</texture>
 		</control>
@@ -157,11 +157,11 @@
 			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
 			<label>Add Selection To Favorites</label>
 			<onup>5118</onup>
-			<ondown>5114</ondown>
+			<ondown>5120</ondown>
 		</control>
 		
-		<control type="button" id="5114">
-			<description>button delete rom</description>
+		<control type="button" id="5120">
+			<description>button export nfo files</description>
 			<posx>34</posx>
 			<posy>264</posy>
 			<width>328</width>
@@ -172,14 +172,31 @@
 			<focusedcolor>0xFFFFFFFF</focusedcolor>
 			<texturefocus border="5">rcb-button-focus.png</texturefocus>
 			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
-			<label>Delete Game</label>
+			<label>Export game database (nfo files)</label>
 			<onup>5119</onup>
+			<ondown>5114</ondown>
+		</control>
+		
+		<control type="button" id="5114">
+			<description>button delete rom</description>
+			<posx>34</posx>
+			<posy>302</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>Delete Game</label>
+			<onup>5120</onup>
 			<ondown>5115</ondown>
 		</control>
 		<control type="button" id="5115">
 			<description>button delete rom collection</description>
 			<posx>34</posx>
-			<posy>302</posy>
+			<posy>340</posy>
 			<width>328</width>
 			<height>38</height>
 			<font>fontContextMenu</font>
@@ -195,7 +212,7 @@
 		<control type="button" id="5116">
 			<description>button clean database</description>
 			<posx>34</posx>
-			<posy>340</posy>
+			<posy>378</posy>
 			<width>328</width>
 			<height>38</height>
 			<font>fontContextMenu</font>

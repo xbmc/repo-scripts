@@ -5,12 +5,14 @@ import codecs
 import zipfile
 import time
 
-import util
+import util, helper
 from util import *
 from config import *
 from gamedatabase import *
 from descriptionparserfactory import *
 from pyscraper import *
+import nfowriter
+from nfowriter import *
 
 #HACK: zlib isn't shipped with some linux distributions
 try:
@@ -130,7 +132,7 @@ class DBUpdate:
 		
 							if(filenamelist != None and len(filenamelist) > 0):
 												
-								gamenameFromFile = self.getGamenameFromFilename(filenamelist[0], romCollection)
+								gamenameFromFile = helper.getGamenameFromFilename(filenamelist[0], romCollection)
 								foldername = self.getFoldernameFromRomFilename(filenamelist[0])
 								
 								continueUpdate = gui.writeMsg(progDialogRCHeader, "Import game: " +str(gamenameFromDesc), "", fileCount)
@@ -177,7 +179,7 @@ class DBUpdate:
 						
 					#all files still available files-list, are missing entries
 					for filename in files:
-						gamenameFromFile = self.getGamenameFromFilename(filename, romCollection)
+						gamenameFromFile = helper.getGamenameFromFilename(filename, romCollection)
 						self.missingDescFile.write('%s\n' %gamenameFromFile)
 							
 				except Exception, (exc):
@@ -195,7 +197,7 @@ class DBUpdate:
 					
 					try:
 						gamenameFromFile = ''
-						gamenameFromFile = self.getGamenameFromFilename(filename, romCollection)
+						gamenameFromFile = helper.getGamenameFromFilename(filename, romCollection)
 						
 						#check if we are handling one of the additional disks of a multi rom game
 						isMultiRomGame = self.checkRomfileIsMultirom(gamenameFromFile, lastgamename)
@@ -293,7 +295,7 @@ class DBUpdate:
 				gui.writeMsg(progDialogRCHeader, "Building file list...", "", fileCount)
 				fileCount = fileCount +1
 				
-				gamename = self.getGamenameFromFilename(filename, romCollection)
+				gamename = helper.getGamenameFromFilename(filename, romCollection)
 				#check if we are handling one of the additional disks of a multi rom game
 				isMultiRomGame = self.checkRomfileIsMultirom(gamename, lastgamename)
 				#lastgamename may be overwritten by parsed gamename
@@ -392,35 +394,6 @@ class DBUpdate:
 			num_sep_this = len([x for x in root if x == os.path.sep])
 			if num_sep + level <= num_sep_this:
 				del dirs[:]
-		
-		
-	def getGamenameFromFilename(self, filename, romCollection):		
-					
-		Logutil.log("current rom file: " + filename, util.LOG_LEVEL_INFO)
-
-		#build friendly romname
-		if(not romCollection.useFoldernameAsGamename):
-			gamename = os.path.basename(filename)
-		else:
-			gamename = os.path.basename(os.path.dirname(filename))
-			
-		Logutil.log("gamename (file): " +gamename, util.LOG_LEVEL_INFO)
-				
-		#use regular expression to find disk prefix like '(Disk 1)' etc.		
-		match = False
-		if(romCollection.diskPrefix != ''):
-			match = re.search(romCollection.diskPrefix.lower(), gamename.lower())
-		
-		if match:
-			gamename = gamename[0:match.start()]
-		else:
-			gamename = os.path.splitext(gamename)[0]					
-		
-		gamename = gamename.strip()
-		
-		Logutil.log("gamename (friendly): " +gamename, util.LOG_LEVEL_INFO)		
-		
-		return gamename
 		
 		
 	def checkRomfileIsMultirom(self, gamename, lastgamename):		
@@ -570,7 +543,7 @@ class DBUpdate:
 			doContinue = False
 			for scraper in scraperSite.scrapers:
 				pyScraper = PyScraper()
-				result, urlsFromPreviousScrapers, doContinue = pyScraper.scrapeResults(result, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, firstRomfile, fuzzyFactor, updateOption, romCollection)
+				result, urlsFromPreviousScrapers, doContinue = pyScraper.scrapeResults(result, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, firstRomfile, fuzzyFactor, updateOption, romCollection, self.Settings)
 			if(doContinue):
 				continue
 									
@@ -617,11 +590,9 @@ class DBUpdate:
 			
 		publisherId = -1
 		developerId = -1
-		publisher = ''
-		developer = ''
 			
 		#read current properties for local artwork scraper
-		if(not isLocalArtwork):					
+		if(not isLocalArtwork):
 			publisherId = self.insertForeignKeyItem(gamedescription, 'Publisher', Publisher(self.gdb))
 			developerId = self.insertForeignKeyItem(gamedescription, 'Developer', Developer(self.gdb))
 		else:
@@ -649,6 +620,12 @@ class DBUpdate:
 		translatedBy = self.resolveParseResult(gamedescription, 'TranslatedBy')
 		version = self.resolveParseResult(gamedescription, 'Version')								
 		plot = self.resolveParseResult(gamedescription, 'Description')
+		isFavorite = self.resolveParseResult(gamedescription, 'IsFavorite')
+		if(isFavorite == ''):
+			isFavorite = '0'
+		launchCount = self.resolveParseResult(gamedescription, 'LaunchCount')
+		if(launchCount == ''):
+			launchCount = '0'
 		
 		if(gamedescription != None):
 			gamename = self.resolveParseResult(gamedescription, 'Game')
@@ -673,12 +650,17 @@ class DBUpdate:
 		#create Nfo file with game properties
 		createNfoFile = self.Settings.getSetting(util.SETTING_RCB_CREATENFOFILE).upper() == 'TRUE'	
 		if(createNfoFile and gamedescription != None):
-			self.createNfoFromDesc(gamename, plot, romCollection.name, publisher, developer, year, 
-			players, rating, votes, url, region, media, perspective, controller, originalTitle, alternateTitle, version, gamedescription, romFiles[0], gamenameFromFile, artworkfiles, artworkurls)
+			genreList = []
+			try:
+				genreList = gamedescription['Genre']
+			except:
+				pass
+			nfowriter.NfoWriter().createNfoFromDesc(gamename, plot, romCollection.name, publisher, developer, year, 
+				players, rating, votes, url, region, media, perspective, controller, originalTitle, alternateTitle, version, genreList, isFavorite, launchCount, romFiles[0], gamenameFromFile, artworkfiles, artworkurls)
 						
 		if(not isLocalArtwork):
 			gameId = self.insertGame(gamename, plot, romCollection.id, publisherId, developerId, reviewerId, yearId, 
-				players, rating, votes, url, region, media, perspective, controller, originalTitle, alternateTitle, translatedBy, version, isUpdate, gameId, romCollection.allowUpdate, )
+				players, rating, votes, url, region, media, perspective, controller, originalTitle, alternateTitle, translatedBy, version, isFavorite, launchCount, isUpdate, gameId, romCollection.allowUpdate, )
 		
 			if(gameId == None):
 				return None, True
@@ -743,13 +725,13 @@ class DBUpdate:
 		
 		
 	def insertGame(self, gameName, description, romCollectionId, publisherId, developerId, reviewerId, yearId, 
-				players, rating, votes, url, region, media, perspective, controller, originalTitle, alternateTitle, translatedBy, version, isUpdate, gameId, allowUpdate):		
+				players, rating, votes, url, region, media, perspective, controller, originalTitle, alternateTitle, translatedBy, version, isFavorite, launchCount, isUpdate, gameId, allowUpdate):		
 		
 		try:
 			if(not isUpdate):
 				Logutil.log("Game does not exist in database. Insert game: " +gameName, util.LOG_LEVEL_INFO)
 				Game(self.gdb).insert((gameName, description, None, None, romCollectionId, publisherId, developerId, reviewerId, yearId, 
-					players, rating, votes, url, region, media, perspective, controller, 0, 0, originalTitle, alternateTitle, translatedBy, version))
+					players, rating, votes, url, region, media, perspective, controller, int(isFavorite), int(launchCount), originalTitle, alternateTitle, translatedBy, version))
 				return self.gdb.cursor.lastrowid
 			else:	
 				if(allowUpdate):
@@ -757,9 +739,9 @@ class DBUpdate:
 					gameRow = None
 					Logutil.log("Game does exist in database. Update game: " +gameName, util.LOG_LEVEL_INFO)
 					Game(self.gdb).update(('name', 'description', 'romCollectionId', 'publisherId', 'developerId', 'reviewerId', 'yearId', 'maxPlayers', 'rating', 'numVotes',
-						'url', 'region', 'media', 'perspective', 'controllerType', 'originalTitle', 'alternateTitle', 'translatedBy', 'version'),
+						'url', 'region', 'media', 'perspective', 'controllerType', 'originalTitle', 'alternateTitle', 'translatedBy', 'version', 'isFavorite', 'launchCount'),
 						(gameName, description, romCollectionId, publisherId, developerId, reviewerId, yearId, players, rating, votes, url, region, media, perspective, controller,
-						originalTitle, alternateTitle, translatedBy, version),
+						originalTitle, alternateTitle, translatedBy, version, int(isFavorite), int(launchCount)),
 						gameId)
 				else:
 					Logutil.log("Game does exist in database but update is not allowed for current rom collection. game: " +gameName, util.LOG_LEVEL_INFO)
@@ -1002,74 +984,6 @@ class DBUpdate:
 			return True
 		
 		return ''.join(c for c in inputString if chk(c))
-
-
-	def createNfoFromDesc(self, gamename, plot, romCollectionName, publisher, developer, year, players, rating, votes, 
-						url, region, media, perspective, controller, originalTitle, alternateTitle, version, gamedescription, romFile, gameNameFromFile, artworkfiles, artworkurls):
-		
-		root = Element('game')
-		SubElement(root, 'title').text = gamename		
-		SubElement(root, 'originalTitle').text = originalTitle
-		SubElement(root, 'alternateTitle').text = alternateTitle
-		SubElement(root, 'platform').text = romCollectionName
-		SubElement(root, 'plot').text = plot
-		SubElement(root, 'publisher').text = publisher
-		SubElement(root, 'developer').text = developer
-		SubElement(root, 'year').text = year
-				
-		try:
-			genreList = gamedescription['Genre']			
-		except:
-			genreList = []
-		
-		for genre in genreList:
-			SubElement(root, 'genre').text = str(genre)
-		
-		SubElement(root, 'detailUrl').text = url
-		SubElement(root, 'maxPlayer').text = players
-		SubElement(root, 'region').text = region
-		SubElement(root, 'media').text = media
-		SubElement(root, 'perspective').text = perspective
-		SubElement(root, 'controller').text = controller
-		SubElement(root, 'version').text = version
-		SubElement(root, 'rating').text = rating
-		SubElement(root, 'votes').text = votes
-		
-		for artworktype in artworkfiles.keys():
-			
-			local = ''
-			online = ''
-			try:
-				local = artworkfiles[artworktype][0]
-				online = str(artworkurls[artworktype.name])
-			except:
-				pass
-			
-			try:
-				SubElement(root, 'thumb', {'type' : artworktype.name, 'local' : local}).text = online
-			except Exception, (exc):
-				print 'Error writing artwork url: ' +str(exc)
-				pass
-		
-		#write file		
-		try:
-			util.indentXml(root)
-			tree = ElementTree(root)
-			
-			romDir = os.path.dirname(romFile)
-			Logutil.log('Romdir: ' +str(romDir), util.LOG_LEVEL_INFO)
-			nfoFile = os.path.join(romDir, gameNameFromFile +'.nfo')
-			
-			if (not os.path.isfile(nfoFile)):
-				Logutil.log('Writing NfoFile: ' +str(nfoFile), util.LOG_LEVEL_INFO)
-			else:
-				Logutil.log('NfoFile already exists. Wont overwrite file: ' +str(nfoFile), util.LOG_LEVEL_INFO)
-				return
-												
-			tree.write(nfoFile)
-			
-		except Exception, (exc):
-			print("Error: Cannot write game.nfo: " +str(exc))		
 			
 		
 	def insertFile(self, fileName, gameId, fileType, romCollectionId, publisherId, developerId):

@@ -118,4 +118,32 @@ def buildLikeStatement(selectedCharacter, searchTerm):
 		likeStatement += " AND name LIKE '%s'" %('%' +searchTerm +'%')
 	
 	return likeStatement
+
+
+def getGamenameFromFilename(filename, romCollection):
+					
+	Logutil.log("current rom file: " + filename, util.LOG_LEVEL_INFO)
+
+	#build friendly romname
+	if(not romCollection.useFoldernameAsGamename):
+		gamename = os.path.basename(filename)
+	else:
+		gamename = os.path.basename(os.path.dirname(filename))
 		
+	Logutil.log("gamename (file): " +gamename, util.LOG_LEVEL_INFO)
+			
+	#use regular expression to find disk prefix like '(Disk 1)' etc.		
+	match = False
+	if(romCollection.diskPrefix != ''):
+		match = re.search(romCollection.diskPrefix.lower(), gamename.lower())
+	
+	if match:
+		gamename = gamename[0:match.start()]
+	else:
+		gamename = os.path.splitext(gamename)[0]					
+	
+	gamename = gamename.strip()
+	
+	Logutil.log("gamename (friendly): " +gamename, util.LOG_LEVEL_INFO)		
+	
+	return gamename

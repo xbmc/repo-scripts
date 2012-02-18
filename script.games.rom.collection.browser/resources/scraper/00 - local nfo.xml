@@ -18,5 +18,7 @@
 		<OriginalTitle>originalTitle</OriginalTitle>
 		<AlternateTitle>alternateTitle</AlternateTitle>
 		<Version>version</Version>
+		<IsFavorite>isFavorite</IsFavorite>
+		<LaunchCount>launchCount</LaunchCount>
 	</GameGrammar>
 </parserConfig>

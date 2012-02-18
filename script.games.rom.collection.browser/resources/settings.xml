@@ -16,7 +16,9 @@
 		<setting id="rcb_createNfoWhileScraping" label="Create local nfo file while scraping" type="bool" default="true"/>
 		<setting id="rcb_ignoreGamesWithoutDesc" label="Don't import games without description" type="bool" default="true"/>
 		<setting id="rcb_ignoreGamesWithoutArtwork" label="Don't import games without artwork" type="bool" default="true"/>
-		<setting id="rcb_enableFullReimport" label="Always rescan imported games" type="bool" default="false"/>	
+		<setting id="rcb_enableFullReimport" label="Always rescan imported games" type="bool" default="false"/>
+		<setting id="rcb_useNfoFolder" label="Use extra nfo folder" type="bool" />
+		<setting id="rcb_nfoFolder" label="nfo folder path" type="folder" enable="eq(-1,true)" />
 	</category>
 	
 	<category label="Browse Games">
@@ -26,7 +28,7 @@
 		<setting id="rcb_showEntryAllYears" label="Show filter All Years" type="bool" default="true"/>
 		<setting id="rcb_showEntryAllPublisher" label="Show filter All Publishers" type="bool" default="true"/>
 		<setting id="rcb_showEntryAllChars" label="Show filter All Chars" type="bool" default="true"/>
-		<setting id="rcb_preventUnfilteredSearch" label="Prevent unfiltered search" type="bool" default="false"/>		
+		<setting id="rcb_preventUnfilteredSearch" label="Prevent unfiltered search" type="bool" default="false"/>
 	</category>
 	
 	<category label="Launch Games">
