@@ -1,0 +1,4 @@
+[B]Version 1.0.0 - 2012-02-04[/B]
+- Initial module version
+- Named after a creature in my favorite animated show:
+  http://theinfosphere.org/Where_the_Buggalo_Roam

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings>
+    <string id="90000">Game over, man! [I]Game over![/I]</string>
+    <string id="90001">You can't handle the truth!</string>
+    <string id="90002">Danger Will Robinson</string>
+    <string id="90003">Why does it cry, Sméagol?</string>
+    <string id="90004">Houston, we have a problem...</string>
+    <string id="90005">E.T. phone home</string>
+
+    <string id="91000">Unfortunately an error occurred in the addon.</string>
+    <string id="91001">You can help with fixing the problem by submitting</string>
+    <string id="91002">an error report. No personal information is sent.</string>
+    <string id="91003">Submit error report</string>
+    <string id="91004">Don't submit</string>
+    <string id="91005">Thank you for contributing!</string>
+
+</strings>
