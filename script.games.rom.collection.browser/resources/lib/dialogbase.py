@@ -5,9 +5,7 @@ import os
 import util, config
 from util import *
 
-ACTION_EXIT_SCRIPT = (10,)
-ACTION_CANCEL_DIALOG = ACTION_EXIT_SCRIPT + (9,)
-
+ACTION_CANCEL_DIALOG = (9,10,51,92,110)
 CONTROL_BUTTON_EXIT = 5101
 
 

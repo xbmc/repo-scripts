@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="script.games.rom.collection.browser"
-  version="0.9.7"
+  version="0.9.9"
   name="Rom Collection Browser"
   provider-name="carabalb, jimyx17, malte">
   <requires>

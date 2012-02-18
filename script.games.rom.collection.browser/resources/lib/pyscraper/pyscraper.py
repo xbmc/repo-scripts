@@ -16,7 +16,7 @@ class PyScraper:
 	def __init__(self):
 		pass
 
-	def scrapeResults(self, results, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, romFile, fuzzyFactor, updateOption, romCollection):		
+	def scrapeResults(self, results, scraper, urlsFromPreviousScrapers, gamenameFromFile, foldername, filecrc, romFile, fuzzyFactor, updateOption, romCollection, settings):		
 		Logutil.log("using parser file: " +scraper.parseInstruction, util.LOG_LEVEL_DEBUG)		
 		Logutil.log("using game description: " +scraper.source, util.LOG_LEVEL_DEBUG)
 		
@@ -36,9 +36,17 @@ class PyScraper:
 			scraperSource = url
 			
 		if(scraper.source == 'nfo'):
-			romDir = os.path.dirname(romFile)
-			Logutil.log('Romdir: ' +str(romDir), util.LOG_LEVEL_INFO)
-			nfoFile = os.path.join(romDir, gamenameFromFile +'.nfo')
+			nfoFile = ''
+			nfoFolder = settings.getSetting(util.SETTING_RCB_NFOFOLDER)
+			if(nfoFolder != '' and nfoFolder != None):
+				nfoFolder = os.path.join(nfoFolder, romCollection.name)
+				nfoFile = os.path.join(nfoFolder, gamenameFromFile +'.nfo')
+					
+			if (not os.path.isfile(nfoFile)):
+				romDir = os.path.dirname(romFile)
+				Logutil.log('Romdir: ' +str(romDir), util.LOG_LEVEL_INFO)
+				nfoFile = os.path.join(romDir, gamenameFromFile +'.nfo')
+				
 			Logutil.log('Using nfoFile: ' +str(nfoFile), util.LOG_LEVEL_INFO)
 			scraperSource = nfoFile
 														

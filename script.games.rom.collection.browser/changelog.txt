@@ -1,3 +1,26 @@
+0.9.9 (02/2012)
+~~~~~~~~~~~~~
+General:
+  * refactoring: move config wizard to separate module
+  * refactoring: remove Camelot compatibility code
+  * bugfix: remove and add Rom Collection in one turn caused errors
+  
+Import Games:
+  * bugfix: import dialog is empty after "Edit offline scraper"
+  
+Launch Games:
+  * bugfix: don't launch emulator if 7z file could not be extracted
+
+0.9.8 (02/2012)
+~~~~~~~~~~~~~
+General:
+  * Add action 92 (backspace) to close dialogs
+  
+Import Games:
+  * bugfix: Developer and Publisher not available in nfo files
+  * set path to nfo folder
+  * export nfo files on demand
+
 0.9.7 (12/2011)
 ~~~~~~~~~~~~~
 General:
