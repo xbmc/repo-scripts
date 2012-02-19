@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.logo-downloader"
        name="Logo Downloader"
-       version="3.0.9"
+       version="3.0.10"
        provider-name="ppic, ronie">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -28,5 +28,6 @@
     <disclaimer lang="en">Please contribute on www.xbmcstuff.com www.tvdb.com www.lockstockmods.net</disclaimer>
     <disclaimer lang="fr">Contribuez sur www.xbmcstuff.com www.tvdb.com www.lockstockmods.net</disclaimer>
     <disclaimer lang="es">Por favor, ayuda a www.xbmcstuff.com www.tvdb.com www.lockstockmods.net</disclaimer>
+    <broken>deprecated</broken>
   </extension>
 </addon>

@@ -1,3 +1,6 @@
+v3.0.10
+- THIS ADDON HAS BEEN REPLACED BY ARTWORK DOWNLOADER
+
 v3.0.9
 - fixed script when default thumb was disabled
 
