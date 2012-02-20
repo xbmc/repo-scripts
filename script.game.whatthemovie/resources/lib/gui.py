@@ -59,6 +59,7 @@ class GUI(xbmcgui.WindowXMLDialog):
     CID_LIST_STARS = 1017
     CID_PROGR_OWN_RATING = 1018
     CID_GROUP_RATING = 1016
+    CID_LABEL_PRELOADS = 1020
 
     # STRING_IDs
     #  Messages
@@ -140,6 +141,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.getString = self.Addon.getLocalizedString
         self.getSetting = self.Addon.getSetting
         self.setSetting = self.Addon.setSetting
+        self.createPaths()
 
         # get controls
         self.button_guess = self.getControl(self.CID_BUTTON_GUESS)
@@ -163,6 +165,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.group_rating = self.getControl(self.CID_GROUP_RATING)
         self.progr_avg_rating = self.getControl(self.CID_PROGR_AVG_RATING)
         self.progr_own_rating = self.getControl(self.CID_PROGR_OWN_RATING)
+        self.label_preloads = self.getControl(self.CID_LABEL_PRELOADS)
 
         # set control visibility depending on xbmc-addon settings
         self.hideLabels()
@@ -179,9 +182,11 @@ class GUI(xbmcgui.WindowXMLDialog):
         user_agent = 'XBMC-ADDON - %s - V%s' % (self.ADDON_ID,
                                                 self.ADDON_VERSION)
         self.Quiz = whatthemovie.WhatTheMovie(user_agent)
+        self.Quiz.setImagePath(xbmc.translatePath(self.cache_path))
         # try to login and get first random shot. If it fails exit
         try:
             self.login()
+            self.Quiz.start(callback=self.updatePreload)
             self.getShot('random')
         except Exception, error:
             self.errorMessage(self.getString(self.SID_ERROR_LOGIN),
@@ -274,6 +279,7 @@ class GUI(xbmcgui.WindowXMLDialog):
 
     def closeDialog(self):
         self.setWTMProperty('main_image', '')
+        self.Quiz.stop()
         self.close()
 
     def getShot(self, shot_request):
@@ -282,19 +288,17 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.setWTMProperty('busy', 'loading')
         # hide label_status
         self.setWTMProperty('solved_status', 'inactive')
-        # scrape shot and download picture
+        # scrape shot
         try:
             self.shot = self.Quiz.getShot(shot_request)
             shot = self.shot
-            image_path = self.downloadPic(shot['image_url'],
-                                          shot['shot_id'])
             self.log('Got a shot: %s' % self.shot)
         except Exception, error:
             self.errorMessage(self.getString(self.SID_ERROR_SHOT),
                               str(error))
             self.setWTMProperty('busy', '')
             return
-        self._showShotImage(image_path)
+        self._showShotImage(shot['image_url'])
         self._showShotType(shot['shot_type'])
         self._showShotPostedBy(shot['posted_by'])
         self._showShotSolvedStatus(shot['solved'])
@@ -479,8 +483,14 @@ class GUI(xbmcgui.WindowXMLDialog):
             self.setWTMProperty('sotd', '')
 
     def _showUserScore(self, score):
-        score_string = self.getString(self.SID_YOUR_SCORE) % str(score)
-        self.label_score.setLabel(score_string)
+        ff_score_label = (self.getString(self.SID_YOUR_SCORE) \
+                          % (score['ff_score'], score['all_score']))
+        self.label_score.setLabel(ff_score_label)
+
+    def updatePreload(self, num_preloads):
+        # fixme(anyone): This needs a better place ;-)
+        label = 'Preloads : %s' % num_preloads
+        self.label_preloads.setLabel(label)
 
     def rateShot(self, shot_id, own_rating):
         if self.logged_in:
@@ -544,7 +554,12 @@ class GUI(xbmcgui.WindowXMLDialog):
             # clear solved_status
             self.setWTMProperty('solved_status', 'inactive')
             guess = keyboard.getText().decode('utf8')
-            gives_point = (self.shot['gives_point'])  # call by value forced
+            # We need to avoid pythons call by reference with gives_point.
+            # If answer is right the api will turn the values from gives_point
+            # to false to avoid double scoring. Now we use var "gave_point"
+            # which wont be automatically updated.
+            gave_point = {'ff': (self.shot['gives_point']['ff']),
+                          'all': (self.shot['gives_point']['all'])}
             self.log('Try to check the title: %s' % guess)
             # enter checking status
             self.image_solution.setColorDiffuse('FFFFFF00')
@@ -562,7 +577,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             # call answerRight or answerWrong
             if solution['is_right']:
                 self.answerRight(solution['title_year'],
-                                 gives_point)
+                                 gave_point)
             else:
                 self.answerWrong(guess)
 
@@ -572,12 +587,16 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.setWTMProperty('solved_status', 'correct')
         self.image_solution.setColorDiffuse('FF00FF00')
         # if this shot gives points, do so
-        if gives_point:
-            self.score += 1
+        if gives_point['ff'] or gives_point['all']:
+            if gives_point['all']:
+                self.score['all_score'] += 1
+                message = self.getString(self.SID_ANSWER_RIGHT) % title_year
+            if gives_point['ff']:
+                self.score['ff_score'] += 1
+                message = self.getString(self.SID_ANSWER_RIGHT_POINT) % title_year
             self._showUserScore(self.score)
-            message = self.getString(self.SID_ANSWER_RIGHT_POINT) % title_year
         else:
-            message = self.getString(self.SID_ANSWER_RIGHT) % title_year
+            message = 'FIXME: Is this possible?'
         self.label_message.setLabel(message)
         # if user wants auto_jump, do so
         if self.getSetting('auto_jump_enabled') == 'true':
@@ -601,15 +620,15 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.image_solution.setColorDiffuse('FFFF0000')
 
     def login(self):
-        self.score = 0
+        self.score = {'ff_score': 0,
+                      'all_score': 0}
         self.logged_in = False
         label = self.getString(self.SID_NOT_LOGGED_IN)
         # if login is enabeld start loop until
         # self.logged_in is true or user disables login
         if self.getSetting('login') == 'true':
-            cookie_dir = self.Addon.getAddonInfo('profile')
-            self.checkCreatePath(cookie_dir)
-            cookie_file = xbmc.translatePath('%s/cookie.txt' % cookie_dir)
+            cookie_file = xbmc.translatePath('%s/cookie.txt'
+                                             % self.profile_path)
             # try to login until self.logged_in becomes True
             while not self.logged_in:
                 if self.getSetting('login') == 'false':
@@ -631,7 +650,7 @@ class GUI(xbmcgui.WindowXMLDialog):
                     self.log('Login successfull via: %s' % self.logged_in)
                     # login successfully
                     label = self.getString(self.SID_LOGGED_IN_AS) % user
-                    self.score = int(self.Quiz.getScore(user)['ff_score'])
+                    self.score = self.Quiz.getScore(user)
                     self.setRandomOptions()
         self.label_loginstate.setLabel(label)
         self._showUserScore(self.score)
@@ -658,18 +677,11 @@ class GUI(xbmcgui.WindowXMLDialog):
             self.Quiz.setRandomOptions(options)
             self.setSetting('already_sent_options', current_options)
 
-    def downloadPic(self, image_url, shot_id):
-        subst_image_url = 'http://static.whatthemovie.com/images/substitute'
-        if not image_url.startswith(subst_image_url):
-            cache_dir = ('special://profile/addon_data/%s/cache'
-                         % self.ADDON_ID)
-            self.checkCreatePath(cache_dir)
-            image_path = xbmc.translatePath('%s/%s.jpg' % (cache_dir, shot_id))
-            if not os.path.isfile(image_path):
-                self.Quiz.downloadFile(image_url, image_path)
-        else:
-            image_path = image_url
-        return image_path
+    def createPaths(self):
+        self.profile_path = self.Addon.getAddonInfo('profile')
+        self.cache_path = self.profile_path + '/cache/'
+        self.checkCreatePath(self.profile_path)
+        self.checkCreatePath(self.cache_path)
 
     def checkCreatePath(self, path):
         result = False

@@ -1,3 +1,10 @@
+1.0.2
+- Multithreading background scraping of shots
+- Now showing overall-score in addition to featurefilms-score
+- now going back and forward through already scraped shots with 'back' and 'random'
+- Code cleanups and improvements
+- Removed the need for mechanize-lib
+
 1.0.0
 - Eden release
 

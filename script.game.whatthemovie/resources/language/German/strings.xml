@@ -25,7 +25,7 @@ Misc     = 3300-3349
     <string id="3102">Falsch: [B]%s[/B]</string>
     <string id="3103">Nicht eingeloggt</string>
     <string id="3104">Eingeloggt als: [B]%s[/B]</string>
-    <string id="3105">Deine Punkte: [B]%s[/B]</string>
+    <string id="3105">Deine Punkte: [B]%s[/B] ([B]%s[/B])</string>
     <string id="3106">[B][COLOR=ff008B00]%s[/COLOR][/B] mal gelöst. Erster: [B]%s[/B]</string>
     <string id="3107">Bisher ungelöst</string>
     <string id="3108">Shot ID: [B]%s[/B]</string>
