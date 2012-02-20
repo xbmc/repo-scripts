@@ -1,46 +1,46 @@
-from scraper import ScraperPlugin
 import re
+from scraper import ScraperPlugin
 
 
 class Scraper(ScraperPlugin):
 
-    NAME = 'TotallyCoolPix.com'
+    _title = 'TotallyCoolPix.com'
 
-    def getAlbums(self):
+    def _get_albums(self):
+        self.albums = []
         url = 'http://totallycoolpix.com/'
-        tree = self.getCachedTree(url)
-        self.albums = list()
-        storyNodes = tree.find('div', {'class': 'pri'}).findAll('div', {'class': 'block'})
-        for node in storyNodes:
-            try:
-                title = self.cleanHTML(node.find('h1').a.string)
-                link = node.find('h1').a['href']
-                desc_raw = node.find('div',
-                                     attrs={'class': 'post-intro'}).p.contents
-                description = self.cleanHTML(desc_raw)
-                pic = node.find('img')['src']
-                self.albums.append({'title': title,
-                                    'pic': pic,
-                                    'description': description,
-                                    'link': link})
-            except:
-                pass
+        tree = self._get_tree(url)
+        section = tree.find('div', {'class': 'pri'})
+        albums = section.findAll('div', {'class': 'block'})
+        for id, album in enumerate(albums):
+            title = album.find('h1').a.string
+            album_url = album.find('h1').a['href']
+            d = album.find('div', {'class': 'post-intro'}).p.contents
+            description = self._collapse(d)
+            pic = album.find('img')['src']
+            self.albums.append({'title': title,
+                                'album_id': id,
+                                'pic': pic,
+                                'description': description,
+                                'album_url': album_url})
         return self.albums
 
-    def getPhotos(self, url):
-        tree = self.getCachedTree(url)
-        title = self.cleanHTML(tree.find('h1').a.string)
-        self.photos = list()
-        photoNodes = tree.findAll('div', {'class':
-                                          re.compile('^wp-caption')})
-        for node in photoNodes:
-            pic = node.img['src']
-            description = self.cleanHTML(node.p.contents)
-            self.photos.append({'title': title,
+    def _get_photos(self, album_url):
+        self.photos = []
+        tree = self._get_tree(album_url)
+        album_title = tree.find('h1').a.string
+        photos = tree.findAll('div', {'class': re.compile('^wp-caption')})
+        for id, photo in enumerate(photos):
+            pic = photo.img['src']
+            description = self._collapse(photo.p.contents)
+            self.photos.append({'title': '%d - %s' % (id + 1, album_title),
+                                'album_title': album_title,
+                                'photo_id': id,
                                 'pic': pic,
-                                'description': description})
+                                'description': description,
+                                'album_url': album_url})
         return self.photos
 
 
-def register():
-    return Scraper()
+def register(id):
+    return Scraper(id)

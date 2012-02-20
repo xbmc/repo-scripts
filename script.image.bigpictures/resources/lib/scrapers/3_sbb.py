@@ -3,49 +3,46 @@ from scraper import ScraperPlugin
 
 class Scraper(ScraperPlugin):
 
-    NAME = 'Sacramento Bee: The Frame'
+    _title = 'Sacramento Bee: The Frame'
 
-    def getAlbums(self):
+    def _get_albums(self):
+        self.albums = []
         url = 'http://blogs.sacbee.com/photos/'
-        tree = self.getCachedTree(url)
-        self.albums = list()
-        storyNodes = tree.findAll('div',
-                                  'entry-asset asset hnews hentry story')
-        for node in storyNodes:
-            title = node.find('a').string
-            link = node.find('a')['href']
-            style = 'width: 980px; padding: 5px; text-align: left;'
-            desc = self.cleanHTML(node.find('div',
-                                            attrs={'style': style}).contents)
-            pic = node.find('img')['src']
+        tree = self._get_tree(url)
+        albums = tree.findAll('div', 'entry-asset asset hnews hentry story')
+        for id, album in enumerate(albums):
+            title = album.find('a').string
+            album_url = album.find('a')['href']
+            s = 'width: 980px; padding: 5px; text-align: left;'
+            d = album.find('div', {'style': s}).contents
+            description = self._collapse(d)
+            pic = album.find('img')['src']
             self.albums.append({'title': title,
+                                'album_id': id,
                                 'pic': pic,
-                                'description': desc,
-                                'link': link})
+                                'description': description,
+                                'album_url': album_url})
         return self.albums
 
-    def getPhotos(self, url):
-        tree = self.getCachedTree(url)
-        title = tree.find('div', 'asset-name entry-title title').a.string
-        self.photos = list()
-        style = 'background: rgb(224, 224, 224); width: 982px; padding: 4px;'
-        subtree_img = tree.findAll('div',
-                                   attrs={'style': style})
-        style = 'background: rgb(224, 224, 224); width: 970px; padding: 10px;'
-        subtree_txt = tree.findAll('div',
-                                   attrs={'style': style})
-        # this is very dirty because this website is very dirty :(
-        for i, node_img in enumerate(subtree_img):
-            pic = node_img.find('img')['src']
-            try:
-                description = self.cleanHTML(subtree_txt[i])
-            except:
-                description = ''
-            self.photos.append({'title': title,
+    def _get_photos(self, album_url):
+        self.photos = []
+        tree = self._get_tree(album_url)
+        album_title = tree.find('div', 'asset-name entry-title title').a.string
+        s = 'background: rgb(224, 224, 224); width: 982px; padding: 4px;'
+        images = tree.findAll('div', {'style': s})
+        s = 'background: rgb(224, 224, 224); width: 970px; padding: 10px;'
+        descriptions = tree.findAll('div', {'style': s})
+        for id, photo in enumerate(images):
+            pic = photo.find('img')['src']
+            description = self._collapse(descriptions[id]).replace('  ', ' ')
+            self.photos.append({'title': '%d - %s' % (id + 1, album_title),
+                                'album_title': album_title,
+                                'photo_id': id,
                                 'pic': pic,
-                                'description': description})
+                                'description': description,
+                                'album_url': album_url})
         return self.photos
 
 
-def register():
-    return Scraper()
+def register(id):
+    return Scraper(id)

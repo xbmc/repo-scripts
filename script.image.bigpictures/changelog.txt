@@ -1,3 +1,17 @@
+3.0.0
+  Complete code rewrite
+  Added: Slideshow feature (press play)
+  Added: Plugin-mode for slideshow and screensaver mode
+  Improved: Go back to the last seen album when returning from a photoset
+  Improved: Faster cache algorithm (json storage)
+  Improved: Rewrite of skin including animations and behaviour
+  Improved: Smoother scrolling between the pictures
+  Fixed: All unicode/entity problems
+  Cosmetics: 100% pep8 (python styleguide) conformity
+  Improved: Debug logging
+  Added: French translation (thx to stombi)
+  Added: Dutch translation (thx to apeeters)
+
 2.0.3
   Added: New Scraper "TotallyCoolPix.com"
   Added: New Scraper "Time.com: LightBox - Closeup"
@@ -5,7 +19,6 @@
   Fixed: html codes in title from some "Atlantic in focus" albums
   Changed: The spinning loading animation logic
   Fixed: ATV2-Remote Keymaps
-
 
 2.0.2
   Fixed import error

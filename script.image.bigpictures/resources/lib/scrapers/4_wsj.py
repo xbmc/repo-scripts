@@ -3,52 +3,57 @@ from scraper import ScraperPlugin
 
 class Scraper(ScraperPlugin):
 
-    NAME = 'Wallstreetjournal: The Photo Journal'
+    _title = 'Wallstreetjournal: The Photo Journal'
 
-    def getAlbums(self):
+    def _get_albums(self):
+        self.albums = []
         url = 'http://blogs.wsj.com/photojournal/'
-        tree = self.getCachedTree(url)
-        self.albums = list()
-        storyNodes = tree.findAll('li',
-                                  'postitem imageFormat-P')
-        for node in storyNodes:
-            try:
-                title = self.cleanHTML(node.find('h2').a.string)
-                link = node.find('h2').a['href']
-                content_raw = node.findAll('div', attrs={'class':
-                                                         'postContent'})
-                description = self.cleanHTML(content_raw[1].p)
-                pic = node.find('img')['src'].strip()
-                self.albums.append({'title': title,
-                                    'pic': pic,
-                                    'description': description,
-                                    'link': link})
-            except:
-                pass
+        tree = self._get_tree(url)
+        albums = tree.findAll('li', 'postitem imageFormat-P')
+        for id, album in enumerate(albums):
+            author = album.find('cite').string
+            if not author == u'By WSJ Staff':
+                continue
+            title = album.find('h2').a.string
+            album_url = album.find('h2').a['href']
+            d = album.findAll('div', {'class': 'postContent'})[1].p
+            description = self._collapse(d)
+            pic = album.find('img')['src'].strip()
+            self.albums.append({'title': title,
+                                'album_id': id,
+                                'pic': pic,
+                                'description': description,
+                                'album_url': album_url})
         return self.albums
 
-    def getPhotos(self, url, append=False):
-        tree = self.getCachedTree(url)
-        title = tree.find('div',
-                          'articleHeadlineBox headlineType-newswire').h1.string
-        if not append:
-            self.photos = list()
-        subtree = tree.find('div', {'class': 'articlePage'})
-        subtree.extract()
-        photoNodes = subtree.findAll('p')
-        for node in photoNodes:
-            try:
-                pic = node.img['src'].strip()
-                description = self.cleanHTML(node.contents)
-                self.photos.append({'title': self.cleanHTML(title),
-                                    'pic': pic,
-                                    'description': description})
-            except:
-                pass
-        if tree.find('a', 'nav_next'):
-            self.getPhotos(tree.find('a', 'nav_next')['href'], append=True)
+    def _get_photos(self, album_url):
+        self.photos = []
+        while album_url:
+            photos, album_url = self.__get_photo_page(album_url)
+            self.photos.extend(photos)
         return self.photos
 
+    def __get_photo_page(self, album_url):
+        page_photos = []
+        next_page_url = None
+        tree = self._get_tree(album_url)
+        c = 'articleHeadlineBox headlineType-newswire'
+        album_title = tree.find('div', c).h1.string
+        section = tree.find('div', {'class': 'articlePage'})
+        photos = section.findAll('p')
+        for id, photo in enumerate(photos):
+            pic = photo.img['src'].strip()
+            description = self._collapse(photo.contents)
+            page_photos.append({'title': '%d - %s' % (id + 1, album_title),
+                                'album_title': album_title,
+                                'photo_id': id,
+                                'pic': pic,
+                                'description': description,
+                                'album_url': album_url})
+        if tree.find('a', 'nav_next'):
+            next_page_url = tree.find('a', 'nav_next')['href']
+        return page_photos, next_page_url
 
-def register():
-    return Scraper()
+
+def register(id):
+    return Scraper(id)

@@ -1,58 +1,56 @@
-from scraper import ScraperPlugin
 import re
+import simplejson as json
+from scraper import ScraperPlugin
+
 
 class Scraper(ScraperPlugin):
 
-    NAME = 'Time.com: LightBox - Closeup'
+    _title = 'Time.com: LightBox - Closeup'
 
-
-    def getAlbums(self):
-        url = 'http://lightbox.time.com/category/closeup/feed/'
-        
-        self.albums = list()
-        tree = self.getCachedTree(url)
-        title = tree.find('title')
-        photoNodes = tree.findAll('item')
-        for node in photoNodes:
-            item_title = self.cleanHTML(node.find('title'))
-            title = item_title
-            pic = node.find('large_image').string
-            link = node.find('guid').string
-            ugly_desc = node.find(re.compile('description')).string
-            description = self.cleanHTML(ugly_desc.encode('utf-8'))
+    def _get_albums(self):
+        self.albums = []
+        url = 'http://lightbox.time.com/category/closeup/'
+        tree = self._get_tree(url)
+        albums = tree.findAll('div', {'id': re.compile('^post')})
+        for id, album in enumerate(albums):
+            title = album.find('h2').a.string
+            p = album.find('img')['src']
+            pic = self.__buildImg(p)
+            album_url = album.find('h2').a['href']
+            description = album.find('p').string
             self.albums.append({'title': title,
+                                'album_id': id,
                                 'pic': pic,
                                 'description': description,
-                                'link': link})
+                                'album_url': album_url})
         return self.albums
 
-    def getPhotos(self, url):
-        self.photos = list()
-        tree = self.getCachedTree(url)
+    def _get_photos(self, album_url):
+        self.photos = []
+        tree = self._get_tree(album_url)
+        album_title = tree.find('h1').string
         js_code = tree.find('text/javascript', text=re.compile('var images'))
-        js_var = re.search('var images = \[(.*)\]', js_code).group(1)
-        nodes = re.findall('{([^}]*?)}', js_var)
-        pic_regex = re.compile('"fullscreen":"(.*?)"')
-        desc_regex = re.compile('"post_content":"(.*?)"')
-        title_regex = re.compile('"post_title":"(.*?)"')
-        for node in nodes:
-            try:
-                pic = re.search(pic_regex, node).group(1).replace('\/', '/')
-                ugly_title = re.search(title_regex, node).group(1)
-                if ugly_title.endswith('\\'):  # fix python bug
-                    ugly_title = ugly_title[:-1]
-                title = ugly_title.decode('unicode-escape')
-                ugly_desc = re.search(desc_regex, node).group(1)
-                if ugly_desc.endswith('\\'):  # fix python bug
-                    ugly_desc = ugly_desc[:-1]
-                description = ugly_desc.decode('unicode-escape')
+        json_photos = re.search('var images = (\[.*?\])', js_code).group(1)
+        photos = json.loads(json_photos)
+        for id, photo in enumerate(photos):
+            if u'post_mime_type' in photo:
+                photo_title = photo['post_title'].strip()
+                t = album_title.replace('Pictures of the Week, ', '')
+                title = ' - '.join([t, photo_title])
+                pic = photo['fullscreen']
+                description = photo['post_content']
                 self.photos.append({'title': title,
+                                    'album_title': album_title,
+                                    'photo_id': id,
                                     'pic': pic,
-                                    'description': description})
-            except:
-                pass
+                                    'description': description,
+                                    'album_url': album_url})
         return self.photos
 
+    def __buildImg(self, url):
+        path, params = url.split('?')
+        return '%s?w=1178' % path
 
-def register():
-    return Scraper()
+
+def register(id):
+    return Scraper(id)
