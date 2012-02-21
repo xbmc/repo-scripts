@@ -15,8 +15,8 @@ __cwd__        = __addon__.getAddonInfo('path')
 __version__    = __addon__.getAddonInfo('version')
 __language__   = __addon__.getLocalizedString
 
-__profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') )
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
+__profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
+__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
 
 sys.path.append (__resource__)
 

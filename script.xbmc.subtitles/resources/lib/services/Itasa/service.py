@@ -83,6 +83,10 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                 content= geturl(main_url + 'index.php?option=com_remository&Itemid=6')
                 if content is not None:
                     match = re.search(show_pattern % tvshow, content, re.IGNORECASE | re.DOTALL)
+                    if match is None and tvshow[-1] == ")":
+                        log( __name__ ," Year Bug? '%s'" % tvshow)
+                        tvshow = tvshow[:-7]
+                        match = re.search(show_pattern % tvshow, content, re.IGNORECASE | re.DOTALL)
                     if match:
                         log( __name__ ," Tv show '%s' found" % tvshow)
                         content= geturl(main_url + match.group(1))

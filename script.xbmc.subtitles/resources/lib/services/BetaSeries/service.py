@@ -48,7 +48,7 @@ def getShortTV(title):
 
     try:
         # search TVDB's id from tvshow's title
-        query = "select c12 from tvshow where c00 = '" + unicode(title) + "' limit 1"
+        query = 'select c12 from tvshow where c00 = "' + unicode(title) + '" limit 1'
         res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
         
         # get the result

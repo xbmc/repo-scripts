@@ -1,3 +1,8 @@
+2.9.33
+- fix: BetaSeries service and series  with ' in it
+- fix: Itasa year bug fixed
+- fix: decode utf-8 paths to internal encoding otherwise the addon fails to load on windows with non-ascii profile paths like G:\XBMC\íö. thx chadoe for this
+
 2.9.32
 - added: Chinese (Simple) localization , thanks taxigps
 - added: new service , Shooter. thanks taxigps
