@@ -187,7 +187,7 @@ def do_one(dest_addr, timeout):
                 " - Note that ICMP messages can only be sent from processes"
                 " running as root."
             )
-            raise socket.error(msg)
+            raise socket.error(errno, msg)
         raise # raise the original error
  
     my_ID = os.getpid() & 0xFFFF

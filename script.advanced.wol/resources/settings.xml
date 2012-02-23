@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <setting id="macaddress" type="text" label="50000" default="00:25:11:c4:fb:8a" />
-    <setting id="hostorip" type="text" label="50001" default="my-server" />
-    <setting id="timeout" type="labelenum" label="50002" values="10|20|30|40|50|60|120" default="30" />
-    <setting id="autostart" type="bool" label="50003"  default="false" />
+	<category label="51000">
+		<setting id="separator" type="lsep" label="51000"/>
+		<setting id="macAddress" type="text" label="51001" default="00:25:11:c4:fb:8a" />
+		<setting id="hostOrIp" type="text" label="52003" default="my-server" />
+		<setting id="autostart" type="bool" label="51002"  default="false" />
+	</category>
+	<category label="52000">
+		<setting id="separator" type="lsep" label="52000"/>
+		<setting id="enableNotifies" type="bool" label="52001" default="true" />
+		<setting id="enableVerificationNotifies" type="bool" label="52002" default="true" enable="eq(-1,true)" />
+		<setting id="pingTimeout" type="labelenum" label="52004" values="10|20|30|40|50|60|120" default="30" enable="eq(-1,true)+eq(-2,true)" />
+	</category>
+	<category label="53000">
+		<setting id="separator" type="lsep" label="53000"/>
+		<setting id="continuousWol" type="bool" label="53001" default="false" />
+		<setting id="continuousWolDelay" type="labelenum" label="53002" values="10|20|30|40|50|60|120" default="30" visible="eq(-1,true)" />
+	</category>
 </settings>

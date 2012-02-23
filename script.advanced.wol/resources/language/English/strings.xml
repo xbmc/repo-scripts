@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-    <string id="50000">Ethernet MAC-address</string>
-    <string id="50001">IP-address or hostname</string>
-    <string id="50002">Timeout (in seconds)</string>
-    <string id="50003">Wake on XBMC-start</string>
-    <string id="60000">Waking up %hostorip%...</string>
-    <string id="60001">Waiting for %hostorip% to wake up...</string>
+	<string id="51000">Basic settings</string>
+    <string id="51001">Ethernet MAC-address</string>
+    <string id="51002">Wake on XBMC-launch</string>
+	<string id="52000">Notification settings</string>
+    <string id="52001">Enable notifications</string>
+    <string id="52002">Enable hostup-check and -notifications</string>
+    <string id="52003">IP-address or hostname</string>
+    <string id="52004">Timeout for hostup-check (in seconds)</string>
+	<string id="53000">Advanced settings</string>
+	<string id="53001">Send continuous WOL-packets</string>
+	<string id="53002">Delay between packets (in seconds)</string>
+    <string id="60000">Waking up %hostOrIp%...</string>
+    <string id="60001">Waiting for %hostOrIp% to wake up...</string>
     <string id="60002">%timecount% of %timeout% seconds</string>
-    <string id="60003">%hostorip% did not wake up!</string>
-    <string id="60004">%hostorip% is awake!</string>
-    <string id="60005">SOCKET ERROR</string>
-    <string id="60006">Host %hostorip% could not be resolved.</string>
+    <string id="60003">%hostOrIp% did not wake up!</string>
+    <string id="60004">%hostOrIp% is awake!</string>
+    <string id="60005">ERROR on hostup-check</string>
+    <string id="60006">Host %hostOrIp% could not be resolved.</string>
     <string id="60007">Launching command...</string>
+	<string id="60008">Submission of WOL-packets will continue with a delay of %continuousWolDelay% seconds.</string>
+	<string id="60009">XBMC must be run as Administrator for this feature to work. You can disable &quot;hostup-notifications&quot; in the addon-settings to prevent this error.</string>
+	<string id="60010">XBMC must be run as root for this feature to work. You can disable &quot;hostup-notifications&quot; in the addon-settings to prevent this error.</string>
 </strings>

@@ -1,2 +1,20 @@
+[B]1.1.3[/B]
+- Fixed script-error on ATV2
+
+[B]1.1.2[/B]
+- Fixed hang-up on XBMC-exit when using continuous WOL-packets- and autostart-feature
+- Fixed problems with XBMC accessing internet-resources when using continuous WOL-packets- and autostart-feature
+
+[B]1.1.1[/B]
+- Fixed error and improved error-message on missing root-rights with hostup-checks on linux machines.
+
+[B]1.1.0[/B]
+- Added option to send continuous WOL-packets (thanks to user "TheLexus"!).
+- Added option to enable/disable notifications.
+- Added option to enable/disable hostup-check and -notifications.
+- Reorganisation of settings.
+- Improved error-message on missing administrator-rights with hostup-checks.
+- Fixed error with non-ASCII-charakters in error messages of hostup-check.
+
 [B]1.0.0[/B]
 - Initial Release

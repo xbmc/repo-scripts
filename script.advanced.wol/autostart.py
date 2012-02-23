@@ -1,6 +1,6 @@
 # Wake-On-LAN
 
-import xbmc, xbmcgui, xbmcaddon
+import xbmcaddon, sys
 
 settings = xbmcaddon.Addon( id="script.advanced.wol" )
 
@@ -8,7 +8,6 @@ settings = xbmcaddon.Addon( id="script.advanced.wol" )
 settings = xbmcaddon.Addon( id="script.advanced.wol" )
 autostart = settings.getSetting("autostart")
 
-performWakeup = False
-
 if (autostart == "true"):
   import default
+  default.main()
