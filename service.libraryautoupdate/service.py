@@ -106,8 +106,8 @@ class AutoUpdater:
             self.log('Update Music')
             xbmc.executebuiltin('UpdateLibrary(music)')
 
-        #reset the last run timer    
-        self.last_run = time.time()
+        #reset the last run timer - mod to top of minute (thanks pkscuot)     
+        self.last_run = time.time() - (time.time() % 60)
         self.writeLastRun()
 
     def readLastRun(self):
@@ -122,6 +122,10 @@ class AutoUpdater:
         
 
     def writeLastRun(self):
+        #create the addon folder if it doesn't exist
+        if(not os.path.exists(xbmc.translatePath(self.datadir))):
+            os.makedirs(xbmc.translatePath(self.datadir))
+            
         f = open(xbmc.translatePath(self.datadir + "last_run.txt"),"w")
         
         #write out the value for the last time the program ran

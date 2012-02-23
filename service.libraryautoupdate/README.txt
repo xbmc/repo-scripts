@@ -1,5 +1,7 @@
 The XBMC Library Updater will update your music and/or video libraries according to times specified by you. 
 
+Thanks to pkscuot for several small tweaks to this addon!
+
 A note on Timers:
 
 Standard Timer - specify an interval to run the library update process. It will be launched every X hours within the interval unless on of the conditions specified by you as been met (don't run during media playback, etc) in which case it will be run at the next earliest convenience. 

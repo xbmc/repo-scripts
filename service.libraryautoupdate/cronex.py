@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 """
 
+Created by Eric Pruitt
+http://code.activestate.com/recipes/577466-cron-like-triggers/
+
 This module provides a class for cron-like scheduling systems, and
 exposes the function used to convert static cron expressions to Python
 sets.

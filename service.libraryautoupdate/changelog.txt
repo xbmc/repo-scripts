@@ -29,5 +29,11 @@
 [B]Version 0.5.0[/B]
 
 -major changes to settings, split them by General and Timer category
--Advanced timer functions now add the ability to do cron-like scheduling of the update process
+-Advanced timer functions now add the ability to do cron-like scheduling of the update process, thanks to pkscuot for the timer ideas
 -option to skip during media playback or run the update anyway
+
+[B]Version 0.5.1[/B]
+
+-merged changes from pkscuot's branch. 
+-rounds last_run to top of the minute (timer executes at 00 not anywhere in minute)
+-creates addon data directory if it doesn't exist
