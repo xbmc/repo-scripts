@@ -37,3 +37,7 @@
 -merged changes from pkscuot's branch. 
 -rounds last_run to top of the minute (timer executes at 00 not anywhere in minute)
 -creates addon data directory if it doesn't exist
+
+[B]Version 0.5.2[/B]
+
+-fixed os import error

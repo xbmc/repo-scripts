@@ -1,6 +1,7 @@
 import time
 import xbmc
 import xbmcaddon
+import os
 from cronex import CronExpression
 
 class AutoUpdater:
