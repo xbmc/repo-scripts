@@ -1,3 +1,6 @@
+3.0.1
+  default - > Default
+   
 3.0.0
   Complete code rewrite
   Added: Slideshow feature (press play)
