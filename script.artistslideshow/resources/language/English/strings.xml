@@ -46,11 +46,25 @@
     <string id="30246">Vietnamese</string>
     <string id="30247">Farsi</string>
   <!-- Settings  --> 
-    <string id="32000">General</string>
+    <string id="32000">Download</string>
     <string id="32001">Download images from last.fm</string>
     <string id="32002">Download images from htbackdrops.com</string>
     <string id="32003">Minimal image width</string>
     <string id="32004">Minimal image height</string>
     <string id="32005">Download additional artist information</string>
-    <string id="32006">Preferred language for artist information</string>
+    <string id="32006">  Preferred language for artist information</string>
+    <string id="32007">Download only 16:9 images</string>
+    <string id="32100">Slideshow</string>
+    <string id="32101">Local artist folder</string>
+    <string id="32102">  Image Priority</string>
+    <string id="32103">Fallback slideshow folder</string>
+    <string id="32104">Override slideshow folder</string>
+    <string id="32105">Refresh slideshow before all downloads complete</string>
+    <string id="32106">  Minimum time between refresh (in seconds)</string>    
+    <string id="32901">Use remote images first</string>
+    <string id="32902">Use local images first</string>
+    <string id="32903">Use both local and remote images</string>
+    <string id="32200">Advanced</string>
+    <string id="32201">Limit size of download cache</string>
+    <string id="32202">  Maximum cache size (in megabytes)</string>
 </strings>

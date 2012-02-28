@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artistslideshow" name="Artist Slideshow" version="1.1.5" provider-name="ronie">
+<addon id="script.artistslideshow" name="Artist Slideshow" version="1.2.0" provider-name="ronie/kyleejohnson (pkscuot)">
 	<requires>
 		<import addon="xbmc.python" version="2.0"/>
 		<import addon="script.module.elementtree" version="1.2.7"/>
@@ -9,7 +9,7 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Download images and additional info of the currently playing artist</summary>
-		<description>Addon to download images and additional information from Last.FM and htbackdrops.com of the currently playing artist. The images and info can be used by the skin to create a slideshow for the artist being listened to.</description>
+		<description>Addon to download images and additional information from Last.FM and htbackdrops.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to.</description>
 		<platform>all</platform>
 	</extension>
 </addon>

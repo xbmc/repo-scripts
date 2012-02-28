@@ -9,13 +9,14 @@
 # *  Last.fm:      http://www.last.fm/
 # *  htbackdrops:  http://www.htbackdrops.com/
 
-import urllib, re, os, sys, time, unicodedata, socket
+import urllib, re, os, sys, time, unicodedata, socket, shutil
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 from elementtree import ElementTree as xmltree
 
 __addon__        = xbmcaddon.Addon()
 __addonname__    = __addon__.getAddonInfo('id')
 __addonversion__ = __addon__.getAddonInfo('version')
+__addonpath__    = __addon__.getAddonInfo('path')
 
 socket.setdefaulttimeout(10)
 
@@ -112,27 +113,33 @@ class Main:
         if xbmc.getInfoLabel( "Window(12006).Property(ArtistSlideshowRunning)" ) == "True":
             log('script already running')
         else:
+            self.LastCacheTrim = 0
             self.WINDOW.setProperty("ArtistSlideshowRunning", "True")
             if xbmc.Player().isPlayingAudio() == False:
                 log('no music playing')
                 if self.DAEMON == "False":
                     self.WINDOW.clearProperty("ArtistSlideshowRunning")
+            elif(not self.OVERRIDEPATH == ''):
+                self.WINDOW.setProperty("ArtistSlideshow", self.OVERRIDEPATH)
             else:
                 log('first song started')
                 time.sleep(0.2) # it may take some time for xbmc to read tag info after playback started
-                self._start_download()
-            while (not xbmc.abortRequested):
+                self._use_correct_artwork()
+                self._trim_cache()
+            while (not xbmc.abortRequested and self.OVERRIDEPATH == ''):
                 time.sleep(0.5)
                 if xbmc.getInfoLabel( "Window(12006).Property(ArtistSlideshowRunning)" ) == "True":
                     if xbmc.Player().isPlayingAudio() == True:
                         currentname = xbmc.Player().getMusicInfoTag().getArtist()
                         if self.NAME != currentname:
-                            log('new artist playing, start download')
                             self._clear_properties()
-                            self._start_download()
-                        elif not self.DownloadedAllImages:
-                            log('same artist playing, continue download')
-                            self._start_download()
+                            self.UsingFallback = False
+                            self._use_correct_artwork()
+                            self._trim_cache()
+                        elif(not (self.DownloadedAllImages or self.UsingFallback)):
+                            if(not (self.LocalImagesFound and self.PRIORITY == '1')):
+                                log('same artist playing, continue download')
+                                self._use_correct_artwork()
                     else:
                         time.sleep(1) # doublecheck if playback really stopped
                         if xbmc.Player().isPlayingAudio() == False:
@@ -142,7 +149,34 @@ class Main:
                     self._clear_properties()
                     break
 
-      
+
+    def _use_correct_artwork( self ):
+        if(self.PRIORITY == '1' and not self.LOCALARTISTPATH == ''):
+            log('looking for local artwork')
+            self._get_local_images()
+            if(not self.LocalImagesFound):
+                log('no local artist artwork found, start download')
+                self._start_download()
+        elif(self.PRIORITY == '2' and not self.LOCALARTISTPATH == ''):
+            log('looking for local artwork')
+            self._get_local_images()
+            log('start download')
+            self._start_download()
+        else:
+            log('start download')
+            self._start_download()
+            if(not (self.CachedImagesFound or self.ImageDownloaded)):
+                log('no remote artist artwork found, looking for local artwork')
+                self._get_local_images()
+        
+        if(not (self.LocalImagesFound or self.CachedImagesFound or self.ImageDownloaded)):
+            if (not self.FALLBACKPATH == ''):
+                log('no images found for artist, using fallback slideshow')
+                log('fallbackdir = ' +self.FALLBACKPATH)
+                self.UsingFallback = True
+                self.WINDOW.setProperty("ArtistSlideshow", self.FALLBACKPATH)                            
+
+
     def _parse_argv( self ):
         try:
             params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
@@ -154,6 +188,8 @@ class Main:
 
 
     def _get_settings( self ):
+        self.LASTFM = __addon__.getSetting( "lastfm" )
+        self.HTBACKDROPS = __addon__.getSetting( "htbackdrops" )
         try:
             self.minwidth = int(__addon__.getSetting( "minwidth" ))
         except:
@@ -162,8 +198,7 @@ class Main:
             self.minheight = int(__addon__.getSetting( "minheight" ))
         except:
             self.minheight = 0
-        self.LASTFM = __addon__.getSetting( "lastfm" )
-        self.HTBACKDROPS = __addon__.getSetting( "htbackdrops" )
+        self.HDASPECTONLY = __addon__.getSetting( "hd_aspect_only" )
         self.ARTISTINFO = __addon__.getSetting( "artistinfo" )
         self.LANGUAGE = __addon__.getSetting( "language" )
         for language in LANGUAGES:
@@ -171,10 +206,31 @@ class Main:
                 self.LANGUAGE = language[1]
                 log('language = %s' % self.LANGUAGE)
                 break
+        self.LOCALARTISTPATH = __addon__.getSetting( "local_artist_path" )
+        self.PRIORITY = __addon__.getSetting( "priority" )
+        self.FALLBACKPATH = __addon__.getSetting( "fallback_path" )
+        self.OVERRIDEPATH = __addon__.getSetting( "slideshow_path" )
+        self.REFRESHEVERYIMAGE = __addon__.getSetting( "refresh_every_image" )
+        try:
+            self.minrefresh = int(__addon__.getSetting( "min_refresh" ))
+        except:
+            self.minrefresh = 20
+        self.RESTRICTCACHE = __addon__.getSetting( "restrict_cache" )
+        try:
+            self.maxcachesize = int(__addon__.getSetting( "max_cache_size" )) * 1000000
+        except:
+            self.maxcachesize = 1024 * 1000000
+
 
     def _init_vars( self ):
         self.WINDOW = xbmcgui.Window( 12006 )
         self.NAME = ''
+        self.LocalImagesFound = False
+        self.CachedImagesFound = False
+        self.ImageDownloaded = False
+        self.DownloadedAllImages = False
+        self.UsingFallback = False
+        self.BlankDir = xbmc.translatePath('%s/resources/blank/' % ( __addonpath__ ))
         LastfmApiKey = 'fbd57a1baddb983d1848a939665310f6'
         HtbackdropsApiKey = '96d681ea0dcb07ad9d27a347e64b652a'
         self.LastfmURL = 'http://ws.audioscrobbler.com/2.0/?autocorrect=1&api_key=' + LastfmApiKey
@@ -193,15 +249,42 @@ class Main:
         self.DownloadedFirstImage = False
         self.DownloadedAllImages = False
         self.ImageDownloaded = False
-        self.NAME = xbmc.Player().getMusicInfoTag().getArtist()
+        try:
+            self.NAME = xbmc.Player().getMusicInfoTag().getArtist()
+        except:
+            return
         if len(self.NAME) == 0:
             log('no artist name provided')
             return
-        CacheName = xbmc.getCacheThumbName(self.NAME).replace('.tbn', '')
-        self.CacheDir = xbmc.translatePath('special://profile/addon_data/%s/ArtistSlideshow/%s/' % ( __addonname__ , CacheName, ))
-        checkDir(self.CacheDir)
+        if(self.PRIORITY == '2' and self.LocalImagesFound):
+            pass
+            #self.CacheDir was successfully set in _get_local_images
+        else:
+            CacheName = xbmc.getCacheThumbName(self.NAME).replace('.tbn', '')
+            self.CacheDir = xbmc.translatePath('special://profile/addon_data/%s/ArtistSlideshow/%s/' % ( __addonname__ , CacheName, ))
+            checkDir(self.CacheDir)
         log('cachedir = %s' % self.CacheDir)
-        files = os.listdir(self.CacheDir)
+
+        success = False
+        attempts = 0
+        while( not success ):
+            if( self._playback_stopped_or_changed() ):
+                    return
+            try:
+                files = os.listdir(self.CacheDir)
+            except OSError as (errno, strerror):
+                if( errno == 2 or errno == 3):
+                    checkDir( self.CacheDir )
+                else:
+                    log( 'error: %s %s' % (errno, strerror) )
+                    time.sleep(10)
+                success = False
+                attempts = attmepts + 1
+                if( attempts > 3 ):
+                    return
+            else:
+                success = True
+                
         for file in files:
             if file.endswith('tbn'):
                 self.CachedImagesFound = True
@@ -225,44 +308,131 @@ class Main:
         lastfmlist.extend(htbackdropslist)
         log('downloading images')
         for url in lastfmlist:
-            if xbmc.Player().isPlayingAudio() == True:
-                currentname = xbmc.Player().getMusicInfoTag().getArtist()
-                if self.NAME != currentname:
-                    return
-            else:
+            if( self._playback_stopped_or_changed() ):
                 return
-
             path = getCacheThumbName(url, self.CacheDir)
             if not xbmcvfs.exists(path):
-                download(url, path)
-                log('downloaded %s to %s' % (url, path) )
-                self.ImageDownloaded=True
+                try:
+                    download(url, path)
+                except:
+                    log ('site unreachable')
+                else:
+                    log('downloaded %s to %s' % (url, path) )
+                    self.ImageDownloaded=True
             if self.ImageDownloaded:
                 if not self.DownloadedFirstImage:
                     log('downloaded first image')
                     self.DownloadedFirstImage = True
+                    last_time = 0
                     if not self.CachedImagesFound:
                         self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
                         if self.ARTISTINFO == "true":
                             self._get_artistinfo()
-
+                elif(self.REFRESHEVERYIMAGE == 'true' and (time.time() - last_time > self.minrefresh)):
+                    self._refresh_image_directory()
+                    last_time = time.time()
+                    
         if self.ImageDownloaded:
             log('finished downloading images')
             self.DownloadedAllImages = True
-            self.WINDOW.setProperty("ArtistSlideshowRefresh", "True")
-            time.sleep(0.3)
-            self.WINDOW.clearProperty("ArtistSlideshow")
-            time.sleep(1)
-            self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
-            self.WINDOW.clearProperty("ArtistSlideshowRefresh")
+            self._refresh_image_directory()
 
         if not self.ImageDownloaded:
             log('no images downloaded')
             self.DownloadedAllImages = True
             if not self.CachedImagesFound:
+                log('clearing ArtistSlideshow property')
                 self.WINDOW.clearProperty("ArtistSlideshow")
                 if self.ARTISTINFO == "true":
                     self._get_artistinfo()
+
+
+    def _refresh_image_directory( self ):
+        self.WINDOW.setProperty("ArtistSlideshow", self.BlankDir)
+        time.sleep(2)
+        self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+
+
+    def _playback_stopped_or_changed( self ):
+        if xbmc.Player().isPlayingAudio() == True:
+            currentname = xbmc.Player().getMusicInfoTag().getArtist()
+            if self.NAME != currentname:
+                return True
+        else:
+            return True
+
+
+    def _get_local_images( self ):
+        self.LocalImagesFound = False
+        try:
+            self.NAME = xbmc.Player().getMusicInfoTag().getArtist()
+        except:
+            return
+        if len(self.NAME) == 0:
+            log('no artist name provided')
+            return
+        self.CacheDir = self.LOCALARTISTPATH + self.NAME + '/extrafanart'
+        log('cachedir = %s' % self.CacheDir)
+        try:
+            files = os.listdir(self.CacheDir)
+        except OSError:
+            files = []
+        for file in files:
+            if(file.endswith('tbn') or file.endswith('jpg') or file.endswith('jpeg') or file.endswith('gif') or file.endswith('png')):
+                self.LocalImagesFound = True
+
+        if self.LocalImagesFound:
+            log('local images found')
+            self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+            if self.ARTISTINFO == "true":
+                self._get_artistinfo()
+
+
+    def _trim_cache( self ):
+        if( self.RESTRICTCACHE == 'true' and not self.PRIORITY == '2' ):
+            now = time.time()
+            cache_trim_delay = 0   #delay time is in seconds
+            if( now - self.LastCacheTrim > cache_trim_delay ):
+                log(' trimming the cache down to %s bytes' % self.maxcachesize )
+                cache_root = xbmc.translatePath( 'special://profile/addon_data/%s/ArtistSlideshow/' % __addonname__ )
+                os.chdir( cache_root )
+                folders = os.listdir( cache_root )
+
+                success = False
+                while( not success ):
+                    if( self._playback_stopped_or_changed() ):
+                        return
+                    try:
+                        folders.sort( key=lambda x: os.path.getmtime(x), reverse=True )
+                    except OSerror:
+                        time.sleep(10)
+                        success = False
+                    else:
+                        success = True                    
+
+                cache_size = 0
+                first_folder = True
+                for folder in folders:
+                    cache_size = cache_size + self._get_folder_size( cache_root + folder )
+                    log( 'looking at folder %s cache size is now %s' % (folder, cache_size) )
+                    if( cache_size > self.maxcachesize and not first_folder ):
+                        log( 'attempting to delete folder %s' % folder )
+                        try:
+                            shutil.rmtree( cache_root + folder, True )
+                            log( '%s successfully deleted' % folder )
+                        except:
+                            log( '%s was not deleted due to an error' % folder )                            
+                    first_folder = False
+                self.LastCacheTrim = now
+
+
+    def _get_folder_size( self, start_path ):
+        total_size = 0
+        for dirpath, dirnames, filenames in os.walk( start_path ):
+            for f in filenames:
+                fp = os.path.join( dirpath, f )
+                total_size += os.path.getsize( fp )
+        return total_size
 
 
     def _get_images( self, site ):
@@ -332,7 +502,12 @@ class Main:
                             width = element.attrib.get('width')
                             height = element.attrib.get('height')
                             if ( int(width) >= self.minwidth ) and ( int(height) >= self.minheight ):
-                                data.append(element.text)
+                                if(self.HDASPECTONLY == 'true'):
+                                    aspect_ratio = int(width)/int(height)
+                                    if(aspect_ratio > 1.770 and aspect_ratio < 1.787):
+                                        data.append(element.text)
+                                else:
+                                    data.append(element.text)
                 elif site == "htbackdrops":
                     if element.tag == "id":
                         data.append(self.HtbackdropsDownloadURL + str( element.text ) + '/fullsize')
@@ -387,7 +562,6 @@ class Main:
     def _clear_properties( self ):
         if not xbmc.getInfoLabel( "Window(12006).Property(ArtistSlideshowRunning)" ) == "True":
             self.WINDOW.clearProperty("ArtistSlideshow")
-            self.WINDOW.clearProperty("ArtistSlideshowRefresh")
         self.WINDOW.clearProperty( "ArtistSlideshow.ArtistBiography" )
         for count in range( 50 ):
             self.WINDOW.clearProperty( "ArtistSlideshow.%d.SimilarName" % ( count ) )
