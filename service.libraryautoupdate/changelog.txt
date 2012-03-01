@@ -41,3 +41,7 @@
 [B]Version 0.5.2[/B]
 
 -fixed os import error
+
+[B]Version 0.5.4[/B]
+ 
+ -fixed issue with startup timer, thanks stevenD

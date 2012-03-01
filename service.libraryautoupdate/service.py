@@ -28,7 +28,7 @@ class AutoUpdater:
                 self.readLastRun()
                 
                 #check if we would have run an update anyway
-                if(time.time() >= self.last_run + (timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60)):
+                if(time.time() >= self.last_run + (self.timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60)):
                     #trick system by subtracting the timer amount then adding a delay (now - timer + delay = nextrun)
                     self.last_run = time.time() - (self.timer_amounts[self.Addon.getSetting('timer_amount')] * 60 *60) + (int(self.Addon.getSetting("startup_delay")) * 60)
                     self.writeLastRun()
