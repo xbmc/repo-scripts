@@ -3,6 +3,9 @@
     <!-- Plugin settings strings -->
     <string id="101">Notification length</string>
     <string id="102">Hide progress during playback</string>
+    <string id="103">Location of rtmpdump executable</string>
+    <string id="104">Location of vlc executable</string>
+    <string id="105">Location of mplayer executable</string>
 
     <!-- messages -->
     <string id="201">Preparing download</string>

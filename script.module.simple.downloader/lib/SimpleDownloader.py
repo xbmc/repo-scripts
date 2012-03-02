@@ -28,7 +28,7 @@ class SimpleDownloader():
     dialog = ""
 
     def __init__(self):
-        self.version = "0.9.1"
+        self.version = "0.9.2"
         self.plugin = "SimpleDownloader-" + self.version
 
         if hasattr(sys.modules["__main__"], "common"):
@@ -89,12 +89,12 @@ class SimpleDownloader():
         else:
             self.rtmp_binary = "rtmpdump"
 
-        if self.settings.getSetting("rtmp_binary"):
+        if self.settings.getSetting("vlc_binary"):
             self.vlc_binary = self.settings.getSetting("vlc_binary")
         else:
             self.vlc_binary = "vlc"
 
-        if self.settings.getSetting("rtmp_binary"):
+        if self.settings.getSetting("mplayer_binary"):
             self.mplayer_binary = self.settings.getSetting("mplayer_binary")
         else:
             self.mplayer_binary = "mplayer"
@@ -103,6 +103,7 @@ class SimpleDownloader():
 
         self.temporary_path = self.xbmc.translatePath(self.settings.getAddonInfo("profile"))
         if not self.xbmcvfs.exists(self.temporary_path):
+            self.common.log("Making path structure: " + repr(self.temporary_path))
             os.makedirs(self.temporary_path)
 
         self.common.log("Done")
@@ -135,6 +136,15 @@ class SimpleDownloader():
         params["path_complete"] = os.path.join(params["download_path"].decode("utf-8"), self.common.makeUTF8(filename))
         self.common.log(params["path_incomplete"], 5)
         self.common.log(params["path_complete"], 5)
+
+        if self.xbmcvfs.exists(params["path_complete"]):
+            self.common.log("Removing existing %s" % repr(params["path_complete"]))
+            self.xbmcvfs.delete(params["path_complete"])
+
+        if self.xbmcvfs.exists(params["path_incomplete"]):
+            self.common.log("Removing incomplete %s" % repr(params["path_incomplete"]))
+            self.xbmcvfs.delete(params["path_incomplete"])
+
         self.common.log("Done", 5)
 
     def _processQueue(self):
@@ -151,22 +161,12 @@ class SimpleDownloader():
                 while item:
                     status = 500
                     self._setPaths(filename, item)
-                    if self.xbmcvfs.exists(item["path_complete"]):
-                        self.xbmcvfs.delete(item["path_complete"])
-
-                    if self.xbmcvfs.exists(item["path_incomplete"]):
-                        self.xbmcvfs.delete(item["path_incomplete"])
 
                     if not "url" in item:
                         self.common.log("URL missing : %s" % repr(item))
-                    elif item["url"].find("ftp") > -1:
-                        self.common.log("Found FTP")
-                        status = self._downloadURL(filename, item)
-                    elif item["url"].find("http") > -1:
-                        self.common.log("Found HTTP")
+                    elif item["url"].find("ftp") > -1 or item["url"].find("http") > -1:
                         status = self._downloadURL(filename, item)
                     else:
-                        self.common.log("Trying to detect media stream")
                         self._detectStream(filename, item)
                         if "cmd_call" in item:
                             status = self._downloadStream(filename, item)
@@ -175,12 +175,14 @@ class SimpleDownloader():
 
                     if status == 200:
                         if self.xbmcvfs.exists(item["path_incomplete"]):
+                            self.common.log("Moving %s to %s" % (repr(item["path_incomplete"]), repr(item["path_complete"])))
                             self.xbmcvfs.rename(item["path_incomplete"], item["path_complete"])
                             self._showMessage(self.language(203), filename)
                         else:
-                            self.common.log("Couldn't find file: " + item["path_incomplete"])
+                            self.common.log("Download complete, but file %s not found" % repr(item["path_incomplete"]))
                             self._showMessage(self.language(204), "ERROR")
                     else:
+                        self.common.log("Failure: " + repr(item) + " - " + repr(status))
                         self._showMessage(self.language(204), self.language(302))
 
                     self._removeItemFromQueue(filename)
@@ -194,6 +196,115 @@ class SimpleDownloader():
                     self.common.log("Closed dialog")
                 self.dialog = ""
 
+    def _runCommand(self, args):
+        self.common.log(" ".join(args))
+        try:
+            proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        except:
+            self.common.log("Couldn't run command")
+            return False
+        else:
+            self.common.log("Returning process", 5)
+            return proc
+
+    def _readPipe(self, proc):
+        self.common.log("", 50)
+        try:
+            return proc.communicate()[0]
+        except:
+            return ""
+
+    def _rtmpDetectArgs(self, probe_args, item):
+        get = item.get
+        self.common.log("")
+
+        if get("url"):
+            probe_args += ["--rtmp", get("url")]
+        elif get("rtmp"):
+            probe_args += ["--rtmp", get("url")]
+            
+        if get("host"):
+            probe_args += ["--host", get("host")]
+            
+        if get("port"):
+            probe_args += ["--port", get("port")]
+
+        if get("protocol"):
+            probe_args += ["--protocol", get("protocol")]
+
+        if get("app"):
+            probe_args += ["--app", get("app")]
+
+        if get("tcUrl"):
+            probe_args += ["--tcUrl", get("tcUrl")]
+
+        if get("pageUrl"):
+            probe_args += ["--pageUrl", get("pageUrl")]
+
+        if get("swfUrl"):
+            probe_args += ["--swfUrl", get("swfUrl")]
+
+        if get("flashVer"):
+            probe_args += ["--flashVer", get("flashVer")]
+
+        if get("auth"):
+            probe_args += ["--auth", get("auth")]
+
+        if get("conn"):
+            probe_args += ["--conn", get("conn")]
+
+        if get("playpath"):
+            probe_args += ["--playpath", get("playpath")]
+
+        if get("playlist"):
+            probe_args += ["--playlist"]
+
+        if get("live"):
+            probe_args += ["--live"]
+
+        if get("subscribe"):
+            probe_args += ["--subscribe", get("subscribe")]
+
+        if get("resume"):
+            probe_args += ["--resume"]
+
+        if get("skip"):
+            probe_args += ["--skip", get("skip")]
+
+        if get("start"):
+            probe_args += ["--start", get("start")]
+
+        if get("stop") and "--stop" not in probe_args:
+            probe_args += ["--stop", str(get("stop"))]
+        elif get("duration") and "--stop" not in probe_args:
+            probe_args += ["--stop", str(get("duration"))]
+
+        if get("buffer"):
+            probe_args += ["--buffer", get("buffer")]
+
+        if get("timeout"):
+            probe_args += ["--timeout", get("timeout")]
+
+        if get("token"):
+            probe_args += ["--token", get("token")]
+
+        if get("swfhash"):
+            probe_args += ["--swfhash", get("swfhash")]
+
+        if get("swfsize"):
+            probe_args += ["--swfsize", get("swfsize")]
+
+        if get("player_url"):
+            probe_args += ["--swfVfy", get("player_url")]
+        elif get("swfVfy"):
+            probe_args += ["--swfVfy", get("player_url")]
+
+        if get("swfAge"):
+            probe_args += ["--swfAge", get("swfAge")]
+
+        self.common.log("Done: " + repr(probe_args))
+        return probe_args
+
     def _detectStream(self, filename, item):
         get = item.get
         self.common.log(get("url"))
@@ -202,61 +313,55 @@ class SimpleDownloader():
         if get("url").find("rtmp") > -1 or get("use_rtmpdump"):
             self.common.log("Trying rtmpdump")
             # Detect filesize
-            probe_args = [self.rtmp_binary, "--stop", "1", "-r", get("url")]
+            probe_args = [self.rtmp_binary, "--stop", "1"]
 
-            if get("live"):
-                probe_args += ["-v"]
+            probe_args = self._rtmpDetectArgs(probe_args, item)
 
-            if get("player_url"):
-                probe_args += ["-W", get("player_url")]
+            proc = self._runCommand(probe_args)
+            if proc:
+                output = ""
+                now = time.time()
+                while not proc.poll():
+                    temp_output = self._readPipe(proc)
+                    output += temp_output
+                    if now + 15 < time.time() or output.find("Starting") > -1:
+                        self.common.log("Breaking, duration: " + repr(time.time() - now))
+                        break
 
-            if get("token"):
-                probe_args += ["-T", get("token")]
+                if output.find("Starting") > -1:  # If download actually started
+                    if output.find("filesize") > -1:
+                        item["total_size"] = int(float(output[output.find("filesize") + len("filesize"):output.find("\n", output.find("filesize"))]))
+                    elif get("live"):
+                        item["total_size"] = 0
 
-            probe_args += ["-o", item["path_incomplete"]]
-            try:
-                p = subprocess.Popen(probe_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                output = p.communicate()[1]
-            except:
-                self.common.log("Couldn't find rtmpdump binary")
-            else:
-                if output.find("filesize") > -1:
-                    item["total_size"] = int(float(output[output.find("filesize") + len("filesize"):output.find("\n", output.find("filesize"))]))
-                elif get("live"):
-                    item["total_size"] = 0
+                    cmd_call = self._rtmpDetectArgs([self.rtmp_binary], item)
 
-                cmd_call = [self.rtmp_binary, "-r", get("url")]
+                    cmd_call += ["--flv", item["path_incomplete"]]
+                    item["cmd_call"] = cmd_call
 
-                if get("live"):
-                    cmd_call += ["-v"]
-
-                if get("duration"):
-                    cmd_call += ["--stop", str(get("duration"))]
-
-                if get("player_url"):
-                    cmd_call += ["-W", get("player_url")]
-
-                if get("token"):
-                    cmd_call += ["-T", get("token")]
-
-                cmd_call += ["-o", item["path_incomplete"]]
-                item["cmd_call"] = cmd_call
+                try:
+                    proc.kill()
+                except:
+                    pass
 
         # VLC
         # Fix getting filesize
-        if (not "total_size" in item and not "cmd_call" in item) or get("use_vlc"):
+        if ("total_size" not in item and "cmd_call" not in item) or get("use_vlc"):
             self.common.log("Trying vlc")
             # Detect filesize
             probe_args = [self.vlc_binary, "-I", "dummy", "-v", "-v", "--stop-time", "1", "--sout", "file/avi:" + item["path_incomplete"], item["url"], "vlc://quit"]
 
-            self.common.log(probe_args)
+            proc = self._runCommand(probe_args)
+            if proc:
+                output = ""
+                now = time.time()
+                while not proc.poll():
+                    temp_output = self._readPipe(proc)
+                    output += temp_output
+                    if now + 15 < time.time() or output.find(get("url") + "' successfully opened") > -1:
+                        self.common.log("Breaking, duration: " + repr(time.time() - now))
+                        break
 
-            try:
-                p = subprocess.Popen(probe_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                output = p.communicate()[1]
-            except:
-                self.common.log("Couldn't find vlc binary")
-            else:
                 if output.find(get("url") + "' successfully opened") > -1:
                     if output.find("media_length:") > -1 and False:
                         item["total_size"] = int(float(output[output.find("media_length:") + len("media_length:"):output.find("s", output.find("media_length:"))]))
@@ -264,7 +369,7 @@ class SimpleDownloader():
                         item["total_size"] = 0
 
                     # Download args
-                    cmd_call = [self.vlc_binary, "-I", "dummy", "--sout", "file/avi:" + get("path_incomplete")]
+                    cmd_call = [self.vlc_binary, "-v", "-v", "-I", "dummy", "--sout", "file/avi:" + get("path_incomplete")]
 
                     if "duration" in item:
                         cmd_call += ["--stop-time", str(get("duration"))]
@@ -272,32 +377,41 @@ class SimpleDownloader():
                     cmd_call += [get("url"), "vlc://quit"]
                     item["cmd_call"] = cmd_call
 
+                try:
+                    proc.kill()
+                except:
+                    pass
+
         # Mplayer
-        if (not "total_size" in item and not "cmd_call" in item and not "duration" in item) or get("use_mplayer"):
+        # -endpos doesn't work with dumpstream.
+        if ("total_size" not in item and "cmd_call" not in item) or get("use_mplayer"):
             self.common.log("Trying mplayer")
             # Detect filesize
             probe_args = [self.mplayer_binary, "-v", "-endpos", "1", "-vo", "null", "-ao", "null", get("url")]
 
-            self.common.log(probe_args)
+            proc = self._runCommand(probe_args)
+            if proc:
+                output = ""
+                now = time.time()
+                while not proc.poll():
+                    temp_output = self._readPipe(proc)
+                    output += temp_output
+                    if now + 15 < time.time() or output.find("Starting playback") > -1:
+                        self.common.log("Breaking, duration: " + repr(time.time() - now))
+                        break
 
-            try:
-                p = subprocess.Popen(probe_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                print "XXXXX : " + repr(p.returncode)
-                output = p.communicate()[0]
-            except:
-                self.common.log("Couldn't find mplayer binary")
-            else:
-                if output.find("filesize") > -1:
-                    item["total_size"] = int(float(output[output.find("filesize: ") + len("filesize: "):output.find("\n", output.find("filesize: "))]))
-                elif get("live"):
-                    item["total_size"] = 0
+                if output.find("Starting playback") > -1:
+                    if output.find("filesize") > -1:
+                        item["total_size"] = int(float(output[output.find("filesize: ") + len("filesize: "):output.find("\n", output.find("filesize: "))]))
+                    elif get("live"):
+                        item["total_size"] = 0
 
-                while p.returncode == None:
-                    time.sleep(0.1)
-
-                print repr(p.returncode)
-                if p.returncode == 0:
                     item["cmd_call"] = [self.mplayer_binary, "-v", "-dumpstream", "-dumpfile", item["path_incomplete"], get("url")]
+
+                try:
+                    proc.kill()
+                except:
+                    pass
 
         if not "total_size" in item:
             item["total_size"] = 0
@@ -307,7 +421,6 @@ class SimpleDownloader():
         self.common.log(filename)
         self.common.log(get("cmd_call"))
 
-        p = subprocess.Popen(get("cmd_call"), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         same_bytes_count = 0
         retval = 1
@@ -315,63 +428,86 @@ class SimpleDownloader():
         params = {"bytes_so_far": 0, "mark": 0.0, "queue_mark": 0.0, "obytes_so_far": 0}
         item["percent"] = 0.1
         item["old_percent"] = -1
-        delay = 0.5
-        #for chunk in p.stderr:
-        #for chunk in p.stdout:
-        #while True:
-        while p.returncode == None:
-            if self.xbmcvfs.exists(item["path_incomplete"]):
-                params["bytes_so_far"] = os.path.getsize(item["path_incomplete"])
-                if params["mark"] == 0.0 and params["bytes_so_far"] > 0:
-                    params["mark"] = time.time()
-                    self.common.log("Mark set")
+        delay = 0.3
+        stall_timeout = self.settings.getSetting("stall_timeout")
+        proc = self._runCommand(get("cmd_call"))
+        output = ""
+        if proc:
+            while proc.returncode == None:
+                temp_output = proc.stdout.read(23) 
+                if len(output) > 10000:
+                    output = output[0:500] + "\r\n\r\n\r\n"
+                output += temp_output
 
-            if params["bytes_so_far"] == params["obytes_so_far"]:
-                same_bytes_count += 1
-                delay = delay * 1.2
+                if self.xbmcvfs.exists(item["path_incomplete"]):
+                    params["bytes_so_far"] = os.path.getsize(item["path_incomplete"])
+                    if params["mark"] == 0.0 and params["bytes_so_far"] > 0:
+                        params["mark"] = time.time()
+                        self.common.log("Mark set")
 
-                if same_bytes_count >= 10 and (item["total_size"] != 0 or params["bytes_so_far"] != 0):
-                    self.common.log("Download complete. Same bytes for 10 times in a row.")
-                    if (item["total_size"] > 0 and item["total_size"] * 0.998 < params["bytes_so_far"]):
-                        self.common.log("Size disrepancy: " + str(item["total_size"] - params["bytes_so_far"]))
+                if params["bytes_so_far"] == params["obytes_so_far"]:
+                    if same_bytes_count == 0:
+                        now = time.time()
+                    same_bytes_count += 1
+                    #if delay < 3:
+                    #    delay = delay * 1.2
+
+                    if same_bytes_count >= 300 and (item["total_size"] != 0 or params["bytes_so_far"] != 0) and (now + int(stall_timeout) < time.time()):
+                        self.common.log("Download complete. Same bytes for 300 times in a row.")
+                        if (item["total_size"] > 0 and item["total_size"] * 0.998 < params["bytes_so_far"]):
+                            self.common.log("Size disrepancy: " + str(item["total_size"] - params["bytes_so_far"]))
+                        retval = 0
+                        break
+                    else:
+                        self.common.log("Sleeping: " + str(delay) + " - " + str(params["bytes_so_far"]), 5)
+                        time.sleep(delay)
+                        continue
+                else:
+                    same_bytes_count = 0
+                    #if delay > 0.3:
+                    #    delay = delay * 0.8
+                    self.common.log("Bytes updated: " + str(delay) + " - " + str(params["bytes_so_far"]), 5)
+
+                self.common.log("bytes_so_far : " + str(params["bytes_so_far"]), 5)
+
+                self._generatePercent(item, params)
+
+                if "duration" in item and repr(get("cmd_call")).find("mplayer") > -1 and item["percent"] > 105:
+                    self.common.log("Mplayer over percentage %s. Killing! " % repr(item["percent"]))
+                    retval = 0
+                    proc.kill()
+                    break
+     
+                if item["percent"] > item["old_percent"]:
+                    self._updateProgress(filename, item, params)
+                    item["old_percent"] = item["percent"]
+
+                if params["bytes_so_far"] >= item["total_size"] and item["total_size"] != 0:
+                    self.common.log("Download complete. Matched size")
                     retval = 0
                     break
-                else:
-                    self.common.log("Sleeping: " + str(delay) + " - " + str(params["bytes_so_far"]), 5)
-                    time.sleep(delay)
-                    continue
-            else:
-                same_bytes_count = 0
-                delay = delay * 0.8
 
-            self.common.log("bytes_so_far : " + str(params["bytes_so_far"]))
+                if "duration" in item and params["mark"] > 0.0 and (params["mark"] + int(get("duration")) + 10 < time.time()) and False:
+                    self.common.log("Download complete. Over duration.")
+                    retval = 0
+                    break
 
-            self._generatePercent(item, params)
+                # Some rtmp streams seem abort after ~ 99.8%. Don't complain for those.
+                if (item["total_size"] != 0 and get("url").find("rtmp") > -1 and item["total_size"] * 0.998 < params["bytes_so_far"]):
+                    self.common.log("Download complete. Size disrepancy: " + str(item["total_size"] - params["bytes_so_far"]) + " - " + str(same_bytes_count))
+                    retval = 0
+                    break
 
-            if item["percent"] > item["old_percent"]:
-                self._updateProgress(filename, item, params)
-                item["old_percent"] = item["percent"]
-
-            if params["bytes_so_far"] >= item["total_size"] and item["total_size"] != 0:
-                self.common.log("Download complete. Matched size")
-                retval = 0
-                break
-
-            if "duration" in item and params["mark"] > 0.0 and (params["mark"] + int(get("duration")) + 10 < time.time()) and False:
-                self.common.log("Download complete. Over duration.")
-                retval = 0
-                break
-
-            # Some rtmp streams seem abort after ~ 99.8%. Don't complain for those.
-            if (item["total_size"] != 0 and get("url").find("rtmp") > -1 and item["total_size"] * 0.998 < params["bytes_so_far"]):
-                self.common.log("Download complete. Size disrepancy: " + str(item["total_size"] - params["bytes_so_far"]) + " - " + str(same_bytes_count))
-                retval = 0
-                break
-
-            params["obytes_so_far"] = params["bytes_so_far"]
+                params["obytes_so_far"] = params["bytes_so_far"]
+            
+            try:
+                output += proc.stdout.read()
+                proc.kill()
+            except:
+                pass
 
         if retval == 1:
-            self.common.log("Download failed")
+            self.common.log("Download failed, binary output: %s" % output)
             return 500
         else:
             self.common.log("done")
@@ -392,8 +528,7 @@ class SimpleDownloader():
         if con.info().getheader("Content-Length").strip():
             item["total_size"] = int(con.info().getheader("Content-Length").strip())
 
-        #try:
-        if True:
+        try:
             params = {"bytes_so_far": 0, "mark": 0.0, "queue_mark": 0.0, "obytes_so_far": 0}
             item["percent"] = 0.1
             item["old_percent"] = -1
@@ -420,20 +555,30 @@ class SimpleDownloader():
 
             con.close()
             file.close()
-        #except:
-        else:
+        except:
             self.common.log("Download failed.")
             try:
                 con.close()
+            except:
+                self.common.log("Failed to close download stream")
+
+            try:
                 file.close()
             except:
-                self.common.log("Failed to close download stream and file handle")
+                self.common.log("Failed to close file handle")
 
             self._showMessage(self.language(204), "ERROR")
             return 500
 
         self.common.log("done")
         return 200
+
+    def _convertSecondsToHuman(self, seconds):
+        seconds = int(seconds)
+        if seconds < 60:
+            return "~%ss" % (seconds)
+        elif seconds < 3600:
+            return "~%sm" % (seconds / 60)
 
     def _generatePercent(self, item, params):
         self.common.log("", 5)
@@ -451,8 +596,15 @@ class SimpleDownloader():
         if item["total_size"] > 0 and new_delta:
             self.common.log("total_size", 5)
             item["percent"] = float(get("bytes_so_far")) / float(item["total_size"]) * 100
+        elif iget("duration") and get("mark") != 0.0 and new_delta:
+            time_spent = time.time() - get("mark")
+            item["percent"] = time_spent / int(iget("duration")) * 100
+            self.common.log("Time spent: %s. Duration: %s. Time left: %s (%s)" % (int(time_spent), int(iget("duration")),
+                                                                                  int(int(iget("duration")) - time_spent),
+                                                                                  self._convertSecondsToHuman(int(iget("duration")) - time_spent)), 5)
+
         elif new_delta:
-            self.common.log("cycle - " + str(time.time() - item["last_delta"]), 2)
+            self.common.log("cycle - " + str(time.time() - item["last_delta"]), 5)
             delta = time.time() - item["last_delta"]
             if delta > 10 or delta < 0:
                 delta = 5
@@ -465,25 +617,17 @@ class SimpleDownloader():
         if new_delta:
             item["last_delta"] = time.time()
 
-    def _getHumanReadable(self, size, precision=2):
-        self.common.log(repr(size), 5)
-        suffixes = ['B', 'KB', 'MB', 'GB', 'TB']
-        suffixIndex = 0
-        while size > 1024:
-            suffixIndex += 1  # increment the index of the suffix
-            size = size / 1024.0  # apply the division
-        result = "%.*f %s" % (precision, size, suffixes[suffixIndex])
-        self.common.log(repr(result), 5)
-        return result
-
     def _updateProgress(self, filename, item, params):
-        self.common.log("")
+        self.common.log("", 5)
         get = params.get
         iget = item.get
         queue = False
         new_mark = time.time()
-        speed = int((get("bytes_so_far") / 1024) / (new_mark - get("mark")))
-        progress = self._getHumanReadable(get("bytes_so_far"))
+
+        if new_mark == get("mark"):
+            speed = 0
+        else:
+            speed = int((get("bytes_so_far") / 1024) / (new_mark - get("mark")))
 
         if new_mark - get("queue_mark") > 1.5:
             queue = self.cache.get("SimpleDownloaderQueue")
@@ -498,7 +642,7 @@ class SimpleDownloader():
 
         if new_mark - get("queue_mark") > 1.5:
             heading = "[%s] %sKb/s (%.2f%%)" % (len(items), speed, item["percent"])
-            self.common.log("Updating %s - %s - %s" % (heading, self.common.makeUTF8(filename), progress), 2)
+            self.common.log("Updating %s - %s" % (heading, self.common.makeUTF8(filename)), 2)
             params["queue_mark"] = new_mark
 
         if self.xbmc.Player().isPlaying() and self.xbmc.getCondVisibility("VideoPlayer.IsFullscreen"):
@@ -510,10 +654,7 @@ class SimpleDownloader():
                 self.dialog = DialogDownloadProgress.DownloadProgress()
                 self.dialog.create(self.language(201), "")
 
-            if item["total_size"] > 0:
-                heading = "[%s] %s - %.2f%%" % (len(items), self.language(202), item["percent"])
-            else:
-                heading = "[%s] %s - %s" % (len(items), self.language(202), progress)
+            heading = "[%s] %s - %.2f%%" % (len(items), self.language(202), item["percent"])
 
             if iget("Title"):
                 self.dialog.update(percent=item["percent"], heading=heading, label=iget("Title"))
@@ -610,7 +751,6 @@ class SimpleDownloader():
 
     def movieItemToPosition(self, filename, position):
         if position > 0 and  self.cache.lock("SimpleDownloaderQueueLock"):
-
             items = []
             if filename:
                 queue = self.cache.get("SimpleDownloaderQueue")

@@ -1,4 +1,11 @@
 [B]Todo:[/B]
+- User interface for queue manipulation
+- Not backgroundable download(With dialog and wait for return)
+- Add "Trying rtmpdump", "Trying vlc", "Trying mplayer" messages to OSD
+
+[B]Version 0.9.2[/B]
+- Don't use select.select on windows
+- Many updates and fixes.
 
 [B]Version 0.9.1[/B]
 - Added asynchronous option to download (async is used by default)
