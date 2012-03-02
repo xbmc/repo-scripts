@@ -1,3 +1,7 @@
+2.9.34
+- Titlovi service rewrite using their API, this is now supported by them. Thanks Nikola for API key and assistance
+- cosmetics
+
 2.9.33
 - fix: BetaSeries service and series  with ' in it
 - fix: Itasa year bug fixed

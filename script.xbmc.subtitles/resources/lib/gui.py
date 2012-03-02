@@ -311,7 +311,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
       # Choose the last pair in the list, second item (destination file)
       if subtitle_set:
         xbmc.Player().setSubtitles(files_list[-1][1])
-        rem_files(self.tmp_sub_dir)
         self.close()
       else:
         if gui:
