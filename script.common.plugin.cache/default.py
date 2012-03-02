@@ -19,18 +19,16 @@
 import sys
 import xbmc
 import xbmcaddon
-try:
-    import xbmcvfs
-except:
-    import xbmcvfsdummy as xbmcvfs
+import xbmcvfs
 
 settings = xbmcaddon.Addon(id='script.common.plugin.cache')
-language = settings.getLocalizedString
 dbg = settings.getSetting("debug") == "true"
 dbglevel = 3
 
 
 def run():
+    sys.path = [settings.getAddonInfo('path') + "/lib"] + sys.path
+    import StorageServer
     s = StorageServer.StorageServer(False)
     print " StorageServer Module loaded RUN"
     print s.plugin + " Starting server"
@@ -38,7 +36,5 @@ def run():
     return True
 
 if __name__ == "__main__":
-    if not xbmc.getCondVisibility('system.platform.ios') and settings.getSetting("autostart") == "true":
-        sys.path = [settings.getAddonInfo('path') + "/lib"] + sys.path
-        import StorageServer
+    if settings.getSetting("autostart") == "true":
         run()

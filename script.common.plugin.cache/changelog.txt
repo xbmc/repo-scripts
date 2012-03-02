@@ -1,3 +1,9 @@
+[B]TODO:[/B]
+
+[B]Version 0.9.2[/B]
+- Don't autodetect instancemode
+- Set timeout of instancemode in settings
+
 [B]Version 0.9.1[/B]
 - Update interface
 
