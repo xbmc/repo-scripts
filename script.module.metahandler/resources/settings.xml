@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+<category label="Metahandler">
+    <setting id="meta_folder_location" type="folder" label="Meta Data Save Location" default="special://profile/addon_data/script.module.metahandler/"/>
+</category>
+</settings>
