@@ -1,3 +1,14 @@
+v0.1.11
+- fixed episode and season thumb not set in some occasions
+- use json module on systems with python 2.7 or up
+
+v0.1.10
+- fetch all episodes in a single query
+- only query for season thumbs when strictly needed
+
+v0.1.9
+- improved updating performance
+
 v0.1.8
 - script will now update only if necessary
 
