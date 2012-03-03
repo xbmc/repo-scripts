@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.speedfaninfo"
-    name="SpeedFan Information Display" version="0.3.3" provider-name="kylejohnson (pkscuot)">
+    name="SpeedFan Information Display" version="0.3.4" provider-name="kylejohnson (pkscuot)">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
   </requires>

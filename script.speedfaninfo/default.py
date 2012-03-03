@@ -210,7 +210,10 @@ class LogParser():
             if(item_type == 'voltage'):
                 s_value = s_value.rstrip()
             else:
-                s_value = str(int(round(float(s_value.rstrip()))))
+                try:
+                    s_value = str(int(round(float(s_value.rstrip()))))
+                except ValueError:
+                    s_value = str(int(round(float(s_value.rstrip().replace(',', '.')))))
             if(item_type == "temp"):
                 #put this info in the temperature array
                 lw.log('put the information in the temperature array','verbose');

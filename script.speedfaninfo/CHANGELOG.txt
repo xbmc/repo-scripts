@@ -1,3 +1,6 @@
+0.3.4 03/03/2012
+-added support for languages that use comma as the ordinal separator for decimals
+
 0.3.3  02/10/2012
 -First public release
 -Added visual notice if there is no log file location defined or no log file in the defined location
