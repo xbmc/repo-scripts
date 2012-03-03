@@ -1,0 +1,4 @@
+<settings>
+   <setting id="limit_size" type="bool" label="Limit Image Size" default="false"/>
+   <setting id="min_height" type="enum" values="400|350|300|250" label="Minimum Image Height" default="3" enable="eq(-1,true)"/>
+</settings>
