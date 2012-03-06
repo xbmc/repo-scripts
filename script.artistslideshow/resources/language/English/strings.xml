@@ -59,8 +59,6 @@
     <string id="32102">  Image Priority</string>
     <string id="32103">Fallback slideshow folder</string>
     <string id="32104">Override slideshow folder</string>
-    <string id="32105">Refresh slideshow before all downloads complete</string>
-    <string id="32106">  Minimum time between refresh (in seconds)</string>    
     <string id="32901">Use remote images first</string>
     <string id="32902">Use local images first</string>
     <string id="32903">Use both local and remote images</string>

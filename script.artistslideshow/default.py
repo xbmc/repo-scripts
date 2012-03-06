@@ -93,13 +93,16 @@ def cleanText(text):
     text = re.sub('User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.','',text)
     return text.strip()
         
-def download(src, dst):
+def download(src, dst, dst2):
     if (not xbmc.abortRequested):
         tmpname = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % ( __addonname__ , xbmc.getCacheThumbName(src) ))
         if xbmcvfs.exists(tmpname):
             xbmcvfs.delete(tmpname)
         urllib.urlretrieve(src, tmpname)
         if os.path.getsize(tmpname) > 999:
+            log( 'copying file to transition directory' )
+            xbmcvfs.copy(tmpname, dst2)
+            log( 'moving file to cache directory' )
             xbmcvfs.rename(tmpname, dst)
         else:
             xbmcvfs.delete(tmpname)
@@ -110,14 +113,14 @@ class Main:
         self._get_settings()
         self._init_vars()
         self._make_dirs()
-        if xbmc.getInfoLabel( "Window(12006).Property(ArtistSlideshowRunning)" ) == "True":
+        if xbmc.getInfoLabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
             log('script already running')
         else:
             self.LastCacheTrim = 0
             self.WINDOW.setProperty("ArtistSlideshowRunning", "True")
-            if xbmc.Player().isPlayingAudio() == False:
+            if( xbmc.Player().isPlayingAudio() == False and xbmc.getInfoLabel( self.EXTERNALCALL ) == '' ):
                 log('no music playing')
-                if self.DAEMON == "False":
+                if( self.DAEMON == "False" ):
                     self.WINDOW.clearProperty("ArtistSlideshowRunning")
             elif(not self.OVERRIDEPATH == ''):
                 self.WINDOW.setProperty("ArtistSlideshow", self.OVERRIDEPATH)
@@ -128,10 +131,9 @@ class Main:
                 self._trim_cache()
             while (not xbmc.abortRequested and self.OVERRIDEPATH == ''):
                 time.sleep(0.5)
-                if xbmc.getInfoLabel( "Window(12006).Property(ArtistSlideshowRunning)" ) == "True":
-                    if xbmc.Player().isPlayingAudio() == True:
-                        currentname = xbmc.Player().getMusicInfoTag().getArtist()
-                        if self.NAME != currentname:
+                if xbmc.getInfoLabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
+                    if( xbmc.Player().isPlayingAudio() == True or xbmc.getInfoLabel( self.EXTERNALCALL ) != '' ):
+                        if self.NAME != self._get_current_artist():
                             self._clear_properties()
                             self.UsingFallback = False
                             self._use_correct_artwork()
@@ -142,8 +144,8 @@ class Main:
                                 self._use_correct_artwork()
                     else:
                         time.sleep(1) # doublecheck if playback really stopped
-                        if xbmc.Player().isPlayingAudio() == False:
-                            if self.DAEMON == "False":
+                        if( xbmc.Player().isPlayingAudio() == False and xbmc.getInfoLabel( self.EXTERNALCALL ) == '' ):
+                            if ( self.DAEMON == "False" ):
                                 self.WINDOW.clearProperty("ArtistSlideshowRunning")
                 else:
                     self._clear_properties()
@@ -172,7 +174,7 @@ class Main:
         if(not (self.LocalImagesFound or self.CachedImagesFound or self.ImageDownloaded)):
             if (not self.FALLBACKPATH == ''):
                 log('no images found for artist, using fallback slideshow')
-                log('fallbackdir = ' +self.FALLBACKPATH)
+                log('fallbackdir = ' + self.FALLBACKPATH)
                 self.UsingFallback = True
                 self.WINDOW.setProperty("ArtistSlideshow", self.FALLBACKPATH)                            
 
@@ -182,6 +184,10 @@ class Main:
             params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
         except:
             params = {}
+        self.WINDOWID = params.get( "windowid", "12006")
+        log( 'window id is set to %s' % self.WINDOWID )
+        self.ARTISTFIELD = params.get( "artistfield", "" )
+        log( 'artist field is set to %s' % self.ARTISTFIELD )
         self.DAEMON = params.get( "daemon", "False" )
         if self.DAEMON == "True":
             log('daemonizing')
@@ -210,11 +216,6 @@ class Main:
         self.PRIORITY = __addon__.getSetting( "priority" )
         self.FALLBACKPATH = __addon__.getSetting( "fallback_path" )
         self.OVERRIDEPATH = __addon__.getSetting( "slideshow_path" )
-        self.REFRESHEVERYIMAGE = __addon__.getSetting( "refresh_every_image" )
-        try:
-            self.minrefresh = int(__addon__.getSetting( "min_refresh" ))
-        except:
-            self.minrefresh = 20
         self.RESTRICTCACHE = __addon__.getSetting( "restrict_cache" )
         try:
             self.maxcachesize = int(__addon__.getSetting( "max_cache_size" )) * 1000000
@@ -223,14 +224,24 @@ class Main:
 
 
     def _init_vars( self ):
-        self.WINDOW = xbmcgui.Window( 12006 )
+        self.WINDOW = xbmcgui.Window( int(self.WINDOWID) )
+        self.WINDOW.clearProperty( "ArtistSlideshow.CleanupComplete" )
+        if( self.ARTISTFIELD == '' ):
+            self.SKINARTIST = ''
+        else:
+            self.SKINARTIST = "Window(%s).Property(%s)" % ( self.WINDOWID, self.ARTISTFIELD )
+        self.ARTISTSLIDESHOW = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow" )
+        self.ARTISTSLIDESHOWRUNNING = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshowRunning" )
+        self.EXTERNALCALL = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow.ExternalCall" )
+        self.EXTERNALCALLSTATUS = xbmc.getInfoLabel( self.EXTERNALCALL )
+        log( 'external call is set to ' + xbmc.getInfoLabel( self.EXTERNALCALL ) )
         self.NAME = ''
         self.LocalImagesFound = False
         self.CachedImagesFound = False
         self.ImageDownloaded = False
         self.DownloadedAllImages = False
         self.UsingFallback = False
-        self.BlankDir = xbmc.translatePath('%s/resources/blank/' % ( __addonpath__ ))
+        self.BlankDir = xbmc.translatePath('special://profile/addon_data/%s/transition' % __addonname__ )
         LastfmApiKey = 'fbd57a1baddb983d1848a939665310f6'
         HtbackdropsApiKey = '96d681ea0dcb07ad9d27a347e64b652a'
         self.LastfmURL = 'http://ws.audioscrobbler.com/2.0/?autocorrect=1&api_key=' + LastfmApiKey
@@ -242,6 +253,7 @@ class Main:
         checkDir(xbmc.translatePath('special://profile/addon_data/%s' % __addonname__ ))
         checkDir(xbmc.translatePath('special://profile/addon_data/%s/temp' % __addonname__ ))
         checkDir(xbmc.translatePath('special://profile/addon_data/%s/ArtistSlideshow' % __addonname__ ))
+        checkDir(xbmc.translatePath('special://profile/addon_data/%s/transition' % __addonname__ ))
         
 
     def _start_download( self ):
@@ -249,10 +261,9 @@ class Main:
         self.DownloadedFirstImage = False
         self.DownloadedAllImages = False
         self.ImageDownloaded = False
-        try:
-            self.NAME = xbmc.Player().getMusicInfoTag().getArtist()
-        except:
-            return
+        self.FirstImage = True
+        min_refresh = 9.9
+        self.NAME = self._get_current_artist()
         if len(self.NAME) == 0:
             log('no artist name provided')
             return
@@ -265,26 +276,7 @@ class Main:
             checkDir(self.CacheDir)
         log('cachedir = %s' % self.CacheDir)
 
-        success = False
-        attempts = 0
-        while( not success ):
-            if( self._playback_stopped_or_changed() ):
-                    return
-            try:
-                files = os.listdir(self.CacheDir)
-            except OSError as (errno, strerror):
-                if( errno == 2 or errno == 3):
-                    checkDir( self.CacheDir )
-                else:
-                    log( 'error: %s %s' % (errno, strerror) )
-                    time.sleep(10)
-                success = False
-                attempts = attmepts + 1
-                if( attempts > 3 ):
-                    return
-            else:
-                success = True
-                
+        files = os.listdir(self.CacheDir)
         for file in files:
             if file.endswith('tbn'):
                 self.CachedImagesFound = True
@@ -292,8 +284,11 @@ class Main:
         if self.CachedImagesFound:
             log('cached images found')
             self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+            last_time = time.time()
             if self.ARTISTINFO == "true":
                 self._get_artistinfo()
+        else:
+            last_time = 0
 
         if self.LASTFM == "true":
             lastfmlist = self._get_images('lastfm')
@@ -304,38 +299,60 @@ class Main:
             htbackdropslist = self._get_images('htbackdrops')
         else:
             htbackdropslist = []
-
         lastfmlist.extend(htbackdropslist)
+
         log('downloading images')
         for url in lastfmlist:
             if( self._playback_stopped_or_changed() ):
+                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                self._clean_dir( self.BlankDir )
                 return
             path = getCacheThumbName(url, self.CacheDir)
+            path2 = getCacheThumbName(url, self.BlankDir)
             if not xbmcvfs.exists(path):
                 try:
-                    download(url, path)
+                    download(url, path, path2)
                 except:
                     log ('site unreachable')
                 else:
                     log('downloaded %s to %s' % (url, path) )
                     self.ImageDownloaded=True
             if self.ImageDownloaded:
-                if not self.DownloadedFirstImage:
-                    log('downloaded first image')
-                    self.DownloadedFirstImage = True
-                    last_time = 0
-                    if not self.CachedImagesFound:
-                        self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
-                        if self.ARTISTINFO == "true":
-                            self._get_artistinfo()
-                elif(self.REFRESHEVERYIMAGE == 'true' and (time.time() - last_time > self.minrefresh)):
-                    self._refresh_image_directory()
+                if( self._playback_stopped_or_changed() ):
+                    self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                    self._clean_dir( self.BlankDir )
+                    return
+                if not self.CachedImagesFound:
+                    self.CachedImagesFound = True
+                    if self.ARTISTINFO == "true":
+                        self._get_artistinfo()
+                wait_elapsed = time.time() - last_time
+                if( wait_elapsed > min_refresh ):
+                    if( not (self.FirstImage and not self.CachedImagesFound) ):
+                        self._wait( min_refresh - (wait_elapsed % min_refresh) )
+                    if( not self._playback_stopped_or_changed() ):
+                        self._refresh_image_directory()
                     last_time = time.time()
+                self.FirstImage = False
                     
         if self.ImageDownloaded:
             log('finished downloading images')
             self.DownloadedAllImages = True
-            self._refresh_image_directory()
+            if( self._playback_stopped_or_changed() ):
+                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                self._clean_dir( self.BlankDir )
+                return
+            log( 'cleaning up from refreshing slideshow' )
+            wait_elapsed = time.time() - last_time
+            if( wait_elapsed < min_refresh ):
+                self._wait( min_refresh - wait_elapsed )
+            if( not self._playback_stopped_or_changed() ):
+                self._refresh_image_directory()
+            if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ) == self.BlankDir ):
+                self._wait( min_refresh )
+                if( not self._playback_stopped_or_changed() ):
+                    self._refresh_image_directory()
+            self._clean_dir( self.BlankDir )
 
         if not self.ImageDownloaded:
             log('no images downloaded')
@@ -343,31 +360,63 @@ class Main:
             if not self.CachedImagesFound:
                 log('clearing ArtistSlideshow property')
                 self.WINDOW.clearProperty("ArtistSlideshow")
-                if self.ARTISTINFO == "true":
+                if( self.ARTISTINFO == "true" and not self._playback_stopped_or_changed() ):
                     self._get_artistinfo()
 
 
+    def _wait( self, wait_time ):
+        waited = 0
+        while( waited < wait_time ):
+            time.sleep(0.1)
+            waited = waited + 0.1
+            if( self._playback_stopped_or_changed() ):
+                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                self.Abort = True
+                return
+
+
+    def _clean_dir( self, dir_path ):
+        try:
+            old_files = os.listdir( dir_path )
+        except:
+            old_files = []
+        for old_file in old_files:
+            xbmcvfs.delete( '%s/%s' % (dir_path, old_file) )
+            log( 'deleting file %s/%s' % (dir_path, old_file) )
+
+
     def _refresh_image_directory( self ):
-        self.WINDOW.setProperty("ArtistSlideshow", self.BlankDir)
-        time.sleep(2)
-        self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+        if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ) == self.BlankDir):
+            self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+            log( 'switching slideshow to ' + self.CacheDir )
+        else:    
+            self.WINDOW.setProperty("ArtistSlideshow", self.BlankDir)
+            log( 'switching slideshow to ' + self.BlankDir )
+
+
+    def _get_current_artist( self ):
+        if( xbmc.Player().isPlayingAudio() == True ):
+            artist = xbmc.Player().getMusicInfoTag().getArtist()
+            if( artist == '' ):
+                return xbmc.Player().getMusicInfoTag().getTitle()
+            else:
+                return artist
+        elif( not xbmc.getInfoLabel( self.SKINARTIST ) == '' ):
+            return  xbmc.getInfoLabel( self.SKINARTIST )
+        else:
+            return ''
 
 
     def _playback_stopped_or_changed( self ):
-        if xbmc.Player().isPlayingAudio() == True:
-            currentname = xbmc.Player().getMusicInfoTag().getArtist()
-            if self.NAME != currentname:
-                return True
-        else:
+        if (self.NAME != self._get_current_artist() or self.EXTERNALCALLSTATUS != xbmc.getInfoLabel(self.EXTERNALCALL) ):
             return True
+        else:
+            return False
 
 
     def _get_local_images( self ):
         self.LocalImagesFound = False
-        try:
-            self.NAME = xbmc.Player().getMusicInfoTag().getArtist()
-        except:
-            return
+        self.NAME = self._get_current_artist()
         if len(self.NAME) == 0:
             log('no artist name provided')
             return
@@ -397,31 +446,17 @@ class Main:
                 cache_root = xbmc.translatePath( 'special://profile/addon_data/%s/ArtistSlideshow/' % __addonname__ )
                 os.chdir( cache_root )
                 folders = os.listdir( cache_root )
-
-                success = False
-                while( not success ):
-                    if( self._playback_stopped_or_changed() ):
-                        return
-                    try:
-                        folders.sort( key=lambda x: os.path.getmtime(x), reverse=True )
-                    except OSerror:
-                        time.sleep(10)
-                        success = False
-                    else:
-                        success = True                    
-
+                folders.sort( key=lambda x: os.path.getmtime(x), reverse=True )
                 cache_size = 0
                 first_folder = True
                 for folder in folders:
+                    if( self._playback_stopped_or_changed() ):
+                        break
                     cache_size = cache_size + self._get_folder_size( cache_root + folder )
                     log( 'looking at folder %s cache size is now %s' % (folder, cache_size) )
                     if( cache_size > self.maxcachesize and not first_folder ):
-                        log( 'attempting to delete folder %s' % folder )
-                        try:
-                            shutil.rmtree( cache_root + folder, True )
-                            log( '%s successfully deleted' % folder )
-                        except:
-                            log( '%s was not deleted due to an error' % folder )                            
+                        self._clean_dir( cache_root + folder )
+                        log( 'deleted files in folder %s' % folder )
                     first_folder = False
                 self.LastCacheTrim = now
 
@@ -439,8 +474,10 @@ class Main:
         if site == "lastfm":
             self.info = 'artist.getImages'
             self.url = self.LastfmURL + '&method=artist.getImages&artist=' + self.NAME.replace('&','%26').replace(' ','+')
+            log( 'asking for images from: %s' %self.url )
         elif site == "htbackdrops":
             self.url = self.HtbackdropsQueryURL + '&keywords=' + self.NAME.replace('&','%26').replace(' ','+') + '&dmin_w=' + str( self.minwidth ) + '&dmin_h=' + str( self.minheight )
+            log( 'asking for images from: %s' %self.url )
         images = self._get_data(site, 'images')
         return images
 
@@ -560,7 +597,7 @@ class Main:
 
 
     def _clear_properties( self ):
-        if not xbmc.getInfoLabel( "Window(12006).Property(ArtistSlideshowRunning)" ) == "True":
+        if not xbmc.getInfoLabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
             self.WINDOW.clearProperty("ArtistSlideshow")
         self.WINDOW.clearProperty( "ArtistSlideshow.ArtistBiography" )
         for count in range( 50 ):
@@ -572,5 +609,6 @@ class Main:
 
 if ( __name__ == "__main__" ):
         log('script version %s started' % __addonversion__)
-        Main()
+        slideshow = Main()
+        slideshow.WINDOW.setProperty("ArtistSlideshow.CleanupComplete", "True")
 log('script stopped')
