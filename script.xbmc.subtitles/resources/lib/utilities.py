@@ -10,6 +10,7 @@ import shutil
 import xbmcgui
 
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
+_              = sys.modules[ "__main__" ].__language__
 
 LANGUAGES = (
     
@@ -115,7 +116,7 @@ def regex_tvshow(compare, file, sub = ""):
   for regex in REGEX_EXPRESSIONS:
     response_file = re.findall(regex, file)                  
     if len(response_file) > 0 : 
-      print "Regex File Se: %s, Ep: %s," % (str(response_file[0][0]),str(response_file[0][1]),)
+      log( __name__ , "Regex File Se: %s, Ep: %s," % (str(response_file[0][0]),str(response_file[0][1]),) )
       tvshow = 1
       if not compare :
         title = re.split(regex, file)[0]
@@ -161,9 +162,7 @@ def rem_files(directory):
   try:
     for root, dirs, files in os.walk(directory, topdown=False):
       for items in dirs:
-        print os.path.join(root, items)
         shutil.rmtree(os.path.join(root, items), ignore_errors=True, onerror=None)
-      print files
       for name in files:
         os.remove(os.path.join(root, name))
   except:

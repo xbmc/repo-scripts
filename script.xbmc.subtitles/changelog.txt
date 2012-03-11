@@ -1,3 +1,11 @@
+2.9.35
+- Added Subtitles.gr service, lambda81
+- fix the whole lot of utf-8 issues
+- fix Titlovi
+- add language and minor cleanup in utilities
+- temp fix for rar files
+- fixed Shooter service after decode utf-8 paths to internal encoding
+
 2.9.34
 - Titlovi service rewrite using their API, this is now supported by them. Thanks Nikola for API key and assistance
 - cosmetics

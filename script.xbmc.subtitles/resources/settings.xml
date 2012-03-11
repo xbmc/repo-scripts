@@ -52,6 +52,7 @@
       <setting id="Sublight" type="bool" label="Sublight.si" default="false"/>             
       <setting id="Subscene" type="bool" label="Subscene.com" default="false"/>
       <setting id="Subscenter" type="bool" label="Subscenter.org" default="false"/>
+      <setting id="SubtitlesGr" type="bool" label="Subtitles.gr (Greek subs only)" default="false"/>
       <setting id="SuperSubtitles" type="bool" label="SuperSubtitles (Feliratok.info)" default="false"/>      
       <setting id="Swesub" type="bool" label="Swesub.nu" default="false"/>
       

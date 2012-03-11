@@ -230,7 +230,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     barename = subtitles_list[pos][ "filename" ].rsplit(".",1)[0]
     language = subtitles_list[pos][ "language_name" ]
     for file in subtitles_list[pos][ "filedata" ]:
-        filename = os.path.join(tmp_sub_dir, ".".join([barename, file.ExtName]))
+        filename = os.path.join(tmp_sub_dir, ".".join([barename, file.ExtName]).decode("utf-8")).encode('utf-8')
         fn = unicode(filename, 'utf-8')
         open(fn,"wb").write(file.FileData)
         if (file.ExtName in ["srt", "txt", "ssa", "smi", "sub"]):

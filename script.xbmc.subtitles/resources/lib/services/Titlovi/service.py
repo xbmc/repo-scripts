@@ -49,7 +49,10 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         if lang_full in languages:
             sub_id = subtitle.getElementsByTagName("url")[0].firstChild.data
             movie = subtitle.getElementsByTagName("safeTitle")[0].firstChild.data
-            filename = "%s - %s" % (movie, subtitle.getElementsByTagName("release")[0].firstChild.data)
+            if subtitle.getElementsByTagName("release")[0].firstChild:
+                filename = "%s - %s" % (movie, subtitle.getElementsByTagName("release")[0].firstChild.data)
+            else:
+                filename = movie  
             rating = int(subtitle.getElementsByTagName("score")[0].firstChild.data)*2
             flag_image = "flags/%s.gif" % lang
             link = url_base % sub_id.split("-")[-1].replace("/","")            
