@@ -3,6 +3,7 @@
 	<category id="general" label="30000">
 	    <setting id="update_video" type="bool" label="30002" default="true" />
 	    <setting id="update_music" type="bool" label="30003" default="false" />
+		<setting id="notify_next_run" type="bool" label="30009" default="true" />
 		<setting id="run_during_playback" type="bool" label="30008" default="false" />
 	</category>
 	<category id="advanced" label="30005">

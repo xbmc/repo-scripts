@@ -45,3 +45,13 @@
 [B]Version 0.5.4[/B]
  
  -fixed issue with startup timer, thanks stevenD
+
+[B]Version 0.5.5[/B]
+
+-changed cron expression library. Croniter will allow iterating through the cron expressions and show the next update time
+
+-added methods to display a "countdown" when the next update will occur, and settings to display notifications
+
+[B]Version 0.5.6[/B]
+
+-updated the manual run interface to include information about when the updater will run again

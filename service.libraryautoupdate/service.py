@@ -1,15 +1,18 @@
 import time
+from datetime import datetime
 import xbmc
 import xbmcaddon
 import os
-from cronex import CronExpression
+from resources.lib.croniter import croniter
 
 class AutoUpdater:
     addon_id = "service.libraryautoupdate"
     Addon = xbmcaddon.Addon(addon_id)
     datadir = Addon.getAddonInfo('profile')
+    addondir = Addon.getAddonInfo('path')
     sleep_time = 10
     forceUpdate = False
+    previousTimer = 0
     
     #setup the timer amounts
     timer_amounts = {}
@@ -19,13 +22,15 @@ class AutoUpdater:
     timer_amounts['3'] = 10
     timer_amounts['4'] = 15
     timer_amounts['5'] = 24
+
+    def __init__(self):
+        self.readLastRun()
         
     def runProgram(self):
-
+        
         if(self.Addon.getSetting('use_advanced_timer') == 'false'):        
             #check if we should delay the first run
             if(int(self.Addon.getSetting("startup_delay")) != 0):
-                self.readLastRun()
                 
                 #check if we would have run an update anyway
                 if(time.time() >= self.last_run + (self.timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60)):
@@ -34,9 +39,17 @@ class AutoUpdater:
                     self.writeLastRun()
                     self.log("Setting delay at " + self.Addon.getSetting("startup_delay") + " minute")
 
+            self.showNotify(self.last_run + (self.timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60))
+            self.currentTimer = self.Addon.getSetting('timer_amount')
+        else:
+            self.currentTimer = self.Addon.getSetting("cron_expression")
+            cronExp = croniter(self.Addon.getSetting("cron_expression"),datetime.now())
+            self.showNotify(cronExp.get_next(float))
+        
         #run until XBMC quits
         while(not xbmc.abortRequested):
-
+            self.checkTimer()
+            
             if(self.Addon.getSetting('use_advanced_timer') == 'true'):
                 self.runAdvanced()
             else:
@@ -52,12 +65,13 @@ class AutoUpdater:
         self.readLastRun()
             
         #check if we should run an update
-        if(now >= self.last_run + (self.timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60)):
+        if(now >= self.last_run + (self.timer_amounts[self.currentTimer] * 60 * 60)):
             #make sure player isn't running
             if(xbmc.Player().isPlaying() == False or self.Addon.getSetting('run_during_playback') == 'true'):
                 if(self.scanRunning() == False):
                     self.runUpdates()
-                    self.log("will run again in " + str(self.timer_amounts[self.Addon.getSetting("timer_amount")]) + " hours")
+                    self.showNotify(self.last_run + (self.timer_amounts[self.currentTimer] * 60 * 60))
+                    self.log("will run again in " + str(self.timer_amounts[self.currentTimer]) + " hours")
                         
             else:
                 self.log("Player is running, waiting until finished")
@@ -66,19 +80,22 @@ class AutoUpdater:
 
     def runAdvanced(self):        
         self.readLastRun()
-
+        now = time.time()
+        
         #create the cron expression
-        cron = CronExpression(self.Addon.getSetting("cron_expression") + " XBMC_COMMAND")
-
+        cron = croniter(self.currentTimer,datetime.fromtimestamp(now - 60))
+        runCron = cron.get_next(float)
+        
         #check if we should run, and that we haven't already run the update within the past minute - alternatively check that we shouldn't force an update
-        structTime = time.localtime()
-        if((cron.check_trigger((structTime[0],structTime[1],structTime[2],structTime[3],structTime[4])) and time.time() > self.last_run + 60) or self.forceUpdate):
+        if((runCron <= now and time.time() > self.last_run + 60) or self.forceUpdate):
             #make sure player isn't running
             if(xbmc.Player().isPlaying() == False or self.Addon.getSetting('run_during_playback') == 'true'):
                 self.forceUpdate = False
                 if(self.scanRunning() == False):
                     self.runUpdates()
-                    self.log("will run again according to: " + self.Addon.getSetting("cron_expression"))
+                    nextRun = cron.get_next(float)
+                    self.showNotify(nextRun)
+                    self.log("will run again in " + self.nextRun(nextRun))
                             
             else:
                 #force an update if this 
@@ -133,6 +150,58 @@ class AutoUpdater:
         f.write(str(self.last_run));
         f.close();
 
+    def showNotify(self,timestamp):
+        #don't show anything if the update will happen now
+        if(timestamp > time.time() and self.Addon.getSetting('notify_next_run') == 'true'):
+            self.log(self.addondir)
+            xbmc.executebuiltin("Notification(Library Auto Update,Next run: " + self.nextRun(timestamp) + ",4000," + xbmc.translatePath(self.addondir + "/icon.png") + ")")
+
+    def calcNextRun(self):
+        if(self.Addon.getSetting('use_advanced_timer') == 'false'):
+            return self.nextRun(self.last_run + (self.timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60))
+        else:
+            cronExp = croniter(self.Addon.getSetting("cron_expression"),datetime.now())
+            return self.nextRun(cronExp.get_next(float))
+                
+                
+    def nextRun(self,nextRun):
+        #compare now with next date
+        cronDiff = nextRun - time.time() + 60
+
+        if cronDiff < 0:
+            return ""
+        
+        hours = int((cronDiff / 60) / 60)
+        minutes = int((cronDiff / 60) - hours * 60)
+
+        #we always have at least one minute
+        if minutes == 0:
+            minutes = 1
+
+        result = str(hours) + " h " + str(minutes) + " m"
+        if hours == 0:
+            result = str(minutes) + " m"
+        elif hours > 36:
+            #just show the date instead
+            result = datetime.fromtimestamp(nextRun).strftime('%m/%d %I:%M%p')
+        elif hours > 24:
+            days = int(hours / 24)
+            hours = hours - days * 24
+            result = str(days) + " d " + str(hours) + " h " + str(minutes) + " m"
+       
+        return result
+        
+    def checkTimer(self):
+        if(self.Addon.getSetting('use_advanced_timer') == 'false'):
+            if  self.Addon.getSetting('timer_amount') != self.currentTimer:
+                self.showNotify(self.last_run + (self.timer_amounts[self.Addon.getSetting('timer_amount')] * 60 * 60))
+                self.currentTimer = self.Addon.getSetting('timer_amount')
+        else:
+            if self.Addon.getSetting("cron_expression") != self.currentTimer:
+                cronExp = croniter(self.Addon.getSetting("cron_expression"),datetime.now())
+                self.showNotify(cronExp.get_next(float))
+                self.currentTimer = self.Addon.getSetting("cron_expression")
+        
     def log(self,message):
         xbmc.log('service.libraryautoupdate: ' + message)
 

@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <strings>
-    <!-- Plugin settings -->
+	<string id="30010">XBMC Library Auto Update</string>
 	<string id="30000">General</string>
     <string id="30001">Amount of time between updates (hours)</string>
     <string id="30002">Update Video Library</string>
     <string id="30003">Update Music Library</string>
 	<string id="30004">Startup Delay (minutes)</string>
 	<string id="30008">Run during playback</string>
+	<string id="30009">Show Notifications</string>
 	
 	<string id="30005">Timers</string>
 	<string id="30006">Used Advanced Timer</string>
 	<string id="30007">Cron Expression</string>
+	
+	<!-- gui -->
+	<string id="30011">Update will run again </string>
+	<string id="30012">Do you wish to manually run an update?</string>
 </strings>
