@@ -78,11 +78,12 @@ def location(string):
     loc   = []
     locid = []
     query = fetch(LOCATION_URL % (urllib2.quote(string)))
-    for item in query['RESULTS']:
-        location   = item['name']
-        locationid = item['l']
-        loc.append(location)
-        locid.append(locationid)
+    if query != '':
+        for item in query['RESULTS']:
+            location   = item['name']
+            locationid = item['l']
+            loc.append(location)
+            locid.append(locationid)
     return loc, locid
 
 def geoip():
