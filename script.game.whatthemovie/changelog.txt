@@ -1,3 +1,13 @@
+0.9.3
+- Fix white shot (website changes)
+
+0.9.2
+- Multithreading background scraping of shots
+- Now showing overall-score in addition to featurefilms-score
+- now going back and forward through already scraped shots with 'back' and 'random'
+- Code cleanups and improvements
+- Removed the need for mechanize-lib
+
 0.9.1 
 - Bugfix (error if player has exactly 1 point)
 

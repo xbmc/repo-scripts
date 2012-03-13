@@ -215,9 +215,20 @@
                     <ondown>3003</ondown>
                 </control>
             </control>
-            <control type="label" id="1001">
+			<control type="label" id="1001">
                 <description>Login state label</description>
                 <posx>20</posx>
+                <posy>12</posy>
+                <width>450</width>
+                <align>left</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="label" id="1020">
+                <description>Preload label</description>
+                <posx>300</posx>
                 <posy>12</posy>
                 <width>450</width>
                 <align>left</align>

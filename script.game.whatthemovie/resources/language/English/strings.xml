@@ -25,7 +25,7 @@ Misc     = 3300-3349
     <string id="3102">Wrong: [B]%s[/B]</string>
     <string id="3103">Not logged in</string>
     <string id="3104">Logged in as user: [B]%s[/B]</string>
-    <string id="3105">Your score: [B]%s[/B]</string>
+    <string id="3105">Your score: [B]%s[/B] ([B]%s[/B])</string>
     <string id="3106">Solved [B][COLOR=ff008B00]%s[/COLOR][/B] times, first by [B]%s[/B]</string>
     <string id="3107">Not solved yet</string>
     <string id="3108">Shot ID: [B]%s[/B]</string>
