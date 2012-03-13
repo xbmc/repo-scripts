@@ -385,8 +385,13 @@ class WhatTheMovie(object):
                 else:
                     nav[nav_type] = None
             # image url
-            image_url = tree.find('img',
-                                  alt='guess this movie snapshot')['src']
+            section = tree.find('style', {'type': 'text/css'})
+            image_url = ''
+            if section:
+                r_img = re.compile('background-image:url\("(.+?)"\)')
+                m_img = re.search(r_img, section.string)
+                if m_img:
+                    image_url = WhatTheMovie.MAIN_URL + m_img.group(1)
             subst_image_url = 'http://static.whatthemovie.com/images/subst'
             if self.image_download_path:
                 if not image_url.startswith(subst_image_url):
