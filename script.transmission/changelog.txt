@@ -1,3 +1,9 @@
+Version 0.6.3
+	(Changes backported from 0.7.1)
+	* Added Apple TV remote MENU key support to close dialogs
+		(submitted by Filipe Pina <fopina@skmobi.com>)
+	* Removed btjunkie.org search
+	* Updated The Pirate Bay search to use the new hostname and magnet links
 Version 0.6.2
 	* Updated transmissionrpc library to 0.8 (Now supports Transmission 2.40+)
 Version 0.6.1
