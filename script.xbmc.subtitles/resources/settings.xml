@@ -45,6 +45,8 @@
       <setting id="PTSuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30134" default=""/>
       <setting id="PTSpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30135" default=""/>
 
+      <setting id="RegieLive" type="bool" label="Subtitrari.RegieLive.ro" default="false"/>
+
       <setting id="Shooter" type="bool" label="Shooter.cn (Chinese and English subs only)" default="false"/>
       <setting id="Sratim" type="bool" label="Sratim.co.il" default="false"/>
       <setting id="SubDB" type="bool" label="theSubDB.com" default="false"/>

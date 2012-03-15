@@ -63,7 +63,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     self.autoDownload   = False
     movieFullPath       = urllib.unquote(xbmc.Player().getPlayingFile()).decode('utf-8')# Full path of a playing file
     path                = __addon__.getSetting( "subfolder" ) == "true"                 # True for movie folder
-    self.sub_folder     = xbmc.translatePath(__addon__.getSetting( "subfolderpath" ))   # User specified subtitle folder
+    self.sub_folder     = xbmc.translatePath(__addon__.getSetting( "subfolderpath" )).decode("utf-8")   # User specified subtitle folder
     self.year           = xbmc.getInfoLabel("VideoPlayer.Year")                         # Year
     self.season         = str(xbmc.getInfoLabel("VideoPlayer.Season"))                  # Season
     self.episode        = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                 # Episode
@@ -187,13 +187,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
       log( __name__ ,"Services : [%s]"             % self.service_list)
       log( __name__ ,"Temp?: [%s]"                 % self.temp)
       log( __name__ ,"Rar?: [%s]"                  % self.rar)
-      log( __name__ ,"File Path: [%s]"             % self.file_original_path.encode('utf-8'))
+      log( __name__ ,"File Path: [%s]"             % self.file_original_path)
       log( __name__ ,"Year: [%s]"                  % str(self.year))
       log( __name__ ,"Tv Show Title: [%s]"         % self.tvshow)
       log( __name__ ,"Tv Show Season: [%s]"        % self.season)
       log( __name__ ,"Tv Show Episode: [%s]"       % self.episode)
       log( __name__ ,"Movie/Episode Title: [%s]"   % self.title)
-      log( __name__ ,"Subtitle Folder: [%s]"       % self.sub_folder.encode('utf-8'))
+      log( __name__ ,"Subtitle Folder: [%s]"       % self.sub_folder)
       log( __name__ ,"Languages: [%s] [%s] [%s]"   % (self.language_1, self.language_2, self.language_3,))
       log( __name__ ,"Parent Folder Search: [%s]"  % self.parsearch)
       log( __name__ ,"Stacked(CD1/CD2)?: [%s]"     % self.stack)
@@ -307,7 +307,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
           log( __name__ ,"found .sub+.idx pair %s + %s" % (file_from,file_from[:-3]+"idx"))
           files_list.append((file_from[:-3]+"idx",file_to[:-3]+"idx"))
       for cur_file_from, cur_file_to in files_list:
-         subtitle_set,file_path  = copy_files( cur_file_from.encode("utf-8"), cur_file_to.encode("utf-8") )  
+         subtitle_set,file_path  = copy_files( cur_file_from, cur_file_to )  
       # Choose the last pair in the list, second item (destination file)
       if subtitle_set:
         subtitle = files_list[-1][1]
@@ -325,7 +325,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
           self.getControl( window_list ).selectItem( 0 )  
 
   def Extract_Subtitles( self, zip_subs, subtitle_lang, gui = True ):
-    xbmc.executebuiltin('XBMC.Extract("%s","%s")' % (zip_subs,self.tmp_sub_dir,))
+    xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip_subs,self.tmp_sub_dir,)).encode('utf-8'))
     xbmc.sleep(1000)
     files = os.listdir(self.tmp_sub_dir)
     sub_filename = os.path.basename( self.file_original_path )
@@ -360,22 +360,22 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 for subName in self.stackPath:
                   if (re.split("(?x)(?i)\CD(\d)", zip_entry)[1]) == (re.split("(?x)(?i)\CD(\d)", urllib.unquote ( subName ))[1]):
                     subtitle_file, file_path = self.create_name(zip_entry,urllib.unquote ( os.path.basename(subName[8:]) ),subtitle_lang)
-                    subtitle_set,file_path = copy_files( subtitle_file.encode("utf-8"), file_path.encode("utf-8") ) 
+                    subtitle_set,file_path = copy_files( subtitle_file, file_path ) 
                 if re.split("(?x)(?i)\CD(\d)", zip_entry)[1] == "1":
                   subToActivate = file_path
               except:
                 subtitle_set = False              
             else:
-              subtitle_set,subToActivate = copy_files( subtitle_file.encode("utf-8"), file_path.encode("utf-8") )
+              subtitle_set,subToActivate = copy_files( subtitle_file, file_path )
 
       if not subtitle_set:
         for zip_entry in files:
           if os.path.splitext( zip_entry )[1] in exts:
             subtitle_file, file_path = self.create_name(zip_entry,sub_filename,subtitle_lang)
-            subtitle_set,subToActivate  = copy_files( subtitle_file.encode("utf-8"), file_path.encode("utf-8") )
+            subtitle_set,subToActivate  = copy_files( subtitle_file, file_path )
 
     if subtitle_set :
-      xbmc.Player().setSubtitles(subToActivate)
+      xbmc.Player().setSubtitles(subToActivate.encode("utf-8"))
       self.close()
     else:
       if gui:

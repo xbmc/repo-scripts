@@ -53,7 +53,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                 filename = "%s - %s" % (movie, subtitle.getElementsByTagName("release")[0].firstChild.data)
             else:
                 filename = movie  
-            rating = int(subtitle.getElementsByTagName("score")[0].firstChild.data)*2
+            rating = int(float(subtitle.getElementsByTagName("score")[0].firstChild.data)*2)
             flag_image = "flags/%s.gif" % lang
             link = url_base % sub_id.split("-")[-1].replace("/","")            
             subtitles_list.append({'filename'     :filename,

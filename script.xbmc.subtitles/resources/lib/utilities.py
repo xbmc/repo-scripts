@@ -107,7 +107,7 @@ class UserNotificationNotifier:
 
    
 def log(module,msg):
-  xbmc.log("### [%s-%s] - %s" % (__scriptname__,module,msg,),level=xbmc.LOGDEBUG ) 
+  xbmc.log((u"### [%s-%s] - %s" % (__scriptname__,module,msg,)).encode('utf-8'),level=xbmc.LOGDEBUG ) 
 
 def regex_tvshow(compare, file, sub = ""):
   sub_info = ""
@@ -178,7 +178,7 @@ def rem_files(directory):
 def copy_files( subtitle_file, file_path ):
   subtitle_set = False
   try:
-    xbmcvfs.copy(subtitle_file, file_path)
+    xbmcvfs.copy(subtitle_file.encode("utf-8"), file_path.encode("utf-8"))
     log( __name__ ,"vfs module copy %s -> %s" % (subtitle_file, file_path))
     subtitle_set = True
   except :

@@ -68,27 +68,27 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 
     getallsubs(searchstring, "el", "Greek", subtitles_list)
     if greek == 0:
-        msg = "Won't work, Greeksubtitlesproject is only for Greek subtitles."
+        msg = "Won't work, subtitles.gr is only for Greek subtitles."
 
     return subtitles_list, "", msg #standard output
-
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
     id = subtitles_list[pos][ "id" ]
     language = subtitles_list[pos][ "language_name" ]
-    if string.lower(language) == "greek":
-        url = download_url + id
+    if string.lower(language) == "greek": url = download_url + id
     local_file = open(zip_subs, "w" + "b")
     f = urllib.urlopen(url)
     local_file.write(f.read())
     local_file.close()
-    tmp_new_dir = tmp_sub_dir+'\sub_dir'
+    tmp_new_dir = os.path.join( tmp_sub_dir ,"zipsubs" )
+    tmp_new_dir_2 = os.path.join( tmp_new_dir ,"subs" )
     xbmc.executebuiltin("XBMC.Extract(" + zip_subs + "," + tmp_new_dir +")")
-    time.sleep(2)
-    os.remove(zip_subs)
-    for file in os.listdir(tmp_new_dir+'\subs'):
-        file=os.path.join(tmp_new_dir+'\subs', file)
+    xbmc.sleep(1000)
+    for file in os.listdir(tmp_new_dir_2): file=os.path.join(tmp_new_dir_2, file)
+    if re.search('.rar',file) is not None:
         xbmc.executebuiltin("XBMC.Extract(" + file + "," + tmp_sub_dir +")")
-        time.sleep(2)
-        shutil.rmtree(tmp_new_dir)
+        xbmc.sleep(1000)
+    else: shutil.copy(file, tmp_sub_dir)
+    os.remove(zip_subs)
+    shutil.rmtree(tmp_new_dir)
     return True,language, "" #standard output

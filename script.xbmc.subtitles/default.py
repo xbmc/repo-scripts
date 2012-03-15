@@ -11,7 +11,7 @@ __scriptname__ = "XBMC Subtitles"
 
 __addon__      = xbmcaddon.Addon(id='script.xbmc.subtitles')
 
-__cwd__        = __addon__.getAddonInfo('path')
+__cwd__        = __addon__.getAddonInfo('path').decode("utf-8")
 __version__    = __addon__.getAddonInfo('version')
 __language__   = __addon__.getLocalizedString
 

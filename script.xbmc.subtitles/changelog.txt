@@ -1,3 +1,9 @@
+2.9.36
+- Added RegieLive.ro subtitles service, thx ThumbGen
+- fixed Subtitles.gr service
+- fixed Titlovi rating
+- chadoe fixed path encoding, again... thx!
+
 2.9.35
 - Added Subtitles.gr service, lambda81
 - fix the whole lot of utf-8 issues
