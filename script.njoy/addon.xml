@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.njoy"
        name="Njoy Live TV"
-       version="0.1.1"
+       version="0.1.2"
        provider-name="amet">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
   </requires>
-  <extension point="xbmc.python.script"
-             library="default.py" />
+  <extension point="xbmc.python.script" library="default.py">
+        <provides>video</provides>
+  </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Njoy Live TV  on XBMC</summary>
     <description lang="en">This addon brings live digital ( Pay and FTA ) TV on XBMC. Stream your digital TV channels from your subscription package on Digital Cable, Terrestrial or Satellite TV with the N7 Network tuner into your network and start watching and zapping.</description>
