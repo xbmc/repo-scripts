@@ -18,14 +18,16 @@
         <setting id="asterisk_manager_pass" type="text" label="30016" default="xbmc"/>
     </category>
     <category label="30040">
-        <!-- CDR & VoiceMail related settings -->
+        <!-- CDR & VoiceMail & MWI related settings -->
         <setting id="separator" type="lsep" label="30040"/>
         <setting id="asterisk_info" type="text" label="30041" default="" enable="false"/>
         <setting id="asterisk_info_url" type="text" label="30042" default="http://asterisk/xbmc-pbx-addon.php"/>
         <setting id="xbmc_vm_notification_timeout" type="enum" label="30043" values="5|10|15|20|25|30" default="2"/>
         <setting id="asterisk_vm_mailbox" type="number" label="30044" default="000"/>
         <setting id="asterisk_vm_context" type="text" label="30045" default="default"/>
-        <setting id="asterisk_vm_format" type="enum" label="30046" values="wav|gsm|mp3" default="0"/>
+        <setting id="asterisk_vm_format" type="enum" label="30046" values="wav|gsm|mp3|WAV" default="0"/>
+        <setting id="asterisk_mwi_info" type="text" label="30047" default="" enable="false"/>
+        <setting id="asterisk_mwi_clean" type="bool" label="30048" default="false"/>
     </category>
     <category label="30030">
         <!-- Asterisk Outbound calls related settings -->
@@ -46,5 +48,7 @@
         <setting id="asterisk_now_playing_enabled" type="bool" label="30027" default="false"/>
         <setting id="asterisk_now_playing_context" type="text" label="30028" default="xbmc-now-playing"/>
         <setting id="asterisk_redir_alert_info" type="text" label="30029" default=""/>
+        <setting id="xbmc_caller_picture_enabled" type="bool" label="30061" default="false"/>
+        <setting id="xbmc_caller_picture_path" type="folder" label="30062" default=""/>
     </category>
 </settings>

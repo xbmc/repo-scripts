@@ -1,23 +1,38 @@
-'''
-
-    XBMC PBX Addon
-        Fron-end (XBMC) side
-        This script will be running as a service in background
-
-
-'''
+#
+#  XBMC PBX Addon
+#      Fron-end (XBMC) side
+#      This script will be running as a service in background
+#
+#
+#  Copyright (C) 2012 hmronline@gmail.com 
+#  http://xbmc-pbx-addon.googlecode.com
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation; either version 2
+#  of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
 
 # Script constants
 __addon__       = "XBMC PBX Addon"
 __addon_id__    = "script.xbmc-pbx-addon"
 __author__      = "hmronline"
 __url__         = "http://code.google.com/p/xbmc-pbx-addon/"
-__version__     = "1.0.9"
+__version__     = "1.0.10"
 
 # Modules
 import sys, os
-import xbmc, xbmcaddon
-import re, traceback, time
+import xbmc, xbmcaddon, xbmcgui, xbmcvfs
+import re, traceback
 
 
 xbmc.log("[%s]: Version %s\n" % (__addon__,__version__))
@@ -55,7 +70,7 @@ class get_incoming_call(object):
         self.asterisk_now_playing = False
         self.ast_first_uniqid = 0
         self.ast_my_uniqid = 0
-        self.event_callerid = ""
+        self.got_newcall_actions = False
         self.events = Asterisk.Util.EventCollection()
         self.events.clear()
         self.events.subscribe('Newchannel',self.NewChannel)
@@ -108,14 +123,20 @@ class get_incoming_call(object):
             log(">> UniqueID: " + event.Uniqueid)
         if (self.asterisk_series == "1.4"):
             # Asterisk 1.4
-            event_callerid_num = str(event.CallerID)
+            self.event_callerid_num = str(event.CallerID)
         else:
             # Asterisk 1.6+
-            event_callerid_num = str(event.CallerIDNum)
-        if (event.CallerIDName != "" and event_callerid_num != ""):
-            self.event_callerid = str(event.CallerIDName + " <" + event_callerid_num + ">")
+            self.event_callerid_num = str(event.CallerIDNum)
+        if (event.CallerIDName != "" and self.event_callerid_num != ""):
+            self.event_callerid = str(event.CallerIDName + " <" + self.event_callerid_num + ">")
+        else:
+            self.event_callerid = ""
         if (self.DEBUG): log(">> CallerID: " + self.event_callerid)
-        if (event.Uniqueid == self.ast_my_uniqid and self.event_callerid != ""):
+        if (event.Uniqueid == self.ast_my_uniqid and not self.got_newcall_actions):
+            if (self.DEBUG):
+                log(">>> Will fire actions for this one:")
+                log(">>> UniqueID: " + self.ast_my_uniqid)
+                log(">> CallerID: " + self.event_callerid)
             self.newcall_actions(event)
 
     #####################################################################################################
@@ -139,17 +160,19 @@ class get_incoming_call(object):
         if (xbmc_player.isPlaying() == 1):
             # Resume media
             xbmc_remaining_time = xbmc_player.getTotalTime() - xbmc_player.getTime()
-            time.sleep(1)
+            xbmc.sleep(1000)
             xbmc_new_remaining_time = xbmc_player.getTotalTime() - xbmc_player.getTime()
             if (self.xbmc_player_paused and xbmc_remaining_time == xbmc_new_remaining_time):
                 log(">> Resume media...")
                 xbmc_player.pause()
                 self.xbmc_player_paused = False
         del xbmc_player
+        self.got_newcall_actions = False
 
     #####################################################################################################
     def newcall_actions(self,event):
         log("> newcall_actions()")
+        self.got_newcall_actions = True
         asterisk_alert_info = str(pbx.Getvar(event.Channel,"ALERT_INFO",""))
         if (self.DEBUG):
             log(">> Channel: " + str(event.Channel))
@@ -161,7 +184,8 @@ class get_incoming_call(object):
         xbmc_oncall_notification_timeout = int(arr_timeout[int(settings.getSetting("xbmc_oncall_notification_timeout"))])
         cfg_asterisk_cid_alert_info = settings.getSetting("asterisk_cid_alert_info").strip(' \t\n\r')
         cfg_asterisk_redir_alert_info = settings.getSetting("asterisk_redir_alert_info").strip(' \t\n\r')
-        asterisk_now_playing_context = settings.getSetting("asterisk_now_playing_context").strip(' \t\n\r')
+        asterisk_now_playing_context = settings.getSetting("asterisk_now_playing_context").strip(' \t\n\r') 
+        xbmc_caller_picture_path = settings.getSetting("xbmc_caller_picture_path").strip(' \t\n\r')
         xbmc_img = xbmc.translatePath(os.path.join(RESOURCE_PATH,'media','xbmc-pbx-addon.png'))
         xbmc_oncall_pause_media = False
         if (settings.getSetting("xbmc_oncall_pause_media") == "true"):
@@ -172,6 +196,9 @@ class get_incoming_call(object):
         xbmc_oncall_notification = False
         if (settings.getSetting("xbmc_oncall_notification") == "true"):
             xbmc_oncall_notification = True
+        xbmc_caller_picture_enabled = False
+        if (settings.getSetting("xbmc_caller_picture_enabled") == "true"):
+            xbmc_caller_picture_enabled = True        
         del settings
         xbmc_player = xbmc.Player(xbmc.PLAYER_CORE_AUTO)
         if (xbmc_player.isPlaying() == 1):
@@ -193,7 +220,7 @@ class get_incoming_call(object):
                     log(">> Remaining time (minutes): " + str(round(xbmc_remaining_time/60)))
                 # Pause Video
                 if (xbmc_oncall_pause_media):
-                    time.sleep(1)
+                    xbmc.sleep(1000)
                     if (asterisk_alert_info == cfg_asterisk_cid_alert_info or cfg_asterisk_cid_alert_info == ''):
                         xbmc_new_remaining_time = xbmc_player.getTotalTime() - xbmc_player.getTime()
                         if (not self.xbmc_player_paused and xbmc_remaining_time > xbmc_new_remaining_time):
@@ -210,16 +237,37 @@ class get_incoming_call(object):
                             pbx.Redirect(event.Channel,asterisk_now_playing_context)
                             self.asterisk_now_playing = True
                     except:
-                        xbmc_notification = str(sys.exc_info()[1])
+                        xbmc_notification = unicode(str(sys.exc_info()[1]))
                         log(">> Notification: " + xbmc_notification)
                         xbmc.executebuiltin("XBMC.Notification("+ __language__(30051) +","+ xbmc_notification +","+ str(15*1000) +","+ xbmc_img +")")
         del xbmc_player
         # Show Incoming Call Notification Popup
         if (xbmc_oncall_notification):
             if (asterisk_alert_info == cfg_asterisk_cid_alert_info or cfg_asterisk_cid_alert_info == ''):
-                xbmc_notification = self.event_callerid
+                xbmc_notification = unicode(self.event_callerid)
                 log(">> Notification: " + xbmc_notification)
                 xbmc.executebuiltin("XBMC.Notification("+ __language__(30050) +","+ xbmc_notification +","+ str(xbmc_oncall_notification_timeout*1000) +","+ xbmc_img +")")
+        # EXPERIMENTAL: Show Caller's Picture
+        if (xbmc_caller_picture_enabled):
+            xbmc_caller_picture = xbmc_caller_picture_path + self.event_callerid_num
+            if (self.DEBUG): log(">> Caller's picture: " + xbmc_caller_picture)
+            if (xbmcvfs.exists(xbmc_caller_picture)):
+                log(">> Showing Caller's picture")
+                popup = PopUpGUI("popup.xml",CWD,"Default")
+                popup .show()
+                popup.getControl(110).setImage(xbmc_caller_picture)
+                xbmc.sleep(xbmc_oncall_notification_timeout*1000)
+                popup .close()
+                del popup
+
+#############################################################################################################
+class PopUpGUI(xbmcgui.WindowXML):
+    def __init__(self,*args,**kwargs):
+        xbmcgui.WindowXML.__init__(self)
+        
+    def onAction(self, action):
+        self.close()
+        
 
 
 #################################################################################################################
@@ -247,17 +295,18 @@ try:
         log(">> Asterisk " + asterisk_series)
         if (DEBUG == "true"): log(">> " + asterisk_version)
         vm_count = str(pbx.MailboxCount(vm)[0])
-        xbmc_notification = __language__(30053) + vm_count
+        xbmc_notification = unicode(__language__(30053) + vm_count)
         xbmc_img = xbmc.translatePath(os.path.join(RESOURCE_PATH,'media','xbmc-pbx-addon.png'))
         log(">> Notification: " + xbmc_notification)
         xbmc.executebuiltin("XBMC.Notification("+ __language__(30052) +","+ xbmc_notification +","+ str(xbmc_vm_notification_timeout*1000) +","+ xbmc_img +")")
         grab = get_incoming_call()
         pbx.events += grab.events
-        pbx.serve_forever()
+        while (not xbmc.abortRequested):
+            pbx.read()
 except:
-    xbmc_notification = str(sys.exc_info()[1])
+    xbmc_notification = unicode(str(sys.exc_info()[1]))
     xbmc_img = xbmc.translatePath(os.path.join(RESOURCE_PATH,'media','xbmc-pbx-addon.png'))
-    log(">> Notification: " + xbmc_notification)
+    log(">> EXIT Notification: " + xbmc_notification)
     xbmc.executebuiltin("XBMC.Notification("+ __language__(30051) +","+ xbmc_notification +","+ str(15*1000) +","+ xbmc_img +")")
 try:
     del grab

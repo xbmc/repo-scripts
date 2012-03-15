@@ -1,5 +1,17 @@
 = Changelog =
 
+== 1.0.10 ==
+  * Added option to store listened VM messages (MWI);
+  * Dialer is now numeric-only;
+  * A valid Caller ID is no longer required (will work with no CID at all);
+  * Experimental: Added option to display Caller's picture;
+  * UTF8 encoded all content from CDR & VM;
+  * Nicer Back-end messages;
+  * Back-end messages are now also shown on Front-end;
+  * Script is killed using XBMC Eden method;
+  * Fixes from vladi (XBMC Forum member) Thanks!;
+  * Other fixes
+ 
 == 1.0.9 ==
   * Restored autoexec.py which is still needed for Dharma;
   * Added option to Auto-select NewChannel State setting based on Asterisk Version;

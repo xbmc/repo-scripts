@@ -11,7 +11,7 @@
             <texture>background.png</texture>
         </control>
  
-      	<!--- GUI Header --->
+      	<!-- GUI Header -->
      	<control type="image">
          <description>XBMC PBX Addon Logo</description>
         	<posx>15</posx>
@@ -85,7 +85,7 @@
             <ondown>113</ondown>
         </control>
         
-        <!--- Content Panel --->
+        <!-- Content Panel -->
         <control type="image" id="0">
             <description>contentpanel slice</description>
             <posx>0</posx>
@@ -243,7 +243,7 @@
             </control>
         </control>
         
-        <!--- Content Panel - List Container --->
+        <!-- Content Panel - List Container -->
         <control type="group" id="113">
             <posx>10</posx>
             <posy>135</posy>

@@ -1,23 +1,38 @@
-'''
-
-    XBMC PBX Addon
-        Fron-end (XBMC) side
-        This script is the User Interface
-
-
-'''
+#
+#  XBMC PBX Addon
+#      Fron-end (XBMC) side
+#      This script is the User Interface
+#
+#
+#  Copyright (C) 2012 hmronline@gmail.com 
+#  http://xbmc-pbx-addon.googlecode.com
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation; either version 2
+#  of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
 
 # Script constants
 __addon__       = "XBMC PBX Addon"
 __addon_id__    = "script.xbmc-pbx-addon"
 __author__      = "hmronline"
 __url__         = "http://code.google.com/p/xbmc-pbx-addon/"
-__version__     = "1.0.9"
+__version__     = "1.0.10"
 
 # Modules
 import sys, os
 import xbmc, xbmcaddon, xbmcgui
-import re, traceback, time
+import re, traceback
 import urllib, urlparse, urllib2, xml.dom.minidom
 
 xbmc.log("[%s]: Version %s\n" % (__addon__,__version__))
@@ -76,7 +91,7 @@ class MainGUI(xbmcgui.WindowXML):
             # Done...
             dialog.update(100,__language__(30065))
         except:
-            xbmc_notification = str(sys.exc_info()[1])
+            xbmc_notification = unicode(str(sys.exc_info()[1]))
             xbmc_img = xbmc.translatePath(os.path.join(RESOURCE_PATH,'media','xbmc-pbx-addon.png'))
             log(">> Notification: " + xbmc_notification)
             xbmc.executebuiltin("XBMC.Notification("+ __language__(30051) +","+ xbmc_notification +","+ str(15*1000) +","+ xbmc_img +")")
@@ -139,6 +154,7 @@ class MainGUI(xbmcgui.WindowXML):
     def showInfo(self):
         log("> showInfo()")
         backend_version = "unknown"
+        backend_error_msg = ""
         for node in self.dom.getElementsByTagName('version'):
             backend_version = node.firstChild.data
         options = {"cdr":120,"vm":121}
@@ -146,6 +162,13 @@ class MainGUI(xbmcgui.WindowXML):
         for option in options.keys():
             self.getControl(options[option]).reset()
             # Parse CDR/VM XML content
+            # Error Messages
+            for node in self.dom.getElementsByTagName(option +'_error'):
+                for childNode in node.childNodes:
+                    if (childNode.nodeName != "#text"):
+                        if (childNode.firstChild):
+                            backend_error_msg = childNode.firstChild.data
+            # CDR/VM content
             for node in self.dom.getElementsByTagName(option):
                 listitem = xbmcgui.ListItem()
                 for childNode in node.childNodes:
@@ -158,9 +181,15 @@ class MainGUI(xbmcgui.WindowXML):
                 del listitem
         if (__os__ == 'xbox'): xbmcgui.unlock()
         del self.dom
+        if (backend_error_msg != ""):
+            log(">> Received error from Back-end!: " + backend_error_msg)
+            xbmc_notification = unicode("Back-end says:" + backend_error_msg)
+            xbmc_img = xbmc.translatePath(os.path.join(RESOURCE_PATH,'media','xbmc-pbx-addon.png'))
+            log(">> Notification: " + xbmc_notification)
+            xbmc.executebuiltin("XBMC.Notification("+ __language__(30051) +","+ xbmc_notification +","+ str(15*1000) +","+ xbmc_img +")")
         if (backend_version != __version__):
             log(">> Version mismatch!: Frontend is " + __version__ + " while Backend is " + backend_version)
-            xbmc_notification = "You have to update the backend!"
+            xbmc_notification = unicode("You have to update the backend!")
             xbmc_img = xbmc.translatePath(os.path.join(RESOURCE_PATH,'media','xbmc-pbx-addon.png'))
             log(">> Notification: " + xbmc_notification)
             xbmc.executebuiltin("XBMC.Notification("+ __language__(30051) +","+ xbmc_notification +","+ str(15*1000) +","+ xbmc_img +")")
@@ -209,12 +238,11 @@ class MainGUI(xbmcgui.WindowXML):
             self.onInit()
         # Dialer
         elif (controlId == 108):
-            kb = xbmc.Keyboard('',__language__(30108))
-            kb.doModal()
-            if (kb.isConfirmed()):
-                number_to_call = kb.getText()
-                if (number_to_call != ""):
-                    self.make_outgoing_call(number_to_call)
+            dialer = xbmcgui.Dialog()
+            number_to_call = dialer.numeric(0,__language__(30108))
+            if (number_to_call != ""):
+                self.make_outgoing_call(number_to_call)
+            del dialer
         # Settings
         elif (controlId == 112):
             settings = xbmcaddon.Addon(__addon_id__)
@@ -240,7 +268,7 @@ class MainGUI(xbmcgui.WindowXML):
     def play_voice_mail(self,recindex):
         log("> play_voice_mail()")
         settings = xbmcaddon.Addon(__addon_id__)
-        audio_format = ["wav","gsm","mp3"]
+        audio_format = ["wav","gsm","mp3","WAV"]
         asterisk_vm_format = audio_format[int(settings.getSetting("asterisk_vm_format"))]
         self.url_vm = settings.getSetting("asterisk_info_url") +"?recindex="+ recindex
         self.url_vm = self.url_vm +"&mailbox="+ settings.getSetting("asterisk_vm_mailbox")
@@ -260,14 +288,34 @@ class MainGUI(xbmcgui.WindowXML):
     def voice_mail_ended(self):
         log("> voice_mail_ended()")
         del self.vm_player
+        settings = xbmcaddon.Addon(__addon_id__)
+        asterisk_mwi_clean = False
+        if (settings.getSetting("asterisk_mwi_clean") == "true"):
+            asterisk_mwi_clean = True
+        del settings
         if (self.url_vm != ""):
             dialog = xbmcgui.Dialog()
             if (dialog.yesno(__addon__,__language__(30106))):
                 # Delete Voice Mail
                 self.delete_voice_mail()
                 self.onInit()
+            elif (asterisk_mwi_clean):
+                # Store Voice Mail (Updates MWI)
+                self.store_voice_mail()
+                self.onInit()
             del dialog
             self.url_vm = ""
+
+    #####################################################################################################
+    def store_voice_mail(self):
+        log("> store_voice_mail()")
+        if (self.url_vm != ""):
+            self.url_vm = self.url_vm +"&store"
+            if (self.DEBUG):
+                log(">> " + self.url_vm)
+            f = urllib.urlopen(self.url_vm)
+            f.close()
+            del f
 
     #####################################################################################################
     def delete_voice_mail(self):
@@ -279,7 +327,7 @@ class MainGUI(xbmcgui.WindowXML):
             f = urllib.urlopen(self.url_vm)
             f.close()
             del f
-
+            
 
 #############################################################################################################
 class VoiceMailPlayer(xbmc.Player):
@@ -345,7 +393,7 @@ try:
         ui = MainGUI("main_gui.xml",CWD,"Default")
     ui.doModal()
 except:
-    xbmc_notification = str(sys.exc_info()[1])
+    xbmc_notification = unicode(str(sys.exc_info()[1]))
     xbmc_img = xbmc.translatePath(os.path.join(RESOURCE_PATH,'media','xbmc-pbx-addon.png'))
     log(">> Notification: " + xbmc_notification)
     xbmc.executebuiltin("XBMC.Notification("+ __language__(30051) +","+ xbmc_notification +","+ str(15*1000) +","+ xbmc_img +")")

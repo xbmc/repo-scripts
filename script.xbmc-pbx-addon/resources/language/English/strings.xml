@@ -27,12 +27,14 @@
     <string id="30027">PBX: Redirect calls if XBMC is playing Video</string>
     <string id="30028">PBX: Redirect calls to context (name)</string>
     <string id="30029">PBX: Redirect only if ALERT_INFO equals to:</string>
+    <string id="30061">XBMC: Show Caller's Picture</string>
+    <string id="30062">XBMC: Search for Caller's Picture here:</string>
     <!-- Asterisk Outbound Calls -->
     <string id="30030">Outbound Calls</string>
     <string id="30031">Define here what to do with outbound calls</string>
     <string id="30032">PBX: Use extension</string>
     <string id="30033">PBX: Use context</string>
-    <!-- CDR & VoiceMail -->
+    <!-- CDR & VoiceMail & MWI -->
     <string id="30040">CDR &amp; VoiceMail</string>
     <string id="30041">Define here how to retrieve CDR and VoiceMail</string>
     <string id="30042">XBMC: URL to xbmc-pbx-addon.php</string>
@@ -40,6 +42,8 @@
     <string id="30044">PBX: Mailbox number</string>
     <string id="30045">PBX: VoiceMail Context</string>
     <string id="30046">PBX: Audio Format</string>
+    <string id="30047">Message Waiting Indicator (MWI)</string>
+    <string id="30048">MWI: After listening a VM, clear message count</string>
 
     <!-- GUI related strings -->
     <!-- Notification popup -->

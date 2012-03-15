@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window id="3001">
+    <allowoverlay>false</allowoverlay>
+    <backgroundcolor>0x00000000</backgroundcolor>
+    <zorder>2</zorder>
+    <controls>
+     	<control type="image" id="110">
+            <description>Caller's Picture</description>
+        	<posx>0</posx>
+        	<posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <visible>true</visible>
+            <fadetime>10</fadetime>
+        	<aspectratio>keep</aspectratio>
+        	<texture>background.png</texture>
+      	</control>
+    </controls>
+</window>
