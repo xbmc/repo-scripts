@@ -1,3 +1,8 @@
+Version 0.7.1
+	* Added Apple TV remote MENU key support to close dialogs
+		(submitted by Filipe Pina <fopina@skmobi.com>)
+	* Removed btjunkie.org search
+	* Updated The Pirate Bay search to use the new hostname and magnet links
 Version 0.7.0
 	* Updated to support XBMC Eden
 	* Added progress bars to the torrent list screen

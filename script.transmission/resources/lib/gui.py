@@ -3,7 +3,6 @@
 
 import sys
 import base64
-import urllib2
 import xbmc
 import xbmcgui
 from basictypes.bytes import Bytes
@@ -15,10 +14,10 @@ __settings__ = sys.modules[ "__main__" ].__settings__
 
 KEY_BUTTON_BACK = 275
 KEY_KEYBOARD_ESC = 61467
+KEY_MENU_ID = 92
 
 EXIT_SCRIPT = ( 6, 10, 247, 275, 61467, 216, 257, 61448, )
 CANCEL_DIALOG = EXIT_SCRIPT + ( 216, 257, 61448, )
-
 
 class TransmissionGUI(xbmcgui.WindowXMLDialog):
     def __init__(self, strXMLname, strFallbackPath, strDefaultName, bforeFallback=0):
@@ -110,7 +109,6 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
             # Add torrent
             engines = [
                 (_(200), None),
-                (_(201), search.BTJunkie),
                 (_(202), search.TPB),
                 (_(203), search.Mininova),
                 (_(204), search.TorrentReactor),
@@ -149,9 +147,7 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
                 if selected < 0:
                     return
                 try:
-                    f = urllib2.urlopen(results[selected]['url'])
-                    data = base64.b64encode(f.read())
-                    self.transmission.add(data)
+                    self.transmission.add_uri(results[selected]['url'])
                 except:
                     xbmcgui.Dialog().ok(_(0), _(293))
                     return
@@ -191,7 +187,7 @@ class TransmissionGUI(xbmcgui.WindowXMLDialog):
         pass
 
     def onAction( self, action ):
-        if ( action.getButtonCode() in CANCEL_DIALOG ):
+        if ( action.getButtonCode() in CANCEL_DIALOG ) or (action.getId() == KEY_MENU_ID):
             self.close()
     def close(self):
         if self.repeater:
@@ -245,7 +241,7 @@ class TorrentInfoGUI(xbmcgui.WindowXMLDialog):
         self.repeater.stop()
         super(TorrentInfoGUI, self).close()
     def onAction(self, action):
-        if (action.getButtonCode() in CANCEL_DIALOG):
+        if (action.getButtonCode() in CANCEL_DIALOG) or (action.getId() == KEY_MENU_ID):
             self.close()
             pass
     def onClick(self, controlID):
