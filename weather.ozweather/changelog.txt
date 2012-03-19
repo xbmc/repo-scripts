@@ -1,0 +1,58 @@
+V0.3.7
+- Localized, although seems kind of pointless...getting rteady for moving to official repo maybe?
+
+V0.3.6
+- Fixed locations bug with help from scotia, a tricky one as I couldn't raise the bug.... 
+
+V 0.3.5
+- New icon, little cleanup
+
+V 0.3.4
+
+- Fixes for ParseDom 0.9.1, and removed radar from DialogSeekBar as jmarshall confirms it won't re-read the images in the path
+- so it stops working after an hour or two...
+
+V 0.3.2
+
+- Removed 7 day icon hack now that my patch to xbmc mainline is in beta2
+
+V 0.3.1
+
+- Separate getting of current and forecast data so if one part of WeatherZone is not working, the rest still does
+- Added support for ABC Weather in 90 Seconds (pinched from Weather+, thanks brightstr!!)
+
+V 0.2.7
+- Don't crash if weatherzone has missing data, exit with an error to screen
+
+V 0.2.6
+- Do images before properties so updates look better visually
+- Improved DialogSeekBar.xml - if you want radar/weather when live video is paused...
+
+V 0.2.5
+- Added DialogSeekBar.xml - if you want radar/weather when live video is paused...
+
+V 0.2.4
+- increased timout if weatherzone is taking a while and if they're down plugin will not crash
+- added hack for the national radar IDR00004 that oddly uses a different background number  
+
+v 0.2.3
+- Temp fix to try really hard on ATV2 to get at least a basic background for troyp42
+- code to clear the window properties during updates so it's a bit neater
+
+v 0.2.2
+- Removed double setting
+
+v 0.2.1
+- Better logging, bug fixes, topography
+
+v0.1.9
+- First version with new radar support & 7 day forecasts
+
+v0.1
+- Fixed bugs - Windy with showers has an icon, and fire dangers is rading better.
+
+v0.0.7
+- First version in repo
+
+v0.0.4
+- second alpha

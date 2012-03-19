@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="30101">OzWeather Settings</string>
+	
+  <string id="30111">Change Postcode 1</string>
+	<string id="30112">Change Postcode 2</string>
+	<string id="30113">Change Postcode 3</string>
+	<string id="30114">Change Postcode 4</string>
+	<string id="30115">Change Postcode 5</string>
+	<string id="30116">Change Postcode 6</string>
+	
+	<string id="30155">Change Radar ID for Postcode 1</string>
+	<string id="30156">Change Radar ID for Postcode 2</string>
+	<string id="30157">Change Radar ID for Postcode 3</string>
+	<string id="30158">Change Radar ID for Postcode 4</string>
+	<string id="30159">Change Radar ID for Postcode 5</string>
+	<string id="30160">Change Radar ID for Postcode 6</string>
+
+	<string id="30194">Use extended features (long forecast, radar loop)</string>
+
+</strings>
+                      
