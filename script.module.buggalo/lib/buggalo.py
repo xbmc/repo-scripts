@@ -34,6 +34,10 @@ import xbmcaddon
 #   The full URL to where the gathered data should be posted.
 SUBMIT_URL = None
 
+EXTRA_DATA = dict()
+
+def addExtraData(key, value):
+    EXTRA_DATA[key] = value
 
 def getRandomHeading():
     """
@@ -51,13 +55,31 @@ def getLocalizedString(id):
     return buggaloAddon.getLocalizedString(id)
 
 
-def onExceptionRaised():
+def buggalo_try_except(extraData = None):
+    """
+    @buggalo_try_except function decorator wraps a function in a try..except clause and invokes onExceptionRaised()
+    in case an exception is raised. Provide extraData to specific function specific extraData.
+
+    @param extraData: str or dict
+    """
+    def decorator(fn):
+        def wrap_in_try_except(*args, **kwargs):
+            try:
+                fn(*args, **kwargs)
+            except Exception:
+                onExceptionRaised(extraData)
+        return wrap_in_try_except
+    return decorator
+
+def onExceptionRaised(extraData = None):
     """
     Invoke this method in an except clause to allow the user to submit
     a bug report with stacktrace, system information, etc.
 
     This also avoids the 'Script error' popup in XBMC, unless of course
     an exception is thrown in this code :-)
+
+    @param extraData: str or dict
     """
     # start by logging the usual info to stderr
     (type, value, traceback) = sys.exc_info()
@@ -72,12 +94,12 @@ def onExceptionRaised():
     thanks = getLocalizedString(91005)
 
     if xbmcgui.Dialog().yesno(heading, line1, line2, line3, no, yes):
-        data = _gatherData(type, value, traceback)
+        data = _gatherData(type, value, traceback, extraData)
         _submitData(data)
         xbmcgui.Dialog().ok(heading, thanks)
 
 
-def _gatherData(type, value, traceback):
+def _gatherData(type, value, traceback, extraData):
     data = dict()
     data['version'] = 3
     data['timestamp'] = datetime.datetime.now().isoformat()
@@ -96,7 +118,7 @@ def _gatherData(type, value, traceback):
         system['release'] = release
         system['version'] = version
         system['machine'] = machine
-    except Exception as ex:
+    except Exception, ex:
         system['sysname'] = sys.platform
         system['exception'] = str(ex)
     data['system'] = system
@@ -128,6 +150,20 @@ def _gatherData(type, value, traceback):
     exception['stacktrace'] = tb.format_tb(traceback)
     data['exception'] = exception
 
+    extraDataInfo = dict()
+    try:
+        for (key, value) in EXTRA_DATA.items():
+            extraDataInfo[key] = str(value)
+
+        if type(extraData) == dict:
+            for (key, value) in extraData.items():
+                extraDataInfo[key] = str(value)
+        elif extraData is not None:
+            extraDataInfo[''] = str(extraData)
+    except Exception, ex:
+        extraDataInfo['exception'] = str(ex)
+    data['extraData'] = extraDataInfo
+
     return simplejson.dumps(data)
 
 
@@ -142,4 +178,6 @@ def _submitData(data):
             break # success; no further attempts
         except Exception:
             pass # probably timeout; retry
+
+
 

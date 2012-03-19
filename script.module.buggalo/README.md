@@ -17,7 +17,7 @@ http://tommy.winther.nu/files/2011/12/script_error.png
 
 HOW TO USE
 ==========
-To use this script you must do two things besides importing it.
+To use this script you must do these things besides importing it.
 
 1.  Set buggalo.SUBMIT_URL to a full URL where the collected data is submitted.
 
@@ -40,12 +40,26 @@ To use this script you must do two things besides importing it.
     See this link for an example:
     https://github.com/twinther/script.tvguide/blob/master/gui.py#L140
 
+    Optionally, instead of writing the try..except block yourself, you can decorate the function
+    with @buggalo_try_except(). Function specific may be provide in the decorator:
+
+    ```python
+    @buggalo_try_except({'class' : 'MyWindowXML', 'method' : 'onInit', 'other_key' : 'other_value'})
+    def onInit(self)
+        pass
+    ```
+
 3.  Finally you must setup the website where the error report is submitted.
     A good starting point is my buggalo-web module on github:
     https://github.com/twinther/buggalo-web
     If you want to roll your own custom setup then take a look at the submit.php
     file which store the error report in the database.
     https://github.com/twinther/buggalo-web/blob/master/submit.php
+
+    If you don't want to or can't setup your own website you can use the shared site at:
+    http://buggalo.xbmc.info/
+    In this case buggalo.SUBMIT_URL must be set to:
+    http://buggalo.xbmc.info/submit.php
 
 WHAT IS COLLECTED
 =================
