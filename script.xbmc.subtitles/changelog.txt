@@ -1,3 +1,9 @@
+2.9.37
+- fixed encoding again, thx taxigps
+- fixed Shooter service. thx  taxigps
+- Update script for argenteam.net, thx Esteban Mendoza
+- Updated Subtitles.gr service, thx lambda81
+
 2.9.36
 - Added RegieLive.ro subtitles service, thx ThumbGen
 - fixed Subtitles.gr service

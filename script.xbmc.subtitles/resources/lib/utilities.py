@@ -97,13 +97,13 @@ REGEX_EXPRESSIONS = [ '[Ss]([0-9]+)[][._-]*[Ee]([0-9]+)([^\\\\/]*)$',
 class UserNotificationNotifier:
   def __init__(self, title, initialMessage, time = -1):
     self.__title = title
-    xbmc.executebuiltin("Notification(%s,%s,%i)" % (title, initialMessage, time))
+    xbmc.executebuiltin((u"Notification(%s,%s,%i)" % (title, initialMessage, time)).encode('utf-8'))
     
   def update(self, message, time = -1):
-    xbmc.executebuiltin("Notification(%s,%s,-1)" % (self.__title, message, time))
+    xbmc.executebuiltin((u"Notification(%s,%s,-1)" % (self.__title, message, time)).encode("utf-8"))
 
   def close(self, message, time = -1):
-    xbmc.executebuiltin("Notification(%s,%s,%i)" % (self.__title, message, time)) 
+    xbmc.executebuiltin((u"Notification(%s,%s,%i)" % (self.__title, message, time)).encode("utf-8")) 
 
    
 def log(module,msg):
@@ -166,19 +166,12 @@ def rem_files(directory):
       for name in files:
         os.remove(os.path.join(root, name))
   except:
-    try:
-      for root, dirs, files in os.walk(directory, topdown=False):
-        for items in dirs:
-          shutil.rmtree(os.path.join(root, items).decode("utf-8"), ignore_errors=True, onerror=None)
-        for name in files:
-          os.remove(os.path.join(root, name).decode("utf-8"))
-    except:
-      pass 
+    pass 
       
 def copy_files( subtitle_file, file_path ):
   subtitle_set = False
   try:
-    xbmcvfs.copy(subtitle_file.encode("utf-8"), file_path.encode("utf-8"))
+    xbmcvfs.copy(subtitle_file, file_path)
     log( __name__ ,"vfs module copy %s -> %s" % (subtitle_file, file_path))
     subtitle_set = True
   except :

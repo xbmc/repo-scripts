@@ -107,7 +107,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         else:
           self.sub_folder = os.path.dirname( movieFullPath )
       else:
-        self.sub_folder = os.path.dirname( movieFullPath )   
+        self.sub_folder = os.path.dirname( movieFullPath )
     
     if self.episode.lower().find("s") > -1:                                 # Check if season is "Special"             
       self.season = "0"                                                     #
@@ -164,7 +164,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         service = name
 
     if len(self.tvshow) > 0:
-      def_service = __addon__.getSetting( "deftvservice") 
+      def_service = __addon__.getSetting( "deftvservice")
     else:
       def_service = __addon__.getSetting( "defmovieservice")
       
@@ -297,17 +297,17 @@ class GUI( xbmcgui.WindowXMLDialog ):
       else:
         file_name = "%s%s" % ( sub_name, sub_ext )
       file_from = file.replace('\\','/')
-      file_to = os.path.join(self.sub_folder.encode("utf-8"), file_name).replace('\\','/')
+      file_to = os.path.join(self.sub_folder, file_name).replace('\\','/')
       # Create a files list of from-to tuples so that multiple files may be
       # copied (sub+idx etc')
       files_list = [(file_from,file_to)]
       # If the subtitle's extension sub, check if an idx file exists and if so
       # add it to the list
-      if ((sub_ext == ".sub") and (os.path.exists(unicode(file[:-3]+"idx", 'utf-8')))):
+      if ((sub_ext == ".sub") and (os.path.exists(file[:-3]+"idx"))):
           log( __name__ ,"found .sub+.idx pair %s + %s" % (file_from,file_from[:-3]+"idx"))
           files_list.append((file_from[:-3]+"idx",file_to[:-3]+"idx"))
       for cur_file_from, cur_file_to in files_list:
-         subtitle_set,file_path  = copy_files( cur_file_from, cur_file_to )  
+         subtitle_set,file_path  = copy_files( cur_file_from, cur_file_to )
       # Choose the last pair in the list, second item (destination file)
       if subtitle_set:
         subtitle = files_list[-1][1]

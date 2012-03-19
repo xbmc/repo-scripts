@@ -6,14 +6,24 @@ from utilities import log
 _ = sys.modules[ "__main__" ].__language__
 
 
-main_url = "http://buscador.argenteam.net/"
+main_url = "http://www.argenteam.net/search/"
 debug_pretext = "argenteam"
 
 #====================================================================================================================
 # Regular expression patterns
 #====================================================================================================================
 
-subtitle_pattern = "<a\shref=\"http://www.argenteam.net/download/(.+?)/(.+?)\"\sclass=\"searchResultLink\">(.+?)</a>"
+'''
+<div class="search-item-desc">
+	<a href="/episode/29322/The.Mentalist.%282008%29.S01E01-Pilot">
+	
+<div class="search-item-desc">
+	<a href="/movie/25808/Awake.%282007%29">
+'''
+
+search_results_pattern = "<div\sclass=\"search-item-desc\">(.+?)<a\shref=\"/(episode|movie)/(.+?)/(.+?)\">(.+?)</a>"
+
+subtitle_pattern = "<div\sclass=\"links\">(.+?)<strong>Descargado:</strong>(.+?)ve(ces|z)(.+?)<div>(.+?)<a\shref=\"/subtitles/(.+?)/(.+?)\">(.+?)</a>"
 
 #====================================================================================================================
 # Functions
@@ -23,34 +33,42 @@ subtitle_pattern = "<a\shref=\"http://www.argenteam.net/download/(.+?)/(.+?)\"\s
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, tvshow, season, episode):
 	
 	if languageshort == "es":
+		log( __name__ ,"TVShow: %s" % (tvshow))
 		if len(tvshow) > 0:
-			url = main_url + "?sourceid=xbmc-search&mode=results&search_keywords=" + urllib.quote_plus(searchstring)
+			url = main_url + urllib.quote_plus(searchstring)
 		else:
 			searchstring = re.sub('\([0-9]{4}\)','',searchstring)
-			url = main_url + "?sourceid=xbmc-search&mode=results&search_keywords=" + urllib.quote_plus(searchstring)
+			url = main_url + urllib.quote_plus(searchstring)
 			
 	content = geturl(url)
 	#subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': searchstring, 'sync': False, 'id' : 1, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
-	for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
-		id = matches.group(1)
-		filename=matches.group(3).replace('&#x22;','')
-		filename=filename.replace('&#34;','')
-		server = "http://www.argenteam.net"
-
-		if len(tvshow) > 0:
+	for matches in re.finditer(search_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
+		log( __name__ ,"Resultado: %s" % (matches))
+		log( __name__ ,"Tipo: %s" % (matches.group(2)))
+		log( __name__ ,"ID: %s" % (matches.group(3)))
+		log( __name__ ,"Link: %s" % (matches.group(4)))
+		
+		tipo = matches.group(2)
+		id = matches.group(3)
+		link = matches.group(4)
+		
+		url_subtitle = "http://www.argenteam.net/" + tipo +"/"+ id +"/"+link
+		
+		content_subtitle = geturl(url_subtitle)
+		for matches in re.finditer(subtitle_pattern, content_subtitle, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
+			log( __name__ ,"Descargas: %s" % (matches.group(2)))
 			
-			if int(episode) < 10:
-				episode2 = "0"+str(episode)
-			else:
-				episode2 = episode
-				
-			episodeSerie = season+episode2
-			if filename.find(episodeSerie) >= 0:
-				filename = filename
-				subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
-		else:
-			subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
-
+			id = matches.group(6)
+			filename=urllib.unquote_plus(matches.group(7))
+			server = filename
+			downloads = int(matches.group(2)) / 1000
+			if (downloads > 10):
+				downloads=10
+			#server = matches.group(4).encode('ascii')
+			log( __name__ ,"Resultado Subtítulo 2: %s" % (matches.group(6)))
+			subtitles_list.append({'rating': str(downloads), 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+	
+	
 def geturl(url):
     class MyOpener(urllib.FancyURLopener):
         version = ''
@@ -82,7 +100,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     getallsubs(searchstring, "es", "Spanish", file_original_path, subtitles_list, tvshow, season, episode)
 
     if spanish == 0:
-        msg = "Won't work, Subdivx is only for Spanish subtitles!"
+        msg = "Won't work, argenteam is only for Spanish subtitles!"
 
     return subtitles_list, "", msg #standard output
 
@@ -91,8 +109,9 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     id = subtitles_list[pos][ "id" ]
     server = subtitles_list[pos][ "server" ]
     language = subtitles_list[pos][ "language_name" ]
+
     if string.lower(language) == "spanish":
-        url = "http://www.argenteam.net/download/" + id + "/u=" + server
+        url = "http://www.argenteam.net/subtitles/" + id + "/"
 
     content = geturl(url)
     if content is not None:

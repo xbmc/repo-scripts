@@ -29,12 +29,11 @@ def getBlockHash(f, offset):
     return hashlib.md5(grapBlock(f, offset, 4096)).hexdigest()
 
 def genFileHash(fpath):
-    upath = unicode(fpath, 'utf-8')
-    ftotallen = os.stat(upath).st_size
+    ftotallen = os.stat(fpath).st_size
     if ftotallen < 8192:
         return ""
     offset = [4096, ftotallen/3*2, ftotallen/3, ftotallen - 8192]
-    f = open(upath, "rb")
+    f = open(fpath, "rb")
     return ";".join(getBlockHash(f, i) for i in offset)
 
 def getShortNameByFileName(fpath):
@@ -113,13 +112,13 @@ def downloadSubs(fpath, lang):
         pathinfo = "E:\\" + pathinfo.replace(os.path.sep, "\\")
     filehash = genFileHash(fpath)
     shortname = getShortName(fpath)
-    vhash = genVHash(SVP_REV_NUMBER, fpath, filehash)
+    vhash = genVHash(SVP_REV_NUMBER, fpath.encode("utf-8"), filehash)
     formdata = []
-    formdata.append(("pathinfo", pathinfo))
+    formdata.append(("pathinfo", pathinfo.encode("utf-8")))
     formdata.append(("filehash", filehash))
     if vhash:
         formdata.append(("vhash", vhash))
-    formdata.append(("shortname", shortname))
+    formdata.append(("shortname", shortname.encode("utf-8")))
     if lang != "chn":
         formdata.append(("lang", lang))
     
@@ -230,9 +229,8 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     barename = subtitles_list[pos][ "filename" ].rsplit(".",1)[0]
     language = subtitles_list[pos][ "language_name" ]
     for file in subtitles_list[pos][ "filedata" ]:
-        filename = os.path.join(tmp_sub_dir, ".".join([barename, file.ExtName]).decode("utf-8")).encode('utf-8')
-        fn = unicode(filename, 'utf-8')
-        open(fn,"wb").write(file.FileData)
+        filename = os.path.join(tmp_sub_dir, ".".join([barename, file.ExtName]))
+        open(filename,"wb").write(file.FileData)
         if (file.ExtName in ["srt", "txt", "ssa", "smi", "sub"]):
             subs_file = filename
     return False, language, subs_file #standard output
