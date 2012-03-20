@@ -1,3 +1,15 @@
+v0.1.8
+- use title instead of label
+
+v0.1.7
+- use json if python 2.7 is available
+
+v0.1.6
+- use simplejson
+
+v0.1.5
+- ignore possible encoding errors
+
 v0.1.4
 - show correct labels in dialog
 
