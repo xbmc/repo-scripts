@@ -73,7 +73,7 @@ class Main:
     def _fetch_movies( self ):
         self.movies = []
         self.movieList = []
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["resume", "genre", "studio", "tagline", "runtime", "fanart", "thumbnail", "file", "plot", "plotoutline", "year", "lastplayed", "rating"]}, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "resume", "genre", "studio", "tagline", "runtime", "fanart", "thumbnail", "file", "plot", "plotoutline", "year", "lastplayed", "rating"]}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if json_response['result'].has_key('movies'):
@@ -81,7 +81,7 @@ class Main:
                 self.movieList.append(item)
                 if item['resume']['position'] > 0:
                     # this item has a resume point
-                    label = item['label']
+                    title = item['title']
                     year = str(item['year'])
                     genre = item['genre']
                     studio = item['studio']
@@ -104,14 +104,14 @@ class Main:
                     else:
                         datetime = strptime(lastplayed, "%Y-%m-%d %H:%M:%S")
                         lastplayed = str(mktime(datetime))
-                    self.movies.append([lastplayed, label, year, genre, studio, plot, plotoutline, tagline, runtime, fanart, thumbnail, path, rating])
+                    self.movies.append([lastplayed, title, year, genre, studio, plot, plotoutline, tagline, runtime, fanart, thumbnail, path, rating])
         self.movies.sort(reverse=True)
         log("movie list: %s items" % len(self.movies))
 
     def _fetch_tvshows( self ):
         self.tvshows = []
         # fetch all episodes in one query
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"properties": ["playcount", "plot", "season", "episode", "showtitle", "thumbnail", "file", "lastplayed", "rating"], "sort": {"method": "episode"} }, "id": 1}' )
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"properties": ["title", "playcount", "plot", "season", "episode", "showtitle", "thumbnail", "file", "lastplayed", "rating"], "sort": {"method": "episode"} }, "id": 1}' )
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if json_response['result'].has_key('episodes'):
@@ -119,12 +119,12 @@ class Main:
             # our list is sorted by episode number, secondary we sort by tvshow title (itertools.groupy needs contiguous items) and split it into seperate lists for each tvshow
             episodes = [list(group) for key,group in itertools.groupby(sorted(json_response, key=itemgetter('showtitle')), key=itemgetter('showtitle'))]
         # fetch all tvshows, sorted by title 
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["studio", "thumbnail", "fanart"], "sort": {"method": "label"}}, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "studio", "thumbnail", "fanart"], "sort": {"method": "title"}}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if json_response['result'].has_key('tvshows'):
             for count, tvshow in enumerate(json_response['result']['tvshows']):
-                item = [tvshow['tvshowid'], tvshow['thumbnail'], tvshow['studio'], tvshow['label'], tvshow['fanart'], []]
+                item = [tvshow['tvshowid'], tvshow['thumbnail'], tvshow['studio'], tvshow['title'], tvshow['fanart'], []]
                 for episodelist in episodes:
                     if episodelist[0]['showtitle'] == item[3]:
                         item[5] = episodelist
@@ -167,7 +167,7 @@ class Main:
                         break
                     else:
                         # this is the episode we need
-                        label = item['label']
+                        title = item['title']
                         episode = "%.2d" % float(item['episode'])
                         path = item['file']
                         plot = item['plot']
@@ -188,7 +188,7 @@ class Main:
                         studio = tvshow[2]
                         fanart = tvshow[4]
                         seasonthumb = ''
-                        self.episodes.append([lastplayed, label, episode, season, plot, showtitle, path, thumbnail, fanart, episodeno, studio, showthumb, seasonthumb, resumable, rating, playcount, tvshowid])
+                        self.episodes.append([lastplayed, title, episode, season, plot, showtitle, path, thumbnail, fanart, episodeno, studio, showthumb, seasonthumb, resumable, rating, playcount, tvshowid])
                         # we have found our episode, collected all data, so continue to next tv show
                         break
         self.episodes.sort(reverse=True)
@@ -235,13 +235,13 @@ class Main:
         self.albums = []
         for count, albumid in enumerate( self.albumsids ):
             count += 1
-            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params": {"properties": ["description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "rating"], "albumid":%s }, "id": 1}' % albumid[0])
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params": {"properties": ["title", "description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "rating"], "albumid":%s }, "id": 1}' % albumid[0])
             json_query = unicode(json_query, 'utf-8', errors='ignore')
             json_response = simplejson.loads(json_query)
             if json_response['result'].has_key('albumdetails'):
                 item = json_response['result']['albumdetails']
                 description = item['description']
-                album = item['label']
+                album = item['title']
                 albumlabel = item['albumlabel']
                 artist = item['artist']
                 genre = item['genre']
@@ -418,7 +418,7 @@ class Main:
                                     if seasonnumber != item[3]:
                                         # our new episode is from the next season, so fetch seasonthumb
                                         seasonthumb = self._fetch_seasonthumb(tvshowid, seasonnumber)
-                                    self.episodes.insert( 0, [ep['lastplayed'], ep['label'], episodenumber, seasonnumber, ep['plot'], ep['showtitle'], ep['file'], ep['thumbnail'], fanart, "s%se%s" % ( seasonnumber,  episodenumber, ), tvshow[2], tvshow[1], seasonthumb, "True", str(round(float(ep['rating']),1)), ep['playcount']] )
+                                    self.episodes.insert( 0, [ep['lastplayed'], ep['title'], episodenumber, seasonnumber, ep['plot'], ep['showtitle'], ep['file'], ep['thumbnail'], fanart, "s%se%s" % ( seasonnumber,  episodenumber, ), tvshow[2], tvshow[1], seasonthumb, "True", str(round(float(ep['rating']),1)), ep['playcount']] )
                                     insert = True
                                     if update:
                                         break
@@ -523,7 +523,7 @@ class MyPlayer(xbmc.Player):
         except:
             pass
         if type == 'movie':
-            label = xbmc.getInfoLabel('VideoPlayer.Title')
+            title = xbmc.getInfoLabel('VideoPlayer.Title')
             year = xbmc.getInfoLabel('VideoPlayer.Year')
             genre = xbmc.getInfoLabel('VideoPlayer.Genre')
             studio = xbmc.getInfoLabel('VideoPlayer.Studio')
@@ -535,7 +535,7 @@ class MyPlayer(xbmc.Player):
             rating = str(xbmc.getInfoLabel('VideoPlayer.Rating'))
             self.item = ["", label, year, genre, studio, plot, plotoutline, tagline, runtime, "", "", path, rating]
         elif type == 'episode':
-            label = xbmc.getInfoLabel('VideoPlayer.Title')
+            title = xbmc.getInfoLabel('VideoPlayer.Title')
             episode = "%.2d" % float(xbmc.getInfoLabel('VideoPlayer.Episode'))
             path = xbmc.getInfoLabel('Player.Filenameandpath')
             plot = xbmc.getInfoLabel('VideoPlayer.Plot')
@@ -549,7 +549,7 @@ class MyPlayer(xbmc.Player):
                 playcount = int(playcount)
             else:
                 playcount = 0
-            self.item = ["", label, episode, season, plot, showtitle, path, "", "", episodeno, "", "", "", "True", rating, playcount, ""]
+            self.item = ["", title, episode, season, plot, showtitle, path, "", "", episodeno, "", "", "", "True", rating, playcount, ""]
         elif type == 'album':
             pass
 
