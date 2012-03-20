@@ -42,8 +42,9 @@
         <setting label="32121" type="bool"      id="movie_fanart"               subsetting="true" enable="eq(-2,true)"  default="true" />
         <setting label="32122" type="bool"      id="movie_extrafanart"          subsetting="true" enable="eq(-3,true)"  default="true" />
         <setting label="32131" type="bool"      id="movie_extrathumbs"          subsetting="true" enable="eq(-4,true)"  default="true" />
-        <setting label="32126" type="bool"      id="movie_logo"                 subsetting="true" enable="false"        default="false" />
-        <setting label="32132" type="bool"      id="movie_discart"              subsetting="true" enable="false"        default="false" />
+        <setting label="32126" type="bool"      id="movie_logo"                 subsetting="true" enable="eq(-5,true)"  default="false"/>
+        <setting label="32125" type="bool"      id="movie_clearart"             subsetting="true" enable="eq(-6,true)"  default="true" />
+        <setting label="32132" type="bool"      id="movie_discart"              subsetting="true" enable="eq(-7,true)"  default="false"/>
     </category>
     
 <!-- Plugin settings: TV Show section -->
@@ -53,19 +54,19 @@
         <setting type="sep" />
         <setting label="32013" type="bool"      id="tvshow_enable"              default="true" />
         <setting label="32128" type="bool"      id="tvshow_poster"              subsetting="true" enable="eq(-1,true)"  default="true" />
-        <setting label="32129" type="bool"      id="tvshow_seasonposter"        subsetting="true" enable="false"        default="false" />
+        <setting label="32129" type="bool"      id="tvshow_seasonposter"        subsetting="true" enable="eq(-2,true)"  default="false"/>
         <setting label="32121" type="bool"      id="tvshow_fanart"              subsetting="true" enable="eq(-3,true)"  default="true" />
         <setting label="32122" type="bool"      id="tvshow_extrafanart"         subsetting="true" enable="eq(-4,true)"  default="true" />
         <setting label="32125" type="bool"      id="tvshow_clearart"            subsetting="true" enable="eq(-5,true)"  default="true" />
-        <setting label="32127" type="bool"      id="tvshow_characterart"        subsetting="true" enable="eq(-6,true)"  default="false" />
+        <setting label="32127" type="bool"      id="tvshow_characterart"        subsetting="true" enable="eq(-6,true)"  default="false"/>
         <setting label="32126" type="bool"      id="tvshow_logo"                subsetting="true" enable="eq(-7,true)"  default="true" />
         <setting label="32123" type="bool"      id="tvshow_showbanner"          subsetting="true" enable="eq(-8,true)"  default="true" />
-        <setting label="32124" type="bool"      id="tvshow_seasonbanner"        subsetting="true" enable="eq(-9,true)"  default="false" />
+        <setting label="32124" type="bool"      id="tvshow_seasonbanner"        subsetting="true" enable="eq(-9,true)"  default="false"/>
         <setting label="32130" type="bool"      id="tvshow_thumb"               subsetting="true" enable="eq(-10,true)" default="true" />
-        <setting label="32134" type="bool"      id="tvshow_seasonthumbs"        subsetting="true" enable="false"        default="false" />
+        <setting label="32134" type="bool"      id="tvshow_seasonthumb"         subsetting="true" enable="eq(-11,true)" default="false"/>
     </category>
 
-<!-- Plugin settings: Movie section -->
+<!-- Plugin settings: Musicvideo section -->
     <category label="32091" id="section_musicvideo">
         <setting type="sep" />
         <setting label="32092" type="lsep" />
@@ -75,6 +76,9 @@
         <setting label="32121" type="bool"      id="musicvideo_fanart"          subsetting="true" enable="eq(-2,true)"  default="true" />
         <setting label="32122" type="bool"      id="musicvideo_extrafanart"     subsetting="true" enable="eq(-3,true)"  default="true" />
         <setting label="32131" type="bool"      id="musicvideo_extrathumbs"     subsetting="true" enable="eq(-4,true)"  default="true" />
+        <setting label="32126" type="bool"      id="musicvideo_logo"            subsetting="true" enable="false"        default="false" visible="false"/>
+        <setting label="32125" type="bool"      id="musicvideo_clearart"        subsetting="true" enable="false"        default="false" visible="false"/>
+        <setting label="32132" type="bool"      id="musicvideo_discart"         subsetting="true" enable="false"        default="false" visible="false"/>
     </category>
     
 <!-- Plugin settings: Advanced section -->
@@ -84,10 +88,12 @@
         <setting type="sep" />
         <setting label="32035" type="bool"      id="files_overwrite"            default="false"/>
         <setting type="sep" />
+        <!--
         <setting label="32036" type="bool"      id="centralize_enable"          default="false"/>
         <setting label="32038" type="folder"    id="centralfolder_movies"       default=""      subsetting="true"    source="auto" option="writeable" enable="eq(-1,true)" visible="eq(-1,true)"/>
         <setting label="32037" type="folder"    id="centralfolder_tvshows"      default=""      subsetting="true"    source="auto" option="writeable" enable="eq(-2,true)" visible="eq(-2,true)"/>
         <setting type="sep" />
+        -->
         <setting label="32106" type="bool"      id="xbmc_caching_enabled"       default="false" enable="false"/>
     </category>
     

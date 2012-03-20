@@ -14,9 +14,9 @@
         <string id="32011">Netzwerkfehler erkannt</string>
         <string id="32012">Abgeschlossen</string>
         <string id="32013">Download aktivieren</string>
-        <string id="32014">extrafanart zentralisiert</string>
+        <string id="32014">Total Artwork</string>
         <string id="32015">Bitte wählen Sie</string>
-        <string id="32016">heruntergeladen</string>
+        <string id="32016">Failed items</string>
         <string id="32017">abgebrochen</string>
         <string id="32018">Download vom Benutzer abgebrochen</string>
         <string id="32019">Verzögerter Start in Minuten:</string>
@@ -96,7 +96,7 @@
         <string id="32130">Thumb 16:9</string>
         <string id="32131">Extrathumbs</string>
         <string id="32132">CD-Art</string>
-        <string id="32133">-</string>
+        <string id="32133">Artwork</string>
         <string id="32134">Staffel-Thumb 16:9</string>
 
     <!-- Add-on messages: -->
@@ -105,14 +105,14 @@
         <string id="32143">Votes</string>
         <string id="32144">Season</string>
         <string id="32145">Size</string>
-        <string id="32146">-</string>
-        <string id="32147">-</string>
-        <string id="32148">-</string>
-        <string id="32149">-</string>
-        <string id="32150">-</string>
-        <string id="32151">-</string>
-        <string id="32152">-</string>
-        <string id="32153">-</string>
+        <string id="32146">Disc</string>
+        <string id="32147">below limit setting</string>
+        <string id="32148">Time of finish</string>
+        <string id="32149">No failed or missing items found</string>
+        <string id="32150">add-on aborted because of XBMC shutting down</string>
+        <string id="32151">add-on cancelled while searching for Artwork</string>
+        <string id="32152">add-on aborted because of problems</string>
+        <string id="32153">add-on cancelled while downloading Artwork</string>
         <string id="32154">-</string>
         
     <!-- Add-on settings: Info section id=32181 to 32190-->   

@@ -7,10 +7,10 @@ import xbmcgui
 from xbmcaddon import Addon
 
 ### get addon info
-ADDON           = Addon( "script.artwork.downloader" )
-ADDON_NAME      = ADDON.getAddonInfo( "name" )
-ADDON_DIR       = ADDON.getAddonInfo( "path" )
-ADDON_PROFILE   = xbmc.translatePath( ADDON.getAddonInfo('profile') )
+__addon__           = Addon( "script.artwork.downloader" )
+__addonname__       = __addon__.getAddonInfo( "name" )
+__addonpath__       = __addon__.getAddonInfo( "path" )
+__addonprofile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode('utf-8')
 
 
 class Viewer:
@@ -33,16 +33,16 @@ class Viewer:
         #get header, text
         heading, text = self.getText()
         # set heading
-        self.window.getControl( self.CONTROL_LABEL ).setLabel( "%s - %s" % ( heading, ADDON_NAME, ) )
+        self.window.getControl( self.CONTROL_LABEL ).setLabel( "%s - %s" % ( heading, __addonname__, ) )
         # set text
         self.window.getControl( self.CONTROL_TEXTBOX ).setText( text )
 
     def getText( self ):
         try:
             if sys.argv[ 1 ] == "downloadreport":
-                return "Download report", self.readFile( os.path.join( ADDON_PROFILE, "downloadreport.txt" ) )
+                return "Download report", self.readFile( os.path.join( __addonprofile__, "downloadreport.txt" ) )
         except Exception, e:
-            xbmc.log( ADDON_NAME + ': ' + str( e ), xbmc.LOGERROR )
+            xbmc.log( __addonname__ + ': ' + str( e ), xbmc.LOGERROR )
         return "", ""
 
     def readFile( self, filename ):
@@ -56,12 +56,12 @@ class WebBrowser:
         try:
             url = sys.argv[ 2 ]
             # notify user
-            notification( ADDON_NAME, url )
+            notification( __addonname__, url )
             xbmc.sleep( 100 )
             # launch url
             self.launchUrl( url )
         except Exception, e:
-            xbmc.log( ADDON_NAME + ': ' + str( e ), xbmc.LOGERROR )
+            xbmc.log( __addonname__ + ': ' + str( e ), xbmc.LOGERROR )
 
     def launchUrl( self, url ):
         import webbrowser
@@ -75,7 +75,7 @@ def Main():
         else:
             Viewer()
     except Exception, e:
-        xbmc.log( ADDON_NAME + ': ' + str( e ), xbmc.LOGERROR )
+        xbmc.log( __addonname__ + ': ' + str( e ), xbmc.LOGERROR )
 
 
 

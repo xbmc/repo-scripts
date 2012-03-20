@@ -14,9 +14,9 @@
         <string id="32011">Wystąpił błąd sieci</string>
         <string id="32012">Zakończono</string>
         <string id="32013">Włącz pobieranie</string>
-        <string id="32014">scentralizowany ExtraFanArt</string>
+        <string id="32014">Total Artwork</string>
         <string id="32015">Proszę wybrać</string>
-        <string id="32016">pobrano</string>
+        <string id="32016">Failed items</string>
         <string id="32017">Anulowano</string>
         <string id="32018">Pobierane zostało anulowane przez użytkownika</string>
         <string id="32019">Opóźnienie startu w minutach:</string>
@@ -96,7 +96,7 @@
         <string id="32130">Miniatury 16:9</string>
         <string id="32131">ExtraMiniatury</string>
         <string id="32132">Grafika płyty</string>
-        <string id="32133">-</string>
+        <string id="32133">Artwork</string>
         <string id="32134">Miniatury sezonu 16:9</string>
 
     <!-- Add-on messages: -->
@@ -105,14 +105,14 @@
         <string id="32143">Votes</string>
         <string id="32144">Season</string>
         <string id="32145">Size</string>
-        <string id="32146">-</string>
-        <string id="32147">-</string>
-        <string id="32148">-</string>
-        <string id="32149">-</string>
-        <string id="32150">-</string>
-        <string id="32151">-</string>
-        <string id="32152">-</string>
-        <string id="32153">-</string>
+        <string id="32146">Disc</string>
+        <string id="32147">below limit setting</string>
+        <string id="32148">Time of finish</string>
+        <string id="32149">No failed or missing items found</string>
+        <string id="32150">add-on aborted because of XBMC shutting down</string>
+        <string id="32151">add-on cancelled while searching for Artwork</string>
+        <string id="32152">add-on aborted because of problems</string>
+        <string id="32153">add-on cancelled while downloading Artwork</string>
         <string id="32154">-</string>
         
     <!-- Add-on settings: Info section id=32181 to 32190-->   

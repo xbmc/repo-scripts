@@ -15,23 +15,22 @@ __version__     = __addon__.getAddonInfo('version')
 __addonpath__   = __addon__.getAddonInfo('path')
 __icon__        = __addon__.getAddonInfo('icon')
 __localize__    = __addon__.getLocalizedString
-__addondir__    = xbmc.translatePath( __addon__.getAddonInfo('profile') )
+__addonprofile__= xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode('utf-8')
 
 #import libraries
-from resources.lib import utils
-from resources.lib.utils import _log as log
-from resources.lib.settings import _settings
+from resources.lib.utils import *
+from resources.lib.settings import settings
 
 # starts update/sync
 def autostart():
         xbmcaddon.Addon().setSetting(id="files_overwrite", value='false')
-        settings = _settings()
-        settings._get_general()
-        tempdir = os.path.join(__addondir__, 'temp')
-        service_runtime  = str(settings.service_runtime + ':00')
-        log('## Service - Run at startup: %s'%settings.service_startup, xbmc.LOGNOTICE)        
-        log('## Service - Delayed startup: %s minutes'%settings.service_startupdelay, xbmc.LOGNOTICE)   
-        log('## Service - Run as service: %s'%settings.service_enable, xbmc.LOGNOTICE)
+        setting = settings()
+        setting._get_general()
+        tempdir = os.path.join(__addonprofile__, 'temp')
+        service_runtime  = str(setting.service_runtime + ':00')
+        log('## Service - Run at startup: %s'%setting.service_startup, xbmc.LOGNOTICE)        
+        log('## Service - Delayed startup: %s minutes'%setting.service_startupdelay, xbmc.LOGNOTICE)   
+        log('## Service - Run as service: %s'%setting.service_enable, xbmc.LOGNOTICE)
         log('## Service - Time: %s'%service_runtime, xbmc.LOGNOTICE)
         log("##########........................")
         # Check if tempdir exists and remove it
@@ -42,9 +41,9 @@ def autostart():
         # Run script when enabled and check on existence of tempdir.
         # This because it is possible that script was running even when we previously deleted it.
         # Could happen when switching profiles and service gets triggered again
-        if settings.service_startup and not xbmcvfs.exists(tempdir):
-            xbmc.executebuiltin('XBMC.AlarmClock(ArtworkDownloader,XBMC.RunScript(script.artwork.downloader,silent=true),00:%s:15,silent)' %settings.service_startupdelay) 
-        if settings.service_enable:
+        if setting.service_startup and not xbmcvfs.exists(tempdir):
+            xbmc.executebuiltin('XBMC.AlarmClock(ArtworkDownloader,XBMC.RunScript(script.artwork.downloader,silent=true),00:%s:15,silent)' %setting.service_startupdelay) 
+        if setting.service_enable:
             while (not xbmc.abortRequested):
                 xbmc.sleep(5000)
                 if not(time.strftime('%H:%M') == service_runtime):
@@ -53,6 +52,10 @@ def autostart():
                     if not xbmcvfs.exists(tempdir):
                         log('Time is %s:%s, Scheduled run starting' % (time.strftime('%H'), time.strftime('%M')))
                         xbmc.executebuiltin('XBMC.RunScript(script.artwork.downloader,silent=true)')
+                        # Because we now use the commoncache module the script is run so fast it is possible it is started twice
+                        # within the one minute window. So keep looping until it goes out of that window
+                        while (not xbmc.abortRequested and time.strftime('%H:%M') == service_runtime):
+                            xbmc.sleep(5000)
                     else:
                         log('Addon already running, scheduled run aborted', xbmc.LOGNOTICE)
 

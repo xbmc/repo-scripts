@@ -1,4 +1,21 @@
-[B]1.0.7[/B]
+[B]1.0.8[/B]
+- Added: Increased speed by using commingcache for library JSON when using custom/gui mode (expires after 1 hour)
+- Added: Greek translation (thx CutSickAss)
+- Added: Spanish translation (thx PatOso)
+- added: Portuguese translation (Brazil) (thx Wanilton)
+- added: French translation (thx mikebzh44)
+- Added: Localization of the download report
+- Added: TV Show Season Posters
+- Added: TV Show Season Banners
+- Added: TV Show Season Thumb 16:9
+- Added: Movie Clearlogo
+- Added: Movie Clearart
+- Added: Movie Discart
+- Fixed: Don't run script twice when it was started on service time caused by the speed increase by using commoncache
+- Changed: Switched to the new fanart.tv API
+- Changed: increase caching of API calls because provider data doesn't change that (24->48 hours)
+
+[B]1.0.7[/B] 
 - Changed: Revert 1.0.6 because dependencies are now met. Meaning options from 1.0.5 are now active
 - Fixed: Limit TMDB by rating not by number of votes
 

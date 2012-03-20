@@ -4,10 +4,7 @@ import sys
 
 ### import libraries
 from resources.lib.script_exceptions import NoFanartError, ItemNotFoundError
-from resources.lib.utils import _log as log
-from resources.lib.utils import _normalize_string as normalize
-from resources.lib.utils import _get_xml as get_xml
-from resources.lib.utils import _get_json as get_json
+from resources.lib.utils import *
 from resources.lib import language
 from elementtree import ElementTree as ET
 from operator import itemgetter
@@ -135,7 +132,7 @@ class TMDBProvider():
 
 
 def _search_movie(medianame,year=''):
-    medianame = normalize(medianame)
+    medianame = normalize_string(medianame)
     log('TMDB API search criteria: Title[''%s''] | Year[''%s'']' % (medianame,year) )
     illegal_char = ' -<>:"/\|?*%'
     for char in illegal_char:

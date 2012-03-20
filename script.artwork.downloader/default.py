@@ -16,7 +16,7 @@ __addonname__   = __addon__.getAddonInfo('name')
 __author__      = __addon__.getAddonInfo('author')
 __version__     = __addon__.getAddonInfo('version')
 __addonpath__   = __addon__.getAddonInfo('path')
-__addondir__    = xbmc.translatePath( __addon__.getAddonInfo('profile') )
+__addonprofile__= xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode('utf-8')
 __icon__        = __addon__.getAddonInfo('icon')
 __localize__    = __addon__.getLocalizedString
 
@@ -25,15 +25,12 @@ from traceback import print_exc
 from resources.lib import language
 from resources.lib import media_setup
 from resources.lib import provider
-from resources.lib.provider import tmdb
-from resources.lib.utils import _log as log
-from resources.lib.utils import _dialog as dialog
-from resources.lib.utils import _getUniq as getUniq
-from resources.lib.utils import _save_nfo_file as save_nfo_file
-from resources.lib.script_exceptions import DownloadError, CreateDirectoryError, HTTP404Error, HTTP503Error, NoFanartError, HTTPTimeout, ItemNotFoundError, CopyError
+from resources.lib.provider import tmdb # import on behalf of searching when there's no ID
+from resources.lib.utils import *
+from resources.lib.script_exceptions import *
 from resources.lib.fileops import fileops
 from resources.lib.apply_filters import apply_filters
-from resources.lib.settings import _settings
+from resources.lib.settings import settings
 from resources.lib.media_setup import _media_listing as media_listing
 from xml.parsers.expat import ExpatError
 
@@ -64,7 +61,7 @@ class Main:
                 self.settings.background = False
                 self.settings.notify = False
                 self.settings.files_overwrite = True
-            dialog('create', line1 = __localize__(32008), background = self.settings.background)
+            dialog_msg('create', line1 = __localize__(32008), background = self.settings.background)
             # Check if mediatype is specified
             if not self.mediatype == '':
                 # Check if medianame is specified
@@ -74,10 +71,12 @@ class Main:
                         self.solo_mode(self.mediatype, self.medianame, self.mediapath)
                     else:
                         self.solo_mode(self.mediatype, self.medianame, self.mediapath)
-                        if not dialog('iscanceled', background = self.settings.background) and not self.mode == 'customgui':
+                        if not dialog_msg('iscanceled', background = self.settings.background) and not self.mode == 'customgui':
                             self._batch_download(self.download_list)
-                # No medianame specified
+                
                 else:
+                    # If no medianame specified
+                    # 1. Check what media type was specified, 2. Retrieve library list, 3. Enable the correct type, 4. Do the API stuff
                     if self.mediatype == 'movie':
                         log("Bulk mode: movie")
                         self.Medialist = media_listing('movie')
@@ -99,7 +98,7 @@ class Main:
                         self.settings.tvshow_enable = 'false'
                         self.settings.musicvideo_enable = 'true'
                         self.download_artwork(self.Medialist, self.musicvideo_providers)
-                    if not dialog('iscanceled', background = self.settings.background):
+                    if not dialog_msg('iscanceled', background = self.settings.background):
                         self._batch_download(self.download_list)
             # No mediatype is specified
             else:
@@ -110,27 +109,30 @@ class Main:
                     self.settings.musicvideo_enable = True
                 
                 # Normal oprations check
-                if self.settings.movie_enable and not dialog('iscanceled', background = True):
+                # 1. Check if enable, 2. Get library list, 3. Set mediatype, 4. Do the API stuff
+                # Do this for each media type
+                if self.settings.movie_enable and not dialog_msg('iscanceled', background = True):
                     self.Medialist = media_listing('movie')
                     self.mediatype = 'movie'
                     self.download_artwork(self.Medialist, self.movie_providers)
                 else:
                     log('Movie fanart disabled, skipping', xbmc.LOGINFO)
                 
-                if self.settings.tvshow_enable and not dialog('iscanceled', background = True):
+                if self.settings.tvshow_enable and not dialog_msg('iscanceled', background = True):
                     self.Medialist = media_listing('tvshow')
                     self.mediatype = 'tvshow'
                     self.download_artwork(self.Medialist, self.tv_providers)
                 else:
                     log('TV fanart disabled, skipping', xbmc.LOGINFO)
                 
-                if self.settings.musicvideo_enable and not dialog('iscanceled', background = True):
+                if self.settings.musicvideo_enable and not dialog_msg('iscanceled', background = True):
                     self.Medialist = media_listing('musicvideo')
                     self.mediatype = 'musicvideo'
                     self.download_artwork(self.Medialist, self.musicvideo_providers)
                 else:
                     log('Musicvideo fanart disabled, skipping', xbmc.LOGINFO)
-                if not dialog('iscanceled', background = self.settings.background):
+                # If not cancelled throw the whole downloadlist into the batch downloader
+                if not dialog_msg('iscanceled', background = self.settings.background):
                     self._batch_download(self.download_list)
         else:
             log('Initialisation error, script aborting', xbmc.LOGERROR)
@@ -141,23 +143,23 @@ class Main:
 
     ### Declare standard vars   
     def initial_vars(self):
-        providers = provider.get_providers()
-        self.settings = _settings()
-        self.filters = apply_filters()
-        self.movie_providers = providers['movie_providers']
-        self.tv_providers = providers['tv_providers']
-        self.musicvideo_providers = providers['musicvideo_providers']
-        self.download_counter = {}
+        providers       = provider.get_providers()
+        self.settings   = settings()
+        self.filters    = apply_filters()
+        self.movie_providers        = providers['movie_providers']
+        self.tv_providers           = providers['tv_providers']
+        self.musicvideo_providers   = providers['musicvideo_providers']
+        self.download_counter       = {}
         self.download_counter['Total Artwork'] = 0
-        self.reportdata = '[B]Artwork Downloader:[/B]'
-        self.mediatype = ''
-        self.medianame = ''
-        self.mediapath = ''
-        self.mode = ''
-        self.silent = ''
+        self.reportdata             = '[B]Artwork Downloader:[/B]'
+        self.mediatype  = ''
+        self.medianame  = ''
+        self.mediapath  = ''
+        self.mode       = ''
+        self.silent     = ''
         self.gui_selected_type = ''
-        self.failed_items = []
-        self.download_list = []
+        self.failed_items   = []
+        self.download_list  = []
         self._download_art_succes = False
 
     ### load settings and initialise needed directories
@@ -196,11 +198,11 @@ class Main:
             # Check for medianame
             match = re.search("medianame=(.*)" , item)
             if match:
-                self.medianame = match.group(1)
+                self.medianame = match.group(1).lstrip(' " ').rstrip(' " ')
             # Check for mediapath
             match = re.search("mediapath=(.*)" , item)
             if match:
-                self.mediapath = (match.group(1).rstrip(' /\ '))
+                self.mediapath = match.group(1).lstrip(' " ').rstrip(' "/\ ')
                 log('matchgroup: %s' %self.mediapath)
         try:
             # Creates temp folder
@@ -213,7 +215,7 @@ class Main:
 
     def cleanup(self):
         if self.fileops._exists(self.fileops.tempdir):
-            dialog('update', percentage = 100, line1 = __localize__(32005), background = self.settings.background)
+            dialog_msg('update', percentage = 100, line1 = __localize__(32005), background = self.settings.background)
             log('Cleaning up temp files')
             for x in os.listdir(self.fileops.tempdir):
                 tempfile = os.path.join(self.fileops.tempdir, x)
@@ -228,32 +230,33 @@ class Main:
         
         ### log results and notify user
         # Download totals to log and to download report
-        self.reportdata += ( '\n - Time of finish: %s' %time.strftime('%d %B %Y - %H:%M') )
-        self.reportdata += ( '\n[B]Download totaliser:[/B]' )
-        self.reportdata += ( '\n - Total Artwork: %s' % self.download_counter['Total Artwork'] )
+        self.reportdata += ( '\n - %s: %s' %(__localize__(32148), time.strftime('%d %B %Y - %H:%M')) )      # Time of finish
+        self.reportdata += ( '\n[B]%s:[/B]' %(__localize__(32020)) )                                        # Download total header
+        self.reportdata += ( '\n - %s: %s' % (__localize__(32014), self.download_counter['Total Artwork']) )# Total downloaded items
         # Cycle through the download totals
         for artwork_type in self.download_counter:
             if not artwork_type == 'Total Artwork':
                 self.reportdata += '\n - %s: %s' % ( artwork_type, self.download_counter[artwork_type] )
-        self.reportdata += '\n[B]Failed items:[/B]'
+        self.reportdata += '\n[B]%s:[/B]' %__localize__(32016)                                              # Failed items header
         # Cycle through the download totals
         if not self.failed_items:
-            self.reportdata += '\n - No failed or missing items found'
+            self.reportdata += '\n - %s' %__localize__(32149)                                               # No failed or missing items found
         else:
-            for item in getUniq(self.failed_items):
+            # use  list(sorted(set(mylist)))  to get unique items
+            for item in list(sorted(set(self.failed_items))):
                 self.reportdata += '\n - %s' %item
         # Build dialog messages
-        summary = __localize__(32012) + ': %s ' % self.download_counter['Total Artwork'] + __localize__(32016)
-        summary_notify = ': %s ' % self.download_counter['Total Artwork'] + __localize__(32016)
+        summary = __localize__(32012) + ': %s ' % self.download_counter['Total Artwork'] + __localize__(32020)
+        summary_notify = ': %s ' % self.download_counter['Total Artwork'] + __localize__(32020)
         provider_msg1 = __localize__(32001)
         provider_msg2 = __localize__(32184) + " | " + __localize__(32185) + " | " + __localize__(32186)
         # Close dialog in case it was open before doing a notification
         time.sleep(2)
-        dialog('close', background = self.settings.background)
+        dialog_msg('close', background = self.settings.background)
         # Print the self.reportdata log message
         log('Failed items report: %s' % self.reportdata.replace('[B]', '').replace('[/B]', '') )
         # Safe the downloadreport to settings folder using save function
-        save_nfo_file(self.reportdata, os.path.join( __addondir__ , 'downloadreport.txt' ) )
+        save_nfo_file(self.reportdata, os.path.join( __addonprofile__ , 'downloadreport.txt' ) )
         # Some dialog checks
         if self.settings.notify:
             log('Notify on finished/error enabled')
@@ -263,19 +266,19 @@ class Main:
             self.settings.background = True
         if not self.settings.failcount < self.settings.failthreshold:
             log('Network error detected, script aborted', xbmc.LOGERROR)
-            dialog('okdialog', line1 = __localize__(32010), line2 = __localize__(32011), background = self.settings.background)
+            dialog_msg('okdialog', line1 = __localize__(32010), line2 = __localize__(32011), background = self.settings.background)
         if not xbmc.abortRequested:
             # Show dialog/notification
             if self.settings.background:
-                dialog('okdialog', line0 = summary_notify, line1 = provider_msg1 + ' ' + provider_msg2, background = self.settings.background)
+                dialog_msg('okdialog', line0 = summary_notify, line1 = provider_msg1 + ' ' + provider_msg2, background = self.settings.background)
             else:
-                # When chosen no in the 'yes/no' dialog exicute the viewer.py and parse 'downloadreport'
-                if dialog('yesno', line1 = summary, line2 = provider_msg1, line3 = provider_msg2, background = self.settings.background, nolabel = __localize__(32027), yeslabel = __localize__(32028)):
+                # When chosen no in the 'yes/no' dialog execute the viewer.py and parse 'downloadreport'
+                if dialog_msg('yesno', line1 = summary, line2 = provider_msg1, line3 = provider_msg2, background = self.settings.background, nolabel = __localize__(32027), yeslabel = __localize__(32028)):
                     runcmd = os.path.join(__addonpath__, 'resources/lib/viewer.py')
                     xbmc.executebuiltin('XBMC.RunScript (%s,%s) '%(runcmd, 'downloadreport') )
                     
         else:
-            dialog('okdialog', line1 = __localize__(32010), line2 = summary, background = self.settings.background)
+            dialog_msg('okdialog', line1 = __localize__(32010), line2 = summary, background = self.settings.background)
         # Container refresh
         if self.mode in ['gui','customgui']:
             if self._download_art_succes:
@@ -305,9 +308,9 @@ class Main:
         mediafound = False
         for currentitem in self.Medialist:
             # Check on exact match
-            if itemname == currentitem["name"]:
-                # Check on exact path match when provided
-                if itempath == currentitem['path'] or itempath == '':
+            if itemname in currentitem["name"]:
+                # Check on exact path match when provided and normalize the path because of unicode issues
+                if normalize_string(itempath) == normalize_string(currentitem['path']) or itempath == '':
                     self.Medialist = []
                     self.Medialist.append(currentitem)
                     mediafound = True
@@ -333,20 +336,25 @@ class Main:
             ### check if XBMC is shutting down
             if xbmc.abortRequested:
                 log('XBMC abort requested, aborting')
-                self.reportdata += ( '\n - add-on aborted because of XBMC shutting down: %s' %time.strftime('%d %B %Y - %H:%M') )
+                self.reportdata += ( '\n - %s: %s' %( __localize__(32150), time.strftime('%d %B %Y - %H:%M')) )
                 break
             ### check if script has been cancelled by user
-            if dialog('iscanceled', background = self.settings.background):
-                self.reportdata += ( '\n - add-on cancelled while searching for %s artwork: %s' %(self.mediatype, time.strftime('%d %B %Y - %H:%M')) )
+            if dialog_msg('iscanceled', background = self.settings.background):
+                self.reportdata += ( '\n - %s [%s]: %s' %(__localize__(32151), self.mediatype, time.strftime('%d %B %Y - %H:%M')) )
                 break
+            # abort script because of to many failures
             if not self.settings.failcount < self.settings.failthreshold:
-                self.reportdata += ( '\n - add-on aborted because of problems. Check the log: %s' %time.strftime('%d %B %Y - %H:%M') )
+                self.reportdata += ( '\n - %s: %s' %( __localize__(32152), time.strftime('%d %B %Y - %H:%M')) )
                 break
             # Declare some vars
             self.media_id   = currentmedia["id"]
             self.media_name = currentmedia["name"]
             self.media_path = currentmedia["path"]
-            dialog('update', percentage = int(float(self.processeditems) / float(len(media_list)) * 100.0), line1 = self.media_name, line2 = __localize__(32008), line3 = '', background = self.settings.background)
+            if self.mediatype == 'movie':
+                self.media_disctype = currentmedia["disctype"]
+            else:
+                self.media_disctype = 'n/a'
+            dialog_msg('update', percentage = int(float(self.processeditems) / float(len(media_list)) * 100.0), line1 = self.media_name, line2 = __localize__(32008), line3 = '', background = self.settings.background)
             log('########################################################')
             log('Processing media:  %s' % self.media_name, xbmc.LOGNOTICE)
             # do some id conversions 
@@ -384,14 +392,14 @@ class Main:
 
             # Check for presence of id used by source sites
             if self.mode == 'gui' and ((self.media_id == '') or (self.mediatype == 'tvshow' and self.media_id.startswith('tt'))):
-                dialog('close', background = self.settings.background)
-                dialog('okdialog','' ,self.media_name , __localize__(32030))
+                dialog_msg('close', background = self.settings.background)
+                dialog_msg('okdialog','' ,self.media_name , __localize__(32030))
             elif self.media_id == '':
                 log('- No ID found, skipping', xbmc.LOGNOTICE)
-                self.failed_items.append('[%s] No ID found, skipping' % self.media_name)
+                self.failed_items.append('[%s] ID %s' %( self.media_name, __localize__(32022) ))
             elif self.mediatype == 'tvshow' and self.media_id.startswith('tt'):
                 log('- IMDB ID found for TV show, skipping', xbmc.LOGNOTICE)
-                self.failed_items.append('[%s]: IMDB ID found for TV show, skipping' % self.media_name)
+                self.failed_items.append('[%s]: TVDB ID %s' %( self.media_name, __localize__(32022) ))
             
             # If correct ID found continue
             else:
@@ -418,7 +426,7 @@ class Main:
                         except NoFanartError, e:
                             errmsg = 'No artwork found'
                             artwork_result = 'skipping'
-                            self.failed_items.append('[%s] No fanart found' %self.media_name)
+                            self.failed_items.append('[%s] %s' %(self.media_name, __localize__(32133)) )
                         except ItemNotFoundError, e:
                             errmsg = '%s not found' % self.media_id
                             artwork_result = 'skipping'
@@ -500,6 +508,7 @@ class Main:
         i = 0                                   # Set loop counter
         imagefound = False                      # Set found image false
         imageignore = False                     # Set ignaore image false
+        disctype = self.media_disctype          # Set the needed disc type
         final_image_list = []
         if self.mode in ['gui', 'customgui'] and not art_type in ['extrafanart', 'extrathumbs']:
             final_image_list.append(self.image_item)
@@ -519,7 +528,7 @@ class Main:
                 for artwork in final_image_list:
                     if art_type in artwork['type']:
                         ### check if script has been cancelled by user
-                        if dialog('iscanceled', background = self.settings.background):
+                        if dialog_msg('iscanceled', background = self.settings.background):
                             #dialog('close', background = self.settings.background)
                             break
                         if not self.settings.failcount < self.settings.failthreshold:
@@ -531,6 +540,8 @@ class Main:
                         item['media_name']      = self.media_name
                         item['artwork_string']  = msg
                         item['artwork_details'] = artwork
+
+                        # raise artwork counter only on first loop
                         if i != 1:
                             current_artwork        += 1
 
@@ -551,8 +562,12 @@ class Main:
                             # jump out of the loop
                             imagefound = True
                         else:
+
                             # Check for set limits
-                            limited = self.filters.do_filter( art_type, self.mediatype, item['artwork_details'], limit_counter, pref_language )
+                            if art_type == 'discart':
+                                limited = self.filters.do_filter( art_type, self.mediatype, item['artwork_details'], limit_counter, pref_language, disctype )
+                            else:
+                                limited = self.filters.do_filter( art_type, self.mediatype, item['artwork_details'], limit_counter, pref_language )
                             # Delete extrafanart when below settings and parsing the reason message
                             if limited[0] and not i == 1 and art_type in [ 'extrafanart', 'extrathumbs' ]:
                                 self.fileops._delete_file_in_dirs( item['filename'], item['targetdirs'], limited[1],self.media_name )
@@ -582,22 +597,27 @@ class Main:
                                         imagefound = True
                                         log(" - Ignoring (Exists in all target directories): %s" % item['filename'] )
                                 # Raise limit counter because image was added to list or it already existed
-                                # Do some special check on season artwork
-                                if art_type == 'seasonthumbs' or art_type == 'seasonbanner' or art_type   == 'seasonposter':
-                                    if artwork['season'] in seasonfile_presents:
-                                        log('seasonnumber: %s' %artwork['season'] )
-                                        limit_counter += 1
-                                    else:
-                                        seasonfile_presents.append( artwork['season'] )
-                                        log('Seasons present: %s' %seasonfile_presents )
-                                        limit_counter = 0
-                                else:
-                                    limit_counter += 1
+                                limit_counter += 1
                                 # Check if artwork doesn't exist and the ones available are below settings even after searching for English fallback                                   
                                 if limited[0] and imageignore and i == 1:
                                     for targetdir in item['targetdirs']:
                                         if not self.fileops._exists(os.path.join (targetdir, item['filename']) ) and not art_type in ['extrafanart', 'extrathumbs']:
-                                            self.failed_items.append('[%s] Skipping %s - Below limit setting' % (self.media_name,art_type) )
+                                            self.failed_items.append('[%s] %s %s' % (self.media_name, art_type, __localize__(32147)) )
+                            # Do some special check on season artwork
+                            if art_type == 'seasonthumbs' or art_type == 'seasonbanner' or art_type   == 'seasonposter':
+                                # If already present in list set limit on 1 so it is skipped
+                                if artwork['season'] in seasonfile_presents:
+                                    log('seasonnumber: %s' %artwork['season'] )
+                                    limit_counter = 1
+                                # If not present in list but found image add it to list and reset counter limit
+                                elif imagefound:
+                                    seasonfile_presents.append( artwork['season'] )
+                                    log('Seasons present: %s' %seasonfile_presents )
+                                    limit_counter = 0
+                                # if not found and not already in list set limit to zero and image found false
+                                else:
+                                    limit_counter = 0
+                                    imagefound = False
                 # Counter to make the loop twice when nothing found
                 i += 1
                 # Not loop when preferred language is English because that the same as the backup
@@ -605,7 +625,7 @@ class Main:
                     i += 2
             # Add to failed items if 0
             if current_artwork == 0:
-                self.failed_items.append('[%s] No %s found' % (self.media_name,art_type) )
+                self.failed_items.append('[%s] %s %s' % (self.media_name, art_type, __localize__(32022)) )
             # Print log message number of found images per art type
             log(' - Found a total of: %s %s' % (current_artwork, art_type) )
 
@@ -624,13 +644,14 @@ class Main:
                 # Check if cancel has been called to break the loop
                 if xbmc.abortRequested:
                     log('XBMC abort requested, aborting')
-                    self.reportdata += ( '\n - add-on aborted because of XBMC shutting down: %s' %time.strftime('%d %B %Y - %H:%M') )
+                    self.reportdata += ( '\n - %s: %s' %( __localize__(32150), time.strftime('%d %B %Y - %H:%M')) )
                     break
-                if dialog('iscanceled', background = self.settings.background):
-                    self.reportdata += ( '\n - add-on cancelled during downloading artwork: %s' %time.strftime('%d %B %Y - %H:%M') )
+                ### check if script has been cancelled by user
+                if dialog_msg('iscanceled', background = self.settings.background):
+                    self.reportdata += ( '\n - %s: %s' %(__localize__(32153), time.strftime('%d %B %Y - %H:%M')) )
                     break
                 # Update the dialog
-                dialog('update', percentage = int(float(self.download_counter['Total Artwork']) / float(len(image_list)) * 100.0), line1 = item['media_name'], line2 = __localize__(32009) + ' ' + item['artwork_string'], line3 = item['filename'], background = self.settings.background)
+                dialog_msg('update', percentage = int(float(self.download_counter['Total Artwork']) / float(len(image_list)) * 100.0), line1 = item['media_name'], line2 = __localize__(32009) + ' ' + item['artwork_string'], line3 = item['filename'], background = self.settings.background)
                 # Try downloading the file and catch errors while trying to
                 try:
                     self.fileops._downloadfile(item['url'], item['filename'], item['targetdirs'], item['media_name'], self.mode)
@@ -663,7 +684,8 @@ class Main:
 
     def _gui_mode(self):
         # Close the 'checking for artwork' dialog before opening the GUI list
-        dialog('close', background = self.settings.background)
+        dialog_msg('close', background = self.settings.background)
+        # Create empty list and set bool to false that there is a list
         self.GUI_type_list = []
         imagelist = False
         # Fill GUI art type list
@@ -671,40 +693,53 @@ class Main:
             if item['solo_enabled'] == 'true' and self.mediatype == item['media_type']:
                 gui = item['gui_string']
                 self.GUI_type_list.append (gui)
-        # 
+        # Not sure what this does again
         if len(self.GUI_type_list) == 1:
             self.GUI_type_list[0] = "True"
+        # Fills imagelist with image that fit the selected imagetype
         if ( len(self.GUI_type_list) == 1 ) or self._choice_type():
-            
             imagelist = self._gui_imagelist(self.gui_selected_type)
             # Some debug log output
             for item in imagelist:
                 log('- Image put to GUI: %s' %item)
         
         # Download the selected image
+        # If there's a list
         if imagelist:
+            # send the imagelist to the selection dialog
             if self._choose_image(imagelist):
-                dialog('create')
+                # Create a progress dialog so you can see the progress
+                dialog_msg('create')
+                # Send the selected image for processing
                 self._download_art(self.gui_selected_type, self.gui_selected_filename, self.target_artworkdir, self.gui_selected_msg)
+                # Initia the batch download
                 self._batch_download(self.download_list)
+                # When not succesfull show failure dialog
                 if not self._download_art_succes:
-                    dialog('okdialog', line1 = __localize__(32006) , line2 = __localize__(32007) )
+                    dialog_msg('okdialog', line1 = __localize__(32006) , line2 = __localize__(32007) )
+        # When no images found or nothing selected
         if not imagelist and not self.gui_selected_type == '':
             log('- No artwork found')
-            dialog('okdialog', line1 = self.media_name , line2 = self.gui_selected_msg + ' ' + __localize__(32022) )
+            dialog_msg('okdialog', line1 = self.media_name , line2 = self.gui_selected_msg + ' ' + __localize__(32022) )
+        # When download succesfull
         elif self._download_art_succes:
             log('- Download succesfull')
+        # Selection was cancelled
         else:
             log('- Cancelled')
-            dialog('okdialog', line1 = __localize__(32017) , line2 =  __localize__(32018) )
+            dialog_msg('okdialog', line1 = __localize__(32017) , line2 =  __localize__(32018) )
 
     # This creates the art type selection dialog. The string id is the selection constraint for what type has been chosen.
     def _choice_type(self):
+        # Send the image type list to the selection dialog
         select = xbmcgui.Dialog().select(__addonname__ + ': ' + __localize__(32015) , self.GUI_type_list)
+        # Create empty slected image type var
         self.gui_selected_type = ''
+        # When nothing is selected from the dialog
         if select == -1: 
             log( "### Canceled by user" )
             return False
+        # If some selection was made
         else:
             # Check what artwork type has been chosen and parse the image restraints
             for item in self.settings.available_arttypes:
@@ -733,24 +768,24 @@ class Main:
             log('- Number of images: %s' %len(imagelist))
             # If more images than 1 found show GUI selection
             if len(imagelist) > 1:
-                dialog('close', background = self.settings.background)
+                dialog_msg('close', background = self.settings.background)
                 self.mode = 'customgui'
                 log('- Image list larger than 1')
                 if self._choose_image(imagelist):
                     log('- Chosen: %s'%self.image_item)
-                    dialog('create')
+                    dialog_msg('create')
                     for item in self.settings.available_arttypes:
                         if gui_arttype == item['art_type']:
                             self._download_art(item['art_type'], item['filename'], self.target_artworkdir, item['gui_string'])
                             break
                     self._batch_download(self.download_list)
                     if not self._download_art_succes:
-                        dialog('okdialog', line1 = __localize__(32006) , line2 = __localize__(32007) )
+                        dialog_msg('okdialog', line1 = __localize__(32006) , line2 = __localize__(32007) )
                 if self._download_art_succes:
                     log('- Download succesfull')
                 else:
                     log('- Cancelled')
-                    dialog('okdialog', line1 = __localize__(32017) , line2 = __localize__(32018) )
+                    dialog_msg('okdialog', line1 = __localize__(32017) , line2 = __localize__(32018) )
             else:
                 self._download_process()
                 log('- More than 1 image available')

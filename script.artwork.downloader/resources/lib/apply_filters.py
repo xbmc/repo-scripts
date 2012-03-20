@@ -5,17 +5,16 @@ import xbmcaddon
 ### import libraries
 from resources.lib import language
 from resources.lib.fileops import fileops
-from resources.lib.settings import _settings
-from resources.lib.utils import _log as log
+from resources.lib.settings import settings
 pref_language = xbmcaddon.Addon().getSetting("limit_preferred_language")
 
 class apply_filters:
 
     def __init__(self):
-        self.settings = _settings()
+        self.settings = settings()
         self.settings._get_limit()
 
-    def do_filter(self, art_type, mediatype, artwork, downloaded_artwork, language):
+    def do_filter(self, art_type, mediatype, artwork, downloaded_artwork, language, disctype = ''):
         if art_type   == 'fanart':
             return self.fanart(mediatype, artwork, downloaded_artwork, language)
 
@@ -56,8 +55,9 @@ class apply_filters:
             return self.defaultthumb(mediatype, artwork, downloaded_artwork, language)
 
         elif art_type == 'discart':
-            return self.discart(mediatype, artwork, downloaded_artwork, language)
-        else: return [False, 'Unrecognised art_type']
+            return self.discart(mediatype, artwork, downloaded_artwork, language, disctype)
+        else:
+            return [False, 'Unrecognised art_type']
 
     def fanart(self, mediatype, artwork, downloaded_artwork, language):
         limited = False
@@ -271,12 +271,20 @@ class apply_filters:
             limited = True
         return [limited, reason]        
 
-    def discart(self, mediatype, artwork, downloaded_artwork, language):
+    def discart(self, mediatype, artwork, downloaded_artwork, language, disctype):
         limited = False
         reason = ''
         # Maximum number
         if downloaded_artwork >= self.settings.limit_artwork_max:
             reason = 'Max number discart reached: %s' % self.settings.limit_artwork_max
+            limited = True
+        # Correct discnumber
+        elif not artwork['discnumber'] == '1':
+            reason = "Doesn't match preferred discnumber: 1"
+            limited = True
+        # Correct discnumber
+        elif not artwork['disctype'] == disctype:
+            reason = "Doesn't match preferred disctype: %s" %disctype
             limited = True
         # Correct language
         elif self.settings.limit_artwork and not artwork['language'] in [ language, 'n/a' ]:

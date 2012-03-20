@@ -14,9 +14,9 @@
         <string id="32011">Network error gedetecteerd</string>
         <string id="32012">Klaar</string>
         <string id="32013">Downloaden toestaan</string>
-        <string id="32014">extrafanart gecentralizeerd</string>
+        <string id="32014">Artwork totaal</string>
         <string id="32015">Kiezen a.u.b.</string>
-        <string id="32016">gedownload</string>
+        <string id="32016">Mislukte items</string>
         <string id="32017">Geannuleerd</string>
         <string id="32018">Downloaden geannuleerd door gebruiker</string>
         <string id="32019">Vertraagde start in minuten:</string>
@@ -96,7 +96,7 @@
         <string id="32130">Minatuur 16:9</string>
         <string id="32131">Extra miniaturen</string>
         <string id="32132">Disc Art</string>
-        <string id="32133">-</string>
+        <string id="32133">Artwork</string>
         <string id="32134">Seizoen miniatuur 16:9</string>
 
     <!-- Add-on messages: -->
@@ -105,14 +105,14 @@
         <string id="32143">Stemmen</string>
         <string id="32144">Seizoen</string>
         <string id="32145">Grootte</string>
-        <string id="32146">-</string>
-        <string id="32147">-</string>
-        <string id="32148">-</string>
-        <string id="32149">-</string>
-        <string id="32150">-</string>
-        <string id="32151">-</string>
-        <string id="32152">-</string>
-        <string id="32153">-</string>
+        <string id="32146">Schijf</string>
+        <string id="32147">onder limiet instelling</string>
+        <string id="32148">Tijd van beëindigen</string>
+        <string id="32149">Geen mislukte of ontbrekende items gevonden</string>
+        <string id="32150">add-on afgebroken wegens aflsuiten van XBMC</string>
+        <string id="32151">add-on geannuleerd tijdens zoeken naar Artwork</string>
+        <string id="32152">add-on afgebroken wegens problemen</string>
+        <string id="32153">add-on geannuleerd tijdens downloaden Artwork</string>
         <string id="32154">-</string>
         
     <!-- Add-on settings: Info section id=32181 to 32190-->   

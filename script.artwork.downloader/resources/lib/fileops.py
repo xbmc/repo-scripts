@@ -7,11 +7,11 @@ import xbmcvfs
 
 ### import libraries
 from traceback import print_exc
-from resources.lib.script_exceptions import CopyError, DownloadError, CreateDirectoryError, HTTP404Error, HTTPTimeout, ItemNotFoundError
+from resources.lib.script_exceptions import *
 from urllib2 import HTTPError, URLError
 from resources.lib import utils
-from resources.lib.settings import _settings
-from resources.lib.utils import _log as log
+from resources.lib.settings import settings
+from resources.lib.utils import *
 THUMBS_CACHE_PATH = xbmc.translatePath( "special://profile/Thumbnails/Video" )
 
 
@@ -31,7 +31,7 @@ class fileops:
         """Initialise needed directories/vars for fileops"""
 
         log("Setting up fileops")
-        self.settings = _settings()
+        self.settings = settings()
         self.settings._get_general()
         self._exists = lambda path: xbmcvfs.exists(path)
         self._rmdir = lambda path: xbmcvfs.rmdir(path)
@@ -39,17 +39,16 @@ class fileops:
         self._delete = lambda path: xbmcvfs.delete(path)
 
         self.downloadcount = 0
-        addondir = xbmc.translatePath( utils.__addon__.getAddonInfo('profile') )
-        self.tempdir = os.path.join(addondir, 'temp')
+        self.tempdir = os.path.join(utils.__addonprofile__, 'temp')
         if not self._exists(self.tempdir):
-            if not self._exists(addondir):
-                if not self._mkdir(addondir):
-                    raise CreateDirectoryError(addondir)
+            if not self._exists(utils.__addonprofile__):
+                if not self._mkdir(utils.__addonprofile__):
+                    raise CreateDirectoryError(utils.__addonprofile__)
             if not self._mkdir(self.tempdir):
                 raise CreateDirectoryError(self.tempdir)
         
     def _copy(self, source, target):
-        return xbmcvfs.copy(source, target)
+        return xbmcvfs.copy(source.encode("utf-8"), target.encode("utf-8"))
 
     ### Delete file from all targetdirs
     def _delete_file_in_dirs(self, filename, targetdirs, reason, media_name = '' ):
@@ -97,7 +96,7 @@ class fileops:
 
     # copy filen from temp to final location
     def _copyfile(self, sourcepath, targetpath, media_name = ''):
-        targetdir = os.path.dirname(targetpath)
+        targetdir = os.path.dirname(targetpath).encode("utf-8")
         if not self._exists(targetdir):
             if not self._mkdir(targetdir):
                 raise CreateDirectoryError(targetdir)
@@ -115,7 +114,6 @@ class fileops:
 
         try:
             temppath = os.path.join(self.tempdir, filename)
-            url = url.replace(" ", "%20")
             tempfile = open(temppath, "wb")
             response = urllib2.urlopen(url)
             tempfile.write(response.read())

@@ -1,13 +1,13 @@
 #import modules
 import sys
 import urllib
-
+import xbmc
 ### import libraries
 from resources.lib.provider.base import BaseProvider
 from resources.lib.script_exceptions import NoFanartError, ItemNotFoundError
-from resources.lib.utils import _log as log
-from resources.lib.utils import _get_xml as get_xml
+from resources.lib.utils import *
 from elementtree import ElementTree as ET
+from operator import itemgetter
 
 ### get addon info
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
@@ -17,83 +17,106 @@ class FTV_TVProvider():
     def __init__(self):
         self.name = 'fanart.tv - TV API'
         self.api_key = '586118be1ac673f74963cc284d46bd8e'
-        #self.url = "http://fanart.tv/webservice/series/%s/%s/xml/all/1/2"
-        self.url = 'http://fanart.tv/api/fanart.php?v=4&id=%s'
+        self.url = "http://fanart.tv/webservice/series/%s/%s/json/all/1/2"
         self.imagetypes = ['clearlogo', 'clearart', 'tvthumb', 'seasonthumb', 'characterart']
 
     def get_image_list(self, media_id):
-        #xml_url = self.url % (self.api_key,media_id)
-        xml_url = self.url % (media_id)
-        log('API:               %s ' % xml_url)
+        data = get_json(self.url % (self.api_key,media_id))
         image_list = []
-        data = get_xml(xml_url)
-        tree = ET.fromstring(data)
-        for imagetype in self.imagetypes:
-            imageroot = imagetype + 's'
-            for images in tree.findall(imageroot):
-                for image in images:
-                    info = {}
-                    info['id'] = image.get('id')
-                    info['url'] = urllib.quote(image.get('url'), ':/')
-                    info['preview'] = info['url']
-                    info['type'] = [imagetype]
-                    info['rating'] = 'n/a'
-                    info['language'] = 'n/a'
-                    '''
-                    info['preview'] = urllib.quote(image.get('preview'), ':/')
-                    info['language'] = image.get('lang')
-                    info['likes'] = image.get('likes')
-                    if imagetype == 'seasonthumb':
-                        seasonxx = "%.2d" % int(image.findtext('season')) #ouput is double digit int
-                        if seasonxx == '00':
-                            info['season'] = '-specials'
-                        else:
-                            info['season'] = str(seasonxx)
-                        info['season'] = "%.2d" % int(image.get('season')) #ouput is double digit int
-                    else:
-                        info['season'] = 'NA'
-                    info['generalinfo'] = 'Language: %s , Likes: %s   ' %(info['language'], info['likes'])
-                    '''
-                    # Create Gui string to display
-                    info['generalinfo'] = '%s: %s  |  %s: %s   ' %( __localize__(32141), info['language'], __localize__(32142), info['rating'])
-                    if info:
-                        image_list.append(info)
+        # Get fanart
+        try:
+            # split "name" and "data"
+            for title, value in data.iteritems():
+                # run through specified types
+                for art in self.imagetypes:
+                    # if type has been found
+                    if value.has_key(art):
+                        # Run through all the items
+                        for item in value[art]:
+                            info = {}
+                            info['url']         = urllib.quote(item['url'], ':/')   # Original image url
+                            info['preview']     = info['url'] + "/preview"          # Create a preview url for later use
+                            info['id']          = item['id']
+                            info['type']        = art
+                            if item.has_key('season'):
+                                info['season']  = item['season']
+                            else:
+                                info['season']  = 'n/a'
+                            # language and votes
+                            info['language']    = item['lang']
+                            info['votes']       = item['likes']
+                            
+                            # Create Gui string to display
+                            info['generalinfo'] = '%s: %s  |  ' %( __localize__(32141), info['language'])
+                            if info['season'] != 'n/a':
+                                info['generalinfo'] += '%s: %s  |  ' %( __localize__(32144), info['season'] )
+                            info['generalinfo'] += '%s: %s  |  ' %( __localize__(32143), info['votes'] )
+                            # Add data to list
+                            if info:
+                                image_list.append(info)
+        except: pass
         if image_list == []:
             raise NoFanartError(media_id)
         else:
+            # Sort the list before return. Last sort method is primary
+            image_list = sorted(image_list, key=itemgetter('votes'), reverse=True)
+            image_list = sorted(image_list, key=itemgetter('language'))
             return image_list
-
-
+            
 class FTV_MovieProvider():
 
     def __init__(self):
         self.name = 'fanart.tv - Movie API'
         self.api_key = '586118be1ac673f74963cc284d46bd8e'
-        self.url = "http://fanart.tv/webservice/movie/%s/%s/xml/all/1/2/"
-        self.imagetypes = ['clearlogo', 'clearart', 'cdart']
+        self.url = "http://fanart.tv/webservice/movie/%s/%s/json/all/1/2/"
+        self.imagetypes = ['movielogo', 'movieart', 'moviedisc']
 
     def get_image_list(self, media_id):
-        xml_url = self.url % (self.api_key,media_id)
-        log('API: %s ' % xml_url)
+        data = get_json(self.url % (self.api_key,media_id))
         image_list = []
-        data = get_xml(xml_url)
-        tree = ET.fromstring(data)
-        for imagetype in self.imagetypes:
-            imageroot = imagetype + 's'
-            for images in tree.findall(imageroot):
-                for image in images:
-                    info = {}
-                    info['id'] = image.get('id')
-                    info['url'] = urllib.quote(image.get('url'), ':/')
-                    info['preview'] = urllib.quote(image.get('preview'), ':/')
-                    info['type'] = imagetype
-                    info['language'] = image.get('lang')
-                    info['likes'] = image.get('likes')
-                    # Create Gui string to display
-                    info['generalinfo'] = '%s: %s  |  %s: %s   ' %( __localize__(32141), info['language'], __localize__(32143), info['likes'] )
-                    if info:            
-                        image_list.append(info)
+        # Get fanart
+        try:
+            # split "name" and "data"
+            for title, value in data.iteritems():
+                # run through specified types
+                for art in self.imagetypes:
+                    # if type has been found
+                    if value.has_key(art):
+                        # Run through all the items
+                        for item in value[art]:
+                            info = {}
+                            info['url']         = urllib.quote(item['url'], ':/')   # Original image url
+                            info['preview']     = info['url'] + "/preview"          # Create a preview url for later use
+                            info['id']          = item['id']
+                            # Check on what type and use the general tag
+                            if art == 'movielogo':
+                                info['type']    = 'clearlogo'
+                            elif art == 'moviedisc':
+                                info['type']    = 'discart'
+                            elif art == 'movieart':
+                                info['type']    = 'clearart'
+                            # Check on disctype
+                            if art == 'moviedisc':
+                                info['disctype']   = item['disc_type']
+                                info['discnumber'] = item['disc']
+                            else:
+                                info['disctype']   = 'n/a'
+                                info['discnumber'] = 'n/a'
+                            # language and votes
+                            info['language']    = item['lang']
+                            info['votes']       = item['likes']
+                            # Create Gui string to display
+                            info['generalinfo'] = '%s: %s  |  ' %( __localize__(32141), info['language'])
+                            if info['disctype'] != 'n/a':
+                                info['generalinfo'] += '%s: %s (%s)  |  ' %( __localize__(32146), info['discnumber'], info['disctype'] )
+                            info['generalinfo'] += '%s: %s  |  ' %( __localize__(32143), info['votes'] )
+                            if info:
+                                image_list.append(info)
+        except: pass
         if image_list == []:
             raise NoFanartError(media_id)
         else:
+            # Sort the list before return. Last sort method is primary
+            image_list = sorted(image_list, key=itemgetter('votes'), reverse=True)
+            image_list = sorted(image_list, key=itemgetter('language'))
             return image_list
