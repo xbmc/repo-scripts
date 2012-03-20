@@ -2287,7 +2287,7 @@
 				<width>25</width>
 				<height>20</height>
 				<texturenofocus>TVGuide-HomeIcon.png</texturenofocus>
-				<texturefocus>TVGuide-HomeIcon-Focus</texturefocus>
+				<texturefocus>TVGuide-HomeIcon-Focus.png</texturefocus>
 				<label>-</label>
 				<onclick>ActivateWindow(Home)</onclick>
 			</control>

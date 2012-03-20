@@ -43,6 +43,8 @@ class Gui( xbmcgui.WindowXML ):
             except:
                 continue
             for day in airdays:
+                if (day[0] == '0') or (day[0] == '1'):
+                    continue
                 listitem = self.setLabels('listitem', item, True)
                 nextdate = item.get("RFC3339" , "" )[:10]
                 if len(nextdate) == 10:

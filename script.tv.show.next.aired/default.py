@@ -1,9 +1,13 @@
 from time import strptime, time, mktime
-import os, sys, re, socket, urllib, unicodedata, simplejson
+import os, sys, re, socket, urllib, unicodedata
 from traceback import print_exc
 from datetime import datetime, date, timedelta, tzinfo
 from dateutil import tz
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
 # http://mail.python.org/pipermail/python-list/2009-June/596197.html
 import _strptime
 
@@ -18,7 +22,7 @@ __language__  = __addon__.getLocalizedString
 __useragent__ = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/2008070208 Firefox/3.6"
 
 DATA_PATH = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ), __addonid__ )
-RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) )
+RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) ).decode('utf-8')
 sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
 
 # Get localized date format
@@ -186,14 +190,14 @@ class NextAired:
             DIALOG_PROGRESS.close()
 
     def listing(self):
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file", "thumbnail", "fanart"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "file", "thumbnail", "fanart"], "sort": { "method": "title" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         log("### %s" % json_response)
         self.TVlist = []
         if json_response['result'].has_key('tvshows'):
             for item in json_response['result']['tvshows']:
-                tvshowname = item['label']
+                tvshowname = item['title']
                 tvshowname = normalize_string( tvshowname )
                 path = item['file']
                 thumbnail = item['thumbnail']

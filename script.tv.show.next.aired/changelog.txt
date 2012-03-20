@@ -1,3 +1,19 @@
+v4.1.20
+- use title instead of label
+
+v4.1.19
+- fix unicode in path issue
+
+v4.1.18
+- revert previous airtime fixed and add check in next_aired_dialog.py instead
+
+v4.1.17
+- set empty airtime when we fail to parse it
+
+v4.1.16
+- fix for occasions where airtime contains no weekday
+- use json module on systems with python 2.7 or up
+
 v4.1.15
 - fix issue with single character day/month in dateshort
 
