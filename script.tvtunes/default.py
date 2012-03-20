@@ -10,7 +10,7 @@ __author__    = __addon__.getAddonInfo('author')
 __version__   = __addon__.getAddonInfo('version')
 __language__  = __addon__.getLocalizedString
 
-RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) )
+RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) ).decode('utf-8')
 sys.path.append( RESOURCES_PATH )
 
 def log(msg):

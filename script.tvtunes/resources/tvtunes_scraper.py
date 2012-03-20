@@ -4,12 +4,15 @@ import urllib
 import os
 from traceback import print_exc
 import re
-import simplejson
 import unicodedata
 import xbmc  
 import xbmcaddon
 import xbmcgui
 import xbmcvfs
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
 
 __addon__     = xbmcaddon.Addon(id='script.tvtunes')
 __addonid__   = __addon__.getAddonInfo('id')
@@ -204,14 +207,14 @@ class TvTunes:
     def listing(self):
         # on recup la liste des series en biblio
         # json statement for tv shows
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "file"], "sort": { "method": "title" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         log( json_response )
         TVlist = []
         if json_response['result'].has_key('tvshows'):
             for item in json_response['result']['tvshows']:
-                tvshow = item['label'].replace(":","")
+                tvshow = item['title'].replace(":","")
                 tvshow = normalize_string( tvshow )
                 if self.enable_custom_path == "true":
                     path = self.custom_path + (tvshow)
