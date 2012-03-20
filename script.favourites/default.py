@@ -97,15 +97,19 @@ class MainGui( xbmcgui.WindowXMLDialog ):
         self.getControl(5).setVisible(False)
         self.getControl(1).setLabel(xbmc.getLocalizedString(1036))
 
-        self.fav_list.addItem( xbmcgui.ListItem( __language__(451) ) )
+        self.fav_list.addItem( xbmcgui.ListItem( __language__(451), iconImage="DefaultAddonNone.png" ) )
 
         for favourite in self.listing :
             listitem = xbmcgui.ListItem( favourite.attributes[ 'name' ].nodeValue )
-            try:
-                listitem.setIconImage( favourite.attributes[ 'thumb' ].nodeValue )
-                listitem.setProperty( "Icon", favourite.attributes[ 'thumb' ].nodeValue )
-            except: pass
             fav_path = favourite.childNodes [ 0 ].nodeValue
+            try:
+                if 'playlists/music' in fav_path or 'playlists/video' in fav_path:
+                    listitem.setIconImage( "DefaultPlaylist.png" )
+                    listitem.setProperty( "Icon", "DefaultPlaylist.png" )
+                else:
+                    listitem.setIconImage( favourite.attributes[ 'thumb' ].nodeValue )
+                    listitem.setProperty( "Icon", favourite.attributes[ 'thumb' ].nodeValue )
+            except: pass
             if 'RunScript' not in fav_path: 
                 fav_path = fav_path.rstrip(')')
                 fav_path = fav_path + ',return)'

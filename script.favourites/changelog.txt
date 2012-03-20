@@ -1,8 +1,10 @@
+v3.2.2
+- added icon images for reset and playlist items
+
 v3.2.1
 - use select dialog with id 6
 - added french translation
 - bugfixes
-
 
 v3.2.0
 - added readme
