@@ -5,15 +5,19 @@
 # *  ppic, Hitcher & ronie for the updates
 
 import xbmc, xbmcgui, xbmcaddon
-import re, sys, os, random, simplejson
+import re, sys, os, random
 from elementtree import ElementTree as xmltree
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
 
 __addon__        = xbmcaddon.Addon()
 __addonid__      = __addon__.getAddonInfo('id')
 __addonversion__ = __addon__.getAddonInfo('version')
 
 def log(txt):
-    message = '%s: %s' % (__addonid__,txt)
+    message = '%s: %s' % (__addonid__, txt)
     xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 class Main:
@@ -79,7 +83,7 @@ class Main:
 
     def _fetch_movie_info( self ):
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["playcount", "year", "plot", "runtime", "fanart", "thumbnail", "file", "trailer", "rating"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "playcount", "year", "plot", "runtime", "fanart", "thumbnail", "file", "trailer", "rating"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
@@ -104,7 +108,7 @@ class Main:
                     if playcount > 0:
                         count = count - 1
                         continue
-                title = item['label']
+                title = item['title']
                 rating = str(round(float(item['rating']),1))
                 year = str(item['year'])
                 plot = item['plot']
@@ -128,7 +132,7 @@ class Main:
     def _fetch_episode_info( self ):
         # query the database
         tvshowid = 2
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["playcount", "season", "episode", "showtitle", "plot", "fanart", "thumbnail", "file", "rating"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "fanart", "thumbnail", "file", "rating"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
@@ -153,7 +157,7 @@ class Main:
                     if playcount > 0:
                         count = count - 1
                         continue 
-                title = item['label']
+                title = item['title']
                 showtitle = item['showtitle']
                 season = "%.2d" % float(item['season'])
                 episode = "%.2d" % float(item['episode'])
@@ -178,7 +182,7 @@ class Main:
 
     def _fetch_musicvideo_info( self ):
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["artist", "playcount", "year", "plot", "runtime", "fanart", "thumbnail", "file"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["title", "artist", "playcount", "year", "plot", "runtime", "fanart", "thumbnail", "file"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
@@ -203,7 +207,7 @@ class Main:
                     if playcount > 0:
                         count = count - 1
                         continue 
-                title = item['label']
+                title = item['title']
                 year = str(item['year'])
                 plot = item['plot']
                 runtime = item['runtime']
@@ -224,7 +228,7 @@ class Main:
 
     def _fetch_album_info( self ):
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["artist", "year", "thumbnail", "fanart", "rating"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "artist", "year", "thumbnail", "fanart", "rating"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
@@ -244,7 +248,7 @@ class Main:
                 # remove the item from our list
                 json_response.remove( item )
                 # find values
-                title = item['label']
+                title = item['title']
                 rating = str(item['rating'])
                 if rating == '48':
                     rating = ""
@@ -265,7 +269,7 @@ class Main:
 
     def _fetch_song_info( self ):
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["playcount", "artist", "album", "year", "file", "thumbnail", "fanart", "rating"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "playcount", "artist", "album", "year", "file", "thumbnail", "fanart", "rating"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
@@ -290,7 +294,7 @@ class Main:
                     if playcount > 0:
                         count = count - 1
                         continue 
-                title = item['label']
+                title = item['title']
                 rating = str(int(item['rating'])-48)
                 year = str(item['year'])
                 artist = item['artist']
