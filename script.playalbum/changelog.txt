@@ -1,3 +1,9 @@
+v0.0.5:
+- use title instead of label
+
+v0.0.4:
+- use json if python 2.7 is available
+
 v0.0.3:
 - use simplejson
 - fix fetching album id

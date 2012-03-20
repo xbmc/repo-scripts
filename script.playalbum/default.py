@@ -1,6 +1,9 @@
 import sys
-import simplejson
 import xbmc, xbmcgui, xbmcaddon
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
 
 __addon__        = xbmcaddon.Addon()
 __addonid__      = __addon__.getAddonInfo('id')
@@ -34,12 +37,12 @@ class Main:
         self.albumid = ''
 
     def _get_albumid( self ):
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["artist"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "artist"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('albums')):
             for item in json_response['result']['albums']:
-                album = item['label']
+                album = item['title']
                 if album == self.album:
                     artist = item['artist']
                     if artist == self.artist:
