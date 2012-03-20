@@ -44,6 +44,7 @@ ListItem.Property(Year)
 ListItem.Property(Trailer)
 ListItem.Property(Playcount)
 ListItem.Property(Rating)
+ListItem.Property(StarRating)
 ListItem.Property(Mpaa)
 ListItem.Property(Director)
 ListItem.Property(Writer)
@@ -67,6 +68,7 @@ ListItem.Property(Plot)
 ListItem.Property(Premiered)
 ListItem.Property(Studio)
 ListItem.Property(Rating)
+ListItem.Property(StarRating)
 ListItem.Property(Playcount)
 ListItem.Property(Path)
 
@@ -87,6 +89,7 @@ ListItem.Icon
 ListItem.Property(Episode)
 ListItem.Property(Plot)
 ListItem.Property(Rating)
+ListItem.Property(StarRating)
 ListItem.Property(Director)
 ListItem.Property(Fanart_Image)
 ListItem.Property(Season)
@@ -150,6 +153,7 @@ ListItem.Property(Album_Description)
 ListItem.Property(Album_Theme)
 ListItem.Property(Album_Style)
 ListItem.Property(Album_Rating)
+ListItem.Property(StarRating)
 ListItem.Property(Album_Type)
 ListItem.Property(Album_Mood)
 ListItem.Property(Year)
@@ -165,6 +169,7 @@ ListItem.Property(Genre)
 ListItem.Property(Comment)
 ListItem.Property(Track)
 ListItem.Property(Rating)
+ListItem.Property(StarRating)
 ListItem.Property(Playcount)
 ListItem.Property(Duration)
 ListItem.Property(Fanart_Image)
@@ -253,6 +258,7 @@ V. Control id's used in script-globalsearch-contextmenu.xml
 
 1001 - First context menu button, the script will handle the visible condition
 1002 - Second context menu button, the script will handle the visible condition
+1003 - Third context menu button, the script will handle the visible condition
 
 
 As always, do not change or remove any of the id's mentioned above!

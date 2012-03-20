@@ -9,11 +9,13 @@
 	<string id="32006">Suche Alben</string>
 	<string id="32007">Suche Songs</string>
 	<string id="32101">Suchbegriff eingeben</string>
-	<string id="32201">Finde alle Staffeln und Episoden</string>
-	<string id="32202">Finde alle Alben und Songs</string>
 	<string id="32203">Album durchsuchen</string>
 	<string id="32204">Staffel-Informationen</string>
 	<string id="32205">Trailer abspielen</string>
 	<string id="32206">Finde Album</string>
+	<string id="32207">Finde alle Staffeln</string>
+	<string id="32208">Finde alle Episoden</string>
+	<string id="32209">Finde alle Alben</string>
+	<string id="32210">Finde alle Songs</string>
 	<string id="32299">NEUE SUCHE</string>
 </strings>

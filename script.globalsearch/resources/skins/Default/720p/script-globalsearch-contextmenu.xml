@@ -4,8 +4,8 @@
 	<animation effect="fade" time="300">WindowClose</animation>
 	<coordinates>
 		<system>1</system>
-		<posx>110</posx>
-		<posy>270</posy>
+		<posx>0</posx>
+		<posy>0</posy>
 	</coordinates>
 	<controls>
 		<control type="image" id="997">
@@ -40,7 +40,7 @@
 			<texturenofocus border="5">button-nofocus.png</texturenofocus>
 			<onleft>1001</onleft>
 			<onright>1001</onright>
-			<onup>1002</onup>
+			<onup>1003</onup>
 			<ondown>1002</ondown>
 		</control>
 		<control type="button" id="1002">
@@ -57,6 +57,22 @@
 			<onleft>1002</onleft>
 			<onright>1002</onright>
 			<onup>1001</onup>
+			<ondown>1003</ondown>
+		</control>
+		<control type="button" id="1003">
+			<posx>20</posx>
+			<posy>0</posy>
+			<width>320</width>
+			<height>38</height>
+			<font>font-20</font>
+			<align>center</align>
+			<textcolor>88FFFFFF</textcolor>
+			<focusedcolor>FFFFFFFF</focusedcolor>
+			<texturefocus border="5">button-focus.png</texturefocus>
+			<texturenofocus border="5">button-nofocus.png</texturenofocus>
+			<onleft>1003</onleft>
+			<onright>1003</onright>
+			<onup>1002</onup>
 			<ondown>1001</ondown>
 		</control>
 	</controls>

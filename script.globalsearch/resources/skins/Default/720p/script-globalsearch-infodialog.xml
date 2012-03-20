@@ -54,7 +54,7 @@
 				<align>center</align>
 				<aligny>center</aligny>
 				<textcolor>FFFFFFFF</textcolor>
-				<shadowcolor>00000000</shadowcolor>
+				<shadowcolor>FF000000</shadowcolor>
 				<label>$INFO[Container(100).ListItem.Label]</label>
 			</control>
 			<control type="image">

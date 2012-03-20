@@ -9,12 +9,14 @@
 	<string id="32006">Procurar Álbuns</string>
 	<string id="32007">Procurar Músicas</string>
 	<string id="32101">Entre texto que deseja buscar</string>
-	<string id="32201">Encontrar todas as temporadas e episódios</string>
-	<string id="32202">Encontrar todos os álbuns e músicas</string>
 	<string id="32203">Navegar álbum</string>
 	<string id="32204">Informação da Temporada</string>
 	<string id="32205">Play trailer</string>
 	<string id="32206">Encontrar álbum</string>
+	<string id="32207">Encontrar todas as temporadas</string>
+	<string id="32208">Encontrar todas os episódios</string>
+	<string id="32209">Encontrar todos os álbuns</string>
+	<string id="32210">Encontrar todos as músicas</string>
 	<string id="32299">Nova Busca</string>
 </strings>
 

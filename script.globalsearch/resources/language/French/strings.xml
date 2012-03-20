@@ -9,11 +9,13 @@
 	<string id="32006">Recherche Albums</string>
 	<string id="32007">Recherche Chansons</string>
 	<string id="32101">Entrer Mot de Recherche</string>
-	<string id="32201">Trouver tous les épisodes et saisons</string>
-	<string id="32202">Trouver tous les albums et chansons</string>
 	<string id="32203">Parcourir album</string>
 	<string id="32204">Information saison</string>
 	<string id="32205">Lire bande annonce</string>
 	<string id="32206">Trouver album</string>
+	<string id="32207">Trouver tous les saisons</string>
+	<string id="32208">Trouver tous les épisodes</string>
+	<string id="32209">Trouver tous les albums</string>
+	<string id="32210">Trouver tous les chansons</string>
 	<string id="32299">NOUVELLE RECHERCHE</string>
 </strings>

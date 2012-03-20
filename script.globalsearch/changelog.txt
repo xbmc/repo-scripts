@@ -1,3 +1,19 @@
+v0.2.2
+- use title instead of label
+
+v0.2.1
+- fix unicode in path issue
+
+v0.2.0
+- add seperate context menu items for find seasons and find episodes
+- add seperate context menu items for find albums and find songs
+
+v0.1.9
+- add starrating
+
+v0.1.8
+- remove unused code
+
 v0.1.7
 - ignore possible encoding errors
 - improve videoresolution matching

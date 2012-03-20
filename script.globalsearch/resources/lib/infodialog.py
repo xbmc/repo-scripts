@@ -6,18 +6,15 @@ __language__   = sys.modules[ "__main__" ].__language__
 CANCEL_DIALOG  = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
 ACTION_SHOW_INFO = ( 11, )
 
-
 class GUI( xbmcgui.WindowXMLDialog ):
     def __init__( self, *args, **kwargs ):
         xbmcgui.WindowXMLDialog.__init__( self )
         self.listitem = kwargs[ "listitem" ]
         self.content = kwargs[ "content" ]
 
-
     def onInit( self ):
         self._hide_controls()
         self._show_info()
-
 
     def _hide_controls( self ):
         self.getControl( 110 ).setVisible( False )
@@ -31,7 +28,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 191 ).setVisible( False )
         self.getControl( 192 ).setVisible( False )
         self.getControl( 193 ).setVisible( False )
-
 
     def _show_info( self ):
         self.getControl( 100 ).addItem( self.listitem )
@@ -82,11 +78,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 192 ).setVisible( True )
         self.setFocus( self.getControl( 191 ) )
 
-
     def _close_dialog( self, action=None ):
         self.action = action
         self.close()
-
 
     def onClick( self, controlId ):
         if controlId == 191:
@@ -114,12 +108,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if self.content == 'albums':
                 self._close_dialog( 'browse_album' )
 
-
     def onFocus( self, controlId ):
         pass
-
 
     def onAction( self, action ):
         if ( action.getId() in CANCEL_DIALOG ) or ( action.getId() in ACTION_SHOW_INFO ):
             self._close_dialog()
-

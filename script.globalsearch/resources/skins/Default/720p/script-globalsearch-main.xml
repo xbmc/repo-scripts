@@ -645,7 +645,7 @@
 						<height>118</height>
 						<texture border="2">blue.png</texture>
 						<colordiffuse>4FFFFFFF</colordiffuse>
-						<visible>Control.HasFocus(111)</visible>
+						<visible>Control.HasFocus(131)</visible>
 					</control>
 					<control type="list" id="131">
 						<posx>10</posx>

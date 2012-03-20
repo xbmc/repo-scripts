@@ -6,7 +6,7 @@ __addonversion__ = __addon__.getAddonInfo('version')
 __language__     = __addon__.getLocalizedString
 __cwd__          = __addon__.getAddonInfo('path')
 
-BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
+BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode('utf-8')
 
 sys.path.append (BASE_RESOURCE_PATH)
 
@@ -17,7 +17,6 @@ if ( __name__ == "__main__" ):
     if ( keyboard.isConfirmed() ):
         searchstring = keyboard.getText()
         import gui
-#        window = "main"
         ui = gui.GUI( "script-globalsearch-main.xml", __cwd__, "Default", searchstring=searchstring )
         ui.doModal()
         del ui

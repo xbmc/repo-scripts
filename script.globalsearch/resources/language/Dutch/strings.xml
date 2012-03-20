@@ -9,11 +9,13 @@
 	<string id="32006">Zoek Albums</string>
 	<string id="32007">Zoek Nummers</string>
 	<string id="32101">Voer zoekterm in</string>
-	<string id="32201">Vind alle seizoenen en afleveringen</string>
-	<string id="32202">Vind alle albums en nummers</string>
 	<string id="32203">Open album</string>
 	<string id="32204">Seizoen informatie</string>
 	<string id="32205">Start trailer</string>
 	<string id="32206">Vind album</string>
+	<string id="32207">Vind alle seizoenen</string>
+	<string id="32208">Vind alleafleveringen</string>
+	<string id="32209">Vind alle albums</string>
+	<string id="32210">Vind alle nummers</string>
 	<string id="32299">ZOEK OPNIEUW</string>
 </strings>
