@@ -254,7 +254,7 @@ class Main:
         time.sleep(2)
         dialog_msg('close', background = self.settings.background)
         # Print the self.reportdata log message
-        log('Failed items report: %s' % self.reportdata.replace('[B]', '').replace('[/B]', '') )
+        #log('Failed items report: %s' % self.reportdata.replace('[B]', '').replace('[/B]', '') )
         # Safe the downloadreport to settings folder using save function
         save_nfo_file(self.reportdata, os.path.join( __addonprofile__ , 'downloadreport.txt' ) )
         # Some dialog checks
@@ -308,7 +308,7 @@ class Main:
         mediafound = False
         for currentitem in self.Medialist:
             # Check on exact match
-            if itemname in currentitem["name"]:
+            if normalize_string(itemname) == normalize_string(currentitem["name"]):
                 # Check on exact path match when provided and normalize the path because of unicode issues
                 if normalize_string(itempath) == normalize_string(currentitem['path']) or itempath == '':
                     self.Medialist = []
@@ -682,6 +682,17 @@ class Main:
             log('Finished download')
         log('########################################################')
 
+    ### Checks imagelist if it has that type of artwork has got images
+    def _hasimages(self, art_type):
+        found = False
+        for artwork in self.image_list:
+            if  art_type in artwork['type']:
+                found = True
+                break
+            else: pass
+        return found
+
+    ### This handles the GUI image type selector part
     def _gui_mode(self):
         # Close the 'checking for artwork' dialog before opening the GUI list
         dialog_msg('close', background = self.settings.background)
@@ -690,7 +701,7 @@ class Main:
         imagelist = False
         # Fill GUI art type list
         for item in self.settings.available_arttypes:
-            if item['solo_enabled'] == 'true' and self.mediatype == item['media_type']:
+            if item['solo_enabled'] == 'true' and self.mediatype == item['media_type'] and self._hasimages(item['art_type']):
                 gui = item['gui_string']
                 self.GUI_type_list.append (gui)
         # Not sure what this does again

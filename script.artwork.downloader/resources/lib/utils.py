@@ -30,7 +30,7 @@ try:
 except:
     import storageserverdummy as StorageServer
 
-cache = StorageServer.StorageServer("ArtworkDownloader",48)
+cache = StorageServer.StorageServer("ArtworkDownloader",96)
 
 ### adjust default timeout to stop script hanging
 timeout = 20
@@ -110,9 +110,9 @@ def get_json(url):
     try:
         result = cache.cacheFunction( get_json_new, url )
     except:
-        result = ''
+        result = 'Empty'
     if len(result) == 0:
-        result = []
+        result = 'Empty'
         return result
     else:
         return result
@@ -120,26 +120,34 @@ def get_json(url):
 # Retrieve JSON data from site
 def get_json_new(url):
     log('Cache expired. Retrieving new data')
+    parsed_json = []
     try:
         request = urllib2.Request(url)
+        # TMDB needs a header to be able to read the data
         if url.startswith("http://api.themoviedb.org"):
             request.add_header("Accept", "application/json")
+        # Add some delay to stop trashing the fanart.tv server for now
+        elif url.startswith("http://fanart.tv/"):
+            xbmc.sleep(2000)
         req = urllib2.urlopen(request)
         json_string = req.read()
         req.close()
+        try:
+            parsed_json = simplejson.loads(json_string)
+        except:
+            parsed_json = 'Empty'
     except HTTPError, e:
-        if e.code == 404:
+        # Add an empty cache to stop trashing the fanart.tv server for now
+        if url.startswith("http://fanart.tv/"):
+            parsed_json = 'Empty'
+        elif e.code == 404:
             raise HTTP404Error(url)
         elif e.code == 503:
             raise HTTP503Error(url)
         else:
             raise DownloadError(str(e))
     except:
-        json_string = []
-    try:
-        parsed_json = simplejson.loads(json_string)
-    except:
-        parsed_json = []
+        parsed_json = 'Empty'
     return parsed_json
 
 # Retrieve XML data from cache function

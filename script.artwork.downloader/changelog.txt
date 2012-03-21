@@ -1,3 +1,8 @@
+[B]1.0.9[/B]
+- Changed: increase the API cache expire time to stop trashing the fanart.tv site
+- Added: Only show artwork types in GUI mode that are avaiable
+- Fixed: Unicode error in custom/gui mode search
+
 [B]1.0.8[/B]
 - Added: Increased speed by using commingcache for library JSON when using custom/gui mode (expires after 1 hour)
 - Added: Greek translation (thx CutSickAss)
