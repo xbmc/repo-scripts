@@ -1,4 +1,5 @@
 import sys, re, datetime
+from operator import itemgetter #needed for sorting workaround
 import xbmc, xbmcgui
 import contextmenu, infodialog
 if sys.version_info < (2, 7):
@@ -118,7 +119,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(342) + '[/B]' )
         count = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "mpaa", "director", "writer"], "sort": { "method": "title" } }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "mpaa", "director", "writer"], "sort": { "method": "label" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('movies')):
@@ -217,7 +218,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20343) + '[/B]' )
         count = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "genre", "studio", "premiered", "plot", "fanart", "thumbnail", "playcount", "year", "mpaa", "episode", "rating"], "sort": { "method": "title" } }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "genre", "studio", "premiered", "plot", "fanart", "thumbnail", "playcount", "year", "mpaa", "episode", "rating"], "sort": { "method": "label" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
@@ -266,7 +267,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20343) + '[/B]' )
         count = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["title", "showtitle", "season", "fanart", "thumbnail", "playcount", "episode"], "sort": { "method": "title" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["showtitle", "season", "fanart", "thumbnail", "playcount", "episode"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('seasons')):
@@ -278,7 +279,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     episode = str(item['episode'])
                     fanart = item['fanart']
                     path = 'videodb://2/2/' + self.tvshowid + '/' + str(item['season']) + '/'
-                    season = item['title']
+                    season = item['label']
                     playcount = str(item['playcount'])
                     thumb = item['thumbnail']
                     listitem = xbmcgui.ListItem(label=season, iconImage='DefaultVideo.png', thumbnailImage=thumb)
@@ -309,6 +310,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('episodes')):
+            json_response['result']['episodes'].sort(key=itemgetter('title')) #workaround, sort method 'title' is broken in json-rpc
             for item in json_response['result']['episodes']:
                 if self.fetch_seasonepisodes == 'true':
                     episode = item['showtitle']
@@ -404,7 +406,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20389) + '[/B]' )
         count = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["title", "streamdetails", "runtime", "genre", "studio", "artist", "album", "year", "plot", "fanart", "thumbnail", "file", "playcount", "director"], "sort": { "method": "title" } }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["title", "streamdetails", "runtime", "genre", "studio", "artist", "album", "year", "plot", "fanart", "thumbnail", "file", "playcount", "director"], "sort": { "method": "label" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('musicvideos')):
@@ -412,7 +414,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 musicvideo = item['title']
                 musicvideomatch = re.search( '.*' + self.searchstring + '.*', musicvideo, re.I )
                 if musicvideomatch:
-                    log("match")
                     count = count + 1
                     album = item['album']
                     artist = item['artist']
@@ -545,9 +546,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(132) + '[/B]' )
         count = 0
         if self.fetch_albumssongs == 'true':
-            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"], "sort": { "method": "title" }, "artistid":%s }, "id": 1}' % self.artistid)
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"], "sort": { "method": "label" }, "artistid":%s }, "id": 1}' % self.artistid)
         else:
-            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"], "sort": { "method": "title" } }, "id": 1}')
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "theme", "type", "mood", "style", "rating"], "sort": { "method": "label" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('albums')):
@@ -581,7 +582,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         starrating = 'rating%.1d.png' % round(float(int(rating))/2)
                     else:
                         starrating = 'rating0.png'
-                    log('starrating: %s' % starrating)
                     style = item['style']
                     theme = item['theme']
                     albumtype = item['type']
@@ -616,9 +616,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(134) + '[/B]' )
         count = 0
         if self.fetch_albumssongs == 'true':
-            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "artist", "album", "genre", "duration", "year", "file", "thumbnail", "fanart", "comment", "rating", "track", "playcount"], "sort": { "method": "title" }, "artistid":%s }, "id": 1}' % self.artistid)
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "artist", "album", "genre", "duration", "year", "file", "thumbnail", "fanart", "comment", "rating", "track", "playcount"], "sort": { "method": "label" }, "artistid":%s }, "id": 1}' % self.artistid)
         else:
-            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "artist", "album", "genre", "duration", "year", "file", "thumbnail", "fanart", "comment", "rating", "track", "playcount"], "sort": { "method": "title" } }, "id": 1}')
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "artist", "album", "genre", "duration", "year", "file", "thumbnail", "fanart", "comment", "rating", "track", "playcount"], "sort": { "method": "label" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('songs')):

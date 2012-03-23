@@ -1,3 +1,7 @@
+v0.2.3
+- use label for seasons
+- sort by label instead of title
+
 v0.2.2
 - use title instead of label
 
