@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="500">
+       <setting id="bStepForward" type="text" label="501" default="168"/>
+       <setting id="bStepBack" type="text" label="502" default="169" />
+       <setting id="bBigStepForward" type="text" label="503" default="166"/>
+       <setting id="bBigStepBack" type="text" label="504" default="167"/>
+       <setting id="bNextAlbum" type="text" label="505" default="210"/>
+       <setting id="bPrevAlbum" type="text" label="506" default="211"/>
+       <setting id="bLoadPlaylist" type="text" label="507" default="249"/>
+       <setting id="bSavePlaylist" type="text" label="508" default="40"/>
+       <setting id="bRescan" type="text" label="509" default="101"/>
+       <setting id="bProgramMode" type="text" label="510" default="251"/>
+       <setting id="bNormalMode" type="text" label="511" default="252"/>
+       <setting id="bRepeat" type="text" label="512" default="253"/>
+       <setting id="bRepeatOne" type="text" label="513" default="250"/>
+       <setting id="bAlbumMode" type="text" label="514" default="254"/>
+       <setting id="bEnableTurnOff" type="text" label="515" default="229"/>
+       <setting id="bDisableTurnOff" type="text" label="516" default="45"/>
+       <setting id="bRepeatAB" type="text" label="517" default="232"/>
+       <setting id="bHotKey" type="text" label="518" default=""/>
+    </category>
+</settings>

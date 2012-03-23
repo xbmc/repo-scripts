@@ -1,0 +1,991 @@
+<window>
+	<defaultcontrol always="true">1100</defaultcontrol>
+	<animation effect="fade" time="250">WindowOpen</animation>
+	<animation effect="fade" time="250">WindowClose</animation>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>blind-background.png</texture>
+		</control>
+		<control type="image">
+			<posx>40</posx>
+			<posy>40</posy>
+			<width>1200</width>
+			<height>640</height>
+			<texture>blind-panel.png</texture>
+		</control>
+		<control type="image">
+			<posx>80</posx>
+			<posy>180</posy>
+			<width>256</width>
+			<height>256</height>
+			<texture>blind-icon.png</texture>
+		</control>
+			<control type="label" id="999">
+				<description></description>
+				<posx>80</posx>
+				<posy>560</posy>
+				<width>300</width>
+				<height>80</height>
+				<font>font13</font>
+				<align>left</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<shadowcolor>00000000</shadowcolor>
+				<wrapmultiline>true</wrapmultiline>
+			</control>           
+
+		<control type="group" id="1100">
+			<control type="label" id="1101">
+				<description>Track</description>
+				<posx>400</posx>
+				<posy>250</posy>
+				<width>800</width>
+				<height>80</height>
+				<font>font13</font>
+				<align>center</align>
+				<scroll>true</scroll>
+				<textcolor>FFFFFFFF</textcolor>
+				<shadowcolor>00000000</shadowcolor>
+				<wrapmultiline>false</wrapmultiline>
+			</control>           
+			<control type="label" id="1102">
+				<description>Path</description>
+				<posx>400</posx>
+				<posy>595</posy>
+				<width>800</width>
+				<height>50</height>
+				<font>font13</font>
+				<align>center</align>
+				<scroll>true</scroll>
+				<textcolor>FFFFFFFF</textcolor>
+				<shadowcolor>00000000</shadowcolor>
+				<wrapmultiline>false</wrapmultiline>
+			</control>           
+		</control>
+		<control type="group" id="2100">
+			<control type="grouplist" id="17">
+			<description>Buttons</description>
+			<posx>400</posx>
+			<posy>150</posy>
+			<width>600</width>
+			<height>400</height>
+			<itemgap>10</itemgap>
+			<pagecontrol>25</pagecontrol>
+			<scrolltime tween="sine" easing="out">200</scrolltime>
+			<orientation>vertical</orientation>
+			<usecontrolcoords>false</usecontrolcoords>
+			<visible>true</visible>
+			<onup>2</onup>
+			<ondown>3</ondown>
+			<onleft></onleft>
+			<onright></onright>
+                        <control type="group" id="2200">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="2201">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT501][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3901</onup>
+				<ondown>2301</ondown>
+				<onleft>2201</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="2202">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control>
+			</control>
+                        <control type="group" id="2300">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="2301">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT502][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>2201</onup>
+				<ondown>2401</ondown>
+				<onleft>2301</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="2302">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+                        <control type="group" id="2400">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="2401">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT503][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>2301</onup>
+				<ondown>2501</ondown>
+				<onleft>2401</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="2402">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="2500">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="2501">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT504][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>2401</onup>
+				<ondown>2601</ondown>
+				<onleft>2501</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="2502">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="2600">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="2601">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT505][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>2501</onup>
+				<ondown>2701</ondown>
+				<onleft>2601</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="2602">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="2700">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="2701">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT506][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>2601</onup>
+				<ondown>2801</ondown>
+				<onleft>2701</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="2702">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="2800">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="2801">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT507][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>2701</onup>
+				<ondown>2901</ondown>
+				<onleft>2801</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="2802">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="2900">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="2901">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT508][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>2801</onup>
+				<ondown>3001</ondown>
+				<onleft>2901</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="2902">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3000">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3001">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT509][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>2901</onup>
+				<ondown>3101</ondown>
+				<onleft>3001</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3002">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3100">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3101">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT510][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3001</onup>
+				<ondown>3201</ondown>
+				<onleft>3101</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3102">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3200">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3201">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT511][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3101</onup>
+				<ondown>3301</ondown>
+				<onleft>3201</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3202">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3300">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3301">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT512][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3201</onup>
+				<ondown>3401</ondown>
+				<onleft>3301</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3302">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3400">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3401">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT513][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3301</onup>
+				<ondown>3501</ondown>
+				<onleft>3401</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3402">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3500">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3501">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT514][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3401</onup>
+				<ondown>3601</ondown>
+				<onleft>3501</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3502">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3600">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3601">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT515][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3501</onup>
+				<ondown>3701</ondown>
+				<onleft>3601</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3602">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3700">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3701">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT516][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3601</onup>
+				<ondown>3801</ondown>
+				<onleft>3701</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3702">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3800">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3801">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT517][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3701</onup>
+				<ondown>3901</ondown>
+				<onleft>3801</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3802">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+                        <control type="group" id="3900">
+                                <description>ControlGroup</description>
+                                <width>600</width>
+                                <height>50</height>
+                                <visible>true</visible>
+                                <onup>2</onup>
+                                <ondown>3</ondown>
+                                <onleft></onleft>
+                                <onright></onright>
+			<control type="radiobutton" id="3901">
+				<description></description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>34</height>
+				<texturefocus border="0,2,0,2">blind-list-focus.png</texturefocus>
+				<texturenofocus border="0,2,0,2">blind-list-nofocus.png</texturenofocus>
+				<textureradioon>blind-radiobutton-focus.png</textureradioon>
+				<textureradiooff>blind-radiobutton-nofocus.png</textureradiooff>
+				<label>[B]$LOCALIZE[SCRIPT518][/B]</label>
+				<font>font13</font>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>50</textoffsetx>
+				<radioposx>10</radioposx>
+				<pulseonselect>true</pulseonselect>
+				<onup>3801</onup>
+				<ondown>2201</ondown>
+				<onleft>3901</onleft>
+				<onright></onright>
+			</control>
+			<control type="button" id="3902">
+				<description></description>
+				<posx>420</posx>
+				<posy>0</posy>
+				<width>180</width>
+				<height>34</height>
+				<texturefocus border="5">blind-button-focus.png</texturefocus>
+				<texturenofocus border="5">blind-button-nofocus.png</texturenofocus>
+				<label></label>
+				<font>font12_title</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<pulseonselect>true</pulseonselect>
+			</control> 
+			</control> 
+
+			</control>
+		</control>
+	</controls>
+</window>

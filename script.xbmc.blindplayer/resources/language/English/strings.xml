@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="500">Buttons</string>
+  <string id="501">Step forward</string>
+  <string id="502">Step backward</string>
+  <string id="503">Big step forward</string>
+  <string id="504">Big step backward</string>
+  <string id="505">Next album</string>
+  <string id="506">Previous album</string>
+  <string id="507">Load playlist</string>
+  <string id="508">Save playlist</string>
+  <string id="509">Rescan</string>
+  <string id="510">Program mode</string>
+  <string id="511">Normal mode</string>
+  <string id="512">Repeat</string>
+  <string id="513">Repeat one</string>
+  <string id="514">Album mode</string>
+  <string id="515">Enable auto power off</string>
+  <string id="516">Disable auto power off</string>
+  <string id="517">Repeat A-B</string>
+  <string id="518">HotKey</string>
+  <string id="30100">Setup: Buttons</string>
+  <string id="30101">Mode: Album</string>
+  <string id="30102">Mode: Normal</string>
+  <string id="30103">Mode: Program</string>
+  <string id="30104">Repeat: track</string>
+  <string id="30105">Repeat: on</string>
+  <string id="30106">Repeat: off</string>
+  <string id="30107">Auto Power-off</string>
+  <string id="30110">Playlist</string>
+  <string id="30111">Loading...</string>
+  <string id="30112">Saving...</string>
+  <string id="30113">Rescan</string>
+  <string id="30114">Building scan list...</string>
+  <string id="30115">Init</string>
+  <string id="30116">Navigate</string>
+  <string id="30117">Repeat: A-?</string>
+  <string id="30118">Repeat: A-B</string>
+</strings>

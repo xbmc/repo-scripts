@@ -1,0 +1,22 @@
+<keymap>
+  <MyMusicFiles>
+    <remote>
+      <__hotkey__>XBMC.RunScript(script.xbmc.blindplayer, "music")</__hotkey__>
+    </remote>
+  </MyMusicFiles>
+  <MyMusicLibrary>
+    <remote>
+      <__hotkey__>XBMC.RunScript(script.xbmc.blindplayer, "music")</__hotkey__>
+    </remote>
+  </MyMusicLibrary>
+  <MyVideoLibrary>
+    <remote>
+      <__hotkey__>XBMC.RunScript(script.xbmc.blindplayer, "video")</__hotkey__>
+    </remote>
+  </MyVideoLibrary>
+  <MyVideoFiles>
+    <remote>
+      <__hotkey__>XBMC.RunScript(script.xbmc.blindplayer, "video")</__hotkey__>
+    </remote>
+  </MyVideoFiles>
+</keymap>
