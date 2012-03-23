@@ -161,8 +161,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "fanart", "year"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('movies'):
+            totalitems = len( json_response['result']['movies'] )
             for item in json_response['result']['movies']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
@@ -191,8 +191,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "fanart"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('tvshows'):
+            totalitems = len( json_response['result']['tvshows'] )
             for item in json_response['result']['tvshows']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
@@ -220,8 +220,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["title", "fanart", "artist"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('musicvideos'):
+            totalitems = len( json_response['result']['musicvideos'] )
             for item in json_response['result']['musicvideos']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
@@ -250,8 +250,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": ["fanart"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('artists'):
+            totalitems = len( json_response['result']['artists'] )
             for item in json_response['result']['artists']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
@@ -279,8 +279,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "thumbnail", "year"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('movies'):
+            totalitems = len( json_response['result']['movies'] )
             for item in json_response['result']['movies']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
@@ -309,8 +309,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "thumbnail"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('tvshows'):
+            totalitems = len( json_response['result']['tvshows'] )
             for item in json_response['result']['tvshows']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
@@ -347,18 +347,18 @@ class Main:
                 tvshowids.append(tvshowid)
             for tvshowid in tvshowids:
                 processeditems = 0
-                json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["title", "thumbnail", "showtitle"], "tvshowid":%s }, "id": 1}' % tvshowid)
+                json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["thumbnail", "showtitle"], "tvshowid":%s }, "id": 1}' % tvshowid)
                 json_query = unicode(json_query, 'utf-8', errors='ignore')
                 json_response = simplejson.loads(json_query)
-                totalitems = len( json_response )
                 if json_response['result'].has_key('seasons'):
+                    totalitems = len( json_response['result']['seasons'] )
                     for item in json_response['result']['seasons']:
                         if self.dialog.iscanceled():
                             log('script cancelled')
                             return
                         processeditems = processeditems + 1
                         self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32007) + ': ' + str( count + 1 ) )
-                        name = item['title']
+                        name = item['label']
                         tvshow = item['showtitle']
                         artwork = item['thumbnail'][:-4]
                         tmp_filename = tvshow + ' - ' + name
@@ -380,8 +380,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"properties": ["title", "thumbnail", "season", "episode", "showtitle"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('episodes'):
+            totalitems = len( json_response['result']['episodes'] )
             for item in json_response['result']['episodes']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
@@ -413,8 +413,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["title", "thumbnail", "artist"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('musicvideos'):
+            totalitems = len( json_response['result']['musicvideos'] )
             for item in json_response['result']['musicvideos']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
@@ -443,8 +443,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": ["thumbnail"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('artists'):
+            totalitems = len( json_response['result']['artists'] )
             for item in json_response['result']['artists']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
@@ -472,8 +472,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "thumbnail", "artist"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        totalitems = len( json_response )
         if json_response['result'].has_key('albums'):
+            totalitems = len( json_response['result']['albums'] )
             for item in json_response['result']['albums']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
