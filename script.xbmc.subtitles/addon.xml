@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmc.subtitles"
        name="XBMC Subtitles"
-       version="2.9.37"
+       version="2.9.38"
        provider-name="Amet, mr_blobby">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -16,7 +16,6 @@
     <summary lang="hu">XBMC feliratok</summary> 
     <summary lang="sr">XBMC Преводи</summary>
     <summary lang="nl">XBMC Ondertitels</summary>
-    <summary lang="bg">XBMC Субтитри</summary>
     <summary lang="pt">Legendas XBMC</summary>
     <summary lang="pl">Napisy XBMC</summary>
     <summary lang="zh">XBMC字幕</summary>

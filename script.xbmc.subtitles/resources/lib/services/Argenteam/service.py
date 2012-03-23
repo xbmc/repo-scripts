@@ -43,10 +43,10 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 	content = geturl(url)
 	#subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': searchstring, 'sync': False, 'id' : 1, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 	for matches in re.finditer(search_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
-		log( __name__ ,"Resultado: %s" % (matches))
-		log( __name__ ,"Tipo: %s" % (matches.group(2)))
-		log( __name__ ,"ID: %s" % (matches.group(3)))
-		log( __name__ ,"Link: %s" % (matches.group(4)))
+		log( __name__ ,u"Resultado: %s" % (matches))
+		log( __name__ ,u"Tipo: %s" % (matches.group(2)))
+		log( __name__ ,u"ID: %s" % (matches.group(3)))
+		log( __name__ ,u"Link: %s" % (matches.group(4)))
 		
 		tipo = matches.group(2)
 		id = matches.group(3)
@@ -56,7 +56,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 		
 		content_subtitle = geturl(url_subtitle)
 		for matches in re.finditer(subtitle_pattern, content_subtitle, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
-			log( __name__ ,"Descargas: %s" % (matches.group(2)))
+			log( __name__ ,u"Descargas: %s" % (matches.group(2)))
 			
 			id = matches.group(6)
 			filename=urllib.unquote_plus(matches.group(7))
@@ -65,7 +65,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			if (downloads > 10):
 				downloads=10
 			#server = matches.group(4).encode('ascii')
-			log( __name__ ,"Resultado Subtítulo 2: %s" % (matches.group(6)))
+			log( __name__ ,u"Resultado Subtítulo 2: %s" % (matches.group(6)))
 			subtitles_list.append({'rating': str(downloads), 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 	
 	

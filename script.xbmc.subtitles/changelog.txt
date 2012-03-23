@@ -1,3 +1,9 @@
+2.9.38
+- fix Argenteam service
+- "fix" for Subdivx service, not happy with this but best I can do for now
+- Select the current service in the service list, thx Martin Wallgren
+- fixed Bulgarian addon.xml localization, thx Kiril
+
 2.9.37
 - fixed encoding again, thx taxigps
 - fixed Shooter service. thx  taxigps

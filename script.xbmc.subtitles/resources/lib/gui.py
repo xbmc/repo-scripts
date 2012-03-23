@@ -232,23 +232,33 @@ class GUI( xbmcgui.WindowXMLDialog ):
         xbmc.sleep(1500)
         self.next.remove(self.service)
         self.service = self.next[0]
+        try:
+          select_index = self.service_list.index(self.service)
+        except IndexError:
+          select_index = 0
+        self.getControl( SERVICES_LIST ).selectItem( select_index )
         log( __name__ ,"Auto Searching '%s' Service" % (self.service,) )
         self.Search_Subtitles(gui)
       else:
         self.next = list(self.service_list)
         if gui:
+          select_index = 0
           if msg != "":
             self.getControl( STATUS_LABEL ).setLabel( msg )
           else:
             self.getControl( STATUS_LABEL ).setLabel( _( 657 ) )
           if self.newWindow:
             window_list = SERVICES_LIST
+            try:
+              select_index = self.service_list.index(self.service)
+            except IndexError:
+              select_index = 0
           else:
             window_list = SUBTITLES_LIST
             self.list_services()   
           if gui:
             self.setFocusId( window_list )
-            self.getControl( window_list ).selectItem( 0 ) 
+            self.getControl( window_list ).selectItem( select_index )
     else:
       if not self.newWindow: self.list_services()
       subscounter = 0
@@ -315,14 +325,19 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.close()
       else:
         if gui:
+          select_index = 0
           self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
           if self.newWindow:
             window_list = SERVICES_LIST
+            try:
+              select_index = self.service_list.index(self.service)
+            except IndexError:
+              select_index = 0
           else:
             window_list = SUBTITLES_LIST
             self.list_services()   
           self.setFocusId( window_list )
-          self.getControl( window_list ).selectItem( 0 )  
+          self.getControl( window_list ).selectItem( select_index )
 
   def Extract_Subtitles( self, zip_subs, subtitle_lang, gui = True ):
     xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip_subs,self.tmp_sub_dir,)).encode('utf-8'))
@@ -336,7 +351,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
         if self.newWindow:  
           self.setFocusId( SERVICES_LIST )
-          self.getControl( SERVICES_LIST ).selectItem( 0 )
+          try:
+            select_index = self.service_list.index(self.service)
+          except IndexError:
+            select_index = 0
+          self.getControl( SERVICES_LIST ).selectItem( select_index )
         else:
           self.list_services()
     else :
@@ -379,14 +398,19 @@ class GUI( xbmcgui.WindowXMLDialog ):
       self.close()
     else:
       if gui:
+        select_index = 0
         self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
         if self.newWindow:
           window_list = SERVICES_LIST
+          try:
+            select_index = self.service_list.index(self.service)
+          except IndexError:
+            select_index = 0
         else:
           window_list = SUBTITLES_LIST
           self.list_services()   
         self.setFocusId( window_list )
-        self.getControl( window_list ).selectItem( 0 )
+        self.getControl( window_list ).selectItem( select_index )
 
   def create_name(self,zip_entry,sub_filename,subtitle_lang): 
     if self.temp:
@@ -487,6 +511,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.Search_Subtitles()      
 
   def onFocus( self, controlId ):
+    if controlId == 150:
+      try:
+        select_index = self.service_list.index(self.service)
+      except IndexError:
+        select_index = 0
+      self.getControl( SERVICES_LIST ).selectItem(select_index)
     self.controlId = controlId
     try:
       if controlId == 8999:
