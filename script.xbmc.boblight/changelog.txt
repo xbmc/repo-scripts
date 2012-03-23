@@ -1,3 +1,6 @@
+1.0.3
+- fixed the lib downloading code on win32
+
 1.0.2
 - changed icon to something we own the copyright for
 

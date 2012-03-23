@@ -58,15 +58,15 @@ def tools_downloadLibBoblight():
   dest = "none"
   destdir = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib') )
   if xbmc.getCondVisibility('system.platform.osx'):
-    url = xbmc.translatePath( os.path.join( __libbaseurl__, 'osx', __libnameosx__) ) + ".zip"
+    url = "%s/%s/%s.zip" % (__libbaseurl__, 'osx', __libnameosx__)
     dest = os.path.join( destdir, __libnameosx__) 
     DownloaderClass(url, dest + ".zip")
   elif  xbmc.getCondVisibility('system.platform.ios'):
-    url = xbmc.translatePath( os.path.join( __libbaseurl__, 'ios', __libnameios__) ) + ".zip"
+    url = "%s/%s/%s.zip" % (__libbaseurl__, 'ios', __libnameios__)
     dest = os.path.join( destdir, __libnameios__)
     DownloaderClass(url, dest + ".zip")
   elif xbmc.getCondVisibility('system.platform.windows'): 
-    url = xbmc.translatePath( os.path.join( __libbaseurl__, 'win32', __libnamewin__) ) + ".zip"
+    url = "%s/%s/%s.zip" % (__libbaseurl__, 'win32', __libnamewin__)
     dest = os.path.join( destdir, __libnamewin__)
     DownloaderClass(url, dest + ".zip")
   print "boblight: " + url + " -> " + dest
