@@ -398,7 +398,8 @@ class Main:
         if( xbmc.Player().isPlayingAudio() == True ):
             artist = xbmc.Player().getMusicInfoTag().getArtist()
             if( artist == '' ):
-                return xbmc.Player().getMusicInfoTag().getTitle()
+                artist = xbmc.Player().getMusicInfoTag().getTitle()
+                return artist[0:(artist.find('-'))-1]
             else:
                 return artist
         elif( not xbmc.getInfoLabel( self.SKINARTIST ) == '' ):
@@ -518,7 +519,7 @@ class Main:
                 ForceUpdate = False
             else:
                 log('outdated cached artist %s info found' % item)
-        elif ForceUpdate:
+        if ForceUpdate:
             log('downloading artist %s info %s' % (item, site))
             try:
                 urllib.urlretrieve( self.url, filename )

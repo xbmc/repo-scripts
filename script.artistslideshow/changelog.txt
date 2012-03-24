@@ -1,3 +1,7 @@
+v1.3.1
+- changes to support for internet streams
+- fixed bug that caused artist .nfo files to never be updated
+
 v1.3.0
 - updated refresh during download logic to make it more aesthetically pleasing
 - refresh during downloads is now the default (and non-optional) behavior
