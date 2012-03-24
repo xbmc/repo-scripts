@@ -1,3 +1,6 @@
+v0.1.10
+- check for empty json response
+
 v0.1.9
 - use label for seasons
 - fix progressbars
