@@ -42,7 +42,10 @@ class Main:
             path = 'special://profile/playlists/music/'
         else:
             return
-        dirlist = os.listdir( xbmc.translatePath( path ) )
+        try:
+            dirlist = os.listdir( xbmc.translatePath( path ) )
+        except:
+            dirlist = []
         log('dirlist: %s' % dirlist)
         for item in dirlist:
             playlist = os.path.join( path, item)

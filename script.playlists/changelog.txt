@@ -1,3 +1,6 @@
+v 0.1.1
+- don't crash when patsubstitution is being used
+
 v 0.1.0
 - initial release
 
