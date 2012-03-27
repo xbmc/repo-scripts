@@ -1,19 +1,16 @@
-import sys
-import os
-import xbmc
-import xbmcaddon
+import sys, os
+import xbmc, xbmcaddon
 
 # Script constants
-__scriptname__ = "RSS Editor"
-__author__     = "rwparris2"
-__url__        = "http://code.google.com/p/xbmc-addons/"
-__credits__    = "Team XBMC"
-__settings__   = xbmcaddon.Addon(id='script.rss.editor')
-__version__    = __settings__.getAddonInfo('version')
-__language__   = __settings__.getLocalizedString
-__cwd__        = __settings__.getAddonInfo('path')
+__addon__      = xbmcaddon.Addon()
+__version__    = __addon__.getAddonInfo('version')
+__language__   = __addon__.getLocalizedString
+__cwd__        = __addon__.getAddonInfo('path')
 
-print "[SCRIPT] '%s: version %s' initialized!" % (__scriptname__, __version__, )
+def log(txt):
+    xbmc.log(msg=txt, level=xbmc.LOGDEBUG)
+
+log("[SCRIPT] '%s: version %s' initialized!" % (__addon__, __version__, ))
 
 if (__name__ == "__main__"):
     import resources.lib.rssEditor as rssEditor

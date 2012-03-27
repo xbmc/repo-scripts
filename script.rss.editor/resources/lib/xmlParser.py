@@ -1,13 +1,9 @@
-import os, sys
+import os, sys, unicodedata
 from xml.dom.minidom import parse, Document, _write_data, Node, Element
-import xbmcaddon
+import xbmc, xbmcaddon, xbmcgui
 
-try:
-    import xbmc
-    import xbmcgui
-except:
-    xbmc = None
-
+def log(txt):
+    xbmc.log(msg=txt, level=xbmc.LOGDEBUG)
 
 def writexml(self, writer, indent="", addindent="", newl=""):
     #credit: http://ronrothman.com/public/leftbraned/xml-dom-minidom-toprettyxml-and-silly-whitespace/
@@ -43,7 +39,7 @@ class XMLParser:
 
     def __init__(self):
         if xbmc:
-            self.RssFeedsPath = xbmc.translatePath('special://userdata/RssFeeds.xml')
+            self.RssFeedsPath = xbmc.translatePath('special://userdata/RssFeeds.xml').decode("utf-8")
         else:
             self.RssFeedsPath = r'C:\Documents and Settings\Xerox\Application Data\XBMC\userdata\RssFeeds.xml'
         sane = self.checkRssFeedPathSanity()
@@ -51,10 +47,10 @@ class XMLParser:
             try:
                 self.feedsTree = parse(self.RssFeedsPath)
             except:
-                print '[script] RSS Editor --> Failed to parse ' + self.RssFeedsPath
+                log('[script] RSS Editor --> Failed to parse ' + unicodedata.normalize( 'NFKD', self.RssFeedsPath ).encode( 'ascii', 'ignore' ))
                 regen = xbmcgui.Dialog().yesno(getLS(40), getLS(51), getLS(52), getLS(53))
                 if regen:
-                    print '[script] RSS Editor --> Attempting to Regenerate RssFeeds.xml'
+                    log('[script] RSS Editor --> Attempting to Regenerate RssFeeds.xml')
                     xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<rssfeeds>\n\
                     <!-- RSS feeds. To have multiple feeds, just add a feed to the set. You can also have multiple sets. 	!-->\n\
                     <!-- To use different sets in your skin, each must be called from skin with a unique id.             	!-->\n\
@@ -64,14 +60,13 @@ class XMLParser:
                     f.close()
                     self.__init__()
                 else:
-                    print '[script] RSS Editor --> User opted to not regenerate RssFeeds.xml.  Script Exiting'
+                    log('[script] RSS Editor --> User opted to not regenerate RssFeeds.xml.  Script Exiting')
                     self.feedsTree = False
             if self.feedsTree:
                 self.feedsList = self.getCurrentRssFeeds()
         else:
             self.feedsList = False
-            print '[SCRIPT] RSS Editor --> Could not open ' + self.RssFeedsPath +'. Either the file does not exist, or its\
-                size is zero.'
+            log('[SCRIPT] RSS Editor --> Could not open ' + unicodedata.normalize( 'NFKD', self.RssFeedsPath ).encode( 'ascii', 'ignore' ) +'. Either the file does not exist, or its size is zero.')
 
     def checkRssFeedPathSanity(self):
         if os.path.isfile(self.RssFeedsPath):
@@ -125,7 +120,7 @@ class XMLParser:
         return doc.toprettyxml(indent = '  ', encoding = 'UTF-8')
 
     def writeXmlToFile(self):
-        print '[SCRIPT] RSS Editor --> writing to %s' % (self.RssFeedsPath)
+        log('[SCRIPT] RSS Editor --> writing to %s' % (unicodedata.normalize( 'NFKD', self.RssFeedsPath ).encode( 'ascii', 'ignore' )))
         xml = self.formXml()
         #hack for standalone attribute, minidom doesn't support DOM3
         xmlHeaderEnd = xml.find('?>')
@@ -134,14 +129,14 @@ class XMLParser:
             RssFeedsFile = open(self.RssFeedsPath, 'w')
             RssFeedsFile.write(xml)
             RssFeedsFile.close()
-            print '[SCRIPT] RSS Editor --> write success'
+            log('[SCRIPT] RSS Editor --> write success')
             self.refreshFeed()
         except IOError, error:
-            print '[SCRIPT] RSS Editor --> write failed', error
+            log('[SCRIPT] RSS Editor --> write failed', error)
 
     def refreshFeed(self):
         """Refresh XBMC's rss feed so changes can be seen immediately"""
         if xbmc:
             xbmc.executebuiltin('refreshrss()')
         else:
-            print 'kthx'
+            log('kthx')

@@ -1,12 +1,10 @@
-import xbmc
-import xbmcgui
 import os, sys
+import xbmc, xbmcgui
 from xmlParser import XMLParser
 
 #enable localization
 getLS   = sys.modules[ "__main__" ].__language__
 __cwd__ = sys.modules[ "__main__" ].__cwd__
-
 
 class GUI(xbmcgui.WindowXMLDialog):
 

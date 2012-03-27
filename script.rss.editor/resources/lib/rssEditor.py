@@ -1,6 +1,5 @@
-import xbmc
-import xbmcgui
 import os, sys
+import xbmc, xbmcgui
 from xmlParser import XMLParser
 
 #enable localization
