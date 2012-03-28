@@ -1,0 +1,473 @@
+<window>
+	<allowoverlay>no</allowoverlay>
+	<coordinates>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="image" id="103">
+			<description>Channel Bug</description>
+			<posx>1140</posx>
+			<posy>635</posy>
+			<width>130</width>
+			<height>75</height>
+			<aspectratio>keep</aspectratio>
+			<colordiffuse>66FFFFFF</colordiffuse>
+			<animation effect="fade" start="100" end="50" time="0" condition="True">conditional</animation>
+		</control>	
+		<control type="group" id="102">
+			<include>Animation_OpenCloseFade</include>
+			<include>Animation_FadedByOSDSettings</include>
+			<!-- Background Image -->
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>175</height>
+				<texture>osd/OSDdialogback_top.png</texture>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+				<visible>!IsEmpty(VideoPlayer.Plot)</visible>
+			</control>
+			<!-- Plot -->
+			<control type="textbox">
+				<posx>25</posx>
+				<posy>67</posy>
+				<width>1230</width>
+				<height>92</height>
+				<align>justify</align>
+				<font>METF_PlotTextMedium</font>
+				<textcolor>TextNF</textcolor>
+				<label>$INFO[VideoPlayer.Plot]</label>
+				<autoscroll time="4000" delay="16000" repeat="8000">Skin.HasSetting(AutoScroll)</autoscroll>
+				<visible>!IsEmpty(VideoPlayer.Plot)</visible>
+			</control>
+			<!-- Director -->
+			<control type="grouplist">
+				<posx>25</posx>
+				<posy>39</posy>
+				<width>750</width>
+				<height>25</height>
+				<itemgap>8</itemgap>
+				<align>left</align>
+				<orientation>horizontal</orientation>
+				<include>Animation_OpenCloseFade</include>
+				<include>Animation_FadedByOSDSettings</include>
+				<visible>!IsEmpty(VideoPlayer.Plot)</visible>
+				<control type="label">
+					<width min="0" max="750">auto</width>
+					<height>25</height>
+					<aligny>center</aligny>
+					<font>METF_PlotTextMedium</font>
+					<textcolor>TextFO</textcolor>
+					<label>[B]$LOCALIZE[20339]:[/B]</label>
+					<visible>!IsEmpty(VideoPlayer.Director)</visible>
+				</control>
+				<control type="label">
+					<width min="0" max="750">auto</width>
+					<height>25</height>
+					<aligny>center</aligny>
+					<font>METF_PlotTextMedium</font>
+					<textcolor>TextNF</textcolor>
+					<label>$INFO[VideoPlayer.Director]</label>
+					<visible>!IsEmpty(VideoPlayer.Director)</visible>
+				</control>
+			</control>
+			<!-- Genre -->
+			<control type="grouplist">
+				<posx>25</posx>
+				<posy>14</posy>
+				<width>750</width>
+				<height>25</height>
+				<itemgap>8</itemgap>
+				<align>left</align>
+				<orientation>horizontal</orientation>
+				<include>Animation_OpenCloseFade</include>
+				<include>Animation_FadedByOSDSettings</include>
+				<visible>!IsEmpty(VideoPlayer.Plot)</visible>
+				<control type="label">
+					<width min="0" max="750">auto</width>
+					<height>25</height>
+					<aligny>center</aligny>
+					<font>METF_PlotTextMedium</font>
+					<textcolor>TextFO</textcolor>
+					<label>[B]$LOCALIZE[515]:[/B]</label>
+					<visible>!IsEmpty(VideoPlayer.Genre)</visible>
+				</control>
+				<control type="label">
+					<width min="0" max="750">auto</width>
+					<height>25</height>
+					<aligny>center</aligny>
+					<font>METF_PlotTextMedium</font>
+					<textcolor>TextNF</textcolor>
+					<label>$INFO[VideoPlayer.Genre]</label>
+				</control>				
+			</control>
+			<include>OSD_Progress_Bar2</include>
+			<include>OSD_Player_Details</include>
+			<control type="group">
+				<posx>3</posx>
+				<posy>5</posy>
+				<include>Animation_FadedByMenu</include>
+				<include>Animation_CommonFade</include>
+				<include>Animation_OpenCloseFade</include>
+				<!-- MPAA Flags -->
+				<control type="group">
+					<posx>300</posx>
+					<posy>650</posy>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/NoRating.png</texture>
+						<visible>IsEmpty(VideoPlayer.mpaa)</visible>
+					</control>
+					<!-- US/MPAA -->
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/mpaa_r.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Rated R,Left)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/mpaa_pg13.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Rated PG-13,Left)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/mpaa_pg.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Rated PG,Left) + !substring(VideoPlayer.mpaa,Rated PG-13,Left)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/mpaa_nc17.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Rated NC,Left)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/mpaa_general.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Rated G,Left)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>$INFO[VideoPlayer.mpaa,flags/Rating/,.png]</texture>
+						<visible>substring(VideoPlayer.mpaa,TV-)</visible>
+					</control>
+					<!-- Germany -->
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/germany_0.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Germany:0)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>t>
+						<texture>flags/Rating/germany_6.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Germany:6)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/germany_12.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Germany:12)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/germany_16.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Germany:16)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/germany_18.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Germany:18)</visible>
+					</control>
+					<!-- Australia -->
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/australia_r.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Australia:R)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/australia_m.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Australia:M) + !substring(VideoPlayer.mpaa,Australia:MA)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/australia_ma.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Australia:MA)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/australia_pg.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Australia:PG)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/australia_g.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Australia:G)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/australia_e.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Australia:E)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/australia_x.png</texture>
+						<visible>substring(VideoPlayer.mpaa,Australia:X)</visible>
+					</control>
+					<!-- United Kingdom -->
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/bbfc_u.png</texture>
+						<visible>substring(VideoPlayer.mpaa,UK:U)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/bbfc_pg.png</texture>
+						<visible>substring(VideoPlayer.mpaa,UK:PG)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/bbfc_12.png</texture>
+						<visible>substring(VideoPlayer.mpaa,UK:12)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/bbfc_12a.png</texture>
+						<visible>substring(VideoPlayer.mpaa,UK:12A)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/bbfc_15.png</texture>
+						<visible>substring(VideoPlayer.mpaa,UK:15)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/bbfc_18.png</texture>
+						<visible>substring(VideoPlayer.mpaa,UK:18)</visible>
+					</control>
+					<control type="image">
+						<include>MediaFlagsVarsMPAA</include>
+						<texture>flags/Rating/bbfc_r18.png</texture>
+						<visible>substring(VideoPlayer.mpaa,UK:X)</visible>
+					</control>
+					<control type="image">
+						<posx>-10</posx>
+						<posy>-4</posy>
+						<width>66</width>
+						<height>58</height>
+						<texture>flags/flag_framesquare.png</texture>
+						<colordiffuse>MediaFlagBoxDiffuse</colordiffuse>
+					</control>
+				</control>
+				<!-- Rating Stars -->
+				<control type="group">
+					<posx>362</posx>
+					<posy>650</posy>
+					<control type="image">
+						<posx>2</posx>
+						<posy>4</posy>
+						<width>42</width>
+						<height>42</height>
+						<texture>Star.png</texture>
+						<colordiffuse>RatingStarDiffuse</colordiffuse>
+					</control>
+					<control type="label">
+						<posx>-2</posx>
+						<posy>0</posy>
+						<width>50</width>
+						<height>50</height>
+						<align>center</align>
+						<aligny>center</aligny>
+						<label fallback="NA">$INFO[VideoPlayer.Rating]</label>
+						<textcolor>MediaFlagDiffuse</textcolor>
+						<font>METF_StarRating</font>
+					</control>
+					<control type="image">
+						<posx>-10</posx>
+						<posy>-4</posy>
+						<width>66</width>
+						<height>58</height>
+						<texture>flags/flag_framesquare.png</texture>
+						<colordiffuse>MediaFlagBoxDiffuse</colordiffuse>
+					</control>
+				</control>
+			</control>
+			<control type="group">
+				<posx>167</posx>
+				<posy>3</posy>
+				<include>Animation_FadedByMenu</include>
+				<include>Animation_CommonFade</include>
+				<include>Animation_OpenCloseFade</include>
+				<!-- Video Resolution -->
+				<control type="group">
+					<posx>240</posx>
+					<posy>640</posy>
+					<control type="image">
+						<posx>22</posx>
+						<posy>16</posy>
+						<width>80</width>
+						<height>40</height>
+						<colordiffuse>MediaFlagDiffuse</colordiffuse>
+						<texture fallback="flags/default.png">$INFO[VideoPlayer.VideoResolution,flags/VideoResolution/,.png]</texture>
+					</control>
+					<control type="image">
+						<posx>8</posx>
+						<posy>8</posy>
+						<width>104</width>
+						<height>54</height>
+						<colordiffuse>MediaFlagBoxDiffuse</colordiffuse>
+						<texture>flags/flag_frame.png</texture>
+					</control>
+				</control>
+				<!-- Video Aspect-->
+				<control type="group">
+					<posx>335</posx>
+					<posy>640</posy>
+					<control type="image">
+						<posx>22</posx>
+						<posy>16</posy>
+						<width>80</width>
+						<height>40</height>
+						<colordiffuse>MediaFlagDiffuse</colordiffuse>
+						<texture fallback="flags/VideoAspect/default.png">$INFO[VideoPlayer.VideoAspect,flags/VideoAspect/,.png]</texture>
+					</control>
+					<control type="image">
+						<posx>8</posx>
+						<posy>8</posy>
+						<width>104</width>
+						<height>54</height>
+						<colordiffuse>MediaFlagBoxDiffuse</colordiffuse>
+						<texture>flags/flag_frame.png</texture>
+					</control>
+				</control>
+				<!-- Video Codec -->
+				<control type="group">
+					<posx>430</posx>
+					<posy>640</posy>
+					<control type="image">
+						<posx>21</posx>
+						<posy>16</posy>
+						<width>80</width>
+						<height>40</height>
+						<colordiffuse>MediaFlagDiffuse</colordiffuse>
+						<texture fallback="flags/default.png">$INFO[VideoPlayer.VideoCodec,flags/VideoCodec/,.png]</texture>
+					</control>
+					<control type="image">
+						<posx>8</posx>
+						<posy>8</posy>
+						<width>104</width>
+						<height>54</height>
+						<colordiffuse>MediaFlagBoxDiffuse</colordiffuse>
+						<texture>flags/flag_frame.png</texture>
+					</control>
+				</control>
+				<!-- Audio Codec -->
+				<control type="group">
+					<posx>525</posx>
+					<posy>640</posy>
+					<control type="image">
+						<posx>21</posx>
+						<posy>16</posy>
+						<width>80</width>
+						<height>40</height>
+						<colordiffuse>MediaFlagDiffuse</colordiffuse>
+						<texture fallback="flags/defaultsound.png">$INFO[VideoPlayer.AudioCodec,flags/AudioCodec/,.png]</texture>
+					</control>
+					<control type="image">
+						<posx>8</posx>
+						<posy>8</posy>
+						<width>104</width>
+						<height>54</height>
+						<colordiffuse>MediaFlagBoxDiffuse</colordiffuse>
+						<texture>flags/flag_frame.png</texture>
+					</control>
+				</control>
+				<!-- Audio Channels -->
+				<control type="group">
+					<posx>620</posx>
+					<posy>640</posy>
+					<control type="image">
+						<posx>20</posx>
+						<posy>16</posy>
+						<width>80</width>
+						<height>40</height>
+						<colordiffuse>MediaFlagDiffuse</colordiffuse>
+						<texture fallback="flags/AudioChannels/DefaultChannels.png">$INFO[VideoPlayer.AudioChannels,flags/AudioChannels/,ch.png]</texture>
+					</control>
+					<control type="image">
+						<posx>8</posx>
+						<posy>8</posy>
+						<width>104</width>
+						<height>54</height>
+						<colordiffuse>MediaFlagBoxDiffuse</colordiffuse>
+						<texture>flags/flag_frame.png</texture>
+					</control>
+				</control>
+				<!-- Subtitles -->
+				<control type="group">
+					<posx>728</posx>
+					<posy>645</posy>
+					<control type="image">
+						<posx>5</posx>
+						<posy>8</posy>
+						<width>45</width>
+						<height>45</height>
+						<colordiffuse>MediaFlagDiffuse</colordiffuse>
+						<texture>flags/cc.png</texture>
+						<visible>!IsEmpty(VideoPlayer.SubtitleLanguage)</visible>
+					</control>
+					<control type="image">
+						<posx>-2</posx>
+						<posy>3</posy>
+						<width>58</width>
+						<height>54</height>
+						<colordiffuse>MediaFlagBoxDiffuse</colordiffuse>
+						<texture>flags/flag_framesquare.png</texture>
+						<visible>!IsEmpty(VideoPlayer.SubtitleLanguage)</visible>
+					</control>
+				</control>
+			</control>		
+			<include condition="Skin.HasSetting(DebugGrid)">Object_DebugGrid</include>
+			<include condition="Skin.HasSetting(DebugMode)">Debug</include>
+			<control type="group">
+			<visible>false</visible>
+				<control type="image" id="101">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+					<texture>-</texture>
+				</control>
+				<control type="label" id="502">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+				</control>
+				<control type="label" id="503">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+				</control>
+				<control type="label" id="504">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+				</control>
+				<control type="label" id="505">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+				</control>
+				<control type="image" id="506">
+					<posx>-10</posx>
+					<posy>-10</posy>
+					<width>1</width>
+					<height>1</height>
+					<texture>-</texture>
+				</control>
+			</control>		
+		</control>
+	</controls>
+</window>

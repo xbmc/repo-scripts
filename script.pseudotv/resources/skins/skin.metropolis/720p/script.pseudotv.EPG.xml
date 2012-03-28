@@ -1,0 +1,543 @@
+<window>
+    <allowoverlay>no</allowoverlay>
+    <coordinates>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+	<include>Animation_OpenCloseFade</include>
+    <controls>	
+		<!--BACKGROUND-->
+		<control type="image">
+			<description>EPG Back</description>
+			<posx>392</posx>
+			<posy>235</posy>
+			<width>864</width>
+			<height>300</height>
+			<texture>ButtonFo.png</texture>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>175</height>
+			<texture>osd/OSDdialogback_top.png</texture>
+			<colordiffuse>OSDBackgroundColor</colordiffuse>
+			<visible>!IsEmpty(VideoPlayer.Plot)</visible>
+		</control>			
+		<control type="label">
+			<description>Title</description>
+			<posx>45</posx>
+			<posy>0</posy>
+			<width>200</width>
+			<height>78</height>
+			<font>METF_TitleText</font>
+			<textcolor>GlobalHeading</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<aligny>center</aligny>
+			<align>left</align>
+			<label>PseudoTV</label>
+		</control>
+		<control type="image">
+			<description>Navigation Flag</description>
+			<posx>900</posx>
+			<posy>25</posy>
+			<width>336</width>
+			<height>28</height>
+			<texture>NavFlagEpg.png</texture>
+			<colordiffuse>GlobalHeading</colordiffuse>
+		</control>
+		<!-- Plot -->
+		<control type="label" id="502">
+			<posx>25</posx>
+			<posy>67</posy>
+			<width>1230</width>
+			<height>82</height>
+			<align>justify</align>
+			<font>METF_PlotTextMedium</font>
+			<textcolor>TextNF</textcolor>
+			<wrapmultiline>true</wrapmultiline>
+			<visible>!IsEmpty(VideoPlayer.Plot)</visible>
+		</control>	
+		<control type="image">
+			<posx>0</posx>
+			<posy>545</posy>
+			<width>1280</width>
+			<height>175</height>
+			<texture>osd/OSDdialogback.png</texture>
+			<colordiffuse>OSDBackgroundColor</colordiffuse>
+		</control>
+		<control type="progress" id="23">
+			<description>Progressbar</description>
+			<posx>295</posx>
+			<posy>627</posy>
+			<width>960</width>
+			<height>15</height>
+			<info>Player.Progress</info>
+			<texturebg>osd/osd_progress_back.png</texturebg>
+			<lefttexture>osd/osd_progress_left.png</lefttexture>
+			<midtexture>osd/osd_progress_mid.png</midtexture>
+			<righttexture>osd/osd_progress_right.png</righttexture>
+			<colordiffuse>OSDProgressBar</colordiffuse>
+			<overlaytexture>-</overlaytexture>
+		</control>
+		<!-- Current position / Total Time -->
+		<control type="label">
+			<posx>1250</posx>
+			<posy>640</posy>
+			<width>250</width>
+			<height>40</height>
+			<aligny>center</aligny>
+			<align>right</align>
+			<font>METF_OSDTime</font>
+			<textcolor>OSDProgressBar</textcolor>
+			<label>$INFO[VideoPlayer.Time] [COLOR TextNF]/[/COLOR] $INFO[VideoPlayer.Duration]</label>
+			<textcolor>OSDPlayingDuration</textcolor>
+		</control>
+		<!-- Finish Time -->
+		<control type="label">
+			<posx>1250</posx>
+			<posy>670</posy>
+			<width>250</width>
+			<height>40</height>
+			<aligny>center</aligny>
+			<align>right</align>
+			<font>METF_OSDTime</font>
+			<textcolor>OSDFinishTime</textcolor>
+			<label>$LOCALIZE[31409]:  $INFO[Player.FinishTime]</label>
+		</control>
+		<!--LISTING HEADER AND TIME INFO-->		
+		<control type="group">
+			<posx>393</posx>
+			<posy>185</posy>
+			<width>863</width>
+			<height>500</height>			
+			<control type="image">
+				<description>Channel Header</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>863</width>
+				<height>50</height>
+				<texture>osd/OSDdialogback.png</texture>
+				<aspectratio align="center" aligny="top">center</aspectratio>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+				<bordertexture>dialogback.png</bordertexture>
+				<bordersize>1</bordersize>
+			</control>		
+			<control type="label" id="101">
+				<description>Time 1 Label</description>
+				<posx>5</posx>
+				<posy>0</posy>
+				<width>284</width>
+				<height>50</height>
+				<label>Time 1</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+			</control>
+			<control type="image">
+				<posx>287</posx>
+				<posy>5</posy>
+				<width>1</width>
+				<height>40</height>
+				<texture>VideoInfoLine_Vertical.png</texture>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+			</control>
+			<control type="label" id="102">
+				<description>Time 2 Label</description>
+				<posx>292</posx>
+				<posy>0</posy>
+				<width>284</width>
+				<height>50</height>
+				<label>Time 2</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+			</control>
+			<control type="image">
+				<posx>574</posx>
+				<posy>5</posy>
+				<width>1</width>
+				<height>40</height>
+				<texture>VideoInfoLine_Vertical.png</texture>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+			</control>
+			<control type="label" id="103">
+				<description>Time 3 Label</description>
+				<posx>579</posx>
+				<posy>0</posy>
+				<width>284</width>
+				<height>50</height>
+				<label>Time 2</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+			</control>			
+		</control>
+		<!--SHOW LISTINGS-->		
+		<control type="button" id="100">
+			<visible>false</visible>			
+			<label>0xFFFFFFFF</label><!--un-focused text color-->	
+			<label2>0xFFc89008</label2><!--focused text color-->
+		</control>
+		<control type="group" id="111">
+			<posx>393</posx>
+			<posy>236</posy>
+			<width>860</width>
+			<height>48</height>
+		</control>
+		<control type="group" id="112">
+			<posx>393</posx>
+			<posy>286</posy>
+			<width>860</width>
+			<height>48</height>
+		</control>
+		<control type="group" id="113">
+			<posx>393</posx>
+			<posy>336</posy>
+			<width>860</width>
+			<height>48</height>
+		</control>
+		<control type="group" id="114">
+			<posx>393</posx>
+			<posy>386</posy>
+			<width>860</width>
+			<height>48</height>
+		</control>
+		<control type="group" id="115">
+			<posx>393</posx>
+			<posy>436</posy>
+			<width>860</width>
+			<height>48</height>
+		</control>		
+		<control type="group" id="116">
+			<posx>393</posx>
+			<posy>486</posy>
+			<width>860</width>
+			<height>48</height>
+		</control>
+        <!--CHANNEL BUTTONS AND LABELS-->		
+		<control type="group">
+			<posx>28</posx>
+			<posy>185</posy>
+			<width>390</width>
+			<height>500</height>			
+			<!--CHANNEL HEADER-->						
+			<control type="image">
+				<description>Channel Header</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>365</width>
+				<height>50</height>
+				<texture>osd/OSDdialogback.png</texture>
+				<aspectratio align="left" aligny="top">center</aspectratio>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+				<bordertexture>dialogback.png</bordertexture>
+				<bordersize>1</bordersize>
+			</control>			
+			<control type="label" id="104">
+				<description>Date Label</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>365</width>
+				<height>50</height>
+				<label>Current Date</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+			</control>			
+			<!--CHANNEL 1-->			
+			<control type="image">
+				<description>Channel 1 Back</description>
+				<posx>0</posx>
+				<posy>50</posy>
+				<width>365</width>
+				<height>50</height>
+				<texture>osd/OSDdialogback.png</texture>
+				<aspectratio align="center" aligny="center">center</aspectratio>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+				<bordertexture>dialogback.png</bordertexture>
+				<bordersize>1</bordersize>
+			</control>
+			<control type="label" id="301">
+				<description>Channel 1 Name</description>
+				<posx>55</posx>
+				<posy>50</posy>
+				<width>300</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="311">
+				<description>Channel 1 Number</description>
+				<posx>45</posx>
+				<posy>50</posy>
+				<width>50</width>
+				<height>50</height>
+				<label>1</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>GlobalHeading</textcolor>
+			</control>			
+			<!-- CHANNEL 2 -->			
+			<control type="image">
+				<description>Channel 2 Back</description>
+				<posx>0</posx>
+				<posy>100</posy>
+				<width>365</width>
+				<height>50</height>
+				<texture>osd/OSDdialogback.png</texture>
+				<aspectratio align="center" aligny="center">center</aspectratio>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+				<bordertexture>dialogback.png</bordertexture>
+				<bordersize>1</bordersize>
+			</control>			
+			<control type="label" id="302">
+				<description>Channel 2 Name</description>
+				<posx>55</posx>
+				<posy>100</posy>
+				<width>300</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="312">
+				<description>Channel 2 Number</description>
+				<posx>45</posx>
+				<posy>100</posy>
+				<width>50</width>
+				<height>50</height>
+				<label>2</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>GlobalHeading</textcolor>
+			</control>			
+			<!-- CHANNEL 3 -->			
+			<control type="image">
+				<description>Channel 3 Back</description>
+				<posx>0</posx>
+				<posy>150</posy>
+				<width>365</width>
+				<height>50</height>
+				<texture>osd/OSDdialogback.png</texture>
+				<aspectratio align="center" aligny="center">center</aspectratio>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+				<bordertexture>dialogback.png</bordertexture>
+				<bordersize>1</bordersize>
+			</control>			
+			<control type="label" id="303">
+				<description>Channel 3 Name</description>
+				<posx>55</posx>
+				<posy>150</posy>
+				<width>300</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="313">
+				<description>Channel 3 Number</description>
+				<posx>45</posx>
+				<posy>150</posy>
+				<width>50</width>
+				<height>50</height>
+				<label>2</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>GlobalHeading</textcolor>
+			</control>			
+			<!-- CHANNEL 4 -->			
+			<control type="image">
+				<description>Channel 4 Back</description>
+				<posx>0</posx>
+				<posy>200</posy>
+				<width>365</width>
+				<height>50</height>
+				<texture>osd/OSDdialogback.png</texture>
+				<aspectratio align="center" aligny="center">center</aspectratio>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+				<bordertexture>dialogback.png</bordertexture>
+				<bordersize>1</bordersize>
+			</control>			
+			<control type="label" id="304">
+				<description>Channel 4 Name</description>
+				<posx>55</posx>
+				<posy>200</posy>
+				<width>300</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="314">
+				<description>Channel 4 Number</description>
+				<posx>45</posx>
+				<posy>200</posy>
+				<width>50</width>
+				<height>50</height>
+				<label>4</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>GlobalHeading</textcolor>
+			</control>			
+			<!-- CHANNEL 5 -->			
+			<control type="image">
+				<description>Channel 5 Back</description>
+				<posx>0</posx>
+				<posy>250</posy>
+				<width>365</width>
+				<height>50</height>
+				<texture>osd/OSDdialogback.png</texture>
+				<aspectratio align="center" aligny="center">center</aspectratio>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+				<bordertexture>dialogback.png</bordertexture>
+				<bordersize>1</bordersize>
+			</control>			
+			<control type="label" id="305">
+				<description>Channel 5 Name</description>
+				<posx>55</posx>
+				<posy>250</posy>
+				<width>300</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="315">
+				<description>Channel 5 Number</description>
+				<posx>45</posx>
+				<posy>250</posy>
+				<width>50</width>
+				<height>50</height>
+				<label>5</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>GlobalHeading</textcolor>
+			</control>			
+			<!-- CHANNEL 6 -->			
+			<control type="image">
+				<description>Channel 6 Back</description>
+				<posx>0</posx>
+				<posy>300</posy>
+				<width>365</width>
+				<height>50</height>
+				<texture>osd/OSDdialogback.png</texture>
+				<aspectratio align="center" aligny="center">center</aspectratio>
+				<colordiffuse>OSDBackgroundColor</colordiffuse>
+				<bordertexture>dialogback.png</bordertexture>
+				<bordersize>1</bordersize>
+			</control>			
+			<control type="label" id="306">
+				<description>Channel 6 Name</description>
+				<posx>55</posx>
+				<posy>300</posy>
+				<width>300</width>
+				<height>50</height>
+				<label>Channel</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>			
+			<control type="label" id="316">
+				<description>Channel 6 Number</description>
+				<posx>45</posx>
+				<posy>300</posy>
+				<width>50</width>
+				<height>50</height>
+				<label>2</label>
+				<font>METF_PlotText</font>
+				<shadowcolor>black</shadowcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<textcolor>GlobalHeading</textcolor>
+			</control>
+        </control>
+		<!--TIME BAR-->		
+		<control type="image" id="120">
+			<posx>430</posx>
+			<posy>228</posy>
+			<width>10</width>
+			<height>308</height>
+			<aspectratio>keep</aspectratio>
+		</control>	
+		<!--CHANNEL TITLE/EPISODE-->
+		<control type="grouplist">
+			<posx>300</posx>
+    		<posy>585</posy>
+    		<width>900</width>
+    		<height>40</height>
+			<scroll>true</scroll>
+    		<orientation>horizontal</orientation>
+    		<itemgap>8</itemgap>
+			<control type="label" id="500">
+				<description>Label Show Title</description>
+				<width min="50" max="500">auto</width>
+				<height>40</height>
+				<font>METF_TitleTextMedium</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<scroll>auto</scroll>
+			</control>
+			<control type="label">
+    			<width min="20" max="30">auto</width>
+    			<height>40</height>
+    			<label> - </label>
+				<font>METF_TitleTextMedium</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<visible>!IsEmpty(Control.GetLabel(501))</visible>
+    		</control>			
+			<control type="label" id="501">
+				<description>Label Episode Title</description>
+				<width min="50" max="700">auto</width>
+				<height>40</height>
+				<font>METF_TitleTextMedium</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<scroll>auto</scroll>
+			</control>
+		</control>
+		<include condition="Skin.HasSetting(DebugGrid)">Object_DebugGrid</include>
+		<include condition="Skin.HasSetting(DebugMode)">Debug</include>
+		<control type="image" id="503">
+            <description>Show Channel Icon</description>
+            <posx>30</posx>
+			<posy>565</posy>
+			<width>240</width>
+			<height>138</height>
+			<aspectratio>keep</aspectratio>
+		</control>
+    </controls>
+</window>

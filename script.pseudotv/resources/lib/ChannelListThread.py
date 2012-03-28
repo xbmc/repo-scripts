@@ -82,18 +82,23 @@ class ChannelListThread(threading.Thread):
 
                     self.chanlist.channels[i].setAccessTime(self.myOverlay.channels[i].lastAccessTime)
 
-                    if self.chanlist.setupChannel(i + 1, True, True, False) == True:
-                        while self.paused:
-                            if self.myOverlay.isExiting:
-                                self.log("IsExiting")
-                                return
+                    try:
+                        if self.chanlist.setupChannel(i + 1, True, True, False) == True:
+                            while self.paused:
+                                if self.myOverlay.isExiting:
+                                    self.log("IsExiting")
+                                    return
 
-                            time.sleep(1)
+                                time.sleep(1)
 
-                        self.myOverlay.channels[i] = self.chanlist.channels[i]
+                            self.myOverlay.channels[i] = self.chanlist.channels[i]
 
-                        if self.myOverlay.channels[i].isValid == True:
-                            xbmc.executebuiltin("Notification(PseudoTV, Channel " + str(i + 1) + " Added, 4000)")
+                            if self.myOverlay.channels[i].isValid == True:
+                                xbmc.executebuiltin("Notification(PseudoTV, Channel " + str(i + 1) + " Added, 4000)")
+                    except:
+                        self.log("Unknown Channel Creation Exception", xbmc.LOGERROR)
+                        self.log(traceback.format_exc(), xbmc.LOGERROR)
+                        return
 
         REAL_SETTINGS.setSetting('ForceChannelReset', 'false')
         self.chanlist.sleepTime = 0.3
@@ -128,7 +133,14 @@ class ChannelListThread(threading.Thread):
                             self.chanlist.channels[i].isPaused = self.myOverlay.channels[i].isPaused
                             self.chanlist.channels[i].mode = self.myOverlay.channels[i].mode
                             # Only allow appending valid channels, don't allow erasing them
-                            self.chanlist.setupChannel(i + 1, True, False, True)
+                            
+                            try:
+                                self.chanlist.setupChannel(i + 1, True, False, True)
+                            except:
+                                self.log("Unknown Channel Appending Exception", xbmc.LOGERROR)
+                                self.log(traceback.format_exc(), xbmc.LOGERROR)
+                                return
+
                             self.chanlist.channels[i].playlistPosition = self.myOverlay.channels[i].playlistPosition
                             self.chanlist.channels[i].showTimeOffset = self.myOverlay.channels[i].showTimeOffset
                             self.chanlist.channels[i].lastAccessTime = self.myOverlay.channels[i].lastAccessTime
@@ -136,10 +148,20 @@ class ChannelListThread(threading.Thread):
                             self.chanlist.channels[i].isPaused = self.myOverlay.channels[i].isPaused
                             self.chanlist.channels[i].mode = self.myOverlay.channels[i].mode
                         else:
-                            self.chanlist.setupChannel(i + 1, True, True, False)
+                            try:
+                                self.chanlist.setupChannel(i + 1, True, True, False)
+                            except:
+                                self.log("Unknown Channel Modification Exception", xbmc.LOGERROR)
+                                self.log(traceback.format_exc(), xbmc.LOGERROR)
+                                return
                     else:
-                        # We're not master, so no modifications...just try and load the channel
-                        self.chanlist.setupChannel(i + 1, True, False, False)
+                        try:
+                            # We're not master, so no modifications...just try and load the channel
+                            self.chanlist.setupChannel(i + 1, True, False, False)
+                        except:
+                            self.log("Unknown Channel Loading Exception", xbmc.LOGERROR)
+                            self.log(traceback.format_exc(), xbmc.LOGERROR)
+                            return
 
                     self.myOverlay.channels[i] = self.chanlist.channels[i]
 

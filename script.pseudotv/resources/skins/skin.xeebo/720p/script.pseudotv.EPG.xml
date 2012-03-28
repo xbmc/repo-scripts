@@ -15,7 +15,7 @@
 			<posy>10</posy>
 			<width>1260</width>
 			<height>90</height>
-			<texture>browse_background_top.png</texture>
+			<texture>backgrounds/background_top.png</texture>
 			<animation effect="fade" start="100" end="80" condition="Skin.HasSetting(BackgroundVisibilty_High)">Conditional</animation>
 			<animation effect="fade" start="100" end="90" condition="Skin.HasSetting(BackgroundVisibilty_Med)">Conditional</animation>
 		</control>
@@ -24,7 +24,7 @@
 			<posy>102</posy>
 			<width>1260</width>
 			<height>390</height>
-			<texture>browse_background_bottom.png</texture>
+			<texture>backgrounds/background_bottom.png</texture>
 			<animation effect="fade" start="100" end="80" condition="Skin.HasSetting(BackgroundVisibilty_High)">Conditional</animation>
 			<animation effect="fade" start="100" end="90" condition="Skin.HasSetting(BackgroundVisibilty_Med)">Conditional</animation>
 		</control>
@@ -33,7 +33,7 @@
 			<posy>494</posy>
 			<width>1260</width>
 			<height>216</height>
-			<texture>browse_background_bottom.png</texture>
+			<texture>backgrounds/background_bottom.png</texture>
 			<animation effect="fade" start="100" end="80" condition="Skin.HasSetting(BackgroundVisibilty_High)">Conditional</animation>
 			<animation effect="fade" start="100" end="90" condition="Skin.HasSetting(BackgroundVisibilty_Med)">Conditional</animation>
 		</control>
@@ -46,7 +46,7 @@
 			<control type="image">
 				<description>page header tab icon</description>
 				<include>Common_Title_Image</include>
-				<texture>icon_video.png</texture>
+				<texture>icons/icon_video.png</texture>
 			</control>
 			<control type="label">
 				<description>header label</description>
@@ -55,7 +55,7 @@
 			</control>
 			<control type="group">
 				<description>time group</description>
-				<posx>700</posx>
+				<posx>600</posx>
 				<posy>-34</posy>
 				<include>Common_Clock</include>
 			</control>

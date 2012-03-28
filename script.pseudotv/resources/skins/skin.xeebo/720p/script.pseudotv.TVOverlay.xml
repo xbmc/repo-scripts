@@ -22,7 +22,8 @@
 		<width>100</width>
 		<height>57</height>
 		<aspectratio>keep</aspectratio>
-		<animation effect="fade" start="50" end="50" condition="True">Conditional</animation>
+		<colordiffuse>66FFFFFF</colordiffuse>
+		<animation effect="fade" start="100" end="50" time="0" condition="true">conditional</animation>
 	</control>
 		
 	<control type="group" id="102">
@@ -37,7 +38,7 @@
 					<posy>0</posy>
 					<width>1114</width>
 					<height>56</height>
-					<texture>osd_background_top.png</texture>
+					<texture>osd/osd_background_top.png</texture>
 					<animation effect="fade" start="100" end="80" condition="Skin.HasSetting(BackgroundVisibilty_High)">Conditional</animation>
 					<animation effect="fade" start="100" end="90" condition="Skin.HasSetting(BackgroundVisibilty_Med)">Conditional</animation>
 				</control>				
@@ -50,7 +51,7 @@
 					<posy>0</posy>
 					<width>1114</width>
 					<height>147</height>
-					<texture>osd_picture_background_center.png</texture>
+					<texture>osd/osd_picture_background_center.png</texture>
 					<animation effect="fade" start="100" end="80" condition="Skin.HasSetting(BackgroundVisibilty_High)">Conditional</animation>
 					<animation effect="fade" start="100" end="90" condition="Skin.HasSetting(BackgroundVisibilty_Med)">Conditional</animation>
 				</control>
@@ -109,7 +110,7 @@
 					<posy>0</posy>
 					<width>1114</width>
 					<height>56</height>
-					<texture>osd_background_bottom.png</texture>
+					<texture>osd/osd_background_bottom.png</texture>
 					<animation effect="fade" start="100" end="80" condition="Skin.HasSetting(BackgroundVisibilty_High)">Conditional</animation>
 					<animation effect="fade" start="100" end="90" condition="Skin.HasSetting(BackgroundVisibilty_Med)">Conditional</animation>
 				</control>

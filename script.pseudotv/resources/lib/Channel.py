@@ -40,8 +40,8 @@ class Channel:
         self.isSetup = False
 
 
-    def log(self, msg):
-        log('Channel: ' + msg)
+    def log(self, msg, level = xbmc.LOGDEBUG):
+        log('Channel: ' + msg, level)
 
 
     def setPlaylist(self, filename):

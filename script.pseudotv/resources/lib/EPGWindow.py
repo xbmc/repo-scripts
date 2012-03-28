@@ -19,7 +19,7 @@
 import xbmc, xbmcgui, xbmcaddon
 import subprocess, os
 import time, threading
-import datetime
+import datetime, traceback
 
 from Playlist import Playlist
 from Globals import *
@@ -48,8 +48,12 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
         # image, then it should work.
         if os.path.exists(xbmc.translatePath(os.path.join(ADDON_INFO, 'resources', 'skins', xbmc.getSkinDir(), 'media'))):
             self.mediaPath = xbmc.translatePath(os.path.join(ADDON_INFO, 'resources', 'skins', xbmc.getSkinDir(), 'media')) + '/'
+        elif os.path.exists(xbmc.translatePath('special://skin/media/' + ADDON_ID + '/' + TIME_BAR)):
+            self.mediaPath = xbmc.translatePath('special://skin/media/' + ADDON_ID + '/')
         elif os.path.exists(xbmc.translatePath('special://skin/media/' + TIME_BAR)):
             self.mediaPath = xbmc.translatePath('special://skin/media/')
+        elif xbmc.skinHasImage(xbmc.translatePath(ADDON_ID + '/' + TIME_BAR)):
+            self.mediaPath = xbmc.translatePath(ADDON_ID + '/')
         elif xbmc.skinHasImage(TIME_BAR):
             self.mediaPath = ''
         else:
@@ -60,10 +64,14 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
         # Use the given focus and non-focus textures if they exist.  Otherwise use the defaults.
         if os.path.exists(self.mediaPath + BUTTON_FOCUS):
             self.textureButtonFocus = self.mediaPath + BUTTON_FOCUS
+        elif xbmc.skinHasImage(self.mediaPath + BUTTON_FOCUS):
+            self.textureButtonFocus = self.mediaPath + BUTTON_FOCUS
         else:
             self.textureButtonFocus = 'button-focus.png'
 
         if os.path.exists(self.mediaPath + BUTTON_NO_FOCUS):
+            self.textureButtonNoFocus = self.mediaPath + BUTTON_NO_FOCUS
+        elif xbmc.skinHasImage(self.mediaPath + BUTTON_NO_FOCUS):
             self.textureButtonNoFocus = self.mediaPath + BUTTON_NO_FOCUS
         else:
             self.textureButtonNoFocus = 'button-nofocus.png'
@@ -96,8 +104,8 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
         self.log('setTimeLabels return')
 
 
-    def log(self, msg):
-        log('EPG: ' + msg)
+    def log(self, msg, level = xbmc.LOGDEBUG):
+        log('EPGWindow: ' + msg, level)
 
 
     def onInit(self):
@@ -113,52 +121,66 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
             focusedcolor = int(self.getControl(100).getLabel2(), 16)
 
             if textcolor > 0:
-                self.textcolor = hex(textcolor)[2:-1]
+                self.textcolor = hex(textcolor)[2:]
 
             if focusedcolor > 0:
-                self.focusedcolor = hex(focusedcolor)[2:-1]
+                self.focusedcolor = hex(focusedcolor)[2:]
         except:
             pass
 
-        if self.setChannelButtons(time.time(), self.MyOverlayWindow.currentChannel) == False:
-            self.log('Unable to add channel buttons')
+        try:
+            if self.setChannelButtons(time.time(), self.MyOverlayWindow.currentChannel) == False:
+                self.log('Unable to add channel buttons')
+                return
+
+            curtime = time.time()
+            self.focusIndex = -1
+            basex, basey = self.getControl(113).getPosition()
+            baseh = self.getControl(113).getHeight()
+            basew = self.getControl(113).getWidth()
+
+            # set the button that corresponds to the currently playing show
+            for i in range(len(self.channelButtons[2])):
+                left, top = self.channelButtons[2][i].getPosition()
+                width = self.channelButtons[2][i].getWidth()
+                left = left - basex
+                starttime = self.shownTime + (left / (basew / 5400.0))
+                endtime = starttime + (width / (basew / 5400.0))
+
+                if curtime >= starttime and curtime <= endtime:
+                    self.focusIndex = i
+                    self.setFocus(self.channelButtons[2][i])
+                    self.focusTime = int(time.time())
+                    self.focusEndTime = endtime
+                    break
+
+            # If nothing was highlighted, just select the first button
+            if self.focusIndex == -1:
+                self.focusIndex = 0
+                self.setFocus(self.channelButtons[2][0])
+                left, top = self.channelButtons[2][0].getPosition()
+                width = self.channelButtons[2][0].getWidth()
+                left = left - basex
+                starttime = self.shownTime + (left / (basew / 5400.0))
+                endtime = starttime + (width / (basew / 5400.0))
+                self.focusTime = int(starttime + 30)
+                self.focusEndTime = endtime
+
+            self.focusRow = 2
+            self.setShowInfo()
+        except:
+            self.log("Unknown EPG Initialization Exception", xbmc.LOGERROR)
+            self.log(traceback.format_exc(), xbmc.LOGERROR)
+
+            try:
+                self.close()
+            except:
+                self.log("Error closing", xbmc.LOGERROR)
+
+            self.MyOverlayWindow.sleepTimeValue = 1
+            self.MyOverlayWindow.startSleepTimer()
             return
 
-        curtime = time.time()
-        self.focusIndex = -1
-        basex, basey = self.getControl(113).getPosition()
-        baseh = self.getControl(113).getHeight()
-        basew = self.getControl(113).getWidth()
-
-        # set the button that corresponds to the currently playing show
-        for i in range(len(self.channelButtons[2])):
-            left, top = self.channelButtons[2][i].getPosition()
-            width = self.channelButtons[2][i].getWidth()
-            left = left - basex
-            starttime = self.shownTime + (left / (basew / 5400.0))
-            endtime = starttime + (width / (basew / 5400.0))
-
-            if curtime >= starttime and curtime <= endtime:
-                self.focusIndex = i
-                self.setFocus(self.channelButtons[2][i])
-                self.focusTime = int(time.time())
-                self.focusEndTime = endtime
-                break
-
-        # If nothing was highlighted, just select the first button
-        if self.focusIndex == -1:
-            self.focusIndex = 0
-            self.setFocus(self.channelButtons[2][0])
-            left, top = self.channelButtons[2][0].getPosition()
-            width = self.channelButtons[2][0].getWidth()
-            left = left - basex
-            starttime = self.shownTime + (left / (basew / 5400.0))
-            endtime = starttime + (width / (basew / 5400.0))
-            self.focusTime = int(starttime + 30)
-            self.focusEndTime = endtime
-
-        self.focusRow = 2
-        self.setShowInfo()
         self.log('onInit return')
 
 
@@ -231,102 +253,118 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
     # create the buttons for the specified channel in the given row
     def setButtons(self, starttime, curchannel, row):
         self.log('setButtons ' + str(starttime) + ", " + str(curchannel) + ", " + str(row))
-        curchannel = self.MyOverlayWindow.fixChannel(curchannel)
-        basex, basey = self.getControl(111 + row).getPosition()
-        baseh = self.getControl(111 + row).getHeight()
-        basew = self.getControl(111 + row).getWidth()
 
-        if xbmc.Player().isPlaying() == False:
-            self.log('No video is playing, not adding buttons')
-            self.closeEPG()
-            return False
+        try:
+            curchannel = self.MyOverlayWindow.fixChannel(curchannel)
+            basex, basey = self.getControl(111 + row).getPosition()
+            baseh = self.getControl(111 + row).getHeight()
+            basew = self.getControl(111 + row).getWidth()
 
-        # go through all of the buttons and remove them
-        for button in self.channelButtons[row]:
-            self.removeControl(button)
+            if xbmc.Player().isPlaying() == False:
+                self.log('No video is playing, not adding buttons')
+                self.closeEPG()
+                return False
 
-        del self.channelButtons[row][:]
+            # go through all of the buttons and remove them
+            for button in self.channelButtons[row]:
+                self.removeControl(button)
 
-        # if the channel is paused, then only 1 button needed
-        if self.MyOverlayWindow.channels[curchannel - 1].isPaused:
-            self.channelButtons[row].append(xbmcgui.ControlButton(basex, basey, basew, baseh, self.MyOverlayWindow.channels[curchannel - 1].getCurrentTitle() + " (paused)", focusTexture=self.textureButtonFocus, noFocusTexture=self.textureButtonNoFocus, alignment=4, textColor=self.textcolor, focusedColor=self.focusedcolor))
-            self.addControl(self.channelButtons[row][0])
-        else:
-            # Find the show that was running at the given time
-            # Use the current time and show offset to calculate it
-            # At timedif time, channelShowPosition was playing at channelTimes
-            # The only way this isn't true is if the current channel is curchannel since
-            # it could have been fast forwarded or rewinded (rewound)?
-            if curchannel == self.MyOverlayWindow.currentChannel:
-                playlistpos = int(xbmc.PlayList(xbmc.PLAYLIST_VIDEO).getposition())
-                videotime = xbmc.Player().getTime()
-                reftime = time.time()
+            self.log("deleted buttons")
+            del self.channelButtons[row][:]
+
+            # if the channel is paused, then only 1 button needed
+            if self.MyOverlayWindow.channels[curchannel - 1].isPaused:
+                self.log("adding 1 button")
+                self.channelButtons[row].append(xbmcgui.ControlButton(basex, basey, basew, baseh, self.MyOverlayWindow.channels[curchannel - 1].getCurrentTitle() + " (paused)", focusTexture=self.textureButtonFocus, noFocusTexture=self.textureButtonNoFocus, alignment=4, textColor=self.textcolor, focusedColor=self.focusedcolor))
+                self.addControl(self.channelButtons[row][0])
             else:
-                playlistpos = self.MyOverlayWindow.channels[curchannel - 1].playlistPosition
-                videotime = self.MyOverlayWindow.channels[curchannel - 1].showTimeOffset
-                reftime = self.MyOverlayWindow.channels[curchannel - 1].lastAccessTime
+                # Find the show that was running at the given time
+                # Use the current time and show offset to calculate it
+                # At timedif time, channelShowPosition was playing at channelTimes
+                # The only way this isn't true is if the current channel is curchannel since
+                # it could have been fast forwarded or rewinded (rewound)?
+                if curchannel == self.MyOverlayWindow.currentChannel:
+                    playlistpos = int(xbmc.PlayList(xbmc.PLAYLIST_VIDEO).getposition())
+                    videotime = xbmc.Player().getTime()
+                    reftime = time.time()
+                else:
+                    playlistpos = self.MyOverlayWindow.channels[curchannel - 1].playlistPosition
+                    videotime = self.MyOverlayWindow.channels[curchannel - 1].showTimeOffset
+                    reftime = self.MyOverlayWindow.channels[curchannel - 1].lastAccessTime
 
-            # normalize reftime to the beginning of the video
-            reftime -= videotime
+                # normalize reftime to the beginning of the video
+                reftime -= videotime
+                self.log("while reftime: current is " + str(reftime))
 
-            while reftime > starttime:
-                playlistpos -= 1
-                # No need to check bounds on the playlistpos, the duration function makes sure it is correct
-                reftime -= self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos)
+                while reftime > starttime:
+                    playlistpos -= 1
+                    # No need to check bounds on the playlistpos, the duration function makes sure it is correct
+                    reftime -= self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos)
 
-            while reftime + self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos) < starttime:
-                reftime += self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos)
-                playlistpos += 1
+                self.log("while reftime again")
 
-            # create a button for each show that runs in the next hour and a half
-            endtime = starttime + 5400
-            totaltime = 0
+                while reftime + self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos) < starttime:
+                    reftime += self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos)
+                    playlistpos += 1
 
-            while reftime < endtime:
-                xpos = int(basex + (totaltime * (basew / 5400.0)))
-                tmpdur = self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos)
-                shouldskip = False
+                # create a button for each show that runs in the next hour and a half
+                endtime = starttime + 5400
+                totaltime = 0
+                self.log("while reftime part 3")
+                totalloops = 0
 
-                # this should only happen the first time through this loop
-                # it shows the small portion of the show before the current one
-                if reftime < starttime:
-                    tmpdur -= starttime - reftime
-                    reftime = starttime
+                while reftime < endtime and totalloops < 1000:
+                    xpos = int(basex + (totaltime * (basew / 5400.0)))
+                    tmpdur = self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos)
+                    shouldskip = False
 
-                    if tmpdur < 60 * 3:
-                        shouldskip = True
+                    # this should only happen the first time through this loop
+                    # it shows the small portion of the show before the current one
+                    if reftime < starttime:
+                        tmpdur -= starttime - reftime
+                        reftime = starttime
 
-                # Don't show very short videos
-                if self.MyOverlayWindow.hideShortItems and shouldskip == False:
-                    if self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos) < 60:
-                        shouldskip = True
-                        tmpdur = 0
-                    else:
-                        nextlen = self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos + 1)
-                        prevlen = self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos - 1)
+                        if tmpdur < 60 * 3:
+                            shouldskip = True
 
-                        if nextlen < 60:
-                            tmpdur += nextlen / 2
+                    # Don't show very short videos
+                    if self.MyOverlayWindow.hideShortItems and shouldskip == False:
+                        if self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos) < self.MyOverlayWindow.shortItemLength:
+                            shouldskip = True
+                            tmpdur = 0
+                        else:
+                            nextlen = self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos + 1)
+                            prevlen = self.MyOverlayWindow.channels[curchannel - 1].getItemDuration(playlistpos - 1)
 
-                        if prevlen < 60:
-                            tmpdur += prevlen / 2
+                            if nextlen < 60:
+                                tmpdur += nextlen / 2
 
-                width = int((basew / 5400.0) * tmpdur)
+                            if prevlen < 60:
+                                tmpdur += prevlen / 2
 
-                if width < 30 and shouldskip == False:
-                    width = 30
-                    tmpdur = int(30.0 / (basew / 5400.0))
+                    width = int((basew / 5400.0) * tmpdur)
 
-                if width + xpos > basex + basew:
-                    width = basex + basew - xpos
+                    if width < 30 and shouldskip == False:
+                        width = 30
+                        tmpdur = int(30.0 / (basew / 5400.0))
 
-                if shouldskip == False and width >= 30:
-                    self.channelButtons[row].append(xbmcgui.ControlButton(xpos, basey, width, baseh, self.MyOverlayWindow.channels[curchannel - 1].getItemTitle(playlistpos), focusTexture=self.textureButtonFocus, noFocusTexture=self.textureButtonNoFocus, alignment=4, textColor=self.textcolor, focusedColor=self.focusedcolor))
-                    self.addControl(self.channelButtons[row][-1])
+                    if width + xpos > basex + basew:
+                        width = basex + basew - xpos
 
-                totaltime += tmpdur
-                reftime += tmpdur
-                playlistpos += 1
+                    if shouldskip == False and width >= 30:
+                        self.channelButtons[row].append(xbmcgui.ControlButton(xpos, basey, width, baseh, self.MyOverlayWindow.channels[curchannel - 1].getItemTitle(playlistpos), focusTexture=self.textureButtonFocus, noFocusTexture=self.textureButtonNoFocus, alignment=4, textColor=self.textcolor, focusedColor=self.focusedcolor))
+                        self.addControl(self.channelButtons[row][-1])
+
+                    totaltime += tmpdur
+                    reftime += tmpdur
+                    playlistpos += 1
+                    totalloops += 1
+                    
+                if totalloops >= 1000:
+                    self.log("Broken big loop, too many loops, reftime is " + str(reftime) + ", endtime is " + str(endtime))
+        except:
+            self.log("Exception in setButtons", xbmc.LOGERROR)
+            self.log(traceback.format_exc(), xbmc.LOGERROR)
 
         self.log('setButtons return')
         return True
@@ -341,25 +379,38 @@ class EPGWindow(xbmcgui.WindowXMLDialog):
 
         action = act.getId()
 
-        if action == ACTION_PREVIOUS_MENU:
-            self.closeEPG()
-        elif action == ACTION_MOVE_DOWN:
-            self.GoDown()
-        elif action == ACTION_MOVE_UP:
-            self.GoUp()
-        elif action == ACTION_MOVE_LEFT:
-            self.GoLeft()
-        elif action == ACTION_MOVE_RIGHT:
-            self.GoRight()
-        elif action == ACTION_STOP:
-            self.closeEPG()
-        elif action == ACTION_SELECT_ITEM:
-            lastaction = time.time() - self.lastActionTime
-
-            if lastaction >= 2:
-                self.selectShow()
+        try:
+            if action in ACTION_PREVIOUS_MENU:
                 self.closeEPG()
-                self.lastActionTime = time.time()
+            elif action == ACTION_MOVE_DOWN:
+                self.GoDown()
+            elif action == ACTION_MOVE_UP:
+                self.GoUp()
+            elif action == ACTION_MOVE_LEFT:
+                self.GoLeft()
+            elif action == ACTION_MOVE_RIGHT:
+                self.GoRight()
+            elif action == ACTION_STOP:
+                self.closeEPG()
+            elif action == ACTION_SELECT_ITEM:
+                lastaction = time.time() - self.lastActionTime
+
+                if lastaction >= 2:
+                    self.selectShow()
+                    self.closeEPG()
+                    self.lastActionTime = time.time()
+        except:
+            self.log("Unknown EPG Exception", xbmc.LOGERROR)
+            self.log(traceback.format_exc(), xbmc.LOGERROR)
+
+            try:
+                self.close()
+            except:
+                self.log("Error closing", xbmc.LOGERROR)
+
+            self.MyOverlayWindow.sleepTimeValue = 1
+            self.MyOverlayWindow.startSleepTimer()
+            return
 
         self.actionSemaphore.release()
         self.log('onAction return')

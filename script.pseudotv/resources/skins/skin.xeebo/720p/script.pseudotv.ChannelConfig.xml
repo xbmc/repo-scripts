@@ -20,7 +20,7 @@
 				<posy>0</posy>
 				<width>943</width>
 				<height>520</height>
-				<texture>browser_background.png</texture>
+				<texture>backgrounds/background.png</texture>
 			</control>
 			<control type="label">
 				<description>heading label</description>
@@ -35,19 +35,6 @@
 				<textcolor>white</textcolor>
 			</control>			
 			<control type="image">
-				<description>scraper image</description>
-				<posx>25</posx>
-				<posy>275</posy>
-				<width>220</width>
-				<height>220</height>
-				<bordersize>5</bordersize>
-				<aspectratio>keep</aspectratio>
-				<bordertexture>info_cover_border.png</bordertexture>
-				<info>ListItem.Thumb</info>
-				<visible>!IsEmpty(ListItem.Thumb)</visible>
-			</control>
-			<control type="image">
-				<description>scraper image</description>
 				<posx>25</posx>
 				<posy>275</posy>
 				<width>220</width>
@@ -55,7 +42,7 @@
 				<aspectratio>keep</aspectratio>
 				<texture>DefaultAddon.png</texture>
 				<visible>IsEmpty(ListItem.Thumb)</visible>
-			</control>			
+			</control>		
 		</control>
 
         <control type="group" id="105">
@@ -109,7 +96,7 @@
 						<description>Default Seperator</description>
 						<height>1</height>
 						<width>640</width>
-						<texture>line_divider.png</texture>
+						<texture>views/line_divider.png</texture>
 					</control>
                     <control type="label">
                         <posx>630</posx>
@@ -129,7 +116,7 @@
                         <posy>0</posy>
                         <width>640</width>
                         <height>44</height>
-                        <texture>line_frame_device_white.png</texture>
+                        <texture>views/list_frame_device_white.png</texture>
                     </control>										
                     <control type="label">
                         <posx>40</posx>
@@ -146,7 +133,7 @@
 						<description>Default Seperator</description>
 						<height>1</height>
 						<width>640</width>
-						<texture>line_divider.png</texture>
+						<texture>views/line_divider.png</texture>
 					</control>
                     <control type="label">
                         <posx>630</posx>
@@ -171,9 +158,9 @@
 				<width>12</width>
 				<height>400</height>
                 <visible>Control.IsVisible(102)</visible>
-                <texturesliderbackground border="0,8,0,8">scrollbar_vertical_bg.png</texturesliderbackground>
-				<texturesliderbar border="4,8,4,8">scrollbar_vertical_nib.png</texturesliderbar>
-				<texturesliderbarfocus border="4,8,4,8">scrollbar_vertical_nib_on.png</texturesliderbarfocus>
+                <texturesliderbackground border="0,8,0,8">icons/scrollbar_vertical_bg.png</texturesliderbackground>
+				<texturesliderbar border="4,8,4,8">icons/scrollbar_vertical_nib.png</texturesliderbar>
+				<texturesliderbarfocus border="4,8,4,8">icons/scrollbar_vertical_nib_on.png</texturesliderbarfocus>
 				<textureslidernib>-</textureslidernib>
 				<textureslidernibfocus>-</textureslidernibfocus>
 				<orientation>vertical</orientation>
@@ -205,7 +192,7 @@
                 <posy>54</posy>
 				<height>1</height>
 				<width>640</width>
-				<texture>line_divider.png</texture>
+				<texture>views/line_divider.png</texture>
 			</control>
 
             <control type="label">
@@ -235,8 +222,8 @@
                 <posy>75</posy>
                 <width>20</width>
                 <height>20</height>
-                <texturefocus>settings_arrow_button_down.png</texturefocus>
-                <texturenofocus>scroll_down.png</texturenofocus>
+                <texturefocus>icons/settings_arrow_button_down.png</texturefocus>
+                <texturenofocus>icons/scroll_down.png</texturenofocus>
                 <onleft>111</onleft>
                 <onright>111</onright>
             </control>
@@ -246,8 +233,8 @@
                 <posy>75</posy>
                 <width>20</width>
                 <height>20</height>
-                <texturefocus>settings_arrow_button_up.png</texturefocus>
-                <texturenofocus border="4,4,4,4">scroll_up.png</texturenofocus>
+                <texturefocus>icons/settings_arrow_button_up.png</texturefocus>
+                <texturenofocus border="4,4,4,4">icons/scroll_up.png</texturenofocus>
                 <onleft>110</onleft>
                 <onright>110</onright>
             </control>
@@ -258,8 +245,8 @@
                 <width>640</width>
                 <height>44</height>
                 <label>Advanced Channel Rules</label>
-                <texturefocus>settings_button_on.png</texturefocus>
-				<texturenofocus>settings_button.png</texturenofocus>
+                <texturefocus>icons/settings_button_on.png</texturefocus>
+				<texturenofocus>icons/settings_button.png</texturenofocus>
                 <textcolor>white</textcolor>
 				<focusedcolor>black</focusedcolor>
                 <onup>107</onup>
@@ -279,8 +266,8 @@
 					<description>Cancel Button</description>
 					<width>33</width>
 					<height>33</height>
-					<texturefocus>icon_cancel_on.png</texturefocus>
-					<texturenofocus>icon_cancel.png</texturenofocus>
+					<texturefocus>icons/icon_cancel_on.png</texturefocus>
+					<texturenofocus>icons/icon_cancel.png</texturenofocus>
 					<font>-</font>
 					<onleft>-</onleft>
 					<hitrect x="0" y="0" w="100" h="33" />
@@ -309,8 +296,8 @@
 					<description>OK Button</description>
 					<width>33</width>
 					<height>33</height>
-					<texturefocus>icon_ok_on.png</texturefocus>
-					<texturenofocus>icon_ok.png</texturenofocus>
+					<texturefocus>icons/icon_ok_on.png</texturefocus>
+					<texturenofocus>icons/icon_ok.png</texturenofocus>
 					<font>-</font>
 					<hitrect x="0" y="0" w="100" h="33" />
 				</control>
@@ -358,8 +345,8 @@
                     <width>440</width>
                     <height>44</height>
 					<textoffsetx>20</textoffsetx>
-					<texturefocus>settings_button_on.png</texturefocus>
-					<texturenofocus>settings_button.png</texturenofocus>
+					<texturefocus>icons/settings_button_on.png</texturefocus>
+					<texturenofocus>icons/settings_button.png</texturenofocus>
                     <textcolor>white</textcolor>
 					<focusedcolor>black</focusedcolor>
                     <onup>110</onup>
@@ -401,8 +388,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_down.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_down.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_down.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_down.png</texturenofocus>
                     <onup>110</onup>
                     <ondown>114</ondown>
                     <onleft>141</onleft>
@@ -414,8 +401,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_up.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_up.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_up.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_up.png</texturenofocus>
                     <onup>111</onup>
                     <ondown>114</ondown>
                     <onleft>140</onleft>
@@ -457,8 +444,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_down.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_down.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_down.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_down.png</texturenofocus>
                     <onup>110</onup>
                     <ondown>114</ondown>
                     <onleft>151</onleft>
@@ -470,8 +457,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_up.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_up.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_up.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_up.png</texturenofocus>
                     <onup>111</onup>
                     <ondown>114</ondown>
                     <onleft>150</onleft>
@@ -513,8 +500,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_down.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_down.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_down.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_down.png</texturenofocus>
                     <onup>110</onup>
                     <ondown>114</ondown>
                     <onleft>161</onleft>
@@ -526,8 +513,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_up.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_up.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_up.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_up.png</texturenofocus>
                     <onup>111</onup>
                     <ondown>114</ondown>
                     <onleft>160</onleft>
@@ -569,8 +556,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_down.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_down.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_down.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_down.png</texturenofocus>
                     <onup>110</onup>
                     <ondown>114</ondown>
                     <onleft>171</onleft>
@@ -582,8 +569,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_up.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_up.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_up.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_up.png</texturenofocus>
                     <onup>111</onup>
                     <ondown>114</ondown>
                     <onleft>170</onleft>
@@ -625,8 +612,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_down.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_down.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_down.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_down.png</texturenofocus>
                     <onup>110</onup>
                     <ondown>114</ondown>
                     <onleft>181</onleft>
@@ -638,8 +625,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_up.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_up.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_up.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_up.png</texturenofocus>
                     <onup>111</onup>
                     <ondown>114</ondown>
                     <onleft>180</onleft>
@@ -681,8 +668,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_down.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_down.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_down.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_down.png</texturenofocus>
                     <onup>110</onup>
                     <ondown>194</ondown>
                     <onleft>191</onleft>
@@ -694,8 +681,8 @@
                     <posy>120</posy>
                     <width>20</width>
                     <height>20</height>
-                    <texturefocus>settings_arrow_button_up.png</texturefocus>
-                    <texturenofocus border="4,4,4,4">scroll_up.png</texturenofocus>
+                    <texturefocus>icons/settings_arrow_button_up.png</texturefocus>
+                    <texturenofocus border="4,4,4,4">icons/scroll_up.png</texturenofocus>
                     <onup>111</onup>
                     <ondown>194</ondown>
                     <onleft>190</onleft>
@@ -710,8 +697,8 @@
 					<textcolor>white</textcolor>
 					<focusedcolor>black</focusedcolor>
 					<textoffsetx>10</textoffsetx>
-					<texturefocus>settings_button_on.png</texturefocus>
-					<texturenofocus>settings_button.png</texturenofocus>
+					<texturefocus>icons/settings_button_on.png</texturefocus>
+					<texturenofocus>icons/settings_button.png</texturenofocus>
                     <label>Show in Order:</label>
                     <onup>190</onup>
                     <ondown>114</ondown>
@@ -742,8 +729,8 @@
                     <width>440</width>
                     <height>44</height>
 					<textoffsetx>20</textoffsetx>
-					<texturefocus>settings_button_on.png</texturefocus>
-					<texturenofocus>settings_button.png</texturenofocus>
+					<texturefocus>icons/settings_button_on.png</texturefocus>
+					<texturenofocus>icons/settings_button.png</texturenofocus>
                     <textcolor>white</textcolor>
 					<focusedcolor>black</focusedcolor>
                     <onup>110</onup>

@@ -36,7 +36,7 @@ ADDON_ID = 'script.pseudotv'
 REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
 ADDON_INFO = REAL_SETTINGS.getAddonInfo('path')
 
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 
 TIMEOUT = 15 * 1000
 TOTAL_FILL_CHANNELS = 20
@@ -60,6 +60,7 @@ CHANNEL_SHARING = False
 if REAL_SETTINGS.getSetting('ChannelSharing') == "true":
     CHANNEL_SHARING = True
     SETTINGS_LOC = REAL_SETTINGS.getSetting('SettingsFolder')
+    log("Channel sharing at " + str(SETTINGS_LOC));
 
 IMAGES_LOC = xbmc.translatePath(os.path.join(ADDON_INFO, 'resources', 'images')) + '/'
 PRESETS_LOC = xbmc.translatePath(os.path.join(ADDON_INFO, 'resources', 'presets')) + '/'
@@ -70,6 +71,8 @@ if len(SETTINGS_LOC) == 0:
 CHANNELS_LOC = xbmc.translatePath(os.path.join(SETTINGS_LOC, 'cache')) + '/'
 GEN_CHAN_LOC = os.path.join(CHANNELS_LOC, 'generated') + '/'
 MADE_CHAN_LOC = os.path.join(CHANNELS_LOC, 'stored') + '/'
+
+SHORT_CLIP_ENUM = [15,30,60,90,120,180,240,300,360]
 
 GlobalFileLock = FileLock()
 ADDON_SETTINGS = Settings.Settings()
@@ -94,6 +97,8 @@ RULES_ACTION_BEFORE_CLEAR = 8
 RULES_ACTION_BEFORE_TIME = 16
 RULES_ACTION_FINAL_MADE = 32
 RULES_ACTION_FINAL_LOADED = 64
+RULES_ACTION_OVERLAY_SET_CHANNEL = 128
+RULES_ACTION_OVERLAY_SET_CHANNEL_END = 256
 
 # Maximum is 10 for this
 RULES_PER_PAGE = 7
@@ -105,7 +110,7 @@ ACTION_MOVE_DOWN = 4
 ACTION_PAGEUP = 5
 ACTION_PAGEDOWN = 6
 ACTION_SELECT_ITEM = 7
-ACTION_PREVIOUS_MENU = 10
+ACTION_PREVIOUS_MENU = (9, 10, 92, 216, 247, 257, 275, 61467, 61448,)
 ACTION_SHOW_INFO = 11
 ACTION_PAUSE = 12
 ACTION_STOP = 13

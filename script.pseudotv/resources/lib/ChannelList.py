@@ -66,6 +66,9 @@ class ChannelList:
         self.startMode = int(REAL_SETTINGS.getSetting("StartMode"))
         self.log('Start Mode is ' + str(self.startMode))
         self.backgroundUpdating = int(REAL_SETTINGS.getSetting("ThreadMode"))
+        self.incIceLibrary = REAL_SETTINGS.getSetting('IncludeIceLib') == "true"
+        self.log("IceLibrary is " + str(self.incIceLibrary))
+        self.showSeasonEpisode = REAL_SETTINGS.getSetting("ShowSeEp") == "true"
         self.findMaxChannels()
 
         if self.forceReset:
@@ -276,11 +279,6 @@ class ChannelList:
         except:
             pass
 
-        try:
-            needsreset = ADDON_SETTINGS.getSetting('Channel_' + str(channel) + '_changed') == 'True'
-        except:
-            pass
-
         while len(self.channels) < channel:
             self.channels.append(Channel())
 
@@ -292,6 +290,11 @@ class ChannelList:
         self.channels[channel - 1].loadRules(channel)
         self.runActions(RULES_ACTION_START, channel, self.channels[channel - 1])
         GlobalFileLock.lockFile(CHANNELS_LOC + 'channel_' + str(channel) + '.m3u', True)
+
+        try:
+            needsreset = ADDON_SETTINGS.getSetting('Channel_' + str(channel) + '_changed') == 'True'
+        except:
+            pass
 
         # If possible, use an existing playlist
         # Don't do this if we're appending an existing channel
@@ -1129,9 +1132,16 @@ class ChannelList:
                         except:
                             dur = 0
 
+                    # Remove any file types that we don't want (ex. IceLibrary)
+                    if self.incIceLibrary == False:
+                        if match.group(1).replace("\\\\", "\\")[-4:].lower() == 'strm':
+                            dur = 0
+
                     try:
                         if dur > 0:
                             filecount += 1
+                            seasonval = -1
+                            epval = -1
 
                             if self.background == False:
                                 if filecount == 1:
@@ -1151,7 +1161,21 @@ class ChannelList:
 
                             # This is a TV show
                             if showtitle != None and len(showtitle.group(1)) > 0:
-                                tmpstr += showtitle.group(1) + "//" + title.group(1) + "//" + theplot
+                                season = re.search('"season" *: *(.*?),', f)
+                                episode = re.search('"episode" *: *(.*?),', f)
+                                swtitle = title.group(1)
+
+                                try:
+                                    seasonval = int(season.group(1))
+                                    epval = int(episode.group(1))
+                                    
+                                    if self.showSeasonEpisode:
+                                        swtitle = swtitle + '(S' + ('0' if seasonval < 10 else '') + str(seasonval) + ' E' + ('0' if epval < 10 else '') + str(epval) + ')'
+                                except:
+                                    seasonval = -1
+                                    epval = -1
+
+                                tmpstr += showtitle.group(1) + "//" + swtitle + "//" + theplot
                                 istvshow = True
                             else:
                                 tmpstr += title.group(1) + "//"
@@ -1174,18 +1198,7 @@ class ChannelList:
                             tmpstr = tmpstr + '\n' + match.group(1).replace("\\\\", "\\")
 
                             if self.channels[channel - 1].mode & MODE_ORDERAIRDATE > 0:
-                                if istvshow:
-                                    season = re.search('"season" *: *(.*?),', f)
-                                    episode = re.search('"episode" *: *(.*?),', f)
-
-                                    try:
-                                        seasonval = int(season.group(1))
-                                        epval = int(episode.group(1))
-                                        seasoneplist.append([seasonval, epval, tmpstr])
-                                    except:
-                                        seasoneplist.append([-1, -1, tmpstr])
-                                else:
-                                    seasonplist.append([-1, -1, tmpstr])
+                                    seasoneplist.append([seasonval, epval, tmpstr])
                             else:
                                 fileList.append(tmpstr)
                     except:

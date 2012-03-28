@@ -16,5 +16,8 @@
     <string id="30015">Enable Channel Sharing</string>
     <string id="30016">Show Coming Up Next box</string>
     <string id="30017">Hide very short videos</string>
+    <string id="30018">Duration of "short" videos</string>
+    <string id="30019">Include IceLibrary Videos</string>
     <string id="30020">Visuals</string>
+    <string id="30021">Show Season / Episode</string>
 </strings>

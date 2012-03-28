@@ -1,6 +1,22 @@
 Changelog
 
 
+2.1.0
+    New rule: reset every x days
+    Update to Night skin (thanks Steveb).
+    Better exception handling.
+    Change 'short clip' length.
+    Include IceLibrary streams.
+    Configuration bug fixes.
+    Addition of Metropolis skin (thanks Steveb).
+    Updates to skins (thanks again Steveb).
+    Fix for color truncation (thanks Josebiro).
+    Fix for missing texture (thanks lambda81).
+    Hide channel bug when changing channel.
+    Properly detect already running.
+    Option to include the season / episode in the show title.
+
+
 2.0.0
     New advanced channel rule system.
     Share channels between multiple systems.

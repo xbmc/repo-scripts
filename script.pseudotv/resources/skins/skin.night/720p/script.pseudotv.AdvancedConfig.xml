@@ -12,60 +12,67 @@
     </coordinates>
 
     <controls>
-        <include>Dialog_Popup_Background</include>
-		<control type="group">
-			<include>Dialog_Popup_Animation</include>
-			<posx>168</posx>
-			<posy>156</posy>
-			<control type="image">
-				<description>dialog background</description>
-				<posx>0</posx>
-				<posy>0</posy>
-				<width>943</width>
-				<height>520</height>
-				<texture>backgrounds/background.png</texture>
-			</control>
-			<control type="label">
-				<description>heading label</description>
-				<posx>25</posx>
-				<posy>30</posy>
-				<width>940</width>
-				<height>30</height>
-				<align>left</align>
-				<aligny>center</aligny>
-				<font>light28</font>
-				<label>Channel Rules</label>
-				<textcolor>white</textcolor>
-			</control>
-			<control type="image">
-				<posx>25</posx>
-				<posy>275</posy>
-				<width>220</width>
-				<height>220</height>
-				<aspectratio>keep</aspectratio>
-				<texture>DefaultAddon.png</texture>
-				<visible>IsEmpty(ListItem.Thumb)</visible>
-			</control>
-		</control>
+        <control type="image">
+            <posx>340</posx>
+            <posy>116</posy>
+            <width>600</width>
+            <height>520</height>
+            <description>Background</description>
+            <texture>confluence/DialogBack1.png</texture>
+        </control>
+
+		<control type="label">
+            <posx>340</posx>
+            <posy>145</posy>
+            <width>600</width>
+            <height>40</height>
+            <label>[B]PseudoTV[/B]</label>
+			<font>LiberationSans_Regular_24</font>
+            <textcolor>FF000000</textcolor>
+            <aligny>center</aligny>
+            <align>center</align>
+        </control>
+		
+        <control type="label">
+            <posx>340</posx>
+            <posy>185</posy>
+            <width>600</width>
+            <height>40</height>
+            <label>[B]Channel Rules[/B]</label>
+			<font>LiberationSans_Regular_24</font>
+            <textcolor>FF000000</textcolor>
+            <aligny>center</aligny>
+            <align>center</align>
+        </control>
 
         <control type="group" id="105">
-            <posx>438</posx>
-            <posy>226</posy>
-            <width>640</width>
-            <height>600</height>
+            <posx>340</posx>
+            <posy>240</posy>
+            <width>600</width>
+            <height>320</height>
+			
+			<control type="image">
+                <posx>20</posx>
+                <posy>-10</posy>
+                <width>560</width>
+                <height>375</height>
+                <texture>confluence/DialogBack1.png</texture>
+            </control>
 
             <control type="group" id="104">
                 <control type="button" id="120">
                     <description>Rule Entry 1</description>
-                    <posx>0</posx>
-                    <posy>40</posy>
-                    <textcolor>white</textcolor>
-					<focusedcolor>black</focusedcolor>
+                    <posx>30</posx>
+                    <posy>0</posy>
+                    <textcolor>FF000000</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
                     <ondown>121</ondown>
-                    <width>640</width>
-                    <height>44</height>
-					<texturefocus>views/line_frame_device_white.png</texturefocus>
-					<texturenofocus>views/list_frame_device.png</texturenofocus>
+                    <width>540</width>
+                    <height>30</height>
+					<aligny>center</aligny>
+					<align>center</align>
+					<texturefocus border="4">confluence/button-focus.png</texturefocus>
+					<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                     <visible allowhiddenfocus="true">Control.HasFocus(120) | ![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
                     <onclick>SetProperty(itempress,120)</onclick>
                     <onclick>SetFocus(130)</onclick>
@@ -73,16 +80,18 @@
 
                 <control type="button" id="121">
                     <description>Rule Entry 2</description>
-                    <posx>0</posx>
-                    <posy>85</posy>
-                    <textcolor>white</textcolor>
-					<focusedcolor>black</focusedcolor>
+                    <posx>30</posx>
+                    <posy>35</posy>
+                    <textcolor>FF000000</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
                     <onup>120</onup>
                     <ondown>122</ondown>
-                    <width>640</width>
-                    <height>44</height>
-					<texturefocus>views/line_frame_device_white.png</texturefocus>
-					<texturenofocus>views/list_frame_device.png</texturenofocus>
+                    <width>540</width>
+                    <height>30</height>
+					<aligny>center</aligny>
+					<align>center</align>
+					<texturefocus border="4">confluence/button-focus.png</texturefocus>
+					<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                     <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
                     <onclick>SetProperty(itempress,121)</onclick>
                     <onclick>SetFocus(130)</onclick>
@@ -90,16 +99,18 @@
 
                 <control type="button" id="122">
                     <description>Rule Entry 3</description>
-                    <posx>0</posx>
-                    <posy>130</posy>
-                    <textcolor>white</textcolor>
-					<focusedcolor>black</focusedcolor>
+                    <posx>30</posx>
+                    <posy>70</posy>
+                    <textcolor>FF000000</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
                     <onup>121</onup>
                     <ondown>123</ondown>
-                    <width>640</width>
-                    <height>44</height>
-					<texturefocus>views/line_frame_device_white.png</texturefocus>
-					<texturenofocus>views/list_frame_device.png</texturenofocus>
+                    <width>540</width>
+                    <height>30</height>
+					<aligny>center</aligny>
+					<align>center</align>
+					<texturefocus border="4">confluence/button-focus.png</texturefocus>
+					<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                     <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
                     <onclick>SetProperty(itempress,122)</onclick>
                     <onclick>SetFocus(130)</onclick>
@@ -107,16 +118,18 @@
 
                 <control type="button" id="123">
                     <description>Rule Entry 4</description>
-                    <posx>0</posx>
-                    <posy>175</posy>
-                    <textcolor>white</textcolor>
-					<focusedcolor>black</focusedcolor>
+                    <posx>30</posx>
+                    <posy>105</posy>
+                    <textcolor>FF000000</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
                     <onup>122</onup>
                     <ondown>124</ondown>
-                    <width>640</width>
-                    <height>44</height>
-					<texturefocus>views/line_frame_device_white.png</texturefocus>
-					<texturenofocus>views/list_frame_device.png</texturenofocus>
+                    <width>540</width>
+                    <height>30</height>
+					<aligny>center</aligny>
+					<align>center</align>
+					<texturefocus border="4">confluence/button-focus.png</texturefocus>
+					<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                     <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
                     <onclick>SetProperty(itempress,123)</onclick>
                     <onclick>SetFocus(130)</onclick>
@@ -124,16 +137,18 @@
 
                 <control type="button" id="124">
                     <description>Rule Entry 5</description>
-                    <posx>0</posx>
-                    <posy>220</posy>
-                    <textcolor>white</textcolor>
-					<focusedcolor>black</focusedcolor>
+                    <posx>30</posx>
+                    <posy>140</posy>
+                    <textcolor>FF000000</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
                     <onup>123</onup>
                     <ondown>125</ondown>
-                    <width>640</width>
-                    <height>44</height>
-					<texturefocus>views/line_frame_device_white.png</texturefocus>
-					<texturenofocus>views/list_frame_device.png</texturenofocus>
+                    <width>540</width>
+                    <height>30</height>
+					<aligny>center</aligny>
+					<align>center</align>
+					<texturefocus border="4">confluence/button-focus.png</texturefocus>
+					<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                     <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
                     <onclick>SetProperty(itempress,124)</onclick>
                     <onclick>SetFocus(130)</onclick>
@@ -141,16 +156,18 @@
 
                 <control type="button" id="125">
                     <description>Rule Entry 6</description>
-                    <posx>0</posx>
-                    <posy>265</posy>
-                    <textcolor>white</textcolor>
-					<focusedcolor>black</focusedcolor>
+                    <posx>30</posx>
+                    <posy>175</posy>
+                    <textcolor>FF000000</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
                     <onup>124</onup>
                     <ondown>126</ondown>
-                    <width>640</width>
-                    <height>44</height>
-					<texturefocus>views/line_frame_device_white.png</texturefocus>
-					<texturenofocus>views/list_frame_device.png</texturenofocus>
+                    <width>540</width>
+                    <height>30</height>
+					<aligny>center</aligny>
+					<align>center</align>
+					<texturefocus border="4">confluence/button-focus.png</texturefocus>
+					<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                     <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
                     <onclick>SetProperty(itempress,125)</onclick>
                     <onclick>SetFocus(130)</onclick>
@@ -158,15 +175,17 @@
 
                 <control type="button" id="126">
                     <description>Rule Entry 7</description>
-                    <posx>0</posx>
-                    <posy>310</posy>
-                    <textcolor>white</textcolor>
-					<focusedcolor>black</focusedcolor>
+                    <posx>30</posx>
+                    <posy>210</posy>
+                    <textcolor>FF000000</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
                     <onup>125</onup>
-                    <width>640</width>
-                    <height>44</height>
-					<texturefocus>views/line_frame_device_white.png</texturefocus>
-					<texturenofocus>views/list_frame_device.png</texturenofocus>
+                    <width>540</width>
+                    <height>30</height>
+					<aligny>center</aligny>
+					<align>center</align>
+					<texturefocus border="4">confluence/button-focus.png</texturefocus>
+					<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                     <visible>![StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)]</visible>
                     <onclick>SetProperty(itempress,126)</onclick>
                     <onclick>SetFocus(130)</onclick>
@@ -174,15 +193,16 @@
 
                 <control type="button" id="130">
                     <description>Rule for editing</description>
-                    <posx>0</posx>
-                    <posy>40</posy>
-                    <textcolor>white</textcolor>
-					<focusedcolor>black</focusedcolor>
+                    <posx>30</posx>
+                    <posy>0</posy>
+                    <textcolor>FF000000</textcolor>
+					<focusedcolor>FFFFFFFF</focusedcolor>
                     <ondown>102</ondown>
-                    <width>640</width>
-                    <height>44</height>
-					<texturefocus>views/line_frame_device_white.png</texturefocus>
-					<texturenofocus>views/list_frame_device.png</texturenofocus>
+                    <width>540</width>
+                    <height>30</height>
+					<align>center</align>
+					<texturefocus border="4">confluence/button-focus.png</texturefocus>
+					<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                     <onclick>SetProperty(itempress,100)</onclick>
                     <onclick>SetFocus(120)</onclick>
                     <visible allowhiddenfocus="true">Control.HasFocus(130) | StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)</visible>
@@ -214,10 +234,10 @@
 
                 <control type="group" id="102">
                     <description>Controls for editing</description>
-                    <posx>0</posx>
-                    <posy>85</posy>
-                    <width>640</width>
-                    <height>600</height>
+                    <posx>30</posx>
+                    <posy>30</posy>
+                    <width>540</width>
+                    <height>210</height>
                     <visible>StringCompare(Window.Property(itempress),120) | StringCompare(Window.Property(itempress),121) | StringCompare(Window.Property(itempress),122) | StringCompare(Window.Property(itempress),123) | StringCompare(Window.Property(itempress),124) | StringCompare(Window.Property(itempress),125) | StringCompare(Window.Property(itempress),126)</visible>
 
                     <animation condition="StringCompare(Window.Property(itempress),120)" reversible="false">
@@ -258,116 +278,116 @@
                     <control type="button" id="131">
                         <posx>0</posx>
                         <posy>10</posy>
-                        <width>640</width>
-                        <height>44</height>
-						<texturefocus>views/line_frame_device_white.png</texturefocus>
-						<texturenofocus>views/list_frame_device.png</texturenofocus>
+                        <width>540</width>
+                        <height>30</height>
                         <align>center</align>
-                        <textcolor>white</textcolor>
-						<focusedcolor>black</focusedcolor>
+                        <textcolor>FF000000</textcolor>
+						<focusedcolor>FFFFFFFF</focusedcolor>
+						<texturefocus border="4">confluence/button-focus.png</texturefocus>
+						<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                         <onup>130</onup>
                         <ondown>160</ondown>
                     </control>
 
                     <control type="label" id="150">
-                        <posx>10</posx>
-                        <posy>65</posy>
-                        <width>320</width>
+                        <posx>20</posx>
+                        <posy>70</posy>
+                        <width>240</width>
                         <height>30</height>
-                        <align>left</align>
-						<font>font13</font>
-                        <textcolor>green</textcolor>
+                        <align>center</align>
+                        <textcolor>blue</textcolor>
+						<shadowcolor>black</shadowcolor>
                     </control>
 
                     <control type="label" id="151">
-                        <posx>340</posx>
-                        <posy>65</posy>
-                        <width>310</width>
+                        <posx>280</posx>
+                        <posy>70</posy>
+                        <width>240</width>
                         <height>30</height>
-                        <align>left</align>
-						<font>font13</font>
-                        <textcolor>green</textcolor>
+                        <align>center</align>
+                        <textcolor>blue</textcolor>
+						<shadowcolor>black</shadowcolor>
                     </control>
 
 
                     <control type="label" id="152">
-                        <posx>10</posx>
-                        <posy>145</posy>
-                        <width>320</width>
+                        <posx>20</posx>
+                        <posy>150</posy>
+                        <width>240</width>
                         <height>30</height>
-                        <align>left</align>
-						<font>font13</font>
-                        <textcolor>green</textcolor>
+                        <align>center</align>
+                        <textcolor>blue</textcolor>
+						<shadowcolor>black</shadowcolor>
                     </control>
 
                     <control type="label" id="153">
-                        <posx>340</posx>
-                        <posy>145</posy>
-                        <width>320</width>
+                        <posx>280</posx>
+                        <posy>150</posy>
+                        <width>240</width>
                         <height>30</height>
-                        <align>left</align>
-						<font>font13</font>
-                        <textcolor>green</textcolor>
+                        <align>center</align>
+                        <textcolor>blue</textcolor>
+						<shadowcolor>black</shadowcolor>
                     </control>
 
                     <control type="button" id="160">
-                        <posx>0</posx>
-                        <posy>100</posy>
-                        <width>310</width>
-                        <height>44</height>
-						<texturefocus>views/line_frame_device_white.png</texturefocus>
-						<texturenofocus>views/list_frame_device.png</texturenofocus>
+                        <posx>20</posx>
+                        <posy>90</posy>
+                        <width>240</width>
+                        <height>30</height>
                         <align>center</align>
+						<texturefocus border="4">confluence/button-focus.png</texturefocus>
+						<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                         <onup>131</onup>
                         <ondown>162</ondown>
                         <onright>161</onright>
-                        <textcolor>white</textcolor>
-						<focusedcolor>black</focusedcolor>
+                        <textcolor>FF000000</textcolor>
+						<focusedcolor>FFFFFFFF</focusedcolor>
                     </control>
 
                     <control type="button" id="161">
-                        <posx>330</posx>
-                        <posy>100</posy>
-                        <width>310</width>
-                        <height>44</height>
-						<texturefocus>views/line_frame_device_white.png</texturefocus>
-						<texturenofocus>views/list_frame_device.png</texturenofocus>
+                        <posx>280</posx>
+                        <posy>90</posy>
+                        <width>240</width>
+                        <height>30</height>
                         <align>center</align>
+						<texturefocus border="4">confluence/button-focus.png</texturefocus>
+						<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                         <onup>131</onup>
                         <ondown>163</ondown>
                         <onleft>160</onleft>
                         <onright>162</onright>
-                        <textcolor>white</textcolor>
-						<focusedcolor>black</focusedcolor>
+                        <textcolor>FF000000</textcolor>
+						<focusedcolor>FFFFFFFF</focusedcolor>
                     </control>
 
                     <control type="button" id="162">
-                        <posx>0</posx>
-                        <posy>180</posy>
-                        <width>310</width>
-                        <height>44</height>
-						<texturefocus>views/line_frame_device_white.png</texturefocus>
-						<texturenofocus>views/list_frame_device.png</texturenofocus>
+                        <posx>20</posx>
+                        <posy>170</posy>
+                        <width>240</width>
+                        <height>30</height>
                         <align>center</align>
+						<texturefocus border="4">confluence/button-focus.png</texturefocus>
+						<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                         <onup>160</onup>
                         <onright>163</onright>
                         <onleft>161</onleft>
-                        <textcolor>white</textcolor>
-						<focusedcolor>black</focusedcolor>
+                        <textcolor>FF000000</textcolor>
+						<focusedcolor>FFFFFFFF</focusedcolor>
                     </control>
 
                     <control type="button" id="163">
-                        <posx>330</posx>
-                        <posy>180</posy>
-                        <width>310</width>
-                        <height>44</height>
-						<texturefocus>views/line_frame_device_white.png</texturefocus>
-						<texturenofocus>views/list_frame_device.png</texturenofocus>
+                        <posx>280</posx>
+                        <posy>170</posy>
+                        <width>240</width>
+                        <height>30</height>
                         <align>center</align>
+						<texturefocus border="4">confluence/button-focus.png</texturefocus>
+						<texturenofocus border="4">confluence/black-back2.png</texturenofocus>
                         <onup>161</onup>
                         <onleft>162</onleft>
-                        <textcolor>white</textcolor>
-						<focusedcolor>black</focusedcolor>
+                        <textcolor>FF000000</textcolor>
+						<focusedcolor>FFFFFFFF</focusedcolor>
                     </control>
                 </control>
             </control>

@@ -18,11 +18,12 @@
 		<control type="image" id="103">
 			<description>Channel Bug</description>
 			<posx>1160</posx>
-			<posy>30</posy>
+			<posy>635</posy>
 			<width>100</width>
 			<height>58</height>
 			<aspectratio>keep</aspectratio>
-			<animation effect="fade" start="50" end="50" condition="True">Conditional</animation>
+			<colordiffuse>66FFFFFF</colordiffuse>
+			<animation effect="fade" start="100" end="50" time="0" condition="true">conditional</animation>
 		</control>
 
 	<control type="group" id="102">
@@ -35,9 +36,10 @@
 			<height>720</height>
 			<texture>PseudoBackground.png</texture>
 		</control>
+		
 		<control type="label" id="502">
 			<description>Label Now Playing</description>
-			<posx>85</posx>
+			<posx>75</posx>
 			<posy>510</posy>
 			<width>260</width>
 			<height>20</height>
@@ -56,7 +58,7 @@
 			<align>left</align>
 			<textcolor>mainblue</textcolor>
 			<shadowcolor>black</shadowcolor>
-		</control>				
+		</control>
 		<control type="label" id="504">
 			<description>Label Episode Title</description>
 			<posx>400</posx>
@@ -80,13 +82,33 @@
 			<wrapmultiline>true</wrapmultiline>
 		</control>
 		<control type="image" id="506">
-			<description>Show Channel Icon</description>
-			<posx>85</posx>
-			<posy>530</posy>
-			<width>260</width>
-			<height>150</height>
-			<aspectratio>keep</aspectratio>
-		</control>
+            <description>Show Channel Icon</description>
+            <posx>85</posx>
+            <posy>530</posy>
+            <width>260</width>
+            <height>150</height>
+            <aspectratio>keep</aspectratio>
+            <!--<visible>IsEmpty(Control.GetLabel(20000)) + IsEmpty(Control.GetLabel(30000))</visible>-->
+        </control>
+        <!--<control type ="image" id="20000"> 
+            <description>Show Poster</description>
+            <posx>80</posx>     
+            <posy>490</posy>    
+            <width>270</width>     
+            <height>215</height> 
+            <texture background="true">$INFO[player.FolderPath]folder.jpg</texture>
+            <aspectratio>keep</aspectratio>
+        </control>
+        <control type ="image" id="30000"> 
+            <description>Show Poster</description>
+            <posx>80</posx>     
+            <posy>490</posy>    
+            <width>270</width>     
+            <height>215</height> 
+            <texture background="true">$INFO[Player.FolderPath]../folder.jpg</texture>
+            <aspectratio>keep</aspectratio>
+            <visible>IsEmpty(Control.GetLabel(20000))</visible>
+        </control>-->
 		<control type="image">
 			<description>Navigation Flag</description>
 			<posx>75</posx>

@@ -32,6 +32,8 @@ class Settings:
 
 
     def loadSettings(self):
+        self.log("Loading settings from " + self.logfile);
+
         if Globals.GlobalFileLock.lockFile(self.logfile) == False:
             self.log("Unable to lock the settings file before loading it")
 
