@@ -775,15 +775,13 @@ class Album:
             for t in range(len(self.npTracks[a])):
                 self.npTracks[a][t] = L_NORM
 
-    def OpenGeneral(self, fname):
-        global IOError
+    def OpenGeneral(self, f):
         self.albums[:] = []
         self.tracks[:] = []
         self.npAlbums[:] = [] #empty it
         self.npTracks[:] = [] #empty it
         self.program[:] = [] #empty it
         try:
-            f = open(fname, 'r')
             withinAlbumName = ''
             for track in f.readlines():
                 track = track.strip('\n')
@@ -798,12 +796,14 @@ class Album:
                     self.tracks.append([trackName])
                     self.npAlbums.append(L_NORM)
                     self.npTracks.append([L_NORM])
-            f.close()
-        except IOError, e:
-            debuglog("Open %s" % e)
+        except:
+            return False
+        return True
 
-    def OpenNormal(self, fname):
-        global ValueError, IOError
+
+    def OpenNormal(self, f):
+        global ValueError
+        self.program[:] = [] #empty it
         for a in range(len(self.npAlbums)):
             self.npAlbums[a] = L_PROG
             for t in range(len(self.npTracks[a])):
@@ -827,20 +827,18 @@ class Album:
                             self.program.remove([a,t])
                         except ValueError:
                             # the list is broken
-                            pass                            
-            f.close()
-        except IOError, e:
-            debuglog("Open %s" % e)
+                            pass
+        except:
+            return False
+        return True
 
-    def OpenProgram(self, fname):
-        global IOError
+    def OpenProgram(self, f):
         self.program[:] = [] #empty it
         for a in range(len(self.npAlbums)):
             self.npAlbums[a] = L_NORM
             for t in range(len(self.npTracks[a])):
                 self.npTracks[a][t] = L_NORM
         try:
-            f = open(fname, 'r')
             for l in f.readlines():
                 l = l.strip('\n')
                 pos = [(int(e) + 1) for e in l.split(',')]
@@ -855,21 +853,24 @@ class Album:
                         except:
                             self.npAlbums[a] = L_PROG #assign album to program list only
                         self.program.append([a,t]) 
-            f.close()
-        except IOError, e:
-            debuglog("Open %s" % e)
-
-    def Open(self, fname, destination = L_BOTH):
-        try:
-            if destination == L_PROG:
-                self.OpenProgram(fname)
-            elif destination == L_NORM:
-                self.OpenNormal(fname)
-            else:
-                self.OpenGeneral(fname)
         except:
             return False
         return True
+
+    def Open(self, fname, destination = L_BOTH):
+        try:
+            f = open(fname, 'r')
+        except:
+            return False
+        if destination == L_PROG:
+            status = self.OpenProgram(f)
+        elif destination == L_NORM:
+            status = self.OpenNormal(f)
+        else:
+            status = self.OpenGeneral(f)
+
+        f.close()
+        return status
 
     def ShortPlaylistNormal(self):
         for a in range(len(self.npAlbums)):
@@ -883,7 +884,6 @@ class Album:
             yield "%s" % (','.join(str(n) for n in e))
     
     def Save(self, fname, destination = L_BOTH):
-        global IOError
         if destination == L_PROG:
             pL = self.ShortPlaylistProgram()
         elif destination == L_NORM:
@@ -892,14 +892,15 @@ class Album:
             pL = self.PlaylistGeneral()
         try:
             f = open(fname, 'w')
-            f.writelines("%s\n" % e for e in pL)
-            f.close()
-        except IOError, e:
-            debuglog("Save %s" % e)
-            return False
         except:
             return False
-        return True
+        status = False
+        try:
+            f.writelines("%s\n" % e for e in pL)
+            status = True
+        finally:
+            f.close()
+        return status
 
     def PlaylistGeneral(self):
         for a, albumName in enumerate(self.albums):
@@ -1114,6 +1115,10 @@ class CallbackPlayer(xbmc.Player):
     def stop(self, *args): # not thread safe with other APIs
         self.paused = False
         xbmc.Player.stop(self, *args)
+        #Problem: Calling anything from the onAction() code of GUI shows that
+        #         no callback is received until the onAction() is finished.
+        #         Cannot us the callback for synchronization thus use simle timeout.
+        xbmc.sleep(300)
 
     def pause(self, *args): # not thread safe with other APIs
         self.paused = not self.paused
@@ -1318,26 +1323,26 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if self.setup == True:
            text = __language__(30100)
         else:
-	 if self.mode == L_NORM:
-	   if self.thisAlbumOnly == True:
-	      text = __language__(30101) + "\n"
-	   else:
-	      text = __language__(30102) + "\n"
-	 else:
-	   text = __language__(30103) + "\n"
-	 if self.repeatAB == AB_REPEATER_A:
-	   text += __language__(30117) + "\n"
-	 elif self.repeatAB == AB_REPEATER_AB:
-	   text += __language__(30118) + "\n"
-	 elif self.loop == LOOP_ONE:
-	   text += __language__(30104) + "\n"
-	 elif self.loop == LOOP_ALL:
-	   text += __language__(30105) + "\n"
-	 else:
-	   text += __language__(30106) + "\n"
-	 if self.powerOff == True:
-	   text += __language__(30107)
-	self.getControl(999).setLabel(text)
+           if self.mode == L_NORM:
+               if self.thisAlbumOnly == True:
+                   text = __language__(30101) + "\n"
+               else:
+                   text = __language__(30102) + "\n"
+           else:
+               text = __language__(30103) + "\n"
+           if self.repeatAB == AB_REPEATER_A:
+               text += __language__(30117) + "\n"
+           elif self.repeatAB == AB_REPEATER_AB:
+               text += __language__(30118) + "\n"
+           elif self.loop == LOOP_ONE:
+               text += __language__(30104) + "\n"
+           elif self.loop == LOOP_ALL:
+               text += __language__(30105) + "\n"
+           else:
+               text += __language__(30106) + "\n"
+           if self.powerOff == True:
+               text += __language__(30107)
+        self.getControl(999).setLabel(text)
 
     def Setup(self, on = True):
         if on == True:
@@ -1559,7 +1564,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def onAction(self, action):
         class BreakException(Exception):
             pass
-            
+
         if not self.lock_onAction.acquire(False):
             return
 
@@ -1601,7 +1606,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                actionId = BP_ACTION_NONE
                raise BreakException
 
-            
+            refresh = False
             if actionId == BP_ACTION_PREVIOUS_MENU:
                self.powerOff = False
                self.lock_onAction.release()
@@ -1656,7 +1661,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     if number > 0:
                         self.playerLock.acquire()
                         self.InfoText("%s #%d" % (__language__(30110), number), __language__(30111))
-                        fname = xbmc.translatePath( os.path.join(HOME_SCRIPT_DIR, "%s.%d" % (AV_NAMES[self.avMode], number)) )
+                        fname = xbmc.translatePath( os.path.join(TEMP_DIR, "blindplayer.%s%d" % (AV_NAMES[self.avMode], number)) )
                         self.movePos = []
                         self.thisAlbumOnly = False
                         self.loop = LOOP_DISABLED
@@ -1664,22 +1669,23 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         playing = self.player.isPlaying()
                         if playing:
                             self.player.stop()
-                        if not self.A.Open(fname, self.mode):
-                            self.A.Normalize()
-                        self.ComposeNewPlaylist()
-                        pos = self.A.NextAlbum(self.mode, False, [1,1])
-                        self.A.Pos(pos)
-                        self.InfoText()
-                        if playing:
-                            self.player.play(self.playlist, None, True)
+                        if self.A.Open(fname, self.mode):
+                            self.ComposeNewPlaylist()
+                            pos = self.A.NextAlbum(self.mode, False, [1,1])
+                            self.A.Pos(pos)
+                            if playing:
+                                self.player.play(self.playlist, None, True)
+                            else:
+                                xbmc.playSFX(xbmc.translatePath( os.path.join(XBMC_DIR, 'addons', 'skin.confluence', 'sounds', 'notify.wav') ))
                         self.playerLock.release()
                 elif self.onNumberAction[1] == NUMBER_ACTION_SAVE:
                     if number > 0:
                         self.playerLock.acquire()
                         self.InfoText("%s #%d" % (__language__(30110), number), __language__(30112))
-                        fname = xbmc.translatePath( os.path.join(HOME_SCRIPT_DIR, "%s.%d" % (AV_NAMES[self.avMode], number)) )
+                        fname = xbmc.translatePath( os.path.join(TEMP_DIR, "blindplayer.%s%d" % (AV_NAMES[self.avMode], number)) )
                         self.A.Save(fname, self.mode)
-                        self.InfoText()
+                        if not self.player.isPlaying():
+                            xbmc.playSFX(xbmc.translatePath( os.path.join(XBMC_DIR, 'addons', 'skin.confluence', 'sounds', 'notify.wav') ))
                         self.playerLock.release()
                 else:
                     if not self.BC.active():
@@ -1721,8 +1727,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self.playerLock.release()
             elif actionId == BP_ACTION_LOAD:
                 self.onNumberAction[0] = NUMBER_ACTION_LOAD
+                self.InfoText(__language__(30110), __language__(30120))
             elif actionId == BP_ACTION_SAVE:
                 self.onNumberAction[0] = NUMBER_ACTION_SAVE
+                self.InfoText(__language__(30110), __language__(30119))
             elif actionId == BP_ACTION_RESCAN:
                 self.playerLock.acquire()
                 self.movePos = []
@@ -1751,7 +1759,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 else:
                     xbmc.playSFX(xbmc.translatePath( os.path.join(XBMC_DIR, 'addons', 'skin.confluence', 'sounds', 'notify.wav') ))
                 self.playerLock.release()
-                self.NavigationInfo(True)
+                refresh = True
             elif actionId == BP_ACTION_PROGRAM:
                 self.playerLock.acquire()
                 xbmc.executebuiltin("xbmc.playercontrol(repeatoff)")
@@ -2036,13 +2044,19 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 actionId = BP_ACTION_NONE
         except BreakException:
             pass
+        
+        self.setupSequence = actionId
+        
         if actionId != BP_ACTION_NONE:
-            self.setupSequence = actionId
             if self.onNumberAction[0] != NUMBER_ACTION_BC_ALBUM and self.onNumberAction[0] != NUMBER_ACTION_BC_TRACK:
                 self.BC.cancel()
+            
+            if self.onNumberAction[1] != NUMBER_ACTION_NONE:
+                refresh = True
             self.onNumberAction[1:len(self.onNumberAction)] = self.onNumberAction[0:len(self.onNumberAction)-1]
             self.onNumberAction[0] = NUMBER_ACTION_NONE
-            self.NavigationInfo()
+        
+            self.NavigationInfo(refresh)
         self.lock_onAction.release()
 
     def __exit(self):

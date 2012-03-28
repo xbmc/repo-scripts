@@ -5,7 +5,7 @@ This script helps using xbmc as music player only, without the need for display 
 Script mainly works for music files, when started without parameters or with the 'music' parameter.
 It might plays also audio track from videos, when started with the 'video' parameter.
 On startup script scans all media mentioned in the sources.xml file, creating a scan list.
-If the list already exists if will be reused. To rescan press 'Rescan' button..
+If the list already exists if will be reused. To rescan press 'Rescan' button.
 
 Script works in three modes, NORMAL, PROGRAM and ALBUM.
 NORMAL and PROGRAM modes have their own playlists. These playlists are mutually exclusive and together
@@ -18,7 +18,7 @@ And vice versa, pressing OK while in PROGRAM mode will move the current track to
 To switch to the PROGRAM mode press 'Normal mode' button, it will also disable any repeat mode.
 To switch to the ALBUM mode press 'Progrem mode' button, it will also disable any repeat mode.
 
-There are two repeat modes:
+There are three repeat modes:
 one - plays repeatedly current track, activate it with 'Repeat one' button.
 all - plays repeatedly current playlist (or limited to single album if in ALBUM mode), activate it with 'Repeat all' button.
 A-B - plays repeatedly selected part of a track, activate it with 'Repeat A-B' button

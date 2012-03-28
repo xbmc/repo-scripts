@@ -1,14 +1,16 @@
-Version 1.2.2	Add a hot-key to startup script with a button press.
+Version 1.2.3 Fix playlist load/save and test on XBMCbuntu Eden 11
 
-Version 1.2.1	Add repeat A-B mode, plus small fixes
+Version 1.2.2 Add a hot-key to startup script with a button press.
 
-Version 1.2.0	updated to xbmc Eden, tested with XBMC Eden live 11 beta3
+Version 1.2.1 Add repeat A-B mode, plus small fixes
 
-Version 1.1.2	fixed exceptions, tested with XBMC live 10.2
+Version 1.2.0 updated to xbmc Eden, tested with XBMC Eden live 11 beta3
 
-Version 1.1.0	change the program mode so it keeps track of the files order,
+Version 1.1.2 fixed exceptions, tested with XBMC live 10.2
+
+Version 1.1.0 change the program mode so it keeps track of the files order,
 fix switching from normal to currently selected album mode,
 readme not updated to respect above changes,
 tested with XBMC live 10.2
 
-Version 1.0.0	initial release, tested with XBMC live 10.2
+Version 1.0.0 initial release, tested with XBMC live 10.2
