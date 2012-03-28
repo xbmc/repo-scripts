@@ -236,7 +236,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
           select_index = self.service_list.index(self.service)
         except IndexError:
           select_index = 0
-        self.getControl( SERVICES_LIST ).selectItem( select_index )
+        if gui:  
+          self.getControl( SERVICES_LIST ).selectItem( select_index )
         log( __name__ ,"Auto Searching '%s' Service" % (self.service,) )
         self.Search_Subtitles(gui)
       else:

@@ -33,7 +33,7 @@ subtitle_pattern = "<div\sclass=\"links\">(.+?)<strong>Descargado:</strong>(.+?)
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, tvshow, season, episode):
 	
 	if languageshort == "es":
-		log( __name__ ,"TVShow: %s" % (tvshow))
+		#log( __name__ ,"TVShow: %s" % (tvshow))
 		if len(tvshow) > 0:
 			url = main_url + urllib.quote_plus(searchstring)
 		else:
@@ -43,11 +43,6 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 	content = geturl(url)
 	#subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': searchstring, 'sync': False, 'id' : 1, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 	for matches in re.finditer(search_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
-		log( __name__ ,u"Resultado: %s" % (matches))
-		log( __name__ ,u"Tipo: %s" % (matches.group(2)))
-		log( __name__ ,u"ID: %s" % (matches.group(3)))
-		log( __name__ ,u"Link: %s" % (matches.group(4)))
-		
 		tipo = matches.group(2)
 		id = matches.group(3)
 		link = matches.group(4)
@@ -56,7 +51,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 		
 		content_subtitle = geturl(url_subtitle)
 		for matches in re.finditer(subtitle_pattern, content_subtitle, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
-			log( __name__ ,u"Descargas: %s" % (matches.group(2)))
+			#log( __name__ ,"Descargas: %s" % (matches.group(2)))
 			
 			id = matches.group(6)
 			filename=urllib.unquote_plus(matches.group(7))
@@ -65,7 +60,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			if (downloads > 10):
 				downloads=10
 			#server = matches.group(4).encode('ascii')
-			log( __name__ ,u"Resultado Subtítulo 2: %s" % (matches.group(6)))
+			#log( __name__ ,"Resultado Subtítulo 2: %s" % (matches.group(6)))
 			subtitles_list.append({'rating': str(downloads), 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 	
 	
@@ -73,12 +68,12 @@ def geturl(url):
     class MyOpener(urllib.FancyURLopener):
         version = ''
     my_urlopener = MyOpener()
-    log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
+    #log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
     try:
         response = my_urlopener.open(url)
         content    = response.read()
     except:
-        log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
+        #log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
         content    = None
     return content
 
@@ -90,7 +85,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         searchstring = title
     if len(tvshow) > 0:
         searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
-    log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
+    #log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
 
     spanish = 0
     if string.lower(lang1) == "spanish": spanish = 1
@@ -117,9 +112,9 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     if content is not None:
         header = content[:4]
         if header == 'Rar!':
-            log( __name__ ,"%s argenteam: el contenido es RAR" % (debug_pretext)) #EGO
+            #log( __name__ ,"%s argenteam: el contenido es RAR" % (debug_pretext)) #EGO
             local_tmp_file = os.path.join(tmp_sub_dir, "argenteam.rar")
-            log( __name__ ,"%s argenteam: local_tmp_file %s" % (debug_pretext, local_tmp_file)) #EGO
+            #log( __name__ ,"%s argenteam: local_tmp_file %s" % (debug_pretext, local_tmp_file)) #EGO
             packed = True
         elif header == 'PK':
             local_tmp_file = os.path.join(tmp_sub_dir, "argenteam.zip")
@@ -130,16 +125,17 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             packed = False
         log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
         try:
-            log( __name__ ,"%s argenteam: escribo en %s" % (debug_pretext, local_tmp_file)) #EGO
+            #log( __name__ ,"%s argenteam: escribo en %s" % (debug_pretext, local_tmp_file)) #EGO
             local_file_handle = open(local_tmp_file, "wb")
             local_file_handle.write(content)
             local_file_handle.close()
         except:
-            log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
+            pass
+            #log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
         if packed:
             files = os.listdir(tmp_sub_dir)
             init_filecount = len(files)
-            log( __name__ ,"%s argenteam: número de init_filecount %s" % (debug_pretext, init_filecount)) #EGO
+            #log( __name__ ,"%s argenteam: número de init_filecount %s" % (debug_pretext, init_filecount)) #EGO
             filecount = init_filecount
             max_mtime = 0
             # determine the newest file from tmp_sub_dir

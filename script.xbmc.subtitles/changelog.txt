@@ -1,3 +1,7 @@
+3.0.0
+- Updated argenteam service, thx Esteban Mendoza
+- fix error if auto search is on
+
 2.9.38
 - fix Argenteam service
 - "fix" for Subdivx service, not happy with this but best I can do for now
