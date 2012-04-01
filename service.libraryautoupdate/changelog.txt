@@ -55,3 +55,19 @@
 [B]Version 0.5.6[/B]
 
 -updated the manual run interface to include information about when the updater will run again
+
+[B]Version 0.5.7[/B]
+
+- merged 'standard' and 'advanced' usage to follow more of the same codebase. Now the standard timer uses a cron expression as well and will start at the top of every hour
+
+[B]Version 0.5.8[/B]
+
+- added a 1 minute delay timer before running a scan if XBMC has just exited playback. This should help in scenerios where ending media viewing results in an immediate scan that the user didn't want. 
+
+[B]Version 0.5.9[/B]
+
+- added a custom video path option to only scan a specific video path instead of the entire library
+
+[B]Version 0.6.0[/B]
+
+- added "Cleaning" category to schedule a clean operation of the music/video databases. This operation can happen immediately after a scan or once per day/week/month. Verifying source paths before a clean is also supported

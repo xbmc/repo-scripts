@@ -6,14 +6,28 @@
     <string id="30002">Update Video Library</string>
     <string id="30003">Update Music Library</string>
 	<string id="30004">Startup Delay (minutes)</string>
-	<string id="30008">Run during playback</string>
-	<string id="30009">Show Notifications</string>
-	
-	<string id="30005">Timers</string>
+	<string id="30005">Video</string>
 	<string id="30006">Used Advanced Timer</string>
 	<string id="30007">Cron Expression</string>
+	<string id="30008">Run during playback</string>
+	<string id="30009">Show Notifications</string>
 	
 	<!-- gui -->
 	<string id="30011">Update will run again </string>
 	<string id="30012">Do you wish to manually run an update?</string>
+	
+	<string id="30013">Music</string>
+	<string id="30014">Cleaning</string>
+	<string id="30015">Update Specific Path</string>
+	<string id="30016">Video Path</string>
+	<string id="30017">Read Disclaimer</string>
+	
+	<!-- disclaimer -->
+	<string id="30018">Video Paths Disclaimer</string>
+	<string id="30019">Path must already be a video source with content</string>
+	<string id="30020">Path must match source path exactly to scan</string>
+	
+	<string id="30021">Clean Libraries</string>
+	<string id="30022">Verify Sources Before Clean</string>
+	<string id="30023">Frequency</string>
 </strings>
