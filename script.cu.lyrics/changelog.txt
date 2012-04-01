@@ -1,3 +1,6 @@
+2.0.4
+- added lyricwiki service
+
 2.0.3
 - clean lyrics before saving
 - clean search string further for better matching, thx DDDamian for that
