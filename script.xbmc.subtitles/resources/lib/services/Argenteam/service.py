@@ -37,38 +37,40 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 		if len(tvshow) > 0:
 			url = main_url + urllib.quote_plus(searchstring)
 		else:
-			searchstring = re.sub('\([0-9]{4}\)','',searchstring)
+			#searchstring = re.sub('\([0-9]{4}\)','',searchstring)
 			url = main_url + urllib.quote_plus(searchstring)
 			
 	content = geturl(url)
 	#subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': searchstring, 'sync': False, 'id' : 1, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
-	for matches in re.finditer(search_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
-		tipo = matches.group(2)
-		id = matches.group(3)
-		link = matches.group(4)
+	#if isinstance(season, int ) and isinstance(episode, int ):
+	
+	#for matches in re.finditer(search_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
+		#tipo = matches.group(2)
+		#id = matches.group(3)
+		#link = matches.group(4)
 		
-		url_subtitle = "http://www.argenteam.net/" + tipo +"/"+ id +"/"+link
+		#url_subtitle = "http://www.argenteam.net/" + tipo +"/"+ id +"/"+link
 		
-		content_subtitle = geturl(url_subtitle)
-		for matches in re.finditer(subtitle_pattern, content_subtitle, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
+		#content_subtitle = geturl(url_subtitle)
+	for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
 			#log( __name__ ,"Descargas: %s" % (matches.group(2)))
 			
-			id = matches.group(6)
-			filename=urllib.unquote_plus(matches.group(7))
-			server = filename
-			downloads = int(matches.group(2)) / 1000
-			if (downloads > 10):
-				downloads=10
+		id = matches.group(6)
+		filename=urllib.unquote_plus(matches.group(7))
+		server = filename
+		downloads = int(matches.group(2)) / 1000
+		if (downloads > 10):
+			downloads=10
 			#server = matches.group(4).encode('ascii')
 			#log( __name__ ,"Resultado Subtítulo 2: %s" % (matches.group(6)))
-			subtitles_list.append({'rating': str(downloads), 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+		subtitles_list.append({'rating': str(downloads), 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 	
 	
 def geturl(url):
     class MyOpener(urllib.FancyURLopener):
         version = ''
     my_urlopener = MyOpener()
-    #log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
+    log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
     try:
         response = my_urlopener.open(url)
         content    = response.read()
@@ -87,6 +89,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
     #log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
 
+    searchstring = searchstring + ' ' + year
     spanish = 0
     if string.lower(lang1) == "spanish": spanish = 1
     elif string.lower(lang2) == "spanish": spanish = 2

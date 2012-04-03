@@ -3,7 +3,7 @@
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt
-# Rev. 1.0.2
+# Rev. 1.0.3
 
 import xbmc, xbmcgui
 import cookielib, urllib2, urllib, sys, re, os, webbrowser, time, unicodedata
@@ -32,7 +32,9 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 
 	# Parse the cookie to LegendasLogin and install the url opener
 	LegendasLogin(session_id)
-	
+	#Create some variables
+	subtitle = ""
+	extract_path = os.path.join(tmp_sub_dir, "extracted")
 	# Download the subtitle using its ID.
 	id = subtitles_list[pos][ "ID" ]
 	url_request = base_url+'/info.php?d='+id+'&c=1'
@@ -53,10 +55,10 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	
 	# Use XBMC.Extract to extract the downloaded file, extract it to the temp dir, 
 	# then removes all files from the temp dir that aren't subtitles.
-	xbmc.executebuiltin("XBMC.Extract(" + fname + "," + tmp_sub_dir +")")
+	xbmc.executebuiltin("XBMC.Extract(" + fname + "," + extract_path +")")
 	time.sleep(2)
 	legendas_tmp = []
-	for root, dirs, files in os.walk(tmp_sub_dir, topdown=False):
+	for root, dirs, files in os.walk(extract_path, topdown=False):
 		for file in files:
 			dirfile = os.path.join(root, file)
 			ext = os.path.splitext(dirfile)[1][1:].lower()
@@ -69,8 +71,8 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	# so user can choose. If only one subtitle is found, parse it to the addon.
 	if len(legendas_tmp) > 1:
 		dialog = xbmcgui.Dialog()
-		subtitle = dialog.browse(1, 'XBMC', 'files', '', False, False, tmp_sub_dir+"/")
-		if subtitle == tmp_sub_dir+"/": subtitle = ""
+		subtitle = dialog.browse(1, 'XBMC', 'files', '', False, False, extract_path+"/")
+		if subtitle == extract_path+"/": subtitle = ""
 	elif legendas_tmp:
 		subtitle = legendas_tmp[0]
 	
@@ -165,14 +167,14 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 	xbmcPlayerTitle = xbmc.getCleanMovieTitle( xbmc.getInfoLabel("VideoPlayer.Title") )[0]
 	original_title = re.sub("</?[^>]*>","",xbmc.executehttpapi("QueryVideoDatabase(select c16 from movie where movie.c00 = \""+xbmcPlayerTitle+"\")"))
 
-	if original_title == "" or year == "" : original_title = title
+	if original_title == "" or year == "" : original_title = CleanLTVTitle(title)
 	else:
-		original_title = Uconvert(original_title)
+		original_title = CleanLTVTitle(original_title)
 		log( __name__ ,u"%s Original Title[%s]" % (debug_pretext, original_title))
 
 	# Encodes the first search string using the original movie title,
 	# and download it.
-	search_string = chomp(original_title)
+	search_string = original_title
 	log( __name__ ,u"Searching[%s]" % (debug_pretext))
 	if len(search_string) < 3: search_string = search_string + year
 	search_dict = {'txtLegenda':search_string,'selTipo':tipo,'int_idioma':'99'}
@@ -183,7 +185,7 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 	# If no subtitles with the original name are found, try the parsed title.
 	if response.__contains__('Nenhuma legenda foi encontrada') and original_title != title:
 		log( __name__ ,u" No subtitles found using the original title, using title instead.")
-		search_string = chomp(title)
+		search_string = CleanLTVTitle(title)
 		search_dict = {'txtLegenda':search_string,'selTipo':tipo,'int_idioma':'99'}
 		search_data = urllib.urlencode(search_dict)
 		request = urllib2.Request(base_url+'/index.php?opcao=buscarlegenda',search_data)
@@ -267,9 +269,9 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 	try:
 		xbmcTVShow = xbmc.getInfoLabel("VideoPlayer.TVshowtitle")
 		tvshow_id = int(re.sub("</?[^>]*>","",xbmc.executehttpapi("QueryVideoDatabase(select c12 from tvshow where c00 = \""+xbmcTVShow+"\")")))
-		if tvshow_id: original_tvshow = Uconvert(BeautifulStoneSoup(urllib2.urlopen("http://www.thetvdb.com/data/series/"+str(tvshow_id)+"/").read()).data.series.seriesname.string)
-		else: original_tvshow = tvshow
-	except: original_tvshow = tvshow
+		if tvshow_id: original_tvshow = CleanLTVTitle(BeautifulStoneSoup(urllib2.urlopen("http://www.thetvdb.com/data/series/"+str(tvshow_id)+"/").read()).data.series.seriesname.string)
+		else: original_tvshow = CleanLTVTitle(tvshow)
+	except: original_tvshow = CleanLTVTitle(tvshow)
 	log( __name__ , original_tvshow )
 
 	# Formating the season to double digit format
@@ -281,7 +283,7 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 	# Setting up the search string; the original tvshow name is preferable.
 	# If the tvshow name lenght is less than 3 characters, append the year to the search.
 	
-	search_string = chomp(original_tvshow) + " " +"S"+ss+"E"+ee
+	search_string = original_tvshow + " " +"S"+ss+"E"+ee
 	if len(search_string) < 3: search_string = search_string +" "+ year
 	log( __name__ , "Searching "+search_string )
 	
@@ -340,7 +342,6 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 		# to those parsed or snatched by this service.
 		# Each language is appended to a unique sequence.
 		tvshow = CleanLTVTitle(tvshow)
-		original_tvshow = CleanLTVTitle(original_tvshow)
 		if int(ltv_season) == int(season): 
 			SubtitleResult = { "title" : ltv_original_title, "filename" : release,"language_name" : lang1, "ID" : download_id, "sync" : False, "rating" : ltv_rating, "language_flag": "flags/"+ltv_lang+".gif" } 
 			if re.findall("^%s" % (tvshow),ltv_original_title) or comparetitle(ltv_title,tvshow) or comparetitle(ltv_original_title,original_tvshow):

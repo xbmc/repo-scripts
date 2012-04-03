@@ -1,3 +1,7 @@
+3.0.1
+- Fixed argenteam subtitle search, thx Esteban Mendoza
+- fix LegendasTV bugs, thx gfjardim
+
 3.0.0
 - Updated argenteam service, thx Esteban Mendoza
 - fix error if auto search is on
