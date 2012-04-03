@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <strings>
     <string id="30000">No description</string>
-    <string id="30001">[B]Loading...[/B]</string>
+    <string id="30001">[B]Loading data from external source...[/B]</string>
+    <string id="30002">Calculating remaning time...</string>
+    <string id="30003">Approximately %d seconds left...</string>
+    <string id="30004">Loading of data already in progress...</string>
+    <string id="30005">Mouse control</string>
+    <string id="30006">Now</string>
+    <string id="30007">[B]Tip![/B] You can also use the scroll wheel</string>
+    <string id="30008">Cancel</string>
 
     <string id="30100">General</string>
     <string id="30101">Source</string>
@@ -20,12 +27,14 @@
     <string id="30114">Startup</string>
     <string id="30115">- clear cache first</string>
     <string id="30116">Search for channel logos in</string>
+    <string id="30117">ONTV Pro URL</string>
 
     <string id="30150">Oops, sorry about that!</string>
     <string id="30151">It was not possible to load program data,</string>
     <string id="30152">please try again later...</string>
 
     <string id="30200">on [B]%s[/B] in 5 minutes...</string>
+    <string id="30201">on [B]%s[/B] is starting now...</string>
 
     <string id="30300">Watch %s</string>
     <string id="30301">Remind</string>
@@ -34,18 +43,20 @@
     <string id="30304">Choose stream file</string>
     <string id="30305">You can choose your own .strm file to play, when you want to watch this channel.</string>
     <string id="30306">Remove stream file</string>
-    <string id="99980">Game over, man! [I]Game over![/I]</string>
-    <string id="99981">You can't handle the truth!</string>
-    <string id="99982">Danger Will Robinson</string>
-    <string id="99983">Why does it cry, Sméagol?</string>
-    <string id="99984">Houston, we have a problem...</string>
-    <string id="99985">E.T. phone home</string>
+    <string id="30307">Channels</string>
+    <string id="30308">Quit</string>
 
-    <string id="99990">Unfortunately an error occurred in the addon.</string>
-    <string id="99991">You can help with fixing the problem by submitting</string>
-    <string id="99992">an error report. No personal information is sent.</string>
-    <string id="99993">Submit error report</string>
-    <string id="99994">Don't submit</string>
-    <string id="99995">Thank you!</string>
+    <string id="30400">The TV guide is configured to stream TV using YouSee</string>
+    <string id="30401">web-tv, but the addon is not installed.</string>
+    <string id="30402">Streaming using that addon is now disabled.</string>
+
+    <string id="30403">The TV guide is configured to stream TV using Danish</string>
+    <string id="30404">Live TV, but the addon i snot installed.</string>
+    <string id="30405">Streaming using that addon is now disabled.</string>
+
+    <string id="30500">[B]Edit channel order and visibility[/B]</string>
+    <string id="30501">Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position.</string>
+    <string id="30502">Save</string>
+    <string id="30503">Cancel</string>
 </strings>
 

@@ -33,8 +33,6 @@ class YouSeeApi(object):
     COOKIE_JAR = cookielib.LWPCookieJar()
 
     def __init__(self):
-        print 'YouSeeApi.__init__'
-        print self.COOKIE_JAR
         urllib2.install_opener(urllib2.build_opener(urllib2.HTTPCookieProcessor(self.COOKIE_JAR)))
 
     def _invoke(self, area, function, params=dict()):

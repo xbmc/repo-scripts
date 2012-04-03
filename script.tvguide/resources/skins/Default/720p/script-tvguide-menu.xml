@@ -51,7 +51,7 @@
             <height>50</height>
             <texturefocus>tvguide-program-grey-focus.png</texturefocus>
             <texturenofocus>tvguide-program-grey.png</texturenofocus>
-            <onup>4003</onup>
+            <onup>4004</onup>
             <ondown>4001</ondown>
             <align>center</align>
             <aligny>center</aligny>
@@ -61,7 +61,7 @@
 
         <control type="button" id="4001">
             <posx>20</posx>
-            <posy>190</posy>
+            <posy>180</posy>
             <width>240</width>
             <height>50</height>
             <texturefocus>tvguide-program-grey-focus.png</texturefocus>
@@ -97,7 +97,7 @@
         </control>
         <control type="button" id="4002">
             <posx>20</posx>
-            <posy>460</posy>
+            <posy>470</posy>
             <width>240</width>
             <height>50</height>
             <texturefocus>tvguide-program-grey-focus.png</texturefocus>
@@ -110,21 +110,35 @@
             <textcolor>ffffffff</textcolor>
         </control>
 
-
         <control type="button" id="4003">
+            <posx>20</posx>
+            <posy>590</posy>
+            <width>240</width>
+            <height>50</height>
+            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <onup>4002</onup>
+            <ondown>4004</ondown>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <textcolor>ffffffff</textcolor>
+            <label>$ADDON[script.tvguide 30307]</label>
+        </control>
+        <control type="button" id="4004">
             <posx>20</posx>
             <posy>650</posy>
             <width>240</width>
             <height>50</height>
             <texturefocus>tvguide-program-grey-focus.png</texturefocus>
             <texturenofocus>tvguide-program-grey.png</texturenofocus>
-            <onup>4002</onup>
+            <onup>4003</onup>
             <ondown>4000</ondown>
             <align>center</align>
             <aligny>center</aligny>
             <font>font13</font>
             <textcolor>ffffffff</textcolor>
-            <label>$ADDON[script.tvguide 30303]</label>
+            <label>$ADDON[script.tvguide 30308]</label>
         </control>
 
     </controls>

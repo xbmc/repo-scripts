@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <strings>
     <string id="30000">Ingen beskrivelse</string>
-    <string id="30001">[B]Indlæser...[/B]</string>
+    <string id="30001">[B]Indlæser data fra ekstern kilde...[/B]</string>
+    <string id="30002">Beregner resterende tid...</string>
+    <string id="30003">ca. %d sekunder tilbage...</string>
+    <string id="30004">Indlæsning af data allerede påbegyndt...</string>
+    <string id="30005">Musekontrol</string>
+    <string id="30006">Nu</string>
+    <string id="30007">[B]Tip![/B] Du kan også bruge scrollhjulet</string>
+    <string id="30008">Annuller</string>
 
     <string id="30100">Generelt</string>
     <string id="30101">Kilde</string>
@@ -20,12 +27,14 @@
     <string id="30114">Opstart</string>
     <string id="30115">- slet midlertidige filer først</string>
     <string id="30116">Søg efter kanal logoer i</string>
+    <string id="30117">ONTV Pro URL</string>
 
     <string id="30150">Ups, det er pinligt!</string>
     <string id="30151">Det var ikke muligt at indlæse program data,</string>
     <string id="30152">prøv igen senere...</string>
 
     <string id="30200">på [B]%s[/B] om 5 minutter...</string>
+    <string id="30201">på [B]%s[/B] starter nu...</string>
 
     <string id="30300">Se %s</string>
     <string id="30301">Påmind</string>
@@ -34,6 +43,8 @@
     <string id="30304">Vælg stream fil</string>
     <string id="30305">Du kan vælge din egen .strm fil som skal afspilles, når du vælger at se denne kanal.</string>
     <string id="30306">Fjern stream fil</string>
+    <string id="30307">Kanaler</string>
+    <string id="30308">Afslut</string>
 
     <string id="30400">TV guiden er indstillet til at streame TV via YouSee</string>
     <string id="30401">web-tv, men denne addon er ikke installeret.</string>
@@ -43,18 +54,9 @@
     <string id="30404">Live TV, men denne addon er ikke installeret.</string>
     <string id="30405">Streaming via denne addon deaktiveres nu.</string>
 
-    <string id="99980">Game over, man! [I]Game over![/I]</string>
-    <string id="99981">You can't handle the truth!</string>
-    <string id="99982">Danger Will Robinson</string>
-    <string id="99983">Why does it cry, Sméagol?</string>
-    <string id="99984">Houston, we have a problem...</string>
-    <string id="99985">E.T. phone home</string>
-
-    <string id="99990">Der er desværre opstået en fejl i addon'en.</string>
-    <string id="99991">Du kan hjælpe med at løse fejlen ved at indsende en</string>
-    <string id="99992">fejlrapport. Der sendes ikke personlige oplysninger.</string>
-    <string id="99993">Indsend fejlrapport</string>
-    <string id="99994">Indsend ikke</string>
-    <string id="99995">Tak!</string>
+    <string id="30500">[B]Rediger kanaler og synlighed[/B]</string>
+    <string id="30501">Flyt op og ned for at ændre placering.[CR]Vælg eller flyt til venstre for at gemme[CR]placeringen.</string>
+    <string id="30502">Gem</string>
+    <string id="30503">Annuller</string>
 </strings>
  

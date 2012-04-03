@@ -18,44 +18,14 @@
 #  http://www.gnu.org/copyleft/gpl.html
 #
 import buggalo
-import xbmc
-import xbmcaddon
-import os
-import source
 import gui
-import notification
+
+buggalo.SUBMIT_URL = 'http://tommy.winther.nu/exception/submit.php'
 
 try:
-    SOURCES = {
-        'YouSee.tv' : source.YouSeeTvSource,
-        'DR.dk' : source.DrDkSource,
-        'TVTID.dk' : source.TvTidSource,
-        'XMLTV' : source.XMLTVSource
-        }
+    w = gui.TVGuide()
+    w.doModal()
+    del w
 
-    ADDON = xbmcaddon.Addon()
-    sourceRef = SOURCES[ADDON.getSetting('source')]
-    SETTINGS = {
-        'cache.path' : xbmc.translatePath(ADDON.getAddonInfo('profile')),
-        'xmltv.file' : ADDON.getSetting('xmltv.file'),
-        'xmltv.logo.folder' : ADDON.getSetting('xmltv.logo.folder'),
-        'youseetv.category' : ADDON.getSetting('youseetv.category'),
-        'youseewebtv.playback' : ADDON.getSetting('youseewebtv.playback'),
-        'danishlivetv.playback' : ADDON.getSetting('danishlivetv.playback'),
-        'notifications.enabled' : ADDON.getSetting('notifications.enabled'),
-        'cache.data.on.xbmc.startup' : ADDON.getSetting('cache.data.on.xbmc.startup'),
-        'clear.cache.on.xbmc.startup' : ADDON.getSetting('clear.cache.on.xbmc.startup')
-    }
-
-    if not os.path.exists(SETTINGS['cache.path']):
-        os.makedirs(SETTINGS['cache.path'])
-    SOURCE = sourceRef(SETTINGS)
-    xbmc.log("[script.tvguide] Using source: " + str(sourceRef), xbmc.LOGDEBUG)
-
-    if __name__ == '__main__':
-        n = notification.Notification(SOURCE, ADDON.getAddonInfo('path'), xbmc.translatePath(ADDON.getAddonInfo('profile')))
-        w = gui.TVGuide(source = SOURCE, notification = n)
-        w.doModal()
-        del w
 except Exception:
     buggalo.onExceptionRaised()

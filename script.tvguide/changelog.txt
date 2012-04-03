@@ -1,3 +1,22 @@
+[B]Version 1.3.0 - 2012-04-02[/B]
+- Scheduled notifications from version 1.2.2 are lost and will have to be re-scheduled
+- Completely rewrote focus handling
+- Added support for mouse wheel scrolling (will probably crash XBMC in Eden RC2 and earlier)
+- Added new source for ONTV.dk Pro customers (and other online XMLTV sources)
+- Added slide-out controls to ease navigation with mouse
+- Fixed problem with international characters in (custom) stream URLs
+- Changed notifications to notify both 5 mins before program start and on program start
+- Changed source data to be loaded in a separate thread and added option to cancel
+- Added French translation
+- Use script.module.buggalo for error reporting
+- Cache EPG data to local SQLite database (based on work by timpinkawa)
+- Added option to edit channel order and visibility
+- Automatically detects changes in settings and reloads EPG data as needed
+- Improved XMLTV parsing (thanks timpinkawa)
+- Added initial channel surfing support
+  - Press Info for OSD, navigate with Up, Down, Left, Right, Channel + and -
+  - Press ContextMenu to minimize video and show EPG
+
 [B]Version 1.2.2 - 2012-01-28[/B]
 - Fixed compatibility problem with Python 2.6 and previous versions
   It caused problems on Windows, ATV, etc.

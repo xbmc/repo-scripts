@@ -2,10 +2,10 @@
 <settings>
 	<category label="30101">
 		<setting id="source" label="30101" type="labelenum" default="YouSee.tv"
-                 values="YouSee.tv|DR.dk|TVTID.dk|XMLTV" />
+                 values="YouSee.tv|DR.dk|TVTID.dk|XMLTV|ONTV.dk" />
 
         <setting id="youseetv.category" label="30102" type="labelenum" default="Danske"
-                 values="Mine kanaler|Danske|Filmkanaler|Grundpakken|Mellempakken|Fuldpakken|Nordiske|Engelske|Tyske|Latinske|Slaviske|Tyrkiske|Kurdiske|Arabiske|Asiatiske"
+                 values="Danske|Filmkanaler|Grundpakken|Mellempakken|Fuldpakken|Nordiske|Engelske|Tyske|Latinske|Slaviske|Tyrkiske|Kurdiske|Arabiske|Asiatiske"
                  visible="eq(-1,0)" />
 
         <setting id="youseewebtv.playback" label="30111" type="bool" default="true"
@@ -17,16 +17,11 @@
         <setting id="xmltv.file" label="30103" type="file" visible="eq(-5,3)" />
         <setting id="xmltv.logo.folder" label="30116" type="folder" visible="eq(-6,3)"/>
 
-        <setting type="sep" />
-        <setting type="lsep" label="30109" />
-        <setting label="30104" type="action" action="RunScript($CWD/clear_cache.py)" />
-
+        <setting id="ontv.url" label="30117" type="text" visible="eq(-7,4)" default="http://ontv.dk/xmltv/c81e728d9d4c2f636f067f89cc14862c"/>
 	</category>
 
     <category label="30114">
         <setting id="cache.data.on.xbmc.startup" label="30110" type="bool" default="true" />
-        <setting id="clear.cache.on.xbmc.startup" label="30115" type="bool" default="false" visible="eq(-1,true)"/>
-
     </category>
 
     <category label="30112">
