@@ -1,0 +1,8 @@
+11.0.5
+ - changed addon-id to replace "Debug Log"-addon
+ - new icon
+ - improved the dialog
+ - changed the way os-detection works
+ - added German Translation
+11.0.4
+ - initial test release
