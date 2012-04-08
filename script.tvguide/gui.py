@@ -17,7 +17,6 @@
 #  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 #  http://www.gnu.org/copyleft/gpl.html
 #
-import os
 import datetime
 import threading
 
@@ -61,10 +60,6 @@ CHANNELS_PER_PAGE = 9
 HALF_HOUR = datetime.timedelta(minutes = 30)
 
 ADDON = xbmcaddon.Addon(id = 'script.tvguide')
-TEXTURE_BUTTON_NOFOCUS = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'tvguide-program-grey.png')
-TEXTURE_BUTTON_FOCUS = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'tvguide-program-grey-focus.png')
-TEXTURE_BUTTON_NOFOCUS_NOTIFY = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'tvguide-program-red.png')
-TEXTURE_BUTTON_FOCUS_NOTIFY = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'resources', 'skins', 'Default', 'media', 'tvguide-program-red-focus.png')
 
 def debug(s):
     if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
@@ -653,11 +648,11 @@ class TVGuide(xbmcgui.WindowXML):
 
             if cellWidth > 1:
                 if program.notificationScheduled:
-                    noFocusTexture = TEXTURE_BUTTON_NOFOCUS_NOTIFY
-                    focusTexture = TEXTURE_BUTTON_FOCUS_NOTIFY
+                    noFocusTexture = 'tvguide-program-red.png'
+                    focusTexture = 'tvguide-program-red-focus.png'
                 else:
-                    noFocusTexture = TEXTURE_BUTTON_NOFOCUS
-                    focusTexture = TEXTURE_BUTTON_FOCUS
+                    noFocusTexture = 'tvguide-program-grey.png'
+                    focusTexture = 'tvguide-program-grey-focus.png'
 
                 if cellWidth < 25:
                     title = '' # Text will overflow outside the button if it is too narrow

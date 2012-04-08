@@ -480,6 +480,16 @@ class Source(object):
             # For notifications
             c.execute("CREATE TABLE notifications(channel TEXT, program_title TEXT, source TEXT, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE)")
 
+        if version < [1,3, 1]:
+            # Recreate tables with FOREIGN KEYS as DEFERRABLE INITIALLY DEFERRED
+            c.execute('UPDATE version SET major=1, minor=3, patch=1')
+            c.execute('DROP TABLE channels')
+            c.execute('DROP TABLE programs')
+            c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, stream_url TEXT, source TEXT, visible BOOLEAN, weight INTEGER, PRIMARY KEY (id, source), FOREIGN KEY(source) REFERENCES sources(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+            c.execute('CREATE TABLE programs(channel TEXT, title TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, image_large TEXT, image_small TEXT, source TEXT, updates_id INTEGER, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+            c.execute('CREATE INDEX program_list_idx ON programs(source, channel, start_date, end_date)')
+            c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
+            c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
 
         # make sure we have a record in sources for this Source
         c.execute("INSERT OR IGNORE INTO sources(id, channels_updated) VALUES(?, ?)", [self.KEY, datetime.datetime.fromtimestamp(0)])
@@ -666,6 +676,8 @@ class XMLTVSource(Source):
             # if xmlTvFile doesn't exists or the file size is different from tempFile
             # we copy the tempFile to xmlTvFile which in turn triggers a reload in self._isChannelListCacheExpired(..)
             if not os.path.exists(self.xmlTvFile) or os.path.getsize(self.xmlTvFile) != os.path.getsize(tempFile):
+                if os.path.exists(self.xmlTvFile):
+                    os.unlink(self.xmlTvFile)
                 os.rename(tempFile, self.xmlTvFile)
 
     def getDataFromExternal(self, date, progress_callback = None):
@@ -716,7 +728,6 @@ class XMLTVSource(Source):
         Only check filesystem once every 5 minutes
         """
         delta = datetime.datetime.now() - self.xmlTvFileLastChecked
-        print str(delta.seconds)
         if delta.seconds < 300:
             return False
 
