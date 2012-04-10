@@ -1,4 +1,7 @@
-﻿[B]1.4.3 (2012.01.25)[/B]
+﻿[B]1.4.4 (2012.04.10)[/B]
+fixed: encoding error when login as non english user name under windows
+
+[B]1.4.3 (2012.01.25)[/B]
 fixed: can't split some lyrics at right point
 
 [B]1.4.2 (2012.01.15)[/B]
