@@ -67,8 +67,10 @@ def get_html_source( url , save=False):
 
 class TvTunes:
     def __init__(self):
+        if not xbmcvfs.exists( xbmc.translatePath( 'special://profile/addon_data/%s' % __addonid__ ) ):
+            xbmcvfs.mkdir( xbmc.translatePath( 'special://profile/addon_data/%s' % __addonid__ ) )
         if not xbmcvfs.exists( xbmc.translatePath( 'special://profile/addon_data/%s/temp' % __addonid__ ) ):
-            os.makedirs( xbmc.translatePath( 'special://profile/addon_data/%s/temp' % __addonid__ ) )
+            xbmcvfs.mkdir( xbmc.translatePath( 'special://profile/addon_data/%s/temp' % __addonid__ ) )
         self.search_url = "http://www.televisiontunes.com/search.php?searWords=%s&Send=Search"
         self.download_url = "http://www.televisiontunes.com/download.php?f=%s"
         self.theme_file = "theme.mp3"
