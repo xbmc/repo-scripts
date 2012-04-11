@@ -1,3 +1,7 @@
+v0.2.4
+- add searchstring window property
+- allow dialogfullscreeninfo to be used
+
 v0.2.3
 - use label for seasons
 - sort by label instead of title

@@ -32,6 +32,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if self.searchstring == '':
             self._close()
         else:
+            self.window_id = xbmcgui.getCurrentWindowDialogId()
+            xbmcgui.Window(self.window_id).setProperty('GlobalSearch.SearchString', self.searchstring)
             self._hide_controls()
             if not self.nextsearch:
                 self._parse_argv()
@@ -962,9 +964,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self.Player.stop()
                 self._trailerstopped()
         elif action in ACTION_SHOW_INFO:
-            self._showInfo()
+            if self.playingtrailer == 'true' and xbmc.getCondVisibility('videoplayer.isfullscreen'):
+                xbmc.executebuiltin("ActivateWindow(142)")
+            else:
+                self._showInfo()
 
     def _close( self ):
+            xbmcgui.Window(self.window_id).clearProperty('GlobalSearch.SearchString')
             log('script stopped')
             self.close()
 

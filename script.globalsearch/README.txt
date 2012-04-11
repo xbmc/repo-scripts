@@ -5,12 +5,13 @@ INFORMATION FOR SKINNERS
 
 
 CONTENTS:
-0. Running the addon 
-I. Infolabels available in script-globalsearch-main.xml
-II. Infolabels available in script-globalsearch-infodialog.xml
+0.   Running the addon 
+I.   Infolabels available in script-globalsearch-main.xml
+II.  Infolabels available in script-globalsearch-infodialog.xml
 III. Control id's used in script-globalsearch-main.xml
-IV. Control id's used in script-globalsearch-infodialog.xml
-V. Control id's used in script-globalsearch-contextmenu.xml
+IV.  Control id's used in script-globalsearch-infodialog.xml
+V.   Control id's used in script-globalsearch-contextmenu.xml
+VI.  Available window properties
 
 
 
@@ -265,4 +266,10 @@ As always, do not change or remove any of the id's mentioned above!
 If you want to get rid of some of them, just position them outside of the screen.
 
 Any id not mentioned above, but used in the default xml files, can safely be changed or removed.
+
+
+
+VI.  Available window properties
+--------------------------------
+Window.Property(GlobalSearch.SearchString) - the string the user is searching for
 
