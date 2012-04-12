@@ -1,6 +1,26 @@
 Web Viewer Changelog
 
-Current Version : 0.8.2
+Current Version : 0.8.6
+
+*** 0.8.6 ***
+
+Remove autoforms logging that could print passwords to the log in plain text
+Added logging of version and python version
+
+*** 0.8.5 ***
+
+Fixed a bug causing downloads to fail
+
+*** 0.8.4 ***
+
+Handle more complex <br /> tags
+Added Read View to sub-options menu (For viewing pages without selectable elements or with widely spaced selectable elements.
+Parse file:// out of links so they display properly in local links
+Fix for pages without elements
+
+*** 0.8.3 ***
+
+Fixed an autoforms bug which caused infinite loops when form failed and then redirected back to the same form.
 
 *** 0.8.2 ***
 

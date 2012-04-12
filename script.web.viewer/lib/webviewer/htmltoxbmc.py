@@ -40,7 +40,7 @@ class HTMLConverter:
 		self.lineItemFilter = re.compile('<(li|/li|ul|ol|/ul|/ol)[^>]*?>',re.I)
 		self.ulFilter = re.compile('<ul[^>]*?>(.+?)</ul>',re.I)
 		self.olFilter = re.compile('<ol[^>]*?>(.+?)</ol>',re.I)
-		self.brFilter = re.compile('<br[ /]{0,2}>',re.I)
+		self.brFilter = re.compile('<br[^>]*/{0,1}>',re.I)
 		self.blockQuoteFilter = re.compile('<blockquote>(.+?)</blockquote>',re.S|re.I)
 		self.colorFilter = re.compile('<font color="([^>"]+?)">(.+?)</font>',re.I)
 		self.colorFilter2 = re.compile('<span[^>]*?style="[^>"]*?color: ?([^>]+?)"[^>]*?>(.+?)</span>',re.I)
