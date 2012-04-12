@@ -68,7 +68,6 @@
                     <font>font13</font>
                     <align>center</align>
                     <aligny>center</aligny>
-                    <include>Red_Textcolor</include>
                 </control>
                 <control type="label" id="4001">
                     <description>1st half hour column</description>
@@ -329,7 +328,7 @@
                 <description>Program time</description>
                 <posx>900</posx>
                 <posy>510</posy>
-                <width>240</width>
+                <width>340</width>
                 <height>50</height>
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>

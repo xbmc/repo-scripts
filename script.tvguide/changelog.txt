@@ -1,5 +1,14 @@
-[B]Version 1.3.2 - 2012-xx-xx[/B]
-- Added initial version of rapier skin support (thanks Lunatixz)
+[B]Version 1.3.4 - 2012-04-11[/B]
+- Minor fixed from buggalo error reports
+
+[B]Version 1.3.3 - 2012-04-09[/B]
+- Fixed minor problems in Rapier skin
+- Improved handling of configuration errors (fx if XMLTV source file was removed)
+- Improved handling of invalid XMLTV source data
+
+[B]Version 1.3.2 - 2012-04-08[/B]
+- Accidentally released instead of 1.3.1 below.
+- Added initial version of Rapier skin support (thanks Lunatixz)
 
 [B]Version 1.3.1 - 2012-04-05[/B]
 - Fixed [I]foreign key constraint failed[/I] with certain XMLTV files

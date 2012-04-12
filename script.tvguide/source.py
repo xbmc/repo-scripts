@@ -94,6 +94,9 @@ class SourceUpdateInProgressException(SourceException):
 class SourceUpdateCanceledException(SourceException):
     pass
 
+class SourceNotConfiguredException(SourceException):
+    pass
+
 class Source(object):
     KEY = "undefined"
     STREAMS = {}
@@ -130,6 +133,8 @@ class Source(object):
 
     def close(self):
         #self.conn.rollback() # rollback any non-commit'ed changes to avoid database lock
+        if self.player.isPlaying():
+            self.player.stop()
         self.conn.close()
 
     def wasSettingsChanged(self, addon):
@@ -151,9 +156,10 @@ class Source(object):
 
         if settingsChanged or noRows:
             for key in SETTINGS_TO_CHECK:
-                c.execute('INSERT OR IGNORE INTO settings(key, value) VALUES (?, ?)', [key, addon.getSetting(key)])
+                value = addon.getSetting(key).decode('utf-8', 'ignore')
+                c.execute('INSERT OR IGNORE INTO settings(key, value) VALUES (?, ?)', [key, value])
                 if not c.rowcount:
-                    c.execute('UPDATE settings SET value=? WHERE key=?', [addon.getSetting(key), key])
+                    c.execute('UPDATE settings SET value=? WHERE key=?', [value, key])
             self.conn.commit()
 
         c.close()
@@ -198,7 +204,7 @@ class Source(object):
             c.execute("INSERT INTO updates(source, date, programs_updated) VALUES(?, ?, ?)", [self.KEY, dateStr, datetime.datetime.now()])
             updatesId = c.lastrowid
 
-            imported = 0
+            imported = imported_channels = imported_programs = 0
             for item in self.getDataFromExternal(date, progress_callback):
                 imported += 1
 
@@ -206,6 +212,7 @@ class Source(object):
                     self.conn.commit()
 
                 if isinstance(item, Channel):
+                    imported_channels += 1
                     channel = item
                     if not channel.streamUrl and self.playbackUsingDanishLiveTV and self.STREAMS.has_key(channel.id):
                         channel.streamUrl = self.STREAMS[channel.id]
@@ -214,6 +221,7 @@ class Source(object):
                         c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.KEY])
 
                 elif isinstance(item, Program):
+                    imported_programs += 1
                     program = item
                     if isinstance(program.channel, Channel):
                         channel = program.channel.id
@@ -227,6 +235,9 @@ class Source(object):
             c.execute("UPDATE sources SET channels_updated=? WHERE id=?", [datetime.datetime.now(),self.KEY])
             self.conn.commit()
 
+            if imported_channels == 0 or imported_programs == 0:
+                raise SourceException('No channels or programs imported')
+
         except SourceUpdateCanceledException:
             # force source update on next load
             c.execute('UPDATE sources SET channels_updated=? WHERE id=?', [datetime.datetime.fromtimestamp(0), self.KEY])
@@ -234,16 +245,22 @@ class Source(object):
             self.conn.commit()
 
         except Exception, ex:
-            self.conn.rollback()
-
             import traceback as tb
             import sys
             (type, value, traceback) = sys.exc_info()
             tb.print_exception(type, value, traceback)
 
-            # invalidate cached data
-            c.execute('UPDATE sources SET channels_updated=? WHERE id=?', [datetime.datetime.fromtimestamp(0), self.KEY])
-            self.conn.commit()
+            try:
+                self.conn.rollback()
+            except sqlite3.OperationalError:
+                pass # no transaction is active
+
+            try:
+                # invalidate cached data
+                c.execute('UPDATE sources SET channels_updated=? WHERE id=?', [datetime.datetime.fromtimestamp(0), self.KEY])
+                self.conn.commit()
+            except sqlite3.OperationalError:
+                pass # database is locked
 
             raise SourceException(ex)
         finally:
@@ -309,7 +326,10 @@ class Source(object):
     def _isChannelListCacheExpired(self):
         c = self.conn.cursor()
         c.execute('SELECT channels_updated FROM sources WHERE id=?', [self.KEY])
-        lastUpdated = c.fetchone()['channels_updated']
+        row = c.fetchone()
+        if not row:
+            return True
+        lastUpdated = row['channels_updated']
         c.close()
 
         today = datetime.datetime.now()
@@ -322,11 +342,13 @@ class Source(object):
         @type channel: source.Channel
         @return:
         """
+        program = None
         now = datetime.datetime.now()
         c = self.conn.cursor()
         c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date <= ? AND end_date >= ?', [channel.id, self.KEY, now, now])
         row = c.fetchone()
-        program = Program(channel, row['title'], row['start_date'], row['end_date'], row['description'], row['image_large'], row['image_small'])
+        if row:
+            program = Program(channel, row['title'], row['start_date'], row['end_date'], row['description'], row['image_large'], row['image_small'])
         c.close()
 
         return program
@@ -667,60 +689,26 @@ class XMLTVSource(Source):
         self.logoFolder = addon.getSetting('xmltv.logo.folder')
         self.xmlTvFileLastChecked = datetime.datetime.fromtimestamp(0)
 
+        if not addon.getSetting('xmltv.file') or not xbmcvfs.exists(addon.getSetting('xmltv.file')):
+            raise SourceNotConfiguredException()
+
         self.xmlTvFile = os.path.join(self.cachePath, '%s.xmltv' % self.KEY)
         tempFile = os.path.join(self.cachePath, '%s.xmltv.tmp' % self.KEY)
-        if xbmcvfs.exists(addon.getSetting('xmltv.file')):
-            xbmc.log('[script.tvguide] Caching XMLTV file...')
-            xbmcvfs.copy(addon.getSetting('xmltv.file'), tempFile)
+        xbmc.log('[script.tvguide] Caching XMLTV file...')
+        xbmcvfs.copy(addon.getSetting('xmltv.file'), tempFile)
 
-            # if xmlTvFile doesn't exists or the file size is different from tempFile
-            # we copy the tempFile to xmlTvFile which in turn triggers a reload in self._isChannelListCacheExpired(..)
-            if not os.path.exists(self.xmlTvFile) or os.path.getsize(self.xmlTvFile) != os.path.getsize(tempFile):
-                if os.path.exists(self.xmlTvFile):
-                    os.unlink(self.xmlTvFile)
-                os.rename(tempFile, self.xmlTvFile)
+        # if xmlTvFile doesn't exists or the file size is different from tempFile
+        # we copy the tempFile to xmlTvFile which in turn triggers a reload in self._isChannelListCacheExpired(..)
+        if not os.path.exists(self.xmlTvFile) or os.path.getsize(self.xmlTvFile) != os.path.getsize(tempFile):
+            if os.path.exists(self.xmlTvFile):
+                os.unlink(self.xmlTvFile)
+            os.rename(tempFile, self.xmlTvFile)
 
     def getDataFromExternal(self, date, progress_callback = None):
-        context, f, size = self._loadXml()
-        event, root = context.next()
-        elements_parsed = 0
-
-        for event, elem in context:
-            if event == "end":
-                result = None
-                if elem.tag == "programme":
-                    channel = elem.get("channel")
-                    description = elem.findtext("desc")
-                    iconElement = elem.find("icon")
-                    icon = None
-                    if iconElement is not None:
-                        icon = iconElement.get("src")
-                    if not description:
-                        description = strings(NO_DESCRIPTION)
-                    result = Program(channel, elem.findtext('title'), self._parseDate(elem.get('start')), self._parseDate(elem.get('stop')), description, imageSmall=icon)
-
-                elif elem.tag == "channel":
-                    id = elem.get("id")
-                    title = elem.findtext("display-name")
-                    logo = None
-                    if self.logoFolder:
-                        logoFile = os.path.join(self.logoFolder, title + '.png')
-                        if xbmcvfs.exists(logoFile):
-                            logo = logoFile
-                    if not logo:
-                        iconElement = elem.find("icon")
-                        if iconElement is not None:
-                            logo = iconElement.get("src")
-                    result = Channel(id, title, logo)
-
-                if result:
-                    elements_parsed += 1
-                    if progress_callback and elements_parsed % 500 == 0:
-                        if not progress_callback(100.0 / size * f.tell()):
-                            raise SourceUpdateCanceledException()
-                    yield result
-
-            root.clear()
+        size = os.path.getsize(self.xmlTvFile)
+        f = open(self.xmlTvFile, "rb")
+        context = ElementTree.iterparse(f, events=("start", "end"))
+        return parseXMLTV(context, f, size, self.logoFolder, progress_callback)
 
     def _isChannelListCacheExpired(self):
         """
@@ -733,43 +721,80 @@ class XMLTVSource(Source):
 
         c = self.conn.cursor()
         c.execute('SELECT channels_updated FROM sources WHERE id=?', [self.KEY])
-        lastUpdated = c.fetchone()['channels_updated']
+        row = c.fetchone()
+        if not row:
+            return True
+        lastUpdated = row['channels_updated']
         c.close()
 
         fileModified = datetime.datetime.fromtimestamp(os.path.getmtime(self.xmlTvFile))
         return fileModified > lastUpdated
 
-
     def _isProgramListCacheExpired(self, startTime):
         return self._isChannelListCacheExpired()
 
-    def _loadXml(self):
-        size = os.path.getsize(self.xmlTvFile)
-        f = open(self.xmlTvFile, "rb")
-        context = ElementTree.iterparse(f, events=("start", "end"))
-        return context, f, size
-
-    def _parseDate(self, dateString):
-        dateStringWithoutTimeZone = dateString[:-6]
-        t = time.strptime(dateStringWithoutTimeZone, '%Y%m%d%H%M%S')
-        return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
-
-
-class ONTVSource(XMLTVSource):
+class ONTVSource(Source):
     KEY = 'ontv'
 
     def __init__(self, addon, cachePath):
         super(ONTVSource, self).__init__(addon, cachePath)
         self.ontvUrl = addon.getSetting('ontv.url')
 
-    def _isChannelListCacheExpired(self):
-        return Source._isChannelListCacheExpired(self)
-
-    def _loadXml(self):
+    def getDataFromExternal(self, date, progress_callback = None):
         xml = self._downloadUrl(self.ontvUrl)
         io = StringIO.StringIO(xml)
         context = ElementTree.iterparse(io)
-        return context, io, len(xml)
+        return parseXMLTV(context, io, len(xml), None, progress_callback)
+
+    def _isProgramListCacheExpired(self, startTime):
+        return self._isChannelListCacheExpired()
+
+
+def parseXMLTVDate(dateString):
+    dateStringWithoutTimeZone = dateString[:-6]
+    t = time.strptime(dateStringWithoutTimeZone, '%Y%m%d%H%M%S')
+    return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
+
+def parseXMLTV(context, f, size, logoFolder, progress_callback):
+    event, root = context.next()
+    elements_parsed = 0
+
+    for event, elem in context:
+        if event == "end":
+            result = None
+            if elem.tag == "programme":
+                channel = elem.get("channel")
+                description = elem.findtext("desc")
+                iconElement = elem.find("icon")
+                icon = None
+                if iconElement is not None:
+                    icon = iconElement.get("src")
+                if not description:
+                    description = strings(NO_DESCRIPTION)
+                result = Program(channel, elem.findtext('title'), parseXMLTVDate(elem.get('start')), parseXMLTVDate(elem.get('stop')), description, imageSmall=icon)
+
+            elif elem.tag == "channel":
+                id = elem.get("id")
+                title = elem.findtext("display-name")
+                logo = None
+                if logoFolder:
+                    logoFile = os.path.join(logoFolder, title + '.png')
+                    if xbmcvfs.exists(logoFile):
+                        logo = logoFile
+                if not logo:
+                    iconElement = elem.find("icon")
+                    if iconElement is not None:
+                        logo = iconElement.get("src")
+                result = Channel(id, title, logo)
+
+            if result:
+                elements_parsed += 1
+                if progress_callback and elements_parsed % 500 == 0:
+                    if not progress_callback(100.0 / size * f.tell()):
+                        raise SourceUpdateCanceledException()
+                yield result
+
+        root.clear()
 
 
 def instantiateSource(addon):

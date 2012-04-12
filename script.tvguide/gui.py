@@ -77,6 +77,9 @@ class SourceInitializer(threading.Thread):
                 xbmc.log("[script.tvguide] Using source: %s" % str(type(source)), xbmc.LOGDEBUG)
                 self.sourceInitializedHandler.onSourceInitialized(source)
                 break
+            except src.SourceNotConfiguredException:
+                self.sourceInitializedHandler.onSourceNotConfigured()
+                break
             except src.SourceUpdateInProgressException, ex:
                 xbmc.log('[script.tvguide] database update in progress...: %s' % str(ex), xbmc.LOGDEBUG)
                 xbmc.sleep(1000)
@@ -438,7 +441,10 @@ class TVGuide(xbmcgui.WindowXML):
 
         self.getControl(self.C_MAIN_TITLE).setLabel('[B]%s[/B]' % program.title)
         self.getControl(self.C_MAIN_TIME).setLabel('[B]%s - %s[/B]' % (program.startDate.strftime(xbmc.getRegion('time')), program.endDate.strftime(xbmc.getRegion('time'))))
-        self.getControl(self.C_MAIN_DESCRIPTION).setText(program.description)
+        if program.description:
+            self.getControl(self.C_MAIN_DESCRIPTION).setText(program.description)
+        else:
+            self.getControl(self.C_MAIN_DESCRIPTION).setText(strings(NO_DESCRIPTION))
 
         if program.channel.logo is not None:
             self.getControl(self.C_MAIN_LOGO).setImage(program.channel.logo)
@@ -594,12 +600,7 @@ class TVGuide(xbmcgui.WindowXML):
             startTime += HALF_HOUR
 
         # channels
-        try:
-            channels = self.source.getChannelList()
-        except src.SourceException:
-            self.onEPGLoadError()
-            return
-
+        channels = self.source.getChannelList()
         if channelStart < 0:
             channelStart = len(channels) - 1
         elif channelStart > len(channels) - 1:
@@ -608,19 +609,14 @@ class TVGuide(xbmcgui.WindowXML):
         channelEnd = channelStart + CHANNELS_PER_PAGE
         self.channelIdx = channelStart
 
-        viewChannels = channels[channelStart : channelEnd]
-        try:
-            programs = self.source.getProgramList(viewChannels, self.viewStartDate)
-        except src.SourceException:
-            self.onEPGLoadError()
-            return
+        channelsToShow = channels[channelStart : channelEnd]
+        programs = self.source.getProgramList(channelsToShow, self.viewStartDate)
 
         if programs is None:
             self.onEPGLoadError()
             return
 
         # set channel logo or text
-        channelsToShow = channels[channelStart : channelEnd]
         for idx in range(0, CHANNELS_PER_PAGE):
             if idx >= len(channelsToShow):
                 self.getControl(4110 + idx).setImage('')
@@ -634,7 +630,7 @@ class TVGuide(xbmcgui.WindowXML):
                     self.getControl(4110 + idx).setImage('')
 
         for program in programs:
-            idx = viewChannels.index(program.channel)
+            idx = channelsToShow.index(program.channel)
 
             startDelta = program.startDate - self.viewStartDate
             stopDelta = program.endDate - self.viewStartDate
@@ -719,6 +715,12 @@ class TVGuide(xbmcgui.WindowXML):
         self.redrawingEPG = False
         self._hideControl(self.C_MAIN_LOADING)
         xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1), strings(LOAD_ERROR_LINE2))
+        self.close()
+
+    def onSourceNotConfigured(self):
+        self.redrawingEPG = False
+        self._hideControl(self.C_MAIN_LOADING)
+        xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1), strings(CONFIGURATION_ERROR_LINE2))
         self.close()
 
     def onSourceInitialized(self, source):

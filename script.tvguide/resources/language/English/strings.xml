@@ -31,7 +31,8 @@
 
     <string id="30150">Oops, sorry about that!</string>
     <string id="30151">It was not possible to load program data,</string>
-    <string id="30152">please try again later...</string>
+    <string id="30152">check settings or try again later...</string>
+    <string id="30153">because the settings are invalid!</string>
 
     <string id="30200">on [B]%s[/B] in 5 minutes...</string>
     <string id="30201">on [B]%s[/B] is starting now...</string>

@@ -31,7 +31,8 @@
 
     <string id="30150">Ups, det er pinligt!</string>
     <string id="30151">Det var ikke muligt at indlæse program data,</string>
-    <string id="30152">prøv igen senere...</string>
+    <string id="30152">kontroller indstillingerne eller prøv igen senere...</string>
+    <string id="30153">fordi indstillingerne er ugyldige!</string>
 
     <string id="30200">på [B]%s[/B] om 5 minutter...</string>
     <string id="30201">på [B]%s[/B] starter nu...</string>
