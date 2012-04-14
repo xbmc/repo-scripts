@@ -133,17 +133,15 @@ def _media_listing_new(media_type):
             jsonobject = simplejson.loads(json_response)
             if jsonobject['result'].has_key('musicvideos'):
                 for item in jsonobject['result']['musicvideos']:
-                    Media = {}
-                    Media['id']         = ''
-                    Media['movieid']    = item['musicvideoid']
-                    Media['name']       = item['label']
-                    Media['artist']     = item['artist']
-                    Media['album']      = item['album']
-                    Media['track']      = item['track']
-                    Media['runtime']    = item['runtime']
-                    Media['year']       = item['year']
-                    Media['path']       = media_path(item['file'])
-                    Medialist.append(Media)
+                    Medialist.append({'id': '',
+                                      'movieid': item.get('musicvideoid',''),
+                                      'name': item.get('label',''),
+                                      'artist': item.get('artist',''),
+                                      'album': item.get('album',''),
+                                      'track': item.get('track',''),
+                                      'runtime': item.get('runtime',''),
+                                      'year': item.get('year',''),
+                                      'path': media_path(item.get('file',''))})
         else:
             log('No JSON results found')
     except Exception, NoneType:

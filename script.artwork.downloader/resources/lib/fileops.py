@@ -27,9 +27,6 @@ class fileops:
     """
 
     def __init__(self):
-
-        """Initialise needed directories/vars for fileops"""
-
         log("Setting up fileops")
         self.settings = settings()
         self.settings._get_general()
@@ -57,7 +54,7 @@ class fileops:
             path = os.path.join(targetdir, filename)
             if self._exists(path):
                 self._delete(path)
-                log("[%s] Deleted (%s): %s" % (media_name, reason, path), xbmc.LOGNOTICE)
+                log("[%s] Deleted (%s): %s" % (media_name, reason, path))
                 isdeleted = True
         if not isdeleted:
             log("[%s] Ignoring (%s): %s" % (media_name, reason, filename))
@@ -107,11 +104,6 @@ class fileops:
 
     # download file
     def _downloadfile(self, url, filename, targetdirs, media_name, mode = ""):
-
-        """
-        Download url to filename and place in all targetdirs.
-        """
-
         try:
             temppath = os.path.join(self.tempdir, filename)
             tempfile = open(temppath, "wb")
@@ -131,7 +123,7 @@ class fileops:
         except Exception, e:
             log( str( e ), xbmc.LOGNOTICE )
         else:
-            log("[%s] Downloaded: %s" % (media_name, filename), xbmc.LOGNOTICE)
+            log("[%s] Downloaded: %s" % (media_name, filename))
             self.downloadcount += 1
             for targetdir in targetdirs:
                 targetpath = os.path.join(targetdir, filename)

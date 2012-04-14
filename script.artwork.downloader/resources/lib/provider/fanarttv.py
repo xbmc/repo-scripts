@@ -8,56 +8,45 @@ from resources.lib.script_exceptions import NoFanartError, ItemNotFoundError
 from resources.lib.utils import *
 from elementtree import ElementTree as ET
 from operator import itemgetter
+from resources.lib.language import *
 
 ### get addon info
-__localize__    = ( sys.modules[ "__main__" ].__localize__ )
+__localize__    = ( sys.modules[ '__main__' ].__localize__ )
+
+API_KEY = '586118be1ac673f74963cc284d46bd8e'
+IMAGE_TYPES = ['clearlogo', 'clearart', 'tvthumb', 'seasonthumb', 'characterart','movielogo', 'movieart', 'moviedisc']
 
 class FTV_TVProvider():
 
     def __init__(self):
         self.name = 'fanart.tv - TV API'
-        self.api_key = '586118be1ac673f74963cc284d46bd8e' # ArtworkDownloader-tvshow
-        self.url = "http://fanart.tv/webservice/series/%s/%s/json/all/1/2"
-        self.imagetypes = ['clearlogo', 'clearart', 'tvthumb', 'seasonthumb', 'characterart']
+        self.url = 'http://fanart.tv/webservice/series/%s/%s/json/all/1/2'
 
     def get_image_list(self, media_id):
-        data = get_json(self.url % (self.api_key,media_id))
+        data = get_json(self.url % (API_KEY,media_id))
         image_list = []
-        if data == "Empty":
+        if data == 'Empty' or not data:
             return image_list
         else:
-            # Get fanart
-            try:
-                # split "name" and "data"
-                for title, value in data.iteritems():
-                    # run through specified types
-                    for art in self.imagetypes:
-                        # if type has been found
-                        if value.has_key(art):
-                            # Run through all the items
-                            for item in value[art]:
-                                info = {}
-                                info['url']         = urllib.quote(item['url'], ':/')   # Original image url
-                                info['preview']     = info['url'] + "/preview"          # Create a preview url for later use
-                                info['id']          = item['id']
-                                info['type']        = art
-                                if item.has_key('season'):
-                                    info['season']  = item['season']
-                                else:
-                                    info['season']  = 'n/a'
-                                # language and votes
-                                info['language']    = item['lang']
-                                info['votes']       = item['likes']
-                                
-                                # Create Gui string to display
-                                info['generalinfo'] = '%s: %s  |  ' %( __localize__(32141), info['language'])
-                                if info['season'] != 'n/a':
-                                    info['generalinfo'] += '%s: %s  |  ' %( __localize__(32144), info['season'] )
-                                info['generalinfo'] += '%s: %s  |  ' %( __localize__(32143), info['votes'] )
-                                # Add data to list
-                                if info:
-                                    image_list.append(info)
-            except: pass
+            # split 'name' and 'data'
+            for title, value in data.iteritems():
+                for art in IMAGE_TYPES:
+                    if value.has_key(art):
+                        for item in value[art]:
+                            # Create GUI info tag
+                            generalinfo = '%s: %s  |  ' %( __localize__(32141), get_language(item.get('lang')).capitalize())
+                            if item.get('season'):
+                                generalinfo += '%s: %s  |  ' %( __localize__(32144), item.get('season'))
+                            generalinfo += '%s: %s  |  ' %( __localize__(32143), item.get('likes'))
+                            # Fill list
+                            image_list.append({'url': urllib.quote(item.get('url'), ':/'),
+                                               'preview': item.get('url') + '/preview',
+                                               'id': item.get('id'),
+                                               'type': art,
+                                               'season': item.get('season','n/a'),
+                                               'language': item.get('lang'),
+                                               'votes': item.get('likes'),
+                                               'generalinfo': generalinfo})
             if image_list == []:
                 raise NoFanartError(media_id)
             else:
@@ -70,55 +59,41 @@ class FTV_MovieProvider():
 
     def __init__(self):
         self.name = 'fanart.tv - Movie API'
-        self.api_key = '586118be1ac673f74963cc284d46bd8e' # ArtworkDownloader-movie
-        self.url = "http://fanart.tv/webservice/movie/%s/%s/json/all/1/2/"
-        self.imagetypes = ['movielogo', 'movieart', 'moviedisc']
+        self.url = 'http://fanart.tv/webservice/movie/%s/%s/json/all/1/2/'
+        
 
     def get_image_list(self, media_id):
-        data = get_json(self.url % (self.api_key,media_id))
+        data = get_json(self.url %(API_KEY, media_id))
         image_list = []
-        if data == "Empty":
+        if data == 'Empty' or not data:
             return image_list
         else:
-            # Get fanart
-            try:
-                # split "name" and "data"
-                for title, value in data.iteritems():
-                    # run through specified types
-                    for art in self.imagetypes:
-                        # if type has been found
-                        if value.has_key(art):
-                            # Run through all the items
-                            for item in value[art]:
-                                info = {}
-                                info['url']         = urllib.quote(item['url'], ':/')   # Original image url
-                                info['preview']     = info['url'] + "/preview"          # Create a preview url for later use
-                                info['id']          = item['id']
-                                # Check on what type and use the general tag
-                                if art == 'movielogo':
-                                    info['type']    = 'clearlogo'
-                                elif art == 'moviedisc':
-                                    info['type']    = 'discart'
-                                elif art == 'movieart':
-                                    info['type']    = 'clearart'
-                                # Check on disctype
-                                if art == 'moviedisc':
-                                    info['disctype']   = item['disc_type']
-                                    info['discnumber'] = item['disc']
-                                else:
-                                    info['disctype']   = 'n/a'
-                                    info['discnumber'] = 'n/a'
-                                # language and votes
-                                info['language']    = item['lang']
-                                info['votes']       = item['likes']
-                                # Create Gui string to display
-                                info['generalinfo'] = '%s: %s  |  ' %( __localize__(32141), info['language'])
-                                if info['disctype'] != 'n/a':
-                                    info['generalinfo'] += '%s: %s (%s)  |  ' %( __localize__(32146), info['discnumber'], info['disctype'] )
-                                info['generalinfo'] += '%s: %s  |  ' %( __localize__(32143), info['votes'] )
-                                if info:
-                                    image_list.append(info)
-            except: pass
+            # split 'name' and 'data'
+            for title, value in data.iteritems():
+                for art in IMAGE_TYPES:
+                    if value.has_key(art):
+                        for item in value[art]:
+                            # Check on what type and use the general tag
+                            arttypes = {'movielogo': 'clearlogo',
+                                        'moviedisc': 'discart',
+                                        'movieart': 'clearart'}
+                            type = arttypes[art]
+                            # Create GUI info tag
+                            generalinfo = '%s: %s  |  ' %( __localize__(32141), get_language(item.get('lang')).capitalize())
+                            if item.get('disc_type'):
+                                generalinfo += '%s: %s (%s)  |  ' %( __localize__(32146), item.get('disc'), item.get('disc_type'))
+                            generalinfo += '%s: %s  |  ' %( __localize__(32143), item.get('likes'))
+                            # Fill list
+                            image_list.append({'url': urllib.quote(item.get('url'), ':/'),
+                                               'preview': item.get('url') + '/preview',
+                                               'id': item.get('id'),
+                                               'type': type,
+                                               'season': item.get('season','n/a'),
+                                               'language': item.get('lang'),
+                                               'votes': item.get('likes'),
+                                               'disctype': item.get('disc_type','n/a'),
+                                               'discnumber': item.get('disc','n/a'),
+                                               'generalinfo': generalinfo})
             if image_list == []:
                 raise NoFanartError(media_id)
             else:

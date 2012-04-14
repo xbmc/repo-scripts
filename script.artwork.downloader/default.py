@@ -52,12 +52,10 @@ class Main:
         if self.initialise():
             # Check for silent background mode
             if self.silent:
-                log('Silent mode')
                 self.settings.background = True
                 self.settings.notify = False
             # Check for gui mode
             elif self.mode == 'gui':
-                log('Set dialog and file overwrite true')
                 self.settings.background = False
                 self.settings.notify = False
                 self.settings.files_overwrite = True
@@ -78,21 +76,18 @@ class Main:
                     # If no medianame specified
                     # 1. Check what media type was specified, 2. Retrieve library list, 3. Enable the correct type, 4. Do the API stuff
                     if self.mediatype == 'movie':
-                        log("Bulk mode: movie")
                         self.Medialist = media_listing('movie')
                         self.settings.movie_enable = 'true'
                         self.settings.tvshow_enable = 'false'
                         self.settings.musicvideo_enable = 'false'
                         self.download_artwork(self.Medialist, self.movie_providers)
                     elif self.mediatype == 'tvshow':
-                        log("Bulk mode: TV Shows")
                         self.settings.movie_enable = 'false'
                         self.settings.tvshow_enable = 'true'
                         self.settings.musicvideo_enable = 'false'
                         self.Medialist = media_listing('tvshow')
                         self.download_artwork(self.Medialist, self.tv_providers)
                     elif self.mediatype == 'musicvideo':
-                        log("Bulk mode: musicvideo")
                         self.Medialist = media_listing('musicvideo')
                         self.settings.movie_enable = 'false'
                         self.settings.tvshow_enable = 'false'
@@ -115,22 +110,14 @@ class Main:
                     self.Medialist = media_listing('movie')
                     self.mediatype = 'movie'
                     self.download_artwork(self.Medialist, self.movie_providers)
-                else:
-                    log('Movie fanart disabled, skipping', xbmc.LOGINFO)
-                
                 if self.settings.tvshow_enable and not dialog_msg('iscanceled', background = True):
                     self.Medialist = media_listing('tvshow')
                     self.mediatype = 'tvshow'
                     self.download_artwork(self.Medialist, self.tv_providers)
-                else:
-                    log('TV fanart disabled, skipping', xbmc.LOGINFO)
-                
                 if self.settings.musicvideo_enable and not dialog_msg('iscanceled', background = True):
                     self.Medialist = media_listing('musicvideo')
                     self.mediatype = 'musicvideo'
                     self.download_artwork(self.Medialist, self.musicvideo_providers)
-                else:
-                    log('Musicvideo fanart disabled, skipping', xbmc.LOGINFO)
                 # If not cancelled throw the whole downloadlist into the batch downloader
                 if not dialog_msg('iscanceled', background = self.settings.background):
                     self._batch_download(self.download_list)
@@ -138,7 +125,6 @@ class Main:
             log('Initialisation error, script aborting', xbmc.LOGERROR)
         # Make sure that files_overwrite option get's reset after downloading
         __addon__.setSetting(id="files_overwrite", value='false')
-        # Cleaning up
         self.cleanup()
 
     ### Declare standard vars   
@@ -170,12 +156,8 @@ class Main:
             log( "## arg 1: %s" % sys.argv[1] )
             log( "## arg 2: %s" % sys.argv[2] )
             log( "## arg 3: %s" % sys.argv[3] )
-            log( "## arg 4: %s" % sys.argv[4] )
-            log( "## arg 5: %s" % sys.argv[5] )
-            log( "## arg 6: %s" % sys.argv[6] )
-            log( "## arg 7: %s" % sys.argv[7] )
         except:
-            log( "## No more arg" )
+            pass
         log("## Checking for downloading mode...")
         for item in sys.argv:
             # Check for download mode
@@ -356,20 +338,14 @@ class Main:
                 self.media_disctype = 'n/a'
             dialog_msg('update', percentage = int(float(self.processeditems) / float(len(media_list)) * 100.0), line1 = self.media_name, line2 = __localize__(32008), line3 = '', background = self.settings.background)
             log('########################################################')
-            log('Processing media:  %s' % self.media_name, xbmc.LOGNOTICE)
+            log('Processing media:  %s' % self.media_name)
             # do some id conversions 
             if not self.mediatype == 'tvshow' and self.media_id in ['','tt0000000','0']:
-                log('No IMDB ID found, trying to search themoviedb.org for matching title.', xbmc.LOGNOTICE)
+                log('No IMDB ID found, trying to search themoviedb.org for matching title.')
                 self.media_id = tmdb._search_movie(self.media_name,currentmedia["year"])
             elif self.mediatype == 'movie' and not self.media_id == '' and not self.media_id.startswith('tt'):
-                log('No valid ID found, trying to search themoviedb.org for matching title.', xbmc.LOGNOTICE)
+                log('No valid ID found, trying to search themoviedb.org for matching title.')
                 self.media_id = tmdb._search_movie(self.media_name,currentmedia["year"])
-            '''
-            elif self.mediatype == 'movie' and not self.media_id == '' and not self.media_id.startswith('tt'):
-                self.media_id_old = self.media_id
-                self.media_id = "tt%.7d" % int(self.media_id)
-                log('No IMDB ID found, try ID conversion: %s -> %s' % (self.media_id_old,self.media_id), xbmc.LOGNOTICE)
-            '''
             log('Provider ID:       %s' % self.media_id)
             log('Media path:        %s' % self.media_path)
             # Declare the target folders
@@ -395,10 +371,10 @@ class Main:
                 dialog_msg('close', background = self.settings.background)
                 dialog_msg('okdialog','' ,self.media_name , __localize__(32030))
             elif self.media_id == '':
-                log('- No ID found, skipping', xbmc.LOGNOTICE)
+                log('- No ID found, skipping')
                 self.failed_items.append('[%s] ID %s' %( self.media_name, __localize__(32022) ))
             elif self.mediatype == 'tvshow' and self.media_id.startswith('tt'):
-                log('- IMDB ID found for TV show, skipping', xbmc.LOGNOTICE)
+                log('- IMDB ID found for TV show, skipping')
                 self.failed_items.append('[%s]: TVDB ID %s' %( self.media_name, __localize__(32022) ))
             
             # If correct ID found continue
@@ -469,7 +445,6 @@ class Main:
 
     ### Processes the bulk mode downloading of files
     def _download_process(self):
-        log('- Start processing image list')
         if not self.mode == 'custom':
             self.download_arttypes = []
             for item in self.settings.available_arttypes:
@@ -523,7 +498,7 @@ class Main:
                 # when no image found found after one imagelist loop set to english
                 if not imagefound and i == 1:
                     pref_language = 'en'
-                    log('! No matching %s artwork found. Searching for English backup' %self.settings.limit_preferred_language, xbmc.LOGNOTICE)
+                    log('! No matching %s artwork found. Searching for English backup' %self.settings.limit_preferred_language)
                 # loop through image list
                 for artwork in final_image_list:
                     if art_type in artwork['type']:
@@ -633,24 +608,14 @@ class Main:
 
     def _batch_download(self, image_list):
         log('########################################################')
-        # If image list is empty print log message
-        if len(image_list) == 0:
-            log('- Nothing to download')
-        # If not empty process the image list
-        else:
-            log('- Starting download')
-            # Download artwork that passed the limit check
+        if not len(image_list) == 0:
             for item in image_list:
-                # Check if cancel has been called to break the loop
                 if xbmc.abortRequested:
-                    log('XBMC abort requested, aborting')
                     self.reportdata += ( '\n - %s: %s' %( __localize__(32150), time.strftime('%d %B %Y - %H:%M')) )
                     break
-                ### check if script has been cancelled by user
                 if dialog_msg('iscanceled', background = self.settings.background):
                     self.reportdata += ( '\n - %s: %s' %(__localize__(32153), time.strftime('%d %B %Y - %H:%M')) )
                     break
-                # Update the dialog
                 dialog_msg('update', percentage = int(float(self.download_counter['Total Artwork']) / float(len(image_list)) * 100.0), line1 = item['media_name'], line2 = __localize__(32009) + ' ' + item['artwork_string'], line3 = item['filename'], background = self.settings.background)
                 # Try downloading the file and catch errors while trying to
                 try:
@@ -680,7 +645,6 @@ class Main:
                     self.download_counter['Total Artwork'] += 1
                     self._download_art_succes = True
             log('Finished download')
-        log('########################################################')
 
     ### Checks imagelist if it has that type of artwork has got images
     def _hasimages(self, art_type):
@@ -715,15 +679,12 @@ class Main:
                 log('- Image put to GUI: %s' %item)
         
         # Download the selected image
-        # If there's a list
+        # If there's a list, send the imagelist to the selection dialog
         if imagelist:
-            # send the imagelist to the selection dialog
             if self._choose_image(imagelist):
-                # Create a progress dialog so you can see the progress
+                # Create a progress dialog so you can see the progress, Send the selected image for processing, Initiate the batch download
                 dialog_msg('create')
-                # Send the selected image for processing
                 self._download_art(self.gui_selected_type, self.gui_selected_filename, self.target_artworkdir, self.gui_selected_msg)
-                # Initia the batch download
                 self._batch_download(self.download_list)
                 # When not succesfull show failure dialog
                 if not self._download_art_succes:
@@ -878,10 +839,10 @@ class MainGui( xbmcgui.WindowXMLDialog ):
 
 ### Start of script
 if (__name__ == "__main__"):
-    log("######## Extrafanart Downloader: Initializing...............................")
-    log('## Add-on ID   = %s' % str(__addonid__))
-    log('## Add-on Name = %s' % str(__addonname__))
-    log('## Authors     = %s' % str(__author__))
-    log('## Version     = %s' % str(__version__))
+    log("######## Extrafanart Downloader: Initializing...............................", xbmc.LOGNOTICE)
+    log('## Add-on ID   = %s' % str(__addonid__), xbmc.LOGNOTICE)
+    log('## Add-on Name = %s' % str(__addonname__), xbmc.LOGNOTICE)
+    log('## Authors     = %s' % str(__author__), xbmc.LOGNOTICE)
+    log('## Version     = %s' % str(__version__), xbmc.LOGNOTICE)
     Main()
-    log('script stopped')
+    log('script stopped', xbmc.LOGNOTICE)

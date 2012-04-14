@@ -20,6 +20,7 @@ __icon__        = ( sys.modules[ "__main__" ].__icon__ )
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
 __addonprofile__= ( sys.modules[ "__main__" ].__addonprofile__ )
 
+
 ### import libraries
 from urllib2 import HTTPError, URLError, urlopen
 from resources.lib.script_exceptions import *
@@ -30,11 +31,13 @@ try:
 except:
     import storageserverdummy as StorageServer
 
-cache = StorageServer.StorageServer("ArtworkDownloader",96)
+cache = StorageServer.StorageServer("ArtworkDownloader",168)
 
 ### adjust default timeout to stop script hanging
 timeout = 20
 socket.setdefaulttimeout(timeout)
+CACHE_ON = True
+
 ### Declare dialog
 dialog = xbmcgui.DialogProgress()
 
@@ -56,16 +59,19 @@ def normalize_string( text ):
 
 # Define log messages
 def log(txt, severity=xbmc.LOGDEBUG):
-    try:
-        message = ('%s: %s' % (__addonname__,txt) )
-        xbmc.log(msg=message, level=severity)
-    except UnicodeEncodeError:
+    if severity == xbmc.LOGDEBUG and not __addon__.getSetting("debug_enabled") == 'true':
+        pass
+    else:
         try:
-            message = normalize_string('%s: %s' % (__addonname__,txt) )
+            message = ('%s: %s' % (__addonname__,txt) )
             xbmc.log(msg=message, level=severity)
-        except:
-            message = ('%s: UnicodeEncodeError' %__addonname__)
-            xbmc.log(msg=message, level=xbmc.LOGWARNING)
+        except UnicodeEncodeError:
+            try:
+                message = normalize_string('%s: %s' % (__addonname__,txt) )
+                xbmc.log(msg=message, level=severity)
+            except:
+                message = ('%s: UnicodeEncodeError' %__addonname__)
+                xbmc.log(msg=message, level=xbmc.LOGWARNING)
 
 # Define dialogs
 def dialog_msg(action, percentage = 0, line0 = '', line1 = '', line2 = '', line3 = '', background = False, nolabel = __localize__(32026), yeslabel = __localize__(32025) ):
@@ -108,14 +114,15 @@ def dialog_msg(action, percentage = 0, line0 = '', line1 = '', line2 = '', line3
 def get_json(url):
     log('API: %s'% url)
     try:
-        result = cache.cacheFunction( get_json_new, url )
+        if CACHE_ON:
+            result = cache.cacheFunction( get_json_new, url )
+        else:
+            result = get_json_new(url)
     except:
         result = 'Empty'
-    if len(result) == 0:
+    if not result:
         result = 'Empty'
-        return result
-    else:
-        return result
+    return result
 
 # Retrieve JSON data from site
 def get_json_new(url):
@@ -128,7 +135,7 @@ def get_json_new(url):
             request.add_header("Accept", "application/json")
         # Add some delay to stop trashing the fanart.tv server for now
         elif url.startswith("http://fanart.tv/"):
-            xbmc.sleep(2000)
+            xbmc.sleep(1000)
         req = urllib2.urlopen(request)
         json_string = req.read()
         req.close()
@@ -153,20 +160,22 @@ def get_json_new(url):
 # Retrieve XML data from cache function
 def get_xml(url):
     log('API: %s'% url)
-    result = cache.cacheFunction( get_xml_new, url )
+    if CACHE_ON:
+        result = cache.cacheFunction( get_xml_new, url )
+    else:
+        result = get_xml_new(url)
     if len(result) == 0:
         result = []
-        return result
-    else:
-        return result
+    return result
 
 # Retrieve XML data from site
 def get_xml_new(url):
     log('Cache expired. Retrieving new data')
     try:
-        client  = urlopen(url)
-        data    = client.read()
-        client.close()
+        request = urllib2.Request(url)
+        req = urllib2.urlopen(request)
+        data = req.read()
+        req.close()
         return data
     except HTTPError, e:
         if e.code   == 404:

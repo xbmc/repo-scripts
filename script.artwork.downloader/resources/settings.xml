@@ -76,9 +76,9 @@
         <setting label="32121" type="bool"      id="musicvideo_fanart"          subsetting="true" enable="eq(-2,true)"  default="true" />
         <setting label="32122" type="bool"      id="musicvideo_extrafanart"     subsetting="true" enable="eq(-3,true)"  default="true" />
         <setting label="32131" type="bool"      id="musicvideo_extrathumbs"     subsetting="true" enable="eq(-4,true)"  default="true" />
-        <setting label="32126" type="bool"      id="musicvideo_logo"            subsetting="true" enable="false"        default="false" visible="false"/>
-        <setting label="32125" type="bool"      id="musicvideo_clearart"        subsetting="true" enable="false"        default="false" visible="false"/>
-        <setting label="32132" type="bool"      id="musicvideo_discart"         subsetting="true" enable="false"        default="false" visible="false"/>
+        <setting label="32126" type="bool"      id="musicvideo_logo"            subsetting="true" enable="eq(-5,true)"  default="false"/>
+        <setting label="32125" type="bool"      id="musicvideo_clearart"        subsetting="true" enable="eq(-6,true)"  default="false" visible="false"/>
+        <setting label="32132" type="bool"      id="musicvideo_discart"         subsetting="true" enable="eq(-7,true)"  default="false"/>
     </category>
     
 <!-- Plugin settings: Advanced section -->
@@ -88,13 +88,11 @@
         <setting type="sep" />
         <setting label="32035" type="bool"      id="files_overwrite"            default="false"/>
         <setting type="sep" />
-        <!--
         <setting label="32036" type="bool"      id="centralize_enable"          default="false"/>
         <setting label="32038" type="folder"    id="centralfolder_movies"       default=""      subsetting="true"    source="auto" option="writeable" enable="eq(-1,true)" visible="eq(-1,true)"/>
         <setting label="32037" type="folder"    id="centralfolder_tvshows"      default=""      subsetting="true"    source="auto" option="writeable" enable="eq(-2,true)" visible="eq(-2,true)"/>
-        <setting type="sep" />
-        -->
         <setting label="32106" type="bool"      id="xbmc_caching_enabled"       default="false" enable="false"/>
+        <setting label="Debug" type="bool"      id="debug_enabled"              default="false"/>
     </category>
     
 <!-- Plugin settings: Info section -->

@@ -2,7 +2,7 @@
 <addon
 	id="script.artwork.downloader"
 	name="Artwork Downloader"
-	version="1.0.9"
+	version="1.0.10"
 	provider-name="paddycarey, putneyj, Martijn"
     >
   <requires>
@@ -24,6 +24,7 @@
 	<summary lang="es">Descargue Artwork de Series, Películas y Videoclips a su biblioteca</summary>
 	<summary lang="pt">Transfira Artwork de Seriados, Filmes e Concertos para sua biblioteca</summary>
     <summary lang="fr">Téléchargez les Artworks pour les séries TV, les films and les vidéos musicales de votre bibliothèque</summary>
+    <summary lang="ko">여러분의 라이브러리에 TV 쇼, 영화 및 뮤직비디오를 위한 아트워트를 다운로드 하세요</summary>
     <description lang="en">
 	Downloads all available artwork for TV shows, Movies and Musicvideos in your library. Check the options for supported artwork[CR]
 	Artwork sources:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
@@ -72,6 +73,12 @@
 	Remarques : [CR]Vérifiez votre thème pour savoir quel type d'artwork est supporté ![CR]Chaque Série TV/Film doit avoir son propre dossier ![CR]
 	Intégration dans un thème :[CR]Regardez le fichier rea dme.txt
 	</description>
+    <description lang="ko">
+	여러분의 라이브러리에 TV 쇼, 영화 및 뮤직비디오를 위한 아트워크를 다운로하세요. 지원하는 아트워크는 옵션을 확인하세요.[CR]
+	아트워크 소스:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	주의:[CR]사용중인 스킨이 어떤 종류의 아트워크를 지원하는지 확인하세요![CR]각 TV쇼/영화는 반드시 각각의 각각의 폴더에 있어야 합니다![CR]
+	스킨 통합:[CR]readme 파일을 보세요
+	</description>
     <disclaimer lang="en">For bugs, requests or general questions visit the Artwork Downloader thread on the XBMC forum.</disclaimer>
     <disclaimer lang="nl">Voor fouten, verzoeken of algemene vragen kan je terecht op Artwork Downloader thread op het XBMC forum.</disclaimer>
     <disclaimer lang="pl">By zgłosić błąd, prośbę lub zadać pytanie odwiedź wątek poświęcony Artwork Downladerowi na forum XBMC.</disclaimer>
@@ -79,6 +86,7 @@
     <disclaimer lang="el">Για προβλήματα, αιτήματα ή γενικές ερωτήσεις επισκεφθείτε το θέμα του Artwork Downloader στο forum του XBMC.</disclaimer>
 	<disclaimer lang="es">Para informar de errores, hacer peticiones o preguntas visiten el hilo Artwork Downloader en el foro de XBMC.</disclaimer>
 	<disclaimer lang="pt">Para informar erros, requisitar algo ou perguntar sobre o add-on, visitem o tópico do Artwork Downloader no fórum do XBMC.</disclaimer>
+    <disclaimer lang="ko">버그, 요청사항 및 일반적인 질문은 XBMC 포럼의 Artwork Downloader 글타래를 방문하세요.</disclaimer>
     <platform>all</platform>
   </extension>
 </addon>

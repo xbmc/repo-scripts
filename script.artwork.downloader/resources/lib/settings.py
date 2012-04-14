@@ -13,7 +13,6 @@ __author__      = ( sys.modules[ "__main__" ].__author__ )
 __version__     = ( sys.modules[ "__main__" ].__version__ )
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
 __addonprofile__= ( sys.modules[ "__main__" ].__addonprofile__ )
-settings_file   = os.path.join(__addonprofile__, "settings.xml")
 
 #import libraries
 from resources.lib.utils import *
@@ -51,7 +50,7 @@ class settings:
         self.musicvideo_extrafanart = __addon__.getSetting("musicvideo_extrafanart")== 'true'
         self.musicvideo_extrathumbs = __addon__.getSetting("musicvideo_extrathumbs")== 'true'
         self.musicvideo_logo        = __addon__.getSetting("musicvideo_logo")       == 'true'
-        self.musicvideo_clearart    = __addon__.getSetting("tvshow_clearart")       == 'true'
+        self.musicvideo_clearart    = __addon__.getSetting("musicvideo_clearart")   == 'true'
         self.musicvideo_discart     = __addon__.getSetting("musicvideo_discart")    == 'true'
 
     ### Initial genral vars
@@ -68,10 +67,8 @@ class settings:
         self.service_runtime        = __addon__.getSetting("service_runtime")
         self.files_overwrite        = __addon__.getSetting("files_overwrite")       == 'true'
         self.xbmc_caching_enabled   = __addon__.getSetting("xbmc_caching_enabled")  == 'true'
+        self.debug_enabled          = __addon__.getSetting("debug_enabled")         == 'true'
 
-        # Disable centralize cause it causes to much confusion
-        self.centralize_enable      = False
-        
     ### Initial limit vars
     def _get_limit(self):    
         self.limit_artwork              = __addon__.getSetting("limit_artwork") == 'true'
@@ -155,234 +152,182 @@ class settings:
 
     ### Create list for Artwork types to download
     def _artype_list(self):
-        self.available_arttypes = []
-        # create global list
-        info = {}
-        info['media_type']      = 'movie'
-        info['bulk_enabled']    = self.movie_poster
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32128)
-        info['art_type']        = 'poster'
-        info['filename']        = 'poster.jpg'
-        self.available_arttypes.append(info)
+        self.available_arttypes = [{'media_type': 'movie',
+                                    'bulk_enabled': self.movie_poster,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32128),
+                                    'art_type': 'poster',
+                                    'filename': 'poster.jpg'},
 
-        info = {}
-        info['media_type']      = 'movie'
-        info['bulk_enabled']    = self.movie_fanart 
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32121)
-        info['art_type']        = 'fanart'
-        info['filename']        = 'fanart.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'movie',
+                                    'bulk_enabled': self.movie_fanart,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32121),
+                                    'art_type': 'fanart',
+                                    'filename': 'fanart.jpg'},
 
-        info = {}
-        info['media_type']      = 'movie'
-        info['bulk_enabled']    = self.movie_extrafanart
-        info['solo_enabled']    = 'false'
-        info['gui_string']      = __localize__(32122)
-        info['art_type']        = 'extrafanart'
-        info['filename']        = ''
-        self.available_arttypes.append(info)
+                                    {'media_type': 'movie',
+                                    'bulk_enabled': self.movie_extrafanart,
+                                    'solo_enabled': 'false',
+                                    'gui_string': __localize__(32122),
+                                    'art_type': 'extrafanart',
+                                    'filename': ''},
 
-        info = {}
-        info['media_type']      = 'movie'
-        info['bulk_enabled']    = self.movie_extrathumbs
-        info['solo_enabled']    = 'false'
-        info['gui_string']      = __localize__(32131)
-        info['art_type']        = 'extrathumbs'
-        info['filename']        = 'thumb%s.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'movie',
+                                    'bulk_enabled': self.movie_extrathumbs,
+                                    'solo_enabled': 'false',
+                                    'gui_string': __localize__(32131),
+                                    'art_type': 'extrathumbs',
+                                    'filename': 'thumb%s.jpg'},
 
-        info = {}
-        info['media_type']      = 'movie'
-        info['bulk_enabled']    = self.movie_logo
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32126)
-        info['art_type']        = 'clearlogo'
-        info['filename']        = 'logo.png'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'movie',
+                                    'bulk_enabled': self.movie_logo,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32126),
+                                    'art_type': 'clearlogo',
+                                    'filename': 'logo.png'},
 
-        info = {}
-        info['media_type']      = 'movie'
-        info['bulk_enabled']    = self.movie_clearart
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32125)
-        info['art_type']        = 'clearart'
-        info['filename']        = 'clearart.png'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'movie',
+                                    'bulk_enabled': self.movie_clearart,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32125),
+                                    'art_type': 'clearart',
+                                    'filename': 'clearart.png'},
 
-        info = {}
-        info['media_type']      = 'movie'
-        info['bulk_enabled']    = self.movie_discart
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32132)
-        info['art_type']        = 'discart'
-        info['filename']        = 'disc.png'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'movie',
+                                    'bulk_enabled': self.movie_discart,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32132),
+                                    'art_type': 'discart',
+                                    'filename': 'disc.png'},
 
-        # append tv show list
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_poster
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32128)
-        info['art_type']        = 'poster'
-        info['filename']        = 'poster.jpg'
-        self.available_arttypes.append(info)
+                                    # append tv show list
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_poster,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32128),
+                                    'art_type': 'poster',
+                                    'filename': 'poster.jpg'},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_seasonposter
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32129)
-        info['art_type']        = 'seasonposter'
-        info['filename']        = 'season%s-poster.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_seasonposter,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32129),
+                                    'art_type': 'seasonposter',
+                                    'filename': 'season%s-poster.jpg'},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_fanart
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32121)
-        info['art_type']        = 'fanart'
-        info['filename']        = 'fanart.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_fanart,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32121),
+                                    'art_type': 'fanart',
+                                    'filename': 'fanart.jpg'},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_extrafanart
-        info['solo_enabled']    = 'false'
-        info['gui_string']      = __localize__(32122)
-        info['art_type']        = 'extrafanart'
-        info['filename']        = '' 
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_extrafanart,
+                                    'solo_enabled': 'false',
+                                    'gui_string': __localize__(32122),
+                                    'art_type': 'extrafanart',
+                                    'filename': ''},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_clearart
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32125)
-        info['art_type']        = 'clearart'
-        info['filename']        = 'clearart.png'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_clearart,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32125),
+                                    'art_type': 'clearart',
+                                    'filename': 'clearart.png'},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_logo
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32126)
-        info['art_type']        = 'clearlogo'
-        info['filename']        = 'logo.png'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_logo,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32126),
+                                    'art_type': 'clearlogo',
+                                    'filename': 'logo.png'},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_thumb
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32130)
-        info['art_type']        = 'tvthumb'
-        info['filename']        = 'landscape.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_thumb,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32130),
+                                    'art_type': 'tvthumb',
+                                    'filename': 'landscape.jpg'},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_seasonthumb
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32134)
-        info['art_type']        = 'seasonthumb'
-        info['filename']        = 'season%s-landscape.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_seasonthumb,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32134),
+                                    'art_type': 'seasonthumb',
+                                    'filename': 'season%s-landscape.jpg'},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_showbanner
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32123)
-        info['art_type']        = 'banner'
-        info['filename']        = 'banner.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_showbanner,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32123),
+                                    'art_type': 'banner',
+                                    'filename': 'banner.jpg'},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_seasonbanner
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32124)
-        info['art_type']        = 'seasonbanner'
-        info['filename']        = 'season%s-banner.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_seasonbanner,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32124),
+                                    'art_type': 'seasonbanner',
+                                    'filename': 'season%s-banner.jpg'},
 
-        info = {}
-        info['media_type']      = 'tvshow'
-        info['bulk_enabled']    = self.tvshow_characterart
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32127)
-        info['art_type']        = 'characterart'
-        info['filename']        = 'character.png'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'tvshow',
+                                    'bulk_enabled': self.tvshow_characterart,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32127),
+                                    'art_type': 'characterart',
+                                    'filename': 'character.png'},
 
-        # Musicvideo
-        info = {}
-        info['media_type']      = 'musicvideo'
-        info['bulk_enabled']    = self.musicvideo_poster
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32128)
-        info['art_type']        = 'poster'
-        info['filename']        = 'poster.jpg'
-        self.available_arttypes.append(info)
+                                    # Musicvideo
+                                    {'media_type': 'musicvideo',
+                                    'bulk_enabled': self.musicvideo_poster,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32128),
+                                    'art_type': 'poster',
+                                    'filename': 'poster.jpg'},
 
-        info = {}
-        info['media_type']      = 'musicvideo'
-        info['bulk_enabled']    = self.musicvideo_fanart 
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32121)
-        info['art_type']        = 'fanart'
-        info['filename']        = 'fanart.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'musicvideo',
+                                    'bulk_enabled': self.musicvideo_fanart,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32121),
+                                    'art_type': 'fanart',
+                                    'filename': 'fanart.jpg'},
 
-        info = {}
-        info['media_type']      = 'musicvideo'
-        info['bulk_enabled']    = self.musicvideo_extrafanart
-        info['solo_enabled']    = 'false'
-        info['gui_string']      = __localize__(32122)
-        info['art_type']        = 'extrafanart'
-        info['filename']        = ''
-        self.available_arttypes.append(info)
+                                    {'media_type': 'musicvideo',
+                                    'bulk_enabled': self.musicvideo_extrafanart,
+                                    'solo_enabled': 'false',
+                                    'gui_string': __localize__(32122),
+                                    'art_type': 'extrafanart',
+                                    'filename': ''},
 
-        info = {}
-        info['media_type']      = 'musicvideo'
-        info['bulk_enabled']    = self.musicvideo_extrathumbs
-        info['solo_enabled']    = 'false'
-        info['gui_string']      = __localize__(32131)
-        info['art_type']        = 'extrathumbs'
-        info['filename']        = 'thumb%s.jpg'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'musicvideo',
+                                    'bulk_enabled': self.musicvideo_extrathumbs,
+                                    'solo_enabled': 'false',
+                                    'gui_string': __localize__(32131),
+                                    'art_type': 'extrathumbs',
+                                    'filename': 'thumb%s.jpg'},
 
-        info = {}
-        info['media_type']      = 'musicvideo'
-        info['bulk_enabled']    = self.musicvideo_logo
-        info['solo_enabled']    = 'false'
-        info['gui_string']      = __localize__(32126)
-        info['art_type']        = 'clearlogo'
-        info['filename']        = 'logo.png'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'musicvideo',
+                                    'bulk_enabled': self.musicvideo_logo,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32126),
+                                    'art_type': 'clearlogo',
+                                    'filename': 'logo.png'},
 
-        info = {}
-        info['media_type']      = 'musicvideo'
-        info['bulk_enabled']    = self.musicvideo_clearart
-        info['solo_enabled']    = 'true'
-        info['gui_string']      = __localize__(32125)
-        info['art_type']        = 'clearart'
-        info['filename']        = 'clearart.png'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'musicvideo',
+                                    'bulk_enabled': self.musicvideo_clearart,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32125),
+                                    'art_type': 'clearart',
+                                    'filename': 'clearart.png'},
 
-        info = {}
-        info['media_type']      = 'musicvideo'
-        info['bulk_enabled']    = self.musicvideo_discart
-        info['solo_enabled']    = 'false'
-        info['gui_string']      = __localize__(32132)
-        info['art_type']        = 'cdart'
-        info['filename']        = 'disc.png'
-        self.available_arttypes.append(info)
+                                    {'media_type': 'musicvideo',
+                                    'bulk_enabled': self.musicvideo_discart,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32132),
+                                    'art_type': 'cdart',
+                                    'filename': 'disc.png',}]
         
     ### Check for faulty setting combinations
     def _check(self):

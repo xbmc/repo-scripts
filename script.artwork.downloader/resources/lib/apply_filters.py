@@ -3,7 +3,6 @@ import xbmc
 import xbmcaddon
 
 ### import libraries
-from resources.lib import language
 from resources.lib.fileops import fileops
 from resources.lib.settings import settings
 pref_language = xbmcaddon.Addon().getSetting("limit_preferred_language")

@@ -1,3 +1,8 @@
+[B]1.0.10[/B]
+- Added: Korean translation (thx piodio)
+- Added: Debug option
+- Change: Code handling
+
 [B]1.0.9[/B]
 - Changed: increase the API cache expire time to stop trashing the fanart.tv site
 - Added: Only show artwork types in GUI mode that are avaiable

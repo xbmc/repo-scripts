@@ -2,10 +2,11 @@
 import sys
 
 #import libraries
-from resources.lib.script_exceptions import NoFanartError
-from resources.lib.utils import *
 from elementtree import ElementTree as ET
 from operator import itemgetter
+from resources.lib.script_exceptions import NoFanartError
+from resources.lib.utils import *
+from resources.lib.language import *
 
 ### get addon info
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
@@ -80,7 +81,7 @@ class TVDBProvider():
                         info['season'] = 'n/a'
 
                     # Create Gui string to display
-                    info['generalinfo'] = '%s: %s  |  ' %( __localize__(32141), info['language'] )
+                    info['generalinfo'] = '%s: %s  |  ' %( __localize__(32141), get_language(info['language']).capitalize())
                     if info['season'] != 'n/a':
                         info['generalinfo'] += '%s: %s  |  ' %( __localize__(32144), info['season'] )
                     if 'height' in info:
