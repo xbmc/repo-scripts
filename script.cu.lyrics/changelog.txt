@@ -1,3 +1,11 @@
+2.0.6
+- Try all enabled scrapers until lyrics are found, thx to Yann Rouillard
+- Try to correctly decode the artist/title for a radio stream, thx to Yann Rouillard
+- Gracefully handle the case where lyrics are not available due to licensing issue, thx to Yann Rouillard
+
+2.0.5
+- lyricsmode search improvements, thx to chninkel
+
 2.0.4
 - added lyricwiki service
 

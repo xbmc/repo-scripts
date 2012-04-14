@@ -17,6 +17,8 @@ __settings__   = sys.modules[ "__main__" ].__settings__
 __language__   = sys.modules[ "__main__" ].__language__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
 
+LYRIC_SCRAPER_DIR = os.path.join(__cwd__, "resources", "lib", "scrapers")
+
 class GUI( xbmcgui.WindowXMLDialog ):
     def __init__( self, *args, **kwargs ):
         xbmcgui.WindowXMLDialog.__init__( self )
@@ -24,20 +26,21 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.current_song = Song.current()
         self.current_file = xbmc.Player().getPlayingFile()
         self.song_info = xbmc.Player().getMusicInfoTag().getTitle()
+        self.scrapers = []
 
     def onInit( self ):
         self.setup_all()
         
     def setup_all( self ):
         self.setup_variables()
-        self.get_scraper()
+        self.get_scraper_list()
         self.getMyPlayer()
 
-    def get_scraper( self ):
-        exec ( "from scrapers.%s import lyricsScraper as lyricsScraper" % (__settings__.getSetting( "scraper")))
-        self.LyricsScraper = lyricsScraper.LyricsFetcher()
-        self.scraper_title = lyricsScraper.__title__
-        self.scraper_exceptions = lyricsScraper.__allow_exceptions__
+    def get_scraper_list( self ):
+        for scraper in os.listdir(LYRIC_SCRAPER_DIR):
+            if os.path.isdir(os.path.join(LYRIC_SCRAPER_DIR, scraper)) and __settings__.getSetting( scraper ) == "true":
+                exec ( "from scrapers.%s import lyricsScraper as lyricsScraper_%s" % (scraper, scraper))
+                exec ( "self.scrapers.append(lyricsScraper_%s.LyricsFetcher())" % scraper)
 
     def setup_variables( self ):
         self.artist = None
@@ -66,7 +69,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 lyrics, error = self.get_lyrics_from_file( song, next_song )
                            
             if ( lyrics is None ):
-                lyrics, error = self.LyricsScraper.get_lyrics_thread( song )
+                for scraper in self.scrapers:
+                    lyrics, error = scraper.get_lyrics_thread( song )
+                    if lyrics is not None:
+                        break
                 
                 if ( lyrics is not None ):
                     try:

@@ -139,6 +139,8 @@ class LyricsFetcher:
         self.clean_lyrics_regex = re.compile( "<.+?>" )
         self.normalize_lyrics_regex = re.compile( "&#[x]*(?P<name>[0-9]+);*" )
         self.clean_br_regex = re.compile( "<br[ /]*>[\s]*", re.IGNORECASE )
+        self.search_results_regex = re.compile("<a href=\"[^\"]+\">([^<]+)</a></td>[^<]+<td><a href=\"([^\"]+)\" class=\"b\">[^<]+</a></td>", re.IGNORECASE)
+        self.next_results_regex = re.compile("<A href=\"([^\"]+)\" class=\"pages\">next .</A>", re.IGNORECASE)        
     
     def get_lyrics_start(self, *args):
         lyricThread = threading.Thread(target=self.get_lyrics_thread, args=args)
@@ -151,17 +153,51 @@ class LyricsFetcher:
         l.song = song
         try: # below is borowed from XBMC Lyrics
             url = "http://www.lyricsmode.com/lyrics/%s/%s/%s.html" % (song.artist.lower()[:1],song.artist.lower().replace(" ","_"), song.title.lower().replace(" ","_"), )
-            print "Search url: %s" % (url)
-            song_search = urllib.urlopen(url).read()
+            lyrics_found = False
+            while True:
+                print "Search url: %s" % (url)
+                song_search = urllib.urlopen(url).read()
+                if song_search.find("<div id='songlyrics_h' class='dn'>") >= 0:
+                    break
+    
+                if lyrics_found:
+                    # if we're here, we found the lyrics page but it didn't
+                    # contains the lyrics part (licensing issue or some bug)
+                    return None, "No lyrics found"
+                    
+                # Let's try to use the research box if we didn't yet
+                if not 'search' in url:
+                    url = "http://www.lyricsmode.com/search.php?what=songs&s=" + urllib.quote_plus(song.title.lower())
+                else:
+                    # the search gave more than on result, let's try to find our song 
+                    url = ""
+                    start = song_search.find('<!--output-->')
+                    end = song_search.find('<!--/output-->', start)
+                    results = self.search_results_regex.findall(song_search, start, end)
+      
+                    for result in results:
+                        if result[0].lower() in song.artist.lower():
+                            url = "http://www.lyricsmode.com" + result[1]
+                            lyrics_found = True
+                            break
+      
+                    if not url:
+                        # Is there a next page of results ?
+                        match = self.next_results_regex.search(song_search[end:])
+                        if match:
+                            url = "http://www.lyricsmode.com/search.php" + match.group(1)
+                        else:
+                            return None, "No lyrics found"            
+
             lyr = song_search.split("<div id='songlyrics_h' class='dn'>")[1].split('<!-- /SONG LYRICS -->')[0]
             lyr = self.clean_br_regex.sub( "\n", lyr ).strip()
             lyr = self.clean_lyrics_regex.sub( "", lyr ).strip()
             lyr = self.normalize_lyrics_regex.sub( lambda m: unichr( int( m.group( 1 ) ) ), lyr.decode("ISO-8859-1") )
             lir = []
             for line in lyr.splitlines():
-              line.strip()
-              if line.find("Lyrics from:") < 0:
-                lir.append(line)
+                line.strip()
+                if line.find("Lyrics from:") < 0:
+                    lir.append(line)
             lyr = u"\n".join( lir )       
             l.lyrics = lyr
             l.source = __title__

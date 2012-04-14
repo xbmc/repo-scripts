@@ -5,6 +5,10 @@
         <setting id="save_lyrics" type="bool" label="30101" default="true"/>
         <setting id="show_embeded_lyrics" type="bool" label="30107" default="true"/>
         <setting id="save_embeded_lyrics" type="bool" visible= "eq(-1,true)" enable="eq(-1,true)" label="30108" default="false"/>
-        <setting id="scraper" type="fileenum" mask="/" label="30109" default="lyricstime" values="/resources/lib/scrapers" />
+    </category>
+    <category label="30109">
+      <setting id="lyricsmode" type="bool" label="Lyrics Mode" default="true"/>
+      <setting id="lyricstime" type="bool" label="lyrics.time" default="true"/>
+      <setting id="lyricwiki" type="bool" label="Lyrics Wiki" default="true"/>
     </category>
 </settings>
