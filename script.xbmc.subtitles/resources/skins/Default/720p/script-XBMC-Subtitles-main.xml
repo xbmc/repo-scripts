@@ -156,15 +156,23 @@
 						<control type="image">
 							<posx>135</posx>
 							<posy>13</posy>
+							<width>20</width>
+							<height>12</height>
+							<texture>icon_close_caption.png</texture>
+							<visible>ListItem.property(hearing_imp)</visible>
+						</control>
+						<control type="image">
+							<posx>160</posx>
+							<posy>13</posy>
 							<width>40</width>
 							<height>12</height>
 							<texture>icon_sync.png</texture>
 							<visible>ListItem.property(sync)</visible>
 						</control>
 						<control type="label">
-							<posx>180</posx>
+							<posx>205</posx>
 							<posy>0</posy>
-							<width>520</width>
+							<width>495</width>
 							<height>38</height>
 							<font>font18</font>
 							<aligny>center</aligny>
@@ -219,15 +227,23 @@
 						<control type="image">
 							<posx>135</posx>
 							<posy>13</posy>
+							<width>20</width>
+							<height>12</height>
+							<texture>icon_close_caption.png</texture>
+							<visible>ListItem.property(hearing_imp)</visible>
+						</control>
+						<control type="image">
+							<posx>160</posx>
+							<posy>13</posy>
 							<width>40</width>
 							<height>12</height>
 							<texture>icon_sync.png</texture>
 							<visible>ListItem.property(sync)</visible>
 						</control>
 						<control type="label">
-							<posx>180</posx>
+							<posx>205</posx>
 							<posy>0</posy>
-							<width>520</width>
+							<width>495</width>
 							<height>38</height>
 							<font>font18</font>
 							<aligny>center</aligny>

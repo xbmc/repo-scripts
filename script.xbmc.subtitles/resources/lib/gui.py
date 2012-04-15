@@ -277,6 +277,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
               listitem.setProperty( "sync", "true" )
             else:
               listitem.setProperty( "sync", "false" )
+
+            if item.get("hearing_imp", False):
+              listitem.setProperty( "hearing_imp", "true" )
+            else:
+              listitem.setProperty( "hearing_imp", "false" )
             self.list.append(subscounter)
             subscounter = subscounter + 1                                    
             self.getControl( SUBTITLES_LIST ).addItem( listitem )

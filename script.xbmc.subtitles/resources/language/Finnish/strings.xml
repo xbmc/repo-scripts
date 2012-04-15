@@ -11,20 +11,20 @@
     <string id="652">Tekstitystiedosto ladattu ja purettu</string>
     <string id="653">Yhteys epäonnistui</string>
     <string id="654">Virhe tekstitysten purkamisessa</string>
-    <string id="655">Local subtitle available</string>
-    <string id="656">Service did not respond within the time out limit</string>
-    <string id="657">No Subtitles Found!</string>        
+    <string id="655">Paikalliset tekstitykset saatavilla</string>
+    <string id="656">Palvelu ei vastannut aikarajaan mennessä</string>
+    <string id="657">Tekstityksiä ei löytynyt!</string>        
     <string id="744">tekstitystä löydetty kohteelle</string>
-    <string id="747">Search Using Parent Folder</string>
-    <string id="748">You can't save subtitle to selected destination</string>
-    <string id="750">Would you like to activate this subtitle temporarily?</string>
-    <string id="751">Enter Movie Name (year)</string>
-    <string id="755">Server is overloaded, please try again later</string>
-    <string id="756">Login failed. Please verify your settings at the addon Configuration</string>
-    <string id="757">Server requires you to rewrite code from image</string>
-    <string id="758">Please take look at notification area</string> 
-    <string id="759">Enter code of image in notification area</string>
-    <string id="760">Available Services</string>  
+    <string id="747">Sisällytä yläkansiot hakuun</string>
+    <string id="748">Et voi tallentaa valittuun hakemistoon</string>
+    <string id="750">Haluatko käyttää tekstitystä tilapäisesti?</string>
+    <string id="751">Syötä elokuvan nimi (vuosi)</string>
+    <string id="755">Palvelimessa on ylikuormaa, yritä hetken päästä uudelleen</string>
+    <string id="756">Kirjautuminen epäonnistui. Tarkasta asetuksesi lisäosa asetuksista</string>
+    <string id="757">Palvelin vaatii, että syötät kuvassa olevat merkit</string>
+    <string id="758">Katso ilmoitusalueelle</string> 
+    <string id="759">Syötä ilmoitusalueella olevan kuvan merkit</string>
+    <string id="760">Saatavilla olevat palvelut</string>  
         
  <!-- Script Settings -->
    
@@ -34,22 +34,22 @@
     <string id="30103">Valitse palvelut</string>
     <string id="30104">- Podnapisi.net Käyttäjätunnus</string>
     <string id="30105">- Podnapisi.net Salasana</string>
-    <string id="30106">Advanced Options</string>
-    <string id="30107">Subtitle Download Folder Same As Movie</string>
-    <string id="30108">- Set Custom Subtitle Download Path</string>
+    <string id="30106">Lisäasetukset</string>
+    <string id="30107">Tekstitystiedostoston talletuskansio sama kuin elokuvalla</string>
+    <string id="30108">- Aseta mukautettu tekstitystiedostojen talletuskansio</string>
     <string id="30110">Syötä hakuteksti manuaalisesti</string>
-    <string id="30111">Third Language</string>  
-    <string id="30113">Select Default Movie Service</string>
-    <string id="30114">Select Default TV Show Service</string>
-    <string id="30118">Display file name in results page</string>
-    <string id="30119">Search Using Parent Folder</string>
-    <string id="30121">Add Language To Filename </string>
-    <string id="30122">Set Default Timeout</string>
-    <string id="30123">- Legendas.TV Username</string>
-    <string id="30124">- Legendas.TV Password</string>
-    <string id="30125">Disable hash search</string>
-    <string id="30126">- Itasa Username</string>
-    <string id="30127">- Itasa Password</string>
+    <string id="30111">Kolmas kieli</string>  
+    <string id="30113">Valitse oletuspalvelu elokuville</string>
+    <string id="30114">Valitse oletuspalvelu tv-sarjoille</string>
+    <string id="30118">Näytä tiedostonimi hakutulos sivulla</string>
+    <string id="30119">Sisällytä yläkansiot hakuun </string>
+    <string id="30121">Lisää kielitieto tiedoston nimeen </string>
+    <string id="30122">Aseta oletusaikaraja</string>
+    <string id="30123">- Legendas.TV Käyttäjätunnus</string>
+    <string id="30124">- Legendas.TV Salasana</string>
+    <string id="30125">Poista hajautettu haku käytöstä</string>
+    <string id="30126">- Itasa Käyttäjätunnus</string>
+    <string id="30127">- Itasa Salasana</string>
 
  <!-- Languages  -->
       

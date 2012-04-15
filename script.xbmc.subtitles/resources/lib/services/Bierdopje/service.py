@@ -1,11 +1,13 @@
 # -*- coding: UTF-8 -*-
 
-import os, sys, re, xbmc, xbmcgui, string, urllib, xml.etree.ElementTree as XMLTree
+import os, sys, re, xbmc, xbmcgui, xbmcaddon, string, urllib, urllib2, xml.etree.ElementTree as XMLTree
 from utilities import log
 
 _                = sys.modules[ "__main__" ].__language__
 __profile__      = sys.modules[ "__main__" ].__profile__
+__version__      = sys.modules[ "__main__" ].__version__
 
+useragent        = 'script.xbmc.subtitles/' + __version__
 apiurl           = "http://api.bierdopje.com/"
 apikey           = "369C2ED4261DE9C3"
 showids_filename = os.path.join( __profile__ ,"bierdopje_show_ids.txt" )
@@ -20,7 +22,9 @@ def apicall(command, paramslist):
         url = url + "/" + urllib.quote_plus(param)
     log( __name__ ," getting url '%s'" % url )
     try:
-        response = urllib.urlopen(url)
+        request = urllib2.Request(url)
+        request.add_header("User-agent", useragent)
+        response = urllib2.urlopen(request)
     except:
         okdialog = xbmcgui.Dialog()
         ok = okdialog.ok("Error", "Failed to contact Bierdopje site.")
@@ -34,9 +38,7 @@ def apicall(command, paramslist):
             ok = okdialog.ok("Error", "Failed to contact Bierdopje site.")
             log( __name__ ," failed to get proper response for url '%s'" % url )
             return None
-        if status == "false":
-            okdialog = xbmcgui.Dialog()
-            ok = okdialog.ok("Error", "Failed to contact Bierdopje site.")
+        if status == ["false"]:
             log( __name__ ," failed to get proper response (status = false) for url '%s'" % url )
             return None
         else:
@@ -53,6 +55,7 @@ def gettextelements(xml, path):
     return textelements
 
 def getshowid(showname):
+    showid = None
     showids = {}
     if os.path.isfile(showids_filename):
         showids_filedata = file(showids_filename,'r').read()
@@ -68,18 +71,37 @@ def getshowid(showname):
             showids[showname] = str(showid[0])
             file(showids_filename,'w').write(repr(showids))
             return str(showid[0])
-        elif ("'" in showname):
-            response = apicall("GetShowByName",[string.replace(showname,"'","''")])
+    if (showid is None) and ("'" in showname):
+        response = apicall("GetShowByName",[string.replace(showname,"'","''")])
+        if response is not None:
+            showid = gettextelements(response,"response/showid")
+            if len(showid) == 1:
+                log( __name__ ," show id for '%s' is '%s' (replaced ' with '')" % (string.replace(showname,"'","''"), str(showid[0])) )
+                showids[showname] = str(showid[0])
+                file(showids_filename,'w').write(repr(showids))
+                return str(showid[0])
+    if showid is None:
+        try:
+            query = 'select c12 from tvshow where c00 = "' + unicode(showname) + '" limit 1'
+            result = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
+            tvdbid = re.search('field>(.*?)<\/field',result)
+            tvdbid = tvdbid.group(1)
+        except:
+            log( __name__ ," Failed to find TVDBid in database")
+        else:
+            response = apicall("GetShowByTVDBID",[tvdbid])
             if response is not None:
                 showid = gettextelements(response,"response/showid")
                 if len(showid) == 1:
-                    log( __name__ ," show id for '%s' is '%s' (replaced ' with '')" % (string.replace(showname,"'","''"), str(showid[0])) )
+                    log( __name__ ," show id for '%s' is '%s' (found by TVDBid %s)" % (showname, str(showid[0]), tvdbid))
                     showids[showname] = str(showid[0])
                     file(showids_filename,'w').write(repr(showids))
                     return str(showid[0])
-        okdialog = xbmcgui.Dialog()
-        ok = okdialog.ok("Error", "Failed to get a show id from Bierdopje for " + showname)
-        log( __name__ ," failed to get a show id for '%s'" % showname )
+
+    okdialog = xbmcgui.Dialog()
+    ok = okdialog.ok("Error", "Failed to get a show id from Bierdopje for " + showname)
+    log( __name__ ," failed to get a show id for '%s'" % showname )
+    return None
 
 
 def isexactmatch(subsfile, moviefile):
@@ -124,32 +146,33 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     msg = ""
     if len(tvshow) > 0:
         tvshow_id= getshowid(tvshow)
-        dutch = 0
-        if string.lower(lang1) == "dutch": dutch = 1
-        elif string.lower(lang2) == "dutch": dutch = 2
-        elif string.lower(lang3) == "dutch": dutch = 3
+        if tvshow_id is not None:
+            dutch = 0
+            if string.lower(lang1) == "dutch": dutch = 1
+            elif string.lower(lang2) == "dutch": dutch = 2
+            elif string.lower(lang3) == "dutch": dutch = 3
 
-        english = 0
-        if string.lower(lang1) == "english": english = 1
-        elif string.lower(lang2) == "english": english = 2
-        elif string.lower(lang3) == "english": english = 3
+            english = 0
+            if string.lower(lang1) == "english": english = 1
+            elif string.lower(lang2) == "english": english = 2
+            elif string.lower(lang3) == "english": english = 3
 
-        if ((dutch > 0) and (english == 0)):
-            getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "nl", "Dutch", subtitles_list)
+            if ((dutch > 0) and (english == 0)):
+                getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "nl", "Dutch", subtitles_list)
 
-        if ((english > 0) and (dutch == 0)):
-            getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "en", "English", subtitles_list)
+            if ((english > 0) and (dutch == 0)):
+                getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "en", "English", subtitles_list)
 
-        if ((dutch > 0) and (english > 0) and (dutch < english)):
-            getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "nl", "Dutch", subtitles_list)
-            getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "en", "English", subtitles_list)
+            if ((dutch > 0) and (english > 0) and (dutch < english)):
+                getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "nl", "Dutch", subtitles_list)
+                getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "en", "English", subtitles_list)
 
-        if ((dutch > 0) and (english > 0) and (dutch > english)):
-            getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "en", "English", subtitles_list)
-            getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "nl", "Dutch", subtitles_list)
+            if ((dutch > 0) and (english > 0) and (dutch > english)):
+                getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "en", "English", subtitles_list)
+                getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "nl", "Dutch", subtitles_list)
 
-        if ((dutch == 0) and (english == 0)):
-            msg = "Won't work, Bierdopje is only for Dutch and English subtitles."
+            if ((dutch == 0) and (english == 0)):
+                msg = "Won't work, Bierdopje is only for Dutch and English subtitles."
     else:
         msg = "Won't work, Bierdopje is only for tv shows."
     return subtitles_list, "", msg #standard output
@@ -160,7 +183,9 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 
     log( __name__ ," downloading subtitles from url '%s'" % subtitles_list[pos][ "link" ] )
     try:
-        response = urllib.urlopen(subtitles_list[pos][ "link" ])
+        request = urllib2.Request(subtitles_list[pos][ "link" ])
+        request.add_header("User-agent", useragent)
+        response = urllib2.urlopen(request)
     except:
         okdialog = xbmcgui.Dialog()
         ok = okdialog.ok("Error", "Failed to contact Bierdopje site.")

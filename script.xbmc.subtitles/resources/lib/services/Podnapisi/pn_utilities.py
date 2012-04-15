@@ -95,7 +95,18 @@ class OSDBServer:
               sync1 = False
             else:
               sync1 = True
-            self.subtitles_hash_list.append({'filename':name,'link':link,"language_name":languageTranslate((item["lang"]),2,0),"language_flag":flag_image,"language_id":item["lang"],"ID":item["id"],"sync":sync1, "format":"srt", "rating": str(int(item['rating'])*2) })
+            
+            self.subtitles_hash_list.append({'filename'      : name,
+                                             'link'          : link,
+                                             "language_name" : languageTranslate((item["lang"]),2,0),
+                                             "language_flag" : flag_image,
+                                             "language_id"   : item["lang"],
+                                             "ID"            : item["id"],
+                                             "sync"          : sync1,
+                                             "format"        : "srt",
+                                             "rating"        : str(int(item['rating'])*2),
+                                             "hearing_imp"   : "n" in item['flags']
+                                             })
         self.mergesubtitles(stack)
       return self.subtitles_list,pod_session
     except :
@@ -133,15 +144,16 @@ class OSDBServer:
       if subtitles:
         url_base = "http://www.podnapisi.net/ppodnapisi/download/i/"
         for subtitle in subtitles:
-          filename = ""
-          movie = ""
-          lang_name = ""
           subtitle_id = 0
-          lang_id = ""
-          flag_image = ""
-          link = ""
-          format = "srt"
-          no_files = ""
+          rating      = 0
+          filename    = ""
+          movie       = ""
+          lang_name   = ""
+          lang_id     = ""
+          flag_image  = ""
+          link        = ""
+          format      = "srt"
+          hearing_imp = False
           if subtitle.getElementsByTagName("title")[0].firstChild:
             movie = subtitle.getElementsByTagName("title")[0].firstChild.data
           if subtitle.getElementsByTagName("release")[0].firstChild:
@@ -150,18 +162,28 @@ class OSDBServer:
               filename = "%s (%s).srt" % (movie,year,)
           else:
             filename = "%s (%s).srt" % (movie,year,) 
-          rating = 0
           if subtitle.getElementsByTagName("rating")[0].firstChild:
             rating = int(subtitle.getElementsByTagName("rating")[0].firstChild.data)*2
           if subtitle.getElementsByTagName("languageId")[0].firstChild:
             lang_name = languageTranslate(subtitle.getElementsByTagName("languageId")[0].firstChild.data, 1,2)
           if subtitle.getElementsByTagName("id")[0].firstChild:
             subtitle_id = subtitle.getElementsByTagName("id")[0].firstChild.data
+          if subtitle.getElementsByTagName("flags")[0].firstChild:
+              hearing_imp = "n" in subtitle.getElementsByTagName("flags")[0].firstChild.data
           flag_image = "flags/%s.gif" % ( lang_name, )
           link = str(subtitle_id)
-          if subtitle.getElementsByTagName("cds")[0].firstChild:
-            no_files = int(subtitle.getElementsByTagName("cds")[0].firstChild.data)
-          self.subtitles_name_list.append({'filename':filename,'link':link,'language_name':languageTranslate((lang_name),2,0),'language_id':lang_id,'language_flag':flag_image,'movie':movie,"ID":subtitle_id,"rating":str(rating),"format":format,"sync":False, "no_files":no_files})
+          self.subtitles_name_list.append({'filename':filename,
+                                           'link':link,
+                                           'language_name' : languageTranslate((lang_name),2,0),
+                                           'language_id'   : lang_id,
+                                           'language_flag' : flag_image,
+                                           'movie'         : movie,
+                                           "ID"            : subtitle_id,
+                                           "rating"        : str(rating),
+                                           "format"        : format,
+                                           "sync"          : False,
+                                           "hearing_imp"   : hearing_imp
+                                           })
         self.mergesubtitles(stack)
       return self.subtitles_list
     except :

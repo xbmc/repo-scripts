@@ -66,7 +66,18 @@ class OSDBServer:
             else:                                
               sync = False
 
-            self.subtitles_hash_list.append({'lang_index':lang_index,'filename':item["SubFileName"],'link':item["ZipDownloadLink"],"language_name":item["LanguageName"],"language_flag":flag_image,"language_id":item["SubLanguageID"],"ID":item["IDSubtitle"],"rating":str( int( item["SubRating"][0] ) ),"format":item["SubFormat"],"sync":sync})
+            self.subtitles_hash_list.append({'lang_index'    : lang_index,
+                                             'filename'      : item["SubFileName"],
+                                             'link'          : item["ZipDownloadLink"],
+                                             'language_name' : item["LanguageName"],
+                                             'language_flag' : flag_image,
+                                             'language_id'   : item["SubLanguageID"],
+                                             'ID'            : item["IDSubtitle"],
+                                             'rating'        : str(int(item["SubRating"][0])),
+                                             'format'        : item["SubFormat"],
+                                             'sync'          : sync,
+                                             'hearing_imp'   : int(item["SubHearingImpaired"]) != 0
+                                             })
             
     except:
       msg = "Error Searching For Subs"
