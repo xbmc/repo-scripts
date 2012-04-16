@@ -533,7 +533,7 @@ class MyPlayer(xbmc.Player):
             runtime = xbmc.getInfoLabel('VideoPlayer.Duration')
             path = xbmc.getInfoLabel('Player.Filenameandpath')
             rating = str(xbmc.getInfoLabel('VideoPlayer.Rating'))
-            self.item = ["", label, year, genre, studio, plot, plotoutline, tagline, runtime, "", "", path, rating]
+            self.item = ["", title, year, genre, studio, plot, plotoutline, tagline, runtime, "", "", path, rating]
         elif type == 'episode':
             title = xbmc.getInfoLabel('VideoPlayer.Title')
             episode = "%.2d" % float(xbmc.getInfoLabel('VideoPlayer.Episode'))
