@@ -1,6 +1,6 @@
 Facebook Media Changelog
 
-Current Version : 0.6.4
+Current Version : 0.6.9
 
 Known Issues/TODO:
 	-Needs to handle mouse control better (ie no access to photo/video menu)
@@ -8,6 +8,30 @@ Known Issues/TODO:
 	-Album caching (and other caching)
 	-Exit photo/tags view with same photo selected (option?)
 	-Go to tagged friend when selecting tag from photo/tags view
+
+*** 0.6.9 ***
+
+New authorization method.
+
+*** 0.6.8 ***
+
+Added debug option in settings (Currently only prints HTML to log when auth fails)
+Fixed skin customizing for 1080 skins.
+Removed *args,**kwargs from window __init__'s to get rid of deprecation warning
+Added logging of version
+
+*** 0.6.7 ***
+
+Fixed a bug causing an error when showing comments/likes
+
+*** 0.6.6 ***
+
+Added ability to disable auto-login during authorization
+Improved response to failed/unfinished authorization
+
+*** 0.6.5 ***
+
+Add sharing and feeds for ShareSocial interaction
 
 *** 0.6.4 ***
 

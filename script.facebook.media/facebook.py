@@ -32,10 +32,15 @@ usage of this module might look like this:
 		friends = graph.get_connections("me", "friends")
 
 """
-
+from poster.encode import multipart_encode
+import poster.streaminghttp
 import urllib, urllib2
 import sys, re
+from urllib2 import HTTPError
 from cgi import parse_qs
+
+poster.streaminghttp.register_openers()
+
 # Find a JSON parser
 try:
 	import json
@@ -62,17 +67,17 @@ def ENCODE(string):
 
 def LOG(string):
 	try:
-		print 'WEBVIEWER:facebook.py - %s' % ENCODE(str(string))
+		print 'FACEBOOK MEDIA:facebook.py - %s' % ENCODE(str(string))
 		return
 	except:
-		print "WEBVIEWER:facebook.py - COULDN'T ENCODE FOR LOG - RETRYING"
+		print "FACEBOOK MEDIA:facebook.py - COULDN'T ENCODE FOR LOG - RETRYING"
 	
 	try:
-		print 'WEBVIEWER:facebook.py - %s' % str(string)
+		print 'FACEBOOK MEDIA:facebook.py - %s' % str(string)
 		return
 	except:
-		print "WEBVIEWER:facebook.py - COULDN'T ENCODE FOR LOG - FINAL"
-	
+		print "FACEBOOK MEDIA:facebook.py - COULDN'T ENCODE FOR LOG - FINAL"
+
 class GraphAPI(object):
 	"""A client for the Facebook Graph API.
 
@@ -183,22 +188,56 @@ class GraphAPI(object):
 		we send a POST request to the given path with the given arguments.
 		"""
 		if not args: args = {}
+		headers = None
+		post_data = None
 		if self.access_token:
-			if post_args is not None:
-				post_args["access_token"] = self.access_token
-			else:
+			if post_args is None:
 				args["access_token"] = self.access_token
-		if post_args is None: post_data = None
-		else: post_data = urllib.urlencode(post_args)
+				post_data = None
+			else:
+				post_args["access_token"] = self.access_token
+				post_data, headers = multipart_encode(post_args)
+		
 		pre = "https://graph.facebook.com/"
 		args = "?" + urllib.urlencode(args)
 		if path.startswith('http'):
 			pre = ''
 			args = ''
-		fileob = urllib.urlopen(pre + path + args, post_data)
+			
+		url = pre + path + args
+		try:
+			if headers:
+				request = urllib2.Request(url, post_data, headers)
+				fileob = urllib2.urlopen(request)
+			else:
+				fileob = urllib2.urlopen(url,post_data)
+		except HTTPError, e:
+			if e.code == 400:
+				reason = e.headers.get('WWW-Authenticate')
+				LOG('\nMessage: %s\nReason: %s' % (e.msg,reason))
+				if 'invalid_token' in reason or 'invalid_request' in reason:
+					raise GraphAPIError(	'OAuthException',
+											'Expired/bad token')
+			raise
 		if update_prog: self.updateProgress(30)
 		try:
-			response = _parse_json(fileob.read())
+			data = ''
+			try:
+				total = int(fileob.info()['content-length'])
+			except:
+				total = 1
+				update_prog = False
+			chunk = 4096
+			sofar = 0
+			while True:
+				d = fileob.read(chunk)
+				if not d: break
+				data += d
+				if update_prog:
+					sofar += chunk
+					prog = int((sofar * 40) / total)
+					if update_prog and not self.updateProgress(30 + prog): return
+			response = _parse_json(data)
 		finally:
 			fileob.close()
 		
@@ -206,6 +245,9 @@ class GraphAPI(object):
 			raise GraphAPIError(response["error"]["type"],
 								response["error"]["message"])
 		return response
+	
+	def updateProgress(self,pct):
+		return True
 
 
 class GraphAPIError(Exception):
@@ -227,6 +269,9 @@ class Connections(list):
 		self.progress = progress
 		self.previous = ''
 		self.next = ''
+		self.count = 0
+		if connections:
+			self.count = connections.get('count',0)
 		if connections: self.processConnections(connections)
 		
 	def processConnections(self,connections):
@@ -269,6 +314,14 @@ class Connections(list):
 		except:
 			return limit
 		
+import UserDict
+class UTF8DictWrap(UserDict.UserDict):
+	def get(self,key,failobj=None):
+		val = UserDict.UserDict.get(self, key, failobj)
+		if hasattr(val,'encode'): return val.encode('utf-8')
+		return val
+	
+			
 class GraphObject:
 	def __init__(self,ID=None,graph=None,data=None,**args):
 		if (not ID) and data:
@@ -329,6 +382,8 @@ class GraphObject:
 					return self._toJSON(val)
 				else:
 					return Connections(self.graph,val,progress=False)
+			return UTF8DictWrap(val)
+		if hasattr(val,'encode'): return val.encode('utf-8')
 		return val
 	
 	def _getObjectData(self,ID,**args):
@@ -433,8 +488,10 @@ class GraphWrap(GraphAPI):
 		self._progModifier = 1
 		self._progTotal = 100
 		self._progMessage = ''
+		self.uid = None
 	
 	def withProgress(self,callback,modifier=1,total=100,message=''):
+		poster.streaminghttp.PROGRESS_CALLBACK = callback
 		self._progCallback = callback
 		self._progModifier = modifier
 		self._progTotal = total
@@ -444,7 +501,8 @@ class GraphWrap(GraphAPI):
 	def updateProgress(self,level):
 		if self._progCallback:
 			level *= self._progModifier
-			self._progCallback(int(level),self._progTotal,self._progMessage)
+			return self._progCallback(int(level),self._progTotal,self._progMessage)
+		return True
 			
 	def fromJSON(self,json_string):
 		if not json_string: return None
@@ -455,7 +513,39 @@ class GraphWrap(GraphAPI):
 			elif 'id' in data_obj:
 				return GraphObject(graph=self,data=data_obj)
 		return data_obj
-			
+		
+	def putWallPost(self,message, attachment={}, profile_id="me"):
+		fail = False
+		try:
+			return self.put_wall_post(message, attachment, profile_id)
+		except GraphAPIError,e:
+			LOG(e.type)
+			if not e.type == 'OAuthException': raise
+			fail = True
+	
+		if fail:
+			LOG("ERROR POSTING TO WALL - GETTING NEW TOKEN")
+			if not self.getNewToken():
+				if self.access_token: raise GraphWrapAuthError('RENEW_TOKEN_FAILURE','Failed to get new token')
+				else: return None
+			return self.put_wall_post(message, attachment, profile_id)
+		
+	def putObject(self,parent_object, connection_name, **data):
+		fail = False
+		try:
+			return self.put_object(parent_object, connection_name, **data)
+		except GraphAPIError,e:
+			LOG(e.type)
+			if not e.type == 'OAuthException': raise
+			fail = True
+	
+		if fail:
+			LOG("ERROR POSTING OBJECT - GETTING NEW TOKEN")
+			if not self.getNewToken():
+				if self.access_token: raise GraphWrapAuthError('RENEW_TOKEN_FAILURE','Failed to get new token')
+				else: return None
+			return self.put_object(parent_object, connection_name, **data)
+		
 	def getObject(self,ID,**args):
 		return GraphObject(ID,self,**args)
 	
@@ -557,9 +647,7 @@ class GraphWrap(GraphAPI):
 		if not self.tokenIsValid(token):
 			#if script: LOG("HTML:" + html)
 			return False
-		LOG("|--------------------")
-		LOG("|TOKEN: %s" % token)
-		LOG("|--------------------")
+		LOG("\n|--------------------\n|TOKEN: %s\n|--------------------"  % token)
 		self.saveToken(token)
 		return token
 		

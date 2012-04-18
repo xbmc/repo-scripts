@@ -67,6 +67,12 @@
 	<string id="30053">Slideshow Interval</string>
 	<string id="30054">Slideshow: ON</string>
 	<string id="30055">Slideshow: OFF</string>
+	<string id="30056">Share...</string>
+	<string id="30057">Photo Options</string>
+	<string id="30058">-No Options-</string>
+	<string id="30059">Disable Browser Authorization Auto-Login</string>
+	<string id="30060">Failed To Get Authorization Token</string>
+	<string id="30061">Debug Logging</string>
 		
     <string id="3001">No Tags</string>
 </strings>

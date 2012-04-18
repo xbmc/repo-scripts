@@ -16,7 +16,7 @@ from facebook import GraphAPIError, GraphWrapAuthError
 __author__ = 'ruuk (Rick Phillips)'
 __url__ = 'http://code.google.com/p/facebook-media/'
 __date__ = '01-26-2012'
-__version__ = '0.6.4'
+__version__ = '0.6.9'
 __addon__ = xbmcaddon.Addon(id='script.facebook.media')
 __lang__ = __addon__.getLocalizedString
 
@@ -61,6 +61,8 @@ def DONOTHING(text):
 def LOG(message):
 	print 'FACEBOOK MEDIA: %s' % ENCODE(str(message))
 	
+LOG('Version: ' + __version__)
+
 def ERROR(message):
 	LOG(message)
 	traceback.print_exc()
@@ -244,6 +246,8 @@ class SlideshowTagsWindow(BaseWindow):
 				self.startSlideshow()
 		elif action == ACTION_STOP:
 			self.stopSlideshow()
+		elif action == ACTION_CONTEXT_MENU:
+			self.session.showPhotoDialog(self.currentPhoto().source(''))
 		else:
 			self.resetSlideshow()
 			self.getControl(150).setAnimations([('conditional','effect=fade start=100 end=0 time=400 delay=2000 condition=Control.IsVisible(150)')])
@@ -410,32 +414,26 @@ class FacebookSession:
 
 		self.endProgress()
 		
-	def start(self):
+	def start(self,noApp=False):
 		user = self.getCurrentUser()
 		if not user:
 			if not self.openAddUserWindow(): return False
 			user = self.getCurrentUser()
 		
-		self.graph = self.newGraph(	user.email,
-									user.password,
-									user.id,
-									user.token,
-									self.newTokenCallback )
+		self.graph = newGraph(	user.email,
+								user.password,
+								user.id,
+								user.token,
+								self.newTokenCallback )
 		
 		#print user.username
 		#print user.email
-		
+		if noApp: return
 		self.loadOptions()
 		self.CATEGORIES()
 		self.setCurrentState()
 		self.setUserDisplay()
 		return True
-		
-	def newGraph(self,email,password,uid=None,token=None,new_token_callback=None):
-		graph = facebook.GraphWrap(token,new_token_callback=new_token_callback)
-		graph.setAppData('150505371652086',scope='user_photos,friends_photos,user_videos,friends_videos,publish_stream')
-		graph.setLogin(email,password,uid)
-		return graph
 		
 	def newTokenCallback(self,token):
 		self.token = token
@@ -613,6 +611,40 @@ class FacebookSession:
 		tn_url = self.getRealURL(tn).replace('https://','http://')
 		self.imageURLCache[ID] = tn_url
 		return tn_url
+		
+	def sharePhoto(self,url):
+		LOG('Sharing Photo')
+		try:
+			import ShareSocial #@UnresolvedImport
+		except:
+			return
+		
+		share = ShareSocial.getShare('script.facebook.media','image')
+		share.content = url
+		share.name = 'Facebook Media'
+		share.title = 'Facebook Media Photo'
+		share.share()
+		
+	def showPhotoDialog(self,url):
+		options = []
+		optionIDs = []
+		try:
+			import ShareSocial #@UnresolvedImport
+			if ShareSocial.shareTargetAvailable('image','script.facebook.media'):
+				options.append(__lang__(30056))
+				optionIDs.append('share')
+		except:
+			pass
+		if not options:
+			options.append(__lang__(30058))
+			optionIDs.append('NOOPTIONS')
+		idx = xbmcgui.Dialog().select(__lang__(30057),options)
+		if idx < 0:
+			return
+		else:
+			option = optionIDs[idx]
+		if option == 'share':
+			self.sharePhoto(url)
 		
 	def ALBUMS(self,item):
 		LOG('ALBUMS - STARTED')
@@ -1246,7 +1278,7 @@ class FacebookSession:
 			self.progAutoCt+=1
 			ct = self.progAutoCt
 			message=self.progAutoMessage.replace('@CT',str(ct)).replace('@TOT',str(total))
-		if not self.progressVisible: return
+		if not self.progressVisible: return True
 		if self.cancel_progress: return False
 		try:
 			if ct < 0 or ct > total:
@@ -1411,12 +1443,19 @@ class FacebookSession:
 			self.newUserCache = None
 			return
 		
+		if not token:
+			LOG('addUser(): Failed to get authorization token')
+			xbmcgui.Dialog().ok(__lang__(30035),__lang__(30060))
+			self.closeWindow()
+			self.newUserCache = None
+			return
+		
 		LOG("ADD USER PART 2")
 		self.window.getControl(112).setVisible(False)
 		self.window.getControl(121).setVisible(False)
 		#email,password = self.newUserCache
 		self.newUserCache = None
-		graph = self.newGraph(email, password,token=token)
+		graph = newGraph(email, password,token=token)
 		#graph.getNewToken()
 		self.window.getControl(122).setVisible(False)
 		self.window.getControl(131).setVisible(False)
@@ -1512,12 +1551,19 @@ class FacebookSession:
 		if not setting: return default
 		if type(default) == type(0):
 			return int(float(setting))
+		elif isinstance(default,bool):
+			return default == 'true'
 		return setting
-		
-	def getAuth(self,email='',password='',graph=None):
+	
+	def getAuth(self,email='',password='',graph=None,no_auto=False):
+		xbmcgui.Dialog().ok('Authorize','Goto xbmc.2ndmind.net/fb','Authorize the addon, and write down the pin.','Click OK when done')
+		token = doKeyboard('Enter the 4 digit pin')
+		return token
+	
+	def getAuthOld(self,email='',password='',graph=None,no_auto=False):
 		redirect = urllib.quote('http://2ndmind.com/facebookphotos/complete.html')
-		scope = urllib.quote('user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,user_videos,friends_videos,publish_stream')
-		url = 'https://graph.facebook.com/oauth/authorize?client_id=150505371652086&redirect_uri=%s&type=user_agent&scope=%s' % (redirect,scope)
+		scope = urllib.quote('user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,user_videos,friends_videos,publish_stream,read_stream')
+		url = 'https://graph.facebook.com/oauth/authorize?client_id=150505371652086&redirect_uri=%s&display=page&scope=%s' % (redirect,scope)
 		from webviewer import webviewer #@UnresolvedImport
 		login = {'action':'login.php'}
 		if email and password:
@@ -1526,10 +1572,15 @@ class FacebookSession:
 		autoForms = [login,{'action':'uiserver.php'}]
 		autoClose = {'url':'.*access_token=.*','heading':__lang__(30049),'message':__lang__(30050)}
 		webviewer.WR.browser._ua_handlers["_cookies"].cookiejar.clear()
-		url,html = webviewer.getWebResult(url,autoForms=autoForms,autoClose=autoClose) #@UnusedVariable
+		if no_auto or self.getSetting('disable_auto_login', False):
+			url,html = webviewer.getWebResult(url) #@UnusedVariable
+		else:
+			url,html = webviewer.getWebResult(url,autoForms=autoForms,autoClose=autoClose) #@UnusedVariable
+		
+		if self.getSetting('debug', False): print html
 		
 		if not graph: graph = self.graph
-		if not graph: graph = self.newGraph(email, password)
+		if not graph: graph = newGraph(email, password)
 		token = graph.extractTokenFromURL(url)
 		if graph.tokenIsValid(token):
 			return token
@@ -1545,15 +1596,17 @@ def doKeyboard(prompt,default='',hidden=False):
 def createWindowFile(skin_name):
 	if not skin_name: raise Exception
 	from elementtree import ElementTree as etree #@UnresolvedImport
-	fonts_xml = open(os.path.join(SKIN_PATH,'720p','Font.xml')).read()
+	
+	path = os.path.join(SKIN_PATH,'720p','Font.xml')
+	if not os.path.exists(path): path = os.path.join(SKIN_PATH,'1080i','Font.xml')
+	if not os.path.exists(path): return
+	
+	fonts_xml = open(path).read()	
 	fonts_dom = etree.fromstring(fonts_xml)
 	curr_fonts = {	'font10_title':12,
 					'font12_title':16,
-					'font12_title':20,
-					'font24_title':24,
-					'font28_title':28,
-					'font30_title':30,
-					'WeatherTemp':80}
+					'font13_title':20,
+					'font24_title':24}
 	
 	new_fonts = {}
 	
@@ -1611,7 +1664,29 @@ def openWindow(window_name,session=None,**kwargs):
 			return #Won't happen :)
 		w.doModal()			
 		del w
-		
+
+def newGraph(email,password,uid=None,token=None,new_token_callback=None):
+	graph = facebook.GraphWrap(token,new_token_callback=new_token_callback)
+	graph.setAppData('150505371652086',scope='user_photos,friends_photos,user_videos,friends_videos,publish_stream,read_stream')
+	graph.setLogin(email,password,uid)
+	return graph
+	
+def registerAsShareTarget():
+	try:
+		import ShareSocial #@UnresolvedImport
+	except:
+		LOG('Could not import ShareSocial')
+		return
+	
+	target = ShareSocial.getShareTarget()
+	target.addonID = 'script.facebook.media'
+	target.name = 'Facebook'
+	target.importPath = 'share'
+	target.shareTypes = ['image','audio','video','imagefile','videofile','status']
+	target.provideTypes = ['feed']
+	ShareSocial.registerShareTarget(target)
+	LOG('Registered as share target with ShareSocial')
+	
 XBMC_VERSION = xbmc.getInfoLabel('System.BuildVersion')
 SKIN_PATH = xbmc.translatePath('special://skin')
 if SKIN_PATH.endswith(os.path.sep): SKIN_PATH = SKIN_PATH[:-1]
@@ -1619,4 +1694,6 @@ CURRENT_SKIN = os.path.basename(SKIN_PATH)
 LOG('XBMC Version: %s' % XBMC_VERSION)
 LOG('XBMC Skin: %s' % CURRENT_SKIN)
 
-openWindow('main')
+if __name__ == '__main__':
+	registerAsShareTarget()
+	openWindow('main')
