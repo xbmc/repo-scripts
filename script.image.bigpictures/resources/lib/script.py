@@ -2,7 +2,6 @@ import urllib
 
 import xbmc
 import xbmcgui
-import xbmcvfs
 import downloader
 
 from addon import Addon, log, SCRAPERS_PATH

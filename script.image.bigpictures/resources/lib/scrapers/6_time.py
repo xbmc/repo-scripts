@@ -30,7 +30,7 @@ class Scraper(ScraperPlugin):
         tree = self._get_tree(album_url)
         album_title = tree.find('h1').string
         js_code = tree.find('text/javascript', text=re.compile('var images'))
-        json_photos = re.search('var images = (\[.*?\])', js_code).group(1)
+        json_photos = re.search('var images = (\[.*?"ID":0.*?\])', js_code).group(1)
         photos = json.loads(json_photos)
         for id, photo in enumerate(photos):
             if u'post_mime_type' in photo:

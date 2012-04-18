@@ -8,8 +8,8 @@ Addon = xbmcaddon.Addon('script.image.bigpictures')
 __addon_name__ = Addon.getAddonInfo('name')
 __version__ = Addon.getAddonInfo('version')
 
-ADDON_PATH = Addon.getAddonInfo('path')
-CACHE_PATH = xbmc.translatePath(Addon.getAddonInfo('profile'))
+ADDON_PATH = Addon.getAddonInfo('path').decode('utf-8')
+CACHE_PATH = xbmc.translatePath(Addon.getAddonInfo('profile').decode('utf-8'))
 SCRAPERS_PATH = os.path.join(ADDON_PATH, 'resources', 'lib', 'scrapers')
 
 
