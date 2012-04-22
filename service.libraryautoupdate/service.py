@@ -1,3 +1,4 @@
+# -*- coding: cp1252 -*-
 import time
 from datetime import datetime
 import xbmc
@@ -141,7 +142,7 @@ class AutoUpdater:
                     #create a separate schedule for cleaning - use right now rather than last_run, never 'catch-up'
                     clean_after_update = False
 
-                    if(self.Addon.getSetting('update_video') == 'true' or self.Addon.getSetting('use_custom_1_path') == 'true'):
+                    if(self.Addon.getSetting('update_video') == 'true' or (self.Addon.getSetting('use_custom_1_path') == 'true' or self.Addon.getSetting('use_custom_2_path') == 'true' or self.Addon.getSetting('use_custom_3_path') == 'true')):
                         #video clean schedule starts at 12am
                         aSchedule = CronSchedule()
                         aSchedule.name = 'Clean Video Library'
@@ -192,6 +193,28 @@ class AutoUpdater:
                 aSchedule.name = 'Specific Video Path'
                 aSchedule.command = 'UpdateLibrary(video,' + self.Addon.getSetting('custom_1_scan_path') + ')'
                 aSchedule.expression = self.checkTimer('custom_1')
+                aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
+                aSchedule.clean_library = clean_after_update
+                
+                self.schedules.append(aSchedule)
+
+            if(self.Addon.getSetting('use_custom_2_path') == 'true'):
+                #create a custom video path schedule
+                aSchedule = CronSchedule()
+                aSchedule.name = 'Specific Video Path'
+                aSchedule.command = 'UpdateLibrary(video,' + self.Addon.getSetting('custom_2_scan_path') + ')'
+                aSchedule.expression = self.checkTimer('custom_2')
+                aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
+                aSchedule.clean_library = clean_after_update
+                
+                self.schedules.append(aSchedule)
+
+            if(self.Addon.getSetting('use_custom_3_path') == 'true'):
+                #create a custom video path schedule
+                aSchedule = CronSchedule()
+                aSchedule.name = 'Specific Video Path'
+                aSchedule.command = 'UpdateLibrary(video,' + self.Addon.getSetting('custom_3_scan_path') + ')'
+                aSchedule.expression = self.checkTimer('custom_3')
                 aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
                 aSchedule.clean_library = clean_after_update
                 
@@ -290,7 +313,7 @@ class AutoUpdater:
     def readLastRun(self):
         
         try:
-            f = open(xbmc.translatePath(self.datadir + "last_run.txt"),"r")
+            f = open(unicode(xbmc.translatePath(self.datadir + "last_run.txt"),'utf-8'),"r")
             self.last_run = float(f.read())
             f.close()
         except IOError:
@@ -299,10 +322,10 @@ class AutoUpdater:
 
     def writeLastRun(self):
         #create the addon folder if it doesn't exist
-        if(not os.path.exists(xbmc.translatePath(self.datadir))):
-            os.makedirs(xbmc.translatePath(self.datadir))
-            
-        f = open(xbmc.translatePath(self.datadir + "last_run.txt"),"w")
+        if(not os.path.exists(unicode(xbmc.translatePath(self.datadir),'utf-8'))):
+            os.makedirs(unicode(xbmc.translatePath(self.datadir),'utf-8'))
+
+        f = open(unicode(xbmc.translatePath(self.datadir + "last_run.txt"),'utf-8'),"w")
         
         #write out the value for the last time the program ran
         f.write(str(self.last_run));

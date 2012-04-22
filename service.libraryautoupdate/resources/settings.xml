@@ -11,12 +11,25 @@
 		<setting id="video_timer" type="enum" values="1|2|4|6|12|24" label="30001" default="2" enable="!eq(-1,true) + eq(-2,true)" visible="!eq(-1,true)" />
 		<setting id="video_cron_expression" type="text" label="30007" visible="eq(-2,true)" enable="eq(-2,true) + eq(-3,true)" default="0 * * * *" />
 		<setting type="sep" />
+		<setting id="help_button" type="action" action="RunScript(special://home/addons/service.libraryautoupdate/disclaimer.py)" label="30017" />
+		<!-- custom paths -->
 		<setting id="use_custom_1_path" type="bool" label="30015" default="false" />
-		<setting id="help_button" type="action" action="RunScript(special://home/addons/service.libraryautoupdate/disclaimer.py)" label="30017" visible="eq(-1,true)"/>
-		<setting id="custom_1_advanced_timer" type="bool" label="30006" default="false" enable="eq(-2,true)" visible="eq(-2,true)" />
-		<setting id="custom_1_timer" type="enum" values="1|2|4|6|12|24" label="30001" default="2" enable="!eq(-1,true) + eq(-3,true)" visible="!eq(-1,true) + eq(-3,true)" />
-		<setting id="custom_1_cron_expression" type="text" label="30007" enable="eq(-2,true) + eq(-4,true)" default="0 * * * *" visible="eq(-2,true) + eq(-4,true)" />
-		<setting id="custom_1_scan_path" type="folder" label="30016" enable="eq(-5,true)" visible="eq(-5,true)" />
+		<setting id="custom_1_advanced_timer" type="bool" label="30006" default="false" enable="eq(-1,true)" visible="eq(-1,true)" />
+		<setting id="custom_1_timer" type="enum" values="1|2|4|6|12|24" label="30001" default="2" enable="!eq(-1,true) + eq(-2,true)" visible="!eq(-1,true) + eq(-2,true)" />
+		<setting id="custom_1_cron_expression" type="text" label="30007" enable="eq(-2,true) + eq(-3,true)" default="0 * * * *" visible="eq(-2,true) + eq(-3,true)" />
+		<setting id="custom_1_scan_path" type="folder" label="30016" enable="eq(-4,true)" visible="eq(-4,true)" />
+		<!-- custom 2 -->
+		<setting id="use_custom_2_path" type="bool" label="30024" default="false" />
+		<setting id="custom_2_advanced_timer" type="bool" label="30006" default="false" enable="eq(-1,true)" visible="eq(-1,true)" />
+		<setting id="custom_2_timer" type="enum" values="1|2|4|6|12|24" label="30001" default="2" enable="!eq(-1,true) + eq(-2,true)" visible="!eq(-1,true) + eq(-2,true)" />
+		<setting id="custom_2_cron_expression" type="text" label="30007" enable="eq(-2,true) + eq(-3,true)" default="0 * * * *" visible="eq(-2,true) + eq(-3,true)" />
+		<setting id="custom_2_scan_path" type="folder" label="30016" enable="eq(-4,true)" visible="eq(-4,true)" />
+		<!-- custom 3 -->
+		<setting id="use_custom_3_path" type="bool" label="30025" default="false" />
+		<setting id="custom_3_advanced_timer" type="bool" label="30006" default="false" enable="eq(-1,true)" visible="eq(-1,true)" />
+		<setting id="custom_3_timer" type="enum" values="1|2|4|6|12|24" label="30001" default="2" enable="!eq(-1,true) + eq(-2,true)" visible="!eq(-1,true) + eq(-2,true)" />
+		<setting id="custom_3_cron_expression" type="text" label="30007" enable="eq(-2,true) + eq(-3,true)" default="0 * * * *" visible="eq(-2,true) + eq(-3,true)" />
+		<setting id="custom_3_scan_path" type="folder" label="30016" enable="eq(-4,true)" visible="eq(-4,true)" />
 	</category>
 	<category id="music_timer" label="30013">
 		<setting id="update_music" type="bool" label="30003" default="false" />
