@@ -1,0 +1,11 @@
+[b]Version 0.0.2[/b]
+
+First version, should backup directories as needed
+
+[b]Version 0.0.3[/b]
+
+Added progress bar and "silent" option for running on startup or as a script
+
+[b]Version 0.0.4[/b]
+
+Finished code for restore mode. 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<category id="general" label="30011">
+		<setting id="addon_mode" type="enum" values="Backup|Restore" default="Backup" label="30023" />
+		<setting id="remote_path" type="folder" label="30020" />
+		<setting id="backup_name" type="text" label="30021" default="xbmc_backup"/>
+		<setting id="run_silent" type="bool" label="30022" default="false" />
+	</category>
+	<category id="selection" label="30012">
+		<setting id="backup_addons" type="bool" label="30030" default="true" />
+		<setting id="backup_addon_data" type="bool" label="30031" default="false" />
+		<setting id="backup_database" type="bool" label="30032" default="true" />
+		<setting id="backup_playlists" type="bool" label="30033" default="true" />
+		<setting id="backup_thumbnails" type="bool" label="30034" default="true" />
+		<setting id="backup_config" type="bool" label="30035" default="true" />
+	</category>
+</settings>
