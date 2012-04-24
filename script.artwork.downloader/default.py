@@ -21,6 +21,7 @@ __icon__        = __addon__.getAddonInfo('icon')
 __localize__    = __addon__.getLocalizedString
 
 ### import libraries
+from urlparse import urlsplit, urlparse
 from traceback import print_exc
 from resources.lib import language
 from resources.lib import media_setup
@@ -292,7 +293,7 @@ class Main:
             # Check on exact match
             if normalize_string(itemname) == normalize_string(currentitem["name"]):
                 # Check on exact path match when provided and normalize the path because of unicode issues
-                if normalize_string(itempath) == normalize_string(currentitem['path']) or itempath == '':
+                if normalize_string(urlsplit(currentitem["path"]).path) == normalize_string(urlsplit(itempath).path) or itempath == '':
                     self.Medialist = []
                     self.Medialist.append(currentitem)
                     mediafound = True
