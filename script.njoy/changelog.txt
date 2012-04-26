@@ -1,3 +1,6 @@
+0.2.0
+- increase zapping speed to 500 miliseconds
+
 0.1.2
 - show under Video add-ons rather than programs
 

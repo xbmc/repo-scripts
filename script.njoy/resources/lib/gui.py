@@ -106,7 +106,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 206 ).setLabel( self.current_label )
         if xbmc.Player().isPlaying():
             xbmc.Player().stop()
-        xbmc.sleep(3000)        
+        xbmc.sleep(500)        
         xbmc.Player(xbmc.PLAYER_CORE_DVDPLAYER).play(url, 0, 1)
         self.getControl(150).setVisible(False)
         self.channel = pos
