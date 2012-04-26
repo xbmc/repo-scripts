@@ -4,11 +4,12 @@
 	<string id="30011">General</string>
 	<string id="30012">File Selection</string>
 	
-	<string id="30020">Remote Path</string>
+	<string id="30020">Browse Remote Path</string>
 	<string id="30021">Backup Folder Name</string>
 	<string id="30022">Run Silent</string>
 	<string id="30023">Mode</string>
-	
+	<string id="30024">Type Remote Path</string>
+
 	<string id="30030">User Addons</string>
 	<string id="30031">Addon Data</string>
 	<string id="30032">Database</string>

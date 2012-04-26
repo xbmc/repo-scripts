@@ -5,7 +5,7 @@ I've had to recover my database, thumbnails, and source configuration enough tim
 
 Usage: 
 
-In the addon settings you can define a remote path for the destination of your xbmc files. You must also include a backup folder name, all of your files will be in this folder once the backup runs. 
+In the addon settings you can define a remote path for the destination of your xbmc files. You must also include a backup folder name, all of your files will be in this folder once the backup runs. Please note that the typed path will supercede the browsed path - only one will be used.
 
 On the Backup Selection page you can select which items from your user profile folder will be sent to the backup location. By default all are turned on except the Addon Data directory. 
 

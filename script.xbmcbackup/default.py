@@ -87,16 +87,24 @@ class XbmcBackup:
     #for the progress bar
     progressBar = None
     filesLeft = 0
-    filesTotal = 0
+    filesTotal = 1
 
     fileManager = None
     
     def __init__(self):
         self.local_path = xbmc.translatePath("special://home")
 
-        if(self.Addon.getSetting('remote_path') != '' and self.Addon.getSetting("backup_name") != ''):
-            self.remote_path = self.Addon.getSetting("remote_path") + self.Addon.getSetting('backup_name') + "/"
-
+	if(self.Addon.getSetting('remote_path_2') != '' and xbmcvfs.exists(self.Addon.getSetting('remote_path_2'))):
+	    self.remote_path = self.Addon.getSetting('remote_path_2')
+	    self.Addon.setSetting("remote_path","")
+        elif(self.Addon.getSetting('remote_path') != '' and xbmcvfs.exists(self.Addon.getSetting("remote_path"))):
+            self.remote_path = self.Addon.getSetting("remote_path")
+	
+	if(self.Addon.getSetting("backup_name") != ''):
+	    self.remote_path = self.remote_path + self.Addon.getSetting("backup_name") + "/"
+	else:
+	    self.remote_path = ""
+	  
         self.fileManager = FileManager(self.Addon.getAddonInfo('profile'))
         
         self.log("Starting")
@@ -104,6 +112,11 @@ class XbmcBackup:
         self.log('Remote Dir: ' + self.remote_path)
 
     def run(self):
+	#check if we should use the progress bar
+        if(self.Addon.getSetting('run_silent') == 'false'):
+            self.progressBar = xbmcgui.DialogProgress()
+            self.progressBar.create('XBMC Backup','Gathering file list.....')
+	    
         #check what mode were are in
         if(int(self.Addon.getSetting('addon_mode')) == 0):
             self.syncFiles()
@@ -140,11 +153,6 @@ class XbmcBackup:
     def writeFiles(self,fileList,source,dest):
         self.filesTotal = len(fileList)
         self.filesLeft = self.filesTotal
-
-        #check if we should use the progress bar
-        if(self.Addon.getSetting('run_silent') == 'false'):
-            self.progressBar = xbmcgui.DialogProgress()
-            self.progressBar.create('XBMC Backup','Running......')
 
         #write each file from source to destination
         for aFile in fileList:

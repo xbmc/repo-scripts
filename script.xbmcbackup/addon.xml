@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmcbackup"
-    name="XBMC Backup" version="0.0.4" provider-name="robweber">
+    name="XBMC Backup" version="0.0.5" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
   </requires>
@@ -8,7 +8,7 @@
      <provides>executable</provides> 
   </extension> 
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Backup abd restore your XBMC database and configuration files in the event of a crash or file corruption.</summary>
+    <summary lang="en">Backup and restore your XBMC database and configuration files in the event of a crash or file corruption.</summary>
     <description lang="en">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC.</description>
     <platform>all</platform>
   </extension>

@@ -9,3 +9,8 @@ Added progress bar and "silent" option for running on startup or as a script
 [b]Version 0.0.4[/b]
 
 Finished code for restore mode. 
+
+[b]Version 0.0.5[/b]
+
+Added option to manually type a path rather than browse for one (only one used)
+Show progress bar right away so you know this is doing something
