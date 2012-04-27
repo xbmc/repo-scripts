@@ -53,7 +53,7 @@
     <string id="30122">Set Default Timeout</string>
     <string id="30123">- Legendas.TV Username</string>
     <string id="30124">- Legendas.TV Password</string>
-    <string id="30125">Disable hash search</string>
+    <string id="30125"></string>
     <string id="30126">- Itasa Username</string>
     <string id="30127">- Itasa Password</string>
     <string id="30128">- Titulky Username</string>
@@ -73,6 +73,7 @@
     <string id="30142">TMPlayer</string>
     <string id="30143">MicroDVD</string>
     <string id="30144">MPl2</string>
+    <string id="30145">Use 'Subs' subfolder for storing subtitles</string>
     
   <!-- Languages  -->
   

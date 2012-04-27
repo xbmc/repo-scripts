@@ -58,7 +58,15 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
   log( __name__ ,"Episode:[%s]"                                         % episode )
   log( __name__ ,"Year:[%s]"                                            % year )
   
-  subtitles_list = sublightWebService.SearchSubtitles(session_id, video_hash, movie_title, year,season, episode, language2, language1, language3 )
+  subtitles_list = sublightWebService.SearchSubtitles(session_id,
+                                                      video_hash,
+                                                      movie_title,
+                                                      year,season,
+                                                      episode,
+                                                      language2,
+                                                      language1,
+                                                      language3
+                                                      )
   
   return subtitles_list, session_id, ""  #standard output
   
@@ -351,7 +359,18 @@ class SublightWebService :
         else:                                                           
           flag_image = "-.gif"              
 
-        subtitles.append( { "title" : title, "year" : year, "filename" : release, "language_name" : language, "ID" : subtitleID, "mediaType" : mediaType, "numberOfDiscs" : numberOfDiscs, "downloads" : downloads, "sync" : linked, "rating" : str(int(round(rate*2))), "language_flag":flag_image } )            
+        subtitles.append( { "title"         : title,
+                            "year"          : year,
+                            "filename"      : release,
+                            "language_name" : language,
+                            "ID"            : subtitleID,
+                            "mediaType"     : mediaType,
+                            "numberOfDiscs" : numberOfDiscs,
+                            "downloads"     : downloads,
+                            "sync"          : linked,
+                            "rating"        : str(int(round(rate*2))),
+                            "language_flag" :flag_image
+                            } )            
     
     # Return value
     return subtitles       

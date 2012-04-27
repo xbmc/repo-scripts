@@ -2,12 +2,9 @@
 
 import os
 import sys
-import xbmc
 import xmlrpclib
 from utilities import *
 
-
-_              = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 
 BASE_URL_XMLRPC = u"http://api.opensubtitles.org/xml-rpc"

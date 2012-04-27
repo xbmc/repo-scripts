@@ -4,7 +4,6 @@ import sys
 import os
 from utilities import log
 from os_utilities import OSDBServer
-import socket
 import xbmc
 
 _ = sys.modules[ "__main__" ].__language__   
@@ -13,11 +12,13 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
   ok = False
   msg = ""
   hash_search = False
-  osdb_server = OSDBServer()
   subtitles_list = []  
-  if len(tvshow) > 0:                                              # TvShow
-    OS_search_string = ("%s S%.2dE%.2d" % (tvshow, int(season), int(episode),)).replace(" ","+")      
-  else:                                                            # Movie or not in Library
+  if len(tvshow) > 0:                                            # TvShow
+    OS_search_string = ("%s S%.2dE%.2d" % (tvshow,
+                                           int(season),
+                                           int(episode),)
+                                          ).replace(" ","+")      
+  else:                                                          # Movie or not in Library
     if str(year) == "":                                          # Not in Library
       title, year = xbmc.getCleanMovieTitle( title )
     else:                                                        # Movie in Library
@@ -45,7 +46,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     log( __name__ ,"File Hash [%s]" % SubHash)
   
   log( __name__ ,"Search by hash and name %s" % (os.path.basename( file_original_path ),))
-  subtitles_list, msg = osdb_server.searchsubtitles( OS_search_string, lang1, lang2, lang3, hash_search, SubHash, file_size  )
+  subtitles_list, msg = OSDBServer().searchsubtitles( OS_search_string, lang1, lang2, lang3, hash_search, SubHash, file_size  )
       
   return subtitles_list, "", msg #standard output
   

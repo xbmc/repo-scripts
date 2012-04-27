@@ -4,15 +4,22 @@ import os
 import re
 import sys
 import xbmc
-import struct
 import xbmcvfs
-import shutil
 import xbmcgui
 
-__scriptname__ = sys.modules[ "__main__" ].__scriptname__
 _              = sys.modules[ "__main__" ].__language__
+__scriptname__ = sys.modules[ "__main__" ].__scriptname__
+__cwd__        = sys.modules[ "__main__" ].__cwd__
 
-LANGUAGES = (
+STATUS_LABEL   = 100
+LOADING_IMAGE  = 110
+SUBTITLES_LIST = 120
+SERVICES_LIST  = 150
+CANCEL_DIALOG  = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
+
+SERVICE_DIR    = os.path.join(__cwd__, "resources", "lib", "services")
+
+LANGUAGES      = (
     
     # Full Language name[0]     podnapisi[1]  ISO 639-1[2]   ISO 639-1 Code[3]   Script Setting Language[4]
     
@@ -162,9 +169,9 @@ def rem_files(directory):
   try:
     for root, dirs, files in os.walk(directory, topdown=False):
       for items in dirs:
-        shutil.rmtree(os.path.join(root, items), ignore_errors=True, onerror=None)
+        xbmcvfs.rmdir(os.path.join(root, items))
       for name in files:
-        os.remove(os.path.join(root, name))
+        xbmcvfs.delete(os.path.join(root, name))
   except:
     pass 
       

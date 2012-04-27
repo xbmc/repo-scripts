@@ -4,7 +4,6 @@ import sys
 import os
 import xmlrpclib
 from utilities import *
-import xbmc
 from xml.dom import minidom
 import urllib
 
@@ -13,11 +12,10 @@ try:
   from hashlib import md5 as md5
   from hashlib import sha256
 except ImportError:
-  # #Python 2.5 and earlier
+  # Python 2.5 and earlier
   from md5 import md5
   from sha256 import sha256
   
-_              = sys.modules[ "__main__" ].__language__
 __addon__      = sys.modules[ "__main__" ].__addon__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__    = sys.modules[ "__main__" ].__version__
@@ -33,8 +31,6 @@ class OSDBServer:
     self.subtitles_list = []
     self.subtitles_name_list = []
  
-###-------------------------- Merge Subtitles All -------------################
-
   def mergesubtitles( self, stack ):
     if( len ( self.subtitles_hash_list ) > 0 ):
       for item in self.subtitles_hash_list:
@@ -49,16 +45,11 @@ class OSDBServer:
     if( len ( self.subtitles_list ) > 0 ):
       self.subtitles_list = sorted(self.subtitles_list, compare_columns)
 
-
-###-------------------------- Podnapisi Hash -------------################
-
-
   def searchsubtitles_pod( self, movie_hash, lang1,lang2,lang3, stack):
 #    movie_hash = "e1b45885346cfa0b" # Matrix Hash, Debug only
     podserver = xmlrpclib.Server('http://ssp.podnapisi.net:8000')      
     pod_session = ""
-    hash_pod =[]
-    hash_pod.append(str(movie_hash))      
+    hash_pod =[str(movie_hash)]
     lang = []
     lang.append(lang1)
     if lang1!=lang2:
@@ -111,11 +102,6 @@ class OSDBServer:
       return self.subtitles_list,pod_session
     except :
       return self.subtitles_list,pod_session
-    
-
-
-
-###-------------------------- Podnapisi By Name -------------################
 
   def searchsubtitlesbyname_pod( self, name, tvshow, season, episode, lang1, lang2, lang3, year, stack ):
     if len(tvshow) > 1:

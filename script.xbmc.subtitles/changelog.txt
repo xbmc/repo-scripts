@@ -1,3 +1,12 @@
+3.1.0
+- Fixed 'Ondertitel.com' after site redesign and sync detection added, mr-blobby
+- hearing_imp in hash search in podnapisi
+- remove "disable hash search"
+- option to store subtitles in 'Subs' folder
+- remove old window compatibility, might break some skins. xml needs to be updated
+- more utf-8 fixes
+
+
 3.0.2
 - Added custom useragent for Bierdopje, thx mr-blobby
 - Added an alternative method for looking up Bierdopje show id, thx mr-blobby

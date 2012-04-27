@@ -5,7 +5,6 @@ from xml.dom import minidom
 from utilities import languageTranslate, log
 
 KEY = "UGE4Qk0tYXNSMWEtYTJlaWZfUE9US1NFRC1WRUQtWA=="
-debug_pretext = ""
 
 def compare_columns(b,a):
   return cmp( b["language_name"], a["language_name"] ) 
@@ -28,7 +27,10 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     languages = [lang1, lang2, lang3]
 
     if len(tvshow) > 0:                                              # TvShow
-        search_string = ("%s S%.2dE%.2d" % (tvshow, int(season), int(episode),)).replace(" ","+")      
+        search_string = ("%s S%.2dE%.2d" % (tvshow,
+                                            int(season), 
+                                            int(episode),)
+                                            ).replace(" ","+")      
     else:                                                            # Movie or not in Library
         if str(year) == "":                                          # Not in Library
             title, year = xbmc.getCleanMovieTitle( title )
@@ -37,7 +39,10 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
             title = title
         search_string = title.replace(" ","+")
     log( __name__ , "Search String [ %s ]" % (search_string,))
-    subtitles = minidom.parseString(geturl(search_url % (base64.b64decode(KEY)[::-1], search_string))).getElementsByTagName("subtitle")
+    subtitles = minidom.parseString(
+                        geturl(search_url % (
+                               base64.b64decode(KEY)[::-1], search_string))
+                               ).getElementsByTagName("subtitle")
     if subtitles:
       url_base = "http://en.titlovi.com/downloads/default.ashx?type=1&mediaid=%s"
       for subtitle in subtitles:
@@ -63,7 +68,8 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                                    'language_flag':flag_image,
                                    'movie'        :movie,
                                    'rating'       :str(rating),
-                                   'sync'         :False})
+                                   'sync'         :False
+                                   })
 
     subtitles_list = sorted(subtitles_list, compare_columns)
     return subtitles_list, "", msg #standard output
@@ -72,7 +78,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
     language = subtitles_list[pos][ "language_name" ]
     url = subtitles_list[pos][ "link" ]
-    log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))
+    log( __name__ ,"Fetching subtitles using url %s" % url)
     content = geturl(url)
     if content is not None:
         header = content[:4]
@@ -86,13 +92,13 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             local_tmp_file = os.path.join(tmp_sub_dir, "titlovi.srt") # assume unpacked subtitels file is an '.srt'
             subs_file = local_tmp_file
             packed = False
-        log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
+        log( __name__ ,"Saving subtitles to '%s'" % local_tmp_file)
         try:
             local_file_handle = open(local_tmp_file, "wb")
             local_file_handle.write(content)
             local_file_handle.close()
         except:
-            log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
+            log( __name__ ,"Failed to save subtitles to '%s'" % local_tmp_file)
         if packed:
             files = os.listdir(tmp_sub_dir)
             init_filecount = len(files)
@@ -108,11 +114,14 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
             xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
             waittime  = 0
-            while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
-                time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
+            while ((filecount == init_filecount) and
+                   (waittime < 20) and
+                   (init_max_mtime == max_mtime)): # nothing yet extracted
+                time.sleep(1) # wait 1 second to let the builtin function 'XBMC.extract' unpack
                 files = os.listdir(tmp_sub_dir)
                 filecount = len(files)
-                # determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
+                # determine if there is a newer file 
+                # created in tmp_sub_dir (marks that the extraction had completed)
                 for file in files:
                     if (string.split(file,'.')[-1] in ['srt','sub','txt']):
                         mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
@@ -120,13 +129,16 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
                             max_mtime =  mtime
                 waittime  = waittime + 1
             if waittime == 20:
-                log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
+                log( __name__ ,"Failed to unpack subtitles in '%s'" % tmp_sub_dir)
             else:
-                log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
+                log( __name__ ,"Unpacked files in '%s'" % tmp_sub_dir)
                 for file in files:
-                    # there could be more subtitle files in tmp_sub_dir, so make sure we get the newly created subtitle file
-                    if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
-                        log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))
+                    # there could be more subtitle files 
+                    #in tmp_sub_dir, so make sure we get the newly created subtitle file
+                    if ((string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and 
+                        (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime)): 
+                        # unpacked file is a newly created subtitle file
+                        log( __name__ ,"Unpacked subtitles file '%s'" % file)
                         subs_file = os.path.join(tmp_sub_dir, file)
         return False, language, subs_file #standard output
         

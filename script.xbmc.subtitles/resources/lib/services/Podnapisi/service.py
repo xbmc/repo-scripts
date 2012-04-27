@@ -6,10 +6,6 @@ from utilities import languageTranslate, log
 from pn_utilities import OSDBServer
 import xbmc
 import urllib
-import threading
-
-_ = sys.modules[ "__main__" ].__language__      
-
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input     
   ok = False
