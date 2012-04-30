@@ -1,3 +1,8 @@
+[B]1.0.12[/B]
+- Fixed: Didn't cache empty results
+- Fixed: Should now also work for multipath://
+- Changed: Improved coding in some parts
+
 [B]1.0.11[/B]
 - Fixed: Image selection wasn't working when there was a username/password in source
 

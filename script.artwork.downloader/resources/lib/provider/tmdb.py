@@ -3,27 +3,26 @@ import xbmc
 import sys
 
 ### import libraries
-from resources.lib.script_exceptions import NoFanartError, ItemNotFoundError
+from resources.lib.script_exceptions import NoFanartError
 from resources.lib.utils import *
-from resources.lib import language
-from elementtree import ElementTree as ET
-from operator import itemgetter
 from resources.lib.language import *
+from operator import itemgetter
+
 
 ### get addon info
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
 
 API_KEY = '4be68d7eab1fbd1b6fd8a3b80a65a95e'
+API_URL = 'http://api.themoviedb.org/3/movie/%s/images?api_key=%s'
 BASE_IMAGEURL = "http://cf2.imgobject.com/t/p/"
 
 class TMDBProvider():
 
     def __init__(self):
         self.name = 'TMDB'
-        self.url = "http://api.themoviedb.org/3/movie/%s/images?api_key=%s"
 
     def get_image_list(self, media_id):
-        data = get_json(self.url %(media_id, API_KEY))
+        data = get_data(API_URL%(media_id, API_KEY), 'json')
         image_list = []
         if data == "Empty" or not data:
             return image_list
@@ -124,11 +123,11 @@ def _search_movie(medianame,year=''):
     for char in illegal_char:
         medianame = medianame.replace( char , '+' ).replace( '++', '+' ).replace( '+++', '+' )
 
-    json_url = 'http://api.themoviedb.org/3/search/movie?query=%s+%s&api_key=%s' %( medianame, year, API_KEY )
+    search_url = 'http://api.themoviedb.org/3/search/movie?query=%s+%s&api_key=%s' %( medianame, year, API_KEY )
     tmdb_id = ''
-    log('TMDB API search:   %s ' % json_url)
+    log('TMDB API search:   %s ' % search_url)
     try:
-        data = get_json(json_url)
+        data = get_data(search_url, 'json')
         if data == "Empty":
             tmdb_id = ''
         else:

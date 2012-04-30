@@ -62,7 +62,7 @@ def get_abbrev():
         
 def get_language(abbrev):
     try:
-        lang_string = (key for key,value in LANGUAGES.items() if value==abbrev).next()
+        lang_string = (key for key,value in LANGUAGES.items() if value == abbrev).next()
     except StopIteration:
         lang_string = 'n/a'
     return lang_string

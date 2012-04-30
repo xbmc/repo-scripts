@@ -8,6 +8,8 @@ from resources.lib.script_exceptions import NoFanartError
 from resources.lib.utils import *
 from resources.lib.language import *
 
+API_URL = 'http://www.thetvdb.com/api/%s/series/%s/banners.xml'
+
 ### get addon info
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
 
@@ -18,13 +20,12 @@ class TVDBProvider():
     def __init__(self):
         self.name = 'TVDB'
         self.api_key = '1A41A145E2DA0053'
-        self.url = 'http://www.thetvdb.com/api/%s/series/%s/banners.xml'
+        
         self.url_prefix = 'http://www.thetvdb.com/banners/'
 
     def get_image_list(self, media_id):
-        xml_url = self.url % (self.api_key, media_id)
         image_list = []
-        data = get_xml(xml_url)
+        data = get_data(API_URL%(self.api_key, media_id), 'xml')
         try:
             tree = ET.fromstring(data)
             for image in tree.findall('Banner'):

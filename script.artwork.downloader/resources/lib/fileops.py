@@ -2,16 +2,17 @@
 import os
 import socket
 import urllib2
+import urllib
 import xbmc
 import xbmcvfs
 
 ### import libraries
 from traceback import print_exc
-from resources.lib.script_exceptions import *
 from urllib2 import HTTPError, URLError
+from resources.lib.script_exceptions import *
 from resources.lib import utils
 from resources.lib.settings import settings
-from resources.lib.utils import *
+from resources.lib.utils import log
 THUMBS_CACHE_PATH = xbmc.translatePath( "special://profile/Thumbnails/Video" )
 
 
@@ -68,30 +69,30 @@ class fileops:
                 xbmcvfs.delete( cached_thumb.replace("png" , "dds").replace("jpg" , "dds") )
             copy = xbmcvfs.copy( filename , cached_thumb )
             if copy:
-                log( "Cache succesful" )
+                log("Cache succesful")
             else:
-                log( "Failed to copy to cached thumb" )
+                log("Failed to copy to cached thumb")
         except :
             print_exc()
-            log( "Cache erasing error" )
+            log("Cache erasing error")
 
     # retrieve cache filename
-    def get_cached_thumb( self, filename ):
-        if filename.startswith( "stack://" ):
-            filename = strPath[ 8 : ].split( " , " )[ 0 ]
-        if filename.endswith( "folder.jpg" ):
-            cachedthumb = xbmc.getCacheThumbName( filename )
+    def get_cached_thumb(self, filename):
+        if filename.startswith("stack://"):
+            filename = strPath[ 8 : ].split(" , ")[ 0 ]
+        if filename.endswith("folder.jpg"):
+            cachedthumb = xbmc.getCacheThumbName(filename)
             thumbpath = os.path.join( THUMBS_CACHE_PATH, cachedthumb[0], cachedthumb )
         else:
-            cachedthumb = xbmc.getCacheThumbName( filename )
+            cachedthumb = xbmc.getCacheThumbName(filename)
             if ".jpg" in filename:
-                cachedthumb = cachedthumb.replace("tbn" , "jpg")
+                cachedthumb = cachedthumb.replace("tbn" ,"jpg")
             elif ".png" in filename:
-                cachedthumb = cachedthumb.replace("tbn" , "png")      
+                cachedthumb = cachedthumb.replace("tbn" ,"png")      
             thumbpath = os.path.join( THUMBS_CACHE_PATH, cachedthumb[0], cachedthumb ).replace( "/Video" , "")    
         return thumbpath         
 
-    # copy filen from temp to final location
+    # copy file from temp to final location
     def _copyfile(self, sourcepath, targetpath, media_name = ''):
         targetdir = os.path.dirname(targetpath).encode("utf-8")
         if not self._exists(targetdir):
@@ -121,11 +122,12 @@ class fileops:
         except socket.timeout, e:
             raise HTTPTimeout(url)
         except Exception, e:
-            log( str( e ), xbmc.LOGNOTICE )
+            log(str(e), xbmc.LOGNOTICE)
         else:
             log("[%s] Downloaded: %s" % (media_name, filename))
             self.downloadcount += 1
             for targetdir in targetdirs:
+                #targetpath = os.path.join(urllib.url2pathname(targetdir).replace('|',':'), filename)
                 targetpath = os.path.join(targetdir, filename)
                 self._copyfile(temppath, targetpath, media_name)
                 if self.settings.xbmc_caching_enabled or mode in ['gui','customgui']:
