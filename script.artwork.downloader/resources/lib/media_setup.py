@@ -23,8 +23,7 @@ cacheMedia = StorageServer.StorageServer("ArtworkDownloader",1)
 
 # Retrieve JSON data from cache function
 def _media_listing(media_type):
-    #result = cacheMedia.cacheFunction( _media_listing_new, media_type )
-    result = _media_listing_new(media_type)
+    result = cacheMedia.cacheFunction( _media_listing_new, media_type )
     if len(result) == 0:
         result = []
         return result

@@ -1,3 +1,6 @@
+[B]1.0.13[/B]
+- Fixed: Forgot to remove test line
+
 [B]1.0.12[/B]
 - Fixed: Didn't cache empty results
 - Fixed: Should now also work for multipath://
