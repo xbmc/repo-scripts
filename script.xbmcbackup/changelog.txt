@@ -14,3 +14,8 @@ Finished code for restore mode.
 
 Added option to manually type a path rather than browse for one (only one used)
 Show progress bar right away so you know this is doing something
+
+[b]Version 0.0.6/b]
+
+Added the vfs module created by paddycarey
+File Selection is now followed for both backup and restore options

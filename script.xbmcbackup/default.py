@@ -1,16 +1,16 @@
 import xbmc
 import xbmcaddon
 import xbmcgui
-import xbmcvfs
+import resources.lib.vfs as vfs
 import os
 
 class FileManager:
-    local_path = ''
+    walk_path = ''
     addonDir = ''
     fHandle = None
 
-    def __init__(self,addon_dir):
-        self.local_path = xbmc.translatePath("special://home")
+    def __init__(self,path,addon_dir):
+        self.walk_path = path
         self.addonDir = addon_dir
 
         #create the addon folder if it doesn't exist
@@ -23,29 +23,29 @@ class FileManager:
         #figure out which syncing options to run
         if(Addon.getSetting('backup_addons') == 'true'):
             self.addFile("-addons")
-            self.walkTree(self.local_path + "addons/")
+            self.walkTree(self.walk_path + "addons/")
 
         self.addFile("-userdata")
         
         if(Addon.getSetting('backup_addon_data') == 'true'):
             self.addFile("-userdata/addon_data")
-            self.walkTree(self.local_path + "userdata/addon_data/")
+            self.walkTree(self.walk_path + "userdata/addon_data/")
            
         if(Addon.getSetting('backup_database') == 'true'):
 	    self.addFile("-userdata/Database")
-            self.walkTree(self.local_path + "userdata/Database")
+            self.walkTree(self.walk_path + "userdata/Database")
         
         if(Addon.getSetting("backup_playlists") == 'true'):
 	    self.addFile("-userdata/playlists")
-	    self.walkTree(self.local_path + "userdata/playlists")
+	    self.walkTree(self.walk_path + "userdata/playlists")
 			
         if(Addon.getSetting("backup_thumbnails") == "true"):
 	    self.addFile("-userdata/Thumbnails")
-	    self.walkTree(self.local_path + "userdata/Thumbnails")
+	    self.walkTree(self.walk_path + "userdata/Thumbnails")
 		
         if(Addon.getSetting("backup_config") == "true"):
 	    #this one is an oddity
-            configFiles = os.listdir(self.local_path + "userdata/")
+            configFiles = os.listdir(self.walk_path + "userdata/")
 	    for aFile in configFiles:
 		if(aFile.endswith(".xml")):
 		    self.addFile("userdata/" + aFile)
@@ -54,17 +54,14 @@ class FileManager:
             self.fHandle.close()
         
     def walkTree(self,directory):
-        for (path, dirs, files) in os.walk(directory):
+        for (path, dirs, files) in vfs.walk(directory):
             
-            #get the relative part of this path
-            path = path[len(self.local_path):]
-
             #create all the subdirs first
             for aDir in dirs:
-                self.addFile("-" + path + os.sep +  aDir)
+                self.addFile("-" + aDir[len(self.walk_path):])
             #copy all the files
             for aFile in files:
-                filePath = path + os.sep + aFile
+                filePath = aFile[len(self.walk_path):]
                 self.addFile(filePath)
                     
     def addFile(self,filename):
@@ -93,19 +90,18 @@ class XbmcBackup:
     
     def __init__(self):
         self.local_path = xbmc.translatePath("special://home")
-
-	if(self.Addon.getSetting('remote_path_2') != '' and xbmcvfs.exists(self.Addon.getSetting('remote_path_2'))):
+      
+	if(self.Addon.getSetting('remote_selection') == '1' and vfs.exists(self.Addon.getSetting('remote_path_2'))):
+            xbmc.log(str(self.Addon.getSetting('remote_path_2')))
 	    self.remote_path = self.Addon.getSetting('remote_path_2')
 	    self.Addon.setSetting("remote_path","")
-        elif(self.Addon.getSetting('remote_path') != '' and xbmcvfs.exists(self.Addon.getSetting("remote_path"))):
+        elif(self.Addon.getSetting('remote_selection') == '0' and vfs.exists(self.Addon.getSetting("remote_path"))):
             self.remote_path = self.Addon.getSetting("remote_path")
 	
-	if(self.Addon.getSetting("backup_name") != ''):
+	if(self.Addon.getSetting("backup_name") != '' and self.remote_path != ''):
 	    self.remote_path = self.remote_path + self.Addon.getSetting("backup_name") + "/"
 	else:
 	    self.remote_path = ""
-	  
-        self.fileManager = FileManager(self.Addon.getAddonInfo('profile'))
         
         self.log("Starting")
         self.log('Local Dir: ' + self.local_path)
@@ -119,17 +115,19 @@ class XbmcBackup:
 	    
         #check what mode were are in
         if(int(self.Addon.getSetting('addon_mode')) == 0):
+            self.fileManager = FileManager(self.local_path,self.Addon.getAddonInfo('profile'))
             self.syncFiles()
         else:
+            self.fileManager = FileManager(self.remote_path,self.Addon.getAddonInfo('profile'))
             self.restoreFiles()
         
     def syncFiles(self):
-        if(xbmcvfs.exists(self.remote_path)):
+        if(vfs.exists(self.remote_path)):
             #this will fail - need a disclaimer here
             self.log("Remote Path exists - may have old files in it!")
 
         #make the remote directory
-        xbmcvfs.mkdir(self.remote_path)
+        vfs.mkdir(self.remote_path)
         
         self.fileManager.createFileList(self.Addon)
 
@@ -137,14 +135,10 @@ class XbmcBackup:
 
         #write list from local to remote
         self.writeFiles(allFiles,self.local_path,self.remote_path)
-
-        #write the restore list
-        xbmcvfs.copy(self.Addon.getAddonInfo('profile') + "restore.txt",self.remote_path + "restore.txt")
         
     def restoreFiles(self):
-        #copy the restore file
-        xbmcvfs.copy(self.remote_path + "restore.txt",self.Addon.getAddonInfo('profile') + "restore.txt")
-
+        self.fileManager.createFileList(self.Addon)
+        
         allFiles = self.fileManager.readFileList()
 
         #write list from remote to local
@@ -159,9 +153,9 @@ class XbmcBackup:
             if(not self.checkCancel()):
                 self.updateProgress(aFile)
                 if (aFile.startswith("-")):
-                    xbmcvfs.mkdir(dest + aFile[1:])
+                    vfs.mkdir(dest + aFile[1:])
                 else:
-                    xbmcvfs.copy(source + aFile,dest + aFile)
+                    vfs.copy(source + aFile,dest + aFile)
 
         if(self.Addon.getSetting('run_silent') == 'false'):
             self.progressBar.close()
