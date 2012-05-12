@@ -522,23 +522,16 @@ if platform.is_linux():
       """
       Closes the inotify instance and removes all associated watches.
       """
-      print("WATCHDOG: Inotify.close()")
       with self._lock:
-      #print("WATCHDOG: Inotify.close() middle 1")
         self._remove_all_watches()
-      #print("WATCHDOG: Inotify.close() middle 2")
         os.close(self._inotify_fd)
-      #print("WATCHDOG: Inotify.close() end")
 
     def read_events(self, event_buffer_size=DEFAULT_EVENT_BUFFER_SIZE):
       """
       Reads events from inotify and yields them.
       """
-      
-      #print("WATCHDOG: BEFORE OS READ")
       event_buffer = os.read(self._inotify_fd, event_buffer_size)
       with self._lock:
-        #print("WATCHDOG: AFTER OS READ")
         event_list = []
         for wd, mask, cookie, name in Inotify._parse_event_buffer(
           event_buffer):
@@ -651,23 +644,14 @@ if platform.is_linux():
                              mask)
       if wd == -1:
         Inotify._raise_error()
-      
-      #print("WATCHDOG: _add_watch: " + str(path))
-      #print("WATCHDOG: _add_watch: " + str(wd))
       self._wd_for_path[path] = wd
       self._path_for_wd[wd] = path
-      #print("WATCHDOG: _add_watch: " + str(self._wd_for_path[path]))
-      #print("WATCHDOG: _add_watch: " + str(self._path_for_wd[wd]))
       return wd
 
     def _remove_all_watches(self):
       """
       Removes all watches.
       """
-      #print("WATCHDOG: _remove_all_watches " + str(self._wd_for_path))
-      #print("WATCHDOG: _remove_all_watches " + str(self._wd_for_path.values()))
-      #print("WATCHDOG: _remove_all_watches " + str(self._path_for_wd))
-      
       for wd in self._wd_for_path.values():
         del self._path_for_wd[wd]
         if inotify_rm_watch(self._inotify_fd, wd) == -1:
@@ -757,8 +741,7 @@ if platform.is_linux():
       self._inotify = Inotify(watch.path, watch.is_recursive)
 
     def on_thread_exit(self):
-      print("WATCHDOG: InotifyEmitter.on_thread_exit() " + str(self))
-      ret = self._inotify.close()
+      self._inotify.close()
 
     def queue_events(self, timeout):
       with self._lock:

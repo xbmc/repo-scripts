@@ -279,10 +279,7 @@ class BaseObserver(EventDispatcher):
     return self._emitter_for_watch[watch]
 
   def _clear_emitters(self):
-    #print("WATCHDOG: BaseObserver._clear_emitters() ")
     for emitter in self._emitters:
-      #print("WATCHDOG: BaseObserver._clear_emitters() calling stop() on " + str(emitter))
-      #emitter.on_thread_exit()
       emitter.stop()
     self._emitters.clear()
     self._emitter_for_watch.clear()
@@ -409,9 +406,7 @@ class BaseObserver(EventDispatcher):
       self._watches.clear()
 
   def on_thread_exit(self):
-    print("WATCHDOG: BaseObserver.on_thread_exit()")
     self.unschedule_all()
-    
 
   def _dispatch_event(self, event, watch):
     with self._lock:
