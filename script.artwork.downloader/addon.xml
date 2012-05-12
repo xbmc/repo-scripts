@@ -2,7 +2,7 @@
 <addon
 	id="script.artwork.downloader"
 	name="Artwork Downloader"
-	version="1.0.13"
+	version="1.0.14"
 	provider-name="paddycarey, putneyj, Martijn"
     >
   <requires>
@@ -16,6 +16,7 @@
   </extension>
   <extension point="xbmc.service" library="service.py" start="login"/>
   <extension point="xbmc.addon.metadata">
+    <language></language>
     <summary lang="en">Downloads Artwork for TV shows, Movies and Musicvideos in your library</summary>
     <summary lang="nl">Download Artwork voor TV series, Films en Muziekvideos in jouw bibliotheek</summary>
     <summary lang="pl">Pobiera grafiki dla Seriali TV, Filmów i Teledysków z twojej biblioteki</summary>

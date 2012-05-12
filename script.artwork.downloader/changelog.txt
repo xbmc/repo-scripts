@@ -1,3 +1,6 @@
+[B]1.0.14[/B]
+- Fixed: Possible empty library list when there was no season data
+
 [B]1.0.13[/B]
 - Fixed: Forgot to remove test line
 

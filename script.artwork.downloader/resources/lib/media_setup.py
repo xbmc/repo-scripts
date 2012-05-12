@@ -50,9 +50,9 @@ def _media_listing_new(media_type):
                     if jsonobject_season['result'].has_key('limits'):
                         season_limit = jsonobject_season['result']['limits']
                     # Get the season numbers
+                    seasons_list =[]
                     if jsonobject_season['result'].has_key('seasons'):
                         seasons = jsonobject_season['result']['seasons']
-                        seasons_list =[]
                         for season in seasons:
                             seasons_list.append(season.get('season')) 
                     Medialist.append({'id': item.get('imdbnumber',''),
