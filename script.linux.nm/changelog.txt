@@ -1,0 +1,24 @@
+[B]Version 0.1.2[/B]
+Script id changed to standard format
+
+[B]Version 0.1.1[/B]
+Fixed incorrect status message
+
+[B]Version 0.1.0[/B]
+More clean up in skin making it work in other skins than Confluence
+More general clean up
+Script name made consistent with folder name
+Add hidden functionality added
+
+[B]Version 0.0.3[/B]
+WEP and NONE added
+Status button added
+Monitor connection progress
+
+[B]Version 0.0.2[/B]
+Disconnect, connect, delete and cancel added 
+
+[B]Version 0.0.1[/B]
+Initial version, converted from wicd and the old wireless.manager
+
+
