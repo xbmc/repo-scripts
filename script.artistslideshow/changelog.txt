@@ -1,3 +1,6 @@
+v1.3.2
+- added language files for Portuguese-Brazil (thanks to Wanilton)
+
 v1.3.1
 - changes to support for internet streams
 - fixed bug that caused artist .nfo files to never be updated
