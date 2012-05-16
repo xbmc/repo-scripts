@@ -10,6 +10,10 @@
     </coordinates>
     <animation effect="fade" start="100" end="0" time="200">WindowClose</animation> 
     <controls>
+        <control type="label" id="100">
+            <description>Visibility marker</description>
+            <visible>false</visible>
+        </control>
 
         <control type="image">
             <posx>0</posx>
@@ -100,8 +104,8 @@
                 <posy>160</posy>
                 <width>680</width>
                 <height>300</height>
-                <animation effect="fade" start="0" end="100" time="200" condition="Control.HasFocus(4000) | Control.HasFocus(4003) | Control.HasFocus(4004)">Conditional</animation>
-                <visible>Control.HasFocus(4000) | Control.HasFocus(4003) | Control.HasFocus(4004)</visible>
+                <animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
+                <visible>StringCompare(Control.GetLabel(100),unlimited)</visible>
 
                 <control type="label">
                     <description>No limit on game time</description>
@@ -177,8 +181,8 @@
                 <posy>160</posy>
                 <width>680</width>
                 <height>300</height>
-                <animation effect="fade" start="0" end="100" time="200" condition="Control.HasFocus(4001) | Control.HasFocus(4100) | Control.HasFocus(4103) | Control.HasFocus(4104)">Conditional</animation>
-                <visible>Control.HasFocus(4001) | Control.HasFocus(4100) | Control.HasFocus(4103) | Control.HasFocus(4104)</visible>
+                <animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
+                <visible>StringCompare(Control.GetLabel(100),time-limited)</visible>
 
                 <control type="label">
                     <description>Game will ends after</description>
@@ -192,19 +196,23 @@
                     <label>$ADDON[script.moviequiz 30613]</label>
                 </control>
 
-                <control type="image">
+                <control type="button" id="4101">
                     <posx>680</posx>
                     <posy>0</posy>
                     <width>30</width>
                     <height>40</height>
-                    <texture>quiz-raquo.png</texture>
+                    <texturenofocus>quiz-raquo.png</texturenofocus>
+                    <texturefocus>quiz-raquo.png</texturefocus>
+                    <onright>4100</onright>
                 </control>
-                <control type="image">
+                <control type="button" id="4102">
                     <posx>450</posx>
                     <posy>0</posy>
                     <width>30</width>
                     <height>40</height>
-                    <texture>quiz-laquo.png</texture>
+                    <texturenofocus>quiz-laquo.png</texturenofocus>
+                    <texturefocus>quiz-laquo.png</texturefocus>
+                    <onleft>4100</onleft>
                 </control>
 
                 <control type="fixedlist" id="4100">
@@ -318,8 +326,8 @@
                 <posy>160</posy>
                 <width>680</width>
                 <height>300</height>
-                <animation effect="fade" start="0" end="100" time="200" condition="Control.HasFocus(4002) | Control.HasFocus(4200) | Control.HasFocus(4203) | Control.HasFocus(4204)">Conditional</animation>
-                <visible>Control.HasFocus(4002) | Control.HasFocus(4200) | Control.HasFocus(4203) | Control.HasFocus(4204)</visible>
+                <animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
+                <visible>StringCompare(Control.GetLabel(100),question-limited)</visible>
 
                 <control type="label">
                     <description>No limit on game time</description>
@@ -344,19 +352,21 @@
                     <label>$ADDON[script.moviequiz 30613]</label>
                 </control>
 
-                <control type="image">
+                <control type="button" id="4201">
                     <posx>680</posx>
                     <posy>40</posy>
                     <width>30</width>
                     <height>40</height>
-                    <texture>quiz-raquo.png</texture>
+                    <texturenofocus>quiz-raquo.png</texturenofocus>
+                    <texturefocus>quiz-raquo.png</texturefocus>
                 </control>
-                <control type="image">
+                <control type="button" id="4202">
                     <posx>450</posx>
                     <posy>40</posy>
                     <width>30</width>
                     <height>40</height>
-                    <texture>quiz-laquo.png</texture>
+                    <texturenofocus>quiz-laquo.png</texturenofocus>
+                    <texturefocus>quiz-laquo.png</texturefocus>
                 </control>
 
                 <control type="fixedlist" id="4200">

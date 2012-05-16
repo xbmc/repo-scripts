@@ -124,6 +124,8 @@
     <string id="30522">Nogle spørgsmål kræver ekstra lokale data,</string>
     <string id="30523">som kan hentes herunder:</string>
     <string id="30524">Indsend scores til online highscore</string>
+    <string id="30525">Henter IMDB data... (%d af %d)</string>
+    <string id="30526">IMDB data er hentet og klar til brug.</string>
 
     <string id="30550">Brug disse spørgsmål til film quiz</string>
     <string id="30551">Brug disse spørgsmål til TV quiz</string>

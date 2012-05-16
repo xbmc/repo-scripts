@@ -1,3 +1,23 @@
+#
+#      Copyright (C) 2012 Tommy Winther
+#      http://tommy.winther.nu
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this Program; see the file LICENSE.txt.  If not, write to
+#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+#
+
 import random
 import threading
 import db
@@ -76,7 +96,7 @@ class TenSecondPlayer(xbmc.Player):
         self.startingPlayback = True
 
         if not xbmcvfs.exists(file):
-            xbmc.log(">> TenSecondPlayer - file not found: %s" % file)
+            xbmc.log(">> TenSecondPlayer - file not found: %s" % file.encode('utf-8', 'ignore'))
             return False
 
         self.lastFile = file
@@ -98,7 +118,7 @@ class TenSecondPlayer(xbmc.Player):
         # Get bookmark details, so we can restore after playback
         self.bookmark = self.database.getVideoBookmark(idFile)
 
-        xbmc.log(">> TenSecondPlayer.playWindowed() - about to play file %s" % file)
+        xbmc.log(">> TenSecondPlayer.playWindowed() - about to play file %s" % file.encode('utf-8', 'ignore'))
 
         self.isAudioFile = False
         self.playBackEventReceived = False

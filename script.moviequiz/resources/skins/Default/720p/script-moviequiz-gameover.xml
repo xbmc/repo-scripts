@@ -10,6 +10,10 @@
     </coordinates>
     <animation effect="fade" start="100" end="0" time="200">WindowClose</animation> 
     <controls>
+        <control type="label" id="100">
+            <description>Visibility marker</description>
+            <visible>false</visible>
+        </control>
 
         <control type="image">
             <description>Glasspane</description>
@@ -171,8 +175,8 @@
             <posy>0</posy>
             <width>400</width>
             <height>720</height>
-            <animation effect="fade" start="0" end="100" time="200" condition="Control.HasFocus(4001) | Control.HasFocus(8001)">Conditional</animation>
-            <visible>Control.HasFocus(4001) | Control.HasFocus(8001)</visible>
+            <animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
+            <visible>StringCompare(Control.GetLabel(100),globalHighscore)</visible>
 
             <control type="image">
                 <posx>0</posx>
@@ -303,8 +307,8 @@
             <posy>0</posy>
             <width>400</width>
             <height>720</height>
-            <animation effect="fade" start="0" end="100" time="200" condition="Control.HasFocus(4002) | Control.HasFocus(9001)">Conditional</animation>
-            <visible>Control.HasFocus(4002) | Control.HasFocus(9001)</visible>
+            <animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
+            <visible>StringCompare(Control.GetLabel(100),localHighscore)</visible>
 
             <control type="image">
                 <posx>0</posx>

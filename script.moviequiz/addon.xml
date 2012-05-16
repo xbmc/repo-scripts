@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.moviequiz"
        name="Movie Quiz"
-       version="0.5.0"
+       version="0.5.2"
        provider-name="twinther [tommy@winther.nu]">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.buggalo" version="1.0.1"/>
         <import addon="script.module.elementtree" version="1.2.7"/>
         <import addon="script.module.myconnpy" version="0.3.2"/>
     </requires>
@@ -30,5 +31,6 @@ Mere information, kommentarer og hjælp på forummet:
 http://forum.xbmc.org/showthread.php?t=92540</description>
         <license>GPL 2.0</license>
         <platform>all</platform>
+        <language></language>
     </extension>
 </addon>

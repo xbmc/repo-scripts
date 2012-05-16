@@ -124,6 +124,8 @@
     <string id="30522">Some questions require additional local data,</string>
     <string id="30523">which can be downloaded below:</string>
     <string id="30524">Submit scores to online highscore</string>
+    <string id="30525">Downloading IMDB data... (%d of %d)</string>
+    <string id="30526">IMDB data downloaded and ready for use.</string>
 
     <string id="30550">Use these question types for movies</string>
     <string id="30551">Use these question types for TV shows</string>

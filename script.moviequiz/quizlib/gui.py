@@ -1,3 +1,23 @@
+#
+#      Copyright (C) 2012 Tommy Winther
+#      http://tommy.winther.nu
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this Program; see the file LICENSE.txt.  If not, write to
+#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+#
+
 import threading
 import os
 import re
@@ -12,6 +32,8 @@ import question
 import player
 import db
 import highscore
+
+import buggalo
 
 from strings import *
 
@@ -41,6 +63,7 @@ class LoadingGui(xbmcgui.WindowXMLDialog):
         super(LoadingGui, self).__init__()
         self.menuGui = menuGui
 
+    @buggalo.buggalo_try_except()
     def onInit(self):
         startTime = datetime.datetime.now()
         self.menuGui.loadTrivia()
@@ -51,15 +74,16 @@ class LoadingGui(xbmcgui.WindowXMLDialog):
             xbmc.sleep(1000 * (2 - delta.seconds))
         self.close()
 
+    @buggalo.buggalo_try_except()
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
             self.close()
 
-    #noinspection PyUnusedLocal
+    @buggalo.buggalo_try_except()
     def onClick(self, controlId):
         pass
 
-    #noinspection PyUnusedLocal
+    @buggalo.buggalo_try_except()
     def onFocus(self, controlId):
         pass
 
@@ -85,6 +109,7 @@ class MenuGui(xbmcgui.WindowXML):
         self.database.close()
         super(MenuGui, self).close()
 
+    @buggalo.buggalo_try_except()
     def onInit(self):
         if not self.trivia:
             loadingGui = LoadingGui(self)
@@ -163,10 +188,12 @@ class MenuGui(xbmcgui.WindowXML):
                 strings(M_EPISODE_COUNT) % episodes['count']
             ]
 
+    @buggalo.buggalo_try_except()
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
             self.close()
 
+    @buggalo.buggalo_try_except()
     def onClick(self, controlId):
         """
         @param controlId: id of the control that was clicked
@@ -209,6 +236,7 @@ class MenuGui(xbmcgui.WindowXML):
 
 
 
+    @buggalo.buggalo_try_except()
     def onFocus(self, controlId):
         if controlId != self.C_MENU_USER_SELECT:
             listControl = self.getControl(self.C_MENU_USER_SELECT)
@@ -251,6 +279,8 @@ class MenuGui(xbmcgui.WindowXML):
         localHighscore.close()
 
 class GameTypeDialog(xbmcgui.WindowXMLDialog):
+    C_GAMETYPE_VISIBLE_MARKER = 100
+
     C_GAMETYPE_UNLIMITED = 4000
     C_GAMETYPE_TIME_LIMITED = 4001
     C_GAMETYPE_QUESTION_LIMITED = 4002
@@ -264,7 +294,12 @@ class GameTypeDialog(xbmcgui.WindowXMLDialog):
     C_GAMETYPE_QUESTION_LIMITED_PLAY = 4204
 
     C_GAMETYPE_TIME_LIMIT = 4100
+    C_GAMETYPE_TIME_LIMIT_NEXT = 4101
+    C_GAMETYPE_TIME_LIMIT_PREVIOUS = 4102
+
     C_GAMETYPE_QUESTION_LIMIT = 4200
+    C_GAMETYPE_QUESTION_LIMIT_NEXT = 4201
+    C_GAMETYPE_QUESTION_LIMIT_PREVIOUS = 4202
 
     QUESTION_SUB_TYPES = [
         {'limit' : '5', 'text' : strings(M_X_QUESTIONS, '5')},
@@ -284,6 +319,10 @@ class GameTypeDialog(xbmcgui.WindowXMLDialog):
         {'limit' : '30', 'text' : strings(M_X_MINUTES, '30')}
     ]
 
+    VISIBLE_UNLIMITED = 'unlimited'
+    VISIBLE_TIME_LIMITED = 'time-limited'
+    VISIBLE_QUESTION_LIMITED = 'question-limited'
+
     def __new__(cls, type, userId):
         return super(GameTypeDialog, cls).__new__(cls, 'script-moviequiz-gametype.xml', ADDON.getAddonInfo('path'))
 
@@ -292,6 +331,7 @@ class GameTypeDialog(xbmcgui.WindowXMLDialog):
         self.type = type
         self.userId = userId
 
+    @buggalo.buggalo_try_except()
     def onInit(self):
         if self.type == game.GAMETYPE_MOVIE:
             self.getControl(3999).setLabel(strings(M_CHOOSE_MOVIE_GAME_TYPE))
@@ -310,10 +350,12 @@ class GameTypeDialog(xbmcgui.WindowXMLDialog):
             item.setProperty("limit", subTypes['limit'])
             control.addItem(item)
 
+    @buggalo.buggalo_try_except()
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
             self.close()
 
+    @buggalo.buggalo_try_except()
     def onClick(self, controlId):
         interactive = True
         gameInstance = None
@@ -333,6 +375,34 @@ class GameTypeDialog(xbmcgui.WindowXMLDialog):
             timeLimit = int(control.getSelectedItem().getProperty("limit"))
             gameInstance = game.TimeLimitedGame(self.type, self.userId, interactive, timeLimit)
 
+        elif controlId == self.C_GAMETYPE_TIME_LIMIT_NEXT:
+            control = self.getControl(self.C_GAMETYPE_TIME_LIMIT)
+            idx = control.getSelectedPosition() + 1
+            if idx > len(self.TIME_SUB_TYPES) - 1:
+                idx = 0
+            control.selectItem(idx)
+
+        elif controlId == self.C_GAMETYPE_TIME_LIMIT_PREVIOUS:
+            control = self.getControl(self.C_GAMETYPE_TIME_LIMIT)
+            idx = control.getSelectedPosition() - 1
+            if idx < 0:
+                idx = len(self.TIME_SUB_TYPES) - 1
+            control.selectItem(idx)
+
+        elif controlId == self.C_GAMETYPE_QUESTION_LIMIT_NEXT:
+            control = self.getControl(self.C_GAMETYPE_QUESTION_LIMIT)
+            idx = control.getSelectedPosition() + 1
+            if idx > len(self.QUESTION_SUB_TYPES) - 1:
+                idx = 0
+            control.selectItem(idx)
+
+        elif controlId == self.C_GAMETYPE_QUESTION_LIMIT_PREVIOUS:
+            control = self.getControl(self.C_GAMETYPE_QUESTION_LIMIT)
+            idx = control.getSelectedPosition() - 1
+            if idx < 0:
+                idx = len(self.QUESTION_SUB_TYPES) - 1
+            control.selectItem(idx)
+
         if gameInstance is not None:
             self.close()
 
@@ -340,12 +410,22 @@ class GameTypeDialog(xbmcgui.WindowXMLDialog):
             w.doModal()
             del w
 
-    #noinspection PyUnusedLocal
+    @buggalo.buggalo_try_except()
     def onFocus(self, controlId):
-        pass
+        if controlId == self.C_GAMETYPE_UNLIMITED:
+            self.getControl(self.C_GAMETYPE_VISIBLE_MARKER).setLabel(self.VISIBLE_UNLIMITED)
+        elif controlId == self.C_GAMETYPE_QUESTION_LIMITED:
+            self.getControl(self.C_GAMETYPE_VISIBLE_MARKER).setLabel(self.VISIBLE_QUESTION_LIMITED)
+        elif controlId == self.C_GAMETYPE_TIME_LIMITED:
+            self.getControl(self.C_GAMETYPE_VISIBLE_MARKER).setLabel(self.VISIBLE_TIME_LIMITED)
 
 
 class AboutDialog(xbmcgui.WindowXMLDialog):
+    C_ABOUT_VISIBILITY_MARKER = 100
+    C_ABOUT_HIGHSCORE_BUTTON = 500
+    C_ABOUT_STATISTICS_BUTTON = 501
+    C_ABOUT_ABOUT_BUTTON = 502
+    C_ABOUT_CHANGELOG_BUTTON = 503
     C_ABOUT_CLOSE_BUTTON = 504
 
     C_ABOUT_GLOBAL_HIGHSCORE_LIST = 1001
@@ -358,6 +438,11 @@ class AboutDialog(xbmcgui.WindowXMLDialog):
     C_ABOUT_STATISTICS_USERS = 2003
     C_ABOUT_ABOUT = 3001
     C_ABOUT_CHANGELOG = 4001
+
+    VISIBLE_HIGHSCORES = 'highscores'
+    VISIBLE_STATISTICS = 'statistics'
+    VISIBLE_ABOUT = 'about'
+    VISIBLE_CHANGELOG = 'changelog'
 
     GAME_TYPES = [
         game.UnlimitedGame(game.GAMETYPE_MOVIE, -1, True),
@@ -389,11 +474,14 @@ class AboutDialog(xbmcgui.WindowXMLDialog):
         self.useGlobal = True
         self.useMovieQuiz = True
         self.gameType = self.GAME_TYPES[0]
+        self.isClosing = False
 
     def close(self):
         self.localHighscore.close()
+        self.isClosing = True
         super(AboutDialog, self).close()
 
+    @buggalo.buggalo_try_except()
     def onInit(self):
         f = open(ADDON.getAddonInfo('changelog'))
         changelog = f.read()
@@ -415,8 +503,6 @@ class AboutDialog(xbmcgui.WindowXMLDialog):
                 self.typeOptionList.append(strings(M_X_MINUTES, type.getGameSubType()))
             else:
                 self.typeOptionList.append(repr(type))
-
-        self.reloadHighscores()
 
         statistics = self.globalHighscore.getStatistics()
         statisticsLabel = strings(M_STATISTICS, (
@@ -448,12 +534,14 @@ class AboutDialog(xbmcgui.WindowXMLDialog):
             items.append(item)
         listControl.addItems(items)
 
+        self.reloadHighscores()
 
-
+    @buggalo.buggalo_try_except()
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
             self.close()
 
+    @buggalo.buggalo_try_except()
     def onClick(self, controlId):
         if controlId == self.C_ABOUT_CLOSE_BUTTON:
             self.close()
@@ -473,11 +561,22 @@ class AboutDialog(xbmcgui.WindowXMLDialog):
             self.useMovieQuiz = not self.useMovieQuiz
             self.reloadHighscores()
 
-    #noinspection PyUnusedLocal
+    @buggalo.buggalo_try_except()
     def onFocus(self, controlId):
-        pass
+        if controlId == self.C_ABOUT_HIGHSCORE_BUTTON:
+            self.getControl(self.C_ABOUT_VISIBILITY_MARKER).setLabel(self.VISIBLE_HIGHSCORES)
+        elif controlId == self.C_ABOUT_STATISTICS_BUTTON:
+            self.getControl(self.C_ABOUT_VISIBILITY_MARKER).setLabel(self.VISIBLE_STATISTICS)
+        elif controlId == self.C_ABOUT_ABOUT_BUTTON:
+            self.getControl(self.C_ABOUT_VISIBILITY_MARKER).setLabel(self.VISIBLE_ABOUT)
+        elif controlId == self.C_ABOUT_CHANGELOG_BUTTON:
+            self.getControl(self.C_ABOUT_VISIBILITY_MARKER).setLabel(self.VISIBLE_CHANGELOG)
 
     def reloadHighscores(self):
+        threading.Timer(0.1, self.reloadHighscoresInThread).start()
+
+    @buggalo.buggalo_try_except()
+    def reloadHighscoresInThread(self):
         if self.useMovieQuiz:
             self.gameType.setType(game.GAMETYPE_MOVIE)
         else:
@@ -491,7 +590,7 @@ class AboutDialog(xbmcgui.WindowXMLDialog):
         listControl = self.getControl(self.C_ABOUT_GLOBAL_HIGHSCORE_LIST)
         listControl.reset()
         items = list()
-        for entry in entries:
+        for idx, entry in enumerate(entries):
             item = xbmcgui.ListItem(entry['nickname'])
             item.setProperty('position', str(entry['position']))
             item.setProperty('score', str(entry['score']))
@@ -501,6 +600,10 @@ class AboutDialog(xbmcgui.WindowXMLDialog):
             else:
                 item.setProperty('timestamp', entry['timestamp'])
             items.append(item)
+
+            if self.isClosing:
+                return
+
         listControl.addItems(items)
 
 
@@ -580,6 +683,7 @@ class QuizGui(xbmcgui.WindowXML):
 
         self.uiState = self.STATE_LOADING
 
+    @buggalo.buggalo_try_except()
     def onInit(self):
         if self.gameInstance.getType() == game.GAMETYPE_TVSHOW:
             self.getControl(self.C_MAIN_MOVIE_BACKGROUND).setImage(self.defaultBackground)
@@ -605,7 +709,8 @@ class QuizGui(xbmcgui.WindowXML):
             self.player.close()
         self.database.close()
         super(QuizGui, self).close()
-        
+
+    @buggalo.buggalo_try_except()
     def onAction(self, action):
         if action.getId() == ACTION_PARENT_DIR or action.getId() == ACTION_PREVIOUS_MENU:
             self.onGameOver()
@@ -626,6 +731,7 @@ class QuizGui(xbmcgui.WindowXML):
             self.onQuestionAnswered(self.question.getAnswer(3))
 
 
+    @buggalo.buggalo_try_except()
     def onClick(self, controlId):
         difference = time.time() - self.lastClickTime
         self.lastClickTime = time.time()
@@ -645,6 +751,7 @@ class QuizGui(xbmcgui.WindowXML):
         elif controlId == self.C_MAIN_REPLAY:
             self.player.replay()
 
+    @buggalo.buggalo_try_except()
     def onFocus(self, controlId):
         self.onThumbChanged(controlId)
 
@@ -757,6 +864,7 @@ class QuizGui(xbmcgui.WindowXML):
 
         return q
 
+    @buggalo.buggalo_try_except()
     def onQuestionPointTimer(self):
         """
         onQuestionPointTimer handles the decreasing amount of points awareded to the user when a question is answered correctly.
@@ -853,6 +961,7 @@ class QuizGui(xbmcgui.WindowXML):
             else:
                 self.getControl(self.C_MAIN_COVER_IMAGE_VISIBILITY).setVisible(True)
 
+    @buggalo.buggalo_try_except()
     def onQuestionAnswerFeedbackTimer(self):
         """
         onQuestionAnswerFeedbackTimer is invoked by a timer when the red or green background behind the answers box
@@ -894,7 +1003,11 @@ class QuizGui(xbmcgui.WindowXML):
 
 
 class GameOverDialog(xbmcgui.WindowXMLDialog):
+    C_GAMEOVER_VISIBILITY_MARKER = 100
+
     C_GAMEOVER_RETRY = 4000
+    C_GAMEOVER_GLOBAL_HIGHSCORE = 4001
+    C_GAMEOVER_HIGHSCORE = 4002
     C_GAMEOVER_MAINMENU = 4003
 
     C_GAMEOVER_GLOBAL_HIGHSCORE_LIST = 8001
@@ -902,6 +1015,9 @@ class GameOverDialog(xbmcgui.WindowXMLDialog):
 
     C_GAMEOVER_LOCAL_HIGHSCORE_LIST = 9001
     C_GAMEOVER_LOCAL_HIGHSCORE_TYPE = 9002
+
+    VISIBLE_GLOBAL_HIGHSCORE = 'globalHighscore'
+    VISIBLE_LOCAL_HIGHSCORE = 'localHighscore'
 
     def __new__(cls, parentWindow, gameType):
         return super(GameOverDialog, cls).__new__(cls, 'script-moviequiz-gameover.xml', ADDON.getAddonInfo('path'))
@@ -912,6 +1028,7 @@ class GameOverDialog(xbmcgui.WindowXMLDialog):
         self.parentWindow = parentWindow
         self.game = game
 
+    @buggalo.buggalo_try_except()
     def onInit(self):
         self.getControl(4100).setLabel(strings(G_YOU_SCORED) % (self.game.getCorrectAnswers(), self.game.getTotalAnswers()))
         self.getControl(4101).setLabel(str(self.game.getPoints()))
@@ -919,11 +1036,13 @@ class GameOverDialog(xbmcgui.WindowXMLDialog):
         if self.game.isInteractive():
             self._setupHighscores()
 
+    @buggalo.buggalo_try_except()
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
             self.close()
             self.parentWindow.close()
 
+    @buggalo.buggalo_try_except()
     def onClick(self, controlId):
         if controlId == self.C_GAMEOVER_RETRY:
             self.parentWindow.onNewGame()
@@ -933,9 +1052,14 @@ class GameOverDialog(xbmcgui.WindowXMLDialog):
             self.close()
             self.parentWindow.close()
 
-    #noinspection PyUnusedLocal
+    @buggalo.buggalo_try_except()
     def onFocus(self, controlId):
-        pass
+        if controlId in [self.C_GAMEOVER_RETRY, self.C_GAMEOVER_MAINMENU]:
+            self.getControl(self.C_GAMEOVER_VISIBILITY_MARKER).setLabel('')
+        elif controlId == self.C_GAMEOVER_GLOBAL_HIGHSCORE:
+            self.getControl(self.C_GAMEOVER_VISIBILITY_MARKER).setLabel(self.VISIBLE_GLOBAL_HIGHSCORE)
+        elif controlId == self.C_GAMEOVER_HIGHSCORE:
+            self.getControl(self.C_GAMEOVER_VISIBILITY_MARKER).setLabel(self.VISIBLE_LOCAL_HIGHSCORE)
 
     def _setupHighscores(self):
         # Local highscore
@@ -943,7 +1067,7 @@ class GameOverDialog(xbmcgui.WindowXMLDialog):
         newHighscoreId = localHighscore.addHighscore(self.game)
         name = localHighscore.getNickname(self.game.getUserId())
 
-        entries = localHighscore.getHighscores(self.game)
+        entries = localHighscore.getHighscoresNear(self.game, newHighscoreId)
         localHighscore.close()
 
         subTypeText = None
@@ -983,7 +1107,7 @@ class GameOverDialog(xbmcgui.WindowXMLDialog):
         else:
             newHighscoreId = -1
 
-        entries = globalHighscore.getHighscores(self.game)
+        entries = globalHighscore.getHighscoresNear(self.game, newHighscoreId)
         self.getControl(self.C_GAMEOVER_GLOBAL_HIGHSCORE_TYPE).setLabel(subTypeText)
         items = list()
         selectedIndex = -1

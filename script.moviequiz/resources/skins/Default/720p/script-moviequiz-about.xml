@@ -11,6 +11,10 @@
     <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
     <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
     <controls>
+        <control type="label" id="100">
+            <description>Visibility marker</description>
+            <visible>false</visible>
+        </control>
 
         <control type="image">
             <posx>0</posx>
@@ -21,6 +25,7 @@
         </control>
 
         <control type="group">
+            <description>"tab" buttons</description>
             <posx>30</posx>
             <posy>80</posy>
             <width>200</width>
@@ -77,6 +82,7 @@
                 <texturefocus>quiz-button-focus.png</texturefocus>
                 <onup>501</onup>
                 <ondown>503</ondown>
+                <onright>3002</onright>
             </control>
 
             <control type="button" id="503">
@@ -94,6 +100,7 @@
                 <label>$ADDON[script.moviequiz 30802]</label>
                 <onup>502</onup>
                 <ondown>504</ondown>
+                <onright>4002</onright>
             </control>
 
             <control type="button" id="504">
@@ -120,7 +127,7 @@
             <posy>80</posy>
             <width>990</width>
             <height>380</height>
-            <visible>Control.HasFocus(500) | Control.HasFocus(1001) | Control.HasFocus(1002) | Control.HasFocus(1003) | Control.HasFocus(1004)</visible>
+            <visible>StringCompare(Control.GetLabel(100),highscores)</visible>
 
             <control type="togglebutton" id="1002">
                 <description>global / local highscore toggle</description>
@@ -141,6 +148,7 @@
                 <ondown>1001</ondown>
                 <aligny>center</aligny>
                 <align>center</align>
+                <enable>IntegerGreaterThan(Container(1001).NumItems,0)</enable>
             </control>
             <control type="button" id="1003">
                 <description>highscore type</description>
@@ -158,6 +166,7 @@
                 <ondown>1001</ondown>
                 <aligny>center</aligny>
                 <align>center</align>
+                <enable>IntegerGreaterThan(Container(1001).NumItems,0)</enable>
             </control>
             <control type="togglebutton" id="1004">
                 <description>movie / tv show quiz</description>
@@ -178,6 +187,7 @@
                 <ondown>1001</ondown>
                 <aligny>center</aligny>
                 <align>center</align>
+                <enable>IntegerGreaterThan(Container(1001).NumItems,0)</enable>
             </control>
 
             <control type="label">
@@ -228,6 +238,32 @@
                 <label>$ADDON[script.moviequiz 30814]</label>
                 <aligny>center</aligny>
                 <align>right</align>
+            </control>
+
+            <control type="group">
+                <posx>300</posx>
+                <posy>250</posy>
+                <width>470</width>
+                <height>55</height>
+                <visible>!IntegerGreaterThan(Container(1001).NumItems,0)</visible>
+                <animation effect="fade" start="0" end="100" time="300">VisibleChange</animation>
+
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>54</width>
+                    <height>55</height>
+                    <texture>loading.gif</texture>
+                </control>
+                <control type="label">
+                    <posx>70</posx>
+                    <posy>0</posy>
+                    <width>400</width>
+                    <height>55</height>
+                    <label>$ADDON[script.moviequiz 30008]</label>
+                    <aligny>center</aligny>
+                    <font>font30</font>
+                </control>
             </control>
 
             <control type="list" id="1001">
@@ -379,7 +415,7 @@
             <posy>80</posy>
             <width>990</width>
             <height>570</height>
-            <visible>Control.HasFocus(501) | Control.HasFocus(2002) | Control.HasFocus(2003)</visible>
+            <visible>StringCompare(Control.GetLabel(100),statistics)</visible>
 
             <control type="label" id="2001">
                 <posx>0</posx>
@@ -573,7 +609,7 @@
             <posy>80</posy>
             <width>990</width>
             <height>570</height>
-            <visible>Control.HasFocus(502)</visible>
+            <visible>StringCompare(Control.GetLabel(100),about)</visible>
 
             <control type="textbox" id="3001">
                 <posx>0</posx>
@@ -585,6 +621,16 @@
                 <wrapmultiline>true</wrapmultiline>
                 <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
                 <label>$ADDON[script.moviequiz 30008]</label>
+                <onright>3002</onright>
+                <pagecontrol>3002</pagecontrol>
+            </control>
+
+            <control type="scrollbar" id="3002">
+                <posx>990</posx>
+                <posy>0</posy>
+                <width>20</width>
+                <height>570</height>
+                <onleft>3001</onleft>
             </control>
         </control>
 
@@ -594,7 +640,7 @@
             <posy>80</posy>
             <width>990</width>
             <height>570</height>
-            <visible>Control.HasFocus(503)</visible>
+            <visible>StringCompare(Control.GetLabel(100),changelog)</visible>
 
             <control type="textbox" id="4001">
                 <posx>0</posx>ad
@@ -606,8 +652,17 @@
                 <wrapmultiline>true</wrapmultiline>
                 <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
                 <label>$ADDON[script.moviequiz 30008]</label>
+                <onleft>4002</onleft>
+                <pagecontrol>4002</pagecontrol>
             </control>
 
+            <control type="scrollbar" id="4002">
+                <posx>990</posx>
+                <posy>0</posy>
+                <width>20</width>
+                <height>570</height>
+                <onleft>4001</onleft>
+            </control>
         </control>
 
     </controls>
