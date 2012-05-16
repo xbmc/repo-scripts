@@ -195,7 +195,7 @@ class TMDB(object):
         
         if self._upd_key(meta, 'rating'):
             print '-- IMDB - Updating Rating'
-            imdb_rating = imdb_meta['Rating']
+            imdb_rating = imdb_meta['imdbRating']
             if imdb_rating not in ('N/A', '', None):
                 meta['rating'] = imdb_rating
             else:
@@ -203,7 +203,7 @@ class TMDB(object):
                     meta['rating'] = meta['tmdb_rating']
 
         if not self._upd_key(imdb_meta, 'Votes'):
-            meta['votes'] = imdb_meta['Votes']
+            meta['votes'] = imdb_meta['imdbVotes']
         else:
             meta['votes'] = ''
                 
@@ -230,7 +230,7 @@ class TMDB(object):
                         dur = dur + int(scrape[0])
                 meta['runtime']=str(dur)
         
-        meta['imdb_id'] = imdb_meta['ID']       
+        meta['imdb_id'] = imdb_meta['imdbID']       
         return meta
 
 
@@ -298,7 +298,7 @@ class TMDB(object):
             else:
                 meta = self.search_imdb(name, year=year)
                 if meta:
-                    imdb_id = meta['ID']                         
+                    imdb_id = meta['imdbID']                         
 
         #If we don't have a tmdb_id yet but do have imdb_id lets see if we can find it
         elif imdb_id and not tmdb_id:

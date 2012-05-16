@@ -237,19 +237,26 @@ class MetaData:
         print 'Table addons initialized'     
         
 
-    def _init_tvshow_meta(self, imdb_id, tvdb_id, name):
+    def _init_tvshow_meta(self, imdb_id, tvdb_id, name, year=0):
         '''
         Initializes a tvshow_meta dictionary with default values, to ensure we always
         have all fields
         
         Args:
             imdb_id (str): IMDB ID
+            tvdb_id (str): TVDB ID
             name (str): full name of movie you are searching
-            premiered (str): 10 digit year YYYY-MM-DD
+            year (int): 4 digit year
                         
         Returns:
             DICT in the structure of what is required to write to the DB
-        '''          
+        '''
+        
+        if year:
+            int(year)
+        else:
+            year = 0
+            
         meta = {}
         meta['imdb_id'] = imdb_id
         meta['tvdb_id'] = tvdb_id
@@ -260,6 +267,7 @@ class MetaData:
         meta['plot'] = ''
         meta['mpaa'] = ''
         meta['premiered'] = ''
+        meta['year'] = int(year)
         meta['trailer_url'] = ''
         meta['genre'] = ''
         meta['studio'] = ''
@@ -273,7 +281,7 @@ class MetaData:
         meta['cover_url'] = ''
         meta['backdrop_url'] = ''
         meta['overlay'] = 6
-        meta['episode'] = '0'
+        meta['episode'] = 0
         meta['playcount'] = 0
         return meta
 
@@ -285,8 +293,9 @@ class MetaData:
         
         Args:
             imdb_id (str): IMDB ID
+            tmdb_id (str): TMDB ID
             name (str): full name of movie you are searching
-            premiered (str): 10 digit year YYYY-MM-DD
+            year (int): 4 digit year
                         
         Returns:
             DICT in the structure of what is required to write to the DB
@@ -847,7 +856,7 @@ class MetaData:
             sql_select = "SELECT * FROM %s WHERE imdb_id = '%s'" % (table, meta['imdb_id'])
         else:           
             sql_select = "SELECT * FROM %s WHERE title = '%s'" % (table, meta['title'])
-            if meta.has_key('year'):
+            if meta.has_key('year') and type == self.type_movie:
                 if meta['year']:
                     sql_select = sql_select + " AND year = '%s'" % meta['year']
 
@@ -1087,7 +1096,7 @@ class MetaData:
             tvdb_id = tvdb.get_show_by_imdb(imdb_id)
             
         #Intialize tvshow meta dictionary
-        meta = self._init_tvshow_meta(imdb_id, tvdb_id, name)
+        meta = self._init_tvshow_meta(imdb_id, tvdb_id, name, year)
 
         # if not found by imdb, try by name
         if tvdb_id == '':
@@ -1133,6 +1142,12 @@ class MetaData:
                 meta['plot'] = show.overview
                 meta['mpaa'] = show.content_rating
                 meta['premiered'] = str(show.first_aired)
+
+                #Do whatever we can to set a year, if we don't have one lets try to strip it from show.first_aired/premiered
+                if not year and show.first_aired:
+                        #meta['year'] = int(self._convert_date(meta['premiered'], '%Y-%m-%d', '%Y'))
+                        meta['year'] = int(meta['premiered'][:4])
+
                 if show.genre != '':
                     temp = show.genre.replace("|",",")
                     temp = temp[1:(len(temp)-1)]
@@ -1157,7 +1172,7 @@ class MetaData:
                         if imdb_meta.has_key('overview'):
                             meta['plot'] = imdb_meta['overview']
                         if imdb_meta.has_key('rating'):
-                            meta['rating'] = imdb_meta['rating']
+                            meta['rating'] = float(imdb_meta['rating'])
                         if imdb_meta.has_key('runtime'):
                             meta['duration'] = imdb_meta['runtime']
                         if imdb_meta.has_key('cast'):
@@ -1252,7 +1267,7 @@ class MetaData:
                 meta['tvdb_id']=''
                 meta['episode_id'] = ''                
                 meta['season']=season
-                meta['episode']=episode
+                meta['episode']= int(episode)
                 meta['title']= name
                 meta['plot'] = ''
                 meta['director'] = ''

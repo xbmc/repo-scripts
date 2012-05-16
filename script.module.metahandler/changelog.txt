@@ -1,2 +1,7 @@
+[B]Version 1.0.1[/B]
+- Updated for changes in IMDB field names
+- Added return of Year for TV Shows - still to do: save Year in DB
+- Corrected Ratings and Episode values on TV Shows not returning in proper format in all scenarios
+
 [B]Version 1.0.0[/B]
 - Initial Release.
