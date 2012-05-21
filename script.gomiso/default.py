@@ -10,7 +10,7 @@ import simplejson as json
 __author__ = "Mathieu Feulvarch"
 __copyright__ = "Copyright 2011, Mathieu Feulvarch "
 __license__ = "GPL"
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 __maintainer__ = "Mathieu Feulvarch"
 __email__ = "mathieu@feulvarch.fr"
 __status__ = "Production"
@@ -190,9 +190,19 @@ else:
 							letsGo.checking(json_result[0]['media']['id'], season, episode, displayMessage)
 							if verboseScreen:
 								xbmc.executebuiltin("XBMC.Notification(%s, %s, %i, %s)"  % ('Gomiso', showname + ' S' + season + 'E' + episode + ' ' + __language__(30918), 5000, __settings__.getAddonInfo("icon")))
-						else:
+						elif (showname[-1]!=")"):
 							if verboseScreen:
 								xbmc.executebuiltin("XBMC.Notification(%s, %s, %i, %s)"  % ('Gomiso', showname + ' S' + season + 'E' + episode + ' ' + __language__(30917), 5000, __settings__.getAddonInfo("icon")))
+						else:
+							#try stripping year from the title (es. "Castle (2009)")
+							json_result = json.loads(letsGo.findMedia(showname[:-7], 'tv', 1))
+							if len(json_result) != 0:							
+								letsGo.checking(json_result[0]['media']['id'], season, episode, displayMessage)
+								if verboseScreen:
+									xbmc.executebuiltin("XBMC.Notification(%s, %s, %i, %s)"  % ('Gomiso', showname + ' S' + season + 'E' + episode + ' ' + __language__(30918), 5000, __settings__.getAddonInfo("icon")))
+							else:
+								if verboseScreen:
+									xbmc.executebuiltin("XBMC.Notification(%s, %s, %i, %s)"  % ('Gomiso', showname + ' S' + season + 'E' + episode + ' ' + __language__(30917), 5000, __settings__.getAddonInfo("icon")))
 						checkedTitle = currentTitle
 					#Or are we watching a movie
 					elif len(xbmc.getInfoLabel("VideoPlayer.Title")) >= 1:
@@ -200,6 +210,8 @@ else:
 						#movieName = xbmc.getInfoLabel("VideoPlayer.Title")
 						movieName = unicode(xbmc.getInfoLabel("VideoPlayer.Title"), errors="ignore")
 						movieName = movieName.replace(",", '')
+                        season = ''
+                        episode = ''
 						
 						#Retrieve only one entry but would be good to have a threshold level like if more than 20 entries, no submit
 						json_result = json.loads(letsGo.findMedia(movieName, 'movie', 1))
