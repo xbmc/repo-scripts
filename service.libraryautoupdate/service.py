@@ -313,10 +313,13 @@ class AutoUpdater:
     def readLastRun(self):
         
         try:
+            self.last_run = 0
             f = open(unicode(xbmc.translatePath(self.datadir + "last_run.txt"),'utf-8'),"r")
-            self.last_run = float(f.read())
+            strlastRun = f.read()
+            if len(strlastRun) != 0 :
+                self.last_run = float(strlastRun) 
             f.close()
-        except IOError:
+        except:
             #the file doesn't exist, most likely first time running
             self.last_run = 0
 

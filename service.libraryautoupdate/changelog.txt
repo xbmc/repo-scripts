@@ -71,3 +71,11 @@
 [B]Version 0.6.0[/B]
 
 - added "Cleaning" category to schedule a clean operation of the music/video databases. This operation can happen immediately after a scan or once per day/week/month. Verifying source paths before a clean is also supported
+
+[B]Version 0.6.1[/B]
+
+- added 2 more custom library path options
+
+[B]Version 0.6.2[/B]
+
+- needed a catch in case the last_run.txt file is blank, or has non-integer data. thanks to mmounirou for catching this
