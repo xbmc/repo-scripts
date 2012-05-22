@@ -169,9 +169,9 @@ def rem_files(directory):
   try:
     for root, dirs, files in os.walk(directory, topdown=False):
       for items in dirs:
-        xbmcvfs.rmdir(os.path.join(root, items))
+        xbmcvfs.rmdir(os.path.join(root.encode("utf-8"), items.encode("utf-8")))
       for name in files:
-        xbmcvfs.delete(os.path.join(root, name))
+        xbmcvfs.delete(os.path.join(root.encode("utf-8"), name.encode("utf-8")))
   except:
     pass 
       

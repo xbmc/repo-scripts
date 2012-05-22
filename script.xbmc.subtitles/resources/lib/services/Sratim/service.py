@@ -2,7 +2,7 @@
 
 #===============================================================================
 # Sratim.co.il subtitles service.
-# Version: 2.1
+# Version: 2.2
 #
 # Change log:
 # 1.1 - Fixed bug with movie search: forgot to replace spaces with + signs.
@@ -10,13 +10,14 @@
 # 2.0 - Changed RE patterns and links to match new site layout (Thanks Shai Bentin!)
 #       Fixed TV show subtitles (now navigates site to find requested episode)
 # 2.1 - Changed RE patterns again due to layout change (Thanks BBLN for also suggesting different fix).
+# 2.2 - Changed url to subtitle.co.il
 #
 # Created by: Ori Varon
 #===============================================================================
 import os, re, xbmc, xbmcgui, string, time, urllib2
 from utilities import languageTranslate, log
 
-BASE_URL = "http://www.sratim.co.il/"
+BASE_URL = "http://www.subtitle.co.il/"
 debug_pretext = ""
 
 #===============================================================================

@@ -25,6 +25,13 @@
     <string id="755">O servidor está sobrecarregado, por favor tente mais tarde</string>
     <string id="756">O login falhou. Verifique seus dados nas Configurações do addon</string>
     <string id="760">Serviços Disponíveis</string> 
+    <string id="761">Você deve estar logado para efetuar download destas legendas,[CR]verifique seus ajustes de configuração do addon</string>
+    <string id="762">Ajustes do Addon</string>
+    <string id="763">Auto downloading primeira legenda 'sincronizada'</string>
+    <string id="764">Downloading primeira leg 'sinc'</string>
+    <string id="765">Primeira legenda 'sinc' baixada</string>
+    <string id="766">Escolha Pasta Legenda</string>
+
     
   <!-- Script Settings -->
    
@@ -52,8 +59,8 @@
     <string id="30127">- Itasa Senha</string>
     <string id="30128">- Titulky Nome do Usuário</string>
     <string id="30129">- Titulky Senha</string>
-    <string id="30130">Search next available service if no results are found</string>
-    <string id="30131">Auto download first "sync" subtitle</string>
+    <string id="30130">Procurar Próximo Serviço Disponível, se resultado não for encontrado</string>
+    <string id="30131">Auto download primeira legenda "sinc"</string>
     <string id="30132">- LegendasDivx Usuário</string>
     <string id="30133">- LegendasDivx Senha</string>
     <string id="30134">- PTSubs Usuário</string>
@@ -62,6 +69,13 @@
     <string id="30137">- OmniSubs Senha</string>
     <string id="30138">- LegendasZone Usuário</string>
     <string id="30139">- LegendasZone Senha</string>
+	<string id="30140">- Escolha Tipo subs:</string>
+    <string id="30141">SubRip</string>
+    <string id="30142">TMPlayer</string>
+    <string id="30143">MicroDVD</string>
+    <string id="30144">MPl2</string>
+    <string id="30145">Use 'Subs' subfolder para armazenar legendas</string>
+    
   
   <!-- Languages  -->
 

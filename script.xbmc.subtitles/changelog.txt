@@ -1,3 +1,13 @@
+3.2.0
+- added service Subtitulos.es, thx quillo86
+- Fixed Sratim service (url changed), thx BBLN
+- Fixed Subscenter service (key field), thx BBLN
+- hearing impaired flag for Subscene. thx MartinWallgren
+- fix Subdivx .decode("utf-8")
+- Portugues Brasileiro strings.xml, thx Wanilton
+- fix: Betaseries utf-8
+- general cleanups and fixes
+
 3.1.0
 - Fixed 'Ondertitel.com' after site redesign and sync detection added, mr-blobby
 - hearing_imp in hash search in podnapisi

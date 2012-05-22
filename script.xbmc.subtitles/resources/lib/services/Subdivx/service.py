@@ -168,7 +168,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
                 # determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
                 for file in files:
                     if (string.split(file,'.')[-1] in ['srt','sub','txt']):
-                        mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+                        mtime = os.stat(os.path.join(tmp_sub_dir, file.decode("utf-8"))).st_mtime
                         if (mtime > max_mtime):
                             max_mtime =  mtime
                 waittime  = waittime + 1
@@ -180,6 +180,6 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
                     # there could be more subtitle files in tmp_sub_dir, so make sure we get the newly created subtitle file
                     if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
                         log( __name__ ,u"%s Unpacked subtitles file '%s'" % (debug_pretext, file))
-                        subs_file = os.path.join(tmp_sub_dir, file)
+                        subs_file = os.path.join(tmp_sub_dir, file.decode("utf-8"))
         return False, language, subs_file #standard output
 

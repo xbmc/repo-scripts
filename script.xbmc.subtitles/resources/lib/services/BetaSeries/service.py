@@ -216,7 +216,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             # determine the newest file from tmp_sub_dir
             for file in files:
                 if (string.split(file,'.')[-1] in ['srt','sub','txt','ass']):
-                    mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+                    mtime = os.stat(os.path.join(tmp_sub_dir.encode("utf-8"), file.encode("utf-8"))).st_mtime
                     if mtime > max_mtime:
                         max_mtime =  mtime
             init_max_mtime = max_mtime

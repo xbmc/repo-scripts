@@ -38,8 +38,8 @@ seasons = seasons + ["Twenty-first", "Twenty-second", "Twenty-third", "Twenty-fo
 """
 subtitle_pattern = "..<tr>.{5}<td>.{6}<a class=\"a1\" href=\"/([^\n\r]{10,200}?-\d{3,10}.aspx)\" title=\"[^\n\r]{10,200}\">\
 [\r\n\t ]+?<span class=\"r(0|100)\" >[\r\n\t\ ]+([^\r\n\t]+?) [\r\n\t]+</span>[\r\n\t ]+?<span id=\"r\d+\">([^\r\n\t]{5,500})</span>\
-[\r\n\t]+?</a>[\r\n\t ]+?</td>[\r\n\t ]+?<td class=\"a3\">1[\r\n\t\ ]+?</td>[\r\n\t\ ]+?<td>(?!<div id=imgEar)"
-# group(1) = downloadlink, group(2) = qualitycode, group(3) = language, group(4) = filename
+[\r\n\t]+?</a>[\r\n\t ]+?</td>[\r\n\t ]+?<td class=\"a3\">1[\r\n\t\ ]+?</td>[\r\n\t\ ]+?<td>(|.{52})\r\n\t\t\t</td>"
+# group(1) = downloadlink, group(2) = qualitycode, group(3) = language, group(4) = filename, group(5) = hearing impaired
 
 
 # movie/seasonfound pattern example:
@@ -98,10 +98,10 @@ def find_movie(content, title, year):
 def find_tv_show_season(content, tvshow, season):
     url_found = None
     for matches in re.finditer(movie_season_pattern, content, re.IGNORECASE | re.DOTALL):
-        log( __name__ ,"%s Found tv show season on search page: %s" % (debug_pretext, matches.group(2)))
+        log( __name__ ,"%s Found tv show season on search page: %s" % (debug_pretext, matches.group(2).decode("utf-8")))
         if string.find(string.lower(matches.group(2)),string.lower(tvshow) + " ") > -1:
             if string.find(string.lower(matches.group(2)),string.lower(season)) > -1:
-                log( __name__ ,"%s Matching tv show season found on search page: %s" % (debug_pretext, matches.group(2)))
+                log( __name__ ,"%s Matching tv show season found on search page: %s" % (debug_pretext, matches.group(2).decode("utf-8")))
                 url_found = matches.group(1)
                 break
     return url_found
@@ -114,15 +114,16 @@ def getallsubs(response_url, content, language, title, subtitles_list, search_st
             link = main_url + matches.group(1)
             languageshort = languageTranslate(language,0,2)
             filename   = matches.group(4)
+            hearing_imp = len(matches.group(5)) > 0
             if search_string != "":
                 log( __name__ , "string.lower(filename) = >" + string.lower(filename) + "<" )
                 log( __name__ , "string.lower(search_string) = >" + string.lower(search_string) + "<" )
                 if string.find(string.lower(filename),string.lower(search_string)) > -1:
                     log( __name__ ,"%s Subtitles found: %s, %s" % (debug_pretext, languagefound, filename))
-                    subtitles_list.append({'rating': '0', 'movie':  title, 'filename': filename, 'sync': False, 'link': link, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': language})
+                    subtitles_list.append({'rating': '0', 'movie':  title, 'filename': filename, 'sync': False, 'link': link, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': language, 'hearing_imp': hearing_imp})
             else:
                 log( __name__ ,"%s Subtitles found: %s, %s" % (debug_pretext, languagefound, filename))
-                subtitles_list.append({'rating': '0', 'movie':  title, 'filename': filename, 'sync': False, 'link': link, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': language})
+                subtitles_list.append({'rating': '0', 'movie':  title, 'filename': filename, 'sync': False, 'link': link, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': language, 'hearing_imp': hearing_imp})
 
 
 def geturl(url):

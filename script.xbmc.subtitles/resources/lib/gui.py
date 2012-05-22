@@ -16,6 +16,7 @@ _              = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __addon__      = sys.modules[ "__main__" ].__addon__
 __profile__    = sys.modules[ "__main__" ].__profile__ 
+__version__    = sys.modules[ "__main__" ].__version__
 
 class GUI( xbmcgui.WindowXMLDialog ):
         
@@ -58,14 +59,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
     self.language_1     = languageTranslate(__addon__.getSetting( "Lang01" ), 4, 0)     # Full language 1
     self.language_2     = languageTranslate(__addon__.getSetting( "Lang02" ), 4, 0)     # Full language 2  
     self.language_3     = languageTranslate(__addon__.getSetting( "Lang03" ), 4, 0)     # Full language 3
-    self.tmp_sub_dir    = os.path.join( __profile__ ,"sub_tmp" )                        # Temporary subtitle extraction directory   
-    self.stream_sub_dir = os.path.join( __profile__ ,"sub_stream" )                     # Stream subtitle directory    
-
+    self.tmp_sub_dir    = os.path.join( __profile__ ,"sub_tmp" ).decode("utf-8")        # Temporary subtitle extraction directory   
+    self.stream_sub_dir = os.path.join( __profile__ ,"sub_stream" ).decode("utf-8")     # Stream subtitle directory    
+    
+    self.clean_temp()                                                                   # clean temp dirs
+    
     if ( movieFullPath.find("http") > -1 ):
-      if not xbmcvfs.exists(self.stream_sub_dir):
-        os.makedirs(self.stream_sub_dir)
-      else:
-        rem_files(self.stream_sub_dir)
       self.sub_folder = self.stream_sub_dir
       self.temp = True
 
@@ -138,12 +137,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                                               int(self.episode)
                                              )
       else:
-        self.file_name = "%s (%s)" % (self.title.encode('utf-8'), str(self.year),)    
-
-    if not xbmcvfs.exists(self.tmp_sub_dir):
-      os.makedirs(self.tmp_sub_dir)
-    else:
-      rem_files(self.tmp_sub_dir)
+        self.file_name = "%s (%s)" % (self.title.encode('utf-8'), str(self.year),)
 
     if ((__addon__.getSetting( "auto_download" ) == "true") and 
         (__addon__.getSetting( "auto_download_file" ) != os.path.basename( movieFullPath ))):
@@ -172,8 +166,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
       self.service_list = service_list
       self.next = list(service_list)
       self.controlId = -1
-      self.subtitles_list = []
 
+      log( __name__ ,"Addon Version: [%s]"         % __version__)
       log( __name__ ,"Manual Search : [%s]"        % self.mansearch)
       log( __name__ ,"Default Service : [%s]"      % self.service)
       log( __name__ ,"Services : [%s]"             % self.service_list)
@@ -190,7 +184,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       log( __name__ ,"Parent Folder Search: [%s]"  % self.parsearch)
       log( __name__ ,"Stacked(CD1/CD2)?: [%s]"     % self.stack)
   
-    return movieFullPath
+    return self.autoDownload
 
   def Search_Subtitles( self, gui = True ):
     self.subtitles_list = []
@@ -257,6 +251,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     else:
       subscounter = 0
       itemCount = 0
+      list_subs = []
       for item in self.subtitles_list:
         if (self.autoDownload and 
             item["sync"] and  
@@ -286,15 +281,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
               listitem.setProperty( "hearing_imp", "false" )
               
             self.list.append(subscounter)
-            subscounter = subscounter + 1                                    
-            self.getControl( SUBTITLES_LIST ).addItem( listitem )
+            subscounter = subscounter + 1
+            list_subs.append(listitem)                                 
         itemCount += 1
       
       if gui:
-        self.getControl( STATUS_LABEL ).setLabel( '%i %s '"' %s '"'' % 
-                                                  (len ( self.subtitles_list ),
-                                                   _( 744 ),
-                                                   self.file_name,)) 
+        label = '%i %s '"' %s '"'' % (len ( self.subtitles_list ),_( 744 ),self.file_name,)
+        self.getControl( STATUS_LABEL ).setLabel( label ) 
+        self.getControl( SUBTITLES_LIST ).addItems( list_subs )
         self.setFocusId( SUBTITLES_LIST )
         self.getControl( SUBTITLES_LIST ).selectItem( 0 )
       return False
@@ -407,6 +401,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( STATUS_LABEL ).setLabel( _( 654 ) )
         self.show_service_list(gui)
 
+  def clean_temp( self ):
+    dirs = [self.stream_sub_dir,self.tmp_sub_dir]
+    for temp_dir in dirs:
+      if not xbmcvfs.exists(temp_dir):
+        os.makedirs(temp_dir)
+      else:
+        rem_files(temp_dir) 
+
   def show_service_list(self,gui):
     try:
       select_index = self.service_list.index(self.service)
@@ -422,37 +424,44 @@ class GUI( xbmcgui.WindowXMLDialog ):
     else:
       name = os.path.splitext( sub_filename )[0]
     if (__addon__.getSetting( "lang_to_end" ) == "true"):
-      file_name = u"%s.%s%s" % ( name, subtitle_lang, os.path.splitext( zip_entry )[1] )
+      file_name = u"%s.%s%s" % ( name, 
+                                 subtitle_lang,
+                                 os.path.splitext( zip_entry )[1] )
     else:
       file_name = u"%s%s" % ( name, os.path.splitext( zip_entry )[1] )
-    log( __name__ ,"Sub in Zip [%s], File Name [%s]" % (zip_entry.encode("utf-8"), file_name.encode("utf-8"),))
-    return os.path.join(self.tmp_sub_dir, zip_entry.encode("utf-8")), os.path.join(self.sub_folder, file_name.encode("utf-8"))
+    log( __name__ ,"Sub in Zip [%s], File Name [%s]" % (zip_entry.encode("utf-8"),
+                                                        file_name.encode("utf-8"),))
+    ret_zip_entry = os.path.join(self.tmp_sub_dir,zip_entry.encode("utf-8"))
+    ret_file_name = os.path.join(self.sub_folder,file_name.encode("utf-8"))
+    return ret_zip_entry,ret_file_name
 
   def list_services( self ):
     self.list = []
+    all_items = []
     self.getControl( SERVICES_LIST ).reset() 
     for serv in self.service_list:
       listitem = xbmcgui.ListItem( serv )
       self.list.append(serv)
       listitem.setProperty( "man", "false" )
-      self.getControl( SERVICES_LIST ).addItem( listitem )
+      all_items.append(listitem)
 
     if self.mansearch :
         listitem = xbmcgui.ListItem( _( 612 ) )
         listitem.setProperty( "man", "true" )
         self.list.append("Man")
-        self.getControl( SERVICES_LIST ).addItem( listitem )
+        all_items.append(listitem)
 
     if self.parsearch :
         listitem = xbmcgui.ListItem( _( 747 ) )
         listitem.setProperty( "man", "true" )
         self.list.append("Par")
-        self.getControl( SERVICES_LIST ).addItem( listitem )
+        all_items.append(listitem)
       
     listitem = xbmcgui.ListItem( _( 762 ) )
     listitem.setProperty( "man", "true" )
     self.list.append("Set")
-    self.getControl( SERVICES_LIST ).addItem( listitem )    
+    all_items.append(listitem)
+    self.getControl( SERVICES_LIST ).addItems( all_items )    
 
   def keyboard(self, parent):
     dir, self.year = xbmc.getCleanMovieTitle(self.file_original_path, self.parsearch)
