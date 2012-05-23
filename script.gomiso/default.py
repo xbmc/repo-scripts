@@ -10,7 +10,7 @@ import simplejson as json
 __author__ = "Mathieu Feulvarch"
 __copyright__ = "Copyright 2011, Mathieu Feulvarch "
 __license__ = "GPL"
-__version__ = "1.4.0"
+__version__ = "1.4.1"
 __maintainer__ = "Mathieu Feulvarch"
 __email__ = "mathieu@feulvarch.fr"
 __status__ = "Production"
@@ -212,14 +212,14 @@ else:
 						movieName = movieName.replace(",", '')
                         season = ''
                         episode = ''
-						
-						#Retrieve only one entry but would be good to have a threshold level like if more than 20 entries, no submit
-						json_result = json.loads(letsGo.findMedia(movieName, 'movie', 1))
-						if len(json_result) != 0:
-							letsGo.checking(json_result[0]['media']['id'], season, episode, 'watched on XBMC with gomiso addon')
-							if verboseScreen:
-								xbmc.executebuiltin("XBMC.Notification(%s, %s, %i, %s)"  % ('Gomiso', movieName + ' ' + __language__(30918), 5000, __settings__.getAddonInfo("icon")))
-						else:
-							if verboseScreen:
-								xbmc.executebuiltin("XBMC.Notification(%s, %s, %i, %s)"  % ('Gomiso', movieName + ' ' + __language__(30917), 5000, __settings__.getAddonInfo("icon")))
-						checkedTitle = currentTitle
+                        
+                        #Retrieve only one entry but would be good to have a threshold level like if more than 20 entries, no submit
+                        json_result = json.loads(letsGo.findMedia(movieName, 'movie', 1))
+                        if len(json_result) != 0:
+                            letsGo.checking(json_result[0]['media']['id'], season, episode, 'watched on XBMC with gomiso addon')
+                            if verboseScreen:
+                                xbmc.executebuiltin("XBMC.Notification(%s, %s, %i, %s)"  % ('Gomiso', movieName + ' ' + __language__(30918), 5000, __settings__.getAddonInfo("icon")))
+                        else:
+                            if verboseScreen:
+                                xbmc.executebuiltin("XBMC.Notification(%s, %s, %i, %s)"  % ('Gomiso', movieName + ' ' + __language__(30917), 5000, __settings__.getAddonInfo("icon")))
+                        checkedTitle = currentTitle
