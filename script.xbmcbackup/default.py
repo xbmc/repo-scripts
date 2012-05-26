@@ -7,8 +7,8 @@ import os
 class FileManager:
     walk_path = ''
     addonDir = ''
-    fHandle = None
-
+    fileArray = None
+	
     def __init__(self,path,addon_dir):
         self.walk_path = path
         self.addonDir = addon_dir
@@ -18,7 +18,7 @@ class FileManager:
             os.makedirs(unicode(xbmc.translatePath(self.addonDir),'utf-8'))
 
     def createFileList(self,Addon):
-        self.fHandle = open(unicode(xbmc.translatePath(self.addonDir + "restore.txt"),'utf-8'),"w")
+        self.fileArray = []
         
         #figure out which syncing options to run
         if(Addon.getSetting('backup_addons') == 'true'):
@@ -44,14 +44,18 @@ class FileManager:
 	    self.walkTree(self.walk_path + "userdata/Thumbnails")
 		
         if(Addon.getSetting("backup_config") == "true"):
-	    #this one is an oddity
-            configFiles = os.listdir(self.walk_path + "userdata/")
-	    for aFile in configFiles:
-		if(aFile.endswith(".xml")):
-		    self.addFile("userdata/" + aFile)
+            self.addFile("-userdata/keymaps")
+            self.walkTree(self.walk_path + "userdata/keymaps")
 
-	if(self.fHandle != None):
-            self.fHandle.close()
+            self.addFile("-userdata/peripheral_data")
+            self.walkTree(self.walk_path + "userdata/peripheral_data")
+            
+	    #this part is an oddity
+            configFiles = vfs.listdir(self.walk_path + "userdata/",extra_metadata=True)
+	    for aFile in configFiles:
+                xbmc.log(aFile['file'][len(self.walk_path):])
+		if(aFile['file'].endswith(".xml")):
+		    self.addFile(aFile['file'][len(self.walk_path):])
         
     def walkTree(self,directory):
         for (path, dirs, files) in vfs.walk(directory):
@@ -66,13 +70,10 @@ class FileManager:
                     
     def addFile(self,filename):
         #write the full remote path name of this file
-        if(self.fHandle != None):
-            self.fHandle.write(str(filename) + "\n")
+        self.fileArray.append(filename)
 
-    def readFileList(self):
-        allFiles = open(unicode(xbmc.translatePath(self.addonDir + "restore.txt"),'utf-8'),"r").read().splitlines()
-
-        return allFiles
+    def getFileList(self):
+       return self.fileArray
 
 class XbmcBackup:
     __addon_id__ = 'script.xbmcbackup'
@@ -131,7 +132,7 @@ class XbmcBackup:
         
         self.fileManager.createFileList(self.Addon)
 
-        allFiles = self.fileManager.readFileList()
+        allFiles = self.fileManager.getFileList()
 
         #write list from local to remote
         self.writeFiles(allFiles,self.local_path,self.remote_path)
@@ -139,10 +140,13 @@ class XbmcBackup:
     def restoreFiles(self):
         self.fileManager.createFileList(self.Addon)
         
-        allFiles = self.fileManager.readFileList()
+        allFiles = self.fileManager.getFileList()
 
         #write list from remote to local
         self.writeFiles(allFiles,self.remote_path,self.local_path)
+
+        #call update addons to refresh everything
+        xbmc.executebuiltin('UpdateLocalAddons')
         
     def writeFiles(self,fileList,source,dest):
         self.filesTotal = len(fileList)
