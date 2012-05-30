@@ -24,3 +24,5 @@ CustomFavourite.1.Icon
 CustomFavourite.1.Path
 
 NOTE: playlists attribute has no effect when property is specified. The script will ask if a playlist should play.
+
+Additionally you can pass 'changetitle=true' to the script, this will allow the user to change the name of the favourite.

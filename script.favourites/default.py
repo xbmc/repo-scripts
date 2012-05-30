@@ -13,7 +13,7 @@ sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
 def log(txt):
     message = 'script.favourites: %s' % txt
     xbmc.log(msg=message, level=xbmc.LOGDEBUG)
-    
+
 class Main:
     def __init__( self ):
         self.WINDOW = xbmcgui.Window( 10000 )
@@ -23,7 +23,7 @@ class Main:
         self._parse_String()
         self._fetch_favourites()
         self.doc.unlink()
-        
+
     def _parse_argv( self ):
         try:
             params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
@@ -32,6 +32,7 @@ class Main:
         log( "### params: %s" % params )
         self.PROPERTY = params.get( "property", "" )
         self.PLAY = params.get( "playlists", False )
+        self.CHANGETITLE = params.get( "changetitle", False )
 
     def _clear_properties( self ):
         for count in range( 20 ):
@@ -63,10 +64,10 @@ class Main:
             count = 0
             for self.doc in self.favourites:
                 self.fav_path = self.doc.childNodes [ 0 ].nodeValue
-                # add return 
-                if 'RunScript' not in self.fav_path: 
-                    self.fav_path = self.fav_path.rstrip(')')
-                    self.fav_path = self.fav_path + ',return)'
+                # add return
+                if 'RunScript' not in self.fav_path:
+                    self.fav_path = self.fav_path.rstrip('")')
+                    self.fav_path = self.fav_path + '/",return)'
                 if (self.PLAY):
                     if 'playlists/music' in self.fav_path: self.fav_path = self.fav_path.replace( 'ActivateWindow(10502,', 'PlayMedia(' )
                     if 'playlists/video' in self.fav_path: self.fav_path = self.fav_path.replace( 'ActivateWindow(10025,', 'PlayMedia(' )
@@ -78,13 +79,14 @@ class Main:
                 count = count+1
         # Else show select dialog
         else:
-            MyDialog(self.favourites, self.PROPERTY)
-                
+            MyDialog(self.favourites, self.PROPERTY, self.CHANGETITLE)
+
 class MainGui( xbmcgui.WindowXMLDialog ):
     def __init__( self, *args, **kwargs ):
         xbmcgui.WindowXMLDialog.__init__( self )
         self.listing = kwargs.get( "listing" )
         self.property = kwargs.get( "property" )
+        self.changetitle = kwargs.get( "changetitle" )
 
     def onInit(self):
         try:
@@ -110,7 +112,7 @@ class MainGui( xbmcgui.WindowXMLDialog ):
                     listitem.setIconImage( favourite.attributes[ 'thumb' ].nodeValue )
                     listitem.setProperty( "Icon", favourite.attributes[ 'thumb' ].nodeValue )
             except: pass
-            if 'RunScript' not in fav_path: 
+            if 'RunScript' not in fav_path:
                 fav_path = fav_path.rstrip(')')
                 fav_path = fav_path + ',return)'
             listitem.setProperty( "Path", fav_path )
@@ -123,11 +125,12 @@ class MainGui( xbmcgui.WindowXMLDialog ):
 
     def onClick(self, controlID):
         log( "### control: %s" % controlID )
-        if controlID == 6 or controlID == 3: 
+        if controlID == 6 or controlID == 3:
             num = self.fav_list.getSelectedPosition()
             log( "### position: %s" % num )
             if num > 0:
                 fav_path = self.fav_list.getSelectedItem().getProperty( "Path" )
+                fav_label = self.fav_list.getSelectedItem().getLabel()
                 if 'playlists/music' in fav_path or 'playlists/video' in fav_path:
                     retBool = xbmcgui.Dialog().yesno(xbmc.getLocalizedString(559), __language__(450))
                     if retBool:
@@ -135,8 +138,13 @@ class MainGui( xbmcgui.WindowXMLDialog ):
                             fav_path = fav_path.replace( 'ActivateWindow(10502,', 'PlayMedia(' )
                         else:
                             fav_path = fav_path.replace( 'ActivateWindow(10025,', 'PlayMedia(' )
+                if self.changetitle:
+                    keyboard = xbmc.Keyboard( fav_label, xbmc.getLocalizedString(528), False )
+                    keyboard.doModal()
+                    if ( keyboard.isConfirmed() ):
+                        fav_label = keyboard.getText()
                 xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Path", ), fav_path.encode('string-escape'), ) )
-                xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Label", ), self.fav_list.getSelectedItem().getLabel(), ) )
+                xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Label", ), fav_label, ) )
                 fav_icon = self.fav_list.getSelectedItem().getProperty( "Icon" )
                 if fav_icon:
                     xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Icon", ), fav_icon, ) )
@@ -146,14 +154,14 @@ class MainGui( xbmcgui.WindowXMLDialog ):
                 xbmc.executebuiltin( 'Skin.Reset(%s)' % '%s.%s' % ( self.property, "Path", ) )
                 xbmc.executebuiltin( 'Skin.Reset(%s)' % '%s.%s' % ( self.property, "Label", ) )
                 xbmc.executebuiltin( 'Skin.Reset(%s)' % '%s.%s' % ( self.property, "Icon", ) )
-                xbmc.sleep(300) 
+                xbmc.sleep(300)
                 self.close()
 
     def onFocus(self, controlID):
         pass
-                
-def MyDialog(fav_list, property):
-    w = MainGui( "DialogSelect.xml", __cwd__, listing=fav_list, property=property )
+
+def MyDialog(fav_list, property, changetitle):
+    w = MainGui( "DialogSelect.xml", __cwd__, listing=fav_list, property=property, changetitle=changetitle )
     w.doModal()
     del w
 

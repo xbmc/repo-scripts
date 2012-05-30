@@ -1,3 +1,6 @@
+v3.2.3
+- added option to change favourite label
+
 v3.2.2
 - added icon images for reset and playlist items
 
