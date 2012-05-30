@@ -40,10 +40,26 @@ from strings import *
 # Constants from [xbmc]/xbmc/guilib/Key.h
 ACTION_PARENT_DIR = 9
 ACTION_PREVIOUS_MENU = 10
-REMOTE_1 = 59
-REMOTE_2 = 60
-REMOTE_3 = 61
-REMOTE_4 = 62
+
+ACTION_REMOTE0 = 58
+ACTION_REMOTE1 = 59
+ACTION_REMOTE2 = 60
+ACTION_REMOTE3 = 61
+ACTION_REMOTE4 = 62
+ACTION_REMOTE5 = 63
+ACTION_REMOTE6 = 64
+ACTION_REMOTE7 = 65
+ACTION_REMOTE8 = 66
+ACTION_REMOTE9 = 67
+
+ACTION_JUMP_SMS2 = 142
+ACTION_JUMP_SMS3 = 143
+ACTION_JUMP_SMS4 = 144
+ACTION_JUMP_SMS5 = 145
+ACTION_JUMP_SMS6 = 146
+ACTION_JUMP_SMS7 = 147
+ACTION_JUMP_SMS8 = 148
+ACTION_JUMP_SMS9 = 149
 
 RESOURCES_PATH = os.path.join(ADDON.getAddonInfo('path'), 'resources', )
 AUDIO_CORRECT = os.path.join(RESOURCES_PATH, 'audio', 'correct.wav')
@@ -717,16 +733,16 @@ class QuizGui(xbmcgui.WindowXML):
 
         if self.uiState == self.STATE_LOADING:
             return
-        elif action.getId() == REMOTE_1:
+        elif action.getId() in [ACTION_REMOTE1]:
             self.setFocusId(self.C_MAIN_FIRST_ANSWER)
             self.onQuestionAnswered(self.question.getAnswer(0))
-        elif action.getId() == REMOTE_2:
+        elif action.getId() in [ACTION_REMOTE2, ACTION_JUMP_SMS2]:
             self.setFocusId(self.C_MAIN_FIRST_ANSWER + 1)
             self.onQuestionAnswered(self.question.getAnswer(1))
-        elif action.getId() == REMOTE_3:
+        elif action.getId() in [ACTION_REMOTE3, ACTION_JUMP_SMS3]:
             self.setFocusId(self.C_MAIN_FIRST_ANSWER + 2)
             self.onQuestionAnswered(self.question.getAnswer(2))
-        elif action.getId() == REMOTE_4:
+        elif action.getId() in [ACTION_REMOTE4, ACTION_JUMP_SMS4]:
             self.setFocusId(self.C_MAIN_FIRST_ANSWER + 3)
             self.onQuestionAnswered(self.question.getAnswer(3))
 

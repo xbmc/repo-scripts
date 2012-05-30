@@ -1,3 +1,7 @@
+[B]Version 0.5.3 - 2012-05-29[/B]
+- Actually enable script.module.buggalo for error reporting
+- Added support for answering using the 1,2,3,4 buttons on the remote
+
 [B]Version 0.5.2 - 2012-05-15[/B]
 - Make sure cache folder exists before retrieving IMDB data
 
