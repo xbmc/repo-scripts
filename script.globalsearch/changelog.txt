@@ -1,3 +1,6 @@
+v0.2.5
+- also search originaltitle for movies
+
 v0.2.4
 - add searchstring window property
 - allow dialogfullscreeninfo to be used
