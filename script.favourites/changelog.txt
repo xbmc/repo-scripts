@@ -1,3 +1,6 @@
+v3.2.4
+- revert adding slash at the end of the path
+
 v3.2.3
 - added option to change favourite label
 

@@ -66,8 +66,8 @@ class Main:
                 self.fav_path = self.doc.childNodes [ 0 ].nodeValue
                 # add return
                 if 'RunScript' not in self.fav_path:
-                    self.fav_path = self.fav_path.rstrip('")')
-                    self.fav_path = self.fav_path + '/",return)'
+                    self.fav_path = self.fav_path.rstrip(')')
+                    self.fav_path = self.fav_path + ',return)'
                 if (self.PLAY):
                     if 'playlists/music' in self.fav_path: self.fav_path = self.fav_path.replace( 'ActivateWindow(10502,', 'PlayMedia(' )
                     if 'playlists/video' in self.fav_path: self.fav_path = self.fav_path.replace( 'ActivateWindow(10025,', 'PlayMedia(' )
