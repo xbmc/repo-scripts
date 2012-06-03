@@ -1,8 +1,13 @@
+V0.3.8
+- Only import PIL if extended features are activated (means on paltforms like Crystalbuntu without PIL you can still get BOM weather data at least.
+- some radars (e.g. IDR072) - were not on the ftp server, they now get pulled in by http
+- backgrounds are refreshed every 24 hours to pick up any changes at the BOM
+
 V0.3.7
 - Localized, although seems kind of pointless...getting rteady for moving to official repo maybe?
 
 V0.3.6
-- Fixed locations bug with help from scotia, a tricky one as I couldn't raise the bug.... 
+- Fixed locations bug with help from scotia, a tricky one as I couldn't raise the bug....
 
 V 0.3.5
 - New icon, little cleanup
@@ -33,7 +38,7 @@ V 0.2.5
 
 V 0.2.4
 - increased timout if weatherzone is taking a while and if they're down plugin will not crash
-- added hack for the national radar IDR00004 that oddly uses a different background number  
+- added hack for the national radar IDR00004 that oddly uses a different background number
 
 v 0.2.3
 - Temp fix to try really hard on ATV2 to get at least a basic background for troyp42

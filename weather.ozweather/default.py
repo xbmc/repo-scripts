@@ -13,7 +13,7 @@
 # *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 # *  http://www.gnu.org/copyleft/gpl.html
 # *
- 
+
 import os, sys, urllib, urllib2, socket
 import xbmc, xbmcvfs, xbmcgui, xbmcaddon
 import CommonFunctions
@@ -21,7 +21,7 @@ import re
 import ftplib
 import shutil
 import time
-from PIL import Image
+#from PIL import Image
 
 # plugin constants
 #create an add on instation and store the reference
@@ -43,7 +43,7 @@ sys.path.append (__resource__)
 common = CommonFunctions
 common.plugin = __plugin__
 dbg = False # Set to false if you don't want debugging
-dbglevel = 3 
+dbglevel = 3
 
 #import the tables that map conditions to icon number and short days to long days
 from utilities import *
@@ -52,25 +52,26 @@ from utilities import *
 WEATHER_WINDOW  = xbmcgui.Window(12600)
 WeatherZoneURL = 'http://www.weatherzone.com.au'
 ftpStub = "ftp://anonymous:someone%40somewhere.com@ftp.bom.gov.au//anon/gen/radar_transparencies/"
+httpStub = "http://www.bom.gov.au/products/radar_transparencies/"
 radarBackgroundsPath = ""
 loopImagesPath = ""
 
 
 ################################################################################
 # strip given chararacters from all members of a given list
-       
+
 def striplist(l, chars):
     return([x.strip(chars) for x in l])
-    
+
 ################################################################################
 # log messages neatly to the XBMC master log
-       
+
 def log(message, inst=None):
-    if inst is None: 
+    if inst is None:
       xbmc.log(__plugin__ + ": " + message)
     else:
       xbmc.log(__plugin__ + ": Exception: " + message + "[" + str(inst) +"]")
- 
+
 ################################################################################
 # Just sets window properties we can refer to later in the MyWeather.xml skin file
 
@@ -83,12 +84,12 @@ def set_property(name, value = ""):
 def clearProperties():
     try:
       set_property('Weather.IsFetched')
-      set_property('Radar')   
+      set_property('Radar')
       set_property('Video.1')
-       
+
       #now set all the XBMC current weather properties
       set_property('Current.Condition')
-      set_property('Current.ConditionLong')    
+      set_property('Current.ConditionLong')
       set_property('Current.Temperature')
       set_property('Current.Wind')
       set_property('Current.WindDirection')
@@ -98,19 +99,19 @@ def clearProperties():
       set_property('Current.UVIndex')
       set_property('Current.OutlookIcon')
       set_property('Current.FanartCode')
-  
+
       #and all the properties for the forecast
-      for count in range(0,7):         
+      for count in range(0,7):
           set_property('Day%i.Title'       % count)
           set_property('Day%i.HighTemp'    % count)
           set_property('Day%i.LowTemp'     % count)
           set_property('Day%i.Outlook'     % count)
           set_property('Day%i.OutlookIcon' % count)
           set_property('Day%i.FanartCode'  % count)
-      
+
     except Exception as inst:
       log("********** OzWeather Couldn't clear all the properties, sorry!!", inst)
-    
+
 
 ################################################################################
 # set the location and radar code properties
@@ -129,7 +130,7 @@ def refresh_locations():
     else:
         set_property('Location1', '')
     if location_set2 != '':
-        locations += 1 
+        locations += 1
         set_property('Location2', location_set2)
     else:
         set_property('Location2', '')
@@ -168,7 +169,7 @@ def refresh_locations():
     else:
         set_property('Radar1', '')
     if radar_set2 != '':
-        radars += 1 
+        radars += 1
         set_property('Radar2', radar_set2)
     else:
         set_property('Radar2', '')
@@ -205,25 +206,25 @@ def forecast(url, radarCode):
     global radarBackgroundsPath, loopImagesPath
 
     #make sure updates look neat
-    clearProperties()   
-  
+    clearProperties()
+
     #check if we're doing jsut a basic data update or data and images
     extendedFeatures = __addon__.getSetting('ExtendedFeaturesToggle')
-    log("Getting weather from " + url + ", Extended features = " + str(extendedFeatures))  
+    log("Getting weather from " + url + ", Extended features = " + str(extendedFeatures))
 
     #ok now we want to build the radar images first, looks neater
     if extendedFeatures == "true":
       log("Extended feature powers -> activate!")
-      
-      #strings to store the paths we will use    
+
+      #strings to store the paths we will use
       radarBackgroundsPath = xbmc.translatePath("special://profile/addon_data/weather.ozweather/radarbackgrounds/" + radarCode + "/");
       loopImagesPath = xbmc.translatePath("special://profile/addon_data/weather.ozweather/currentloop/" + radarCode + "/");
 
       buildImages(radarCode)
       radar = ""
       radar = __addon__.getSetting('Radar%s' % sys.argv[1])
-      set_property('Radar', radar)    
- 
+      set_property('Radar', radar)
+
     #and now get and set all the temperatures etc.
     try:
       data = common.fetchPage({"link":url})
@@ -231,52 +232,79 @@ def forecast(url, radarCode):
       log("Error, couldn't retrieve weather page from WeatherZone - error: ", inst)
     if data != '':
        propertiesPDOM(data["content"], extendedFeatures)
-      
+
 
 ################################################################################
 # Downloads a radar background given a BOM radar code like IDR023 & filename
-# Converts the image from indexed colour to RGBA colour 
+# Converts the image from indexed colour to RGBA colour
 
 def downloadBackground(radarCode, fileName):
     global radarBackgroundsPath, loopImagesPath
 
+    #import PIL only if we need it so the add on can be run for data only
+    #on platforms without PIL
+    #log("Importing PIL as extra features are activated.")
+    from PIL import Image
+
     #ok get ready to retrieve some images
-    image = urllib.URLopener() 
+    image = urllib.URLopener()
 
     outFileName = fileName
-    
+
     #the legend file doesn't have the radar code int he filename
     if fileName == "IDR.legend.0.png":
       outFileName = "legend.png"
     else:
-      #append the radar code 
+      #append the radar code
       fileName = radarCode + "." + fileName
 
+    #are the backgrounds stale?
+    if xbmcvfs.exists( radarBackgroundsPath + outFileName ):
+      fileCreation = os.path.getmtime( radarBackgroundsPath + outFileName)
+      now = time.time()
+      dayAgo = now - 60*60*24 # Number of seconds in a day
+      #log ("filec " + str(fileCreation) + " dayAgo " + str(dayAgo))
+      if fileCreation < dayAgo:
+        log("Background older than one day - let's refresh - " + outFileName)
+        os.remove(radarBackgroundsPath + outFileName)
+
     #download the backgrounds only if we don't have them yet
-    if not xbmcvfs.exists( radarBackgroundsPath + fileName):       
-        #the legened image showing the rain scale
+    if not xbmcvfs.exists( radarBackgroundsPath + outFileName ):
+        #the legend image showing the rain scale
         try:
           imageFileIndexed = radarBackgroundsPath + "idx." + fileName
           imageFileRGB = radarBackgroundsPath + outFileName
-          image.retrieve(ftpStub + fileName, imageFileIndexed )
+          try:
+            image.retrieve(ftpStub + fileName, imageFileIndexed )
+          except:
+            log("ftp failed, let's try http instead...")
+            try:
+              image.retrieve(httpStub + fileName, imageFileIndexed )
+            except:
+              log("http failed too.. sad face :( ")
+              #jump to the outer exception
+              raise
+          #got here, we must have an image
+          log("Downloaded background texture...now converting from indexed to RGB - " + fileName)
           im = Image.open( imageFileIndexed )
           rgbimg = im.convert('RGBA')
           rgbimg.save(imageFileRGB, "PNG")
-          os.remove(imageFileIndexed)          
+          os.remove(imageFileIndexed)
         except Exception as inst:
           log("Error, couldn't retrieve " + fileName + " - error: ", inst)
+          #ok try and get it via http instead?
           #try REALLY hard to get at least the background image
           try:
             #ok so something is wrong with image conversion - probably a PIL issue, so let's just get a minimal BG image
             if "background.png" in fileName:
               if not '00004' in fileName:
-                image.retrieve(ftpStub + fileName, imageFileRGB ) 
+                image.retrieve(ftpStub + fileName, imageFileRGB )
               else:
                 #national radar loop uses a different BG for some reason...
-                image.retrieve(ftpStub + 'IDE00035.background.png', imageFileRGB )                 
+                image.retrieve(ftpStub + 'IDE00035.background.png', imageFileRGB )
           except Exception as inst2:
             log("No, really, -> Error, couldn't retrieve " + fileName + " - error: ", inst2)
-             
+
 
 def prepareBackgrounds(radarCode):
     global radarBackgroundsPath, loopImagesPath
@@ -296,29 +324,29 @@ def prepareBackgrounds(radarCode):
 
 ################################################################################
 # Builds the radar images given a BOM radar code like IDR023
-# the background images are permanently cached (user can manually delete if 
+# the background images are permanently cached (user can manually delete if
 # they need to)
 # the radar images are downloaded with each update (~60kb each time)
-    
-def buildImages(radarCode):   
+
+def buildImages(radarCode):
 
     #remove the temporary files - we only want fresh radar files
-    #this results in maybe ~60k used per update.  
+    #this results in maybe ~60k used per update.
     if xbmcvfs.exists( loopImagesPath ):
-      shutil.rmtree( loopImagesPath , ignore_errors=True)      
+      shutil.rmtree( loopImagesPath , ignore_errors=True)
 
     #we need make the directories to store stuff if they don't exist
     if not xbmcvfs.exists( radarBackgroundsPath ):
-      os.makedirs( radarBackgroundsPath )        
+      os.makedirs( radarBackgroundsPath )
     if not xbmcvfs.exists( loopImagesPath ):
-      os.makedirs( loopImagesPath )        
-    
-    prepareBackgrounds(radarCode)        
+      os.makedirs( loopImagesPath )
+
+    prepareBackgrounds(radarCode)
 
     #Ok so we have the backgrounds...now it is time get the loop
     #first we retrieve a list of the available files via ftp
     #ok get ready to retrieve some images
-    image = urllib.URLopener() 
+    image = urllib.URLopener()
     files = []
 
     ftp = ftplib.FTP("ftp.bom.gov.au")
@@ -333,13 +361,13 @@ def buildImages(radarCode):
             log("No files in BOM ftp directory!")
         else:
             log("Something wrong in the ftp bit of radar images")
-            
+
     #ok now we need just the matching radar files...
-    loopPicNames = []    
+    loopPicNames = []
     for f in files:
         if radarCode in f:
-          loopPicNames.append(f)            
-  
+          loopPicNames.append(f)
+
     #download the actual images, might as well get the longest loop they have
     for f in loopPicNames:
        #ignore the composite gif...
@@ -350,20 +378,20 @@ def buildImages(radarCode):
             image.retrieve(imageToRetrieve, loopImagesPath + "/" + f )
          except Exception as inst:
             log("Failed to retrieve radar image: " + imageToRetrieve + ", oh well never mind!", inst )
-            
+
 
 ################################################################################
-# this is the main scraper function that uses parseDOM to scrape the 
+# this is the main scraper function that uses parseDOM to scrape the
 # data from the weatherzone site.
-        
+
 def propertiesPDOM(page, extendedFeatures):
 
     ####CURRENT DATA
     try:
       #pull data from the current observations table
       ret = common.parseDOM(page, "div", attrs = { "class": "details_lhs" })
-      observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" }) 
-      #Observations now looks like - ['18.3&deg;C', '4.7&deg;C', '18.3&deg;C', '41%', 'SSW 38km/h', '48km/h', '1015.7hPa', '-', '0.0mm / -']   
+      observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" })
+      #Observations now looks like - ['18.3&deg;C', '4.7&deg;C', '18.3&deg;C', '41%', 'SSW 38km/h', '48km/h', '1015.7hPa', '-', '0.0mm / -']
       temperature = str.strip(observations[0], '&deg;C')
       dewPoint = str.strip(observations[1], '&deg;C')
       feelsLike = str.strip(observations[2], '&deg;C')
@@ -376,12 +404,12 @@ def propertiesPDOM(page, extendedFeatures):
       log("********** OzWeather Couldn't Parse Data, sorry!!", inst)
       set_property('Current.Condition', "Error w. Current Data!")
       set_property('Current.ConditionLong', "Error - Couldn't retrieve current weather data from WeatherZone - this is usually just a temporary problem with their server and with any luck they'll fix it soon!")
-      set_property("Weather.IsFetched", "false")     
+      set_property("Weather.IsFetched", "false")
     ####END CURRENT DATA
-    
+
     ####FORECAST DATA
-    try:   
-      #pull the basic data from the forecast table  
+    try:
+      #pull the basic data from the forecast table
       ret = common.parseDOM(page, "div", attrs = { "class": "boxed_blue_nopad" })
       #create lists of each of the maxes, mins, and descriptions
       #Get the days UV in text form like 'Extreme' and number '11'
@@ -399,20 +427,20 @@ def propertiesPDOM(page, extendedFeatures):
       shortDesc = common.parseDOM(ret, "td", attrs = { "class": "bg_yellow" })
       shortDesc = common.parseDOM(ret, "span", attrs = { "style": "font-size: 0.9em;" })
       shortDesc = shortDesc[0:7]
-            
+
       for count, desc in enumerate(shortDesc):
         shortDesc[count] = str.replace(shortDesc[count], '-<br />','')
-  
+
       #log the collected data, helpful for finding errors
       #log("Collected data: shortDesc [" + str(shortDesc) + "] maxList [" + str(maxList) +"] minList [" + str(minList) + "]")
-      
+
       #and the names of the days
       days = common.parseDOM(ret, "span", attrs = { "style": "font-size: larger;" })
       days = common.parseDOM(ret, "span", attrs = { "class": "bold" })
       days = days[0:7]
       for count, day in enumerate(days):
           days[count] = DAYS[day]
-   
+
       #get the longer current forecast for the day
       # or just use the short one if this is disabled in settings
       if extendedFeatures == "true":
@@ -422,21 +450,21 @@ def propertiesPDOM(page, extendedFeatures):
           #print '@@@@@@@@@ Long 2', longDayCast
           #new method - just strip the crap (e.g. tabs) out of the string and use a colon separator for the 'return' as we don't have much space
           longDayCast = common.stripTags(longDayCast[0])
-          #print longDayCast       
+          #print longDayCast
           longDayCast = str.replace(longDayCast, '\t','')
           longDayCast = str.replace(longDayCast, '\r',' ')
           longDayCast = str.replace(longDayCast, '&amp;','&')
-          #print '@@@@@@@@@ Long 4', longDayCast    
+          #print '@@@@@@@@@ Long 4', longDayCast
           longDayCast = longDayCast[:-1]
           #print '@@@@@@@@@@@@@@@@' , longDayCast[-5:]
           #if longDayCast[-5:] != "winds":
-          #  longDayCast = longDayCast + " fire danger."    
+          #  longDayCast = longDayCast + " fire danger."
       else:
           longDayCast = shortDesc[0]
-   
+
       #if for some reason the codes change return a neat 'na' response
       try:
-          weathercode = WEATHER_CODES[shortDesc[0]]   
+          weathercode = WEATHER_CODES[shortDesc[0]]
       except:
           weathercode = 'na'
 
@@ -444,8 +472,8 @@ def propertiesPDOM(page, extendedFeatures):
       log("********** OzWeather Couldn't Parse Data, sorry!!", inst)
       set_property('Current.Condition', "Error w. Current Data!")
       set_property('Current.ConditionLong', "Error - Couldn't retrieve forecast weather data from WeatherZone - this is usually just a temporary problem with their server and with any luck they'll fix it soon!")
-      set_property("Weather.IsFetched", "false")     
-    #END FORECAST DATA   
+      set_property("Weather.IsFetched", "false")
+    #END FORECAST DATA
 
     #ABC VIDEO URL
     try:
@@ -461,19 +489,19 @@ def propertiesPDOM(page, extendedFeatures):
         set_property('Video.1',url)
       except Exception as inst:
         log("Couldn't get ABC video URL from page", inst)
-    
+
     except Exception as inst:
       log("********** Couldn't get ABC video page", inst)
     #END ABC VIDEO URL
-    
+
     # set all the XBMC window properties.
     # wrap it in a try: in case something goes wrong, it's better than crashing out...
-  
-    #SET PROPERTIES  
+
+    #SET PROPERTIES
     try:
       #now set all the XBMC current weather properties
       set_property('Current.Condition'     , shortDesc[0])
-      set_property('Current.ConditionLong' , longDayCast)    
+      set_property('Current.ConditionLong' , longDayCast)
       set_property('Current.Temperature'   , temperature)
       set_property('Current.Wind'          , windSpeed)
       set_property('Current.WindDirection' , windDirection)
@@ -483,14 +511,14 @@ def propertiesPDOM(page, extendedFeatures):
       set_property('Current.UVIndex'       , UV)
       set_property('Current.OutlookIcon'   , '%s.png' % weathercode)
       set_property('Current.FanartCode'    , weathercode)
-  
+
       #and all the properties for the forecast
       for count, desc in enumerate(shortDesc):
           try:
               weathercode = WEATHER_CODES[shortDesc[count]]
           except:
               weathercode = 'na'
-          
+
           day = days[count]
           set_property('Day%i.Title'       % count, day)
           set_property('Day%i.HighTemp'    % count, maxList[count])
@@ -498,22 +526,22 @@ def propertiesPDOM(page, extendedFeatures):
           set_property('Day%i.Outlook'     % count, desc)
           set_property('Day%i.OutlookIcon' % count, '%s.png' % weathercode)
           set_property('Day%i.FanartCode'  % count, weathercode)
-      
+
     except Exception as inst:
       log("********** OzWeather Couldn't set all the properties, sorry!!", inst)
-    
+
     #Ok, if we got here we're done
     set_property("Weather.IsFetched", "true")
 
     #END SET PROPERTIES
-   
+
 
 ##############################################
-### NOW ACTUALLTY RUN THIS PUPPY - this is main() in the old language...    
+### NOW ACTUALLTY RUN THIS PUPPY - this is main() in the old language...
 
-socket.setdefaulttimeout(100)      
+socket.setdefaulttimeout(100)
 
-#the being called from the settings section where the user enters their postcodes    
+#the being called from the settings section where the user enters their postcodes
 if sys.argv[1].startswith('Location'):
     keyboard = xbmc.Keyboard('', 'Enter your 4 digit postcode e.g. 3000', False)
     keyboard.doModal()
@@ -541,7 +569,7 @@ if sys.argv[1].startswith('Location'):
             locations = [locationName[0] + ', ' + text]
             locationids = [responseurl]
             log("Single result " + str(locations) + " URL " + str(locationids))
-        else:  
+        else:
             #we got back a page to choose a more specific location
             middle = common.parseDOM(resultPage, "div", attrs = { "id": "structure_middle" })
             skimmed = common.parseDOM(middle, "ul", attrs = { "class": "typ2" })
@@ -553,29 +581,29 @@ if sys.argv[1].startswith('Location'):
             locationids = []
             for count, loc in enumerate(templocs):
                 locationids.append(WeatherZoneURL + loc)
-            #if we did not get enough data back there are no locations with this postcode 
+            #if we did not get enough data back there are no locations with this postcode
             if len(locations)<=1:
                 log("No locations found with this postcode")
                 locations = []
                 locationids = []
-            log("Multiple result " + str(locations) + " URLs " + str(locationids))      
+            log("Multiple result " + str(locations) + " URLs " + str(locationids))
 
-      
+
         #now get them to choose an actual location
         dialog = xbmcgui.Dialog()
         if locations != []:
             selected = dialog.select(xbmc.getLocalizedString(396), locations)
-            if selected != -1: 
+            if selected != -1:
                 __addon__.setSetting(sys.argv[1], locations[selected])
                 __addon__.setSetting(sys.argv[1] + 'id', locationids[selected])
         else:
             dialog.ok(__addonname__, xbmc.getLocalizedString(284))
 
 
-#script is being called in general use, not from the settings page            
+#script is being called in general use, not from the settings page
 #get the currently selected location and grab it's forecast
 else:
- 
+
     #retrieve the currently set location & radar
     location = ""
     location = __addon__.getSetting('Location%sid' % sys.argv[1])
