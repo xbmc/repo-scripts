@@ -39,9 +39,10 @@ STREAM_DR_UPDATE = 'plugin://plugin.video.dr.dk.live/?playChannel=3'
 STREAM_DR_K = 'plugin://plugin.video.dr.dk.live/?playChannel=4'
 STREAM_DR_RAMASJANG = 'plugin://plugin.video.dr.dk.live/?playChannel=5'
 STREAM_DR_HD = 'plugin://plugin.video.dr.dk.live/?playChannel=6'
+STREAM_KANAL_SPORT = 'plugin://plugin.video.dr.dk.live/?playChannel=203'
 
 SETTINGS_TO_CHECK = ['source', 'youseetv.category', 'youseewebtv.playback', 'danishlivetv.playback', 'xmltv.file',
-                     'xmltv.logo.folder', 'ontv.url']
+                     'xmltv.logo.folder', 'ontv.url', 'json.url']
 
 class Channel(object):
     def __init__(self, id, title, logo = None, streamUrl = None, visible = True, weight = -1):
@@ -97,6 +98,9 @@ class SourceUpdateCanceledException(SourceException):
 class SourceNotConfiguredException(SourceException):
     pass
 
+class DatabaseSchemaException(sqlite3.DatabaseError):
+    pass
+
 class Source(object):
     KEY = "undefined"
     STREAMS = {}
@@ -109,18 +113,34 @@ class Source(object):
         for key in SETTINGS_TO_CHECK:
             buggalo.addExtraData('setting: %s' % key, ADDON.getSetting(key))
 
-        try:
-            self.conn = sqlite3.connect(os.path.join(self.cachePath, self.SOURCE_DB), detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread = False)
-            self.conn.execute('PRAGMA foreign_keys = ON')
-            self.conn.row_factory = sqlite3.Row
-            self._createTables()
-        except sqlite3.OperationalError, ex:
-            raise SourceUpdateInProgressException(ex)
-
         self.playbackUsingDanishLiveTV = False
         self.channelList = list()
         self.player = xbmc.Player()
-        self.settingsChanged = self.wasSettingsChanged(addon)
+
+        databasePath = os.path.join(self.cachePath, self.SOURCE_DB)
+        for retries in range(0, 3):
+            try:
+                self.conn = sqlite3.connect(databasePath, detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread = False)
+                self.conn.execute('PRAGMA foreign_keys = ON')
+                self.conn.row_factory = sqlite3.Row
+
+                self._createTables()
+                self.settingsChanged = self.wasSettingsChanged(addon)
+                break
+
+            except sqlite3.OperationalError, ex:
+                raise SourceUpdateInProgressException(ex)
+            except sqlite3.DatabaseError:
+                self.conn = None
+                try:
+                    os.unlink(databasePath)
+                except OSError:
+                    pass
+                xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), strings(DATABASE_SCHEMA_ERROR_1),
+                    strings(DATABASE_SCHEMA_ERROR_2), strings(DATABASE_SCHEMA_ERROR_3))
+
+        if self.conn is None:
+            raise SourceNotConfiguredException()
 
         try:
             if addon.getSetting('danishlivetv.playback') == 'true':
@@ -164,6 +184,7 @@ class Source(object):
 
         c.close()
         print 'Settings changed: ' + str(settingsChanged)
+        #return True # Uncomment to force cache regeneration every run, for debug prp only
         return settingsChanged
 
     def getDataFromExternal(self, date, progress_callback = None):
@@ -218,7 +239,8 @@ class Source(object):
                         channel.streamUrl = self.STREAMS[channel.id]
                     c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.KEY, channel.weight, self.KEY])
                     if not c.rowcount:
-                        c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.KEY])
+                        c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=(CASE ? WHEN -1 THEN visible ELSE ? END), weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?',
+                            [channel.title, channel.logo, channel.streamUrl, channel.weight, channel.visible, channel.weight, channel.weight, channel.id, self.KEY])
 
                 elif isinstance(item, Program):
                     imported_programs += 1
@@ -324,16 +346,19 @@ class Source(object):
         return channelList
 
     def _isChannelListCacheExpired(self):
-        c = self.conn.cursor()
-        c.execute('SELECT channels_updated FROM sources WHERE id=?', [self.KEY])
-        row = c.fetchone()
-        if not row:
-            return True
-        lastUpdated = row['channels_updated']
-        c.close()
+        try:
+            c = self.conn.cursor()
+            c.execute('SELECT channels_updated FROM sources WHERE id=?', [self.KEY])
+            row = c.fetchone()
+            if not row:
+                return True
+            lastUpdated = row['channels_updated']
+            c.close()
 
-        today = datetime.datetime.now()
-        return lastUpdated.day != today.day
+            today = datetime.datetime.now()
+            return lastUpdated.day != today.day
+        except TypeError:
+            return True
 
     def getCurrentProgram(self, channel):
         """
@@ -482,43 +507,46 @@ class Source(object):
         except sqlite3.OperationalError:
             version = [0, 0, 0]
 
-        if version < [1, 3, 0]:
-            c.execute('CREATE TABLE IF NOT EXISTS custom_stream_url(channel TEXT, stream_url TEXT)')
-            c.execute('CREATE TABLE version (major INTEGER, minor INTEGER, patch INTEGER)')
-            c.execute('INSERT INTO version(major, minor, patch) VALUES(1, 3, 0)')
+        try:
+            if version < [1, 3, 0]:
+                c.execute('CREATE TABLE IF NOT EXISTS custom_stream_url(channel TEXT, stream_url TEXT)')
+                c.execute('CREATE TABLE version (major INTEGER, minor INTEGER, patch INTEGER)')
+                c.execute('INSERT INTO version(major, minor, patch) VALUES(1, 3, 0)')
 
-            # For caching data
-            c.execute('CREATE TABLE sources(id TEXT PRIMARY KEY, channels_updated TIMESTAMP)')
-            c.execute('CREATE TABLE updates(id INTEGER PRIMARY KEY, source TEXT, date TEXT, programs_updated TIMESTAMP)')
-            c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, stream_url TEXT, source TEXT, visible BOOLEAN, weight INTEGER, PRIMARY KEY (id, source), FOREIGN KEY(source) REFERENCES sources(id) ON DELETE CASCADE)')
-            c.execute('CREATE TABLE programs(channel TEXT, title TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, image_large TEXT, image_small TEXT, source TEXT, updates_id INTEGER, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE)')
-            c.execute('CREATE INDEX program_list_idx ON programs(source, channel, start_date, end_date)')
-            c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
-            c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
+                # For caching data
+                c.execute('CREATE TABLE sources(id TEXT PRIMARY KEY, channels_updated TIMESTAMP)')
+                c.execute('CREATE TABLE updates(id INTEGER PRIMARY KEY, source TEXT, date TEXT, programs_updated TIMESTAMP)')
+                c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, stream_url TEXT, source TEXT, visible BOOLEAN, weight INTEGER, PRIMARY KEY (id, source), FOREIGN KEY(source) REFERENCES sources(id) ON DELETE CASCADE)')
+                c.execute('CREATE TABLE programs(channel TEXT, title TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, image_large TEXT, image_small TEXT, source TEXT, updates_id INTEGER, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE)')
+                c.execute('CREATE INDEX program_list_idx ON programs(source, channel, start_date, end_date)')
+                c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
+                c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
 
-            # For active setting
-            c.execute('CREATE TABLE settings(key TEXT PRIMARY KEY, value TEXT)')
+                # For active setting
+                c.execute('CREATE TABLE settings(key TEXT PRIMARY KEY, value TEXT)')
 
-            # For notifications
-            c.execute("CREATE TABLE notifications(channel TEXT, program_title TEXT, source TEXT, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE)")
+                # For notifications
+                c.execute("CREATE TABLE notifications(channel TEXT, program_title TEXT, source TEXT, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE)")
 
-        if version < [1,3, 1]:
-            # Recreate tables with FOREIGN KEYS as DEFERRABLE INITIALLY DEFERRED
-            c.execute('UPDATE version SET major=1, minor=3, patch=1')
-            c.execute('DROP TABLE channels')
-            c.execute('DROP TABLE programs')
-            c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, stream_url TEXT, source TEXT, visible BOOLEAN, weight INTEGER, PRIMARY KEY (id, source), FOREIGN KEY(source) REFERENCES sources(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
-            c.execute('CREATE TABLE programs(channel TEXT, title TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, image_large TEXT, image_small TEXT, source TEXT, updates_id INTEGER, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
-            c.execute('CREATE INDEX program_list_idx ON programs(source, channel, start_date, end_date)')
-            c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
-            c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
+            if version < [1,3, 1]:
+                # Recreate tables with FOREIGN KEYS as DEFERRABLE INITIALLY DEFERRED
+                c.execute('UPDATE version SET major=1, minor=3, patch=1')
+                c.execute('DROP TABLE channels')
+                c.execute('DROP TABLE programs')
+                c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, stream_url TEXT, source TEXT, visible BOOLEAN, weight INTEGER, PRIMARY KEY (id, source), FOREIGN KEY(source) REFERENCES sources(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+                c.execute('CREATE TABLE programs(channel TEXT, title TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, image_large TEXT, image_small TEXT, source TEXT, updates_id INTEGER, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+                c.execute('CREATE INDEX program_list_idx ON programs(source, channel, start_date, end_date)')
+                c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
+                c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
 
-        # make sure we have a record in sources for this Source
-        c.execute("INSERT OR IGNORE INTO sources(id, channels_updated) VALUES(?, ?)", [self.KEY, datetime.datetime.fromtimestamp(0)])
+            # make sure we have a record in sources for this Source
+            c.execute("INSERT OR IGNORE INTO sources(id, channels_updated) VALUES(?, ?)", [self.KEY, datetime.datetime.fromtimestamp(0)])
 
-        self.conn.commit()
-        c.close()
+            self.conn.commit()
+            c.close()
 
+        except sqlite3.OperationalError, ex:
+            raise DatabaseSchemaException(ex)
 
 class DrDkSource(Source):
     KEY = 'drdk'
@@ -531,7 +559,7 @@ class DrDkSource(Source):
         'dr.dk/external/ritzau/ channel/dru' : STREAM_DR_UPDATE,
         'dr.dk/mas/whatson/channel/TVR' : STREAM_DR_RAMASJANG,
         'dr.dk/mas/whatson/channel/TVK' : STREAM_DR_K,
-        'dr.dk/mas/whatson/channel/TV' : STREAM_DR_HD
+        'dr.dk/mas/whatson/channel/TVH' : STREAM_DR_HD
     }
 
     def __init__(self, addon, cachePath):
@@ -574,7 +602,8 @@ class YouSeeTvSource(Source):
         889 : STREAM_DR_UPDATE,
         505: STREAM_DR_RAMASJANG,
         504 : STREAM_DR_K,
-        503 : STREAM_DR_HD
+        503 : STREAM_DR_HD,
+        67 : STREAM_KANAL_SPORT
     }
 
     def __init__(self, addon, cachePath):
@@ -719,13 +748,16 @@ class XMLTVSource(Source):
         if delta.seconds < 300:
             return False
 
-        c = self.conn.cursor()
-        c.execute('SELECT channels_updated FROM sources WHERE id=?', [self.KEY])
-        row = c.fetchone()
-        if not row:
+        try:
+            c = self.conn.cursor()
+            c.execute('SELECT channels_updated FROM sources WHERE id=?', [self.KEY])
+            row = c.fetchone()
+            if not row:
+                return True
+            lastUpdated = row['channels_updated']
+            c.close()
+        except TypeError:
             return True
-        lastUpdated = row['channels_updated']
-        c.close()
 
         fileModified = datetime.datetime.fromtimestamp(os.path.getmtime(self.xmlTvFile))
         return fileModified > lastUpdated
@@ -750,10 +782,104 @@ class ONTVSource(Source):
         return self._isChannelListCacheExpired()
 
 
+class JSONSource(Source):
+    KEY = 'json-url'
+
+    def __init__(self, addon, cachePath):
+        super(JSONSource, self).__init__(addon, cachePath)
+        self.playbackUsingWeebTv = False
+        self.JSONURL = addon.getSetting('json.url')
+
+        if not addon.getSetting('json.url'):
+            raise SourceNotConfiguredException()
+                    
+        try:
+            if addon.getSetting('weebtv.playback') == 'true':
+                xbmcaddon.Addon(id = 'plugin.video.weeb.tv') # raises Exception if addon is not installed
+                self.playbackUsingWeebTv = True
+        except Exception:
+            ADDON.setSetting('weebtv.playback', 'false')
+            xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), strings(WEEBTV_WEBTV_MISSING_1),
+                strings(WEEBTV_WEBTV_MISSING_2), strings(WEEBTV_WEBTV_MISSING_3))
+
+    def getDataFromExternal(self, date, progress_callback = None):
+        url = self.JSONURL + '?d=' + date.strftime('%Y-%m-%d')
+        print 'Load JSON URL: ' + url
+        try:
+            r = urllib2.Request(url)
+            u = urllib2.urlopen(r)
+            json = u.read()
+            u.close()
+
+            channels = simplejson.loads(json)
+        except urllib2.URLError, e:
+            raise SourceException('Failed to fetch JSON: ' + str(e))
+        except Exception:
+            raise SourceException('Invalid JSON source (failed to parse output)')
+        
+        
+        for idx, ch in enumerate(channels):
+                try:
+                 print 'Parsing channel: ' + ch['n'].encode("utf-8","ignore")
+                except KeyError:
+                 print ch
+            #try:           
+                if ch.has_key('l') and ch['l'] is not None: # Channel logo
+                    ch['l'] = str(ch['l'])
+                else:
+                    ch['l'] = None
+                
+                c = Channel(id = ch['i'], title = ch['n'], logo = ch['l'])
+                
+                if self.playbackUsingWeebTv and ch.has_key('c') and ch['c'] is not None: # channel numeric id
+                    c.streamUrl = 'plugin://plugin.video.weeb.tv/?mode=2&action=1&cid=' + str(ch['c']) + '&title=' + str(ch['n'])
+                yield c
+                
+                print 'Found ' + str(len(ch['p'])) + ' programs'
+                if ch.has_key('p') and len(ch['p']) > 0:
+                    for pr in ch['p']:
+                        #print 'Parsing program: ' + pr['t'].encode("utf-8","ignore")
+                        if pr.has_key('d') and pr['d'] is not None: # program description
+                            description = pr['d']
+                        else:
+                            description = strings(NO_DESCRIPTION)
+
+                        if not pr.has_key('l'): # large program image
+                            pr['l'] = None
+                                                    
+                        if not pr.has_key('i'): # small program image aka icon
+                            pr['i'] = None
+                            
+                        p = Program(
+                            c,
+                            pr['t'],
+                            self._parseDate(pr['s']),
+                            self._parseDate(pr['e']),
+                            description,
+                            pr['l'],
+                            pr['i']
+                        )
+                        yield p
+            
+           
+                    if progress_callback:
+                        if not progress_callback(100.0 / len(channels) * idx):
+                            raise SourceUpdateCanceledException()
+            #except Exception:
+            #    raise SourceException('External JSON looks invalid, error detected in element ' + str(idx))
+              
+    def _parseDate(self, dateString):
+        return datetime.datetime.fromtimestamp(dateString)
+
 def parseXMLTVDate(dateString):
-    dateStringWithoutTimeZone = dateString[:-6]
-    t = time.strptime(dateStringWithoutTimeZone, '%Y%m%d%H%M%S')
-    return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
+    if dateString is not None:
+        if dateString.find(' ') != -1:
+            # remove timezone information
+            dateString = dateString[:dateString.find(' ')]
+        t = time.strptime(dateString, '%Y%m%d%H%M%S')
+        return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
+    else:
+        return None
 
 def parseXMLTV(context, f, size, logoFolder, progress_callback):
     event, root = context.next()
@@ -803,7 +929,8 @@ def instantiateSource(addon):
         'DR.dk' : DrDkSource,
         'TVTID.dk' : TvTidSource,
         'XMLTV' : XMLTVSource,
-        'ONTV.dk' : ONTVSource
+        'ONTV.dk' : ONTVSource,
+        'JSON-URL' : JSONSource
     }
 
     cachePath = xbmc.translatePath(ADDON.getAddonInfo('profile'))

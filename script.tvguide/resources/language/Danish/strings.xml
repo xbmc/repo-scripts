@@ -34,6 +34,14 @@
     <string id="30152">kontroller indstillingerne eller prøv igen senere...</string>
     <string id="30153">fordi indstillingerne er ugyldige!</string>
 
+    <string id="30154">Det ser ud til dit nuværende skin har en special</string>
+    <string id="30155">version af TV Guide skinnet som ikke er opdateret.</string>
+    <string id="30156">Prøv med et andet skin...</string>
+
+    <string id="30157">Det ser ud til TV Guidens database er gået i stykker.</string>
+    <string id="30158">Database vil blive slettet og oprettet på ny.</string>
+    <string id="30159">Kanalopsætning, mv. går desværre tabt.</string>
+
     <string id="30200">på [B]%s[/B] om 5 minutter...</string>
     <string id="30201">på [B]%s[/B] starter nu...</string>
 
@@ -59,5 +67,12 @@
     <string id="30501">Flyt op og ned for at ændre placering.[CR]Vælg eller flyt til venstre for at gemme[CR]placeringen.</string>
     <string id="30502">Gem</string>
     <string id="30503">Annuller</string>
+
+    <!-- weeb.tv mod -->
+    <string id="30800">JSON-EPG URL</string>
+    <string id="30801">Afspil kanaler via Weeb.Tv addon</string>
+    <string id="30802">TV guiden er indstillet til at streame TV via Weeb.Tv,</string>
+    <string id="30803">men denne addon er ikke installeret.</string>
+    <string id="30804">Streaming via denne addon deaktiveres nu.</string>
 </strings>
  
