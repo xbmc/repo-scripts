@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <strings>
   <!-- Script Strings -->
   <string id="32000">Artistas Reconhecidos</string>
-  <string id="32001">Todos Artistas</string>
+  <string id="32001">Todos os Artistas</string>
   <string id="32002">Procurar Artistas</string>
   <string id="32003">Procurar Álbuns</string>
   <string id="32004">Download Automático</string>
   <string id="32005">Salvar Lista Local do cdART</string>
-  <string id="32006">Fan Arts</string>
+  <string id="32006">Fanarts</string>
   <string id="32007">Artistas Locais: %s</string>
   <string id="32008">cdARTs Locais: %s</string>
   <string id="32009">ClearLOGOs</string>
@@ -62,7 +62,7 @@
   <string id="32058">cdARTs Armazenados em</string>
   <string id="32059"> cdARTs Copiados</string>
   <string id="32060">Copiando cdARTs...</string>
-  <string id="32061">cdART Backup</string>
+  <string id="32061">Backup cdART</string>
   <string id="32062">Pasta para cdART Local que Seja Único</string>
   <string id="32063">Copiar cdARTs Local que Seja Único</string>
   <string id="32064">Pasta de cdARTs Únicos: %s</string>
@@ -109,16 +109,45 @@
   <string id="32104">Uploading Lista de cdARTs faltantes para o website</string>
   <string id="32105">Recuperando detalhes do álbum</string>
   <string id="32106">Sobreponha CDARTs com baixa resolução</string>
-  <string id="32107"></string>
+  <string id="32107"/>
   <string id="32108">Banco de dados muito antigo</string>
   <string id="32109">Você quer reconstruir?</string>
   <string id="32110">Problema Acessando Pasta, Script Saíndo</string>
   <string id="32111">Downloaded Artwork</string>
-  <string id="32112"></string>
-  <string id="32113"></string>
-  <string id="32114"></string>
-  <string id="32115">Notificar Durante ao construção do Banco de Dados(Mostrar por 2 segundos)</string>
+  <string id="32112"/>
+  <string id="32113"/>
+  <string id="32114"/>
+  <string id="32115">Notificar Durante a construção do Banco de Dados(2 segundos)</string>
+  <string id="32116">Notificar no final da construção do Banco de Dados em Background(2 segundos)</string>
   <string id="32117">Construção do Banco de Dados completado</string>
-  <string id="32118">Construindo do Banco de Dados em progresso...  Saíndo do Script...</string>
+  <string id="32118">Construindo o Banco de Dados - em progresso...  Saíndo do Script...</string>
   <string id="32119">Interrompendo a construção do Bando de Dados em Background</string>
+  <string id="32120">Todos os Artistas</string>
+  <string id="32121">Álbuns dos Artistas</string>
+  <string id="32122">Editar por Artista</string>
+  <string id="32123">Backup Base de Dados</string>
+  <string id="32124">Recuperando Todos os Artistas Locais</string>
+  <string id="32125">Artista ID: </string>
+  <string id="32126">Modificar Banco de Dados Local</string>
+  <string id="32127">Editar por Álbum</string>
+  <string id="32128">MusicBrainz Limite Pesquisa</string>
+  <string id="32129">Atualizar Base de Dados</string>
+  <string id="32130">Banco de Dados de músicas no XBMC faltando...</string>
+  <string id="32131">Por favor, verifique se a coleção de música, foi construída com sucesso.</string>
+  <string id="32132">Atualizando Artistas ID´s faltantes MusicBrainz</string>
+  <string id="32133">Atualizando Álbum/Artista MusicBrainz ID's faltantes</string>
+  <string id="32134">Atualizando banco de dados do Addon</string>
+  <string id="32135">Atualizando banco de dados do Addon - Artistas Locais</string>
+  <string id="32136">Durante atualização Banco dados do addon, ligar update do MusicBrainz ID (Para IDs faltantes)</string>
+  <string id="32137">Artista: </string>
+  <string id="32138">Álbum: </string>
+  <string id="32139">Sucesso no backup do banco de dados do Addon</string>
+  <string id="32140">Versão de Banco de Dados antiga encontrado...</string>
+  <string id="32141">Você deseja adicionar Artistas Locais para o Banco de Dados do Addon?</string>
+  <string id="32142">Adicionar todos os artistas para Database durante construção ou atualização?</string>
+  <string id="32143">Ajustes Extras</string>
+  <string id="32144">Imagem dos Artistas</string>
+  <string id="32145">Update XBMC Thumbnails and Fanarts</string>
+  <string id="32146">Settings</string>
+  <string id="32147">Exit</string>
 </strings>

@@ -1,3 +1,68 @@
+2.6.4
+- Fix - Changed artist thumb to be saved as folder.jpg <- which matches what XBMC looks for
+- Add - rename artist.jpg to folder.jpg during Update Fanarts/Thumbnails
+
+2.6.3
+- Add Overwrite thumbnail/fanart which path is supplied by XBMC during download
+- Add Overwrite thumbnail/fanart which path is supplied by XBMC via settings screen
+- Changed images to use preview images on fanart.tv
+
+2.6.2
+- Fixed MusicBrainz retrieval
+- fixed cdart image backup/restore
+
+2.6.1
+- fix artist tag not showing when on ClearLOGOs and Artist Thumbs
+- Add 'Artist' to Fanart and ClearLOGOs labels
+- Add 'Album' to cdART and Cover Art labels
+
+2.6.0
+- add 'Powered By' to logo for MusicBrainz and fanart.tv
+- add Artist Thumbs
+
+2.5.9
+- fix MusicBrainz Album matching(due to change with MusicBrainz)
+- fix fanart.tv API due to change
+- fix an bug in Cover Art View
+- remove unneeded progress dialogs
+
+2.5.8
+- removed import of BeautifulSoup
+
+2.5.7
+- fixed timing of Progress Dialog, fixed hang with XBMC using 12.1
+
+2.5.6
+- fixed script requiring the back up folder to be set(unless actually when trying to back up) - Thanks Martijn
+- fixed progress dialog 'flash' - Thanks Martijn
+- updated Portuguese (Brazil) strings - Thanks Wanilton
+
+2.5.5
+- added option to settings enable/disable "All Artists" when building Database
+- added ability to cancel local artist building
+- added more testing to insure that work folder has been created
+- added logging of script settings
+
+2.5.4
+- added addon database update
+- added local artist to be added to database - this allows clearLOGOs to be downloaded for compliation artists
+- removed some hard coded English strings
+- changed MusicBrainz Access - should work better and also notify me when being overloaded.
+- split album artist with ' / ' separating artists and use first artist(album artists should not have a separator)
+- added auto download for all artists fanart/clearLOGOs
+- added option to not add local artists at the start when moving from an older version of cdART Manager
+- added 'Use Release Name' to Musicbrainz query, should improve percentage of matched albums
+- added creation of 'fanart.jpg' during auto fanart download
+
+2.5.3
+- change layout of skin(for future additions)
+- added decoding of latin-1 strings(to fix some Windows created tags)
+- removed some repetative coding.
+
+2.5.2
+- added All Artists to search for logos and fanart
+- removed pysqlite dependancy
+
 2.5.1
 - fixed error when artist name or album title contains a double quote
 - fixed changes made in XBMC(json-rpc)

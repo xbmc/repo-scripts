@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <category label="Files & Folders">
+    <category label="32095">
         <setting type="sep" />
         <setting label="32095" type="lsep" />
         <setting type="sep" />
@@ -12,7 +12,7 @@
         <setting id="folder" type="enum" label="32019" lvalues="32054|32055" default="0"/>
         <setting type="sep" />
     </category>
-    <category label="Custom Colors"> 
+    <category label="32077"> 
         <setting type="sep" />
         <setting label="32077" type="lsep" />
         <setting type="sep" />
@@ -27,9 +27,9 @@
         <setting label="32093" type="labelenum" id="localcdart" enable="eq(-7,true)" lvalues="32078|32079|32080|32081|32082|32083|32084|32085|32086" default="32083" />
         <setting type="sep" />
     </category>
-    <category label="Extra Settings">
+    <category label="32143">
         <setting type="sep" />
-        <setting label="Extra Settings" type="lsep" />
+        <setting label="32143" type="lsep" />
         <setting type="sep" />
         <setting label="" type="lsep" />
         <setting label="32106" type="bool" id="resizeondownload" default="false" />
@@ -37,5 +37,8 @@
         <setting label="32115" type="bool" id="notifybackground" default="false" />
         <setting label="32116" type="bool" id="notifyatfinish" default="true" />
         <setting label="32099" type="action"  action="RunScript($CWD/default.py,database)" />
+        <setting label="32145" type="action"  action="RunScript($CWD/default.py,update_thumbs)" />
+        <setting label="32142" type="bool" id="enable_all_artists" default="false" />
+        <setting label="32136" type="bool" id="update_musicbrainz" default="true" />
     </category>
 </settings>

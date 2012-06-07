@@ -27,7 +27,7 @@ import os
 import xbmc
 
 
-THUMBS_CACHE_PATH = os.path.join( xbmc.translatePath( "special://profile/" ), "Thumbnails" )
+THUMBS_CACHE_PATH = os.path.join( xbmc.translatePath( "special://profile/" ), "Thumbnails" ).decode("utf-8").replace("////", "//")
 
 
 class Thumbnails:
