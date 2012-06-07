@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmc.subtitles"
        name="XBMC Subtitles"
-       version="3.2.0"
-       provider-name="Amet, mr_blobby">
+       version="3.2.1"
+       provider-name="amet, mr_blobby">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
@@ -15,6 +15,7 @@
     <summary lang="es">Subtítulos XBMC</summary> 
     <summary lang="hu">XBMC feliratok</summary> 
     <summary lang="sr">XBMC Преводи</summary>
+    <summary lang="se">XBMC Undertexter</summary>
     <summary lang="nl">XBMC Ondertitels</summary>
     <summary lang="pt">Legendas XBMC</summary>
     <summary lang="pl">Napisy XBMC</summary>
@@ -29,6 +30,7 @@
     <description lang="pt">Procura e download de legendas em 20 websites: Bierdopje.com, Italiansubs.net, Legendas-Zone.org, LegendasDivx.com, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, PT-SUBS.NET, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com e Undertexter.se. O botão das legendas deve ser adicionado no OSD e o caminho põe-se em Sistema-> Skin-> Addons de Scripts</description>
     <description lang="pl">Szukaj i pobieraj napisy z ponad 20 serwisów: Argenteam.net, Asia-team.net, Bierdopje.com, Italiansubs.net, Legendas-Zone.org, LegendasDivx.com, Legendas.tv, Napiprojekt.pl, Napisy24.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, PT-SUBS.NET, Sratim.co.il, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Subscenter.org, Supersubtitlies, Swesub.nu, Titlovi.com, Titulky.com and Undertexter.se. Aby przycisk napisów w OSD był aktywny trzeba ustawić scieżkę do skryptu w System-> Skóra-> Wytyczka: skróty</description>
     <description lang="zh">从多个服务提供者搜索并下载字幕。需要激活视频OSD菜单中的字幕按钮，并将字幕扩展功能设置为XBMC字幕。设置方法：系统设置->皮肤->扩展功能</description>
+    <description lang="se">Sök och ladda ner undertexter från flera källor. Undertextknappen i OSD'n behöver aktiveras och sökvägen anges till XBMC Undertexter i Inställningar -> Skal -> Tillägg genvägar</description>
     <platform>all</platform>
   </extension>
 </addon>

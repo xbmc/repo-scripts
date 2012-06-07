@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!-- Russian – current edition by Roman_V_M -->
 <strings>
-    <string id="610">Поиск </string>
+    <string id="610">Поиск</string>
     <string id="612">Введите строку поиска</string>
     <string id="642">Поиск субтитров %s</string>
     <string id="646">Подключение…</string>
@@ -71,6 +71,7 @@
     <string id="30142">TMPlayer</string>
     <string id="30143">MicroDVD (sub)</string>
     <string id="30144">MPl2</string>
+    <string id="30145">Сохранять субтитры в подпапку "Subs"</string>
     
   <!-- Languages  -->
   

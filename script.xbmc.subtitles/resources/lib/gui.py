@@ -6,7 +6,6 @@ import sys
 import xbmc
 import urllib
 import socket
-import xbmcvfs
 import xbmcgui
 import unicodedata
 
@@ -402,13 +401,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.show_service_list(gui)
 
   def clean_temp( self ):
-    dirs = [self.stream_sub_dir,self.tmp_sub_dir]
-    for temp_dir in dirs:
-      if not xbmcvfs.exists(temp_dir):
-        os.makedirs(temp_dir)
-      else:
-        rem_files(temp_dir) 
-
+    for temp_dir in [self.stream_sub_dir,self.tmp_sub_dir]:
+      rem_files(temp_dir) 
+      
+      
   def show_service_list(self,gui):
     try:
       select_index = self.service_list.index(self.service)

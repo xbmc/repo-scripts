@@ -1,3 +1,8 @@
+3.2.1
+- fix: clean temp folders properly, we have seen some issues with folders that couldn't be cleaned
+- Russian language update, thx to Roman_V_M
+- Swedish localization update, thx Blittan
+
 3.2.0
 - added service Subtitulos.es, thx quillo86
 - Fixed Sratim service (url changed), thx BBLN

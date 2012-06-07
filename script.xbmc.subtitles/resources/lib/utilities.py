@@ -6,6 +6,7 @@ import sys
 import xbmc
 import xbmcvfs
 import xbmcgui
+import shutil
 
 _              = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
@@ -167,13 +168,12 @@ def unpause():
 
 def rem_files(directory):
   try:
-    for root, dirs, files in os.walk(directory, topdown=False):
-      for items in dirs:
-        xbmcvfs.rmdir(os.path.join(root.encode("utf-8"), items.encode("utf-8")))
-      for name in files:
-        xbmcvfs.delete(os.path.join(root.encode("utf-8"), name.encode("utf-8")))
+    if xbmcvfs.exists(directory):
+      shutil.rmtree(directory)
   except:
-    pass 
+    pass
+
+  xbmcvfs.mkdir(directory)
       
 def copy_files( subtitle_file, file_path ):
   subtitle_set = False
