@@ -1,3 +1,7 @@
+2.6.5
+- Add required <language></language> in addon.xml
+- Fixed artist thumbnail check
+
 2.6.4
 - Fix - Changed artist thumb to be saved as folder.jpg <- which matches what XBMC looks for
 - Add - rename artist.jpg to folder.jpg during Update Fanarts/Thumbnails

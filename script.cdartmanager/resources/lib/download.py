@@ -107,9 +107,9 @@ def download_art( url_cdart, album, database_id, type, mode, size ):
     percent = 1
     if mode == "auto":
         pDialog.update( percent )
-    #except:
-    #    pDialog.create( _(32047) )
-    #    #Onscreen Dialog - "Downloading...."
+    else:
+        pDialog.create( _(32047) )
+        #Onscreen Dialog - "Downloading...."
     file_name = get_filename( type, url_cdart, mode )
     if file_name == "unknown":
         xbmc.log( "[script.cdartmanager] - Unknown Type ", xbmc.LOGDEBUG )
@@ -137,14 +137,10 @@ def download_art( url_cdart, album, database_id, type, mode, size ):
         #and calculating the percentage
         def _report_hook( count, blocksize, totalsize ):
             percent = int( float( count * blocksize * 100 ) / totalsize )
-            if percent < 0:
-                precent = 1
-            strProgressBar = str( percent )
-            if (type == "fanart" or type == "clearlogo" or type == "artistthumb") and mode == "auto":
+            if type in ( "fanart", "clearlogo", "artistthumb" ):
                 pDialog.update( percent, "%s%s" % ( _(32038) , get_unicode( album["artist"] ) ) )
-            elif mode == "auto":
+            else:
                 pDialog.update( percent, "%s%s" % ( _(32038) , get_unicode( album["artist"] ) ), "%s%s" % ( _(32039) , get_unicode( album["title"] ) ) )
-            #Onscreen Dialog - *DOWNLOADING CDART*
             if mode == "auto":
                 if ( pDialog.iscanceled() ):
                     pass  
@@ -184,6 +180,7 @@ def download_art( url_cdart, album, database_id, type, mode, size ):
     if mode == "auto":
         return message, download_success, final_destination  # returns one of the messages built based on success or lack of
     else:
+        pDialog.close()
         return message, download_success
 
 def cdart_search( cdart_url, id, disc ):
@@ -282,7 +279,7 @@ def auto_download( type ):
                     else:
                         artwork = art[0]
                         if type == "artistthumb":
-                            if exists( os.path.join( auto_art["path"], "artist.jpg" ) ):
+                            if exists( os.path.join( auto_art["path"], "folder.jpg" ) ):
                                 xbmc.log( "[script.cdartmanager] - Artist Thumb already exists, skipping", xbmc.LOGDEBUG )
                                 continue
                             else:
