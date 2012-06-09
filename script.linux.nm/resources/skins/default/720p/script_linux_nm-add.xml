@@ -1,5 +1,5 @@
 <window id="129">
-	<defaultcontrol>10</defaultcontrol>
+	<defaultcontrol>11</defaultcontrol>
 	<coordinates>
 		<system>1</system>
 		<posx>240</posx>
@@ -313,7 +313,7 @@
 			<posx>580</posx>
 			<posy>105</posy>
 			<control type="button" id="11">
-				<description>Scan button</description>
+				<description>add button</description>
 				<label>$ADDON[script.linux.nm 629]</label>
 				<visible>true</visible>
 				<posx>0</posx>
@@ -331,7 +331,7 @@
 				<ondown>13</ondown>
 			</control>
 			<control type="button" id="13">
-				<description>Disconnect</description>
+				<description>refresh</description>
 				<label>$ADDON[script.linux.nm 630]</label>
 				<visible>true</visible>
 				<posx>0</posx>

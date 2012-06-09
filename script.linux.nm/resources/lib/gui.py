@@ -10,34 +10,69 @@ getLS   = sys.modules[ "__main__" ].__language__
 __cwd__ = sys.modules[ "__main__" ].__cwd__
 
 
-#TODO Display connection status while connection
-#TODO Display connection status when coming back from add
-#TODO Display status when disconnecting
-#TODO Add hidden
-#TODO add connect button
-#TODO Check for wifi devices
-#TODO Check and display device status
-#TODO ADD Refresh button on AP window
+#Longer term
+#TODO Build a service that monitor state and display a notification about changes
+#TODO Display network detail window
+#TODO Create a new con name if name=ssid is taken
+#TODO the > only indicates active connection. would be nice to show connectivity status as well
+
 
 class GUI(xbmcgui.WindowXMLDialog):
 
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+        self.msg = kwargs['msg']
+        self.first = kwargs['first']
         self.doModal()
 
 
     def onInit(self):
         self.defineControls()
 
-        self.status_msg = ""
-        self.status_label.setLabel(self.status_msg)
+        self.status_label.setLabel(self.msg)
         
         self.showDialog()
-                
-        #self.status_label.setLabel(self.status_msg)
+        
+        if self.first == True:
+            nm_OK, err = self.check_nm() 
+            if nm_OK == True:
+                devlist = qfpynm.list_wifi_devices()        
+                if len(devlist) > 1:
+                    self.msg = getLS(30127)
+                elif len(devlist) == 0:
+                    self.msg = getLS(30128)
+            else:
+                self.msg = getLS(err)
+        
+        self.status_label.setLabel(self.msg)
         
         #self.disconnect_button.setEnabled(False)
         #self.delete_button.setEnabled(False)
+        
+    def check_nm(self):
+        try:
+            import dbus
+        except:
+            # dbus not available
+            err = 30130
+            return False, err
+        
+        try:
+            bus = dbus.SystemBus()
+        except:
+            # could not connect to dbus
+            err =  30131
+            return False, err
+            
+        try:
+            nm_proxy = bus.get_object("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
+            nm_iface = dbus.Interface(nm_proxy, "org.freedesktop.NetworkManager")
+        except:
+            # could not connect to network-manager
+            err = 30132    
+            return False, err
+        
+        return True, ''
         
     def defineControls(self):
         #actions
@@ -76,8 +111,8 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.close()
 
     def onClick(self, controlId):
-        self.status_msg = ""
-        self.status_label.setLabel(self.status_msg)
+        self.msg = ""
+        self.status_label.setLabel(self.msg)
         
                     
         #Activate connection from list
@@ -88,15 +123,36 @@ class GUI(xbmcgui.WindowXMLDialog):
             item = self.list.getSelectedItem()
 
             uuid =  item.getProperty('uuid') 
+            encryption = item.getProperty('encryption') 
             #print uuid
             
             self.activate_connection(uuid)
-            for i in range(1, 50):
+            for i in range(1, 100):
                 state,stateTXT = qfpynm.get_device_state(qfpynm.get_wifi_device())
                 msg = stateTXT
                 self.status_label.setLabel(msg)
-                if (i > 2 and state == 60)  or (state == 100 and i >2):
+                if (state == 100 and i >2):
                     break
+                if (i > 2 and state == 60):
+                    if encryption not in ['WPA','WEP']:
+                        print ("Strange encryption:" + encryption)
+                        break
+                    #Prompt for key
+                    key = ""
+                    kb = xbmc.Keyboard("", getLS(30104), False)
+                    kb.doModal()
+                    if (kb.isConfirmed()):
+                        key=kb.getText()
+                        errors = qfpynm.validate_wifi_input(key,encryption)
+                   
+                    if key == "" or errors != '':
+                        self.msg = getLS(30109)  
+                        self.status_label.setLabel(self.msg)
+                        break
+
+                    qfpynm.update_wifi(uuid, key, encryption)
+                    qfpynm.activate_connection(uuid)     
+                    continue                 
                 time.sleep(1)
                 msg = ''
                 self.status_label.setLabel(msg)
@@ -121,31 +177,31 @@ class GUI(xbmcgui.WindowXMLDialog):
             
         #disconnect button
         elif controlId == self.control_disconnect_button_id:
-
-            msg = getLS(30117) #Disconnecting
-            self.status_label.setLabel(msg)
             self.disconnect()
-            
-            msg = getLS(30115) #Refreshing
-            self.status_label.setLabel(msg)
+                        
+            for i in range(1, 20):
+                state,stateTXT = qfpynm.get_device_state(qfpynm.get_wifi_device())
+                self.msg = stateTXT
+                self.status_label.setLabel(self.msg)
+           
+                if (state == 30):
+                    break
+                time.sleep(1)
             self.updateList()
             
-            msg = getLS(30126) #Done
-            self.status_label.setLabel(msg)
-        
+            
         #Delete button
         elif controlId == self.control_delete_button_id:
             item = self.list.getSelectedItem()
 
             uuid =  item.getProperty('uuid') 
-            print uuid
             
             self.delete_connection(uuid)
             
             msg = getLS(30115) #Refreshing
             self.status_label.setLabel(msg)
         
-            #time.sleep(10)
+            time.sleep(2)
             self.updateList()
             
             msg = getLS(30126) #Done
@@ -198,6 +254,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             item = xbmcgui.ListItem (label=sts, label2 = connection_dict['id'])
             item.setProperty('ssid',connection_dict['ssid'])
             item.setProperty('uuid',connection_dict['uuid'])
+            item.setProperty('encryption',connection_dict['encryption'])
             self.list.addItem(item)
     
     

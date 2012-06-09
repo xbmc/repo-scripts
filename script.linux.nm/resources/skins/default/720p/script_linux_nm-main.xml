@@ -193,6 +193,7 @@
 				<control type="label">
 					<posx>320</posx>
 					<posy>0</posy>
+					<visible>false</visible>
 					<width>120</width>
 					<height>40</height>
 					<font>font13</font>
@@ -272,6 +273,7 @@
 				<control type="label">
 					<posx>320</posx>
 					<posy>0</posy>
+					<visible>false</visible>
 					<width>120</width>
 					<height>40</height>
 					<font>font13</font>

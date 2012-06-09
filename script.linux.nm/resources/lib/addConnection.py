@@ -8,13 +8,8 @@ import sys
 #enable localization
 getLS   = sys.modules[ "__main__" ].__language__
 __cwd__ = sys.modules[ "__main__" ].__cwd__
+__addon__      = xbmcaddon.Addon()
 
-
-
-#TODO Connect to hidden network
-#TODO Re-add connect button and add connect dialog with more options
-#TODO Display network detail window
-#TODO Create a new con name if name=ssid is taken
 
 class GUI(xbmcgui.WindowXMLDialog):
 
@@ -24,14 +19,20 @@ class GUI(xbmcgui.WindowXMLDialog):
 
 
     def onInit(self):
+        self.disable_ipv6 = __addon__.getSetting( "disable_ipv6" )
+        if self.disable_ipv6 == "true":
+            self.disable_ipv6 = True
+        else:
+            self.disable_ipv6 = False
+            
         self.defineControls()
 
-        self.status_msg = ""
-        self.status_label.setLabel(self.status_msg)
+        self.msg = ""
+        self.status_label.setLabel(self.msg)
         
         self.showDialog()
                 
-        self.status_label.setLabel(self.status_msg)
+        self.status_label.setLabel(self.msg)
         self.remove_auto_button.setEnabled(False)
         #self.disconnect_button.setEnabled(False)
        
@@ -63,16 +64,17 @@ class GUI(xbmcgui.WindowXMLDialog):
 
     def showDialog(self):
         self.updateList()
+        self.setFocus(self.list )
 
     def closeDialog(self):        
         import gui
-        mainUI = gui.GUI("script_linux_nm-main.xml", __cwd__, "default")
+        mainUI = gui.GUI("script_linux_nm-main.xml", __cwd__, "default",msg=self.msg, first=False)
         self.close()
         del mainUI
 
     def onClick(self, controlId):
-        self.status_msg = ""
-        self.status_label.setLabel(self.status_msg)
+        self.msg = ""
+        self.status_label.setLabel(self.msg)
         
         #Add connection from list
         if controlId == self.control_list_id:
@@ -82,21 +84,23 @@ class GUI(xbmcgui.WindowXMLDialog):
 
             ssid =  item.getLabel2()  
             encryption = item.getProperty('encryption')
-            self.add_wireless(ssid,encryption)        
-            self.closeDialog()
+            connection_created = self.add_wireless(ssid,encryption)       
+            if connection_created == True:
+                self.closeDialog()
        
         #Refresh
         elif controlId == self.control_refresh_button_id:
-            msg = getLS(30115) #Refreshing
-            self.status_label.setLabel(msg)
+            self.msg = getLS(30115) #Refreshing
+            self.status_label.setLabel(self.msg)
             self.updateList()
-            msg = ""
-            self.status_label.setLabel(msg)
+            self.msg = ""
+            self.status_label.setLabel(self.msg)
         
         #Add hidden button
         elif controlId == self.control_add_hidden_button_id:
-            self.add_hidden()
-            self.closeDialog()
+            connection_created = self.add_hidden()
+            if connection_created == True:
+                self.closeDialog()
 
         #cancel dialog
         elif controlId == self.control_cancel_button_id:
@@ -119,9 +123,9 @@ class GUI(xbmcgui.WindowXMLDialog):
         if (kb.isConfirmed()):
             ssid=kb.getText()
         if ssid == '':
-            msg = getLS(30108)  
-            self.status_label.setLabel(msg)
-            return        
+            self.msg = getLS(30108)  
+            self.status_label.setLabel(self.msg)
+            return False       
         
         encryption = ''
         kb = xbmc.Keyboard("", getLS(30124), False)
@@ -132,17 +136,20 @@ class GUI(xbmcgui.WindowXMLDialog):
                 encryption = encryption.upper()
                 
         if encryption == '' or not any(encryption in s for s in ['NONE', 'WEP', 'WPA']):
-            msg = getLS(30125)  
-            self.status_label.setLabel(msg)
-            return  
-        self.add_wireless(ssid, encryption)
+            self.msg = getLS(30125)  
+            self.status_label.setLabel(self.msg)
+            return  False
+        return self.add_wireless(ssid, encryption)
         
     def add_wireless(self, ssid, encryption):
         finished = False
+        connection_created = False
+        con_path = ''
         while not finished  :
-            finished = self.add_wireless_sub(ssid, encryption)
-         
-    def add_wireless_sub(self, ssid, encryption):
+            finished, connection_created, con_path = self.add_wireless_sub(ssid, encryption, connection_created, con_path)
+        return connection_created
+    
+    def add_wireless_sub(self, ssid, encryption, connection_created, con_path):
         #Prompt for key
         key = ""
         if not encryption == 'NONE':
@@ -153,40 +160,45 @@ class GUI(xbmcgui.WindowXMLDialog):
                 errors = qfpynm.validate_wifi_input(key,encryption)
            
             if key == "" or errors != '':
-                msg = getLS(30109)  
-                self.status_label.setLabel(msg)
-                return True
+                self.msg = getLS(30109)  
+                self.status_label.setLabel(self.msg)
+                return True, connection_created, con_path
         if encryption == 'WEP':
             wep_alg = 'shared'
         else:
             wep_alg = ''
+        if connection_created == False:
+            con_path = qfpynm.add_wifi(ssid,key,encryption,wep_alg,self.disable_ipv6 )
+        else:
+            aUUID = qfpynm.get_con_uuid_by_path(con_path)
+            qfpynm.update_wifi(aUUID, key, encryption)
+            qfpynm.activate_connection(aUUID)
             
-        con_path = qfpynm.add_wifi(ssid,key,encryption,wep_alg)
         for i in range(1, 150):
             state,stateTXT = qfpynm.get_device_state(qfpynm.get_wifi_device())
-            msg = stateTXT
-            self.status_label.setLabel(msg)
+            self.msg = stateTXT
+            self.status_label.setLabel(self.msg)
             # Do not exit directly just to be sure.
             # If trying with a bad key when wifi is disconnected do not give state 60 but 30....
             # better never to disconnect wifi and only deactivate c
             if (i > 10 and state == 60) or (i > 10 and state == 30)  or (state == 100 and i >2):
                 break
             time.sleep(1)
-            msg = ''
-            self.status_label.setLabel(msg)
+            self.msg = ''
+            self.status_label.setLabel(self.msg)
             time.sleep(1)
         if state == 100:
-            msg = getLS(30120) #"Connected!"
-            self.status_label.setLabel(msg)
-            return True
+            self.msg = getLS(30120) #"Connected!"
+            self.status_label.setLabel(self.msg)
+            return True, True, con_path
         if (state == 60  or state == 30) and encryption != "NONE":
-            msg = getLS(30121) #"Not Autorized!"
-            self.status_label.setLabel(msg)
-            return False
+            self.msg = getLS(30121) #"Not Autorized!"
+            self.status_label.setLabel(self.msg)
+            return False, True, con_path
         
-        msg = getLS(30122) #"Connection failed"
-        self.status_label.setLabel(msg)      
-        return True
+        self.msg = getLS(30122) #"Connection failed"
+        self.status_label.setLabel(self.msg)      
+        return True, True, con_path
 
 
     def updateList(self):
