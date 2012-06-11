@@ -15,31 +15,47 @@
 				<width>1280</width>
 				<height>720</height>
 				<texture border="40">forum-browser-panel-full.png</texture>
-				<colordiffuse>FF000000</colordiffuse>
+				<colordiffuse>FF444444</colordiffuse>
 			</control>
 
 			<control type="image" id="251">
-				<description>page header tab icon</description>
+				<description>Large Back</description>
 				<posx>10</posx>
 				<posy>4</posy>
 				<width>1260</width>
-				<height>80</height>
-				<texture border="10">forum-browser-title-background.png</texture>
+				<height>712</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FF888888</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>1260</width>
+				<height>85</height>
+				<texture border="20">forum-browser-white-box.png</texture>
+			</control>
+			<control type="image" id="251">
+				<description>Smaller Back</description>
+				<posx>10</posx>
+				<posy>84</posy>
+				<width>1260</width>
+				<height>632</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
 			</control>
 			<control type="image" id="102">
 				<description>Avatar</description>
-				<posx>19</posx>
-				<posy>15</posy>
+				<posx>23</posx>
+				<posy>16</posy>
 				<width>59</width>
 				<height>59</height>
 			</control>
 			<control type="label" id="103">
-				<description>textarea</description>
-				<posx>82</posx>
+				<description>User</description>
+				<posx>90</posx>
 				<posy>22</posy>
-				<width>120</width>
+				<width>150</width>
 				<height>40</height>
-				<font>font13_title</font>
+				<font>ForumBrowser-font13</font>
 				<textcolor>black</textcolor>
 				<aligny>center</aligny>
 				<align>center</align>
@@ -50,11 +66,11 @@
 
 			<control type="label" id="104">
 				<description>Topic</description>
-				<posx>212</posx>
+				<posx>235</posx>
 				<posy>14</posy>
-				<width>715</width>
+				<width>680</width>
 				<height>60</height>
-				<font>font13_title</font>
+				<font>ForumBrowser-font13</font>
 				<textcolor>black</textcolor>
 				<aligny>center</aligny>
 				<align>center</align>
@@ -63,112 +79,93 @@
 
 			<control type="label" id="105">
 				<description>Date</description>
-				<posx>937</posx>
+				<posx>1200</posx>
 				<posy>14</posy>
-				<width>300</width>
+				<width>330</width>
 				<height>60</height>
-				<font>font18</font>
+				<font>ForumBrowser-font10</font>
 				<textcolor>black</textcolor>
 				<aligny>center</aligny>
-				<align>center</align>
+				<align>right</align>
 			</control>
-			<control type="button" id="110">
-				<description>Close Button</description>
-				<posx>1230</posx>
+			
+			<control type="group">
+				<posx>1200</posx>
 				<posy>15</posy>
-				<width>32</width>
-				<height>28</height>
-				<texturefocus>forum-browser-close-button-focus.png</texturefocus>
-				<texturenofocus>forum-browser-close-button.png</texturenofocus>
-				<visible>system.getbool(input.enablemouse)</visible>
-				<onclick>PreviousMenu</onclick>
-			</control>
-			<control type="image">
-				<description>page header tab icon</description>
-				<posx>10</posx>
-				<posy>4</posy>
-				<width>1260</width>
-				<height>80</height>
-				<texture>forum-browser-overlay.png</texture>
-			</control>
-
-			<control type="image" id="351">
-				<description>page header tab icon</description>
-				<posx>10</posx>
-				<posy>90</posy>
-				<width>1245</width>
-				<height>626</height>
-				<texture border="10">forum-browser-text-background.png</texture>
-				<visible>true</visible>
+				<control type="button" id="110">
+					<description>Close Button</description>
+					<posx>30</posx>
+					<posy>0</posy>
+					<width>28</width>
+					<height>28</height>
+					<texturefocus>forum-browser-close-button-focus.png</texturefocus>
+					<texturenofocus>forum-browser-close-button.png</texturenofocus>
+					<visible>system.getbool(input.enablemouse)</visible>
+					<onclick>PreviousMenu</onclick>
+				</control>
+			
+				<control type="label" id="160">
+					<description>Login Error</description>
+					<posx>0</posx>
+					<posy>4</posy>
+					<width>400</width>
+					<height>10</height>
+					<font>ForumBrowser-font10</font>
+					<textcolor>black</textcolor>
+					<aligny>top</aligny>
+					<align>right</align>
+				</control>
+				<control type="image" id="111">
+					<description>Logged In</description>
+					<posx>5</posx>
+					<posy>4</posy>
+					<width>20</width>
+					<height>20</height>
+					<texture>forum-browser-logged-in.png</texture>
+					<colordiffuse>FF555555</colordiffuse>
+				</control>
 			</control>
 
 			<control type="textbox" id="122">
 				<posx>30</posx>
-				<posy>100</posy>
+				<posy>97</posy>
 				<width>1205</width>
 				<height>606</height>
 				<pagecontrol>123</pagecontrol>
-				<description>My first text box control</description>
 				<colordiffuse>FFFFFFFF</colordiffuse>
-				<font>font18</font>
+				<font>ForumBrowser-font13</font>
 				<scroll>true</scroll>
 				<textcolor>FF000000</textcolor>
 				<visible>true</visible>
 			</control>
-			<control type="image">
-				<description>page header tab icon</description>
-				<posx>20</posx>
-				<posy>395</posy>
-				<width>1025</width>
-				<height>205</height>
-				<texture>forum-browser-text-overlay.png</texture>
-				<visible>false</visible>
-			</control>
 
 			<control type="scrollbar" id="123">
 				<description>Message Scrollbar</description>
-				<posx>1258</posx>
-				<posy>90</posy>
-				<width>12</width>
-				<height>626</height>
+				<posx>1253</posx>
+				<posy>97</posy>
+				<width>4</width>
+				<height>606</height>
 				<onleft>147</onleft>
 				<onright>149</onright>
 				<onup>123</onup>
 				<ondown>123</ondown>
-				<texturesliderbackground border="6">default-scroll_back.png
-				</texturesliderbackground>
-				<texturesliderbar border="6">default-scroll_dark.png
-				</texturesliderbar>
-				<texturesliderbarfocus border="6">default-scroll_mid.png
-				</texturesliderbarfocus>
+				<texturesliderbackground>-</texturesliderbackground>
+				<texturesliderbar border="1">forum-browser-panel-full.png</texturesliderbar>
+				<texturesliderbarfocus border="1">forum-browser-panel-full.png</texturesliderbarfocus>
 				<textureslidernib>-</textureslidernib>
 				<textureslidernibfocus>-</textureslidernibfocus>
 				<orientation>vertical</orientation>
 				<showonepage>true</showonepage>
+				<colordiffuse>FF555555</colordiffuse>
 				<visible>Control.IsVisible(122)</visible>
-			</control>
-
-			<control type="image" id="300">
-				<posx>10</posx>
-				<posy>86</posy>
-				<width>1260</width>
-				<height>2</height>
-				<texture>forum-browser-separator.png</texture>
-			</control>
-			<control type="image" id="310">
-				<posx>10</posx>
-				<posy>86</posy>
-				<width>1</width>
-				<height>2</height>
-				<texture>forum-browser-progress.png</texture>
 			</control>
 		</control>
 
 		<control type="group" id="149">
-			<posx>1265</posx>
+			<posx>1272</posx>
 			<posy>0</posy>
 			<defaultcontrol>150</defaultcontrol>
-			<animation effect="slide" end="-300,0" time="400"
+			<animation effect="slide" end="-309,0" time="400"
 				condition="Control.HasFocus(149)|Control.HasFocus(150)">Conditional</animation>
 			<control type="image">
 				<posx>0</posx>
@@ -180,8 +177,8 @@
 				<colordiffuse>FFFFFFFF</colordiffuse>
 			</control>
 			<control type="list" id="150">
-				<posx>0</posx>
-				<posy>0</posy>
+				<posx>-4</posx>
+				<posy>4</posy>
 				<width>315</width>
 				<height>720</height>
 				<onleft>123</onleft>
@@ -197,18 +194,9 @@
 						<posy>1</posy>
 						<width>300</width>
 						<height>166</height>
-						<texture border="10">forum-browser-text-background.png</texture>
+						<texture border="20">forum-browser-white-boxr.png</texture>
 						<visible>true</visible>
 						<colordiffuse>CC999999</colordiffuse>
-					</control>
-					<control type="image">
-						<posx>16</posx>
-						<posy>1</posy>
-						<width>300</width>
-						<height>166</height>
-						<texture border="10">forum-browser-button-focus.png</texture>
-						<visible>true</visible>
-						<colordiffuse>FFFFFFFF</colordiffuse>
 					</control>
 					<control type="image">
 						<posx>101</posx>
@@ -225,7 +213,7 @@
 						<posy>134</posy>
 						<width>130</width>
 						<height>30</height>
-						<font>font12</font>
+						<font>ForumBrowser-font12</font>
 						<aligny>center</aligny>
 						<textcolor>black</textcolor>
 						<selectedcolor>black</selectedcolor>
@@ -240,16 +228,7 @@
 						<posy>1</posy>
 						<width>300</width>
 						<height>298</height>
-						<texture border="10">forum-browser-text-background.png</texture>
-						<visible>true</visible>
-						<colordiffuse>FFFFFFFF</colordiffuse>
-					</control>
-					<control type="image">
-						<posx>16</posx>
-						<posy>1</posy>
-						<width>300</width>
-						<height>298</height>
-						<texture border="10">forum-browser-button-focus.png</texture>
+						<texture border="20">forum-browser-white-boxr.png</texture>
 						<visible>true</visible>
 						<colordiffuse>FFFFFFFF</colordiffuse>
 					</control>
@@ -268,7 +247,7 @@
 						<posy>264</posy>
 						<width>130</width>
 						<height>30</height>
-						<font>font12</font>
+						<font>ForumBrowser-font12</font>
 						<aligny>center</aligny>
 						<textcolor>black</textcolor>
 						<selectedcolor>black</selectedcolor>
@@ -281,10 +260,10 @@
 		</control>
 
 		<control type="group" id="147">
-			<posx>-500</posx>
+			<posx>-507</posx>
 			<posy>0</posy>
 			<defaultcontrol>150</defaultcontrol>
-			<animation effect="slide" end="500,0" time="400"
+			<animation effect="slide" end="507,0" time="400"
 				condition="Control.HasFocus(147)|Control.HasFocus(148)">Conditional</animation>
 			<control type="image">
 				<posx>0</posx>
@@ -296,8 +275,8 @@
 				<colordiffuse>FFFFFFFF</colordiffuse>
 			</control>
 			<control type="list" id="148">
-				<posx>0</posx>
-				<posy>0</posy>
+				<posx>4</posx>
+				<posy>4</posy>
 				<width>515</width>
 				<height>720</height>
 				<onleft>123</onleft>
@@ -313,18 +292,9 @@
 						<posy>1</posy>
 						<width>500</width>
 						<height>58</height>
-						<texture border="10">forum-browser-text-background.png</texture>
+						<texture border="20">forum-browser-white-boxr.png</texture>
 						<visible>true</visible>
 						<colordiffuse>CC999999</colordiffuse>
-					</control>
-					<control type="image">
-						<posx>1</posx>
-						<posy>1</posy>
-						<width>500</width>
-						<height>58</height>
-						<texture border="10">forum-browser-button-focus.png</texture>
-						<visible>true</visible>
-						<colordiffuse>FFFFFFFF</colordiffuse>
 					</control>
 					<control type="image">
 						<posx>10</posx>
@@ -341,7 +311,7 @@
 						<posy>1</posy>
 						<width>421</width>
 						<height>58</height>
-						<font>font12</font>
+						<font>ForumBrowser-font12</font>
 						<aligny>center</aligny>
 						<textcolor>black</textcolor>
 						<selectedcolor>black</selectedcolor>
@@ -357,16 +327,7 @@
 						<posy>1</posy>
 						<width>500</width>
 						<height>118</height>
-						<texture border="10">forum-browser-text-background.png</texture>
-						<visible>true</visible>
-						<colordiffuse>FFFFFFFF</colordiffuse>
-					</control>
-					<control type="image">
-						<posx>1</posx>
-						<posy>1</posy>
-						<width>500</width>
-						<height>118</height>
-						<texture border="10">forum-browser-button-focus.png</texture>
+						<texture border="20">forum-browser-white-boxr.png</texture>
 						<visible>true</visible>
 						<colordiffuse>FFFFFFFF</colordiffuse>
 					</control>
@@ -385,7 +346,7 @@
 						<posy>1</posy>
 						<width>375</width>
 						<height>78</height>
-						<font>font12</font>
+						<font>ForumBrowser-font12</font>
 						<aligny>center</aligny>
 						<textcolor>black</textcolor>
 						<selectedcolor>black</selectedcolor>
@@ -399,7 +360,7 @@
 						<posy>80</posy>
 						<width>375</width>
 						<height>30</height>
-						<font>font12</font>
+						<font>ForumBrowser-font12</font>
 						<aligny>center</aligny>
 						<textcolor>FF444444</textcolor>
 						<selectedcolor>black</selectedcolor>

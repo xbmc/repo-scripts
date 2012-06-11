@@ -1,0 +1,11 @@
+#Generic
+
+url:subscriptions=subscriptions.php|track.php
+
+filter:page=>\s*(?P<display>Page\s(?:</?\w+>)?(?P<page>\d+)(?:</?\w+>)?\sof\s(?:</?\w+>)?(?P<total>\d+)(?:</?\w+>)?)\s?<(?i)
+
+#------------------------------------- Login
+url:login=login.php
+form:login_action=login.php
+form:login_user=user
+form:login_pass=pass

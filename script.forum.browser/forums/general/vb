@@ -1,0 +1,17 @@
+#VBulletin
+
+url:threads=forumdisplay.php?f=!FORUMID!!PAGE!
+url:replies=showthread.php?t=!THREADID!!PAGE!
+
+url:page_arg=&page=!PAGE!
+filter:next=Next Page - Results ([\d,]+) to ([\d,]+) of ([\d,]+).*?(?P<page>Next Page - Results [\d,]+ to [\d,]+ of [\d,]+)
+filter:prev=Prev Page - Results ([\d,]+) to ([\d,]+) of ([\d,]+).*?(?P<page>Prev Page - Results [\d,]+ to [\d,]+ of [\d,]+)
+filter:page=>(?P<display>Page\s(?P<page>\d+)\sof\s(?P<total>\d+))<
+
+url:subscriptions=subscription.php
+url:forum_subscriptions=usercp.php
+
+url:login=login.php?do=login
+form:login_action=login.php
+form:login_user=vb_login_username
+form:login_pass=vb_login_password

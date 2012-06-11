@@ -1,0 +1,17 @@
+Threads Window Help
+@item:threadlist=Threads List
+On the left is the thread starter and on the right is the thread title. At the bottom is either the description or the name of the user who last posted, dependeng on what information is available.
+A red circle icon next to the title indicates a sticky or announcement thread.
+
+The context menu gives options to subscribe to/unsubscribe from the selected thread as well as the forum you are viewing.
+Pressing right or left will select the page button at the top.
+@item:pagination=Page Buttons
+The page button shows your current page and the total pages for the thread.
+
+If there is a page before or after the current page, next and/or previous buttons will be available to go to those pages.
+
+Clicking the page button gives you options to go to the first page, last page, or select a page number.
+@item:loginstate=Logged In Indicator
+The green/gray circle at the top right is green when you are logged in and grey when you are not.
+
+If mouse support is enabled in XBMC, a close button will be visible to the right.

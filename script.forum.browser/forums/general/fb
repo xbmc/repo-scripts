@@ -1,0 +1,17 @@
+#FluxBB
+
+url:threads=viewforum.php?id=!FORUMID!!PAGE!
+url:replies=viewtopic.php?id=!THREADID!!PAGE!
+
+url:page_arg=&p=!PAGE!
+
+url:subscriptions=search.php?action=show_subscriptions
+
+filter:page=>(?P<total>\d+)</a>\s*<a[^>]*?>Next
+filter:next=href="view(?:forum|topic)\.php\?[^"]*?p=(?P<page>\d+)[^"]*?">Next</a>
+filter:prev=href="view(?:forum|topic)\.php\?[^"]*?p=(?P<page>\d+)[^"]*?">Previous</a>
+
+url:login=login.php
+form:login_action=login.php?
+form:login_user=req_username
+form:login_pass=req_password

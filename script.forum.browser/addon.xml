@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.forum.browser"
        name="Forum Browser"
-       version="0.8.7"
+       version="1.0.0"
        provider-name="Rick Phillips (ruuk)">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -15,6 +15,6 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <summary lang="en">Browse forums within XBMC</summary>
-    <description lang="en">Browse Forums in XBMC. View forums, threads, posts, subscriptions and private messages. Follow links in Web Viewer. Post replies, send private messages, delete posts, quote posts. View images in posts, follow post forum links and download post links. Translate post messages via Google Translate. Currently supports Forums: xbmc.org,boxee.tv,xbmc4xbox.org,dvhk.pl</description>
+    <description lang="en">Browse Forums in XBMC. Supports Tapatalk enabled forums (over 30000) and Forumrunner enabled forums. Also supports boxee.tv. View forums, threads, posts, subscriptions and private messages. Follow links in Web Viewer. Post replies, send private messages, delete posts, quote posts. View images in posts, follow post forum links and download post links.</description>
   </extension>
 </addon>

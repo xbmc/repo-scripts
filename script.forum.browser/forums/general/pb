@@ -1,0 +1,20 @@
+#FluxBB
+
+url:threads=viewforum.php?f=!FORUMID!!PAGE!
+url:replies=viewtopic.php?f=!FORUMID!&t=!THREADID!!PAGE!
+
+url:page_arg=&start=!PAGE!
+
+url:subscriptions=ucp.php?i=main&mode=subscribed
+url:forum_subscriptions=ucp.php?i=main&mode=subscribed
+
+filter:page=>\s*(?P<display>Page\s(?:</?\w+>)?(?P<page>\d+)(?:</?\w+>)\sof\s(?:</?\w+>)(?P<total>\d+)(?:</?\w+>))\s?<(?i)
+
+filter:prev=<a href="./view(?:forum|topic).php?[^>]*?start=(?P<start>\d+)[^"]*?">.*?<strong>\d+</strong>(?i)
+#<a href="./viewtopic.php?f=65&amp;t=1494875&amp;sid=72b5579a0307098deba5f9fed3d4186c">1</a><span class="page-sep">, </span><strong>2</strong><span class="page-sep">, </span><a href="./viewtopic.php?f=65&amp;t=1494875&amp;sid=72b5579a0307098deba5f9fed3d4186c&amp;start=30">
+filter:next=(?<!of |ge )<strong>\d+</strong>.*?<a href="./view(?:forum|topic).php?[^>]*?start=(?P<start>\d+)[^"]*?">(?i)
+
+url:login=ucp.php?mode=login
+form:login_action=ucp.php?mode=login
+form:login_user=username
+form:login_pass=password

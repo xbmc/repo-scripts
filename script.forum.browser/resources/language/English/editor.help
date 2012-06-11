@@ -1,0 +1,15 @@
+Message Editor Help
+@item:titlebutton=Set Title Button
+Clicking this button will bring up an input where you can enter a title to the message.
+@item:editlist=Edit List
+This lists the lines of the message.
+Clicking a line will let you edit that line. You can use normal BB formatting codes.
+The context menu has options to add a line before the selected line, or delete the selected line.
+@item:buttons=Buttons
+The 'Add Line' button brings up an input where you can enter the text of the line. You can use normal BB formatting codes.
+
+The 'Add Lines' button is the same as the 'Add Line' button except that when you are done with the line, it will bring up a new input for the next line. Use the previous menu button to exit.
+
+The 'Send Message' or 'Post Reply' button sends the message.
+@item:preview=Preview
+This view shows the message as it will appear in Forum Browser message views, which is the best approximation it can make of normal web style formatting.

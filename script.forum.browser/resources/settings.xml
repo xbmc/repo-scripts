@@ -2,11 +2,22 @@
 <settings>
   <category label="30000">
     <setting id="always_login" type="bool" label="30004" default="false" />
+    <setting id="ask_close_on_exit" type="bool" label="30237" default="false" />
     <setting id="open_thread_to_newest" type="bool" label="30001" default="true" />
+    <setting id="auto_thread_subscriptions_window" type="bool" label="30009" default="false" />
     <setting id="reverse_sort" type="bool" label="30002" default="false" />
-    <setting id="language" type="enum" label="30003" values="Afrikaans|Albanian|Amharic|Arabic|Armenian|Azerbaijani|Basque|Belarusian|Bengali|Bihari|Breton|Bulgarian|Burmese|Catalan|Cherokee|Chinese|Chinese_Simplified|Chinese_Traditional|Corsican|Croatian|Czech|Danish|Dhivehi|Dutch|English|Esperanto|Estonian|Faroese|Filipino|Finnish|French|Frisian|Galician|Georgian|German|Greek|Gujarati|Haitian_Creole|Hebrew|Hindi|Hungarian|Icelandic|Indonesian|Inuktitut|Irish|Italian|Japanese|Javanese|Kannada|Kazakh|Khmer|Korean|Kurdish|Kyrgyz|Lao|Latin|Latvian|Lithuanian|Luxembourgish|Macedonian|Malay|Malayalam|Maltese|Maori|Marathi|Mongolian|Nepali|Norwegian|Occitan|Oriya|Pashto|Persian|Polish|Portuguese|Portuguese_Portugal|Punjabi|Quechua|Romanian|Russian|Sanskrit|Scots_Gaelic|Serbian|Sindhi|Sinhalese|Slovak|Slovenian|Spanish|Sundanese|Swahili|Swedish|Syriac|Tajik|Tamil|Tatar|Telugu|Thai|Tibetan|Tonga|Turkish|Uighur|Ukrainian|Urdu|Uzbek|Vietnamese|Welsh|Yiddish|Yoruba|Unknown" default="24" />
-    <setting id="color_mode" type="enum" label="30005" lvalues="30010|30011|30012" default="0" />
-    <setting id="use_forum_colors" type="bool" label="30007" default="false" />
-    <setting id="use_text_editor" type="bool" label="30006" default="false" />
+    <setting id="use_skin_mods" type="bool" label="30234" default="true" />
+    <setting id="enable_ssl" type="bool" label="30235" default="false" visible="false"/>
+    <setting id="save_logos" type="bool" label="30245" default="false" />
+    <setting id="skin" type="enum" label="30005" lvalues="30012|30011" default="0" />
+    <setting label="30244" type="action" action="RunScript(script.forum.browser,settingshelp)"/>
+  </category>
+  <category label="30008">
+  	<setting id="crypto_type" type="enum" label="30238" values="AES|Triple DES|AES & Triple DES" default="2" />
+    <setting label="30239" type="file" id="crypto_key_file" default="" />
+    <setting id="debug" type="bool" label="30228" default="false" />
+    <setting id="do_mybb_edit_bug_fix" type="bool" label="30233" default="true" />
+    <setting id="forumrunner_disable_ssl" type="bool" label="30247" default="true" visible="false"/>
+    <setting id="experimental" type="bool" label="Experimental Stuff" default="false" />
   </category>
 </settings>

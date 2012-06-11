@@ -1,0 +1,8 @@
+Image Viewer Help
+@item:controls=Controls
+The left and right buttons cycle backwards and forwards through the images in the post.
+
+If mouse support is enabled in XBMC, there will be a close button between the buttons, otherwise use the previous menu button. 
+@item:context=Context Menu
+[B]Save Image[/B]: Save the current image to disk.
+You will be asked to enter a name for the file and pick a location to save to. The next time you save an image the location will be remembered.

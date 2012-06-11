@@ -1,0 +1,21 @@
+#MyBB
+
+url:threads=forumdisplay.php?fid=!FORUMID!!PAGE!
+url:replies=showthread.php?tid=!THREADID!!PAGE!
+
+url:page_arg=&page=!PAGE!
+
+url:subscriptions=usercp.php?action=subscriptions
+url:forum_subscriptions=usercp.php?action=forumsubscriptions
+
+#url:threads=forum-!FORUMID!!PAGE!.html
+#url:replies=thread-!THREADID!!PAGE!.html
+
+#url:page_arg=-page-!PAGE!
+
+filter:page=>Pages \((?P<total>\d+)\).*?class="pagination_current">(?P<page>\d+)<(?is)
+
+url:login=member.php?action=login
+form:login_action=member.php
+form:login_user=username
+form:login_pass=password

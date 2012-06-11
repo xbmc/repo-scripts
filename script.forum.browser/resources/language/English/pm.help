@@ -1,0 +1,25 @@
+Private Messages Window Help
+@item:pmlist=Private Message List
+Lists a preview of each message.
+Clicking a message will open the full message view.
+The context menu will bring up options for the selected message.
+Pressing left or right will select the buttons at the top of the window.
+Various information is listed to the left of each post, depending on what is available.
+The green/grey circle will be green if the user is online or grey if not.
+@item:context=Context Menu
+Some options will be unavailable depending on login status.
+Quote: Open the message editor dialog with the current message quoted
+Refresh: Refresh the list of messages
+Delete: Delete the currently selected message. This may not be available, or may not work depending on the forum interface or what the forum allows.
+@item:buttons=Buttons
+At the top left, the 'Send PM' button will first ask you to to enter the recipients of the message and then open the message editor.
+You can put multiple receipients separated by commas.
+If you are not logged in, the button will be disabled.
+
+On the top right, the page button shows your current page and the total pages.
+If there is a page before or after the current page, next and/or previous buttons will be available to go to those pages.
+Clicking the page button gives you options to go to the first page, last page, newest post,or select a page number.
+@item:loginstate=Logged In Indicator
+The green/gray circle at the top right is green when you are logged in and grey when you are not.
+
+If mouse support is enabled in XBMC, a close button will be visible to the right.
