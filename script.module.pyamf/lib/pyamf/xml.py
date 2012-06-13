@@ -33,9 +33,7 @@ def set_default_interface(etree):
     (both objects and blobs).
     """
     global types, ET, modules
-
     t = _get_etree_type(etree)
-
     _types = set(types or [])
     _types.update([t])
 
@@ -68,8 +66,10 @@ def find_libs():
             etree = get_module(mod)
         except ImportError:
             continue
-
-        t = _get_etree_type(etree)
+        try:
+            t = _get_etree_type(etree)
+        except TypeError:
+            continue
 
         types.append(t)
         mapping[t] = etree
