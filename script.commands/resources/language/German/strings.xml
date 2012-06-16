@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="30001">Befehl hinzufügen</string>
+  <string id="30002">Aus Liste</string>
+  <string id="30003">Aus Favoriten</string>
+  <string id="30004">Befehl eingeben</string>
+  <string id="30005">Befehle verwalten</string>
+  <string id="30006">Ändern</string>
+  <string id="30007">Entfernen</string>
+  <string id="30008">Sortieren</string>
+  <string id="30009">Befehl</string>
+  <string id="30010">Titel</string>
+  <string id="30011">Neue Position</string>
+</strings>

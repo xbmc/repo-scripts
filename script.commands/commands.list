@@ -1,0 +1,43 @@
+Sleep Timer###AlarmClock(Sleep Timer, ShutDown)
+Toggle Random###PlayerControl(Random)
+Cycle Repeat###PlayerControl(Repeat)
+Cycle Subtitles###Action(nextsubtitle)
+Cycle Languages###Action(audionextlanguage)
+Take Screenshot###TakeScreenshot
+Refresh RSS feeds###RefreshRSS
+Eject Tray###EjectTray
+Play DVD###PlayDVD
+Rip CD###RipCD
+Clean Playlist###Playlist.Clear
+Update Video DB###UpdateLibrary(video)
+Update Music DB###UpdateLibrary(music)
+Clean Video DB###CleanLibrary(video)
+Clean Music DB###CleanLibrary(music)
+Toggle Sort Direction###Container.SortDirection
+Cycle View Modes###Container.NextViewMode
+Force Addon Update###UpdateAddonRepos
+Force Weather Refresh###Weather.Refresh
+Next Weather Location###Weather.LocationNext
+Search Video Library###VideoLibrary.Search
+Video Partymode###Partymode(video)
+Music Partymode###Partymode(music)
+Reboot System###Reboot
+ShutDown System###ShutDown
+Hibernate System###Hibernate
+Suspend System###Suspend
+Restart XBMC###RestartApp
+Toggle Fullscreen###Action(togglefullscreen)
+Show HOME###ActivateWindow(10000)
+Show Videos###ActivateWindow(10006)
+Show Video Addons###ActivateWindow(10025,addons://sources/video/)
+Show Music###ActivateWindow(10005)
+Show Music Addons###ActivateWindow(10502,addons://sources/audio/)
+Show Images###ActivateWindow(10002)
+Show Image Addons###ActivateWindow(10002,addons://sources/image/)
+Show Programs###ActivateWindow(10001)
+Show System Info###ActivateWindow(10007)
+Show Settings###ActivateWindow(10004)
+Show Shutdown Menu###ActivateWindow(10111)
+Show Favourites###ActivateWindow(10134)
+SimplePlaylists: Add###RunPlugin(plugin://script.simpleplaylists/?mode=addCurrentUrl)
+SimplePlaylists: View###RunPlugin(plugin://script.simpleplaylists/?mode=showPlaylists)
