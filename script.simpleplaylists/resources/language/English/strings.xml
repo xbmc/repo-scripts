@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="30001">Videos</string>
+  <string id="30002">Music</string>
+  <string id="30003">Images</string>
+  <string id="30004">Choose playlist</string>
+  <string id="30005">No file playing</string>
+  <string id="30009">Use alternative directory for playlist</string>
+  <string id="30010">Playlist directory</string>
+  <string id="30011">Show Keyboard to edit title</string>
+  <string id="30012">Added on</string>
+  <string id="30013">Remove from playlist</string>
+  <string id="30014">Empty playlist</string>
+  <string id="30015">Empty all playlists</string>
+  <string id="30016">Already exists in playlist</string>
+  <string id="30017">New Playlist</string>
+  <string id="30019">New Subfolder</string>
+  <string id="30020">Subfolder</string>
+  <string id="30021">Playlist</string>
+  <string id="30022">Add item</string>
+  <string id="30023">No playlist available</string>
+  <string id="30024">Root Folder</string>
+  <string id="30025">Manage playlists</string>
+  <string id="30026">Playlists</string>
+  <string id="30027">Subfolders</string>
+  <string id="30028">No subfolders available</string>
+  <string id="30029">Subfolders in</string>
+  <string id="30030">Added item</string>
+  <string id="30031">Show confirmation when adding items</string>
+  <string id="30032">Show playlists</string>
+  <string id="30033">Rename item</string>
+  <string id="30034">Empty subfolder</string>
+  <string id="30035">Manage subfolders</string>
+</strings>
