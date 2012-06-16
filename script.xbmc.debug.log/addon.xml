@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmc.debug.log"
        name="XBMC Log Uploader"
-       version="11.0.5"
-       provider-name="Team-XBMC">
+       version="11.0.6"
+       provider-name="Tristan Fischer (sphere@dersphere.de)">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
     </requires>
-    <extension point="xbmc.python.script"
-             library="addon.py"/>
+    <extension point="xbmc.python.script" library="addon.py"/>
     <extension point="xbmc.addon.metadata">
+        <language></language>
         <summary lang="de">Lädt logs zu xbmclogs.com hoch</summary>
         <summary lang="en">Uploads your logs to xbmclogs.com</summary>
         <summary lang="da">Indsender dine logfiler til xbmclogs.com</summary>

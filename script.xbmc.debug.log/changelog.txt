@@ -1,5 +1,9 @@
+11.0.6
+ - fixed log uploading on atv2 (thx jbeluch)
+ - added crashfile uploading for windows
 11.0.5
  - changed addon-id to replace "Debug Log"-addon
+ - added danish translations (thx twinther)
  - new icon
  - improved the dialog
  - changed the way os-detection works

@@ -115,23 +115,26 @@ class LogUploader(object):
 
     def __get_logs(self):
         if xbmc.getCondVisibility('system.platform.osx'):
-            log_path = os.path.join(os.path.expanduser('~'), 'Library/Logs')
+            if xbmc.getCondVisibility('system.platform.atv2'):
+                log_path = '/var/mobile/Library/Preferences'
+            else:
+                log_path = os.path.join(os.path.expanduser('~'), 'Library/Logs')
             crashlog_path = os.path.join(os.path.expanduser('~'),
                                          'Library/Logs/CrashReporter')
-            crashfile_prefix = 'XBMC'
+            crashfile_match = 'XBMC'
         elif xbmc.getCondVisibility('system.platform.ios'):
             log_path = '/var/mobile/Library/Preferences'
             crashlog_path = os.path.join(os.path.expanduser('~'),
                                          'Library/Logs/CrashReporter')
-            crashfile_prefix = 'XBMC'
+            crashfile_match = 'XBMC'
         elif xbmc.getCondVisibility('system.platform.windows'):
             log_path = xbmc.translatePath('special://home')
-            crashlog_path = ''
-            crashfile_prefix = ''
+            crashlog_path = log_path
+            crashfile_match = '.dmp'
         elif xbmc.getCondVisibility('system.platform.linux'):
             log_path = xbmc.translatePath('special://home/temp')
             crashlog_path = os.path.expanduser('~')
-            crashfile_prefix = 'xbmc_crashlog'
+            crashfile_match = 'xbmc_crashlog'
         else:
             # we are on an unknown OS and need to fix that here
             raise Exception('UNHANDLED OS')
@@ -140,10 +143,10 @@ class LogUploader(object):
         log_old = os.path.join(log_path, 'xbmc.old.log')
         # check for XBMC crashlogs
         log_crash = None
-        if crashlog_path and crashfile_prefix:
+        if crashlog_path and crashfile_match:
             crashlog_files = [s for s in os.listdir(crashlog_path)
                               if os.path.isfile(os.path.join(crashlog_path, s))
-                              and s.startswith(crashfile_prefix)]
+                              and crashfile_match in s]
             if crashlog_files:
                 # we have crashlogs, get fullpath from the last one by time
                 crashlog_files = self.__sort_files_by_date(crashlog_path,
