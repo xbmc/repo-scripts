@@ -13,19 +13,19 @@ translation = settings.getLocalizedString
 if not os.path.isdir(addon_work_folder):
   os.mkdir(addon_work_folder)
 
-def importCommands():
+def importCommands(key):
         global myCommands
         myCommands=[]
-        if os.path.exists(commandsFile):
-          fh = open(commandsFile, 'r')
+        if os.path.exists(commandsFile+key):
+          fh = open(commandsFile+key, 'r')
           for line in fh:
             myCommands.append(line.replace("\n",""))
           fh.close()
         myCommands.append("- "+translation(30001))
         myCommands.append("- "+translation(30005))
 
-def commandsMain():
-        importCommands()
+def commandsMain(key):
+        importCommands(key)
         myCommandsTemp=[]
         for temp in myCommands:
           if temp.find("###")>=0:
@@ -41,26 +41,26 @@ def commandsMain():
             command = entry[entry.find("###")+3:]
             xbmc.executebuiltin(command)
           if entry=="- "+translation(30001):
-            addCommand()
+            addCommand(key)
           elif entry=="- "+translation(30005):
-            manageCommands()
+            manageCommands(key)
 
-def addCommand():
+def addCommand(key):
         dialog = xbmcgui.Dialog()
         modes=[translation(30002),translation(30003),translation(30004)]
         nr=dialog.select(translation(30001), modes)
         if nr>=0:
           mode = modes[nr]
           if mode==translation(30002):
-            addCommandList()
+            addCommandList(key)
           elif mode==translation(30003):
-            addCommandFavs()
+            addCommandFavs(key)
           elif mode==translation(30004):
-            addCommandEnter()
+            addCommandEnter(key)
         else:
-          commandsMain()
+          commandsMain(key)
 
-def addCommandList():
+def addCommandList(key):
         if os.path.exists(commandsList):
           favs=[]
           fh = open(commandsList, 'r')
@@ -77,14 +77,14 @@ def addCommandList():
             title = entry[:entry.find("###")]
             command = entry[entry.find("###")+3:]
             if title+"###"+command not in myCommands:
-              fh = open(commandsFile, 'a')
+              fh = open(commandsFile+key, 'a')
               fh.write(title+"###"+command+"\n")
               fh.close()
-            commandsMain()
+            commandsMain(key)
           else:
-            addCommand()
+            addCommand(key)
 
-def addCommandFavs():
+def addCommandFavs(key):
         if os.path.exists(favsFile):
           favs=[]
           fh = open(favsFile, 'r')
@@ -106,15 +106,15 @@ def addCommandFavs():
             title = entry[:entry.find("###")]
             command = entry[entry.find("###")+3:]
             if title+"###"+command not in myCommands:
-              fh = open(commandsFile, 'a')
+              fh = open(commandsFile+key, 'a')
               fh.write(title+"###"+command+"\n")
               fh.close()
-            commandsMain()
+            commandsMain(key)
           else:
-            addCommand()
+            addCommand(key)
 
-def addCommandEnter():
-        kb = xbmc.Keyboard("", "Title")
+def addCommandEnter(key):
+        kb = xbmc.Keyboard("", translation(30010))
         kb.doModal()
         if kb.isConfirmed():
           title=kb.getText()
@@ -123,31 +123,31 @@ def addCommandEnter():
           if kb.isConfirmed():
             command=kb.getText()
             if title+"###"+command not in myCommands:
-              fh = open(commandsFile, 'a')
+              fh = open(commandsFile+key, 'a')
               fh.write(title+"###"+command+"\n")
               fh.close()
-            commandsMain()
+            commandsMain(key)
           else:
-            addCommand()
+            addCommand(key)
         else:
-          addCommand()
+          addCommand(key)
 
-def manageCommands():
+def manageCommands(key):
         dialog = xbmcgui.Dialog()
         modes=[translation(30006),translation(30007),translation(30008)]
         nr=dialog.select(translation(30005), modes)
         if nr>=0:
           mode = modes[nr]
           if mode==translation(30006):
-            manageCommandsEdit()
+            manageCommandsEdit(key)
           elif mode==translation(30007):
-            manageCommandsRemove()
+            manageCommandsRemove(key)
           elif mode==translation(30008):
-            manageCommandsSort()
+            manageCommandsSort(key)
         else:
-          commandsMain()
+          commandsMain(key)
 
-def manageCommandsEdit():
+def manageCommandsEdit(key):
         myCommandsTemp=[]
         for temp in myCommands:
           if temp.find("###")>=0:
@@ -170,22 +170,22 @@ def manageCommandsEdit():
               if kb.isConfirmed():
                 command=kb.getText()
                 newContent=""
-                fh = open(commandsFile, 'r')
+                fh = open(commandsFile+key, 'r')
                 for line in fh:
                   if line.find(oldTitle+"###")==0:
                     newContent+=line.replace(oldTitle,title).replace(oldCommand,command)
                   else:
                     newContent+=line
                 fh.close()
-                fh=open(commandsFile, 'w')
+                fh=open(commandsFile+key, 'w')
                 fh.write(newContent)
                 fh.close()
-                importCommands()
-                manageCommandsEdit()
+                importCommands(key)
+                manageCommandsEdit(key)
         else:
-          manageCommands()
+          manageCommands(key)
 
-def manageCommandsRemove():
+def manageCommandsRemove(key):
         myCommandsTemp=[]
         for temp in myCommands:
           if temp.find("###")>=0:
@@ -198,22 +198,22 @@ def manageCommandsRemove():
             title = entry[:entry.find("###")]
             command = entry[entry.find("###")+3:]
             newContent=""
-            fh = open(commandsFile, 'r')
+            fh = open(commandsFile+key, 'r')
             for line in fh:
               if line.find(title+"###")==0:
                 pass
               else:
                 newContent+=line
             fh.close()
-            fh=open(commandsFile, 'w')
+            fh=open(commandsFile+key, 'w')
             fh.write(newContent)
             fh.close()
-            importCommands()
-            manageCommandsRemove()
+            importCommands(key)
+            manageCommandsRemove(key)
         else:
-          manageCommands()
+          manageCommands(key)
 
-def manageCommandsSort():
+def manageCommandsSort(key):
         myCommandsTemp=[]
         for temp in myCommands:
           if temp.find("###")>=0:
@@ -231,18 +231,18 @@ def manageCommandsSort():
               pos=-1
             if int(pos)<len(myCommandsTemp) and int(pos)>0:
               newContent=""
-              fh = open(commandsFile, 'r')
+              fh = open(commandsFile+key, 'r')
               for line in fh:
                 if line.find(entry)==0:
                   pass
                 else:
                   newContent+=line
               fh.close()
-              fh=open(commandsFile, 'w')
+              fh=open(commandsFile+key, 'w')
               fh.write(newContent)
               fh.close()
               newContent=""
-              fh = open(commandsFile, 'r')
+              fh = open(commandsFile+key, 'r')
               lineNr=1
               for line in fh:
                 if int(pos)==lineNr:
@@ -252,14 +252,33 @@ def manageCommandsSort():
                   newContent+=line
                 lineNr+=1
               fh.close()
-              fh=open(commandsFile, 'w')
+              fh=open(commandsFile+key, 'w')
               fh.write(newContent)
               fh.close()
-              importCommands()
-              manageCommandsSort()
+              importCommands(key)
+              manageCommandsSort(key)
             else:
-              manageCommandsSort()
+              manageCommandsSort(key)
         else:
-          manageCommands()
+          manageCommands(key)
 
-commandsMain()
+def parameters_string_to_dict(parameters):
+        ''' Convert parameters encoded in a URL to a dict. '''
+        paramDict = {}
+        if parameters:
+            paramPairs = parameters[1:].split("&")
+            for paramsPair in paramPairs:
+                paramSplits = paramsPair.split('=')
+                if (len(paramSplits)) == 2:
+                    paramDict[paramSplits[0]] = paramSplits[1]
+        return paramDict
+
+params=parameters_string_to_dict(sys.argv[2])
+key=params.get('key')
+if type(key)!=type(str()):
+  key=''
+
+if key != '':
+    commandsMain('_'+key)
+else:
+    commandsMain('')
