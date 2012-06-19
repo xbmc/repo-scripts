@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="1">Submit?</string>
+    <string id="2">{0} episodes, {1} movies</string>
+    <string id="3">{0} musicVideos, {1} video files</string>
+
+    <string id="4">GSoC 2012</string>
+    <string id="5">Initializing upload...</string>
+    <string id="6">Uploading episodes</string>
+    <string id="7">Uploading movies</string>
+    <string id="8">Uploading music videos</string>
+    <string id="9">Uploading unscraped video files</string>
+    <string id="10">Initializing extractors...</string>
+
+    <string id="11">Extracting episodes</string>
+    <string id="12">Extracting movies</string>
+    <string id="13">Extracting music videos</string>
+    <string id="14">Extracting unscraped videos </string>
+
+    <string id="15">Push BACK to cancel</string>
+    <string id="16">Next!</string>
+
+    <string id="17">Submit scraped movies</string>
+    <string id="18">Submit scraped episodes</string>
+    <string id="19">Submit scraped music videos</string>
+    <string id="20">Submit unscraped videos from </string>
+
+    <string id="21">Server down</string>
+    <string id="22">The statistics server seems to be down</string>
+
+</strings>
