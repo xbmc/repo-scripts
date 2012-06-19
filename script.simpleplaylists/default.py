@@ -253,14 +253,17 @@ def addCurrentUrl():
         if url=="" and isAlbum==False:
           addModePlaying="true"
           if xbmc.Player().isPlayingVideo():
-            title = xbmc.Player().getVideoInfoTag().getTitle()
-            url = xbmc.Player().getVideoInfoTag().getPath()
+            playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+            if playlist.getposition()>=0:
+              title = playlist[playlist.getposition()].getdescription()
+              url = playlist[playlist.getposition()].getfilename()
+              thumb=xbmc.getInfoImage('VideoPlayer.Cover')
           elif xbmc.Player().isPlayingAudio():
             title = xbmc.Player().getMusicInfoTag().getArtist()+" - "+xbmc.Player().getMusicInfoTag().getTitle()
             url = xbmc.Player().getMusicInfoTag().getURL()
+            thumb=xbmc.getInfoImage('MusicPlayer.Cover')
         if url!="" and addModePlaying=="true":
           isDir=False
-          thumb=xbmc.getInfoImage('VideoPlayer.Cover')
           plot = xbmc.getInfoLabel('VideoPlayer.Plot')
           genre = xbmc.getInfoLabel('VideoPlayer.Genre')
           year = xbmc.getInfoLabel('VideoPlayer.Year')

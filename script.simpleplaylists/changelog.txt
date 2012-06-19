@@ -50,3 +50,6 @@
 - Added context menu for renaming playlist items
 - Added some more db infos
 - Fixed some bugs
+
+1.1.0
+- Fixed bug when adding currently playing videos
