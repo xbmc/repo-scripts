@@ -23,7 +23,7 @@ class SubmitState(object):
 
 	def doModal(self):
 		dialog = xbmcgui.Dialog()
-		ret = dialog.yesno(__settings__.getLocalizedString(1), __settings__.getLocalizedString(2).format(len(self.episodes), len(self.movies)), __settings__.getLocalizedString(3).format(len(self.musicVideos), len(self.videoFiles)))
+		ret = dialog.yesno(__settings__.getLocalizedString(32001), __settings__.getLocalizedString(32002).format(len(self.episodes), len(self.movies)), __settings__.getLocalizedString(32003).format(len(self.musicVideos), len(self.videoFiles)))
 
 		if ret:
 			chunksize = 20
@@ -31,32 +31,32 @@ class SubmitState(object):
 			total = len(self.episodes) + len(self.movies) + len(self.musicVideos) + len(self.videoFiles)
 
 			progress = xbmcgui.DialogProgress()
-			ret = progress.create(__settings__.getLocalizedString(4), __settings__.getLocalizedString(5), "")
+			ret = progress.create(__settings__.getLocalizedString(32004), __settings__.getLocalizedString(32005), "")
 
 			for m in chunks(self.episodes, chunksize):
 				server.uploadMedia("episodes", m)
-				progress.update((percentage * 100) / total, __settings__.getLocalizedString(6))
+				progress.update((percentage * 100) / total, __settings__.getLocalizedString(32006))
 				percentage += chunksize
 				if progress.iscanceled():
 					return
 
 			for m in chunks(self.movies, chunksize):
 				server.uploadMedia("movies", m)
-				progress.update((percentage * 100) / total, __settings__.getLocalizedString(7))
+				progress.update((percentage * 100) / total, __settings__.getLocalizedString(32007))
 				percentage += chunksize
 				if progress.iscanceled():
 					return
 
 			for m in chunks(self.musicVideos, chunksize):
 				server.uploadMedia("musicvideos", m)
-				progress.update((percentage * 100) / total, __settings__.getLocalizedString(8))
+				progress.update((percentage * 100) / total, __settings__.getLocalizedString(32008))
 				percentage += chunksize
 				if progress.iscanceled():
 					return
 
 			for m in chunks(self.videoFiles, chunksize):
 				server.uploadMedia("videofiles", m)
-				progress.update((percentage * 100) / total, __settings__.getLocalizedString(9))
+				progress.update((percentage * 100) / total, __settings__.getLocalizedString(32009))
 				percentage += chunksize
 				if progress.iscanceled():
 					return
@@ -73,7 +73,7 @@ class GatherState(object):
 		self.extractionSteps = extractionSteps
 
 	def doModal(self):
-		ret = self.gatherDialog.create(__settings__.getLocalizedString(4), __settings__.getLocalizedString(10), "")
+		ret = self.gatherDialog.create(__settings__.getLocalizedString(32004), __settings__.getLocalizedString(32010), "")
 
 		episodes = list()
 		movies = list()
@@ -85,17 +85,17 @@ class GatherState(object):
 			files = set()
 			if "episodes" in self.extractionSteps:
 				def episodeProgress(percentage):
-					self.gatherDialog.update(percentage / self.steps, __settings__.getLocalizedString(11), "", "")
+					self.gatherDialog.update(percentage / self.steps, __settings__.getLocalizedString(32011), "", "")
 				episodes = extraction.extractEpisodes(files, episodeProgress, self.gatherDialog.iscanceled)
 
 			if "movies" in self.extractionSteps:
 				def movieProgress(percentage):
-					self.gatherDialog.update((100 + percentage) / self.steps, __settings__.getLocalizedString(12), "", "")
+					self.gatherDialog.update((100 + percentage) / self.steps, __settings__.getLocalizedString(32012), "", "")
 				movies = extraction.extractMovies(files, movieProgress, self.gatherDialog.iscanceled)
 
 			if "musicvideos" in self.extractionSteps:
 				def musicVideosProgress(percentage):
-					self.gatherDialog.update((100 + percentage) / self.steps, __settings__.getLocalizedString(13), "", "")
+					self.gatherDialog.update((100 + percentage) / self.steps, __settings__.getLocalizedString(32013), "", "")
 				musicVideos = extraction.extractMusicVideos(files, musicVideosProgress, self.gatherDialog.iscanceled)
 
 			sources = [s for s in getSources() if s["file"] in self.extractionSteps]
@@ -111,7 +111,7 @@ class GatherState(object):
 					s = string.join(['.' for s in range(source["tick"])])
 					offset = 200 + i * nbrSources
 
-					self.gatherDialog.update((offset + source["percentage"]) / self.steps, __settings__.getLocalizedString(14) + s, source["label"], "")
+					self.gatherDialog.update((offset + source["percentage"]) / self.steps, __settings__.getLocalizedString(32014) + s, source["label"], "")
 
 					return self.gatherDialog.iscanceled()
 
@@ -133,21 +133,21 @@ class GatherState(object):
 
 class InitialWindow(xbmcgui.Window):
 	def __init__(self):
-		self.strActionInfo = xbmcgui.ControlLabel(0, 0, 300, 200, __settings__.getLocalizedString(15), 'font13', '0xFFFFFFFF')
+		self.strActionInfo = xbmcgui.ControlLabel(0, 0, 300, 200, __settings__.getLocalizedString(32015), 'font13', '0xFFFFFFFF')
 		self.addControl(self.strActionInfo)
 
 		self.choiceButton = list()
 		self.choiceID = list()
 
-		self.gather = xbmcgui.ControlButton(800, 50, 200, 100, __settings__.getLocalizedString(16))
+		self.gather = xbmcgui.ControlButton(800, 50, 200, 100, __settings__.getLocalizedString(32016))
 		self.addControl(self.gather)
 
-		self.addChoice(__settings__.getLocalizedString(17), "movies")
-		self.addChoice(__settings__.getLocalizedString(18), "episodes")
-		self.addChoice(__settings__.getLocalizedString(19), "musicvideos")
+		self.addChoice(__settings__.getLocalizedString(32017), "movies")
+		self.addChoice(__settings__.getLocalizedString(32018), "episodes")
+		self.addChoice(__settings__.getLocalizedString(32019), "musicvideos")
 
 		for source in getSources():
-			self.addChoice(__settings__.getLocalizedString(20) + '"' + source["label"] + u'"', source["file"])
+			self.addChoice(__settings__.getLocalizedString(32020) + '"' + source["label"] + u'"', source["file"])
 
 		self.setFocus(self.choiceButton[0])
 		self.gather.controlLeft(self.choiceButton[0])
@@ -178,7 +178,7 @@ class CheckServerState(object):
 			self.sm.switchTo(InitialWindow())
 		else:
 			dialog = xbmcgui.Dialog()
-			dialog.ok(__settings__.getLocalizedString(21), __settings__.getLocalizedString(22))
+			dialog.ok(__settings__.getLocalizedString(32021), __settings__.getLocalizedString(32022))
 
 	def close(self):
 		pass
