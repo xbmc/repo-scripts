@@ -5,7 +5,7 @@ import server
 import string
 
 
-__settings__ = xbmcaddon.Addon(id='script.statistics2012.gsoc.scraper')
+__settings__ = xbmcaddon.Addon(id='script.statistics.gsoc2012.scraper')
 
 
 def chunks(l, n):
