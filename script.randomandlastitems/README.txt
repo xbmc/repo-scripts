@@ -75,6 +75,7 @@ Playlist<method>Music<menu>.<# of album>.Fanart = Album N°# fanart
 Playlist<method>Music<menu>.<# of album>.Thumb = Album N°# thumbnail
 Playlist<method>Music<menu>.<# of album>.ArtistPath = Album N°# artist path (eg : C:\Music\Artist1)
 Playlist<method>Music<menu>.<# of album>.AlbumPath = Album N°# path (ex : C:\Music\Artist1\Album1)
+Playlist<method>Music<menu>.<# of album>.AlbumDesc = Album N°# description
 Playlist<method>Music<menu>.<# of album>.PlayPath = Album N°# for playing (musicdb://3/1/)
 
 With :

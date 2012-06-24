@@ -358,7 +358,7 @@ def _getAlbumsFromPlaylist ( ):
         for _file in _files:
             if _file['type'] == 'album':
                 _albumid = _file['id']
-                # Playlist de type album donc on recherche les path en interrogeant les chansons
+                # Album playlist so get path from songs
                 _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"albumid": %s, "properties": ["file"]}, "id": 1}' %(_albumid))
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
                 _json_pl_response = simplejson.loads(_json_query)
@@ -404,11 +404,18 @@ def _getAlbumsFromPlaylist ( ):
             # Remove item from JSON list
             _albums.remove( _album )
             _count += 1
+            # Get album description
+            _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params": {"albumid": %s, "properties": ["description"]}, "id": 1}' %(_albumid))
+            _json_query = unicode(_json_query, 'utf-8', errors='ignore')
+            _json_pl_response = simplejson.loads(_json_query)
+            _result = _json_pl_response.get( "result", {} ).get( "albumdetails" )
+            _albumdesc = _result.get ("description")
+            _album["albumDesc"] = _albumdesc
             _setAlbumProperties ( _album, _count )
         if _count != LIMIT:
             while _count < LIMIT:
                 _count += 1
-                _setEpisodeProperties ( None, _count )
+                _setAlbumProperties ( None, _count )
     else:
         print("[RandomAndLastItems] ## PLAYLIST %s COULD NOT BE LOADED ##" %(PLAYLIST))
         print("[RandomAndLastItems] JSON RESULT ", _json_pl_response)
@@ -533,6 +540,7 @@ def _setAlbumProperties ( _album, _count ):
         fanart = _album['fanart']
         artistPath = _album['artistPath']
         albumPath = _album['albumPath']
+        albumDesc = _album['albumDesc']
         playPath = "musicdb://3/%s/" %(_album['id'])
     else:
         album = ""
@@ -542,6 +550,7 @@ def _setAlbumProperties ( _album, _count ):
         fanart = ""
         artistPath = ""
         albumPath = ""
+        albumDesc = ""
         playPath = ""
     # Set window properties
     _setProperty( "%s.%d.Album"      % ( PROPERTIE, _count ), album )
@@ -551,6 +560,7 @@ def _setAlbumProperties ( _album, _count ):
     _setProperty( "%s.%d.Fanart"     % ( PROPERTIE, _count ), fanart)
     _setProperty( "%s.%d.ArtistPath" % ( PROPERTIE, _count ), artistPath)
     _setProperty( "%s.%d.AlbumPath"  % ( PROPERTIE, _count ), albumPath)
+    _setProperty( "%s.%d.AlbumDesc"  % ( PROPERTIE, _count ), albumDesc)
     _setProperty( "%s.%d.PlayPath"   % ( PROPERTIE, _count ), playPath)
 
 def _setProperty ( _property, _value ):

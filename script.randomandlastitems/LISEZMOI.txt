@@ -77,6 +77,7 @@ Playlist<method>Music<menu>.<# of album>.Fanart = Fanart de l'album N°#
 Playlist<method>Music<menu>.<# of album>.Thumb = Vignette de l'album N°#
 Playlist<method>Music<menu>.<# of album>.ArtistPath = Chemin complet de l'artiste de l'album N°# (ex : C:\Musique\Artiste1)
 Playlist<method>Music<menu>.<# of album>.AlbumPath = Chemin complet de l'album N°# (ex : C:\Musique\Artiste1\Album1)
+Playlist<method>Music<menu>.<# of album>.AlbumDesc = Description de l'album N°#
 Playlist<method>Music<menu>.<# of album>.PlayPath = Chemin de l'album N°# pour la lecture (musicdb://3/1/)
 
 Avec :

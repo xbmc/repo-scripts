@@ -1,3 +1,7 @@
+v1.2.4
+- [Fix] Albums properties were not cleared properly
+- [Add] New property AlbumDesc
+
 v1.2.3
 - [Fix] Episode title is now based on title and not on label because of some JSON changes :
 http://forum.xbmc.org/showthread.php?tid=113702&pid=1047340&highlight=episodetitle#pid1049580
