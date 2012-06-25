@@ -28,8 +28,8 @@ class SimpleDownloader():
     dialog = ""
 
     def __init__(self):
-        self.version = "0.9.2"
-        self.plugin = "SimpleDownloader-" + self.version
+        self.version = "0.9.3"
+        self.plugin = "SimpleDownloader" + self.version
 
         if hasattr(sys.modules["__main__"], "common"):
             self.common = sys.modules["__main__"].common
@@ -104,8 +104,7 @@ class SimpleDownloader():
         self.temporary_path = self.xbmc.translatePath(self.settings.getAddonInfo("profile"))
         if not self.xbmcvfs.exists(self.temporary_path):
             self.common.log("Making path structure: " + repr(self.temporary_path))
-            os.makedirs(self.temporary_path)
-
+            self.xbmcvfs.mkdir(self.temporary_path)
         self.common.log("Done")
 
     def download(self, filename, params={}, async=True):
@@ -181,16 +180,20 @@ class SimpleDownloader():
                         else:
                             self.common.log("Download complete, but file %s not found" % repr(item["path_incomplete"]))
                             self._showMessage(self.language(204), "ERROR")
-                    else:
+                    elif status != 300:
                         self.common.log("Failure: " + repr(item) + " - " + repr(status))
                         self._showMessage(self.language(204), self.language(302))
 
-                    self._removeItemFromQueue(filename)
-                    item = self._getNextItemFromQueue()
-                    if item:
-                        (filename, item) = item
+                    if status == 300:
+                        item = False
+                    else:
+                        self._removeItemFromQueue(filename)
+                        item = self._getNextItemFromQueue()
+                        if item:
+                            (filename, item) = item
 
                 self.common.log("Finished download queue.")
+                self.cache.set("StopQueue", "")
                 if self.dialog:
                     self.dialog.close()
                     self.common.log("Closed dialog")
@@ -433,7 +436,7 @@ class SimpleDownloader():
         proc = self._runCommand(get("cmd_call"))
         output = ""
         if proc:
-            while proc.returncode == None:
+            while proc.returncode == None and "quit" not in params:
                 temp_output = proc.stdout.read(23) 
                 if len(output) > 10000:
                     output = output[0:500] + "\r\n\r\n\r\n"
@@ -478,7 +481,7 @@ class SimpleDownloader():
                     proc.kill()
                     break
      
-                if item["percent"] > item["old_percent"]:
+                if item["percent"] > item["old_percent"] or time.time() - params["queue_mark"] > 3:
                     self._updateProgress(filename, item, params)
                     item["old_percent"] = item["percent"]
 
@@ -506,18 +509,24 @@ class SimpleDownloader():
             except:
                 pass
 
+        if "quit" in params:
+            self.common.log("Download aborted.")
+            return 300
         if retval == 1:
             self.common.log("Download failed, binary output: %s" % output)
             return 500
-        else:
-            self.common.log("done")
-            return 200
+
+        self.common.log("Done")
+        return 200
 
     def _downloadURL(self, filename, item):
         self.common.log(filename)
 
         url = urllib2.Request(item["url"])
-        url.add_header("User-Agent", self.common.USERAGENT)
+        if "useragent" in item:
+            url.add_header("User-Agent", item["useragent"])
+        else:
+            url.add_header("User-Agent", self.common.USERAGENT)
 
         file = self.common.openFile(item["path_incomplete"], "wb")
         con = urllib2.urlopen(url)
@@ -528,12 +537,11 @@ class SimpleDownloader():
         if con.info().getheader("Content-Length").strip():
             item["total_size"] = int(con.info().getheader("Content-Length").strip())
 
+        params = {"bytes_so_far": 0, "mark": 0.0, "queue_mark": 0.0, "obytes_so_far": 0}
+        item["percent"] = 0.1
+        item["old_percent"] = -1
         try:
-            params = {"bytes_so_far": 0, "mark": 0.0, "queue_mark": 0.0, "obytes_so_far": 0}
-            item["percent"] = 0.1
-            item["old_percent"] = -1
-
-            while 1:
+            while "quit" not in params:
                 chunk = con.read(chunk_size)
                 file.write(chunk)
                 params["bytes_so_far"] += len(chunk)
@@ -544,14 +552,17 @@ class SimpleDownloader():
 
                 self._generatePercent(item, params)
 
-                if item["percent"] > item["old_percent"]:
-                    self._updateProgress(filename, item, params)
+                self.common.log("recieved chunk: %s - %s" % ( repr(item["percent"] > item["old_percent"]), repr(time.time() - params["queue_mark"])))
+                if item["percent"] > item["old_percent"] or time.time() - params["queue_mark"] > 30:
+                    self._run_async(self._updateProgress(filename, item, params))
+
                     item["old_percent"] = item["percent"]
 
                 params["obytes_so_far"] = params["bytes_so_far"]
 
                 if not chunk:
                     break
+            self.common.log("Loop done")
 
             con.close()
             file.close()
@@ -570,7 +581,11 @@ class SimpleDownloader():
             self._showMessage(self.language(204), "ERROR")
             return 500
 
-        self.common.log("done")
+        if "quit" in params:
+            self.common.log("Download aborted.")
+            return 300
+
+        self.common.log("Done")
         return 200
 
     def _convertSecondsToHuman(self, seconds):
@@ -617,8 +632,20 @@ class SimpleDownloader():
         if new_delta:
             item["last_delta"] = time.time()
 
+    def _getQueue(self):
+        self.common.log("")
+        queue = self.cache.get("SimpleDownloaderQueue")
+
+        try:
+                items = eval(queue)
+        except:
+            items = {}
+
+        self.common.log("Done: " + str(len(items)))
+        return items
+
     def _updateProgress(self, filename, item, params):
-        self.common.log("", 5)
+        self.common.log("", 3)
         get = params.get
         iget = item.get
         queue = False
@@ -634,6 +661,8 @@ class SimpleDownloader():
             self.queue = queue
         elif hasattr(self, "queue"):
             queue = self.queue
+
+        self.common.log("eval queue", 2)
 
         try:
             items = eval(queue)
@@ -660,6 +689,7 @@ class SimpleDownloader():
                 self.dialog.update(percent=item["percent"], heading=heading, label=iget("Title"))
             else:
                 self.dialog.update(percent=item["percent"], heading=heading, label=filename)
+        self.common.log("Done", 3)
 
     #============================= Download Queue =================================
     def _getNextItemFromQueue(self):
@@ -694,7 +724,7 @@ class SimpleDownloader():
             items = []
             if filename:
                 queue = self.cache.get("SimpleDownloaderQueue")
-                self.common.log("queue loaded : " + repr(queue))
+                self.common.log("queue loaded : " + repr(queue), 3)
 
                 if queue:
                     try:
@@ -714,7 +744,7 @@ class SimpleDownloader():
                     items.append((filename, params))
                     self.common.log("Added: " + filename + " to queue - " + str(len(items)))
                 else:
-                    items.insert(1, (filename, params))
+                    items.insert(0, (filename, params))
                     self.common.log("Moved " + filename + " to front of queue. - " + str(len(items)))
 
                 self.cache.set("SimpleDownloaderQueue", repr(items))
@@ -729,7 +759,7 @@ class SimpleDownloader():
             items = []
 
             queue = self.cache.get("SimpleDownloaderQueue")
-            self.common.log("queue loaded : " + repr(queue))
+            self.common.log("queue loaded : " + repr(queue), 3)
 
             if queue:
                 try:
@@ -754,7 +784,7 @@ class SimpleDownloader():
             items = []
             if filename:
                 queue = self.cache.get("SimpleDownloaderQueue")
-                self.common.log("queue loaded : " + repr(queue))
+                self.common.log("queue loaded : " + repr(queue), 3)
 
                 if queue:
                     try:
@@ -762,7 +792,7 @@ class SimpleDownloader():
                     except:
                         items = []
 
-                    self.common.log("pre items: %s " % repr(items))
+                    self.common.log("pre items: %s " % repr(items), 3)
                     for index, item in enumerate(items):
                         (item_id, item) = item
                         if item_id == filename:
@@ -770,7 +800,7 @@ class SimpleDownloader():
                             del items[index]
                             items = items[:position] + [(filename, item)] + items[position:]
                             break
-                    self.common.log("post items: %s " % repr(items))
+                    self.common.log("post items: %s " % repr(items), 3)
 
                     self.cache.set("SimpleDownloaderQueue", repr(items))
 

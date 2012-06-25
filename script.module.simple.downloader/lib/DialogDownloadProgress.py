@@ -188,6 +188,7 @@ class Window:
         self.ADDON_SKIN = ("default", XBMC_SKIN)[os.path.exists(os.path.join(self.SKINS_PATH, XBMC_SKIN))]
 
         windowXml = DialogDownloadProgressXML("DialogDownloadProgress.xml", addonDir, self.ADDON_SKIN)
+        #windowXml = DialogDownloadProgressXML("DialogProgress.xml", addonDir, self.ADDON_SKIN)
         self.controls = windowXml.controls
         del windowXml
 
