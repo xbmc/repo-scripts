@@ -26,7 +26,7 @@ import time
 import HTMLParser
 
 
-version = "0.9.2"
+version = "1.0.0"
 plugin = "CommonFunctions-" + version
 print plugin
 
@@ -135,7 +135,7 @@ def stripTags(html):
 
 
 def _getDOMContent(html, name, match, ret):  # Cleanup
-    log("match: " + match, 2)
+    log("match: " + match, 3)
 
     endstr = "</" + name  # + ">"
 
@@ -152,7 +152,7 @@ def _getDOMContent(html, name, match, ret):  # Cleanup
         pos = html.find("<" + name, pos + 1)
         log("loop: " + str(start) + " < " + str(end) + " pos = " + str(pos), 8)
 
-    log("start: %s, len: %s, end: %s" % (start, len(match), end), 2)
+    log("start: %s, len: %s, end: %s" % (start, len(match), end), 3)
     if start == -1 and end == -1:
         result = ""
     elif start > -1 and end > -1:
@@ -166,18 +166,17 @@ def _getDOMContent(html, name, match, ret):  # Cleanup
         endstr = html[end:html.find(">", html.find(endstr)) + 1]
         result = match + result + endstr
 
-    log("done result length: " + str(len(result)), 2)
+    log("done result length: " + str(len(result)), 3)
     return result
 
-
 def _getDOMAttributes(match, name, ret):
-    log("", 2)
+    log("", 3)
     lst = re.compile('<' + name + '.*? ' + ret + '=(.[^>]*?)>', re.M | re.S).findall(match)
     ret = []
     for tmp in lst:
         cont_char = tmp[0]
         if cont_char in "'\"":
-            log("Using %s as quotation mark" % cont_char)
+            log("Using %s as quotation mark" % cont_char, 3)
 
             # Limit down to next variable.
             if tmp.find('=' + cont_char, tmp.find(cont_char, 1)) > -1:
@@ -187,7 +186,7 @@ def _getDOMAttributes(match, name, ret):
             if tmp.rfind(cont_char, 1) > -1:
                 tmp = tmp[1:tmp.rfind(cont_char)]
         else:
-            log("No quotation mark found", 2)
+            log("No quotation mark found", 3)
             if tmp.find(" ") > 0:
                 tmp = tmp[:tmp.find(" ")]
             elif tmp.find("/") > 0:
@@ -197,11 +196,11 @@ def _getDOMAttributes(match, name, ret):
 
         ret.append(tmp.strip())
 
-    log("Done: " + repr(ret), 2)
+    log("Done: " + repr(ret), 3)
     return ret
 
 def _getDOMElements(item, name, attrs):
-    log("Name: " + repr(name) + " - Attrs:" + repr(attrs) + " - HTML: " + str(type(item)))
+    log("", 3)
     lst = []
     for key in attrs:
         lst2 = re.compile('(<' + name + '[^>]*?(?:' + key + '=[\'"]' + attrs[key] + '[\'"].*?>))', re.M | re.S).findall(item)
@@ -218,20 +217,20 @@ def _getDOMElements(item, name, attrs):
             test.reverse()
             for i in test:  # Delete anything missing from the next list.
                 if not lst[i] in lst2:
-                    log("Purging mismatch " + str(len(lst)) + " - " + repr(lst[i]), 1)
+                    log("Purging mismatch " + str(len(lst)) + " - " + repr(lst[i]), 3)
                     del(lst[i])
 
     if len(lst) == 0 and attrs == {}:
-        log("No list found, trying to match on name only", 1)
+        log("No list found, trying to match on name only", 3)
         lst = re.compile('(<' + name + '>)', re.M | re.S).findall(item)
         if len(lst) == 0:
             lst = re.compile('(<' + name + ' .*?>)', re.M | re.S).findall(item)
 
-    log("Done: " + str(type(lst)))
+    log("Done: " + str(type(lst)), 3)
     return lst
 
 def parseDOM(html, name="", attrs={}, ret=False):
-    log("Name: " + repr(name) + " - Attrs:" + repr(attrs) + " - Ret: " + repr(ret) + " - HTML: " + str(type(html)), 1)
+    log("Name: " + repr(name) + " - Attrs:" + repr(attrs) + " - Ret: " + repr(ret) + " - HTML: " + str(type(html)), 3)
 
     if isinstance(html, str) or isinstance(html, unicode):
         html = [html]
@@ -252,13 +251,13 @@ def parseDOM(html, name="", attrs={}, ret=False):
         lst = _getDOMElements(item, name, attrs)
 
         if isinstance(ret, str):
-            log("Getting attribute %s content for %s matches " % (ret, len(lst) ), 2)
+            log("Getting attribute %s content for %s matches " % (ret, len(lst) ), 3)
             lst2 = []
             for match in lst:
                 lst2 += _getDOMAttributes(match, name, ret)
             lst = lst2
         else:
-            log("Getting element content for %s matches " % len(lst), 2)
+            log("Getting element content for %s matches " % len(lst), 3)
             lst2 = []
             for match in lst:
                 log("Getting element content for %s" % match, 4)
@@ -268,7 +267,7 @@ def parseDOM(html, name="", attrs={}, ret=False):
             lst = lst2
         ret_lst += lst
 
-    log("Done", 1)
+    log("Done: " + repr(ret_lst), 3)
     return ret_lst
 
 
@@ -313,7 +312,6 @@ def fetchPage(params={}):
         request.add_header('Cookie', get("cookie"))
 
     if get("refering"):
-        log("Added refering url: %s" % get("refering"))
         request.add_header('Referer', get("refering"))
 
     try:

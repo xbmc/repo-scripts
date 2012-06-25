@@ -1,3 +1,6 @@
+[B]Version 1.0.0[/B]
+- Minor fixes
+
 [B]Version 0.9.1[/B]
 - Stability and more functions
 - Add cookie support to fetchPage.
