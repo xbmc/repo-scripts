@@ -33,7 +33,7 @@ except: pass
 
 class StorageServer():
     def __init__(self, table=None, timeout=24, instance=False):
-        self.version = "0.9.2"
+        self.version = "1.0.0"
         self.plugin = "StorageClient-" + self.version
         self.instance = instance
         self.die = False
@@ -695,7 +695,7 @@ class StorageServer():
         return ""
 
     def setCacheTimeout(self, timeout):
-        self.timeout = int(timeout) * 3600
+        self.timeout = float(timeout) * 3600
 
     def _log(self, description, level=0):
         if self.dbg and self.dbglevel > level:
@@ -719,7 +719,6 @@ def checkInstanceMode():
 
     settings = xbmcaddon.Addon(id='script.common.plugin.cache')
     if settings.getSetting("autostart") == "false":
-
         s = StorageServer(table=False, instance=True)
         print " StorageServer Module loaded RUN(instance only)"
 
