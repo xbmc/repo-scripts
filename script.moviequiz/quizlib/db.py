@@ -466,7 +466,7 @@ class Database(object):
             query = """
                 SELECT tv.idShow, tv.c00 AS title, tv.strPath AS tvShowPath
                 FROM tvshowview tv
-                WHERE 1=1
+                WHERE tv.idShow IN (SELECT idShow FROM tvshowlinkepisode)
                 """
         else:
             query = """

@@ -1,3 +1,7 @@
+[B]Version 0.4.5 - 2012-06-27[/B]
+- Online highscores are now located at http://tommy.winther.nu/moviequiz/
+  - the old URL will expire in a couple of months
+
 [B]Version 0.4.4 - 2011-09-27[/B]
 - Improved checks for invalid settings that could cause lock-ups and crashes
 - Improved question logic error handling

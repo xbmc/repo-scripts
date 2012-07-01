@@ -33,7 +33,7 @@ class HighscoreDatabase(object):
 
 class GlobalHighscoreDatabase(HighscoreDatabase):
     STATUS_OK = 'OK'
-    SERVICE_URL = 'http://moviequiz.xbmc.info/service.json.php'
+    SERVICE_URL = 'http://tommy.winther.nu/moviequiz/service.json.php'
 
     def __init__(self, addonVersion):
         self.addonVersion = addonVersion
