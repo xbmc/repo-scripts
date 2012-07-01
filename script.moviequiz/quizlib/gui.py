@@ -121,6 +121,10 @@ class MenuGui(xbmcgui.WindowXML):
         super(MenuGui, self).__init__()
         self.trivia = None
         self.database = db.Database.connect()
+
+        if self.database is None:
+            pass
+
     def close(self):
         self.database.close()
         super(MenuGui, self).close()
@@ -182,32 +186,45 @@ class MenuGui(xbmcgui.WindowXML):
             directors = self.database.fetchone('SELECT COUNT(DISTINCT idDirector) AS count FROM directorlinkmovie')
             studios = self.database.fetchone('SELECT COUNT(idStudio) AS count FROM studio')
 
-            self.trivia += [
-                    strings(M_MOVIE_COLLECTION_TRIVIA),
-                    strings(M_MOVIE_COUNT) % movies['count'],
-                    strings(M_ACTOR_COUNT) % actors['count'],
-                    strings(M_DIRECTOR_COUNT) % directors['count'],
-                    strings(M_STUDIO_COUNT) % studios['count'],
-                    strings(M_HOURS_OF_ENTERTAINMENT) % int(movies['total_hours'])
-            ]
-
+            self.trivia.append(strings(M_MOVIE_COLLECTION_TRIVIA))
+            if movies is not None:
+                self.trivia.append(strings(M_MOVIE_COUNT) % movies['count'])
+            if actors is not None:
+                self.trivia.append(strings(M_ACTOR_COUNT) % actors['count'])
+            if directors is not None:
+                self.trivia.append(strings(M_DIRECTOR_COUNT) % directors['count'])
+            if studios is not None:
+                self.trivia.append(strings(M_STUDIO_COUNT) % studios['count'])
+            if movies is not None:
+                self.trivia.append(strings(M_HOURS_OF_ENTERTAINMENT) % int(movies['total_hours']))
 
         if self.database.hasTVShows():
             shows = self.database.fetchone('SELECT COUNT(*) AS count FROM tvshow')
             seasons = self.database.fetchone('SELECT SUM(season_count) AS count FROM (SELECT idShow, COUNT(DISTINCT c12) AS season_count from episodeview GROUP BY idShow) AS tbl')
             episodes = self.database.fetchone('SELECT COUNT(*) AS count FROM episode')
 
-            self.trivia += [
-                strings(M_TVSHOW_COLLECTION_TRIVIA),
-                strings(M_TVSHOW_COUNT) % shows['count'],
-                strings(M_SEASON_COUNT) % seasons['count'],
-                strings(M_EPISODE_COUNT) % episodes['count']
-            ]
+            self.trivia.append(strings(M_TVSHOW_COLLECTION_TRIVIA))
+            if shows is not None:
+                self.trivia.append(strings(M_TVSHOW_COUNT) % shows['count'])
+            if seasons is not None:
+                self.trivia.append(strings(M_SEASON_COUNT) % seasons['count'])
+            if episodes is not None:
+                self.trivia.append(strings(M_EPISODE_COUNT) % episodes['count'])
 
     @buggalo.buggalo_try_except()
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU]:
             self.close()
+
+        listControl = self.getControl(self.C_MENU_USER_SELECT)
+        if listControl.getSelectedItem() is not None and listControl.getSelectedItem().getProperty('id') == '-1':
+            # A user must be selected before leaving control
+            self.getControl(self.C_MENU_MOVIE_QUIZ).setEnabled(False)
+            self.getControl(self.C_MENU_TVSHOW_QUIZ).setEnabled(False)
+        else:
+            self.getControl(self.C_MENU_MOVIE_QUIZ).setEnabled(True)
+            self.getControl(self.C_MENU_TVSHOW_QUIZ).setEnabled(True)
+
 
     @buggalo.buggalo_try_except()
     def onClick(self, controlId):
@@ -219,11 +236,17 @@ class MenuGui(xbmcgui.WindowXML):
         item = listControl.getSelectedItem()
 
         if controlId == self.C_MENU_MOVIE_QUIZ:
+            if item is None:
+                xbmcgui.Dialog().ok(strings(CHOOSE_PLAYER), strings(CHOOSE_PLAYER_LINE_1))
+                return
             w = GameTypeDialog(game.GAMETYPE_MOVIE, item.getProperty('id'))
             w.doModal()
             del w
 
         elif controlId == self.C_MENU_TVSHOW_QUIZ:
+            if item is None:
+                xbmcgui.Dialog().ok(strings(CHOOSE_PLAYER), strings(CHOOSE_PLAYER_LINE_1))
+                return
             w = GameTypeDialog(game.GAMETYPE_TVSHOW, item.getProperty('id'))
             w.doModal()
             del w
@@ -254,13 +277,7 @@ class MenuGui(xbmcgui.WindowXML):
 
     @buggalo.buggalo_try_except()
     def onFocus(self, controlId):
-        if controlId != self.C_MENU_USER_SELECT:
-            listControl = self.getControl(self.C_MENU_USER_SELECT)
-            if listControl.getSelectedItem() is not None and listControl.getSelectedItem().getProperty('id') == '-1':
-                # A user must be selected before leaving control
-                self.setFocusId(self.C_MENU_USER_SELECT)
-
-
+        pass
 
     def onAddNewUser(self, createDefault = False):
         keyboard = xbmc.Keyboard('', strings(G_WELCOME_ENTER_NICKNAME))

@@ -28,6 +28,7 @@ import re
 import imdb
 import game
 
+import xbmc
 import xbmcvfs
 
 from strings import *
@@ -246,7 +247,7 @@ class ActorNotInMovieQuestion(MovieQuestion):
                 actor = row
                 break
             else:
-                print "Actor %s doesn't have a local photoFile" % row['strActor']
+                print "Actor doesn't have a local photoFile"
                 photoFile = None
 
         if actor is None:
@@ -1022,12 +1023,8 @@ def getRandomQuestion(gameInstance, database):
     for candidate in questionCandidates:
         try:
             return candidate(database)
-        except QuestionException, ex:
-            print "QuestionException in %s: %s" % (candidate, ex)
-        except db.DbException, ex:
-            print "DbException in %s: %s" % (candidate, ex)
         except Exception, ex:
-            print "Exception in %s: %s" % (candidate, ex)
+            xbmc.log("%s in %s" % (ex.__class__.__name__, candidate.__name__))
             import traceback, sys
             traceback.print_exc(file = sys.stdout)
 

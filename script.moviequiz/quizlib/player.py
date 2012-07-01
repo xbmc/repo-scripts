@@ -96,7 +96,7 @@ class TenSecondPlayer(xbmc.Player):
         self.startingPlayback = True
 
         if not xbmcvfs.exists(file):
-            xbmc.log(">> TenSecondPlayer - file not found: %s" % file.encode('utf-8', 'ignore'))
+            xbmc.log(">> TenSecondPlayer - file not found")#: %s" % file.encode('utf-8', 'ignore'))
             return False
 
         self.lastFile = file
@@ -118,7 +118,7 @@ class TenSecondPlayer(xbmc.Player):
         # Get bookmark details, so we can restore after playback
         self.bookmark = self.database.getVideoBookmark(idFile)
 
-        xbmc.log(">> TenSecondPlayer.playWindowed() - about to play file %s" % file.encode('utf-8', 'ignore'))
+        #xbmc.log(">> TenSecondPlayer.playWindowed() - about to play file %s" % file.encode('utf-8', 'ignore'))
 
         self.isAudioFile = False
         self.playBackEventReceived = False
@@ -137,10 +137,10 @@ class TenSecondPlayer(xbmc.Player):
         self.startingPlayback = True
 
         if not xbmcvfs.exists(file):
-            xbmc.log(">> TenSecondPlayer - file not found: %s" % file)
+            xbmc.log(">> TenSecondPlayer - file not found")
             return False
 
-        xbmc.log(">> TenSecondPlayer.playWindowed() - about to play file %s" % file)
+        #xbmc.log(">> TenSecondPlayer.playWindowed() - about to play file %s" % file)
 
         self.bookmark = None
         self.isAudioFile = True
@@ -153,7 +153,10 @@ class TenSecondPlayer(xbmc.Player):
             retries += 1
 
     def _getRandomDvdVob(self, ifoFile):
-        xbmc.log(">> TenSecondPlayer._getRandomDvdVob() - ifoFile = %s" % ifoFile)
+        #xbmc.log(">> TenSecondPlayer._getRandomDvdVob() - ifoFile = %s" % ifoFile)
+
+        if not os.path.exists(ifoFile):
+            return ifoFile
 
         files = []
         path = os.path.dirname(ifoFile)
@@ -163,7 +166,7 @@ class TenSecondPlayer(xbmc.Player):
 
         random.shuffle(files)
         file = os.path.join(path, files[0])
-        xbmc.log(">> TenSecondPlayer._getRandomDvdVob() - file = %s" % file)
+        #xbmc.log(">> TenSecondPlayer._getRandomDvdVob() - file = %s" % file)
         return file
 
     def onTenSecondsPassed(self):

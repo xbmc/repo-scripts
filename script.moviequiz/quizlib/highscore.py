@@ -49,7 +49,7 @@ class HighscoreDatabase(object):
 
 class GlobalHighscoreDatabase(HighscoreDatabase):
     STATUS_OK = 'OK'
-    SERVICE_URL = 'http://moviequiz.xbmc.info/service.json.php'
+    SERVICE_URL = 'http://tommy.winther.nu/moviequiz/service.json.php'
 
     def __init__(self, addonVersion):
         self.addonVersion = addonVersion
@@ -153,7 +153,7 @@ class LocalHighscoreDatabase(HighscoreDatabase):
 
         self.conn = sqlite3.connect(highscoreDbPath, check_same_thread = False)
         self.conn.row_factory = db._sqlite_dict_factory
-        xbmc.log("HighscoreDatabase opened: " + highscoreDbPath)
+        #xbmc.log("HighscoreDatabase opened: " + highscoreDbPath)
 
         self._createTables()
 
@@ -186,7 +186,9 @@ class LocalHighscoreDatabase(HighscoreDatabase):
         c = self.conn.cursor()
         c.execute('SELECT h.*, u.nickname FROM highscore h, user u WHERE h.user_id=u.id AND h.type=? AND h.gameType=? and h.gameSubType=? ORDER BY h.score DESC, h.timestamp ASC',
             [game.getType(), game.getGameType(), game.getGameSubType()])
-        return c.fetchall()
+        result = c.fetchall()
+        c.close()
+        return result
 
     def getHighscoresNear(self, game, highscoreId, limit = 50):
         c = self.conn.cursor()
@@ -199,11 +201,13 @@ class LocalHighscoreDatabase(HighscoreDatabase):
 
         c.execute("SELECT h.*, u.nickname FROM highscore h, user u WHERE h.user_id=u.id AND h.type=? AND h.gameType=? and h.gameSubType=? AND h.position > ? AND h.position < ? ORDER BY h.position",
             [game.getType(), game.getGameType(), game.getGameSubType(), position - (limit / 2), position + (limit / 2)])
-        return c.fetchall()
+        result = c.fetchall()
+        c.close()
+        return result
 
     def createUser(self, nickname):
         c = self.conn.cursor()
-        c.execute("INSERT INTO user(nickname, last_used) VALUES(?, datetime('now'))", [nickname])
+        c.execute("INSERT INTO user(nickname, last_used) VALUES(?, datetime('now'))", [nickname.decode('utf-8', 'ignore')])
         self.conn.commit()
         rowid = c.lastrowid
         c.close()
@@ -223,6 +227,7 @@ class LocalHighscoreDatabase(HighscoreDatabase):
         c.execute('DELETE FROM user WHERE id = ?', [id])
         c.execute('DELETE FROM highscore WHERE user_id = ?', [id])
         self.conn.commit()
+        c.close()
 
     def getNickname(self, userId):
         c = self.conn.cursor()
@@ -244,7 +249,7 @@ class LocalHighscoreDatabase(HighscoreDatabase):
         except sqlite3.OperationalError:
             version = [0,0,0]
 
-        xbmc.log("Highscore Database version: " + str(version))
+        #xbmc.log("Highscore Database version: " + str(version))
 
         if version < [0,4,1]:
             xbmc.log("Migrating Highscore Database to v0.4.1")

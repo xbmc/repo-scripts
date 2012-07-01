@@ -1,3 +1,10 @@
+[B]Version 0.5.4 - 2012-06-27[/B]
+- Online highscores are now located at http://tommy.winther.nu/moviequiz/
+  - the old URL will expire in a couple of months
+- Fixed a number of minor errors submitted via the error reporting
+- Cleaned up database cursor handling to hopefully avoid some errors
+- Removed a lot of debug messages that might have caused errors
+
 [B]Version 0.5.3 - 2012-05-29[/B]
 - Actually enable script.module.buggalo for error reporting
 - Added support for answering using the 1,2,3,4 buttons on the remote

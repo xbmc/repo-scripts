@@ -20,6 +20,8 @@
 
 from xml.etree import ElementTree
 from xml.parsers.expat import ExpatError
+from xml.etree.ElementTree import ParseError
+
 
 import os
 import xbmc
@@ -93,8 +95,10 @@ class Database(object):
                     settings['pass'] = doc.findtext('videodatabase/pass')
             except ExpatError:
                xbmc.log("Unable to parse advancedsettings.xml")
+            except ParseError:
+                xbmc.log("Unable to parse advancedsettings.xml")
 
-        xbmc.log("Loaded DB settings: %s" % settings)
+        xbmc.log("Successfully loaded DB settings")
 
         if settings.has_key('type') and settings['type'] is not None and settings['type'].lower() == 'mysql':
             return MySQLDatabase(allowedRatings, onlyWatched, settings)
@@ -134,10 +138,11 @@ class Database(object):
         elif not isinstance(parameters, tuple):
             parameters = [parameters]
 
-        xbmc.log("Fetch all SQL [%s] with params %s" % (sql, str(parameters)))
+        #xbmc.log("Fetch all SQL [%s] with params %s" % (sql, str(parameters)))
         c = self.cursor()
         c.execute(sql, parameters)
         result = c.fetchall()
+        c.close()
 
         if result is None:
             raise DbException(sql)
@@ -150,10 +155,11 @@ class Database(object):
         if not isinstance(parameters, tuple):
             parameters = [parameters]
 
-        xbmc.log("Fetch one SQL [%s] with params %s" % (sql, str(parameters)))
+        #xbmc.log("Fetch one SQL [%s] with params %s" % (sql, str(parameters)))
         c = self.cursor()
         c.execute(sql, parameters)
         result = c.fetchone()
+        c.close()
 
         if result is None:
             raise DbException(sql)
@@ -166,7 +172,7 @@ class Database(object):
         if not isinstance(parameters, tuple):
             parameters = [parameters]
 
-        xbmc.log("Execute SQL [%s] with params %s" % (sql, str(parameters)))
+        #xbmc.log("Execute SQL [%s] with params %s" % (sql, str(parameters)))
         c = self.cursor()
         c.execute(sql, parameters)
         self.conn.commit()
@@ -645,7 +651,7 @@ class SQLiteDatabase(Database):
             xbmc.log("Unable to find any known SQLiteDatabase files!")
             return
 
-        xbmc.log("Connecting to SQLite database file: %s" % db_file)
+        #xbmc.log("Connecting to SQLite database file: %s" % db_file)
         self.conn = sqlite3.connect(db_file, check_same_thread = False)
         self.conn.row_factory = _sqlite_dict_factory
         xbmc.log("SQLiteDatabase opened")
@@ -684,7 +690,7 @@ class MySQLDatabase(Database):
             db = str(dbName)
             )
 
-        xbmc.log("MySQLDatabase %s opened" % dbName)
+        #xbmc.log("MySQLDatabase %s opened" % dbName)
         super(MySQLDatabase, self).postInit()
 
     def cursor(self):
