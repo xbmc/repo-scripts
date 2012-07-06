@@ -39,7 +39,12 @@ def commandsMain(key):
           if entry.find("###")>=0:
             title = entry[:entry.find("###")]
             command = entry[entry.find("###")+3:]
-            xbmc.executebuiltin(command)
+            if command.find("#")==-1:
+              xbmc.executebuiltin(command)
+            else:
+              spl=command.split("#")
+              for temp in spl:
+                xbmc.executebuiltin(temp)
           if entry=="- "+translation(30001):
             addCommand(key)
           elif entry=="- "+translation(30005):
@@ -47,7 +52,7 @@ def commandsMain(key):
 
 def addCommand(key):
         dialog = xbmcgui.Dialog()
-        modes=[translation(30002),translation(30003),translation(30004)]
+        modes=[translation(30002),translation(30003),translation(30004),translation(30012)]
         nr=dialog.select(translation(30001), modes)
         if nr>=0:
           mode = modes[nr]
@@ -57,7 +62,43 @@ def addCommand(key):
             addCommandFavs(key)
           elif mode==translation(30004):
             addCommandEnter(key)
+          elif mode==translation(30012):
+            global currentCombo
+            currentCombo=""
+            addCommandComboMain(key)
         else:
+          commandsMain(key)
+
+def addCommandComboMain(key):
+        kb = xbmc.Keyboard("", translation(30010))
+        kb.doModal()
+        if kb.isConfirmed():
+          title=kb.getText()
+          addCommandCombo(title,key)
+
+def addCommandCombo(title,key):
+        global currentCombo
+        favs=[]
+        fh = open(commandsList, 'r')
+        for line in fh:
+            favs.append(line.replace("\n",""))
+        fh.close()
+        myCommandsTemp=[]
+        for temp in favs:
+          myCommandsTemp.append(temp[:temp.find("###")])
+        dialog = xbmcgui.Dialog()
+        nr=dialog.select(translation(30002), myCommandsTemp)
+        if nr>=0:
+          entry=favs[nr]
+          command = entry[entry.find("###")+3:]
+          currentCombo+=command+"#"
+          addCommandCombo(title,key)
+        else:
+          currentCombo=currentCombo[:len(currentCombo)-1]
+          if title+"###"+currentCombo not in myCommands:
+            fh = open(commandsFile+key, 'a')
+            fh.write(title+"###"+currentCombo+"\n")
+            fh.close()
           commandsMain(key)
 
 def addCommandList(key):
