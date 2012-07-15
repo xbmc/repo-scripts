@@ -1,3 +1,6 @@
+v0.0.6:
+- adjust code to work with $ESCINFO
+
 v0.0.5:
 - use title instead of label
 

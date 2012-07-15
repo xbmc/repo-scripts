@@ -18,7 +18,7 @@ class Main:
         log('version %s started' % __addonversion__ )
         self._parse_argv()
         self._init_vars()
-        if self.artist != '' and self.album != '':
+        if self.artist and self.album:
             log('artist: %s' % self.artist)
             log('album: %s' % self.album)
             self._get_albumid()
@@ -32,6 +32,11 @@ class Main:
             params = {}
         self.artist = params.get( 'artist', '' )
         self.album = params.get( 'album', '' )
+        if self.artist and self.album:
+            if self.artist.startswith('"') and self.artist.endswith('"'):
+                self.artist = self.artist[1:-1]
+            if self.album.startswith('"') and self.album.endswith('"'):
+                self.album = self.album[1:-1]
 
     def _init_vars( self ):
         self.albumid = ''

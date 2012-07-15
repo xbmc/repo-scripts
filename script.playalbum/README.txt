@@ -1,3 +1,3 @@
 
-RunScript(script.playalbum,artist=$INFO[ListItem.Artist]&amp;album=$INFO[ListItem.Album])
+RunScript(script.playalbum,artist=$ESCINFO[ListItem.Artist]&amp;album=$ESCINFO[ListItem.Album])
 
