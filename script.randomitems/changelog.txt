@@ -1,3 +1,18 @@
+v3.1.1
+- added "RandomArtist.%d.Genre"
+
+v3.1.0
+- added "Random Artists" properties:
+
+"RandomArtist.%d.Title"
+"RandomArtist.%d.Path"
+"RandomArtist.%d.Fanart"
+"RandomArtist.%d.Thumb"
+"RandomArtist.%d.Artist_Description"
+
+v3.0.10
+- added album description property (randomalbum.x.album_description)
+
 v3.0.9
 - use title instead of label
 

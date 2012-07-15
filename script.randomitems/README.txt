@@ -10,7 +10,7 @@ For example:
  
 XBMC.RunScript(script.randomitems,limit=10&amp;unplayed=True&amp;alarm=30)
 
-will return 10 random, unplayed movies, episodes, albums, songs and addons every 30 minutes.
+will return 10 random, unplayed movies, episodes, albums, songs, artists and addons every 30 minutes.
 
 
 Labels:
@@ -55,6 +55,7 @@ Labels:
 "RandomAlbum.%d.Fanart"
 "RandomAlbum.%d.Thumb"
 "RandomAlbum.%d.Rating"
+"RandomAlbum.%d.Album_Description"
 "RandomAlbum.Count"
 
 "RandomSong.%d.Title"
@@ -76,6 +77,14 @@ Labels:
 "RandomAddon.%d.Fanart"
 "RandomAddon.%d.Thumb"
 "RandomAddon.Count"
+
+"RandomArtist.%d.Title"
+"RandomArtist.%d.Artist_Description"
+"RandomArtist.%d.Path"
+"RandomArtist.%d.Fanart"
+"RandomArtist.%d.Thumb"
+"RandomArtist.%d.Genre"
+"RandomArtist.Count"
 
 
 For more inforamtion and help please check:

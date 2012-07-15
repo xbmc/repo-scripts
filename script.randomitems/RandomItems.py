@@ -2,7 +2,7 @@
 # *
 # *  Nuka for the original RecentlyAdded.py on which this is based
 # *
-# *  ppic, Hitcher & ronie for the updates
+# *  ppic, Hitcher,ronie & phil65 for the updates
 
 import xbmc, xbmcgui, xbmcaddon
 import re, sys, os, random
@@ -78,6 +78,7 @@ class Main:
             self._fetch_episode_info()
             self._fetch_musicvideo_info()
             self._fetch_album_info()
+            self._fetch_artist_info()
             self._fetch_song_info()
             self._fetch_addon_info()
 
@@ -156,7 +157,7 @@ class Main:
                     playcount = item['playcount']
                     if playcount > 0:
                         count = count - 1
-                        continue 
+                        continue
                 title = item['title']
                 showtitle = item['showtitle']
                 season = "%.2d" % float(item['season'])
@@ -206,7 +207,7 @@ class Main:
                     playcount = item['playcount']
                     if playcount > 0:
                         count = count - 1
-                        continue 
+                        continue
                 title = item['title']
                 year = str(item['year'])
                 plot = item['plot']
@@ -228,7 +229,7 @@ class Main:
 
     def _fetch_album_info( self ):
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "artist", "year", "thumbnail", "fanart", "rating"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "description", "artist", "year", "thumbnail", "fanart", "rating"] }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
@@ -249,6 +250,7 @@ class Main:
                 json_response.remove( item )
                 # find values
                 title = item['title']
+                description = item['description']
                 rating = str(item['rating'])
                 if rating == '48':
                     rating = ""
@@ -265,7 +267,43 @@ class Main:
                 self.WINDOW.setProperty( "RandomAlbum.%d.Path"   % ( count ), path )
                 self.WINDOW.setProperty( "RandomAlbum.%d.Fanart" % ( count ), fanart )
                 self.WINDOW.setProperty( "RandomAlbum.%d.Thumb"  % ( count ), thumb )
+                self.WINDOW.setProperty( "RandomAlbum.%d.Album_Description"  % ( count ), description )
                 self.WINDOW.setProperty( "RandomAlbum.Count"     , total )
+
+    def _fetch_artist_info( self ):
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": ["genre", "description", "fanart", "thumbnail"], "sort": { "method": "label" } }, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('artists')):
+            json_response = json_response['result']['artists']
+            # get total value
+            total = str( len( json_response ) )
+            # enumerate thru our records
+            count = 0
+            while count < self.LIMIT:
+                count += 1
+                # check if we don't run out of items before LIMIT is reached
+                if len( json_response ) == 0:
+                    return
+                # select a random item
+                item = random.choice( json_response )
+                # remove the item from our list
+                json_response.remove( item )
+                # find values
+                description = item['description']
+                genre = str(item['genre'])
+                artist = item['label']
+                path = 'musicdb://2/' + str(item['artistid']) + '/'
+                fanart = item['fanart']
+                thumb = item['thumbnail']
+                # set our properties
+                self.WINDOW.setProperty( "RandomArtist.%d.Title"  % ( count ), artist )
+                self.WINDOW.setProperty( "RandomArtist.%d.Genre" % ( count ), genre )
+                self.WINDOW.setProperty( "RandomArtist.%d.Path"   % ( count ), path )
+                self.WINDOW.setProperty( "RandomArtist.%d.Fanart" % ( count ), fanart )
+                self.WINDOW.setProperty( "RandomArtist.%d.Thumb"  % ( count ), thumb )
+                self.WINDOW.setProperty( "RandomArtist.%d.Artist_Description"  % ( count ), description )
+                self.WINDOW.setProperty( "RandomArtist.Count"     , total )
 
     def _fetch_song_info( self ):
         # query the database
@@ -293,7 +331,7 @@ class Main:
                     playcount = item['playcount']
                     if playcount > 0:
                         count = count - 1
-                        continue 
+                        continue
                 title = item['title']
                 rating = str(int(item['rating'])-48)
                 year = str(item['year'])
