@@ -143,7 +143,7 @@ class MainGui( xbmcgui.WindowXMLDialog ):
                     keyboard.doModal()
                     if ( keyboard.isConfirmed() ):
                         fav_label = keyboard.getText()
-                xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Path", ), fav_path.encode('string-escape'), ) )
+                xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Path", ), fav_path.encode('unicode-escape'), ) )
                 xbmc.executebuiltin( 'Skin.SetString(%s,%s)' % ( '%s.%s' % ( self.property, "Label", ), fav_label, ) )
                 fav_icon = self.fav_list.getSelectedItem().getProperty( "Icon" )
                 if fav_icon:
