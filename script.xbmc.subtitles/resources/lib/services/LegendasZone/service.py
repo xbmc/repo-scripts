@@ -69,7 +69,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 
 	page = 0
 	if languageshort == "pt":
-		url = main_url + "	legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+		url = main_url + "legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 
 	content = opener.open(url)
 	content = content.read()
@@ -135,7 +135,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 				#filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
 				subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits': hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 			page = page + 1
-			url = main_url + "	legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+			url = main_url + "legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 			content = opener.open(url)
 			content = content.read()
 			#For DEBUG only uncomment next line
@@ -143,7 +143,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 	else:
 		page = 0
 		if languageshort == "pt":
-			url = main_url + "	legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+			url = main_url + "legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 		content = opener.open(url)
 		content = content.read()
 		maxsubs = re.findall(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)

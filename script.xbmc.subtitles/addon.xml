@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmc.subtitles"
        name="XBMC Subtitles"
-       version="3.2.1"
+       version="3.3.0"
        provider-name="amet, mr_blobby">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -13,6 +13,7 @@
     <summary lang="bg">XBMC субтитри</summary>
     <summary lang="en">XBMC Subtitles</summary>
     <summary lang="es">Subtítulos XBMC</summary> 
+    <summary lang="fr">Sous-titres XBMC</summary>
     <summary lang="hu">XBMC feliratok</summary> 
     <summary lang="sr">XBMC Преводи</summary>
     <summary lang="se">XBMC Undertexter</summary>
@@ -23,6 +24,7 @@
     <description lang="bg">Търси и сваля субтитри от многобройни източници. Трябват ли ви субтитри на български език пробвайте OpenSubtitles.org. Ползващите Eden могат да вкл/изкл субтитрите от Настройки > Облик > Добавка > Видео OSD</description>
     <description lang="en">Search and download subtitles from multipe providers.Subtitle button on OSD needs to be activated and path set to XBMC Subtitles under System-> Skin-> Addon Scripts</description>
     <description lang="es">Busca y descarga subtítulos de:Bierdopje.com, Italiansubs.net, Legendas-Zone.org, LegendasDivx.com, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, PT-SUBS.NET, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com y Undertexter.se.El botón de subtitulos en el OSD debe ser añadido, y la ruta al addon debe ponerse en Sistema-> Skin-> Addons de Scripts</description>
+    <description lang="fr">Recherche et télécharge des sous-titres depuis plusieurs sources. Le bouton de sous-titres doit être activé dans l'OSD (interface affichée lors de la lecture), et un chemin doit être ajouté vers "XBMC Subtitles" dans Système-> Thème-> Add-on(Raccourcis)</description>
     <description lang="hu">Film feliratok keresése letöltése az:Bierdopje.com, Italiansubs.net, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com és Undertexter.se webhelyekról.A dalszöveg OSD gombot aktiválni kell az elérési út megadásával a Beállítások -> Skin -> Szkriptek alatt.</description>
     <description lang="sr">Претражи и скини преводе од многобројних провајдера. Дугме за преводе на OSD треба да се активира и изабере XBMC Subtitles у Систем-> Маска-> Скрипт додаци</description>
     <description lang="nl">Zoek en download ondertitels van 19 websites:Bierdopje.com, Italiansubs.net, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com en Undertexter.se.De ondertitel knop in het OSD scherm moet zijn geactiveerd met het pad naar XBMC Subtitles via Systeem-> Skin-> Addon Scripts.</description>

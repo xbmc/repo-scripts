@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # based on argenteam.net subtitles, based on a mod of Subdivx.com subtitles, based on a mod of Undertext subtitles
-# developed by quillo86 for Subtitulos.es and XBMC.org
+# developed by quillo86 and infinito for Subtitulos.es and XBMC.org
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
 from utilities import log
 _ = sys.modules[ "__main__" ].__language__
@@ -22,141 +22,187 @@ subtitle_pattern2 = "<li class='li-idioma'>(.+?)<strong>(.+?)</strong>(.+?)<li c
 # Functions
 #====================================================================================================================
 
+def getallsubs(languageshort, langlong, file_original_path, subtitles_list, tvshow, season, episode):
 
-def getallsubs(searchstring, languageshort, langlong, file_original_path, subtitles_list, tvshow, season, episode):
-	
+    if re.search(r'\([^)]*\)', tvshow):
+        for level in range(4):
+            searchstring, tvshow, season, episode = getsearchstring(tvshow, season, episode, level)
+            url = main_url + searchstring
+            getallsubsforurl(url, languageshort, langlong, file_original_path, subtitles_list, tvshow, season, episode)
+    else:
+        searchstring, tvshow, season, episode = getsearchstring(tvshow, season, episode, 0)
+        url = main_url + searchstring
+        getallsubsforurl(url, languageshort, langlong, file_original_path, subtitles_list, tvshow, season, episode)
 
-	if len(tvshow) > 0:
-		url = main_url + re.sub(r'\s', '-', searchstring)
-	else:
-		url = main_url + re.sub(r'\s', '-', searchstring)
+def getallsubsforurl(url, languageshort, langlong, file_original_path, subtitles_list, tvshow, season, episode):
 
-	content = geturl(url)
+    content = geturl(url)
 
-	for matches in re.finditer(subtitle_pattern1, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
-		filename = urllib.unquote_plus(matches.group(2))
-		filename = re.sub(r' ', '.', filename)
-		filename = re.sub(r'\s', '.', tvshow) + "." + season + "x" + episode + filename
-		
-		server = filename
-		backup = filename
-		subs = matches.group(4)
+    for matches in re.finditer(subtitle_pattern1, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
+                filename = urllib.unquote_plus(matches.group(2))
+                filename = re.sub(r' ', '.', filename)
+                filename = re.sub(r'\s', '.', tvshow) + "." + season + "x" + episode + filename
 
-		for matches in re.finditer(subtitle_pattern2, subs, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
-			#log( __name__ ,"Descargas: %s" % (matches.group(2)))
-					
-			idioma = matches.group(2)
-			idioma = re.sub(r'\xc3\xb1', 'n', idioma)
-			idioma = re.sub(r'\xc3\xa0', 'a', idioma)
-			idioma = re.sub(r'\xc3\xa9', 'e', idioma)
+                server = filename
+                backup = filename
+                subs = matches.group(4)
 
-			if idioma == "English":
-				languageshort = "en"
-				languagelong = "English"
-			elif idioma == "Catala":
-				languageshort = "ca"
-				languagelong = "Catalan"
-			elif idioma == "Espanol (Latinoamerica)":
-				languageshort = "es"
-				languagelong = "Spanish"
-				filename = filename + ".LATINO"
-				server = filename
-			elif idioma == "Galego":
-				languageshort = "es"
-				languagelong = "Spanish"
-				filename = filename + ".GALEGO"
-				server = filename
-			else:
-				languageshort = "es"
-				languagelong = "Spanish"
-			
-			estado = matches.group(4)
-			estado = re.sub(r'\t', '', estado)
-			estado = re.sub(r'\n', '', estado)
-			
-			id = matches.group(6)
-			id = id[44:61]
-			id = re.sub(r'"', '', id)
+                for matches in re.finditer(subtitle_pattern2, subs, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
+                        #log( __name__ ,"Descargas: %s" % (matches.group(2)))
 
-			if estado == "green'>Completado" and languagelong == langlong:
-				subtitles_list.append({'rating': "0", 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
-			
-			filename = backup
-			server = backup
-			
-	
+                        idioma = matches.group(2)
+                        idioma = re.sub(r'\xc3\xb1', 'n', idioma)
+                        idioma = re.sub(r'\xc3\xa0', 'a', idioma)
+                        idioma = re.sub(r'\xc3\xa9', 'e', idioma)
+
+                        if idioma == "English":
+                                languageshort = "en"
+                                languagelong = "English"
+                                filename = filename + ".(ENGLISH)"
+                                server = filename
+                        elif idioma == "Catala":
+                                languageshort = "ca"
+                                languagelong = "Catalan"
+                                filename = filename + ".(CATALA)"
+                                server = filename
+                        elif idioma == "Espanol (Latinoamerica)":
+                                languageshort = "es"
+                                languagelong = "Spanish"
+                                filename = filename + ".(LATINO)"
+                                server = filename
+                        elif idioma == "Galego":
+                                languageshort = "es"
+                                languagelong = "Spanish"
+                                filename = filename + ".(GALEGO)"
+                                server = filename
+                        else:
+                                languageshort = "es"
+                                languagelong = "Spanish"
+                                filename = filename + ".(ESPAÑA)"
+                                server = filename
+
+                        estado = matches.group(4)
+                        estado = re.sub(r'\t', '', estado)
+                        estado = re.sub(r'\n', '', estado)
+
+                        id = matches.group(6)
+                        id = id[44:61]
+                        id = re.sub(r'"', '', id)
+
+                        if estado == "green'>Completado" and languagelong == langlong:
+                                subtitles_list.append({'rating': "0", 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+
+                        filename = backup
+                        server = backup
+
+
 def geturl(url):
-	class AppURLopener(urllib.FancyURLopener):
-		version = "App/1.7"
-		def __init__(self, *args):
-			urllib.FancyURLopener.__init__(self, *args)
-		def add_referrer(self, url=None):
-			if url:
-				urllib._urlopener.addheader('Referer', url)
+        class AppURLopener(urllib.FancyURLopener):
+                version = "App/1.7"
+                def __init__(self, *args):
+                        urllib.FancyURLopener.__init__(self, *args)
+                def add_referrer(self, url=None):
+                        if url:
+                                urllib._urlopener.addheader('Referer', url)
 
-	urllib._urlopener = AppURLopener()
-	urllib._urlopener.add_referrer("http://www.subtitulos.es/")
-	try:
-		response = urllib._urlopener.open(url)
-		content    = response.read()
-	except:
-		#log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
-		content    = None
-	return content
+        urllib._urlopener = AppURLopener()
+        urllib._urlopener.add_referrer("http://www.subtitulos.es/")
+        try:
+                response = urllib._urlopener.open(url)
+                content    = response.read()
+        except:
+                #log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
+                content    = None
+        return content
 
+def getsearchstring(tvshow, season, episode, level):
+
+    # Clean tv show name
+    if level == 1 and re.search(r'\([^)][a-zA-Z]*\)', tvshow):
+        # Series name like "Shameless (US)" -> "Shameless US"
+        tvshow = tvshow.replace('(', '').replace(')', '')
+
+    if level == 2 and re.search(r'\([^)][0-9]*\)', tvshow):
+        # Series name like "Scandal (2012)" -> "Scandal"
+        tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
+
+    if level == 3 and re.search(r'\([^)]*\)', tvshow):
+        # Series name like "Shameless (*)" -> "Shameless"
+        tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
+
+    # Zero pad episode
+    episode = str(episode).rjust(2, '0')
+
+    # Build search string
+    searchstring = tvshow + '/' + season + 'x' + episode
+
+    # Replace spaces with dashes
+    searchstring = re.sub(r'\s', '-', searchstring)
+
+    #log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
+    return searchstring, tvshow, season, episode
+
+def clean_subtitles_list(subtitles_list):
+    seen = set()
+    subs = []
+    for sub in subtitles_list:
+        filename = sub['filename']
+        #log(__name__, "Filename: %s" % filename)
+        if filename not in seen:
+            subs.append(sub)
+            seen.add(filename)
+    return subs
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
     subtitles_list = []
     msg = ""
-	
-    if len(tvshow) == 0:
-		msg = "Subtitulos.es is only for TV Shows subtitles!"
-    if len(tvshow) > 0:
-        searchstring = tvshow + '/' + season + 'x' + episode
-    #log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
 
-	if lang1 == "Spanish":
-		languagelong = "Spanish"
-		languageshort = "es"
-		getallsubs(searchstring, "es", "Spanish", file_original_path, subtitles_list, tvshow, season, episode)
-	elif lang1 == "English":
-		languagelong = "English"
-		languageshort = "en"
-		getallsubs(searchstring, "en", "English", file_original_path, subtitles_list, tvshow, season, episode)
-	elif lang1 == "Catalan":
-		languagelong = "Catalan"
-		languageshort = "ca"
-		getallsubs(searchstring, "ca", "Catalan", file_original_path, subtitles_list, tvshow, season, episode)			
-	
-	if lang2 == "Spanish" and lang1 != "Spanish":
-		languagelong = "Spanish"
-		languageshort = "es"
-		getallsubs(searchstring, "es", "Spanish", file_original_path, subtitles_list, tvshow, season, episode)
-	elif lang2 == "English" and lang1 != "English":
-		languagelong = "English"
-		languageshort = "en"
-		getallsubs(searchstring, "en", "English", file_original_path, subtitles_list, tvshow, season, episode)
-	elif lang2 == "Catalan" and lang1 != "Catalan":
-		languagelong = "Catalan"
-		languageshort = "ca"
-		getallsubs(searchstring, "ca", "Catalan", file_original_path, subtitles_list, tvshow, season, episode)	
-	
-	if lang3 == "Spanish" and lang1 != "Spanish" and lang2 != "Spanish":
-		languagelong = "Spanish"
-		languageshort = "es"
-		getallsubs(searchstring, "es", "Spanish", file_original_path, subtitles_list, tvshow, season, episode)
-	elif lang3 == "English" and lang1 != "English" and lang2 != "English":
-		languagelong = "English"
-		languageshort = "en"
-		getallsubs(searchstring, "en", "English", file_original_path, subtitles_list, tvshow, season, episode)
-	elif lang3 == "Catalan" and lang1 != "Catalan" and lang2 != "Catalan":
-		languagelong = "Catalan"
-		languageshort = "ca"
-		getallsubs(searchstring, "ca", "Catalan", file_original_path, subtitles_list, tvshow, season, episode)	
-	
+    if len(tvshow) == 0:
+            msg = "Subtitulos.es is only for TV Shows subtitles!"
+
+    if lang1 == "Spanish":
+            languagelong = "Spanish"
+            languageshort = "es"
+            getallsubs("es", "Spanish", file_original_path, subtitles_list, tvshow, season, episode)
+    elif lang1 == "English":
+            languagelong = "English"
+            languageshort = "en"
+            getallsubs("en", "English", file_original_path, subtitles_list, tvshow, season, episode)
+    elif lang1 == "Catalan":
+            languagelong = "Catalan"
+            languageshort = "ca"
+            getallsubs("ca", "Catalan", file_original_path, subtitles_list, tvshow, season, episode)
+
+    if lang2 == "Spanish" and lang1 != "Spanish":
+            languagelong = "Spanish"
+            languageshort = "es"
+            getallsubs("es", "Spanish", file_original_path, subtitles_list, tvshow, season, episode)
+    elif lang2 == "English" and lang1 != "English":
+            languagelong = "English"
+            languageshort = "en"
+            getallsubs("en", "English", file_original_path, subtitles_list, tvshow, season, episode)
+    elif lang2 == "Catalan" and lang1 != "Catalan":
+            languagelong = "Catalan"
+            languageshort = "ca"
+            getallsubs("ca", "Catalan", file_original_path, subtitles_list, tvshow, season, episode)
+
+    if lang3 == "Spanish" and lang1 != "Spanish" and lang2 != "Spanish":
+            languagelong = "Spanish"
+            languageshort = "es"
+            getallsubs("es", "Spanish", file_original_path, subtitles_list, tvshow, season, episode)
+    elif lang3 == "English" and lang1 != "English" and lang2 != "English":
+            languagelong = "English"
+            languageshort = "en"
+            getallsubs("en", "English", file_original_path, subtitles_list, tvshow, season, episode)
+    elif lang3 == "Catalan" and lang1 != "Catalan" and lang2 != "Catalan":
+            languagelong = "Catalan"
+            languageshort = "ca"
+            getallsubs("ca", "Catalan", file_original_path, subtitles_list, tvshow, season, episode)
+
     if ((lang1 != "Spanish") and (lang2 != "English") and (lang3 != "Catalan")):
         msg = "Won't work, subtitulos.es is only for Spanish, English and Catalan subtitles!"
 
+    subtitles_list = clean_subtitles_list(subtitles_list)
     return subtitles_list, "", msg #standard output
 
 
@@ -194,7 +240,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
         if packed:
             files = os.listdir(tmp_sub_dir)
             init_filecount = len(files)
-            #log( __name__ ,"%s argenteam: número de init_filecount %s" % (debug_pretext, init_filecount)) #EGO
+            #log( __name__ ,"%s argenteam: nÃºmero de init_filecount %s" % (debug_pretext, init_filecount)) #EGO
             filecount = init_filecount
             max_mtime = 0
             # determine the newest file from tmp_sub_dir
@@ -228,4 +274,3 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
                         log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))
                         subs_file = os.path.join(tmp_sub_dir, file)
         return False, language, subs_file #standard output
-

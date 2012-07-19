@@ -3,7 +3,7 @@
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt
-# Rev. 1.0.3
+# Rev. 1.0.4
 
 import xbmc, xbmcgui
 import cookielib, urllib2, urllib, sys, re, os, webbrowser, time, unicodedata
@@ -58,7 +58,9 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	xbmc.executebuiltin("XBMC.Extract(" + fname + "," + extract_path +")")
 	time.sleep(2)
 	legendas_tmp = []
-	for root, dirs, files in os.walk(extract_path, topdown=False):
+	# brunoga fixed solution for non unicode caracters
+	fs_encoding = sys.getfilesystemencoding()
+	for root, dirs, files in os.walk(extract_path.encode(fs_encoding), topdown=False):
 		for file in files:
 			dirfile = os.path.join(root, file)
 			ext = os.path.splitext(dirfile)[1][1:].lower()

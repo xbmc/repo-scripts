@@ -1,3 +1,11 @@
+3.3.0
+- French localization, thx Regis Villemin
+- Enabled localization of lang names in search results, thx Regis Villemin
+- Fixed: LegendasZone, thx HiGhLaNdeR
+- Fixed: script loading and charset errors on windows, thx chadoe
+- fixed: Legendas.TV, MrSparklle
+- fixed: Subtitulos.es fix tvshows with year, thx quillo86
+
 3.2.1
 - fix: clean temp folders properly, we have seen some issues with folders that couldn't be cleaned
 - Russian language update, thx to Roman_V_M

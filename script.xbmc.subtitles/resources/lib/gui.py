@@ -47,7 +47,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     self.stack          = False
     self.autoDownload   = False
     use_subs_folder     = __addon__.getSetting( "use_subs_folder" ) == "true"           # use 'Subs' subfolder for storing subtitles
-    movieFullPath       = urllib.unquote(xbmc.Player().getPlayingFile()).decode('utf-8')# Full path of a playing file
+    movieFullPath       = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))# Full path of a playing file
     path                = __addon__.getSetting( "subfolder" ) == "true"                 # True for movie folder
     self.sub_folder     = xbmc.translatePath(__addon__.getSetting( "subfolderpath" )).decode("utf-8")   # User specified subtitle folder
     self.year           = xbmc.getInfoLabel("VideoPlayer.Year")                         # Year
@@ -58,8 +58,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
     self.language_1     = languageTranslate(__addon__.getSetting( "Lang01" ), 4, 0)     # Full language 1
     self.language_2     = languageTranslate(__addon__.getSetting( "Lang02" ), 4, 0)     # Full language 2  
     self.language_3     = languageTranslate(__addon__.getSetting( "Lang03" ), 4, 0)     # Full language 3
-    self.tmp_sub_dir    = os.path.join( __profile__ ,"sub_tmp" ).decode("utf-8")        # Temporary subtitle extraction directory   
-    self.stream_sub_dir = os.path.join( __profile__ ,"sub_stream" ).decode("utf-8")     # Stream subtitle directory    
+    self.tmp_sub_dir    = os.path.join( __profile__ ,"sub_tmp" )                        # Temporary subtitle extraction directory   
+    self.stream_sub_dir = os.path.join( __profile__ ,"sub_stream" )                     # Stream subtitle directory    
     
     self.clean_temp()                                                                   # clean temp dirs
     
@@ -264,7 +264,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
           break
         else:
           if gui:
-            listitem = xbmcgui.ListItem(label=item["language_name"],
+            listitem = xbmcgui.ListItem(label=_( languageTranslate(item["language_name"],0,5) ),
                                         label2=item["filename"],
                                         iconImage=item["rating"],
                                         thumbnailImage=item["language_flag"]
@@ -314,9 +314,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
       sub_ext  = os.path.splitext( file )[1]
       sub_name = os.path.splitext( os.path.basename( self.file_original_path ) )[0]
       if (__addon__.getSetting( "lang_to_end" ) == "true"):
-        file_name = "%s.%s%s" % ( sub_name, sub_lang, sub_ext )
+        file_name = u"%s.%s%s" % ( sub_name, sub_lang, sub_ext )
       else:
-        file_name = "%s%s" % ( sub_name, sub_ext )
+        file_name = u"%s%s" % ( sub_name, sub_ext )
       file_from = file.replace('\\','/')
       file_to = os.path.join(self.sub_folder, file_name).replace('\\','/')
       # Create a files list of from-to tuples so that multiple files may be
@@ -425,10 +425,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                                  os.path.splitext( zip_entry )[1] )
     else:
       file_name = u"%s%s" % ( name, os.path.splitext( zip_entry )[1] )
-    log( __name__ ,"Sub in Zip [%s], File Name [%s]" % (zip_entry.encode("utf-8"),
-                                                        file_name.encode("utf-8"),))
-    ret_zip_entry = os.path.join(self.tmp_sub_dir,zip_entry.encode("utf-8"))
-    ret_file_name = os.path.join(self.sub_folder,file_name.encode("utf-8"))
+    log( __name__ ,"Sub in Zip [%s], File Name [%s]" % (zip_entry,
+                                                        file_name,))
+    ret_zip_entry = os.path.join(self.tmp_sub_dir,zip_entry)
+    ret_file_name = os.path.join(self.sub_folder,file_name)
     return ret_zip_entry,ret_file_name
 
   def list_services( self ):
