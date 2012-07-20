@@ -45,6 +45,9 @@
     <string id="30245">Ukrainian</string>
     <string id="30246">Vietnamese</string>
     <string id="30247">Farsi</string>
+  <!-- Dialog Text -->
+    <string id="30300">Please be Patient</string>
+    <string id="30301">Downloading first artist image</string>
   <!-- Settings  --> 
     <string id="32000">Download</string>
     <string id="32001">Download images from last.fm</string>
@@ -65,4 +68,7 @@
     <string id="32200">Advanced</string>
     <string id="32201">Limit size of download cache</string>
     <string id="32202">  Maximum cache size (in megabytes)</string>
+    <string id="32203">Display progress images during first download</string>
+    <string id="32204">  Progress images folder</string>
+    <string id="32205">Alternate name for local fanart folder</string>
 </strings>

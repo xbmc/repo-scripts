@@ -17,6 +17,8 @@ __addon__        = xbmcaddon.Addon()
 __addonname__    = __addon__.getAddonInfo('id')
 __addonversion__ = __addon__.getAddonInfo('version')
 __addonpath__    = __addon__.getAddonInfo('path')
+__addonicon__    = xbmc.translatePath('%s/icon.png' % __addonpath__ )
+__language__     = __addon__.getLocalizedString
 
 socket.setdefaulttimeout(10)
 
@@ -133,7 +135,8 @@ class Main:
                 time.sleep(0.5)
                 if xbmc.getInfoLabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
                     if( xbmc.Player().isPlayingAudio() == True or xbmc.getInfoLabel( self.EXTERNALCALL ) != '' ):
-                        if self.NAME != self._get_current_artist():
+                        #if self.NAME not in self._get_current_artist():
+                        if set( self.ALLARTISTS ) <> set( self._get_current_artist() ):
                             self._clear_properties()
                             self.UsingFallback = False
                             self._use_correct_artwork()
@@ -146,6 +149,7 @@ class Main:
                         time.sleep(1) # doublecheck if playback really stopped
                         if( xbmc.Player().isPlayingAudio() == False and xbmc.getInfoLabel( self.EXTERNALCALL ) == '' ):
                             if ( self.DAEMON == "False" ):
+                                self._clean_dir( self.MergeDir )
                                 self.WINDOW.clearProperty("ArtistSlideshowRunning")
                 else:
                     self._clear_properties()
@@ -153,25 +157,34 @@ class Main:
 
 
     def _use_correct_artwork( self ):
-        if(self.PRIORITY == '1' and not self.LOCALARTISTPATH == ''):
-            log('looking for local artwork')
-            self._get_local_images()
-            if(not self.LocalImagesFound):
-                log('no local artist artwork found, start download')
-                self._start_download()
-        elif(self.PRIORITY == '2' and not self.LOCALARTISTPATH == ''):
-            log('looking for local artwork')
-            self._get_local_images()
-            log('start download')
-            self._start_download()
-        else:
-            log('start download')
-            self._start_download()
-            if(not (self.CachedImagesFound or self.ImageDownloaded)):
-                log('no remote artist artwork found, looking for local artwork')
+        self._clean_dir( self.MergeDir )
+    	artists = self._get_current_artist()
+    	self.ALLARTISTS = artists
+    	self.ARTISTNUM = 0
+    	self.TOTALARTISTS = len(artists)
+    	self.MergedImagesFound = False
+    	for artist in artists:
+    	    log('current artist is %s' % artist)
+    	    self.ARTISTNUM += 1
+            self.NAME = artist
+            if(self.PRIORITY == '1' and not self.LOCALARTISTPATH == ''):
+                log('looking for local artwork')
                 self._get_local_images()
-        
-        if(not (self.LocalImagesFound or self.CachedImagesFound or self.ImageDownloaded)):
+                if(not self.LocalImagesFound):
+                    log('no local artist artwork found, start download')
+                    self._start_download()
+            elif(self.PRIORITY == '2' and not self.LOCALARTISTPATH == ''):
+                log('looking for local artwork')
+                self._get_local_images()
+                log('start download')
+                self._start_download()
+            else:
+                log('start download')
+                self._start_download()
+                if(not (self.CachedImagesFound or self.ImageDownloaded)):
+                    log('no remote artist artwork found, looking for local artwork')
+                    self._get_local_images()
+        if(not (self.LocalImagesFound or self.CachedImagesFound or self.ImageDownloaded or self.MergedImagesFound)):
             if (not self.FALLBACKPATH == ''):
                 log('no images found for artist, using fallback slideshow')
                 log('fallbackdir = ' + self.FALLBACKPATH)
@@ -221,6 +234,16 @@ class Main:
             self.maxcachesize = int(__addon__.getSetting( "max_cache_size" )) * 1000000
         except:
             self.maxcachesize = 1024 * 1000000
+        if ( len ( __addon__.getSetting( "progress_path" ) ) > 0 ) and ( __addon__.getSetting( "show_progress" ) == "true" ):
+            self.PROGRESSPATH = __addon__.getSetting( "progress_path" )
+            log('set progress path to %s' % self.PROGRESSPATH)
+        else:
+        	self.PROGRESSPATH = ''
+        if len ( __addon__.getSetting( "fanart_folder" ) ) > 0:
+            self.FANARTFOLDER = __addon__.getSetting( "fanart_folder" )
+            log('set fanart folder to %s' % self.FANARTFOLDER)
+        else:
+        	self.FANARTFOLDER = 'extrafanart'
 
 
     def _init_vars( self ):
@@ -236,12 +259,15 @@ class Main:
         self.EXTERNALCALLSTATUS = xbmc.getInfoLabel( self.EXTERNALCALL )
         log( 'external call is set to ' + xbmc.getInfoLabel( self.EXTERNALCALL ) )
         self.NAME = ''
+        self.ALLARTISTS = []
         self.LocalImagesFound = False
         self.CachedImagesFound = False
         self.ImageDownloaded = False
         self.DownloadedAllImages = False
         self.UsingFallback = False
         self.BlankDir = xbmc.translatePath('special://profile/addon_data/%s/transition' % __addonname__ )
+        self.MergeDir = xbmc.translatePath('special://profile/addon_data/%s/merge' % __addonname__ )    
+        self.InitDir = xbmc.translatePath('%s/resources/black' % __addonpath__ )
         LastfmApiKey = 'fbd57a1baddb983d1848a939665310f6'
         HtbackdropsApiKey = '96d681ea0dcb07ad9d27a347e64b652a'
         self.LastfmURL = 'http://ws.audioscrobbler.com/2.0/?autocorrect=1&api_key=' + LastfmApiKey
@@ -263,7 +289,6 @@ class Main:
         self.ImageDownloaded = False
         self.FirstImage = True
         min_refresh = 9.9
-        self.NAME = self._get_current_artist()
         if len(self.NAME) == 0:
             log('no artist name provided')
             return
@@ -283,12 +308,19 @@ class Main:
 
         if self.CachedImagesFound:
             log('cached images found')
-            self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
             last_time = time.time()
-            if self.ARTISTINFO == "true":
-                self._get_artistinfo()
+            if self.ARTISTNUM == 1:
+                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                if self.ARTISTINFO == "true":
+                    self._get_artistinfo()
         else:
             last_time = 0
+            if self.ARTISTNUM == 1:
+                if len ( self.PROGRESSPATH ) > 0:
+                    self.WINDOW.setProperty("ArtistSlideshow", self.PROGRESSPATH)
+                else:
+                    self.WINDOW.setProperty("ArtistSlideshow", self.InitDir)
+                    xbmc.executebuiltin('XBMC.Notification("' + __language__(30300) + '", "' + __language__(30301) + '", 10000, ' + __addonicon__ + ')')
 
         if self.LASTFM == "true":
             lastfmlist = self._get_images('lastfm')
@@ -318,19 +350,19 @@ class Main:
                     log('downloaded %s to %s' % (url, path) )
                     self.ImageDownloaded=True
             if self.ImageDownloaded:
-                if( self._playback_stopped_or_changed() ):
+                if( self._playback_stopped_or_changed() and self.ARTISTNUM == 1 ):
                     self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
                     self._clean_dir( self.BlankDir )
                     return
                 if not self.CachedImagesFound:
                     self.CachedImagesFound = True
-                    if self.ARTISTINFO == "true":
+                    if self.ARTISTINFO == "true" and self.ARTISTNUM == 1:
                         self._get_artistinfo()
                 wait_elapsed = time.time() - last_time
                 if( wait_elapsed > min_refresh ):
                     if( not (self.FirstImage and not self.CachedImagesFound) ):
                         self._wait( min_refresh - (wait_elapsed % min_refresh) )
-                    if( not self._playback_stopped_or_changed() ):
+                    if( not self._playback_stopped_or_changed() and self.ARTISTNUM == 1 ):
                         self._refresh_image_directory()
                     last_time = time.time()
                 self.FirstImage = False
@@ -347,8 +379,11 @@ class Main:
             if( wait_elapsed < min_refresh ):
                 self._wait( min_refresh - wait_elapsed )
             if( not self._playback_stopped_or_changed() ):
-                self._refresh_image_directory()
-            if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ) == self.BlankDir ):
+                if self.ARTISTNUM == 1:
+                    self._refresh_image_directory()
+                if self.TOTALARTISTS > 1:
+                    self._merge_images()                
+            if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ) == self.BlankDir and self.ARTISTNUM == 1):
                 self._wait( min_refresh )
                 if( not self._playback_stopped_or_changed() ):
                     self._refresh_image_directory()
@@ -358,10 +393,13 @@ class Main:
             log('no images downloaded')
             self.DownloadedAllImages = True
             if not self.CachedImagesFound:
-                log('clearing ArtistSlideshow property')
-                self.WINDOW.clearProperty("ArtistSlideshow")
-                if( self.ARTISTINFO == "true" and not self._playback_stopped_or_changed() ):
-                    self._get_artistinfo()
+                if self.ARTISTNUM == 1:
+                    log('clearing ArtistSlideshow property')
+                    self.WINDOW.clearProperty("ArtistSlideshow")
+                    if( self.ARTISTINFO == "true" and not self._playback_stopped_or_changed() ):
+                        self._get_artistinfo()
+            elif self.TOTALARTISTS > 1:
+                self._merge_images()
 
 
     def _wait( self, wait_time ):
@@ -395,21 +433,26 @@ class Main:
 
 
     def _get_current_artist( self ):
+        check_title = False
         if( xbmc.Player().isPlayingAudio() == True ):
             artist = xbmc.Player().getMusicInfoTag().getArtist()
+            featured_artist = xbmc.Player().getMusicInfoTag().getTitle().replace('ft.','feat.').split('feat.')
             if( artist == '' ):
-                artist = xbmc.Player().getMusicInfoTag().getTitle()
-                return artist[0:(artist.find('-'))-1]
+                artist = xbmc.Player().getMusicInfoTag().getTitle()[0:(artist.find('-'))-1]
             else:
-                return artist
+                check_title = True
         elif( not xbmc.getInfoLabel( self.SKINARTIST ) == '' ):
-            return  xbmc.getInfoLabel( self.SKINARTIST )
+            artist = xbmc.getInfoLabel( self.SKINARTIST )
         else:
-            return ''
+            artist = ''
+        artists = artist.replace('ft.','/').replace('feat.','/').split('/')
+        if check_title and len( featured_artist ) > 1:
+            artists.append( featured_artist[-1] )
+        return [a.strip(' ()') for a in artists]
 
 
     def _playback_stopped_or_changed( self ):
-        if (self.NAME != self._get_current_artist() or self.EXTERNALCALLSTATUS != xbmc.getInfoLabel(self.EXTERNALCALL) ):
+        if ( set(self.ALLARTISTS) <> set(self._get_current_artist()) or self.EXTERNALCALLSTATUS != xbmc.getInfoLabel(self.EXTERNALCALL) ):
             return True
         else:
             return False
@@ -417,11 +460,10 @@ class Main:
 
     def _get_local_images( self ):
         self.LocalImagesFound = False
-        self.NAME = self._get_current_artist()
         if len(self.NAME) == 0:
             log('no artist name provided')
             return
-        self.CacheDir = self.LOCALARTISTPATH + self.NAME + '/extrafanart'
+        self.CacheDir = self.LOCALARTISTPATH + self.NAME + '/' + self.FANARTFOLDER
         log('cachedir = %s' % self.CacheDir)
         try:
             files = os.listdir(self.CacheDir)
@@ -430,12 +472,25 @@ class Main:
         for file in files:
             if(file.endswith('tbn') or file.endswith('jpg') or file.endswith('jpeg') or file.endswith('gif') or file.endswith('png')):
                 self.LocalImagesFound = True
-
         if self.LocalImagesFound:
             log('local images found')
-            self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
-            if self.ARTISTINFO == "true":
-                self._get_artistinfo()
+            if self.ARTISTNUM == 1:
+                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                if self.ARTISTINFO == "true":
+                    self._get_artistinfo()
+            if self.TOTALARTISTS > 1:
+               self._merge_images()                
+
+
+    def _merge_images( self ):
+        self.MergedImagesFound = True                
+        files = os.listdir(self.CacheDir)
+        for file in files:
+            if(file.endswith('tbn') or file.endswith('jpg') or file.endswith('jpeg') or file.endswith('gif') or file.endswith('png')):
+                xbmcvfs.copy(os.path.join(self.CacheDir, file), os.path.join(self.MergeDir, file))
+        if self.ARTISTNUM == self.TOTALARTISTS:
+            self._wait( 9.8 )
+            self.WINDOW.setProperty("ArtistSlideshow", self.MergeDir)
 
 
     def _trim_cache( self ):

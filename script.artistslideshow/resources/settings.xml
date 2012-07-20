@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="32000">
-        <setting id="lastfm" type="bool" label="32001" default="true"/>
-        <setting id="htbackdrops" type="bool" label="32002" default="false"/>
-        <setting id="minwidth" type="text" label="32003" default="0"/>
-        <setting id="minheight" type="text" label="32004" default="0"/>
-        <setting id="hd_aspect_only" type="bool" label="32007" default="false"/>
-        <setting id="artistinfo" type="bool" label="32005" default="false"/>
-        <setting id="language" type="enum" label="32006" enable="eq(-1,true)" default="11" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246"/>
+        <setting id="lastfm" type="bool" label="32001" default="true" />
+        <setting id="htbackdrops" type="bool" label="32002" default="false" />
+        <setting id="minwidth" type="text" label="32003" default="0" />
+        <setting id="minheight" type="text" label="32004" default="0" />
+        <setting id="hd_aspect_only" type="bool" label="32007" default="false" />
+        <setting id="artistinfo" type="bool" label="32005" default="false" />
+        <setting id="language" type="enum" label="32006" enable="eq(-1,true)" default="11" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246" />
     </category>
     <category label="32100">
-        <setting id="local_artist_path" type="folder" label="32101" default=""/>
-        <setting id="priority" type="enum" label="32102" lvalues="32901|32902|32903" default="0"/>
-        <setting id="fallback_path" type="folder" label="32103" default=""/>
-        <setting id="slideshow_path" type="folder" label="32104" default=""/>
+        <setting id="local_artist_path" type="folder" label="32101" default="" />
+        <setting id="priority" type="enum" label="32102" lvalues="32901|32902|32903" default="0" />
+        <setting id="fallback_path" type="folder" label="32103" default="" />
+        <setting id="slideshow_path" type="folder" label="32104" default="" />
     </category>
     <category label="32200">
         <setting id="restrict_cache" type="bool" label="32201" default="false" />
         <setting id="max_cache_size" label="32202" type="labelenum" values="128|256|512|768|1024|2048|3072|4096" enable="eq(-1,true)" default="1024" />
+        <setting id="show_progress" type="bool" label="32203" default="false" />
+        <setting id="progress_path" type="folder" label="32204" default="" />
+		<setting id="fanart_folder" type="text" label="32205" default="" />
     </category>
 </settings>

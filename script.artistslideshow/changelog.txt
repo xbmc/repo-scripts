@@ -1,3 +1,9 @@
+v.1.4.0
+- added ability to display artwork from multiple artists simultaneously
+- added option for a folder name other than extrafanart
+- added notification when downloading first image for an artist
+- added option for user to set image to use during download of first artist image
+
 v1.3.2
 - added language files for Portuguese-Brazil (thanks to Wanilton)
 
