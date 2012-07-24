@@ -38,6 +38,8 @@ def walk(path):
 
     current_depth = 0
 
+    not_dir = ['.zip','.xsp','.rar']
+
     while True:
 
         if current_depth > -1:
@@ -48,8 +50,10 @@ def walk(path):
                 current_dirs, current_files = [], []
 
                 for x in listdir(current_path, extra_metadata=True):
+
+                    file_ext = x['file'].split('.')[-1]
                     
-                    if x['filetype'] == 'directory' and not x['file'].startswith("zip://"):
+                    if x['filetype'] == 'directory' and not any(file_ext in s for s in not_dir):
 
                         current_dirs.append(urllib.unquote(x['file']))
 

@@ -27,3 +27,13 @@ removed "restore.txt" file and now write file listing to memory list instead
 [b]Version 0.0.8[/b]
 
 modified vfs.py script to exclude handling zip files as directories, added keymap and peripheral data folders in the "config" section
+
+[b]Version 0.0.9 [/b]
+
+modified vfs.py again to filter out xsp files (smart playlists). Created running list for these types of compressed files
+
+added enable/disable logging toggle in settings
+
+[b]Version 0.1.0[/b]
+
+removed transparency from icon.png
