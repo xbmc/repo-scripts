@@ -1,3 +1,7 @@
+v.1.4.1
+- updated language files for Portuguese-Brazil (thanks to Wanilton)
+- fixed error causing information for 50th album to not be cleared
+
 v.1.4.0
 - added ability to display artwork from multiple artists simultaneously
 - added option for a folder name other than extrafanart

@@ -657,10 +657,10 @@ class Main:
             self.WINDOW.clearProperty("ArtistSlideshow")
         self.WINDOW.clearProperty( "ArtistSlideshow.ArtistBiography" )
         for count in range( 50 ):
-            self.WINDOW.clearProperty( "ArtistSlideshow.%d.SimilarName" % ( count ) )
-            self.WINDOW.clearProperty( "ArtistSlideshow.%d.SimilarThumb" % ( count ) )
-            self.WINDOW.clearProperty( "ArtistSlideshow.%d.AlbumName" % ( count ) )
-            self.WINDOW.clearProperty( "ArtistSlideshow.%d.AlbumThumb" % ( count ) )
+            self.WINDOW.clearProperty( "ArtistSlideshow.%d.SimilarName" % ( count + 1 ) )
+            self.WINDOW.clearProperty( "ArtistSlideshow.%d.SimilarThumb" % ( count + 1 ) )
+            self.WINDOW.clearProperty( "ArtistSlideshow.%d.AlbumName" % ( count + 1 ) )
+            self.WINDOW.clearProperty( "ArtistSlideshow.%d.AlbumThumb" % ( count + 1 ) )
 
 
 if ( __name__ == "__main__" ):
