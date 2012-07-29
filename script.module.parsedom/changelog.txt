@@ -1,3 +1,7 @@
+[B]Version 1.1.0[/B]
+- Handle \t that breaks DOM variable extraction
+- Added extractJS function
+
 [B]Version 1.0.0[/B]
 - Minor fixes
 

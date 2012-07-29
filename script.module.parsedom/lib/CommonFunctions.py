@@ -25,8 +25,7 @@ import inspect
 import time
 import HTMLParser
 
-
-version = "1.0.0"
+version = "1.1.0"
 plugin = "CommonFunctions-" + version
 print plugin
 
@@ -171,7 +170,7 @@ def _getDOMContent(html, name, match, ret):  # Cleanup
 
 def _getDOMAttributes(match, name, ret):
     log("", 3)
-    lst = re.compile('<' + name + '.*? ' + ret + '=(.[^>]*?)>', re.M | re.S).findall(match)
+    lst = re.compile('<' + name + '.*?' + ret + '=(.[^>]*?)>', re.M | re.S).findall(match)
     ret = []
     for tmp in lst:
         cont_char = tmp[0]
@@ -271,10 +270,86 @@ def parseDOM(html, name="", attrs={}, ret=False):
     return ret_lst
 
 
-def extractJSON(data):
-    lst = re.compile('({.*?})', re.M | re.S).findall(data)
-    return lst
+def extractJS(data, function=False, variable=False, match=False, evaluate=False, values=False):
+    log("")
+    scripts = parseDOM(data, "script")
+    if len(scripts) == 0:
+        log("Couldn't find any script tags. Assuming javascript file was given.")
+        scripts = [data]
 
+    lst = []
+    log("Extracting", 4)
+    for script in scripts:
+        tmp_lst = []
+        if function:
+            tmp_lst = re.compile(function + '\(.*?\).*?;', re.M | re.S).findall(script)
+        elif variable:
+            tmp_lst = re.compile(variable + '[ ]+=.*?;', re.M | re.S).findall(script)            
+        else:
+            tmp_lst = [script]
+        if len(tmp_lst) > 0:
+            log("Found: " + repr(tmp_lst), 4)
+            lst += tmp_lst
+        else:
+            log("Found nothing on: " + script, 4)
+
+    test = range(0, len(lst))
+    test.reverse()
+    for i in test:
+        if match and lst[i].find(match) == -1:
+            log("Removing item: " + repr(lst[i]), 10)
+            del lst[i]
+        else:
+            log("Cleaning item: " + repr(lst[i]), 4)
+            if lst[i][0] == "\n":
+                lst[i] == lst[i][1:]
+            if lst[i][len(lst) -1] == "\n":
+                lst[i] == lst[i][:len(lst)- 2]
+            lst[i] = lst[i].strip()
+
+    if values or evaluate:
+        for i in range(0, len(lst)):
+            log("Getting values %s" % lst[i])
+            if function:
+                if evaluate: # include the ( ) for evaluation
+                    data = re.compile("(\(.*?\))", re.M | re.S).findall(lst[i])
+                else:
+                    data = re.compile("\((.*?)\)", re.M | re.S).findall(lst[i])
+            elif variable:
+                tlst = re.compile(variable +".*?=.*?;", re.M | re.S).findall(lst[i])
+                data = []
+                for tmp in tlst:
+                    cont_char = tmp[0]
+                    cont_char = tmp[tmp.find("=") + 1:].strip()
+                    cont_char = cont_char[0]
+                    if cont_char in "'\"":
+                        log("Using %s as quotation mark" % cont_char, 3)
+                        tmp = tmp[tmp.find(cont_char) + 1:tmp.rfind(cont_char)]
+                    else:
+                        log("No quotation mark found", 3)
+                        tmp = tmp[tmp.find("=") + 1: tmp.rfind(";")]
+
+                    tmp = tmp.strip()
+                    if len(tmp) > 0:
+                        data.append(tmp)
+            else:
+                log("ERROR: Don't know what to extract values from")
+
+            log("Values extracted: %s" % repr(data))
+            if len(data) > 0:
+                lst[i] = data[0]
+
+    if evaluate:
+        for i in range(0, len(lst)):
+            log("Evaluating %s" % lst[i])
+            data = lst[i].strip()
+            try:
+                lst[i] = eval(data)
+            except:
+                log("Couldn't eval: %s from %s" % (repr(data), repr(lst[i])))
+
+    log("Done: " + str(len(lst)))
+    return lst
 
 def fetchPage(params={}):
     get = params.get
