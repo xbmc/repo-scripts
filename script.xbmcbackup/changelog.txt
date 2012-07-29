@@ -37,3 +37,7 @@ added enable/disable logging toggle in settings
 [b]Version 0.1.0[/b]
 
 removed transparency from icon.png
+
+[b]Version 0.1.1[/b]
+
+added check for key in vfs.py - Thanks Martijn!

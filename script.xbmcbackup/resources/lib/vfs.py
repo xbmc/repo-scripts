@@ -101,7 +101,7 @@ def listdir(path, extra_metadata=False):
 
     jsonobject = json.loads(json_response)
 
-    if jsonobject['result']['files']:
+    if jsonobject.has_key('result') and jsonobject['result']['files']:
 
         for item in jsonobject['result']['files']:
 
