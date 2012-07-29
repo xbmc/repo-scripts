@@ -14,8 +14,10 @@ class Scraper(ScraperPlugin):
         for id, album in enumerate(albums):
             title = album.find('a').string
             album_url = album.find('a')['href']
-            d = album.find('div', {'class': 'bpBody'}).contents
-            description = self._collapse(d)
+            d = album.find('div', {'class': 'bpBody'})
+            if not d:
+                continue
+            description = self._collapse(d.contents)
             pic = album.find('img')['src']
             self.albums.append({'title': title,
                                 'album_id': id,

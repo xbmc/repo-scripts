@@ -1,3 +1,7 @@
+3.0.4
+  Fixed: "The Big Picture"-scraper
+  Fixed: "Wallstreet Jouarnal"-scraper
+
 3.0.3
   Fixed TheSacramentoBee
   Fixed Time.com: LightBox 

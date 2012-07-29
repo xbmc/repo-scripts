@@ -14,6 +14,8 @@ class Scraper(ScraperPlugin):
             author = album.find('cite').string
             if not author == u'By WSJ Staff':
                 continue
+            if not album.find('img'):
+                continue
             title = album.find('h2').a.string
             album_url = album.find('h2').a['href']
             d = album.findAll('div', {'class': 'postContent'})[1].p
