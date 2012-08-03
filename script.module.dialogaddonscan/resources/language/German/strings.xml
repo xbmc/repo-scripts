@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!-- Add-on title -->
+  <string id="30000">Dialog Addon Scan</string>
+  <string id="30001"></string>
+
+  <!-- category separators -->
+  <string id="30050">Allgemein</string>
+  <string id="30051">Danksagung</string>
+  <string id="30052"></string>
+  <string id="30053"></string>
+  <string id="30054"></string>
+  <string id="30055"></string>
+
+  <!-- General -->
+  <string id="30100">Verstecke den Dialog</string>
+  <string id="30101"></string>
+  <string id="30102">Dialog Position</string>
+  <string id="30103">Erlaube angepasste Positionen</string>
+  <string id="30104">Position X</string>
+  <string id="30105">Position Y</string>
+
+  <string id="30110">Aktiviere den Abbrechen Schalter</string>
+  <string id="30111">(Nur die Maus kann abbrechen)</string>
+
+  <!-- Credits -->
+  <string id="30500"></string>
+  <string id="30501">Idee:</string>
+  <string id="30502">Gruppe:</string>
+  <string id="30503"></string>
+  <string id="30504">Zeige Changelog</string>
+  <string id="30505">Zeige Entwicklerkommentar</string>
+</strings>
