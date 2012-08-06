@@ -74,15 +74,15 @@ class Validators(object):
 
     @staticmethod
     def video_ids(ids):
-        return ','.join(ids)
+        return ','.join(str(_id) for _id in ids)
 
     @staticmethod
     def playlist_ids(ids):
-        return ','.join(ids)
+        return ','.join(str(_id) for _id in ids)
 
     @staticmethod
     def reference_ids(ids):
-        return ','.join(ids)
+        return ','.join(str(_id) for _id in ids)
 
 
 def requires_or(*_args):
