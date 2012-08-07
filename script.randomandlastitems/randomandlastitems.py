@@ -243,6 +243,10 @@ def _getEpisodesFromPlaylist ( ):
                 _episodes = _json_response.get( "result", {} ).get( "episodes" )
                 if _episodes:
                     for _episode in _episodes:
+                        # Add TV Show fanart and thumbnail for each episode
+                        #_episode["tvshowid"]=_file['id']
+                        _episode["tvshowfanart"]=_file['fanart']
+                        _episode["tvshowthumb"]=_file['thumbnail']
                         _total, _watched, _unwatched, _result = _watchedOrResume ( _total, _watched, _unwatched, _result, _episode )
                 else:
                     print("[RandomAndLastItems] ## PLAYLIST %s COULD NOT BE LOADED ##" %(PLAYLIST))
@@ -274,6 +278,13 @@ def _getEpisodesFromPlaylist ( ):
             # Remove item from JSON list
             _result.remove( _episode )
             _count += 1
+            if _episode.get("tvshowid") :
+                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails", "params": { "tvshowid": %s, "properties": ["title", "fanart", "thumbnail"] }, "id": 1}' %(_episode['tvshowid']))
+                _json_query = unicode(_json_query, 'utf-8', errors='ignore')
+                _json_pl_response = simplejson.loads(_json_query)
+                _tvshow = _json_pl_response.get( "result", {} ).get( "tvshowdetails" )
+                _episode["tvshowfanart"]=_tvshow['fanart']
+                _episode["tvshowthumb"]=_tvshow['thumbnail']
             _setEpisodeProperties ( _episode, _count )
         if _count != LIMIT:
             while _count < LIMIT:
@@ -327,6 +338,20 @@ def _getEpisodes ( ):
             # Remove item from JSON list
             _result.remove( _episode )
             _count += 1
+            _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails", "params": { "tvshowid": %s, "properties": ["title", "fanart", "thumbnail"] }, "id": 1}' %(_episode['tvshowid']))
+            _json_query = unicode(_json_query, 'utf-8', errors='ignore')
+            _json_pl_response = simplejson.loads(_json_query)
+            _tvshow = _json_pl_response.get( "result", {} ).get( "tvshowdetails" )
+            _episode["tvshowfanart"]=_tvshow['fanart']
+            _episode["tvshowthumb"]=_tvshow['thumbnail']
+            """
+            _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": { "tvshowid": %s, "properties": ["season", "episode", "showtitle", "fanart", "thumbnail"] }, "id": 1}' %(_episode['tvshowid']))
+            _json_query = unicode(_json_query, 'utf-8', errors='ignore')
+            _json_pl_response = simplejson.loads(_json_query)
+            _seasons = _json_pl_response.get( "result", {} ).get( "seasons" )
+            print("##### SEASON = ", _seasons)
+            # ATTENTION, ca retourne toutes les saisons, il faudra boucler pour trouver la bonne saison par rapport a l episode
+            """
             _setEpisodeProperties ( _episode, _count )
         if _count != LIMIT:
             while _count < LIMIT:
@@ -503,6 +528,8 @@ def _setEpisodeProperties ( _episode, _count ):
         episodeno = "s%se%s" % ( seasonXX,  episode, )
         thumb = _episode['thumbnail']
         fanart = _episode['fanart']
+        tvthumb = _episode['tvshowthumb']
+        tvfanart = _episode['tvshowfanart']
     else:
         title = ""
         rating = ""
@@ -516,6 +543,8 @@ def _setEpisodeProperties ( _episode, _count ):
         episodeno = ""
         thumb = ""
         fanart = ""
+        tvthumb = ""
+        tvfanart = ""
     # Set window properties
     _setProperty( "%s.%d.Path"          % ( PROPERTIE, _count ), path )
     _setProperty( "%s.%d.Thumb"         % ( PROPERTIE, _count ), thumb)
@@ -529,6 +558,8 @@ def _setEpisodeProperties ( _episode, _count ):
     _setProperty( "%s.%d.EpisodeNo"     % ( PROPERTIE, _count ), episodeno )
     _setProperty( "%s.%d.EpisodeSeason" % ( PROPERTIE, _count ), season )
     _setProperty( "%s.%d.EpisodeNumber" % ( PROPERTIE, _count ), episode )
+    _setProperty( "%s.%d.TVShowThumb"   % ( PROPERTIE, _count ), tvthumb)
+    _setProperty( "%s.%d.TVShowFanart"  % ( PROPERTIE, _count ), tvfanart)
 
 def _setAlbumProperties ( _album, _count ):
     global PROPERTIE

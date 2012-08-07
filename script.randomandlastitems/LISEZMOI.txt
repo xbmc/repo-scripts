@@ -63,6 +63,8 @@ Playlist<method>Episode<menu>.<# of episode>.EpisodeTitle = Titre de l'épisode N
 Playlist<method>Episode<menu>.<# of episode>.EpisodeNo = Numéro de l'épisode N°# (sous la forme sXXeXX)
 Playlist<method>Episode<menu>.<# of episode>.EpisodeSeason = Saison de l'épisode N°#
 Playlist<method>Episode<menu>.<# of episode>.EpisodeNumber = Numéro de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.TVShowFanart = Fanart de la série pour l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.TVShowThumb = Vignette de la série pour l'épisode N°#
 
 * type=Music
 
