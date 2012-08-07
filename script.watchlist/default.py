@@ -76,7 +76,7 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "resume", "genre", "studio", "tagline", "runtime", "fanart", "thumbnail", "file", "plot", "plotoutline", "year", "lastplayed", "rating"]}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        if json_response['result'].has_key('movies'):
+        if json_response.has_key('result') and json_response['result'].has_key('movies'):
             for item in json_response['result']['movies']:
                 self.movieList.append(item)
                 if item['resume']['position'] > 0:
@@ -114,29 +114,29 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"properties": ["title", "playcount", "plot", "season", "episode", "showtitle", "thumbnail", "file", "lastplayed", "rating"], "sort": {"method": "episode"} }, "id": 1}' )
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        if json_response['result'].has_key('episodes'):
+        if json_response.has_key('result') and json_response['result'].has_key('episodes'):
             json_response = json_response['result']['episodes']
             # our list is sorted by episode number, secondary we sort by tvshow title (itertools.groupy needs contiguous items) and split it into seperate lists for each tvshow
             episodes = [list(group) for key,group in itertools.groupby(sorted(json_response, key=itemgetter('showtitle')), key=itemgetter('showtitle'))]
-        # fetch all tvshows, sorted by title 
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "studio", "thumbnail", "fanart"], "sort": {"method": "title"}}, "id": 1}')
-        json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
-        if json_response['result'].has_key('tvshows'):
-            for count, tvshow in enumerate(json_response['result']['tvshows']):
-                item = [tvshow['tvshowid'], tvshow['thumbnail'], tvshow['studio'], tvshow['title'], tvshow['fanart'], []]
-                for episodelist in episodes:
-                    if episodelist[0]['showtitle'] == item[3]:
-                        item[5] = episodelist
-                        break
-                self.tvshows.append(item)
+            # fetch all tvshows, sorted by title 
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "studio", "thumbnail", "fanart"], "sort": {"method": "title"}}, "id": 1}')
+            json_query = unicode(json_query, 'utf-8', errors='ignore')
+            json_response = simplejson.loads(json_query)
+            if json_response.has_key('result') and json_response['result'].has_key('tvshows'):
+                for count, tvshow in enumerate(json_response['result']['tvshows']):
+                    item = [tvshow['tvshowid'], tvshow['thumbnail'], tvshow['studio'], tvshow['title'], tvshow['fanart'], []]
+                    for episodelist in episodes:
+                        if episodelist[0]['showtitle'] == item[3]:
+                            item[5] = episodelist
+                            break
+                    self.tvshows.append(item)
         log("tv show list: %s items" % len(self.tvshows))
 
     def _fetch_seasonthumb( self, tvshowid, seasonnumber ):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["season", "thumbnail"], "tvshowid":%s }, "id": 1}' % tvshowid)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        if json_response['result'].has_key('seasons'):
+        if json_response.has_key('result') and json_response['result'].has_key('seasons'):
             for item in json_response['result']['seasons']:
                 season = "%.2d" % float(item['season'])
                 if season == seasonnumber:
@@ -147,8 +147,12 @@ class Main:
         self.episodes = []
         for tvshow in self.tvshows:
             lastplayed = ""
-            for item in tvshow[5]:
-                playcount = item['playcount']
+            episode_sorter = lambda item: (int(item['season']), int(item['episode']))
+            for key, group in itertools.groupby(sorted(tvshow[5], key=episode_sorter), episode_sorter):
+                playcount = 0
+                for item in sorted(group, key=lambda x: (x['lastplayed'], x['episodeid'])):
+                    # sort first by lastplayed, so we're certain to always get the latest played item upon final iteration of the loop. Then sort by episodeid, mainly for the case where lastplayed is empty for all items, and we want the latest episodeid to be the one chosen (higher episodeid equals being added later to xbmc)
+                    playcount += int(item['playcount'])
                 if playcount != 0:
                     # this episode has been watched, record play date (we need it for sorting the final list) and continue to next episode
                     lastplayed = item['lastplayed']
@@ -209,7 +213,7 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["playcount", "albumid"], "sort": { "method": "album" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
+        if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('songs')):
             for item in json_response['result']['songs']:
                 albumid = item['albumid']
                 if albumid != '':
@@ -238,7 +242,7 @@ class Main:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params": {"properties": ["title", "description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "rating"], "albumid":%s }, "id": 1}' % albumid[0])
             json_query = unicode(json_query, 'utf-8', errors='ignore')
             json_response = simplejson.loads(json_query)
-            if json_response['result'].has_key('albumdetails'):
+            if json_response.has_key('result') and json_response['result'].has_key('albumdetails'):
                 item = json_response['result']['albumdetails']
                 description = item['description']
                 album = item['title']
@@ -265,7 +269,7 @@ class Main:
         playlist = xbmc.PlayList(0)
         # clear the playlist
         playlist.clear()
-        if json_response['result'].has_key('songs'):
+        if json_response.has_key('result') and json_response['result'].has_key('songs'):
             for item in json_response['result']['songs']:
                 song = item['file']
                 fanart = item['fanart']

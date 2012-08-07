@@ -1,3 +1,9 @@
+v0.1.15
+- fixed up the case for TV episodes where you have more than 1 file for a given season/episode of a TV show (thx jparyani)
+
+v0.1.14
+- fixed script error on empty library
+
 v0.1.13
 - fixed use title instead of label
 
