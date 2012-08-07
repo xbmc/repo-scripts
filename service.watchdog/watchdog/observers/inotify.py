@@ -238,6 +238,7 @@ if platform.is_linux():
     InotifyConstants.IN_CREATE,
     InotifyConstants.IN_DELETE,
     InotifyConstants.IN_DELETE_SELF,
+    InotifyConstants.IN_DONT_FOLLOW,
     ])
 
   class InotifyEvent(object):
@@ -530,7 +531,15 @@ if platform.is_linux():
       """
       Reads events from inotify and yields them.
       """
-      event_buffer = os.read(self._inotify_fd, event_buffer_size)
+      while True:
+        try:
+          event_buffer = os.read(self._inotify_fd, event_buffer_size)
+          break
+        except OSError as e:
+          if e.errno == errno.EINTR:
+            continue
+          break
+      
       with self._lock:
         event_list = []
         for wd, mask, cookie, name in Inotify._parse_event_buffer(
@@ -627,6 +636,8 @@ if platform.is_linux():
         for root, dirnames, _ in os.walk(path):
           for dirname in dirnames:
             full_path = absolute_path(os.path.join(root, dirname))
+            if os.path.islink(full_path):
+              continue
             self._add_watch(full_path, mask)
 
     def _add_watch(self, path, mask):

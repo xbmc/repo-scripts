@@ -110,9 +110,7 @@ class DaemonThread(threading.Thread):
 
   def stop(self):
     """Signals the daemon thread to stop."""
-    
     self._stopped_event.set()
-    print("WATCHDOG: DaemonThread.stop() " + str(self))
     self.on_thread_exit()
 
 

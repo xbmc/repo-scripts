@@ -1,3 +1,7 @@
+[B]0.6.1[/B]
+- fixed: not able to resume from sleep mode on linux
+- fixed: addon not able to start on windows xp when syscall is selected
+
 [B]0.6.0[/B]
-- fixed bug causing xbmc to hang on windows
+- fixed: xbmc deadlocks on windows when exiting
 
