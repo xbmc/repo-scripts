@@ -88,5 +88,6 @@ Labels:
 
 
 For more inforamtion and help please check:
+http://wiki.xbmc.org/index.php?title=Add-on:Random_Items_script
 
-http://forum.xbmc.org/showthread.php?t=55907
+http://forum.xbmc.org/showthread.php?tid=79378

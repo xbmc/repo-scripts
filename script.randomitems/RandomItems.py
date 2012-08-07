@@ -88,7 +88,7 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-        if (json_response['result'] != None) and (json_response['result'].has_key('movies')):
+        if json_response.has_key('result') and (json_response['result'].has_key('movies')):
             json_response = json_response['result']['movies']
             # get total value
             total = str( len( json_response ) )
@@ -137,7 +137,7 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-        if (json_response['result'] != None) and (json_response['result'].has_key('episodes')):
+        if json_response.has_key('result') and (json_response['result'].has_key('episodes')):
             json_response = json_response['result']['episodes']
             # get total value
             total = str( len( json_response ) )
@@ -187,7 +187,7 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-        if (json_response['result'] != None) and (json_response['result'].has_key('musicvideos')):
+        if json_response.has_key('result') and (json_response['result'].has_key('musicvideos')):
             json_response = json_response['result']['musicvideos']
             # get total value
             total = str( len( json_response ) )
@@ -233,7 +233,8 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-        if (json_response['result'] != None) and (json_response['result'].has_key('albums')):
+
+        if json_response.has_key('result') and (json_response['result'].has_key('albums')):
             json_response = json_response['result']['albums']
             # get total value
             total = str( len( json_response ) )
@@ -274,7 +275,8 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": ["genre", "description", "fanart", "thumbnail"], "sort": { "method": "label" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        if (json_response['result'] != None) and (json_response['result'].has_key('artists')):
+
+        if json_response.has_key('result') and (json_response['result'].has_key('artists')):
             json_response = json_response['result']['artists']
             # get total value
             total = str( len( json_response ) )
@@ -311,7 +313,7 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-        if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
+        if json_response.has_key('result') and (json_response['result'].has_key('songs')):
             json_response = json_response['result']['songs']
             # get total value
             total = str( len( json_response ) )
@@ -364,7 +366,11 @@ class Main:
                 addonfile = os.path.join(addonpath, item, 'addon.xml')
                 if os.path.exists(addonfile):
                     # find addon id
-                    addonfilecontents = xmltree.parse(addonfile).getroot()
+                    try:
+                        addonfilecontents = xmltree.parse(addonfile).getroot()
+                    except:
+                        # don't error on invalid addon.xml files
+                        continue
                     for element in addonfilecontents.getiterator():
                        if element.tag == "addon":
                            addonid = element.attrib.get('id')
@@ -412,7 +418,7 @@ class Main:
         # separate the records
         json_response = simplejson.loads(json_query)
         # enumerate thru our records
-        if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
+        if json_response.has_key('result') and (json_response['result'].has_key('songs')):
             for item in json_response['result']['songs']:
                 song = item['file']
                 fanart = item['fanart']
