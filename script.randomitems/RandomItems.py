@@ -2,7 +2,7 @@
 # *
 # *  Nuka for the original RecentlyAdded.py on which this is based
 # *
-# *  ppic, Hitcher,ronie & phil65 for the updates
+# *  ppic, Hitcher,ronie & phil65, Martijn for the updates
 
 import xbmc, xbmcgui, xbmcaddon
 import re, sys, os, random
@@ -88,7 +88,7 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-        if json_response.has_key('result') and (json_response['result'].has_key('movies')):
+        if json_response.has_key('result') and json_response.has_key['result'] != None and json_response['result'].has_key('movies'):
             json_response = json_response['result']['movies']
             # get total value
             total = str( len( json_response ) )
@@ -137,7 +137,7 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-        if json_response.has_key('result') and (json_response['result'].has_key('episodes')):
+        if json_response.has_key('result') and json_response.has_key['result'] != None and (son_response['result'].has_key('episodes'):
             json_response = json_response['result']['episodes']
             # get total value
             total = str( len( json_response ) )
@@ -187,7 +187,7 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-        if json_response.has_key('result') and (json_response['result'].has_key('musicvideos')):
+        if json_response.has_key('result') and json_response.has_key['result'] != None and json_response['result'].has_key('musicvideos'):
             json_response = json_response['result']['musicvideos']
             # get total value
             total = str( len( json_response ) )
@@ -234,7 +234,7 @@ class Main:
         # separate the records
         json_response = simplejson.loads(json_query)
 
-        if json_response.has_key('result') and (json_response['result'].has_key('albums')):
+        if json_response.has_key('result') and json_response.has_key['result'] != None and json_response['result'].has_key('albums'):
             json_response = json_response['result']['albums']
             # get total value
             total = str( len( json_response ) )
@@ -276,7 +276,7 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
 
-        if json_response.has_key('result') and (json_response['result'].has_key('artists')):
+        if json_response.has_key('result') and json_response.has_key['result'] != None and json_response['result'].has_key('artists'):
             json_response = json_response['result']['artists']
             # get total value
             total = str( len( json_response ) )
@@ -313,7 +313,7 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-        if json_response.has_key('result') and (json_response['result'].has_key('songs')):
+        if json_response.has_key('result') and json_response.has_key['result'] != None and json_response['result'].has_key('songs'):
             json_response = json_response['result']['songs']
             # get total value
             total = str( len( json_response ) )
@@ -418,7 +418,7 @@ class Main:
         # separate the records
         json_response = simplejson.loads(json_query)
         # enumerate thru our records
-        if json_response.has_key('result') and (json_response['result'].has_key('songs')):
+        if json_response.has_key('result') and json_response.has_key['result'] != None and json_response['result'].has_key('songs'):
             for item in json_response['result']['songs']:
                 song = item['file']
                 fanart = item['fanart']
