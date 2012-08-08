@@ -1,4 +1,4 @@
-v3.1.4
+v3.1.5
 - fix error on empty JSON-RPC result
 
 v3.1.3
