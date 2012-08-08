@@ -1,3 +1,6 @@
+v0.1.16
+- fix error on empty JSON-RPC result
+
 v0.1.15
 - fixed up the case for TV episodes where you have more than 1 file for a given season/episode of a TV show (thx jparyani)
 
