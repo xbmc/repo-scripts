@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.watchlist" name="Watchlist" version="0.1.16" provider-name="ronie, `Black, Martijn">
+<addon id="script.watchlist" name="Watchlist" version="0.1.17" provider-name="ronie, `Black, Martijn">
 	<requires>
 		<import addon="xbmc.python" version="2.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
