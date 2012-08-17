@@ -95,12 +95,15 @@ def cleanText(text):
     text = re.sub('User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.','',text)
     return text.strip()
         
-def download(src, dst, dst2):
+def download(src, dst, dst2, display_dialog):
     if (not xbmc.abortRequested):
         tmpname = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % ( __addonname__ , xbmc.getCacheThumbName(src) ))
         if xbmcvfs.exists(tmpname):
             xbmcvfs.delete(tmpname)
-        urllib.urlretrieve(src, tmpname)
+        global __last_time__
+        # __last_time__ = 0
+        # urllib.urlretrieve( src, tmpname, lambda nb, bs, fs: reporthook(nb, bs, fs, display_dialog) )
+        urllib.urlretrieve( src, tmpname )
         if os.path.getsize(tmpname) > 999:
             log( 'copying file to transition directory' )
             xbmcvfs.copy(tmpname, dst2)
@@ -108,6 +111,12 @@ def download(src, dst, dst2):
             xbmcvfs.rename(tmpname, dst)
         else:
             xbmcvfs.delete(tmpname)
+
+def reporthook( numblocks, blocksize, filesize, display_dialog ):
+    if time.time() - __last_time__ > 3 and display_dialog:
+        xbmc.executebuiltin('XBMC.Notification("' + __language__(30300).encode("utf8") + '", "' + __language__(30301).encode("utf8") + '", 20000, ' + __addonicon__ + ')')
+        global __last_time__
+        __last_time__ = time.time()
 
 class Main:
     def __init__( self ):
@@ -201,6 +210,8 @@ class Main:
         log( 'window id is set to %s' % self.WINDOWID )
         self.ARTISTFIELD = params.get( "artistfield", "" )
         log( 'artist field is set to %s' % self.ARTISTFIELD )
+        self.TITLEFIELD = params.get( "titlefield", "" )
+        log( 'title field is set to %s' % self.TITLEFIELD )
         self.DAEMON = params.get( "daemon", "False" )
         if self.DAEMON == "True":
             log('daemonizing')
@@ -253,6 +264,10 @@ class Main:
             self.SKINARTIST = ''
         else:
             self.SKINARTIST = "Window(%s).Property(%s)" % ( self.WINDOWID, self.ARTISTFIELD )
+        if( self.TITLEFIELD == '' ):
+            self.SKINTITLE = ''
+        else:
+            self.SKINTITLE = "Window(%s).Property(%s)" % ( self.WINDOWID, self.TITLEFIELD )
         self.ARTISTSLIDESHOW = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow" )
         self.ARTISTSLIDESHOWRUNNING = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshowRunning" )
         self.EXTERNALCALL = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow.ExternalCall" )
@@ -288,6 +303,8 @@ class Main:
         self.DownloadedAllImages = False
         self.ImageDownloaded = False
         self.FirstImage = True
+        show_progress = True
+        display_dialog = False
         min_refresh = 9.9
         if len(self.NAME) == 0:
             log('no artist name provided')
@@ -303,7 +320,7 @@ class Main:
 
         files = os.listdir(self.CacheDir)
         for file in files:
-            if file.endswith('tbn'):
+            if file.endswith('tbn') or (self.PRIORITY == '2' and self.LocalImagesFound):
                 self.CachedImagesFound = True
 
         if self.CachedImagesFound:
@@ -316,11 +333,26 @@ class Main:
         else:
             last_time = 0
             if self.ARTISTNUM == 1:
-                if len ( self.PROGRESSPATH ) > 0:
-                    self.WINDOW.setProperty("ArtistSlideshow", self.PROGRESSPATH)
+                for cache_file in ['artistimageshtbackdrops.nfo', 'artistimageslastfm.nfo']:
+                    filename = os.path.join( self.CacheDir, cache_file )
+                    if xbmcvfs.exists( os.path.join( self.CacheDir, filename ) ):
+                        if time.time() - os.path.getmtime(filename) < 1209600:
+                            log('cached %s found' % filename)
+                            show_progress = False
+                        else:
+                           log('outdated %s found' % filename)
+                           show_progress = True
+                if show_progress:
+                    if len ( self.PROGRESSPATH ) > 0:
+                        self.WINDOW.setProperty("ArtistSlideshow", self.PROGRESSPATH)
+                    else:
+                        self.WINDOW.setProperty("ArtistSlideshow", self.InitDir)
+                        display_dialog = True
                 else:
                     self.WINDOW.setProperty("ArtistSlideshow", self.InitDir)
-                    xbmc.executebuiltin('XBMC.Notification("' + __language__(30300) + '", "' + __language__(30301) + '", 10000, ' + __addonicon__ + ')')
+
+        if display_dialog:
+            xbmc.executebuiltin('XBMC.Notification("' + __language__(30300).encode("utf8") + '", "' + __language__(30301).encode("utf8") + '", 5000, ' + __addonicon__ + ')')
 
         if self.LASTFM == "true":
             lastfmlist = self._get_images('lastfm')
@@ -343,7 +375,7 @@ class Main:
             path2 = getCacheThumbName(url, self.BlankDir)
             if not xbmcvfs.exists(path):
                 try:
-                    download(url, path, path2)
+                    download(url, path, path2, display_dialog)
                 except:
                     log ('site unreachable')
                 else:
@@ -366,7 +398,7 @@ class Main:
                         self._refresh_image_directory()
                     last_time = time.time()
                 self.FirstImage = False
-                    
+                
         if self.ImageDownloaded:
             log('finished downloading images')
             self.DownloadedAllImages = True
@@ -388,6 +420,8 @@ class Main:
                 if( not self._playback_stopped_or_changed() ):
                     self._refresh_image_directory()
             self._clean_dir( self.BlankDir )
+            if display_dialog:
+                xbmc.executebuiltin('XBMC.Notification("' + __language__(30304).encode("utf8") + '", "' + __language__(30305).encode("utf8") + '", 5000, ' + __addonicon__ + ')')
 
         if not self.ImageDownloaded:
             log('no images downloaded')
@@ -395,7 +429,9 @@ class Main:
             if not self.CachedImagesFound:
                 if self.ARTISTNUM == 1:
                     log('clearing ArtistSlideshow property')
-                    self.WINDOW.clearProperty("ArtistSlideshow")
+                    self.WINDOW.setProperty("ArtistSlideshow", self.InitDir)
+                    if display_dialog:
+                        xbmc.executebuiltin('XBMC.Notification("' + __language__(30302).encode("utf8") + '", "' + __language__(30303).encode("utf8") + '", 10000, ' + __addonicon__ + ')')
                     if( self.ARTISTINFO == "true" and not self._playback_stopped_or_changed() ):
                         self._get_artistinfo()
             elif self.TOTALARTISTS > 1:
@@ -433,20 +469,20 @@ class Main:
 
 
     def _get_current_artist( self ):
-        check_title = False
+        featured_artist = ''
         if( xbmc.Player().isPlayingAudio() == True ):
             artist = xbmc.Player().getMusicInfoTag().getArtist()
-            featured_artist = xbmc.Player().getMusicInfoTag().getTitle().replace('ft.','feat.').split('feat.')
             if( artist == '' ):
                 artist = xbmc.Player().getMusicInfoTag().getTitle()[0:(artist.find('-'))-1]
-            else:
-                check_title = True
+            featured_artist = xbmc.Player().getMusicInfoTag().getTitle().replace('ft.','feat.').split('feat.')
         elif( not xbmc.getInfoLabel( self.SKINARTIST ) == '' ):
             artist = xbmc.getInfoLabel( self.SKINARTIST )
+            log('current song title from skin is %s' % xbmc.getInfoLabel( self.SKINTITLE ))
+            featured_artist = xbmc.getInfoLabel( self.SKINTITLE ).replace('ft.','feat.').split('feat.')
         else:
             artist = ''
         artists = artist.replace('ft.','/').replace('feat.','/').split('/')
-        if check_title and len( featured_artist ) > 1:
+        if len( featured_artist ) > 1:
             artists.append( featured_artist[-1] )
         return [a.strip(' ()') for a in artists]
 
@@ -540,17 +576,62 @@ class Main:
 
     def _get_artistinfo( self ):
         site = "lastfm"
-        self.url = self.LastfmURL + '&method=artist.getInfo&artist=' + self.NAME.replace('&','%26').replace(' ','+') + '&lang=' + self.LANGUAGE
-        bio = self._get_data(site, 'bio')
+        bio = self._get_local_data( 'bio' )
+        if bio == []:
+            self.url = self.LastfmURL + '&method=artist.getInfo&artist=' + self.NAME.replace('&','%26').replace(' ','+') + '&lang=' + self.LANGUAGE
+            bio = self._get_data(site, 'bio')
         if bio == []:
             self.biography = ''
         else:
             self.biography = cleanText(bio[0])
-        self.url = self.LastfmURL + '&method=artist.getSimilar&artist=' + self.NAME.replace('&','%26').replace(' ','+')
-        self.similar = self._get_data(site, 'similar')
-        self.url = self.LastfmURL + '&method=artist.getTopAlbums&artist=' + self.NAME.replace('&','%26').replace(' ','+')
-        self.albums = self._get_data(site, 'albums')
+        self.similar = self._get_local_data( 'similar' )
+        if self.similar == []:
+            self.url = self.LastfmURL + '&method=artist.getSimilar&artist=' + self.NAME.replace('&','%26').replace(' ','+')
+            self.similar = self._get_data(site, 'similar')
+        self.albums = self._get_local_data( 'albums' )
+        if self.albums == []:
+            self.url = self.LastfmURL + '&method=artist.getTopAlbums&artist=' + self.NAME.replace('&','%26').replace(' ','+')
+            self.albums = self._get_data(site, 'albums')
         self._set_properties()
+
+
+    def _get_local_data( self, item ):
+        data = []
+        local_path = os.path.join( self.LOCALARTISTPATH, self.NAME, 'override' )
+        if item == "similar":
+            filename = os.path.join( local_path, 'artistsimilar.nfo' )
+        elif item == "albums":
+            filename = os.path.join( local_path, 'artistsalbums.nfo' )
+        elif item == "bio":
+            filename = os.path.join( local_path, 'artistbio.nfo' )
+        try:
+            xmldata = xmltree.parse(filename).getroot()
+        except:
+            log('invalid local xml file for %s' % item)
+            return data
+        if item == "bio":
+            for element in xmldata.getiterator():
+                if element.tag == "content":
+                    bio = element.text
+                    if not bio:
+                        bio = ''
+                    data.append(bio)
+        elif( item == "similar" or item == "albums" ):
+            for element in xmldata.getiterator():
+                if element.tag == "name":
+                    name = element.text
+                    name.encode('ascii', 'ignore')
+                elif element.tag == "image":
+                    image_text = element.text
+                    if not image_text:
+                        image = ''
+                    else:
+                        image = os.path.join( local_path, item, image_text )
+                    data.append( ( name , image ) )
+        if data == '':
+            log('no %s found in local xml file' % item)
+        return data
+
 
 
     def _get_data( self, site, item ):

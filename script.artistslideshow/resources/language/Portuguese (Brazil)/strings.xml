@@ -46,8 +46,12 @@
     <string id="30246">Vietnamese</string>
     <string id="30247">Farsi</string>
   <!-- Dialog Text -->
-    <string id="30300">Por favor, aguarde</string>
-    <string id="30301">Baixando primeira imagem do artista</string>
+    <string id="30300">Downloading</string>
+    <string id="30301">Downloading imagens do artista</string>
+    <string id="30302">Nenhum Download efetuado</string>
+    <string id="30303">Não localizei imagens para este artista</string>    
+    <string id="30304">Download finalizado</string>
+    <string id="30305">Foram efetuados downloads de todas as imagens</string>    
   <!-- Settings  --> 
     <string id="32000">Download</string>
     <string id="32001">Download imagens do last.fm</string>
@@ -70,4 +74,5 @@
     <string id="32202">  Tamanho do cache máximo (em megabytes)</string>
     <string id="32203">Exibir imagens de progresso durante a primeira transferência</string>
     <string id="32204">  Pasta de imagens Progresso</string>
+	<string id="32205">Nome alternativo para a pasta fanart locais</string>
 </strings>

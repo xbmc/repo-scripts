@@ -46,8 +46,12 @@
     <string id="30246">Vietnamese</string>
     <string id="30247">Farsi</string>
   <!-- Dialog Text -->
-    <string id="30300">Please be Patient</string>
-    <string id="30301">Downloading first artist image</string>
+    <string id="30300">Downloading</string>
+    <string id="30301">Downloading artist images</string>
+    <string id="30302">Nothing Downloaded</string>
+    <string id="30303">No images found for artist</string>    
+    <string id="30304">Download Complete</string>
+    <string id="30305">All artist images downloaded</string>    
   <!-- Settings  --> 
     <string id="32000">Download</string>
     <string id="32001">Download images from last.fm</string>
