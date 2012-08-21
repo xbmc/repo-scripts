@@ -18,6 +18,7 @@ import simplejson
 import xbmc
 import xbmcaddon
 from time import sleep
+from urllib import unquote
 from threading import Thread
 from watchdog.events import FileSystemEventHandler
 
@@ -29,6 +30,9 @@ RECURSIVE = not (ADDON.getSetting('nonrecursive') in ['true']) or not POLLING
 WATCH_VIDEO = ADDON.getSetting('watchvideo') in ['true']
 WATCH_MUSIC = ADDON.getSetting('watchmusic') in ['true']
 DELAY = 1
+
+EXTENSIONS = "|.nsv|.m4a|.flac|.aac|.strm|.pls|.rm|.rma|.mpa|.wav|.wma|.ogg|.mp3|.mp2|.m3u|.mod|.amf|.669|.dmf|.dsm|.far|.gdm|.imf|.it|.m15|.med|.okt|.s3m|.stm|.sfx|.ult|.uni|.xm|.sid|.ac3|.dts|.cue|.aif|.aiff|.wpl|.ape|.mac|.mpc|.mp+|.mpp|.shn|.zip|.rar|.wv|.nsf|.spc|.gym|.adx|.dsp|.adp|.ymf|.ast|.afc|.hps|.xsp|.xwav|.waa|.wvs|.wam|.gcm|.idsp|.mpdsp|.mss|.spt|.rsd|.mid|.kar|.sap|.cmc|.cmr|.dmc|.mpt|.mpd|.rmt|.tmc|.tm8|.tm2|.oga|.url|.pxml|.tta|.rss|.cm3|.cms|.dlt|.brstm|.wtv|.mka|.m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.img|.iso|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.bin|.dat|.mpg|.mpeg|.mp4|.mkv|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.rar|.001|.wpl|.zip|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.url|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv|.m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.m3u8|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.img|.iso|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.bin|.dat|.mpg|.mpeg|.mp4|.mkv|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.rar|.001|.wpl|.zip|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.url|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv|"
+
 
 if POLLING:
   from watchdog.observers.polling import PollingObserver as Observer
@@ -90,6 +94,10 @@ class EventHandler(FileSystemEventHandler):
     self._scan()
   
   def on_deleted(self, event):
+    if not event.is_directory:
+      _, ext = os.path.splitext(str(event.src_path))
+      if EXTENSIONS.find('|%s|' % ext) == -1:
+        return
     self._clean()
   
   def on_moved(self, event):
@@ -103,10 +111,19 @@ def get_media_sources(type):
   query = '{"jsonrpc": "2.0", "method": "Files.GetSources", "params": {"media": "%s"}, "id": 1}' % type
   result = xbmc.executeJSONRPC(query)
   json = simplejson.loads(result)
+  ret = []
   if json.has_key('result'):
     if json['result'].has_key('sources'):
-      return [ e['file'] for e in json['result']['sources'] ]
-  return []
+      paths = [ e['file'] for e in json['result']['sources'] ]
+      for path in paths:
+        #split and decode multipaths
+        if path.startswith("multipath://"):
+          for e in path.split("multipath://")[1].split('/'):
+            if e != "":
+              ret.append(unquote(e))
+        else:
+          ret.append(path)
+  return ret
 
 def log(msg):
   xbmc.log("%s: %s" % (ADDON_ID, msg), xbmc.LOGDEBUG)

@@ -1,3 +1,7 @@
+[B]0.6.2[/B]
+- added multipath support
+- added stricter triggering of library clean based on file type
+
 [B]0.6.1[/B]
 - fixed: not able to resume from sleep mode on linux
 - fixed: addon not able to start on windows xp when syscall is selected
