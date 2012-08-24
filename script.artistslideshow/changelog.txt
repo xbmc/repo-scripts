@@ -1,3 +1,11 @@
+v.1.4.4
+- fix for non-ascii characters in windows user name
+- fix for non-ascii characters in artist name
+- download notifications disabled by default with option to enable them
+
+v.1.4.3
+unreleased beta
+
 v.1.4.2
 - updated featured artist parsing to support radio streams
 - updated featured artist parsing to support calls from external scripts
