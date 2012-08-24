@@ -966,6 +966,7 @@ class HTMLTag:
 		self.endIndex = -1
 		self.sequenceIndex = 0
 		self.info = None
+		self.ignore = False
 		
 	def __str__(self):
 		return self.tag
@@ -1077,6 +1078,7 @@ class AdvancedParser(HTML5Parser):
 		self.isGeneric = False
 		self.dataCleanerRE = re.compile('[\n\r\t]')
 		self.tagIndex = 0
+		self.isValid = False
 		self.pages = {}
 	
 	def getForumType(self):
@@ -1100,6 +1102,7 @@ class AdvancedParser(HTML5Parser):
 					mx = ct
 					pick = r
 					ftpick = ft
+		self.isValid = bool(pick)
 		self.linkRE = pick
 		self.forumType = ftpick[:2]
 		self.isGeneric = self.forumType[1].isdigit()
@@ -1177,12 +1180,23 @@ class GeneralForumParser(AdvancedParser):
 		self.maxForumDepth = 0
 		self.subsSet = False
 		self.forums = []
+		self.dups = {}
+		self.typeNames = {	'vb': 'VBulletin',
+							'fb': 'FluxBB',
+							'mb': 'MyBB',
+							'mb2': 'MyBB',
+							'pb': 'PhpBB',
+							'ip': 'Invision Power Board',
+							'sm': 'SMF (Simple Machines Forum)'
+						}
+		
 		self.linkREs = {	'vb': re.compile('(?:^|")(?:forumdisplay.php|forums)(?:\?|/)(?:[^"\']*?f=)?(?P<id>\d+)'),
 							'fb': re.compile('(?:^|")viewforum.php?[^"\']*?(?<!;)(?:f|id)=?(?P<id>\d+)'),
 							'mb': re.compile('(?:^|")forum-(?P<id>\d+).html'),
 							'mb2': re.compile('(?:^|")forumdisplay\.php\?(?!from=)[^"\']*?fid=(?P<id>\d+)'),
 							'pb': re.compile('(?:^|")(?:\W+)?viewforum.php?[^"\']*?f=?(?P<id>\d+)'),
-							'ip': re.compile('/forum/(?P<id>\d+)-[^"\']*?(?:"|\'|$)')
+							'ip': re.compile('/forum/(?P<id>\d+)-[^"\']*?(?:"|\'|$)'),
+							'sm': re.compile('index\.php\?[^"\']*?board=(?P<id>\d+\.0+)')
 						}
 		
 		self.splits = {	'vb':[ (re.compile('<!--[^>]*?SUBSCRIBED FORUMS[^>]*?-->(?i)'),re.compile('<!--[^>]*?END SUBSCRIBED FORUMS[^>]*?-->(?i)')) ],
@@ -1192,6 +1206,9 @@ class GeneralForumParser(AdvancedParser):
 		self.genericLinkREs = {	'u0':re.compile('(?:^|"|\')(?P<url>[^"\']*?forum\w*\.php\?[^"\']*?(?<!b|m|f)(?:forumid|fid|f|id)=(?P<id>\d+)[^"\']*?)(?:$|"|\')') }
 		#http://www.torrentday.com/forums.php?action=viewforum&subforumid=1&forumid=26
 		self.linkRE = None
+	
+	def getForumTypeName(self):
+		return self.typeNames.get(self.forumType,'Generic')
 	
 	def getRE(self, html):
 		if self.linkRE: return
@@ -1206,6 +1223,7 @@ class GeneralForumParser(AdvancedParser):
 	def getForums(self,html):
 		if not isinstance(html,unicode): html = unicode(html,'utf8','replace')
 		self.forums = []
+		self.dups = {}
 		self.reset()
 		self.getRE(html)
 		if not self.linkRE: return self.forums
@@ -1220,6 +1238,7 @@ class GeneralForumParser(AdvancedParser):
 			keepAll = True
 		forums = []
 		for f in self.forums:
+			#print f['title'] + ' ' + str(f['depth'])
 			if self.maxForumDepth - f['depth'] < 2 or keepAll:
 				if f['depth'] == self.maxForumDepth: f['subforum'] = True
 				del f['depth']
@@ -1235,16 +1254,24 @@ class GeneralForumParser(AdvancedParser):
 	def handleEndTag(self,tag):
 		if tag and tag.tag == 'a':
 			href = tag.getAttr('href')
+			parent = self.stack[-1]
 			if href:
 				m = self.linkRE.search(href)
 				if m and not 'topicid' in href:
 					mdict = m.groupdict()
-					forum = {'forumid':mdict.get('id',''),'title':''.join(tag.dataStack),'depth':self.forumDepth,'url':mdict.get('url',''),'tag':tag}
+					fid = mdict.get('id','')
+					if fid in self.dups:
+						forum = self.dups[fid]
+						if not forum.get('title'): forum['title'] = ''.join(tag.dataStack)
+						#forum['tag'] = tag
+					else:
+						forum = {'forumid':fid,'title':''.join(tag.dataStack),'depth':self.forumDepth,'url':mdict.get('url',''),'tag':tag}
 					for t in reversed(self.stack):
 						if t.tag in ('td','li','div'):
 							t.callback = self.checkDesc
 							break
-					if 'sub' in tag.getAttr('class') or (self.lastTag and 'sub' in self.lastTag.getAttr('class')):
+					#TODO: Make this more efficient? See if re is better than checking for sub and not subject - also, perhaps get the class attr at start
+					if ('sub' in t.getAttr('class') and not 'subject' in t.getAttr('class')) or (self.lastTag and ('sub' in self.lastTag.getAttr('class') or 'children' in parent.getAttr('class')) and not 'subject' in self.lastTag.getAttr('class')):
 							forum['subforum'] = True
 							self.subsSet = True
 					for t in reversed(self.stack):
@@ -1269,7 +1296,8 @@ class GeneralForumParser(AdvancedParser):
 							break
 					self.lastForumTag = tag
 					self.lastForum = forum
-					self.forums.append(forum)
+					if not fid in self.dups: self.forums.append(forum)
+					self.dups[fid] = forum
 					#print tag.depth, forum
 	
 	def checkDesc(self,tag):
@@ -1282,9 +1310,10 @@ class GeneralThreadParser(AdvancedParser):
 		self.linkREs = {	'vb':re.compile('(?:^|")(?:showthread.php|threads)(?:\?|/)(?:[^"]*?t=)?(?P<id>\d+)'),
 							'fb':re.compile('(?:^|")viewtopic.php?[^"]*?(?<!;|p)(?:f|id)=?(?P<id>\d+)'),
 							'mb':re.compile('(?:^|")thread-(?P<id>\d+).html'),
-							'mb2': re.compile('(?:^|")showthread\.php\?[^"\']*?tid=(?P<id>\d+)'),
+							'mb2':re.compile('(?:^|")showthread\.php\?[^"\']*?tid=(?P<id>\d+)'),
 							'pb':re.compile('(?:^|")(?:\W+)?viewtopic.php?[^"\']*?f=(?P<fid>\d+)[^"\']*?t=(?P<id>\d+)'),
-							'ip':re.compile('/topic/(?P<id>\d+)-[^"\']*?(?:"|\'|$)')
+							'ip':re.compile('/topic/(?P<id>\d+)-[^"\']*?(?:"|\'|$)'),
+							'sm':re.compile('index\.php\?[^"\']*?topic=(?P<id>\d+\.0+)')
 						}
 		
 		self.genericLinkREs = {	'u0':re.compile('(?:href=|^|"|\')(?P<url>[^"\']*?(?:thread|topic)\w*\.php\?[^"\']*?(?:t|id|threadid|tid)=(?P<id>\d+)[^"\']*?)(?:$|"|\'| |>)'),
@@ -1389,6 +1418,8 @@ class GeneralThreadParser(AdvancedParser):
 class GeneralPostParser(AdvancedParser):
 	def __init__(self):
 		AdvancedParser.__init__(self)
+		self.ignoreForumImages = True
+		self.domain = ''
 		self.setDefaults()
 		
 		self.wsRE = re.compile('[\r\t]')
@@ -1404,8 +1435,12 @@ class GeneralPostParser(AdvancedParser):
 							'mb': re.compile('(?:^|")thread-\d+-post-(?P<id>\d+)\.html'),
 							'mb2': re.compile('(?:^|")showthread\.php\?[^"\']*?tid=\d+[^"\']*?pid=(?P<id>\d+)'),
 							'pb': re.compile('(?:^|")#p(?P<id>\d+)'),
-							'ip': re.compile('/topic/\d+-[^"\']*?/#entry(?P<id>\d+)(?:"|\'|$)')
+							'ip': re.compile('/topic/\d+-[^"\']*?/#entry(?P<id>\d+)(?:"|\'|$)'),
+							'sm': re.compile('index\.php\?[^"\']*?topic=\d+\.msg(?P<id>\d+)#msg\d+')
 						}
+		#sm    SMF: Simple Machines Forum
+		#ub    UBB
+		#ez    Ezboard/Yuku:
 		
 		self.genericLinkREs = {	'u0': re.compile('\?[^"\']*?postid=(?P<pid>\d+)'),
 								'u9': re.compile('(?:^|>)#(?P<pid>\d+)')
@@ -1440,6 +1475,7 @@ class GeneralPostParser(AdvancedParser):
 							('postcount',re.compile('^([\d,]+) posts(?i)')),
 							('extra.location',re.compile('^(?:location|from):?( .+)?(?i)')),
 							('extra.reputation',re.compile('^reputation:( \d+)?(?i)')),
+							('extra.gender',re.compile('^gender:( .*?)?(?i)')),
 							('status',re.compile('(^.{1,40}$)')),
 							('postcount',re.compile('\w+: ([\d,]+)$(?i)')),
 							('title',re.compile('^re: (?i)')),
@@ -1448,6 +1484,9 @@ class GeneralPostParser(AdvancedParser):
 							('extra.ratio',re.compile('^ratio: ?(.+)$(?i)')),
 							('extra.karma',re.compile('^karma: ?(.+)$(?i)'))
 						]
+		
+		self.ignores = ('pm','profile','email','private message','report','quote','private message','add as contact','send email','edit post','delete post','report this post','reply with quote','visit homepage','edit','delete')
+		
 		self.threadParser = None
 		
 	def setDefaults(self):
@@ -1461,16 +1500,42 @@ class GeneralPostParser(AdvancedParser):
 		self.lastStack = []
 		self.forumType = 'u0'
 		self.lastUnset = ''
+		self.base = ''
 		self.mode = 'NORMAL'
 		self.pidTags = OrderedDict()
 		self.callback = self.fakeCallback
 		self.pages = {}
+		self.filters = {}
+		self.BLOCK = None
+		self.BLOCKSUB = None
+		self.BLOCKMODE = None
 		
 	def fakeCallback(self,pct,msg): return True
 	
-	def getPosts(self,html,url='',callback=None):
+	def setBaseURL(self,url):
+		self.base = url.rsplit('/',1)[0] + '/'
+		
+	def fixURL(self,url):
+		if url.startswith('http'): return url
+		url = url.split('/',1)[-1]
+		return self.base + url
+	
+	def setFilters(self,filters):
+		if filters: self.filters = filters
+		self.quoteUserPrefix = self.filters.get('quote_user_prefix','posted by')
+		self.quoteFormat = self.filters.get('quote_tag','=%s')
+		self.postURLPrefix = self.filters.get('post_url_prefix','@@**&&++')
+		
+	def setDomain(self,url):
+		domain = url.split('://')[-1].split('/')[0]
+		domain = '.'.join(domain.split('.')[-2:])
+		self.domain = domain
+			
+	def getPosts(self,html,url='',callback=None,filters=None,page_url=''):
 		if not isinstance(html,unicode): html = unicode(html,'utf8','replace')
 		self.setDefaults()
+		self.setBaseURL(page_url)
+		self.setFilters(filters)
 		self.callback = callback or self.fakeCallback
 		self.reset()
 		self.getPages(url, html,self.threadParser.linkRE)
@@ -1639,22 +1704,52 @@ class GeneralPostParser(AdvancedParser):
 		self.lastUnset = ''
 		p['extras'] = {}
 		for d in p.get('data',[]):
-			newData,last = self.handleDataItem(d, p, dREs, newData,last)
+			last = self.handleDataItem(d, p, dREs, newData,last)
 		return newData
 		
 	def rindex(self,alist,a):
 		return len(alist) - alist[-1::-1].index(a) - 1
+		
+	def checkClasses(self,tag,newData):
+		classes = tag.getClasses()
+		if classes:
+			if self.filters.get('quote_class') and self.filters['quote_class'] in classes:
+				newData.append('[quote]')
+				tag.info = 'QUOTE'
+				self.BLOCK = 'QUOTE'
+				return True
+			elif self.BLOCKMODE == 'QUOTE' and 'quote' in repr(classes):
+				self.BLOCKMODE = None
+				self.BLOCK = 'QUOTE'
+				tag.info = 'QUOTE'
+				return True
+		return False
+		
+	def clearFirstNonEmptyMatch(self,newData,match):
+		if not match: return
+		idx = -1
+		while not newData[idx].strip():
+			idx -= 1
+		if match.lower() in newData[idx].lower():
+			newData.pop(idx)
+			return True
+		return False
+			
 			
 	def handleDataItem(self,d,p,dREs,newData, last):
 		if isinstance(d,HTMLTag):
 			if d.tag == 'img':
-				src = d.getAttr('src')
-				if 'avatar' in repr(d).lower():
+				src = self.revertCodes(d.getAttr('src'))
+				reprd = repr(d)
+				if 'avatar' in reprd.lower():
 					p['avatar'] = src or ''
-				elif 'offline' in repr(d):
+				elif 'offline' in reprd or 'useroff' in reprd:
 					p['online'] = False
-				elif 'online' in src:
+				elif 'online' in src or 'useron' in src: #useron is from SMF
 					p['online'] = True
+				elif self.lastUnset and self.lastUnset.endswith('gender') and ('male' in src.lower() or 'female' in src.lower()):
+					p['extras']['gender'] = 'female' in src.lower() and 'Female' or 'Male'
+					self.lastUnset = None 
 				elif d.getAttr('width') and not p.get('avatar'): #user added images won't have size attributes set, at least that's the theory
 					p['avatar'] = src or ''
 				elif src.startswith('http'):
@@ -1662,11 +1757,11 @@ class GeneralPostParser(AdvancedParser):
 					if 'width' in style  and not p.get('avatar'): #user added images won't have size attributes set, at least that's the theory
 						p['avatar'] = src or ''
 					else:
-						newData.append(' [img]'+src+'[/img] ')
+						if (not (self.domain and self.domain in src) and src.startswith('http')) or not self.ignoreForumImages: newData.append(' [img]'+src+'[/img] ')
 			elif d.tag == 'a':
 				href = d.getAttr('href')
 				if href and not 'javascript:' in href and not href.startswith('#'):
-					tag = '[url='+href+']'
+					tag = '[url='+self.fixURL(self.revertCodes(href))+']'
 					newData.append(tag)
 					d.info = tag
 			elif d.tag == 'embed':
@@ -1677,8 +1772,18 @@ class GeneralPostParser(AdvancedParser):
 				if not val or not val.startswith('http'): val = d.getAttr('data')
 				if val and val.startswith('http'):
 					newData.append('[url='+val+']'+(d.data or 'EMBED')+'[/url]')
-			elif d.tag in ('div','tr','table','ul','ol','blockquote','pre'):
-				newData.append('\n')
+			elif d.tag in ('div','tr','table','ul','ol','blockquote','pre','cite','code'):
+				if d.tag in ('pre','code'):
+					self.BLOCKSUB = 'PRE'
+					#if self.BLOCKMODE and self.BLOCKMODE in newData[-1].upper():
+					#	newData.pop()
+					#elif self.BLOCKMODE and self.BLOCKMODE in newData[-2].upper():
+					#	newData.pop(-2)
+					self.clearFirstNonEmptyMatch(newData, self.BLOCKMODE)
+				else:
+					if not self.checkClasses(d, newData) and not self.BLOCK: newData.append('\n')
+			elif d.tag == 'td':
+				self.checkClasses(d, newData)
 			elif d.tag == 'p':
 				newData.append('\n\n') #TODO: maybe do this for other tags
 			elif d.tag == 'font':
@@ -1697,38 +1802,76 @@ class GeneralPostParser(AdvancedParser):
 #			for x in d.stack:
 #				newData,last = self.handleDataItem(x, p, dREs, newData, last)
 		elif isinstance(d,HTMLEndTag):
-			if d.tag in ('div','tr','table','ul','ol','blockquote','pre','br','cite'):
-				newData.append('\n')
+			if d.tag in ('div','tr','table','ul','ol','blockquote','pre','br','cite','code'):
+				if d.startTag.info == 'QUOTE':
+					newData.append('[/quote]')
+					self.BLOCK = None
+				ds = ''.join(d.startTag.dataStack)
+				dslower = ds.lower()
+				if d.tag == 'pre' or d.tag == 'code':
+					self.BLOCKSUB = None
+					if self.BLOCKMODE:
+						if d.tag == 'pre':
+							newData.append('['+self.BLOCKMODE.lower()+']'+'\n'.join(d.startTag.dataStack)+'[/'+self.BLOCKMODE.lower()+']')
+						elif d.tag == 'code':
+							#TODO: Remove empty datas before join
+							newData.append('['+self.BLOCKMODE.lower()+']'+'\n'.join(filter(lambda a: a, d.startTag.dataStack))+'[/'+self.BLOCKMODE.lower()+']')
+						self.BLOCKMODE = None
+				elif dslower.startswith('code'):
+					self.BLOCKMODE = 'CODE'
+				elif dslower.startswith('html'):
+					self.BLOCKMODE = 'HTML'
+				elif dslower.startswith('php'):
+					self.BLOCKMODE = 'PHP'
+				elif dslower == 'quote:':
+					self.BLOCKMODE = 'QUOTE'
+					newData.pop()
+				if not self.BLOCK: newData.append('\n')
+			elif d.tag == 'td':
+				if d.startTag.info == 'QUOTE':
+					newData.append('[/quote]')
+					self.BLOCK = None
+				
 			if d.tag == 'a':
 				href = d.startTag.getAttr('href')
+				ds = ''.join(d.startTag.dataStack)
 				if d.startTag.info: # and href and not 'javascript:' in href and not href.startswith('#'):
-					ds = ''.join(d.startTag.dataStack)
 					if ds.endswith(newData[-1]): newData.pop() #If we missed the text because it was inside another tag
 					#TODO: Maybe we need to do this more than once in a while, in case the text was in multiple tags
-					if not ds.lower() in ('quote','pm','profile','email','private message'):
-						if ds != p.get('user') and not 'user' in href and not 'member' in href and not p.get('postid') in href: 
+					dslower = ds.lower()
+					if not dslower in self.ignores and not href.startswith(self.postURLPrefix): #('quote','pm','profile','email','private message','edit post','delete post','report this post','reply with quote'):
+						if (ds != p.get('user') and not 'user' in href and not 'member' in href and not p.get('postid') in href) or 'edited by' in dslower:
+							newData.append(ds)
 							newData.append('[/url]')
 						elif len(newData) > 1 and ds == p.get('user') and newData[-2].strip().endswith('edited by'):
 							if d.startTag.info in newData: newData.pop(self.rindex(newData,d.startTag.info))
 							newData.append(ds) #So the username stays in the last edited by part
 						else:
+							if ds == p.get('user') and not p.get('status','').strip():
+								last = 'user'
 							if d.startTag.info in newData: newData.pop(self.rindex(newData,d.startTag.info))
 					else:
 						if d.startTag.info in newData:
-							newData.pop(self.rindex(newData,d.startTag.info))
+							#ds = ''.join(d.startTag.dataStack)
+							#newData = newData[:self.rindex(newData,d.startTag.info)] #TODO: make sure this method isn't breaking anything
+							del newData[self.rindex(newData,d.startTag.info):] #Modify list without replacing as above
+							#if ds in newData[-1]: print newData.pop()
+							#newData.pop(self.rindex(newData,d.startTag.info))
 			elif d.tag == 'li':
 				ds = ''.join(d.startTag.dataStack)
 				dslower = ds.lower()
-				if not dslower in ('report','quote','private message','add as contact','send email'):
+				if not dslower in self.ignores and not d.startTag.ignore: #('report','quote','private message','add as contact','send email','edit post','delete post','report this post','reply with quote'):
 					if not dslower.startswith('view') and not dslower.endswith('posts') and not dslower.endswith('profile'):
 						newData.append('    * ' + ds + '\n')
 			elif d.tag == 'font':
 				if d.startTag.info == 'COLOR':
 					newData.append('[/COLOR]')
+		elif self.BLOCKSUB == 'PRE':
+			pass
 		else:
 			dstrip = d.strip()
 			if d:
-				if d.tag == p.get('usedtag'): return newData, last
+				if d.tag == p.get('usedtag'): return last
 				#print d.encode('ascii','replace')
 				for i in range(0,len(dREs)):
 					if not dstrip: continue
@@ -1746,7 +1889,9 @@ class GeneralPostParser(AdvancedParser):
 								user = m.group(1).strip()
 								if last == 'user' and re.search('\w',d) and not d.tag.tag == 'a' and user != p.get('user',''):
 									#print user.encode('ascii','replace') + ' : ' + p.get('user','').encode('ascii','replace')
-									if user: p[val] = user
+									if user:
+										p[val] = user
+										d.tag.ignore = True
 								else:
 									if user == p.get('user') and not p.get('status'):
 										last = 'user'
@@ -1759,15 +1904,20 @@ class GeneralPostParser(AdvancedParser):
 							#print 'ls ' + d.encode('ascii','replace')
 							if m.group(1):
 								status = m.group(1).strip()
-								if status: p['status'] = status
+								if status:
+									p['status'] = status
+									d.tag.ignore = True
 						elif val == 'date':
 							#print 'd ' + d.encode('ascii','replace')
 							if not val in p:
 								p[val] = dstrip
+								d.tag.ignore = True
 							elif p[val].endswith(','):
 								p[val] += ' ' + dstrip
+								d.tag.ignore = True
 							elif self.lastUnset:
 								p[self.lastUnset] = dstrip
+								d.tag.ignore = True
 								self.lastUnset = None
 							else:
 								if p[val] == dstrip:
@@ -1781,9 +1931,11 @@ class GeneralPostParser(AdvancedParser):
 							#print 'pn ' + d.encode('ascii','replace')
 							if self.lastUnset:
 								p[self.lastUnset] = dstrip
+								d.tag.ignore = True
 								self.lastUnset = None
 							elif not p.get('postnumber'):
 								p[val] = m.group(1)
+								d.tag.ignore = True
 							else:
 								if not m.group(1) == '#': break #Eat the postnumber if already set and don't remove in case we just got #
 						elif val.startswith('extra.'):
@@ -1791,23 +1943,34 @@ class GeneralPostParser(AdvancedParser):
 							data = m.group(1)
 							if data:
 								extra = val.split('.',1)[-1]
-								if not extra in p['extras']: p['extras'][extra] = data
+								if not extra in p['extras']:
+									p['extras'][extra] = data
+									d.tag.ignore = True
 							else:
 								self.lastUnset = val
+								d.tag.ignore = True
 						elif m.groups():
 							#print 'g ' + d.encode('ascii','replace')
 							if not val in p:
 								mg1 = m.group(1)
 								if mg1: mg1 = mg1.strip()
 								p[val] = mg1
+								d.tag.ignore = True
 								if not p[val]: last = val
 								if not mg1: self.lastUnset = val
+							else:
+								continue
+						elif val == 'user':
+							if not p.get('user') and not dstrip.lower() in self.ignores:
+								p[val] = dstrip
+								d.tag.ignore = True
 							else:
 								continue
 						else:
 							#print 'ng ' + d.encode('ascii','replace')
 							if not val in p:
 								p[val] = dstrip
+								d.tag.ignore = True
 							else:
 								continue
 						
@@ -1824,14 +1987,10 @@ class GeneralPostParser(AdvancedParser):
 							if not extra in p['extras']: p['extras'][extra] = dstrip
 						else:
 							p[self.lastUnset] = dstrip
+							d.tag.ignore = True
 						self.lastUnset = ''
-					elif d.tag.tag.startswith('h') or d.tag.tag == 'strong':
-						if not p.get('title') and not p.get('joindate') and not p.get('postcount'):
-							if not (newData and 'posted by' in newData[-1].lower()):
-								p['title'] = dstrip
-							#if self.forumType != 'pb': newData = []
-						else:
-							newData.append(d)
+					elif (d.tag.tag.startswith('h') or d.tag.tag == 'strong') and not p.get('title') and not (newData and self.quoteUserPrefix in newData[-1].lower()):
+						p['title'] = dstrip
 					elif d.tag.tag == 'embed':
 						pass
 					elif d.lower() == 'offline':
@@ -1843,8 +2002,19 @@ class GeneralPostParser(AdvancedParser):
 #					elif d.tag.tag == 'li':
 #						newData.append(d + '\n')
 					else:
-						newData.append(d)	
-		return newData, last
+						pre='';post=''
+						if d.tag.tag == 'b': pre='[b]';post='[/b]'
+						elif d.tag.tag == 'i': pre='[i]';post='[/i]'
+						
+						if self.BLOCK == 'QUOTE':
+							if self.quoteUserPrefix in newData[-1].lower():
+								newData.pop()
+								newData[-1] = '['+(self.quoteFormat % dstrip) + ']'
+							else:
+								newData.append(pre+d+post)
+						else:
+							newData.append(pre+d+post)
+		return last
 		
 	def handleStartTag(self,tag):
 		pass
@@ -1864,13 +2034,13 @@ class GeneralPostParser(AdvancedParser):
 				if not ID in self.ids:
 					usedTag = None
 					postnumber = ''.join(tag.dataStack).split(' ')[0]
-					title = postnumber
+					title = ''.join(tag.dataStack)
 					if not '#' in postnumber and not postnumber.isdigit():
 						postnumber = ''.join(self.lastTag.dataStack).split(' ')[0]
 					if not '#' in postnumber and not postnumber.isdigit():
-						if self.forumType != 'pb' and not self.isGeneric: return
+						if not self.forumType in ('pb','sm') and not self.isGeneric: return
 						if not title:
-							title = postnumber
+							title = ''.join(self.lastTag.dataStack)
 							usedTag = self.lastTag
 						else:
 							usedTag = tag

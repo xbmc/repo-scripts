@@ -253,7 +253,7 @@
 			<control type="label">
 				<description>textarea</description>
 				<posx>44</posx>
-				<posy>655</posy>
+				<posy>645</posy>
 				<width>1192</width>
 				<height>45</height>
 				<font>ForumBrowser-font13</font>

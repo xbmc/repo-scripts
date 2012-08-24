@@ -64,10 +64,18 @@ class ForumrunnerClient():
 		return handler
 	
 	def _callMethod(self,method,**args):
-		url = self.url + 'request.php?cmd=' + method
+		url = self.url #+ 'request.php?cmd=' + method
+		if url.endswith('/'): url = url[:-1]
+		args['cmd'] = method
 		#url = '&'.join((url,urllib.urlencode(args)))
 		encArgs = urllib.urlencode(args)
-		obj = self.opener.open(url,encArgs)
+		try:
+			obj = self.opener.open(url,encArgs)
+		except urllib2.HTTPError,e:
+			if e.code == 404: raise forumbrowser.ForumNotFoundException('Forumrunner')
+			data = e.read()
+			return FRCFail({'message':e.msg + '\n\n' + data})
+			
 		if DEBUG: LOG('Response Headers: ' + str(obj.info()))
 		encoding = obj.info().get('content-type').split('charset=')[-1]
 		if '/' in encoding: encoding = 'utf8'
@@ -77,6 +85,7 @@ class ForumrunnerClient():
 			pyobj = json.loads(data)
 		except:
 			pass
+		#open('/home/ruuk/test.html','w').write(data.encode('ascii','replace'))
 		if not pyobj: pyobj = json.loads(re.sub(r'\\u[\d\w]+','?',data),strict=False)
 		if DEBUG: LOG('JSON: ' + str(pyobj))
 		if pyobj.get('success'):
@@ -146,15 +155,17 @@ class ForumPost(forumbrowser.ForumPost):
 	
 class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 	browserType = 'forumrunner'
+	prefix = 'FR.'
 	ForumPost = ForumPost
 	
 	def __init__(self,forum,always_login=False):
 		forumbrowser.ForumBrowser.__init__(self, forum, always_login,BBMessageConverter)
 		self.forum = forum[3:]
-		self.prefix = 'FR.'
 		self.lang = sys.modules["__main__"].__language__
 		self.online = {}
 		self.lastOnlineCheck = 0
+		self.version = {}
+		self.pmBoxes = []
 		self.loadForumFile()
 		self.setupClient()
 		self.setFilters()
@@ -180,14 +191,27 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 #		
 #		if not self.client:
 		self.client = ForumrunnerClient(self._url)
-		result = self.client.version()
+		try:
+			result = self.client.version()
+		except forumbrowser.ForumNotFoundException:
+			raise
+		except:
+			ERROR('Error getting version info')
+			raise forumbrowser.BrokenForumException(self._url)
+		if not result:
+			LOG(result.message)
+			raise Exception(result.message)
+			return False
+		
 		self.SSL = False
 			
 		self.platform = result.get('platform')
 		self.charset = result.get('charset')
+		self.version = result
 		
 		LOG('Forum Type: ' + self.platform)
 		LOG('Plugin Version: ' + result.get('version'))
+		return True
 		
 	def setFilters(self):
 		self.filters['quote'] = self.getQuoteFormat()
@@ -201,6 +225,22 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 		elif text == 'ipb': return 'ip' #don't know if this is right
 		return text
 	
+	def getForumVersion(self):
+		m = re.search('(\d+)',self.platform)
+		if not m: return ''
+		return m.group(1)
+		
+	def getForumTypeName(self):
+		return self.forumTypeNames.get(self.getForumType(),'Unknown')
+	
+	def getForumInfo(self):
+		return [	('name',self.getDisplayName()),
+					('interface','Forumrunner'),
+					('forumrunner_plugin_version',self.version.get('version')),
+					('forum_type',self.getForumTypeName() + ' (' + self.getForumVersion()) + ')',
+					('login_set',self.canLogin())
+				]
+		
 	def loadForumFile(self):
 		forum = self.getForumID()
 		fname = os.path.join(sys.modules["__main__"].FORUMS_PATH,forum)
@@ -213,8 +253,8 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 			
 	def createForumDict(self,data,sub=False):
 		data['forumid'] = data.get('id')
-		data['title'] = str(data.get('name'))
-		data['description'] = str(data.get('desc'))
+		data['title'] = unicode(data.get('name'))
+		data['description'] = unicode(data.get('desc'))
 		data['subforum'] = sub
 		return data
 	
@@ -263,6 +303,9 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 				base = data.get('forums')
 				flist = []
 				for forum in base:
+					if forum.get('link'):
+						flist.append((forum,False))
+						continue
 					sub = False
 					data = self.client.get_forum(forumid=forum.get('id'))
 					f = data.get('forums')
@@ -280,7 +323,7 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 			for forum,sub in flist:
 				forums.append(self.createForumDict(forum,sub))
 			if not callback(80,self.lang(30231)): break
-			logo = self.urls.get('logo') or 'http://%s/favicon.ico' % self.forum
+			logo = self.urls.get('logo') or 'http://%s/favicon.ico' % self.domain()
 			try:
 				pm_counts = self.getPMCounts(80)
 			except:
@@ -337,6 +380,7 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 		normal = sub.get('threads',[])
 		if not callback(70,self.lang(30103)): return None,None
 		for n in normal:
+			print n
 			self.createThreadDict(n)
 			n['subscribed'] = True
 		return normal, pd
@@ -364,24 +408,39 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 		callback(100,self.lang(30052))
 		return self.finish(FBData(threads,pd),donecallback)
 		
-	def getOnlineUsers(self):
+	def canGetOnlineUsers(self): return True
+	
+	def getOnlineUsers(self,for_replies=False):
 		#lets not hammer the server. Only get online user list every five minutes
 		now = time.time()
-		if now - self.lastOnlineCheck > 300:
+		ret = []
+		err = None
+		if now - self.lastOnlineCheck > 300 or not for_replies:
 			self.lastOnlineCheck = now
 			try:
 				oDict = {}
 				online = self.client.online()
 				if not online:
 					LOG('Could not get online users: ' + online.message)
-					return self.online
+					if for_replies:
+						return self.online
+					else:
+						return online.message
 				for o in online.get('users',online.get('online_users',[])): #online_users is the documented key but not found in practice
 					oDict[o.get('username','?')] = o.get('userid','?')
+					ret.append({'user':str(o.get('username','')),'userid':o.get('userid',''),'avatar':o.get('avatarurl',''),'status':'Online'})
 				self.online = oDict
 				#print self.online
 			except:
-				ERROR('Error getting online users')
-		return self.online
+				err = ERROR('Error getting online users')
+				
+		if for_replies:
+			return self.online
+		else:
+			if err:
+				return err
+			else:
+				return ret
 	
 	def getReplies(self,threadid,forumid,page=1,lastid='',pid='',callback=None,donecallback=None,announcement=False,page_data=None):
 		if not callback: callback = self.fakeCallback
@@ -390,7 +449,7 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 			except: page = 1
 			
 			if not callback(20,self.lang(30102)): break
-			oDict = self.getOnlineUsers()
+			oDict = self.getOnlineUsers(for_replies=True)
 			if not callback(40,self.lang(30102)): break
 			try:
 				sreplies = []
@@ -443,6 +502,39 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 	def getAnnouncement(self,aid,callback=None,donecallback=None):
 		return self.getReplies(aid, None, callback=callback, donecallback=donecallback,announcement=True)
 		
+	
+	def getPMBoxes(self,update=True,callback_percent=5):
+		if not update and self.pmBoxes: return self.pmBoxes
+		if not self.hasPM(): return None
+		if not self.checkLogin(callback_percent=callback_percent): return None
+		result = self.client.get_pm_folders()
+		if not result or result.get('folders') == None:
+			LOG('Failed to get PM boxes')
+			return None
+		self.pmBoxes = []
+		defaultSet = False
+		boxes = result.get('folders')
+		if not boxes: return None
+		if isinstance(boxes,list): #Not sure if this is necessary because I've only gotten empty lists
+			temp = boxes
+			boxes = {}
+			for b in temp:
+				boxes[b] = b
+			
+		for boxid,name in boxes.items():
+			box = {	'id':boxid,
+					'name':name,
+					'count':0,
+					'unread':0,
+					'type':name.upper()
+			}
+			if box.get('id') == 0 or box.get('type') == 'INBOX' and not defaultSet:
+				box['default'] = True
+				defaultSet = True
+			self.pmBoxes.append(box)
+		if not defaultSet and self.pmBoxes: self.pmBoxes[0]['default'] = True
+		return self.pmBoxes
+		
 	def getPMCounts(self,callback_percent=5):
 		if not self.hasPM(): return None
 		if not self.checkLogin(callback_percent=callback_percent): return None
@@ -457,14 +549,17 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 	
 	def hasPM(self): return True
 		
-	def getPrivateMessages(self,callback=None,donecallback=None):
+	def getPrivateMessages(self,callback=None,donecallback=None,boxid=None):
 		if not callback: callback = self.fakeCallback
 		
 		while True:
-			oDict = self.getOnlineUsers()
+			oDict = self.getOnlineUsers(for_replies=True)
 			if not callback(30,self.lang(30102)): break
 			try:
-				messages = self.client.get_pms(page=1,perpage=50)
+				if boxid:
+					messages = self.client.get_pms(folderid=boxid,page=1,perpage=50)
+				else:
+					messages = self.client.get_pms(page=1,perpage=50)
 			except:
 				em = ERROR('ERROR GETTING PRIVATE MESSAGES')
 				callback(-1,'%s' % em)
@@ -570,3 +665,14 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 			post.error = result.message
 			return False
 		return True
+	
+	def canCreateThread(self,fid): return self.isLoggedIn()
+	
+	def createThread(self,fid,title,message):
+		if not self.checkLogin(): return False
+		result = self.client.post_message(forumid=str(fid),subject=title,message=message)
+		if not result:
+			LOG('Failed to create new thread: ' + result.message)
+			return result.message
+		return True
+	

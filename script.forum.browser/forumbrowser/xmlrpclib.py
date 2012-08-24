@@ -846,7 +846,7 @@ class Unmarshaller:
     dispatch["nil"] = end_nil
 
     def end_boolean(self, data):
-        if data == "0":
+        if data == "0" or data == "": #TODO: MARKER: or data == "": added by ruuk to fix a forum (type sm)
             self.append(False)
         elif data == "1":
             self.append(True)

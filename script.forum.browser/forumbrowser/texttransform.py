@@ -30,6 +30,7 @@ class MessageConverter:
 	def __init__(self,fb):
 		global FB
 		FB = fb
+		self.fb = fb
 		self._currentFilter = None
 		self.resetOrdered(False)
 		self.textwrap = textwrap.TextWrapper(80)
@@ -46,25 +47,27 @@ class MessageConverter:
 		self.colorFilter2 = re.compile('<span.*?style=".*?color: ?(.+?)".*?>(.+?)</span>')
 		self.setReplaces()
 		self.resetRegex()
-	
+		
 	def prepareSmileyList(self):
 		class SmiliesList(list):
 			def get(self,key,default=None): return default
 			
 		new = SmiliesList()
 		if __addon__.getSetting('use_skin_mods') == 'true':
-			for f,r,x in FB.smiliesDefs: #@UnusedVariable
+			for f,r,x in self.FB.smiliesDefs: #@UnusedVariable
+				f = '(\s)'+ re.escape(f)
 				if '[/COLOR]' in r:
 					new.append((f,r))
 				else:
 					new.append((f,'[COLOR FFBBBB00]'+r+'[/COLOR]'))
 		else:
-			for f,r,x in FB.smiliesDefs: #@UnusedVariable
+			for f,r,x in self.FB.smiliesDefs: #@UnusedVariable
+				f = '(\s)'+ re.escape(f)
 				if '[/COLOR]' in x:
 					new.append((f,x))
 				else:
 					new.append((f,'[COLOR FFBBBB00]'+x+'[/COLOR]'))
-		FB.smilies = new
+		self.FB.smilies = new
 		
 	def resetRegex(self):
 		if not FB: return
@@ -350,13 +353,13 @@ class MessageConverter:
 	def imageConvert(self,m):
 		self.imageCount += 1
 		return self.imageReplace % (self.imageCount,m.group('url'))
-		
+
 	def processSmilies(self,text):
 		if not isinstance(text,unicode): text = unicode(text,'utf8')
 		if self.smileyFilter: return text
-		for f,r in FB.smilies: text = text.replace(f,r)
+		for f,r in self.FB.smilies: text = re.sub(f,r'\1'+r,text)
 		return text
-
+	
 	def smileyRawConvert(self,m):
 		return FB.smilies.get(m.group('smiley'),'')
 		
@@ -412,6 +415,7 @@ class MessageConverter:
 class BBMessageConverter(MessageConverter):
 	def __init__(self,fb):
 		self.FB = fb
+		self.smileyFilter = None
 		self._currentFilter = None
 		self.textwrap = textwrap.TextWrapper(80)
 		self.textwrap.replace_whitespace = False
@@ -426,25 +430,6 @@ class BBMessageConverter(MessageConverter):
 		self.underlineFilter = re.compile('\[/?u\](?i)')
 		self.setReplaces()
 		self.resetRegex()
-	
-	def prepareSmileyList(self):
-		class SmiliesList(list):
-			def get(self,key,default=None): return default
-			
-		new = SmiliesList()
-		if __addon__.getSetting('use_skin_mods') == 'true':
-			for f,r,x in self.FB.smiliesDefs: #@UnusedVariable
-				if '[/COLOR]' in r:
-					new.append((f,r))
-				else:
-					new.append((f,'[COLOR FFBBBB00]'+r+'[/COLOR]'))
-		else:
-			for f,r,x in self.FB.smiliesDefs: #@UnusedVariable
-				if '[/COLOR]' in x:
-					new.append((f,x))
-				else:
-					new.append((f,'[COLOR FFBBBB00]'+x+'[/COLOR]'))
-		self.FB.smilies = new
 		
 	def resetRegex(self):		
 		self.prepareSmileyList()
@@ -610,11 +595,6 @@ class BBMessageConverter(MessageConverter):
 	def imageConvert(self,m):
 		self.imageCount += 1
 		return self.imageReplace % (self.imageCount,m.group('url'))
-		
-	def processSmilies(self,text):
-		if not isinstance(text,unicode): text = unicode(text,'utf8')
-		for f,r in self.FB.smilies: text = text.replace(f,r)
-		return text
 		
 	def parseCodes(self,text):
 		text = re.sub('\[QUOTE=(?P<user>\w+)(?:;\d+)*\](?P<quote>.+?)\[/QUOTE\](?is)',self.quoteConvert,text)

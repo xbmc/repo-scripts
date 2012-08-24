@@ -1,5 +1,5 @@
 <window>
-	<defaultcontrol>111</defaultcontrol>
+	<defaultcontrol>123</defaultcontrol>
 	<zorder>2</zorder>
 	<coordinates>
 		<system>1</system>
@@ -77,32 +77,6 @@
 				<onclick>PreviousMenu</onclick>
 			</control>
 			
-			<control type="image">
-				<posx>670</posx>
-				<posy>380</posy>
-				<width>120</width>
-				<height>60</height>
-				<texture border="30">forum-browser-white-box.png</texture>
-				<colordiffuse>AA000000</colordiffuse>
-			</control>
-			<control type="button" id="111">
-				<description>Ok Button</description>
-				<posx>670</posx>
-				<posy>380</posy>
-				<width>100</width>
-				<height>40</height>
-				<visible>true</visible>
-				<font>font13</font>
-				<align>center</align>
-				<label>$LOCALIZE[SCRIPT3013]</label>
-				<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
-				<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
-				<textcolor>black</textcolor>
-				<disabledcolor>60000000</disabledcolor>
-				<focusedcolor>white</focusedcolor>
-				<onclick>PreviousMenu</onclick>
-			</control>
-				
 			<control type="textbox" id="122">
 				<posx>30</posx>
 				<posy>97</posy>
@@ -113,7 +87,61 @@
 				<scroll>true</scroll>
 				<textcolor>FF000000</textcolor>
 				<visible>true</visible>
+				<pagecontrol>123</pagecontrol>
 			</control>
+			<control type="scrollbar" id="123">
+				<description>Message Scrollbar</description>
+				<posx>774</posx>
+				<posy>97</posy>
+				<width>4</width>
+				<height>326</height>
+				<onleft>111</onleft>
+				<onright>111</onright>
+				<onup>123</onup>
+				<ondown>123</ondown>
+				<texturesliderbackground>-</texturesliderbackground>
+				<texturesliderbar border="1">forum-browser-panel-full.png</texturesliderbar>
+				<texturesliderbarfocus border="1">forum-browser-black-square.png</texturesliderbarfocus>
+				<textureslidernib>-</textureslidernib>
+				<textureslidernibfocus>-</textureslidernibfocus>
+				<orientation>vertical</orientation>
+				<showonepage>false</showonepage>
+				<colordiffuse>FF555555</colordiffuse>
+				<!-- visible>!Control.IsVisible(112)</visible -->
+			</control>
+			
+			<control type="group" id="112">
+				<control type="image">
+					<posx>670</posx>
+					<posy>380</posy>
+					<width>120</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="111">
+					<description>Ok Button</description>
+					<posx>670</posx>
+					<posy>380</posy>
+					<width>100</width>
+					<height>40</height>
+					<onleft>123</onleft>
+					<onright>123</onright>
+					<onup>123</onup>
+					<ondown>123</ondown>
+					<visible>true</visible>
+					<font>font13</font>
+					<align>center</align>
+					<label>$LOCALIZE[SCRIPT3013]</label>
+					<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+					<onclick>PreviousMenu</onclick>
+				</control>
+			</control>
+			
 		</control>
 
 	</controls>

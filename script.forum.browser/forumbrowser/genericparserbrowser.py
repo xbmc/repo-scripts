@@ -7,33 +7,48 @@ LOG = sys.modules["__main__"].LOG
 ERROR = sys.modules["__main__"].ERROR
 FORUMS_STATIC_PATH = sys.modules["__main__"].FORUMS_STATIC_PATH
 __language__ = sys.modules["__main__"].__language__
+getSetting = sys.modules["__main__"].getSetting
 
-	
+def testForum(url,user=None,password=None):
+	if not url.startswith('http'):
+		if url.startswith('/'): url = url[1:]
+		url = 'http://' + url
+	if not url.endswith('/'): url += '/'
+	#p = GeneralForumParser()
+	pb = GenericParserForumBrowser(url,url=url)
+	pb.user = user
+	pb.password = password
+	info = forumbrowser.HTMLPageInfo(url)
+	#p.getForums(info.html)
+	pb.getForums()
+	if pb.forumParser.isValid: return url,info,pb.forumParser
+	return None,None,None
+
 class GenericParserForumBrowser(scraperbrowser.ScraperForumBrowser):
 	browserType = 'GenericParserForumBrowser'
+	prefix = 'GB.' 
 	
 	def __init__(self,forum,always_login=False,ftype=None,url=''):
 		forumbrowser.ForumBrowser.__init__(self, forum, always_login,message_converter=texttransform.BBMessageConverter)
-		self.forum = 'general'
+		self.forum = forum[3:]
 		self._url = url
 		self.browser = None
 		self.mechanize = None
 		self.needsLogin = True
 		self.alwaysLogin = always_login
 		self.lastHTML = ''
-		#self.reloadForumData(forum)
+		self.loadForumFile()
 		self.forumType = 'u0'
 		self.forumParser = GeneralForumParser()
 		self.threadParser = GeneralThreadParser()
 		self.threadParser.forumParser = self.forumParser
 		self.postParser = GeneralPostParser()
 		self.postParser.threadParser = self.threadParser
-		self.urls = {}
-		self.filters = {}
-		self.forms = {}
-		self.formats = {}
 		
-		self.urls['base'] = url
+		#self.urls['base'] = url
+		self.initialize()
+		
+	def loadForumFile(self):
 		self.filters.update({	'quote':'\[QUOTE\](?P<quote>.*)\[/QUOTE\](?is)',
 								'code':'\[CODE\](?P<code>.+?)\[/CODE\](?is)',
 								'php':'\[PHP\](?P<php>.+?)\[/PHP\](?is)',
@@ -45,18 +60,49 @@ class GenericParserForumBrowser(scraperbrowser.ScraperForumBrowser):
 								'thread_link':'showthread.php\?[^<>"]*?tid=(?P<threadid>\d+)',
 								'color_start':'\[color=?#?(?P<color>\w+)\]'
 								})
-		self.initialize()
+				
+		forum = self.getForumID()
+		fname = os.path.join(sys.modules["__main__"].FORUMS_PATH,forum)
+		if not os.path.exists(fname):
+			fname = os.path.join(sys.modules["__main__"].FORUMS_STATIC_PATH,forum)
+			if not os.path.exists(fname): return False
+		self.loadForumData(fname)
+		self._url = self.urls.get('server',self._url)
+		self.formats['quote'] = ''
 		
 	def getForumID(self):
 		return 'GB.' + self.getDisplayName()
 	
 	def getDisplayName(self):
-		name = self._url.split('://')[-1].split('/')[0]
-		if name.startswith('www.'): name = name[4:]
-		return name
+		return self.forum
+		#name = self._url.split('://')[-1].split('/')[0]
+		#if name.startswith('www.'): name = name[4:]
+		#return name
 	
 	def getForumType(self):
 		return self.forumType
+	
+	def getForumInfo(self):
+		return [	('name',self.getDisplayName()),
+					('interface','Parser Browser'),
+					('forum_type',self.forumParser.getForumTypeName()),
+					('login_set',self.canLogin()),
+					('can_post',self.canPost()),
+					('can_edit_posts',self.canEditPost(self.user)),
+					('can_delete_posts',self.canDelete(self.user)),
+					('can_view_private_messages',self.hasPM()),
+					('can_view_subscriptions',self.hasSubscriptions()),
+					('can_subscribe',self.canSubscribeForum(None)),
+					('can_send_private_messages',self.canPrivateMessage()),
+					('can_delete_private_messages',self.canDelete(self.user,target='PM')),
+				]
+	
+	def loadForumData(self,forum):
+		self.needsLogin = True
+		fname = os.path.join(FORUMS_STATIC_PATH,forum)
+		if not os.path.exists(fname): fname = forum
+		if not os.path.exists(fname): return False
+		return forumbrowser.ForumBrowser.parseForumData(self, fname)
 	
 	def isLoggedIn(self):
 		if self.forms.get('login_action'):
@@ -77,9 +123,10 @@ class GenericParserForumBrowser(scraperbrowser.ScraperForumBrowser):
 			
 	def getForums(self,callback=None,donecallback=None,url='',html='',subs=False):
 		if not callback: callback = self.fakeCallback
+		#if html: self.lastHTML = html #TODO: Maybe put this back
 		if not html:
 			try:
-				url = url or self.urls.get('base','')
+				url = url or self._url
 				LOG('Forums List URL: ' + url)
 				html = self.readURL(url,callback=callback,force_browser=True)
 			except:
@@ -92,6 +139,8 @@ class GenericParserForumBrowser(scraperbrowser.ScraperForumBrowser):
 		
 		forums = self.forumParser.getForums(html)
 		LOG('Detected Forum Type: ' + self.forumParser.forumType)
+		self.forumType = self.forumParser.forumType
+		self.MC.resetRegex()
 		self.doLoadForumData()
 		self.checkLogin(callback)
 		if not forums and self.isLoggedIn():
@@ -107,7 +156,7 @@ class GenericParserForumBrowser(scraperbrowser.ScraperForumBrowser):
 			f['is_forum'] = True
 		
 		#logo = self.getLogo(html)
-		logo = 'http://%s/favicon.ico' % self.urls.get('base','').split('://')[-1].split('/')[0]
+		logo = self.urls.get('logo') or 'http://%s/favicon.ico' % self.domain()
 		#pm_counts = self.getPMCounts(html)
 		pm_counts = None
 		callback(100,__language__(30052))
@@ -180,6 +229,8 @@ class GenericParserForumBrowser(scraperbrowser.ScraperForumBrowser):
 		if not callback: callback = self.fakeCallback
 		url = None
 		pagesURL = url
+		self.postParser.ignoreForumImages = getSetting('ignore_forum_images',True)
+		self.postParser.setDomain(self._url)
 		if self.threadParser.isGeneric:
 			for f in self.threadParser.threads:
 				if threadid == f.get('threadid'):
@@ -196,7 +247,7 @@ class GenericParserForumBrowser(scraperbrowser.ScraperForumBrowser):
 		html = self.readURL(url,callback=callback,force_browser=True)
 		if not html or not callback(80,__language__(30103)):
 			return self.finish(FBData(error=html and 'CANCEL' or 'EMPTY HTML'),donecallback)
-		replies = self.postParser.getPosts(html,pagesURL,callback=callback)
+		replies = self.postParser.getPosts(html,pagesURL,callback=callback,filters=self.filters,page_url=url)
 		LOG('Detected Posts Type: ' + self.postParser.forumType)
 		#topic = re.search(self.filters.get('thread_topic','%#@+%#@'),html)
 		#if not threadid:
@@ -207,6 +258,8 @@ class GenericParserForumBrowser(scraperbrowser.ScraperForumBrowser):
 		for r in replies:
 			try:
 				post = self.getForumPost(r)
+				post.tid = threadid
+				post.fid = forumid
 				#print post.message.encode('ascii','replace')
 				sreplies.append(post)
 			except:
@@ -232,15 +285,73 @@ class GenericParserForumBrowser(scraperbrowser.ScraperForumBrowser):
 		else:
 			return scraperbrowser.ScraperForumBrowser.hasSubscriptions(self)
 		
-	def subscribeThread(self,tid): return False
+	def subscribeThread(self,tid):
+		url = self.urls.get('subscribe_thread').replace('!THREADID!',tid)
+		try:
+			if self.doForm(url,action_match=self.forms.get('subscribe_thread_action','subs'),controls='subscribe_notification_control%s'):
+				return True
+			else:
+				return 'Reason Unknown'
+			#TODO: check for success = perhaps look for exec_refresh()
+		except:
+			return ERROR('Failed to subscribe to thread: ' + tid)
 		
-	def unSubscribeThread(self, tid): return False
+	def unSubscribeThread(self, tid):
+		url = self.urls.get('unsubscribe_thread').replace('!THREADID!',tid)
+		try:
+			self.readURL(url, force_login=True,is_html=False) #is_html=False because otherwise breaks login status
+			#TODO: check for success = perhaps look for exec_refresh()
+			return True
+		except:
+			return ERROR('Failed to unsubscribe from thread: ' + tid)
 		
-	def subscribeForum(self, fid): return False
+	def subscribeForum(self, fid):
+		url = self.urls.get('subscribe_forum').replace('!FORUMID!',fid)
+		try:
+			
+			if self.doForm(url,action_match=self.forms.get('subscribe_forum_action','subs'),controls='subscribe_forum_notification_control%s'):
+				return True
+			else:
+				return 'Reason Unknown'
+			#TODO: check for success = perhaps look for exec_refresh()
+		except:
+			return ERROR('Failed to subscribe to forum: ' + fid)
 		
-	def unSubscribeForum(self, fid): return False
+	def unSubscribeForum(self, fid):
+		url = self.urls.get('unsubscribe_forum').replace('!FORUMID!',fid)
+		try:
+			self.readURL(url, force_login=True,is_html=False) #is_html=False because otherwise breaks login status
+			#TODO: check for success = perhaps look for exec_refresh()
+			return True
+		except:
+			return ERROR('Failed to unsubscribe from forum: ' + fid)
 		
-	def canSubscribeThread(self, tid): return False
+	def canSubscribeThread(self, tid): return bool(self.urls.get('subscribe_thread') and self.isLoggedIn())
 	
-	def canSubscribeForum(self, fid): return False
+	def canSubscribeForum(self, fid): return bool(self.urls.get('subscribe_forum') and self.isLoggedIn())
+	
+	def canUnSubscribeThread(self,tid): return bool(self.urls.get('unsubscribe_thread') and self.isLoggedIn())
+	
+	def canUnSubscribeForum(self,fid): return bool(self.urls.get('unsubscribe_forum') and self.isLoggedIn())
+		
+	def isThreadSubscribed(self,tid,default=False):
+		if not self.canSubscribeThread(tid): return default
+		if default: return True
+		url = self.getPageUrl('','subscriptions')
+		data = self.getThreads(None, '',url=url,subs=True)
+		for d in data.data:
+			if d.get('threadid') == tid: return True
+		return False
+	
+	def isForumSubscribed(self,fid,default=False):
+		if not self.canSubscribeForum(fid): return default
+		if default: return True
+		url2 = self.getPageUrl('','forum_subscriptions')
+		if not url2: return default
+		data = self.getForums(url=url2,subs=True)
+		for d in data.data:
+			if d.get('forumid') == fid: return True
+		return False
+	
+
 	

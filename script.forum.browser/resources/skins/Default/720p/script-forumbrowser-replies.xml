@@ -444,7 +444,7 @@
 						<aligny>center</aligny>
 						<textcolor>FF444444</textcolor>
 						<align>right</align>
-						<label>&#35;$INFO[ListItem.Property(postnumber)]</label>
+						<label>#$INFO[ListItem.Property(postnumber)]</label>
 						<visible>!StringCompare(ListItem.Property(postnumber),)</visible>
 					</control>
 					<control type="textbox">
@@ -673,7 +673,7 @@
 						<aligny>center</aligny>
 						<textcolor>FF444444</textcolor>
 						<align>right</align>
-						<label>&#35;$INFO[ListItem.Property(postnumber)]</label>
+						<label>#$INFO[ListItem.Property(postnumber)]</label>
 						<visible>!StringCompare(ListItem.Property(postnumber),)</visible>
 					</control>
 					<control type="textbox">

@@ -4,7 +4,9 @@ Clicking this button will bring up an input where you can enter a title to the m
 @item:editlist=Edit List
 This lists the lines of the message.
 Clicking a line will let you edit that line. You can use normal BB formatting codes.
+
 The context menu has options to add a line before the selected line, or delete the selected line.
+If the ShareSocial addon is installed, you will have the option to paste from the clipboard previously copied links/images/video links into the post. These will be automatically formatted with the appropriate tag (ie [url][img][video])
 @item:buttons=Buttons
 The 'Add Line' button brings up an input where you can enter the text of the line. You can use normal BB formatting codes.
 

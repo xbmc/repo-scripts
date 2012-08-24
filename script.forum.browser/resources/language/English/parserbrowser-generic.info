@@ -1,0 +1,15 @@
+[B]Notes:[/B] ([COLOR FF880000]Please Read[/COLOR])
+
+While this forum does not appear to be compatible with the [B]Parser Browser's[/B] normal parsing method, it appears it may [I]possibly[/I] work using it's [I]generic[/I] method.
+
+While the normal method is designed for and handles the most common forum types, the generic method tries to handle forums in a generic way.
+
+As such it's behavior is unpredictable. It may work great, it may work badly.
+
+Some things to note about the generic method:
+  * It is read-only, so you can't create posts and such
+  * Logging in may work - or not
+  * Posts are fairly likely to have extra text or other weirdness
+
+While I (ruuk) cannot generally support user requests to make specific forums work, if there is a forum that is useful to the XBMC community, feel free to let me know in the Forum Browser support thread at forum.xbmc.org, and maybe I'll see what I can do :) 
+

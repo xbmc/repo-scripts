@@ -12,14 +12,16 @@ When enabled, Forum Browser will automatilly open the subscriptions window when 
 This only works if login user and password are set for the current forum.
 @item:reverse_sort=Reverse Sort Posts
 Sort the posts with the oldest on top.
+@item:hide_sig=Hide Signatures In Posts
+When enabled, will hide post signatures if possible
+@item:show_ok=Always Show OK Button In Message Dialogs
+When enabled, message dialogs will always show an OK button. In either case you may exit the dialogs in the normal fashion.
 @item:use_skin_mods=Use Skin Modifications
 [B]Recommended.[/B]
 When enabled allows Forum Browser to modify the current skin. This allows the use of a custom font for a more consistent display on skins other than Confluence, and also allows the use of a modified keyboard for easier post editing.
 When forum browser next starts, it will ask to install the modifications.
 
 The custom keyboard and font will only show in Forum Browser.
-@item:enable_ssl=Enable SSL Connections
-When enabled, Forum Browser will attempt to connect to forums via https.
 @item:save_logos=Cache Logo Images Locally
 When enabled, Forum Browser will save the logo file to disk, and use this copy in the future.
 @item:skin=Skin
@@ -36,7 +38,5 @@ The only restrictions for the file is the file is that is must be readable by XB
 Enables more detailed logging. You should only enable this if the developer asks you to when reporting a bug.
 @item:do_mybb_edit_bug_fix=Enable MyBB Edit Post Bug Re-Subscribe Fix
 A bug in (as of this writing) the current version of the MyBB plugin for tapatalk causes the current thread to be unsubscribed when you submit an edited post. Enabling this will cause forum browser to re-subscribe if you were subscribed before editing.
-@item:forumrunner_disable_ssl=Disable SSL For Forumrunner
-Most (all?) Forumrunner forums don't seem to work with https enabled.
-
-Disabling this makes startup faster for those forums because it doesn't have to fail first.
+@item:exp_stuff=Experimental Stuff
+Enable any experimental features (if available). Experimental features may be broken and are not supported in any way. 

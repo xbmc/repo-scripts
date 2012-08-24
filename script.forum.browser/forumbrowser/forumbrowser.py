@@ -1,5 +1,5 @@
 #Forum browser common
-import sys, re, urllib, urllib2, texttransform
+import sys, os, re, urllib, urllib2, texttransform, binascii
 
 def LOG(message):
 	print 'FORUMBROWSER: %s' % message
@@ -10,7 +10,26 @@ def ERROR(message):
 	traceback.print_exc()
 	return str(sys.exc_info()[1])
 
+def durationToShortText(unixtime):
+	days = int(unixtime/86400)
+	if days: return '%sd' % days
+	left = unixtime % 86400
+	hours = int(left/3600)
+	if hours: return '%sh' % hours
+	left = left % 3600
+	mins = int(left/60)
+	if mins: return '%sm' % mins
+	sec = int(left % 60)
+	if sec: return '%ss' % sec
+	return '0s'
+
 class Error(Exception): pass
+
+class BrokenForumException(Exception): pass
+
+class ForumMovedException(Exception): pass
+
+class ForumNotFoundException(Exception): pass
 
 class FBData():
 	def __init__(self,data=None,pagedata=None,extra=None,error=None):
@@ -39,10 +58,11 @@ class FBData():
 		
 	def __nonzero__(self):
 		return not self.error
-	
+
 class FBOnlineDatabase():
 	def __init__(self):
-		self.url = 'http://xbmc.2ndmind.net/forumbrowser/tapatalk.php'
+		self.url = 'http://xbmc.2ndmind.com/forumbrowser/forums.php'
+		#self.url = 'http://xbmc.2ndmind.tk/forumbrowser/forums.php'
 	
 	def postData(self,**data):
 		enc = urllib.urlencode(data)
@@ -53,22 +73,38 @@ class FBOnlineDatabase():
 			err = ERROR('FBTTOnlineDatabase.postData()')
 			return 'ERROR: ' + err
 			
-	def addForum(self,name,url,logo='',desc='',ftype='TT'):
-		return self.postData(do='add',name=name,url=url,desc=desc,logo=logo,type=ftype)
+	def addForum(self,name,url,logo='',desc='',ftype='TT',cat='0',rating_function='0',rating_accuracy='0',header_color='FFFFFF'):
+		return self.postData(do='add',name=name,url=url,desc=desc,cat=cat,logo=logo,type=ftype,rating_function=rating_function,rating_accuracy=rating_accuracy,header_color=header_color)
 		
-	def getForumList(self):
-		flist = self.postData(do='list')
+	def setTheme(self,fname,vals_dict):
+		return self.postData(do='set_theme',name=fname,**vals_dict)
+		
+	def getForumList(self,cat=None):
+		if cat:
+			flist = self.postData(do='list',cat=cat)
+		else:
+			flist = self.postData(do='list')
+		#print flist.replace('\r',',')
 		if not flist: return None
 		flist = flist.split('\n')
 		final = []
-		for f in flist:
-			if f:
-				name, rest = f.split('=',1)
-				url,desc,logo,ftype = rest.split('\r',3)
-				final.append({'name':name,'url':url,'desc':desc,'logo':logo,'type':ftype})
+		try:
+			for f in flist:
+				if f:
+					name, rest = f.split(':',1)
+					add = {'name':name}
+					for f in rest.split('\r'):
+						k,v = f.split('=',1)
+						add[k] = v
+					#print repr(add)
+					add['cat'] = int(add.get('cat',0))
+					final.append(add)
+		except:
+			ERROR(str(flist))
 		return final
 
 class HTMLPageInfo:
+	urlParentDirFilter = re.compile('(?<!/)/\w[^/]*?/\.\./')
 	def __init__(self,url,html=''):
 		self.url = url
 		
@@ -78,6 +114,9 @@ class HTMLPageInfo:
 		base2 = 'http://' + url.rsplit('://',1)[-1].split('/',1)[0]
 		self.base2 = base2
 		self.base2 += '/'
+		
+		self.html = ''
+		self.html2 = ''
 		
 		self.isValid = True
 		if html:
@@ -103,7 +142,13 @@ class HTMLPageInfo:
 		
 	def getHTML(self,url):
 		opener = urllib2.build_opener()
-		o = opener.open(urllib2.Request(url,None,{'User-Agent':'Wget/1.12'}))
+		try:
+			o = opener.open(urllib2.Request(url,None,{'User-Agent':'Mozilla/5.0'}))
+		except urllib2.HTTPError,e:
+			if e.code == 403:
+				o = opener.open(urllib2.Request(url,None,{'User-Agent':'Wget/1.12'}))
+			else:
+				raise
 		html = o.read()
 		o.close()
 		return html
@@ -117,13 +162,17 @@ class HTMLPageInfo:
 		
 		
 	def description(self,default=''):
-		try: return re.search('<meta[^>]*?name="description"[^>]*?content="([^"]*?)"',self.html).group(1)
+		if not self.isValid: return default
+		try:
+			desc = re.search('<meta[^>]*?name="description"[^>]*?content="([^"]*?)"',self.html).group(1)
+			if desc: return desc
 		except: pass
 		try: return re.search('<meta[^>]*?name="description"[^>]*?content="([^"]*?)"',self.html2).group(1)
 		except: pass
 		return default
 		
 	def images(self):
+		if not self.isValid: return [self.base2 + 'favicon.ico']
 		images = self._images(self.html, self.base)
 		images2 = self._images(self.html2, self.base2)
 		images3 = self.getStyleImages(self.html, self.base)
@@ -141,6 +190,7 @@ class HTMLPageInfo:
 	def _images(self,html,base):
 		urlList = re.findall('<img[^>]*?src="([^"]+?)"[^>]*?>',html) #Image tags
 		urlList2 = re.findall('<meta[^>]*?property="[^"]*image"[^>]*?content="([^"]*?)"',html) #Meta tag images
+		#<link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon" />
 		final = []
 		for u in urlList + urlList2:
 			u = self.fullURL(u, base)
@@ -150,17 +200,18 @@ class HTMLPageInfo:
 		return final
 
 	def getStyleImages(self,html,base):
-		styles = ''
+		urls = []
 		for url in re.findall('<link[^>]*?href="(?P<url>[^"]*?)"[^>]*?"text/css"[^>]*?>',html) + re.findall('<link[^>]*?"text/css"[^>]*?href="(?P<url>[^"]*?)"[^>]*?>',html):
 			#print url
 			url = self.fullURL(url, base)
+			sbase = url.rsplit('/',1)[0] + '/'
 			try:
-				styles += self.getHTML(url)
+				style = self.getHTML(url)
+				for url in re.findall("background(?:-image)?:[^\(]*?url\(['\"]?(?P<url>[^\"']+?)['\"]?\)",style):
+					urls.append(self.fullURL(url, sbase))
 			except:
 				LOG('Failed to get stylesheet')
-		urls = []
-		for url in re.findall("background(?:-image)?:[^\(]+?url\(['\"](?P<url>[^\"']+?)['\"]\)",styles):
-			urls.append(self.fullURL(url, base))
+		
 		#print urls
 		return urls
 	
@@ -176,8 +227,73 @@ class HTMLPageInfo:
 			u = self.base2 + u[1:]
 		else:
 			u = base + u
+		pdfFilter = self.urlParentDirFilter
+		while pdfFilter.search(u):
+			#TODO: Limit
+			u = pdfFilter.sub('/',u)
+			u = u.replace('/../','/')
+		u = u.replace('&amp;','&')
 		return u
 	
+class ForumData:
+	def __init__(self,forumID,forumsPath):
+		self.forumID = forumID
+		self.forumsPath = forumsPath
+		self.filePath = os.path.join(self.forumsPath,self.forumID)
+		self.name = ''
+		self.description = ''
+		self.readData()
+		
+	def readData(self):
+		self.urls = {}
+		self.theme = {}
+		self.formats = {}
+		if not os.path.exists(self.filePath): return
+		f = open(self.filePath,'r')
+		data = f.read()
+		f.close()
+		data = data.splitlines()
+		self.name = data.pop(0)[1:]
+		self.description = data.pop(0)[1:]
+		for line in data:
+			line = line.strip()
+			if not line: continue
+			if line.startswith('#'): continue
+			dtype , rest = line.split(':',1)
+			if dtype == 'import':
+				self.loadForumData(rest)
+			elif dtype == 'url':
+				key,url = rest.split('=',1)
+				if url.startswith('=='):
+					dup = url.split('=')[-1]
+					url = self.urls[dup]
+				self.urls[key] = url
+			elif dtype == 'theme':
+				key,color = rest.split('=',1)
+				if color.startswith('=='):
+					dup = color.split('=')[-1]
+					color = self.theme[dup]
+				self.theme[key] = color
+			elif dtype == 'format':
+				key,data = rest.split('=',1)
+				if data.startswith('=='):
+					dup = data.split('=')[-1]
+					data = self.formats[dup]
+				self.formats[key] = data
+				
+	def writeData(self):
+		out = '#%s\n#%s\n' % (self.name,self.description)
+		for k,v in self.urls.items():
+			out += 'url:' + k + '=' + v + '\n'
+		for k,v in self.theme.items():
+			out += 'theme:' + k + '=' + v + '\n'
+		for k,v in self.formats.items():
+			out += 'format:' + k + '=' + v + '\n'
+		f = open(self.filePath,'w')
+		f.write(out)
+		f.close()
+		
+
 ################################################################################
 # Action
 ################################################################################
@@ -187,6 +303,7 @@ class Action:
 
 class PMLink:
 	linkImageFilter = re.compile('https?://.+?\.(?:jpg|png|gif|bmp)$')
+	#urlParentDirFilter = re.compile('(?<!/)/\w[^/]*?/\.\./')
 	def __init__(self,fb,match=None):
 		self.FB = fb
 		self.MC = fb.MC
@@ -207,6 +324,7 @@ class PMLink:
 			
 	def processURL(self):
 		if not self.url: return
+		self.url = self.url.replace('&amp;','&')
 		self._isImage = self.linkImageFilter.search(self.url) and True or False
 		if self._isImage: return
 		pm = re.search(self.FB.filters.get('post_link','@`%#@>-'),self.url)
@@ -259,10 +377,13 @@ class PostMessage(Action):
 		self.isPM = is_pm
 		self.isEdit = isEdit
 		self.error = ''
-		self.tagFilter = re.compile('<[^<>]+?>',re.S)
+		self.successMessage = ''
+		self.boxid = ''
+		self.moderated = False
 		
 	def setQuote(self,user,quote):
-		self.quser = self.tagFilter.sub('',user)
+		tagFilter = re.compile('<[^<>]+?>',re.S)
+		self.quser = tagFilter.sub('',user)
 		self.quote = quote
 		
 	def setMessage(self,title,message):
@@ -275,7 +396,62 @@ class PostMessage(Action):
 		self.fid = post.fid
 		self.message = post.message
 		self.title = post.title
+		self.boxid = post.boxid
 		return self
+	
+	def toString(self):
+		return dictToString(self.__dict__)
+	
+	def fromString(self,data):
+		self.__dict__.update(dictFromString(data))
+		return self
+
+def valToString(val):
+	if hasattr(val,'encode'):
+		try:
+			return val.encode('utf-8')
+		except:
+			LOG('valToString() encode error')
+			return val
+	return str(val).encode('utf-8')
+
+def dictToString(data_dict):
+	if not data_dict: return ''
+	ret = []
+	try:
+		for key,val in data_dict.items():
+			if val == None:
+				continue
+			elif isinstance(val,dict):
+				val = dictToString(val)
+				key = 'dict___' + key
+			elif isinstance(val,list):
+				val = ','.join(val)
+				key = 'list___' + key
+			ret.append('%s=%s' % (key,binascii.hexlify(valToString(val))))
+	except:
+		raise
+	return ','.join(ret)
+
+def dictFromString(data,val_is_hex=True):
+	if not data: return {}
+	theDict = {}
+	for keyval in data.split(','):
+		key,val = keyval.split('=',1)
+		if key.startswith('dict___'):
+			key = key[7:]
+			val = dictFromString(binascii.unhexlify(val),val_is_hex)
+			theDict[key] = val
+		elif key.startswith('list___'):
+			key = key[7:]
+			val = binascii.unhexlify(val).split(',')
+			theDict[key] = val
+		else:
+			if val_is_hex:
+				theDict[key] = binascii.unhexlify(val)
+			else:
+				theDict[key] = val.decode('utf-8')
+	return theDict
 
 ################################################################################
 # PageData
@@ -352,6 +528,7 @@ class PageData:
 # ForumPost
 ################################################################################
 class ForumPost:
+	hideSignature = False
 	def __init__(self,fb,pdict=None):
 		self.FB = fb
 		self.MC = fb.MC
@@ -376,12 +553,14 @@ class ForumPost:
 		self.boxid = ''
 		self.status = ''
 		self.activity = ''
+		self.activityUnix = None
 		self.online = False
 		self.postCount = 0
 		self.postNumber = 0
 		self.joinDate = ''
 		self.userInfo = {}
 		self.extras = {}
+		self.isSent = False
 		if pdict: self.setVals(pdict)
 			
 	def setVals(self,pdict): pass
@@ -391,6 +570,8 @@ class ForumPost:
 		
 	def setUserInfo(self,info): pass
 		
+	def getActivity(self): return self.activity
+	
 	def setPostID(self,pid):
 		self.postId = pid
 		self.pid = pid
@@ -404,6 +585,7 @@ class ForumPost:
 		return self.getMessage(True)
 	
 	def getMessage(self,skip=False,raw=False):
+		if self.hideSignature: return self.message
 		return self.message + self.signature
 	
 	def messageAsText(self):
@@ -440,12 +622,29 @@ class ForumPost:
 	def makeAvatarURL(self): return self.avatar
 	
 	def cleanUserName(self): return self.userName
+	
+######################################################################################
+# ForumUser
+######################################################################################
+class ForumUser:
+	def __init__(self,ID,name):
+		self.name = name
+		self.ID = ID
+		self.postCount = ''
+		self.joinDate = ''
+		self.activity = ''
+		self.online = False
+		self.lastActivityDate = ''
+		self.avatar = ''
+		self.status = ''
+		self.extras = {}
 			
 ######################################################################################
 # Forum Browser API
 ######################################################################################
 class ForumBrowser:
 	browserType = 'ForumBrowser'
+	prefix = ''
 	ForumPost = ForumPost
 	PMLink = PMLink
 	PageData = PageData
@@ -469,9 +668,11 @@ class ForumBrowser:
 	
 	#Order is importand because some a substrings of others. Also some include \r so the replacement is not re-replaced. We clean those out at the end
 	smiliesDefs = [	(':devil:',u'[COLOR FFAA0000]\u2461[/COLOR]',u'>:\r)'),
+					(':evil:',u'[COLOR FFAA0000]\u2461[/COLOR]',u'>:\r)'),
+					(':twisted:',u'[COLOR FFAA0000]\u2461[/COLOR]',u'>:\rD'),
 					(':angel:',u'\u2460',u'O:\r)'),
 					(':;):',u'\u2464',u';\r)'),
-					(':-/',u'\u246e',u':-)'),
+					(':-/',u'\u246e',u':-/'),
 					(';)',u'\u2464',u';\r)'),
 					(':D',u'\u2463',u':\rD'),
 					(':P',u'\u2465',u':\rP'),
@@ -480,45 +681,75 @@ class ForumBrowser:
 					(':~',u'\u246a',u':~'),
 					(':grin:',u'\u2463',u':\rD'),
 					(':blush:',u'[COLOR FFFF9999]\u246d[/COLOR]',u':")'),
+					(':oops:',u'[COLOR FFFF9999]\u246d[/COLOR]',u':")'),
 					(':laugh:',u'\u2470',u':\r))'),
 					(':angry:',u'\u2466',u'>:\r{'),
 					(':rofl:',u'\u2467',u'*ROFL*'),
+					(':lol:',u'\u2467',u'*LOL*'),
 					(':huh:',u'\u2473',u'*HUH?*'),
 					(':sleepy:',u'\u2468',u'*SLEEPY*'),
 					(':cool:',u'\u2462',u'B)'),
+					('8-)',u'\u2462',u'8-)'),
 					(':rolleyes:',u'*ROLLEYES*',u'*ROLLEYES*'),
+					(':roll:',u'*ROLLEYES*',u'*ROLLEYES*'),
 					(':nod:',u'*NOD*',u'*NOD*'),
 					(':sniffle:',u'\u246a',u':\rs'),
 					(':confused:',u'%)',u'%)'),
 					(':mad:',u'\u2466',u'>:\r{'),
+					(':x',u'\u2466',u'>:\r{'),
 					(':yawn:',u'*YAWN*',u'*YAWN*'),
 					(':struggle:',u'*STRUGGLE*',u'*STRUGGLE*'),
 					(':shame:',u'\u246c',u'*SHAME*'),
-					(':eek:',u'[COLOR FF00AA00]\u2472[/COLOR]',u'8o'),
+					(':eek:',u'[COLOR FF00AA00]\u2472[/COLOR]',u'[COLOR FF00AA00]8o[/COLOR]'),
+					(':mrgreen:',u'[COLOR FF00AA00]\u2472[/COLOR]',u'[COLOR FF00AA00]:D[/COLOR]'),
 					(':rotfl:',u'\u2467',u'*ROFL*'),
 					(':bulgy-eyes:',u'\u246f',u'Oo'),
 					(':at-wits-end:',u'[COLOR FFAA0000]\u2466[/COLOR]',u'[COLOR FFAA0000]>:{[/COLOR]'),
 					(':oo:',u'>oo<',u'>oo<'),
 					(':stare:',u'*STARE*',u'*STARE*'),
 					(':sad:',u'\u2639',u':\r('),
+					(':cry:',u'\u2639',u':\r('),
 					(':no:',u'*NO*',u'*NO*'),
 					('???',u'\u2473',u'???'),
 					(':shocked:',u'\u2469',u'*SHOCKED*'),
+					(':shock:',u'\u2469',u'*SHOCKED*'),
 					(':love:',u'\u2471',u'[COLOR FFAA0000]<3[/COLOR]'),
 					('<3',u'[COLOR FFAA0000]\u2665[/COLOR]',u'[COLOR FFAA0000]<3[/COLOR]'),
 					(':shy:',u'*SHY*',u'*SHY*'),
 					(':nerd:',u'\u2474',u':-B'),
+					(':geek:',u'\u2474',u':-B'),
+					(':ugeek:',u'\u2474',u':-B'), #TODO: Make smiley with beard
+					#(':!:','',''), #TODO: ! in face
+					#(':?:','',''), #TODO: ? in face
+					#(':idea:','',''), #TODO: lightbulb 
+					#(':arrow:','',''), #TODO: Arrow in face
 					(':(',u'\u2639',u':\r('),
 					(':)',u'\u263a',u':\r)'),
 					(':s',u'\u2463',u':\rs'),
 					('\r',u'',u'')
 					]
-	
+
+#From IP Board
+#:smile: :thumbsup: :wub: :unsure: >_< :ph34r: (w00t) :drool: :sick: :sorcerer: :sweat: :huggles: :console: :poke: :flowers: :hairy:
+#:super: :phone: :santa: :purple: :puppeh: :sheep: :heart: :question: (!) :homestar: :cat: :hyper: <_< :alien: :dry: :hmm: :aww: :afro:
+#:sleep: :mellow: :zorro: :whistle: :tongue: :nuke: :ike: :brr: :pirate: :kiss: :cheer: :wacko: :ninja: :turned: :faceless:
+#:baby: :ahappy: :bug: :frantics: :ohmy: :shifty: :clover: :bye: :logik: :blink: :yes: :ermm: :twitch: :queen:
+					
+	forumTypeNames = {	'vb': 'VBulletin',
+						'fb': 'FluxBB',
+						'mb': 'MyBB',
+						'pb': 'PhpBB',
+						'ip': 'Invision Power Board',
+						'sm': 'Simple Machines Forum',
+						'xf': 'XenForo'
+					}
+		
 	def __init__(self,forum,always_login=False,message_converter=None):
 		if not message_converter: message_converter = texttransform.MessageConverter
 		self.forum = forum
-		self.prefix = ''
 		self._url = ''
+		self.user = ''
+		self.password = ''
 		self.transport = None
 		self.server = None
 		self.forumConfig = {}
@@ -535,6 +766,9 @@ class ForumBrowser:
 		self.altQuoteStartFilter = '\r\r\r\r\r\r'
 		self.smilies = {}
 		self.MC = None
+		self.pmBoxes = []
+		self.lastURL = ''
+		self.browser = None
 		self.messageConvertorClass=message_converter
 		
 	def initialize(self):
@@ -543,6 +777,19 @@ class ForumBrowser:
 	def finish(self,data,callback=None):
 		if callback: callback(data)
 		return data
+	
+	def domain(self):
+		domain = self._url.split('://',1)[-1]
+		return domain.split('/')[0]
+	
+	def canLogin(self):
+		return bool(self.user and self.password)
+	
+	def forumTypeDisplay(self,short):
+		return self.forumTypeNames(short,'Unknown')
+	
+	def getForumInfo(self):
+		return [ ('name',self.forum) ]
 	
 	def getForumPost(self,pdict=None):
 		return self.ForumPost(self,pdict=pdict)
@@ -564,9 +811,15 @@ class ForumBrowser:
 	
 	def resetBrowser(self): pass
 		
-	def loadForumData(self,fname):
+	def clearForumData(self):
 		self.urls = {}
-		self.filters = {'quote':'\[QUOTE\](?P<quote>.*)\[/QUOTE\](?is)',
+		self.filters = {}
+		self.theme = {}
+		self.forms = {}
+		self.formats = {}
+		
+	def loadForumData(self,fname):
+		self.filters.update({'quote':'\[QUOTE\](?P<quote>.*)\[/QUOTE\](?is)',
 						'code':'\[CODE\](?P<code>.+?)\[/CODE\](?is)',
 						'php':'\[PHP\](?P<php>.+?)\[/PHP\](?is)',
 						'html':'\[HTML\](?P<html>.+?)\[/HTML\](?is)',
@@ -575,12 +828,10 @@ class ForumBrowser:
 						'link2':'\[url\](?P<text>(?P<url>.+?))\[/url\](?is)',
 						'post_link':'(?:showpost.php|showthread.php)\?[^<>"]*?tid=(?P<threadid>\d+)[^<>"]*?pid=(?P<postid>\d+)',
 						'thread_link':'showthread.php\?[^<>"]*?tid=(?P<threadid>\d+)',
-						'color_start':'\[color=?#?(?P<color>\w+)\]'}
+						'color_start':'\[color=?#?(?P<color>\w+)\]'})
+		return self.parseForumData(fname)
 		
-		self.theme = {}
-		self.forms = {}
-		self.formats = {}
-		
+	def parseForumData(self,fname):
 		f = open(fname,'r')
 		data = f.read()
 		f.close()
@@ -628,6 +879,19 @@ class ForumBrowser:
 					data = self.smilies[dup]
 				self.smilies[key] = data
 	
+	def sortDictList(self,dlist,key):
+		ct = 0
+		srt = {}
+		for d in dlist:
+			srt[str(d.get(key)) + str(ct)] = d
+			ct+=1
+		keys = srt.keys()
+		keys.sort(reverse=True)
+		dlist = []
+		for k in keys:
+			dlist.append(srt[k])
+		return dlist
+	
 	def getForumType(self): return ''
 
 	def getQuoteFormat(self):
@@ -666,6 +930,10 @@ class ForumBrowser:
 	def canSubscribeForum(self,fid): return False
 	def canUnSubscribeForum(self,fid): return False
 	
+	def canCreateThread(self,fid): return False
+	
+	def canGetOnlineUsers(self): return False
+	
 	def isForumSubscribed(self,fid,default=False): return default
 	
 	def isThreadSubscribed(self,tid,default=False): return default
@@ -676,6 +944,8 @@ class ForumBrowser:
 	
 	def canPost(self): return False
 	
+	def canPrivateMessage(self): return self.canPost()
+	
 	def canDelete(self,user,target='POST'): return False
 			
 	def canEditPost(self,user): return False
@@ -685,6 +955,12 @@ class ForumBrowser:
 	def guestOK(self): return True
 	
 	def getAnnouncement(self,aid): return None
+	
+	def getPMBoxes(self,update=True): return None
+	
+	def canGetUserInfo(self): return False
+	
+	def getUserInfo(self,uid=None,uname=None): return None
 	
 	
 		

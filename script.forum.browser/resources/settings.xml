@@ -2,10 +2,13 @@
 <settings>
   <category label="30000">
     <setting id="always_login" type="bool" label="30004" default="false" />
-    <setting id="ask_close_on_exit" type="bool" label="30237" default="false" />
+    <setting id="ask_close_on_exit" type="bool" label="30015" default="false" />
     <setting id="open_thread_to_newest" type="bool" label="30001" default="true" />
     <setting id="auto_thread_subscriptions_window" type="bool" label="30009" default="false" />
     <setting id="reverse_sort" type="bool" label="30002" default="false" />
+    <setting id="hide_signatures" type="bool" label="30013" default="false" />
+    <setting id="ignore_forum_images" type="bool" label="30016" default="true" />
+    <setting id="message_dialog_always_show_ok" type="bool" label="30014" default="false" />
     <setting id="use_skin_mods" type="bool" label="30234" default="true" />
     <setting id="enable_ssl" type="bool" label="30235" default="false" visible="false"/>
     <setting id="save_logos" type="bool" label="30245" default="false" />
@@ -13,7 +16,7 @@
     <setting label="30244" type="action" action="RunScript(script.forum.browser,settingshelp)"/>
   </category>
   <category label="30008">
-  	<setting id="crypto_type" type="enum" label="30238" values="AES|Triple DES|AES & Triple DES" default="2" />
+  	<setting id="crypto_type" type="enum" label="30238" values="AES|Triple DES|AES &amp; Triple DES" default="2" />
     <setting label="30239" type="file" id="crypto_key_file" default="" />
     <setting id="debug" type="bool" label="30228" default="false" />
     <setting id="do_mybb_edit_bug_fix" type="bool" label="30233" default="true" />

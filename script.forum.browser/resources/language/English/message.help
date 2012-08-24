@@ -15,6 +15,8 @@ Shows the formatted message.
 Links will show as: link_text (Link: [B]http://url[/B]) - and can be followed by pressing left to bring up the links list. Clicking a link will open WebViewer to view a web page or, for post and thread links, open them in Forum Browser.
 
 Images will show as: [COLOR FFFF0000]I[/COLOR][COLOR FFFF8000]M[/COLOR][COLOR FF00FF00]G[/COLOR][COLOR FF0000FF]#[/COLOR][COLOR FFFF00FF]0[/COLOR]: [I]http://img_url[/I] - and can be viewed by pressing right to bring up the images list. Clicking an image will bring up the image viewer.
+
+If the ShareSocial addon is installed, when a link or image is selected, the context menu will give the option to copy the link/image url to the clipboard. You can later paste this url into a post/pm.
 @item:context=Context Menu
 Some options will be unavailable depending on login status.
 

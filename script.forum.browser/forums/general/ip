@@ -24,3 +24,25 @@ form:login_pass=ips_password
 
 #------------------------------------- Formats/Flags
 format:no_9999=True
+
+#------------------------------------- Start Topic - TODO
+#http://community.invisionpower.com/index.php?app=forums&module=post&section=post&do=new_post&f=15
+
+#-- Posting ---------------------------------
+url:newpost=index.php?app=forums&module=post&section=post&do=reply_post&f=!FORUMID!&t=!THREADID!
+url:quotepost=index.php?app=forums&module=post&section=post&do=reply_post&f=!FORUMID!&t=!THREADID!&qpid=!POSTID!
+
+form:post_id=postingform
+form:post_message=Post
+form:post_submit_wait=1
+
+#url:editpost=index.php?app=forums&module=post&section=post&do=edit_post&f=!FORUMID!&t=!THREADID!&pid=!POSTID!
+
+#form:edit_post_id=postingform
+#form:edit_post_message=Post
+#form:edit_post_submit_wait=1
+
+
+#url:deletepost=
+#form:delete_action=
+#form:delete_control1=radio:name.deletepost=delete

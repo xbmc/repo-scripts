@@ -15,3 +15,21 @@ url:login=login.php
 form:login_action=login.php?
 form:login_user=req_username
 form:login_pass=req_password
+
+#-- Posting ---------------------------------
+url:newpost=post.php?tid=!THREADID!
+
+form:post_action=post.php?action=post
+form:post_message=req_message
+form:post_submit_wait=1
+
+url:editpost=edit.php?id=!POSTID!
+
+form:edit_post_action=edit.php?id=
+form:edit_post_message=req_message
+form:edit_post_submit_wait=1
+
+url:quotepost=post.php?tid=!THREADID!&qid=!POSTID!
+
+url:deletepost=delete.php?id=!POSTID!
+form:delete_action=delete.php

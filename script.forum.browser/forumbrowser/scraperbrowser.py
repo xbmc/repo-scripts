@@ -41,6 +41,7 @@ class ForumPost(forumbrowser.ForumPost):
 		self.postNumber = pdict.get('postnumber') or None
 		self.postCount = pdict.get('postcount') or None
 		self.joinDate = pdict.get('joindate') or ''
+		self.boxid = pdict.get('boxid') or ''
 		self.extras = pdict.get('extras') or self.extras
 	
 	def messageToText(self,html):
@@ -67,7 +68,7 @@ class ForumPost(forumbrowser.ForumPost):
 	
 	def getMessage(self):
 		sig = ''
-		if self.signature: sig = '\n__________\n' + self.signature
+		if self.signature and not self.hideSignature: sig = '\n__________\n' + self.signature
 		return self.message + sig
 	
 	def messageAsText(self):
@@ -75,7 +76,8 @@ class ForumPost(forumbrowser.ForumPost):
 		
 	def messageAsDisplay(self,short=False,raw=False):
 		if self.isPM:
-			message =  self.MC.parseCodes(self.getMessage())
+			self.MC = texttransform.BBMessageConverter(self.FB)
+			message = self.MC.messageToDisplay(re.sub('(?<!\n)(\[quote)(?i)',r'\n\1',self.message)) #self.MC.parseCodes(self.getMessage())
 		else:
 			message = self.MC.messageToDisplay(self.getMessage())
 		message = re.sub('\[(/?)b\]',r'[\1B]',message)
@@ -83,7 +85,11 @@ class ForumPost(forumbrowser.ForumPost):
 		return message
 		
 	def messageAsQuote(self):
-		return self.MC.messageAsQuote(self.message)
+		pm = self.FB.getPostAsQuote(self)
+		if pm:
+			return pm.message
+		else:
+			return self.MC.messageAsQuote(self.message)
 		
 	def imageURLs(self):
 		return self.MC.imageFilter.findall(self.getMessage())
@@ -145,7 +151,7 @@ class PageData:
 			if pdict.get('page'):
 				self.page = pdict.get('page')
 				page_set = True
-			self.totalPages = pdict.get('total','1')
+			self.totalPages = pdict.get('total','1') or '1'
 			self.pageDisplay = self.MC.tagFilter.sub('',pdict.get('display',''))
 		if next_match:
 			#check for less greedy match by looking in the whole match for a smaller match
@@ -332,6 +338,11 @@ class PageData:
 		if self.page and self.totalPages:
 			return 'Page %s of %s' % (self.page,totalPages)
 		
+class ForumMessage:
+	def __init__(self,message,is_error=False):
+		self.message = message
+		self.isError = is_error
+		
 ######################################################################################
 # Forum Browser API
 ######################################################################################
@@ -358,10 +369,10 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 		return self.forum
 	
 	def isLoggedIn(self):
-		#check = self.forms.get('login_action','@%+#').split('?')[0]
-		#if check and self.lastHTML:
-		#	#open('/home/ruuk/test3.txt','w').write(self.lastHTML)
-		#	return not 'action="' + check in self.lastHTML
+		check = self.formats.get('login_check')
+		if check and self.lastHTML:
+			#open('/home/ruuk/test3.txt','w').write(self.lastHTML)
+			if check in self.lastHTML: return False
 		if self.lastHTML:
 			return bool(re.search('log[\s-]?out(?i)',self.lastHTML)) and not self.needsLogin
 		return self._loggedIn
@@ -480,7 +491,7 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 			
 	def doCaptcha(self,url):
 		cachePath = sys.modules["__main__"].CACHE_PATH
-		captchaPath = os.path.join(cachePath,'captcha')
+		captchaPath = os.path.join(cachePath,'captcha'+str(time.time()))
 		open(captchaPath,'w').write(self.browser.open_novisit(url).read())
 		url = captchaPath
 		import xbmcgui, xbmc
@@ -501,10 +512,32 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 		try:
 			return sys.modules["__main__"].doModKeyboard('Enter security code')
 		finally:
+			os.remove(captchaPath)
 			w.close()
 			del w
-			
+		
 	def login(self,url=''):
+		if self.doLogin(url):
+			return True
+		url = None
+		for l in self.browser.links():
+			if 'login' in l.url:
+				url = l.url
+				if not url.startswith('http'): url = l.base_url + url
+				break
+		else:
+			return False
+		LOG('Login Failed. Attempting to find re-direct login link...')
+		return self.doLogin(url,generic=True)
+		
+	def doLogin(self,url='',generic=False):
+		if generic:
+			usercontrol = 'user'
+			passcontrol = 'pass'
+		else:
+			usercontrol = self.forms['login_user']
+			passcontrol = self.forms['login_pass']
+			
 		if not self.canLogin():
 			self._loggedIn = False
 			return False
@@ -513,13 +546,23 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 			return True
 		LOG('LOGGING IN')
 		self.checkBrowser()
-		response = self.browser.open(url or self.getURL('login'))
+		try:
+			response = self.browser.open(url or self.getURL('login'))
+		except self.mechanize.HTTPError, e:
+			if e.code == 302:
+				response = e
+			else:
+				return False
 		html = response.read()
+		#self.lastHTML = html
 		#open('/home/ruuk/test.txt','w').write(html)
+		#if self.isLoggedIn():
+		#	LOG('Already Logged In')
+		#	return True
 		try:
 			self.browser.select_form(predicate=self.predicateLogin)
-			self.browser[self.forms['login_user']] = self.user
-			self.browser[self.forms['login_pass']] = self.password
+			self.browser[usercontrol] = self.user
+			self.browser[passcontrol] = self.password
 		except:
 			ERROR('LOGIN FORM SELECT ERROR',hide_tb=True)
 			LOG('TRYING ALTERNATE METHOD 1')
@@ -527,8 +570,8 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 				form = self.getForm(html,self.forms.get('login_action'))
 				if not form: raise Exception('NO FORM')
 				self.browser.form = form
-				self.browser[self.forms['login_user']] = self.user
-				self.browser[self.forms['login_pass']] = self.password
+				self.browser[usercontrol] = self.user
+				self.browser[passcontrol] = self.password
 			except:
 				ERROR('LOGIN FORM SELECT ERROR',hide_tb=True)
 				LOG('TRYING ALTERNATE METHOD 2')
@@ -541,10 +584,14 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 						ct+=1
 						try:
 							for c in self.browser.form.controls:
-								if not userset and self.forms['login_user'] in str(c.name):
+								if not userset and usercontrol in str(c.name):
 									userset = True
 									c.value = self.user
-								elif not passset and self.forms['login_pass'] in str(c.name):
+								elif generic and not userset and 'email' in str(c.name):
+									LOG('Found \'email\' control. Using it.')
+									userset = True
+									c.value = self.user
+								elif not passset and passcontrol in str(c.name):
 									passset = True
 									c.value = self.password
 								elif userset and ('sec' in str(c.name).lower() or 'captcha' in str(c.name).lower()) and not c.readonly:
@@ -568,7 +615,7 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 								ct+=1
 								try:
 									for c in self.browser.form.controls:
-										if not passset and self.forms['login_pass'] in str(c.name):
+										if not passset and passcontrol in str(c.name):
 											passset = True
 											c.value = self.password
 										elif passset and 'sec' in str(c.name).lower() and not c.readonly:
@@ -627,9 +674,6 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 		self.lastURL = response.geturl()
 		if not callback(60,__language__(30102)): return ''
 		return response.read()
-		
-	def canLogin(self):
-		return self.user and self.password
 	
 	def readURL(self,url,callback=None,force_login=False,is_html=True,force_browser=False):
 		if not url:
@@ -754,7 +798,22 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 	def hasPM(self):
 		return bool(self.urls.get('private_messages_xml') or self.urls.get('private_messages_csv'))
 	
-	def getPrivateMessages(self,callback=None,donecallback=None):
+	def getPMBoxes(self,update=True):
+		boxes = self.getPrivateMessages(get_boxes=True)
+		if not boxes: return None
+		ret = []
+		for b,c in boxes.items():
+			box = {	'id':b.lower(),
+					'name':b,
+					'count':c,
+					'unread':0,
+					'type':b.upper()
+					}
+			ret.append(box)
+			
+		return ret
+					
+	def getPrivateMessages(self,callback=None,donecallback=None,boxid=None,get_boxes=False):
 		if not callback: callback = self.fakeCallback
 		#if not self.checkLogin(callback=callback): return None, None
 		pms = None
@@ -777,23 +836,50 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 				pms.append(p)
 				
 		elif self.urls.get('private_messages_csv'):
-			csvstring = self.readURL(self.getURL('private_messages_csv'),callback=callback,force_login=True,is_html=False)
+			if self.forms.get('private_messages_csv_action'):
+				csvstring = self.getPMCSVFromForm(self.getURL('private_messages_csv'))
+			else:
+				csvstring = self.readURL(self.getURL('private_messages_csv'),callback=callback,force_login=True,is_html=False)
 			if not csvstring or not callback(80,__language__(30103)):
 				return self.finish(FBData(error=csvstring and 'CANCEL' or 'NO MESSAGES'),donecallback)
-			columns = self.formats.get('pm_csv_columns').split(',')
+			columns = self.formats.get('pm_csv_columns','').split(',')
 			import csv
 			cdata = csv.DictReader(csvstring.splitlines()[1:],fieldnames=columns)
 			pms = []
-			folder = self.formats.get('pm_csv_folder')
+			folder = boxid and boxid.lower() or 'inbox' #self.formats.get('pm_csv_folder')
+			boxes = {}
 			for d in cdata:
-				if folder and folder == d.get('folder'):
+				if d.get('boxid'):
+					if d.get('boxid') in boxes:
+						boxes[d.get('boxid')] += 1
+					else:
+						boxes[d.get('boxid')] = 0
+					
+				if folder and folder == d.get('boxid','').lower():
 					p = self.getForumPost(pdict=d)
-					p.isPM = True
 					p.setPostID(len(pms))
+					p.isPM = True
 					pms.append(p)
+			if get_boxes: return boxes
+		if get_boxes: return None
+			
 		callback(100,__language__(30052))
 		pms.reverse()
 		return self.finish(FBData(pms),donecallback)
+		
+	def getPMCSVFromForm(self,url):
+		res = self.browser.open(url)
+		html = res.read()
+		self.selectForm(self.forms.get('private_messages_csv_action'))
+		res = self.browser.submit()
+		html = res.read()
+		if self.forms.get('private_messages_csv_submit2'):
+			self.selectForm(self.forms.get('private_messages_csv_action'))
+			res = self.browser.submit()
+			html = res.read()
+		#open('/home/ruuk/test.txt','w').write(html)
+		return html
+		
 			
 	def hasSubscriptions(self):
 		return bool(self.urls.get('subscriptions'))
@@ -825,12 +911,27 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 	def getPageUrl(self,page,sub,pid='',tid='',fid='',lastid='',suburl=''):
 		suburl = suburl or self.urls.get(sub,'')
 		if not suburl: return None
-		if page and not str(page).isdigit(): return self.makeURL(page)
+		if page:
+			try: int(page)
+			except: return self.makeURL(page)
+			
 		if sub == 'replies' and page and int(page) < 0:
 			gnp = self.urls.get('gotonewpost','')
 			page = self.URLSubs(gnp,pid=lastid)
 		else:
 			if page:
+				
+				####-- For SMF --################################
+				if fid.endswith('.0') or tid.endswith('.0'):
+					if tid.endswith('.0'):
+						mult = 20
+						tid = tid[:-1]
+					elif fid.endswith('.0'):
+						mult = 25
+						fid = fid[:-1]
+					if int(page) > 0: page = str((int(page) - 1) * mult)
+				####-- For SMF --################################
+					
 				try:
 					if int(page) < 0: page = '9999'
 				except:
@@ -875,6 +976,9 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 	def editURL(self,post):
 		return self.URLSubs(self.getURL('editpost'),post=post)
 	
+	def quoteURL(self,post):
+		return self.URLSubs(self.getURL('quotepost'),post=post)
+	
 	def predicatePost(self,formobj):
 		return self.forms.get('post_action','@%+#') in formobj.action
 	
@@ -883,21 +987,41 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 		
 	def fakeCallback(self,pct,message=''): return True
 	
-	def post(self,post,callback=None,edit=False):
+	def selectForm(self,action_sub=None,ID=None):
+		if action_sub:
+			for f in self.browser.forms():
+				if action_sub in f.action:
+					self.browser.form = f
+					return
+			raise Exception('No Matching Form Found')
+		elif ID:
+			for f in self.browser.forms():
+				if f.attrs.get('id') == ID:
+					self.browser.form = f
+					return
+			raise Exception('No Matching Form Found')
+			
+	def post(self,post,callback=None,edit=False,get_for_edit=False,quote=False):
 		if not callback: callback = self.fakeCallback
 		if not self.checkLogin(callback=callback):
 			post.error = 'Could not log in'
 			return False
 		pre = ''
-		if edit or post.isEdit:
+		if quote:
+			url = self.quoteURL(post)
+		elif edit or post.isEdit:
 			pre = 'edit_'
 			url = self.editURL(post)
 		else:
 			url = self.postURL(post)
-			
+		LOG('Posting URL: ' + url)
 		res = self.browser.open(url)
 		#print res.info()
 		html = res.read()
+		self.lastHTML = html
+		if not self.checkLogin():
+			post.error = 'Not logged in and could not log in'
+			return False
 		#open('/home/ruuk/test.txt','w').write(html)
 		if self.forms.get('login_action','@%+#') in html:
 			callback(5,__language__(30100))
@@ -912,11 +1036,14 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 			if self.forms.get(pre + 'post_name'):
 				self.browser.select_form(self.forms.get(pre + 'post_name'))
 				LOG('FORM SELECTED BY NAME')
+			elif self.forms.get(pre + 'post_id'):
+				self.selectForm(ID=self.forms.get(pre + 'post_id'))
+				LOG('FORM SELECTED BY ID')
 			else:
 				if edit or post.isEdit:
-					self.browser.select_form(predicate=self.predicateEditPost)
+					self.selectForm(self.forms.get('edit_post_action', '@%+#'))
 				else:
-					self.browser.select_form(predicate=self.predicatePost)
+					self.selectForm(self.forms.get('post_action', '@%+#'))
 				LOG('FORM SELECTED BY ACTION')
 			selected = True
 		except:
@@ -927,10 +1054,20 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 			if form:
 				self.browser.form = form
 			else:
-				post.error = 'Could not find form.'
+				error = self.checkForError(html)
+				post.error = error and error.message or 'Could not find form.'
 				return False
+		#print self.browser.form
 		try:
-			if post.title: self.browser[self.forms[pre + 'post_title']] = post.title
+			if get_for_edit:
+				title = ''
+				if self.forms.get(pre + 'post_title'): title = self.browser[self.forms[pre + 'post_title']]
+				message = self.browser[self.forms[pre + 'post_message']]
+				moderated = False
+				if re.search('approv\w+[^<]*?moderat\w+',html) or re.search('moderat\w+[^<]*?approv\w+',html): moderated = True
+				return (title,message,moderated)
+			
+			if post.title and self.forms.get(pre + 'post_title'): self.browser[self.forms[pre + 'post_title']] = post.title
 			self.browser[self.forms[pre + 'post_message']] = post.message
 			self.setControls(pre + 'post_controls%s')
 			wait = int(self.forms.get(pre + 'post_submit_wait',0))
@@ -942,23 +1079,37 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 			#open('/home/ruuk/test.txt','w').write(html)
 			err = self.checkForError(html)
 			if err:
-				post.error = err
-				return False
+				if err.isError:
+					post.error = err.message
+					return False
+				else:
+					post.successMessage = err.message
+					
 			callback(100,__language__(30052))
 		except:
 			post.error = ERROR('FORM ERROR')
 			return False
 			
+		#message = self.checkForError(html)
+		#if message: post.successMessage = message
+		moderated = False
+		if re.search('approv\w+[^<]*?moderat\w+',html) or re.search('moderat\w+[^<]*?approv\w+',html): moderated = True
+		post.moderated = moderated
 		return True
 		
 	def checkForError(self,html):
-		errm = re.search('(<div[^>]*?class="[^"]*?error[^"]*?[^>]*?>)(.*?)</div>(?is)',html)
+		#open('/home/ruuk/test.txt','w').write(html)
+		errm = re.search('(<div[^>]*?(?:class|id)="[^"]*?(?:error|message)[^>]*?>)(.*?)</div>(?is)',html)
 		if errm:
 			if 'hidden' in errm.group(1):
 				return None
-			error = re.sub('[\n\t\r]','',errm.group(2))
-			error = re.sub('<[^>]*?>','\n',error).replace('\n\n','\n').replace('\n','[CR]')
-			return error
+			message = re.sub('[\n\t\r]','',errm.group(2))
+			message = re.sub('<[^>]*?>','\n',message).replace('\n\n','\n').strip().replace('\n','[CR]')
+			if 'error' in errm.group(1).lower() or 'error' in message.lower():
+				return ForumMessage(message,is_error=True)
+			else:
+				if re.search('[^_\w]message[^_\w]',errm.group(1).lower()): #To catch only real messages (hopefully) and not things like post_message
+					return ForumMessage(message,is_error=False)
 		return None
 	
 	def doPrivateMessage(self,post,callback=None):
@@ -967,6 +1118,9 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 							self.forms.get('pm_action'),
 							{self.forms.get('pm_recipient'):post.to,self.forms.get('pm_title'):post.title,self.forms.get('pm_message'):post.message},
 							callback=callback)
+		
+	def canPrivateMessage(self):
+		return bool(self.isLoggedIn() and self.urls.get('pm_new_message'))
 		
 	def deletePrivateMessage(self,post,callback=None):
 		return self.deletePrivateMessageViaIndex(post, callback)
@@ -1008,11 +1162,18 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 				LOG('FORM SELECTED BY NAME')
 			else:
 				predicate = lambda formobj: action_match in formobj.action
-				self.browser.select_form(predicate=predicate)
+				try:
+					self.browser.select_form(predicate=predicate)
+					selected = True
+				except:
+					ERROR('browser.select_form() failed. Trying self.selectForm()...',hide_tb=True)
+					
+				if not selected:
+					self.selectForm(action_match)
 				LOG('FORM SELECTED BY ACTION')
 			selected = True
 		except:
-			ERROR('NO FORM 1')
+			ERROR('NO FORM 1',hide_tb=True)
 			
 		if not selected:
 			form = self.getForm(html,action_match,form_name)
@@ -1045,8 +1206,8 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 		if not self.checkLogin(): return post
 		res = self.browser.open(self.URLSubs(self.getURL('deletepost'),post=post))
 		html = res.read()
-		
-		if self.forms.get('login_action','@%+#') in html:
+		#open('/home/ruuk/test2.html','w').write(html)
+		if not self.isLoggedIn():
 			if not self.login():
 				post.error = 'Could not log in.'
 				return False
@@ -1058,7 +1219,8 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 			
 		selected = False
 		try:
-			self.browser.select_form(predicate=self.predicateDeletePost)
+			self.selectForm(self.forms.get('delete_action', '@%+#'))
+			#self.browser.select_form(predicate=self.predicateDeletePost)
 			selected = True
 		except:
 			ERROR('DELETE NO FORM 1')
@@ -1071,18 +1233,27 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 				LOG('DELETE NO FORM 2')
 				post.error = 'Could not find form'
 				return False
-		
 		try:
 			#self.browser.find_control(name="deletepost").value = ["delete"]
 			self.setControls('delete_control%s')
 			#self.browser["reason"] = reason[:50]
-			self.browser.submit()
+			if 'delete_submit_name' in self.forms:
+				res = self.browser.submit(name=self.forms['delete_submit_name'])
+			else:
+				res = self.browser.submit()
+			#print res.read()
+		except self.mechanize.HTTPError, e:
+			LOG('HTTPError on delete submit: ' + e.msg)
+			post.error = 'HTTPError: ' + e.msg
+			#print e.__dict__
+			#print e.read()
+			return False
 		except:
 			ERROR('DELETE NO CONTROL')
 			post.error = 'Could not find form controls'
 			return False
+		#open('/home/ruuk/test.html','w').write(res.read())
 		return True
-		#<a href="editpost.php?do=editpost&amp;p=631488" name="vB::QuickEdit::631488">
 	
 	def setControls(self,control_string):
 		if not control_string: return
@@ -1101,11 +1272,11 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 				control.items[0].selected = value == 'True'
 			x+=1
 		
-	def canPost(self): return self.isLoggedIn()
+	def canPost(self): return bool(self.isLoggedIn() and self.urls.get('newpost'))
 	
 	def canDelete(self,user,target='POST'):
 		if target == 'POST':
-			return self.user == user and self.urls.get('deletepost') and self.isLoggedIn()
+			return bool(self.user == user and self.urls.get('deletepost') and self.isLoggedIn())
 		else:
 			return bool(self.urls.get('private_messages_delete')) and self.isLoggedIn()
 	
@@ -1113,15 +1284,32 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 		return None
 	
 	def getPostForEdit(self,post):
+		result = self.post(post, edit=True, get_for_edit=True)
+		if not result: return None
+		title,message,moderated = result
 		pm =  forumbrowser.PostMessage().fromPost(post)
+		pm.title = title
+		pm.message = message
 		pm.isEdit = True
+		pm.moderated = moderated
 		return pm
 		
+	def getPostAsQuote(self,post):
+		pm =  forumbrowser.PostMessage().fromPost(post)
+		result = self.post(pm, get_for_edit=True,quote=True)
+		if not result: return None
+		title,message,moderated = result
+		pm.title = title
+		pm.message = message
+		pm.isEdit = True
+		pm.moderated = moderated
+		return pm
+	
 	def editPost(self,pm,callback=None):
 		return self.post(pm,callback,edit=True)
 	
-	def canEditPost(self,user): return user == self.user and self.isLoggedIn() and self.canPost()
+	def canEditPost(self,user): return bool(user == self.user and self.isLoggedIn() and self.urls.get('editpost'))
 	
 	def getQuoteStartFormat(self):
-		return self.filters.get('quote_start','[QUOTE]')
+		return self.quoteStartFormats.get(self.getForumType(),self.filters.get('quote_start','\[quote[^\]]*?\]'))
 	

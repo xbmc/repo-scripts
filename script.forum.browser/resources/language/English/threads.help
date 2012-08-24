@@ -3,8 +3,14 @@ Threads Window Help
 On the left is the thread starter and on the right is the thread title. At the bottom is either the description or the name of the user who last posted, dependeng on what information is available.
 A red circle icon next to the title indicates a sticky or announcement thread.
 
-The context menu gives options to subscribe to/unsubscribe from the selected thread as well as the forum you are viewing.
 Pressing right or left will select the page button at the top.
+@item:context=Context Menu
+[B]Subscribe To/Unsubscribe From Thread[/B]: Subscribes/unsubscribes the currently selected thread.
+
+[B]Subscribe To/UnsubscribeFrom Forum: x[/B]: Subscribes/unsubscribes the forum you are currently viewing.
+
+[B]Create New Thread[/B]: Opens the post editor to start a new thread in the current forum. Set the title of the post to set the thread title.
+
 @item:pagination=Page Buttons
 The page button shows your current page and the total pages for the thread.
 

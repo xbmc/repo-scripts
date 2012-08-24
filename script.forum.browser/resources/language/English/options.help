@@ -8,12 +8,16 @@ Share the current forum info to the Forum Browser online database.
 @item:addforum
 Add a forum by entering it's domain or URL.
 
-Forum browser will attempt to find the forum, and then ask you to edit the description and choose a logo image.
+Forum Browser will attempt to find the forum via Tapatalk or Forumrunner. If that fails it will attempt to use the Parser Browser. If successful you will then be asked to edit the description and choose a logo image.
 Afterwards you may optionally share it to the Forum Browser online database.
 @item:addonline
 Select a forum to add from the Forum Browser online database, or un-hide removed built-in forums.
 @item:removeforum
 Remove a forum from the list of forums. For built-in forums, the forum is hidden.
+@item:setcurrentcolor
+Enter the desired header color in hex format for the current forum.
+@item:updatethemeodb
+Share current forum colors to the Forum Browser online database.
 @item:setlogins
 Set user name and password for forums.
 

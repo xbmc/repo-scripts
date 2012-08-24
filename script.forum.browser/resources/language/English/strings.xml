@@ -16,6 +16,11 @@
     <string id="30011">Dark</string>
     <string id="30012">Light</string>
     
+    <string id="30013">Hide Signatures In Posts</string>
+    <string id="30014">Always Show OK Button In Message Dialogs</string>
+    <string id="30015">Confirm Exit On Quit</string>
+    <string id="30016">Parser Browser: Ignore Forum Images In Posts</string>
+    
     <string id="30050">ERROR</string>
     <string id="30051">Options</string>
     <string id="30052">Done</string>
@@ -119,7 +124,6 @@
     <string id="30234">Use skin modifications (Recommended)</string>
     <string id="30235">Enable SSL connections (https)</string>
     <string id="30236">Subscribe To Thread</string>
-    <string id="30237">Confirm exit on quit</string>
     
     <string id="30238">Password Encryption Type</string>
     <string id="30239">Encryption Key File (Optional)</string>
@@ -140,7 +144,28 @@
     <string id="30249">Reply/Forward</string>
     <string id="30250">No posts</string>
     <string id="30251">No messages</string>
+    <string id="30252">Create New Thread</string>
+    <string id="30253">Send PM to %s</string>
     
+    <string id="30500">Miscellaneous</string>
+    <string id="30501">Audio/Video Software &amp; Technology</string>
+    <string id="30502">Science &amp; Technology</string>
+    <string id="30503">Automotive/Motorcycle/Powersports</string>
+    <string id="30504">Pets</string>
+    <string id="30505">Wildlife &amp; Nature</string>
+    <string id="30506">Games (Video/Board/Etc)</string>
+    <string id="30507">Sports (Fans)</string>
+    <string id="30508">Outdoor &amp; Travel</string>
+    <string id="30509">Society &amp; Culture</string>
+    <string id="30510">Food, Drink &amp; Dining</string>
+    <string id="30511">Computers &amp; Software</string>
+    <string id="30512">Gadgets &amp; Phones</string>
+    <string id="30513">Hobbies &amp; Collecting</string>
+    <string id="30514">Sports (Recreational)</string>
+    <string id="30515">Internet</string>
+    <string id="30516">Entertainment (TV/Movies/Music)</string>
+
+    <string id="30515">Internet</string>					
     <string id="3000">Prev</string> <!-- Previous -->
     <string id="3001">Next</string>
     <string id="3002">Post Reply</string>

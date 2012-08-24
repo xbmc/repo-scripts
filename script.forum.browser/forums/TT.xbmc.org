@@ -1,4 +1,4 @@
-#forum.xbmc.org
+#xbmc.org
 #XBMC Media Center, a free and open source cross-platform media center software, capable of playing back almost all known video, audio and picture formats.
 url:tapatalk_server=http://forum.xbmc.org/mobiquo/mobiquo.php
 url:logo=http://forum.xbmc.org/images/xbmc/xbmc-lettering.png

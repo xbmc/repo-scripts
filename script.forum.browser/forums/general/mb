@@ -19,3 +19,25 @@ url:login=member.php?action=login
 form:login_action=member.php
 form:login_user=username
 form:login_pass=password
+
+#-- Posting ---------------------------------
+url:newpost=newreply.php?tid=!THREADID!
+
+form:post_action=newreply.php
+form:post_title=subject
+form:post_message=message
+form:post_submit_wait=1
+
+url:editpost=editpost.php?pid=!POSTID!
+
+form:edit_post_action=editpost.php?pid=
+form:edit_post_title=subject
+form:edit_post_message=message
+form:edit_post_submit_wait=1
+
+url:quotepost=newreply.php?tid=!THREADID!&pid=!POSTID!
+
+url:deletepost=editpost.php?pid=!POSTID!
+form:delete_action=editpost.php
+form:delete_name=editpost
+form:delete_control1=checkbox:name.delete=True

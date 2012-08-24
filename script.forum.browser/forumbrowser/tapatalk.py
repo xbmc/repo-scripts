@@ -126,6 +126,7 @@ class CookieTransport(xmlrpclib.Transport):
 			if response.status == 200:
 				self.verbose = verbose
 				return self.parse_response(response)
+			
 		except xmlrpclib.Fault:
 			raise
 		except Exception:
@@ -137,8 +138,12 @@ class CookieTransport(xmlrpclib.Transport):
 		#discard any response data and raise exception
 		if (response.getheader("content-length", 0)):
 			response.read()
-			
-		raise httplib.HTTPException(response.reason)
+		if response.status == 301:
+			raise forumbrowser.ForumMovedException(response.getheader('location'))
+		elif response.status == 404:
+			raise forumbrowser.ForumNotFoundException('Tapatalk')
+		else:
+			raise httplib.HTTPException(response.reason)
 	
 	def send_content(self, connection, request_body):
 		connection.putheader("Content-Type", "text/xml")
@@ -205,14 +210,28 @@ class ForumPost(forumbrowser.ForumPost):
 				date = date[0:4] + '-' + date[4:6] + '-' + date[6:]
 				date = time.strftime('%I:%M %p - %A %B %d, %Y',iso8601.parse_date(date).timetuple())
 			self.date = date
-			self.userName = str(pdict.get('msg_from') or 'UERROR')
+			if 'msg_from' in pdict:
+				self.userName = str(pdict.get('msg_from') or 'UERROR')
+			else:
+				self.userName = str(str(pdict.get('msg_to',[{}])[0].get('username')) or 'UERROR')
+				self.isSent = True
 			self.avatar = pdict.get('icon_url','')
 			self.online = pdict.get('is_online',False)
 			self.title = str(pdict.get('msg_subject',''))
 			self.message = str(pdict.get('short_content',''))
 			self.boxid = pdict.get('boxid','')
 			self.signature = ''
-			
+		
+	def getActivity(self):
+		if not self.activity: return ''
+		if not self.activityUnix: return self.activity
+		now = time.time()
+		if time.daylight: now += 3600
+		#print  time.strftime('%b %d, %Y %H:%M',time.localtime(now))
+		#print  time.strftime('%b %d, %Y %H:%M',time.gmtime(self.activityUnix))
+		d = now - self.activityUnix
+		return self.activity + ' - ' + forumbrowser.durationToShortText(d) + ' ago'
+	
 	def setUserInfo(self,info):
 		if not info: return
 		self.userInfo = info
@@ -224,7 +243,18 @@ class ForumPost(forumbrowser.ForumPost):
 		if date:
 			date = date[0:4] + '-' + date[4:6] + '-' + date[6:]
 			date = time.strftime('%b %d, %Y',iso8601.parse_date(date).timetuple())
-		self.joinDate = date
+		date = str(info.get('last_activity_time',''))
+		if date:
+			date = date[0:4] + '-' + date[4:6] + '-' + date[6:]
+			date = time.mktime(iso8601.parse_date(date).timetuple())
+		self.activityUnix = date
+		for e in info.get('custom_fields_list',[]):
+			name = str(e['name'])
+			val = str(e['value'])
+			if name.lower() == 'signature':
+				self.signature = val
+			else:
+				if val: self.extras[name] = val
 		
 	def setPostID(self,pid):
 		self.postId = pid
@@ -252,7 +282,7 @@ class ForumPost(forumbrowser.ForumPost):
 			self.message = str(m.get('post_content',self.message))
 			self.isRaw = True
 		sig = ''
-		if self.signature: sig = '\n__________\n' + self.signature
+		if self.signature and not self.hideSignature: sig = '\n__________\n' + self.signature
 		return self.message + sig
 	
 	def messageAsText(self):
@@ -357,19 +387,46 @@ class PageData:
 		if self.pageDisplay: return self.pageDisplay
 		if self.page is not None and self.totalPages is not None:
 			return 'Page %s of %s' % (self.page,self.totalPages)
-	
+
+######################################################################################
+# ForumUser
+######################################################################################
+class ForumUser(forumbrowser.ForumUser):
+	def __init__(self,ID,name,info):
+		forumbrowser.ForumUser.__init__(self,ID,name)
+		self.avatar = info.get('icon_url','')
+		self.status = str(info.get('display_text',''))
+		self.activity = str(info.get('current_activity',''))
+		self.online = info.get('is_online',False) or self.online
+		self.postCount = info.get('post_count',0)
+		date = str(info.get('reg_time',''))
+		if date:
+			date = date[0:4] + '-' + date[4:6] + '-' + date[6:]
+			date = time.strftime('%b %d, %Y',iso8601.parse_date(date).timetuple())
+		self.joinDate = date
+		date = str(info.get('last_activity_time',''))
+		if date:
+			date = date[0:4] + '-' + date[4:6] + '-' + date[6:]
+			date = time.strftime('%b %d, %Y %H:%M %p',iso8601.parse_date(date).timetuple())
+		self.lastActivityDate = date
+		extras = info.get('custom_fields_list')
+		if extras:
+			for e in extras:
+				val = str(e['value'])
+				if val: self.extras[str(e['name'])] = val
+		
 ######################################################################################
 # Forum Browser API for TapaTalk
 ######################################################################################
 class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 	browserType = 'tapatalk'
+	prefix = 'TT.'
 	ForumPost = ForumPost
 	PageData = PageData
 	
 	def __init__(self,forum,always_login=False):
 		forumbrowser.ForumBrowser.__init__(self, forum, always_login,BBMessageConverter)
 		self.forum = forum[3:]
-		self.prefix = 'TT.'
 		self._url = ''
 		self.transport = None
 		self.server = None
@@ -424,9 +481,23 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 			LOG('Forum Plugin Version: ' + self.getForumPluginVersion())
 			LOG('Forum API Level: ' + self.forumConfig.get('api_level',''))
 			if DEBUG: LOG(self.forumConfig)
+		except (forumbrowser.ForumMovedException, forumbrowser.ForumNotFoundException):
+			raise
 		except:
 			ERROR('Failed to get forum config')
+			
+	def getForumInfo(self):
+		return [	('name',self.getDisplayName()),
+					('interface','Tapatalk'),
+					('tapatalk_api_level',self.forumConfig.get('api_level','')),
+					('tapatalk_plugin_version',self.getForumPluginVersion()),
+					('forum_type',self.getForumTypeName() + ' v' + self.forumConfig.get('sys_version','')),
+					('login_set',self.canLogin())
+				]
 		
+	def getForumTypeName(self):
+		return self.forumTypeNames.get(self.getForumType(),'Unknown')
+	
 	def guestOK(self):
 		return self.forumConfig.get('guest_okay',True)
 	
@@ -485,21 +556,41 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 				return False
 		return True
 		
-	def getPMCounts(self,callback_percent=5):
+	def getPMBoxes(self,update=True,callback_percent=5):
+		if not update and self.pmBoxes: return self.pmBoxes
 		if not self.hasPM(): return None
 		if not self.checkLogin(callback_percent=callback_percent): return None
 		result = self.server.get_box_info()
 		if not result.get('result'):
-			LOG('Failed to get PM counts: ' + str(result.get('result_text')))
+			LOG('Failed to get PM boxes: ' + str(result.get('result_text')))
 			return None
+		self.pmBoxes = []
+		defaultSet = False
+		for b in result.get('list',[]):
+			box = {	'id':b.get('box_id',''),
+					'name':str(b.get('box_name','?')),
+					'count':b.get('msg_count',0),
+					'unread':b.get('unread_count',0),
+					'type':b.get('box_type','') or str(b.get('box_name','?')).upper()
+			}
+			if box.get('type') == 'INBOX' and not defaultSet:
+				box['default'] = True
+				defaultSet = True
+			self.pmBoxes.append(box)
+		if not defaultSet and self.pmBoxes: self.pmBoxes[0]['default'] = True
+		return self.pmBoxes
+	
+	def getPMCounts(self,callback_percent=5):
+		boxes = self.getPMBoxes(callback_percent=callback_percent)
+		if not boxes: return None
 		unread = 0
 		total = 0
 		boxid = None
-		for l in result.get('list',[]):
-			if l.get('box_type') == 'INBOX':
-				if not boxid: boxid = l.get('box_id')
-				total += l.get('msg_count',0)
-				unread += l.get('unread_count',0)
+		for l in boxes:
+			if l.get('type') == 'INBOX':
+				if l.get('default'): boxid = l.get('id')
+				total += l.get('count',0)
+				unread += l.get('unread',0)
 		return {'unread':unread,'total':total,'boxid':boxid}
 		
 	def makeURL(self,url):
@@ -516,6 +607,7 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 		
 	def getForums(self,callback=None,donecallback=None):
 		if not callback: callback = self.fakeCallback
+		if not self.guestOK(): self.checkLogin(callback, 5)
 		logo = None
 		while True:
 			if not callback(20,self.lang(30102)): break
@@ -526,7 +618,10 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 				em = ERROR('ERROR GETTING FORUMS')
 				callback(-1,'%s' % em)
 				return self.finish(FBData(error=em),donecallback)
-			
+			if 'result_text' in flist:
+				em = unicode(str(flist.get('result_text')),'utf-8')
+				callback(-1,'%s' % em)
+				return self.finish(FBData(error=em),donecallback)
 			if not callback(40,self.lang(30103)): break
 			forums = []
 			for general in flist:
@@ -536,7 +631,7 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 					for sub in forum.get('child',[]):
 						if not sub.get('sub_only'): forums.append(self.createForumDict(sub,True))
 			if not callback(80,self.lang(30231)): break
-			logo = self.urls.get('logo') or 'http://%s/favicon.ico' % self.forum
+			logo = self.urls.get('logo') or 'http://%s/favicon.ico' % self.domain()
 			try:
 				pm_counts = self.getPMCounts(80)
 			except:
@@ -590,7 +685,7 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 	
 	def createThreadDict(self,data,sticky=False):
 		data['threadid'] = data.get('topic_id','')
-		data['starter'] = str(data.get('topic_author_name',self.user))
+		data['starter'] = str(data.get('topic_author_name',data.get('post_author_name',self.user)))
 		data['title'] = str(data.get('topic_title',''))
 		data['short_content'] = str(data.get('short_content',''))
 		data['subscribed'] = data.get('is_subscribed',False)
@@ -634,8 +729,9 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 			if donecallback: donecallback(None,None)
 			return (None,None)
 		for n in normal: self.createThreadDict(n)
+		normal = self.sortDictList(normal, 'post_time')
 		return normal, pd
-	
+			
 	def getThreads(self,forumid,page=0,callback=None,donecallback=None,page_data=None):
 		if not callback: callback = self.fakeCallback
 		try:
@@ -714,19 +810,20 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 	def hasPM(self):
 		return not self.forumConfig.get('disable_pm','0') == '1'
 	
-	def getPrivateMessages(self,callback=None,donecallback=None):
+	def getPrivateMessages(self,callback=None,donecallback=None,boxid=None):
 		if not callback: callback = self.fakeCallback
 		
 		while True:
 			if not callback(20,self.lang(30102)): break
-			try:
-				pmInfo = self.getPMCounts(20)
-			except:
-				em = ERROR('ERROR GETTING PRIVATE MESSAGES - getPMCounts()')
-				callback(-1,'%s' % em)
-				return self.finish(FBData(error=em),donecallback)
-			if not pmInfo: break
-			boxid = pmInfo.get('boxid')
+			if not boxid:
+				try:
+					pmInfo = self.getPMCounts(20)
+				except:
+					em = ERROR('ERROR GETTING PRIVATE MESSAGES - getPMCounts()')
+					callback(-1,'%s' % em)
+					return self.finish(FBData(error=em),donecallback)
+				if not pmInfo: break
+				boxid = pmInfo.get('boxid')
 			if not boxid: break
 			if not callback(50,self.lang(30102)): break
 			try:
@@ -741,9 +838,12 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 			for p in messages.get('list',[]):
 				p['boxid'] = boxid
 				fp = self.getForumPost(p)
+				fp.online = False #Because at least on sent items, we can't trust this value returned with the list
 				if not fp.userName in infos:
 					try:
-						infos[fp.userName] = self.server.get_user_info(xmlrpclib.Binary(fp.userName))
+						info = self.server.get_user_info(xmlrpclib.Binary(fp.userName))
+						if info.get('is_online'): info['is_online'] = bool(info.get('current_activity')) 
+						infos[fp.userName] = info
 					except:
 						ERROR('Failed to get user info')
 						break
@@ -848,8 +948,10 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 		return True
 		
 	def deletePrivateMessage(self,post,callback=None):
-		pmInfo = self.getPMCounts()
-		boxid = pmInfo.get('boxid')
+		boxid = post.boxid
+		if not boxid:
+			pmInfo = self.getPMCounts()
+			boxid = pmInfo.get('boxid')
 		if not boxid: return
 		result = self.server.delete_message(post.pid,boxid)
 		if not result.get('result'):
@@ -916,3 +1018,43 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 			text = result.get('result_text')
 			LOG('Failed to unsubscribe from forum: ' + text)
 			return text
+
+	def canCreateThread(self, fid): return self.isLoggedIn()
+	
+	def createThread(self,fid,title,message):
+		result = self.server.new_topic(fid,xmlrpclib.Binary(title),xmlrpclib.Binary(message))
+		if result.get('result'):
+			return True
+		else:
+			text = result.get('result_text')
+			LOG('Failed to create thread: ' + str(text))
+			return text
+	
+	def canGetOnlineUsers(self): return self.forumConfig.get('get_online_users',True)
+	
+	def getOnlineUsers(self):
+		result = self.server.get_online_users()
+		if 'list' in result:
+			ret = []
+			dups = []
+			for u in result.get('list',[]):
+				name = str(u.get('user_name',''))
+				if not name in dups: #because at least in MyBB v2 the list returns name duplicates with user ids of offline users
+					ret.append({'user':name,'userid':u.get('user_id',''),'avatar':u.get('icon_url',''),'status':str(u.get('display_text',''))})
+					dups.append(name)
+			return ret
+		else:
+			text = str(result.get('result_text'))
+			LOG('Failed to get online users: ' + text)
+			return text
+	
+	def canGetUserInfo(self): return True
+	
+	def getUserInfo(self,uid=None,uname=None):
+		result = self.server.get_user_info(xmlrpclib.Binary(uname))
+		if not result.get('result_text'):
+			return ForumUser(uid,uname,result)
+		else:
+			text = result.get('result_text')
+			LOG('Failed to user info: ' + str(text))
+			return None

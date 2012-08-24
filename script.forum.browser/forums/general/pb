@@ -1,4 +1,4 @@
-#FluxBB
+#PhpBB
 
 url:threads=viewforum.php?f=!FORUMID!!PAGE!
 url:replies=viewtopic.php?f=!FORUMID!&t=!THREADID!!PAGE!
@@ -18,3 +18,36 @@ url:login=ucp.php?mode=login
 form:login_action=ucp.php?mode=login
 form:login_user=username
 form:login_pass=password
+
+format:login_check=ucp.php?mode=login
+
+#-- Posting ---------------------------------
+url:newpost=posting.php?mode=reply&f=!FORUMID!&t=!THREADID!
+url:quotepost=posting.php?mode=quote&f=!FORUMID!&p=!POSTID!
+
+form:post_action=posting.php
+form:post_title=subject
+form:post_message=message
+form:post_submit_wait=1
+
+url:editpost=posting.php?mode=edit&f=!FORUMID!&p=!POSTID!
+
+form:edit_post_action=mode=edit
+form:post_title=subject
+form:edit_post_message=message
+form:edit_post_submit_wait=1
+
+#url:deletepost=posting.php?mode=delete&f=!FORUMID!&p=!POSTID!
+#form:delete_action=mode=delete
+#form:delete_submit_name=confirm
+#This wasn't working. Was logged in at the delete form, the says we're logged out after the submit...
+
+#url:deletepost=posting.php?mode=edit&f=!FORUMID!&p=!POSTID!
+#form:delete_action=mode=edit
+#form:delete_control1=checkbox:name.delete=True
+#This wasn't working either. Same thing
+
+url:private_messages_csv=ucp.php?i=pm&folder=inbox
+form:private_messages_csv_action=action=view_folder
+form:private_messages_csv_submit1=submit_export
+form:private_messages_csv_submit2=submit_export

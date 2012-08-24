@@ -27,7 +27,7 @@
 			</control>
 			<!-- ** Required ** Do not change <id> or <type> -->
 
-			<control type="image" id="251">
+			<control type="image"  id="100">
 				<description>page header tab icon</description>
 				<posx>10</posx>
 				<posy>4</posy>
@@ -36,7 +36,7 @@
 				<texture border="20">forum-browser-white-boxr.png</texture>
 				<colordiffuse>FF888888</colordiffuse>
 			</control>
-			<control type="image">
+			<control type="image" id="251">
 				<posx>10</posx>
 				<posy>4</posy>
 				<width>1260</width>
@@ -111,7 +111,8 @@
 				<posy>49</posy>
 				<width>32</width>
 				<height>32</height>
-				<texture>forum-browser-loading.gif</texture>
+				<texture>forum-browser-loading3.png</texture>
+				<animation effect="rotate" end="-3600" center="984,65" time="20000" loop="true" condition="Control.IsVisible(105)">Conditional</animation>
 				<visible>Control.isVisible(105)</visible>
 			</control>
 			<control type="button" id="105">

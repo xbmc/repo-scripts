@@ -15,6 +15,7 @@ Some options will be unavailable depending on login status.
 [B]Delete[/B]: Visible on your posts. Delete the currently selected post. This may not be available, or may not work depending on the forum interface or what the forum allows.
 [B]Edit[/B]: Visible on your posts. Allows you to edit the post.
 [B]Subscribe/Unsubscribe[/B]: Subscribe to or unsubscribe from the currently viewed thread.
+[B]Send PM to ?[/B]: Open the private message editor with the "to" field preset to the author of the selected post. You will be given the option of quoting the post. 
 @item:buttons=Buttons
 At the top left, the 'Post Reply' button opens the post editor so you can create a new post to this thread. If you are not logged in, the button will be disabled.
 
