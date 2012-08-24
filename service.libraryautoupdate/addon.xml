@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.libraryautoupdate"
-    name="XBMC Library Auto Update" version="0.6.2" provider-name="robweber">
+    name="XBMC Library Auto Update" version="0.6.3" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
   </requires>
@@ -10,8 +10,11 @@
   <extension point="xbmc.service" library="default.py" start="login">
   </extension>
   <extension point="xbmc.addon.metadata">
+    <language></language>
     <summary lang="en">Update your XBMC Video and Music Libraries on a timer. Timer runs as an XBMC service so you never miss an update.</summary>
     <description lang="en">This is an XBMC Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported.</description>
+	<summary lang="fr">Mettez à jour votre vidéo médiathèques XBMC et votre bibliothèques musicales avec une minuterie. La minuterie fonctionne comme un service XBMC afin que vous ne manquez jamais une mise à jour.</summary>
+    <description lang="fr">Il s'agit d'un service de XBMC qui mettra à jour vos bibliothèques musicale et vidéo sur une minuterie. Vous pouvez sélectionner plusieurs intervalles pour scanner vos bases de données multimédia (Audio,Vidéo,Les deux) ou vous pouvez régler une minuterie pour un meilleur contrôle. Si vous jouez un fichier audio ou vidéo lorsque la minuterie démarre, le processus de mise à jour bibliothèque peut être ignoré jusqu'à ce que la lecture soit terminée afin que votre expérience multimédia ne soit pas interrompue. Mise à jour d’un chemin vidéo spécifique, et nettoyage des bibliothèques de musique/vidéo est maintenant supporté.</description>
     <platform>all</platform>
   </extension>
 </addon>

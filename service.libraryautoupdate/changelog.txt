@@ -1,50 +1,34 @@
-[B]Version 0.3.1[/B]
+[B]Version 0.6.3[/B]
 
-- fixed a really stupid indent error
+- added French translation file, thanks to foX aCe
 
+[B]Version 0.6.2[/B]
 
-[B]Version 0.3.1[/B]
+- needed a catch in case the last_run.txt file is blank, or has non-integer data. thanks to mmounirou for catching this
 
-- added cancelalarm call in case run more than once
+[B]Version 0.6.1[/B]
 
-[B]Version 0.3.5[/B]
+- added 2 more custom library path options
 
-- now runs as a service instead of needing the autoexec.py file
+[B]Version 0.6.0[/B]
 
-- removed sample autoexec.py
+- added "Cleaning" category to schedule a clean operation of the music/video databases. This operation can happen immediately after a scan or once per day/week/month. Verifying source paths before a clean is also supported
 
-[B]Version 0.3.9[/B]
- 
-- running video and music scans side by side never really worked. Now checks if scan is running and waits until complete before running the next scan. 
+[B]Version 0.5.9[/B]
 
-[B]Version 0.4.0[/B]
+- added a custom video path option to only scan a specific video path instead of the entire library
 
-- Had a user suggestion to allow for a manual launch of the process as well as the service. Since the service point will ALWAYS launch on startup the manual option will kick off the library update process. 
+[B]Version 0.5.8[/B]
 
-[B]Version 0.4.1[/B]
+- added a 1 minute delay timer before running a scan if XBMC has just exited playback. This should help in scenerios where ending media viewing results in an immediate scan that the user didn't want. 
 
--added extra setting for a "startup delay" timer. This will only affect the addon when xbmc starts. 
--the last running time is now set to a variable so that manual updates will reset the timer, and system resets will start the service where it left off
+[B]Version 0.5.7[/B]
 
-[B]Version 0.5.0[/B]
+- merged 'standard' and 'advanced' usage to follow more of the same codebase. Now the standard timer uses a cron expression as well and will start at the top of every hour
 
--major changes to settings, split them by General and Timer category
--Advanced timer functions now add the ability to do cron-like scheduling of the update process, thanks to pkscuot for the timer ideas
--option to skip during media playback or run the update anyway
+[B]Version 0.5.6[/B]
 
-[B]Version 0.5.1[/B]
-
--merged changes from pkscuot's branch. 
--rounds last_run to top of the minute (timer executes at 00 not anywhere in minute)
--creates addon data directory if it doesn't exist
-
-[B]Version 0.5.2[/B]
-
--fixed os import error
-
-[B]Version 0.5.4[/B]
- 
- -fixed issue with startup timer, thanks stevenD
+-updated the manual run interface to include information about when the updater will run again
 
 [B]Version 0.5.5[/B]
 
@@ -52,30 +36,46 @@
 
 -added methods to display a "countdown" when the next update will occur, and settings to display notifications
 
-[B]Version 0.5.6[/B]
+[B]Version 0.5.4[/B]
+ 
+ -fixed issue with startup timer, thanks stevenD
 
--updated the manual run interface to include information about when the updater will run again
+[B]Version 0.5.2[/B]
 
-[B]Version 0.5.7[/B]
+-fixed os import error
 
-- merged 'standard' and 'advanced' usage to follow more of the same codebase. Now the standard timer uses a cron expression as well and will start at the top of every hour
+[B]Version 0.5.1[/B]
 
-[B]Version 0.5.8[/B]
+-merged changes from pkscuot's branch. 
+-rounds last_run to top of the minute (timer executes at 00 not anywhere in minute)
+-creates addon data directory if it doesn't exist
 
-- added a 1 minute delay timer before running a scan if XBMC has just exited playback. This should help in scenerios where ending media viewing results in an immediate scan that the user didn't want. 
+[B]Version 0.5.0[/B]
 
-[B]Version 0.5.9[/B]
+-major changes to settings, split them by General and Timer category
+-Advanced timer functions now add the ability to do cron-like scheduling of the update process, thanks to pkscuot for the timer ideas
+-option to skip during media playback or run the update anyway
 
-- added a custom video path option to only scan a specific video path instead of the entire library
+[B]Version 0.4.1[/B]
 
-[B]Version 0.6.0[/B]
+-added extra setting for a "startup delay" timer. This will only affect the addon when xbmc starts. 
+-the last running time is now set to a variable so that manual updates will reset the timer, and system resets will start the service where it left off
 
-- added "Cleaning" category to schedule a clean operation of the music/video databases. This operation can happen immediately after a scan or once per day/week/month. Verifying source paths before a clean is also supported
+[B]Version 0.4.0[/B]
 
-[B]Version 0.6.1[/B]
+- Had a user suggestion to allow for a manual launch of the process as well as the service. Since the service point will ALWAYS launch on startup the manual option will kick off the library update process. 
 
-- added 2 more custom library path options
+[B]Version 0.3.9[/B]
+ 
+- running video and music scans side by side never really worked. Now checks if scan is running and waits until complete before running the next scan. 
 
-[B]Version 0.6.2[/B]
+[B]Version 0.3.5[/B]
 
-- needed a catch in case the last_run.txt file is blank, or has non-integer data. thanks to mmounirou for catching this
+- now runs as a service instead of needing the autoexec.py file
+- removed sample autoexec.py
+
+[B]Version 0.3.1[/B]
+
+- fixed a really stupid indent error
+- added cancelalarm call in case run more than once
+

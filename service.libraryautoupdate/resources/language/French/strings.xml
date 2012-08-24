@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Language file translated with Team XBMC Translator-->
+<!--Date of translation: 08/20/2012-->
+<!--$Revision$-->
+<strings>
+  <string id="30000">Général</string>
+  <string id="30001">Temps entre les mises à jour (heures)</string>
+  <string id="30002">Mise à jour Médiathèque</string>
+  <string id="30003">Mise à jour bibliothèque musical</string>
+  <string id="30004">Délai de démarrage (minutes)</string>
+  <string id="30005">Vidéo</string>
+  <string id="30006">Utiliser minuterie avancée</string>
+  <string id="30007">Cron Expression</string>
+  <string id="30008">Exécuter pendant la lecture</string>
+  <string id="30009">Afficher les notifications</string>
+  <string id="30010">XBMC Médiathèque mise à jour automatique</string>
+  <string id="30011">Une mise à jour aura lieu de nouveau dans </string>
+  <string id="30012">Souhaitez exécuter une mise à jour manuellement ?</string>
+  <string id="30013">Musique</string>
+  <string id="30014">Nettoyage</string>
+  <string id="30015">Mise à jour chemin spécifique 1</string>
+  <string id="30016">Chemin vidéo</string>
+  <string id="30017">Lire Avertissement</string>
+  <string id="30018">Avertissement chemins vidéo</string>
+  <string id="30019">Le chemin doit être une source vidéo avec du contenu</string>
+  <string id="30020">Le chemin doit correspondre au chemin source pour l'analyse</string>
+  <string id="30021">Nettoyer Médiathèques</string>
+  <string id="30022">Vérifier les sources avant de nettoyer</string>
+  <string id="30023">Fréquence</string>
+  <string id="30024">Mise à jour chemin spécifique 2</string>
+  <string id="30025">Mise à jour chemin spécifique 3</string>
+</strings>
