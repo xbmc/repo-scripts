@@ -22,7 +22,7 @@ debug_pretext = ""
 
 				<td style="width: 60px;">3 CD's</td><td><a href="/user_list.php?user=Goffini">Goffini</a></td></tr>
 """
-subtitle_pattern = "<strong><a href=\"/(ondertitels/info/[^\n\r\t]*?.html)\"[^\n\r\t]*?trailer.png\" height=\"15\" border=\"0\"></a><br>\
+subtitle_pattern = "<strong><a href=\"/(ondertitels/info/[^\n\r\t]*?.html)\"[^\n\r\t]*?></a><br>\
 [\n\r\t ]*?<font style=\"font-size: 11px; color: #444445;\"><i>([^\r\n\t]*?)</i></font>[\n\r\t ]*?</div>[\n\r\t ]*?</td>\
 [\n\r\t ]*?<td>[^\r\n\t]*?</td>[\r\n\t ]*?<td style=\"width: 60px;\">(\d) CD"
 # group(1) = link to page with downloadlink, group(2) = filename, group(3) = number of CD's

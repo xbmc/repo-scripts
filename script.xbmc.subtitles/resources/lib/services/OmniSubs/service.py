@@ -8,12 +8,14 @@
 # http://www.teknorage.com
 # License: GPL v2
 #
+# NEW on Service OmniSubs.net v0.1.6:
+# Added uuid for better file handling, no more hangups.
 #
 # Initial Release of Service OmniSubs.net - v0.1.5:
 # TODO: re-arrange code :)
 #
 # OmniSubs.NET subtitles, based on a mod of Undertext subtitles
-import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib, shutil, fnmatch
+import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib, shutil, fnmatch, uuid
 from utilities import log
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
@@ -250,14 +252,14 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 		header = content.info()['Content-Disposition'].split('filename')[1].split('.')[-1].strip("\"")
 		if header == 'rar':
 			log( __name__ ,"%s file: content is RAR" % (debug_pretext)) #EGO
-			local_tmp_file = os.path.join(tmp_sub_dir, "ldivx.rar")
+			local_tmp_file = os.path.join(tmp_sub_dir, str(uuid.uuid1()) + ".rar")
 			log( __name__ ,"%s file: local_tmp_file %s" % (debug_pretext, local_tmp_file)) #EGO
 			packed = True
 		elif header == 'zip':
-			local_tmp_file = os.path.join(tmp_sub_dir, "ldivx.zip")
+			local_tmp_file = os.path.join(tmp_sub_dir, str(uuid.uuid1()) + ".zip")
 			packed = True
 		else: # never found/downloaded an unpacked subtitles file, but just to be sure ...
-			local_tmp_file = os.path.join(tmp_sub_dir, "ldivx.srt") # assume unpacked sub file is an '.srt'
+			local_tmp_file = os.path.join(tmp_sub_dir, str(uuid.uuid1()) + ".srt") # assume unpacked sub file is an '.srt'
 			subs_file = local_tmp_file
 			packed = False
 		log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))

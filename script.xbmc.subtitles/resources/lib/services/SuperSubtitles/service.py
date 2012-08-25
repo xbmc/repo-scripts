@@ -100,12 +100,16 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         sep = season + "x" + str(episode).zfill(2)
         subenv.debuglog("Release type: %s, Releaser: %s, Episode str: %s" % (release_type, releaser, sep) )
         
-        for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE):  #  | re.UNICODE
-            link = matches.group('link1') + urllib.quote_plus(matches.group('link2')) + matches.group('link3')
-            hun_title = matches.group('huntitle')
-            orig_title = matches.group('origtitle')
-            hun_langname = matches.group('lang')
-            sub_id = matches.group('id')
+        html_encoding = 'utf8'
+        decode_policy = 'replace'
+
+        for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):  #  | re.UNICODE
+            link = (matches.group('link1') + urllib.quote_plus(matches.group('link2')) + matches.group('link3')).decode(html_encoding, decode_policy)
+            hun_title = matches.group('huntitle').decode(html_encoding, decode_policy)
+            orig_title = matches.group('origtitle').decode(html_encoding, decode_policy)
+            hun_langname = matches.group('lang').decode(html_encoding, decode_policy)
+            sub_id = matches.group('id').decode(html_encoding, decode_policy)
+            #subenv.debuglog("Found movie on search page: orig_title: %s, hun: %s, lang: %s, link: %s, subid: %s" % (orig_title, hun_title, hun_langname, link, sub_id) )
             
             hun_title, parenthesized =subutils.remove_parenthesized_parts(hun_title)
             orig_title = orig_title + parenthesized
@@ -116,30 +120,38 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 
             score = 0
             rating = 0
+
+            
             orig_title_low = orig_title.lower()
+            search_low = search_string.lower()
             if (release_type != "") and (release_type in orig_title_low): 
                 score += 10
-                rating += 2
+                rating += 1
             if (releaser != "") and (releaser in orig_title_low): 
                 score += 5
-                rating += 2
+                rating += 1
             if (year != "") and (str(year) in orig_title_low):
                 score += 20
-            
+            if (orig_title_low.startswith(search_low) or hun_title.startswith(search_low)):
+                score += 500
+                rating += 4
+
+
             if hun_langname.lower() == "magyar": score += 1
                 
             if len(tvshow) > 0:
                 if sep in orig_title_low: 
                     score += 100
-                    rating += 6
+                    rating += 4
             else:
-                rating *= 2.5
-            #rating format must be string 
+                rating *= 1.25
+
             sync = (rating == 10)
+            #rating format must be string 
             rating = str(int(rating))
             
             subenv.debuglog("Found movie on search page: orig_title: %s, hun: %s, lang: %s, link: %s, flag: %s, rating: %s, score: %s" % (orig_title, hun_title, hun_langname, link, flag, rating, score) )
-            subtitles_list.append({'movie':  orig_title, 'filename': orig_title + " / " + hun_title, 'link': link, 'id': sub_id, 'language_flag': 'flags/' + flag + '.gif', 'language_name': hun_langname, 'movie_file':file_original_path, 'eng_language_name': eng_langname, 'sync': sync, 'rating': rating, 'format': 'srt', 'base_url' : base_url, 'score': score })
+            subtitles_list.append({'movie':  orig_title, 'filename': orig_title + " / " + hun_title, 'link': link, 'id': sub_id, 'language_flag': 'flags/' + flag + '.gif', 'language_name': eng_langname, 'movie_file':file_original_path, 'eng_language_name': eng_langname, 'sync': sync, 'rating': rating, 'format': 'srt', 'base_url' : base_url, 'score': score })
 
         subenv.debuglog("%d subtitles found" % (len(subtitles_list)) )
         error_msg = ""
@@ -154,6 +166,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     except Exception, inst: 
         subenv.errorlog( "query error: %s" % (inst))
         msg = "Query error:" + str(inst)
+        subtitles_list = []
         return subtitles_list, "", msg #standard output
 
 

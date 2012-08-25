@@ -1,3 +1,9 @@
+3.3.1
+- SuperSubtitles adjustments according to the site's new html encoding, thx kispaljr
+- Added uuid for better file handling, no more hangups, thx HiGhLaNdeR
+- Fixed: Subtitle not show after download under windows because can't open the download file when replace \ to / , thx taxigps
+- Fix for broken pattern in services.ondertitel, thx mdklapwijk
+
 3.3.0
 - French localization, thx Regis Villemin
 - Enabled localization of lang names in search results, thx Regis Villemin
