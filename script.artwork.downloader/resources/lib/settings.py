@@ -68,11 +68,13 @@ class settings:
         self.files_overwrite        = __addon__.getSetting("files_overwrite")       == 'true'
         self.xbmc_caching_enabled   = __addon__.getSetting("xbmc_caching_enabled")  == 'true'
         self.debug_enabled          = __addon__.getSetting("debug_enabled")         == 'true'
-
+        self.service_startup        = False
+        self.service_enable         = False
+        
     ### Initial limit vars
     def _get_limit(self):    
         self.limit_artwork              = __addon__.getSetting("limit_artwork") == 'true'
-        self.limit_extrafanart_max      = int(__addon__.getSetting("limit_extrafanart_max").rstrip('0').rstrip('.'))
+        self.limit_extrafanart_max      = int(__addon__.getSetting("limit_extrafanart_maximum").rstrip('0').rstrip('.'))
         self.limit_extrafanart_rating   = int(__addon__.getSetting("limit_extrafanart_rating").rstrip('0').rstrip('.'))
         self.limit_size_moviefanart     = int(__addon__.getSetting("limit_size_moviefanart"))
         self.limit_size_tvshowfanart    = int(__addon__.getSetting("limit_size_tvshowfanart"))

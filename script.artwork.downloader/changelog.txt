@@ -1,3 +1,7 @@
+[B]1.0.15[/B]
+- Disable autorun
+- Disable fanart deletion and reduce max number of image
+
 [B]1.0.14[/B]
 - Fixed: Possible empty library list when there was no season data
 

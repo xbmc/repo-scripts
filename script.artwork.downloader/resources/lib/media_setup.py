@@ -19,7 +19,7 @@ except:
     import storageserverdummy as StorageServer
 
 cacheMedia = StorageServer.StorageServer("ArtworkDownloader",1)
-#cacheMedia.timeout = 600 # In seconds
+cacheMedia.timeout = 600 # In seconds
 
 # Retrieve JSON data from cache function
 def _media_listing(media_type):

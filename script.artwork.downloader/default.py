@@ -544,9 +544,11 @@ class Main:
                                 limited = self.filters.do_filter(art_type, self.mediatype, item['artwork_details'], limit_counter, pref_language, disctype)
                             else:
                                 limited = self.filters.do_filter(art_type, self.mediatype, item['artwork_details'], limit_counter, pref_language)
+                            
                             # Delete extrafanart when below settings and parsing the reason message
                             if limited[0] and not i == 1 and art_type in ['extrafanart', 'extrathumbs']:
-                                self.fileops._delete_file_in_dirs(item['filename'], item['targetdirs'], limited[1],self.media_name)
+                                #self.fileops._delete_file_in_dirs(item['filename'], item['targetdirs'], limited[1],self.media_name)
+                                pass
                             # Just ignore image when it's below settings
                             elif limited[0]:
                                 imageignore = True

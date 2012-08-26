@@ -29,7 +29,7 @@ try:
 except:
     import storageserverdummy as StorageServer
 
-cache = StorageServer.StorageServer("ArtworkDownloader",168)
+cache = StorageServer.StorageServer("ArtworkDownloader",240)
 
 ### Adjust default timeout to stop script hanging
 socket.setdefaulttimeout(20)
