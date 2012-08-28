@@ -42,7 +42,7 @@ class DailymotionResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error(self.name + '- got http error %d fetching %s' %
                                    (e.code, web_url))
             return False
-        sequence = re.compile('"sequence",  "(.+?)"').findall(link)
+        sequence = re.compile('"sequence":"(.+?)"').findall(link)
         newseqeunce = urllib.unquote(sequence[0]).decode('utf8').replace('\\/', '/')
         imgSrc = re.compile('og:image" content="(.+?)"').findall(link)
         if(len(imgSrc) == 0):

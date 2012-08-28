@@ -36,7 +36,7 @@ class GorillavidResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
         #e.g. http://gorillavid.com/vb80o1esx2eb
-        self.pattern = 'http://((?:www.)?gorillavid.com)/([0-9a-zA-Z]+)'
+        self.pattern = 'http://((?:www.)?gorillavid.in)/([0-9a-zA-Z]+)'
 
 
     def get_media_url(self, host, media_id):
@@ -63,7 +63,7 @@ class GorillavidResolver(Plugin, UrlResolver, PluginSettings):
             return False
 
         
-        r = re.search('{ file: "(.+?)", type:"video/flv" }', html)
+        r = re.search('file: "(.+?)"', html)
         print r
         if r:
             return r.group(1)
@@ -71,7 +71,7 @@ class GorillavidResolver(Plugin, UrlResolver, PluginSettings):
         return False
 
     def get_url(self, host, media_id):
-        return 'http://gorillavid.com/%s' % (media_id)
+        return 'http://gorillavid.in/%s' % (media_id)
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)

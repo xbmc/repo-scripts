@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.urlresolver" 
 	     name="urlresolver" 
-	     version="1.0.1" 
-	     provider-name="t0mm0 (inspired by unbehagan, anarchintosh)">
+	     version="1.0.2" 
+	     provider-name="XBMCHub.com">
   <requires>
     <import addon="xbmc.python" version="2.0" />
     <import addon="script.module.t0mm0.common" version="1.0.0"/>
