@@ -14,7 +14,7 @@
 				<posy>0</posy>
 				<width>1200</width>
 				<height>700</height>
-				<texture border="40">default-panel.png</texture>
+				<texture border="40">webviewer-default-panel.png</texture>
 			</control>
 			<control type="image" id="102">
 				<posx>15</posx>
@@ -29,8 +29,8 @@
 				<posy>0</posy>
 				<width>1200</width>
 				<height>700</height>
-		        <texturefocus>transparent.png</texturefocus>
-		        <texturenofocus>transparent.png</texturenofocus>
+		        <texturefocus>webviewer-transparent.png</texturefocus>
+		        <texturenofocus>webviewer-transparent.png</texturenofocus>
 		        <onclick>PreviousMenu</onclick>
 	      	</control>
 		</control>

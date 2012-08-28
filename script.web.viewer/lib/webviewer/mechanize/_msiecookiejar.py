@@ -12,10 +12,8 @@ COPYING.txt included with the distribution).
 # XXX names and comments are not great here
 
 import os, re, time, struct, logging
-
-#For Web Viewer at least on XBMC 4 Xbox
-#if os.name == "nt":
-#    import _winreg
+if os.name == "nt":
+    import _winreg
 
 from _clientcookie import FileCookieJar, CookieJar, Cookie, \
      MISSING_FILENAME_TEXT, LoadError
@@ -24,10 +22,10 @@ debug = logging.getLogger("mechanize").debug
 
 
 def regload(path, leaf):
-    key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, path, 0, #@UndefinedVariable
-                          _winreg.KEY_ALL_ACCESS) #@UndefinedVariable
+    key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, path, 0,
+                          _winreg.KEY_ALL_ACCESS)
     try:
-        value = _winreg.QueryValueEx(key, leaf)[0] #@UndefinedVariable
+        value = _winreg.QueryValueEx(key, leaf)[0]
     except WindowsError:
         value = None
     return value

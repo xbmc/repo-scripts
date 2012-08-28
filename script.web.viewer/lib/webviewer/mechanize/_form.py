@@ -71,7 +71,6 @@ import urlparse
 import warnings
 
 #import _beautifulsoup
-#change for XBMC
 import BeautifulSoup as _beautifulsoup
 import _request
 
