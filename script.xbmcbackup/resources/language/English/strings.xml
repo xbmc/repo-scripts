@@ -4,13 +4,16 @@
 	<string id="30011">General</string>
 	<string id="30012">File Selection</string>
 	
+	<string id="30016">Backup</string>
+	<string id="30017">Restore</string>
+	<string id="30018">Browse Path</string>
+	<string id="30019">Type Path</string>
 	<string id="30020">Browse Remote Path</string>
 	<string id="30021">Backup Folder Name</string>
 	<string id="30022">Run Silent</string>
 	<string id="30023">Mode</string>
 	<string id="30024">Type Remote Path</string>
 	<string id="30025">Remote Path Type</string>
-	<string id="30026">Verbose Logging</string>
 	
 	<string id="30030">User Addons</string>
 	<string id="30031">Addon Data</string>
@@ -18,5 +21,14 @@
 	<string id="30033">Playlist</string>
 	<string id="30034">Thumbnails/Fanart</string>
 	<string id="30035">Config Files</string>
+
+	<string id="30045">Error: Remote path doesn't exist</string>
+	<string id="30046">Starting</string>
+	<string id="30047">Local Dir</string>
+	<string id="30048">Remote Dir</string>
+	<string id="30049">Gathering file list</string>
+	<string id="30050">Remote Path exists - may have old files in it!</string>
+	<string id="30051">Creating Files List</string>
+	<string id="30052">Writing file</string>
 
 </strings>

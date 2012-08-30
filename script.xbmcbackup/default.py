@@ -3,6 +3,10 @@ import xbmcaddon
 import xbmcgui
 import resources.lib.vfs as vfs
 import os
+import time
+
+__addon_id__ = 'script.xbmcbackup'
+__Addon = xbmcaddon.Addon(__addon_id__)
 
 class FileManager:
     walk_path = ''
@@ -71,16 +75,14 @@ class FileManager:
                     
     def addFile(self,filename):
         #write the full remote path name of this file
-        if(self.verbose_log):
-            xbmc.log("Add File: " + filename)
+        log("Add File: " + filename,xbmc.LOGDEBUG)
         self.fileArray.append(filename)
 
     def getFileList(self):
        return self.fileArray
 
 class XbmcBackup:
-    __addon_id__ = 'script.xbmcbackup'
-    Addon = xbmcaddon.Addon(__addon_id__)
+    addon = None
     local_path = ''
     remote_path = ''
     restoreFile = None
@@ -92,49 +94,64 @@ class XbmcBackup:
 
     fileManager = None
     
-    def __init__(self):
-        self.local_path = xbmc.translatePath("special://home")
+    def __init__(self,__Addon):
+        self.addon = __Addon
+        self.local_path = xbmc.makeLegalFilename(xbmc.translatePath("special://home"),False);
       
-	if(self.Addon.getSetting('remote_selection') == '1' and vfs.exists(self.Addon.getSetting('remote_path_2'))):
-            xbmc.log(str(self.Addon.getSetting('remote_path_2')))
-	    self.remote_path = self.Addon.getSetting('remote_path_2')
-	    self.Addon.setSetting("remote_path","")
-        elif(self.Addon.getSetting('remote_selection') == '0' and vfs.exists(self.Addon.getSetting("remote_path"))):
-            self.remote_path = self.Addon.getSetting("remote_path")
-	
-	if(self.Addon.getSetting("backup_name") != '' and self.remote_path != ''):
-	    self.remote_path = self.remote_path + self.Addon.getSetting("backup_name") + "/"
+	if(self.addon.getSetting('remote_selection') == '1'):
+	    self.remote_path = self.addon.getSetting('remote_path_2')
+	    self.addon.setSetting("remote_path","")
+        elif(self.addon.getSetting('remote_selection') == '0'):
+            self.remote_path = self.addon.getSetting("remote_path")
+
+        #check if trailing slash is included
+        if(self.remote_path[-1:] != "/"):
+            self.remote_path = self.remote_path + "/"
+
+	#append backup folder name
+        if(int(self.addon.getSetting('addon_mode')) == 0 and self.remote_path != ''):
+            self.remote_path = self.remote_path + time.strftime("%Y%m%d") + "/"
+	elif(int(self.addon.getSetting('addon_mode')) == 1 and self.addon.getSetting("backup_name") != '' and self.remote_path != ''):
+	    self.remote_path = self.remote_path + self.addon.getSetting("backup_name") + "/"
 	else:
 	    self.remote_path = ""
         
-        self.log("Starting")
-        self.log('Local Dir: ' + self.local_path)
-        self.log('Remote Dir: ' + self.remote_path)
+        log(self.addon.getLocalizedString(30046))
+        log(self.addon.getLocalizedString(30047) + ": " + self.local_path)
+        log(self.addon.getLocalizedString(30048) + ": " + self.remote_path)
 
     def run(self):
 	#check if we should use the progress bar
-        if(self.Addon.getSetting('run_silent') == 'false'):
+        if(self.addon.getSetting('run_silent') == 'false'):
             self.progressBar = xbmcgui.DialogProgress()
-            self.progressBar.create('XBMC Backup','Gathering file list.....')
+            self.progressBar.create(self.addon.getLocalizedString(30010),self.addon.getLocalizedString(30049) + "......")
 	    
         #check what mode were are in
-        if(int(self.Addon.getSetting('addon_mode')) == 0):
-            self.fileManager = FileManager(self.local_path,self.Addon.getAddonInfo('profile'))
+        if(int(self.addon.getSetting('addon_mode')) == 0):
+            self.fileManager = FileManager(self.local_path,self.addon.getAddonInfo('profile'))
+
+            #for backups check if remote path exists
+            if(vfs.exists(self.remote_path)):
+                #this will fail - need a disclaimer here
+                log(self.addon.getLocalizedString(30050))
+
             self.syncFiles()
         else:
-            self.fileManager = FileManager(self.remote_path,self.Addon.getAddonInfo('profile'))
-            self.restoreFiles()
+            self.fileManager = FileManager(self.remote_path,self.addon.getAddonInfo('profile'))
+
+            #for restores remote path must exist
+            if(vfs.exists(self.remote_path)):
+                self.restoreFiles()
+            else:
+                xbmcgui.Dialog().ok(self.addon.getLocalizedString(30010),self.addon.getLocalizedString(30045))
         
     def syncFiles(self):
-        if(vfs.exists(self.remote_path)):
-            #this will fail - need a disclaimer here
-            self.log("Remote Path exists - may have old files in it!")
-
+        
         #make the remote directory
         vfs.mkdir(self.remote_path)
 
-        self.log("Creating Files List")
-        self.fileManager.createFileList(self.Addon)
+        log(self.addon.getLocalizedString(30051))
+        self.fileManager.createFileList(self.addon)
 
         allFiles = self.fileManager.getFileList()
 
@@ -142,9 +159,9 @@ class XbmcBackup:
         self.writeFiles(allFiles,self.local_path,self.remote_path)
         
     def restoreFiles(self):
-        self.fileManager.createFileList(self.Addon)
+        self.fileManager.createFileList(self.addon)
 
-        self.log("Creating Files List")
+        log(self.addon.getLocalizedString(30051))
         allFiles = self.fileManager.getFileList()
 
         #write list from remote to local
@@ -154,21 +171,21 @@ class XbmcBackup:
         xbmc.executebuiltin('UpdateLocalAddons')
         
     def writeFiles(self,fileList,source,dest):
-        self.log("Writing files to: " + dest)
+        log("Writing files to: " + dest)
         self.filesTotal = len(fileList)
         self.filesLeft = self.filesTotal
 
         #write each file from source to destination
         for aFile in fileList:
             if(not self.checkCancel()):
-                xbmc.log('Writing file: ' + source + aFile, level=xbmc.LOGDEBUG)
+                log('Writing file: ' + source + aFile,xbmc.LOGDEBUG)
                 self.updateProgress(aFile)
                 if (aFile.startswith("-")):
-                    vfs.mkdir(dest + aFile[1:])
+                    vfs.mkdir(xbmc.makeLegalFilename(dest + aFile[1:],False))
                 else:
-                    vfs.copy(source + aFile,dest + aFile)
+                    vfs.copy(xbmc.makeLegalFilename(source + aFile),xbmc.makeLegalFilename(dest + aFile,False))
 
-        if(self.Addon.getSetting('run_silent') == 'false'):
+        if(self.addon.getSetting('run_silent') == 'false'):
             self.progressBar.close()
 
     def updateProgress(self,message=''):
@@ -185,17 +202,22 @@ class XbmcBackup:
             result = self.progressBar.iscanceled()
 
         return result
-      
-    def log(self,message):
-        xbmc.log(self.__addon_id__ + ": " + message)
 
     def isReady(self):
         return True if self.remote_path != '' else False
 
+#global functions for logging and encoding
+def log(message,loglevel=xbmc.LOGNOTICE):
+    xbmc.log(encode(__Addon.getLocalizedString(30010) + ": " + message),level=loglevel)
+
+def encode(string):
+    return string.encode('UTF-8','replace')
+
+
 #run the profile backup
-backup = XbmcBackup()
+backup = XbmcBackup(__Addon)
 
 if(backup.isReady()):
     backup.run()
 else:
-    xbmcgui.Dialog().ok('XBMC Backup','Error: Remote path cannot be empty')
+    xbmcgui.Dialog().ok(__Addon.getLocalizedString(30010),__Addon.getLocalizedString(30045))

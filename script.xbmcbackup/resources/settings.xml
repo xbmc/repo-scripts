@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
 	<category id="general" label="30011">
-		<setting id="addon_mode" type="enum" values="Backup|Restore" default="Backup" label="30023" />
-		<setting id="remote_selection" type="enum" values="Browse Path|Type Path" defaults="Browse Path" label="30025"/>
+		<setting id="addon_mode" type="enum" lvalues="30016|30017" default="0" label="30023" />
+		<setting id="remote_selection" type="enum" lvalues="30018|30019" default="0" label="30025"/>
 		<setting id="remote_path_2" type="text" label="30024" default="" visible="eq(-1,1)" />
 		<setting id="remote_path" type="folder" label="30020" visible="eq(-2,0)" />
-		<setting id="backup_name" type="text" label="30021" default="xbmc_backup"/>
+		<setting id="backup_name" type="text" label="30021" default="backup_date" visible="eq(-4,1)"/>
 		<setting id="run_silent" type="bool" label="30022" default="false" />
-		<setting id="verbose_log" type="bool" label="30026" default="false" />
 	</category>
 	<category id="selection" label="30012">
 		<setting id="backup_addons" type="bool" label="30030" default="true" />
