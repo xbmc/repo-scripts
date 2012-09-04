@@ -233,7 +233,6 @@ class Main:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
-
         if json_response.has_key('result') and json_response['result'] != None and json_response['result'].has_key('albums'):
             json_response = json_response['result']['albums']
             # get total value
@@ -275,7 +274,6 @@ class Main:
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": ["genre", "description", "fanart", "thumbnail"], "sort": { "method": "label" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-
         if json_response.has_key('result') and json_response['result'] != None and json_response['result'].has_key('artists'):
             json_response = json_response['result']['artists']
             # get total value
@@ -293,7 +291,7 @@ class Main:
                 json_response.remove( item )
                 # find values
                 description = item['description']
-                genre = str(item['genre'])
+                genre = item['genre']
                 artist = item['label']
                 path = 'musicdb://2/' + str(item['artistid']) + '/'
                 fanart = item['fanart']
