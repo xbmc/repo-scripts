@@ -1,3 +1,6 @@
+v2.0.0
+- add frost to credits
+
 v1.0.18
 - fix path creation when pathsubstitution is used
 
