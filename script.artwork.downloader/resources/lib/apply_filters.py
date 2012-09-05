@@ -161,10 +161,6 @@ class apply_filters:
         if downloaded_artwork >= self.settings.limit_artwork_max:
             reason = 'Max number banner reached: %s' % self.settings.limit_artwork_max
             limited = True
-        # Minimal rating
-        elif self.settings.limit_artwork and artwork['rating'] < self.settings.limit_extrafanart_rating:
-            reason = 'Rating too low: %s' % artwork['rating']
-            limited = True
         # Correct language
         elif self.settings.limit_artwork and not artwork['language'] in [ language ]:
             reason = "Doesn't match preferred language: %s" % pref_language
@@ -181,10 +177,6 @@ class apply_filters:
         # Has season
         if not 'season' in artwork:
             reason = 'No season'
-            limited = True
-        # Minimal rating
-        elif self.settings.limit_artwork and artwork['rating'] < self.settings.limit_extrafanart_rating:
-            reason = 'Rating too low: %s' % artwork['rating']
             limited = True
         # Correct language
         elif self.settings.limit_artwork and not artwork['language'] in [ language ]:

@@ -66,7 +66,7 @@ class TMDBProvider():
                     image_list.append({'url': BASE_IMAGEURL + 'w780' + item['file_path'],
                                        'preview': BASE_IMAGEURL + 'w300' + item['file_path'],
                                        'id': item.get('file_path').lstrip('/').replace('.jpg', ''),
-                                       'type': ['thumb','extrathumbs'],
+                                       'type': ['extrathumbs'],
                                        'height': item.get('height'),
                                        'width': item.get('width'),
                                        'language': item.get('iso_639_1','n/a'),

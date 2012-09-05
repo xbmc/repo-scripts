@@ -28,9 +28,11 @@ class settings:
         self.movie_extrafanart      = __addon__.getSetting("movie_extrafanart")     == 'true'
         self.movie_extrathumbs      = __addon__.getSetting("movie_extrathumbs")     == 'true'
         self.movie_logo             = __addon__.getSetting("movie_logo")            == 'true'
-        self.movie_clearart         = __addon__.getSetting("tvshow_clearart")       == 'true'
+        self.movie_clearart         = __addon__.getSetting("movie_clearart")        == 'true'
         self.movie_discart          = __addon__.getSetting("movie_discart")         == 'true'
-
+        self.movie_thumb            = __addon__.getSetting("movie_thumb")           == 'true'
+        self.movie_banner           = __addon__.getSetting("movie_banner")          == 'true'
+        
         self.tvshow_enable          = __addon__.getSetting("tvshow_enable")         == 'true'
         self.tvshow_poster          = __addon__.getSetting("tvshow_poster")         == 'true'
         self.tvshow_seasonposter    = __addon__.getSetting("tvshow_seasonposter")   == 'true'
@@ -110,6 +112,8 @@ class settings:
         log('## - ExtraThumbs           = %s' % str(self.movie_extrathumbs))
         log('## - Logo                  = %s' % str(self.movie_logo))
         log('## - DiscArt               = %s' % str(self.movie_discart))
+        log('## - Thumbs                = %s' % str(self.movie_thumb))
+        log('## - Banner                = %s' % str(self.movie_banner))
         log('##')
         log('## TV Show Artwork         = %s' % str(self.tvshow_enable))
         log('## - Poster                = %s' % str(self.tvshow_poster))
@@ -202,6 +206,20 @@ class settings:
                                     'gui_string': __localize__(32132),
                                     'art_type': 'discart',
                                     'filename': 'disc.png'},
+
+                                    {'media_type': 'movie',
+                                    'bulk_enabled': self.movie_thumb,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32130),
+                                    'art_type': 'thumb',
+                                    'filename': 'landscape.jpg'},
+                                    
+                                    {'media_type': 'movie',
+                                    'bulk_enabled': self.movie_banner,
+                                    'solo_enabled': 'true',
+                                    'gui_string': __localize__(32123),
+                                    'art_type': 'banner',
+                                    'filename': 'banner.jpg'},
 
                                     # append tv show list
                                     {'media_type': 'tvshow',
@@ -342,7 +360,7 @@ class settings:
             self._get_artwork()
             # Check if faulty setting in movie section
             if self.movie_enable:
-                if not self.movie_poster and not self.movie_fanart and not self.movie_extrafanart and not self.movie_extrathumbs and not self.movie_logo and not self.movie_clearart and not self.movie_discart:
+                if not self.movie_poster and not self.movie_fanart and not self.movie_extrafanart and not self.movie_extrathumbs and not self.movie_logo and not self.movie_clearart and not self.movie_discart and not self.movie_thumb and not self.movie_banner:
                     check_movie = False
                     log('Setting check: No subsetting of movies enabled')
                 else: check_movie = True

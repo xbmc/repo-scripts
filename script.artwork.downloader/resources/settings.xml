@@ -47,6 +47,8 @@
         <setting label="32126" type="bool"      id="movie_logo"                 subsetting="true" enable="eq(-5,true)"  default="false"/>
         <setting label="32125" type="bool"      id="movie_clearart"             subsetting="true" enable="eq(-6,true)"  default="true" />
         <setting label="32132" type="bool"      id="movie_discart"              subsetting="true" enable="eq(-7,true)"  default="false"/>
+        <setting label="32123" type="bool"      id="movie_banner"               subsetting="true" enable="eq(-8,true)"  default="false" />
+        <setting label="32130" type="bool"      id="movie_thumb"                subsetting="true" enable="eq(-9,true)"  default="false"/>
     </category>
     
 <!-- Plugin settings: TV Show section -->
