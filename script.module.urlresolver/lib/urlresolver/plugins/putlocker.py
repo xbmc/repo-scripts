@@ -83,7 +83,7 @@ class PutlockerResolver(Plugin, UrlResolver, PluginSettings):
         else:
             common.addon.log_error('putlocker: stream url not found')
             return False
-        
+        flv_url = flv_url.replace('&amp;','&') #ghizzu
         return flv_url
 
     def get_url(self, host, media_id):
