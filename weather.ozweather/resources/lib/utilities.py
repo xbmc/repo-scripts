@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 import xbmc
 
 DAYS = { "Mon": xbmc.getLocalizedString( 11 ),
@@ -9,51 +9,51 @@ DAYS = { "Mon": xbmc.getLocalizedString( 11 ),
          "Sat": xbmc.getLocalizedString( 16 ),
          "Sun": xbmc.getLocalizedString( 17 )}
 
-WEATHER_CODES = { 'Clearing shower'                 : '39',
+WEATHER_CODES = { 'Clearing Shower'                 : '39',
                   'Cloudy'                          : '26',
-                  'Cloud and wind increasing'       : '23',
-                  'Cloud increasing'                : '26',
+                  'Cloud And Wind Increasing'       : '23',
+                  'Cloud Increasing'                : '26',
                   'Drizzle'                         : '11',
-                  'Drizzle clearing'                : '39',
-                  'Fog then sunny'                  : '34',
-                  'Frost then sunny'                : '34',
+                  'Drizzle Clearing'                : '39',
+                  'Fog Then Sunny'                  : '34',
+                  'Frost Then Tunny'                : '34',
                   'Hazy'                            : '21',
-                  'Heavy rain'                      : '40',
-                  'Heavy showers'                   : '12',
-                  'Increasing sunshine'             : '30',
-                  'Late shower'                     : '45',
-                  'Late thunder'                    : '47',
-                  'Mostly cloudy'                   : '26',
-                  'Mostly sunny'                    : '34',
+                  'Heavy Rain'                      : '40',
+                  'Heavy Showers'                   : '12',
+                  'Increasing Sunshine'             : '30',
+                  'Late Shower'                     : '45',
+                  'Late Thunder'                    : '47',
+                  'Mostly Cloudy'                   : '26',
+                  'Mostly Sunny'                    : '34',
                   'Overcast'                        : '26',
-                  'Possible shower'                 : '11',
-                  'Possible thunderstorm'           : '37',
+                  'Possible Shower'                 : '11',
+                  'Possible Thunderstorm'           : '37',
                   'Rain'                            : '40',
-                  'Rain and snow'                   : '5',
-                  'Rain clearing'                   : '39',
-                  'Rain developing'                 : '12',
-                  'Rain tending to snow'            : '5',
+                  'Rain and Snow'                   : '5',
+                  'Rain Clearing'                   : '39',
+                  'Rain Developing'                 : '12',
+                  'Rain Tending To Snow'            : '5',
                   'Showers'                         : '11',
-                  'Showers easing'                  : '11',
-                  'Showers increasing'              : '11',
+                  'Showers Easing'                  : '11',
+                  'Showers Increasing'              : '11',
                   'Snow'                            : '41',
-                  'Snowfalls clearing'              : '5',
-                  'Snow develping'                  : '13',
-                  'Snow showers'                    : '41',
-                  'Snow tending to rain'            : '5',
+                  'Snowfalls Clearing'              : '5',
+                  'Snow Developing'                 : '13',
+                  'Snow Showers'                    : '41',
+                  'Snow Tending To Rain'            : '5',
                   'Sunny'                           : '32',
                   'Thunderstorms'                   : '38',
-                  'Thunderstorms clearing'          : '37',
+                  'Thunderstorms Clearing'          : '37',
                   'Windy'                           : '23',
-                  'Windy with rain'                 : '2',
-                  'Windy with showers'              : '2',
-                  'Windy with snow'                 : '43',
-                  'Wind and rain increasing'        : '2',
-                  'Wind and showers easing'         : '11',                                 
+                  'Windy Rith Rain'                 : '2',
+                  'Windy With Showers'              : '2',
+                  'Windy With Snow'                 : '43',
+                  'Wind And Rain Increasing'        : '2',
+                  'Wind And Showers Easing'         : '11',
                   'Unknown'                         : 'na',
                   'nt_unknown'                      : 'na'}
 
-"""   These are the weather codes fro XBMC is seems               
+"""   These are the weather codes fro XBMC is seems
 N/A Not Available
 0 Rain/Lightning
 01 Windy/Rain
@@ -102,5 +102,5 @@ N/A Not Available
 44 Same as 30
 45 Rain/Night
 46 Snow/Night
-47 Thunder Showers/Night 
+47 Thunder Showers/Night
 """

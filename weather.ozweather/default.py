@@ -21,7 +21,6 @@ import re
 import ftplib
 import shutil
 import time
-#from PIL import Image
 
 # plugin constants
 #create an add on instation and store the reference
@@ -429,7 +428,7 @@ def propertiesPDOM(page, extendedFeatures):
       shortDesc = shortDesc[0:7]
 
       for count, desc in enumerate(shortDesc):
-        shortDesc[count] = str.replace(shortDesc[count], '-<br />','')
+        shortDesc[count] = str.replace(shortDesc[count].title(), '-<br />','')
 
       #log the collected data, helpful for finding errors
       #log("Collected data: shortDesc [" + str(shortDesc) + "] maxList [" + str(maxList) +"] minList [" + str(minList) + "]")
