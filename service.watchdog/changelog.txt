@@ -1,3 +1,7 @@
+[B]0.6.3[/B]
+- added setting for delaying updates
+- no longer scans/cleans during playback
+
 [B]0.6.2[/B]
 - added multipath support
 - added stricter triggering of library clean based on file type
