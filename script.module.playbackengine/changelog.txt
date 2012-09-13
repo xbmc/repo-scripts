@@ -1,0 +1,9 @@
+[B]Version 1.0.2[/B]
+
+- Added documentation
+- Added Localized string support. Uses XBMC language files.
+- Corrected minor bugs
+
+[B]Version 1.0.1[/B]
+
+- Initial Release
