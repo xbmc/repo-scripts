@@ -3,11 +3,14 @@
 # Frankenstein Monster v 2.0
 # Feel free to improve, change anything.
 # Credits to amet, Guilherme Jardim, and many more.
+# Big thanks to gaco for adding logging to site.
 # mrto
 
 import urllib2, re, string, xbmc, sys, os
 from utilities import log, languageTranslate
 from BeautifulSoup import BeautifulSoup
+from cookielib import CookieJar
+from urllib import urlencode
 
 _ = sys.modules[ "__main__" ].__language__
 __addon__ = sys.modules[ "__main__" ].__addon__
@@ -22,7 +25,7 @@ elif __addon__.getSetting( "Napisy24_type" ) == "3":
     subtitle_type = "mpl2"
 
 main_url = "http://napisy24.pl/search.php?str="
-base_download_url = "http://napisy.me/download/"
+base_download_url = "http://napisy24.pl/download/"
 down_url = "%s%s/" % (base_download_url, subtitle_type)
 
 def getallsubs(content, title, subtitles_list, file_original_path, stack, lang1, lang2, lang3):
@@ -159,16 +162,30 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     return subtitles_list, "", "" #standard output
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
-    import urllib
-    f = urllib.urlopen(subtitles_list[pos][ "link" ])
-    language = subtitles_list[pos][ "language_name" ]
-
+    cj = CookieJar()
+    headers = {
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Charset': 'UTF-8,*;q=0.5',
+          'Accept-Encoding': 'gzip,deflate,sdch',
+          'Accept-Language': 'pl,pl-PL;q=0.8,en-US;q=0.6,en;q=0.4',
+          'Connection': 'keep-alive',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.83 Safari/537.1',
+          'Referer': 'http://napisy24.pl/'
+    }
+    values = { 'form_logowanieMail' : __addon__.getSetting( "n24user" ), 'form_logowanieHaslo' :  __addon__.getSetting( "n24pass" ), 'postAction' : 'sendLogowanie' }
+    data = urlencode(values)
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    request = urllib2.Request("http://napisy24.pl/logowanie/", data, headers)
+    response = opener.open(request)
+    request = urllib2.Request(subtitles_list[pos][ "link" ], "", headers)
+    f = opener.open(request)
     local_tmp_file = os.path.join(tmp_sub_dir, "zipsubs.zip")
     log( __name__ ,"Saving subtitles to '%s'" % (local_tmp_file))
     
     local_file = open(zip_subs, "w" + "b")
     local_file.write(f.read())
     local_file.close()
-
-    return True,language, "" #standard output
-
+    opener.open("http://napisy24.pl/index.php?sendAction=Wyloguj")
+    
+    language = subtitles_list[pos][ "language_name" ]
+    return True, language, "" #standard output

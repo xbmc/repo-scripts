@@ -53,15 +53,15 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
-  import urllib
-  f = urllib.urlopen(subtitles_list[pos][ "link" ])
-  local_file = open(zip_subs, "w" + "b")
-
-  local_file.write(f.read())
-  local_file.close()
+  
+  destination = os.path.join(tmp_sub_dir, "%s.srt" % subtitles_list[pos][ "ID" ])
+  result = OSDBServer().download(subtitles_list[pos][ "ID" ], destination, session_id)
+  if not result:
+    import urllib
+    urllib.urlretrieve(subtitles_list[pos][ "link" ],zip_subs)
   
   language = subtitles_list[pos][ "language_name" ]
-  return True,language, "" #standard output
+  return not result,language, destination #standard output
     
     
     

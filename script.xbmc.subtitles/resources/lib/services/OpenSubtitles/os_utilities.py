@@ -11,6 +11,11 @@ BASE_URL_XMLRPC = u"http://api.opensubtitles.org/xml-rpc"
 
 class OSDBServer:
 
+  def __init__( self, *args, **kwargs ):
+    self.server = xmlrpclib.Server( BASE_URL_XMLRPC, verbose=0 )
+    login = self.server.LogIn("", "", "en", __scriptname__.replace(" ","_"))    
+    self.osdb_token  = login[ "token" ]
+
   def mergesubtitles( self ):
     self.subtitles_list = []
     if( len ( self.subtitles_hash_list ) > 0 ):
@@ -34,10 +39,6 @@ class OSDBServer:
     if lang3 != lang1 and lang3 != lang2:
       language += "," + languageTranslate(lang3,0,3)
   
-    self.server = xmlrpclib.Server( BASE_URL_XMLRPC, verbose=0 )
-    login = self.server.LogIn("", "", "en", __scriptname__.replace(" ","_"))
-  
-    self.osdb_token  = login[ "token" ]
     log( __name__ ,"Token:[%s]" % str(self.osdb_token))
   
     try:
@@ -69,7 +70,7 @@ class OSDBServer:
                                              'language_name' : item["LanguageName"],
                                              'language_flag' : flag_image,
                                              'language_id'   : item["SubLanguageID"],
-                                             'ID'            : item["IDSubtitle"],
+                                             'ID'            : item["IDSubtitleFile"],
                                              'rating'        : str(int(item["SubRating"][0])),
                                              'format'        : item["SubFormat"],
                                              'sync'          : sync,
@@ -81,3 +82,19 @@ class OSDBServer:
     
     self.mergesubtitles()
     return self.subtitles_list, msg
+
+  def download(self, ID, dest, token):
+     try:
+       import zlib, base64
+       down_id=[ID,]
+       result = self.server.DownloadSubtitles(self.osdb_token, down_id)
+       if result["data"]:
+         local_file = open(dest, "w" + "b")
+         d = zlib.decompressobj(16+zlib.MAX_WBITS)
+         data = d.decompress(base64.b64decode(result["data"][0]["data"]))
+         local_file.write(data)
+         local_file.close()
+         return True
+       return False
+     except:
+       return False

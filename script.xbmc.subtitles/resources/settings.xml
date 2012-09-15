@@ -29,8 +29,8 @@
       <setting id="Napiprojekt" type="bool" label="Napiprojekt.pl (Polish/English subs only)" default="false"/>
       <setting id="Napisy24pl" type="bool" label="Napisy24.pl (Mostly Polish/English subs)" default="false"/>
       <setting id="Napisy24_type" type="enum" lvalues="30141|30142|30143|30144" visible= "eq(-1,true)" enable="eq(-1,true)" default="2" label="30140"/>
-      <setting id="Napisyme" type="bool" label="Napisy.me (Mostly Polish/English subs from napisy24.pl database)" default="false"/>
-      <setting id="Napisyme_type" type="enum" lvalues="30141|30142|30143|30144" visible= "eq(-1,true)" enable="eq(-1,true)" default="2" label="30140"/>
+      <setting id="n24user" type="text"  visible= "eq(-2,true)" enable="eq(-2,true)" label="30146" default=""/>
+      <setting id="n24pass" type="text" option = "hidden" visible= "eq(-3,true)" enable="eq(-3,true)" label="30147" default=""/>
 
       <setting id="OmniSubs" type="bool" label="OmniSubs.net" default="false"/>
       <setting id="Omniuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30136" default=""/>
