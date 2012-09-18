@@ -1,3 +1,7 @@
+[B]Version 1.2.0[/B]
+- fetchPage should default to utf-8 encoding
+- parseDOM should handle utf-8 encoding
+
 [B]Version 1.1.0[/B]
 - Handle \t that breaks DOM variable extraction
 - Added extractJS function
