@@ -388,16 +388,20 @@ def propertiesPDOM(page, extendedFeatures):
     ####CURRENT DATA
     try:
       #pull data from the current observations table
-      ret = common.parseDOM(page, "div", attrs = { "class": "details_lhs" })
-      observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" })
-      #Observations now looks like - ['18.3&deg;C', '4.7&deg;C', '18.3&deg;C', '41%', 'SSW 38km/h', '48km/h', '1015.7hPa', '-', '0.0mm / -']
-      temperature = str.strip(observations[0], '&deg;C')
-      dewPoint = str.strip(observations[1], '&deg;C')
-      feelsLike = str.strip(observations[2], '&deg;C')
-      humidity = str.strip(observations[3], '%')
-      windTemp = observations[4].partition(' ');
-      windDirection = windTemp[0]
-      windSpeed = str.strip(windTemp[2], 'km/h')
+        ret = common.parseDOM(page, "div", attrs = { "class": "details_lhs" })
+        observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" })
+        #Observations now looks like - ['18.3&deg;C', '4.7&deg;C', '18.3&deg;C', '41%', 'SSW 38km/h', '48km/h', '1015.7hPa', '-', '0.0mm / -']
+        #log(" *********************************************************** ")
+        #log(" OBESERVATIONS " + str(observations))
+        temperature = observations[0].strip( '&deg;C' )
+        #log(" *********************************************************** ")
+        #log(" TEMP " + str(temperature))
+        dewPoint = observations[1].strip( '&deg;C' )
+        feelsLike = observations[2].strip( '&deg;C')
+        humidity = observations[3].strip( '%')
+        windTemp = observations[4].partition(' ');
+        windDirection = windTemp[0]
+        windSpeed = windTemp[2].strip( 'km/h')
       #there's no UV so we get that from the forecast, see below
     except Exception as inst:
       log("********** OzWeather Couldn't Parse Data, sorry!!", inst)
@@ -428,7 +432,7 @@ def propertiesPDOM(page, extendedFeatures):
       shortDesc = shortDesc[0:7]
 
       for count, desc in enumerate(shortDesc):
-        shortDesc[count] = str.replace(shortDesc[count].title(), '-<br />','')
+        shortDesc[count] = shortDesc[count].title().replace( '-<br />','')
 
       #log the collected data, helpful for finding errors
       #log("Collected data: shortDesc [" + str(shortDesc) + "] maxList [" + str(maxList) +"] minList [" + str(minList) + "]")
@@ -450,9 +454,9 @@ def propertiesPDOM(page, extendedFeatures):
           #new method - just strip the crap (e.g. tabs) out of the string and use a colon separator for the 'return' as we don't have much space
           longDayCast = common.stripTags(longDayCast[0])
           #print longDayCast
-          longDayCast = str.replace(longDayCast, '\t','')
-          longDayCast = str.replace(longDayCast, '\r',' ')
-          longDayCast = str.replace(longDayCast, '&amp;','&')
+          longDayCast = longDayCast.replace( '\t','')
+          longDayCast = longDayCast.replace( '\r',' ')
+          longDayCast = longDayCast.replace( '&amp;','&')
           #print '@@@@@@@@@ Long 4', longDayCast
           longDayCast = longDayCast[:-1]
           #print '@@@@@@@@@@@@@@@@' , longDayCast[-5:]

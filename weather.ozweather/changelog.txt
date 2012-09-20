@@ -1,3 +1,7 @@
+V0.4.2
+- Fixes for capatilisation
+- Fixes for parsedom 1.2 unicode behaviour
+
 V0.3.8
 - Only import PIL if extended features are activated (means on paltforms like Crystalbuntu without PIL you can still get BOM weather data at least.
 - some radars (e.g. IDR072) - were not on the ftp server, they now get pulled in by http
