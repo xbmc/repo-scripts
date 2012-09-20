@@ -11,6 +11,10 @@ On the Backup Selection page you can select which items from your user profile f
 
 To restore your data simply switch the Mode from "backup" to "restore" and type the date of the backup you wish to restore from . The files will be copied from your remote directory to the local path. The file selection criteria will be used for the restore as well. 
 
+Scheduling: 
+
+You can also schedule backups to be completed on a set interval via the scheduling area. When it is time for the backup to run it will be executed in the background. 
+
 What this Addon Will Not Do:
 
 This is not meant as an XBMC file sync solution. If you have multiple frontends you want to keep in sync this addon may work in a "poor man's" sort of way but it is not intended for that. 
