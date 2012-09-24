@@ -1,3 +1,6 @@
+V0.4.3
+- Fixes for fixes for capatilisation :)
+
 V0.4.2
 - Fixes for capatilisation
 - Fixes for parsedom 1.2 unicode behaviour
