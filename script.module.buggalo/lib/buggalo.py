@@ -18,33 +18,48 @@
 #  http://www.gnu.org/copyleft/gpl.html
 #
 #
-import os
 import sys
 import traceback as tb
-import datetime
-import urllib2
-import simplejson
 import random
-import platform
 
-import xbmc
-import xbmcgui
 import xbmcaddon
+import xbmcplugin
+
+import buggalo_client as client
+import buggalo_gui as gui
+import buggalo_userflow as userflow
 
 #   The full URL to where the gathered data should be posted.
 SUBMIT_URL = None
-
 EXTRA_DATA = dict()
+SCRIPT_ADDON = len(sys.argv) == 1
+
+if not SCRIPT_ADDON:
+    # Automatically track userflow for plugin type addons
+    userflow.trackUserFlow('%s%s' % (sys.argv[0], sys.argv[2]))
 
 def addExtraData(key, value):
     EXTRA_DATA[key] = value
+
+def trackUserFlow(value):
+    """
+    Registers an entry in the user's flow through the addon.
+    The values is stored in a dict with the current time as key and the provided value as the value.
+
+    For plugin-type addons the user flow is automatically registered for each page the user loads.
+    The value can be any string, so it's also useful in script-type addons.
+
+    @param value: the value indicating the user's flow.
+    @type value: str
+    """
+    userflow.trackUserFlow(value)
 
 def getRandomHeading():
     """
     Get a random heading for use in dialogs, etc.
     The heading contains a random movie quote from the English strings.xml
     """
-    return getLocalizedString(random.randint(90000, 90005))
+    return getLocalizedString(random.randint(90000, 90011))
 
 
 def getLocalizedString(id):
@@ -85,99 +100,17 @@ def onExceptionRaised(extraData = None):
     (type, value, traceback) = sys.exc_info()
     tb.print_exception(type, value, traceback)
 
-    heading = getRandomHeading()
-    line1 = getLocalizedString(91000)
-    line2 = getLocalizedString(91001)
-    line3 = getLocalizedString(91002)
-    yes = getLocalizedString(91003)
-    no = getLocalizedString(91004)
-    thanks = getLocalizedString(91005)
-
-    if xbmcgui.Dialog().yesno(heading, line1, line2, line3, no, yes):
-        data = _gatherData(type, value, traceback, extraData)
-        _submitData(data)
-        xbmcgui.Dialog().ok(heading, thanks)
-
-
-def _gatherData(type, value, traceback, extraData):
-    data = dict()
-    data['version'] = 3
-    data['timestamp'] = datetime.datetime.now().isoformat()
-
-    system = dict()
-    try:
-        if hasattr(os, 'uname'):
-            # Works on recent unix flavors
-            (sysname, nodename, release, version, machine) = os.uname()
-        else:
-            # Works on Windows (and others?)
-            (sysname, nodename, release, version, machine, processor) = platform.uname()
-
-        system['nodename'] = nodename
-        system['sysname'] = sysname
-        system['release'] = release
-        system['version'] = version
-        system['machine'] = machine
-    except Exception, ex:
-        system['sysname'] = sys.platform
-        system['exception'] = str(ex)
-    data['system'] = system
-
-    addon = xbmcaddon.Addon()
-    addonInfo = dict()
-    addonInfo['id'] = addon.getAddonInfo('id')
-    addonInfo['name'] = addon.getAddonInfo('name')
-    addonInfo['version'] = addon.getAddonInfo('version')
-    addonInfo['path'] = addon.getAddonInfo('path')
-    addonInfo['profile'] = addon.getAddonInfo('profile')
-    data['addon'] = addonInfo
-
-    xbmcInfo = dict()
-    xbmcInfo['buildVersion'] = xbmc.getInfoLabel('System.BuildVersion')
-    xbmcInfo['buildDate'] = xbmc.getInfoLabel('System.BuildDate')
-    xbmcInfo['skin'] = xbmc.getSkinDir()
-    xbmcInfo['language'] = xbmc.getInfoLabel('System.Language')
-    data['xbmc'] = xbmcInfo
-
-    execution = dict()
-    execution['python'] = sys.version
-    execution['sys.argv'] = sys.argv
-    data['execution'] = execution
-
-    exception = dict()
-    exception['type'] = str(type)
-    exception['value'] = str(value)
-    exception['stacktrace'] = tb.format_tb(traceback)
-    data['exception'] = exception
-
-    extraDataInfo = dict()
-    try:
-        for (key, value) in EXTRA_DATA.items():
-            extraDataInfo[key] = str(value)
-
-        if type(extraData) == dict:
-            for (key, value) in extraData.items():
-                extraDataInfo[key] = str(value)
-        elif extraData is not None:
-            extraDataInfo[''] = str(extraData)
-    except Exception, ex:
-        extraDataInfo['exception'] = str(ex)
-    data['extraData'] = extraDataInfo
-
-    return simplejson.dumps(data)
-
-
-def _submitData(data):
-    for attempt in range(0, 3):
+    if not SCRIPT_ADDON:
         try:
-            req = urllib2.Request(SUBMIT_URL, data)
-            req.add_header('Content-Type', 'text/json')
-            u = urllib2.urlopen(req)
-            u.read()
-            u.close()
-            break # success; no further attempts
+            # signal error to XBMC to hide progress dialog
+            HANDLE = int(sys.argv[1])
+            xbmcplugin.endOfDirectory(HANDLE, succeeded=False)
         except Exception:
-            pass # probably timeout; retry
+            pass
 
+    heading = getRandomHeading()
+    data = client.gatherData(type, value, traceback, extraData, EXTRA_DATA)
 
-
+    d = gui.BuggaloDialog(SUBMIT_URL, heading, data)
+    d.doModal()
+    del d

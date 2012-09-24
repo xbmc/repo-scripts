@@ -13,7 +13,7 @@ It is also better integrated into the user experience, the user only
 has to decide if they want to submit the bug report or not.
 
 The user will see a dialog as seen in this screenshot:
-http://tommy.winther.nu/files/2011/12/script_error.png
+http://forum.xbmc.org/showthread.php?tid=121925&pid=1137307#pid1137307
 
 HOW TO USE
 ==========
@@ -76,8 +76,29 @@ such as date and time.
    Python version and sys.argv
 *  Exception information
    Type of exception, message and full stack trace
+*  User flow information
+   For plugin-type addons each request is recorded with parameters and timestamp
+   For script-type addons the author must record relevant information by invoking the trackUserFlow() method
 
 For further details take a look at the code in buggalo.py
+
+TRACKING USER FLOW
+==================
+A new feature in version 1.1.0 is the option to track the users flow when the user navigate through
+the addon. This can somewhat be compared to an access log from the apache webserver.
+
+Buggalo will keep track of the userflow for individual addons and store it up to 24 hours.
+This also means that when an error report is sent it contains the userflow for the last 24 hours.
+
+```python
+buggalo.trackUserFlow('event information')
+```
+
+*  For plugin-type addons the userflow is automatically tracked.
+   It is possible for the addon author to track additional events by invoking the trackuserFlow() method.
+
+*  For script-type addons the addon author must invoke the trackUserFlow() method with relevant information.
+   This could be pretty much anything, it could fx be used to track navigation insde a customer UI.
 
 ---------------------------------------------------------------------
 
@@ -88,4 +109,4 @@ The module is named after a creature in my favorite animated show:
 http://theinfosphere.org/Where_the_Buggalo_Roam
 
 ---------------------------------------------------------------------
-                                               2012.02.18 - twinther
+2012.09.19 - twinther
