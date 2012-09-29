@@ -1,3 +1,12 @@
+v0.2.8
+- fix crash on empty search string
+
+v0.2.7
+- ignore empty searchstrings
+
+v0.2.6
+- added hungarian language file
+
 v0.2.5
 - also search originaltitle for movies
 
