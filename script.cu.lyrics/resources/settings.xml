@@ -9,6 +9,6 @@
     <category label="30109">
       <setting id="lyricsmode" type="bool" label="Lyrics Mode" default="true"/>
       <setting id="lyricstime" type="bool" label="lyrics.time" default="true"/>
-      <setting id="lyricwiki" type="bool" label="Lyrics Wiki" default="true"/>
+      <setting id="lyricwiki" type="bool" label="LyricWiki" default="true"/>
     </category>
 </settings>

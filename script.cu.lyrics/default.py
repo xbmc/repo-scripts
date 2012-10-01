@@ -1,23 +1,20 @@
-# main import's 
 import sys
 import os
 import xbmc
 import xbmcaddon
-# Script constants 
-__scriptname__    = "CU Lyrics"
-__author__        = "Amet, ZorMonkey"
-__scriptid__      = "script.cu.lyrics"
-__credits__       = "EnderW,Nuka1195"
-__settings__      = xbmcaddon.Addon()
-__language__      = __settings__.getLocalizedString
-__version__       = __settings__.getAddonInfo('version')
-__cwd__           = __settings__.getAddonInfo('path')
-__profile__       = xbmc.translatePath( __settings__.getAddonInfo('profile') )
 
-# Shared resources 
-BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
+__addon__      = xbmcaddon.Addon()
+__author__     = __addon__.getAddonInfo('author')
+__scriptid__   = __addon__.getAddonInfo('id')
+__scriptname__ = __addon__.getAddonInfo('name')
+__cwd__        = __addon__.getAddonInfo('path')
+__version__    = __addon__.getAddonInfo('version')
+__language__   = __addon__.getLocalizedString
 
-sys.path.append (BASE_RESOURCE_PATH)
+__profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') )
+__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
+
+sys.path.append (__resource__)
 
 if ( __name__ == "__main__" ):
     import gui
