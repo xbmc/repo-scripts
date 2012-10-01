@@ -1,3 +1,6 @@
+v3.1.7
+- sort by tracknumber when playing albums
+
 v3.1.6
 - fixed potential unicode encode error
 

@@ -411,7 +411,7 @@ class Main:
         # clear the playlist
         playlist.clear()
         # query the database
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["file", "fanart"], "albumid":%s }, "id": 1}' % ID)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["file", "fanart"], "sort": { "method": "track" }, "albumid":%s }, "id": 1}' % ID)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         # separate the records
         json_response = simplejson.loads(json_query)
