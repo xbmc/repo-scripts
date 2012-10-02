@@ -1,3 +1,22 @@
+v2.0.5
+- fix unicodedecode error when downloading theme
+
+v2.0.4
+- fix unicodedecode errors
+- fix progressdialog wouldn't close at the end of the download
+
+v2.0.3
+- fade tunes when navigating back to the tv show list
+
+v2.0.2
+- catch unicode encode errors
+- add portuguese translation
+- add spanish translation
+
+v2.0.1
+- add scriptname to logging
+- fix unicode encode errors
+
 v2.0.0
 - add frost to credits
 

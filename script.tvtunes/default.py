@@ -4,6 +4,7 @@ import os
 import xbmcaddon
 
 __addon__     = xbmcaddon.Addon()
+__addonid__   = __addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
 __cwd__       = __addon__.getAddonInfo('path')
 __author__    = __addon__.getAddonInfo('author')
@@ -13,8 +14,9 @@ __language__  = __addon__.getLocalizedString
 RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) ).decode('utf-8')
 sys.path.append( RESOURCES_PATH )
 
-def log(msg):
-    xbmc.log( str( msg ),level=xbmc.LOGDEBUG )
+def log(txt):
+    message = '%s: %s' % (__addonid__, txt)
+    xbmc.log(msg=str(message), level=xbmc.LOGDEBUG)
 
 log( "### %s starting ..." % __addonname__ )
 log( "### author: %s" % __author__ )
@@ -40,11 +42,11 @@ if params.get("backend", False ):
     downvolume = downvolume.split(".")[0]
     if xbmc.getInfoLabel( "Window(10025).Property(TvTunesIsRunning)" ) != "true":
         #log( '########################################################################%s,loop=%s&downvolume=%s&smb=%s&user=%spassword=%s' % (os.path.join( RESOURCES_PATH , "tvtunes_backend.py"), loop , downvolume , smb , username , password) )
-        xbmc.executebuiltin('XBMC.RunScript(%s,loop=%s&downvolume=%s&smb=%s&user=%s&password=%s)' % (os.path.join( RESOURCES_PATH , "tvtunes_backend.py"), loop , downvolume , smb , username , password))
+        xbmc.executebuiltin('XBMC.RunScript(%s,loop=%s&downvolume=%s&smb=%s&user=%s&password=%s)' % (str(os.path.join( RESOURCES_PATH , "tvtunes_backend.py")), loop , downvolume , smb , username , password))
 
 elif params.get("mode", False ) == "solo":
     log( "### params %s" % params )
-    xbmc.executebuiltin('XBMC.RunScript(%s,mode=solo&name=%s&path=%s)' % (os.path.join( RESOURCES_PATH , "tvtunes_scraper.py") , params.get("tvname", False ) , params.get("tvpath", False ) ) )
+    xbmc.executebuiltin('XBMC.RunScript(%s,mode=solo&name=%s&path=%s)' % (str(os.path.join( RESOURCES_PATH , "tvtunes_scraper.py")) , params.get("tvname", False ) , params.get("tvpath", False ) ) )
 
 else: 
     log( "### %s v%s" % ( __addon__.getAddonInfo("id") , __addon__.getAddonInfo("version") ) )

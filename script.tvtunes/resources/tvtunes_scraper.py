@@ -19,8 +19,12 @@ __addonid__   = __addon__.getAddonInfo('id')
 __cwd__       = __addon__.getAddonInfo('path')
 __language__  = __addon__.getLocalizedString
 
-def log(msg):
-    xbmc.log( str( msg ),level=xbmc.LOGDEBUG )
+def log(txt):
+    message = '%s: %s' % (__addonid__, txt)
+    try:
+        xbmc.log(msg=message, level=xbmc.LOGDEBUG)
+    except:
+        xbmc.log(msg='UnicodeDecodeError', level=xbmc.LOGDEBUG)
 
 try:
     # parse sys.argv for params
@@ -88,22 +92,22 @@ class TvTunes:
                 self.scan(params.get("name", "" ),params.get("path", "false" ))
         else:
             self.scan()
+        self.DIALOG_PROGRESS.close()
 
     def scan(self , cur_name=False , cur_path=False):
         count = 0
         if cur_name and cur_path: 
             log( "### solo mode" )
-
             log("####################### %s" % cur_name )
             log("####################### %s" % cur_path )
-            self.TVlist = [[cur_name,cur_path.encode('utf-8')]]
+            self.TVlist = [[cur_name,cur_path]]
         total = len(self.TVlist)
         for show in self.TVlist:
             count = count + 1
             if not self.ERASE and xbmcvfs.exists(os.path.join(show[1],"theme.mp3")):
                 log( "### %s already exists, ERASE is set to %s" % ( os.path.join(show[1],"theme.mp3"), [False,True][self.ERASE] ) )
             else:
-                self.DIALOG_PROGRESS.update( (count*100)/total , __language__(32107) + ' ' + show[0] , "")
+                self.DIALOG_PROGRESS.update( (count*100)/total , str(__language__(32107)) + ' ' + show[0] , "")
                 if self.DIALOG_PROGRESS.iscanceled():
                     self.DIALOG_PROGRESS.close()
                     xbmcgui.Dialog().ok(__language__(32108),__language__(32109))
@@ -122,7 +126,7 @@ class TvTunes:
             def _report_hook( count, blocksize, totalsize ):
                 percent = int( float( count * blocksize * 100 ) / totalsize )
                 strProgressBar = str( percent )
-                self.DIALOG_PROGRESS.update( percent , __language__(32110) + ' ' + theme_url , __language__(32111) + ' ' + destination )
+                self.DIALOG_PROGRESS.update( percent , str(__language__(32110)) + ' ' + theme_url , str(__language__(32111)) + ' ' + destination )
             if not xbmcvfs.exists(path):
                 try:
                     xbmcvfs.mkdir(path)
@@ -150,7 +154,7 @@ class TvTunes:
         theme_list.insert(0 , searchdic)
         while theme_url == False:
 
-            select = xbmcgui.Dialog().select(__language__(32112) + ' ' + searchname, [ theme["name"] for theme in theme_list ])
+            select = xbmcgui.Dialog().select(str(__language__(32112)) + ' ' + searchname, [ theme["name"] for theme in theme_list ])
             if select == -1: 
                 log( "### Canceled by user" )
                 #xbmcgui.Dialog().ok("Canceled" , "Download canceled by user" )

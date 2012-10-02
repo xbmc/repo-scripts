@@ -12,9 +12,14 @@ import xbmcvfs
 import xbmcaddon
 
 __addon__     = xbmcaddon.Addon(id='script.tvtunes')
+__addonid__   = __addon__.getAddonInfo('id')
 
-def log(msg):
-    xbmc.log( str( msg ),level=xbmc.LOGDEBUG )
+def log(txt):
+    message = '%s: %s' % (__addonid__, txt)
+    try:
+        xbmc.log(msg=message, level=xbmc.LOGDEBUG)
+    except:
+        xbmc.log(msg='UnicodeDecodeError', level=xbmc.LOGDEBUG)
 
 try:
     # parse sys.argv for params
@@ -70,10 +75,9 @@ class mythread( threading.Thread ):
                     self.oldpath = ""
                     self.playpath = ""
                     log( "### stop playing" )
-                    xbmc.Player().stop()
+                    self.fade_out()
                     if self.loud: self.raise_volume()
                     xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
-
                 time.sleep( .5 )
         except:
             print_exc()
@@ -104,6 +108,26 @@ class mythread( threading.Thread ):
         log( "### raise volume to %d%% " % vol )
         xbmc.executebuiltin( 'XBMC.SetVolume(%d)' % vol )
         self.loud = False
+
+    def fade_out( self ):
+        cur_vol = self.get_volume()
+        cur_vol_prec = 100 + (cur_vol * (100/60.0))
+        vol_step = cur_vol_prec / 10
+        # do not mute completely else the mute icon shows up
+        for step in range (0,9):
+            vol = cur_vol_prec - vol_step
+            log( "### vol: %s" % str(vol) )
+            xbmc.executebuiltin('XBMC.SetVolume(%d)' % vol)
+            cur_vol_prec = vol
+            xbmc.sleep(200)
+        xbmc.Player().stop()
+        # wait till player is stopped before raising the volume
+        while xbmc.Player().isPlaying():
+            xbmc.sleep(50)
+        pre_vol_prec = 100 + (cur_vol * (100/60.0))
+        xbmc.executebuiltin('XBMC.SetVolume(%d)' % pre_vol_prec)
+        # wait till xbmc has adjusted the volume before continuing
+        xbmc.sleep(200)
 
     def start_playing( self ):
         if params.get("smb", "false" ) == "true" and self.newpath.startswith("smb://") : 
