@@ -1,4 +1,4 @@
-from time import strptime, time, mktime
+from time import strptime, time, mktime, localtime
 import os, sys, re, socket, urllib, unicodedata
 from traceback import print_exc
 from datetime import datetime, date, timedelta, tzinfo
@@ -12,7 +12,6 @@ else:
 import _strptime
 
 __addon__     = xbmcaddon.Addon()
-__settings__  = xbmcaddon.Addon( "script.tv.show.next.aired" )
 __addonid__   = __addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
 __cwd__       = __addon__.getAddonInfo('path')
@@ -35,8 +34,9 @@ elif DATE_FORMAT[0] == 'm':
 if not xbmcvfs.exists(DATA_PATH):
     xbmcvfs.mkdir(DATA_PATH)
 
-def log(msg):
-    xbmc.log( str( msg ),level=xbmc.LOGDEBUG )
+def log(txt):
+    message = '%s: %s' % (__addonid__, txt)
+    xbmc.log(msg=str(message), level=xbmc.LOGDEBUG)
 
 def footprints():
     log( "### %s starting ..." % __addonname__ )
@@ -86,9 +86,11 @@ class NextAired:
         self.weekday = date.today().weekday()
         self.days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
         self.ampm = xbmc.getCondVisibility('substring(System.Time,Am)') or xbmc.getCondVisibility('substring(System.Time,Pm)')
+        self.update_hour = __addon__.getSetting( "update_hour" )
+        self.update_minute = __addon__.getSetting( "update_minute" )
         self._parse_argv()
-        if __settings__.getSetting( "AddonVersion" ) != __version__:
-            __settings__.setSetting ( id = "AddonVersion", value = "%s" % __version__ )
+        if __addon__.getSetting( "AddonVersion" ) != __version__:
+            __addon__.setSetting ( id = "AddonVersion", value = "%s" % __version__ )
             self.FORCEUPDATE = True
         if self.BACKEND:
             self.run_backend()
@@ -97,15 +99,24 @@ class NextAired:
             if self.SILENT == "":
                 self.show_gui()
             else:
-                oldweekday = date.today().weekday()
                 while (not xbmc.abortRequested):
                     xbmc.sleep(1000)
-                    newweekday = date.today().weekday()
-                    if newweekday != oldweekday:
-                        oldweekday = newweekday
+                    current_time = localtime()
+                    current_hour = '%.2i' % current_time.tm_hour
+                    current_minute = '%.2i' % current_time.tm_min
+                    if (current_hour == self.update_hour) and (current_minute == self.update_minute):
                         self.FORCEUPDATE = True
-                        log( "### it's midnight, force update" )
+                        log( "### it's update time, force update" )
                         self.update_data()
+                        current_time = localtime()
+                        current_hour = '%.2i' % current_time.tm_hour
+                        current_minute = '%.2i' % current_time.tm_min
+                        while (current_hour == self.update_hour) and (current_minute == self.update_minute) and (not xbmc.abortRequested):
+                            xbmc.sleep(1000)
+                            current_time = localtime()
+                            current_hour = '%.2i' % current_time.tm_hour
+                            current_minute = '%.2i' % current_time.tm_min
+                        log( "### forced update finished" )
                 self.close("xbmc is closing, stop script")
 
     def _parse_argv( self ):
@@ -116,7 +127,7 @@ class NextAired:
         log( "### params: %s" % params )
         self.SILENT = params.get( "silent", "" )
         self.BACKEND = params.get( "backend", False )
-        self.FORCEUPDATE = params.get( "force", False ) or __settings__.getSetting("ForceUpdate") == "true"
+        self.FORCEUPDATE = params.get( "force", False ) or __addon__.getSetting("ForceUpdate") == "true"
 
     def update_data(self):
         self.nextlist = []
@@ -124,7 +135,7 @@ class NextAired:
         if xbmcvfs.exists(dbfile):
             if self.FORCEUPDATE:
                 log( "### update forced, rescanning..." )
-                __settings__.setSetting(id="ForceUpdate", value="false")
+                __addon__.setSetting(id="ForceUpdate", value="false")
                 self.scan_info()
             elif time() - os.path.getmtime(dbfile) > 86400:
                 log( "### db more than 24h old, rescanning..." )
@@ -167,7 +178,7 @@ class NextAired:
                 percent = int( float( self.count * 100 ) / self.total_show )
                 DIALOG_PROGRESS.update( percent , __language__(32102) , "%s" % show[0] )
                 if DIALOG_PROGRESS.iscanceled():
-                    __settings__.setSetting( id="ForceUpdate", value="true" ) 
+                    __addon__.setSetting( id="ForceUpdate", value="true" ) 
                     DIALOG_PROGRESS.close()
                     xbmcgui.Dialog().ok(__language__(32103),__language__(32104))
                     break

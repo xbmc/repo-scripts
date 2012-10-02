@@ -3,11 +3,13 @@ from time import mktime
 from datetime import date
 import xbmc, xbmcgui, xbmcaddon, time
 
-__addon__ = xbmcaddon.Addon()
-__cwd__ = __addon__.getAddonInfo('path')
+__addon__   = xbmcaddon.Addon()
+__addonid__ = __addon__.getAddonInfo('id')
+__cwd__     = __addon__.getAddonInfo('path')
 
-def log(msg):
-    xbmc.log( str( msg ),level=xbmc.LOGDEBUG )
+def log(txt):
+    message = '%s: %s' % (__addonid__, txt)
+    xbmc.log(msg=str(message), level=xbmc.LOGDEBUG)
 
 class Gui( xbmcgui.WindowXML ):
     def __init__(self, *args, **kwargs):
@@ -98,9 +100,9 @@ class Gui( xbmcgui.WindowXML ):
         pass
 
     def onAction( self, action ):
-        if action in ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, ):
+        if action.getId() in ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, ):
             self.close()
-        if action in ( 7, 10, 92, ) and self.settingsOpen:
+        if action.getId() in ( 7, 10, 92, ) and self.settingsOpen:
             num = int( __addon__.getSetting( "ThumbType" ) )
             xbmc.executebuiltin( "SetProperty(TVGuide.ThumbType,%i,Home)" % num )
             if __addon__.getSetting( "PreviewThumbs" ) == 'true':
