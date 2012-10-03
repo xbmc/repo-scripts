@@ -1,3 +1,7 @@
+3.3.3
+- [fix] safe streaming subtitle name
+- xbmc.validatePath() should fix activating subs in some windows cases, thx WiSo and Martijn
+
 3.3.2
 - use OpenSubtitles XMLRPC for downloading subs if possible
 - fixed Napysy24 subs download speed

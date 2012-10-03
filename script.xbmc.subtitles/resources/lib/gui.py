@@ -312,13 +312,16 @@ class GUI( xbmcgui.WindowXMLDialog ):
       self.Extract_Subtitles(zip_subs,sub_lang, gui)
     else:
       sub_ext  = os.path.splitext( file )[1]
-      sub_name = os.path.splitext( os.path.basename( self.file_original_path ) )[0]
+      if self.temp:
+        sub_name = "temp_sub"
+      else:  
+        sub_name = os.path.splitext( os.path.basename( self.file_original_path ) )[0]
       if (__addon__.getSetting( "lang_to_end" ) == "true"):
         file_name = u"%s.%s%s" % ( sub_name, sub_lang, sub_ext )
       else:
         file_name = u"%s%s" % ( sub_name, sub_ext )
       file_from = file
-      file_to = os.path.join(self.sub_folder, file_name)
+      file_to = xbmc.validatePath(os.path.join(self.sub_folder, file_name))
       # Create a files list of from-to tuples so that multiple files may be
       # copied (sub+idx etc')
       files_list = [(file_from,file_to)]
@@ -427,8 +430,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
       file_name = u"%s%s" % ( name, os.path.splitext( zip_entry )[1] )
     log( __name__ ,"Sub in Zip [%s], File Name [%s]" % (zip_entry,
                                                         file_name,))
-    ret_zip_entry = os.path.join(self.tmp_sub_dir,zip_entry)
-    ret_file_name = os.path.join(self.sub_folder,file_name)
+    ret_zip_entry = xbmc.validatePath(os.path.join(self.tmp_sub_dir,zip_entry))
+    ret_file_name = xbmc.validatePath(os.path.join(self.sub_folder,file_name))
     return ret_zip_entry,ret_file_name
 
   def list_services( self ):
