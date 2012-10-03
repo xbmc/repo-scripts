@@ -1,3 +1,6 @@
+[B]1.0.19[/B]
+- Add fix (again) for Frodo users
+
 [B]1.0.18[/B]
 - Add fix for Frodo users
 

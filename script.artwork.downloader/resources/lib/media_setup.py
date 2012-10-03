@@ -77,9 +77,10 @@ def _media_listing_new(media_type):
                         disctype = '3d'
                     elif (('bluray' or 'blu-ray' or 'brrip' or 'bdrip') in filename):
                         disctype = 'bluray'
-                    elif item.get('streamdetails') and item.get('streamdetails') != None and item.get('streamdetails').has_key('video'):
-                        videowidth = item['streamdetails']['video'][0]['width']
-                        videoheight = item['streamdetails']['video'][0]['height']
+                    elif item.get('streamdetails') != None and item.get('streamdetails').has_key('video') and item.get('streamdetails').get('video'):
+                        streamdata = item.get('streamdetails').get('video')
+                        videowidth = streamdata[0].get('width')
+                        videoheight = streamdata[0].get('height')
                         if videowidth <= 720 and videoheight <= 480:
                             disctype = 'dvd'
                         else:
