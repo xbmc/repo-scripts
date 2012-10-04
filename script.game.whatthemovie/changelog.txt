@@ -1,5 +1,9 @@
+1.0.4
+- Fix image retrieving
+
 1.0.3
 - Fix white shot (website changes)
+- Catch HTTPError and URLError in background threads
 
 1.0.2
 - Multithreading background scraping of shots

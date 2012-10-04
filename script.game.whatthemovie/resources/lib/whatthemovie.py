@@ -22,6 +22,7 @@
 import re
 import urllib
 import urllib2
+import socket
 import cookielib
 import threading
 import Queue
@@ -347,7 +348,11 @@ class WhatTheMovie(object):
                 # scrape the shot - this will take some time
                 is_new = False
                 while not is_new:
-                    shot = self.scrapeShot(job)
+                    try:
+                        shot = self.scrapeShot(job)
+                    except (urllib2.HTTPError, socket.timeout):
+                        print 'Timeout occured, trying again...'
+                        continue
                     WhatTheMovie.Scraper.next_shots_lock.acquire()
                     if shot['shot_id'] in [s['shot_id'] for s in WhatTheMovie.Scraper.next_shots]:
                         pass
@@ -366,6 +371,15 @@ class WhatTheMovie(object):
                     self.callback(len(WhatTheMovie.Scraper.next_shots))
                 WhatTheMovie.Scraper.next_shots_lock.release()
                 WhatTheMovie.Scraper.jobs.task_done()
+
+        def download_file(self, url, local_file, referer=None):
+            req = urllib2.Request(url)
+            if referer:
+                req.add_header('Referer', referer)
+            res = urllib2.urlopen(req)
+            f = open(local_file, 'wb')
+            f.write(res.read())
+            f.close()
 
         def scrapeShot(self, shot_request):
             self.shot = dict()
@@ -391,13 +405,13 @@ class WhatTheMovie(object):
                 r_img = re.compile('background-image:url\("(.+?)"\)')
                 m_img = re.search(r_img, section.string)
                 if m_img:
-                    image_url = WhatTheMovie.MAIN_URL + m_img.group(1)
+                    image_url = m_img.group(1)
             subst_image_url = 'http://static.whatthemovie.com/images/subst'
             if self.image_download_path:
                 if not image_url.startswith(subst_image_url):
                     local_image_file = '%s%s.jpg' % (self.image_download_path,
                                                      shot_id)
-                    urllib.urlretrieve(image_url, local_image_file, )
+                    self.download_file(image_url, local_image_file, referer=shot_url)
                     image_url = local_image_file
             # languages
             lang_list = dict()
