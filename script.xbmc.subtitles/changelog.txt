@@ -1,3 +1,6 @@
+3.3.5
+- [fix] of a previous [fix]
+
 3.3.4
 - [fix] mkdirs for all temp folders
 - [fix] make "subs" folder if it doesn't exist in destination folder
