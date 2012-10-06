@@ -75,7 +75,10 @@ class mythread( threading.Thread ):
                     self.oldpath = ""
                     self.playpath = ""
                     log( "### stop playing" )
-                    self.fade_out()
+                    if __addon__.getSetting("fade") == 'true':
+                        self.fade_out()
+                    else:
+                        xbmc.Player().stop()
                     if self.loud: self.raise_volume()
                     xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
                 time.sleep( .5 )
