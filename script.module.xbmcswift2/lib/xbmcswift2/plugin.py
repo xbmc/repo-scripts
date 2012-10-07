@@ -40,22 +40,52 @@ class Plugin(XBMCMixin):
     plugin. Typical creation looks like this::
 
         from xbmcswift2 import Plugin
-        plugin = Plugin('Hello XBMC', 'plugin.video.helloxbmc', __file__)
+        plugin = Plugin('Hello XBMC')
+
+
+    .. versionchanged:: 0.2
+        The *addon_id* and *filepath* parameters are now optional. They will
+        now default to the correct values.
 
     :param name: The name of the plugin, e.g. 'Academic Earth'.
+
     :param addon_id: The XBMC addon ID for the plugin, e.g.
-                     'plugin.video.academicearth'
-    :param filepath: The path to the addon.py file. In typical usage, the
-                     builtin ``__file__`` variable can used.
+                     'plugin.video.academicearth'. This parameter is now
+                     optional and is really only useful for testing purposes.
+                     If it is not provided, the correct value will be parsed
+                     from the addon.xml file.
+
+    :param filepath: Optional parameter. If provided, it should be the path to
+                     the addon.py file in the root of the addon directoy. This
+                     only has an effect when xbmcswift2 is running on the
+                     command line. Will default to the current working
+                     directory since xbmcswift2 requires execution in the root
+                     addon directoy anyway. The parameter still exists to ease
+                     testing.
     '''
 
-    def __init__(self, name, addon_id, filepath):
+    def __init__(self, name=None, addon_id=None, filepath=None, info_type=None):
         self._name = name
-        self._filepath = filepath
-        self._addon_id = addon_id
         self._routes = []
         self._view_functions = {}
-        self._addon = xbmcaddon.Addon(id=self._addon_id)
+
+        # addon_id is no longer required as it can be parsed from addon.xml
+        if addon_id:
+            self._addon = xbmcaddon.Addon(id=addon_id)
+        else:
+            self._addon = xbmcaddon.Addon()
+
+        self._addon_id = addon_id or self._addon.getAddonInfo('id')
+        self._name = name or self._addon.getAddonInfo('name')
+
+        self._info_type = info_type
+        if not self._info_type:
+            types = {
+                'video': 'video',
+                'audio': 'music',
+                'image': 'pictures',
+            }
+            self._info_type = types.get(self._addon_id.split('.')[1], 'video')
 
         # Keeps track of the added list items
         self._current_items = []
@@ -67,26 +97,41 @@ class Plugin(XBMCMixin):
         self._end_of_directory = False
 
         # The plugin's named logger
-        self._log = setup_log(addon_id)
+        self._log = setup_log(self._addon_id)
 
-        # The path to the cache directory for the addon
-        self._cache_path = xbmc.translatePath(
-            'special://profile/addon_data/%s/.cache/' % self._addon_id)
+        # The path to the storage directory for the addon
+        self._storage_path = xbmc.translatePath(
+            'special://profile/addon_data/%s/.storage/' % self._addon_id)
+        if not os.path.isdir(self._storage_path):
+            os.makedirs(self._storage_path)
 
         # If we are runing in CLI, we need to load the strings.xml manually
-        # TODO: a better way to do this. Perhaps allow a user provided filepath
+        # Since xbmcswift2 currently relies on execution from an addon's root
+        # directly, we can rely on cwd for now...
         if xbmcswift2.CLI_MODE:
             from xbmcswift2.mockxbmc import utils
-            utils.load_addon_strings(self._addon,
-                os.path.join(os.path.dirname(self._filepath), 'resources',
-                             'language', 'English', 'strings.xml'))
+            if filepath:
+                addon_dir = os.path.dirname(filepath)
+            else:
+                addon_dir = os.getcwd()
+            strings_fn = os.path.join(addon_dir, 'resources', 'language',
+                                      'English', 'strings.xml')
+            utils.load_addon_strings(self._addon, strings_fn)
+
+    @property
+    def info_type(self):
+        return self._info_type
 
     @property
     def log(self):
         '''The log instance for the plugin. Returns an instance of the
         stdlib's ``logging.Logger``. This log will print to STDOUT when running
         in CLI mode and will forward messages to XBMC's log when running in
-        XBMC.
+        XBMC. Some examples::
+
+            plugin.log.debug('Debug message')
+            plugin.log.warning('Warning message')
+            plugin.log.error('Error message')
         '''
         return self._log
 
@@ -96,13 +141,13 @@ class Plugin(XBMCMixin):
         return self._addon_id
 
     @property
-    def cache_path(self):
-        '''A full path to the cache folder for this plugin's addon data.'''
-        return self._cache_path
+    def storage_path(self):
+        '''A full path to the storage folder for this plugin's addon data.'''
+        return self._storage_path
 
     @property
     def addon(self):
-        '''This plugin's underlying instance of xbmcaddon.Addon.'''
+        '''This plugin's wrapped instance of xbmcaddon.Addon.'''
         return self._addon
 
     @property
@@ -176,7 +221,7 @@ class Plugin(XBMCMixin):
         '''A decorator to add a route to a view and also apply caching.
         '''
         route_decorator = self.route(url_rule, name=name, options=options)
-        cache_decorator = self.cache()
+        cache_decorator = self.cached()
         def new_decorator(func):
             return route_decorator(cache_decorator(func))
         return new_decorator
@@ -202,10 +247,12 @@ class Plugin(XBMCMixin):
         rule = UrlRule(url_rule, view_func, name, options)
         if name in self._view_functions.keys():
             # TODO: Raise exception for ambiguous views during registration
-            log.warning('Cannot add url rule "%s" with name "%s". There is already a view with that name' % (url_rule, name))
+            log.warning('Cannot add url rule "%s" with name "%s". There is '
+                        'already a view with that name' % (url_rule, name))
             self._view_functions[name] = None
         else:
-            log.debug('Adding url rule "%s" named "%s" pointing to function "%s"' % (url_rule, name, view_func.__name__))
+            log.debug('Adding url rule "%s" named "%s" pointing to function '
+                      '"%s"' % (url_rule, name, view_func.__name__))
             self._view_functions[name] = rule
         self._routes.append(rule)
 
@@ -236,7 +283,8 @@ class Plugin(XBMCMixin):
                 view_func, items = rule.match(path)
             except NotFoundException:
                 continue
-            log.info('Request for "%s" matches rule for function "%s"' % (path, view_func.__name__))
+            log.info('Request for "%s" matches rule for function "%s"'
+                     % (path, view_func.__name__))
             listitems = view_func(**items)
 
             # TODO: Verify the main UI handle is always 0, this check exists so

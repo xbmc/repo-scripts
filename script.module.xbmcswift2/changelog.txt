@@ -2,6 +2,17 @@ CHANGES
 =======
 
 
+Version 1.2
+-----------
+
+- Addon name, id and filepath are now no longer necessary for Plugin(). They
+  will be discovered automatically.
+- Plugin() now creates the storage folder
+- Plugin.set_info now supports different info types
+- Sort methods can be passed as strings to plugin.finish()
+- Plugin caching has been renamed to storage and now works properly
+
+
 Version 1.1.1
 -------------
 

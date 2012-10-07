@@ -19,7 +19,16 @@ class SortMethod(object):
 
     e.g. SORT_METHOD_TITLE becomes SortMethod.TITLE
     '''
-    pass
+
+    @classmethod
+    def from_string(cls, sort_method):
+        '''Returns the sort method specified. sort_method is case insensitive.
+        Will raise an AttributeError if the provided sort_method does not
+        exist.
+
+        >>> SortMethod.from_string('title')
+        '''
+        return getattr(cls, sort_method.upper())
 
 
 PREFIX = 'SORT_METHOD_'

@@ -13,13 +13,15 @@ from types import ModuleType
 class module(ModuleType):
     '''A wrapper class for a module used to override __getattr__. This class
     will behave normally for any existing module attributes. For any attributes
-    which do not existin in the wrapped module, a mock function will be
+    which do not existi in in the wrapped module, a mock function will be
     returned. This function will also return itself enabling multiple mock
     function calls.
     '''
 
     def __init__(self, wrapped=None):
         self.wrapped = wrapped
+        if wrapped:
+            self.__dict__.update(wrapped.__dict__)
 
     def __getattr__(self, name):
         '''Returns any existing attr for the wrapped module or returns a mock
@@ -60,7 +62,7 @@ except ImportError:
     xbmcvfs = module()
 
 
-from xbmcswift2.cache import Cache, TimedCache
+from xbmcswift2.storage import TimedStorage
 from xbmcswift2.request import Request
 from xbmcswift2.common import (xbmc_url, enum, clean_dict, pickle_dict,
     unpickle_args, unpickle_dict, download_page, unhex)

@@ -1,8 +1,8 @@
 '''
-    xbmcswift2.cache
-    ----------------
+    xbmcswift2.storage
+    ~~~~~~~~~~~~~~~~~~
 
-    This module contains persistent caching classes.
+    This module contains persistent storage classes.
 
     :copyright: (c) 2012 by Jonathan Beluch
     :license: GPLv3, see LICENSE for more details.
@@ -18,7 +18,7 @@ from datetime import datetime
 from xbmcswift2.logger import log
 
 
-class PersistentDictMixin(object):
+class _PersistentDictMixin(object):
     ''' Persistent dictionary with an API compatible with shelve and anydbm.
 
     The dict is kept in memory, so the dictionary operations run as fast as
@@ -37,8 +37,8 @@ class PersistentDictMixin(object):
         self.file_format = file_format      # 'csv', 'json', or 'pickle'
         self.filename = filename
         if flag != 'n' and os.access(filename, os.R_OK):
-            log.debug('Reading %s cache from disk at "%s"' % (self.file_format,
-                                                              self.filename))
+            log.debug('Reading %s storage from disk at "%s"' %
+                      (self.file_format, self.filename))
             fileobj = open(filename, 'rb' if file_format == 'pickle' else 'r')
             with fileobj:
                 self.load(fileobj)
@@ -100,25 +100,25 @@ class PersistentDictMixin(object):
         raise NotImplementedError
 
 
-class Cache(collections.MutableMapping, PersistentDictMixin):
-    '''A cache that acts like a dict but also can persist to disk.
+class _Storage(collections.MutableMapping, _PersistentDictMixin):
+    '''Storage that acts like a dict but also can persist to disk.
 
-    :param filename: An absolute filepath to reprsent the cache on disk. The
-                     cache will loaded from this file if it already exists,
+    :param filename: An absolute filepath to reprsent the storage on disk. The
+                     storage will loaded from this file if it already exists,
                      otherwise the file will be created.
     :param file_format: 'pickle', 'json' or 'csv'. pickle is the default. Be
                         aware that json and csv have limited support for python
                         objets.
 
-    .. warning:: Currently there are no limitations on the size of the cache.
-                 Please be sure to call :meth:`~xbmcswift2.Cache.clear`
+    .. warning:: Currently there are no limitations on the size of the storage.
+                 Please be sure to call :meth:`~xbmcswift2._Storage.clear`
                  periodically.
     '''
 
     def __init__(self, filename, file_format='pickle'):
         '''Acceptable formats are 'csv', 'json' and 'pickle'.'''
         self._items = {}
-        PersistentDictMixin.__init__(self, filename, file_format=file_format)
+        _PersistentDictMixin.__init__(self, filename, file_format=file_format)
 
     def __setitem__(self, key, val):
         self._items.__setitem__(key, val)
@@ -142,16 +142,16 @@ class Cache(collections.MutableMapping, PersistentDictMixin):
     initial_update = collections.MutableMapping.update
 
 
-class TimedCache(Cache):
-    '''A dict with the ability to persist to disk and ttl for items.'''
+class TimedStorage(_Storage):
+    '''A dict with the ability to persist to disk and TTL for items.'''
 
-    def __init__(self, filename, file_format='pickle', ttl=None):
-        '''ttl if provided should be a datetime.timedelta. Any entries
-        older than the provided ttl will be removed upon load and upon item
+    def __init__(self, filename, file_format='pickle', TTL=None):
+        '''TTL if provided should be a datetime.timedelta. Any entries
+        older than the provided TTL will be removed upon load and upon item
         access.
         '''
-        self.ttl = ttl
-        Cache.__init__(self, filename, file_format=file_format)
+        self.TTL = TTL
+        _Storage.__init__(self, filename, file_format=file_format)
 
     def __setitem__(self, key, val, raw=False):
         if raw:
@@ -161,8 +161,8 @@ class TimedCache(Cache):
 
     def __getitem__(self, key):
         val, timestamp = self._items[key]
-        if self.ttl and (datetime.utcnow() -
-            datetime.utcfromtimestamp(timestamp) > self.ttl):
+        if self.TTL and (datetime.utcnow() -
+            datetime.utcfromtimestamp(timestamp) > self.TTL):
             del self._items[key]
             return self._items[key][0]  # Will raise KeyError
         return val
@@ -173,6 +173,6 @@ class TimedCache(Cache):
         '''
         for key, val in mapping.items():
             _, timestamp = val
-            if not self.ttl or (datetime.utcnow() -
-                datetime.utcfromtimestamp(timestamp) < self.ttl):
+            if not self.TTL or (datetime.utcnow() -
+                datetime.utcfromtimestamp(timestamp) < self.TTL):
                 self.__setitem__(key, val, raw=True)

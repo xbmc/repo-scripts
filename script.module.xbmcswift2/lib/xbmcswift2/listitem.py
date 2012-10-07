@@ -181,7 +181,7 @@ class ListItem(object):
     @classmethod
     def from_dict(cls, label=None, label2=None, icon=None, thumbnail=None,
                   path=None, selected=None, info=None, properties=None,
-                  context_menu=None, is_playable=None):
+                  context_menu=None, is_playable=None, info_type='video'):
         '''A ListItem constructor for setting a lot of properties not
         available in the regular __init__ method. Useful to collect all
         the properties in a dict and then use the **dct to call this
@@ -193,7 +193,7 @@ class ListItem(object):
             listitem.select(selected)
 
         if info:
-            listitem.set_info('video', info)
+            listitem.set_info(info_type, info)
 
         if is_playable:
             listitem.set_is_playable(True)
