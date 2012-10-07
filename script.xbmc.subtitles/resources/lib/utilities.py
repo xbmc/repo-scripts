@@ -172,8 +172,9 @@ def rem_files(directory):
       shutil.rmtree(directory)
   except:
     pass
-
-  os.makedirs(directory)
+    
+  if not xbmcvfs.exists(directory):
+    os.makedirs(directory)
       
 def copy_files( subtitle_file, file_path ):
   subtitle_set = False

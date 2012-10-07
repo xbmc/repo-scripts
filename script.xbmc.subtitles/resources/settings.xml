@@ -38,6 +38,7 @@
       <setting id="Ondertitel" type="bool" label="Ondertitel.com (Movies and Dutch subs only)" default="false"/>      
       <setting id="OpenSubtitles" type="bool" label="OpenSubtitles.org" default="true"/>
 
+      <setting id="Pipocas" type="bool" label="Pipocas.tv" default="false"/>
       <setting id="Podnapisi" type="bool" label="Podnapisi.net" default="true"/>
       <setting id="PNuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30104" default=""/>
       <setting id="PNpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30105" default=""/> 

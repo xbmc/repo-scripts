@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Service LegendasDivx.com version 0.2.5
+# Service pipocas.tv version 0.0.1
 # Code based on Undertext service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
@@ -8,53 +8,14 @@
 # http://www.teknorage.com
 # License: GPL v2
 #
-# NEW on Service LegendasDivx.com v0.2.5:
-# Added PortugueseBrazilian. After a few requests the language is now available.
+# Initial Release of Service Pipocas.tv - v0.0.1:
+# Very first version of this service. Expect bugs. Regex is not the best way to parse html so nothing is perfect :)
+# If you are watching this then you can see the several approaches I had with regex. The site code is a mess of html :)
+# Fortunaly I came up with an ideia that sorted a few things and made the code work. Cheers!
+# Expect new versions when the plugin core is changed, to due in a few weeks.
 #
-# NEW on Service LegendasDivx.com v0.2.4:
-# Added uuid for better file handling, no more hangups.
-#
-# NEW on Service LegendasDivx.com v0.2.3:
-# Fixed typo on the version.
-# Added built-in notifications.
-#
-# NEW on Service LegendasDivx.com v0.2.2:
-# Fixed pathnames using (os.sep). For sure :)
-#
-# NEW on Service LegendasDivx.com v0.2.1:
-# Fixed bug when the file is played from a root path, no parent dir search\sync when that happens.
-# Fixed pathnames to work with all OS (Win, Unix, etc).
-# Added pattern to search several subtitle extensions.
-#
-# NEW on Service LegendasDivx.com v0.2.0:
-# Better "star" rating, remember that the start rating is calculated using the number of hits/downloads.
-# Fixed a bug in the SYNC subtitles, it wouldn't assume that any were sync (in the code), a dialog box would open in multi packs.
-#
-# NEW on Service LegendasDivx.com v0.1.9:
-# When no sync subtitle is found and the pack has more then 1 sub, it will open a dialog box for browsing the substitles inside the multi pack.
-#
-# NEW on Service LegendasDivx.com v0.1.8:
-# Uncompress rar'ed subtitles inside a rar file... yeh weird site...
-#
-# NEW on Service LegendasDivx.com v0.1.7:
-# BUG found in multi packs is now fixed.
-# Added more accuracy to the selection of subtitle to load. Now checks the release dirname against the subtitles downloaded.
-# When no sync is found and if the substitle name is not equal to the release dirname or release filename it will load one random subtitle from the package.
-#
-# NEW on Service LegendasDivx.com v0.1.6:
-# Movies or TV eps with 2cds or more will now work.
-# Sync subs is now much more accurate.
-#
-# Initial Release of Service LegendasDivx.com - v0.1.5:
-# TV Season packs now downloads and chooses the best one available in the pack
-# Movie packs with several releases now works too, tries to choose the sync sub using filename or dirname
-# Search description for SYNC subtitles using filename or dirname
-#
-# KNOWN BUGS (TODO for next versions):
-# Regex isn't perfect so a few results might have html tags still, not many but ...
-# Filtering languages, shows only European Portuguese flag.
 
-# LegendasDivx.com subtitles, based on a mod of Undertext subtitles
+# pipocas.tv subtitles, based on a mod of Undertext subtitles
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib, shutil, fnmatch, uuid
 from utilities import log
 _ = sys.modules[ "__main__" ].__language__
@@ -62,8 +23,8 @@ __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __addon__ = sys.modules[ "__main__" ].__addon__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
 
-main_url = "http://www.legendasdivx.com/"
-debug_pretext = "LegendasDivx"
+main_url = "http://www.pipocas.tv/"
+debug_pretext = "Pipocas.tv"
 subext = ['srt', 'aas', 'ssa', 'sub', 'smi']
 packext = ['rar', 'zip']
 
@@ -72,46 +33,86 @@ packext = ['rar', 'zip']
 #====================================================================================================================
 
 """
-<div class="sub_box">
-<div class="sub_header">
-<b>The Dark Knight</b> (2008) &nbsp; - &nbsp; Enviada por: <a href='modules.php?name=User_Info&username=tck17'><b>tck17</b></a> &nbsp; em 2010-02-03 02:44:09
-
-</div>
-<table class="sub_main color1" cellspacing="0">
-<tr>
-<th class="color2">Idioma:</th>
-<td><img width="18" height="12" src="modules/Downloads/img/portugal.gif" /></td>
-<th>CDs:</th>
-<td>1&nbsp;</td>
-<th>Frame Rate:</th>
-<td>23.976&nbsp;</td>
-<td rowspan="2" class="td_right color2">
-<a href="?name=Downloads&d_op=ratedownload&lid=128943">
-<img border="0" src="modules/Downloads/images/rank9.gif"><br>Classifique (3 votos)
-
-</a>
-</td>
-</tr>
-<tr>
-<th class="color2">Hits:</th>
-<td>1842</td>
-<th>Pedidos:</th>
-<td>77&nbsp;</td>
-<th>Origem:</th>
-<td>DVD Rip&nbsp;</td>
-</tr>
-
-<tr>
-<th class="color2">Descrição:</th>
-<td colspan="5" class="td_desc brd_up">Não são minhas.<br />
+<div class="box last-box"> <!-- INFO: IF last box ... add class "last-box" -->
+	<div class="colhead">
+		<div class="colhead-corner"></div>
+		<span class="align-right"> 20/10/2011 18:23:13</span>
+				<span><img alt="Portugal" class="title-flag" src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-portugal.png" />  Batman: Year One (2011)</span>
+	</div>
+	<div class="box-content"><br />
+		
+		<h1 class="title">
+			Release: <input value="Batman.Year.One.2011.DVDRiP.XviD-T00NG0D" style="font-size: 8pt; color:#666666; border: solid #E7E4E0 1px; background-color: #E7E4E0;" type="text" size="105" readonly="readonly" />		</h1>
+		
+		<ul class="sub-details">
+			<li class="sub-box1">
+				<img alt="Poster" src="http://img.pipocas.tv/images/1672723.jpg" />			</li>
+			<li class="sub-box2">
+				<ul>
+					<li><span>Fonte:</span>  Tradução</li>
+					<li><span>CDs:</span> 1</li>
+					<li><span>FPS:</span> 23.976</li>
+					<li><span>Hits:</span> 30</li>
+					<li><span>Comentários:</span> 2</li>
+					<li><span>Enviada por:</span> <a href="my.php?u=23019"><font style="font-weight:normal;"> arodri</font></a> </li>
+				</ul>
+			</li>
+			<li class="sub-box3">
+				<p>Legendas Relacionadas</p>
+				<ul>
+					<li><span>Portugal <img src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-portugal.png" alt="Portugal"/></span> <a href="legendas.php?release=1672723&amp;linguagem=portugues&amp;grupo=imdb">1</a></li>
+					<li><span>Brasil <img src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-brazil.png" alt="Brasil"/></span> <a href="legendas.php?release=1672723&amp;linguagem=brasileiro&amp;grupo=imdb">1</a></li>
+					<li><span>España <img src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-spain.png" alt="España"/></span> <a href="legendas.php?release=1672723&amp;linguagem=espanhol&amp;grupo=imdb">0</a></li>
+					<li><span>England <img src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-uk.png" alt="UK"/></span> <a href="legendas.php?release=1672723&amp;linguagem=ingles&amp;grupo=imdb">0</a></li>
+				</ul>
+			</li>
+			<li class="sub-box4"><div style="padding-left:25px;"><div id="rate_23671"><ul class="star-rating"><li style="width: 100%;" class="current-rating">.</li><li><a href="/rating.php?id=23671&amp;rate=1&amp;ref=%2Flegendas.php%3Frelease%3Dbatman%26grupo%3Drel%26linguagem%3Dtodas&amp;what=legenda" class="one-star" onclick="do_rate(1,23671,'legenda'); return false" title="1 estrela de 5" >1</a></li><li><a href="/rating.php?id=23671&amp;rate=2&amp;ref=%2Flegendas.php%3Frelease%3Dbatman%26grupo%3Drel%26linguagem%3Dtodas&amp;what=legenda" class="two-stars" onclick="do_rate(2,23671,'legenda'); return false" title="2 estrelas de 5" >2</a></li><li><a href="/rating.php?id=23671&amp;rate=3&amp;ref=%2Flegendas.php%3Frelease%3Dbatman%26grupo%3Drel%26linguagem%3Dtodas&amp;what=legenda" class="three-stars" onclick="do_rate(3,23671,'legenda'); return false" title="3 estrelas de 5" >3</a></li><li><a href="/rating.php?id=23671&amp;rate=4&amp;ref=%2Flegendas.php%3Frelease%3Dbatman%26grupo%3Drel%26linguagem%3Dtodas&amp;what=legenda" class="four-stars" onclick="do_rate(4,23671,'legenda'); return false" title="4 estrelas de 5" >4</a></li><li><a href="/rating.php?id=23671&amp;rate=5&amp;ref=%2Flegendas.php%3Frelease%3Dbatman%26grupo%3Drel%26linguagem%3Dtodas&amp;what=legenda" class="five-stars" onclick="do_rate(5,23671,'legenda'); return false" title="5 estrelas de 5" >5</a></li></ul>5.00 / 5 de 1 Voto(s)</div></div><br />
+				<a href="download.php?id=23671" class="download"></a>
+				<a href="info/23671/Batman.Year.One.2011.DVDRiP.XviD-T00NG0D.html" class="info"></a>
+								<a href="vagradecer.php?id=23671" class="thanks"></a> 			</li>
+		</ul>
+		<br class="clr"/>
+		
+		<div class="horizontal-divider"></div>
+		
+		<p class="description-title">Descrição</p>
+		<div class="description-box">
+			<center><font color="#2B60DE">Batman: Year One </font></center><br />
 <br />
-Release: The.Dark.Knight.2008.720p.BluRay.DTS.x264-ESiR</td>
+<center><b><br />
+<br />
+Versão<br />
+Batman.Year.One.2011.DVDRiP.XviD-T00NG0D<br />
+<br />
+</b></center><br />
+<br />
+Tradução Brasileira &nbsp;por The_Tozz e Dres<br />
+<br />
+<br />
+A adaptação PtPt: <center><span style="font-size:12px;"><font face="arial"><font color="#0000A0">arodri</font></font> </span></center><br />
+<br />
+Um agradecimento muito especial à<br />
+<br />
+<center><b><font color="#008000"><span style="font-size:14px;">FreedOM</span></font></b></center><br />
+<br />
+Pela revisão total...<br />
+<br />
 """
-#subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?img/(.+?)gif\".+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)&nbsp;</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>"
-# group(1) = Name, group(2) = Year, group(3) = Language, group(4)= Number Files, group(5) = ID, group(6) = Hits, group(7) = Requests, group(8) = Description
-
-subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>"
-# group(1) = Name, group(2) = Year, group(3) = Number Files, group(4) = ID, group(5) = Hits, group(6) = Requests, group(7) = Description
+subtitle_pattern = "<a href=\"info/(.+?)\" class=\"info\"></a>"
+name_pattern = "Release: <input value=\"(.+?)\" style=\"font-size"
+id_pattern = "<a href=\".+?download.php\?id=(.+?)\" class=\"download\"></a>"
+hits_pattern = "<li><span>Hits:</span> (.+?)</li>"
+desc_pattern = "<div class=\"description-box\">([\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*)<center><iframe"
+uploader_pattern = "<a href=\"/my.php\?u.+?:normal;\"> (.+?)</font></a>"
+#subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>"
+#subtitle_pattern = "Release: <input value=\"(.+?)\" style=\"font-size.+\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*<li><span>Hits:</span> (.+?)</li>\n.*\n.*href=\"my.php\?u.*:normal;\"> (.+?)</font></a>.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*download.php\?id=(.+?)\" class=\"download\">.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*<p class=\"description-title\">.*\n.*<div class=\"description-box\">((\n|.)*)<center><iframe"
+#subtitle_pattern = "Release: <input value=\"(.+?)\" style=\"font-size.+?[\t\n\r].+?[\t\n\r].+?[\t\n\r].+?[\t\n\r].+?[\t\n\r].+?[\t\n\r]{4}.+?[\t\n\r].+?[\t\n\r]{3}.+?[\t\n\r].+?[\t\n\r]{4}.+?[\t\n\r].+?[\t\n\r]{5}.+?[\t\n\r].+?[\t\n\r]{5}.+?[\t\n\r].+?[\t\n\r]{5}.+?[\t\n\r].+?[\t\n\r]{5}<li><span>Hits:</span> (.+?)</li>"
+#subtitle_pattern = "Release: <input value=\"(.+?)\" style=\"font-size.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+<li><span>Hits:</span> (.+?)</li>\n.+\n.+href=\"my.php\?u.+:normal;\"> (.+?)</font></a>.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+download.php\?id=(.+?)\" class=\"download\">"
+#subtitle_pattern = "<a href=\"download.php\?id=(.+?)\" class=\"download\"></a>[\r\n\t ]+?[\r\n\t]<a href=\"info/.+?/(.+?).html\" class=\"info\"></a>"
+#subtitle_pattern = "Release: <input value=\"(.+?)\" style=\"font-size"
+#subtitle_pattern1 = "<a href=\"download.php\?id=(.+?)\" class=\"download\"></a>"
+#((\n|.)*)<span>Hits:</span> (.+?)</li>((\n|.)*)<span>Enviada por:</span>.+?<a href=\"my.php.+?<font style=\"font-weight:normal;\"> (.+?)</font>((\n|.)*)<a href=\"download.php\?id=(.+?)\" class=\"download\"></a>((\n|.)*)<div class=\"description-box\">((\n|.)*)www.facebook.com"
+# group(1) = Name, group(2) = Hits, group(3) = Uploader, group(4) = ID, group(5) = Description
 #====================================================================================================================
 # Functions
 #====================================================================================================================
@@ -119,30 +120,54 @@ def msg(text, timeout):
 	icon =  os.path.join(__cwd__,"icon.png")
 	xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,timeout,icon))
 
-
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
 
-	page = 1
+	page = 0
 	if languageshort == "pt":
-		url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
+		url = main_url + "legendas.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
 	if languageshort == "pb":
-		url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=29&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
+		url = main_url + "legendas.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
 
 	content = geturl(url)
-	log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
+	content = content.decode('latin1')
 	msg("Searching Title... Please wait!", 6000)
-	while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 6:
-		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
-			hits = matches.group(5)
-			id = matches.group(4)
-			movieyear = matches.group(2)
-			no_files = matches.group(3)
-			downloads = int(matches.group(5)) / 300
+	while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL) and page < 6:
+		#log( __name__ ,"%s Getting '%s' inside while ..." % (debug_pretext, subtitle_pattern))
+		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
+			#log( __name__ ,"%s FILENAME: '%s' ..." % (debug_pretext, matches.group(1)))
+			#hits = matches.group(4)
+			#id = matches.group(2)
+			#movieyear = matches.group(2)
+			#no_files = matches.group(3)
+			#uploader = string.strip(matches.group(2))
+			#downloads = int(matches.group(2)) / 2
+			#if (downloads > 10):
+			#	downloads=10
+			#filename = string.strip(matches.group(1))
+			#desc = string.strip(matches.group(1))
+			#desc = string.strip(matches.group(13))
+			#Remove new lines on the commentaries
+			details = matches.group(1)
+			content_details = geturl(main_url + "info/" + details)
+			content_details = content_details.decode('latin1')
+			for namematch in re.finditer(name_pattern, content_details, re.IGNORECASE | re.DOTALL):
+				filename = string.strip(namematch.group(1))
+				desc = filename
+				#log( __name__ ,"%s FILENAME match: '%s' ..." % (debug_pretext, namematch.group(1)))			
+			for idmatch in re.finditer(id_pattern, content_details, re.IGNORECASE | re.DOTALL):
+				id = idmatch.group(1)
+				#log( __name__ ,"%s ID match: '%s' ..." % (debug_pretext, idmatch.group(1)))			
+			for upmatch in re.finditer(uploader_pattern, content_details, re.IGNORECASE | re.DOTALL):
+				uploader = upmatch.group(1)
+			for hitsmatch in re.finditer(hits_pattern, content_details, re.IGNORECASE | re.DOTALL):
+				hits = hitsmatch.group(1)
+			#log( __name__ ,"%s UP match: '%s' ..." % (debug_pretext, upmatch.group(1)))			
+			#for descmatch in re.finditer(desc_pattern, content_details, re.IGNORECASE | re.DOTALL):
+			#	desc = string.strip(descmatch.group(1))
+			#	log( __name__ ,"%s DESC match: '%s' ..." % (debug_pretext, decmatch.group(1)))
+			downloads = int(hits) / 4
 			if (downloads > 10):
 				downloads=10
-			filename = string.strip(matches.group(1))
-			desc = string.strip(matches.group(7))
-			#Remove new lines on the commentaries
 			filename = re.sub('\n',' ',filename)
 			desc = re.sub('\n',' ',desc)
 			#Remove HTML tags on the commentaries
@@ -183,14 +208,17 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 					else:
 						if re.search(filesearch[1][:len(filesearch[1])-4], desc):
 							sync = True
-			filename = filename + " " + "(" + movieyear + ")" + "  " + hits + "Hits" + " - " + desc
-			subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+			#filename = filename + " " + "(" + movieyear + ")" + "  " + hits + "Hits" + " - " + desc
+			filename = filename + " " + "- Enviado por: " + uploader +  " - Hits: " + hits
+			#subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+			subtitles_list.append({'rating': str(downloads), 'filename': filename, 'hits': hits, 'desc': desc, 'sync': sync, 'id': id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 		page = page + 1
 		if languageshort == "pt":
-			url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
+			url = main_url + "legendas.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
 		if languageshort == "pb":
-			url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=29&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
+			url = main_url + "legendas.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
 		content = geturl(url)
+		content = content.decode('latin1')
 
 	if subtitles_list != []:
 		msg("Finished Searching. Choose One!", 3000)
@@ -296,8 +324,8 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 			getallsubs(searchstring, "pt", "Portuguese", file_original_path, subtitles_list, searchstring_notclean)
 
 	if ((portuguese == 0) and (portuguesebrazil == 0)):
-			msg = "Won't work, LegendasDivx.com is only for Portuguese and Portuguese Brazil subtitles."
-
+			msg = "Won't work, Pipocas.tv is only for Portuguese and Portuguese Brazil subtitles."
+	
 	return subtitles_list, "", msg #standard output
 	
 def recursive_glob(treeroot, pattern):
@@ -313,28 +341,15 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	msg("Downloading... Please Wait!", 6000)
 	id = subtitles_list[pos][ "id" ]
 	sync = subtitles_list[pos][ "sync" ]
-	log( __name__ ,"%s Fetching id using url %s" % (debug_pretext, id))
-	#Grabbing login and pass from xbmc settings
-	username = __addon__.getSetting( "LDivxuser" )
-	password = __addon__.getSetting( "LDivxpass" )
 	cj = cookielib.CookieJar()
 	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 	opener.addheaders.append(('User-agent', 'Mozilla/4.0'))
-	opener.addheaders.append(('Referer', 'http://www.legendasdivx.com/modules.php?name=Your_Account&op=userinfo&bypass=1&username=highlander'))
-	login_data = urllib.urlencode({'username' : username, 'user_password' : password, 'op' : 'login'})
-	#This is where you are logged in
-	resp = opener.open('http://www.legendasdivx.com/modules.php?name=Your_Account', login_data)
-	#For DEBUG only uncomment next line
-	#log( __name__ ,"%s resposta '%s' subs ..." % (debug_pretext, resp))
-	#Now you can go to member only pages
-	resp1 = opener.open('http://www.legendasdivx.com/modules.php?name=Your_Account&op=userinfo&bypass=1&username=highlander')
-	d = resp1.read()
 	#Now you download the subtitles
 	language = subtitles_list[pos][ "language_name" ]
-#	if string.lower(language) == "portuguese" or string.lower(language) == "portuguesebrazilian":
-	content = opener.open('http://www.legendasdivx.com/modules.php?name=Downloads&d_op=getit&lid=' + id + '&username=highlander')
+	content = opener.open('http://www.pipocas.tv/download.php?id=' + id)
 
 	if content is not None:
+		log( __name__ ,"%s Content-info: %s" % (debug_pretext, content.info()))
 		header = content.info()['Content-Disposition'].split('filename')[1].split('.')[-1].strip("\"")
 		if header == 'rar':
 			log( __name__ ,"%s file: content is RAR" % (debug_pretext)) #EGO

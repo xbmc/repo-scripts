@@ -99,7 +99,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
           self.sub_folder = dialog.browse( 0, _( 766 ), "files")
     
     if not xbmcvfs.exists(self.sub_folder):
-      xbmcvfs.mkdirs(self.sub_folder)
+      xbmcvfs.mkdir(self.sub_folder)
     
     if self.episode.lower().find("s") > -1:                                 # Check if season is "Special"             
       self.season = "0"                                                     #
