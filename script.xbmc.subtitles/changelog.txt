@@ -1,3 +1,6 @@
+3.4.1
+- [fix] xbmc.validatePath() should be decoded to UTF-8
+
 3.4.0
 - New service Pipocas.tv, thx highlandr
 - Pipocas.tv and LegendasDivx.com both with pt-pt and pt-br, thx highlandr

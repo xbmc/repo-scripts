@@ -179,8 +179,8 @@ def rem_files(directory):
 def copy_files( subtitle_file, file_path ):
   subtitle_set = False
   try:
-    xbmcvfs.copy(subtitle_file, file_path)
     log( __name__ ,"vfs module copy %s -> %s" % (subtitle_file, file_path))
+    xbmcvfs.copy(subtitle_file, file_path)
     subtitle_set = True
   except :
     dialog = xbmcgui.Dialog()
