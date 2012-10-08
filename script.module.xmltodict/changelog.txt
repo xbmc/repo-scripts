@@ -1,0 +1,3 @@
+0.2.0
+ Original: https://github.com/martinblech/xmltodict
+ Upstream: be842ee121072beb75b643881d8bed5f683cf2c5
