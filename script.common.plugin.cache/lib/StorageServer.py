@@ -33,7 +33,7 @@ except: pass
 
 class StorageServer():
     def __init__(self, table=None, timeout=24, instance=False):
-        self.version = "1.1.0"
+        self.version = "1.3.0"
         self.plugin = "StorageClient-" + self.version
         self.instance = instance
         self.die = False
@@ -83,6 +83,7 @@ class StorageServer():
 
         self.platform = sys.platform
         self.modules = sys.modules
+        self.network_buffer_size = 4096
 
         if isinstance(table, str) and len(table) > 0:
             self.table = ''.join(c for c in table if c in "%s%s" % (string.ascii_letters, string.digits))
@@ -227,7 +228,7 @@ class StorageServer():
             self._runCommand(data)
             idle_since = time.time()
 
-            self._log("Done", 3)
+            self._log("Done")
 
         self._log("Closing down")
         sock.close()
@@ -248,7 +249,7 @@ class StorageServer():
         while data[len(data) - 2:] != "\r\n" or not idle:
             try:
                 if idle:
-                    recv_buffer = sock.recv(4096)
+                    recv_buffer = sock.recv(self.network_buffer_size)
                     idle = False
                     i += 1
                     self._log("got data  : " + str(i) + " - " + repr(idle) + " - " + str(len(data)) + " + " + str(len(recv_buffer)) + " | " + repr(recv_buffer)[len(recv_buffer) - 5:], 4)
@@ -290,8 +291,8 @@ class StorageServer():
             send_buffer = " "
             try:
                 if idle:
-                    if len(data) > 4096:
-                        send_buffer = data[:4096]
+                    if len(data) > self.network_buffer_size:
+                        send_buffer = data[:self.network_buffer_size]
                     else:
                         send_buffer = data + "\r\n"
 
@@ -306,8 +307,8 @@ class StorageServer():
                         i -= 1
 
                     idle = True
-                    if len(data) > 4096:
-                        data = data[4096:]
+                    if len(data) > self.network_buffer_size:
+                        data = data[self.network_buffer_size:]
                     else:
                         data = ""
 
@@ -459,7 +460,7 @@ class StorageServer():
 
     def _evaluate(self, data):
         try:
-            data = eval(data)
+            data = eval(data) # Test json.loads vs eval
             return data
         except:
             self._log("Couldn't evaluate message : " + repr(data))
@@ -511,6 +512,8 @@ class StorageServer():
     def _setCache(self, cache, name, ret_val):
         self._log("")
         if len(ret_val) > 0:
+            if not isinstance(cache, dict):
+                cache = {}
             cache[name] = {"timestamp": time.time(),
                            "timeout": self.timeout,
                            "res": ret_val}
