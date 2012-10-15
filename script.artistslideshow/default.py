@@ -94,7 +94,7 @@ def cleanText(text):
     text = re.sub('&lt;','<',text)
     text = re.sub('User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.','',text)
     return text.strip()
-        
+
 def download(src, dst, dst2):
     if (not xbmc.abortRequested):
         tmpname = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % ( __addonname__ , xbmc.getCacheThumbName(src) )).decode("utf-8")
@@ -121,13 +121,13 @@ class Main:
             log('script already running')
         else:
             self.LastCacheTrim = 0
-            self.WINDOW.setProperty("ArtistSlideshowRunning", "True")
+            self._set_property("ArtistSlideshowRunning", "True")
             if( xbmc.Player().isPlayingAudio() == False and xbmc.getInfoLabel( self.EXTERNALCALL ) == '' ):
                 log('no music playing')
                 if( self.DAEMON == "False" ):
                     self.WINDOW.clearProperty("ArtistSlideshowRunning")
             elif(not self.OVERRIDEPATH == ''):
-                self.WINDOW.setProperty("ArtistSlideshow", self.OVERRIDEPATH)
+                self._set_property("ArtistSlideshow", self.OVERRIDEPATH)
             else:
                 log('first song started')
                 time.sleep(0.2) # it may take some time for xbmc to read tag info after playback started
@@ -152,7 +152,7 @@ class Main:
                         if( xbmc.Player().isPlayingAudio() == False and xbmc.getInfoLabel( self.EXTERNALCALL ) == '' ):
                             if ( self.DAEMON == "False" ):
                                 self._clean_dir( self.MergeDir )
-                                self.WINDOW.clearProperty("ArtistSlideshowRunning")
+                                self._set_property("ArtistSlideshowRunning")
                 else:
                     self._clear_properties()
                     break
@@ -191,7 +191,7 @@ class Main:
                 log('no images found for artist, using fallback slideshow')
                 log('fallbackdir = ' + self.FALLBACKPATH)
                 self.UsingFallback = True
-                self.WINDOW.setProperty("ArtistSlideshow", self.FALLBACKPATH)                            
+                self._set_property("ArtistSlideshow", self.FALLBACKPATH)
 
 
     def _parse_argv( self ):
@@ -239,7 +239,7 @@ class Main:
         except:
             self.maxcachesize = 1024 * 1000000
         self.NOTIFICATIONTYPE = __addon__.getSetting( "show_progress" )
-        if self.NOTIFICATIONTYPE == "2":    
+        if self.NOTIFICATIONTYPE == "2":
             self.PROGRESSPATH = __addon__.getSetting( "progress_path" )
             log('set progress path to %s' % self.PROGRESSPATH)
         else:
@@ -253,7 +253,7 @@ class Main:
 
     def _init_vars( self ):
         self.WINDOW = xbmcgui.Window( int(self.WINDOWID) )
-        self.WINDOW.clearProperty( "ArtistSlideshow.CleanupComplete" )
+        self._set_property( "ArtistSlideshow.CleanupComplete" )
         if( self.ARTISTFIELD == '' ):
             self.SKINARTIST = ''
         else:
@@ -289,7 +289,7 @@ class Main:
         checkDir(xbmc.translatePath('special://profile/addon_data/%s/temp' % __addonname__ ).decode("utf-8"))
         checkDir(xbmc.translatePath('special://profile/addon_data/%s/ArtistSlideshow' % __addonname__ ).decode("utf-8"))
         checkDir(xbmc.translatePath('special://profile/addon_data/%s/transition' % __addonname__ ).decode("utf-8"))
-        
+
 
     def _start_download( self ):
         self.CachedImagesFound = False
@@ -321,7 +321,7 @@ class Main:
             cached_image_info = True
             last_time = time.time()
             if self.ARTISTNUM == 1:
-                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                self._set_property("ArtistSlideshow", self.CacheDir)
                 if self.ARTISTINFO == "true":
                     self._get_artistinfo()
         else:
@@ -336,17 +336,17 @@ class Main:
                         else:
                            log('outdated %s found' % filename)
                            cached_image_info = False
-                if self.NOTIFICATIONTYPE == "1":
-                    self.WINDOW.setProperty("ArtistSlideshow", self.InitDir)
-                    if not cached_image_info:
-                        xbmc.executebuiltin('XBMC.Notification("' + __language__(30300).encode("utf8") + '", "' + __language__(30301).encode("utf8") + '", 5000, ' + __addonicon__ + ')')
-                elif self.NOTIFICATIONTYPE == "2":
-                    if not cached_image_info:
-                        self.WINDOW.setProperty("ArtistSlideshow", self.PROGRESSPATH)
-                    else:
-                        self.WINDOW.setProperty("ArtistSlideshow", self.InitDir)                    
-                else:
-                    self.WINDOW.setProperty("ArtistSlideshow", self.InitDir)
+	            if self.NOTIFICATIONTYPE == "1":
+	                self._set_property("ArtistSlideshow", self.InitDir)
+	                if not cached_image_info:
+	                    xbmc.executebuiltin('XBMC.Notification("' + __language__(30300).encode("utf8") + '", "' + __language__(30301).encode("utf8") + '", 5000, ' + __addonicon__ + ')')
+	            elif self.NOTIFICATIONTYPE == "2":
+	                if not cached_image_info:
+	                    self._set_property("ArtistSlideshow", self.PROGRESSPATH)
+	                else:
+	                    self._set_property("ArtistSlideshow", self.InitDir)
+	            else:
+	                  self._set_property("ArtistSlideshow", self.InitDir)
 
         if self.LASTFM == "true":
             lastfmlist = self._get_images('lastfm')
@@ -362,7 +362,7 @@ class Main:
         log('downloading images')
         for url in lastfmlist:
             if( self._playback_stopped_or_changed() ):
-                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                self._set_property("ArtistSlideshow", self.CacheDir)
                 self._clean_dir( self.BlankDir )
                 return
             path = getCacheThumbName(url, self.CacheDir)
@@ -377,7 +377,7 @@ class Main:
                     self.ImageDownloaded=True
             if self.ImageDownloaded:
                 if( self._playback_stopped_or_changed() and self.ARTISTNUM == 1 ):
-                    self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                    self._set_property("ArtistSlideshow", self.CacheDir)
                     self._clean_dir( self.BlankDir )
                     return
                 if not self.CachedImagesFound:
@@ -392,12 +392,12 @@ class Main:
                         self._refresh_image_directory()
                     last_time = time.time()
                 self.FirstImage = False
-                
+
         if self.ImageDownloaded:
             log('finished downloading images')
             self.DownloadedAllImages = True
             if( self._playback_stopped_or_changed() ):
-                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                self._set_property("ArtistSlideshow", self.CacheDir)
                 self._clean_dir( self.BlankDir )
                 return
             log( 'cleaning up from refreshing slideshow' )
@@ -410,7 +410,7 @@ class Main:
                     if self.NOTIFICATIONTYPE == "1" and not cached_image_info:
                         xbmc.executebuiltin('XBMC.Notification("' + __language__(30304).encode("utf8") + '", "' + __language__(30305).encode("utf8") + '", 5000, ' + __addonicon__ + ')')
                 if self.TOTALARTISTS > 1:
-                    self._merge_images()                
+                    self._merge_images()
             if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ).decode("utf-8") == self.BlankDir and self.ARTISTNUM == 1):
                 self._wait( min_refresh )
                 if( not self._playback_stopped_or_changed() ):
@@ -423,7 +423,7 @@ class Main:
             if not self.CachedImagesFound:
                 if self.ARTISTNUM == 1:
                     log('clearing ArtistSlideshow property')
-                    self.WINDOW.setProperty("ArtistSlideshow", self.InitDir)
+                    self._set_property("ArtistSlideshow", self.InitDir)
                     if self.NOTIFICATIONTYPE == "1" and not cached_image_info:
                         xbmc.executebuiltin('XBMC.Notification("' + __language__(30302).encode("utf8") + '", "' + __language__(30303).encode("utf8") + '", 10000, ' + __addonicon__ + ')')
                     if( self.ARTISTINFO == "true" and not self._playback_stopped_or_changed() ):
@@ -438,7 +438,7 @@ class Main:
             time.sleep(0.1)
             waited = waited + 0.1
             if( self._playback_stopped_or_changed() ):
-                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                self._set_property("ArtistSlideshow", self.CacheDir)
                 self.Abort = True
                 return
 
@@ -455,10 +455,10 @@ class Main:
 
     def _refresh_image_directory( self ):
         if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ).decode("utf-8") == self.BlankDir):
-            self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+            self._set_property("ArtistSlideshow", self.CacheDir)
             log( 'switching slideshow to ' + self.CacheDir )
-        else:    
-            self.WINDOW.setProperty("ArtistSlideshow", self.BlankDir)
+        else:
+            self._set_property("ArtistSlideshow", self.BlankDir)
             log( 'switching slideshow to ' + self.BlankDir )
 
 
@@ -505,22 +505,22 @@ class Main:
         if self.LocalImagesFound:
             log('local images found')
             if self.ARTISTNUM == 1:
-                self.WINDOW.setProperty("ArtistSlideshow", self.CacheDir)
+                self._set_property("ArtistSlideshow", self.CacheDir)
                 if self.ARTISTINFO == "true":
                     self._get_artistinfo()
             if self.TOTALARTISTS > 1:
-               self._merge_images()                
+               self._merge_images()
 
 
     def _merge_images( self ):
-        self.MergedImagesFound = True                
+        self.MergedImagesFound = True
         files = os.listdir(self.CacheDir)
         for file in files:
             if(file.endswith('tbn') or file.endswith('jpg') or file.endswith('jpeg') or file.endswith('gif') or file.endswith('png')):
                 xbmcvfs.copy(os.path.join(self.CacheDir, file), os.path.join(self.MergeDir, file))
         if self.ARTISTNUM == self.TOTALARTISTS:
             self._wait( 9.8 )
-            self.WINDOW.setProperty("ArtistSlideshow", self.MergeDir)
+            self._set_property("ArtistSlideshow", self.MergeDir)
 
 
     def _trim_cache( self ):
@@ -718,28 +718,42 @@ class Main:
 
 
     def _set_properties( self ):
-        self.WINDOW.setProperty("ArtistSlideshow.ArtistBiography", self.biography)
-        for count, item in enumerate( self.similar ):
-            self.WINDOW.setProperty("ArtistSlideshow.%d.SimilarName" % ( count + 1 ), item[0])
-            self.WINDOW.setProperty("ArtistSlideshow.%d.SimilarThumb" % ( count + 1 ), item[1])
-        for count, item in enumerate( self.albums ):
-            self.WINDOW.setProperty("ArtistSlideshow.%d.AlbumName" % ( count + 1 ), item[0])
-            self.WINDOW.setProperty("ArtistSlideshow.%d.AlbumThumb" % ( count + 1 ), item[1])
+
+      self._set_property("ArtistSlideshow.ArtistBiography", self.biography)
+      for count, item in enumerate( self.similar ):
+          self._set_property("ArtistSlideshow.%d.SimilarName" % ( count + 1 ), item[0])
+          self._set_property("ArtistSlideshow.%d.SimilarThumb" % ( count + 1 ), item[1])
+      for count, item in enumerate( self.albums ):
+          self._set_property("ArtistSlideshow.%d.AlbumName" % ( count + 1 ), item[0])
+          self._set_property("ArtistSlideshow.%d.AlbumThumb" % ( count + 1 ), item[1])
 
 
     def _clear_properties( self ):
         if not xbmc.getInfoLabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
-            self.WINDOW.clearProperty("ArtistSlideshow")
-        self.WINDOW.clearProperty( "ArtistSlideshow.ArtistBiography" )
+            self._set_property("ArtistSlideshow")
+        self._set_property( "ArtistSlideshow.ArtistBiography" )
         for count in range( 50 ):
-            self.WINDOW.clearProperty( "ArtistSlideshow.%d.SimilarName" % ( count + 1 ) )
-            self.WINDOW.clearProperty( "ArtistSlideshow.%d.SimilarThumb" % ( count + 1 ) )
-            self.WINDOW.clearProperty( "ArtistSlideshow.%d.AlbumName" % ( count + 1 ) )
-            self.WINDOW.clearProperty( "ArtistSlideshow.%d.AlbumThumb" % ( count + 1 ) )
+            self._set_property( "ArtistSlideshow.%d.SimilarName" % ( count + 1 ) )
+            self._set_property( "ArtistSlideshow.%d.SimilarThumb" % ( count + 1 ) )
+            self._set_property( "ArtistSlideshow.%d.AlbumName" % ( count + 1 ) )
+            self._set_property( "ArtistSlideshow.%d.AlbumThumb" % ( count + 1 ) )
+
+    #sets a property (or clears it if no value is supplied)
+    #does not crash if e.g. the window no longer exists.
+    def _set_property( self, property_name, value=""):
+      try:
+        self.WINDOW.setProperty(property_name, value)
+      except:
+        pass
+        #log(" *************** Exception: Couldn't set propery " + property_name + " value " + value)
 
 
 if ( __name__ == "__main__" ):
         log('script version %s started' % __addonversion__)
         slideshow = Main()
-        slideshow.WINDOW.setProperty("ArtistSlideshow.CleanupComplete", "True")
+        try:
+          slideshow._set_property("ArtistSlideshow.CleanupComplete", "True")
+        except:
+          pass
+
 log('script stopped')

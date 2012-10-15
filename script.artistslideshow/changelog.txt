@@ -1,3 +1,6 @@
+v.1.4.5
+- fix for improper clearing of info labels on XBMC abort request
+
 v.1.4.4
 - fix for non-ascii characters in windows user name
 - fix for non-ascii characters in artist name
