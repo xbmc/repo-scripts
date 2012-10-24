@@ -3,7 +3,7 @@
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
 from utilities import languageTranslate, log
 
-main_url = "http://subscene.com/"
+main_url = "http://v2.subscene.com/"
 debug_pretext = ""
 
 # Seasons as strings for searching

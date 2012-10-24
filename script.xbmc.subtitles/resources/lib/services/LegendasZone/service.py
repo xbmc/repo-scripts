@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -*-
 
-# Service Legendas-Zone.org version 0.1.8
+# Service Legendas-Zone.org version 0.1.9
 # Code based on Undertext service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
 # Bugs & Features to highlander@teknorage.com
 # http://www.teknorage.com
 # License: GPL v2
+#
+# NEW on Service Legendas-Zone.org v0.1.9:
+# Added all site languages (English, Portuguese, Portuguese Brazilian and Spanish)
+# Changed the way it would handle several patterns for much better finding (site not well formed...)
+# Messages now in xbmc choosen language.
+# Added new logo.
+# Fixed download.
+# Code re-arrange...
 #
 # NEW on Service Legendas-Zone.org v0.1.8:
 # Added uuid for better file handling, no more hangups.
@@ -24,16 +32,20 @@
 #
 # Legendas-Zone.org subtitles, based on a mod of Undertext subtitles
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib, shutil, fnmatch, uuid
-from utilities import log
+from utilities import languageTranslate, log
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __addon__ = sys.modules[ "__main__" ].__addon__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
+__language__   = __addon__.getLocalizedString
 
 main_url = "http://www.legendas-zone.org/"
 debug_pretext = "Legendas-Zone"
 subext = ['srt', 'aas', 'ssa', 'sub', 'smi']
 packext = ['rar', 'zip']
+#Grabbing login and pass from xbmc settings
+username = __addon__.getSetting( "LZuser" )
+password = __addon__.getSetting( "LZpass" )
 
 #====================================================================================================================
 # Regular expression patterns
@@ -45,16 +57,16 @@ packext = ['rar', 'zip']
 #subtitle_pattern = "onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
 subtitle_pattern = "<b><a\shref=\"legendas.php\?modo=detalhes&amp;(.+?)\".+?[\r\n\t]+?.+?[\r\n\t]+?.+?onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
 # group(1) = ID, group(2) = Name, group(3) = Hits, group(4) = Files, group(5) = Uploader
-multiple_results_pattern = "<td\salign=\"left\".+?<b><a\shref=\"legendas.php\?imdb=(.+?)&l=pt\"\stitle=\".+?\">.+?</td>"
+multiple_results_pattern = "<td\salign=\"left\".+?<b><a\shref=\"legendas.php\?imdb=(.+?)&l=.+?\"\stitle=\".+?\">.+?</td>"
 # group(1) = IMDB
 imdb_pattern = "<p><b>Popular\sTitles</b>\s\(Displaying.+?Result.+?<table><tr>.+?<a\shref=\"\/title\/tt(.+?)\/\""
 # group(1) = IMDB
 #====================================================================================================================
 # Functions
 #====================================================================================================================
-def msg(text, timeout):
+def msgnote(site, text, timeout):
 	icon =  os.path.join(__cwd__,"icon.png")
-	xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,timeout,icon))
+	xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (site,text,timeout,icon))
 
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
 
@@ -70,14 +82,15 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 	
 
 	page = 0
-	if languageshort == "pt":
-		url = main_url + "legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+	if languageshort == "pb":
+			languageshort = "br"
+	url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 
 	content = opener.open(url)
 	content = content.read()
 	if re.search(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) == None:
+		log( __name__ ,"%s Lang: '%s'" % (debug_pretext, languageshort))
 		log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "Single Title"))
-		msg("Searching Single Title... Please wait!", 6000)
 		while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 6:
 			for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 				hits = matches.group(3)
@@ -135,32 +148,42 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 							if re.search(filesearch[1][:len(filesearch[1])-4], desc):
 								sync = True
 				#filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
+				if languageshort == "br":
+					languageshort = "pb"
 				subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits': hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 			page = page + 1
-			url = main_url + "legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+			if languageshort == "br":
+				languageshort = "pb"
+			url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 			content = opener.open(url)
 			content = content.read()
 			#For DEBUG only uncomment next line
 			#log( __name__ ,"%s Getting '%s' list part xxx..." % (debug_pretext, content))
 	else:
 		page = 0
-		if languageshort == "pt":
-			url = main_url + "legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+		if languageshort == "pb":
+			languageshort = "br"
+		url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 		content = opener.open(url)
 		content = content.read()
 		maxsubs = re.findall(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
 		maxsubs = len(maxsubs)
 		if maxsubs < 10:
-			msg("Searching Many Title... Please wait!", 6000)
-			while re.search(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
-				log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "Less Then 10 Titles"))
+			log( __name__ ,"%s Lang: '%s'" % (debug_pretext, languageshort))
+			log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "Less Then 10 Titles"))
+			while re.search(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 1:
 				for resmatches in re.finditer(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 					imdb = resmatches.group(1)
 					page1 = 0
-					content1 = opener.open(main_url + "legendas.php?l=pt&imdb=" + imdb + "&page=" + str(page1))
+					if languageshort == "pb":
+						languageshort = "br"
+					content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
 					content1 = content1.read()
+					content1 = content1.decode('latin1')
+					log( __name__ ,"%s Content1 '%s' subs inside less than 10..." % (debug_pretext, content1))
 					while re.search(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 						for matches in re.finditer(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
+							log( __name__ ,"%s Getting '%s' subs inside less than 10..." % (debug_pretext, page1))
 							hits = matches.group(3)
 							downloads = int(matches.group(3)) / 5
 							if (downloads > 10):
@@ -217,24 +240,30 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 										if re.search(filesearch[1][:len(filesearch[1])-4], desc):
 											sync = True
 							filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
+							if languageshort == "br":
+								languageshort = "pb"
 							subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 						page1 = page1 + 1
-						content1 = opener.open(main_url + "legendas.php?l=pt&imdb=" + imdb + "&page=" + str(page1))
+						content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
 						content1 = content1.read()
 				page = page + 1
-				url = main_url + "	legendas.php?l=pt&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+				if languageshort == "pb":
+					languageshort = "br"
+				url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 				content = opener.open(url)
 				content = content.read()
 		else:
-			if languageshort == "pt":
-				url = "http://uk.imdb.com/find?s=all&q=" + urllib.quote_plus(searchstring)
+			url = "http://uk.imdb.com/find?s=all&q=" + urllib.quote_plus(searchstring)
 			content = opener.open(url)
 			content = content.read()
 			imdb = re.findall(imdb_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
 			page1 = 0
-			content1 = opener.open(main_url + "legendas.php?l=pt&imdb=" + imdb[0] + "&page=" + str(page1))
+			log( __name__ ,"%s Lang: '%s'" % (debug_pretext, languageshort))
+			if languageshort == "pb":
+				languageshort = "br"
+			content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb[0] + "&page=" + str(page1))
 			content1 = content1.read()
-			msg("Too many hits. Grabbing IMDB title!", 6000)
+			#msgnote(pretext, "Too many hits. Grabbing IMDB title!", 6000)
 			while re.search(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 				log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "IMDB Title"))
 				for matches in re.finditer(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
@@ -294,17 +323,27 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 								if re.search(filesearch[1][:len(filesearch[1])-4], desc):
 									sync = True
 					filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
+					if languageshort == "br":
+						languageshort = "pb"
 					subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 				page1 = page1 + 1
-				content1 = opener.open(main_url + "legendas.php?l=pt&imdb=" + imdb[0] + "&page=" + str(page1))
+				if languageshort == "pb":
+					languageshort = "br"
+				content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb[0] + "&page=" + str(page1))
 				content1 = content1.read()
 				#For DEBUG only uncomment next line
 
 
-	if subtitles_list != []:
-		msg("Finished Searching. Choose One!", 3000)
-	else:
-		msg("No Results! Try Parent Dir Or Manual!", 4000)
+	if subtitles_list == []:
+		msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
+		msgnote(debug_pretext,"Try manual or parent dir!", 2000)
+	elif subtitles_list != []:
+		lst = str(subtitles_list)
+		if languagelong in lst:
+			msgnote(debug_pretext,"Found sub(s) in "  + languagelong + ".", 2000)
+		else:
+			msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
+			msgnote(debug_pretext,"Try manual or parent dir!", 2000)
 
 	#Bubble sort, to put syncs on top
 	for n in range(0,len(subtitles_list)):
@@ -316,7 +355,19 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 
 
 
-
+def get_download(url, download, id):
+    req_headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
+    'Referer': main_url}
+    request = urllib2.Request(url, headers=req_headers)
+    cj = cookielib.CookieJar()
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    login_data = urllib.urlencode({'username' : username, 'password' : password})
+    response = opener.open(request,login_data)
+    download_data = urllib.urlencode({'sid' : id, 'submit' : '+', 'action' : 'Download'})
+    request = urllib2.Request(download, download_data, req_headers)
+    f = opener.open(request)
+    return f 
 
 def geturl(url):
 	class MyOpener(urllib.FancyURLopener):
@@ -380,15 +431,15 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 		searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
 	log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
 
-	portuguese = 0
-	if string.lower(lang1) == "portuguese": portuguese = 1
-	elif string.lower(lang2) == "portuguese": portuguese = 2
-	elif string.lower(lang3) == "portuguese": portuguese = 3
+	hasLang = languageTranslate(lang1,0,2) + " " + languageTranslate(lang2,0,2) + " " + languageTranslate(lang3,0,2)
 
-	getallsubs(searchstring, "pt", "Portuguese", file_original_path, subtitles_list, searchstring_notclean)
-
-	if portuguese == 0:
-		msg = "Only for Portuguese subtitles, perhaps others in the future!"
+	if re.search('pt', hasLang) or re.search('en', hasLang) or re.search('es', hasLang) or re.search('pb', hasLang):
+		msgnote(debug_pretext,__language__(30153), 6000)
+		getallsubs(searchstring, languageTranslate(lang1,0,2), lang1, file_original_path, subtitles_list, searchstring_notclean)
+		getallsubs(searchstring, languageTranslate(lang2,0,2), lang2, file_original_path, subtitles_list, searchstring_notclean)
+		getallsubs(searchstring, languageTranslate(lang3,0,2), lang3, file_original_path, subtitles_list, searchstring_notclean)
+	else:
+		msg = "Won't work, LegendasDivx.com is only for PT, PTBR, ES or EN subtitles."
 	
 	return subtitles_list, "", msg #standard output
 	
@@ -402,28 +453,16 @@ def recursive_glob(treeroot, pattern):
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
 
-	msg("Downloading... Please Wait!", 6000)
+	msgnote(debug_pretext, "Downloading... Please Wait!", 6000)
 	id = subtitles_list[pos][ "id" ]
 	id = string.split(id,"=")
 	id = id[-1]
 	sync = subtitles_list[pos][ "sync" ]
 	log( __name__ ,"%s Fetching id using url %s" % (debug_pretext, id))
-	#Grabbing login and pass from xbmc settings
-	username = __addon__.getSetting( "LZuser" )
-	password = __addon__.getSetting( "LZpass" )
-	cj = cookielib.CookieJar()
-	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-	opener.addheaders.append(('User-agent', 'Mozilla/4.0'))
-	login_data = urllib.urlencode({'username' : username, 'password' : password})
-	#This is where you are logged in
-	resp = opener.open(main_url+'fazendologin.php', login_data)
-	#For DEBUG only uncomment next line
-	#log( __name__ ,"%s resposta '%s' subs ..." % (debug_pretext, resp))
+	#This is where you are logged in and download
+	content = get_download(main_url+'fazendologin.php', main_url+'downloadsub.php', id)
 	#Now you download the subtitles
 	language = subtitles_list[pos][ "language_name" ]
-	if string.lower(language) == "portuguese":
-		download_data = urllib.urlencode({'sid' : id, 'submit' : '+', 'action' : 'Download'})
-		content = opener.open(main_url+'downloadsub.php', download_data)
 
 	if content is not None:
 		#added a strip(";") in the end because it was needed ;)
@@ -462,7 +501,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 						max_mtime =  mtime
 			init_max_mtime = max_mtime
 			time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
-			msg("Extracting Subtitles!", 6000)
+			msgnote(debug_pretext,__language__(30155), 6000)
 			xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
 			waittime  = 0
 			while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
@@ -480,7 +519,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 			if waittime == 20:
 				log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
 			else:
-				msg("Done Extracting!", 3000)
+				msgnote(debug_pretext,__language__(30156), 3000)
 				log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
 				searchrars = recursive_glob(tmp_sub_dir, packext)
 				searchrarcount = len(searchrars)
@@ -541,8 +580,6 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 							break
 				else:
 					#If none is found just open a dialog box for browsing the temporary subtitle folder
-					icon =  os.path.join(__cwd__,"icon.png")
-					xbmc.executebuiltin("XBMC.Notification(%s,%s,6000,%s)" % (__scriptname__,"Please wait. Opening browser!",icon))
 					sub_ext = "srt,aas,ssa,sub,smi"
 					sub_tmp = []
 					for root, dirs, files in os.walk(tmp_sub_dir, topdown=False):
@@ -564,6 +601,6 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 						subs_file = sub_tmp[0]
 	
 		
-		msg("Playing Title!", 3000)
+		msgnote(debug_pretext,__language__(30157), 3000)
 
 		return False, language, subs_file #standard output

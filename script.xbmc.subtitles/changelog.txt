@@ -1,3 +1,10 @@
+3.5.0
+- [fix] Bierdopje service, mr-blobby
+- [fix] Subscene service, publicENEMY
+- New service euTorrents.me, highlandr
+- Several changes in LegendasDivx.net, Pipocas.tv and Legendas-zone.org, highlandr
+- Update Turkish translation, queeup
+
 3.4.1
 - [fix] xbmc.validatePath() should be decoded to UTF-8
 

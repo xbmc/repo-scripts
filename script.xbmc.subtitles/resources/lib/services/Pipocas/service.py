@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Service pipocas.tv version 0.0.1
+# Service pipocas.tv version 0.0.3
 # Code based on Undertext service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
 # Bugs & Features to highlander@teknorage.com
 # http://www.teknorage.com
 # License: GPL v2
+#
+# New on Service Pipocas.tv - v0.0.3:
+# Fixed bug on the authentication preventing to download the latest subtitles!
+#
+# New on Service Pipocas.tv - v0.0.2:
+# Added authentication system. Now you don't need to wait 24h to download the new subtitles. Go register on the site!!!
+# Added Portuguese Brazilian. Now has Portuguese and Portuguese Brazilian.
+# Messages now in xbmc choosen language.
+# Code re-arrange...
 #
 # Initial Release of Service Pipocas.tv - v0.0.1:
 # Very first version of this service. Expect bugs. Regex is not the best way to parse html so nothing is perfect :)
@@ -22,11 +31,14 @@ _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __addon__ = sys.modules[ "__main__" ].__addon__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
+__language__   = __addon__.getLocalizedString
 
-main_url = "http://www.pipocas.tv/"
+main_url = "http://pipocas.tv/"
 debug_pretext = "Pipocas.tv"
 subext = ['srt', 'aas', 'ssa', 'sub', 'smi']
 packext = ['rar', 'zip']
+username = __addon__.getSetting( "Pipocasuser" )
+password = __addon__.getSetting( "Pipocaspass" )
 
 #====================================================================================================================
 # Regular expression patterns
@@ -116,9 +128,9 @@ uploader_pattern = "<a href=\"/my.php\?u.+?:normal;\"> (.+?)</font></a>"
 #====================================================================================================================
 # Functions
 #====================================================================================================================
-def msg(text, timeout):
+def msgnote(site, text, timeout):
 	icon =  os.path.join(__cwd__,"icon.png")
-	xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,timeout,icon))
+	xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (site,text,timeout,icon))
 
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
 
@@ -130,7 +142,6 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 
 	content = geturl(url)
 	content = content.decode('latin1')
-	msg("Searching Title... Please wait!", 6000)
 	while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL) and page < 6:
 		#log( __name__ ,"%s Getting '%s' inside while ..." % (debug_pretext, subtitle_pattern))
 		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
@@ -153,15 +164,15 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			for namematch in re.finditer(name_pattern, content_details, re.IGNORECASE | re.DOTALL):
 				filename = string.strip(namematch.group(1))
 				desc = filename
-				#log( __name__ ,"%s FILENAME match: '%s' ..." % (debug_pretext, namematch.group(1)))			
+				log( __name__ ,"%s FILENAME match: '%s' ..." % (debug_pretext, namematch.group(1)))			
 			for idmatch in re.finditer(id_pattern, content_details, re.IGNORECASE | re.DOTALL):
 				id = idmatch.group(1)
-				#log( __name__ ,"%s ID match: '%s' ..." % (debug_pretext, idmatch.group(1)))			
+				log( __name__ ,"%s ID match: '%s' ..." % (debug_pretext, idmatch.group(1)))			
 			for upmatch in re.finditer(uploader_pattern, content_details, re.IGNORECASE | re.DOTALL):
 				uploader = upmatch.group(1)
 			for hitsmatch in re.finditer(hits_pattern, content_details, re.IGNORECASE | re.DOTALL):
 				hits = hitsmatch.group(1)
-			#log( __name__ ,"%s UP match: '%s' ..." % (debug_pretext, upmatch.group(1)))			
+			log( __name__ ,"%s UP match: '%s' ..." % (debug_pretext, upmatch.group(1)))			
 			#for descmatch in re.finditer(desc_pattern, content_details, re.IGNORECASE | re.DOTALL):
 			#	desc = string.strip(descmatch.group(1))
 			#	log( __name__ ,"%s DESC match: '%s' ..." % (debug_pretext, decmatch.group(1)))
@@ -220,10 +231,16 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 		content = geturl(url)
 		content = content.decode('latin1')
 
-	if subtitles_list != []:
-		msg("Finished Searching. Choose One!", 3000)
-	else:
-		msg("No Results! Try Parent Dir Or Manual!", 4000)
+	if subtitles_list == []:
+		msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
+		msgnote(debug_pretext,"Try manual or parent dir!", 2000)
+	elif subtitles_list != []:
+		lst = str(subtitles_list)
+		if languagelong in lst:
+			msgnote(debug_pretext,"Found sub(s) in "  + languagelong + ".", 2000)
+		else:
+			msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
+			msgnote(debug_pretext,"Try manual or parent dir!", 2000)
 		
 #	Bubble sort, to put syncs on top
 	for n in range(0,len(subtitles_list)):
@@ -232,8 +249,6 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			if subtitles_list[i]["sync"] > subtitles_list[i-1]["sync"]:
 				subtitles_list[i] = subtitles_list[i-1]
 				subtitles_list[i-1] = temp
-
-
 
 
 
@@ -310,16 +325,20 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 	elif string.lower(lang3) == "portuguesebrazil": portuguesebrazil = 3
 	
 	if ((portuguese > 0) and (portuguesebrazil == 0)):
+			msgnote(debug_pretext,__language__(30153), 12000)
 			getallsubs(searchstring, "pt", "Portuguese", file_original_path, subtitles_list, searchstring_notclean)
 
 	if ((portuguesebrazil > 0) and (portuguese == 0)):
+			msgnote(debug_pretext,__language__(30153), 12000)
 			getallsubs(searchstring, "pb", "PortugueseBrazil", file_original_path, subtitles_list, searchstring_notclean)
 
 	if ((portuguese > 0) and (portuguesebrazil > 0) and (portuguese < portuguesebrazil)):
+			msgnote(debug_pretext,__language__(30153), 12000)
 			getallsubs(searchstring, "pt", "Portuguese", file_original_path, subtitles_list, searchstring_notclean)
 			getallsubs(searchstring, "pb", "PortugueseBrazil", file_original_path, subtitles_list, searchstring_notclean)
 
 	if ((portuguese > 0) and (portuguesebrazil > 0) and (portuguese > portuguesebrazil)):
+			msgnote(debug_pretext,__language__(30153), 12000)
 			getallsubs(searchstring, "pb", "PortugueseBrazil", file_original_path, subtitles_list, searchstring_notclean)
 			getallsubs(searchstring, "pt", "Portuguese", file_original_path, subtitles_list, searchstring_notclean)
 
@@ -338,15 +357,24 @@ def recursive_glob(treeroot, pattern):
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
 
-	msg("Downloading... Please Wait!", 6000)
+	msgnote(debug_pretext,__language__(30154), 6000)
 	id = subtitles_list[pos][ "id" ]
 	sync = subtitles_list[pos][ "sync" ]
+	language = subtitles_list[pos][ "language_name" ]
+
+	url = main_url + 'vlogin.php'
+	download = main_url + 'download.php?id=' + id
+	req_headers = {
+	'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
+	'Referer': main_url}
+	request = urllib2.Request(url, headers=req_headers)
 	cj = cookielib.CookieJar()
 	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-	opener.addheaders.append(('User-agent', 'Mozilla/4.0'))
-	#Now you download the subtitles
-	language = subtitles_list[pos][ "language_name" ]
-	content = opener.open('http://www.pipocas.tv/download.php?id=' + id)
+	login_data = urllib.urlencode({'username' : username, 'password' : password})
+	response = opener.open(request,login_data)
+	download_data = urllib.urlencode({'id' : id})
+	request = urllib2.Request(download, download_data, req_headers)
+	content = opener.open(request)
 
 	if content is not None:
 		log( __name__ ,"%s Content-info: %s" % (debug_pretext, content.info()))
@@ -385,7 +413,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 						max_mtime =  mtime
 			init_max_mtime = max_mtime
 			time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
-			msg("Extracting... Please Wait!", 6000)
+			msgnote(debug_pretext,__language__(30155), 6000)
 			xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
 			waittime  = 0
 			while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
@@ -403,7 +431,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 			if waittime == 20:
 				log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
 			else:
-				msg("Done Extracting!", 3000)
+				msgnote(debug_pretext,__language__(30156), 3000)
 				log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
 				searchrars = recursive_glob(tmp_sub_dir, packext)
 				searchrarcount = len(searchrars)
@@ -484,6 +512,6 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 					elif sub_tmp:
 						subs_file = sub_tmp[0]
 		
-		msg("Playing Title!", 3000)
+		msgnote(debug_pretext,__language__(30157), 3000)
 
 		return False, language, subs_file #standard output

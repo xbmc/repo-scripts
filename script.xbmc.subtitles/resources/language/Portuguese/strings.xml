@@ -62,6 +62,26 @@
     <string id="30137">- OmniSubs Password</string>
     <string id="30138">- LegendasZone Username</string>
     <string id="30139">- LegendasZone Password</string>
+    <string id="30140">- Escolha o tipo de subs:</string>
+    <string id="30141">SubRip</string>
+    <string id="30142">TMPlayer</string>
+    <string id="30143">MicroDVD</string>
+    <string id="30144">MPl2</string>
+    <string id="30145">Use a 'Subs' subpasta para guardar as legendas</string>
+    <string id="30146">- napisy24.pl Utilizador</string>
+    <string id="30147">- napisy24.pl Password</string>
+    <string id="30148">- euTorrents Utilizador</string>
+    <string id="30149">- euTorrents Password</string>
+    <string id="30150">Sem sub(s) em</string>
+    <string id="30151">Procure manual ou nome da pasta!</string>
+    <string id="30152">Com sub(s) em</string>
+    <string id="30153">A Pesquisar... Aguarde!</string>
+    <string id="30154">A Descarregar... Aguarde!</string>
+    <string id="30155">A Descompactar... Aguarde!</string>
+    <string id="30156">Descompactado!... Aguarde!</string>
+    <string id="30157">A Continuar o Filme!</string>
+    <string id="30158">- Pipocas Utilizador</string>
+    <string id="30159">- Pipocas Password</string>
   
   <!-- Languages  -->
 

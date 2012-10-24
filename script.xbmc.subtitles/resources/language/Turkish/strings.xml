@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-
+    
     <!-- Türkçe -->
-
+  
     <string id="610">Ara </string>
     <string id="612">El ile arama dizesi gir</string>
     <string id="642">%s Altyazı aranıyor</string>
@@ -73,9 +73,12 @@
     <string id="30142">TMPlayer</string>
     <string id="30143">MicroDVD</string>
     <string id="30144">MPl2</string>
+    <string id="30145">Altyazıları depolamak için 'Subs' alt klasörünü kullan</string>
+    <string id="30146">- napisy24.pl Kullanıcı Adı</string>
+    <string id="30147">- napisy24.pl Parola</string>
     
   <!-- Languages  -->
-       
+  
     <string id="30201">Arnavutça</string>
     <string id="30202">Arapça</string>
     <string id="30203">Beyaz Rusyaca</string>
@@ -120,5 +123,5 @@
     <string id="30245">Ukraynaca</string>
     <string id="30246">Vietnamca</string>
     <string id="30247">Farsça</string>
- 
+    
 </strings>

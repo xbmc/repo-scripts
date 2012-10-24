@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Service LegendasDivx.com version 0.2.6
+# Service euTorrents.me version 0.0.2
 # Code based on Undertext service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
@@ -8,58 +8,17 @@
 # http://www.teknorage.com
 # License: GPL v2
 #
-# NEW on Service LegendasDivx.com v0.2.6:
-# Added English and Spanish. Now searches all site languages.
+# NEW on Service euTorrents.me v0.0.2:
+# Added all site languages.
 # Messages now in xbmc choosen language.
 # Code re-arrange...
 #
-# NEW on Service LegendasDivx.com v0.2.5:
-# Added PortugueseBrazilian. After a few requests the language is now available.
+# Initial release of Service euTorrents.me v0.0.1:
+# First version of the service. Requests are welcome.
+# Works with every language available on the site.
 #
-# NEW on Service LegendasDivx.com v0.2.4:
-# Added uuid for better file handling, no more hangups.
-#
-# NEW on Service LegendasDivx.com v0.2.3:
-# Fixed typo on the version.
-# Added built-in notifications.
-#
-# NEW on Service LegendasDivx.com v0.2.2:
-# Fixed pathnames using (os.sep). For sure :)
-#
-# NEW on Service LegendasDivx.com v0.2.1:
-# Fixed bug when the file is played from a root path, no parent dir search\sync when that happens.
-# Fixed pathnames to work with all OS (Win, Unix, etc).
-# Added pattern to search several subtitle extensions.
-#
-# NEW on Service LegendasDivx.com v0.2.0:
-# Better "star" rating, remember that the start rating is calculated using the number of hits/downloads.
-# Fixed a bug in the SYNC subtitles, it wouldn't assume that any were sync (in the code), a dialog box would open in multi packs.
-#
-# NEW on Service LegendasDivx.com v0.1.9:
-# When no sync subtitle is found and the pack has more then 1 sub, it will open a dialog box for browsing the substitles inside the multi pack.
-#
-# NEW on Service LegendasDivx.com v0.1.8:
-# Uncompress rar'ed subtitles inside a rar file... yeh weird site...
-#
-# NEW on Service LegendasDivx.com v0.1.7:
-# BUG found in multi packs is now fixed.
-# Added more accuracy to the selection of subtitle to load. Now checks the release dirname against the subtitles downloaded.
-# When no sync is found and if the substitle name is not equal to the release dirname or release filename it will load one random subtitle from the package.
-#
-# NEW on Service LegendasDivx.com v0.1.6:
-# Movies or TV eps with 2cds or more will now work.
-# Sync subs is now much more accurate.
-#
-# Initial Release of Service LegendasDivx.com - v0.1.5:
-# TV Season packs now downloads and chooses the best one available in the pack
-# Movie packs with several releases now works too, tries to choose the sync sub using filename or dirname
-# Search description for SYNC subtitles using filename or dirname
-#
-# KNOWN BUGS (TODO for next versions):
-# Regex isn't perfect so a few results might have html tags still, not many but ...
-# Filtering languages, shows only European Portuguese flag.
+# euTorrents.me subtitles, based on a mod of Undertext subtitles
 
-# LegendasDivx.com subtitles, based on a mod of Undertext subtitles
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib, shutil, fnmatch, uuid
 from utilities import languageTranslate, log
 _ = sys.modules[ "__main__" ].__language__
@@ -68,56 +27,34 @@ __addon__ = sys.modules[ "__main__" ].__addon__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
 __language__   = __addon__.getLocalizedString
 
-main_url = "http://www.legendasdivx.com/"
-debug_pretext = "LegendasDivx"
+main_url = "http://bt.eutorrents.me/"
+debug_pretext = "euTorrents"
 subext = ['srt', 'aas', 'ssa', 'sub', 'smi']
 packext = ['rar', 'zip']
+isLang = xbmc.getLanguage()
+#DEBUG ONLY
+#log( __name__ ,"%s isLang: '%s'" % (debug_pretext, isLang))
 
 #====================================================================================================================
 # Regular expression patterns
 #====================================================================================================================
 
 """
-<div class="sub_box">
-<div class="sub_header">
-<b>The Dark Knight</b> (2008) &nbsp; - &nbsp; Enviada por: <a href='modules.php?name=User_Info&username=tck17'><b>tck17</b></a> &nbsp; em 2010-02-03 02:44:09
-
-</div>
-<table class="sub_main color1" cellspacing="0">
-<tr>
-<th class="color2">Idioma:</th>
-<td><img width="18" height="12" src="modules/Downloads/img/portugal.gif" /></td>
-<th>CDs:</th>
-<td>1&nbsp;</td>
-<th>Frame Rate:</th>
-<td>23.976&nbsp;</td>
-<td rowspan="2" class="td_right color2">
-<a href="?name=Downloads&d_op=ratedownload&lid=128943">
-<img border="0" src="modules/Downloads/images/rank9.gif"><br>Classifique (3 votos)
-
-</a>
-</td>
-</tr>
-<tr>
-<th class="color2">Hits:</th>
-<td>1842</td>
-<th>Pedidos:</th>
-<td>77&nbsp;</td>
-<th>Origem:</th>
-<td>DVD Rip&nbsp;</td>
-</tr>
-
-<tr>
-<th class="color2">Descrição:</th>
-<td colspan="5" class="td_desc brd_up">Não são minhas.<br />
-<br />
-Release: The.Dark.Knight.2008.720p.BluRay.DTS.x264-ESiR</td>
+			<tr>
+				<td class="lista"><a href="index.php?page=torrent-details&id=0b6431c18917842465b658c2d429cb9f50f9becc" title="My Life in the Air (2008) Ma vie en l'air">My Life in the Air (2008) Ma vie en l'air</a></td>
+				<td class="lista"><a href="index.php?page=userdetails&id=94803"><span style='color: #333333'>Sammahel</span></a></td>
+				<td class="lista"><img src="images/flag/gb.png" alt="English" /> <a href="download-subtitle.php?subid=3321">English</a></td>
+				<td class="lista"><a href="download-subtitle.php?subid=3321"><img src="images/download.gif" border="0" /></a></td>
+				<td class="lista"></td>
+				<td class="lista">94.93 KB</td>
+				<td class="lista">39</td>
+				<td class="lista">&nbsp;</td>
+			</tr>
 """
-#subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?img/(.+?)gif\".+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)&nbsp;</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>"
-# group(1) = Name, group(2) = Year, group(3) = Language, group(4)= Number Files, group(5) = ID, group(6) = Hits, group(7) = Requests, group(8) = Description
 
-subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>"
-# group(1) = Name, group(2) = Year, group(3) = Number Files, group(4) = ID, group(5) = Hits, group(6) = Requests, group(7) = Description
+subtitle_pattern = "<tr>[\n\r\t][\n\r\t].+?index.php\?page=torrent-details.+?\">(.+?)</a></td>[\n\r\t][\n\r\t].+?page=userdetails.+?\'>(.+?)</span></a></td>[\n\r\t][\n\r\t].+?alt=\"(.+?)\" />.+?\?subid=(.+?)\">.+?</td>[\n\r\t][\n\r\t].+?<td.+?</td>[\n\r\t][\n\r\t].+?<td.+?</td>[\n\r\t][\n\r\t].+?<td.+?</td>[\n\r\t][\n\r\t].+?<td.+?\">(.+?)</td>"
+
+# group(1) = Name, group(2) = Uploader, group(3) = Language, group(4) = ID, group(5) = Downloads
 #====================================================================================================================
 # Functions
 #====================================================================================================================
@@ -127,39 +64,44 @@ def msgnote(site, text, timeout):
 
 
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
+	
 
 	page = 1
-	if languageshort == "pt":
-		url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-	elif languageshort == "pb":
-		url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=29&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-	elif languageshort == "es":
-		url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=30&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-	elif languageshort == "en":
-		url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=31&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-	else:
-		url = main_url + "index.php"
+	cj = cookielib.CookieJar()
+	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+	#Grabbing login and pass from xbmc settings
+	username = __addon__.getSetting( "euTuser" )
+	password = __addon__.getSetting( "euTpass" )
+	login_data = urllib.urlencode({'uid' : username, 'pwd' : password})
+	#This is where you are logged in
+	resp = opener.open('http://bt.eutorrents.me/index.php?page=login', login_data)
+	#log( __name__ ,"%s Getting '%s'  ..." % (debug_pretext, resp))
 
-	content = geturl(url)
-	log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
-	while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 6:
-		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
+	url = main_url + "subtitles.php?action=search&language=" + languageshort + "&pages=" + str(page) + "&search=" + urllib.quote_plus(searchstring)
+	content = opener.open(url)
+	content = content.read()
+	content = content.decode('latin1')
+	
+
+	#log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
+
+	while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL) and page < 6:
+		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
 			hits = matches.group(5)
 			id = matches.group(4)
-			movieyear = matches.group(2)
-			no_files = matches.group(3)
-			downloads = int(matches.group(5)) / 300
+			uploader = string.strip(matches.group(2))
+			downloads = int(matches.group(5)) / 10
 			if (downloads > 10):
 				downloads=10
 			filename = string.strip(matches.group(1))
-			desc = string.strip(matches.group(7))
+			desc = string.strip(matches.group(1))
 			#Remove new lines on the commentaries
 			filename = re.sub('\n',' ',filename)
 			desc = re.sub('\n',' ',desc)
-			desc = re.sub(':.','',desc)
-			desc = re.sub('br />','',desc)
+			uploader = re.sub('\n',' ',uploader)
 			#Remove HTML tags on the commentaries
 			filename = re.sub(r'<[^<]+?>','', filename)
+			uploader = re.sub(r'<[^<]+?>','', uploader)
 			desc = re.sub(r'<[^<]+?>|[~]','', desc)
 			#Find filename on the comentaries to show sync label using filename or dirname (making it global for further usage)
 			global filesearch
@@ -196,35 +138,27 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 					else:
 						if re.search(filesearch[1][:len(filesearch[1])-4], desc):
 							sync = True
-			filename = filename + " " + "(" + movieyear + ")" + "  " + hits + "Hits" + " - " + desc
-			subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
-		page = page + 1
-		
-		if languageshort == "pt":
-			url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-		elif languageshort == "pb":
-			url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=29&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-		elif languageshort == "es":
-			url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=30&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-		elif languageshort == "en":
-			url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=31&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-		else:
-			url = main_url + "index.php"
-			
-		content = geturl(url)
+			filename = filename + " " + "(sent by: " + uploader + ")" + "  " + hits + "hits"
+			subtitles_list.append({'rating': str(downloads), 'filename': filename, 'uploader': uploader, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_flag': 'flags/' + languageTranslate(languageshort,3,2) + '.gif', 'language_name': languagelong})
 
+		page = page + 1
+		url = main_url + "subtitles.php?action=search&language=" + languageshort + "&pages=" + str(page) + "&search=" + urllib.quote_plus(searchstring)
+		content = opener.open(url)
+		content = content.read()
+		content = content.decode('latin1')
+	
+		
 	if subtitles_list == []:
-		msgnote(debug_pretext,__language__(30150) + " "  + languagelong + "!", 2000)
-		msgnote(debug_pretext,__language__(30151), 2000)
+		msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
+		msgnote(debug_pretext,"Try manual or parent dir!", 2000)
 	elif subtitles_list != []:
 		lst = str(subtitles_list)
 		if languagelong in lst:
-			msgnote(debug_pretext,__language__(30152) + " "  + languagelong + ".", 2000)
+			msgnote(debug_pretext,"Found sub(s) in "  + languagelong + ".", 2000)
 		else:
-			msgnote(debug_pretext,__language__(30150) + " "  + languagelong + "!", 2000)
-			msgnote(debug_pretext,__language__(30151), 2000)
-	
-			
+			msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
+			msgnote(debug_pretext,"Try manual or parent dir!", 2000)
+		
 #	Bubble sort, to put syncs on top
 	for n in range(0,len(subtitles_list)):
 		for i in range(1, len(subtitles_list)):
@@ -232,6 +166,8 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			if subtitles_list[i]["sync"] > subtitles_list[i-1]["sync"]:
 				subtitles_list[i] = subtitles_list[i-1]
 				subtitles_list[i-1] = temp
+
+
 
 
 def geturl(url):
@@ -296,15 +232,11 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 		searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
 	log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
 
-	hasLang = languageTranslate(lang1,0,2) + " " + languageTranslate(lang2,0,2) + " " + languageTranslate(lang3,0,2)
 	
-	if re.search('pt', hasLang) or re.search('en', hasLang) or re.search('es', hasLang) or re.search('pb', hasLang):
-		msgnote(debug_pretext,__language__(30153), 6000)
-		getallsubs(searchstring, languageTranslate(lang1,0,2), lang1, file_original_path, subtitles_list, searchstring_notclean)
-		getallsubs(searchstring, languageTranslate(lang2,0,2), lang2, file_original_path, subtitles_list, searchstring_notclean)
-		getallsubs(searchstring, languageTranslate(lang3,0,2), lang3, file_original_path, subtitles_list, searchstring_notclean)
-	else:
-		msg = "Won't work, LegendasDivx.com is only for PT, PTBR, ES or EN subtitles."
+	msgnote(debug_pretext,__language__(30153), 6000)
+	getallsubs(searchstring, languageTranslate(lang1,0,3), lang1, file_original_path, subtitles_list, searchstring_notclean)
+	getallsubs(searchstring, languageTranslate(lang2,0,3), lang2, file_original_path, subtitles_list, searchstring_notclean)
+	getallsubs(searchstring, languageTranslate(lang3,0,3), lang3, file_original_path, subtitles_list, searchstring_notclean)
 
 	return subtitles_list, "", msg #standard output
 	
@@ -318,24 +250,21 @@ def recursive_glob(treeroot, pattern):
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
 
-	msgnote(debug_pretext,__language__(30154), 6000)
+	msgnote(debug_pretext, "Downloading... Please Wait!", 6000)
 	id = subtitles_list[pos][ "id" ]
 	sync = subtitles_list[pos][ "sync" ]
 	log( __name__ ,"%s Fetching id using url %s" % (debug_pretext, id))
-	#Grabbing login and pass from xbmc settings
-	username = __addon__.getSetting( "LDivxuser" )
-	password = __addon__.getSetting( "LDivxpass" )
 	cj = cookielib.CookieJar()
 	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-	login_data = urllib.urlencode({'username' : username, 'user_password' : password, 'op' : 'login'})
+	#Grabbing login and pass from xbmc settings
+	username = __addon__.getSetting( "euTuser" )
+	password = __addon__.getSetting( "euTpass" )
+	login_data = urllib.urlencode({'uid' : username, 'pwd' : password})
 	#This is where you are logged in
-	resp = opener.open('http://www.legendasdivx.com/modules.php?name=Your_Account', login_data)
-	#Now you can go to member only pages
-	resp1 = opener.open('http://www.legendasdivx.com/modules.php?name=Your_Account&op=userinfo&bypass=1')
-	d = resp1.read()
-	#Now you download the subtitles
+	resp = opener.open('http://bt.eutorrents.me/index.php?page=login', login_data)
 	language = subtitles_list[pos][ "language_name" ]
-	content = opener.open('http://www.legendasdivx.com/modules.php?name=Downloads&d_op=getit&lid=' + id + '&username=' + username)
+	#Now you download the subtitles
+	content = opener.open('http://bt.eutorrents.me/download-subtitle.php?subid=' + id)
 
 	if content is not None:
 		header = content.info()['Content-Disposition'].split('filename')[1].split('.')[-1].strip("\"")
@@ -397,7 +326,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 				searchrarcount = len(searchrars)
 				if searchrarcount > 1:
 					for filerar in searchrars:
-						if filerar != os.path.join(tmp_sub_dir,local_tmp_file) and filerar != os.path.join(tmp_sub_dir,local_tmp_file):
+						if filerar != os.path.join(tmp_sub_dir,'ldivx.rar') and filerar != os.path.join(tmp_sub_dir,'ldivx.zip'):
 							xbmc.executebuiltin("XBMC.Extract(" + filerar + "," + tmp_sub_dir +")")
 				time.sleep(1)
 				searchsubs = recursive_glob(tmp_sub_dir, subext)
