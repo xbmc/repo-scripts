@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.advanced.wol"
        name="Advanced Wake On Lan"
-       version="1.1.3"
+       version="1.2.2"
        provider-name="mandark">
   <requires>
         <import addon="xbmc.python" version="2.0"/>
@@ -15,6 +15,9 @@
     <description lang="en">Sends a WOL magic packet to a remote computer using its ethernet MAC address and displays a notification if and when the computer is available.
 ------------------------
 The Addon can be launched manually from the Programs-section of XBMC (and thus added to your favourites, etc.), and can also be configured in the addon-settings to autostart with XBMC, thus waking up your remote computer when XBMC starts.
+There is also a setting that will also send a wake-up signal, if XBMC comes out from standby/sleep/suspend.
+------------------------
+When autostarted with XBMC you can also set the addon to update the video- and/or music-libraries automatically after a successful wake-up.
 ------------------------
 Additionally another command (e.g. activate a specific window) can be handed to the script as a parameter. It then launches that command either immediately or not until the remote computer is available. Behaviour can be set by a second parameter:
   - False: launch immediately (default)
@@ -31,7 +34,14 @@ You can also pass the Host/IP and MAC-Address of the Remote Computer to the scri
 
 This is useful, if you have more then one remote computer you want to wake independently.
 ------------------------
-In the advanced settings you can set the addon to continue sending WOL packets with a configurable delay. This is useful, when the remote computer or NAS is kept awake, as long as WOL-packets are received.</description>
+In the advanced settings you can also set the addon to continue sending WOL packets with a configurable delay.
+This is useful, when the remote computer or NAS is kept awake, as long as WOL-packets are received.
+Normally the continuous WOL-packets will also continue after XBMC has returned from standby/sleep/suspend, but there is an option to turn this behaviour off.
+------------------------
+If for any reason the check of a successful wake-up via ping is not possible or fails on your system, please note the following:
+  - XBMC must be run as Administrator on Windows / with root rights on Linux for ping-based host-up checks to work.
+  - If this is not possible or it still fails, you can disable ping-based host-up checks in the advanced addon-settings.
+    This allows you to set a fixed timespan, after which the addon just assumes, that the remote host is awake (to display success-notifies, launch other commands, etc.).</description>
     <disclaimer lang="en">Uses XBMC-builtin-command &quot;WakeOnLan&quot; to send the wakeup-packet, and the GNU-licensed &quot;python-ping&quot;-script to determine the status of the server. Please see the file &quot;ping.py&quot; for infos on the latter one.</disclaimer>
     <platform>all</platform>
   </extension>

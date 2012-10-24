@@ -177,7 +177,10 @@ def do_one(dest_addr, timeout):
     """
     Returns either the delay (in seconds) or none on timeout.
     """
-    icmp = socket.getprotobyname("icmp")
+    try:
+        icmp = socket.getprotobyname("icmp")
+    except socket.error, (errmsg):
+        icmp = 1
     try:
         my_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, icmp)
     except socket.error, (errno, msg):
