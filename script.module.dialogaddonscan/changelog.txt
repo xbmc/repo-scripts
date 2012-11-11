@@ -1,3 +1,9 @@
+1.1.2
+- fixed:  One progress bar forgotten for the Frodo fix.
+
+1.1.1
+- fixed:  Frodo fix in class AddonScan.Control because type(self.controlXML) is always xbmcgui.Control.
+
 1.1.0
  - added: 1080i window xml for glass skin
  

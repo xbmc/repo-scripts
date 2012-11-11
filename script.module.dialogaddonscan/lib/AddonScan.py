@@ -42,7 +42,11 @@ class Control:
         except: extra = {}
         option = {}
         x, y, w, h = self.getCoords( coords )
-        if type( self.controlXML ) == xbmcgui.ControlImage:
+        
+        # ATTENTION: in Frodo from Oct. 26th 2012 type(self.controlXML) is always xbmcgui.Control!!!
+        # Therefore the test for the ID of the control.
+        
+        if type( self.controlXML ) == xbmcgui.ControlImage or self.controlXML.getId() in [2001]:
             # http://passion-xbmc.org/gros_fichiers/XBMC%20Python%20Doc/xbmc_svn/xbmcgui.html#ControlImage
             texture = self.label
             valideOption = "colorKey, aspectRatio, colorDiffuse".split( ", " )
@@ -59,7 +63,7 @@ class Control:
             # ControlImage( x, y, width, height, filename[, colorKey, aspectRatio, colorDiffuse] )
             self.control = xbmcgui.ControlImage( x, y, w, h, texture, **option )
 
-        elif type( self.controlXML ) == xbmcgui.ControlLabel:
+        elif type( self.controlXML ) == xbmcgui.ControlLabel or self.controlXML.getId() in [1999, 2002, 2003, 2045]:
             # http://passion-xbmc.org/gros_fichiers/XBMC%20Python%20Doc/xbmc_svn/xbmcgui.html#ControlLabel
             valideOption = "font, textColor, disabledColor, alignment, hasPath, angle".split( ", " )
             for key, value in extra.items():
@@ -77,7 +81,7 @@ class Control:
             # ControlLabel(x, y, width, height, label[, font, textColor, disabledColor, alignment, hasPath, angle])
             self.control = xbmcgui.ControlLabel( x, y, w, h, "", **option )
 
-        elif type( self.controlXML ) == xbmcgui.ControlProgress:
+        elif type( self.controlXML ) == xbmcgui.ControlProgress or self.controlXML.getId() in [2004, 2005 ]:
             # http://passion-xbmc.org/gros_fichiers/XBMC%20Python%20Doc/xbmc_svn/xbmcgui.html#ControlProgress
             valideOption = "texturebg, textureleft, texturemid, textureright, textureoverlay".split( ", " )
             for key, value in kwargs.items():
@@ -87,7 +91,7 @@ class Control:
             # ControlProgress(x, y, width, height[, texturebg, textureleft, texturemid, textureright, textureoverlay])
             self.control = xbmcgui.ControlProgress( x, y, w, h, **option )
 
-        elif type( self.controlXML ) in [ xbmcgui.ControlButton, xbmcgui.ControlRadioButton ]:
+        elif type( self.controlXML ) in [ xbmcgui.ControlButton, xbmcgui.ControlRadioButton ] or self.controlXML.getId() == 2006:
             # http://passion-xbmc.org/gros_fichiers/XBMC%20Python%20Doc/xbmc_svn/xbmcgui.html#ControlRadioButton
             # ControlRadioButton(x, y, width, height, label[, focusTexture, noFocusTexture, textOffsetX, textOffsetY, alignment, font, textColor, disabledColor, angle, shadowColor, focusedColor, TextureRadioFocus, TextureRadioNoFocus])
             option = { "TextureRadioFocus": "", "TextureRadioNoFocus": "" }
@@ -169,11 +173,9 @@ class DialogAddonScanXML( xbmcgui.WindowXMLDialog ):
     def onInit( self ):
         self.controls = {}
         try:
-            #xbmcgui.lock()
             self.getControls()
         except:
             print_exc()
-        #xbmcgui.unlock()
         self.close()
 
     def getControls( self ):
@@ -238,8 +240,6 @@ class Window:
 
     def setupWindow( self ):
         error = 0
-        #try: xbmcgui.lock()
-        #except: pass
         # get the id for the current 'active' window as an integer.
         # http://wiki.xbmc.org/index.php?title=Window_IDs
         try: currentWindowId = xbmcgui.getCurrentWindowId()
@@ -265,11 +265,9 @@ class Window:
             error = 1
 
         self.window.setProperty( "DialogAddonScan.Hide", __settings__.getSetting( "hidedialog" ) )
-        #xbmcgui.unlock()
         if error:
             raise xbmcguiWindowError( "xbmcgui.Window(%s)" % repr( currentWindowId ) )
 
-        #self.canceled = ( self.window.getProperty( "DialogAddonScan.Cancel" ) == "true" )
         self.window.setProperty( "DialogAddonScan.IsAlive", "true" )
 
     def initialize( self ):
