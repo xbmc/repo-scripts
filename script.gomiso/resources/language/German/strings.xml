@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="30901">Generelle Einstellungen</string>
+	<string id="30913">Sendeoptionen</string>
+	
+	<string id="30905">Benutzername</string>
+	<string id="30906">Passwort</string>
+	<string id="30915">Sende nach XX%</string>
+	<string id="30916">Verbunden</string>
+	<string id="30917">Fehler beim Senden</string>
+	<string id="30918">Übertragen</string>
+	<string id="30919">Geschaut mit XBMC - Gomiso Addon</string>
+	<string id="30920">Zeige Sendenachricht an</string>
+	<string id="30921">Authentifizierung fehlgeschlagen</string>
+	<string id="30922">Autostart</string>
+	<string id="30923">Gomiso manuell aus autoexec.py löschen</string>
+	<string id="30924">Sendenachricht</string>
+	<string id="30925">Standard Sendenachricht</string>
+</strings>

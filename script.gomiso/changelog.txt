@@ -1,3 +1,8 @@
+Version 1.6.0
+				German translation file, thanks to Sascha Bürk
+				Solved a problem with movies submission
+Version 1.5.0
+				Tokens stored under username and not a generic "tokensfile"
 Version 1.4.1
 				Indentation problem stopping the script from starting
 Version 1.4.0
