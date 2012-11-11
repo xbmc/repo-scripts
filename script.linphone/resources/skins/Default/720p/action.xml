@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type='dialog' id="4001">
+    <defaultcontrol always="true">303</defaultcontrol>
+    <backgroundcolor>0xaaaaaaaa</backgroundcolor>
+    <allowoverlay>yes</allowoverlay>
+    <visible>true</visible>
+    <coordinates>
+        <posx>400</posx>
+        <posy>200</posy>
+    </coordinates>
+    <controls>
+        <control type="image" id="300">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>390</width>
+            <height>120</height>
+            <visible>true</visible>
+            <texture border="5" flipy="true" flipx="false">list_bg.png</texture>
+            <aspectratio>stretch</aspectratio>
+        </control>
+        <control type="label" id="311">
+            <posx>20</posx>
+            <posy>10</posy>
+            <width>350</width>
+            <visible>true</visible>
+            <label></label>
+            <font>font13</font>
+            <textcolor>FFFFFFFF</textcolor>
+        </control>
+        <control type="label" id="312">
+            <posx>20</posx>
+            <posy>40</posy>
+            <width>350</width>
+            <visible>true</visible>
+            <label></label>
+            <font>font13</font>
+            <textcolor>FFFFFFFF</textcolor>
+        </control>
+        <control type="button" id ="301">
+            <description>Close Window button</description>
+            <posx>326</posx>
+            <posy>0</posy>
+            <width>64</width>
+            <height>32</height>
+            <label>-</label>
+            <font>-</font>
+            <texturefocus>DialogCloseButton-focus.png</texturefocus>
+            <texturenofocus>DialogCloseButton.png</texturenofocus>
+            <visible></visible>
+            <ondown>303</ondown>
+        </control>
+        <control type="button" id ="303">
+            <posx>30</posx>
+            <posy>80</posy>
+            <width>100</width>
+            <height>30</height>
+            <label>Call</label>
+            <font>font14</font>
+            <align>center</align>
+            <texturefocus>button-focus.png</texturefocus>
+            <texturenofocus>button-nofocus.png</texturenofocus>
+            <onup>301</onup>
+            <onleft>301</onleft>
+            <onright>304</onright>
+            <visible></visible>
+        </control>
+        <control type="button" id ="304">
+            <posx>140</posx>
+            <posy>80</posy>
+            <width>110</width>
+            <height>30</height>
+            <label>Edit</label>
+            <font>font14</font>
+            <align>center</align>
+            <texturefocus>button-focus.png</texturefocus>
+            <texturenofocus>button-nofocus.png</texturenofocus>
+            <onup>301</onup>
+            <onleft>303</onleft>
+            <onright>305</onright>
+            <visible></visible>
+        </control>
+        <control type="button" id ="305">
+            <posx>250</posx>
+            <posy>80</posy>
+            <width>110</width>
+            <height>30</height>
+            <label>Delete</label>
+            <font>font14</font>
+            <align>center</align>
+            <texturefocus>button-focus.png</texturefocus>
+            <texturenofocus>button-nofocus.png</texturenofocus>
+            <onup>301</onup>
+            <onleft>304</onleft>
+            <onright>301</onright>
+            <visible></visible>
+        </control>
+    </controls>
+</window>
