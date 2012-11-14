@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="450">TV Guide</string>
+	<string id="32101">TV Show - Next Aired</string>
+	<string id="32102">Pegando Informação...</string>
+	<string id="32103">CANCELADO</string>
+	<string id="32104">Operação cancelada pelo Usuário.</string>
+	<string id="45000">Exibir</string>
+	<string id="45001">Tipo de Miniatura</string>
+	<string id="45002">Download baners (Requer Artwork Downloader)</string>
+	<string id="45003">Download logos (Requer Artwork Downloader)</string>
+	<string id="45004">Ligar background fanart</string>
+	<string id="45005">Ligar visualização de miniaturas 16:9</string>
+	<string id="45006">Download visualização de miniaturas 16:9 (Requer Artwork Downloader)</string>
+	<string id="45007">Reescanear os dados do guia de tv</string>
+</strings>

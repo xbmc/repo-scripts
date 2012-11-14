@@ -1,0 +1,109 @@
+v1.0.5
+- fix encoding issues
+
+v1.0.4
+- rename fanart property
+
+v1.0.3
+- update code to latest json-rpc changes
+
+v1.0.2
+- use json-rpc to play albums
+
+v1.0.1
+- use action.getId() instead of action
+
+v1.0.0
+- adjust code for frodo
+
+v0.2.7
+- ignore empty searchstrings
+
+v0.2.6
+- added hungarian language file
+
+v0.2.5
+- also search originaltitle for movies
+
+v0.2.4
+- add searchstring window property
+- allow dialogfullscreeninfo to be used
+
+v0.2.3
+- use label for seasons
+- sort by label instead of title
+
+v0.2.2
+- use title instead of label
+
+v0.2.1
+- fix unicode in path issue
+
+v0.2.0
+- add seperate context menu items for find seasons and find episodes
+- add seperate context menu items for find albums and find songs
+
+v0.1.9
+- add starrating
+
+v0.1.8
+- remove unused code
+
+v0.1.7
+- ignore possible encoding errors
+- improve videoresolution matching
+
+v0.1.6
+- check if streamdetails items exist before calling them
+- show artistname instead of recordlabel for musicvideos in gui
+
+v0.1.5
+- use simplejson instead of regex
+
+v0.1.4
+- clean plot and description
+
+v0.1.3
+- added option for skins to specify search categories
+
+v0.1.2
+- removed some debug logging
+- added Portuguese (Brazil) translation
+- added Italian translation
+
+v0.1.1
+- adjusted to latest json-rpc changes
+- fixed fetching of streamdetails
+
+v0.1.0
+- initial release
+
+v0.0.6 (beta 6)
+- fixed json query when compactoutput was set to false
+
+v0.0.5 (beta 5)
+- fixed hidden item showed up on info dialog
+
+v0.0.4 (beta 4)
+- speed up list creation
+- fixed issue with + in searchstring
+- fixed issue with brackets in searchstring
+- added key actions to close the context and info dialog
+- added writer info for movies
+- sort items by title
+- simplified code for searching episodes
+
+v0.0.3 (beta 3)
+- added mediaflags
+
+v0.0.2 (beta 2)
+- use less strict regex matching
+- don't use a window property to pass the searchstring
+- added 'find album' option to songs context menu
+- remove unneeded regex match in play_album code
+- use built-in python method to clear the playlist
+- simplified code to pass listitem to infodialog
+- made infodialog fully skinnable
+
+v0.0.1 (beta 1)
+- initial beta

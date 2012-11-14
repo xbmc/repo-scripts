@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="32000">Général</string>
+	<string id="32001">Recherche Films</string>
+	<string id="32002">Recherche Séries TV</string>
+	<string id="32003">Recherche Episodes</string>
+	<string id="32004">Recherche Clips Vidéos</string>
+	<string id="32005">Recherche Artistes</string>
+	<string id="32006">Recherche Albums</string>
+	<string id="32007">Recherche Chansons</string>
+	<string id="32101">Entrer Mot de Recherche</string>
+	<string id="32203">Parcourir album</string>
+	<string id="32204">Information saison</string>
+	<string id="32205">Lire bande annonce</string>
+	<string id="32206">Trouver album</string>
+	<string id="32207">Trouver tous les saisons</string>
+	<string id="32208">Trouver tous les épisodes</string>
+	<string id="32209">Trouver tous les albums</string>
+	<string id="32210">Trouver tous les chansons</string>
+	<string id="32299">NOUVELLE RECHERCHE</string>
+</strings>

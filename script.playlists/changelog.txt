@@ -1,0 +1,23 @@
+v1.0.0
+- bump version for frodo
+
+v0.1.2
+- fix encoding issues
+
+v 0.1.1
+- don't crash when patsubstitution is being used
+
+v 0.1.0
+- initial release
+
+v 0.0.4:
+- properly strip the extension
+
+v 0.0.3:
+- add support for .m3u files
+
+v 0.0.2:
+- properly handle unicode data
+
+v 0.0.1:
+- initial beta

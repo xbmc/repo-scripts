@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="32001">Jouer le thème en boucle</string>
+	<string id="32002">baisser le volume pour la lecture</string>
+	<string id="32003">Utiliser un partage SMB protégé</string>	
+	<string id="32004">Nom d'utilisateur:</string>
+	<string id="32005">Mot de passe:</string>
+</strings>

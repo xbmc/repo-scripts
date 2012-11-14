@@ -1,0 +1,177 @@
+v3.0.0
+- bump version for frodo
+
+v2.0.9
+- fix encoding issues (reprise)
+
+v2.0.8
+- fix encoding issues
+
+v2.0.7
+- download exact matches automatically (bypass the select dialog)
+
+v2.0.6
+- made fade optional
+
+v2.0.5
+- fix unicodedecode error when downloading theme
+
+v2.0.4
+- fix unicodedecode errors
+- fix progressdialog wouldn't close at the end of the download
+
+v2.0.3
+- fade tunes when navigating back to the tv show list
+
+v2.0.2
+- catch unicode encode errors
+- add portuguese translation
+- add spanish translation
+
+v2.0.1
+- add scriptname to logging
+- fix unicode encode errors
+
+v2.0.0
+- add frost to credits
+
+v1.0.18
+- fix path creation when pathsubstitution is used
+
+v1.0.17
+- use title instead of label
+
+v1.0.16
+- fix unicode in path issue
+- use json if python 2.7 is available
+
+v1.0.15
+- fix browsing smb shares in addon settings
+
+v1.0.14
+- ignore possible encoding errors
+
+v1.0.13
+- clean up addon.xml
+
+v1.0.12
+- fix unicode issue
+
+v1.0.11
+- use simplejson
+
+v1.0.10:
+- replace illegal characters in filename
+
+v1.0.9:
+- added option for custom path
+- make it a program addon
+
+v1.0.8:
+- adjusted to latest json-rpc changes
+
+v1.0.7:
+- add support for rar files
+- fixed json query when compactoutput was set to false
+
+v1.0.6:
+- do not use the xbmc temp dir
+
+v1.0.5:
+- code cleanup
+
+v1.0.4:
+- fixed unicode tvshow name
+
+v1.0.3:
+- localize strings
+
+v1.0.2:
+- use json-rpc instead of http-api
+
+v1.0.1:
+- fixed copy theme to smb share
+
+v1.0.0:
+- updated code for xbmc eden
+
+v0.9.0:
+- added support for dvd iso folders (thanks to anarchintosh)
+
+v0.8.1:
+- localized settings.
+
+v0.8.0:
+- added solo mode, use this line with a button on dialogvideoinfo for tvshow:
+<onclick>XBMC.RunScript(script.tvtunes,mode=solo&path=$INFO[ListItem.FilenameAndPath]&name=$INFO[ListItem.TVShowTitle])</onclick>
+probably won't work on episode level.
+
+v0.7.3
+- prevent theme script to be activated when browsing plugins
+
+v0.7.2
+- added Spanish translation. 
+
+v0.7.1
+- corrected float conversion error between linux and windows.
+
+v0.7.0
+- added support for protected smb share 'activate in settings'.
+
+v0.6.7:
+- fix theme playing on recently added episodes
+- fix error on start with volume parameter
+
+v0.6.6:
+- fix the video stopped by script exiting.
+
+v0.6.5:
+- changed log volume display (all in %)
+- changed container and playing conditions
+- log steps
+- now compense volume during theme playing (when going back to original volume, your volume change will be take in count)
+- fixed loop
+
+v0.6.0:
+- change volume setting
+- rewrite code
+- changed thread control
+- corrections on volume control, no only used when theme is playing
+- control if current playing is a theme for stop condtion
+- do not interrupt music playing if user is listen to music.
+- fixed theme not playinf when re enter the same show
+- fixed theme downloader was not playing full theme
+
+v0.5.3:
+- added sound setting decrease from 0 to 60 in setting, automatically raising when script exit.
+- moved running control into default.py
+
+v0.5.2:
+- fixed problem for flatten tvshow option
+- change the visible condition to : !"Window(10025).Property(TvTunesIsAlive)" it's "true" when script is running
+
+v0.5.1:
+- moved loop in addon setting.
+
+v0.5.0:
+- added backend to play theme when entering a show. this will play theme.mp3 in your tv show folder
+- Skinners informations:
+will automatically launch when browsing videolibrary, automaticaly end when playing video or exiting video library
+add this button in MyVideoNav.xml:
+
+	    <control type="button" id="9999">
+            <description>trigger</description>
+            <onfocus>XBMC.RunScript(script.TvTunes,backend=True&amploop=False)</onfocus>
+            <onfocus>SetFocus(50)</onfocus>
+            <texturenofocus>-</texturenofocus>
+            <texturefocus>-</texturefocus>
+        </control>	
+        
+change the defaultcontrol to 9999 (or id you want for this control) and put your previous defaultcontrol in SefFocus()
+loop can be True or False if you want or not to repeat the theme in loop while browsing in the tv show.
+
+you can also use this visible condition to prevent activating visualisation or music baground fanart:
+        !SubString(Window(10025).Property(TvTunesIsAlive),True)
+        
+v0.1.0:
+-initial release

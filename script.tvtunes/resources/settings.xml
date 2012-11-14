@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32991">
+		<setting id="loop" type="bool" label="32001" default="false"/>
+		<setting id="downvolume" label="32002" type="slider" default="0" range="0,1,60" format="%1.f db" />
+		<setting id="fade" type="bool" label="32008" default="false"/>
+	</category>
+	<category label="32992">
+		<setting id="exact_match" type="bool" label="32009" default="true"/>
+	</category>
+	<category label="32993">
+		<setting id="smb_share" type="bool" label="32003" default="false"/>
+		<setting id="smb_login" enable="eq(-1,true)" type="text" label="32004" default="" />
+		<setting id="smb_psw" enable="eq(-2,true)" type="text" option="hidden" label="32005" default="" />
+		<setting id="custom_path_enable" type="bool" label="32006" default="false"/>
+		<setting id="custom_path" enable="eq(-1,true)" type="folder" source="files" label="32007" default="" />
+	</category>
+</settings>
