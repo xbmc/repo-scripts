@@ -39,7 +39,8 @@
   <string id="401">Festes Hintergrundlicht</string>
   <string id="402">Rot</string>
   <string id="403">Gruen</string>
-  <string id="404">Blau</string>  
+  <string id="404">Blau</string>
+  <string id="405">Waehrend Bildschirmschoner Licht ausschalten</string>
 
   <!--Notifications-->                                                                                                                                                                                           
   <string id="500">Fehler beim Verbinden zu boblightd!</string>
@@ -52,4 +53,5 @@
   <string id="507">Dieses Addon kann auf Ihrem Betriebssystem nicht</string>
   <string id="508">ausgefuehrt werden! (Das ctypes Modul fehlt)</string>
   <string id="509">Soll versucht werden diese automatisch herunterzuladen?</string>
+  <string id="510">Fehler beim Herunterladen. Dateisystemberechtigungen pruefen.</string>
 </strings>

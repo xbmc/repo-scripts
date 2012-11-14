@@ -40,5 +40,6 @@
     <setting id="other_static_red" type="slider" subsetting="true" enable="eq(-1,true)" label="402" option="int" default="128" range="0,255" />
     <setting id="other_static_green" type="slider" subsetting="true" enable="eq(-2,true)" label="403" option="int" default="128" range="0,255" />
     <setting id="other_static_blue" type="slider" subsetting="true" enable="eq(-3,true)" label="404" option="int" default="128" range="0,255" />
+    <setting id="other_static_onscreensaver" type="bool" label="405" default="false" />
   </category>
 </settings>

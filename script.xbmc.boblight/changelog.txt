@@ -1,3 +1,10 @@
+2.0.1
+- [fix] close download dialog once we finished/failed 
+- [fix] - catch exceptions during libboblight download and add a toast for suggesting a check of the fs permissions
+
+2.0.0
+- compleate rewrite of the addon, it uses xbmc.Monitor class to monitor for changes in addon settings, player start/stop and others
+
 1.0.3
 - fixed the lib downloading code on win32
 

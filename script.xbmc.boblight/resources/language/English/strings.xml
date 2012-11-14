@@ -40,6 +40,7 @@
   <string id="402">Red</string>
   <string id="403">Green</string>
   <string id="404">Blue</string>
+  <string id="405">Disable when Screen Saver is on</string>
   
   <!--Notifications-->
   <string id="500">Failed to connect to boblightd!</string>
@@ -52,6 +53,7 @@
   <string id="507">This addon can't be run on that</string>
   <string id="508">operating system! (missing ctypes module)</string>
   <string id="509">Should the addon try to download it for you?</string>
+  <string id="510">Error downloading. Check filesystem permissions.</string>
 </strings>
 
 
