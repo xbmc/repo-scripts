@@ -1,0 +1,37 @@
+v0.0.14
+- Always resume episodes and movies
+
+v0.0.10
+- Drop old artwork labels for tvshows and movies
+- Add update label for recent items
+- Add non native artwork support. Needs Artwork Downloader 12.0.2 or up
+
+v0.0.9
+- Added streamdetails for all video related items
+- use foo.Art(bar) for artwork related
+
+v0.0.7
+- Prefer new database 'Art' field over old 'thumb' and use local files as backup
+- Add Resolution label for movies
+
+v0.0.6
+- Fixes calling recent episode multiple times
+
+v0.0.5
+- Add missing trailer property
+- Fixed some wrong labels
+- Added Recent Items
+
+v0.0.4
+- Fix missing import
+- Fix typo in clearproperty
+- Add SetProperty(SkinWidgets_RandomItems_Update,true) to trigger update on all randomitems
+
+v0.0.3
+- Fix wrong recommeded movies JSON-RPC request
+
+v0.0.2
+- Add option for randomitems to use the timer or on database update
+
+v0.0.1
+- Initial version that bring Watchlist and RandomItems in one service script
