@@ -1,0 +1,5 @@
+1.0.1
+- added gnome-shell support
+1.0.0
+- initial commit
+ 

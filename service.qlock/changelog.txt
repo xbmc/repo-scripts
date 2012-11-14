@@ -1,0 +1,34 @@
+0.5.3
+- Eden release
+
+0.1.2
+-added: Spanish layout, thx to xbmcero
+
+0.1.1
+-fixed: Swedish layout, needed changes to default.py to work properly
+-fixed: German layout
+
+0.1.0
+- added: Swedish Layout, thx filigran
+
+0.0.9
+-fixed: spelling in English layout
+
+0.0.8
+-fixed: two o'clock in Serbian
+
+0.0.7
+- added: Croatian layout, thanks Zrino
+
+0.0.6
+- added: German layout, thanks donabi
+- added: fix for german layout at one o'clock
+
+0.0.5
+- added: French layout, thanks to humferier
+- added: changelog.txt
+
+0.0.4
+- initial commit
+- Thanks to donabi for the idea, Jezz_X for making initial code for Confluence, lcapriotti for Italian layout,  ronie for support on Transparency! and Dutch layout
+ 
