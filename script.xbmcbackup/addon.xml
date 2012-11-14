@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xbmcbackup"
+    name="XBMC Backup" version="0.1.6" provider-name="robweber">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py"> 
+     <provides>executable</provides> 
+  </extension> 
+  <extension point="xbmc.service" library="scheduler.py" start="startup" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="fr">Sauvegarder et restaurer vos bases de données XBMC et vos fichiers de configuration en cas de crash ou de fichiers corrompus.</summary>
+    <summary lang="de">Die XBMC Datenbank sichern und bei Dateiverlust oder Beschädigung wiederherstellen.</summary>
+    <summary lang="en">Backup and restore your XBMC database and configuration files in the event of a crash or file corruption.</summary>
+	<description lang="fr">Avez-vous déjà perdu votre configuration XBMC et espéré avoir fait une sauvegarde ? Maintenant, vous pouvez le faire en un simple click. Vous pouvez exporter vos bases de données, playlists, miniatures, addons et autres fichiers de configuration vers n'importe quel endroit accessible depuis XBMC.</description>
+    <description lang="de">Jemals deine XBMC Konfiguration zerschossen und dir dann gewünscht, dass ein Backup existiert? Jetzt kannst du eine Sicherung mit nur einem Klick erzeugen. Du kannst deine Datenbanen, Playlisten, Thumbnails, Addons und andere Details zu einem Ort deiner Wahl sichern.</description>
+    <description lang="en">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC. Backups can be run on demand or via a scheduler. </description>
+    <platform>all</platform>
+    <language></language>
+  </extension>
+</addon>

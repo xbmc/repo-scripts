@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30100">
+      <setting id="Location1" label="30110" type="action" action="RunScript($ID,Location1)" default=""/>
+      <setting id="Location2" label="30111" type="action" action="RunScript($ID,Location2)" default=""/>
+      <setting id="Location3" label="30112" type="action" action="RunScript($ID,Location3)" default=""/>
+   </category>
+</settings>

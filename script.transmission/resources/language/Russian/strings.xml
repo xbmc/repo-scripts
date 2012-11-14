@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="0">Transmission</string>
+    
+    <string id="1">Подключение к Transmission</string>
+    <string id="2">Ошибка Transmission</string>
+    
+    <!-- Buttons -->
+    <string id="101">Добавить</string>
+    <string id="102">Удалить</string>
+    <string id="103">Остановить</string>
+    <string id="104">Запустить</string>
+    <string id="105">Остановить все</string>
+    <string id="106">Запустить все</string>
+    <string id="107">Выход</string>
+    
+    <!-- Settings -->
+    <string id="1000">Настройки RPC</string>
+    <string id="1001">Хост</string>
+    <string id="1002">Порт</string>
+    <string id="1003">Пользователь</string>
+    <string id="1004">Пароль</string>
+</strings>

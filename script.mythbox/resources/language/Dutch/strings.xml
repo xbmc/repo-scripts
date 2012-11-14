@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<strings>
+  <string id="0">Myth TV</string>
+  <string id="1">Kijk TV</string>
+  <string id="2">Bekijk opnames (Dit scherm wordt herschreven)</string>
+  <string id="3">TV Gids</string>
+  <string id="4">Nieuwe opnames</string>
+  <string id="5">Status</string>
+  <string id="6">Instellingen</string>
+  <string id="7">Primaire host IP/Naam</string>
+  <string id="8">Poort</string>
+  <string id="9">Status poort</string>
+  <string id="10">Protocol versie</string>
+  <string id="11">Database naam</string>
+  <string id="12">Gebruiker</string>
+  <string id="13">Wachtwoord</string>
+  <string id="14">Opname mappen</string>
+  <string id="16">Pad locale kopie</string> <!-- delete -->
+  <string id="17">Bewaren</string>
+  <string id="18">Myth TV - instellingen</string>
+  <string id="19">Myth TV - MySQL instellingen</string>
+  <string id="20">Myth TV - Pad instellingen</string>
+  <string id="21">Myth TV</string>
+  <string id="22">MySQL</string>
+  <string id="23">Paden</string>
+  <string id="24">Test instellingen..</string>
+  <string id="25">Instellingen succesvol bewaard</string>
+  
+  <string id="29">Instellingen zijn veranderd. Deze veranderingen opheffen?</string>
+  <string id="30">Foutieve integer waarde gespecificeerd</string>
+  <string id="31">Kan geen connectie met primaire MythTV backend maken</string>
+  <string id="32">Kan geen connectie met MySQL database maken</string>
+  <string id="33">Instellingen succesvol getest</string>
+  <string id="34">Geen '%s' label van instellingen</string>
+  <string id="35">Instellingen bestand niet gevonden</string>
+  <string id="36">Instellingen bestand verouderd - met standaard samengevoegd</string>
+  <string id="37">MySQL host IP/Naam</string>
+  <string id="38">Sorteer op: Datum oplopend</string>
+  <string id="39">Sorteer op: Titel oplopend</string>
+  <string id="40">Titel</string>
+  <string id="41">Kanaal</string>
+  <string id="42">Originele uitzending</string>
+  <string id="43">Uitzend datum</string>
+  <string id="44">Omschrijving</string>
+  
+  <!-- Strings -->
+  <string id="26">Informatie</string>
+  <string id="27">Fout</string>
+  <string id="28">Bevestiging</string>
+  <string id="45">Onbekend</string>
+  <string id="65">Bent u er zeker van dat u deze opname wilt verwijderen?</string>
+  <string id="51">Bent u er zeker van dat u een heropname wilt?</string>
+  
+  
+  
+  <string id="46">Niet beschikbaar</string>
+  <string id="47">Opname details</string>
+  <string id="48">Afspelen</string>
+  <string id="49">Bewaren</string>
+  <string id="50">Verlopen</string>
+  
+  <string id="52">Verwijder</string>
+  <string id="53">Verversen</string>
+  <string id="54">Kan opname '%s' op '%s' niet vinden</string>
+  <string id="55">Live TV Buffer Grootte (KB)</string>
+  <string id="56">Categorie</string>
+  <string id="57">Autoverloop</string>
+  <string id="58">Ja</string>
+  <string id="59">Nee</string>
+  <string id="60">Bestand Grootte</string>
+  <string id="61">KB</string>
+  <string id="62">MB</string>
+  <string id="63">GB</string>
+  <string id="64">bytes</string>
+  
+  <string id="66">Bestandskopie klaar</string>
+  <string id="67">Bestandskopie niet gelukt</string>
+  <string id="68">Programma naar de lokale hard disk kopieëren?</string>
+  <string id="69">Sorteer op: Datum aflopend</string>
+  <string id="70">Sorteer op: Titel aflopend</string>
+  <string id="71">Tuner Status</string>
+  <string id="72">Plannen</string>
+  <string id="73">Machine informatie</string>
+  <string id="74">Geef de FQDN of IP address van uw primare MythTV server</string>
+  <string id="75">Niet in staat de informatie vanuit de server te begrijpen</string>
+  <string id="76">Vrije ruimte</string>
+  <string id="77">Totale ruimte</string>
+  <string id="78">In geberuik</string>
+  <string id="79">1 minuut</string>
+  <string id="80">5 minuten</string>
+  <string id="81">15 minuten</string>
+  <string id="82">Disk ruimte</string>
+  <string id="83">Gemiddelde belasting</string>
+  <string id="84">De volgende %d programmas zijn ingeplanned voor opname</string>
+  <string id="85">Kan geen screenshot van de backend ontvangen</string>
+  <string id="86">Uw instellingen zijn verouderd. Gaarne nakijken</string>
+  <string id="87">Notities</string>
+  
+  
+  <!-- enums.RecordingStatus -->
+  <string id="88">Programma was opgenomen maar voortijdig verwijderd</string>
+  <string id="89">Programma was opgenomen maar voortijdig gestopt</string>
+  <string id="90">Programma was opgenomen</string>
+  <string id="91">Programma wordt opgenomen</string>
+  <string id="92">Programma zal worden opgenomen</string>
+  <string id="93">Status van dit programma is onbekend</string>
+  <string id="94">Programma is handmtig op niet opnemen gezet</string>
+  <string id="95">Aflevering was al eerder opgenomen</string>
+  <string id="96">Aflevering was al eerder opgenmen en is nog beschikbaar</string>
+  <string id="97">Aflevering wordt op een eerder tijdstip opgenomen</string>
+  <string id="98">Maximaal aantal opnamens bereikt</string>
+  <string id="99">Geplanned voor opname maar handmatig opgeheven</string>
+  <string id="100">Een programma met een hogere prioriteit zal worden opgenomen</string>
+  <string id="101">Aflevering zal op een latere tijd worden opgenomen</string>
+  <string id="102">Aflevering is een herhaling en zal niet opgenomen worden</string>
+  <string id="103">Dit is gedekt door een andere geplande opname voor hetzelfde programma</string>
+  <string id="104">Onvoldoende diskruimte beschikbaar om dit programma op te nemen</string>
+  <string id="105">Tuner was bezet ten tijde van deze opname</string>
+  
+  
+  <string id="106">Wil je automatisch reclames overslaan?</string>
+  <string id="107">TV Gids (dit scherm wordt vernieuwd)</string>
+  <string id="108">Geen data</string>
+  <string id="109">Protocol versie fout: %s</string>
+  <string id="110">Opname schema's</string>
+  
+  <!-- enums.ScheduleType -->
+  <string id="111">Eenmalig</string>
+  <string id="112">Dagelijks</string>
+  <string id="113">Kanaal</string>
+  <string id="114">Altijd</string>
+  <string id="115">Wekelijks</string>
+  <string id="116">Vind één</string>
+  <string id="117">Overschrijven</string>
+  <string id="118">Niet opnemen</string>
+  
+  
+  <string id="119">Vind dagelijks</string>
+  <string id="120">Vind wekelijks</string>
+  <string id="121">Opname schema details - "%s"</string>
+  <string id="122">Opname schema bestaat niet meer</string>
+  <string id="123">Type</string>
+  <string id="124">Profiel</string>
+  <string id="125">Groep</string>
+  <string id="126">Prioriteit</string>
+  <string id="127">Duplicaten in</string>
+  <string id="128">Controle methode</string>
+  <string id="129">Markeer reclameblokken</string>
+  <string id="130">Auto vervallen</string>
+  <string id="131">Nieuwe opnemen, oude vervallen</string>
+  <string id="132">Aantal te bewaren</string>
+  <string id="133">Start offset</string>
+  <string id="134">Einde offset</string>
+  
+  <!-- enums.ScheduleType.long_translations -->
+  <string id="135">Alleen deze uitzending</string>
+  <string id="136">Dagelijks op deze tijd</string>
+  <string id="137">Op elk tijdstip op dit kanaal</string>
+  <string id="138">Op elk tijdstip en elk kanaal</string>
+  <string id="139">Wekelijks op dit tijdstip</string>
+  <string id="140">Vind één uitzending</string>
+  <string id="141">(Uitzondering) Neem deze specifieke uitzending op</string>
+  <string id="142">(Uitzondering) Neem deze specifieke uitzending niet op</string>
+  <string id="143">Eén keer per dag</string>
+  <string id="144">Eén keer per week</string>
+  
+  <!-- enums.CheckForDupesUsing -->
+  <string id="145">Geen</string>
+  <string id="146">Ondertitel</string>
+  <string id="147">Omschrijving</string>
+  <string id="148">Ondertitel en omschrijving</string>
+  <string id="200">Eerst ondertitel, dan omschrijving</string>
+  
+  <!-- enums.CheckForDupesIn -->
+  <string id="149">Huidige opnames</string>
+  <string id="150">Vorige opnames</string>
+  <string id="153">Alle opnames</string>
+  
+  <!-- enums.EpisodeFilter -->
+  <string id="201">Geen</string>
+  <string id="152">Alleen nieuwe afleveringen</string>
+  <string id="151">Sluit herhalingen uit</string>
+  <string id="202">Sluit algemene afleveringen uit</string>
+  <string id="203">Sluit herhalingen en algemene uitzendingen uit</string>      
+
+  <!-- enums.JobType -->
+  <string id="250">Geen</string>
+  <string id="251">Systeem</string>
+  <string id="252">Transcodeer</string>
+  <string id="253">Reclame markering</string>
+  <string id="254">Gebruikers taak</string>
+  <string id="255">Gebruikers taak 1</string>
+  <string id="256">Gebruikers taak 2</string>
+  <string id="257">Gebruikers taak 3</string>
+  <string id="258">Gebruikers taak 4</string>
+
+  <!-- enums.JobStatus -->
+  <string id="260">Onbekend</string>
+  <string id="261">In wachtrij</string>
+  <string id="262">In afwachting</string>
+  <string id="263">Startend</string>
+  <string id="264">Loopt</string>
+  <string id="265">Stopt</string>
+  <string id="266">Gepauseerd</string>
+  <string id="267">Bezig opnieuw te proberen</string>
+  <string id="268">Fout aan het gaan</string>
+  <string id="269">Bezig met opheffen</string>
+  <string id="270">Klaar (onjuiste status!)</string>
+  <string id="271">Gereed</string>
+  <string id="272">Opgeheven</string>
+  <string id="273">Foutief verlopen</string>
+  <string id="274">Gestopt</string>
+  
+  
+  <string id="154">Waarde moet van &gt;= tot %d zijn</string>
+  <string id="155">Waarde moet van &lt;= tot %d zijn</string>
+  <string id="156">Selecteer een waarde</string>
+  <string id="157">Opname permanent verwijderen?</string>
+  <string id="158">Schema aanpassingen succesvol opgeslagen</string>
+  <string id="159">Opname Groep</string>
+  <string id="160">Programma Titel</string>
+  <string id="161">Afl.</string>
+  <string id="162">Wacht op Live TV Tuning</string>
+  <string id="163">Start pagina ID</string>
+  <string id="164">DVDPlayer voor Live TV</string>
+  <string id="165">DVDPlayer voor opnames</string>
+  <string id="166">Neem Live TV op</string>
+  <string id="167">Neem Live TV lengte op</string>
+  <string id="168">Heropnemen</string>
+  <string id="169">Afspelen en overslaan</string>
+  
+  
+  <!--  Common -->
+  <string id="210">Verversen</string>
+  <string id="211">[B]Datum[/B]</string>
+  <string id="212">[B]Titel[/B]</string>
+
+  <!-- Screen Titles -->
+  <string id="295">[B]Instellingen[/B]</string>
+
+  
+  <!-- Home Screen -->
+  <string id="300">Opnames</string>
+  <string id="301">Live TV</string>
+  <string id="302">TV Gids</string>
+  <string id="303">Opname schema's</string>              
+  <string id="304">Geplande opnames</string>
+  <string id="305">Instellingen</string>
+  
+  <string id="310">[B]Tuner[/B]</string>
+  <string id="311">[B]Status[/B]</string>
+  <string id="312">[B]Taak[/B]</string>
+
+
+  <!-- Watch Recordings Screen -->
+  <string id="500">[B]Opnames[/B]</string>
+
+
+  <!-- Recording Details Screen -->
+  <string id="600">[B]Opname Details[/B]</string>
+  <string id="601">Afspelen</string>
+  <string id="602">Afspelen en overslaan</string>
+  <string id="603">Verwijderen</string>
+  <string id="604">Heropnemen</string>
+  <string id="605">Wijzig Schema</string>
+  <string id="606">Begin van de wachtrij</string>
+  
+  <string id="610">Titel</string>
+  <string id="611">Omschrijving</string>
+  <string id="612">Uitzend datum</string>
+  <string id="613">Kanaal</string>
+  <string id="614">Categorie</string>
+  <string id="615">Originele uitzenddatum</string>
+  <string id="616">Grootte</string>
+  <string id="617">Reclame onderbrekingen</string>
+  
+  <string id="630">Taak niet gevonden</string>
+  <string id="631">Bezig met laden...</string>
+  <string id="632">Geen</string>
+  <string id="633">In rij %d van %d geplaatst</string>
+  
+  <!-- Watch TV Screen -->
+  <string id="700">[B]Live TV[/B]</string>
+
+  <!-- Player -->
+  <string id="750">Hervatten op %s</string>
+  <string id="751">Reclameblok %s aan het overslaan</string>
+  <string id="752">Door reclameblok %s aan het spoelen</string>
+
+  <!-- TV Guide Screen -->
+  <string id="800">[B]TV Gids[/B]</string>
+
+
+  <!-- Recordings Screen -->
+  <string id="850">Datum</string>
+  <string id="851">Titel</string>
+  <string id="852">Originele uizenddatum</string>
+  <string id="853">Sorteer</string>  
+  
+  <!-- Recording Schedules Screen -->
+  <string id="900">[B]Opname schema's[/B]</string>
+  <string id="901">[B]Titel[/B]</string>
+  <string id="902">[B]Type[/B]</string>
+  <string id="903">[B]Prioriteit[/B]</string>
+  <string id="904">[B]Kanaal[/B]</string>
+    
+  
+  <!-- Upcoming Recording Screen -->
+  <string id="1000">[B]Geplande opnames[/B]</string>
+  <string id="1001">[B]Datum[/B]</string>
+  <string id="1002">[B]Titel[/B]</string>
+  <string id="1003">[B]Start Tijd[/B]</string>
+  <string id="1004">[B]Kanaal[/B]</string>
+  <string id="1005">[B]Tuner[/B]</string>
+  
+  <string id='1010'>Programma heeft geen opname schema</string>
+  <string id='1011'>Opname schema %d niet gevonden</string>
+  <string id='1012'>Vandaag</string>
+  <string id='1013'>Morgen</string>  
+
+  <!-- Create/Edit schedule dialog -->
+  <string id="1100">Nieuw opname schema</string>
+  <string id="1101">Wijzig opname schema</string>
+  
+  <string id="1102">Opnemen</string>
+  <string id="1103">Prioriteit</string>
+  <string id="1104">Controleer op duplicaten middels</string>
+  <string id="1105">Controleer op duplicaten in</string>
+  <string id="1106">Afleveringen filter</string>
+  <string id="1107">Auto-markeer reclame</string>
+  <string id="1108">Auto-vervallen</string>
+  <string id="1109">Auto-transcoderen</string>
+  <string id="1110">Bewaar ten hoogste</string>
+  <string id="1111">Neem nieuwe op en laat oude verlopen</string>
+  <string id="1112">Start opname</string>
+  <string id="1113">Stop opname</string>
+  <string id="1114">Schema geactiveerd</string>
+  <string id="1115">%d aflevering(en)</string>
+  <string id="1116">Alle afleveringen</string>
+  <string id="1117">%d minu(u)t(en) eerder</string>
+  <string id="1118">Op tijd</string>
+  <string id="1119">%d minu(u)t(en) later</string>  
+  <string id="1123">Waarde moet tussen %d en %d zijn</string>
+  
+  <string id="1120">Bewaren</string>
+  <string id="1121">Opheffen</string>
+  <string id="1122">Verwijder</string>
+  
+  
+  <!-- Settings Screen -->
+  <string id="400">MySQL DB</string>
+  <string id="401">Hostnaam</string>
+  <string id="402">Poort</string>
+  <string id="403">Database naam</string>
+  <string id="404">Gebruiker</string>
+  <string id="405">Wachtwoord</string>
+  <string id="406">Standaard poort is 3306</string>
+  <string id="407">Standaard database naam is mythconverg</string>
+  <string id="408">Standaard gebruiker is mythtv</string>
+            
+  <string id="410">MythTV</string>
+  <string id="411">Master backend hostnaam</string>
+  <string id="412">Master backend poort</string>
+  <string id="413">Lokale opname map(pen)</string>
+
+  <string id="415">Verwijderingen bevestigen</string>
+  <string id="416">Locatie MythTV opnames op het lokale systeem, eventueel via gekoppelde storage groepen</string>
+  <string id="417">Meerdere mappen scheiden met een ":" op Linux/Mac en een ";" op Windows</string>
+  <string id="419">Aggresieve caching aanzetten</string>
+  <string id="427">Cached data aggresiever maar geeft meer load op uw backend en gebruikt meer bandbreedte</string>
+  <string id="428">Niet aanzetten als u met uw MythTV backend bent verbonden middels een wireless verbinding</string>
+  
+    
+  <string id="420">Fan art</string>
+  <string id="421">Gebruik TVDB.com</string>
+  <string id="422">Gebruik TheMovieDB.org</string>
+  <string id="423">Gebruik IMDB.com</string>
+  <string id="424">Gebruik Google Image Search</string>
+  <string id="425">Schoon cache</string>
+  <string id="426">Cache successvol geschoond</string>
+  <string id="429">Gebruik TVRage.com</string>
+    
+  <string id="430">Test instellingen..</string>
+  <string id="431">Instellingen OK</string>
+
+  <string id="440">Geavanceerd</string>
+  <string id="441">Gebruik lirc aanpassing voor herhaalde toetsaanslagen</string>
+  <string id="442">Aanzetten debug logging</string>
+  <string id="443">Twitter feeds</string>
+  <string id="444">Als u een afstandsbediening met lirc gebruikt en soms 2 toetsaanslagen in plaats van 1 ontvangt</string>
+  <string id="445">activeer dan deze aanpassing om de extra aanslag te compenseren</string>
+  <string id="446">Kommagescheiden lijst van publieke twitter namen. Bijv: cnnbrk, woot, thelittleidiot, wired, current...</string> 
+  
+  <string id="450">XBMC instellingen..</string>
+    
+  <string id="460">Over</string>
+
+  
+</strings>

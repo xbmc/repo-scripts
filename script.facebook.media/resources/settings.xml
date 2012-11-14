@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- General -->
+  <category label="30000">
+    <setting label="30052" type="slider" id="photo_limit" default="200" range="30,10,500" option="int"/>
+    <setting label="30053" type="slider" id="slideshow_interval" default="5" range="1,1,60" option="int"/>
+    <setting type="sep" />
+    <setting id="disable_auto_login" type="bool" label="30059" default="false" />
+    <setting id="debug" type="bool" label="30061" default="false" />
+  </category>
+</settings>

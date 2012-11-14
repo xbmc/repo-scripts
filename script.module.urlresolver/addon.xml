@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.urlresolver" 
+	     name="urlresolver" 
+	     version="1.0.3" 
+	     provider-name="XBMCHub.com">
+  <requires>
+    <import addon="xbmc.python" version="2.0" />
+    <import addon="script.module.t0mm0.common" version="1.0.0"/>
+    <import addon="plugin.video.youtube"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Resolve common video host URL's to be playable in XBMC.</summary>
+    <description lang="en">Resolve common video host URL's to be playable in XBMC, simplify addon development of video plugins requiring multi video hosts.</description>    
+  </extension>
+</addon>

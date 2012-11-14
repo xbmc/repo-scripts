@@ -1,0 +1,1116 @@
+<window>
+  <id>3001</id>
+  <defaultcontrol>251</defaultcontrol>
+  <type>window</type>
+  <coordinates>
+    <system>1</system>
+    <posx>0</posx>
+    <posy>0</posy>
+  </coordinates>
+
+  <controls>
+
+    <!-- ============================================= -->
+    <!--   S C R E E N       B A C K G R O U N D       -->          
+    <!-- ============================================= -->              
+  
+    <!-- Copy of CommonBackground -->
+    <control type="image">
+      <description>background image</description>
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>1280</width>
+      <height>720</height>
+      <texture>bg.png</texture>
+    </control>
+
+    <control type="group">
+        <description>Content Group</description>
+        <!-- Copy Window_OpenClose_Right_Panel_Animation -->
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+        <animation effect="slide" start="1030,0" end="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="slide" end="1030,0" start="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+
+        <!-- ============================================= -->
+        <!--   C O N T E N T     B A C K G R O U N D       -->          
+        <!-- ============================================= -->              
+      
+        <!-- Copy of ContentPanel -->
+        <control type="image">
+            <posx>265</posx>
+            <posy>100</posy>
+            <width>1015</width>
+            <height>580</height>
+            <texture border="50,0,0,45">vpanel1.png</texture>
+        </control>
+
+        <control type="grouplist" id="9001">
+            <description>MySQL Settings</description>
+            <posx>300</posx>
+            <posy>135</posy>
+            <width>1100</width>
+            <height>550</height>
+            <itemgap>4</itemgap>
+            <onleft>251</onleft>
+            <onright>251</onright>
+            <ondown>9001</ondown>
+            <onup>9001</onup>
+            <visible>Control.HasFocus(251)|ControlGroup(9001).HasFocus()</visible>
+            <animation effect="fade" time="200">VisibleChange</animation>
+            
+            <control type="button" id="301">
+                <description>hostname</description>
+                <label>SCRIPT401</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="button" id="302">
+                <description>port</description>
+                <label>SCRIPT402</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+            
+            <control type="button" id="303">
+                <description>datbase name</description>
+                <label>SCRIPT403</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="button" id="304">
+                <description>mysql user</description>
+                <label>SCRIPT404</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="button" id="305">
+                <description>mysql password</description>
+                <label>SCRIPT405</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+            
+        </control>
+
+        <control type="grouplist" id="9000">
+            <description>MythTV Settings</description>
+            <posx>300</posx>
+            <posy>135</posy>
+            <width>1100</width>
+            <height>550</height>
+            <itemgap>4</itemgap>
+            <onleft>250</onleft>
+            <onright>250</onright>
+            <ondown>9000</ondown>
+            <onup>9000</onup>
+            <visible>Control.HasFocus(250)|ControlGroup(9000).HasFocus()</visible> 
+            <animation effect="fade" time="200">VisibleChange</animation>
+
+            <control type="button" id="201">
+                <description>master backend hostname</description>
+                <label>SCRIPT411</label>
+                <width>950</width>
+                <height>35</height>
+                <font>font12</font>
+                <align>left</align>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2>$INFO[Window.Property(MasterBackendHostname)]</label2>
+                <enable>false</enable>
+            </control>
+
+            <control type="button" id="202">
+                <description>master backend port</description>
+                <label>SCRIPT412</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2>$INFO[Window.Property(MasterBackendPort)]</label2>
+                <enable>false</enable>
+            </control>
+            
+            <control type="image" id="211">
+                <description>separator image</description>
+                <width>950</width>
+                <height>2</height>
+                <texture>separator.png</texture>
+                <enable>false</enable>
+            </control>
+
+            <control type="radiobutton" id="208">
+                <description>enable streaming</description>
+                <label>SCRIPT414</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="button" id="205">
+                <description>local recording directories</description>
+                <label>SCRIPT413</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="image" id="210">
+                <description>separator image</description>
+                <width>950</width>
+                <height>2</height>
+                <texture>separator.png</texture>
+                <enable>false</enable>
+            </control>
+            
+            <control type="radiobutton" id="206">
+                <description>confirm on delete</description>
+                <label>SCRIPT415</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="radiobutton" id="207">
+                <description>aggressive caching</description>
+                <label>SCRIPT419</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+        </control>
+
+        <control type="grouplist" id="9006">
+            <description>Playback Settings</description>
+            <posx>300</posx>
+            <posy>135</posy>
+            <width>1100</width>
+            <height>550</height>
+            <itemgap>4</itemgap>
+            <onleft>259</onleft>
+            <onright>259</onright>
+            <ondown>9006</ondown>
+            <onup>9006</onup>
+            <visible>Control.HasFocus(259)|ControlGroup(9006).HasFocus()</visible>
+            <animation effect="fade" time="200">VisibleChange</animation>
+             
+            <control type="button" id="602">
+                <description>Seek forward</description>
+                <label>SCRIPT472</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="button" id="603">
+                <description>Seek backwards</description>
+                <label>SCRIPT473</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="button" id="604">
+                <description>big seek forward</description>
+                <label>SCRIPT474</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+            <control type="button" id="605">
+                <description>big seek backward</description>
+                <label>SCRIPT475</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2></label2>
+            </control>
+
+        </control>
+
+        <control type="grouplist" id="9002">
+            <description>Fan Art Scraper Settings</description>
+            <posx>300</posx>
+            <posy>135</posy>
+            <width>1100</width>
+            <height>550</height>
+            <itemgap>4</itemgap>
+            <onleft>254</onleft>
+            <onright>254</onright>
+            <ondown>9002</ondown>
+            <onup>9002</onup>
+            <visible>Control.HasFocus(254)|ControlGroup(9002).HasFocus()</visible> 
+            <animation effect="fade" time="200">VisibleChange</animation>
+                            
+            <control type="radiobutton" id="401">
+                <description>enable TVDB</description>
+                <label>SCRIPT421</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="radiobutton" id="406">
+                <description>enable TVrage</description>
+                <label>SCRIPT429</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+            
+            <control type="radiobutton" id="402">
+                <description>enable themoviedb.org</description>
+                <label>SCRIPT422</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+            
+            <control type="radiobutton" id="403">
+                <description>enable imdb</description>
+                <label>SCRIPT423</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="radiobutton" id="404">
+                <description>enable google image search</description>
+                <label>SCRIPT424</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="button" id="405">
+                <description>clear cache</description>
+                <label>SCRIPT425</label>
+                <width>150</width>
+                <height>40</height>
+                <align>left</align>
+                <font>font12</font>
+                <texturefocus border="7">button-focus2.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+            </control>
+        </control>
+
+        <control type="grouplist" id="9004">
+            <description>Advanced Settings</description>
+            <posx>300</posx>
+            <posy>135</posy>
+            <width>1100</width>
+            <height>550</height>
+            <itemgap>4</itemgap>
+            <onleft>256</onleft>
+            <onright>256</onright>
+            <ondown>9004</ondown>
+            <onup>9004</onup>
+            <visible>Control.HasFocus(256)|ControlGroup(9004).HasFocus()</visible> 
+            <animation effect="fade" time="200">VisibleChange</animation>
+
+<!-- 
+            <control type="radiobutton" id="501">
+                <description>Enable lirc hack for repeated button presses</description>
+                <label>SCRIPT441</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+                <enable>system.platform.linux</enable>
+            </control>
+-->
+
+            <control type="radiobutton" id="502">
+                <description>Enable debug logging</description>
+                <label>SCRIPT442</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <textureradiofocus>checkbox-focus.png</textureradiofocus>
+                <textureradionofocus>checkbox-nofocus.png</textureradionofocus>
+            </control>
+
+            <control type="button" id="503">
+                <description>Twitter Feeds</description>
+                <label>SCRIPT443</label>
+                <width>950</width>
+                <height>35</height>
+                <align>left</align>
+                <font>font12</font>
+                <textoffsetx>10</textoffsetx>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textcolor>88FFFFFF</textcolor>
+                <focusedcolor>ffffffff</focusedcolor>
+                <label2>Window.Property(feeds_twitter)</label2>
+            </control>
+
+        </control>
+
+        <control type="group" id="9005">
+            <description>readme and faq panel</description>
+            <posx>300</posx>
+            <posy>135</posy>
+            <width>1100</width>
+            <height>550</height>
+            <itemgap>4</itemgap>
+            <onleft>258</onleft>
+            <onright>258</onright>
+            <ondown>9005</ondown>
+            <onup>9005</onup>
+            <visible>Control.HasFocus(258)|ControlGroup(9005).HasFocus</visible>
+            <animation effect="fade" time="200">VisibleChange</animation>
+
+            <control type="textbox" id="599">
+                <description>textarea</description>
+                <posy>10</posy>
+                <posx>10</posx>
+                <height>480</height>
+                <width>900</width>
+                <font>font12</font>
+<!--                <align>center</align>-->
+                <textcolor>ffffffff</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <pagecontrol>598</pagecontrol>
+<!--                <autoscroll time="1000" delay="5000" repeat="5000">true</autoscroll>-->
+                <info>Window.Property(ReadmeText)</info>
+                <texturefocus border="7">list-focus.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+            </control>
+            
+            <control type="scrollbar" id="598">
+                <posx>950</posx>
+                <posy>10</posy>
+                <width>15</width>
+                <height>480</height>
+<!--                <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>-->
+<!--                <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>-->
+<!--                <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>-->
+<!--                <textureslidernib>ScrollBarNib.png</textureslidernib>-->
+<!--                <textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>-->
+
+	            <texturesliderbackground border="2,2,2,2">scrollbar_bar_back2.png</texturesliderbackground> 
+	            <texturesliderbar border="2,16,2,16">scrollbar_bar.png</texturesliderbar> 
+	            <texturesliderbarfocus border="2,16,2,16">scrollbar_bar_focus.png</texturesliderbarfocus> 
+	            <textureslidernib>scrollbar_nib.png</textureslidernib> 
+	            <textureslidernibfocus>scrollbar_nib.png</textureslidernibfocus> 
+
+                <onleft>258</onleft>
+                <onright>258</onright>
+                <showonepage>false</showonepage>
+                <orientation>vertical</orientation>
+            </control>            
+            
+            <!--  
+                    <control type="textbox" id="400">
+                        <description>Description</description>
+                        <posx>10</posx>
+                        <posy>195</posy>
+                        <width>580</width>
+                        <height>160</height>
+                        <font>font12</font>
+                        <align>-</align>
+                        <textcolor>white</textcolor>
+                        <label>$INFO[ListItem.Property(Addon.Description)]</label>
+                        <pagecontrol>60</pagecontrol>
+                    </control>
+                    <control type="scrollbar" id="60">
+                        <posx>610</posx>
+                        <posy>190</posy>
+                        <width>25</width>
+                        <height>175</height>
+                        <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
+                        <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
+                        <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
+                        <textureslidernib>ScrollBarNib.png</textureslidernib>
+                        <textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
+                        <onleft>9000</onleft>
+                        <onright>61</onright>
+                        <showonepage>false</showonepage>
+                        <orientation>vertical</orientation>
+                    </control>            
+            
+            -->
+            
+        </control>
+
+        <control type="group" id="9003">
+            <description>About panel</description>
+            <posx>300</posx>
+            <posy>135</posy>
+            <width>1100</width>
+            <height>550</height>
+            <itemgap>0</itemgap>
+            <onleft>255</onleft>
+            <onright>255</onright>
+            <ondown>9003</ondown>
+            <onup>9003</onup>
+            <visible>Control.HasFocus(255)|ControlGroup(9003).HasFocus</visible>
+            <animation effect="fade" time="200">VisibleChange</animation>
+
+            <control type="image">
+                <description>About Image</description>
+                <posx>200</posx>
+                <posy>10</posy>
+                <width>100</width>
+                <height>100</height>
+                <texture>mythbox-logo.png</texture>
+                <aspectratio>keep</aspectratio>
+            </control>
+
+            <control type="textbox" id="502">
+                <description>about text</description>
+                <posy>10</posy>
+                <posx>10</posx>
+                <height>240</height>
+                <width>900</width>
+                <font>font12</font>
+                <align>center</align>
+                <textcolor>ffffffff</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <info>Window.Property(AboutText)</info>               
+            </control>
+            
+            <control type="textbox" id="504">
+                <description>opensource text</description>
+                <posy>260</posy>
+                <posx>10</posx>
+                <height>250</height>
+                <width>900</width>
+                <font>font12</font>
+                <align>center</align>
+                <textcolor>ffffffff</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <autoscroll time="2000" delay="2000" repeat="2000">true</autoscroll>
+                <info>Window.Property(OpensourceText)</info>               
+            </control>
+            
+        </control>
+	
+		<!-- ==================================== -->
+		<!--              HELP                    -->
+		<!-- ==================================== -->
+
+	    <control type="button">
+	      	<description>help label</description>
+	      	<posx>300</posx>
+	      	<posy>580</posy>
+	      	<height>50</height>
+	      	<width>900</width>
+	      	<align>left</align>
+	      	<aligny>center</aligny>
+	      	<font>font12</font>
+	      	<textcolor>ffffffff</textcolor>
+	      	<label>Default port is 6543</label>
+			<visible>Control.HasFocus(202)</visible>
+			<texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+	    </control>
+      
+        <control type="button">
+            <description>Enable streaming help</description>
+            <posx>300</posx>
+            <posy>580</posy>
+            <height>50</height>
+            <width>900</width>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <textcolor>ffffffff</textcolor>
+            <label>SCRIPT480</label>
+            <visible>Control.HasFocus(208)</visible>
+            <texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+        </control>
+      
+	    <control type="label">
+	      	<description>mythtv recording dirs help1</description>
+	      	<posx>310</posx>
+	      	<posy>580</posy>
+	      	<height>50</height>
+	      	<width>900</width>
+	      	<align>left</align>
+	      	<aligny>center</aligny>
+	      	<font>font12</font>
+	      	<textcolor>ffffffff</textcolor>
+	      	<label>SCRIPT416</label>
+			<visible>Control.HasFocus(205)</visible>
+			<texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
+	    </control>
+	    
+	    <control type="label">
+	      	<description>mythtv recording dirs help2</description>
+	      	<posx>310</posx>
+	      	<posy>610</posy>
+	      	<height>50</height>
+	      	<width>900</width>
+	      	<align>left</align>
+	      	<aligny>center</aligny>
+	      	<font>font12</font>
+	      	<textcolor>ffffffff</textcolor>
+	      	<label>SCRIPT417</label>
+			<visible>Control.HasFocus(205)</visible>
+			<texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
+	    </control>
+         
+        <control type="label">
+            <description>aggressive caching help1</description>
+            <posx>310</posx>
+            <posy>580</posy>
+            <height>50</height>
+            <width>900</width>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <textcolor>ffffffff</textcolor>
+            <label>SCRIPT427</label>
+            <visible>Control.HasFocus(207)</visible>
+            <texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
+        </control>
+        
+        <control type="label">
+            <description>aggressive caching help2</description>
+            <posx>310</posx>
+            <posy>610</posy>
+            <height>50</height>
+            <width>900</width>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <textcolor>ffffffff</textcolor>
+            <label>SCRIPT428</label>
+            <visible>Control.HasFocus(207)</visible>
+            <texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
+        </control>
+
+        <control type="button">
+            <description>Playback:Skip Help x 4</description>
+            <posx>300</posx>
+            <posy>580</posy>
+            <height>50</height>
+            <width>900</width>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <textcolor>ffffffff</textcolor>
+            <label>SCRIPT471</label>
+            <visible>Control.HasFocus(602) | Control.HasFocus(603) | Control.HasFocus(604) | Control.HasFocus(605)</visible>
+            <texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+        </control>
+
+	    <control type="button">
+	      	<description>mysql port help</description>
+	      	<posx>300</posx>
+	      	<posy>580</posy>
+	      	<height>50</height>
+	      	<width>900</width>
+	      	<align>left</align>
+	      	<aligny>center</aligny>
+	      	<font>font12</font>
+	      	<textcolor>ffffffff</textcolor>
+	      	<label>SCRIPT406</label>
+			<visible>Control.HasFocus(302)</visible>
+			<texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+	    </control>
+
+	    <control type="button">
+	      	<description>mysql dbname help</description>
+	      	<posx>300</posx>
+	      	<posy>580</posy>
+	      	<height>50</height>
+	      	<width>900</width>
+	      	<align>left</align>
+	      	<aligny>center</aligny>
+	      	<font>font12</font>
+	      	<textcolor>ffffffff</textcolor>
+	      	<label>SCRIPT407</label>
+			<visible>Control.HasFocus(303)</visible>
+			<texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+	    </control>
+
+	    <control type="button">
+	      	<description>mysql user help</description>
+	      	<posx>300</posx>
+	      	<posy>580</posy>
+	      	<height>50</height>
+	      	<width>900</width>
+	      	<align>left</align>
+	      	<aligny>center</aligny>
+	      	<font>font12</font>
+	      	<textcolor>ffffffff</textcolor>
+	      	<label>SCRIPT408</label>
+			<visible>Control.HasFocus(304)</visible>
+			<texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+	    </control>
+
+        <control type="button">
+            <description>enable debug log help</description>
+            <posx>300</posx>
+            <posy>580</posy>
+            <height>50</height>
+            <width>900</width>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <textcolor>ffffffff</textcolor>
+            <label>$INFO[Window.Property(debugLogLocation)]</label>
+            <visible>Control.HasFocus(502)</visible>
+            <texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+        </control>
+
+        <control type="label">
+            <description>twitter help</description>
+            <posx>310</posx>
+            <posy>580</posy>
+            <height>50</height>
+            <width>900</width>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <textcolor>ffffffff</textcolor>
+            <label>SCRIPT446</label>
+            <visible>Control.HasFocus(503)</visible>
+            <texturenofocus>-</texturenofocus>
+            <animation effect="fade" time="200">VisibleChange</animation>
+            <scroll>true</scroll>
+        </control>
+
+    </control>
+	
+    <!-- ============================================= -->
+    <!--        H E A D E R                            -->          
+    <!-- ============================================= -->              
+    <control type="image">
+      <description>Header Panel</description>
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>1280</width>
+      <height>128</height>
+      <texture>mb-header.png</texture>
+    </control>
+
+    <control type="image">
+        <posx>40</posx>
+        <posy>20</posy>
+        <width>460</width>
+        <height>90</height>
+        <texture>mythbox.png</texture>
+        <aspectratio align="left">keep</aspectratio>
+        <animation effect="fade" time="200">WindowOpen</animation>
+        <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+
+    <control type="label">
+      <description>screen title</description>
+      <posx>70r</posx>
+      <posy>25</posy>
+      <width>400</width>
+      <height>35</height>
+      <align>right</align>
+      <aligny>center</aligny>
+      <textcolor>ffffffff</textcolor>
+      <label>SCRIPT295</label>
+      <animation effect="fade" time="200">WindowOpen</animation>
+      <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+
+    <control type="label">
+      <description>date/time label</description>
+      <posx>70r</posx>
+      <posy>65</posy>
+      <width>500</width>
+      <height>35</height>
+      <align>right</align>
+      <aligny>center</aligny>
+      <font>font12</font>
+      <textcolor>ffffffff</textcolor>
+      <label>$INFO[System.Date] [COLOR=88FFFFFF] |  $INFO[System.Time][/COLOR]</label>
+      <animation effect="fade" time="200">WindowOpen</animation>
+      <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+        
+    <!-- ============================================= -->
+    <!--  N A V     B U T T O N S                      -->          
+    <!-- ============================================= -->              
+    <control type="group" id="2000">
+        <posx>0</posx>
+        <posy>122</posy>
+
+	    <!-- Copy of include Window_OpenClose_Left_Panel_Animation -->
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+        <animation effect="slide" start="-400,0" end="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="slide" end="-400,0" start="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+
+        <control type="button" id="251">
+            <description>database</description>
+            <label>SCRIPT400</label>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onright>9001</onright>
+            <onleft>9001</onleft>
+            <onup>255</onup>
+            <ondown>250</ondown>
+        </control>
+        
+        <control type="button" id="250" >
+            <description>MythTV settings</description>
+            <label>SCRIPT410</label>
+            <posx>0</posx>
+            <posy>40</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onright>9000</onright>
+            <onleft>9000</onleft>
+            <onup>251</onup>
+            <ondown>259</ondown>
+        </control>
+        
+        <control type="button" id="259">
+            <description>playback</description>
+            <label>SCRIPT470</label>
+            <posx>0</posx>
+            <posy>80</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onright>9006</onright>
+            <onleft>9006</onleft>
+            <onup>250</onup>
+            <ondown>254</ondown>
+        </control>
+        
+        <control type="button" id="254">
+            <description>Fan Art</description>
+            <label>SCRIPT420</label>
+            <posx>0</posx>
+            <posy>120</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onup>259</onup>
+            <ondown>253</ondown>
+            <onright>9002</onright>
+            <onleft>9002</onleft>
+        </control>
+
+        <control type="button" id="253">
+            <description>Test Settings button</description>
+            <label>SCRIPT430</label>
+            <posx>0</posx>
+            <posy>160</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onup>254</onup>
+            <ondown>256</ondown>
+        </control>
+
+        <control type="button" id="256">
+            <description>Advanced button</description>
+            <label>SCRIPT440</label>
+            <posx>0</posx>
+            <posy>200</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onup>253</onup>
+            <ondown>257</ondown>
+            <onright>9004</onright>
+            <onleft>9004</onleft>
+        </control>
+
+        <control type="button" id="257">
+            <description>xbmc settings</description>
+            <label>SCRIPT450</label>
+            <posx>0</posx>
+            <posy>240</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onup>256</onup>
+            <ondown>258</ondown>
+            <onright>9004</onright>
+            <onleft>9004</onleft>
+            <onclick>ActivateWindow(settings)</onclick>
+        </control>
+
+        <control type="button" id="258">
+            <description>readme and faq</description>
+            <label>SCRIPT455</label>
+            <posx>0</posx>
+            <posy>280</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onup>257</onup>
+            <ondown>255</ondown>
+            <onright>9005</onright>
+            <onleft>9005</onleft>
+        </control>
+
+        <control type="button" id="255">
+            <description>about</description>
+            <label>SCRIPT460</label>
+            <posx>0</posx>
+            <posy>320</posy>
+            <width>285</width>
+            <height>40</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+            <onup>258</onup>
+            <ondown>251</ondown>
+        </control>
+
+    </control>
+    
+    <control type="multiimage">
+        <description>Busy animation</description>
+        <posx>722</posx>
+        <posy>340</posy>
+        <width>100</width>
+        <height>100</height>
+        <imagepath>busy</imagepath>
+        <timeperimage>50</timeperimage>
+        <fadetime>0</fadetime>
+        <visible>substring(Window.Property(busy),true)</visible>
+        <animation effect="fade" time="250">VisibleChange</animation>    
+    </control>
+    
+  </controls>
+</window>

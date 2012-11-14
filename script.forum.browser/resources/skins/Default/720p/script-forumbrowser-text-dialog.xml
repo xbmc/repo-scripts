@@ -1,0 +1,118 @@
+<window>
+	<defaultcontrol>123</defaultcontrol>
+	<zorder>2</zorder>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>40</posx>
+			<posy>40</posy>
+			<control type="image">
+				<posx>0</posx>
+				<posy>-6</posy>
+				<width>1220</width>
+				<height>672</height>
+				<texture border="20">forum-browser-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image" id="251">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>-6</posy>
+				<width>1200</width>
+				<height>652</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FF444444</colordiffuse>
+			</control>
+			<control type="image" id="251">
+				<description>Large Back</description>
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>1180</width>
+				<height>632</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FF888888</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>1180</width>
+				<height>85</height>
+				<texture border="20">forum-browser-white-box.png</texture>
+			</control>
+			<control type="image" id="251">
+				<description>Smaller Back</description>
+				<posx>10</posx>
+				<posy>84</posy>
+				<width>1180</width>
+				<height>552</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+			</control>
+
+			<control type="label" id="104">
+				<description>Topic</description>
+				<posx>235</posx>
+				<posy>14</posy>
+				<width>600</width>
+				<height>60</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>black</textcolor>
+				<aligny>center</aligny>
+				<align>center</align>
+				<wrapmultiline>true</wrapmultiline>
+			</control>
+			
+			<control type="button" id="110">
+				<description>Close Button</description>
+				<posx>1150</posx>
+				<posy>15</posy>
+				<width>28</width>
+				<height>28</height>
+				<texturefocus>forum-browser-close-button-focus.png</texturefocus>
+				<texturenofocus>forum-browser-close-button.png</texturenofocus>
+				<visible>system.getbool(input.enablemouse)</visible>
+				<onclick>PreviousMenu</onclick>
+			</control>
+			
+				
+
+			<control type="textbox" id="122">
+				<posx>30</posx>
+				<posy>97</posy>
+				<width>1125</width>
+				<height>526</height>
+				<pagecontrol>123</pagecontrol>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>ForumBrowser-font13</font>
+				<scroll>true</scroll>
+				<textcolor>FF000000</textcolor>
+				<visible>true</visible>
+			</control>
+
+			<control type="scrollbar" id="123">
+				<description>Message Scrollbar</description>
+				<posx>1173</posx>
+				<posy>97</posy>
+				<width>4</width>
+				<height>526</height>
+				<onleft>147</onleft>
+				<onright>149</onright>
+				<onup>123</onup>
+				<ondown>123</ondown>
+				<texturesliderbackground>-</texturesliderbackground>
+				<texturesliderbar border="1">forum-browser-panel-full.png</texturesliderbar>
+				<texturesliderbarfocus border="1">forum-browser-panel-full.png</texturesliderbarfocus>
+				<textureslidernib>-</textureslidernib>
+				<textureslidernibfocus>-</textureslidernibfocus>
+				<orientation>vertical</orientation>
+				<showonepage>true</showonepage>
+				<colordiffuse>FF555555</colordiffuse>
+				<visible>Control.IsVisible(122)</visible>
+			</control>
+		</control>
+
+	</controls>
+</window>

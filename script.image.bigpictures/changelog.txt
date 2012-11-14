@@ -1,0 +1,107 @@
+3.0.4
+  Fixed: "The Big Picture"-scraper
+  Fixed: "Wallstreet Jouarnal"-scraper
+
+3.0.3
+  Fixed TheSacramentoBee
+  Fixed Time.com: LightBox 
+  Added Czech Translation (thx to Spike)
+
+3.0.2
+  Fix for startup error (default->Default)
+
+3.0.0
+  Complete code rewrite
+  Added: Slideshow feature (press play)
+  Added: Plugin-mode for slideshow and screensaver mode
+  Improved: Go back to the last seen album when returning from a photoset
+  Improved: Faster cache algorithm (json storage)
+  Improved: Rewrite of skin including animations and behaviour
+  Improved: Smoother scrolling between the pictures
+  Fixed: All unicode/entity problems
+  Cosmetics: 100% pep8 (python styleguide) conformity
+  Improved: Debug logging
+  Added: French translation (thx to stombi)
+  Added: Dutch translation (thx to apeeters)
+
+2.0.3
+  Added: New Scraper "TotallyCoolPix.com"
+  Added: New Scraper "Time.com: LightBox - Closeup"
+  Changed: How using 'keep' as default aspect-ratio (press 0 or set in settings to change)
+  Fixed: html codes in title from some "Atlantic in focus" albums
+  Changed: The spinning loading animation logic
+  Fixed: ATV2-Remote Keymaps
+
+2.0.2
+  Fixed import error
+
+2.0.1
+  New plugin-way for scrapers
+  Fixed: Wallstreetjournal Scraper
+  Fixed: Sacramento Bee Scraper
+  Fixed: Visible-conditions in Eden
+  Fixed: Back-key in Eden
+  Code Improvements
+
+2.0.0
+  Eden release
+
+1.5.0
+  Added: New Scraper: 'The Atlantic: In Focus'
+  Removed: Scraper 'Boston.com: The Big Shot' - outdated
+  Added: Function and Setting for changing the aspect-ratio of the Pictures
+  Improved: Caching of HTML-Pages (much faster now)
+  Improved: Rewrote the multi-scraper-logic
+  Fixed: The Big Pictures Facebook-comment-change Announcement broke scraper
+  Fixed: The Big Pictures remove Hash at the end of the Description
+  Changed: The usage help is now replaced by a settings "help"-section
+  Cosmetic: more pep8 conformity
+
+1.4.2
+  Fixed: Error with external Python and os.makedirs(cachedir) with cachedir = "special://..."
+  Fixed TheSacramentoBee wasn't able to get Photos
+  Fixed WallStreetJournal wasn't able to get Photos
+
+1.4.1
+  Fixed: boston.com now needs a referer for the photosets
+  Improved: Better class Inheritance
+  Cosmetic: pep8 (except line length)
+  Improved: The german, english and french usage instructions (and shorten them)
+  Fixed: The Help now appears only on the first album or photoset
+
+1.4.0
+  Changed: Skin has a new Look - thanks to Jezz_X
+  Changed: Skin is now animated
+  Changed: Dedicated Usage-Help-Box (hides if any key is pressed)
+  Added: French Translation
+  Changed: Split Sourcename, Albumtitle and Picturetitle for different use in 3rd party Skins
+  Improved: The toggle "showInfo" stays now in its last state
+  Improved: Respect pep8 styleguide (except line length...)
+  Improved: Skin XML-File is now clean
+
+1.3.2
+  Changed: Don't use 'os.getcwd()'
+  Improved: author, name, id, version only at one place
+  Improved: Make it possible for skins to override the scripts skin (thanks to Jeroen)
+
+1.3.1
+  Fixed: Crash/Hang when using Alaska/Rapier-Skin
+
+1.3.0
+  Added: The possibility to get albums/images from more than one website (switch source)
+  Added: New Scraper 'Wallstreetjournal: The Photo Journal'
+  Added: New Scraper 'Boston.com: The Big Shot'
+  Added: New Scraper 'Sacramento Bee: The Frame'
+  Changed: The Layout and content of the help texts
+  Fixed: TBP-Scraper: Remove the image-number within the description text
+  Fixed: TBP-Scraper: removed #-sign at the end of the picture
+  Improved: Changes to the icon.png (more padding)
+
+1.2.0
+  Ported to be dharma compatible by sphere (with permission of rwparris2)
+  Added: German Translation
+  Changed: Addon ported from plugin which called script to native script
+  Added: New icon.png
+
+1.1.2
+  Released as plugin for camelot by rwparris2

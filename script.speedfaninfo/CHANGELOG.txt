@@ -1,0 +1,31 @@
+0.3.4 03/03/2012
+-added support for languages that use comma as the ordinal separator for decimals
+
+0.3.3  02/10/2012
+-First public release
+-Added visual notice if there is no log file location defined or no log file in the defined location
+-Fixed a typo in one of the verbose logging outputs
+-added a README file with instructions on how to setup the SpeedFan log file
+
+0.3.2  02/03/2012
+-Fixed issue with voltage headings not displaying correctly.  Required a change in the way you format the SpeedFan log, but since nobody is using it at this point but me, it doesn't matter. '-)
+-Fixed the way the setting.xml passes the temperature scale to default.py so that the code is a little easier to read.
+
+0.3.1  02/02/2012
+-Fixes to logging engine
+-Updated display XML to be skin independent (mostly having to do with font settings)
+-Moved all text strings into language file so that the plugin can be localized
+-Added icon
+
+0.3.0  01/31/2012
+-Implemented new logging engine to make it easier to have a basic log for day to day use and full log for troubleshooting
+-updated code to make better use of boolean objects
+
+0.2.0  01/30/2012
+-Added ability to update screen based on arbitary interval (set by user)
+
+0.1.1  01/29/2012
+-Fixed some code issues that caused the script not to work on Windows (that's what you get when you develop on a Mac and deploy to Windows)
+
+0.1.0  01/28/2012
+-Initial internal release

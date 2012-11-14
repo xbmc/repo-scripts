@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- General -->
+  <category label="30218">
+    <setting id="notification_length" type="enum" label="101" values="1|2|3|4|5|6|7|8|9|10" default="5" />
+    <setting id="hideDuringPlayback" type="bool" label="102" default="false" />
+    <setting id="rtmp_binary" type="file" label="103" default="" />
+    <setting id="vlc_binary" type="file" label="104" default="" />
+    <setting id="mplayer_binary" type="file" label="105" default="" />
+    <setting id="stall_timeout" type="number" label="Stall timeout" default="15" />
+  </category>
+</settings>

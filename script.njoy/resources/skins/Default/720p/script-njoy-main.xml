@@ -1,0 +1,226 @@
+<window>
+	<defaultcontrol>120</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<allowoverlay>no</allowoverlay>
+	<controls>
+	  <control type="group" id="100">
+  		<control type="image">
+  			<posx>0</posx>
+  			<posy>0</posy>
+  			<width>1280</width>
+  			<height>720</height>
+  			<texture>background.png</texture>
+  		</control>
+  		<control type="group">
+  			<visible>Player.Playing</visible>
+  			<control type="videowindow">
+  				<posx>45</posx>
+  				<posy>450</posy>
+  				<width>320</width>
+  				<height>180</height>
+  			</control>
+  			<control type="button">
+  				<posx>45</posx>
+  				<posy>450</posy>
+  				<width>325</width>
+  				<height>182</height>
+  				<font>font13</font>
+  				<align>center</align>
+  				<aligny>center</aligny>
+  				<texturenofocus>video_frame.png</texturenofocus>
+  				<texturefocus>video_frame.png</texturefocus>
+  			</control>
+  		</control>
+  		<control type="button" id="110">
+  			<posx>150</posx>
+  			<posy>250</posy>
+  			<width>215</width>
+  			<height>50</height>
+  			<onup>115</onup>
+  			<ondown>115</ondown>
+  			<onleft>120</onleft>
+  			<onright>120</onright>
+  			<label>$LOCALIZE[SCRIPT667]</label>
+  			<font>font13</font>
+  			<align>center</align>
+  			<aligny>center</aligny>
+  			<texturenofocus>menu_normal.png</texturenofocus>
+  			<texturefocus>menu_selected.png</texturefocus>
+  		</control>
+  		<control type="button" id="115">
+  			<posx>150</posx>
+  			<posy>305</posy>
+  			<width>215</width>
+  			<height>50</height>
+  			<onup>110</onup>
+  			<ondown>650</ondown>
+  			<onleft>120</onleft>
+  			<onright>120</onright>
+  			<label>$LOCALIZE[SCRIPT668]</label>
+  			<font>font13</font>
+  			<align>center</align>
+  			<aligny>center</aligny>
+  			<texturenofocus>menu_normal.png</texturenofocus>
+  			<texturefocus>menu_selected.png</texturefocus>
+  		</control>
+  		<control type="list" id="120">
+  			<posy>85</posy>
+  			<posx>450</posx>
+  			<width>850</width>
+  			<height>570</height>
+  			<onup>120</onup>
+  			<onleft>110</onleft>
+  			<scrolltime>200</scrolltime>
+  <!--			<visible>!Control.isVisible(150)</visible> -->
+  			<orientation>vertical</orientation>
+  			<viewtype label="535">list</viewtype>
+  			<preloaditems>2</preloaditems>
+  			<itemlayout width="850" height="50">
+  				<control type="image">
+  					<posx>85</posx>
+  					<posy>5</posy>
+  					<width>55</width>
+  					<height>40</height>
+  					<texture background="true">$INFO[ListItem.Thumb]</texture>
+  				</control>
+  				<control type="label">
+  					<posx>170</posx>
+  					<posy>10</posy>
+  					<width>500</width>
+  					<height>30</height>
+  					<aligny>left</aligny>
+  					<label>$INFO[ListItem.Label]</label>
+  					<font>font13</font>
+  					<textcolor>FFFFFFFF</textcolor>
+  				</control>
+  			</itemlayout>
+  			<focusedlayout width="850" height="120">
+  				<control type="image">
+  					<posx>0</posx>
+  					<posy>0</posy>
+  					<width>750</width>
+  					<height>162</height>
+  					<texture>channel_selected.png</texture>
+  				</control>
+  				<control type="image">
+  					<visible>Control.HasFocus(120)</visible>
+  					<posx>0</posx>
+  					<posy>0</posy>
+  					<width>750</width>
+  					<height>162</height>
+  					<texture>channel_focus.png</texture>
+  				</control>
+  				<control type="image">
+  					<posx>30</posx>
+  					<posy>26</posy>
+  					<width>85</width>
+  					<height>75</height>
+  					<texture background="true">$INFO[ListItem.Thumb]</texture>
+  				</control>
+  				<control type="label">
+  					<posx>125</posx>
+  					<posy>45</posy>
+  					<width>300</width>
+  					<height>40</height>
+  					<aligny>left</aligny>
+  					<font>font13</font>
+  					<label>$INFO[ListItem.Label]</label>
+  					<textcolor>black</textcolor>
+  				</control>
+  			</focusedlayout>
+  		</control>
+  		<control type="group" id="150">
+  			<posx>1070</posx>
+  			<posy>638</posy>
+  			<control type="image">
+  				<posx>0</posx>
+  				<posy>0</posy>
+  				<width>200</width>
+  				<height>72</height>
+  				<texture border="20">OverlayDialogBackground.png</texture>
+  			</control>
+  			<control type="image">
+  				<posx>20</posx>
+  				<posy>20</posy>
+  				<width>32</width>
+  				<height>32</height>
+  				<texture>busy.png</texture>
+  				<aspectratio>keep</aspectratio>
+  				<animation effect="rotate" start="0" end="360" center="36,36" time="1200" loop="true" condition="true">conditional</animation>
+  			</control>
+  			<control type="label">
+  				<posx>60</posx>
+  				<posy>20</posy>
+  				<width>120</width>
+  				<height>32</height>
+  				<align>left</align>
+  				<aligny>center</aligny>
+  				<label>$LOCALIZE[SCRIPT666]</label>
+  				<font>font12</font>
+  			</control>
+  		</control>
+  		<control type="label" id="200">
+  			<posy>324</posy>
+  			<posx>880</posx>
+  			<width>285</width>
+  			<height>30</height>
+  			<align>left</align>
+  			<font>font13</font>
+  			<textcolor>FF000000</textcolor>
+  			<scroll>true</scroll>
+  		</control>
+  		<control type="label" id="201">
+  			<posy>352</posy>
+  			<posx>880</posx>
+			<width>285</width>
+			<height>30</height>
+			<align>left</align>
+			<font>font13</font>
+			<textcolor>FF000000</textcolor>
+			<scroll>true</scroll>
+		</control>
+		<control type="label">
+			<posy>645</posy>
+			<posx>185</posx>
+			<width>285</width>
+			<height>25</height>
+			<align>right</align>
+			<font>font13</font>
+			<label>$LOCALIZE[SCRIPT669]</label>
+			<textcolor>FFD7DF21</textcolor>
+		</control>
+		<control type="label" id="205">
+			<posy>645</posy>
+			<posx>200</posx>
+			<width>285</width>
+			<height>25</height>
+			<align>left</align>
+			<font>font13</font>
+			<textcolor>FFFFFFFF</textcolor>
+		</control>
+		<control type="label">
+			<posy>375</posy>
+			<posx>45</posx>
+			<width>285</width>
+			<height>25</height>
+			<align>left</align>
+			<font>font13</font>
+			<label>$LOCALIZE[SCRIPT670]</label>
+			<textcolor>FFD7DF21</textcolor>
+		</control>
+		<control type="label" id="206">
+			<posy>400</posy>
+			<posx>45</posx>
+			<width>285</width>
+			<height>25</height>
+			<align>left</align>
+			<font>font13</font>
+			<textcolor>FFFFFFFF</textcolor>
+		</control>		
+   </control>
+	</controls>
+</window>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.game.whatthemovie"
+       name="WhatTheMovie"
+       version="1.0.4"
+       provider-name="sphere, tadi, skiller2k1">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    </requires>
+    <extension point="xbmc.python.script"
+               library="default.py" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Ein Filmquiz - Zu Snapshots Filmtitel erraten</summary>
+        <summary lang="en">A Movie Quiz - Guess Movies by snapshots</summary>
+        <description lang="de">Löse Snapshots um Punkte für die Hall of Fame zu bekommen - powered by the website whatthemovie.com [CR][CR]Aktuelle Haupt-Features:[CR]- Login mit deinem whatthemovie.com Account[CR]- Löse, favorisiere, bookmarke und bewerte Shots[CR]- Snapshot Zoom[CR]- Zufalls- und Navigations-Einstellungen[CR]- Automatischer Sprung zum nächsten Shot</description>
+        <description lang="en">Solve snapshots to gain points for the Hall of Fame - powered by the website whatthemovie.com [CR][CR]Currently Main Features are:[CR]- Login with your whatthemovie.com account[CR]- Solve, favourite, bookmark and rate shots[CR]- Zoom the snapshot[CR]- Set random and navigation options[CR]- Jump automatically to the next or random next shot</description>
+    </extension>
+</addon>

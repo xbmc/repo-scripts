@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<window type="window">
+	<defaultcontrol always="true">160</defaultcontrol>
+	<allowoverlay>no</allowoverlay>
+	<controls>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<colordiffuse>80FFFFFF</colordiffuse>
+			<texture>facebook-media-background.png</texture>
+		</control>
+		<control type="image" id="101">
+			<posx>63</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF888888</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>true</visible>
+		</control>
+		<control type="image" id="102">
+			<posx>63</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF9A9F1F</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>!Control.IsVisible(101)</visible>
+		</control>
+		<control type="image">
+			<posx>63</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF1F9F31</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>!Control.IsVisible(101) + !Control.IsVisible(102)</visible>
+		</control>
+		<control type="label">
+			<posx>93</posx>
+			<posy>154</posy>
+			<width>207</width>
+			<height>319</height>
+			<font>title20b</font>
+			<align>center</align>
+			<aligny>center</aligny>
+			<textcolor>white</textcolor>
+			<wrapmultiline>true</wrapmultiline>
+			<label>Enter Login Information</label>
+		</control>
+		<control type="image" id="111">
+			<posx>359</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF888888</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>true</visible>
+		</control>
+		<control type="image" id="112">
+			<posx>359</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF9A9F1F</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>!Control.IsVisible(111)</visible>
+		</control>
+		<control type="image">
+			<posx>359</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF1F9F31</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>!Control.IsVisible(111) + !Control.IsVisible(112)</visible>
+		</control>
+		<control type="label">
+			<posx>389</posx>
+			<posy>154</posy>
+			<width>207</width>
+			<height>319</height>
+			<font>title20b</font>
+			<align>center</align>
+			<aligny>center</aligny>
+			<textcolor>white</textcolor>
+			<wrapmultiline>true</wrapmultiline>
+			<label>Authorize Via Web Viewer</label>
+		</control>
+		<control type="image" id="121">
+			<posx>655</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF888888</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>true</visible>
+		</control>
+		<control type="image" id="122">
+			<posx>655</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF9A9F1F</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>!Control.IsVisible(121)</visible>
+		</control>
+		<control type="image">
+			<posx>655</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF1F9F31</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>!Control.IsVisible(121) + !Control.IsVisible(122)</visible>
+		</control>
+		<control type="label">
+			<posx>685</posx>
+			<posy>154</posy>
+			<width>207</width>
+			<height>319</height>
+			<font>title20b</font>
+			<align>center</align>
+			<aligny>center</aligny>
+			<textcolor>white</textcolor>
+			<wrapmultiline>true</wrapmultiline>
+			<label>Get Authorization Data</label>
+		</control>
+		<control type="image" id="131">
+			<posx>951</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF888888</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>true</visible>
+		</control>
+		<control type="image" id="132">
+			<posx>951</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF9A9F1F</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>!Control.IsVisible(131)</visible>
+		</control>
+		<control type="image">
+			<posx>951</posx>
+			<posy>124</posy>
+			<width>267</width>
+			<height>379</height>
+			<colordiffuse>FF1F9F31</colordiffuse>
+			<texture>facebook-media-adduser-stepbackground.png</texture>
+			<visible>!Control.IsVisible(131) + !Control.IsVisible(132)</visible>
+		</control>
+		<control type="label">
+			<posx>981</posx>
+			<posy>154</posy>
+			<width>207</width>
+			<height>319</height>
+			<font>title20b</font>
+			<align>center</align>
+			<aligny>center</aligny>
+			<textcolor>white</textcolor>
+			<wrapmultiline>true</wrapmultiline>
+			<label>Get User Data</label>
+		</control>
+	</controls>
+</window>

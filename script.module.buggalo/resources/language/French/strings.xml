@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings>
+    <string id="91000">Une erreur s'est produite. Vous pouvez aider à corriger</string>
+    <string id="91001">le problème en envoyant un rapport d'erreur.</string>
+    <string id="91002">Aucune information personnel n'est transmise.</string>
+    <string id="91003">Envoyer un rapport</string>
+    <string id="91004">Ne pas envoyer</string>
+    <string id="91005">Merci!</string>
+</strings>

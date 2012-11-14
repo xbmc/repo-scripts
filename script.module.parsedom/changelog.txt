@@ -1,0 +1,19 @@
+[B]Version 1.2.0[/B]
+- fetchPage should default to utf-8 encoding
+- parseDOM should handle utf-8 encoding
+
+[B]Version 1.1.0[/B]
+- Handle \t that breaks DOM variable extraction
+- Added extractJS function
+
+[B]Version 1.0.0[/B]
+- Minor fixes
+
+[B]Version 0.9.1[/B]
+- Stability and more functions
+- Add cookie support to fetchPage.
+- Add getCookieInfoAsHTML.
+- Add POST and Refering capabilities to fetchPage
+
+[B]Version 0.9.0[/B]
+- Initial public test run.

@@ -1,0 +1,23 @@
+[B]Version 1.1.2 - 2012-09-09[/B]
+- Improved UI compatibility with skins other than Confluence
+- Updated movie quotes
+
+[B]Version 1.1.1 - 2012-09-09[/B]
+- Reworked error dialog layout a bit
+
+[B]Version 1.1.0 - 2012-07-11[/B]
+- Added custom error dialog with details view
+- Added support for tracking userflow
+- More robust handling of extra data
+
+[B]Version 1.0.1 - 2012-03-16[/B]
+- Added option to pass extra data along in the error report
+  either through addExtraData(key, value) or directly in
+  onExceptionRaised(data) as a dict or string.
+- Added @buggalo_try_except function decorator to easily wrap
+  a function in a try..except clause.
+
+[B]Version 1.0.0 - 2012-02-04[/B]
+- Initial module version
+- Named after a creature in my favorite animated show:
+  http://theinfosphere.org/Where_the_Buggalo_Roam

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+<!--Common-->
+ 
+  
+<!--Settings-->  
+  <!--General-->
+  <string id="100">Allgemein</string>
+  <string id="101">Benutze boblight über Netzwerk</string>
+  <string id="102">Boblightd IP</string>
+  <string id="103">Boblightd Port</string>
+  <string id="104">Boblight ausschalten</string>
+  <string id="105">Erzwinge Kategorie</string>                                                                                                                                                              
+  <string id="106">Kategorie</string>
+
+  <!--Movie/MusicVideo/Other-->
+  <string id="200">Film</string>
+  <string id="201">Preset</string>
+  <string id="202">Geschwindigkeit</string>
+  <string id="203">autom. Geschwindigkeit</string>
+  <string id="204">Interpolation</string>
+  <string id="205">Farbe</string>
+  <string id="206">Wert</string>
+  <string id="207">Schwellwert</string>
+  
+  <string id="220">Eigene</string>
+  <string id="221">langsam</string>
+  <string id="222">schnell</string>
+  
+  <!--MusicVideo-->
+  <string id="300">Musikvideo</string>
+  
+  <string id="320">Eigene</string>
+  <string id="321">langsam</string>
+  <string id="322">schnell</string>
+  
+  <!--Other-->
+  <string id="400">Sonstige</string>
+  <string id="401">Festes Hintergrundlicht</string>
+  <string id="402">Rot</string>
+  <string id="403">Gruen</string>
+  <string id="404">Blau</string>  
+
+  <!--Notifications-->                                                                                                                                                                                           
+  <string id="500">Fehler beim Verbinden zu boblightd!</string>
+  <string id="501">Verbunden mit boblightd!</string>
+  <string id="502">Einstellungen geaendert!</string>
+  <string id="503">Boblight wurde ausgeschaltet!</string>
+  <string id="504">Dieses Addon benoetigt eine binaere Bibliothek.</string>
+  <string id="505">Bitte lesen Sie die README Datei.</string>
+  <string id="506">fuer weitere Hilfe.</string>
+  <string id="507">Dieses Addon kann auf Ihrem Betriebssystem nicht</string>
+  <string id="508">ausgefuehrt werden! (Das ctypes Modul fehlt)</string>
+  <string id="509">Soll versucht werden diese automatisch herunterzuladen?</string>
+</strings>

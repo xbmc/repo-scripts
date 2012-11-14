@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+	<string id="30010">XBMC Backup</string>
+	<string id="30011">General</string>
+	<string id="30012">File Selection</string>
+	<string id="30013">Scheduling</string>
+
+	<string id="30016">Backup</string>
+	<string id="30017">Restore</string>
+	<string id="30018">Browse Path</string>
+	<string id="30019">Type Path</string>
+	<string id="30020">Browse Remote Path</string>
+	<string id="30021">Backup Folder Name</string>
+	<string id="30022">Run Silent</string>
+	<string id="30023">Mode</string>
+	<string id="30024">Type Remote Path</string>
+	<string id="30025">Remote Path Type</string>
+	
+	<string id="30030">User Addons</string>
+	<string id="30031">Addon Data</string>
+	<string id="30032">Database</string>
+	<string id="30033">Playlist</string>
+	<string id="30034">Thumbnails/Fanart</string>
+	<string id="30035">Config Files</string>
+
+	<string id="30045">Error: Remote path doesn't exist</string>
+	<string id="30046">Starting</string>
+	<string id="30047">Local Dir</string>
+	<string id="30048">Remote Dir</string>
+	<string id="30049">Gathering file list</string>
+	<string id="30050">Remote Path exists - may have old files in it!</string>
+	<string id="30051">Creating Files List</string>
+	<string id="30052">Writing file</string>
+    <string id="30053">Starting scheduled backup</string>
+	
+	<string id="30060">Enable Scheduler</string>
+    <string id="30061">Schedule</string>
+	<string id="30062">Hour of Day</string>
+	<string id="30063">Day of Week</string>
+	<string id="30064">Cron Schedule</string>
+	<string id="30065">Sunday</string>
+	<string id="30066">Monday</string>
+	<string id="30067">Tuesday</string>
+	<string id="30068">Wednesday</string>
+	<string id="30069">Thursday</string>
+	<string id="30070">Friday</string>
+	<string id="30071">Saturday</string>
+	<string id="30072">Every Day</string>
+	<string id="30073">Every Week</string>
+	<string id="30074">First Day of Month</string>
+	<string id="30075">Custom Schedule</string>
+</strings>

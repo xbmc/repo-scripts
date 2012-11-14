@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Usage help strings in settings dialog -->
+    <string id="32000">Denne addon indsender dine logfiler til xbmclogs.com</string>
+    <string id="32001">Hvis du vil have en email med direkte links til dine</string>
+    <string id="32002">indsendte logfiler skal du indstille din emailadresse.</string>
+    <string id="32003"></string>
+    <string id="32004">Logfilerne kan indeholde brugernavne eller adgangskoder!</string>
+    <!-- Settings -->
+    <string id="31000">Emailadresse</string>
+    <string id="31001">Indsend aldrig xbmc.old.log (logfil fra tidligere kørsel)</string>
+    <!-- Dialog strings -->
+    <string id="30000">Vil du indsende "%s"?</string>
+    <string id="30001">Indsendt som ID: %s</string>
+    <string id="30002">URL: %s</string>
+    <string id="30003">Ingen email sendes (Ingen emailadresse indstillet)</string>
+    <string id="30004">Email sendes til: %s</string>
+</strings>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Help -->
+    <string id="32001">Links + Rechts = Album/Photo wechseln</string>
+    <string id="32002">Hoch + Runter = Quelle wechseln</string>
+    <string id="32003">Select = Album öffnen</string>
+    <string id="32004">Zurück = Zurück zum Album/Addon beenden</string>
+    <string id="32005">Info = Onscreen-Info zeigen/verstecken</string>
+    <string id="32006">Kontext = Album herunterladen</string>
+    <string id="32007">Play = Slideshow starten</string>
+    <string id="32008">0 = Seitenverhältnis wechseln</string>
+    <!-- Settings -->
+    <string id="32100">Diese Hilfe nicht mehr anzeigen</string>
+    <string id="32110">Standard Seitenverhältnis</string>
+    <string id="32111">scale</string>
+    <string id="32112">keep</string>
+    <string id="32120">Pfeile zeigen</string>
+    <string id="32130">Slideshow shuffle</string>
+    <string id="32140">Download-Verzeichnis</string>
+    <!-- Settings categories -->
+    <string id="32200">Hilfe</string>
+    <string id="32201">Einstellungen</string>
+    <!-- Script strings -->
+    <string id="32300">Download-Verzeichnis wählen</string>
+    <string id="32301">Sammle Daten...</string>
+    <string id="32302">Datei %d/%d</string>
+    <string id="32303">Aktuelle Datei: %s %d%%</string>
+    <string id="32304">Verzeichnis: %s</string>
+</strings>

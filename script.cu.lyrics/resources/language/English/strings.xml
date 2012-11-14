@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Labels -->
+    <string id="0">CU Lyrics</string>
+    <string id="30000">Fetching Lyrics</string>
+    <string id="30001">Failed fetching lyrics</string>
+    <string id="30002">Lyrics not found for song '%s' by '%s'</string>
+    <string id="30003">LyricWiki.org API</string>
+    <string id="30004">Fetching lyrics from %s failed</string>
+    <string id="30005">File</string>
+    <string id="30006">Lyricsmode.com API</string>
+    <string id="30007">Lyricstime.com API</string>
+    <string id="30008">Lyricwiki.com API</string>
+
+    <!-- Settings -->
+    <string id="30100">Smooth Scrolling</string>
+    <string id="30101">Save Lyrics</string>
+    <string id="30102">Settings</string>
+    <string id="30103">Info</string>
+    <string id="30104">Version</string>
+    <string id="30105">Author</string>
+    <string id="30106">Original authors</string>
+    <string id="30107">Use embeded lyrics</string>
+    <string id="30108"> - Save embeded lyrics to file</string>
+    <string id="30109">Select Scraper</string>
+
+</strings>

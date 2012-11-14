@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.feedparser"
+       name="feedparser"
+       version="5.1.2"
+       provider-name="Tristan Fischer (sphere@dersphere.de)">
+  <requires>
+    <import addon="xbmc.python" 
+            version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <summary lang="en">Python helper module</summary>
+    <description lang="en">feedparser is a Python library that parses feeds in all known formats, including Atom, RSS, and RDF. It runs on Python 2.4 all the way up to 3.2.</description>
+    <license>MIT</license>
+    <platform>all</platform>
+  </extension>
+</addon>

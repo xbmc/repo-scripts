@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="30001">Videos</string>
+  <string id="30002">Musik</string>
+  <string id="30003">Bilder</string>
+  <string id="30004">Playlist wählen</string>
+  <string id="30005">Keine URL zum hinzufuegen vorhanden</string>
+  <string id="30009">Alternatives Playlist Verzeichnis verwenden</string>
+  <string id="30010">Playlist Verzeichnis</string>
+  <string id="30011">Keyboard zum Ändern des Titels einblenden</string>
+  <string id="30012">Hinzugefügt am</string>
+  <string id="30013">Aus Playlist entfernen</string>
+  <string id="30014">Playlist leeren</string>
+  <string id="30015">Alle Playlisten leeren</string>
+  <string id="30016">Bereits in Playlist vorhanden</string>
+  <string id="30017">Neue Playlist</string>
+  <string id="30019">Neuer Unterordner</string>
+  <string id="30020">Unterordner</string>
+  <string id="30022">Item hinzufügen</string>
+  <string id="30023">Keine Playlist vorhanden</string>
+  <string id="30024">Hauptverzeichnis</string>
+  <string id="30025">Playlisten verwalten</string>
+  <string id="30026">Playlisten</string>
+  <string id="30027">Unterordner</string>
+  <string id="30028">Keine Unterordner vorhanden</string>
+  <string id="30029">Unterordner in</string>
+  <string id="30030">Item hinzugefuegt</string>
+  <string id="30031">Bestätigung beim Hinzufügen anzeigen</string>
+  <string id="30032">Playlisten anzeigen</string>
+  <string id="30033">Item umbenennen</string>
+  <string id="30034">Unterordner leeren</string>
+  <string id="30035">Unterordner verwalten</string>
+</strings>

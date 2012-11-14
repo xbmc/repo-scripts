@@ -1,0 +1,179 @@
+<window>
+	<defaultcontrol>601</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<allowoverlay>no</allowoverlay>
+	<controls>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>video-screen-mask.png</texture>
+		</control>
+		<control type="videowindow">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+		</control>
+		<control type="button">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<label>-</label>
+			<font>-</font>
+			<texturenofocus>-</texturenofocus>
+			<texturefocus>-</texturefocus>
+		</control>
+		<control type="group" id="205">
+			<visible>!System.IdleTime(5)</visible>
+			<control type="group">
+				<posx>415</posx>
+				<posy>590</posy>
+				<animation effect="slide" start="0,300" end="0,0" time="750" tween="quadratic" easing="out">WindowOpen</animation>
+				<animation effect="slide" start="0,0" end="0,300" time="750" tween="quadratic" easing="out">WindowClose</animation>
+				<control type="image">
+					<posx>0</posx>
+					<posy>-3</posy>
+					<width>450</width>
+					<height>162</height>
+					<texture>OSD_bar.png</texture>
+				</control>
+				<control type="label" id="206">
+					<posy>45</posy>
+					<posx>40</posx>
+					<width>185</width>
+					<height>25</height>
+					<align>left</align>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+				</control>
+				<control type="button" id="601">
+					<posx>245</posx>
+					<posy>40</posy>
+					<width>45</width>
+					<height>45</height>
+					<label>-</label>
+					<font>-</font>
+					<texturefocus>OSDStopFO.png</texturefocus>
+					<texturenofocus>OSDStopNF.png</texturenofocus>
+					<onleft>703</onleft>
+					<onright>702</onright>
+					<onup>120</onup>
+					<ondown>120</ondown>
+					<onclick>PlayerControl(Stop)</onclick>
+				</control> 
+				<control type="button" id="702">
+					<posx>305</posx>
+					<posy>40</posy>
+					<width>45</width>
+					<height>45</height>
+					<label>-</label>
+					<font>-</font>
+					<texturefocus>OSDVideoFO.png</texturefocus>
+					<texturenofocus>OSDVideoNF.png</texturenofocus>
+					<onleft>601</onleft>
+					<onright>703</onright>
+					<onup>120</onup>
+					<ondown>120</ondown>
+					<onclick>ActivateWindow(OSDVideoSettings)</onclick>
+				</control>
+				<control type="button" id="703">
+					<posx>365</posx>
+					<posy>40</posy>
+					<width>45</width>
+					<height>45</height>
+					<label>-</label>
+					<font>-</font>
+					<texturefocus>OSDAudioFO.png</texturefocus>
+					<texturenofocus>OSDAudioNF.png</texturenofocus>
+					<onleft>702</onleft>
+					<onright>601</onright>
+					<onup>120</onup>
+					<ondown>120</ondown>
+					<onclick>ActivateWindow(OSDAudioSettings)</onclick>
+				</control>
+			</control>
+			<control type="group">
+				<animation effect="slide" start="900,0" end="0,0" time="750" tween="quadratic" easing="out">WindowOpen</animation>
+				<animation effect="slide" start="0,0" end="900,0" time="750" tween="quadratic" easing="out">WindowClose</animation> 
+				<control type="image">
+					<posx>880</posx>
+					<posy>0</posy>
+					<width>406</width>
+					<height>720</height>
+					<texture>MediaBladeSub.png</texture>
+				</control>
+				<control type="list" id="120">
+					<posy>85</posy>
+					<posx>880</posx>
+					<width>850</width>
+					<height>570</height>
+					<onleft>601</onleft>
+					<scrolltime>200</scrolltime>
+					<orientation>vertical</orientation>
+					<viewtype label="535">list</viewtype>
+					<preloaditems>2</preloaditems>
+					<itemlayout width="850" height="50">
+						<control type="image">
+							<posx>85</posx>
+							<posy>5</posy>
+							<width>55</width>
+							<height>40</height>
+							<texture background="true">$INFO[ListItem.Thumb]</texture>
+						</control>
+						<control type="label">
+							<posx>170</posx>
+							<posy>10</posy>
+							<width>500</width>
+							<height>30</height>
+							<aligny>left</aligny>
+							<label>$INFO[ListItem.Label]</label>
+							<font>font13</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</itemlayout>
+					<focusedlayout width="850" height="120">
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>750</width>
+							<height>162</height>
+							<texture>channel_selected.png</texture>
+						</control>
+						<control type="image">
+							<visible>Control.HasFocus(120)</visible>
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>750</width>
+							<height>162</height>
+							<texture>channel_focus.png</texture>
+						</control>
+						<control type="image">
+							<posx>30</posx>
+							<posy>26</posy>
+							<width>85</width>
+							<height>75</height>
+							<texture background="true">$INFO[ListItem.Thumb]</texture>
+						</control>
+						<control type="label">
+							<posx>125</posx>
+							<posy>45</posy>
+							<width>300</width>
+							<height>40</height>
+							<aligny>left</aligny>
+							<font>font13</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF000000</textcolor>
+						</control>
+					</focusedlayout>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

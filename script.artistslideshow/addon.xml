@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.artistslideshow" name="Artist Slideshow" version="1.4.5" provider-name="ronie/kyleejohnson (pkscuot)">
+	<requires>
+		<import addon="xbmc.python" version="2.0"/>
+		<import addon="script.module.elementtree" version="1.2.7"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Download images and additional info of the currently playing artist</summary>
+		<description>Addon to download images and additional information from Last.FM and htbackdrops.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to.</description>
+		<summary lang="fr">Télécharger les images et les informations additionnelles de l'artiste en cours de lecture</summary>
+		<description lang="fr">Cett addon permet de télécharger les images et les informations additionnelles depuis Last.FM et htbackdrops.com de l'artiste en cours de lecture. Les images, ainsi que les images locales, et les informations peuvent être utilisées par le thème pour créer un diaporama pour l'artiste que vous êtes en train d'écouter.</description>
+		<platform>all</platform>
+		<language>sq ar be bg ca zh hr cs da nl en et fi fr de el iw hi hu is in it ja ko lv lt mk no pl pt ro ru sr sk sl es sv th tr uk vi</language>
+	</extension>
+</addon>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+
+  <!-- Script -->
+
+    <string id="666">Working...</string>
+    <string id="667">Refresh List</string>
+    <string id="668">Find Tuner</string>
+    <string id="669">Active Tuner:</string>
+    <string id="670">Current Channel:</string>
+    <string id="30100">To use this app and watch live television</string>
+    <string id="30101">you need an Anysee N7 Tuner.</string>
+    <string id="30102">Do you have this tuner and is it setup correctly?</string>
+    <string id="30103">Exit</string>
+    <string id="30104">Continue</string>
+    <string id="30105">Tuner not found at ip %s</string>
+    <string id="30106">Multiple Tuners Found, Please Choose</string>
+    <string id="30107">Please Choose</string>
+    <string id="30108">Scan for a N7 network TV tuner or</string>
+    <string id="30109">enter it's IP/hostname manually.</string>
+    <string id="30110">Manually</string>
+    <string id="30111">Scan</string>
+    <string id="30112">N7 Tuner found at %s</string>
+    <string id="30113">Enter IP number of N7 networktuner</string>
+    <string id="30114">Error</string>
+    <string id="30115">Closing application in 3 seconds</string>
+    <string id="30116">Could not get Channel List, try to setup the tuner again</string>
+    <string id="30117">No N7 tuner found during the scan.</string>
+    <string id="30118">Continue</string>
+    <string id="30119">Wait time between zaps</string>
+    <string id="30120">General</string>
+    <string id="30121">Please wait %i seconds between zaps</string>
+</strings>

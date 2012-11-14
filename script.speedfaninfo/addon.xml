@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.speedfaninfo"
+    name="SpeedFan Information Display" version="0.3.4" provider-name="kylejohnson (pkscuot)">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Display information from your SpeedFan log.</summary>
+    <description lang="en">Parses and displays information from the SpeedFan log. While this plugin works on any platform, SpeedFan only works on Windows, so it is optimally built for people using XBMC on Windows. Please see readme.txt for information on how to configure your SpeedFan log so that the plugin can parse it properly.</description>
+    <platform>all</platform>
+  </extension>
+</addon>

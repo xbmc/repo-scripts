@@ -1,0 +1,44 @@
+<window>
+	<zorder>1</zorder>
+	<coordinates>
+		<system>1</system>
+		<posx>556</posx>
+		<posy>206</posy>
+	</coordinates>
+	<controls>
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-10</posy>
+				<width>208</width>
+				<height>198</height>
+				<texture border="20">forum-browser-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>168</width>
+				<height>168</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+			</control>
+			<control type="label" id="100">
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>148</width>
+				<height>10</height>
+				<font>ForumBrowser-font10</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textcolor>FF000000</textcolor>
+			</control>
+			<control type="image">
+				<posx>48</posx>
+				<posy>48</posy>
+				<width>72</width>
+				<height>72</height>
+				<texture>forum-browser-loading.gif</texture>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+			</control>
+	</controls>
+</window>

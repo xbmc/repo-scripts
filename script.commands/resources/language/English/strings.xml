@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="30001">Add command</string>
+  <string id="30002">From list</string>
+  <string id="30003">From favorites</string>
+  <string id="30004">Enter command</string>
+  <string id="30005">Manage commands</string>
+  <string id="30006">Edit</string>
+  <string id="30007">Remove</string>
+  <string id="30008">Sort</string>
+  <string id="30009">Command</string>
+  <string id="30010">Title</string>
+  <string id="30011">New position</string>
+  <string id="30012">Combination</string>
+</strings>

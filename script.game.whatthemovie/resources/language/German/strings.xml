@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" standalone='yes'?>
+<!-- String IDs
+Buttons  = 3000-3049 (same IDs like in skin.xml)
+Messages = 3050-3099
+Labels   = 3100-3199
+Settings = 3200-3299
+Misc     = 3300-3349
+-->
+<strings>
+    <!-- Buttons -->
+    <string id="3000">Erraten!</string>
+    <string id="3001">Zufall</string>
+    <string id="3002">Zurück</string>
+    <!-- Messages -->
+    <string id="3050">Login nicht erfolgreich</string>
+    <string id="3051">Passwort falsch oder Benutzer unbekannt: [B]%s[/B][CR]Bitte korrigieren oder Login deaktivieren</string>
+    <string id="3052">Shot ID eingeben</string>
+    <string id="3053">Filmtitel eingeben</string>
+    <string id="3054">Login Seite nicht erreichbar</string>
+    <string id="3055">Konnte den Shot nicht holen</string>
+    <string id="3066">Konnte den Shot nicht prüfen</string>
+    <!-- Labels -->
+    <string id="3100">Prüfe: [B]%s[/B]</string>
+    <string id="3101">Richtig. Originaltitel: [B]%s[/B]</string>
+    <string id="3102">Falsch: [B]%s[/B]</string>
+    <string id="3103">Nicht eingeloggt</string>
+    <string id="3104">Eingeloggt als: [B]%s[/B]</string>
+    <string id="3105">Deine Punkte: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">[B][COLOR=ff008B00]%s[/COLOR][/B] mal gelöst. Erster: [B]%s[/B]</string>
+    <string id="3107">Bisher ungelöst</string>
+    <string id="3108">Shot ID: [B]%s[/B]</string>
+    <string id="3109">Datum: [B]%s[/B]</string>
+    <string id="3110">Ersteller: [B]%s[/B]</string>
+    <string id="3111">Unveröffentlicht</string>
+    <string id="3112">Gelöschter Benutzer</string>
+    <string id="3113">New Submissions</string>
+    <string id="3114">Feature Films</string>
+    <string id="3115">The Archive</string>
+    <string id="3116">[B]%s[/B] Votes</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
+    <string id="3118">Versteckt</string>
+    <string id="3119">-</string>
+    <string id="3120">Rejected Shots</string>
+    <string id="3121">Du hast diesen Shot bereits gelöst</string>
+    <string id="3122">Die Lösung lautet: [B]%s[/B]</string>
+    <string id="3123">Du hast diesen Shot erstellt</string>
+    <string id="3124">Sorry, du darfst den Shot [B]%s[/B] nicht sehen - umgeleitet zu [B]%s[/B]</string>
+    <string id="3125">The Vault</string>
+    <string id="3126">Großartig. Originaltitel: [B]%s[/B] +1 Punkt!</string>
+    <string id="3127">Deleted Shots</string>
+    <string id="3128">Sorry, es existiert kein Shot [B]%s[/B] - umgeleitet zu [B]%s[/B]</string>
+    <!-- Settings -->
+    <string id="3200">Allgemein</string>
+    <string id="3201">Login</string>
+    <string id="3202">whatthemovie.com Account benutzen</string>
+    <string id="3203">Benutzername</string>
+    <string id="3204">Passwort</string>
+    <string id="3205">Zufallsoptionen (Login erforderlich)</string>
+    <string id="3206">Schwierigkeit</string>
+    <string id="3207">Einfach</string>
+    <string id="3208">Einfach+Mittel</string>
+    <string id="3209">Alle</string>
+    <string id="3210">Inkl. Archiv</string>
+    <string id="3211">Inkl. gelöste</string>
+    <string id="3212">Look+feel</string>
+    <string id="3213">Aussehen</string>
+    <string id="3214">Zeige "Veröffentlicht von"</string>
+    <string id="3215">Zeige "Gelöst"</string>
+    <string id="3216">Zeige "Shot ID"</string>
+    <string id="3217">Zeige "Shot Datum"</string>
+    <string id="3218">Verhalten</string>
+    <string id="3219">Auto Sprung nach korrektem raten</string>
+    <string id="3220">...nach X Sekunden</string>
+    <string id="3221">Zeige "Shot Flaggen"</string>
+    <string id="3222">Flaggen</string>
+    <string id="3223">Flagge 1</string>
+    <string id="3224">Flagge 2</string>
+    <string id="3225">Flagge 3</string>
+    <string id="3226">Flagge 4</string>
+    <string id="3227">Flagge 5</string>
+    <string id="3228">Wähle die sichtbaren Flaggen</string>
+    <string id="3229">Navigationsoptionen (Login erfolderlich)</string>
+    <string id="3230">Nur ungelöste Shots</string>
+    <string id="3231">Zeige "Shot Bewertungen"</string>
+    <string id="3232">Springe zu</string>
+    <string id="3233">Zufall</string>
+    <string id="3234">Nächstem</string>
+    <string id="3235">Zeige "Funktions Buttons"</string>
+    <string id="3236">Zeige "Navigations Buttons"</string>
+    <string id="3237">Tasten</string>
+    <string id="3238">Wähle Tasten für Funktionen</string>
+    <!-- Keys -->
+    <string id="3239">Keine Taste</string>
+    <string id="3240">Bild Hoch</string>
+    <string id="3241">Bild Runter</string>
+    <string id="3242">Zeige Info</string>
+    <string id="3243">Pause</string>
+    <string id="3244">Stop</string>
+    <string id="3245">next item</string>
+    <string id="3246">prev item</string>
+    <string id="3247">Vorspulen</string>
+    <string id="3248">Zurückspulen </string>
+    <string id="3249">Play</string>
+    <string id="3250">Kontext-Menu</string>
+    <string id="3251">Volume +</string>
+    <string id="3252">Volume -</string>
+    <string id="3253">Scroll up</string>
+    <string id="3254">Scroll down</string>
+    <string id="3255">Pos1</string>
+    <string id="3256">Ende</string>
+    <!-- Functions -->
+    <string id="3260">Nächster</string>
+    <string id="3261">Vorheriger</string>
+    <string id="3262">Springen</string>
+    <string id="3263">Lesezeichen</string>
+    <string id="3264">Favorisieren</string>
+    <string id="3265">Lösen</string>
+</strings>

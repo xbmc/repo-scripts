@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- General -->
+  <category label="30000">
+    <setting id="add_missing_submit" type="bool" label="30001" default="true" />
+    <setting id="goto_pre_filled" type="bool" label="30002" default="false" />
+    <setting id="simple_controls" type="bool" label="30003" />
+  </category>
+</settings>

@@ -1,0 +1,116 @@
+[B]Version 1.3.5 - 2012-06-03[/B]
+- Fixed key-repeat problem when re-ordering channels
+- Fixed problem with parsing some XMLTV dates
+- Detect custom skins that are not up-to-date
+- Move timebar in a thread to always have it show current time
+- Introduced support for external JSON (by kiler129)
+  - Sample format: see resources/sample-epg.json
+  - Sample code: http://pastebin.com/jW3FQdzy
+- Introduced support for Weeb.Tv plugin (by kiler129)
+- Added Polish translation (by kiler129)
+- Some adjustments to the settings menu look (by kiler129)
+- Improved error handling and recovery when the TV Guide database is broken
+- Added Aeon Nox skin (thanks Lunatixz)
+
+[B]Version 1.3.4 - 2012-04-11[/B]
+- Minor fixed from buggalo error reports
+
+[B]Version 1.3.3 - 2012-04-09[/B]
+- Fixed minor problems in Rapier skin
+- Improved handling of configuration errors (fx if XMLTV source file was removed)
+- Improved handling of invalid XMLTV source data
+
+[B]Version 1.3.2 - 2012-04-08[/B]
+- Accidentally released instead of 1.3.1 below.
+- Added initial version of Rapier skin support (thanks Lunatixz)
+
+[B]Version 1.3.1 - 2012-04-05[/B]
+- Fixed [I]foreign key constraint failed[/I] with certain XMLTV files
+- Fixed problem with overwriting local cache of XMLTV file
+
+[B]Version 1.3.0 - 2012-04-02[/B]
+- Scheduled notifications from version 1.2.2 are lost and will have to be re-scheduled
+- Completely rewrote focus handling
+- Added support for mouse wheel scrolling (will probably crash XBMC in Eden RC2 and earlier)
+- Added new source for ONTV.dk Pro customers (and other online XMLTV sources)
+- Added slide-out controls to ease navigation with mouse
+- Fixed problem with international characters in (custom) stream URLs
+- Changed notifications to notify both 5 mins before program start and on program start
+- Changed source data to be loaded in a separate thread and added option to cancel
+- Added French translation
+- Use script.module.buggalo for error reporting
+- Cache EPG data to local SQLite database (based on work by timpinkawa)
+- Added option to edit channel order and visibility
+- Automatically detects changes in settings and reloads EPG data as needed
+- Improved XMLTV parsing (thanks timpinkawa)
+- Added initial channel surfing support
+  - Press Info for OSD, navigate with Up, Down, Left, Right, Channel + and -
+  - Press ContextMenu to minimize video and show EPG
+
+[B]Version 1.2.2 - 2012-01-28[/B]
+- Fixed compatibility problem with Python 2.6 and previous versions
+  It caused problems on Windows, ATV, etc.
+
+[B]Version 1.2.1 - 2012-01-27[/B]
+- Added option to load channel icons from a folder when using XMLTV as source
+  Logos must be png's and named <channel name>.png
+- Added support for loading XMLTV files from network shares
+  Add your shares in XBMC's File manager
+- Fixed a number of small annoying bugs
+
+[B]Version 1.2.0 - 2012-01-19[/B]
+- Fixed a rendering problem when the source contains more than one day of programs
+- Improved handling of programs in the future
+- Changed popup menu to a context menu
+- Added option to choose custom stream file instead of built-in streaming options
+- Added support for stream playback using YouSee web-tv and Danish Live TV addons
+- Improved error handling with option for the user to submit exceptions/bugs
+- Fixed problem with missing cache folder (thanks spiff)
+- Added option to clear cache on startup before updating program information
+
+[B]Version 1.1.0 - 2011-10-03[/B]
+- Add option to get notified before programs start
+- New graphics
+- Readded initial support for streaming channels
+
+[B]Version 1.0.1 - 2011-09-10[/B]
+- Made paging of channels more logical to navigate
+- Better handling of errors if EPG data is unavailable
+- Improved visual feedback while loading
+- Added option in settings to clear cached EPG data (useful if you change source)
+
+[B]Version 1.0.0 - 2011-08-17[/B]
+- Background loading of EPG data on XBMC startup (Only available in Eden)
+- Otherwise same as v. 0.3.0.
+
+[B]Version 0.3.0 - 2011-08-17[/B]
+- Major restructuring
+- Updated YouSee source to use official API
+- Added TVTID.dk as source
+- Added support for XMLTV as source
+- Dropped support for streaming channels
+
+[B]Version 0.2.3[/B]
+- Added loading screen
+- Renamed background image to avoid conflict with skin (fx. Alaska Revisited)
+
+[B]Version 0.2.2[/B]
+- Added icon and fanart based on http://downloadpsd.com/icons/old-style-retro-tv-free-icon-psd-2.html
+- Both back (backspace) and menu (esc) will exit the guide now
+
+[B]Version 0.2.1[/B]
+- Use danishaddons module version 1.1.0
+
+[B]Version 0.2.0[/B]
+- Added multiple sources for EPG data; defaults is YouSee.tv with logo support
+- Refactored navigation logic
+
+[B]Version 0.1.0[/B]
+- First public release
+- Basic functionality is in place, but needs fine tuning
+
+[B]Version 0.0.2[/B]
+- Test version
+
+[B]Version 0.0.1[/B]
+- Proof of concept

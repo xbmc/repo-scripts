@@ -1,0 +1,87 @@
+= Changelog =
+
+== 1.0.10 ==
+  * Added option to store listened VM messages (MWI);
+  * Dialer is now numeric-only;
+  * A valid Caller ID is no longer required (will work with no CID at all);
+  * Experimental: Added option to display Caller's picture;
+  * UTF8 encoded all content from CDR & VM;
+  * Nicer Back-end messages;
+  * Back-end messages are now also shown on Front-end;
+  * Script is killed using XBMC Eden method;
+  * Fixes from vladi (XBMC Forum member) Thanks!;
+  * Other fixes
+ 
+== 1.0.9 ==
+  * Restored autoexec.py which is still needed for Dharma;
+  * Added option to Auto-select NewChannel State setting based on Asterisk Version;
+  * Added the ability to call back numbers from the voicemail list;
+  * Added a Dialpad (keyboard input) to initiate phone calls;
+  * Some other minor changes;
+
+== 1.0.8 ==
+  * Updated images (fanart and icons) to comply with this guideline: http://wiki.xbmc.org/index.php?title=Add-ons_for_XBMC_%28Development%29
+  * Removed (unnecessary) check for Linux64 that was causing trouble with XBMC Eden(-pre). Thanks freebs (XBMC Forum member);
+  * Added option to disable background service (so video is not going to be paused and notification popups are not going to be shown);
+  * Added check for Front-end and Back-end versions to make sure they match;
+  * Some other minor changes;
+
+== 1.0.7 ==
+  * Minor updates to make it compatible with the Official XBMC Eden(-pre) Add-on repository;
+
+== 0.0.7 ==
+  * Several fixes and improvements done by oneadvent (XBMC Forum member) Thanks!;
+  * Made it compatible with Dharma and Eden XBMC releases;
+    * Tested it on XBMC for Linux, Windows, XBMC4XBOX 3.0.1 and LiveCD;
+  * Added some checks and instructions on server-side;
+  * Added settings for VoiceMail notification timeout;
+  * Added settings to display Caller ID and/or pause video only if ALERT_INFO matches;
+  * Added setting to enable/disable DEBUG;
+  * Updated py-asterisk library to version 0.2;
+  * Fixed VoiceMail sorting;
+  * Added a "Refresh" button, so new CDR and VM information is retrieved from Asterisk;
+  * GUI moved from PAL to 720p default resolution;
+  * Added fanart;
+
+== 0.0.6 ==
+  * Fixed support for both Asterisk 1.4 and Asterisk 1.6;
+  * Added ability to delete Voice Mail;
+  * Rewrote skin to avoid localization bug and changed layout;
+  * Added Music Player controls while playing Voice Mail;
+  * Plus a few other changes and fixes;
+
+== 0.0.5 ==
+  * Added new setting to redirect calls if ALERT_INFO matches;
+  * Restricted AMI permissions;
+  * Re-arranged script settings;
+  * Added script image on notifications, tbn, etc;
+  * Some other minor changes;
+
+== 0.0.4 ==
+  * Changed the way script settings are used, making possible to reflect them immediately;
+  * Script splitted in two files (one for background and another for GUI) as XBox is unable to run the same script twice;
+  * Some fixes;
+
+== 0.0.3 ==
+  * Updated py-asterisk library;
+  * Added VoiceMail Context configuration;
+  * Added NewChannel State configuration;
+  * Added VoiceMail count notification on script startup;
+  * Added ability to Redirect(Transfer) phone calls if playing video;
+  * Some fixes;
+
+== 0.0.2 ==
+  * Added some error handling and messages for missing CDR & VM files/directory;
+  * Some fixes;
+
+== 0.0.1 ==
+  * Started a GUI using WindowsXML;
+  * GUI skinnable and supporting internationalization;
+  * Instructions are shown on first use;
+  * Partially working functionality:
+    * XBMC actions (i.e. Caller ID notification popup) based on Asterisk events;
+    * Displaying CDR info into XBMC;
+    * Initiating an outgoing phone call for the selected record;
+    * Displaying Voice Mail info into XBMC;
+    * Should be able to play the VoiceMail recorded message into XBMC.
+

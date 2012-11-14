@@ -1,0 +1,530 @@
+<window>
+  <id>3000</id>
+  <defaultcontrol>250</defaultcontrol>
+  <type>window</type>
+  <coordinates>
+    <system>1</system>
+    <posx>0</posx>
+    <posy>0</posy>
+  </coordinates>
+
+  <controls>
+
+    <!-- ============================================= -->
+    <!--   S C R E E N       B A C K G R O U N D       -->          
+    <!-- ============================================= -->              
+  
+    <!-- Copy of CommonBackground -->
+    <control type="image">
+      <description>background image</description>
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>1280</width>
+      <height>720</height>
+      <texture>bg.png</texture>
+    </control>
+
+    <control type="group">
+        <description>Content Group</description>
+        <!-- Copy Window_OpenClose_Right_Panel_Animation -->
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+        <animation effect="slide" start="1030,0" end="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="slide" end="1030,0" start="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+
+        <!-- ============================================= -->
+        <!--   C O N T E N T     B A C K G R O U N D       -->          
+        <!-- ============================================= -->              
+      
+        <!-- Copy of ContentPanel -->
+        <control type="image">
+            <posx>265</posx>
+            <posy>100</posy>
+            <width>1015</width>
+            <height>580</height>
+            <texture border="50,0,0,45">vpanel1.png</texture>
+        </control>
+        
+        <!-- ============================================= -->
+        <!--            L A B E L S   C O L U M N          -->          
+        <!-- ============================================= -->              
+        <control type="grouplist" id="3000">
+            <description>Column of text labels</description>
+            <posx>320</posx>
+            <posy>135</posy>
+            <itemgap>32</itemgap>
+            <control type="label"><description>title</description><label>SCRIPT610</label></control>
+            <control type="label"><description>desc</description><label>SCRIPT611</label></control>
+            
+            <control type="label"><description>air date</description><label>SCRIPT612</label></control>
+            <control type="label"><description>channel</description><label>SCRIPT613</label></control>
+            <!--
+            <control type="label"><description>category</description><label>SCRIPT614</label></control>
+            -->
+            <control type="label"><description>episode</description><label>Episode</label></control>
+        </control>
+
+        <control type="grouplist" id="3001">
+            <description>Column of text labels</description>
+            <posx>875</posx>
+            <posy>135</posy>
+            <itemgap>32</itemgap>
+            <control type="label"><label>-</label></control>  <!-- spacing -->
+            <control type="label"><label>-</label></control>  <!-- spacing -->
+            <control type="label"><description>orignal air date</description><label>SCRIPT615</label></control>
+            <control type="label"><description>size</description><label>SCRIPT616</label></control>
+            <control type="label"><description>comm breaks</description><label>SCRIPT617</label></control>
+        </control>
+
+        <!-- ============================================= -->
+        <!--        D E T A I L S  C O L U M N             -->          
+        <!-- ============================================= -->              
+        <control type="grouplist" id="4000">
+            <description>Column of Show Details</description>
+            <posx>475</posx>
+            <posy>135</posy>
+            <itemgap>32</itemgap>
+            <control type="fadelabel" id="4001">
+                <description>Title</description>
+                <width>750</width>
+                <scrollout>false</scrollout>
+                <pauseatend>500</pauseatend>
+                <textcolor>0xffddddff</textcolor>
+                <info>Window.Property(title)</info>
+            </control>
+            <control type="fadelabel" id="4004">
+                <description>Show desc</description>
+                <width>750</width>
+                <scrollout>false</scrollout>
+                <pauseatend>500</pauseatend>
+                <textcolor>0xffddddff</textcolor>
+                <info>Window.Property(description)</info>
+            </control>
+            <control type="label" id="4002">
+                <description>Air Date</description>
+                <textcolor>0xffddddff</textcolor>
+                <info>Window.Property(airDate)</info>
+            </control>
+            <control type="label" id="4003">
+                <description>Channel</description>
+                <textcolor>0xffddddff</textcolor>
+                <info>Window.Property(channel)</info>
+            </control>
+            <!-- 
+            <control type="label" id="4005">
+                <description>Category</description>
+                <textcolor>0xffddddff</textcolor>
+                <info>Window.Property(category)</info>
+                <visible>false</visible>
+            </control>
+            -->
+            <control type="label" id="4006">
+                <description>Episode</description>
+                <textcolor>0xffddddff</textcolor>
+                <info>Window.Property(episode)</info>
+            </control>
+        </control>
+
+        <control type="grouplist" id="4001">
+            <description>Column of Show Details</description>
+            <posx>1030</posx>
+            <posy>135</posy>
+            <itemgap>32</itemgap>
+            <control type="label"><label>-</label></control>
+            <control type="label"><label>-</label></control>
+            <control type="label" id="4006">
+                <description>Orig. Air Date</description>
+                <textcolor>0xffddddff</textcolor>
+                <info>Window.Property(originalAirDate)</info>
+            </control>
+            <control type="label" id="4007">
+                <description>Size</description>
+                <textcolor>0xffddddff</textcolor>
+                <info>Window.Property(fileSize)</info>
+            </control>
+            <control type="label" id="4008">
+                <description>Comm Breaks</description>
+                <textcolor>0xffddddff</textcolor>
+                <info>Window.Property(commBreaks)</info>
+            </control>
+        </control>
+
+        <!-- ============================================= -->
+        <!--        T H U M B N A I L                      -->          
+        <!-- ============================================= -->
+        <control type="image" id="4010">
+            <description>Preview shadow</description>
+            <posx>295</posx>
+            <posy>287</posy>
+            <width>625</width>
+            <height>380</height>
+            <texture background="false" border="40">-</texture>
+            <info>Window.Property(thumbnailShadow)</info>
+            <visible>!Player.HasVideo</visible>
+        </control>
+                      
+        <control type="image" id="4009">
+            <description>Preview Thumbnail</description>
+            <posx>320</posx>
+            <posy>320</posy>
+            <width>568</width>
+            <height>320</height>
+            <texture background="false">-</texture>
+            <info>Window.Property(thumbnail)</info>
+            <aspectratio>scale</aspectratio>
+            <fadetime>400</fadetime>
+            <visible>!Player.HasVideo</visible>
+        </control>
+        
+        <control type="videowindow" id="4011">
+            <posx>320</posx>
+            <posy>320</posy>
+            <width>568</width>
+            <height>320</height>
+            <visible>Player.HasVideo</visible>
+        </control>
+        
+    </control>
+
+
+    <!-- ============================================= -->
+    <!--        H E A D E R                            -->          
+    <!-- ============================================= -->              
+    <control type="image">
+      <description>Header Panel</description>
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>1280</width>
+      <height>128</height>
+      <texture>mb-header.png</texture>
+    </control>
+
+    <control type="image">
+        <posx>40</posx>
+        <posy>20</posy>
+        <width>460</width>
+        <height>90</height>
+        <texture>mythbox.png</texture>
+        <aspectratio align="left">keep</aspectratio>
+        <animation effect="fade" time="200">WindowOpen</animation>
+        <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+
+    <control type="label">
+      <description>screen title</description>
+      <posx>70r</posx>
+      <posy>25</posy>
+      <width>400</width>
+      <height>35</height>
+      <align>right</align>
+      <aligny>center</aligny>
+      <textcolor>ffffffff</textcolor>
+      <label>SCRIPT600</label>
+      <animation effect="fade" time="200">WindowOpen</animation>
+      <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+
+    <control type="label">
+      <description>date/time label</description>
+      <posx>70r</posx>
+      <posy>65</posy>
+      <width>450</width>
+      <height>35</height>
+      <align>right</align>
+      <aligny>center</aligny>
+      <font>font12</font>
+      <textcolor>ffffffff</textcolor>
+      <label>$INFO[System.Date] [COLOR=88FFFFFF] |  $INFO[System.Time][/COLOR]</label>
+      <animation effect="fade" time="200">WindowOpen</animation>
+      <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+        
+    <!-- ============================================= -->
+    <!--  N A V     B U T T O N S                      -->          
+    <!-- ============================================= -->              
+    <control type="group" id="2000">
+        <description>Buttons</description>
+        <posx>0</posx>
+        <posy>122</posy>
+        <itemgap>1</itemgap>
+        <onup>2000</onup>
+        <ondown>2000</ondown>
+        
+        <!-- Copy of include Window_OpenClose_Left_Panel_Animation -->
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+        <animation effect="slide" start="-400,0" end="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="slide" end="-400,0" start="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+        
+        <control type="button" id="250" >
+            <description>Play button</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>285</width>
+            <height>40</height>
+            <label>SCRIPT601</label>
+            <align>left</align>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <enabled>true</enabled>
+            <pulseonselect>true</pulseonselect>
+            <onup>255</onup>
+            <ondown>251</ondown>
+        </control>
+        
+        <control type="button" id="251">
+            <posx>0</posx>
+            <posy>40</posy>
+            <width>285</width>
+            <height>40</height>
+            <description>Play+Skip button</description>
+            <label>SCRIPT602</label>
+            <align>left</align>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <onup>250</onup>
+            <ondown>252</ondown>
+        </control>
+        
+        <control type="button" id="252">
+            <posx>0</posx>
+            <posy>80</posy>
+            <width>285</width>
+            <height>40</height>
+            <description>Delete button</description>
+            <label>SCRIPT603</label>
+            <align>left</align>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <onup>251</onup>
+            <ondown>253</ondown>
+        </control>
+
+        <control type="button" id="253">
+            <description>Re-Record button</description>
+            <posx>0</posx>
+            <posy>120</posy>
+            <width>285</width>
+            <height>40</height>
+            <label>SCRIPT604</label>
+            <align>left</align>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <onup>252</onup>
+            <ondown>256</ondown>
+        </control>
+
+        <control type="button" id="256">
+            <description>edit schedule</description>
+            <posx>0</posx>
+            <posy>160</posy>
+            <width>285</width>
+            <height>40</height>
+            <label>SCRIPT605</label>
+            <align>left</align>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <onup>253</onup>
+            <ondown>257</ondown>
+        </control>
+
+        <control type="button" id="257">
+            <description>advanced</description>
+            <posx>0</posx>
+            <posy>200</posy>
+            <width>285</width>
+            <height>40</height>
+            <label>SCRIPT440</label>
+            <align>left</align>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <onleft>300</onleft>
+            <onright>300</onright>
+            <onclick>SetFocus(300)</onclick>
+            <onup>256</onup>
+            <ondown>255</ondown>
+        </control>
+
+        <control type="button" id="255">
+            <description>Refresh button</description>
+            <posx>0</posx>
+            <posy>240</posy>
+            <width>285</width>
+            <height>40</height>
+            <label>SCRIPT210</label>
+            <align>left</align>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <onup>257</onup>
+            <ondown>250</ondown>
+        </control>
+
+    </control>
+    
+    <control type="group">
+        <posx>60</posx>
+        <posy>470</posy>
+        <!-- Copy of include Window_OpenClose_Left_Panel_Animation -->
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+        <animation effect="slide" start="-400,0" end="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="slide" end="-400,0" start="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+
+        <control type="image">
+            <width>150</width>
+            <height>150</height>
+            <aspectratio>keep</aspectratio>
+            <info>Window.Property(channelIcon)</info>
+            <fadetime>400</fadetime>
+        </control>
+    </control>
+    
+    <control type="group" id="300">
+       <posx>-285</posx>
+       <posy>0</posy>
+       <defaultcontrol>254</defaultcontrol>
+       <animation effect="slide" end="285,0" time="400" tween="quadratic" easing="out" condition="Control.HasFocus(254)|Control.HasFocus(300)|Control.HasFocus(301)|Control.HasFocus(302)|Control.HasFocus(303)|Control.HasFocus(304)|Control.HasFocus(305)|Control.HasFocus(306)|Control.HasFocus(307)">Conditional</animation>
+       <control type="image">
+           <posx>0</posx>
+           <posy>0</posy>
+           <width>285</width>
+           <height>720</height>
+           <texture border="10">MediaBladeSub.png</texture>
+        </control>
+        <control type="grouplist">
+          <posx>0</posx>
+          <posy>200</posy>
+          <onleft>257</onleft>
+          <onright>257</onright>
+          <itemgap>0</itemgap>
+          
+          <control type="button" id="254">
+              <description>Move to first job in Queue Button</description>
+              <width>270</width>
+              <label>SCRIPT606</label>
+              <textoffsetx>40</textoffsetx>
+              <texturefocus>button_focus.png</texturefocus>
+              <texturenofocus>button_nofocus.png</texturenofocus>
+              <pulseonselect>true</pulseonselect>
+              <onclick>SetFocus(257)</onclick>
+          </control>
+          <control type="button" id="307">
+              <description>Refresh Fanart</description>
+              <width>270</width>
+              <textoffsetx>40</textoffsetx>
+              <texturefocus>button_focus.png</texturefocus>
+              <texturenofocus>button_nofocus.png</texturenofocus>
+              <pulseonselect>true</pulseonselect>
+              <label>Refresh Fan Art</label>
+              <visible>true</visible>
+              <onclick>SetFocus(257)</onclick>
+          </control>
+          <control type="button" id="301">
+              <description>Flag Commercials</description>
+              <width>270</width>
+              <label>SCRIPT129</label>
+              <textoffsetx>40</textoffsetx>
+              <texturefocus>button_focus.png</texturefocus>
+              <texturenofocus>button_nofocus.png</texturenofocus>
+              <pulseonselect>true</pulseonselect>
+              <onclick>SetFocus(257)</onclick>
+          </control>
+          <control type="button" id="302">
+              <description>Transcode</description>
+              <width>270</width>
+              <textoffsetx>40</textoffsetx>
+              <texturefocus>button_focus.png</texturefocus>
+              <texturenofocus>button_nofocus.png</texturenofocus>
+              <pulseonselect>true</pulseonselect>
+              <label>SCRIPT252</label>
+              <onclick>SetFocus(257)</onclick>
+          </control>
+          <control type="button" id="303">
+              <description>UserJob1</description>
+              <width>270</width>
+              <textoffsetx>40</textoffsetx>
+              <texturefocus>button_focus.png</texturefocus>
+              <texturenofocus>button_nofocus.png</texturenofocus>
+              <pulseonselect>true</pulseonselect>
+              <label>UserJob1</label>
+              <visible>true</visible>
+              <onclick>SetFocus(257)</onclick>
+          </control>
+          <control type="button" id="304">
+              <description>UserJob2</description>
+              <width>270</width>
+              <textoffsetx>40</textoffsetx>
+              <texturefocus>button_focus.png</texturefocus>
+              <texturenofocus>button_nofocus.png</texturenofocus>
+              <pulseonselect>true</pulseonselect>
+              <label>UserJob2</label>
+              <visible>true</visible>
+              <onclick>SetFocus(257)</onclick>
+          </control>
+          <control type="button" id="305">
+              <description>UserJob3</description>
+              <width>270</width>
+              <textoffsetx>40</textoffsetx>
+              <texturefocus>button_focus.png</texturefocus>
+              <texturenofocus>button_nofocus.png</texturenofocus>
+              <pulseonselect>true</pulseonselect>
+              <label>UserJob3</label>
+              <visible>true</visible>
+              <onclick>SetFocus(257)</onclick>
+          </control>
+          <control type="button" id="306">
+              <description>UserJob4</description>
+              <width>270</width>
+              <textoffsetx>40</textoffsetx>
+              <texturefocus>button_focus.png</texturefocus>
+              <texturenofocus>button_nofocus.png</texturenofocus>
+              <pulseonselect>true</pulseonselect>
+              <label>UserJob4</label>
+              <visible>true</visible>
+              <onclick>SetFocus(257)</onclick>
+          </control>
+        </control>
+    </control>
+    
+    <control type="multiimage">
+        <description>Busy animation</description>
+        <posx>722</posx>
+        <posy>340</posy>
+        <width>100</width>
+        <height>100</height>
+        <imagepath>busy</imagepath>
+        <timeperimage>50</timeperimage>
+        <fadetime>0</fadetime>
+        <visible>substring(Window.Property(busy),true) + !Player.HasVideo</visible>
+        <animation effect="fade" time="250">VisibleChange</animation>    
+    </control>
+
+    <control type="label">
+        <posx>70r</posx>
+        <posy>50r</posy>
+        <width>200</width>
+        <height>35</height>
+        <align>right</align>
+        <aligny>center</aligny>
+        <font>font12</font>
+        <textcolor>ffffffff</textcolor>
+        <label>$INFO[Window.Property(recordingNofM)]</label>
+        <animation effect="fade" time="200">WindowOpen</animation>
+        <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+    
+  </controls>
+</window>

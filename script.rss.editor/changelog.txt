@@ -1,0 +1,8 @@
+2.0.2
+- fix encoding issues when writing to log
+
+2.0.1
+- fix encoding issues when opening files
+
+2.0.0
+- eden compatible version

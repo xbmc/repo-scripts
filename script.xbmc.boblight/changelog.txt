@@ -1,0 +1,11 @@
+1.0.3
+- fixed the lib downloading code on win32
+
+1.0.2
+- changed icon to something we own the copyright for
+
+1.0.1
+- ping boblightd and reconnect if connection is lost
+
+1.0.0
+- initial addon release

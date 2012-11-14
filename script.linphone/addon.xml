@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.linphone"
+       name="Linphonec"
+       version="0.0.6"
+       provider-name="PostMet Corporation">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>osx linux</platform>
+    <summary lang="en">Video and audio SIP soft phone</summary>
+    <description lang="en">You need install dpkg -i  http://saturn.postmet.com/pub/linphone_3.5.0-1_i386.deb</description>
+  </extension>
+</addon>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+	<string id="30010">XBMC Backup</string>
+	<string id="30011">Allgemein</string>
+	<string id="30012">Datenauswahl</string>
+
+	<string id="30016">Sichern</string>
+	<string id="30017">Wiederherstellen</string>
+	<string id="30018">Verzeichnis wählen</string>
+	<string id="30019">Verzeichnis eintippen</string>
+	<string id="30020">Entferntes Verzeichnis wählen</string>
+	<string id="30021">Sicherungsverzeichnisname</string>
+	<string id="30022">Im Hintergrund arbeiten</string>
+	<string id="30023">Modus</string>
+	<string id="30024">Entferntes Verzeichnis</string>
+	<string id="30025">Typ Entferntes Verzeichnis</string>
+
+	<string id="30030">Benutzer Addons</string>
+	<string id="30031">Addon Data</string>
+	<string id="30032">Datenbanken</string>
+	<string id="30033">Playlisten</string>
+	<string id="30034">Thumbnails/Fanart</string>
+	<string id="30035">Config Dateien</string>
+
+	<string id="30045">Fehler: Entferntes Verzeichnis nicht konfiguriert</string>
+	<string id="30046">Starte</string>
+	<string id="30047">Lokales Verzeichnis</string>
+	<string id="30048">Entferntes Verzeichnis</string>
+	<string id="30049">Dateiliste wird erzeugt</string>
+	<string id="30050">Entferntes Verzeichnis existiert - es könnte bereits Dateien beinhalten!</string>
+	<string id="30051">Dateiliste wird erzeugt</string>
+	<string id="30052">Schreibe Datei</string>
+</strings>

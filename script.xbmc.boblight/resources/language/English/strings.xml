@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+<!--Common-->
+ 
+  
+<!--Settings-->  
+  <!--General-->
+  <string id="100">General</string>
+  <string id="101">Use remote boblightd</string>
+  <string id="102">Boblightd IP</string>
+  <string id="103">Boblightd Port</string>
+  <string id="104">Disable boblight</string>
+  <string id="105">Override used category</string>
+  <string id="106">Category</string>
+
+  <!--Movie/MusicVideo/Other-->
+  <string id="200">Movie</string>
+  <string id="201">Preset</string>
+  <string id="202">Speed</string>
+  <string id="203">Autospeed</string>
+  <string id="204">Interpolation</string>
+  <string id="205">Saturation</string>
+  <string id="206">Value</string>
+  <string id="207">Threshold</string>
+  
+  <string id="220">Custom</string>
+  <string id="221">Slow</string>
+  <string id="222">Fast</string>
+  
+  <!--MusicVideo-->
+  <string id="300">Musicvideo</string>
+  
+  <string id="320">Custom</string>
+  <string id="321">Slow</string>
+  <string id="322">Fast</string>
+  
+  <!--Other-->
+  <string id="400">Other</string>
+  <string id="401">Static background light</string>
+  <string id="402">Red</string>
+  <string id="403">Green</string>
+  <string id="404">Blue</string>
+  
+  <!--Notifications-->
+  <string id="500">Failed to connect to boblightd!</string>
+  <string id="501">Connected to boblightd!</string>
+  <string id="502">Settings changed!</string>
+  <string id="503">Boblight is disabled!</string>
+  <string id="504">This addon needs a binary library.</string>
+  <string id="505">Please read the README file.</string>
+  <string id="506">for getting some more instructions.</string>
+  <string id="507">This addon can't be run on that</string>
+  <string id="508">operating system! (missing ctypes module)</string>
+  <string id="509">Should the addon try to download it for you?</string>
+</strings>
+
+

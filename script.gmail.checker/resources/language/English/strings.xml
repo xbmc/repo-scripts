@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    
+  <!-- English -->
+  
+    <string id="610">Connecting to Gmail ...</string>
+    <string id="611">(%s) New e-mail%s</string>
+    <string id="612">Received on %s (UTC)</string>
+    <string id="613">Error Connecting to Gmail</string>
+    <string id="614">Please set Username and Password</string>
+
+  <!-- Script Settings -->
+
+    <string id="30100">Settings</string>
+    <string id="30101">Gmail Username</string>
+    <string id="30102">Gmail Password</string>
+
+</strings>

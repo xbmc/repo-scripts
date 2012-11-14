@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <!-- Plugin settings -->
+    <string id="30000">SpeedFan Log Folder</string>
+    <string id="30001">Enable Verbose Logging</string>
+    <string id="30002">Log Temperature Scale</string>
+    <string id="30003">Window Update Interval (in seconds)</string>
+    <string id="30100">Temperature Information</string>
+    <string id="30101">Fan Speed Information</string>
+    <string id="30102">Voltage Information</string>
+	<!-- Other text display strings -->
+
+</strings>

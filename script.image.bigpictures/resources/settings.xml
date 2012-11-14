@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32200">
+        <setting type="lsep" label="32001"/>
+        <setting type="lsep" label="32002"/>
+        <setting type="lsep" label="32003"/>
+        <setting type="lsep" label="32004"/>
+        <setting type="lsep" label="32005"/>
+        <setting type="lsep" label="32006"/>
+        <setting type="lsep" label="32007"/>
+        <setting type="lsep" label="32008"/>
+        <setting type="bool" label="32100" id="dont_show_help" />
+    </category>
+    <category label="32201">
+        <setting id="aspect_ratio2" type="enum" label="32110" default="1" lvalues="32111|32112"/>
+        <setting id="show_arrows" type="bool" label="32120" default="true"/>
+        <setting id="random_slideshow" type="bool" label="32130" default="false"/>
+        <setting id="download_path" type="folder" source="files" label="32140"  option="writeable" default=""/>
+    </category>
+</settings>

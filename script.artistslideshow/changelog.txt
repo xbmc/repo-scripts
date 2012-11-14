@@ -1,0 +1,105 @@
+v.1.4.5
+- fix for improper clearing of info labels on XBMC abort request
+
+v.1.4.4
+- fix for non-ascii characters in windows user name
+- fix for non-ascii characters in artist name
+- download notifications disabled by default with option to enable them
+
+v.1.4.3
+unreleased beta
+
+v.1.4.2
+- updated featured artist parsing to support radio streams
+- updated featured artist parsing to support calls from external scripts
+- updated the notifications logic when downloading images
+- added notification if no images downloaded
+- added notification when all downloads complete
+- added ability to override artist bio, albums, and similar artists with local info
+- fixed bug when using both local and remote images
+- added French localization strings and description (thanks to mikebzh44)
+- updated Portuguese-Brazil strings (thanks to Wanilton)
+- UTF8 encoded message strings
+
+v.1.4.1
+- updated language files for Portuguese-Brazil (thanks to Wanilton)
+- fixed error causing information for 50th album to not be cleared
+
+v.1.4.0
+- added ability to display artwork from multiple artists simultaneously
+- added option for a folder name other than extrafanart
+- added notification when downloading first image for an artist
+- added option for user to set image to use during download of first artist image
+
+v1.3.2
+- added language files for Portuguese-Brazil (thanks to Wanilton)
+
+v1.3.1
+- changes to support for internet streams
+- fixed bug that caused artist .nfo files to never be updated
+
+v1.3.0
+- updated refresh during download logic to make it more aesthetically pleasing
+- refresh during downloads is now the default (and non-optional) behavior
+- removed option to change refresh timing
+- new cache manager (removes only files, not directories)
+- added one additional (smaller) option for cache size
+- experimental support for external scripts using artistslideshow
+- experimental support for internet streams
+
+v1.2.0
+- added ability to use local or remote images
+- added priority image control to use local first, remote first, or both
+- added option to restrict downloads to 16:9 images
+- added option to have slideshow refresh after every image download or after x seconds
+- added option for override folder that will be showed instead of artists images
+- updated logic to refresh images after all are downloaded
+- fixed potential script crash if remote sites unavailable
+- experimental support for limiting size of cache folder
+
+v1.1.5
+- blank window property a little longer
+
+v1.1.4
+- make sure we don't block xbmc on exit
+
+v1.1.3
+- add language selection for artists
+
+v1.1.2
+- added option to download additional artist info
+- use elementtree script module
+
+v1.1.1
+- added option to download images from htbackdrops.com
+
+v1.1.0
+- code refactoring
+
+v1.0.4
+- do not use the xbmc temp dir
+
+v1.0.3
+- allow the script to run without music playing
+
+v1.0.2
+- store images in addon_data
+
+v1.0.1
+- use xbmcvfs.mkdir
+
+v1.0.0
+- initial release
+
+v0.0.4 (beta 4)
+- added settings to specify minimal image width and height
+
+v0.0.3 (beta 3)
+- better song change detection
+- don't try to download when no artist name is provided 
+- try to make sure the script doesn't fail when listening to online radio
+
+v0.0.2 (beta 2)
+- fixed: screen could go black when next track started before download finished
+
+v0.0.1 (beta 1)

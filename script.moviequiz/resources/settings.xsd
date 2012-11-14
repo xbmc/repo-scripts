@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="settings">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="category" type="categoryType" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="categoryType">
+        <xs:sequence>
+            <xs:element name="setting" type="settingType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="label" type="xs:string" />
+    </xs:complexType>
+
+    <xs:complexType name="settingType">
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="label" type="xs:string"/>
+        <xs:attribute name="type" type="typeEnum" use="required"/>
+        <xs:attribute name="default" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+        <xs:attribute name="visible" type="xs:string"/>
+        <xs:attribute name="values" type="xs:string"/>
+        <xs:attribute name="subsetting" type="xs:boolean"/>
+        <xs:attribute name="enable" type="xs:string"/>
+        <xs:attribute name="action" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:simpleType name="typeEnum">
+        <xs:annotation>
+            <xs:documentation>
+                bla bla
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction>
+            <xs:enumeration value="action">
+                <xs:annotation>
+                    <xs:documentation>
+                        This type defines the setting as an action.
+                        When invoked the action defined by the action attribute is invoked.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bool">
+                <xs:annotation>
+                    <xs:documentation>
+                        This type defines a setting that can be either true or false.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="number">
+                <xs:annotation>
+                    <xs:documentation>
+                        This type defines a setting that accepts an integer as value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="labelenum">
+                <xs:annotation>
+                    <xs:documentation>
+                        This type defines a setting that provides the user with a choice between a predefined set of values.
+                        TODO The actual values is retrieved from strings.xml
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="enum">
+                <xs:annotation>
+                    <xs:documentation>
+                        This type defines a setting that provides the user with a choice between a predefined set of values.
+                        The possible values must be provided in the values attribute and each value separated with a pipe (|)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="lsep">
+                <xs:annotation>
+                    <xs:documentation>
+                        This type will generate a highlighted header line with
+                        the text defined by the label attribute (if present).
+                        It cannot be focused or invoked.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sep">
+                <xs:annotation>
+                    <xs:documentation>
+                        This type will generate a horizontal line seperator, between the
+                        settings above and below.
+                        It cannot be focused or invoked.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="slider"/>
+            <xs:enumeration value="fileenum"/>
+            <xs:enumeration value="text"/>
+            <xs:enumeration value="fileenum"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

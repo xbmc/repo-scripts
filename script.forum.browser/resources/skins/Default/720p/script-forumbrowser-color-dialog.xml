@@ -1,0 +1,667 @@
+<window>
+	<defaultcontrol>111</defaultcontrol>
+	<zorder>1</zorder>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>240</posx>
+			<posy>100</posy>
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-10</posy>
+				<width>840</width>
+				<height>482</height>
+				<texture border="30">forum-browser-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image" id="250">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>-6</posy>
+				<width>800</width>
+				<height>452</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FF444444</colordiffuse>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>780</width>
+				<height>432</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FF888888</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>780</width>
+				<height>85</height>
+				<texture border="20">forum-browser-white-box.png</texture>
+			</control>
+			<control type="image" id="160">
+				<description>Smaller Back</description>
+				<posx>10</posx>
+				<posy>84</posy>
+				<width>780</width>
+				<height>352</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+			</control>
+			
+			<control type="image" id="300">
+				<description>Smaller Back</description>
+				<posx>20</posx>
+				<posy>104</posy>
+				<width>760</width>
+				<height>160</height>
+				<aspectratio>keep</aspectratio>
+			</control>
+
+			<control type="label" id="104">
+				<description>Caption</description>
+				<posx>35</posx>
+				<posy>14</posy>
+				<width>200</width>
+				<height>60</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>black</textcolor>
+				<aligny>center</aligny>
+				<align>center</align>
+				<wrapmultiline>true</wrapmultiline>
+				<label>Header Color</label>
+			</control>
+
+			<control type="button" id="110">
+				<description>Close Button</description>
+				<posx>750</posx>
+				<posy>15</posy>
+				<width>28</width>
+				<height>28</height>
+				<texturefocus>forum-browser-close-button-focus.png</texturefocus>
+				<texturenofocus>forum-browser-close-button.png</texturenofocus>
+				<visible>system.getbool(input.enablemouse)</visible>
+				<onclick>PreviousMenu</onclick>
+			</control>
+			
+			<control type="group">
+				<posx>30</posx>
+				<posy>290</posy>
+				
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>120</width>
+					<height>145</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>100</width>
+					<height>125</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FFAA0000</colordiffuse>
+				</control>
+				
+				<control type="label" id="200">
+					<description>r decimal</description>
+					<posx>0</posx>
+					<posy>70</posy>
+					<width>100</width>
+					<height>20</height>
+					<font>ForumBrowser-font13</font>
+					<textcolor>white</textcolor>
+					<aligny>center</aligny>
+					<align>center</align>
+				</control>
+				
+				<control type="label" id="201">
+					<description>r decimal</description>
+					<posx>0</posx>
+					<posy>95</posy>
+					<width>100</width>
+					<height>20</height>
+					<font>ForumBrowser-font13</font>
+					<textcolor>FF000000</textcolor>
+					<aligny>center</aligny>
+					<align>center</align>
+				</control>
+				
+				<control type="button" id="150">
+					<description>Ok Button</description>
+					<posx>5</posx>
+					<posy>5</posy>
+					<width>40</width>
+       				<height>60</height>
+					<onleft>111</onleft>
+					<onright>151</onright>
+					<onup>150</onup>
+					<ondown>150</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus>forum-browser-left-focus.png</texturefocus>
+					<texturenofocus>forum-browser-left-nofocus.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+					<label>[B]-[/B]</label>
+				</control>
+
+				<control type="button" id="151">
+					<description>Ok Button</description>
+					<posx>55</posx>
+					<posy>5</posy>
+					<width>40</width>
+       				<height>60</height>
+					<onleft>150</onleft>
+					<onright>152</onright>
+					<onup>151</onup>
+					<ondown>151</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus>forum-browser-right-focus.png</texturefocus>
+					<texturenofocus>forum-browser-right-nofocus.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+					<label>[B]+[/B]</label>
+				</control>
+				
+				<control type="image">
+					<posx>115</posx>
+					<posy>0</posy>
+					<width>120</width>
+					<height>145</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				
+				<control type="image">
+					<posx>115</posx>
+					<posy>0</posy>
+					<width>100</width>
+					<height>125</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FF00AA00</colordiffuse>
+				</control>
+				
+				<control type="label" id="202">
+					<description>r decimal</description>
+					<posx>115</posx>
+					<posy>70</posy>
+					<width>100</width>
+					<height>20</height>
+					<font>ForumBrowser-font13</font>
+					<textcolor>white</textcolor>
+					<aligny>center</aligny>
+					<align>center</align>
+				</control>
+				
+				<control type="label" id="203">
+					<description>r decimal</description>
+					<posx>115</posx>
+					<posy>95</posy>
+					<width>100</width>
+					<height>20</height>
+					<font>ForumBrowser-font13</font>
+					<textcolor>FF000000</textcolor>
+					<aligny>center</aligny>
+					<align>center</align>
+				</control>
+				
+				<control type="button" id="152">
+					<description>Ok Button</description>
+					<posx>120</posx>
+					<posy>5</posy>
+					<width>40</width>
+       				<height>60</height>
+					<onleft>151</onleft>
+					<onright>153</onright>
+					<onup>152</onup>
+					<ondown>152</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus>forum-browser-left-focus.png</texturefocus>
+					<texturenofocus>forum-browser-left-nofocus.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+					<label>[B]-[/B]</label>
+				</control>
+
+				<control type="button" id="153">
+					<description>Ok Button</description>
+					<posx>170</posx>
+					<posy>5</posy>
+					<width>40</width>
+       				<height>60</height>
+					<onleft>152</onleft>
+					<onright>154</onright>
+					<onup>153</onup>
+					<ondown>153</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus>forum-browser-right-focus.png</texturefocus>
+					<texturenofocus>forum-browser-right-nofocus.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+					<label>[B]+[/B]</label>
+				</control>
+				
+				<control type="image">
+					<posx>230</posx>
+					<posy>0</posy>
+					<width>120</width>
+					<height>145</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				
+				<control type="image">
+					<posx>230</posx>
+					<posy>0</posy>
+					<width>100</width>
+					<height>125</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FF0000FF</colordiffuse>
+				</control>
+				
+				<control type="label" id="204">
+					<description>r decimal</description>
+					<posx>230</posx>
+					<posy>70</posy>
+					<width>100</width>
+					<height>20</height>
+					<font>ForumBrowser-font13</font>
+					<textcolor>white</textcolor>
+					<aligny>center</aligny>
+					<align>center</align>
+				</control>
+				
+				<control type="label" id="205">
+					<description>r decimal</description>
+					<posx>230</posx>
+					<posy>95</posy>
+					<width>100</width>
+					<height>20</height>
+					<font>ForumBrowser-font13</font>
+					<textcolor>FF000000</textcolor>
+					<aligny>center</aligny>
+					<align>center</align>
+				</control>
+				
+				<control type="button" id="154">
+					<description>Ok Button</description>
+					<posx>235</posx>
+					<posy>5</posy>
+					<width>40</width>
+       				<height>60</height>
+					<onleft>153</onleft>
+					<onright>155</onright>
+					<onup>154</onup>
+					<ondown>154</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus>forum-browser-left-focus.png</texturefocus>
+					<texturenofocus>forum-browser-left-nofocus.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+					<label>[B]-[/B]</label>
+				</control>
+
+				<control type="button" id="155">
+					<description>Ok Button</description>
+					<posx>285</posx>
+					<posy>5</posy>
+					<width>40</width>
+       				<height>60</height>
+					<onleft>154</onleft>
+					<onright>156</onright>
+					<onup>155</onup>
+					<ondown>155</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus>forum-browser-right-focus.png</texturefocus>
+					<texturenofocus>forum-browser-right-nofocus.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+					<label>[B]+[/B]</label>
+				</control>
+				
+				<control type="image">
+					<posx>345</posx>
+					<posy>0</posy>
+					<width>120</width>
+					<height>145</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				
+				<control type="image">
+					<posx>345</posx>
+					<posy>0</posy>
+					<width>100</width>
+					<height>125</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FF666666</colordiffuse>
+				</control>
+				
+				<control type="label">
+					<description>r decimal</description>
+					<posx>345</posx>
+					<posy>70</posy>
+					<width>100</width>
+					<height>20</height>
+					<font>ForumBrowser-font13</font>
+					<textcolor>white</textcolor>
+					<aligny>center</aligny>
+					<align>center</align>
+					<label>All</label>
+				</control>
+				
+				<control type="button" id="156">
+					<description>Ok Button</description>
+					<posx>350</posx>
+					<posy>5</posy>
+					<width>40</width>
+       				<height>60</height>
+					<onleft>155</onleft>
+					<onright>157</onright>
+					<onup>156</onup>
+					<ondown>156</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus>forum-browser-left-focus.png</texturefocus>
+					<texturenofocus>forum-browser-left-nofocus.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+					<label>[B]-[/B]</label>
+				</control>
+
+				<control type="button" id="157">
+					<description>Ok Button</description>
+					<posx>400</posx>
+					<posy>5</posy>
+					<width>40</width>
+       				<height>60</height>
+					<onleft>156</onleft>
+					<onright>158</onright>
+					<onup>157</onup>
+					<ondown>157</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus>forum-browser-right-focus.png</texturefocus>
+					<texturenofocus>forum-browser-right-nofocus.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+					<label>[B]+[/B]</label>
+				</control>
+				
+				<control type="image">
+					<posx>460</posx>
+					<posy>-15</posy>
+					<width>170</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				
+				<control type="button" id="158">
+					<description>Hex</description>
+					<posx>460</posx>
+					<posy>-15</posy>
+					<width>150</width>
+					<height>40</height>
+					<onleft>157</onleft>
+					<onright>111</onright>
+					<onup>158</onup>
+					<ondown>171</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+				</control>
+				
+				<control type="image">
+					<posx>460</posx>
+					<posy>35</posy>
+					<width>60</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="170">
+					<posx>460</posx>
+					<posy>35</posy>
+					<width>40</width>
+					<height>40</height>
+					<onleft>157</onleft>
+					<onright>171</onright>
+					<onup>158</onup>
+					<ondown>173</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus border="20">forum-browser-white-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<colordiffuse>FFFFFFFF</colordiffuse>
+				</control>
+				<control type="image">
+					<posx>460</posx>
+					<posy>35</posy>
+					<width>40</width>
+					<height>40</height>
+					<texture border="20">forum-browser-white-outline.png</texture>
+					<visible>Control.HasFocus(170)</visible>
+				</control>
+				
+				<control type="image">
+					<posx>510</posx>
+					<posy>35</posy>
+					<width>60</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="171">
+					<posx>510</posx>
+					<posy>35</posy>
+					<width>40</width>
+					<height>40</height>
+					<onleft>170</onleft>
+					<onright>172</onright>
+					<onup>158</onup>
+					<ondown>174</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<colordiffuse>FF000000</colordiffuse>
+				</control>
+				<control type="image">
+					<posx>510</posx>
+					<posy>35</posy>
+					<width>40</width>
+					<height>40</height>
+					<texture border="20">forum-browser-white-outline.png</texture>
+					<visible>Control.HasFocus(171)</visible>
+				</control>
+				
+				<control type="image">
+					<posx>560</posx>
+					<posy>35</posy>
+					<width>60</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="172">
+					<posx>560</posx>
+					<posy>35</posy>
+					<width>40</width>
+					<height>40</height>
+					<onleft>171</onleft>
+					<onright>111</onright>
+					<onup>158</onup>
+					<ondown>175</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus border="20">forum-browser-white-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<colordiffuse>FF7F7F7F</colordiffuse>
+				</control>
+				<control type="image">
+					<posx>560</posx>
+					<posy>35</posy>
+					<width>40</width>
+					<height>40</height>
+					<texture border="20">forum-browser-white-outline.png</texture>
+					<visible>Control.HasFocus(172)</visible>
+				</control>
+				
+				<control type="image">
+					<posx>460</posx>
+					<posy>85</posy>
+					<width>60</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="173">
+					<posx>460</posx>
+					<posy>85</posy>
+					<width>40</width>
+					<height>40</height>
+					<onleft>157</onleft>
+					<onright>174</onright>
+					<onup>170</onup>
+					<ondown>173</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus border="20">forum-browser-white-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<colordiffuse>FFFF0000</colordiffuse>
+				</control>
+				<control type="image">
+					<posx>460</posx>
+					<posy>85</posy>
+					<width>40</width>
+					<height>40</height>
+					<texture border="20">forum-browser-white-outline.png</texture>
+					<visible>Control.HasFocus(173)</visible>
+				</control>
+				
+				<control type="image">
+					<posx>510</posx>
+					<posy>85</posy>
+					<width>60</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="174">
+					<posx>510</posx>
+					<posy>85</posy>
+					<width>40</width>
+					<height>40</height>
+					<onleft>173</onleft>
+					<onright>175</onright>
+					<onup>171</onup>
+					<ondown>174</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus border="20">forum-browser-white-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<colordiffuse>FF00FF00</colordiffuse>
+				</control>
+				<control type="image">
+					<posx>510</posx>
+					<posy>85</posy>
+					<width>40</width>
+					<height>40</height>
+					<texture border="20">forum-browser-white-outline.png</texture>
+					<visible>Control.HasFocus(174)</visible>
+				</control>
+				
+				<control type="image">
+					<posx>560</posx>
+					<posy>85</posy>
+					<width>60</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="175">
+					<posx>560</posx>
+					<posy>85</posy>
+					<width>40</width>
+					<height>40</height>
+					<onleft>174</onleft>
+					<onright>111</onright>
+					<onup>172</onup>
+					<ondown>175</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<texturefocus border="20">forum-browser-white-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<colordiffuse>FF0000FF</colordiffuse>
+				</control>
+				<control type="image">
+					<posx>560</posx>
+					<posy>85</posy>
+					<width>40</width>
+					<height>40</height>
+					<texture border="20">forum-browser-white-outline.png</texture>
+					<visible>Control.HasFocus(175)</visible>
+				</control>
+				
+			</control>
+			
+			<control type="group" id="112">
+				<control type="image">
+					<posx>670</posx>
+					<posy>380</posy>
+					<width>120</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="111">
+					<description>Ok Button</description>
+					<posx>670</posx>
+					<posy>380</posy>
+					<width>100</width>
+					<height>40</height>
+					<onleft>158</onleft>
+					<onright>150</onright>
+					<onup>111</onup>
+					<ondown>111</ondown>
+					<visible>true</visible>
+					<font>font13</font>
+					<align>center</align>
+					<label>$LOCALIZE[SCRIPT3013]</label>
+					<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+				</control>
+			</control>
+
+		</control>
+
+	</controls>
+</window>

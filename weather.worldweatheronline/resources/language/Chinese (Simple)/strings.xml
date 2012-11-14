@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!-- Script Settings -->
+
+    <string id="30100">所在地设置</string>
+    <string id="30110">更改地点1</string>
+    <string id="30111">更改地点2</string>
+    <string id="30112">更改地点3</string>
+</strings>

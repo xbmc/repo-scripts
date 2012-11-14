@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting type="lsep" label="1000" />
+    <setting id="rpc_host" type="text" label="1001" default="localhost" />
+    <setting id="rpc_port" type="number" label="1002" default="9091" />
+    <setting id="rpc_user" type="text" label="1003" default="" />
+    <setting id="rpc_password" type="text" option="hidden" label="1004" default="" />
+</settings>

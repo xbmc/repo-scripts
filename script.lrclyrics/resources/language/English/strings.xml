@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC Lyrics</string>
+    <string id="30000">File</string>
+    <string id="30001">No lyrics found!</string>
+
+    <!-- Settings labels -->
+    <string id="30100">Scraper</string>
+    <string id="30101">Save lyrics</string>
+    <string id="30102">Save folder</string>
+    <string id="30103"></string>
+    <string id="30104">Save lyrics files in artist folder</string>
+    <string id="30105">Smooth scrolling for lyrics</string>
+    <string id="30106">Use only filename for search</string>
+    <string id="30107">Filename format</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">Load same name lyrics from sub folder</string>
+    <string id="30112">- Sub folder name</string>
+</strings>

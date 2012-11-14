@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../strings.xsd">
+    <!-- -->
+    <string id="30000">Frage %d von %d</string>
+    <string id="30001">Richtig:</string>
+    <string id="30002">Falsch:</string>
+    <string id="30003">Game Over</string>
+    <string id="30004">Du hast %d von %d</string><!-- 1st %d is score, 2nd %d is total question -->
+
+    <string id="30005">Specials</string><!-- same value as id="20381" in main xbmc strings.xml -->
+    <string id="30006">Staffel %d</string><!-- same value as id="20358" in main xbmc strings.xml -->
+    <string id="30007">%B %e, %Y</string><!-- episode first aired date format: http://docs.python.org/library/time.html#time.strftime -->
+    <string id="30008">[B]Lade...[/B]</string>
+
+    <string id="30010">Willkommen, bitte wähle einen Spieler-Namen:</string>
+    
+    <string id="30011">Nochmal</string>
+    <string id="30012">Quiz</string>
+    <string id="30013">Deine Punkte:</string>
+
+    <string id="30014">Wähle Spieler</string>
+    <string id="30015">Neuer Spieler</string>
+
+    <string id="30050">Warnung</string>
+    <string id="30051">Alle Film-Fragen sind deaktiviert,</string>
+    <string id="30052">Alle Serien-Fragen sind deaktiviert,</string>
+    <string id="30053">dieser Spieltyp steht also nicht zur Verfügung.</string>
+
+    <string id="30054">Fehlende Vorraussetzungen!</string>
+    <string id="30055">Um das Movie Quiz zu spielen müssen Filme</string>
+    <string id="30056">oder Serien in der Datenbank vorhanden sein.</string>
+    <string id="30057">Prüfe die XBMC Wiki für weitere Informationen</string>
+
+    <string id="30058">%s löschen?</string>
+    <string id="30059">Dies wird den Spieler und alle seine Punkte</string>
+    <string id="30060">unwiederbringlich löschen!</string>
+
+    <string id="30061">Keiner deiner Filme oder Serien-Episoden sind als</string>
+    <string id="30062">"gesehen" markiert, [I]zeige nur gesehene Filme[/I]</string>
+    <string id="30063">[I]in den Frage-[/I] Einstellungen wird deaktiviert.</string>
+
+    <string id="30064">Keiner deiner Filme hat MPAA/FSK Eintragungen,</string>
+    <string id="30065">Die [I]Begrenze Filme nach Altersbeschränkung[/I]</string>
+    <string id="30066">Einstellung wird deaktiviert.</string>
+
+    <string id="30067">Keiner deiner Filme hat Content rating,</string>
+    <string id="30068">Die [I]Begrenze Serien nach Content rating[/I]</string>
+    <string id="30069">Einstellung wird deaktiviert.</string>
+    
+    <!-- Menu -->
+    <string id="30100">Film-Quiz spielen</string>
+    <string id="30101">Serien-Quiz spielen</string>
+    <string id="30102">Highscores, etc.</string>
+    <string id="30103">Beenden</string>
+
+    <string id="30110">[B]Film Trivia[/B]</string>
+    <string id="30111">%d Filme</string><!-- %d is movie count -->
+    <string id="30112">%d Schauspieler</string><!-- %d is actor count -->
+    <string id="30113">%d Regisseure</string><!-- %d is director count -->
+    <string id="30114">%d Studios</string><!-- %d is studio count -->
+    <string id="30115">%d Stunden Unterhaltung</string>
+
+    <string id="30120">[B]TV Serien Trivia[/B]</string>
+    <string id="30121">%d TV Serien</string><!-- %d is TV show count -->
+    <string id="30122">%d Staffeln</string><!-- %d is season count -->
+    <string id="30123">%d Episoden</string><!-- %d is episodes  -->
+
+    <string id="30130">Eine Minute</string>
+    <string id="30131">%s Minuten</string>
+    <string id="30132">%s Fragen</string>
+
+    <string id="30133">Noch %d Fragen</string>
+    <string id="30134">Letzte Frage</string>
+    <string id="30135">Noch %d Minuten</string>
+    
+    <!-- Movie Questions -->
+    <string id="30400">Welcher Film ist das?</string>
+    <string id="30401">In welchem Film spielt [B]%s[/B] nicht mit?</string><!-- %s is actor name -->
+    <string id="30402">In welchem Jahr wurde [B]%s[/B] veröffentlicht?</string><!-- %s is movie title -->
+    <string id="30403">Welche Tagline gehört zu [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30404">Wer führte Regie bei [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30405">Welches Studio veröffentlichte [B]%s[/B]?</string><!-- %s is movie title -->
+    <string id="30406">Welcher Schauspieler ist das?</string>
+    <string id="30407">Wer spielt [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+    <string id="30408">Wer spricht [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is movie title -->
+    <string id="30409">Aus welchem Film ist dieses Zitat?</string>
+    <string id="30410">Welcher Film ist der Neuste?</string>
+    <string id="30411">Bei welchem Film führte [B]%s[/B] nicht Regie?</string><!-- %s is director name -->
+    <string id="30412">Welcher Schauspieler spielt in diesen Filmen mit?</string>
+    <string id="30413">What actor is in [B]%s[/B] besides [B]%s[/B]?</string><!-- 1st %s is movie title, 2nd %s is actor name -->
+    <string id="30414">Welcher dieser Filme ist der längste?</string>
+
+    <!-- TV Questions -->
+    <string id="30450">Welche TV-Serie ist das?</string>
+    <string id="30451">Welche Staffel von [B]%s[/B] ist das?</string><!-- %s is tvshow title -->
+    <string id="30452">Welche Episode von [B]%s[/B] ist das?</string><!-- %s is tvshow title -->
+    <string id="30453">Wann wurde [B]%s[/B] von [B]%s[/B] zuerst ausgestrahlt?</string><!-- 1st %s is episode, 2nd %s is tvshow title -->
+    <string id="30454">Wann wurde [B]%s[/B] zuerst ausgestrahlt?</string><!-- %s is tvshow title -->
+    <string id="30455">Wer spielt [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
+    <string id="30456">Wer spricht [B]%s[/B] in [B]%s[/B]?</string><!-- 1st %s is role, 2nd %s is tvshow title -->
+    <string id="30457">Aus welcher TV-Serie ist dieses Zitat?</string>
+    <string id="30458">Aus welcher TV-Serie stammt diese Titelmusik?</string>
+
+  <!-- Settings strings -->
+    <string id="30500">Allgemein</string>
+    <string id="30501">Filme</string>
+    <string id="30502">TV Serien</string>
+    <string id="30503">Downloads</string>
+    <string id="30504">Highscore</string>
+    <string id="30505">Fragen</string>
+    
+    <string id="30510">Limitiere die Anzahl der Fragen</string>
+    <string id="30511">Fragen Limit</string>
+    <string id="30512">Limitiere Filme anhand der Altersfreigabe</string>
+    <string id="30513">Max. Altersfreigabe</string>
+    <string id="30514">Zeige die korrekte Antwort, wenn falsche ausgewählt wurde</string>
+    <string id="30515">Nutze nur gesehene Filme für das Quiz</string>
+    <string id="30516">Limitiere TV Serien anhand der Altersfreigabe</string>
+    <string id="30517">Maximale Altersfreigabe</string>
+    <string id="30519">IMDB Daten herunterladen...</string>
+    <string id="30520">Lade IMDB Daten...</string>
+    <string id="30521">%d von %d MB</string>
+    <string id="30522">Manche Fragen benötigen zusätzliche Daten,</string>
+    <string id="30523">diese können hier geladen werden:</string>
+    <string id="30524">Punkte in die Highscore-Liste eintragen</string>
+    
+    <string id="30550">Nur diese Art der Fragen beim Film-Quiz</string>
+    <string id="30551">Nur diese Art der Fragen beim Serien-Quiz</string>
+
+    <string id="30552">Welcher Film ist das?</string>
+    <string id="30553">In welchem Film spielt SCHAUSP. nicht mit?</string>
+    <string id="30554">In welchem Jahr wurde FILM veröffentlicht?</string>
+    <string id="30555">Welche Tagline gehört zu FILM?</string>
+    <string id="30556">Wer führte Regie bei FILM?</string>
+    <string id="30557">Welches Studio veröffentlichte FILM?</string>
+    <string id="30558">Welcher Schauspieler ist das?</string>
+    <string id="30559">Wer spielt ROLLE in FILM?</string>
+    <string id="30560">Aus welchem Film ist dieses Zitat?</string>
+    <string id="30561">Welcher Film ist der Neuste?</string>
+    <string id="30562">Bei welchem Film führte REGIES. nicht Regie?</string>
+    <string id="30563">Welcher Schauspieler spielt in diesen Filmen mit?</string>
+    <string id="30564">What actor is in these movie besides other actor?</string>
+    <string id="30565">Welcher dieser Filme ist der längste?</string>
+
+    <string id="30580">Welche TV-Serie ist das?</string>
+    <string id="30581">Welche Staffel ist das?</string>
+    <string id="30582">Welche Folge ist das?</string>
+    <string id="30583">Wann wurde TV-SERIE zuerst ausgestrahlt?</string>
+    <string id="30584">Wer spielte ROLLE in TV-SERIE?</string>
+    <string id="30585">Aus welcher TV-Serie stammt dieses Zitat?</string>
+    <string id="30586">Aus welcher TV-Serie stammt diese Titelmusik?</string>
+    
+    <!-- Game type strings -->
+    <string id="30600">[B]Wähle den Film-Quiz Typ[/B]</string>
+    <string id="30601">[B]Wähle den Serien-Quiz Typ[/B]</string>
+    <string id="30602">Unbegrenzt</string>
+    <string id="30603">Zeitlimit</string>
+    <string id="30604">Fragenlimit</string>
+    <string id="30605">Zurück</string>
+    <string id="30606">Los</string>
+
+    <string id="30610">Kein Zeitlimit</string>
+    <string id="30611">Kein Fragenlimit</string>
+    <string id="30612">Beende das Spiel mit "Beenden"</string>
+    <string id="30613">Das Quiz endet nach</string>
+
+    <!-- Game over strings -->
+    <string id="30700">[B]Game Over[/B]</string>
+    <string id="30701">Nochmal</string>
+    <string id="30702">Highscore</string>
+    <string id="30703">Lokale Highscore</string>
+    <string id="30704">Hauptmenu</string>
+    <string id="30705">Unbegrenzt</string>
+    <string id="30706">Limit: %s Fragen</string>
+    <string id="30707">Limit: Einer Minute</string>
+    <string id="30708">Limit: %s Minuten</string>
+
+    <!-- About strings -->
+    <string id="30800">Highscores</string>
+    <string id="30801">About</string>
+    <string id="30802">Changelog</string>
+    <string id="30803">Statistiken</string>
+
+    <string id="30810">Film-Quiz</string>
+    <string id="30811">Serien-Quiz</string>
+
+    <string id="30812">[B]Nickname[/B]</string>
+    <string id="30813">[B]Punkte[/B]</string>
+    <string id="30814">[B]Datum[/B]</string>
+    <string id="30815">Typ wählen</string>
+
+    <string id="30820">Statistiken basieren auf der globalen Highscore-Liste aus September 2011.[CR][CR][B]%s[/B] verschiedene Spieler aus [B]%s[/B] Ländern haben [B]%s[/B] Highscores.[CR]Eine Gesamtmenge aus [B]%s[/B] wurden beantwortet, davon [B]%s[/B] richtig, das sind [B]%s[/B] Prozent.</string>
+    <string id="30821">[B]Top Länder[/B]</string>
+    <string id="30822">[B]Top Spieler[/B]</string>
+
+    <string id="39998">Entwickelt von Tommy Winther</string>
+    <string id="39999">Übersetzt von sphere und mad-max</string>
+</strings>

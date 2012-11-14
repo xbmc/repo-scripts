@@ -1,0 +1,375 @@
+<window>
+	<defaultcontrol>123</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<control type="image" id="101">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<texture border="40">forum-browser-panel-full.png</texture>
+				<colordiffuse>FF444444</colordiffuse>
+			</control>
+
+			<control type="image" id="251">
+				<description>Large Back</description>
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>1260</width>
+				<height>712</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FF888888</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>1260</width>
+				<height>85</height>
+				<texture border="20">forum-browser-white-box.png</texture>
+			</control>
+			<control type="image" id="251">
+				<description>Smaller Back</description>
+				<posx>10</posx>
+				<posy>84</posy>
+				<width>1260</width>
+				<height>632</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+			</control>
+			<control type="image" id="102">
+				<description>Avatar</description>
+				<posx>23</posx>
+				<posy>16</posy>
+				<width>59</width>
+				<height>59</height>
+			</control>
+			<control type="label" id="103">
+				<description>User</description>
+				<posx>90</posx>
+				<posy>22</posy>
+				<width>150</width>
+				<height>40</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>black</textcolor>
+				<aligny>center</aligny>
+				<align>center</align>
+				<label>[B]Post[/B]</label>
+				<wrapmultiline>true</wrapmultiline>
+			</control>
+
+
+			<control type="label" id="104">
+				<description>Topic</description>
+				<posx>235</posx>
+				<posy>14</posy>
+				<width>680</width>
+				<height>60</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>black</textcolor>
+				<aligny>center</aligny>
+				<align>center</align>
+				<wrapmultiline>true</wrapmultiline>
+			</control>
+
+			<control type="label" id="105">
+				<description>Date</description>
+				<posx>1200</posx>
+				<posy>14</posy>
+				<width>330</width>
+				<height>60</height>
+				<font>ForumBrowser-font10</font>
+				<textcolor>black</textcolor>
+				<aligny>center</aligny>
+				<align>right</align>
+			</control>
+			
+			<control type="group">
+				<posx>1200</posx>
+				<posy>15</posy>
+				<control type="button" id="110">
+					<description>Close Button</description>
+					<posx>30</posx>
+					<posy>0</posy>
+					<width>28</width>
+					<height>28</height>
+					<texturefocus>forum-browser-close-button-focus.png</texturefocus>
+					<texturenofocus>forum-browser-close-button.png</texturenofocus>
+					<visible>system.getbool(input.enablemouse)</visible>
+					<onclick>PreviousMenu</onclick>
+				</control>
+			
+				<control type="label" id="160">
+					<description>Login Error</description>
+					<posx>0</posx>
+					<posy>4</posy>
+					<width>400</width>
+					<height>10</height>
+					<font>ForumBrowser-font10</font>
+					<textcolor>black</textcolor>
+					<aligny>top</aligny>
+					<align>right</align>
+				</control>
+				<control type="image" id="111">
+					<description>Logged In</description>
+					<posx>5</posx>
+					<posy>4</posy>
+					<width>20</width>
+					<height>20</height>
+					<texture>forum-browser-logged-in.png</texture>
+					<colordiffuse>FF555555</colordiffuse>
+				</control>
+			</control>
+
+			<control type="textbox" id="122">
+				<posx>30</posx>
+				<posy>97</posy>
+				<width>1205</width>
+				<height>606</height>
+				<pagecontrol>123</pagecontrol>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>ForumBrowser-font13</font>
+				<scroll>true</scroll>
+				<textcolor>FF000000</textcolor>
+				<visible>true</visible>
+			</control>
+
+			<control type="scrollbar" id="123">
+				<description>Message Scrollbar</description>
+				<posx>1253</posx>
+				<posy>97</posy>
+				<width>4</width>
+				<height>606</height>
+				<onleft>147</onleft>
+				<onright>149</onright>
+				<onup>123</onup>
+				<ondown>123</ondown>
+				<texturesliderbackground>-</texturesliderbackground>
+				<texturesliderbar border="1">forum-browser-panel-full.png</texturesliderbar>
+				<texturesliderbarfocus border="1">forum-browser-panel-full.png</texturesliderbarfocus>
+				<textureslidernib>-</textureslidernib>
+				<textureslidernibfocus>-</textureslidernibfocus>
+				<orientation>vertical</orientation>
+				<showonepage>true</showonepage>
+				<colordiffuse>FF555555</colordiffuse>
+				<visible>Control.IsVisible(122)</visible>
+			</control>
+		</control>
+
+		<control type="group" id="149">
+			<posx>1272</posx>
+			<posy>0</posy>
+			<defaultcontrol>150</defaultcontrol>
+			<animation effect="slide" end="-309,0" time="400"
+				condition="Control.HasFocus(149)|Control.HasFocus(150)">Conditional</animation>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>315</width>
+				<height>720</height>
+				<texture border="10">forum-browser-Slide-panel.png</texture>
+				<visible>true</visible>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+			</control>
+			<control type="list" id="150">
+				<posx>-4</posx>
+				<posy>4</posy>
+				<width>315</width>
+				<height>720</height>
+				<onleft>123</onleft>
+				<onright>123</onright>
+				<onup>150</onup>
+				<ondown>150</ondown>
+				<viewtype label="535">list</viewtype>
+				<!-- <pagecontrol>121</pagecontrol> -->
+				<scrolltime>200</scrolltime>
+				<itemlayout height="168">
+					<control type="image">
+						<posx>16</posx>
+						<posy>1</posy>
+						<width>300</width>
+						<height>166</height>
+						<texture border="20">forum-browser-white-boxr.png</texture>
+						<visible>true</visible>
+						<colordiffuse>CC999999</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>101</posx>
+						<posy>4</posy>
+						<width>128</width>
+						<height>128</height>
+						<texture fallback="forum-browser-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<visible>true</visible>
+						<colordiffuse>A0FFFFFF</colordiffuse>
+						<aspectratio>keep</aspectratio>
+					</control>
+					<control type="label">
+						<posx>25</posx>
+						<posy>134</posy>
+						<width>130</width>
+						<height>30</height>
+						<font>ForumBrowser-font12</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout height="300">
+					<control type="image">
+						<posx>16</posx>
+						<posy>1</posy>
+						<width>300</width>
+						<height>298</height>
+						<texture border="20">forum-browser-white-boxr.png</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>33</posx>
+						<posy>4</posy>
+						<width>256</width>
+						<height>256</height>
+						<texture fallback="forum-browser-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+						<aspectratio>keep</aspectratio>
+					</control>
+					<control type="label">
+						<posx>25</posx>
+						<posy>264</posy>
+						<width>130</width>
+						<height>30</height>
+						<font>ForumBrowser-font12</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+
+		<control type="group" id="147">
+			<posx>-507</posx>
+			<posy>0</posy>
+			<defaultcontrol>150</defaultcontrol>
+			<animation effect="slide" end="507,0" time="400"
+				condition="Control.HasFocus(147)|Control.HasFocus(148)">Conditional</animation>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>515</width>
+				<height>720</height>
+				<texture border="10">forum-browser-Slide-panel.png</texture>
+				<visible>true</visible>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+			</control>
+			<control type="list" id="148">
+				<posx>4</posx>
+				<posy>4</posy>
+				<width>515</width>
+				<height>720</height>
+				<onleft>123</onleft>
+				<onright>123</onright>
+				<onup>148</onup>
+				<ondown>148</ondown>
+				<viewtype label="535">list</viewtype>
+				<!-- <pagecontrol>121</pagecontrol> -->
+				<scrolltime>200</scrolltime>
+				<itemlayout height="60">
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>58</height>
+						<texture border="20">forum-browser-white-boxr.png</texture>
+						<visible>true</visible>
+						<colordiffuse>CC999999</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>6</posy>
+						<width>58</width>
+						<height>48</height>
+						<texture fallback="forum-browser-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="label">
+						<posx>69</posx>
+						<posy>1</posy>
+						<width>421</width>
+						<height>58</height>
+						<font>ForumBrowser-font12</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+				</itemlayout>
+				<focusedlayout height="120">
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>118</height>
+						<texture border="20">forum-browser-white-boxr.png</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>10</posy>
+						<width>100</width>
+						<height>100</height>
+						<texture fallback="forum-browser-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="label">
+						<posx>115</posx>
+						<posy>1</posy>
+						<width>375</width>
+						<height>78</height>
+						<font>ForumBrowser-font12</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label">
+						<posx>115</posx>
+						<posy>80</posy>
+						<width>375</width>
+						<height>30</height>
+						<font>ForumBrowser-font12</font>
+						<aligny>center</aligny>
+						<textcolor>FF444444</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label2</info>
+						<visible>true</visible>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>

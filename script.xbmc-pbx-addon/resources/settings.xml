@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30001">
+        <!-- Info -->
+        <setting id="first_time_use" type="bool" default="true" visible="false"/>
+        <setting id="info" type="text" label="30002" default="http://code.google.com/p/xbmc-pbx-addon/" enable="false"/>
+        <setting id="xbmc_debug" type="bool" label="30003" default="false"/>
+        <setting id="xbmc_bgservice" type="bool" label="30004" default="false"/>
+    </category>
+    <category label="30010">
+        <!-- Connection -->
+        <!-- Asterisk Manager related settings -->
+        <setting id="separator" type="lsep" label="30011"/>
+        <setting id="asterisk_manager" type="text" label="30012" default="" enable="false"/>
+        <setting id="asterisk_manager_host" type="text" label="30013" default="asterisk"/>
+        <setting id="asterisk_manager_port" type="number" label="30014" default="5038"/>
+        <setting id="asterisk_manager_user" type="text" label="30015" default="xbmc"/>
+        <setting id="asterisk_manager_pass" type="text" label="30016" default="xbmc"/>
+    </category>
+    <category label="30040">
+        <!-- CDR & VoiceMail & MWI related settings -->
+        <setting id="separator" type="lsep" label="30040"/>
+        <setting id="asterisk_info" type="text" label="30041" default="" enable="false"/>
+        <setting id="asterisk_info_url" type="text" label="30042" default="http://asterisk/xbmc-pbx-addon.php"/>
+        <setting id="xbmc_vm_notification_timeout" type="enum" label="30043" values="5|10|15|20|25|30" default="2"/>
+        <setting id="asterisk_vm_mailbox" type="number" label="30044" default="000"/>
+        <setting id="asterisk_vm_context" type="text" label="30045" default="default"/>
+        <setting id="asterisk_vm_format" type="enum" label="30046" values="wav|gsm|mp3|WAV" default="0"/>
+        <setting id="asterisk_mwi_info" type="text" label="30047" default="" enable="false"/>
+        <setting id="asterisk_mwi_clean" type="bool" label="30048" default="false"/>
+    </category>
+    <category label="30030">
+        <!-- Asterisk Outbound calls related settings -->
+        <setting id="separator" type="lsep" label="30030"/>
+        <setting id="asterisk_outbound" type="text" label="30031" default="" enable="false"/>
+        <setting id="asterisk_outbound_extension" type="text" label="30032" default="Local/200@from-internal"/>
+        <setting id="asterisk_outbound_context" type="text" label="30033" default="from-internal"/>
+    </category>
+    <category label="30020">
+        <!-- Asterisk Inbound calls related settings -->
+        <setting id="separator" type="lsep" label="30020"/>
+        <setting id="xbmc_oncall" type="text" label="30021" default="" enable="false"/>
+        <setting id="asterisk_chan_state" type="enum" label="30022" values="Down|Ring|Auto" default="2"/>
+        <setting id="asterisk_cid_alert_info" type="text" label="30023" default=""/>
+        <setting id="xbmc_oncall_notification" type="bool" label="30024" default="true"/>
+        <setting id="xbmc_oncall_notification_timeout" type="enum" label="30025" values="5|10|15|20|25|30" default="2"/>
+        <setting id="xbmc_oncall_pause_media" type="bool" label="30026" default="true"/>
+        <setting id="asterisk_now_playing_enabled" type="bool" label="30027" default="false"/>
+        <setting id="asterisk_now_playing_context" type="text" label="30028" default="xbmc-now-playing"/>
+        <setting id="asterisk_redir_alert_info" type="text" label="30029" default=""/>
+        <setting id="xbmc_caller_picture_enabled" type="bool" label="30061" default="false"/>
+        <setting id="xbmc_caller_picture_path" type="folder" label="30062" default=""/>
+    </category>
+</settings>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="0">Transmission</string>
+    
+    <!-- Buttons -->
+    <string id="101">추가</string>
+    <string id="102">삭제</string>
+    <string id="103">일시정지</string>
+    <string id="104">시작</string>
+    <string id="105">전체 일시정지</string>
+    <string id="106">전체 시작</string>
+    <string id="107">나가기</string>
+    
+    <!-- Settings -->
+    <string id="1000">RPC 설정</string>
+    <string id="1001">호스트</string>
+    <string id="1002">포트</string>
+    <string id="1003">유저네임</string>
+    <string id="1004">패스워드</string>
+</strings>

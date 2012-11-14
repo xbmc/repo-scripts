@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.validictory"
+       name="validictory"
+       version="0.8.3"
+       provider-name="Valentin-Costel Hăloiu">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>A general purpose Python data validator</summary>
+    <description>Packed for XBMC from https://github.com/sunlightlabs/validictory</description>
+    <license>MIT</license>
+    <platform>all</platform>
+  </extension>
+</addon>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.image.bigpictures" name="The Big Picture" version="3.0.4" provider-name="Tristan Fischer (sphere@dersphere.de)">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.beautifulsoup" version="3.0.8"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py">
+        <provides>image</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="cs">Fotoreportáže</summary>
+        <summary lang="de">Fotojournalismus</summary>
+        <summary lang="en">Photojournalism</summary>
+        <summary lang="fr">Photojournalisme</summary>
+        <summary lang="nl">Fotojournalisme</summary>
+        <description lang="cs">Tento doplněk poskytuje přístup k nádherným albům a fotografiím z vybraných webových stránek s fotoreportážemi.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup</description>
+        <description lang="de">Dieses Addon bietet schöne Alben und Photos von Fotojournalismus Webseiten.[CR][CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup</description>
+        <description lang="en">This addon provides beautiful albums and photos from some nice photojournalism websites.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup</description>
+        <description lang="fr">Cet addon affiche de magnifiques albums et photos de plusieurs sites Web de photojournalisme.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup</description>
+        <description lang="nl">Deze addon toont prachtige albums en fotos van enkele knappe photojournalisme websites.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup</description>
+    </extension>
+</addon>

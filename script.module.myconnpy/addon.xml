@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.myconnpy"
+       name="MySQL Connector/Python"
+       version="0.3.2"
+       provider-name="http://forge.mysql.com/projects/project.php?id=302">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <summary>MySQL Connector/Python</summary>
+        <description>MySQL Connector/Python is implementing the MySQL Client/Server protocol completely in Python. This means you don't have to compile anything or MySQL (client library) doesn't even have to be installed on the machine.</description>
+        <license>GPLv2</license>
+        <platform>all</platform>
+    </extension>
+</addon>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id='script.common.plugin.cache' version='1.3.0' name='Common plugin cache' provider-name='TheCollective'>
+  <requires>
+    <import addon='xbmc.python' version='2.0'/>
+  </requires>
+  <extension point='xbmc.service' library='default.py' start='startup'>
+  </extension>
+  <extension point='xbmc.addon.metadata'>
+    <platform>all</platform>
+    <summary lang='en'>Common caching api for xbmc plugins.</summary>
+  </extension>
+  <extension point='xbmc.python.module' library='lib' />
+</addon>

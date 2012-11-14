@@ -1,0 +1,9 @@
+[B]Version 1.0.3[/B]
+- Fixed putlocker
+
+[B]Version 1.0.2[/B]
+- Fixed dailymotion
+- Fixed gorillavid
+
+[B]Version 1.0.0[/B]
+- Initial Release.

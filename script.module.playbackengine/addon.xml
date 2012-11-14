@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.playbackengine" name="XBMCHUB Playback Engine" version="1.0.2" provider-name="XBMCHUB.com">
+	<requires>
+		<import addon="xbmc.python" version="2.0" />
+		<import addon="script.module.t0mm0.common" version="1.0.1" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Bookmarking playback engine</summary>
+		<description lang="en">Generic playback engine that adds bookmarking support to xbmc's player. Code developed by XBMCHUB.com members.</description>
+	</extension>
+</addon>

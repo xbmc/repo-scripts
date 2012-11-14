@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="0">Transmission</string>
+    
+    <string id="1">Connectant amb Transmission</string>
+    <string id="2">Error de Transmission</string>
+    <string id="3">Obro el diàleg de paràmetres?</string>
+    
+    <!-- Buttons -->
+    <string id="101">Afegeix</string>
+    <string id="102">Elimina</string>
+    <string id="103">Pausa</string>
+    <string id="104">Inicia</string>
+    <string id="105">Pausa-ho tot</string>
+    <string id="106">Inicia-ho tot</string>
+    <string id="107">Surt</string>
+    
+    <!-- Settings -->
+    <string id="1000">Paràmetres RPC</string>
+    <string id="1001">Amfitrió</string>
+    <string id="1002">Port</string>
+    <string id="1003">Usuari</string>
+    <string id="1004">Contrasenya</string>
+
+    <!-- Errors -->
+    <string id="9000">S'ha trobat un error inesperat</string>
+    <string id="9001">No es pot connectar amb Transmission</string>
+    <string id="9002">Usuari o Contrasenya invàlids</string>
+</strings>

@@ -1,0 +1,337 @@
+1/8/2011 - MythBox 1.1.0
+-----------------------------
+  New
+    - Support for XBMC 11.0 BETA (Eden)
+    - A thumbnail for which there is no associated recording is
+      automatically deleted
+    - Added 'Refresh Fan Art' button to the Recording Details > Advanced menu
+    - IMDbPY 4.7
+    - TVRage 0.3.2
+    - MythTV protocols 66 - 70 (based on patch from mitch capper)
+    - iOS device support (verified on IPad 1)
+
+  Fixed
+    - EPG was broken for Python 2.7
+    - Re-record button on coverflow popup fixed
+    - Loading of persistant TVRage metadata failed on file corruption
+    - [EDEN] Fixed crash on startup
+    - [EDEN] Support for Apple Remote menu button
+    - Bunch of other minor bug fixes 
+    
+6/11/2011 - MythBox 1.0.4
+-----------------------------
+  New
+
+    - Issue 168 - User jobs, comm flagging, and transcoding can
+      be triggered via the Advanced button on the Recording
+      Details window 
+    - Jobs and Tuners table on the Home window update automatically
+      based on events from the master backend
+    - Coverflow recordings can be deleted by clicking the down button
+    - New artwork is checked for once a month if no artwork was 
+      previously available
+    - |<< and >>| buttons are mapped to go to the top/bottom of a list   
+    - Upgraded to mysql-connector-python 0.3.2
+    - Various caching optimizations
+    - Added blurb on the two different Commercial Skipping modes to
+      the FAQ as Q7.
+    
+  Fixed
+    - Issue 170 - Programs no longer sorted by title after a program is deleted
+
+5/9/2011 - MythBox 1.0.3
+-----------------------------
+  New
+    - Recordings Window
+        - Issue 128 - Recordings grouped by title
+        - Wallpapers from TVDB/TMDB added as backdrop
+    
+    - Recording Schedules Window 
+        - Added # Recorded column
+        - Sortable by Title, # Recorded, or Priority
+    
+    - Recording Schedule Dialog
+        - Issue 155 - Added User Jobs
+        - Added Recording Profile 
+        
+    - TV Guide Window
+        - Selecting a program that is currently playing starts Live TV
+        - Selecting a program with a schedule edits the schedule
+        - Selecting a program with no schedule creates a schedule
+        - Added banners from TVDB to the program details (bottom)
+ 
+    - Watch TV Window
+        - Added banners from TVDB to each channel        
+
+    - Upcoming Recordings Window    
+        - Launches faster (smart caching)
+    
+    - Settings Window
+        - Issue 111 - Stream recordings directly from the backend by 
+          selecting MythTV > Enable Streaming
+        - Advanced tab - Log location add as help text
+        - Playback tab - Editable values for seeking during playback
+           * Small Skip Forward 
+           * Small Skip Backward
+           * Big Skip Forward
+           * Big Skip Backward
+          
+    - Removed dependency on ffmpeg for determining recording framerate 
+    - Google Image Search updated with API key and size restrictions
+    - Slovak translations - tnx Juraj Belobrad
+    
+  Fixed
+    - Issue 161 - schedule from TV Guide impossible if show category 
+      contains (french) accented characters
+    - Some 1080i ATSC recordings from a HD Homerun were incorrectly
+      getting commskipped due to incorrect fps detection
+    - Twitter newsfeed no longer renders linebreaks which were causing
+      multiline output
+	  
+1/25/2011 - MythBox 1.0.2
+-----------------------------
+  New
+    - Issue 148 - Dutch translations (tnx Fred van Zwieten)
+    
+  Fixed
+    - Issue 145 - Fixed unicode error in Live TV window 
+    - Issue 147 - Changes to the recording schedule do not take effect immediately
+    - Issue 149 - Help text on Settings screen gets truncated based on the translation
+    - Added support for ScheduleType.NOT_RECORDING
+    - TVRage grabber more resilient to incomplete season and episode information
+    - Google image search now works for programs with unicode chars in the title
+    
+1/13/2011 - MythBox 1.0.1
+-----------------------------
+  New
+    - Issue 132 - Support for MythTV 0.24 except for LiveTV (thx mitch capper)
+    - TVRage season and episode matching now uses the program's subtitle when the original air date search fails
+    - Added Episode column to the recordings screen
+    - TV Guide shows upcoming recordings in a different color
+    - Readme and FAQ viewable from MythBox > Settings > Readme and FAQ
+    - Czech translations (tnx Pavel MlÄ�och)
+    - Swedish translations (tnx Magnus Gustafsson)
+    - Polish translations (tnx MichaÅ‚ Sawicz)
+        
+  Fixed
+    - Issue 136 - mythbox.log moved to standard log dir on Mac OSX
+    - Issue 141 - settings.xml parsing failed when removing mythboxfeed
+    - Issue 142 - could not save new recording schedules that contained unicode chars
+    - TVRage metadata with missing seasons caused lookup failures 
+    - Resuming from last position now works for ad-hoc recordings
+    - Thumbnail generation for 0.24 backends fixed
+    - Changing sort order or hitting refresh on some windows didn't re-invoke inflight rendering threads 
+    
+11/25/2010 - MythBox 1.0.0
+-----------------------------
+  New
+    - Issue 125 - Added Frech translations (thanks ddekani)
+    - TVRage metadata caching for Season & Episode
+    - FFMpeg binary for Mac and Windows unbundled from installation zip and also removed from Settings screen. Now downloads on demand.
+    - New icon (tnx freezy)
+    - Added to XBMC addon repo for easy updates
+   
+  Fixed
+    - Issue 124 - Fixed parsing another variation of ffmpeg output
+    - Issue 130 - Unable to play a recording when the cache lookup for a thumbnail fails
+    - Issue 131 - Hours in timestamps are not displayed correctly on Macs
+    - Comm skips on HDPVR 1080i recordings incorrect because ffmpeg reports incorrect framerate  
+
+10/11/2010 - MythBox RC2
+-----------------------------
+  New  
+    - Added Sort feature to the Upcoming Recordings screen
+    - Issue 93 - Added splash screen
+    - FFmpeg output is cached for framerate extraction used by comm flagging
+    - Added 'Enable Aggressive Caching' to Settings->MythTV to pre-cache framerate and commercial break info
+    - Added Season and Episode to the Recording Details screen when available
+    - Added TVRage as a provider of TV show metadata (used for season & episode)
+    - Commercial breaks are only skipped once during playback (restarting playback in 'Play' only mode is no longer necessary if the comm break info is incorrect)
+    - Issue 97 - Myth TV hostname and port are now queried directly from the database. Changed to read-only on the Settings->MythTV screen
+    - Issue 106 - More responsive fanart lookup based on the current list selection in the Watch TV screen
+    - Issue 109 - Enabled navigation from the MythBox Settings screen to the XBMC Settings screen 
+    - Issue 114 - Added slave backend hostname to the comm flag status on the Home screen
+    - Issue 118 - MythTV 0.23-1 compatibility (Protocol 57)
+    - Issue 121 - German translation updates (thanks to linuxluemmel)
+     
+  Fixed
+    - Issue 96 - Translations updated (ready for non-English contributions)
+    - Issue 98 - IP addresses are used throughout the codebase. No more host not found errors.
+    - Issue 107 - Database connections are now closed when idle and reconnect on demand. 
+    - Issue 108 - Focus changes to Play+Skip button in Recording Details screen after user has already switched focus to another button
+    - Issue 117 - Selecting the currently playing program in the TV Guide launched the Create Schedule window instead of starting Live TV 
+    - Last focused recording was not restored correctly after a Refresh in the Recordings screen
+ 
+ 
+06/08/2010 - MythBox RC1
+-----------------------------
+ - new     : MythTV 0.23 support added - Protocol version 56 
+ - new     : PageUp/PageDn (Channel Up/Channel Down on the remote) in the Recording Details screen now navigates
+             to the next or previous recording
+ - new     : Automatic forwarding through a commercial break when you land in the middle of the commercial break
+ - new     : Added selected position and total number of items to the Recordings, Schedules, and Upcoming Recordings screens
+ - new     : Selecting a recording in the Upcoming Recordings screen launches the Recording Schedule editor
+ - new     : UI responsiveness tweaked to run well on an Acer Aspire Revo (1.6Ghz Atom + NVidia ION GPU) 
+ - new     : TV Guide screen is back 
+             PgUp/PgDown keys now scroll up/down an entire page
+             Clicking on a currently playing program starts Live TV
+ - new     : Program cells in the TV guide have an HD overlay indicator when appropriate
+ - new     : Added keybindings and remote control buttons section to the README
+ - new     : Non-idle tuners bubble to the top of the tuners list when there are more than two tuners
+ - updated : Higher resolution thumbnails in Recording Details screen
+ - updated : Replaced autoexpire flag with original air date on the Recording Details screen
+ - updated : Faster fanart lookup on all screens + wait indicators
+ - updated : Library updates: tvdb_api 1.5, IMDbPy 4.5.1  
+ - updated : After deleting a recording from the Recording Details window the Recordings window would take quite a 
+             while to update for a large number of recordings
+ - fixed   : Requesting a recording's thumbnail from a slave backend didn't work              
+ - fixed   : UI tweaks when the active skin is confluence (radio button color, active selection in coverflow, etc)
+ - fixed   : Unnecessary refresh of the program listings on the Watch TV screen after stopping live tv.
+ - fixed   : XBMC crashes occasionally when exiting from MythBox
+ - fixed   : Clicking on Edit Schedule in the Recording Details screen when the schedule no longer exists how shows an error message
+ - fixed   : Attempting to watch live tv on tuner which is already recording on a slave backend no longer fails silently
+ 
+01/17/2010 - MythBox SVN 1797
+-----------------------------
+ - new     : Watch Recordings screen rewritten in WindowXML
+ - wip     : TV Guide screen temporarily disabled -- work in progress
+ - new     : Home screen coverflow now supports a context menu from which you can delete or re-rerecord the recording
+ - new     : Twitter feed of mythbox news events added to the bottom of the home screen
+ - new     : Public twitter feeds can be added to the news feed from Settings -> Advanced -> Twitter
+ - updated : Codebase purged of all legacy windowing/skinning code (non-WindowXML)
+ - fixed   : File cache thread safety issues fixed
+ - new     : All screens with listboxes now restore the last selected listitem
+ - fixed   : Unnecessary induced reject on all but the first myth connection negotiation   
+ - updated : The 'x' in the mythbox logo fixed to match the xbmc logo (tnx Jezz_X)
+ - fixed   : Home screen coverflow images scaled instead of stretched
+ - fixed   : Delete recording thumbnail from cache when recording deleted or marked for re-record
+ - updated : Added Q15 to the FAQ - Connect to MySQL failed: 1156 (08S01): Got packets out of order,10000)
+ - updated : IMDbPy updated to download higher resolution box covers (4.5)
+ - new     : Tuners table on home screen now shows the time of the next scheduled recording if the tuner is currently idle
+ - fixed   : Cover flow on Home screen would not get updated when a recording was deleted from the Recording Details screen
+ - fixed   : Issue 70 - recordings not visible in Recording Schedules screen
+ - fixed   : Issue 79 - extra set of quotes needed in call to os.system(...) on Windows (tschutte)
+ - fixed   : Issue 80 - worker threads reaped before exiting script - prevents xbmc from dumping core
+ - fixed   : Issue 83 - recordings from all recording groups are shown instead of just the ones from Default
+  
+10/21/2009 - MythBox SVN 1556
+-----------------------------
+ - updated: Added solution for Issue 63 (old style mysql password hashing) to the FAQ
+ - new    : Added coverflow of the latest recordings to the home screen
+ - new    : Added French translations (tnx w.veilleux)
+ - changed: switched livetv to use xbmc's myth:// protocol for 0.21 backends.
+ - new    : Added enable debug log setting to Settings -> Advanced
+ - new    : fanart is persisted across MythBox sessions now instead of having to be re-retrieved
+ - new    : fanart is randomized if more than one result is returned for a given title
+ - new    : Rewrote startup sequence - faster
+ - new    : Busy throbber added to existing screens that are WindowXML
+ - new    : Lirc double button press workaround added to Advanced Settings screen
+ - new    : You can now edit a program's Recording Schedule from the Recording Details screen
+ - fixed  : Sped up fanart lookup by not re-querying tvdb, tmdb, or imdb if initial query returned nothing.
+ - new    : Upcoming Recordings screen rewritten in WindowXML with fanart
+ - new    : Recording Schedules screen rewritten in WindowXML with fanart 
+ - new    : Home screen rewritten in WindowXML (added table listing jobs)
+ - new    : Updated the FAQ with the MythTV setup I test with
+ - updated: Support for myth protocol versions 46-50 (latest mythtv trunk) 
+ - updated: Added 'green screen' solution to FAQ
+ - fixed  : Issue 53 - Handle channels with a value for iconPath even if the icon does not exist
+ - fixed  : Channel sorting uses channel number instead of channel id in Watch TV screen
+
+07/26/2009 - MythBox SVN 1260
+-----------------------------
+ - new    : Live TV screen rewritten in WindowXML with fanart and channel logos
+ - new    : Fanart support added for tvdb.org, themoviedb.org, imdb, and google image search. 
+ - new    : Added Fan Art section to settings screen with the ability to clear the cached fan art.
+ - changed: Bumped up max value for live tv buffer size to 20MB 
+ - new    : German translations (tnx to linuxluemmel.ch)
+ - new    : Spanish translations (tnx to jkpalo@yahoo.es)
+ - fixed  : Tweaks to work with mediastream skin
+ - new    : Updated the FAQ with Subverion repo questions and feature request process.
+ 
+06/02/2009 - MythBox SVN 1105
+-----------------------------
+ - fixed  : Issue 37 - Failed to startup on windows with no settings.xml
+ - fixed  : Issue 2 - MySQL shared object library for amd64
+ - fixed  : Issue 31 - Channel duplication across multipe tuners with same guide data fixed in Live TV screen
+ - fixed  : Issue 30 - Fixed one terabyte+ diskspace reported incorrectly
+ - changed: Settings windows rewritten in WindowXML, help added, and save button removed.
+ - changed: Live TV progress bar now includes buffer size while buffering
+ - updated: support for MythTV 0.22 (trunk) protocol 45
+ 
+05/05/2009 - MythBox SVN 1062
+-----------------------------
+ - updated: support for MythTV 0.22 (trunk) procotol 44
+ - new    : recording detail screen - added date/time to header 
+ - new    : recording detail screen - mini-video window replaces thumbnail when video is playing
+ - changed: recording detail screen - improved load time - WindowXML rewrite + async pre/post fetching + mythtv connection & db pooling
+ - new    : recording detail screen - added ability to move a queued comm flag job to the beginning of the queue - MythTV doesn't even have this!
+ - new    : recording detail screen - added number of commercial breaks, position in queue, or percent completed if still in progress
+ - changed: recording detail screen - enlarged thumbnail and added drop shadow; recording details re-arranged
+ - changed: recording detail screen - Play+Skip button has default focus if recording is comm flagged
+ - new    : create/edit recording schedule dialog - start and end offsets can now be edited 
+ - updated: Issue 24 - Default buffer size is too low
+ - fixed  : Issue 25 - can't change recording schedule from tv guide
+ - fixed  : Issue 22 - support for ffmpeg 0.5 on ubuntu 9.04 jaunty
+ 
+03/07/2009 - MythBox SVN 856
+-----------------------------
+ - fixed  : Issue 17 - exit screen using right mouse button
+ - fixed  : save/cancel focus wraparound on create/edit recording schedule dialog box
+ - new    : added 'Confirm on Delete' setting. Defaults to yes. 
+ - fixed  : Schedule Recording dialog would sometimes fail because of incompatible 
+            schedule startime.
+ 
+02/26/2009 - MythBox SVN 851
+-----------------------------
+ - new    : recording schedules can now be created from the 'TV Guide' screen by clicking on a program
+ - new    : recording schedules can now be edited from the 'Recording Schedules' screen
+ - fixed  : windows feature set on par with linux. bundled ffmpeg binary.
+ - fixed  : mac feature set on par with linux. bundled ffmpeg binary.
+ - fixed  : script load time reduced 
+ - new    : sensible defaults for mac/win settings - ffmpeg path and recordings dir
+ - fixed  : gaps between buttons on left nav menus removed
+ - changed: tv guide cell bumpers re-aligned 
+ - fixed  : pyxcoder correctly parses framerate from HD-PVR created h.264 recordings
+ - fixed  : pyxcoder correctly parses framerate from MythTV transcoded nuppelvids
+ - fixed  : works on Windows XP (SVN Builds only)
+ - fixed  : passwords scrubbed in logging output
+ - changed: lots of internal refactoring
+ - changed: added exception handler decorators to on* callbacks
+ - removed: mysql wire level debug logger
+ - changed: minor ui updates 
+ 
+01/12/2009 - MythBox SVN 682
+-----------------------------
+ - new    : split out README instructions for Windows/Linux requirements and installation
+ - new    : windows now requires XBMC SVN Trunk
+ - fixed  : added 64bit _mysql.so to libs so Linux x64 now works  
+ - new    : ffmpeg executable added to Settings -> Paths
+ - note   : launching ffmpeg on Windows is problematic because XBMC doesn't have 
+            a console w/ attached stdin to pass to child process. Comm skipping and
+            bookmarking won't work on windows until resolved.
+
+01/04/2009 - MythBox SVN 646
+-----------------------------
+ - new    : LiveTV progress dialog
+
+01/03/2009 - MythBox SVN 640
+-----------------------------
+ - new    : recordings resume where you last left off (mythtv bookmarks feature)
+ - changed: replaced logging subsystem. Mythbox specific logging goes to mythbox.log 
+ - rewrite: commercial skipping (can be off a little if xbmc does not play video at framerate specified in mpeg file)
+ - new    : support for commercial skipping via EDL skip files (broken in xbmc - TODO: Add issue # from trac)
+ - changed: MySQL 4.1+ client support
+ - changed: 12 hour AM/PM time format for TV guide headers
+ - rewrite: livetv working
+ - changed: generated images/thumbs to script_data/<scriptname>/images/thumbs
+ - changed: removed mythtv_statusport, mythtv_startpage, mythtv_recplayer, mythtv_recordlive, mythtv_recordlength settings
+ - fixed  : moved settings.xml to userdata/script_data/<script_name> directory
+ - fixed  : recording details screen thumbnail now respects image aspect ratio
+ - new    : support for multiple recording directories (maps to MythTV recording groups) in settings using ':' on linux/mac and ';' on windows
+ - new    : enabled unit tests to be run w/o hardcoded config info (util.OnDemandConfig)
+ - changed: removed use of singletons (singleton.py)
+ - fixed  : fix livetv/recorded tv player callback issues - induced GC so callbacks get unregistered
+ - new    : added support for MythTV 0.22 (SVN trunk - Protocol v.43) - set <mythtv_version_override> to True in settings.xml
+ - fixed  : fresh install works w/o an existing settings.xml
+ - new    : get a decect icon
+ - changed: tv guide now in a usable state               

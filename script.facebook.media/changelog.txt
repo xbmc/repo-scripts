@@ -1,0 +1,109 @@
+Facebook Media Changelog
+
+Current Version : 0.6.9
+
+Known Issues/TODO:
+	-Needs to handle mouse control better (ie no access to photo/video menu)
+	-Sometimes displaying photo/video options delays waiting on facebook. Should show progress/notify user to wait
+	-Album caching (and other caching)
+	-Exit photo/tags view with same photo selected (option?)
+	-Go to tagged friend when selecting tag from photo/tags view
+
+*** 0.6.9 ***
+
+New authorization method.
+
+*** 0.6.8 ***
+
+Added debug option in settings (Currently only prints HTML to log when auth fails)
+Fixed skin customizing for 1080 skins.
+Removed *args,**kwargs from window __init__'s to get rid of deprecation warning
+Added logging of version
+
+*** 0.6.7 ***
+
+Fixed a bug causing an error when showing comments/likes
+
+*** 0.6.6 ***
+
+Added ability to disable auto-login during authorization
+Improved response to failed/unfinished authorization
+
+*** 0.6.5 ***
+
+Add sharing and feeds for ShareSocial interaction
+
+*** 0.6.4 ***
+
+Restart interval when pressing prev/next or moving through tags during slideshow
+Changed default photo limit to 200
+Removed album thumbnail url resolving, should speed up albums display
+Pop up notification on slideshow on/off
+
+*** 0.6.3 ***
+
+Finished (basically) the photo/tags view
+Added ability to start a slideshow from the photo/tags view (PLAY will start/stop and STOP will stop)
+Slideshow option now uses photo/tags view for slideshows
+Added a slideshow interval option to settings
+Fixed lingering tags and issues when changing photo
+
+*** 0.6.2 ***
+
+Fixed bug which prevented backing out properly from the heirarchy
+
+*** 0.6.1 ***
+
+Added the ability to go to next photo while viewing photo w/tags
+Reworked tags display - still a work in progress
+Added ability change the number of photos displayed. Default is now 100 (prev. 25)
+
+*** 0.6.0 ***
+
+Added error messages for login notifications and locked accounts
+
+*** 0.5.9 ***
+
+Hopefully fixes character encoding problems - Part 2: The Log
+
+*** 0.5.8 ***
+
+Hopefully fixes character encoding problems (ie Cyrillic)
+
+*** 0.5.7 ***
+
+Fixed infinite auth restart when no user is added on fresh install
+
+*** 0.5.6 ***
+
+Allow back/parent dir to exit app for those with limited remote function 
+
+*** 0.5.5 ***
+
+Fixed - backspace/parent dir now works as expected and goes to the previous menu level 
+
+*** 0.5.4 ***
+
+Updated for eden
+Re-worked/simplified the skin
+Localized the strings - anyone want to do some translating :)
+Fixed a bug where empty tag list wouldn't fade out
+Added fanart.jpg
+Fixed bug where top heirarchy list would lose last item after viewing media
+Fixed non-working input blocking during "progress bar" type activities
+Cleaned up error handling of errors and failed auth in user authorization
+Fixed broken behavior where going off the end of a list without a next/prev arrow would wrap to the opposite
+side of the list and follow that arrow. Now just stops.
+
+*** 0.5.3 ***
+
+Added dynamic font genertation for different XBMC skins
+Fixed paging for previous items
+Made animation work finally on progress bar and friend displays
+Changed to smaller fonts on caption and navigation path
+Threaded downloading for album and slideshow images for better speed
+Fixed problem with XBMC crashing on https image urls (happend when displaying some friends albums)
+
+*** 0.5.2 ***
+
+Initial public beta release
