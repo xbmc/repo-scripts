@@ -1,0 +1,144 @@
+#import modules
+import xbmc
+import sys
+
+### import libraries
+from resources.lib.script_exceptions import NoFanartError
+from resources.lib.utils import *
+from resources.lib.language import *
+from operator import itemgetter
+
+
+### get addon info
+__localize__    = ( sys.modules[ "__main__" ].__localize__ )
+
+API_KEY = '4be68d7eab1fbd1b6fd8a3b80a65a95e'
+API_URL = 'http://api.themoviedb.org/3/movie/%s/images?api_key=%s'
+BASE_IMAGEURL = "http://cf2.imgobject.com/t/p/"
+
+class TMDBProvider():
+
+    def __init__(self):
+        self.name = 'TMDB'
+
+    def get_image_list(self, media_id):
+        data = get_data(API_URL%(media_id, API_KEY), 'json')
+        image_list = []
+        if data == "Empty" or not data:
+            return image_list
+        else:
+            # Get fanart
+            try:
+                for item in data['backdrops']:
+                    if int(item.get('vote_count')) >= 1:
+                        rating = float( "%.1f" % float( item.get('vote_average'))) #output string with one decimal
+                        votes = item.get('vote_count','n/a')
+                    else:
+                        rating = 'n/a'
+                        votes = 'n/a'
+                    image_list.append({'url': BASE_IMAGEURL + 'original' + item['file_path'],
+                                       'preview': BASE_IMAGEURL + 'w300' + item['file_path'],
+                                       'id': item.get('file_path').lstrip('/').replace('.jpg', ''),
+                                       'type': ['fanart','extrafanart'],
+                                       'height': item.get('height'),
+                                       'width': item.get('width'),
+                                       'language': item.get('iso_639_1','n/a'),
+                                       'rating': rating,
+                                       'votes': votes,
+                                       # Create Gui string to display
+                                       'generalinfo': ('%s: %s  |  %s: %s  |  %s: %s  |  %s: %sx%s  |  ' 
+                                                       %( __localize__(32141), get_language(item.get('iso_639_1','n/a')).capitalize(),
+                                                          __localize__(32142), rating,
+                                                          __localize__(32143), votes,
+                                                          __localize__(32145), item.get('width'), item.get('height')))})
+            except Exception, e:
+                log( 'Problem report: %s' %str( e ), xbmc.LOGNOTICE )
+            # Get thumbs
+            try:
+                for item in data['backdrops']:
+                    if int(item.get('vote_count')) >= 1:
+                        rating = float( "%.1f" % float( item.get('vote_average'))) #output string with one decimal
+                        votes = item.get('vote_count','n/a')
+                    else:
+                        rating = 'n/a'
+                        votes = 'n/a'
+                    # Fill list
+                    image_list.append({'url': BASE_IMAGEURL + 'w780' + item['file_path'],
+                                       'preview': BASE_IMAGEURL + 'w300' + item['file_path'],
+                                       'id': item.get('file_path').lstrip('/').replace('.jpg', ''),
+                                       'type': ['extrathumbs'],
+                                       'height': item.get('height'),
+                                       'width': item.get('width'),
+                                       'language': item.get('iso_639_1','n/a'),
+                                       'rating': rating,
+                                       'votes': votes,
+                                       # Create Gui string to display
+                                       'generalinfo': ('%s: %s  |  %s: %s  |  %s: %s  |  %s: %sx%s  |  ' 
+                                                       %( __localize__(32141), get_language(item.get('iso_639_1','n/a')).capitalize(),
+                                                          __localize__(32142), rating,
+                                                          __localize__(32143), votes,
+                                                          __localize__(32145), item.get('width'), item.get('height')))})
+            except Exception, e:
+                log( 'Problem report: %s' %str( e ), xbmc.LOGNOTICE )
+            # Get posters
+            try:
+                for item in data['posters']:
+                    if int(item.get('vote_count')) >= 1:
+                        rating = float( "%.1f" % float( item.get('vote_average'))) #output string with one decimal
+                        votes = item.get('vote_count','n/a')
+                    else:
+                        rating = 'n/a'
+                        votes = 'n/a'
+                    # Fill list
+                    image_list.append({'url': BASE_IMAGEURL + 'original' + item['file_path'],
+                                       'preview': BASE_IMAGEURL + 'w185' + item['file_path'],
+                                       'id': item.get('file_path').lstrip('/').replace('.jpg', ''),
+                                       'type': ['poster'],
+                                       'height': item.get('height'),
+                                       'width': item.get('width'),
+                                       'language': item.get('iso_639_1','n/a'),
+                                       'rating': rating,
+                                       'votes': votes,
+                                       # Create Gui string to display
+                                       'generalinfo': ('%s: %s  |  %s: %s  |  %s: %s  |  %s: %sx%s  |  ' 
+                                                       %( __localize__(32141), get_language(item.get('iso_639_1','n/a')).capitalize(),
+                                                          __localize__(32142), rating,
+                                                          __localize__(32143), votes,
+                                                          __localize__(32145), item.get('width'), item.get('height')))})
+            except Exception, e:
+                log( 'Problem report: %s' %str( e ), xbmc.LOGNOTICE )
+            if image_list == []:
+                raise NoFanartError(media_id)
+            else:
+                # Sort the list before return. Last sort method is primary
+                image_list = sorted(image_list, key=itemgetter('rating'), reverse=True)
+                image_list = sorted(image_list, key=itemgetter('language'))
+                return image_list
+
+
+def _search_movie(medianame,year=''):
+    medianame = normalize_string(medianame)
+    log('TMDB API search criteria: Title[''%s''] | Year[''%s'']' % (medianame,year) )
+    illegal_char = ' -<>:"/\|?*%'
+    for char in illegal_char:
+        medianame = medianame.replace( char , '+' ).replace( '++', '+' ).replace( '+++', '+' )
+
+    search_url = 'http://api.themoviedb.org/3/search/movie?query=%s+%s&api_key=%s' %( medianame, year, API_KEY )
+    tmdb_id = ''
+    log('TMDB API search:   %s ' % search_url)
+    try:
+        data = get_data(search_url, 'json')
+        if data == "Empty":
+            tmdb_id = ''
+        else:
+            for item in data['results']:
+                if item['id']:
+                    tmdb_id = item['id']
+                    break
+    except Exception, e:
+        log( str( e ), xbmc.LOGERROR )
+    if tmdb_id == '':
+        log('TMDB API search found no ID')
+    else:
+        log('TMDB API search found ID: %s' %tmdb_id)
+    return tmdb_id

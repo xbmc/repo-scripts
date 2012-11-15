@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <!-- Add-on messages id=32001 to 32030 -->
+        <string id="32001">Proszę pomóc tworzyć grafiki lub wesprzeć finansowo:</string>
+        <string id="32002">Cykliczne uruchomienie o czasie: (24h)</string>
+        <string id="32003">Znaleziono nieprawidłową/pustą kombinację ustawień.</string>
+        <string id="32004">Wybierz ustawienia i naciśnij OK, by je zapisać</string>
+        <string id="32005">Czyszczenie w toku</string>
+        <string id="32006">Błąd</string>
+        <string id="32007">Błąd przy pobieraniu pliku</string>
+        <string id="32008">Wyszukiwanie grafik w toku</string>
+        <string id="32009">Pobieranie</string>
+        <string id="32010">Przerwano działanie wtyczki</string>
+        <string id="32011">Wystąpił błąd sieci</string>
+        <string id="32012">Zakończono</string>
+        <string id="32013">Włącz pobieranie</string>
+        <string id="32014">Total Artwork</string>
+        <string id="32015">Proszę wybrać</string>
+        <string id="32016">Failed items</string>
+        <string id="32017">Anulowano</string>
+        <string id="32018">Pobierane zostało anulowane przez użytkownika</string>
+        <string id="32019">Opóźnienie startu w minutach:</string>
+        <string id="32020">Pobrano</string>
+        <string id="32021">Przetwarzanie grafiki</string>
+        <string id="32022">nie znaleziono!</string>
+        <string id="32023">Uruchom wtyczkę przy logowaniu</string>
+        <string id="32024">Uruchom wtyczkę jako usługę</string>
+        <string id="32025">Tak</string>
+        <string id="32026">Nie</string>
+        <string id="32027">Zamknij</string>
+        <string id="32028">Raport</string>
+        <string id="32029">[I](Po dokonaniu zmian należy ponownie uruchomić XBMC) [/I]</string>
+        <string id="32030">Nie znaleziono ID dostawcy do wyszukania grafik</string>
+
+    <!-- Add-on settings: General section id=32031 to 32050 -->
+        <string id="32031">Ogólne</string>
+        <string id="32032">[B]Ogólne ustawienia używane w Artwork Downloader[/B]</string>
+        <string id="32033">Uruchom w tle</string>        
+        <string id="32034">Pokazuj powiadomienie po zakończeniu / błędach</string>
+        <string id="32035">Zastąp wszystkie istniejące grafiki [I](zostanie automatycznie wyłączone po pobraniu) [/I]</string>
+        <string id="32036">Centralne foldery ExtraFanArtów [I](można ich użyć do pokazów slajdów) [/I]</string>
+        <string id="32037">Folder na ExtraFanArty Seriali TV</string>
+        <string id="32038">Folder na ExtraFanArty Filmów</string>
+        <string id="32039">Pokaż raport z ostatniego uruchomienia</string>
+        <string id="32040">-</string>
+        
+    <!-- Add-on settings: Limit section id=32051 to 32060 -->
+        <string id="32051">Ograniczenia</string>
+        <string id="32052">[B]Opcje ograniczania rodzajów i ilości pobieranych grafik[/B]</string>
+        <string id="32053">Maksymalna ilość ExtraFanArtów</string>
+        <string id="32054">Minimalna ocena</string>
+        <string id="32055">Preferowany język:</string>
+        <string id="32056">Wyklucz FanArt z napisami</string>
+        <string id="32057">Minimalny rozmiar FanArtów: Filmy</string>
+        <string id="32058">Minimalny rozmiar FanArtów: Seriale TV</string>
+        <string id="32059">1080</string>
+        <string id="32060">720</string>
+        <string id="32061">480</string>
+        <string id="32062">Minimalny rozmiar FanArtów: Teledyski</string>
+
+    <!-- Add-on settings: Movie section id=32071 to 32080 -->
+        <string id="32071">Filmy</string>
+        <string id="32072">[B]Opcje pobierania grafik Filmów[/B]</string>
+
+    <!-- Add-on settings: TV Show section id=32081 to 32090 -->
+        <string id="32081">Seriale TV</string>
+        <string id="32082">[B]Opcje pobierania grafik Seriali TV[/B]</string>
+        <string id="32083">-</string>
+
+    <!-- Add-on settings: Music section id=32091 to 32100 -->
+        <string id="32091">Teledyski</string>
+        <string id="32092">[B]Opcje pobierania grafik Teledysków[/B]</string>
+
+    <!-- Add-on settings: Advanced settings section id=32101 to 32020 -->   
+        <string id="32101">Zaawansowane</string>
+        <string id="32102">[B]Kilka ustawień zaawansowanych[/B]</string>
+        <string id="32103">-</string>
+        <string id="32104">-</string>
+        <string id="32105">-</string>
+        <string id="32106">Użyj pamięci podręcznej XBMC [I](po pobraniu kopiuje grafiki do folderu z miniaturami) [/I]</string>
+        <string id="32107">-</string>
+        <string id="32108">-</string>
+        <string id="32109">-</string>
+        <string id="32110">-</string>
+
+    <!-- Add-on messages: Image types id=32121 to 32140 -->
+        <string id="32121">FanArt</string>
+        <string id="32122">ExtraFanArt</string>
+        <string id="32123">Baner</string>
+        <string id="32124">Banery sezonu</string>
+        <string id="32125">ClearArt</string>
+        <string id="32126">Logo</string>
+        <string id="32127">Grafika postaci</string>
+        <string id="32128">Plakat</string>
+        <string id="32129">Plakaty sezonu</string>
+        <string id="32130">Miniatury 16:9</string>
+        <string id="32131">ExtraMiniatury</string>
+        <string id="32132">Grafika płyty</string>
+        <string id="32133">Artwork</string>
+        <string id="32134">Miniatury sezonu 16:9</string>
+
+    <!-- Add-on messages: -->
+        <string id="32141">Language</string>
+        <string id="32142">Rating</string>
+        <string id="32143">Votes</string>
+        <string id="32144">Season</string>
+        <string id="32145">Size</string>
+        <string id="32146">Disc</string>
+        <string id="32147">below limit setting</string>
+        <string id="32148">Time of finish</string>
+        <string id="32149">No failed or missing items found</string>
+        <string id="32150">add-on aborted because of XBMC shutting down</string>
+        <string id="32151">add-on cancelled while searching for Artwork</string>
+        <string id="32152">add-on aborted because of problems</string>
+        <string id="32153">add-on cancelled while downloading Artwork</string>
+        <string id="32154">-</string>
+        
+    <!-- Add-on settings: Info section id=32181 to 32190-->   
+        <string id="32181">Info</string>
+        <string id="32182">Prosimy o datki na rzecz lub pomoc przy tworzeniu poniższych witryn:</string>
+        <string id="32183">[I]www.xbmc.org [/I]</string>
+        <string id="32184">[I]fanart.tv [/I]</string>
+        <string id="32185">[I]www.thetvdb.com [/I]</string>
+        <string id="32186">[I]www.themoviedb.org [/I]</string>
+        <string id="32187">Autorzy wtyczki:</string>
+        <string id="32188">[I]paddycarey, Martijn Kaijser, putneyj [/I]</string>
+        <string id="32191">[I]By zgłosić błąd, prośbę lub zadać pytanie odwiedź wątek [/I]</string>
+        <string id="32192">[I]  poświęcony Artwork Downladerowi na forum XBMC. [/I]</string>
+        <string id="32189">Podziękowania dla:</string>
+        <string id="32190">Team XBMC i autorów innych wtyczek, na podstawie których ta powstała.</string>
+</strings>

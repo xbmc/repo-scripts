@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon
+	id="script.artwork.downloader"
+	name="Artwork Downloader"
+	version="12.0.6"
+	provider-name="Martijn"
+    >
+  <requires>
+    <import addon="xbmc.python"                 version="2.0"/>
+    <import addon="xbmc.addon"                  version="11.9.7"/>
+    <import addon="script.module.elementtree"   version="1.2.7"/>
+    <import addon="script.module.simplejson"    version="2.0.10" optional="true"/>
+    <import addon="script.common.plugin.cache"  version="0.9.1"/>
+  </requires>
+  <extension point="xbmc.python.script"         library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="login"/>
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <summary lang="en">Downloads Artwork for TV shows, Movies and Musicvideos in your library</summary>
+    <summary lang="nl">Download Artwork voor TV series, Films en Muziekvideos in jouw bibliotheek</summary>
+    <summary lang="pl">Pobiera grafiki dla Seriali TV, FilmÃ³w i TeledyskÃ³w z twojej biblioteki</summary>
+    <summary lang="de">Lade Artworks fÃ¼r Filme, Serien und Musikvideos deiner Bibliothek herunter</summary>
+    <summary lang="el">ÎšÎ±Ï„ÎµÎ²Î¬Î¶ÎµÎ¹ Î•Î¹ÎºÏŒÎ½ÎµÏ‚ Î³Î¹Î± Ï„Î¹Ï‚ Î¤Î·Î»ÎµÎ¿Ï€Ï„Î¹ÎºÎ­Ï‚ Î£ÎµÎ¹Ï�Î­Ï‚, Ï„Î¹Ï‚ Î¤Î±Î¹Î½Î¯ÎµÏ‚ ÎºÎ±Î¹ Ï„Î± ÎœÎ¿Ï…ÏƒÎ¹ÎºÎ¬ Î’Î¯Î½Ï„ÎµÎ¿ ÎšÎ»Î¹Ï€ Ï„Î·Ï‚ ÏƒÏ…Î»Î»Î¿Î³Î®Ï‚ ÏƒÎ±Ï‚</summary>
+	<summary lang="es">Descargue Artwork de Series, PelÃ­culas y Videoclips a su biblioteca</summary>
+	<summary lang="pt">Transfira Artwork de Seriados, Filmes e Concertos para sua biblioteca</summary>
+    <summary lang="fr">TÃ©lÃ©chargez les Artworks pour les sÃ©ries TV, les films and les vidÃ©os musicales de votre bibliothÃ¨que</summary>
+    <summary lang="ko">ì—¬ëŸ¬ë¶„ì�˜ ë�¼ì�´ë¸ŒëŸ¬ë¦¬ì—� TV ì‡¼, ì˜�í™” ë°� ë®¤ì§�ë¹„ë””ì˜¤ë¥¼ ìœ„í•œ ì•„íŠ¸ì›ŒíŠ¸ë¥¼ ë‹¤ìš´ë¡œë“œ í•˜ì„¸ìš”</summary>
+    <description lang="en">
+	Downloads all available artwork for TV shows, Movies and Musicvideos in your library. Check the options for supported artwork[CR]
+	Artwork sources:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Remark:[CR]Check your skin to see what type of artwork is supported![CR]Each TV Show/Movie must have its own folder![CR]
+	Skin integration:[CR]See readme file
+	</description>
+    <description lang="nl">
+	Download alle beschikbare artwork voor TV series, Films en Muziekvideos in jouw bibliotheek. Bekijk de opties voor ondersteunde artwork[CR]
+	Artwork bronnen:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Opmerking:[CR]Controleer jouw skin om te bepalen welke artwork deze ondersteund![CR]Elke TV serie/Film moet zich in zijn eigen folder bevinden![CR]
+	Skin integratie:[CR]Kijk in de readme bestand
+	</description>
+    <description lang="pl">
+	Pobiera wszystkie dostÄ™pne grafiki dla Seriali TV, FilmÃ³w i TeledyskÃ³w z twojej biblioteki. SprawdÅº w opcjach obsÅ‚ugiwane rodzaje grafik.[CR]
+	Å¹rÃ³dÅ‚a grafik:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Uwaga:[CR]SprawdÅº w dokumentacji uÅ¼ywanej skÃ³ry, jakie grafiki obsÅ‚uguje![CR]KaÅ¼dy Serial TV / Film musi byÄ‡ w osobnym folderze![CR]
+	Integracja ze skÃ³rami:[CR]Zobacz plik readme
+	</description>
+    <description lang="de">
+	LÃ¤dt alle verfÃ¼gbaren Artworks fÃ¼r Serien, Filme und Musikvideos deiner Bibliothek herunter. PrÃ¼fe die Optionen fÃ¼r verfÃ¼gbare Artwork-Arten.[CR]
+	Artwork-Quellen:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Hinweis:[CR]PrÃ¼fe die Infos deines Skins um zu sehen welche Artwork-Arten er unterstÃ¼tzt![CR]Jede Serie/jeder Film muss in einem eigenem Ordner liegen![CR]
+	Skin-Integration:[CR]Siehe readme-Datei
+	</description>
+    <description lang="el">
+	ÎšÎ±Ï„ÎµÎ²Î¬Î¶ÎµÎ¹ ÏŒÎ»ÎµÏ‚ Ï„Î¹Ï‚ Î´Î¹Î±Î¸Î­ÏƒÎ¹Î¼ÎµÏ‚ ÎµÎ¹ÎºÏŒÎ½ÎµÏ‚ Î³Î¹Î± Ï„Î¹Ï‚ Î¤Î·Î»ÎµÎ¿Ï€Ï„Î¹ÎºÎ­Ï‚ Î£ÎµÎ¹Ï�Î­Ï‚, Ï„Î¹Ï‚ Î¤Î±Î¹Î½Î¯ÎµÏ‚ ÎºÎ±Î¹ Ï„Î± ÎœÎ¿Ï…ÏƒÎ¹ÎºÎ¬ Î’Î¯Î½Ï„ÎµÎ¿ ÎšÎ»Î¹Ï€ Ï„Î·Ï‚ ÏƒÏ…Î»Î»Î¿Î³Î®Ï‚ ÏƒÎ±Ï‚. Î•Î»Î­Î³Î¾Ï„Îµ Ï„Î¹Ï‚ ÎµÏ€Î¹Î»Î¿Î³Î­Ï‚ Î³Î¹Î± Ï…Ï€Î¿ÏƒÏ„Î·Ï�Î¹Î¶ÏŒÎ¼ÎµÎ½ÎµÏ‚ ÎµÎ¹ÎºÏŒÎ½ÎµÏ‚[CR]
+	Î Î·Î³Î­Ï‚ Î•Î¹ÎºÏŒÎ½Ï‰Î½:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Î£Î·Î¼ÎµÎ¯Ï‰ÏƒÎ·:[CR]Î•Î»Î­Î³Î¾Ï„Îµ Ï„Î¿ ÎºÎ­Î»Ï…Ï†ÏŒÏ‚ ÏƒÎ±Ï‚ Î³Î¹Î± Î½Î± Î´ÎµÎ¯Ï„Îµ Ï„Î¹ ÎµÎ¯Î´Î¿Ï…Ï‚ ÎµÎ¹ÎºÏŒÎ½ÎµÏ‚ Ï…Ï€Î¿ÏƒÏ„Î·Ï�Î¯Î¶ÎµÎ¹![CR]ÎšÎ¬Î¸Îµ Î¤Î·Î»ÎµÎ¿Ï€Ï„Î¹ÎºÎ® Î£ÎµÎ¹Ï�Î¬/Î¤Î±Î¹Î½Î¯Î± Ï€Ï�Î­Ï€ÎµÎ¹ Î½Î± Î­Ï‡ÎµÎ¹ Ï„Î¿ Î´Î¹ÎºÏŒ Ï„Î·Ï‚ Ï†Î¬ÎºÎµÎ»Î¿![CR]
+	Î•Î½ÏƒÏ‰Î¼Î¬Ï„Ï‰ÏƒÎ· ÏƒÏ„Î¿ ÎºÎ­Î»Ï…Ï†Î¿Ï‚:[CR]Î”ÎµÎ¯Ï„Îµ Ï„Î¿ Î±Ï�Ï‡ÎµÎ¯Î¿ readme
+	</description>
+	<description lang="es">
+	Descargue todas las ilustraciones disponibles para Series, PelÃ­culas y Videoclips a su biblioteca. Revise las opciones de ilustraciones soportadas[CR]
+	Fuentes de Artwork:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Nota:[CR]Revise su skin para ver quÃ© tipo de Artwork soporta![CR]Cada Serie/PelÃ­cula debe tener su propia carpeta![CR]
+	IntegraciÃ³n en pieles:[CR]Ver el archivo readme
+	</description>
+	<description lang="pt">
+	Transfira todas as ilustraÃ§Ãµes disponÃ­veis para Seriados, Filmes e Concertos para sua biblioteca. Revise as opÃ§Ãµes de ilustraÃ§Ãµes suportadas[CR]
+	Fontes do Artwork:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Nota:[CR]Verifique na skin, quais os tipos de ilustraÃ§Ãµes (artworks) a mesma suporta![CR]Cada Seriado/Filme deve ter sua prÃ³pria pasta![CR]
+	IntegraÃ§Ã£o nas skins:[CR]Ver o arquivo readme
+	</description>
+    <description lang="fr">
+    TÃ©lÃ©chargez tous les artworks disponibles pour les sÃ©ries TV, les films et les vidÃ©os musicales de votre bibliothÃ¨que. Regardez les options pour les artsworks supportÃ©s[CR]
+	Sources des Artworks:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	Remarques : [CR]VÃ©rifiez votre thÃ¨me pour savoir quel type d'artwork est supportÃ© ![CR]Chaque SÃ©rie TV/Film doit avoir son propre dossier ![CR]
+	IntÃ©gration dans un thÃ¨me :[CR]Regardez le fichier rea dme.txt
+	</description>
+    <description lang="ko">
+	ì—¬ëŸ¬ë¶„ì�˜ ë�¼ì�´ë¸ŒëŸ¬ë¦¬ì—� TV ì‡¼, ì˜�í™” ë°� ë®¤ì§�ë¹„ë””ì˜¤ë¥¼ ìœ„í•œ ì•„íŠ¸ì›Œí�¬ë¥¼ ë‹¤ìš´ë¡œí•˜ì„¸ìš”. ì§€ì›�í•˜ëŠ” ì•„íŠ¸ì›Œí�¬ëŠ” ì˜µì…˜ì�„ í™•ì�¸í•˜ì„¸ìš”.[CR]
+	ì•„íŠ¸ì›Œí�¬ ì†ŒìŠ¤:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+	ì£¼ì�˜:[CR]ì‚¬ìš©ì¤‘ì�¸ ìŠ¤í‚¨ì�´ ì–´ë–¤ ì¢…ë¥˜ì�˜ ì•„íŠ¸ì›Œí�¬ë¥¼ ì§€ì›�í•˜ëŠ”ì§€ í™•ì�¸í•˜ì„¸ìš”![CR]ê°� TVì‡¼/ì˜�í™”ëŠ” ë°˜ë“œì‹œ ê°�ê°�ì�˜ ê°�ê°�ì�˜ í�´ë�”ì—� ìžˆì–´ì•¼ í•©ë‹ˆë‹¤![CR]
+	ìŠ¤í‚¨ í†µí•©:[CR]readme íŒŒì�¼ì�„ ë³´ì„¸ìš”
+	</description>
+    <disclaimer lang="en">For bugs, requests or general questions visit the Artwork Downloader thread on the XBMC forum.</disclaimer>
+    <disclaimer lang="nl">Voor fouten, verzoeken of algemene vragen kan je terecht op Artwork Downloader thread op het XBMC forum.</disclaimer>
+    <disclaimer lang="pl">By zgÅ‚osiÄ‡ bÅ‚Ä…d, proÅ›bÄ™ lub zadaÄ‡ pytanie odwiedÅº wÄ…tek poÅ›wiÄ™cony Artwork Downladerowi na forum XBMC.</disclaimer>
+    <disclaimer lang="de">FÃ¼r Fehler, VorschlÃ¤ge oder alggemeine Fragen, besuche das Artwork Downloader-Thema im XBMC-Forum (englisch).</disclaimer>
+    <disclaimer lang="el">Î“Î¹Î± Ï€Ï�Î¿Î²Î»Î®Î¼Î±Ï„Î±, Î±Î¹Ï„Î®Î¼Î±Ï„Î± Î® Î³ÎµÎ½Î¹ÎºÎ­Ï‚ ÎµÏ�Ï‰Ï„Î®ÏƒÎµÎ¹Ï‚ ÎµÏ€Î¹ÏƒÎºÎµÏ†Î¸ÎµÎ¯Ï„Îµ Ï„Î¿ Î¸Î­Î¼Î± Ï„Î¿Ï… Artwork Downloader ÏƒÏ„Î¿ forum Ï„Î¿Ï… XBMC.</disclaimer>
+	<disclaimer lang="es">Para informar de errores, hacer peticiones o preguntas visiten el hilo Artwork Downloader en el foro de XBMC.</disclaimer>
+	<disclaimer lang="pt">Para informar erros, requisitar algo ou perguntar sobre o add-on, visitem o tÃ³pico do Artwork Downloader no fÃ³rum do XBMC.</disclaimer>
+    <disclaimer lang="ko">ë²„ê·¸, ìš”ì²­ì‚¬í•­ ë°� ì�¼ë°˜ì �ì�¸ ì§ˆë¬¸ì�€ XBMC í�¬ëŸ¼ì�˜ Artwork Downloader ê¸€íƒ€ëž˜ë¥¼ ë°©ë¬¸í•˜ì„¸ìš”.</disclaimer>
+    <platform>all</platform>
+  </extension>
+</addon>
