@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <setting label="30000" type="enum" id="type" default="0" lvalues="30002|30003|30004"/>
+  <setting label="30001" type="folder" source="pictures" id="path" default="" enable="eq(-1,2)"/>
+  <setting label="30010" type="enum" id="time" default="4" values="1|2|3|4|5|6|7|8|9|10"/>
+  <setting label="30005" type="slider" id="level" range="0,1,100" option="percent" default="100"/>
+  <setting label="30006" type="enum" id="effect" default="2" lvalues="30007|30008|30009"/>
+</settings>
