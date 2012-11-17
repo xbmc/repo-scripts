@@ -13,8 +13,8 @@ from operator import itemgetter
 __localize__    = ( sys.modules[ '__main__' ].__localize__ )
 
 API_KEY = '586118be1ac673f74963cc284d46bd8e'
-API_URL_TV = 'http://fanart.tv/webservice/series/%s/%s/json/all/1/2'
-API_URL_MOVIE = 'http://fanart.tv/webservice/movie/%s/%s/json/all/1/2/'
+API_URL_TV = 'http://api.fanart.tv/webservice/series/%s/%s/json/all/1/2'
+API_URL_MOVIE = 'http://api.fanart.tv/webservice/movie/%s/%s/json/all/1/2/'
 
 IMAGE_TYPES = ['clearlogo',
                'hdtvlogo',

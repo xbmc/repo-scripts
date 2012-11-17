@@ -1,3 +1,6 @@
+[B]1.0.21[/B]
+- Change API url
+
 [B]1.0.20[/B]
 - Extend cache period
 
