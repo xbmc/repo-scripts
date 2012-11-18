@@ -1,4 +1,8 @@
-﻿[B]1.4.4 (2012.04.10)[/B]
+﻿[B]1.4.5 (2012.11.18)[/B]
+added: embed lyrics support for Lyrics3/Lyrics3V2/SYLT/TXXX(Lyrics) 
+added: use chardet to detect lyrics encoding 
+
+[B]1.4.4 (2012.04.10)[/B]
 fixed: encoding error when login as non english user name under windows
 
 [B]1.4.3 (2012.01.25)[/B]

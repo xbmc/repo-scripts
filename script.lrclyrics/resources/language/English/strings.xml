@@ -4,6 +4,7 @@
     <string id="0">XBMC Lyrics</string>
     <string id="30000">File</string>
     <string id="30001">No lyrics found!</string>
+    <string id="30002">Embed</string>
 
     <!-- Settings labels -->
     <string id="30100">Scraper</string>

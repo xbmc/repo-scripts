@@ -1,8 +1,8 @@
 import sys
 import os
 import re
-import xbmc
-import xbmcgui
+import chardet
+import xbmc, xbmcgui
 
 DEBUG_MODE = 4
 
@@ -100,3 +100,19 @@ def get_settings():
     settings[ "subfolder" ] = __settings__.getSetting( "subfolder" ) == "true"
     settings[ "subfolder_name" ] = __settings__.getSetting( "subfolder_name" )
     return settings
+
+def get_textfile(filepath):
+    try:
+        file = open( filepath, "rb" )
+        data = file.read()
+        file.close()
+        # Detect text encoding
+        enc = chardet.detect(data)
+        if (enc['encoding'] == 'utf-8'):
+            return data
+        else:
+            return unicode( data, enc['encoding'] ).encode( "utf-8")
+    except UnicodeDecodeError:
+        return data
+    except IOError:
+        return ""
