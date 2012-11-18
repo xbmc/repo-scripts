@@ -15,6 +15,7 @@
 	<string id="30023">Mode</string>
 	<string id="30024">Type Remote Path</string>
 	<string id="30025">Remote Path Type</string>
+	<string id="30026">Backups to keep (0 for all)</string>
 	
 	<string id="30030">User Addons</string>
 	<string id="30031">Addon Data</string>
@@ -32,6 +33,7 @@
 	<string id="30051">Creating Files List</string>
 	<string id="30052">Writing file</string>
     <string id="30053">Starting scheduled backup</string>
+	<string id="30054">Removing backup</string>
 	
 	<string id="30060">Enable Scheduler</string>
     <string id="30061">Schedule</string>

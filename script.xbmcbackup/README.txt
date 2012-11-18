@@ -5,7 +5,7 @@ I've had to recover my database, thumbnails, and source configuration enough tim
 
 Usage: 
 
-In the addon settings you can define a remote path for the destination of your xbmc files. Each backup will create a folder named in a month, day, year format so you can create multiple backups.
+In the addon settings you can define a remote path for the destination of your xbmc files. Each backup will create a folder named in a month, day, year format so you can create multiple backups. You can keep a set number of backups by setting the integer value of the Backups to Keep setting greater than 0. 
 
 On the Backup Selection page you can select which items from your user profile folder will be sent to the backup location. By default all are turned on except the Addon Data directory. 
 

@@ -1,33 +1,48 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-	<string id="30010">XBMC Backup</string>
-	<string id="30011">Allgemein</string>
-	<string id="30012">Datenauswahl</string>
-
-	<string id="30016">Sichern</string>
-	<string id="30017">Wiederherstellen</string>
-	<string id="30018">Verzeichnis wählen</string>
-	<string id="30019">Verzeichnis eintippen</string>
-	<string id="30020">Entferntes Verzeichnis wählen</string>
-	<string id="30021">Sicherungsverzeichnisname</string>
-	<string id="30022">Im Hintergrund arbeiten</string>
-	<string id="30023">Modus</string>
-	<string id="30024">Entferntes Verzeichnis</string>
-	<string id="30025">Typ Entferntes Verzeichnis</string>
-
-	<string id="30030">Benutzer Addons</string>
-	<string id="30031">Addon Data</string>
-	<string id="30032">Datenbanken</string>
-	<string id="30033">Playlisten</string>
-	<string id="30034">Thumbnails/Fanart</string>
-	<string id="30035">Config Dateien</string>
-
-	<string id="30045">Fehler: Entferntes Verzeichnis nicht konfiguriert</string>
-	<string id="30046">Starte</string>
-	<string id="30047">Lokales Verzeichnis</string>
-	<string id="30048">Entferntes Verzeichnis</string>
-	<string id="30049">Dateiliste wird erzeugt</string>
-	<string id="30050">Entferntes Verzeichnis existiert - es könnte bereits Dateien beinhalten!</string>
-	<string id="30051">Dateiliste wird erzeugt</string>
-	<string id="30052">Schreibe Datei</string>
+    <string id="30010">XBMC Backup</string>
+    <string id="30011">Allgemein</string>
+    <string id="30012">Datenauswahl</string>
+    <string id="30013">Zeitplan</string>
+    <string id="30016">Sichern</string>
+    <string id="30017">Wiederherstellen</string>
+    <string id="30018">Verzeichnis wählen</string>
+    <string id="30019">Verzeichnis eintippen</string>
+    <string id="30020">Entferntes Verzeichnis wählen</string>
+    <string id="30021">Sicherungsverzeichnisname</string>
+    <string id="30022">Im Hintergrund arbeiten</string>
+    <string id="30023">Modus</string>
+    <string id="30024">Entferntes Verzeichnis</string>
+    <string id="30025">Typ Entferntes Verzeichnis</string>
+    <string id="30030">Benutzer Addons</string>
+    <string id="30031">Addon Daten</string>
+    <string id="30032">Datenbanken</string>
+    <string id="30033">Playlisten</string>
+    <string id="30034">Thumbnails/Fanart</string>
+    <string id="30035">Config Dateien</string>
+    <string id="30045">Fehler: Entferntes Verzeichnis nicht konfiguriert</string>
+    <string id="30046">Starte</string>
+    <string id="30047">Lokales Verzeichnis</string>
+    <string id="30048">Entferntes Verzeichnis</string>
+    <string id="30049">Dateiliste wird erzeugt</string>
+    <string id="30050">Entferntes Verzeichnis existiert - es könnte bereits Dateien beinhalten!</string>
+    <string id="30051">Dateiliste wird erzeugt</string>
+    <string id="30052">Schreibe Datei</string>
+    <string id="30053">Starte geplantes backup</string>
+    <string id="30060">Zeitplaner einschalten</string>
+    <string id="30061">Zeitplan</string>
+    <string id="30062">Stunde</string>
+    <string id="30063">Wochentag</string>
+    <string id="30064">Cron Plan</string>
+    <string id="30065">Sonntag</string>
+    <string id="30066">Montag</string>
+    <string id="30067">Dienstag</string>
+    <string id="30068">Mittwoch</string>
+    <string id="30069">Donnerstag</string>
+    <string id="30070">Freitag</string>
+    <string id="30071">Samstag</string>
+    <string id="30072">Jeden Tag</string>
+    <string id="30073">Jede Woche</string>
+    <string id="30074">Erster Tag eines Monats</string>
+    <string id="30075">Benutzerdefiniert</string>
 </strings>

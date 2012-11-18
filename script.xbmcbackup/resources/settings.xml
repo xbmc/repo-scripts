@@ -6,6 +6,7 @@
 		<setting id="remote_path_2" type="text" label="30024" default="" visible="eq(-1,1)" />
 		<setting id="remote_path" type="folder" label="30020" visible="eq(-2,0)" />
 		<setting id="backup_name" type="text" label="30021" default="backup_date" visible="eq(-4,1)"/>
+		<setting id="backup_rotation" type="number" label="30026" default="0" />
 		<setting id="run_silent" type="bool" label="30022" default="false" />
 	</category>
 	<category id="selection" label="30012">
