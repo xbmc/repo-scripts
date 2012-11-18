@@ -96,6 +96,8 @@ def getID3Lyrics(filename):
             lyrics = ""
             while content != "":
                 pos = endOfString(content, utf16)
+                if (enc == 'latin_1'):
+                    enc = chardet.detect(content[:pos])['encoding']
                 text = content[:pos].decode(enc)
                 if utf16:
                     pos += 1
@@ -103,7 +105,7 @@ def getID3Lyrics(filename):
                 timems = 0
                 for x in range(4):
                     timems += (256)**(3-x) * ord(time[x])
-                lyrics += "%s%s\r\n" % (ms2timestamp(timems), text)
+                lyrics += "%s%s\r\n" % (ms2timestamp(timems), text.replace('\n','').replace('\r','').strip())
                 content=content[pos+5:]
             return lyrics.encode( "utf-8")
         elif tag.fid == "TXXX":

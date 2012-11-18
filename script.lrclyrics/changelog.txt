@@ -1,4 +1,8 @@
-﻿[B]1.4.5 (2012.11.18)[/B]
+﻿[B]1.4.6 (2012.11.18)[/B]
+fixed: can't change lyrics when skip to next song
+fixed: encoding error and lrc error by additional \n\r with SYLT lyrics
+
+[B]1.4.5 (2012.11.18)[/B]
 added: embed lyrics support for Lyrics3/Lyrics3V2/SYLT/TXXX(Lyrics) 
 added: use chardet to detect lyrics encoding 
 

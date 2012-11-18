@@ -85,6 +85,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 200 ).setLabel( "" )
         self.menu_items = []
 
+        xbmc.sleep( 60 )
         lyrics =  getEmbedLyrics(xbmc.Player().getPlayingFile().decode("utf-8"))
         if ( lyrics ):
             self.show_lyrics( lyrics )
@@ -113,7 +114,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.show_lyrics( lyrics, True )
 
     def get_lyrics_from_file( self, artist, song ):
-        xbmc.sleep( 60 )
         if ( self.settings[ "artist_folder" ] ):
             self.song_path = unicode( os.path.join( self.settings[ "lyrics_path" ], artist.replace( "\\", "_" ).replace( "/", "_" ), song.replace( "\\", "_" ).replace( "/", "_" ) + ".lrc" ), "utf-8" )
         else:
@@ -121,7 +121,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         return get_textfile( self.song_path )
 
     def get_lyrics_from_file2( self ):
-        xbmc.sleep( 60 )
         path = xbmc.Player().getPlayingFile()
         dirname = os.path.dirname(path)
         basename = os.path.basename(path)
