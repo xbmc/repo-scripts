@@ -184,7 +184,7 @@
       <onleft>5002</onleft>
       <onright>5002</onright>
       <onup>5001</onup>
-      <ondown>5009</ondown>
+      <ondown>5010</ondown>
       <visible></visible>
     </control>
 
@@ -201,11 +201,12 @@
       <onleft>5004</onleft>
       <onright>5004</onright>
       <onup>5001</onup>
-      <ondown>5009</ondown>
+      <ondown>5010</ondown>
       <visible></visible>
     </control>
 
-    <control type="slider" id="5009">
+
+    <!--<control type="slider" id="5009">
       <description>Slider</description>
       <posx>980</posx>
       <posy>610</posy>
@@ -219,6 +220,38 @@
       <textureslidersnibfocus>slider-nib-focus.png</textureslidersnibfocus>
       <onup>5001</onup>
       <ondown>5005</ondown>
+    </control>-->
+
+    <control type="button" id="5010">
+      <description>Scaler</description>
+      <posx>980</posx>
+      <posy>600</posy>
+      <width>140</width>
+      <height>35</height>
+      <label>Size</label>
+      <font>font13</font>
+      <visible></visible>
+      <pulseonselect>true</pulseonselect>
+      <textoffsetx>45</textoffsetx>
+      <onup>5001</onup>
+      <onright>5012</onright>
+      <ondown>5005</ondown>
+    </control>
+
+    <control type="button" id="5012">
+      <description>Self View</description>
+      <posx>1140</posx>
+      <posy>600</posy>
+      <width>140</width>
+      <height>35</height>
+      <label>Self View</label>
+      <font>font13</font>
+      <visible></visible>
+      <pulseonselect>true</pulseonselect>
+      <textoffsetx>20</textoffsetx>
+      <onup>5001</onup>
+      <onleft>5010</onleft>
+      <ondown>5005</ondown>
     </control>
 
     <control type="button" id ="5005">
@@ -226,23 +259,24 @@
       <posx>980</posx>
       <posy>650</posy>
       <width>300</width>
-      <height>40</height>
+      <height>35</height>
       <label>Settings</label>
       <font>font13</font>
       <texturefocus>button-focus.png</texturefocus>
       <texturenofocus>button-nofocus.png</texturenofocus>
+      <textoffsetx>45</textoffsetx>
       <onleft>5005</onleft>
       <onright>5005</onright>
-      <onup>5009</onup>
+      <onup>5010</onup>
       <ondown>5003</ondown>
       <visible></visible>
     </control>
 
     <control type="label" id="5051">
         <description>debug</description>
-        <posx>980</posx>
-        <posy>380</posy>
-        <width>350</width>
+        <posx>380</posx>
+        <posy>700</posy>
+        <width>700</width>
         <visible>true</visible>
         <align>left</align>
         <aligny>center</aligny>
@@ -250,7 +284,7 @@
         <label></label>
         <haspath>false</haspath>
         <font>font11</font>
-        <textcolor>FFB2D4F5</textcolor>
+        <textcolor>55555555</textcolor>
         <wrapmultiline>false</wrapmultiline>
         <scrollspeed>50</scrollspeed>
         <scrollsuffix> - </scrollsuffix>
