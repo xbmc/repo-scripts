@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30100">
+      <setting id="Lang01" type="select" label="30101" default="11" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246" />
+      <setting id="Lang02" type="select" label="30102" default="35" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246" />
+      <setting id="Lang03" type="select" label="30111" default="11" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246" />
+    </category>
+    <category label="30103">
+      <setting id="Argenteam" type="bool" label="Argenteam.net" default="false"/>
+      <setting id="AsiaTeam" type="bool" label="Asia-Team.net" default="false"/>
+      
+      <setting id="BetaSeries" type="bool" label="betaseries.com" default="false"/>
+      <setting id="Bierdopje" type="bool" label="Bierdopje.com (TV Shows and Dutch/English subs only)" default="false"/>             
+
+      <setting id="euTorrents" type="bool" label="eutorrents.me" default="false"/>
+      <setting id="euTuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30148" default=""/>
+      <setting id="euTpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30149" default=""/>
+
+      <setting id="Itasa" type="bool" label="Itasa (Italiansubs.net, TV Shows and Italian only)" default="false"/>
+      <setting id="ITuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30126" default=""/>
+      <setting id="ITpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30127" default=""/>
+      
+      <setting id="LegendasDivx" type="bool" label="LegendasDivx.com" default="false"/>
+      <setting id="LDivxuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30132" default=""/>
+      <setting id="LDivxpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30133" default=""/>
+      <setting id="LegendasTV" type="bool" label="Legendas.tv" default="false"/>
+      <setting id="LTVuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30123" default=""/>
+      <setting id="LTVpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30124" default=""/>
+      <setting id="LegendasZone" type="bool" label="Legendas-Zone.org" default="false"/>
+      <setting id="LZuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30138" default=""/>
+      <setting id="LZpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30139" default=""/>      
+      
+      <setting id="Napiprojekt" type="bool" label="Napiprojekt.pl (Polish/English subs only)" default="false"/>
+      <setting id="Napisy24pl" type="bool" label="Napisy24.pl (Mostly Polish/English subs)" default="false"/>
+      <setting id="Napisy24_type" type="enum" lvalues="30141|30142|30143|30144" visible= "eq(-1,true)" enable="eq(-1,true)" default="2" label="30140"/>
+      <setting id="n24user" type="text"  visible= "eq(-2,true)" enable="eq(-2,true)" label="30146" default=""/>
+      <setting id="n24pass" type="text" option = "hidden" visible= "eq(-3,true)" enable="eq(-3,true)" label="30147" default=""/>
+
+      <setting id="OmniSubs" type="bool" label="OmniSubs.net" default="false"/>
+      <setting id="Omniuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30136" default=""/>
+      <setting id="Omnipass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30137" default=""/>      
+      <setting id="Ondertitel" type="bool" label="Ondertitel.com (Movies and Dutch subs only)" default="false"/>      
+      <setting id="OpenSubtitles" type="bool" label="OpenSubtitles.org" default="true"/>
+
+      <setting id="Pipocas" type="bool" label="Pipocas.tv" default="false"/>
+      <setting id="Pipocasuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30158" default=""/>
+      <setting id="Pipocaspass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30159" default=""/>
+      <setting id="Podnapisi" type="bool" label="Podnapisi.net" default="true"/>
+      <setting id="PNuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30104" default=""/>
+      <setting id="PNpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30105" default=""/> 
+      <setting id="PTSubs" type="bool" label="PT-SUBS.NET" default="false"/>
+      <setting id="PTSuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30134" default=""/>
+      <setting id="PTSpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30135" default=""/>
+
+      <setting id="RegieLive" type="bool" label="Subtitrari.RegieLive.ro" default="false"/>
+
+      <setting id="Shooter" type="bool" label="Shooter.cn (Chinese and English subs only)" default="false"/>
+      <setting id="Sratim" type="bool" label="Sratim.co.il" default="false"/>
+      <setting id="SubDB" type="bool" label="theSubDB.com" default="false"/>
+      <setting id="Subdivx" type="bool" label="Subdivx.com (Spanish subs only)" default="false"/>      
+      <setting id="Sublight" type="bool" label="Sublight.si" default="false"/>             
+      <setting id="Subscene" type="bool" label="Subscene.com" default="false"/>
+      <setting id="Subscenter" type="bool" label="Subscenter.org" default="false"/>
+      <setting id="SubtitlesGr" type="bool" label="Subtitles.gr (Greek subs only)" default="false"/>
+      <setting id="SubtitulosES" type="bool" label="Subtitulos.es" default="false"/>
+      <setting id="SuperSubtitles" type="bool" label="SuperSubtitles (Feliratok.info)" default="false"/>      
+      <setting id="Swesub" type="bool" label="Swesub.nu" default="false"/>
+      
+      <setting id="Titlovi" type="bool" label="Titlovi.com" default="false"/> 
+      <setting id="Titulky" type="bool" label="Titulky.com (Czech and Slovak subs only)" default="false"/>       
+      <setting id="Titulkyuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30128" default=""/>
+      <setting id="Titulkypass" type="text" option ="hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30129" default=""/>
+           
+      <setting id="Undertexter" type="bool" label="Undertexter.se (Swedish and English subs only)" default="false"/>
+    </category>
+    <category label="30106">
+      <setting id="defmovieservice" type="select" mask="/" label="30113" default="OpenSubtitles" source="/resources/lib/services" />
+      <setting id="deftvservice" type="select" mask="/" label="30114" default="OpenSubtitles" source="/resources/lib/services" />    
+      <setting id="subfolder" type="bool" label="30107" default="true" />
+      <setting id="subfolderpath" type="folder" visible= "eq(-1,false)" source="files" label="30108" default="" />
+      <setting id="searchstr" type="bool" label="30110" default="false"/>
+      <setting id="fil_name" type="bool" label="30118" default="false"/>
+      <setting id="par_folder" type="bool" label="30119" default="false"/>
+      <setting id="lang_to_end" type="bool" label="30121" default="true" />
+      <setting id="use_subs_folder" type="bool" label="30145" default="false" />
+      <setting id="timeout" type="enum" label="30122" default="6" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25" />
+      <setting id="search_next" type="bool" label="30130" default="false" />
+      <setting id="auto_download" type="bool" label="30131" default="false" />
+      <setting id="auto_download_file" visible= "false" type="text" label="" default="" />
+    </category>
+</settings>
