@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmcbackup"
-    name="XBMC Backup" version="0.1.6" provider-name="robweber">
+    name="XBMC Backup" version="0.1.8" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
   </requires>
@@ -9,13 +9,29 @@
   </extension> 
   <extension point="xbmc.service" library="scheduler.py" start="startup" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="fr">Sauvegarder et restaurer vos bases de données XBMC et vos fichiers de configuration en cas de crash ou de fichiers corrompus.</summary>
     <summary lang="de">Die XBMC Datenbank sichern und bei Dateiverlust oder Beschädigung wiederherstellen.</summary>
     <summary lang="en">Backup and restore your XBMC database and configuration files in the event of a crash or file corruption.</summary>
-	<description lang="fr">Avez-vous déjà perdu votre configuration XBMC et espéré avoir fait une sauvegarde ? Maintenant, vous pouvez le faire en un simple click. Vous pouvez exporter vos bases de données, playlists, miniatures, addons et autres fichiers de configuration vers n'importe quel endroit accessible depuis XBMC.</description>
+    <summary lang="es">Haz copia de seguridad  de tu base de datos y configuración y recupera todo en caso de fallo.</summary>
+    <summary lang="es_MX">Respalda y restaura tu base de datos y archivos de configuración de XBMC dado el evento de un cuelgue o corrupción de archivos. </summary>
+    <summary lang="fr">Sauvegarder et restaurer vos bases de données XBMC et vos fichiers de configuration en cas de crash ou de fichiers corrompus.</summary>
+    <summary lang="he">גיבוי ושחזור מסד הנתונים וקבצי ההגדרות של XBMC במקרה של קריסה או קבצים פגומים.</summary>
+    <summary lang="lt">Atsarginė kopija katra atkuria jūsų XBMC duomenų bazę ir konfigūracijos failus avarijos ar failo sugadinimo metu.</summary>
+    <summary lang="pl">Stwórz kopię bezpieczeńśtwa oraz przywróć twoją bazę XBMC łącznie z plikami konfiguracyjnymi w przypadku awarii lub uszkodzenia plików.</summary>
+    <summary lang="pt_BR">Backup e restaure o banco de dados do XBMC e seus arquivos de configuração, no caso de falha ou corrupção de arquivo</summary>
+    <summary lang="sk">Zálohovanie a obnova XBMC databázy a konfiguračných súborov pre prípad havárie alebo poškodenia súboru.</summary>
+    <summary lang="sv">Ta backupp av eller återställ din XBMC-databas och konfigurationsfiler i händelse av en krash eller filkorruption.</summary>
     <description lang="de">Jemals deine XBMC Konfiguration zerschossen und dir dann gewünscht, dass ein Backup existiert? Jetzt kannst du eine Sicherung mit nur einem Klick erzeugen. Du kannst deine Datenbanen, Playlisten, Thumbnails, Addons und andere Details zu einem Ort deiner Wahl sichern.</description>
     <description lang="en">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC. Backups can be run on demand or via a scheduler. </description>
+    <description lang="es_MX">¿Alguna vez haz echado a perder tu configuración de XBMC y haz deseado tener un respaldo? Ahora puedes tenerlo con un simple click. Puedes exportar tu base de datos, listas de reproducción, miniaturas, addons y otros detalles de configuración correspondientes a cualquier fuente que pueda escribir XBMC. Los respaldos pueden ser efectuados a pedido o mediante una programación temporal</description>
+    <description lang="fr">Avez-vous déjà perdu votre configuration XBMC et espéré avoir fait une sauvegarde ? Maintenant, vous pouvez le faire en un simple click. Vous pouvez exporter vos bases de données, playlists, miniatures, addons et autres fichiers de configuration vers n'importe quel endroit accessible depuis XBMC.</description>
+    <description lang="he">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC. Backups can be run on demand or via a scheduler. </description>
+    <description lang="lt">Kada naujinate ir konfiguruojate savo XBMC ar susimastėte, kad jums reikalinga atsarginė kopija? Dabar galite tai atlikti vienu spustelėjimu. Savo duomenų bazes, atkūrimą, miniatiūras, priedus ir kitas konfigūracijos failus galite eksportuoti iš bet kokio šaltinio. Atsarginė(-ės) kopija(-os) gali būti paleistos pareikalavus arba per tvarkaraštį.</description>
+    <description lang="pl">Straciłeś kiedyś swoją konfigurację XBMC i marzyłeś o tym by mieć backup? Teraz już możesz i to w prosty sposób. Możesz eksportować twoją bazę, playlisty, miniatury, dodatki oraz wiele więcej do dowolnego źródłą prosto z XBMC. Kopia bezpieczeństwa może być uruchomiona na rządanie lub przez plan.</description>
+    <description lang="pt_BR">Sempre se preocupou com sua configuração do XBMC e desejou ter backup? Agora você pode, e somente com um simples clique. Você pode exportar seu banco de dados, lista de reprodução, miniaturas, addons e outros detalhes de configuração para qualquer fonte gravável pelo XBMC. Os backups podem ser executados sob demanda ou ser agendados.</description>
+    <description lang="sk">Už ste niekedy poškodili konfiguráciu XBMC a priali si mať zálohu? Teraz môžete - na jeden klik. Môžete exportovať Vašu databázu, playlist, náhľady, doplnky a konfigurácie na ktorýkoľvek zdroj zapisovateľný XBMC. Zálohy môžu byť púšťané na požiadanie alebo plánovačom. </description>
+    <description lang="sv">Har du någonsin tappat bort din XBMC konfiguration och önskat att du hade en backup? Nu kan du enkelt med ett klick. Du kan exportera din databas, spellista, minityrer, tillägg och andra konfigurationsdetaljer till valfri källa som är skrivbar för XBMC. Backupper kan köras på begäran eller via scheman.</description>
     <platform>all</platform>
-    <language></language>
   </extension>
 </addon>
+
+

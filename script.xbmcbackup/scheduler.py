@@ -44,8 +44,9 @@ class BackupScheduler:
                     #run the job in backup mode, hiding the dialog box
                     backup = XbmcBackup()
                     backup.run(XbmcBackup.Backup,True)
-                    
-                self.findNextRun(now)
+                    self.findNextRun(now,True)
+                else:
+                    self.findNextRun(now)
 
             time.sleep(10)
 
