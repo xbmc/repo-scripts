@@ -1,4 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- German language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/de/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
     <!-- Help -->
     <string id="32001">Links + Rechts = Album/Photo wechseln</string>
@@ -9,6 +13,7 @@
     <string id="32006">Kontext = Album herunterladen</string>
     <string id="32007">Play = Slideshow starten</string>
     <string id="32008">0 = Seitenverhältnis wechseln</string>
+
     <!-- Settings -->
     <string id="32100">Diese Hilfe nicht mehr anzeigen</string>
     <string id="32110">Standard Seitenverhältnis</string>
@@ -17,9 +22,11 @@
     <string id="32120">Pfeile zeigen</string>
     <string id="32130">Slideshow shuffle</string>
     <string id="32140">Download-Verzeichnis</string>
+
     <!-- Settings categories -->
     <string id="32200">Hilfe</string>
     <string id="32201">Einstellungen</string>
+
     <!-- Script strings -->
     <string id="32300">Download-Verzeichnis wählen</string>
     <string id="32301">Sammle Daten...</string>

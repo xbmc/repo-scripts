@@ -1,3 +1,7 @@
+3.0.5
+  Fixed: Time.com Lightbox photosets
+  Updated Translations
+
 3.0.4
   Fixed: "The Big Picture"-scraper
   Fixed: "Wallstreet Jouarnal"-scraper

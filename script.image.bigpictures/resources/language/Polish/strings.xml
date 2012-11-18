@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Polish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Lewo + Prawo = Przełącz Album/Zdjęcie</string>
+    <string id="32002">Góra + Dół = Przełącz źródło</string>
+    <string id="32003">Enter lub Select = Wejdź w album</string>
+    <string id="32004">Cofnij = Powróć do albumu/opuść wtyczkę</string>
+    <string id="32005">Info = Przełącz informacje na ekranie</string>
+    <string id="32006">Kontekst = Pobierz album</string>
+    <string id="32007">Play lub Start = Uruchom pokaz slajdów</string>
+    <string id="32008">0 = Przełącz proporcje</string>
+
+    <!-- Settings -->
+    <string id="32100">Nie pokazuj tej pomocy ponownie</string>
+    <string id="32110">Domyślne proporcje</string>
+    <string id="32111">skala</string>
+    <string id="32112">trzymać</string>
+    <string id="32120">Pokaż strzałki</string>
+    <string id="32130">Losowy pokaz slajdów</string>
+    <string id="32140">Ścieżka pobierania albumu</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Pomoc</string>
+    <string id="32201">Ustawienia</string>
+
+    <!-- Script strings -->
+    <string id="32300">Wybierz domyślną ścieżkę pobierania</string>
+    <string id="32301">Gromadzenie danych...</string>
+    <string id="32302">Pozycja %d/%d</string>
+    <string id="32303">Aktualna pozycja: %s %d%%</string>
+    <string id="32304">Pobieranie do: %s</string>
+</strings>

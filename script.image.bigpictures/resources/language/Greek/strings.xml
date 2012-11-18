@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Greek language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/el/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Αριστερά + Δεξιά = Αλλαγή Άλμπουμ/Φωτογραφίας</string>
+    <string id="32002">Πάνω + Κάτω = Αλλαγή Πηγής</string>
+    <string id="32003">Επιλογή = Άνοιγμα άλμπουμ</string>
+    <string id="32004">Πίσω = Πίσω στο άλμπουμ/Έξοδος από άλμπουμ</string>
+    <string id="32005">Info = Εναλλαγή πληροφοριών οθόνης</string>
+    <string id="32006">Context = Λήψη άλμπουμ</string>
+    <string id="32007">Επιλογή = Έναρξη παρουσίασης διαφανειών</string>
+    <string id="32008">0 = Εναλλαγή αναλογίας οθόνης</string>
+
+    <!-- Settings -->
+    <string id="32100">Να μην ξαναεμφανιστεί αυτή η βοήθεια</string>
+    <string id="32110">Προεπιλεγμένη αναλογία οθόνης</string>
+    <string id="32111">κλίμακα</string>
+    <string id="32112">διατήρηση</string>
+    <string id="32120">Εμφάνιση Βελών</string>
+    <string id="32130">Τυχαία σειρά διαφανειών</string>
+    <string id="32140">Διαδρομή λήψης άλμπουμ</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Βοήθεια</string>
+    <string id="32201">Ρυθμίσεις</string>
+
+    <!-- Script strings -->
+    <string id="32300">Επιλογή προεπιλεγμένης διαδρομής λήψεων</string>
+    <string id="32301">Συλλέγονται δεδομένα...</string>
+    <string id="32302">Αντικείμενο %d/%d</string>
+    <string id="32303">Τρέχον αντικείμενο: %s %d%%</string>
+    <string id="32304">Γίνεται λήψη στο: %s</string>
+</strings>

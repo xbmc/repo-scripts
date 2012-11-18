@@ -28,7 +28,8 @@ class Scraper(ScraperPlugin):
     def _get_photos(self, album_url):
         self.photos = []
         tree = self._get_tree(album_url)
-        album_title = tree.find('h1').string
+        entry_top = tree.find('div', {'class': 'entry-top'})
+        album_title = entry_top.find('h1').string or ''
         js_code = tree.find('text/javascript', text=re.compile('var images'))
         json_photos = re.search('var images = (\[.*?"ID":0.*?\])', js_code).group(1)
         photos = json.loads(json_photos)
