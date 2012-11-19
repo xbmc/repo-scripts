@@ -1,4 +1,8 @@
-﻿[B]1.4.6 (2012.11.18)[/B]
+﻿[B]1.4.7 (2012.11.19)[/B]
+fixed: handle I/O error
+fixed: TXXX(Lyrics) load error
+
+[B]1.4.6 (2012.11.18)[/B]
 fixed: can't change lyrics when skip to next song
 fixed: encoding error and lrc error by additional \n\r with SYLT lyrics
 
