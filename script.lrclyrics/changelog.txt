@@ -1,4 +1,8 @@
-﻿[B]1.4.7 (2012.11.19)[/B]
+﻿[B]1.4.8 (2012.11.21)[/B]
+added: MiniLyrics scraper
+fixed: can't read lrc file under music library mode because xbmc.Player().getPlayingFile() return path like 'musicdb://3/3/4.mp3?albumid=3'. use xbmc.getInfoLabel('Player.Filenameandpath') to get real file path.
+
+[B]1.4.7 (2012.11.19)[/B]
 fixed: handle I/O error
 fixed: TXXX(Lyrics) load error
 
