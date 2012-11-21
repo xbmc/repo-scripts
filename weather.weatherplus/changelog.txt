@@ -1,3 +1,6 @@
+﻿v.3.1.0
+- Broken due to site changes
+
 ﻿v.3.0.1
 - Added : [Accuweather.com] Chance of precipitation
 
