@@ -4,6 +4,7 @@
     <string id="0">XBMC歌词</string>
     <string id="30000">文件</string>
     <string id="30001">歌词未找到！</string>
+    <string id="30002">内嵌</string>
 
     <!-- Settings labels -->
     <string id="30100">刮削器</string>

@@ -1,4 +1,22 @@
-﻿[B]1.4.4 (2012.04.10)[/B]
+﻿[B]1.7.1 (2012.11.21)[/B]
+initialized into frodo
+added: MiniLyrics scraper
+changed: use xbmcvfs to access files to support nas share
+fixed: can't read lrc file under music library mode because xbmc.Player().getPlayingFile() return path like 'musicdb://3/3/4.mp3?albumid=3'. use xbmc.getInfoLabel('Player.Filenameandpath') to get real file path.
+
+[B]1.4.7 (2012.11.19)[/B]
+fixed: handle I/O error
+fixed: TXXX(Lyrics) load error
+
+[B]1.4.6 (2012.11.18)[/B]
+fixed: can't change lyrics when skip to next song
+fixed: encoding error and lrc error by additional \n\r with SYLT lyrics
+
+[B]1.4.5 (2012.11.18)[/B]
+added: embed lyrics support for Lyrics3/Lyrics3V2/SYLT/TXXX(Lyrics) 
+added: use chardet to detect lyrics encoding 
+
+[B]1.4.4 (2012.04.10)[/B]
 fixed: encoding error when login as non english user name under windows
 
 [B]1.4.3 (2012.01.25)[/B]
