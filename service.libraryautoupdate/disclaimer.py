@@ -5,4 +5,4 @@ addon_id = "service.libraryautoupdate"
 Addon = xbmcaddon.Addon(addon_id)
 
 #show the disclaimer
-xbmcgui.Dialog().ok(Addon.getLocalizedString(30018),"",Addon.getLocalizedString(30019),Addon.getLocalizedString(30020))
+xbmcgui.Dialog().ok(Addon.getLocalizedString(30031),"",Addon.getLocalizedString(30032),Addon.getLocalizedString(30033))

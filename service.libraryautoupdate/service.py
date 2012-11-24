@@ -4,6 +4,7 @@ from datetime import datetime
 import xbmc
 import xbmcaddon
 import xbmcvfs
+import xbmcgui
 import os
 from resources.lib.croniter import croniter
 
@@ -133,19 +134,25 @@ class AutoUpdater:
             self.log("update timers")
             self.schedules = []
 
-            clean_after_update = False
+            clean_video_after_update = False
+            clean_music_after_update = True
+            
             if(self.Addon.getSetting('clean_libraries') == 'true'):
                 #create clean schedule (if needed)
                 if(int(self.Addon.getSetting("clean_timer")) == 0):
-                    clean_after_update = True  #clean after executing updates
+                    if(self.Addon.getSetting('library_to_clean') == '0' or self.Addon.getSetting('library_to_clean') == '1'):
+                        clean_video_after_update = True
+                    if(self.Addon.getSetting('library_to_clean') == '2' or self.Addon.getSetting('library_to_clean') == '0'):
+                        clean_music_after_update = True
                 else:
                     #create a separate schedule for cleaning - use right now rather than last_run, never 'catch-up'
-                    clean_after_update = False
-
-                    if(self.Addon.getSetting('update_video') == 'true' or (self.Addon.getSetting('use_custom_1_path') == 'true' or self.Addon.getSetting('use_custom_2_path') == 'true' or self.Addon.getSetting('use_custom_3_path') == 'true')):
+                    clean_video_after_update = False
+                    clean_music_after_update = False
+                    
+                    if(self.Addon.getSetting('library_to_clean') == '0' or self.Addon.getSetting('library_to_clean') == '1'):
                         #video clean schedule starts at 12am
                         aSchedule = CronSchedule()
-                        aSchedule.name = 'Clean Video Library'
+                        aSchedule.name = self.Addon.getLocalizedString(30048)
                         aSchedule.timer_type = self.addon_id
                         aSchedule.command = 'video'
                         aSchedule.expression = "0 0 " + aSchedule.cleanLibrarySchedule(int(self.Addon.getSetting("clean_timer")))
@@ -153,10 +160,10 @@ class AutoUpdater:
 
                         self.schedules.append(aSchedule)
                         
-                    if(self.Addon.getSetting('update_music') == 'true'):
+                    if(self.Addon.getSetting('library_to_clean') == '2' or self.Addon.getSetting('library_to_clean') == '0'):
                         #music clean schedule starts at 2am
                         aSchedule = CronSchedule()
-                        aSchedule.name = 'Clean Music Library'
+                        aSchedule.name = self.Addon.getLocalizedString(30049)
                         aSchedule.timer_type = self.addon_id
                         aSchedule.command = 'music'
                         aSchedule.expression = "0 2 " + aSchedule.cleanLibrarySchedule(int(self.Addon.getSetting("clean_timer")))
@@ -168,55 +175,55 @@ class AutoUpdater:
             if(self.Addon.getSetting('update_video') == 'true'):
                 #create the video schedule
                 aSchedule = CronSchedule()
-                aSchedule.name = 'Update Video Library'
+                aSchedule.name = self.Addon.getLocalizedString(30004)
                 aSchedule.command = 'UpdateLibrary(video)'
                 aSchedule.expression = self.checkTimer('video')
                 aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
-                aSchedule.clean_library = clean_after_update
+                aSchedule.clean_library = clean_video_after_update
                 
                 self.schedules.append(aSchedule)
 
             if(self.Addon.getSetting('update_music') == 'true'):
                 #create the music schedule
                 aSchedule = CronSchedule()
-                aSchedule.name = 'Update Music Library'
+                aSchedule.name = self.Addon.getLocalizedString(30005)
                 aSchedule.command = 'UpdateLibrary(music)'
                 aSchedule.expression = self.checkTimer('music')
                 aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
-                aSchedule.clean_library = clean_after_update
+                aSchedule.clean_library = clean_music_after_update
                 
                 self.schedules.append(aSchedule)
 
             if(self.Addon.getSetting('use_custom_1_path') == 'true'):
                 #create a custom video path schedule
                 aSchedule = CronSchedule()
-                aSchedule.name = 'Specific Video Path'
+                aSchedule.name = self.Addon.getLocalizedString(30020)
                 aSchedule.command = 'UpdateLibrary(video,' + self.Addon.getSetting('custom_1_scan_path') + ')'
                 aSchedule.expression = self.checkTimer('custom_1')
                 aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
-                aSchedule.clean_library = clean_after_update
+                aSchedule.clean_library = clean_video_after_update
                 
                 self.schedules.append(aSchedule)
 
             if(self.Addon.getSetting('use_custom_2_path') == 'true'):
                 #create a custom video path schedule
                 aSchedule = CronSchedule()
-                aSchedule.name = 'Specific Video Path'
+                aSchedule.name = self.Addon.getLocalizedString(30021)
                 aSchedule.command = 'UpdateLibrary(video,' + self.Addon.getSetting('custom_2_scan_path') + ')'
                 aSchedule.expression = self.checkTimer('custom_2')
                 aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
-                aSchedule.clean_library = clean_after_update
+                aSchedule.clean_library = clean_video_after_update
                 
                 self.schedules.append(aSchedule)
 
             if(self.Addon.getSetting('use_custom_3_path') == 'true'):
                 #create a custom video path schedule
                 aSchedule = CronSchedule()
-                aSchedule.name = 'Specific Video Path'
+                aSchedule.name = self.Addon.getLocalizedString(30022)
                 aSchedule.command = 'UpdateLibrary(video,' + self.Addon.getSetting('custom_3_scan_path') + ')'
                 aSchedule.expression = self.checkTimer('custom_3')
                 aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
-                aSchedule.clean_library = clean_after_update
+                aSchedule.clean_library = clean_video_after_update
                 
                 self.schedules.append(aSchedule)
                 
@@ -256,7 +263,7 @@ class AutoUpdater:
         inWords = self.nextRunCountdown(next_run_time.next_run)
         #show the notification (if applicable)
         if(next_run_time.next_run > time.time() and self.Addon.getSetting('notify_next_run') == 'true' and displayToScreen == True):
-            xbmc.executebuiltin("Notification(Library Auto Update," + next_run_time.name + " " + inWords + ",4000," + xbmc.translatePath(self.addondir + "/resources/images/clock.png") + ")")
+            xbmc.executebuiltin("Notification(" + self.Addon.getLocalizedString(30000) + "," + next_run_time.name + " - " + inWords + ",4000," + xbmc.translatePath(self.addondir + "/resources/images/clock.png") + ")")
 
         return inWords    
 
@@ -301,11 +308,18 @@ class AutoUpdater:
                 if not xbmcvfs.exists(source['file']):
                     #let the user know this failed, if they subscribe to notifications
                     if(self.Addon.getSetting('notify_next_run') == 'true'):
-                        xbmc.executebuiltin("Notification(Error Cleaning Databse,Source " + source['label'] + " does not exist,4000," + xbmc.translatePath(self.addondir + "/resources/images/clock.png") + ")")
+                        xbmc.executebuiltin("Notification(" + self.Addon.getLocalizedString(30050) + ",Source " + source['label'] + " does not exist,4000," + xbmc.translatePath(self.addondir + "/resources/images/clock.png") + ")")
 
                     self.log("Path " + source['file'] + " does not exist")
                     return
 
+        #also check if we should verify with user first
+        if(self.Addon.getSetting('user_confirm_clean') == 'true'):
+            #user can decide 'no' here and exit this
+            runClean = xbmcgui.Dialog().yesno(self.Addon.getLocalizedString(30000),self.Addon.getLocalizedString(30052),self.Addon.getLocalizedString(30053))
+            if(not runClean):
+                return
+                
         #run the clean operation
         self.log("Cleaning Database")
         xbmc.executebuiltin("CleanLibrary(" + media_type + ")")
