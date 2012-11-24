@@ -41,7 +41,7 @@
         <string id="32036">Συγκέντρωση extrafanart [I](Μπορεί να χρησιμοποιηθεί για παρουσίαση extrafanart) [/I]</string>
         <string id="32037">Κεντρικός κατάλογος extrafanart τηλεοπτικών σειρών</string>
         <string id="32038">Κεντρικός κατάλογος extrafanart ταινιών</string>
-        <string id="32039">Προβολή αναφοράς λήψης από το τελευταίο κατέβασμα</string>
+        <string id="32039">Προβολή αναφοράς από την τελευταία λήψη</string>
         <string id="32040">-</string>
         
     <!-- Add-on settings: Limit section id=32051 to 32060 -->
@@ -50,13 +50,13 @@
         <string id="32053">Μέγιστος αριθμός extrafanart</string>
         <string id="32054">Ελάχιστη βαθμολογία</string>
         <string id="32055">Προτιμώμενη γλώσσα:</string>
-        <string id="32056">Αποκλεισμός fanart που έχουν κείμενο</string>
+        <string id="32056">Αποκλεισμός fanart με κείμενο</string>
         <string id="32057">Ελάχιστο μέγεθος fanart: Ταινίες</string>
         <string id="32058">Ελάχιστο μέγεθος fanart: Τηλεοπτικές Σειρές</string>
         <string id="32059">1080</string>
         <string id="32060">720</string>
         <string id="32061">480</string>
-        <string id="32062">Ελάχιστο μέγεθος fanart: Μουσικά βίντεο κλιπ</string>
+        <string id="32062">Ελάχιστο μέγεθος fanart: Μουσικά Βίντεο</string>
 
     <!-- Add-on settings: Movie section id=32071 to 32080 -->
         <string id="32071">Ταινίες</string>
@@ -68,13 +68,13 @@
         <string id="32083">-</string>
 
     <!-- Add-on settings: Music section id=32091 to 32100 -->
-        <string id="32091">Μουσικά Βίντεο Κλιπ</string>
-        <string id="32092">[B]Επιλογές για λήψη εικόνων Μουσικών Βίντεο Κλιπ[/B]</string>
+        <string id="32091">Μουσικά Βίντεο</string>
+        <string id="32092">[B]Επιλογές για λήψη εικόνων Μουσικών Βίντεο[/B]</string>
 
     <!-- Add-on settings: Advanced settings section id=32101 to 32020 -->   
         <string id="32101">Για προχωρημένους</string>
         <string id="32102">[B]Ορισμένες επιπλέον ρυθμίσεις για προχωρημένους που θα χρησιμοποιηθούν[/B]</string>
-        <string id="32103">-</string>
+        <string id="32103">Χρήση τοπικών αρχείων</string>
         <string id="32104">-</string>
         <string id="32105">-</string>
         <string id="32106">Χρήση του XBMC pre-caching [I](τοποθετεί προσωρινά τις εικόνες στο φάκελο των μικρογραφιών κατά τη λήψη) [/I]</string>
@@ -93,11 +93,11 @@
         <string id="32127">Εικόνες Χαρακτήρων</string>
         <string id="32128">Αφίσα</string>
         <string id="32129">Αφίσες Κύκλων</string>
-        <string id="32130">Μικρογραφία 16:9</string>
+        <string id="32130">Μικρογραφία 16:9 (Τοπίο)</string>
         <string id="32131">Επιπλέον μικρογραφίες (extrathumbs)</string>
-        <string id="32132">Εικόνες Δίσκων</string>
+        <string id="32132">Εικόνες Δίσκων (cdART)</string>
         <string id="32133">Εικόνες</string>
-        <string id="32134">Μικρογραφίες Κύκλου 16:9</string>
+        <string id="32134">Μικρογραφίες Κύκλων 16:9 (Τοπία)</string>
 
     <!-- Add-on messages: -->
         <string id="32141">Γλώσσα</string>
@@ -117,7 +117,7 @@
         
     <!-- Add-on settings: Info section id=32181 to 32190-->   
         <string id="32181">Πληροφορίες</string>
-        <string id="32182">Στηρίξτε μας με τη συνδρομή ή τη συνεισφορά σας στις ακόλουθες σελίδες:</string>
+        <string id="32182">Στηρίξτε μας συνδράμοντας στις ακόλουθες σελίδες:</string>
         <string id="32183">[I]www.xbmc.org [/I]</string>
         <string id="32184">[I]fanart.tv [/I]</string>
         <string id="32185">[I]www.thetvdb.com [/I]</string>
@@ -127,5 +127,5 @@
         <string id="32191">[I]Για προβλήματα, αιτήματα ή γενικές ερωτήσεις επισκεφθείτε το [/I]</string>
         <string id="32192">[I]  θέμα του Artwork Downloader στο forum του XBMC. [/I]</string>
         <string id="32189">Ευχαριστούμε τους:</string>
-        <string id="32190">Ομάδα XBMC και τους δημιουργούς των πρόσθετων πάνω στα οποία βασίστηκε αυτό.</string>
+        <string id="32190">Ομάδα XBMC και τους δημιουργούς των πρόσθετων στα οποία βασίστηκε.</string>
 </strings>

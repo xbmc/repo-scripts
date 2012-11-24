@@ -81,7 +81,6 @@ class Main:
                     if self.mediatype == 'movie':
                         self.settings.movie_enable = True
                         self.Medialist = media_listing('movie')
-                        self.Medialist = media_unique('movie',self.dbid)
                         self.download_artwork(self.Medialist, self.movie_providers)
                     elif self.mediatype == 'tvshow':
                         self.settings.tvshow_enable = True
@@ -505,8 +504,8 @@ class Main:
                                 item['filename'] = "season-all-banner.jpg"
                             else:
                                 item['filename'] = (filename % int(artwork['season']))
-                        elif art_type in ['seasonthumb']:
-                            item['filename'] = (filename % artwork['season'])
+                        elif art_type in ['seasonlandscape']:
+                            item['filename'] = (filename % int(artwork['season']))
                         else:
                             item['filename'] = filename
                         for targetdir in item['targetdirs']:

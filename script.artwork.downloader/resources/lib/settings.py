@@ -277,7 +277,7 @@ class settings:
                                     'solo_enabled': 'true',
                                     'gui_string': __localize__(32134),
                                     'art_type': 'seasonlandscape',
-                                    'filename': 'season%s-landscape.jpg'},
+                                    'filename': 'season%01d-landscape.jpg'},
 
                                     {'media_type': 'tvshow',
                                     'bulk_enabled': self.tvshow_showbanner,

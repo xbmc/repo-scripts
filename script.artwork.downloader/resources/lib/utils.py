@@ -136,9 +136,6 @@ def get_data_new(url, data_type):
         # TMDB needs a header to be able to read the data
         if url.startswith("http://api.themoviedb.org"):
             request.add_header("Accept", "application/json")
-        # Add some delay to stop trashing the fanart.tv server
-        elif url.startswith("http://fanart.tv/"):
-            xbmc.sleep(1000)
         req = urllib2.urlopen(request)
         if data_type == 'json':
             data = simplejson.loads(req.read())
