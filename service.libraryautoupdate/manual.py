@@ -9,7 +9,7 @@ autoUpdate = AutoUpdater()
 
 nextRun = autoUpdate.showNotify(False)
 #check if we should run updates
-runUpdate = xbmcgui.Dialog().yesno(Addon.getLocalizedString(30010),Addon.getLocalizedString(30011) + nextRun,Addon.getLocalizedString(30012))
+runUpdate = xbmcgui.Dialog().yesno(Addon.getLocalizedString(30000),Addon.getLocalizedString(30060) + nextRun,Addon.getLocalizedString(30061))
 
 if(runUpdate):
     #run the program
