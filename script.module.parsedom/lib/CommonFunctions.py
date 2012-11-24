@@ -27,7 +27,7 @@ import HTMLParser
 #import chardet
 import json
 
-version = u"1.3.0"
+version = u"1.4.0"
 plugin = u"CommonFunctions-" + version
 print plugin
 
@@ -97,7 +97,6 @@ def getUserInputNumbers(title=u"Input", default=u""):
 def getParameters(parameterString):
     log("", 5)
     commands = {}
-    parameterString = urllib.unquote_plus(parameterString)
     splitCommands = parameterString[parameterString.find('?') + 1:].split('&')
 
     for command in splitCommands:
