@@ -173,6 +173,11 @@ class Main:
                 play = 'XBMC.RunScript(' + __addonid__ + ',movieid=' + str(item.get('movieid')) + ')'
                 streaminfo = media_streamdetails(item['file'].encode('utf-8').lower(),
                                            item['streamdetails'])
+                # Temporary check if runtime is an int or str
+                if isinstance(item['runtime'],int):
+                    runtime = str(item['runtime']/60)
+                else:
+                    runtime = item['runtime']
                 self.WINDOW.setProperty("%s.%d.Title"           % (request, count), item['title'])
                 self.WINDOW.setProperty("%s.%d.Year"            % (request, count), str(item['year']))
                 self.WINDOW.setProperty("%s.%d.Genre"           % (request, count), " / ".join(item['genre']))
@@ -180,7 +185,7 @@ class Main:
                 self.WINDOW.setProperty("%s.%d.Plot"            % (request, count), item['plot'])
                 self.WINDOW.setProperty("%s.%d.PlotOutline"     % (request, count), item['plotoutline'])
                 self.WINDOW.setProperty("%s.%d.Tagline"         % (request, count), item['tagline'])
-                self.WINDOW.setProperty("%s.%d.Runtime"         % (request, count), item['runtime'])
+                self.WINDOW.setProperty("%s.%d.Runtime"         % (request, count), runtime)
                 self.WINDOW.setProperty("%s.%d.Rating"          % (request, count), str(round(float(item['rating']),1)))
                 self.WINDOW.setProperty("%s.%d.Trailer"         % (request, count), item['trailer'])
                 self.WINDOW.setProperty("%s.%d.Art(poster)"     % (request, count), art.get('poster',''))
@@ -367,12 +372,17 @@ class Main:
                 path = media_path(item['file'])
                 streaminfo = media_streamdetails(item['file'].encode('utf-8').lower(),
                                                  item['streamdetails'])
+                # Temporary check if runtime is an int or str
+                if isinstance(item['runtime'],int):
+                    runtime = str(item['runtime']/60)
+                else:
+                    runtime = item['runtime']
                 self.WINDOW.setProperty("%s.%d.Title"           % (request, count), item['title'])
                 self.WINDOW.setProperty("%s.%d.Artist"          % (request, count), " / ".join(item['artist']))
                 self.WINDOW.setProperty("%s.%d.Year"            % (request, count), str(item['year']))
                 self.WINDOW.setProperty("%s.%d.Plot"            % (request, count), item['plot'])
                 self.WINDOW.setProperty("%s.%d.Genre"           % (request, count), " / ".join(item['genre']))
-                self.WINDOW.setProperty("%s.%d.Runtime"         % (request, count), item['runtime'])
+                self.WINDOW.setProperty("%s.%d.Runtime"         % (request, count), runtime)
                 self.WINDOW.setProperty("%s.%d.Thumb"           % (request, count), item['thumbnail']) #remove
                 self.WINDOW.setProperty("%s.%d.Fanart"          % (request, count), item['fanart']) #remove
                 self.WINDOW.setProperty("%s.%d.Art(thumb)"      % (request, count), item['thumbnail'])
