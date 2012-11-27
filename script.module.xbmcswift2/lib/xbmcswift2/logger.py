@@ -71,7 +71,10 @@ class XBMCFilter(object):
             return False
 
 
-GLOBAL_LOG_LEVEL = logging.INFO
+if CLI_MODE:
+    GLOBAL_LOG_LEVEL = logging.INFO
+else:
+    GLOBAL_LOG_LEVEL = logging.DEBUG
 
 
 def setup_log(name):

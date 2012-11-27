@@ -7,17 +7,23 @@
     :copyright: (c) 2012 by Jonathan Beluch
     :license: GPLv3, see LICENSE for more details.
 '''
-import pickle
+import urllib
 import urllib2
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 
 def xbmc_url(url, **options):
-    '''Appends key/val pairs to the end of a URL. Useful for creating XBMC urls
-    with options, such as RTMP urls with playpath.
+    '''Appends key/val pairs to the end of a URL. Useful for passing arbitrary
+    HTTP headers to XBMC to be used when fetching a media resource, e.g.
+    cookies.
     '''
-    optionstring = ' '.join('%s=%s' % (key, val)
-                            for key, val in options.items())
-    return ' '.join([url, optionstring]).strip()
+    optionstring = urllib.urlencode(options)
+    if optionstring:
+        return url + '|' + optionstring
+    return url
 
 
 def enum(*args, **kwargs):

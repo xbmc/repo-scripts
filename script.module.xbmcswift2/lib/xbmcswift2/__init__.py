@@ -36,7 +36,7 @@ class module(ModuleType):
                 '''
                 log.warning('The %s method has not been implented on the CLI. '
                             'Your code might not work properly when calling '
-                            'it.' % name)
+                            'it.', name)
                 return self
             return func
 

@@ -11,7 +11,10 @@ import os
 import csv
 import json
 import time
-import pickle
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 import shutil
 import collections
 from datetime import datetime
@@ -37,8 +40,8 @@ class _PersistentDictMixin(object):
         self.file_format = file_format      # 'csv', 'json', or 'pickle'
         self.filename = filename
         if flag != 'n' and os.access(filename, os.R_OK):
-            log.debug('Reading %s storage from disk at "%s"' %
-                      (self.file_format, self.filename))
+            log.debug('Reading %s storage from disk at "%s"',
+                      self.file_format, self.filename)
             fileobj = open(filename, 'rb' if file_format == 'pickle' else 'r')
             with fileobj:
                 self.load(fileobj)
@@ -91,7 +94,6 @@ class _PersistentDictMixin(object):
             try:
                 return self.initial_update(loader(fileobj))
             except Exception as e:
-                print e
                 pass
         raise ValueError('File not in a supported format')
 

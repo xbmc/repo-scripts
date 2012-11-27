@@ -217,11 +217,18 @@ class Plugin(XBMCMixin):
         for func in module._register_funcs:
             func(self, url_prefix)
 
-    def cached_route(self, url_rule, name=None, options=None):
-        '''A decorator to add a route to a view and also apply caching.
+    def cached_route(self, url_rule, name=None, options=None, TTL=None):
+        '''A decorator to add a route to a view and also apply caching. The
+        url_rule, name and options arguments are the same arguments for the
+        route function. The TTL argument if given will passed along to the
+        caching decorator.
         '''
         route_decorator = self.route(url_rule, name=name, options=options)
-        cache_decorator = self.cached()
+        if TTL:
+            cache_decorator = self.cached(TTL)
+        else:
+            cache_decorator = self.cached()
+
         def new_decorator(func):
             return route_decorator(cache_decorator(func))
         return new_decorator
@@ -248,11 +255,11 @@ class Plugin(XBMCMixin):
         if name in self._view_functions.keys():
             # TODO: Raise exception for ambiguous views during registration
             log.warning('Cannot add url rule "%s" with name "%s". There is '
-                        'already a view with that name' % (url_rule, name))
+                        'already a view with that name', url_rule, name)
             self._view_functions[name] = None
         else:
             log.debug('Adding url rule "%s" named "%s" pointing to function '
-                      '"%s"' % (url_rule, name, view_func.__name__))
+                      '"%s"', url_rule, name, view_func.__name__)
             self._view_functions[name] = rule
         self._routes.append(rule)
 
@@ -283,8 +290,8 @@ class Plugin(XBMCMixin):
                 view_func, items = rule.match(path)
             except NotFoundException:
                 continue
-            log.info('Request for "%s" matches rule for function "%s"'
-                     % (path, view_func.__name__))
+            log.info('Request for "%s" matches rule for function "%s"',
+                     path, view_func.__name__)
             listitems = view_func(**items)
 
             # TODO: Verify the main UI handle is always 0, this check exists so
@@ -301,11 +308,11 @@ class Plugin(XBMCMixin):
         have the final plugin:// url.'''
         # TODO: Should we be overriding self.request with the new request?
         new_request = self._parse_request(url=url, handle=self.request.handle)
-        log.debug('Redirecting %s to %s' % (self.request.path, new_request.path))
+        log.debug('Redirecting %s to %s', self.request.path, new_request.path)
         return self._dispatch(new_request.path)
 
     def run(self, test=False):
         '''The main entry point for a plugin.'''
         self._request = self._parse_request()
-        log.debug('Handling incoming request for %s' % (self.request.path))
+        log.debug('Handling incoming request for %s', self.request.path)
         return self._dispatch(self.request.path)

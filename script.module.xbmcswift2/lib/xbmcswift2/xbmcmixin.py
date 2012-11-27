@@ -21,7 +21,7 @@ class XBMCMixin(object):
 
         # Also, the child class is responsible for ensuring that this path
         # exists.
-        self.storage_path  
+        self.storage_path
 
         self.added_items
 
@@ -33,7 +33,7 @@ class XBMCMixin(object):
 
         self.handle
 
-    # optional 
+    # optional
     self.info_type: should be in ['video', 'music', 'pictures']
     _memoized_storage = None
     _unsynced_storages = None
@@ -63,17 +63,16 @@ class XBMCMixin(object):
 
                 try:
                     result = storage[key]
-                    #log.debug('Cache hit for key "%s"' % (key, ))
                     log.debug('Storage hit for function "%s" with args "%s" '
-                              'and kwargs "%s"' % (function.__name__, args,
-                                                   kwargs))
+                              'and kwargs "%s"', function.__name__, args,
+                              kwargs)
                 except KeyError:
                     log.debug('Storage miss for function "%s" with args "%s" '
-                              'and kwargs "%s"' % (function.__name__, args,
-                                                   kwargs))
+                              'and kwargs "%s"', function.__name__, args,
+                              kwargs)
                     result = function(*args, **kwargs)
                     storage[key] = result
-                storage.sync()
+                    storage.sync()
                 return result
             return wrapper
         return decorating_function
@@ -92,7 +91,7 @@ class XBMCMixin(object):
         fully functioning python dictionary and is designed to be used that
         way. It is usually not necessary for the caller to load or save the
         storage manually. If the storage does not already exist, it will be
-        created.  
+        created.
 
         .. seealso:: :class:`xbmcswift2.TimedStorage` for more details.
 
@@ -116,13 +115,13 @@ class XBMCMixin(object):
         filename = os.path.join(self.storage_path, name)
         try:
             storage = self._unsynced_storages[filename]
-            log.debug('Loaded storage "%s" from memory' % name)
+            log.debug('Loaded storage "%s" from memory', name)
         except KeyError:
             if TTL:
                 TTL = timedelta(minutes=TTL)
             storage = TimedStorage(filename, file_format, TTL)
             self._unsynced_storages[filename] = storage
-            log.debug('Loaded storage "%s" from disk' % name)
+            log.debug('Loaded storage "%s" from disk', name)
         return storage
 
     def temp_fn(self, path):
@@ -195,6 +194,26 @@ class XBMCMixin(object):
         '''Calls XBMC's Container.SetViewMode. Requires an integer
         view_mode_id'''
         xbmc.executebuiltin('Container.SetViewMode(%d)' % view_mode_id)
+
+    def keyboard(self, default=None, heading=None, hidden=False):
+        '''Displays the keyboard input window to the user. If the user does not
+        cancel the modal, the value entered by the user will be returned.
+
+        :param default: The placeholder text used to prepopulate the input field.
+        :param heading: The heading for the window. Defaults to the current
+                        addon's name. If you require a blank heading, pass an
+                        empty string.
+        :param hidden: Whether or not the input field should be masked with
+                       stars, e.g. a password field.
+        '''
+        if heading is None:
+            heading = self.addon.getAddonInfo('name')
+        if default is None:
+            default = ''
+        keyboard = xbmc.Keyboard(default, heading, hidden)
+        keyboard.doModal()
+        if keyboard.isConfirmed():
+            return keyboard.getText()
 
     def notify(self, msg='', title=None, delay=5000, image=''):
         '''Displays a temporary notification message to the user. If
@@ -283,7 +302,7 @@ class XBMCMixin(object):
                             from xbmcplugin, an attribute of SortMethod, or a
                             string name. For instance, the following method
                             calls are all equivalent:
-        
+
                             * ``plugin.add_sort_method(xbmcplugin.SORT_METHOD_TITLE)``
                             * ``plugin.add_sort_metohd(SortMethod.TITLE)``
                             * ``plugin.add_sort_method('title')``
@@ -306,7 +325,7 @@ class XBMCMixin(object):
 
     def finish(self, items=None, sort_methods=None, succeeded=True,
                update_listing=False, cache_to_disc=True, view_mode=None):
-        '''Adds the provided items to the XBMC interface. 
+        '''Adds the provided items to the XBMC interface.
 
         :param items: an iterable of items where each item is either a
             dictionary with keys/values suitable for passing to
@@ -322,7 +341,7 @@ class XBMCMixin(object):
 
                                 sort_methods = ['label', 'title', ('date', '%D')]
                                 plugin.finish(items, sort_methods=sort_methods)
-                                
+
         :param view_mode: can either be an integer (or parseable integer
             string) corresponding to a view_mode or the name of a type of view.
             Currrently the only view type supported is 'thumbnail'.
@@ -335,7 +354,7 @@ class XBMCMixin(object):
             for sort_method in sort_methods:
                 if not isinstance(sort_method, basestring) and hasattr(sort_method, '__len__'):
                     self.add_sort_method(*sort_method)
-                else: 
+                else:
                     self.add_sort_method(sort_method)
 
         # Attempt to set a view_mode if given
@@ -356,7 +375,8 @@ class XBMCMixin(object):
         # Close any open storages which will persist them to disk
         if hasattr(self, '_unsynced_storages'):
             for storage in self._unsynced_storages.values():
-                log.debug('Saving a %s storage to disk at "%s"' % (storage.file_format, storage.filename))
+                log.debug('Saving a %s storage to disk at "%s"',
+                          storage.file_format, storage.filename)
                 storage.close()
 
         # Return the cached list of all the list items that were added
