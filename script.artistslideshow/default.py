@@ -160,14 +160,14 @@ class Main:
 
     def _use_correct_artwork( self ):
         self._clean_dir( self.MergeDir )
-    	artists = self._get_current_artist()
-    	self.ALLARTISTS = artists
-    	self.ARTISTNUM = 0
-    	self.TOTALARTISTS = len(artists)
-    	self.MergedImagesFound = False
-    	for artist in artists:
-    	    log('current artist is %s' % artist.decode("utf-8"))
-    	    self.ARTISTNUM += 1
+        artists = self._get_current_artist()
+        self.ALLARTISTS = artists
+        self.ARTISTNUM = 0
+        self.TOTALARTISTS = len(artists)
+        self.MergedImagesFound = False
+        for artist in artists:
+            log('current artist is %s' % artist.decode("utf-8"))
+            self.ARTISTNUM += 1
             self.NAME = artist
             if(self.PRIORITY == '1' and not self.LOCALARTISTPATH == ''):
                 log('looking for local artwork')
@@ -243,12 +243,12 @@ class Main:
             self.PROGRESSPATH = __addon__.getSetting( "progress_path" )
             log('set progress path to %s' % self.PROGRESSPATH)
         else:
-        	self.PROGRESSPATH = ''
+            self.PROGRESSPATH = ''
         if len ( __addon__.getSetting( "fanart_folder" ) ) > 0:
             self.FANARTFOLDER = __addon__.getSetting( "fanart_folder" )
             log('set fanart folder to %s' % self.FANARTFOLDER)
         else:
-        	self.FANARTFOLDER = 'extrafanart'
+            self.FANARTFOLDER = 'extrafanart'
 
 
     def _init_vars( self ):
@@ -336,17 +336,18 @@ class Main:
                         else:
                            log('outdated %s found' % filename)
                            cached_image_info = False
-	            if self.NOTIFICATIONTYPE == "1":
-	                self._set_property("ArtistSlideshow", self.InitDir)
-	                if not cached_image_info:
-	                    xbmc.executebuiltin('XBMC.Notification("' + __language__(30300).encode("utf8") + '", "' + __language__(30301).encode("utf8") + '", 5000, ' + __addonicon__ + ')')
-	            elif self.NOTIFICATIONTYPE == "2":
-	                if not cached_image_info:
-	                    self._set_property("ArtistSlideshow", self.PROGRESSPATH)
-	                else:
-	                    self._set_property("ArtistSlideshow", self.InitDir)
-	            else:
-	                  self._set_property("ArtistSlideshow", self.InitDir)
+                if self.NOTIFICATIONTYPE == "1":
+                    self._set_property("ArtistSlideshow", self.InitDir)
+                    if not cached_image_info:
+                        execute_text = 'XBMC.Notification("' + __language__(30300) + '", "' + __language__(30301) + '", 5000, ' + __addonicon__ + ')'
+                        xbmc.executebuiltin(execute_text.encode("utf-8"))
+                elif self.NOTIFICATIONTYPE == "2":
+                    if not cached_image_info:
+                        self._set_property("ArtistSlideshow", self.PROGRESSPATH)
+                    else:
+                        self._set_property("ArtistSlideshow", self.InitDir)
+                else:
+                      self._set_property("ArtistSlideshow", self.InitDir)
 
         if self.LASTFM == "true":
             lastfmlist = self._get_images('lastfm')
@@ -408,7 +409,8 @@ class Main:
                 if self.ARTISTNUM == 1:
                     self._refresh_image_directory()
                     if self.NOTIFICATIONTYPE == "1" and not cached_image_info:
-                        xbmc.executebuiltin('XBMC.Notification("' + __language__(30304).encode("utf8") + '", "' + __language__(30305).encode("utf8") + '", 5000, ' + __addonicon__ + ')')
+                        execute_text = 'XBMC.Notification("' + __language__(30304) + '", "' + __language__(30305) + '", 5000, ' + __addonicon__ + ')'
+                        xbmc.executebuiltin(execute_text.encode("utf-8"))
                 if self.TOTALARTISTS > 1:
                     self._merge_images()
             if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ).decode("utf-8") == self.BlankDir and self.ARTISTNUM == 1):
@@ -425,11 +427,12 @@ class Main:
                     log('clearing ArtistSlideshow property')
                     self._set_property("ArtistSlideshow", self.InitDir)
                     if self.NOTIFICATIONTYPE == "1" and not cached_image_info:
-                        xbmc.executebuiltin('XBMC.Notification("' + __language__(30302).encode("utf8") + '", "' + __language__(30303).encode("utf8") + '", 10000, ' + __addonicon__ + ')')
+                        execute_text = 'XBMC.Notification("' + __language__(30302) + '", "' + __language__(30303) + '", 10000, ' + __addonicon__ + ')'
+                        xbmc.executebuiltin(execute_text.encode("utf-8"))
                     if( self.ARTISTINFO == "true" and not self._playback_stopped_or_changed() ):
                         self._get_artistinfo()
-            elif self.TOTALARTISTS > 1:
-                self._merge_images()
+        elif self.TOTALARTISTS > 1:
+            self._merge_images()
 
 
     def _wait( self, wait_time ):
@@ -475,7 +478,7 @@ class Main:
             featured_artist = xbmc.getInfoLabel( self.SKINTITLE ).replace('ft.','feat.').split('feat.')
         else:
             artist = ''
-        artists = artist.replace('ft.','/').replace('feat.','/').split('/')
+        artists = artist.replace('ft.',' / ').replace('feat.',' / ').split(' / ')
         if len( featured_artist ) > 1:
             artists.append( featured_artist[-1] )
         return [a.strip(' ()') for a in artists]

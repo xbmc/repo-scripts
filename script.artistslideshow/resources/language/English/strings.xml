@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- English language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/en/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
-  <!-- Languages  -->  
+    <!-- Languages -->
     <string id="30201">Albanian</string>
     <string id="30202">Arabic</string>
     <string id="30203">Belarusian</string>
@@ -45,14 +49,16 @@
     <string id="30245">Ukrainian</string>
     <string id="30246">Vietnamese</string>
     <string id="30247">Farsi</string>
-  <!-- Dialog Text -->
+
+    <!-- Dialog Text -->
     <string id="30300">Downloading</string>
     <string id="30301">Downloading artist images</string>
     <string id="30302">Nothing Downloaded</string>
-    <string id="30303">No images found for artist</string>    
+    <string id="30303">No images found for artist</string>
     <string id="30304">Download Complete</string>
-    <string id="30305">All artist images downloaded</string>    
-  <!-- Settings  --> 
+    <string id="30305">All artist images downloaded</string>
+
+    <!-- Settings -->
     <string id="32000">Download</string>
     <string id="32001">Download images from last.fm</string>
     <string id="32002">Download images from htbackdrops.com</string>
@@ -66,9 +72,6 @@
     <string id="32102">  Image Priority</string>
     <string id="32103">Fallback slideshow folder</string>
     <string id="32104">Override slideshow folder</string>
-    <string id="32901">Use remote images first</string>
-    <string id="32902">Use local images first</string>
-    <string id="32903">Use both local and remote images</string>
     <string id="32200">Advanced</string>
     <string id="32201">Limit size of download cache</string>
     <string id="32202">  Maximum cache size (in megabytes)</string>
@@ -78,4 +81,7 @@
     <string id="32206">None</string>
     <string id="32207">Text notifications</string>
     <string id="32208">Custom images</string>
+    <string id="32901">Use remote images first</string>
+    <string id="32902">Use local images first</string>
+    <string id="32903">Use both local and remote images</string>
 </strings>

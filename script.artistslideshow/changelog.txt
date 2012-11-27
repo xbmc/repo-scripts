@@ -1,3 +1,9 @@
+v.1.4.6
+- fix for improper parsing of multiple artists
+- fix multiartist display in cases where first artist has no images
+- fixed script error when using utf-8 encoded text in download pop up messages
+- added English strings.po file  for Frodo and added addon to transifex translation engine
+
 v.1.4.5
 - fix for improper clearing of info labels on XBMC abort request
 
