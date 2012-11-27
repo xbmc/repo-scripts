@@ -65,8 +65,8 @@ class SpeedFanInfoWindow(xbmcgui.WindowXMLDialog):
         #add a fancy degree symbol to the temperatures
         lw.log('add fancy degree symbol to temperatures', 'verbose')
         for i in range(len(temps)):
-            temps[i][1] = temps[i][1][:-1] + unichr(176).encode("latin-1") + temps[i][1][-1:]
-        #now parse all the data and get it into ListIems for display on the page
+              temps[i][1] = temps[i][1][:-1] + u'\N{DEGREE SIGN}' + temps[i][1][-1:]
+      #now parse all the data and get it into ListIems for display on the page
         lw.log('reset the window to prep it for data', 'verbose')
         self.getControl(120).reset()
         #this allows for a line space *after* the first one so the page looks pretty

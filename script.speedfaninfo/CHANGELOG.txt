@@ -1,3 +1,7 @@
+0.3.5 11/21/2012
+-changed the way the degree sign is displayed as old way didn't work either on OSX or with Frodo (not sure which)
+-included new language files for XBMC Frodo and added addon to transifex translation engine
+
 0.3.4 03/03/2012
 -added support for languages that use comma as the ordinal separator for decimals
 
