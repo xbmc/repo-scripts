@@ -1,6 +1,16 @@
 CHANGES
 =======
 
+Version 1.3
+-----------
+
+- Update usages of pickle to use cPickle if available.
+- Allow settings to be specified as environment variables when running in CLI
+  mode. e.g. to set a username, the environment variable will be
+  XBMCSWIFT2_USERNAME.
+- Add new keyboard helper method available on a plugin instance.
+- Allow TTL to be specified as an arg to the cached_route decorator.
+
 
 Version 1.2
 -----------
