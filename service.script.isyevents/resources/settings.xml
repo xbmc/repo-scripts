@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32000">
+        <setting label="30001" type="lsep"/> 
+        <setting label="32001" id="dev_xbmc_start" type="text" default=""/>
+        <setting label="32002" id="devact_xbmc_start" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+        <setting label="32003" id="dev_xbmc_quit" type="text" default=""/>
+        <setting label="32004" id="devact_xbmc_quit" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+
+        <setting label="30002" type="lsep"/>
+        <setting label="32005" id="dev_video_start" type="text" default=""/>
+        <setting label="32006" id="devact_video_start" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+        <setting label="32007" id="dev_video_end" type="text" default=""/>
+        <setting label="32008" id="devact_video_end" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+        <setting label="32009" id="dev_video_pause" type="text" default=""/>
+        <setting label="32010" id="devact_video_pause" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+        <setting label="32011" id="dev_video_resume" type="text" default=""/>
+        <setting label="32012" id="devact_video_resume" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+
+        <setting label="30003" type="lsep"/>
+        <setting label="32005" id="dev_audio_start" type="text" default=""/>
+        <setting label="32006" id="devact_audio_start" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+        <setting label="32007" id="dev_audio_end" type="text" default=""/>
+        <setting label="32008" id="devact_audio_end" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+        <setting label="32009" id="dev_audio_pause" type="text" default=""/>
+        <setting label="32010" id="devact_audio_pause" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+        <setting label="32011" id="dev_audio_resume" type="text" default=""/>
+        <setting label="32012" id="devact_audio_resume" type="labelenum" values="None|On|Off|Fast On|Fast Off|Bright|Dim|On To 25%|On To 50%|On To 75%|On To 100%" default="None"/>
+    </category>
+
+    <category label="32100">
+        <setting label="30001" type="lsep"/> 
+        <setting label="32101" id="prog_xbmc_start" type="text" default=""/>
+        <setting label="32102" id="progact_xbmc_start" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+        <setting label="32103" id="prog_xbmc_quit" type="text" default=""/>
+        <setting label="32104" id="progact_xbmc_quit" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+        
+        <setting label="30002" type="lsep"/>
+        <setting label="32105" id="prog_video_start" type="text" default=""/>
+        <setting label="32106" id="progact_video_start" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+        <setting label="32107" id="prog_video_end" type="text" default=""/>
+        <setting label="32108" id="progact_video_end" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+        <setting label="32109" id="prog_video_pause" type="text" default=""/>
+        <setting label="32110" id="progact_video_pause" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+        <setting label="32111" id="prog_video_resume" type="text" default=""/>
+        <setting label="32112" id="progact_video_resume" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+    
+        <setting label="30003" type="lsep"/>
+        <setting label="32105" id="prog_audio_start" type="text" default=""/>
+        <setting label="32106" id="progact_audio_start" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+        <setting label="32107" id="prog_audio_end" type="text" default=""/>
+        <setting label="32108" id="progact_audio_end" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+        <setting label="32109" id="prog_audio_pause" type="text" default=""/>
+        <setting label="32110" id="progact_audio_pause" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+        <setting label="32111" id="prog_audio_resume" type="text" default=""/>
+        <setting label="32112" id="progact_audio_resume" type="labelenum" values="None|Run|Run Then|Run Else" default="None"/>
+    </category>
+</settings>
