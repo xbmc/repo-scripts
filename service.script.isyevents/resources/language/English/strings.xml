@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30000">ISY Event Handler</string>
+    <string id="30001">XBMC</string>
+    <string id="30002">Video</string>
+    <string id="30003">Audio</string>
+    
+    <!-- SETTINGS -->
+    <!-- NODES -->
+    <string id="32000">Node Events</string>
+    <string id="32001">Starting Device Address</string>
+    <string id="32002">Starting Device Action</string>
+    <string id="32003">Quitting Device Address</string>
+    <string id="32004">Quitting Device Action</string>
+    <string id="32005">Started Device Address</string>
+    <string id="32006">Started Device Action</string>
+    <string id="32007">Ended Device Address</string>
+    <string id="32008">Ended Device Action</string>
+    <string id="32009">Paused Device Address</string>
+    <string id="32010">Paused Device Action</string>
+    <string id="32011">Resumed Device Address</string>
+    <string id="32012">Resumed Device Action</string>
+    <!-- PROGRAMS -->
+    <string id="32100">Program Events</string>
+    <string id="32101">Starting Program Address</string>
+    <string id="32102">Starting Program Action</string>
+    <string id="32103">Quitting Program Address</string>
+    <string id="32104">Quitting Program Action</string>
+    <string id="32105">Started Program Address</string>
+    <string id="32106">Started Program Action</string>
+    <string id="32107">Ended Program Address</string>
+    <string id="32108">Ended Program Action</string>
+    <string id="32109">Paused Program Address</string>
+    <string id="32110">Paused Program Action</string>
+    <string id="32111">Resumed Program Address</string>
+    <string id="32112">Resumed Program Action</string>
+    
+    <!-- MESSAGES -->
+    <string id="33001">XBMC Event - </string>
+    
+    <!-- ERROR MESSAGES -->
+    <string id="35001">ISY Connection Issue</string>
+    <string id="35002">Could not connect to ISY. Check Settings. Using dummy ISY results.</string>
+</strings>
