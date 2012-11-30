@@ -44,11 +44,11 @@ class apply_filters:
         elif art_type == 'characterart':
             return self.characterart(mediatype, artwork, downloaded_artwork, language)
 
-        elif art_type == 'tvthumb':
-            return self.tvthumb(mediatype, artwork, downloaded_artwork, language)
+        elif art_type == 'landscape':
+            return self.landscape(mediatype, artwork, downloaded_artwork, language)
 
-        elif art_type == 'seasonthumbs':
-            return self.seasonthumbs(mediatype, artwork, downloaded_artwork, language)
+        elif art_type == 'seasonlandscape':
+            return self.seasonlandscape(mediatype, artwork, downloaded_artwork, language)
 
         elif art_type == 'defaultthumb':
             return self.defaultthumb(mediatype, artwork, downloaded_artwork, language)
@@ -223,12 +223,12 @@ class apply_filters:
             limited = True
         return [limited, reason]
         
-    def tvthumb(self, mediatype, artwork, downloaded_artwork, language):
+    def landscape(self, mediatype, artwork, downloaded_artwork, language):
         limited = False
         reason = ''
         # Maximum number
         if downloaded_artwork >= self.settings.limit_artwork_max:
-            reason = 'Max number tvthumb reached: %s' % self.settings.limit_artwork_max
+            reason = 'Max number landscape reached: %s' % self.settings.limit_artwork_max
             limited = True
         # Correct language
         elif self.settings.limit_artwork and not artwork['language'] in [ language, 'n/a' ]:
@@ -236,7 +236,7 @@ class apply_filters:
             limited = True
         return [limited, reason]
         
-    def seasonthumbs(self, mediatype, artwork, downloaded_artwork, language):
+    def seasonlandscape(self, mediatype, artwork, downloaded_artwork, language):
         limited = False
         reason = ''
         # Maximum number
