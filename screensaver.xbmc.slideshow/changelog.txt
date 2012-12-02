@@ -1,2 +1,5 @@
+v0.0.2
+- added fanart image
+
 v0.0.1
 - initial release
