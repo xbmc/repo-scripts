@@ -38,7 +38,8 @@ class Main:
         self.musicvideofanart = __addon__.getSetting( "musicvideofanart" )
         self.artistfanart = __addon__.getSetting( "artistfanart" )
         self.moviethumbs = __addon__.getSetting( "moviethumbs" )
-        self.tvshowthumbs = __addon__.getSetting( "tvshowthumbs" )
+        self.tvshowbanners = __addon__.getSetting( "tvshowbanners" )
+        self.tvshowposters = __addon__.getSetting( "tvshowposters" )
         self.seasonthumbs = __addon__.getSetting( "seasonthumbs" )
         self.episodethumbs = __addon__.getSetting( "episodethumbs" )
         self.musicvideothumbs = __addon__.getSetting( "musicvideothumbs" )
@@ -52,7 +53,8 @@ class Main:
         self.musicvideofanartdir = 'MusicVideoFanart'
         self.artistfanartdir = 'ArtistFanart'
         self.moviethumbsdir = 'MovieThumbs'
-        self.tvshowthumbsdir = 'TVShowThumbs'
+        self.tvshowbannersdir = 'TVShowBanners'
+        self.tvshowpostersdir = 'TVShowPosters'
         self.seasonthumbsdir = 'SeasonThumbs'
         self.episodethumbsdir = 'EpisodeThumbs'
         self.musicvideothumbsdir = 'MusicVideoThumbs'
@@ -78,9 +80,12 @@ class Main:
         if self.moviethumbs == 'true':
             self.moviethumbspath = os.path.join( self.directory, self.moviethumbsdir )
             self.artworklist.append( self.moviethumbspath )
-        if self.tvshowthumbs == 'true':
-            self.tvshowthumbspath = os.path.join( self.directory, self.tvshowthumbsdir )
-            self.artworklist.append( self.tvshowthumbspath )
+        if self.tvshowbanners == 'true':
+            self.tvshowbannerspath = os.path.join( self.directory, self.tvshowbannersdir )
+            self.artworklist.append( self.tvshowbannerspath )
+        if self.tvshowposters == 'true':
+            self.tvshowposterspath = os.path.join( self.directory, self.tvshowpostersdir )
+            self.artworklist.append( self.tvshowposterspath )
         if self.seasonthumbs == 'true':
             self.seasonthumbspath = os.path.join( self.directory, self.seasonthumbsdir )
             self.artworklist.append( self.seasonthumbspath )
@@ -140,8 +145,11 @@ class Main:
             if self.moviethumbs == 'true':
                 self._copy_moviethumbs()
         if not self.dialog.iscanceled():
-            if self.tvshowthumbs == 'true':
-                self._copy_tvshowthumbs()
+            if self.tvshowbanners == 'true':
+                self._copy_tvshowbanners()
+        if not self.dialog.iscanceled():
+            if self.tvshowposters == 'true':
+                self._copy_tvshowposters()
         if not self.dialog.iscanceled():
             if self.seasonthumbs == 'true':
                 self._copy_seasonthumbs()
@@ -297,10 +305,10 @@ class Main:
                         log( 'failed to copy moviethumb' )
         log( 'moviethumbs copied: %s' % count )
 
-    def _copy_tvshowthumbs( self ):
+    def _copy_tvshowbanners( self ):
         count = 0
         processeditems = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "thumbnail"]}, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "art"]}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
@@ -312,17 +320,44 @@ class Main:
                 processeditems = processeditems + 1
                 self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32006) + ': ' + str( count + 1 ) )
                 name = item['title']
-                artwork = item['thumbnail']
+                artwork = item['art'].get('banner')
                 tmp_filename = name + '.jpg'
                 filename = clean_filename( tmp_filename )
                 if artwork != '':
                     try:
-                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.tvshowthumbspath, filename ) )
+                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.tvshowbannerspath, filename ) )
                         count += 1
                     except:
                         count -= 1
-                        log( 'failed to copy tvshowthumb' )
-        log( 'tvshowthumbs copied: %s' % count )
+                        log( 'failed to copy tvshowbanner' )
+        log( 'tvshowbanners copied: %s' % count )
+
+    def _copy_tvshowposters( self ):
+        count = 0
+        processeditems = 0
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "art"]}, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
+        json_response = simplejson.loads(json_query)
+        if (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
+            totalitems = len( json_response['result']['tvshows'] )
+            for item in json_response['result']['tvshows']:
+                if self.dialog.iscanceled():
+                    log('script cancelled')
+                    return
+                processeditems = processeditems + 1
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32006) + ': ' + str( count + 1 ) )
+                name = item['title']
+                artwork = item['art'].get('poster')
+                tmp_filename = name + '.jpg'
+                filename = clean_filename( tmp_filename )
+                if artwork != '':
+                    try:
+                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.tvshowposterspath, filename ) )
+                        count += 1
+                    except:
+                        count -= 1
+                        log( 'failed to copy tvshowposter' )
+        log( 'tvshowposters copied: %s' % count )
 
     def _copy_seasonthumbs( self ):
         count = 0

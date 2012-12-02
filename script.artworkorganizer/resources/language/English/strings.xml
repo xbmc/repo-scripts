@@ -5,11 +5,12 @@
 	<string id="32003">Copy Music Video Fanart</string>
 	<string id="32004">Copy Artist Fanart</string>
 	<string id="32005">Copy Movie Thumbs</string>
-	<string id="32006">Copy TV Show Thumbs</string>
 	<string id="32007">Copy Season Thumbs</string>
 	<string id="32008">Copy Episode Thumbs</string>
 	<string id="32009">Copy Music Video Thumbs</string>
 	<string id="32010">Copy Artist Thumbs</string>
 	<string id="32011">Copy Album Thumbs</string>
 	<string id="32012">Destination directory</string>
+	<string id="32013">Copy TV Show Banners</string>
+	<string id="32014">Copy TV Show Posters</string>
 </strings>

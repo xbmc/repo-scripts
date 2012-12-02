@@ -6,7 +6,8 @@
 		<setting id="musicvideofanart" type="bool" label="32003" default="true"/>		
 		<setting id="artistfanart" type="bool" label="32004" default="true"/>
 		<setting id="moviethumbs" type="bool" label="32005" default="true"/>
-		<setting id="tvshowthumbs" type="bool" label="32006" default="true"/>
+		<setting id="tvshowbanners" type="bool" label="32013" default="true"/>
+		<setting id="tvshowposters" type="bool" label="32014" default="true"/>
 		<setting id="seasonthumbs" type="bool" label="32007" default="true"/>
 		<setting id="episodethumbs" type="bool" label="32008" default="true"/>
 		<setting id="musicvideothumbs" type="bool" label="32009" default="true"/>
