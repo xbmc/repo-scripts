@@ -63,6 +63,8 @@ ListItem.Icon
 ListItem.Property(Episode)
 ListItem.Property(Mpaa)
 ListItem.Property(Year)
+ListItem.Property(Art(Banner))
+ListItem.Property(Art(Poster))
 ListItem.Property(Fanart)
 ListItem.Property(Genre)
 ListItem.Property(Plot)

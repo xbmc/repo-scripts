@@ -1,3 +1,8 @@
+v1.1.0
+- added support for tv show banner and poster
+v1.0.6
+- fix runtime
+
 v1.0.5
 - fix encoding issues
 

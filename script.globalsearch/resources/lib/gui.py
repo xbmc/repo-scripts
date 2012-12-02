@@ -141,7 +141,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 outline = item['plotoutline']
                 rating = str(round(float(item['rating']),1))
                 starrating = 'rating%.1d.png' % round(float(rating)/2)
-                runtime = item['runtime']
+                runtime = str(datetime.timedelta(seconds=int(item['runtime'])))
                 studio = " / ".join(item['studio'])
                 tagline = item['tagline']
                 thumb = item['thumbnail']
@@ -220,7 +220,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems = []
         self.getControl( 191 ).setLabel( '[B]' + xbmc.getLocalizedString(20343) + '[/B]' )
         count = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "genre", "studio", "premiered", "plot", "fanart", "thumbnail", "playcount", "year", "mpaa", "episode", "rating"], "sort": { "method": "label" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % self.searchstring)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "genre", "studio", "premiered", "plot", "fanart", "thumbnail", "playcount", "year", "mpaa", "episode", "rating", "art"], "sort": { "method": "label" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % self.searchstring)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
@@ -238,10 +238,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 starrating = 'rating%.1d.png' % round(float(rating)/2)
                 studio = " / ".join(item['studio'])
                 thumb = item['thumbnail']
+                banner = item['art'].get('banner', '')
+                poster = item['art'].get('poster', '')
                 path = path = 'videodb://2/2/' + str(item['tvshowid']) + '/'
                 year = str(item['year'])
                 listitem = xbmcgui.ListItem(label=tvshow, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
+                listitem.setProperty( "art(banner)", banner )
+                listitem.setProperty( "art(poster)", poster )
                 listitem.setProperty( "episode", episode )
                 listitem.setProperty( "mpaa", mpaa )
                 listitem.setProperty( "year", year )
@@ -324,7 +328,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 episodenumber = "%.2d" % float(item['episode'])
                 path = item['file']
                 plot = item['plot']
-                runtime = item['runtime']
+                runtime = str(datetime.timedelta(seconds=int(item['runtime'])))
                 premiered = item['firstaired']
                 rating = str(round(float(item['rating']),1))
                 starrating = 'rating%.1d.png' % round(float(rating)/2)
