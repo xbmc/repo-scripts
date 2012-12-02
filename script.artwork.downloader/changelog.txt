@@ -1,4 +1,7 @@
 [B]12.0.10[/B]
+- Bump dependency versions to prevent being marked as broken
+
+[B]12.0.10[/B]
 - Fixed correct check on season artwork so it isn't downloaded again and again
 - Added quick hack to support local artwork if nothing present on fanart.tv
 
