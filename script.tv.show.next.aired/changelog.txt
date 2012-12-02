@@ -1,3 +1,16 @@
+v5.03
+- delete old databases and start fresh
+- change thumb to poster in skin
+
+v5.0.2
+- add new art stuff
+- add statusid
+
+v5.0.1
+- fix re-adding cancelled shows to the db
+- the rescan option now first deletes the db's before scanning
+- localize tv show status
+
 v5.0.0
 - bump version for frodo
 - don't rescan ended tv shows

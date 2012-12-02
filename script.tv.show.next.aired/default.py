@@ -24,6 +24,33 @@ DATA_PATH = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).
 RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) )
 sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
 
+NEXTAIRED_DB = "nextaired.db"
+CANCELLED_DB = "cancelled.db"
+
+STATUS = { 'Returning Series' : __language__(32201),
+           'Canceled/Ended' : __language__(32202),
+           'TBD/On The Bubble' : __language__(32203),
+           'In Development' : __language__(32204),
+           'New Series' : __language__(32205),
+           'Never Aired' : __language__(32206),
+           'Final Season' : __language__(32207),
+           'On Hiatus' : __language__(32208),
+           'Pilot Ordered' : __language__(32209),
+           'Pilot Rejected' : __language__(32210),
+           '' : ''}
+           
+STATUS_ID = { 'Returning Series' : '0',
+              'Canceled/Ended' : '1',
+              'TBD/On The Bubble' : '2',
+              'In Development' : '3',
+              'New Series' : '4',
+              'Never Aired' : '5',
+              'Final Season' : '6',
+              'On Hiatus' : '7',
+              'Pilot Ordered' : '8',
+              'Pilot Rejected' : '9',
+              '' : '-1'}
+
 # Get localized date format
 DATE_FORMAT = xbmc.getRegion('dateshort').lower()
 if DATE_FORMAT[0] == 'd':
@@ -82,6 +109,12 @@ def normalize_string( text ):
 class NextAired:
     def __init__(self):
         footprints()
+        # delete olders versions of our db's, we are not backward compatible
+        try:
+            xbmcvfs.delete(os.path.join( DATA_PATH , 'next_aired.db' ))
+            xbmcvfs.delete(os.path.join( DATA_PATH , 'canceled.db' ))
+        except:
+            pass
         self.WINDOW = xbmcgui.Window( 10000 )
         self.date = date.today()
         self.datestr = str(self.date)
@@ -91,9 +124,6 @@ class NextAired:
         self.update_hour = __addon__.getSetting( "update_hour" )
         self.update_minute = __addon__.getSetting( "update_minute" )
         self._parse_argv()
-        if __addon__.getSetting( "AddonVersion" ) != __version__:
-            __addon__.setSetting ( id = "AddonVersion", value = "%s" % __version__ )
-            self.FORCEUPDATE = True
         if self.BACKEND:
             self.run_backend()
         else:
@@ -129,11 +159,18 @@ class NextAired:
         log( "### params: %s" % params )
         self.SILENT = params.get( "silent", "" )
         self.BACKEND = params.get( "backend", False )
-        self.FORCEUPDATE = params.get( "force", False ) or __addon__.getSetting("ForceUpdate") == "true"
+        self.FORCEUPDATE = __addon__.getSetting("ForceUpdate") == "true"
+        self.RESET = params.get( "reset", False )
 
     def update_data(self):
         self.nextlist = []
-        dbfile = os.path.join( DATA_PATH , "next_aired.db" )
+        dbfile = os.path.join( DATA_PATH , NEXTAIRED_DB )
+        cancelfile = os.path.join( DATA_PATH , CANCELLED_DB )
+        if self.RESET:
+            if xbmcvfs.exists(dbfile):
+                xbmcvfs.delete(dbfile)
+            if xbmcvfs.exists(cancelfile):
+                xbmcvfs.delete(cancelfile)
         if xbmcvfs.exists(dbfile):
             if self.FORCEUPDATE:
                 log( "### update forced, rescanning..." )
@@ -144,7 +181,7 @@ class NextAired:
                 self.scan_info()
             else: 
                 log( "### db less than 24h old, fetch local data..." )
-                self.current_show_data = self.get_list("next_aired.db")
+                self.current_show_data = self.get_list(NEXTAIRED_DB)
                 if self.current_show_data == "[]":
                     self.scan_info()
         else:
@@ -169,7 +206,7 @@ class NextAired:
         socket.setdefaulttimeout(10)
         self.count = 0
         self.current_show_data = []
-        self.canceled = self.get_list("canceled.db")
+        self.canceled = self.get_list(CANCELLED_DB)
         if not self.listing():
             self.close("error listing")
         self.total_show = len(self.TVlist)
@@ -187,9 +224,9 @@ class NextAired:
             log( "### %s" % show[0] )
             current_show["localname"] = show[0]
             current_show["path"] = show[1]
-            current_show["thumbnail"] = show[2]
-            current_show["fanart"] = show[3]
-            current_show["dbid"] = show[4]
+            current_show["art"] = show[2]
+            current_show["dbid"] = show[3]
+            current_show["thumbnail"] = show[4]
             ended_show = False
             for item in self.canceled:
                 if item.get('localname') == current_show["localname"]:
@@ -197,7 +234,6 @@ class NextAired:
                     break
             if ended_show:
                 log( "### Canceled/Ended" )
-                self.canceled.append(current_show)
             else:
                 self.get_show_info( current_show )
                 self.localize_show_datetime( current_show )
@@ -206,13 +242,13 @@ class NextAired:
                     self.canceled.append(current_show)
                 else:
                     self.current_show_data.append(current_show)
-        self.save_file( self.canceled , "canceled.db")
-        self.save_file( self.current_show_data , "next_aired.db")
+        self.save_file( self.canceled , CANCELLED_DB)
+        self.save_file( self.current_show_data , NEXTAIRED_DB)
         if self.SILENT == "":
             DIALOG_PROGRESS.close()
 
     def listing(self):
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "file", "thumbnail", "fanart"], "sort": { "method": "title" } }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "file", "thumbnail", "art"], "sort": { "method": "title" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         log("### %s" % json_response)
@@ -222,10 +258,10 @@ class NextAired:
                 tvshowname = item['title']
                 tvshowname = normalize_string( tvshowname )
                 path = item['file']
+                art = item['art']
                 thumbnail = item['thumbnail']
-                fanart = item['fanart']
                 dbid = 'videodb://2/2/' + str(item['tvshowid']) + '/'
-                self.TVlist.append( ( tvshowname , path, thumbnail, fanart, dbid ) )
+                self.TVlist.append( ( tvshowname , path, art, dbid, thumbnail ) )
         log( "### list: %s" % self.TVlist )
         return self.TVlist
 
@@ -236,7 +272,6 @@ class NextAired:
         result_info = get_html_source( "http://services.tvrage.com/tools/quickinfo.php?show=%s" % urllib.quote_plus( current_show["localname"]))
         log( "### parse informations" )
         result = re.findall("(?m)(.*)@(.*)", result_info)
-        current_show["ep_img"] = current_show["thumbnail"]
         if result:
             for item in result:
                 current_show[item[0].replace("<pre>" , "")] = item[1]
@@ -386,8 +421,8 @@ class NextAired:
     def run_backend(self):
         self._stop = False
         self.previousitem = ''
-        self.complete_show_data = self.get_list("next_aired.db")
-       	self.complete_show_data.extend(self.get_list("canceled.db"))
+        self.complete_show_data = self.get_list(NEXTAIRED_DB)
+       	self.complete_show_data.extend(self.get_list(CANCELLED_DB))
         if self.complete_show_data == "[]":
             self._stop = True
         while not self._stop:
@@ -405,6 +440,7 @@ class NextAired:
                 self._stop = True
 
     def set_labels(self, infolabel, item, return_items = False ):
+        art = item.get("art", "")
         if (infolabel == 'windowproperty') or (infolabel == 'windowpropertytoday'):
             label = xbmcgui.Window( 10000 )
             if infolabel == "windowproperty":
@@ -412,16 +448,23 @@ class NextAired:
             else:
                 prefix = 'NextAired.' + str(self.count) + '.'
             label.setProperty(prefix + "Label", item.get("localname", ""))
-            label.setProperty(prefix + "Thumb", item.get("ep_img", ""))
+            label.setProperty(prefix + "Thumb", item.get("thumbnail", ""))
         else:
             label = xbmcgui.ListItem()
             prefix = ''
             label.setLabel(item.get("localname", ""))
-            label.setThumbnailImage(item.get("ep_img", ""))
+            label.setThumbnailImage(item.get("thumbnail", ""))
+        try:
+            status = STATUS[item.get("Status", "")]
+            status_id = STATUS_ID[item.get("Status", "")]
+        except:
+            status = item.get("Status", "")
+            status_id = '-1'
         label.setProperty(prefix + "AirTime", item.get("Airtime", ""))
         label.setProperty(prefix + "Path", item.get("path", ""))
         label.setProperty(prefix + "Library", item.get("dbid", ""))
-        label.setProperty(prefix + "Status", item.get("Status", ""))
+        label.setProperty(prefix + "Status", status)
+        label.setProperty(prefix + "StatusID", status_id)
         label.setProperty(prefix + "Network", item.get("Network", ""))
         label.setProperty(prefix + "Started", item.get("Started", ""))
         label.setProperty(prefix + "Classification", item.get("Classification", ""))
@@ -429,7 +472,15 @@ class NextAired:
         label.setProperty(prefix + "Premiered", item.get("Premiered", ""))
         label.setProperty(prefix + "Country", item.get("Country", ""))
         label.setProperty(prefix + "Runtime", item.get("Runtime", ""))
-        label.setProperty(prefix + "Fanart", item.get("fanart", ""))
+        # Keep old fanart property for backwards compatibility
+        label.setProperty(prefix + "Fanart", art.get("fanart", ""))
+        # New art properties
+        label.setProperty(prefix + "Art(fanart)", art.get("fanart", ""))
+        label.setProperty(prefix + "Art(poster)", art.get("poster", ""))
+        label.setProperty(prefix + "Art(banner)", art.get("banner", ""))
+        label.setProperty(prefix + "Art(landscape)", art.get("landscape", ""))
+        label.setProperty(prefix + "Art(clearlogo)", art.get("clearlogo", ""))
+        label.setProperty(prefix + "Art(clearart)", art.get("clearart", ""))
         if item.get("RFC3339" , "" )[:10] == self.datestr:
             label.setProperty(prefix + "Today", "True")
         else:

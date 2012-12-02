@@ -17,6 +17,7 @@ AirTime		    (eg. 'Thursday at 09:00 pm')
 Path		    (tv show path)
 Library		    (eg. videodb://2/2/1/)
 Status		    (eg. 'Returning Series'/'Final Season'/'New Series')
+StatusID        (id of the status)
 Network		    (name of the tv network that's airing the show)
 Started		    (airdate of the first episode, eg. 'Sep/24/2007')
 Classification	    (type of show, ex. 'Animation'/'Documentary')
@@ -39,13 +40,33 @@ LatestSeasonNumber  (season number of the last episode)
 AirDay		    (day of the week the show is aired, eg 'Tuesday')
 ShortTime	    (time the show is aired, eg. '08:00 pm')
 
+New art properties for XBMC 12.0 'Frodo':
+Art(poster)        (tv show poster)
+Art(banner)        (tv show banner)
+Art(fanart)        (tv show fanart)
+Art(landscape)     (tv show landscape - artwork downloader required)   
+Art(clearlogo)     (tv show logo - artwork downloader required)
+Art(clearart)      (tv show clearart - artwork downloader required)
+
+Status ids:
+0 - Returning Series
+1 - Cancelled/Ended
+2 - TBD/On The Bubble
+3 - In Development
+4 - New Series
+5 - Never Aired
+6 - Final Season
+7 - On Hiatus
+8 - Pilot Ordered
+9 - Pilot Rejected
+-1 - Undefined
+
 ---
 
 Window(Home).Property(NextAired.*):
 Total		    (number of running shows)
 TodayTotal	    (number of shows aired today)
 TodayShow	    (list of shows aired today)
-
 
 
 II) MyVideoNav.xml:

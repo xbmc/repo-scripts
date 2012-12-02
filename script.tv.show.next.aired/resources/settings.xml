@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-	<setting id="ReScan" type="action" label="45007" action="RunScript(script.tv.show.next.aired,force=True)"/>
-	<setting type="lsep" label="45000"/>
-	<setting id="ThumbType" type="enum" label="45001" default="0" values="Thumb|Banner|Logo"/>
-	<setting id="DownloadBanners" type="action" subsetting="true" label="45002" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,banner)" visible="gt(-1,0) + lt(-1,2)"/>
-	<setting id="DownloadLogos" type="action" subsetting="true" label="45003" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,clearlogo)" visible="gt(-2,1) + lt(-2,3)"/>
-	<setting id="BackgroundFanart" type="bool" label="45004" default="False"/>
-	<setting id="PreviewThumbs" type="bool" label="45005" default="False"/>
-	<setting id="DownloadPreviewThumbs" type="action" subsetting="true" label="45006" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,tvthumb)" visible="eq(-1,true)"/>
-	<setting type="lsep" label="45008"/>
-	<setting id="update_hour" type="labelenum" label="45009" subsetting="true" values="00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23" default="00"/>
-	<setting id="update_minute" type="labelenum" label="45010" subsetting="true" values="00|05|10|15|20|25|30|35|40|45|50|55" default="00"/>
+	<setting id="Reset" type="action" label="32007" action="RunScript(script.tv.show.next.aired,reset=True)"/>
+	<setting type="lsep" label="32000"/>
+	<setting id="ThumbType" type="enum" label="32001" default="0" values="Poster|Banner|Logo"/>
+	<setting id="DownloadPosters" type="action" subsetting="true" label="32011" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,poster)" visible="lt(-1,1)"/>
+	<setting id="DownloadBanners" type="action" subsetting="true" label="32002" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,banner)" visible="gt(-2,0) + lt(-2,2)"/>
+	<setting id="DownloadLogos" type="action" subsetting="true" label="32003" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,clearlogo)" visible="gt(-3,1) + lt(-3,3)"/>
+	<setting id="BackgroundFanart" type="bool" label="32004" default="False"/>
+	<setting id="PreviewThumbs" type="bool" label="32005" default="False"/>
+	<setting id="DownloadPreviewThumbs" type="action" subsetting="true" label="32006" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,tvthumb)" visible="eq(-1,true)"/>
+	<setting type="lsep" label="32008"/>
+	<setting id="update_hour" type="labelenum" label="32009" subsetting="true" values="00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23" default="00"/>
+	<setting id="update_minute" type="labelenum" label="32010" subsetting="true" values="00|05|10|15|20|25|30|35|40|45|50|55" default="00"/>
 </settings>
