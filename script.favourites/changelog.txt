@@ -1,3 +1,12 @@
+v4.0.4
+- fix encoding issue
+
+v4.0.3
+- re-add setting home window properties
+
+v4.0.2
+- fix change title option
+
 v4.0.1
 - fix encoding issues
 
