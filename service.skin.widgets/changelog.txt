@@ -1,3 +1,6 @@
+v0.0.16
+- Bump dependency versions to prevent being marked as broken
+
 v0.0.15
 - Fix runtime after changes in XBMC 12.0
 

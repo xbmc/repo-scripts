@@ -657,7 +657,7 @@ class MyPlayer(xbmc.Player):
         self.type = ""
         # Set values based on the file content
         if (self.isPlayingAudio()):
-            self.type = "album"  
+            self.type = "music"  
         else:
             if xbmc.getCondVisibility('VideoPlayer.Content(movies)'):
                 filename = ''
@@ -686,8 +686,8 @@ class MyPlayer(xbmc.Player):
             self.action('movie')
         elif self.type == 'episode':
             self.action('episode')
-        elif self.type == 'album':
-            self.action('album')
+        elif self.type == 'music':
+            self.action('music')
         self.type = ""
 
 if (__name__ == "__main__"):
