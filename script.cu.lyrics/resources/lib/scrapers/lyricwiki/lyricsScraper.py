@@ -11,6 +11,8 @@ __language__ = sys.modules[ "__main__" ].__language__
 __title__ = __language__(30008)
 __service__ = 'lyricwiki'
 
+LIC_TXT = 'we are not licensed to display the full lyrics for this song at the moment'
+
 socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
@@ -39,7 +41,10 @@ class LyricsFetcher:
             try:
                 lyricscode = (matchcode.group(1))
                 htmlparser = HTMLParser.HTMLParser()
-                l.lyrics = htmlparser.unescape(lyricscode).replace('<br />', '\n')
+                lyricstext = htmlparser.unescape(lyricscode).replace('<br />', '\n')
+                l.lyrics = re.sub('<[^<]+?>', '', lyricstext)
+                if LIC_TXT in l.lyrics:
+                    return __language__(30002) % (song.title, song.artist), __service__
                 l.source = __title__
                 return l, None, __service__
             except:

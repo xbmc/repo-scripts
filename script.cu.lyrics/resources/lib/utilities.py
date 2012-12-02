@@ -1,5 +1,6 @@
 #-*- coding: UTF-8 -*-
 import os
+import re
 import sys
 import xbmc
 import unicodedata
@@ -20,7 +21,7 @@ def deAccent(str):
 def replace(string):
     replace_char = [" ",",","'","&","and"]
     for char in replace_char:
-        string.replace(char,"-")
+        string = string.replace(char,"-")
     return string
 
 class Lyrics:
@@ -75,8 +76,6 @@ class Song:
         log( "Next Song: %s:%s" % (song.artist, song.title))
         if song.artist != '' and song.title != '':
             return song
-        else:
-            return None
 
     @staticmethod
     def by_offset(offset = 0):

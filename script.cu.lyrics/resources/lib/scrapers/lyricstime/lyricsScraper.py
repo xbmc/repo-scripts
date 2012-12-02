@@ -21,12 +21,12 @@ class LyricsFetcher:
         l.song = song
         try: # ***** parser - changing this changes search string
             url = "http://www.lyricstime.com/%s-%s-lyrics.html" % (
-                     replace(song.artist.lower().replace(" ","-").replace("---","-").replace("--","-")),
-                     replace(song.title.lower().replace(" ","-").replace("---","-").replace("--","-"))
+                     replace(song.artist.lower()).replace("---","-").replace("--","-"),
+                     replace(song.title.lower()).replace("---","-").replace("--","-")
                      )
             song_search = urllib.urlopen(url).read()
             log( "%s: search url: %s" % (__service__, url))
-            lyr = song_search.split('<div id="songlyrics" >')[1].split('</div>')[0]
+            lyr = song_search.split('<div id="songlyrics" style="padding-right:20px;">')[1].split('</div>')[0]
             lyr = self.clean_br_regex.sub( "\n", lyr ).strip()
             lyr = self.clean_lyrics_regex.sub( "", lyr ).strip()
             lyr = self.normalize_lyrics_regex.sub(
