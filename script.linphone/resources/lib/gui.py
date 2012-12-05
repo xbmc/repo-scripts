@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+B# -*- coding: utf-8 -*-
 # *
 # *      Copyright (C) 2012 Postmet corp
 # *      http://www.postmet.com
@@ -150,7 +150,8 @@ class GUI( xbmcgui.WindowXML ):
         list_top_pos = int(HEIGHT / 720) + 90
 
         self.addControl(xbmcgui.ControlImage(970, list_top_pos - 3, 306, 306, __cwd__ + '/resources/skins/Default/media/list_bg.png'))
-        self.list_contacts = xbmcgui.ControlList(973, list_top_pos, 300, 330, font = 'font12', selectedColor = "0xFF000000", textColor = '0xFFFFFFFF', buttonTexture = 'button-nofocus.png', buttonFocusTexture = 'button-focus.png', itemHeight = 25, space = 2)
+        self.list_contacts = xbmcgui.ControlList(973, list_top_pos, 300, 330, 'font12', '0xFFFFFFFF', 'button-nofocus.png', 'button-focus.png', "0xFF000000", 0, 0, 0, 0, 25, 2)
+
         self.addControl(self.list_contacts)
         self.control_list_contacts_id = self.list_contacts.getId()
 
@@ -562,6 +563,7 @@ def linphoneTerminate():
     global last_try_exit
     global last_try_exit_cnt
     global notifier
+    global list_type
     xbmc.log("##### [%s] - Debug msg: %s" % (__scriptname__, call_status),level=xbmc.LOGDEBUG )
 
     tpass = (time.time() - last_try_exit)
@@ -585,6 +587,10 @@ def linphoneTerminate():
         fixUpDown(False, False)
         time.sleep(1)
         placed, recieved, last_calls = parsing('/home/%s/.linphonerc' % (SYSTEM_USER))
+        if list_type == 'recent':
+            LP_WIN.list_contacts.reset()
+            LP_WIN.list_contacts.addItems(last_calls)
+
         #else:
         #    LP_WIN.btn_hangup.setVisible(False)
         #    LP_WIN.btn_answer.setVisible(False)
@@ -709,25 +715,6 @@ def fixUpDown(answer, hangup):
     #5005Up - full:5010 / answer:5002 / hangup:5004 / 5001
     b5005Up = 5010 if is_full_ver else b500xUp
     LP_WIN.getControl(5005).controlUp(LP_WIN.getControl(b5005Up))
-
-    #if answer:
-    #    ctrl_down = 5002
-    #    ctrl_up = 5002
-    #elif hangup:
-    #    ctrl_down = 5004
-    #    ctrl_up = 5004
-    #else:
-    #    ctrl_down = 5010
-    #    ctrl_up = 5011
-    #LP_WIN.getControl(5011).controlDown(LP_WIN.getControl(ctrl_down))
-    #LP_WIN.getControl(5010).controlUp(LP_WIN.getControl(ctrl_up))
-    #if answer and hangup:
-    #    LP_WIN.getControl(5002).controlRight(LP_WIN.getControl(5004)) # from Dial to Hangup
-    #    LP_WIN.getControl(5004).controlLeft(LP_WIN.getControl(5002))
-    #elif answer:
-    #    LP_WIN.getControl(5004).controlLeft(LP_WIN.getControl(5004))
-    #elif hangup:
-    #    LP_WIN.getControl(5002).controlLeft(LP_WIN.getControl(5002))
 
 def initLinphone():
     ##------------------Initialisation Settings----------------------##
@@ -890,10 +877,11 @@ def set_phone_book(pb):
     f.close()
 
 def sound_card_list_creating(soundcard_list):
+    if os.path.isfile(__cwd__ + '/soundcards'):
+        limitLinphonecCodecs()
     try:
         f = open(__cwd__ + '/soundcards', 'w')
     except:
-        limitLinphonecCodecs()
         os.system("touch %s" % __cwd__ + '/soundcards')
         f = open(__cwd__ + '/soundcards', 'w')
     for i in soundcard_list:
@@ -932,8 +920,3 @@ def parsing(filename):
 pb = get_phone_book()
 placed, recieved, last_calls = parsing('/home/' + SYSTEM_USER + '/.linphonerc')
 cmd = str()
-
-# 91.189.95.83
-# register_only_when_network_is_up
-# reg_sendregister=0
-#dpkg -i .deb
