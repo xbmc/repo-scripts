@@ -433,6 +433,9 @@ def propertiesPDOM(page, extendedFeatures):
 
       for count, desc in enumerate(shortDesc):
         shortDesc[count] = shortDesc[count].title().replace( '-<br />','')
+        shortDesc[count] = shortDesc[count].title().replace( '-<Br />','')
+        shortDesc[count] = shortDesc[count].title().replace( 'ThunderStorms','Thunderstorms')
+        shortDesc[count] = shortDesc[count].title().replace( 'windy','Windy')
 
       #log the collected data, helpful for finding errors
       #log("Collected data: shortDesc [" + str(shortDesc) + "] maxList [" + str(maxList) +"] minList [" + str(minList) + "]")
