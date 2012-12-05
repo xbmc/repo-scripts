@@ -7,7 +7,7 @@
 # mrto
 
 import urllib2, re, string, xbmc, sys, os
-from utilities import log, languageTranslate
+from utilities import log, languageTranslate, hashFile
 from BeautifulSoup import BeautifulSoup
 from cookielib import CookieJar
 from urllib import urlencode
@@ -53,7 +53,7 @@ def getallsubs(content, title, subtitles_list, file_original_path, stack, lang1,
                 disc_amount = re.findall(disc_amount_re, row_str)
                 first_row = False
             else:
-                file_size, SubHash = xbmc.subHashAndFileSize(file_original_path)
+                file_size, SubHash = hashFile(file_original_path, False)
                 if disc_amount[0] > '1':
                     video_file_size = re.findall(video_file_size_re_multi, row_str)
                 else:

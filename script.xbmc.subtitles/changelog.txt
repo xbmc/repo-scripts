@@ -1,3 +1,11 @@
+3.9.1
+- [fix] Argenteam service, jurrabi
+- [fix] Napisy24pl service, mrto
+- [fix] Betaseries service
+- [fix] LegendasTV service
+- [add] version in OpenSubtitles server login
+- [fix] service Ondertitel.com after site redesign
+
 3.9.0
 - [fix] properly hash rar files on OpenSubtitles
 - use python hash algo since XBMC one has been removed

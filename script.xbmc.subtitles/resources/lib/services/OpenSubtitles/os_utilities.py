@@ -6,6 +6,7 @@ import xmlrpclib
 from utilities import *
 
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
+__version__    = sys.modules[ "__main__" ].__version__
 
 BASE_URL_XMLRPC = u"http://api.opensubtitles.org/xml-rpc"
 
@@ -13,7 +14,7 @@ class OSDBServer:
 
   def __init__( self, *args, **kwargs ):
     self.server = xmlrpclib.Server( BASE_URL_XMLRPC, verbose=0 )
-    login = self.server.LogIn("", "", "en", __scriptname__.replace(" ","_"))    
+    login = self.server.LogIn("", "", "en", "%s_v%s" %(__scriptname__.replace(" ","_"),__version__))    
     self.osdb_token  = login[ "token" ]
 
   def mergesubtitles( self ):

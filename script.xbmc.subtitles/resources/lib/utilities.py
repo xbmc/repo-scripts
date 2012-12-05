@@ -10,6 +10,9 @@ import shutil
 import struct
 import unicodedata
 
+try: import simplejson as json
+except: import json
+
 _              = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
@@ -269,4 +272,17 @@ def addfilehash(name,hash,seek):
         hash =hash & 0xffffffffffffffff
     f.close()    
     return hash
+
+def getShowId():
+    try:
+      playerid_query = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}'
+      playerid = json.loads(xbmc.executeJSONRPC(playerid_query))['result'][0]['playerid']
+      tvshowid_query = '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": {"playerid": ' + str(playerid) + ', "properties": ["tvshowid"]}, "id": 1}'
+      tvshowid = json.loads(xbmc.executeJSONRPC (tvshowid_query))['result']['item']['tvshowid']
+      tvdbid_query = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails", "params": {"tvshowid": ' + str(tvshowid) + ', "properties": ["imdbnumber"]}, "id": 1}'
+      return json.loads(xbmc.executeJSONRPC (tvdbid_query))['result']['tvshowdetails']['imdbnumber']
+    except:
+      log( __name__ ," Failed to find TVDBid in database")  
+    
+
 

@@ -9,7 +9,7 @@ import xbmc, xbmcgui
 import cookielib, urllib2, urllib, sys, re, os, webbrowser, time, unicodedata
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 from htmlentitydefs import name2codepoint as n2cp
-from utilities import log
+from utilities import log, getShowId
 
 base_url = "http://legendas.tv"
 sub_ext = "srt,aas,ssa,sub,smi"
@@ -166,8 +166,7 @@ def LegendasTVMovies(file_original_path, title, year, lang1, lang2, lang3 ):
 	
 	# Try to get the original movie name from the XBMC database, 
 	# and if not available, set it to the parsed title.
-	xbmcPlayerTitle = xbmc.getCleanMovieTitle( xbmc.getInfoLabel("VideoPlayer.Title") )[0]
-	original_title = re.sub("</?[^>]*>","",xbmc.executehttpapi("QueryVideoDatabase(select c16 from movie where movie.c00 = \""+xbmcPlayerTitle+"\")"))
+	original_title = xbmc.getInfoLabel("VideoPlayer.OriginalTitle")
 
 	if original_title == "" or year == "" : original_title = CleanLTVTitle(title)
 	else:
@@ -270,8 +269,9 @@ def LegendasTVSeries(tvshow, year, season, episode, lang1, lang2, lang3 ):
 	
 	try:
 		xbmcTVShow = xbmc.getInfoLabel("VideoPlayer.TVshowtitle")
-		tvshow_id = int(re.sub("</?[^>]*>","",xbmc.executehttpapi("QueryVideoDatabase(select c12 from tvshow where c00 = \""+xbmcTVShow+"\")")))
-		if tvshow_id: original_tvshow = CleanLTVTitle(BeautifulStoneSoup(urllib2.urlopen("http://www.thetvdb.com/data/series/"+str(tvshow_id)+"/").read()).data.series.seriesname.string)
+		tvshow_id = getShowId()
+		if tvshow_id:
+		  original_tvshow = CleanLTVTitle(BeautifulStoneSoup(urllib2.urlopen("http://www.thetvdb.com/data/series/"+str(tvshow_id)+"/").read()).data.series.seriesname.string)
 		else: original_tvshow = CleanLTVTitle(tvshow)
 	except: original_tvshow = CleanLTVTitle(tvshow)
 	log( __name__ , original_tvshow )

@@ -1,9 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os, sys, re, xbmc, xbmcgui, xbmcaddon, string, urllib, urllib2, time, xml.etree.ElementTree as XMLTree
-from utilities import log
-try: import simplejson as json
-except: import json
+from utilities import log, getShowId
 
 _                = sys.modules[ "__main__" ].__language__
 __profile__      = sys.modules[ "__main__" ].__profile__
@@ -78,16 +76,8 @@ def getshowid(showname):
             log( __name__ ," show id for '%s' is '%s' (from cachefile '%s')" % (showname, showids[showname], showids_filename))
             return showids[showname]
     if showid is None:
-        try:
-            playerid_query = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}'
-            playerid = json.loads(xbmc.executeJSONRPC(playerid_query))['result'][0]['playerid']
-            tvshowid_query = '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": {"playerid": ' + str(playerid) + ', "properties": ["tvshowid"]}, "id": 1}'
-            tvshowid = json.loads(xbmc.executeJSONRPC (tvshowid_query))['result']['item']['tvshowid']
-            tvdbid_query = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails", "params": {"tvshowid": ' + str(tvshowid) + ', "properties": ["imdbnumber"]}, "id": 1}'
-            tvdbid = json.loads(xbmc.executeJSONRPC (tvdbid_query))['result']['tvshowdetails']['imdbnumber']
-        except:
-            log( __name__ ," Failed to find TVDBid in database")
-        else:
+        tvdbid = getShowId()
+        if tvdbid:
             response = apicall("GetShowByTVDBID",[tvdbid])
             if response is not None:
                 showid = gettextelements(response,"response/showid")

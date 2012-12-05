@@ -10,9 +10,8 @@ import xbmc
 import xbmcgui
 import string
 import shutil
-from utilities import log, languageTranslate
+from utilities import log, languageTranslate, getShowId
 from xml.dom import minidom
-
 
   
 _ = sys.modules[ "__main__" ].__language__
@@ -45,33 +44,21 @@ def geturl(url):
     return(content)
 
 def getShortTV(title):
-
-    try:
-        # search TVDB's id from tvshow's title
-        query = 'select c12 from tvshow where c00 = "' + unicode(title) + '" limit 1'
-        res = xbmc.executehttpapi("queryvideodatabase(" + query + ")")
-        
-        # get the result
-        tvdbid = re.search('field>(.*?)<\/field',res)
-        tvdbid = tvdbid.group(1)
-        
+    tvdbid = getShowId()
+    if tvdbid:
         # get tvshow's url from TVDB's id
         searchurl = 'http://' + apiurl + '/shows/display/' + tvdbid + '.xml?key=' + apikey
         log( __name__ , " BetaSeries query : %s" % (searchurl))
 
         dom = minidom.parse(urllib.urlopen(searchurl))
-        url = ""
+        
         if len(dom.getElementsByTagName('url')):
             url = dom.getElementsByTagName('url')[0].childNodes[0]
             url = url.nodeValue
+            return url
 
-        return url
-        
-        log( __name__ , "'%s %s %s %s'" % (user, password, searchurl, url))
-
-    except:
+    else:
         log( __name__ , "getShortTV() failed")
-        return url
 
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
@@ -89,7 +76,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     if (len(file_original_path) > 0) and (len(tvshow) > 0) :
 
         show = getShortTV(tvshow)
-        if len(show)>0:
+        if show:
 
             searchurl = 'http://' + apiurl + '/subtitles/show/' + show + '.xml?season=' + season + '&episode=' + episode + '&language=' + querylang + '&key=' + apikey
             log( __name__ , "searchurl = '%s'" % (searchurl))

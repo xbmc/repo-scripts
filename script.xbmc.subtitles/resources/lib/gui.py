@@ -75,7 +75,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
       movieFullPath = self.stackPath[0][8:]
       self.stack = True
 
-    if useMovieFolderForSubs:
+    if useMovieFolderForSubs and not self.temp:
       if use_subs_folder:
         self.sub_folder = os.path.join(os.path.dirname( movieFullPath ),'Subs')
         xbmcvfs.mkdirs(self.sub_folder)

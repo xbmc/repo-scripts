@@ -1,0 +1,374 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.0
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "חיפוש"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "הכנס ביטוי חיפוש ידנית"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "מחפש כתוביות %s"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "מתחבר ..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "מוריד כתוביות"
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "קובץ הכתוביות הורד וחולץ"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "ההתחברות נכשלה"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "שגיאה בפריסת כתוביות"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "כתובית מקומית זמינה"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "השירות לא הגיב במסגרת הזמן הנקוב"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "לא נמצאו כתוביות "
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "נמצאו כתוביות עבור"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "חפש בתיקיית האב"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "אין באפשרותך לשמור את הכתוביות ליעד שנבחר"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "האם תרצה להפעיל את הכתובית הזו באופן זמני?"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "הקש את שם הסרט (שנה)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "השרת עמוס, אנא נסה מאוחר יותר"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "ההתחברות נכשלה. אנא וודא את פרטיך בהגדרות התוסף"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "אנא הסתכל באזור ההודעות"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "שירותים זמינים"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "אתה צריך להיות משתמש רשום ע\"מ להוריד כתוביות אלו,[CR]בדוק את ההגדרות שלך בתוסף"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "הגדרות תוסף"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "מוריד אוטומטית כתוביות 'מסונכרנות' ראשונות"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "שפות"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "שפה ראשית"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "שפה משנית"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "שרותים"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net שם משתמש"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net ססמה"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "אפשרויות מתקדמות"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "הורד כתוביות לתיקיית הסרט"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "- הגדר נתיב הורדת כתוביות מותאם אישית"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "הכנס ביטוי חיפוש ידנית"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "שפה שלישית"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "הגדר שרות ברירת מחדל לסרט"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "הגדר שרות ברירת מחדל לתכניות טלוויזיה"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "הצג שם קובץ במסך תוצאות"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "חיפוש עפ\"י תיקיית אב"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "הוסף שם שפה לשם קובץ"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "הגדר ברירת מחדל לפסק זמן "
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "הורד אוטומטית כתוביות \"מסונכרנות\" ראשונות"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "השתמש בתיקיית 'Subs' לאכסון כתוביות"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "אלבנית"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "ערבית"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "בלרוסית"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "בוסנית(לטינית)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "בולגרית"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "קטלנית"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "סינית"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "קרואטית"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "צכית"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "דנית"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "הולנדית"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "אנגלית"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "אסטונית"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "פינית"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "צרפתית"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "גרמנית"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "יוונית"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "עברית"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "הינדי"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "הונגרית"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "איסלנדית"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "אינדונזית"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "איטלקית"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "יפנית"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "קוראנית"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "לטבית"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "ליטאית"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "מקדונית"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "נורווגית"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "פולנית"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "פורטוגזית"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "פורטוגזית(ברזיל)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "רומנית"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "רוסית"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "סרבית לטינית"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "סלובקית"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "ספרדית"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "שוודית"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "תאילנדית"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "תורכית"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "אוקראינית"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "ויאטנמית"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "פרסית"
