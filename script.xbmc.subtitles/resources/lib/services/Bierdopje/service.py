@@ -75,8 +75,13 @@ def getshowid(showname):
         showids_filedata = file(showids_filename,'r').read()
         showids = eval(showids_filedata)
         if showname in showids:
-            log( __name__ ," show id for '%s' is '%s' (from cachefile '%s')" % (showname, showids[showname], showids_filename))
-            return showids[showname]
+            if showids[showname] != '16178':
+                log( __name__ ," show id for '%s' is '%s' (from cachefile '%s')" % (showname, showids[showname], showids_filename))
+                return showids[showname]
+            else:
+                log( __name__ ," removing invalid show id '%s' for '%s' from from cachefile '%s'" % (showids[showname], showname, showids_filename))
+                del showids[showname]
+                file(showids_filename,'w').write(repr(showids))
     if showid is None:
         try:
             playerid_query = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}'
@@ -88,14 +93,15 @@ def getshowid(showname):
         except:
             log( __name__ ," Failed to find TVDBid in database")
         else:
-            response = apicall("GetShowByTVDBID",[tvdbid])
-            if response is not None:
-                showid = gettextelements(response,"response/showid")
-                if len(showid) == 1:
-                    log( __name__ ," show id for '%s' is '%s' (found by TVDBid %s)" % (showname, str(showid[0]), tvdbid))
-                    showids[showname] = str(showid[0])
-                    file(showids_filename,'w').write(repr(showids))
-                    return str(showid[0])
+            if tvdbid != '':
+                response = apicall("GetShowByTVDBID",[tvdbid])
+                if response is not None:
+                    showid = gettextelements(response,"response/showid")
+                    if len(showid) == 1:
+                        log( __name__ ," show id for '%s' is '%s' (found by TVDBid %s)" % (showname, str(showid[0]), tvdbid))
+                        showids[showname] = str(showid[0])
+                        file(showids_filename,'w').write(repr(showids))
+                        return str(showid[0])
     response = apicall("GetShowByName",[showname])
     if response is not None:
         showid = gettextelements(response,"response/showid")
