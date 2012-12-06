@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="1.0.0" provider-name="Taxigps, ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.1"/>
+	</requires>
+	<extension point="xbmc.python.lyrics" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary>CU LRC Lyrics</summary>
+		<description>CU LRC Lyrics is a lyrics script for XBMC. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music).</description>
+		<description lang="zh">CU LRC Lyrics是XBMC的歌词插件。它支持原LRC Lyrics歌词插件的功能。这个插件会搜索内嵌的、本地文件或通过刮削器获取同步/非同步歌词。它可以读取以相同文件名与歌曲文件保存在相同目录的.lrc/.txt歌词文件。</description>
+		<platform>all</platform>
+	</extension>
+</addon>

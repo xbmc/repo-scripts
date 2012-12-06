@@ -1,0 +1,6 @@
+v1.0.0
+- initial release
+
+v0.0.1
+- merge cu and lrc lyrics scripts
+
