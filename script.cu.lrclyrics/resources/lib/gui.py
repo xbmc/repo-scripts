@@ -349,7 +349,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         else:
             for cnt in range( 5 ):
                 song = Song.current()
-                if ( song and ( self.current_lyrics.song.filepath != song.filepath ) ):
+                if ( song and ( self.current_lyrics.song != song ) ):
                     self.stop_refresh()
                     lyrics = self.get_lyrics( song )
                     self.current_lyrics = lyrics

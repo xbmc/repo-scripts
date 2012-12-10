@@ -125,7 +125,5 @@ class LyricsFetcher:
                    ))
             return None
         enc = chardet.detect(lyrics)
-        if (enc['encoding'] == 'utf-8'):
-            return lyrics
-        else:
-            return unicode( lyrics, enc['encoding'] ).encode( "utf-8")
+        lyrics = lyrics.decode(enc['encoding'], 'ignore')
+        return lyrics

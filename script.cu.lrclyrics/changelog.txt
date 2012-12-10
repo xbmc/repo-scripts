@@ -1,3 +1,8 @@
+v1.0.1
+- fixed can't change lyric for track in cue/ape file
+- fixed decode error in scrape minilyrics
+- added requires for script.module.chardet
+
 v1.0.0
 - initial release
 
