@@ -1,8 +1,5 @@
-import xbmc
-import xbmcaddon
 import xbmcgui
-addon_id = "service.libraryautoupdate"
-Addon = xbmcaddon.Addon(addon_id)
+import resources.lib.utils as utils
 
 #show the disclaimer
-xbmcgui.Dialog().ok(Addon.getLocalizedString(30031),"",Addon.getLocalizedString(30032),Addon.getLocalizedString(30033))
+xbmcgui.Dialog().ok(utils.getString(30031),"",utils.getString(30032),utils.getString(30033))

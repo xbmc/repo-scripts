@@ -1,3 +1,19 @@
+Version 0.7.2
+
+Fixed error with cleaning library
+
+Version 0.7.1
+
+Started using utils.py as common framework for logging/notifications
+
+fixed unicode error in showing notifications - thanks koying!
+
+added storage server (common plugin cache) as a dep
+
+Version 0.7.0
+
+increment version to keep Eden branch separate
+
 Version 0.6.5
 
 added setting to prompt user before doing scheduled clean. Defaults to False. 

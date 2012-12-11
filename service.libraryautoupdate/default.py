@@ -1,6 +1,6 @@
-import xbmc
+import resources.lib.utils as utils
 from service import AutoUpdater
 
 #run the program
-xbmc.log("Update Library Service starting...")
+utils.log("Update Library Service starting...")
 AutoUpdater().runProgram()
