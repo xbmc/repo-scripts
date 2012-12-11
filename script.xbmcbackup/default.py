@@ -1,7 +1,21 @@
+import xbmcgui
+import resources.lib.utils as utils
 from resources.lib.backup import XbmcBackup
 
-#run the profile backup
-backup = XbmcBackup()
+#figure out if this is a backup or a restore
+mode = xbmcgui.Dialog().select(utils.getString(30010) + " - " + utils.getString(30023),[utils.getString(30016),utils.getString(30017)])
 
-if(backup.isReady()):
-    backup.run()
+if(mode != -1):
+    #run the profile backup
+    backup = XbmcBackup()
+
+    if(mode == backup.Restore):
+        #allow user to select the backup to restore from
+        restorePoints = backup.listBackups()
+
+        selectedRestore = xbmcgui.Dialog().select(utils.getString(30010) + " - " + utils.getString(30021),restorePoints)
+
+        if(selectedRestore != -1):
+            backup.selectRestore(restorePoints[selectedRestore])
+                    
+    backup.run(mode)

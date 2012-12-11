@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmcbackup"
-    name="XBMC Backup" version="0.2.3" provider-name="robweber">
+    name="XBMC Backup" version="0.3.0" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
   </requires>
@@ -9,8 +9,10 @@
   </extension> 
   <extension point="xbmc.service" library="scheduler.py" start="startup" />
   <extension point="xbmc.addon.metadata">
+    <summary lang="fr">Sauvegarder et restaurer vos bases de données XBMC et vos fichiers de configuration en cas de crash ou de fichiers corrompus.</summary>
     <summary lang="de">Die XBMC Datenbank sichern und bei Dateiverlust oder Beschädigung wiederherstellen.</summary>
     <summary lang="en">Backup and restore your XBMC database and configuration files in the event of a crash or file corruption.</summary>
+    <description lang="fr">Avez-vous déjà perdu votre configuration XBMC et espéré avoir fait une sauvegarde ? Maintenant, vous pouvez le faire en un simple click. Vous pouvez exporter vos bases de données, playlists, miniatures, addons et autres fichiers de configuration vers n'importe quel endroit accessible depuis XBMC.</description>
     <summary lang="es">Haz copia de seguridad  de tu base de datos y configuración y recupera todo en caso de fallo.</summary>
     <summary lang="es_MX">Respalda y restaura tu base de datos y archivos de configuración de XBMC dado el evento de un cuelgue o corrupción de archivos. </summary>
     <summary lang="fr">Sauvegarder et restaurer vos bases de données XBMC et vos fichiers de configuration en cas de crash ou de fichiers corrompus.</summary>
@@ -21,7 +23,7 @@
     <summary lang="sk">Zálohovanie a obnova XBMC databázy a konfiguračných súborov pre prípad havárie alebo poškodenia súboru.</summary>
     <summary lang="sv">Ta backupp av eller återställ din XBMC-databas och konfigurationsfiler i händelse av en krash eller filkorruption.</summary>
     <description lang="de">Jemals deine XBMC Konfiguration zerschossen und dir dann gewünscht, dass ein Backup existiert? Jetzt kannst du eine Sicherung mit nur einem Klick erzeugen. Du kannst deine Datenbanen, Playlisten, Thumbnails, Addons und andere Details zu einem Ort deiner Wahl sichern.</description>
-    <description lang="en">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC. Backups can be run on demand or via a scheduler. </description>
+    <description lang="en">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. </description>
     <description lang="es_MX">¿Alguna vez haz echado a perder tu configuración de XBMC y haz deseado tener un respaldo? Ahora puedes tenerlo con un simple click. Puedes exportar tu base de datos, listas de reproducción, miniaturas, addons y otros detalles de configuración correspondientes a cualquier fuente que pueda escribir XBMC. Los respaldos pueden ser efectuados a pedido o mediante una programación temporal</description>
     <description lang="fr">Avez-vous déjà perdu votre configuration XBMC et espéré avoir fait une sauvegarde ? Maintenant, vous pouvez le faire en un simple click. Vous pouvez exporter vos bases de données, playlists, miniatures, addons et autres fichiers de configuration vers n'importe quel endroit accessible depuis XBMC.</description>
     <description lang="he">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC. Backups can be run on demand or via a scheduler. </description>

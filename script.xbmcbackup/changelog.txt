@@ -1,3 +1,11 @@
+Version 0.3.0
+
+major vfs rewrite 
+
+Added Dropbox as storage target
+
+updated gui/removed settings - thanks SFX Group for idea!
+
 Version 0.2.3
 
 first official frodo build
