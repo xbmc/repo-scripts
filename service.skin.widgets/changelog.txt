@@ -1,3 +1,7 @@
+v0.0.17
+- Try to break all skins
+- Updated language files from Transifex
+
 v0.0.16
 - Bump dependency versions to prevent being marked as broken
 

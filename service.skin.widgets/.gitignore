@@ -1,0 +1,4 @@
+*.pyo
+.project
+.pydevproject
+pysrc
