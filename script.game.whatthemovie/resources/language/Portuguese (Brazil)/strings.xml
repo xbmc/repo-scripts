@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Portuguese (Brazil) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Buttons -->
+    <string id="3000">Advinhar!</string>
+    <string id="3001">Aleatório</string>
+    <string id="3002">Voltar</string>
+
+    <!-- Messages -->
+    <string id="3050">Não foi possível entrar</string>
+    <string id="3051">Senha ou nome do usuário errado:  [B]%s[/B][CR]Por favor alterar as credenciais ou desative login</string>
+    <string id="3052">Digite o ID de disparo</string>
+    <string id="3053">Digite o título do filme</string>
+    <string id="3054">Logar no site indisponível</string>
+    <string id="3055">Não foi possível recuperar disparo</string>
+    <string id="3066">Não poderiam verificar adivinhar</string>
+
+    <!-- Labels -->
+    <string id="3100">Verificando: [B]%s[/B]</string>
+    <string id="3101">Correto. Título Original é: [B]%s[/B]</string>
+    <string id="3102">Errado: [B]%s[/B]</string>
+    <string id="3103">Não está logado</string>
+    <string id="3104">Logado como: [B]%s[/B]</string>
+    <string id="3105">Seu score: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Resolvido [B][COLOR=ff008B00]%s[/COLOR][/B] vezes, primeira por [B]%s[/B]</string>
+    <string id="3107">Não resolvido ainda</string>
+    <string id="3108">Disparo ID: [B]%s[/B]</string>
+    <string id="3109">Data: [B]%s[/B]</string>
+    <string id="3110">Postado por: [B]%s[/B]</string>
+    <string id="3111">Não Lançado</string>
+    <string id="3112">Usuário Deletado</string>
+    <string id="3113">Novas Submissões</string>
+    <string id="3114">Longa-Metragens</string>
+    <string id="3115">O Arquivo</string>
+    <string id="3116">[B]%s[/B] votos</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
+    <string id="3118">Oculto</string>
+    <string id="3119">-</string>
+    <string id="3120">Disparos Rejeitados</string>
+    <string id="3121">Você já resolveu esse disparo</string>
+    <string id="3122">A correta solução era: [B]%s[/B]</string>
+    <string id="3123">Você postou este disparo</string>
+    <string id="3124">Desculpe, você não tem permissão para ver este disparo [B]%s[/B] - redirecionado para [B]%s[/B]</string>
+    <string id="3125">O cofre</string>
+    <string id="3126">Maravilhoso. Título original é: [B]%s[/B] +1 Ponto!</string>
+    <string id="3127">Disparos Deletados</string>
+    <string id="3128">Desculpe, não pude disparar [B]%s[/B] - redirecionando para [B]%s[/B]</string>
+
+    <!-- Settings -->
+    <string id="3200">Geral</string>
+    <string id="3201">Login</string>
+    <string id="3202">Usar conta whatthemovie.com</string>
+    <string id="3203">Nome do usuário</string>
+    <string id="3204">Senha</string>
+    <string id="3205">Ajustes para botão "randômico" (login requerido)</string>
+    <string id="3206">Dificuldade</string>
+    <string id="3207">Fácil</string>
+    <string id="3208">fácil+médio</string>
+    <string id="3209">Todos</string>
+    <string id="3210">Incluir arquivo</string>
+    <string id="3211">Incluir resolvidos</string>
+    <string id="3212">olhar+sentir</string>
+    <string id="3213">Olhar</string>
+    <string id="3214">Mostrar "postado por"</string>
+    <string id="3215">Mostrar "resolvido"</string>
+    <string id="3216">Mostrar "disparo ID"</string>
+    <string id="3217">Mostrar "Data Curta"</string>
+    <string id="3218">Comportamento</string>
+    <string id="3219">Auto pule após convidado estiver certo</string>
+    <string id="3220">...após x segundos</string>
+    <string id="3221">Mostrar "bandeiras de disparo"</string>
+    <string id="3222">Bandeira</string>
+    <string id="3223">Bandeira 1</string>
+    <string id="3224">Bandeira 2</string>
+    <string id="3225">Bandeira 3</string>
+    <string id="3226">Bandeira 4</string>
+    <string id="3227">Bandeira 5</string>
+    <string id="3228">Escolha a bandeira que você quer ver</string>
+    <string id="3229">Opções de navegação (login requerido)</string>
+    <string id="3230">Somente disparos não resolvidos</string>
+    <string id="3231">Mostrar "classificação disparos"</string>
+    <string id="3232">Pular para</string>
+    <string id="3233">Aleatório</string>
+    <string id="3234">Próximo</string>
+    <string id="3235">Mostrar botões ferramentas</string>
+    <string id="3236">Mostar botões de navegação</string>
+    <string id="3237">Chaves</string>
+    <string id="3238">Escolha botões para ações</string>
+
+    <!-- Keys -->
+    <string id="3239">Nenhuma Chave</string>
+    <string id="3240">Página Acima</string>
+    <string id="3241">Página Abaixo</string>
+    <string id="3242">mostrar info</string>
+    <string id="3243">pausa</string>
+    <string id="3244">parar</string>
+    <string id="3245">próximo item</string>
+    <string id="3246">item anterior</string>
+    <string id="3247">avançar</string>
+    <string id="3248">retroceder</string>
+    <string id="3249">reproduzir</string>
+    <string id="3250">menu de contexto</string>
+    <string id="3251">Aumentar volume</string>
+    <string id="3252">Diminuir volume</string>
+    <string id="3253">Rolar para cima</string>
+    <string id="3254">Rolar para baixo</string>
+    <string id="3255">home</string>
+    <string id="3256">fim</string>
+
+    <!-- Functions -->
+    <string id="3260">Próximo</string>
+    <string id="3261">Anterior</string>
+    <string id="3262">pular</string>
+    <string id="3263">Marcar</string>
+    <string id="3264">Favorito</string>
+    <string id="3265">Resolver</string>
+</strings>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Bulgarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/bg/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Случаен</string>
+    <string id="3002">Назад</string>
+
+    <!-- Settings -->
+    <string id="3200">General</string>
+    <string id="3203">Потребител</string>
+    <string id="3204">Парола</string>
+    <string id="3233">Случаен</string>
+    <string id="3234">Следващ</string>
+
+    <!-- Functions -->
+    <string id="3260">Следващ</string>
+    <string id="3261">Предишен</string>
+</strings>

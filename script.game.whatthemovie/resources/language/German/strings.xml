@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone='yes'?>
-<!-- String IDs
-Buttons  = 3000-3049 (same IDs like in skin.xml)
-Messages = 3050-3099
-Labels   = 3100-3199
-Settings = 3200-3299
-Misc     = 3300-3349
--->
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- German language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/de/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
     <!-- Buttons -->
     <string id="3000">Erraten!</string>
     <string id="3001">Zufall</string>
     <string id="3002">Zurück</string>
+
     <!-- Messages -->
     <string id="3050">Login nicht erfolgreich</string>
     <string id="3051">Passwort falsch oder Benutzer unbekannt: [B]%s[/B][CR]Bitte korrigieren oder Login deaktivieren</string>
@@ -19,6 +17,7 @@ Misc     = 3300-3349
     <string id="3054">Login Seite nicht erreichbar</string>
     <string id="3055">Konnte den Shot nicht holen</string>
     <string id="3066">Konnte den Shot nicht prüfen</string>
+
     <!-- Labels -->
     <string id="3100">Prüfe: [B]%s[/B]</string>
     <string id="3101">Richtig. Originaltitel: [B]%s[/B]</string>
@@ -49,6 +48,7 @@ Misc     = 3300-3349
     <string id="3126">Großartig. Originaltitel: [B]%s[/B] +1 Punkt!</string>
     <string id="3127">Deleted Shots</string>
     <string id="3128">Sorry, es existiert kein Shot [B]%s[/B] - umgeleitet zu [B]%s[/B]</string>
+
     <!-- Settings -->
     <string id="3200">Allgemein</string>
     <string id="3201">Login</string>
@@ -89,6 +89,7 @@ Misc     = 3300-3349
     <string id="3236">Zeige "Navigations Buttons"</string>
     <string id="3237">Tasten</string>
     <string id="3238">Wähle Tasten für Funktionen</string>
+
     <!-- Keys -->
     <string id="3239">Keine Taste</string>
     <string id="3240">Bild Hoch</string>
@@ -108,6 +109,7 @@ Misc     = 3300-3349
     <string id="3254">Scroll down</string>
     <string id="3255">Pos1</string>
     <string id="3256">Ende</string>
+
     <!-- Functions -->
     <string id="3260">Nächster</string>
     <string id="3261">Vorheriger</string>

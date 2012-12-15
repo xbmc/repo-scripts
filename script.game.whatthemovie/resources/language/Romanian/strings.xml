@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Romanian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ro/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Aleator</string>
+    <string id="3002">Înapoi</string>
+
+    <!-- Settings -->
+    <string id="3200">General</string>
+    <string id="3203">Utilizator</string>
+    <string id="3204">Parolă</string>
+    <string id="3233">Aleator</string>
+    <string id="3234">Următorul</string>
+
+    <!-- Functions -->
+    <string id="3260">Următorul</string>
+    <string id="3261">Precedentul</string>
+</strings>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Danish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/da/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Tilfældig</string>
+    <string id="3002">Tilbage</string>
+    <string id="3118">Skjult</string>
+
+    <!-- Settings -->
+    <string id="3200">Generelt</string>
+    <string id="3203">Brugernavn</string>
+    <string id="3204">Adgangskode</string>
+    <string id="3233">Tilfældig</string>
+    <string id="3234">Næste</string>
+
+    <!-- Functions -->
+    <string id="3260">Næste</string>
+    <string id="3261">Forrige</string>
+    <string id="3264">Favorit</string>
+</strings>

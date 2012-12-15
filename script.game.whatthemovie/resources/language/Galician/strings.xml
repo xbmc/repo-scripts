@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Galician language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/gl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Ó chou</string>
+    <string id="3002">Atrás</string>
+
+    <!-- Settings -->
+    <string id="3200">Xeral</string>
+    <string id="3203">Nome de usuario</string>
+    <string id="3204">Contrasinal</string>
+    <string id="3233">Ó chou</string>
+    <string id="3234">Seguinte</string>
+
+    <!-- Functions -->
+    <string id="3260">Seguinte</string>
+    <string id="3261">Anterior</string>
+</strings>

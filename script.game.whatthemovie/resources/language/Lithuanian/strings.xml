@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Lithuanian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/lt/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Buttons -->
+    <string id="3000">Atspėk(-ti)!</string>
+    <string id="3001">Atsitiktinai</string>
+    <string id="3002">Atgal</string>
+
+    <!-- Messages -->
+    <string id="3050">Nepavyko prisijungti prie</string>
+    <string id="3051">Slaptažodis neteisingas arba vartotojo vardas nežinomas: [B]%s[/ B][CR] Prašome pakeisti kredencialus ir/arba išjungti prisijungimą</string>
+    <string id="3052">Įveskite kadro ID</string>
+    <string id="3053">Įveskite filmo pavadinimą</string>
+    <string id="3054">Prisijungimas svetainėje nepasiekiamas</string>
+    <string id="3055">Nepavyko gauti kadro</string>
+    <string id="3066">Nepavyko patikrinti atspėjimo</string>
+
+    <!-- Labels -->
+    <string id="3100">Tikrinimas: [B]%s[/B]</string>
+    <string id="3101">Ištaisyti. Originalus pavadinimas: [B]%s[/B]</string>
+    <string id="3102">Klaida: [B]%s[/B]</string>
+    <string id="3103">Neprisijunges</string>
+    <string id="3104">Prisijungęs kaip naudotojas: [B]%s[/B]</string>
+    <string id="3105">Your score: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Išspręsta [B][COLOR=ff008B00]%s[/COLOR][/B] kartus, pirmiausia [B]%s[/B]</string>
+    <string id="3107">Dar neišspresta</string>
+    <string id="3108">Shot ID: [B]%s[/B]</string>
+    <string id="3109">Data: [B]%s[/B]</string>
+    <string id="3110">Įdėjo: [B]%s[/B]</string>
+    <string id="3111">Nėra išleistas</string>
+    <string id="3112">Panaikinta vartotojo</string>
+    <string id="3113">Naujų pareiškimų</string>
+    <string id="3114">Vaidybiniai filmai</string>
+    <string id="3115">Archyvas</string>
+    <string id="3116">[B]%s[/B] balsai</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
+    <string id="3118">Paslėptas</string>
+    <string id="3119">-</string>
+    <string id="3120">Atmesti kadrai</string>
+    <string id="3121">Jūs jau išsprendė šį kadrą</string>
+    <string id="3122">Teisingas sprendimas: [B]%s[/B]</string>
+    <string id="3123">Jums atsiuntė šį kadrą</string>
+    <string id="3124">Atsiprašome, bet jums neleidžiama peržiūrėti kadro [B]%s[/B] - nukreipti į [B]%s[/B]</string>
+    <string id="3125">Praktika</string>
+    <string id="3126">Nuostabus.Originalus pavadinimas: [B]%s[/B] +1 Taškas!</string>
+    <string id="3127">Ištrinti kadrai</string>
+    <string id="3128">Atsiprašome, nėra tokio kadrą [B]%s[/B] - nukreipti į [B]%s[/B]</string>
+
+    <!-- Settings -->
+    <string id="3200">Pagrindinis</string>
+    <string id="3201">Prisijungti</string>
+    <string id="3202">Naudoti whatthemovie.com paskyrą</string>
+    <string id="3203">Vartotojo vardas</string>
+    <string id="3204">Slaptažodis</string>
+    <string id="3205">Nustatymai "atsitiktinai" mygtukas (reikalinga registracija)</string>
+    <string id="3206">Lygio sunkumas</string>
+    <string id="3207">Lengvas</string>
+    <string id="3208">Lengvas + vidutinis</string>
+    <string id="3209">Pilnas</string>
+    <string id="3210">Įtraukti į archyvą</string>
+    <string id="3211">Įtraukti į išspręstus</string>
+    <string id="3212">Žiūrėti + pajusti</string>
+    <string id="3213">Žiūrėti</string>
+    <string id="3214">Rodyti "išspręndė pagal"</string>
+    <string id="3215">Rodyti "išspręndė"</string>
+    <string id="3216">Rodyti "kadro ID"</string>
+    <string id="3217">Rodyti "kadro data"</string>
+    <string id="3218">Elgesys</string>
+    <string id="3219">Auto perėjimas po spėjimo buvo teisus</string>
+    <string id="3220">... po x sekundžių</string>
+    <string id="3221">Rodyti "kadro vėliavėles"</string>
+    <string id="3222">Vėliavėlės</string>
+    <string id="3223">Vėliavėlė 1</string>
+    <string id="3224">Vėliavėlė 2</string>
+    <string id="3225">Vėliavėlė 3</string>
+    <string id="3226">Vėliavėlė 4</string>
+    <string id="3227">Vėliavėlė 5</string>
+    <string id="3228">Pasirinkite vėliavėlę katrą norite matyti</string>
+    <string id="3229">Naršymo funkcijos (reikalinga registracija)</string>
+    <string id="3230">Tik neišspręsti kadrai</string>
+    <string id="3231">Rodyti "kadro (-į)vertinimas"</string>
+    <string id="3232">Pereiti į</string>
+    <string id="3233">Atsitiktinai</string>
+    <string id="3234">Sekantis</string>
+    <string id="3235">Rodyti įrankių mygtukus</string>
+    <string id="3236">Rodyti navigacijos mygtukus</string>
+    <string id="3237">Raktai/Klavišai/Mygtukai</string>
+    <string id="3238">Pasirinkite veiksmų mygtukus</string>
+
+    <!-- Keys -->
+    <string id="3239">Jokio mygtuko</string>
+    <string id="3240">aukštyn į puslapį</string>
+    <string id="3241">žemyn į puslapį</string>
+    <string id="3242">rodoma informacija</string>
+    <string id="3243">pauzė</string>
+    <string id="3244">stabdyti</string>
+    <string id="3245">kitas elementas</string>
+    <string id="3246">ankstesnis elementas</string>
+    <string id="3247">greitai pasukti į priekį</string>
+    <string id="3248">atsukti atgal</string>
+    <string id="3249">žaisti</string>
+    <string id="3250">kontekstinis meniu</string>
+    <string id="3251">pagarsinti</string>
+    <string id="3252">patylditi</string>
+    <string id="3253">slinkti aukštyn</string>
+    <string id="3254">slinkti žemyn</string>
+    <string id="3255">namo</string>
+    <string id="3256">pabaiga</string>
+
+    <!-- Functions -->
+    <string id="3260">Sekantis</string>
+    <string id="3261">Ankstesnis</string>
+    <string id="3262">Peršokti</string>
+    <string id="3263">Žymelė</string>
+    <string id="3264">Mėgstamiausi</string>
+    <string id="3265">Išspręsti</string>
+</strings>

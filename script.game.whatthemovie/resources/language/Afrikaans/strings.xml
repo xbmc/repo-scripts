@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Afrikaans language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/af/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Lukraak</string>
+    <string id="3002">Trug</string>
+    <string id="3118">Weggesteek</string>
+
+    <!-- Settings -->
+    <string id="3200">Algemeen</string>
+    <string id="3203">Gebruikersnaam</string>
+    <string id="3204">Wagwoord</string>
+    <string id="3233">Lukraak</string>
+    <string id="3234">Volgende</string>
+
+    <!-- Functions -->
+    <string id="3260">Volgende</string>
+    <string id="3261">Vorige</string>
+</strings>

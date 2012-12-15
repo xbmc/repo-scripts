@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Estonian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/et/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Juhuslik</string>
+    <string id="3002">Tagasi</string>
+
+    <!-- Settings -->
+    <string id="3200">Üldine</string>
+    <string id="3203">Kasutajanimi</string>
+    <string id="3204">Salasõna</string>
+    <string id="3233">Juhuslik</string>
+    <string id="3234">Järgmine</string>
+
+    <!-- Functions -->
+    <string id="3260">Järgmine</string>
+    <string id="3261">Eelmine</string>
+</strings>
