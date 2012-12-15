@@ -510,6 +510,8 @@ class Main:
                                 item['filename'] = "season-specials-poster.jpg"
                             elif artwork['season'] == 'all':
                                 item['filename'] = "season-all-poster.jpg"
+                            elif artwork['season'] == 'n/a':
+                                break
                             else:
                                 item['filename'] = (filename % int(artwork['season']))
                         elif art_type in ['seasonbanner']:
@@ -517,6 +519,8 @@ class Main:
                                 item['filename'] = "season-specials-banner.jpg"
                             elif artwork['season'] == 'all':
                                 item['filename'] = "season-all-banner.jpg"
+                            elif artwork['season'] == 'n/a':
+                                break
                             else:
                                 item['filename'] = (filename % int(artwork['season']))
                         elif art_type in ['seasonlandscape']:

@@ -82,7 +82,7 @@ class fileops:
             filename = strPath[ 8 : ].split(" , ")[ 0 ]
         if filename.endswith("folder.jpg"):
             cachedthumb = xbmc.getCacheThumbName(filename)
-            thumbpath = os.path.join( THUMBS_CACHE_PATH, cachedthumb[0], cachedthumb )
+            thumbpath = os.path.join( THUMBS_CACHE_PATH, cachedthumb[0], cachedthumb ).replace( "/Video" , "")
         else:
             cachedthumb = xbmc.getCacheThumbName(filename)
             if ".jpg" in filename:
@@ -130,5 +130,5 @@ class fileops:
                 #targetpath = os.path.join(urllib.url2pathname(targetdir).replace('|',':'), filename)
                 targetpath = os.path.join(targetdir, filename)
                 self._copyfile(temppath, targetpath, media_name)
-                if self.settings.xbmc_caching_enabled or mode in ['gui','customgui']:
-                    self.erase_current_cache(targetpath)
+                #if self.settings.xbmc_caching_enabled or mode in ['gui','customgui']:
+                #    self.erase_current_cache(targetpath)
