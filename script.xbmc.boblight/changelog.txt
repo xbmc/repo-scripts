@@ -1,3 +1,6 @@
+2.0.2
+- [fix] activate static light when playing audio
+
 2.0.1
 - [fix] close download dialog once we finished/failed 
 - [fix] - catch exceptions during libboblight download and add a toast for suggesting a check of the fs permissions
