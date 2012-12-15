@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Italian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/it/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Casuale</string>
+    <string id="3002">Indietro</string>
+    <string id="3118">Nascosto</string>
+
+    <!-- Settings -->
+    <string id="3200">Generale</string>
+    <string id="3203">Nome utente</string>
+    <string id="3204">Password</string>
+    <string id="3233">Casuale</string>
+    <string id="3234">Successivo</string>
+
+    <!-- Functions -->
+    <string id="3260">Successivo</string>
+    <string id="3261">Precedente</string>
+    <string id="3264">Preferito</string>
+</strings>

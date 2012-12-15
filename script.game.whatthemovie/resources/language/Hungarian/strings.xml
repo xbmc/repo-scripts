@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hungarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/hu/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Véletlenszerű</string>
+    <string id="3002">Vissza</string>
+    <string id="3118">Rejtett</string>
+
+    <!-- Settings -->
+    <string id="3200">Általános</string>
+    <string id="3203">Felhasználónév</string>
+    <string id="3204">Jelszó</string>
+    <string id="3233">Véletlenszerű</string>
+    <string id="3234">Következő</string>
+
+    <!-- Functions -->
+    <string id="3260">Következő</string>
+    <string id="3261">Előző</string>
+    <string id="3264">Kedvenc</string>
+</strings>

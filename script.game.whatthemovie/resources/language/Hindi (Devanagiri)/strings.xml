@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hindi (Devanagiri) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/hi/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">रैंडम</string>
+
+    <!-- Settings -->
+    <string id="3200">सामान्य</string>
+    <string id="3203">उपयोगकर्ता नाम</string>
+    <string id="3233">रैंडम</string>
+    <string id="3234">अगला</string>
+
+    <!-- Functions -->
+    <string id="3260">अगला</string>
+    <string id="3261">पूर्ववर्ती</string>
+</strings>

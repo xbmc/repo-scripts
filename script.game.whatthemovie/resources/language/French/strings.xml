@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- French language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fr/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Aléatoire</string>
+    <string id="3002">Retour</string>
+    <string id="3118">Caché</string>
+
+    <!-- Settings -->
+    <string id="3200">Général</string>
+    <string id="3203">Nom d'utilisateur</string>
+    <string id="3204">Mot de passe</string>
+    <string id="3233">Aléatoire</string>
+    <string id="3234">Suivant</string>
+
+    <!-- Functions -->
+    <string id="3260">Suivant</string>
+    <string id="3261">Précédent</string>
+    <string id="3264">Favori</string>
+</strings>

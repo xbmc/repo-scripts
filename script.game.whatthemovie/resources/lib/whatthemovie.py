@@ -405,7 +405,10 @@ class WhatTheMovie(object):
                 r_img = re.compile('background-image:url\("(.+?)"\)')
                 m_img = re.search(r_img, section.string)
                 if m_img:
-                    image_url = m_img.group(1)
+                    if not image_url.startswith('http'):
+                        image_url = WhatTheMovie.MAIN_URL + m_img.group(1)
+                    else:
+                        image_url = m_img.group(1)
             subst_image_url = 'http://static.whatthemovie.com/images/subst'
             if self.image_download_path:
                 if not image_url.startswith(subst_image_url):

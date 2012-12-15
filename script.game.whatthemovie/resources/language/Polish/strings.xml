@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Polish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Buttons -->
+    <string id="3000">Zgadnij!</string>
+    <string id="3001">Losowo</string>
+    <string id="3002">Wstecz</string>
+
+    <!-- Messages -->
+    <string id="3050">Nie można się zalogować</string>
+    <string id="3051">Hasło lub login nieprawidłowy: [B]%s[/B][CR]Proszę popraw dane lub wyłącz logowanie</string>
+    <string id="3052">Wpisz ID strzału</string>
+    <string id="3053">Wpisz tytuł filmu</string>
+    <string id="3054">Zalogowanie do strony nieosiągalne</string>
+    <string id="3055">Nie można pobrać strzału</string>
+    <string id="3066">Nie można sprawdzić próby odgadnięcia</string>
+
+    <!-- Labels -->
+    <string id="3100">Sprawdzam: [B]%s[/B]</string>
+    <string id="3101">Poprawnie. Oryginalny tytuł to: [B]%s[/B]</string>
+    <string id="3102">Źle: [B]%s[/B]</string>
+    <string id="3103">Nie zalogowany</string>
+    <string id="3104">Zalogowano jako użytkownik: [B]%s[/B]</string>
+    <string id="3105">Twoje punty:  [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Rozwiązane [B][COLOR=ff008B00]%s[/COLOR][/B] razy, najpierw przez  [B]%s[/B]</string>
+    <string id="3107">Nie rozwiązany</string>
+    <string id="3108">ID strzału: [B]%s[/B]</string>
+    <string id="3109">Data: [B]%s[/B]</string>
+    <string id="3110">Przesłąne przez: [B]%s[/B]</string>
+    <string id="3111">Nie wydany</string>
+    <string id="3112">Użytkownik usunięty</string>
+    <string id="3113">Nowe zgłoszenia</string>
+    <string id="3114">Filmy fabularne</string>
+    <string id="3115">Archiwum</string>
+    <string id="3116">[B]%s[/B] głosów</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
+    <string id="3118">Ukryty</string>
+    <string id="3119">-</string>
+    <string id="3120">Strzały odrzucone</string>
+    <string id="3121">Już rozwiązałeś ten strzał</string>
+    <string id="3122">Właściwym rozwiązaniem było: [B]%s[/B]</string>
+    <string id="3123">Zamieściłeś ten strzał</string>
+    <string id="3124">Przepraszamy, ale nie masz dostępu do wyświetlenia tego strzału [B]%s[/B] - przekierowuje na [B]%s[/B]</string>
+    <string id="3125">Skarbiec</string>
+    <string id="3126">Niesamowite. Oryginalny tytuł to:  [B]%s[/B] +1 Punkt!</string>
+    <string id="3127">Strzały usunięte</string>
+    <string id="3128">Przepraszam, brak takiego strzału [B]%s[/B] - przekierowuje na [B]%s[/B]</string>
+
+    <!-- Settings -->
+    <string id="3200">Ogólne</string>
+    <string id="3201">Login</string>
+    <string id="3202">Użyj konta whatthemovie.com</string>
+    <string id="3203">Nazwa użytkownika</string>
+    <string id="3204">Hasło</string>
+    <string id="3205">Ustawienia przycisku "losuj" (wymagany login)</string>
+    <string id="3206">Stopień trudności</string>
+    <string id="3207">Łatwy</string>
+    <string id="3208">Łatwy+średni</string>
+    <string id="3209">Wszystkie</string>
+    <string id="3210">Uwzględniaj archiwum</string>
+    <string id="3211">Uwzględniaj rozwiązane</string>
+    <string id="3212">Patrz+czuj</string>
+    <string id="3213">Patrz</string>
+    <string id="3214">Pokaż "Przełane przez"</string>
+    <string id="3215">Pokaż "Rozwiązane"</string>
+    <string id="3216">Pokaż "ID strzału"</string>
+    <string id="3217">Pokaż "Date strzału"</string>
+    <string id="3218">Zachowanie</string>
+    <string id="3219">Auto przeskok po poprawnej odpowiedzi</string>
+    <string id="3220">... po x sekundach</string>
+    <string id="3221">Pokaż "Flagi strzału"</string>
+    <string id="3222">Flagi</string>
+    <string id="3223">Flaga 1</string>
+    <string id="3224">Flaga 2</string>
+    <string id="3225">Flaga 3</string>
+    <string id="3226">Flaga 4</string>
+    <string id="3227">Flaga 5</string>
+    <string id="3228">Wybierz flagę którą chcesz zobaczyć</string>
+    <string id="3229">Opcje nawigacji (wymagany login)</string>
+    <string id="3230">Tylko nie rozwiązane strzały</string>
+    <string id="3231">Pokaż "Ocena strzału"</string>
+    <string id="3232">Skocz do</string>
+    <string id="3233">Losowo</string>
+    <string id="3234">Następny</string>
+    <string id="3235">Pokaż przycisk narzędzi</string>
+    <string id="3236">Pokaż przycisk nawigacji</string>
+    <string id="3237">Klucze</string>
+    <string id="3238">Wybierz przycisk akcji</string>
+
+    <!-- Keys -->
+    <string id="3239">Brak klucza</string>
+    <string id="3240">strona w górę</string>
+    <string id="3241">strona w dół</string>
+    <string id="3242">pokaż informacje</string>
+    <string id="3243">pauza</string>
+    <string id="3244">stop</string>
+    <string id="3245">kolejny punkt</string>
+    <string id="3246">poprzedni punkt</string>
+    <string id="3247">przewiń</string>
+    <string id="3248">cofnij</string>
+    <string id="3249">odtwarzaj</string>
+    <string id="3250">menu kontekstowe</string>
+    <string id="3251">zgłośnij</string>
+    <string id="3252">ścisz</string>
+    <string id="3253">przwiń w górę</string>
+    <string id="3254">przewiń w dół</string>
+    <string id="3255">główny</string>
+    <string id="3256">zakończ</string>
+
+    <!-- Functions -->
+    <string id="3260">Następny</string>
+    <string id="3261">Poprzedni</string>
+    <string id="3262">Skocz</string>
+    <string id="3263">Zakładka</string>
+    <string id="3264">Ulubione</string>
+    <string id="3265">Rozwiązywać</string>
+</strings>
