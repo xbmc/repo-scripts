@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.randomitems" name="Random Items script" version="9.9.9" provider-name="Hitcher, ronie, phil65, Martijn">
+	<requires>
+		<import addon="xbmc.python" version="2.0"/>
+	</requires>
+	<extension point="xbmc.python.library" library="RandomItems.py" />
+	<extension point="xbmc.addon.metadata">
+		<language/>
+		<summary lang="en">Random Items script</summary>
+		<description lang="en">Script to get Random Videos and Music from the database.</description>
+		<platform>all</platform>
+		<broken>deprecated</broken>
+	</extension>
+</addon>
