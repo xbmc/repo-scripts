@@ -1,0 +1,80 @@
+v9.9.9
+- removed all code. use skin widgets script instead
+
+v0.1.17
+- fix error on empty JSON-RPC result
+
+v0.1.15
+- fixed up the case for TV episodes where you have more than 1 file for a given season/episode of a TV show (thx jparyani)
+
+v0.1.14
+- fixed script error on empty library
+
+v0.1.13
+- fixed use title instead of label
+
+v0.1.12
+- use title instead of label
+
+v0.1.11
+- fixed episode and season thumb not set in some occasions
+- use json module on systems with python 2.7 or up
+
+v0.1.10
+- fetch all episodes in a single query
+- only query for season thumbs when strictly needed
+
+v0.1.9
+- improved updating performance
+
+v0.1.8
+- script will now update only if necessary
+
+v0.1.7
+- ignore possible unicode errors
+- stop previous script instance if a new one is created
+
+v0.1.6
+- daemonize script and update properties after playback ended/stopped notification
+ 
+v0.1.5
+- fix previous fix
+
+v0.1.4
+- fixed: script didn't add episode if xbmc didn't return a playdate for the previous episode
+
+v0.1.3
+- fix crash when user has no music database
+
+v0.1.2
+- added path property for albums
+
+v0.1.1
+- added most played albums
+
+v0.1.0
+- initial release
+
+v0.0.5 (beta 5)
+- allow script to be called with options 
+
+v0.0.4 (beta 4)
+- add rating property for movies and episodes
+
+v0.0.3 (beta 3)
+- add support for movies
+- re-wrote code
+- renamed window properties
+- clean quotes and returns
+- add studio property for episodes
+
+v0.0.2 (beta 2)
+- changed: use 2 digit season and episode numbers
+- added: EpisodeNo property (sxxexx)
+- fixed: partially watched episode didn't show up if it was the first episode of season 1
+- added: IsResumable property for partially watched indication
+- added: tv show thumbnail
+- added: season thumbnail
+
+v0.0.1 (beta 1)
+- initial beta
