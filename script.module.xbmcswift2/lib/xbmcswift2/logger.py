@@ -67,7 +67,7 @@ class XBMCFilter(object):
             from xbmcswift2 import xbmc
             xbmc_level = XBMCFilter.xbmc_levels.get(
                 XBMCFilter.python_to_xbmc.get(record.levelname))
-            xbmc.log('%s%s' % (self.prefix, record.msg), xbmc_level)
+            xbmc.log('%s%s' % (self.prefix, record.getMessage()), xbmc_level)
             return False
 
 

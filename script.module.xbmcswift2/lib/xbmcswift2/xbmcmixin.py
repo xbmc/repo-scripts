@@ -372,12 +372,5 @@ class XBMCMixin(object):
         # Finalize the directory items
         self.end_of_directory(succeeded, update_listing, cache_to_disc)
 
-        # Close any open storages which will persist them to disk
-        if hasattr(self, '_unsynced_storages'):
-            for storage in self._unsynced_storages.values():
-                log.debug('Saving a %s storage to disk at "%s"',
-                          storage.file_format, storage.filename)
-                storage.close()
-
         # Return the cached list of all the list items that were added
         return self.added_items
