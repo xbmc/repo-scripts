@@ -1,2 +1,5 @@
+[B]2012.11.09[/B]
+- compatibility updates
+
 [B]2012.05.04[/B]
 - initial Release for XBMC
