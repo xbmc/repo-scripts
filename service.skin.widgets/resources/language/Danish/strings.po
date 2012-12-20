@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: Skin Widgets
 # Addon id: service.skin.widgets
-# Addon version: 0.0.17
+# Addon version: 0.0.18
 # Addon Provider: Martijn
 msgid ""
 msgstr ""
@@ -17,6 +17,42 @@ msgstr ""
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32001"
+msgid "Recommended"
+msgstr "Anbefalede"
+
 msgctxt "#32002"
 msgid "Random Items"
-msgstr "Tilfældigt udvalg"
+msgstr "Tilfældige Emner"
+
+msgctxt "#32003"
+msgid "Only unplayed"
+msgstr "Kun uafspillede"
+
+msgctxt "#32004"
+msgid "Randomize time (minutes)"
+msgstr "Tilfældig tid (minutter)"
+
+msgctxt "#32005"
+msgid "Use season folders"
+msgstr "Anvend sæsonmapper"
+
+msgctxt "#32006"
+msgid "Use timer"
+msgstr "Anvend timer"
+
+msgctxt "#32007"
+msgid "After database update"
+msgstr "Efter databaseopdatering"
+
+msgctxt "#32008"
+msgid "Update method"
+msgstr "Opdateringsmetode"
+
+msgctxt "#32009"
+msgid "Recent Items"
+msgstr "Nylige Emner"
+
+msgctxt "#32010"
+msgid "Update each time you enter the home screen"
+msgstr "Opdater hver gang hjemmeskærmen besøges"

@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: Skin Widgets
 # Addon id: service.skin.widgets
-# Addon version: 0.0.17
+# Addon version: 0.0.18
 # Addon Provider: Martijn
 msgid ""
 msgstr ""
