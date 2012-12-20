@@ -300,6 +300,7 @@ class Plugin(XBMCMixin):
             # Allow the returning of bare dictionaries so we can cache view
             if not self._end_of_directory and self.handle == 0:
                 listitems = self.finish(listitems)
+
             return listitems
         raise NotFoundException, 'No matching view found for %s' % path
 
@@ -315,4 +316,13 @@ class Plugin(XBMCMixin):
         '''The main entry point for a plugin.'''
         self._request = self._parse_request()
         log.debug('Handling incoming request for %s', self.request.path)
-        return self._dispatch(self.request.path)
+        items = self._dispatch(self.request.path)
+
+        # Close any open storages which will persist them to disk
+        if hasattr(self, '_unsynced_storages'):
+            for storage in self._unsynced_storages.values():
+                log.debug('Saving a %s storage to disk at "%s"',
+                          storage.file_format, storage.filename)
+                storage.close()
+
+        return items
