@@ -1,3 +1,6 @@
+v0.0.19
+- Properly listen to shutdown command in each section since it can take quite some time for them to run
+
 v0.0.18
 - Clean classes on exit
 - fix devide by zero on percentage played
