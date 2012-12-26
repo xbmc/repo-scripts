@@ -1,0 +1,97 @@
+Paramètres (séparés par des virgules , ):
+
+type = Movie/Episode/Music       | Requêtage sur les films (Movie), les épisodes (Episode) ou les albums (Music)
+                                 | (/!\ Attention à la casse des options)
+limit = #                        | Nombre de resultat à retourner (défaut=10)
+method = Last/Random             | Last pour avoir les derniers ajouts et Random pour avoir des résultats aléatoirement
+playlist = PathAndNameOfPlaylist | Nom complet de la smartplaylist sous la forme special://masterprofile/playlists/video/children.xsp
+                                 | ou vide pour requêter sur la base de données globale
+                                 | Si vous définisez ce paramètre, il n'est pas nécessaire de renseigner type= car le type sera lu
+                                 | depuis la playlist
+menu =                           | Nom du menu standard ou personnalise qui affiche le widget
+unwatched = True/False           | unwatched=True pour filtrer sur les items non vus
+resume = True/False              | resume=True pour filtrer sur les items en cours
+propertie = NomDeLaPropriete     | Vous pouvez forcer le nom des proprietes, qui par defaut est Playlist<method><type><menu>, en 
+                                 | utilisant ce parametre. Exemple : propertie=CustomMenu1Widget1
+
+                                 
+/!\ AVERTISSEMENT /!\
+resume=True peut ralentir le script lorsqu'il travaille sur une playlist
+
+Par exemple:
+ 
+XBMC.RunScript(script.RandomAndLastItems,type=Movie,limit=10,method=Random,playlist=special://masterprofile/playlists/video/enfants.xsp,menu=Menu1,unwatched=False,resume=False)
+
+va retourner 10 films aléatoirement de la playlist Enfants
+
+Properties retournées à la fenêtre Home (id 10000) :
+
+* type=Movie
+
+Playlist<method>Movie<menu>.Type = Movie
+Playlist<method>Movie<menu>.Count = Nombre de films dans la bibliothèque ou la playlist
+Playlist<method>Movie<menu>.Unwatched = Nombre de films non vus dans la bibliothèque ou la playlist
+Playlist<method>Movie<menu>.Watched = Nombre de films vus dans la bibliothèque ou la playlist
+Playlist<method>Movie<menu>.<# of movie>.Rating = Note du film N°#
+Playlist<method>Movie<menu>.<# of movie>.Plot = Résumé du film N°#
+Playlist<method>Movie<menu>.<# of movie>.RunningTime = Durée du film N°#
+Playlist<method>Movie<menu>.<# of movie>.Path = Chemin complet du film N°# (ex : C:\Films\Film1\Film1.mkv)
+Playlist<method>Movie<menu>.<# of movie>.Rootpath = Chemin de la racine du film N°# (ex : C:\Films\Film1\)
+Playlist<method>Movie<menu>.<# of movie>.Fanart = Fanart du film N°#
+Playlist<method>Movie<menu>.<# of movie>.Thumb = Jaquette du film N°#
+Playlist<method>Movie<menu>.<# of movie>.Title = Titre du film N°#
+Playlist<method>Movie<menu>.<# of movie>.Year = Année du film N°#
+Playlist<method>Movie<menu>.<# of movie>.Trailer = Bande annonce du film N°#
+Playlist<method>Movie<menu>.<# of movie>.Resolution = Résolution du film N°# (Les valeurs sont blanc, 480, 540, 576, 720, 1080)
+
+* type=Episode
+
+Playlist<method>Episode<menu>.Type = Episode
+Playlist<method>Episode<menu>.Count = Nombre d'épisodes dans la bibliothèque ou la playlist
+Playlist<method>Episode<menu>.Unwatched = Nombre d'épisodes non vus dans la bibliothèque ou la playlist
+Playlist<method>Episode<menu>.Watched = Nombre d'épisodes vus dans la bibliothèque ou la playlist
+Playlist<method>Episode<menu>.TvShows = Nombre de séries dans la bibliothèque ou la playlist
+Playlist<method>Episode<menu>.<# of episode>.Rating = Note de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.Plot = Résumé de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.RunningTime = Durée de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.Path = Chemin complet de l'épisode N°# (ex : C:\Series\Serie1\Saison1\Episode1.avi)
+Playlist<method>Episode<menu>.<# of episode>.Rootpath = Chemin complet de la série de l'épisode N°# (ex : C:\Series\Serie1\)
+Playlist<method>Episode<menu>.<# of episode>.Fanart = Fanart de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.Thumb = Vignette de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.ShowTitle = Nom de la série de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.EpisodeTitle = Titre de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.EpisodeNo = Numéro de l'épisode N°# (sous la forme sXXeXX)
+Playlist<method>Episode<menu>.<# of episode>.EpisodeSeason = Saison de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.EpisodeNumber = Numéro de l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.TVShowFanart = Fanart de la série pour l'épisode N°#
+Playlist<method>Episode<menu>.<# of episode>.TVShowThumb = Vignette de la série pour l'épisode N°#
+
+* type=Music
+
+Playlist<method>Music<menu>.Type = Music
+Playlist<method>Music<menu>.Artists = Nombre d'artistes dans la bibliothèque ou la playlist
+Playlist<method>Music<menu>.Albums = Nombre d'albums dans la bibliothèque ou la playlist
+Playlist<method>Music<menu>.Songs = Nombre de chansons dans la bibliothèque ou la playlist
+Playlist<method>Music<menu>.<# of album>.Album = Titre de l'album N°#
+Playlist<method>Music<menu>.<# of album>.Artist = Nom de l'artiste de l'album N°#
+Playlist<method>Music<menu>.<# of album>.Year = Année de l'album N°#
+Playlist<method>Music<menu>.<# of album>.Fanart = Fanart de l'album N°#
+Playlist<method>Music<menu>.<# of album>.Thumb = Vignette de l'album N°#
+Playlist<method>Music<menu>.<# of album>.ArtistPath = Chemin complet de l'artiste de l'album N°# (ex : C:\Musique\Artiste1)
+Playlist<method>Music<menu>.<# of album>.AlbumPath = Chemin complet de l'album N°# (ex : C:\Musique\Artiste1\Album1)
+Playlist<method>Music<menu>.<# of album>.AlbumDesc = Description de l'album N°#
+Playlist<method>Music<menu>.<# of album>.PlayPath = Chemin de l'album N°# pour la lecture (musicdb://3/1/)
+
+Avec :
+XBMC.RunScript(script.RandomAndLastItems,type=Movie,limit=10,method=Random,playlist=special://masterprofile/playlists/video/children.xsp,menu=Menu1,unwatched=False,resume=False)
+Les properties seront :
+
+PlaylistRandomMovieMenu1.Count
+PlaylistRandomMovieMenu1.1.Title
+...
+...
+PlaylistRandomMovieMenu1.10.Title
+
+Pour plus d'information et d'aide, allez sur le forum :
+
+http://passion-xbmc.org/releases-scripts-et-plugins/script-pour-afficher-les-films-(aleatoire-ou-derniers)-d'une-playlist/

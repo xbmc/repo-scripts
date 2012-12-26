@@ -1,0 +1,87 @@
+v1.2.5
+- [Add] New properties TVShowThumb and TVShowFanart to get TV Show thumbnail and fanart of the episode
+
+v1.2.4
+- [Fix] Albums properties were not cleared properly
+- [Add] New property AlbumDesc
+
+v1.2.3
+- [Fix] Episode title is now based on title and not on label because of some JSON changes :
+http://forum.xbmc.org/showthread.php?tid=113702&pid=1047340&highlight=episodetitle#pid1049580
+
+v1.2.2
+- [Fix] Statistic for songs was wrong on library or albums playlist
+
+v1.2.1
+- [Add] The script now manage Music (playlists or library).
+        See README.txt or LISEZMOI.txt for details.
+
+v1.2.0
+- [Add] Property .Type is returned. Value is Movie or Episode.
+        Helpfull if you use script with playlist and did not specifie type= parameter so script will get type from playlist.
+
+v1.1.9
+- [Fix] If video has no stream details, resolution is set to blank
+
+v1.1.8
+- [Add] New property Resolution for Movies. Values are blank, 480, 540, 576, 720, 1080
+
+v1.1.7
+- [Fix] When type= was not set with playlist, properties name was unwellformed
+
+v1.1.6
+- [Add] If playlist= is set and type= is not seet then playlist type is read from playlist file
+
+v1.1.5
+- [Add] Properties are cleared only if needed to avoid blinking effect in widgets
+
+v1.1.4
+- [Fix] Properties were not cleaned between two call
+
+v1.1.3
+- [Fix] resume= and watched= were inefficient with playlists
+- [Add] Propertie TvShows set to number of TV Shows in library or playlist
+
+v1.1.2
+- [Fix] Season number printed in 2 digit only if needed
+- [Fix] Properties Count, Watched and Unwatched = 0 if playlist or library is empty
+
+v1.1.1
+- [Add] Script can manage tv shows and episodes playlist
+- [Add] Propertie Rootpath to get the directory of the movie or the tvshow (to display extrafanarts and so on)
+
+v1.1.0
+- [Fix] resume= is unable but can slow down the script (see README.txt or LISEZMOI.txt)
+- [Add] You can now get last added or random episodes from series (work only on Library not on Playlist)
+
+v1.0.6
+- [Fix] Handle exception when playlist is empty or fetching information failed
+- resume= parameter is disable because of a bug in method GetDirectory of JSONRPC API
+
+v1.0.5
+- [Add] Playlist<method>Movie<menu>.Unwatched return the number of unwatched movies in the library/playlist
+- [Add] Playlist<method>Movie<menu>.Watched return the number of watched movies in the library/playlist
+
+v1.0.4
+- [Fix] Scanning movies of movie set always scan same set (constant instead af variable in the code).
+- [Add] Playlist<method>Movie<menu>.Count now return the number of movies in the library/playlist
+
+v1.0.3
+- [Fix] Trailer is now provide properly
+
+v1.0.2
+- [Fix] Last added movies really return last added movies. Movies in set are handle properly.
+- [Added] New options
+            UNWATCHED
+              True : Display only unwatched movies
+              False : Display watched and unwatched movies
+
+            RESUME
+              True : Display only movie partially watched movie
+              False : Display all movies
+
+v1.0.1
+- Use Files.GetDirectory instead of parsing XML playlist to retrieve movies
+
+v1.0.0
+- from v3.0.7 of RandomItems script, add playlist filters
