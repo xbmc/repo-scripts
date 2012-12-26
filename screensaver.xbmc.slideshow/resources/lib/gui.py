@@ -1,14 +1,21 @@
-import os, sys, random
+import os, sys, random, urllib
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 if sys.version_info < (2, 7):
     import simplejson
 else:
     import json as simplejson
 
-__addon__ = sys.modules[ "__main__" ].__addon__
-__cwd__   = sys.modules[ "__main__" ].__cwd__
+__addon__   = sys.modules[ "__main__" ].__addon__
+__addonid__ = sys.modules[ "__main__" ].__addonid__
+__cwd__     = sys.modules[ "__main__" ].__cwd__
 
 IMAGE_TYPES = ('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.ico', '.tif', '.tiff', '.tga', '.pcx')
+
+def log(txt):
+    if isinstance (txt,str):
+        txt = txt.decode("utf-8")
+    message = u'%s: %s' % (__addonid__, txt)
+    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 class Screensaver(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
@@ -35,7 +42,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
     def items(self):
 	# image folder (fallback to video fanart in case ..)
         if self.slideshow_type == "2":
-            if not self.slideshow_path or not xbmcvfs.exists(self.slideshow_path):
+            if not self.slideshow_path:
                 self.slideshow_type = "0"
 	# video fanart
         if self.slideshow_type == "0":
@@ -97,12 +104,21 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
     def walk(self, path):
         images = []
-        dirs,files = xbmcvfs.listdir(path)
-        for item in files:
-            if os.path.splitext(item)[1].lower() in IMAGE_TYPES:
-                images.append(os.path.join(path,item))
-        for item in dirs:
-            images += self.walk(os.path.join(path,item))
+        folders = []
+        if path.startswith('multipath://'):
+            paths = path[12:-1].split('/')
+            for item in paths:
+                folders.append(urllib.unquote_plus(item))
+        else:
+            folders.append(path)
+        for folder in folders:
+            if xbmcvfs.exists(xbmc.translatePath(folder)):
+                dirs,files = xbmcvfs.listdir(folder)
+                for item in files:
+                    if os.path.splitext(item)[1].lower() in IMAGE_TYPES:
+                        images.append(os.path.join(folder,item))
+                for item in dirs:
+                    images += self.walk(os.path.join(folder,item))
         return images
 
     def anim(self, winid, next_prop, prev_prop, next_img, prev_img, showtime):
