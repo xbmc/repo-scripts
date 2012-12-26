@@ -1,3 +1,6 @@
+v1.0.1
+- python version bump
+
 v1.0.0
 - bump version for frodo
 
