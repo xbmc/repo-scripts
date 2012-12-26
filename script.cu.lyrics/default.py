@@ -7,12 +7,12 @@ __addon__      = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
-__cwd__        = __addon__.getAddonInfo('path')
+__cwd__        = __addon__.getAddonInfo('path').decode("utf-8")
 __version__    = __addon__.getAddonInfo('version')
 __language__   = __addon__.getLocalizedString
 
 __profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') )
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
+__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
 
 sys.path.append (__resource__)
 

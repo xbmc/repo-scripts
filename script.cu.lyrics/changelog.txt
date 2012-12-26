@@ -1,3 +1,6 @@
+3.0.0
+- bump version for frodo
+
 2.1.2
 - fix some scraper issues
 
