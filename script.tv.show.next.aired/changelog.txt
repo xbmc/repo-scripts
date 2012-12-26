@@ -1,3 +1,6 @@
+v5.04
+- silently try to delete the old databases
+
 v5.03
 - delete old databases and start fresh
 - change thumb to poster in skin

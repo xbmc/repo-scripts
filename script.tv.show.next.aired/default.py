@@ -19,10 +19,10 @@ __author__    = __addon__.getAddonInfo('author')
 __version__   = __addon__.getAddonInfo('version')
 __language__  = __addon__.getLocalizedString
 __useragent__ = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/2008070208 Firefox/3.6"
+__datapath__ = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ )
+__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
 
-DATA_PATH = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ )
-RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) )
-sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
+sys.path.append(__resource__)
 
 NEXTAIRED_DB = "nextaired.db"
 CANCELLED_DB = "cancelled.db"
@@ -58,8 +58,8 @@ if DATE_FORMAT[0] == 'd':
 elif DATE_FORMAT[0] == 'm':
     DATE_FORMAT = '%m-%d-%y'
 
-if not xbmcvfs.exists(DATA_PATH):
-    xbmcvfs.mkdir(DATA_PATH)
+if not xbmcvfs.exists(__datapath__):
+    xbmcvfs.mkdir(__datapath__)
 
 def log(txt):
     if isinstance (txt,str):
@@ -110,11 +110,10 @@ class NextAired:
     def __init__(self):
         footprints()
         # delete olders versions of our db's, we are not backward compatible
-        try:
-            xbmcvfs.delete(os.path.join( DATA_PATH , 'next_aired.db' ))
-            xbmcvfs.delete(os.path.join( DATA_PATH , 'canceled.db' ))
-        except:
-            pass
+        if xbmcvfs.exists(os.path.join( __datapath__ , 'next_aired.db' )):
+            xbmcvfs.delete(os.path.join( __datapath__ , 'next_aired.db' ))
+        if xbmcvfs.exists(os.path.join( __datapath__ , 'canceled.db' )):
+            xbmcvfs.delete(os.path.join( __datapath__ , 'canceled.db' ))
         self.WINDOW = xbmcgui.Window( 10000 )
         self.date = date.today()
         self.datestr = str(self.date)
@@ -164,8 +163,8 @@ class NextAired:
 
     def update_data(self):
         self.nextlist = []
-        dbfile = os.path.join( DATA_PATH , NEXTAIRED_DB )
-        cancelfile = os.path.join( DATA_PATH , CANCELLED_DB )
+        dbfile = os.path.join( __datapath__ , NEXTAIRED_DB )
+        cancelfile = os.path.join( __datapath__ , CANCELLED_DB )
         if self.RESET:
             if xbmcvfs.exists(dbfile):
                 xbmcvfs.delete(dbfile)
@@ -369,7 +368,7 @@ class NextAired:
         log( "### today show: %s - %s" % ( self.todayshow , str(self.todaylist).strip("[]") ) )
 
     def get_list(self , listname ):
-        path = os.path.join( DATA_PATH , listname )
+        path = os.path.join( __datapath__ , listname )
         if xbmcvfs.exists(path):
             log( "### Load list: %s" % path )
             return self.load_file(path)
@@ -386,13 +385,13 @@ class NextAired:
             return []
 
     def save_file( self , txt , filename):
-        path = os.path.join( DATA_PATH , filename )
+        path = os.path.join( __datapath__ , filename )
         try:
             if txt:
                 file( path , "w" ).write( repr( txt ) )
         except:
             print_exc()
-            log( "### ERROR could not save file %s" % DATA_PATH )
+            log( "### ERROR could not save file %s" % __datapath__ )
 
     def push_data(self):
         self.WINDOW.setProperty("NextAired.Total" , str(len(self.nextlist)))
