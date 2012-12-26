@@ -20,5 +20,6 @@ How to use this addon in your skin:
    favourite.%d.path
    favourite.%d.name
    favourite.%d.thumb
+   favourite.count
 
    Additionally you can pass 'playlists=play' to make sure xbmc will play the playlist instead of opening it.

@@ -1,3 +1,9 @@
+v4.0.7
+- add favourite.count window property
+
+v4.0.6
+- fix crash when favourites file was not found
+
 v4.0.5
 - fix icon not showing up
 - fix folders added as a favourite didn't work

@@ -1,7 +1,7 @@
 # Credits to CF2009 for the original favourites script.
 
 import os, sys
-import xbmc, xbmcgui, xbmcaddon
+import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 from xml.dom.minidom import parse
 
 __addon__        = xbmcaddon.Addon()
@@ -9,9 +9,6 @@ __addonid__      = __addon__.getAddonInfo('id')
 __addonversion__ = __addon__.getAddonInfo('version')
 __cwd__          = __addon__.getAddonInfo('path').decode("utf-8")
 __language__     = __addon__.getLocalizedString
-
-RESOURCES_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources' ) )
-sys.path.append( os.path.join( RESOURCES_PATH, "lib" ) )
 
 def log(txt):
     if isinstance (txt,str):
@@ -22,12 +19,13 @@ def log(txt):
 class Main:
     def __init__( self ):
         self._parse_argv()
-        self._read_file()
+        found, favourites = self._read_file()
         if self.PROPERTY == '':
-            self._set_properties(self.favourites)
+            self._set_properties(favourites)
         else:
-            MyDialog(self.favourites, self.PROPERTY, self.CHANGETITLE)
-        self.doc.unlink()
+            MyDialog(favourites, self.PROPERTY, self.CHANGETITLE)
+        if found:
+            self.doc.unlink()
 
     def _parse_argv( self ):
         try:
@@ -43,13 +41,18 @@ class Main:
         # Set path
         self.fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
         # Check to see if file exists
-        if (os.path.isfile( self.fav_file ) == False):
-            self.fav_file = '<favourites><favourite name="' + __language__(452) + ' favourites.xml">-</favourite></favourites>'
-        self.doc = parse( self.fav_file )
-        self.favourites = self.doc.documentElement.getElementsByTagName ( 'favourite' )
+        if xbmcvfs.exists( self.fav_file ):
+            found = True
+            self.doc = parse( self.fav_file )
+            favourites = self.doc.documentElement.getElementsByTagName ( 'favourite' )
+        else:
+            found = False
+            favourites = []
+        return found, favourites
 
     def _set_properties( self, listing ):
         self.WINDOW = xbmcgui.Window( 10000 )
+        self.WINDOW.setProperty( "favourite.count", str(len(listing)) )
         for count, favourite in enumerate(listing):
             name = favourite.attributes[ 'name' ].nodeValue
             path = favourite.childNodes [ 0 ].nodeValue
