@@ -1,5 +1,9 @@
+v1.1.1
+- display runtime in minutes
+
 v1.1.0
 - added support for tv show banner and poster
+
 v1.0.6
 - fix runtime
 

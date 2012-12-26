@@ -6,9 +6,9 @@ __addonid__      = __addon__.getAddonInfo('id')
 __addonversion__ = __addon__.getAddonInfo('version')
 __language__     = __addon__.getLocalizedString
 __cwd__          = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
 
-BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
-sys.path.append (BASE_RESOURCE_PATH)
+sys.path.append(__resource__)
 
 
 if ( __name__ == "__main__" ):

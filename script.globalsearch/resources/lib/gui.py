@@ -141,7 +141,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 outline = item['plotoutline']
                 rating = str(round(float(item['rating']),1))
                 starrating = 'rating%.1d.png' % round(float(rating)/2)
-                runtime = str(datetime.timedelta(seconds=int(item['runtime'])))
+                runtime = str(item['runtime'] / 60)
                 studio = " / ".join(item['studio'])
                 tagline = item['tagline']
                 thumb = item['thumbnail']
@@ -328,7 +328,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 episodenumber = "%.2d" % float(item['episode'])
                 path = item['file']
                 plot = item['plot']
-                runtime = str(datetime.timedelta(seconds=int(item['runtime'])))
+                runtime = str(item['runtime'] / 60)
                 premiered = item['firstaired']
                 rating = str(round(float(item['rating']),1))
                 starrating = 'rating%.1d.png' % round(float(rating)/2)
