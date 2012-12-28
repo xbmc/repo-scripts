@@ -33,7 +33,7 @@ except: pass
 
 class StorageServer():
     def __init__(self, table=None, timeout=24, instance=False):
-        self.version = "1.3.0"
+        self.version = "1.4.0"
         self.plugin = "StorageClient-" + self.version
         self.instance = instance
         self.die = False
@@ -702,8 +702,10 @@ class StorageServer():
 
     def _log(self, description, level=0):
         if self.dbg and self.dbglevel > level:
-            self.xbmc.log("[%s] %s : '%s'" % (self.plugin, inspect.stack()[1][3], description), self.xbmc.LOGNOTICE)
-
+            try:
+                self.xbmc.log("[%s] %s : '%s'" % (self.plugin, repr(inspect.stack()[1][3]), description), self.xbmc.LOGNOTICE)
+            except:
+                self.xbmc.log("[%s] %s : '%s'" % (self.plugin, repr(inspect.stack()[1][3]), repr(description)), self.xbmc.LOGNOTICE)
 
 # Check if this module should be run in instance mode or not.
 __workersByName = {}
