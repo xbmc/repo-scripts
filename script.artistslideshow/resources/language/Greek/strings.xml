@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Greek language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/el/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Αλβανικά</string>
+    <string id="30202">Αραβικά</string>
+    <string id="30203">Λευκορώσικα</string>
+    <string id="30204">Βοσνιακά (Λατινικά)</string>
+    <string id="30205">Βουλγάρικα</string>
+    <string id="30206">Καταλανικά</string>
+    <string id="30207">Κινέζικα</string>
+    <string id="30208">Κροατικά</string>
+    <string id="30209">Τσέχικα</string>
+    <string id="30210">Δανικά</string>
+    <string id="30211">Ολλανδικά</string>
+    <string id="30212">Αγγλικά</string>
+    <string id="30213">Εσθονικά</string>
+    <string id="30214">Φινλανδικά</string>
+    <string id="30215">Γαλλικά</string>
+    <string id="30216">Γερμανικά</string>
+    <string id="30217">Ελληνικά</string>
+    <string id="30218">Εβραϊκά</string>
+    <string id="30219">Ινδικά</string>
+    <string id="30220">Ουγγρικά</string>
+    <string id="30221">Ισλανδικά</string>
+    <string id="30222">Ινδονησιακά</string>
+    <string id="30224">Ιταλικά</string>
+    <string id="30225">Ιαπωνικά</string>
+    <string id="30226">Κορεάτικα</string>
+    <string id="30227">Λετονικά</string>
+    <string id="30228">Λιθουανικά</string>
+    <string id="30229">Γλώσσα FYROM</string>
+    <string id="30230">Νορβηγικά</string>
+    <string id="30232">Πολωνικά</string>
+    <string id="30233">Πορτογαλικά</string>
+    <string id="30234">Πορτογαλικά (Βραζιλίας)</string>
+    <string id="30235">Ρουμανικά</string>
+    <string id="30236">Ρώσικα</string>
+    <string id="30237">Σερβικά Λατινικά</string>
+    <string id="30238">Σλοβακικά</string>
+    <string id="30239">Σλοβενικά</string>
+    <string id="30240">Ισπανικά</string>
+    <string id="30242">Σουηδικά</string>
+    <string id="30243">Ταϊλανδικά</string>
+    <string id="30244">Τούρκικα</string>
+    <string id="30245">Ουκρανικά</string>
+    <string id="30246">Βιετναμέζικα</string>
+    <string id="30247">Φαρσί</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Γίνεται λήψη</string>
+    <string id="30301">Λαμβάνονται εικόνες καλλιτεχνών</string>
+    <string id="30302">Δεν ελήφθη τίποτα</string>
+    <string id="30303">Δε βρέθηκαν εικόνες για τον καλλιτέχνη</string>
+    <string id="30304">Ολοκλήρωση λήψης</string>
+    <string id="30305">Ελήφθησαν όλες οι εικόνες καλλιτέχνη</string>
+
+    <!-- Settings -->
+    <string id="32000">Λήψη</string>
+    <string id="32001">Εικόνες από last.fm</string>
+    <string id="32002">Εικόνες από htbackdrops.com</string>
+    <string id="32003">Ελάχιστο πλάτος εικόνας</string>
+    <string id="32004">Ελάχιστο ύψος εικόνας</string>
+    <string id="32005">Λήψη επιπλέον πληροφοριών καλλιτέχνη</string>
+    <string id="32006">Προτιμώμενη γλώσσα πληροφοριών καλλιτέχνη</string>
+    <string id="32007">Λήψη μόνο εικόνων αναλογίας 16:9</string>
+    <string id="32100">Παρουσίαση διαφανειών</string>
+    <string id="32101">Τοπικός φάκελος καλλιτεχνών</string>
+    <string id="32102">Προτεραιότητα Εικόνας</string>
+    <string id="32103">Φάκελος εφεδρικής παρουσίασης</string>
+    <string id="32104">Φάκελος παρουσίασης παράκαμψης</string>
+    <string id="32200">Για προχωρημένους</string>
+    <string id="32201">Περιορισμός της λανθάνουσας μνήμης λήψεων</string>
+    <string id="32202">Μέγιστο μέγεθος λανθάνουσας μνήμης (σε MB)</string>
+    <string id="32203">Τύπος ειδοποίησης λήψεων</string>
+    <string id="32204">Φάκελος προσωπικών εικόνων ειδοποιήσεων</string>
+    <string id="32205">Εναλλακτικό όνομα τοπικού φακέλου fanart</string>
+    <string id="32206">Κανένας</string>
+    <string id="32207">Ειδοποιήσεις κειμένου</string>
+    <string id="32208">Προσωπικές εικόνες</string>
+    <string id="32901">Χρήση πρώτα των απομακρυσμένων εικόνων</string>
+    <string id="32902">Χρήση πρώτα των τοπικών εικόνων</string>
+    <string id="32903">Χρήση τοπικών και απομακρυσμένων εικόνων</string>
+</strings>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Japanese language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ja/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">アルバニア語</string>
+    <string id="30202">アラビア語</string>
+    <string id="30203">ベラルーシ語</string>
+    <string id="30204">ボスニア語 (ラテン)</string>
+    <string id="30205">ブルガリア語</string>
+    <string id="30206">カタロニア語</string>
+    <string id="30207">中国語</string>
+    <string id="30208">クロアチア語</string>
+    <string id="30209">チェコ語</string>
+    <string id="30210">デンマーク語</string>
+    <string id="30211">オランダ語</string>
+    <string id="30212">英語</string>
+    <string id="30213">エストニア語</string>
+    <string id="30214">フィンランド語</string>
+    <string id="30215">フランス語</string>
+    <string id="30216">ドイツ語</string>
+    <string id="30217">ギリシャ語</string>
+    <string id="30218">ヘブライ語</string>
+    <string id="30219">ヒンディー語</string>
+    <string id="30220">ハンガリー語</string>
+    <string id="30221">アイスランド語</string>
+    <string id="30222">インドネシア語</string>
+    <string id="30224">イタリア語</string>
+    <string id="30225">日本語</string>
+    <string id="30226">韓国語</string>
+    <string id="30227">ラトビア語</string>
+    <string id="30228">リトアニア語</string>
+    <string id="30229">マケドニア語</string>
+    <string id="30230">ノルウェー語</string>
+    <string id="30232">ポーランド語</string>
+    <string id="30233">ポルトガル語</string>
+    <string id="30234">ポルトガル語 (ブラジル)</string>
+    <string id="30235">ルーマニア語</string>
+    <string id="30236">ロシア語</string>
+    <string id="30237">セルビア語 (ラテン)</string>
+    <string id="30238">スロバキア語</string>
+    <string id="30239">スロベニア語</string>
+    <string id="30240">スペイン語</string>
+    <string id="30242">スウェーデン語</string>
+    <string id="30243">タイ語</string>
+    <string id="30244">トルコ語</string>
+    <string id="30245">ウクライナ語</string>
+    <string id="30246">ベトナム語</string>
+    <string id="30247">ペルシャ語</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">ダウンロード中</string>
+
+    <!-- Settings -->
+    <string id="32000">ダウンロード</string>
+    <string id="32100">スライドショー</string>
+    <string id="32200">高度な設定</string>
+    <string id="32206">なし</string>
+</strings>

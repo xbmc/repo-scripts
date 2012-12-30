@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Slovak language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sk/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Albánčina</string>
+    <string id="30202">Arabčina</string>
+    <string id="30203">Bieloruština</string>
+    <string id="30204">Bosniančina (latinika)</string>
+    <string id="30205">Bulharčina</string>
+    <string id="30206">Katalánčina</string>
+    <string id="30207">Čínština</string>
+    <string id="30208">Chorváčtina</string>
+    <string id="30209">Čeština</string>
+    <string id="30210">Dánčina</string>
+    <string id="30211">Holandština</string>
+    <string id="30212">Angličtina</string>
+    <string id="30213">Estónčina</string>
+    <string id="30214">Fínčina</string>
+    <string id="30215">Francúzština</string>
+    <string id="30216">Nemčina</string>
+    <string id="30217">Gréčtina</string>
+    <string id="30218">Hebrejčina</string>
+    <string id="30219">Hindština</string>
+    <string id="30220">Maďarčina</string>
+    <string id="30221">Islandčina</string>
+    <string id="30222">Indonézština</string>
+    <string id="30224">Taliančina</string>
+    <string id="30225">Japončina</string>
+    <string id="30226">Kórejčina</string>
+    <string id="30227">Lotyština</string>
+    <string id="30228">Litovčina</string>
+    <string id="30229">Macedónčina</string>
+    <string id="30230">Nórština</string>
+    <string id="30232">Poľština</string>
+    <string id="30233">Portugalčina</string>
+    <string id="30234">Portugalčina (Brazília)</string>
+    <string id="30235">Rumunčina</string>
+    <string id="30236">Ruština</string>
+    <string id="30237">Srbčina (latinika)</string>
+    <string id="30238">Slovenčina</string>
+    <string id="30239">Slovinčina</string>
+    <string id="30240">Španielčina</string>
+    <string id="30242">Švédština</string>
+    <string id="30243">Thajčina</string>
+    <string id="30244">Turečtina</string>
+    <string id="30245">Ukrajinčina</string>
+    <string id="30246">Vietnamčina</string>
+    <string id="30247">Perzština (Farsi)</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Preberá sa</string>
+
+    <!-- Settings -->
+    <string id="32000">Stiahnuť</string>
+    <string id="32100">Prezentácia</string>
+    <string id="32200">Pokročilé</string>
+    <string id="32206">Žiadne</string>
+</strings>

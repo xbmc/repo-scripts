@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Ukrainian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/uk/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30212">Англійська</string>
+    <string id="30215">Французька</string>
+    <string id="30216">Німецька</string>
+    <string id="30224">Італійська</string>
+    <string id="30225">Японська</string>
+    <string id="30240">Іспанська</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Завантаження…</string>
+
+    <!-- Settings -->
+    <string id="32000">Завантажити</string>
+    <string id="32100">Слайд-шоу</string>
+    <string id="32206">Ні</string>
+</strings>

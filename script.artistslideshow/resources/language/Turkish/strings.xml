@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Turkish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/tr/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Arnavutça</string>
+    <string id="30202">Arapça</string>
+    <string id="30203">Beyaz Rusyaca</string>
+    <string id="30204">Boşnakça (Latin)</string>
+    <string id="30205">Bulgarca</string>
+    <string id="30206">Katalanca</string>
+    <string id="30207">Çince</string>
+    <string id="30208">Hırvatça</string>
+    <string id="30209">Çekçe</string>
+    <string id="30210">Danca</string>
+    <string id="30211">Hollandaca</string>
+    <string id="30212">İngilizce</string>
+    <string id="30213">Estce</string>
+    <string id="30214">Fince</string>
+    <string id="30215">Fransızca</string>
+    <string id="30216">Almanca</string>
+    <string id="30217">Yunanca</string>
+    <string id="30218">İbranice</string>
+    <string id="30219">Hintçe</string>
+    <string id="30220">Macarca</string>
+    <string id="30221">İzlandaca</string>
+    <string id="30222">Endonezca</string>
+    <string id="30224">İtalyanca</string>
+    <string id="30225">Japonca</string>
+    <string id="30226">Korece</string>
+    <string id="30227">Letonca</string>
+    <string id="30228">Litvanca</string>
+    <string id="30229">Makedonca</string>
+    <string id="30230">Norveççe</string>
+    <string id="30232">Lehçe</string>
+    <string id="30233">Portekizce</string>
+    <string id="30234">Portekizce (Brazilya)</string>
+    <string id="30235">Rumence</string>
+    <string id="30236">Rusça</string>
+    <string id="30237">Sırpça</string>
+    <string id="30238">Slovakça</string>
+    <string id="30239">Slovenyaca</string>
+    <string id="30240">İspanyolca</string>
+    <string id="30242">İsveççe</string>
+    <string id="30243">Taice</string>
+    <string id="30244">Türkçe</string>
+    <string id="30245">Ukraynaca</string>
+    <string id="30246">Vietnamca</string>
+    <string id="30247">Farsça</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Karşıdan yükleniyor</string>
+
+    <!-- Settings -->
+    <string id="32000">İndir</string>
+    <string id="32100">Slayt Gösterisi</string>
+    <string id="32206">Hayır</string>
+</strings>

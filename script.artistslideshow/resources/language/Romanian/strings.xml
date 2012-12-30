@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Romanian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ro/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30211">Olanda</string>
+    <string id="30212">Engleză</string>
+    <string id="30215">Franceză</string>
+    <string id="30216">Germană</string>
+    <string id="30224">Italiană</string>
+    <string id="30225">Japoneză</string>
+    <string id="30240">Spaniolă</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Se descarcă</string>
+
+    <!-- Settings -->
+    <string id="32000">Descarcă</string>
+    <string id="32100">Start diapozitive</string>
+    <string id="32200">Avansat</string>
+    <string id="32206">Niciuna</string>
+</strings>

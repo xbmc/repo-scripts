@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Korean language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ko/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">알바니아어</string>
+    <string id="30202">아랍어</string>
+    <string id="30203">벨라루스어</string>
+    <string id="30204">보스니아어 (라틴)</string>
+    <string id="30205">불가리아어</string>
+    <string id="30206">카탈로니아어</string>
+    <string id="30207">중국어</string>
+    <string id="30208">크로아티아어</string>
+    <string id="30209">체코어</string>
+    <string id="30210">덴마크어</string>
+    <string id="30211">네덜란드어</string>
+    <string id="30212">영어</string>
+    <string id="30213">에스토니아어</string>
+    <string id="30214">핀란드어</string>
+    <string id="30215">프랑스어</string>
+    <string id="30216">독일어</string>
+    <string id="30217">그리스어</string>
+    <string id="30218">헤브라이어</string>
+    <string id="30219">힌두어</string>
+    <string id="30220">헝가리어</string>
+    <string id="30221">이이슬란드어</string>
+    <string id="30222">인도네시아어</string>
+    <string id="30224">이탈리아어</string>
+    <string id="30225">일본어</string>
+    <string id="30226">한국어</string>
+    <string id="30227">라트비아어</string>
+    <string id="30228">리투아니아어</string>
+    <string id="30229">마케도니아어</string>
+    <string id="30230">노르웨이어</string>
+    <string id="30232">폴란드어</string>
+    <string id="30233">포르투갈어</string>
+    <string id="30234">포르투갈어 (브라질)</string>
+    <string id="30235">루마니아어</string>
+    <string id="30236">러시아어</string>
+    <string id="30237">세르비아라틴어</string>
+    <string id="30238">슬로바키아어</string>
+    <string id="30239">슬로베니아어</string>
+    <string id="30240">스페인어</string>
+    <string id="30242">스웨덴어</string>
+    <string id="30243">태국어</string>
+    <string id="30244">터키어</string>
+    <string id="30245">우크라니아어</string>
+    <string id="30246">베트남어</string>
+    <string id="30247">이탈리아어</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">다운로딩</string>
+    <string id="30301">아티스트 이미지 다운로드</string>
+    <string id="30302">다운로드한 것 없음</string>
+    <string id="30303">아티스트 이미지 없음</string>
+    <string id="30304">다운로드 완료</string>
+    <string id="30305">모든 아티스트 이미지 다운로드됨</string>
+
+    <!-- Settings -->
+    <string id="32000">다운로드</string>
+    <string id="32001">last.fm에서 이미지 다운로드</string>
+    <string id="32002">htbackdrops.com에서 이미지 다운로드</string>
+    <string id="32003">이미지 최하 가로 길이</string>
+    <string id="32004">이미지 최하 세로 길이</string>
+    <string id="32005">추가 아티스트 정보 다운로드</string>
+    <string id="32006">아티스트 정보 언어</string>
+    <string id="32007">16:9 이미지만 다운로드</string>
+    <string id="32100">슬라이드쇼</string>
+    <string id="32101">로컬 아티스트 폴더</string>
+    <string id="32102">이미지 속성</string>
+    <string id="32103">슬라이드쇼 기본 폴더</string>
+    <string id="32104">슬라이드쇼 폴더 오버라이드</string>
+    <string id="32200">고급</string>
+    <string id="32201">다운로드 캐시 크기 제한</string>
+    <string id="32202">최대 캐시 크기 (메가바이트)</string>
+    <string id="32203">다운로드 알림 형식</string>
+    <string id="32204">사용자 알림 이미지 폴더</string>
+    <string id="32205">다른 로컬 팬아트 폴더 이름</string>
+    <string id="32206">사용 안 함</string>
+    <string id="32207">문자 알림</string>
+    <string id="32208">사용자 이미지</string>
+    <string id="32901">원격 이미지를 먼저 사용</string>
+    <string id="32902">로컬 이미지를 먼저 사용</string>
+    <string id="32903">로컬과 원격 이미지를 모두 사용</string>
+</strings>

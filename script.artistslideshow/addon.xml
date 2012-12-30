@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artistslideshow" name="Artist Slideshow" version="1.4.6" provider-name="ronie/kyleejohnson (pkscuot)">
+<addon id="script.artistslideshow" name="Artist Slideshow" version="1.5.0" provider-name="ronie/kyleejohnson (pkscuot)">
 	<requires>
-		<import addon="xbmc.python" version="2.0"/>
+		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.elementtree" version="1.2.7"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Download images and additional info of the currently playing artist</summary>
-		<description>Addon to download images and additional information from Last.FM and htbackdrops.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to.</description>
+		<summary lang="be">Download images and additional info of the currently playing artist</summary>
+		<summary lang="bg">Сваля изображения и допълнителна инф. за изпълнителя на текущата песен</summary>
+		<summary lang="da">Hent billeder af og ekstra info om kunstneren, der spiller i øjeblikket</summary>
+		<summary lang="de">Downloade Bilder und zusätzliche Informationen des aktuellen abspielenden Künstlers.</summary>
+		<summary lang="el">Κατεβάστε εικόνες και επιπλέον πληροφορίες του τρέχοντος καλλιτέχνη</summary>
+		<summary lang="en">Download images and additional info of the currently playing artist</summary>
+		<summary lang="es">Descarga imágenes e información adicional del artista que esté sonando</summary>
 		<summary lang="fr">Télécharger les images et les informations additionnelles de l'artiste en cours de lecture</summary>
+		<summary lang="he">הורד תמונות ומידע נוסף של האמן המנגן עכשיו</summary>
+		<summary lang="hu">Képeket és kiegészítő információkat tölt le a jelenleg játszott előadóról</summary>
+		<summary lang="ko">현재 재생중인 아티스트의 이미지와 추가 정보 다운로드</summary>
+		<summary lang="nl">Downloaden van afbeeldingen en extra informatie van de nu spelende artiest</summary>
+		<summary lang="pl">Pobieraj zdjęcia i dodatkowe informacje o aktualnie odtwarzanym artyście</summary>
+		<summary lang="pt">Transferir imagens e info adicional do artista em reprodução agora</summary>
+		<summary lang="pt_BR">Transferência de imagens e informações adicionais de artistas que estejam sendo reproduzidos</summary>
+		<summary lang="ru">Загрузить фото и дополнительную информацию об воспроизводимом исполнителе</summary>
+		<summary lang="sv">Ladda ner bilder och ytterligare information om den nu spelande artisten</summary>
+		<description lang="be">Addon to download images and additional information from Last.FM and htbackdrops.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to.</description>
+		<description lang="da">Add-on som henter billeder og yderligere information om kunstnere fra Last.FM og htbackdrops.com. Billederne kan, sammen med lokale kunsterbilleder og info, bruges af skin'et til at lave et diasshow med kunstneren, der lyttes til.</description>
+		<description lang="de">Addon um Bilder und zusätzliche Informationen von Last.FM und htbackdrops.com zum aktuell abspielenden Künstler herunterzuladen. Die Bilder entlag der lokalen Künstlerbilder und Infos können vom Skin genutzt werden, um eine Slideshow für den aktuell abspielenden Künstler zu erstellen.</description>
+		<description lang="el">Πρόσθετο για τη λήψη εικόνων και επιπλέον πληροφοριών από το Last.FM και το htbackdrops.com για τον τρέχοντα καλλιτέχνη. Οι εικόνες, μαζί με τοπικές εικόνες του καλλιτέχνη καθώς και πληροφορίες, μπορούν να χρησιμοποιηθούν από το κέλυφος για τη δημιουργία παρουσιάσεων διαφανειών του καλλιτέχνη η μουσική του οποίου ακούγεται.</description>
+		<description lang="en">Addon to download images and additional information from Last.FM and htbackdrops.com of the currently playing artist. The images, along with local artists' images, and info can be used by the skin to create a slideshow for the artist being listened to.</description>
+		<description lang="es">Complemento para descargar imágenes e información adicional de Last.FM y  htbackdrops.com para el artista que está sonando. Dichas imágenes, junto con las guardadas del artista en local, y la información puede ser usada en el skin para crear una presentación del artista que estás escuchando.</description>
 		<description lang="fr">Cett addon permet de télécharger les images et les informations additionnelles depuis Last.FM et htbackdrops.com de l'artiste en cours de lecture. Les images, ainsi que les images locales, et les informations peuvent être utilisées par le thème pour créer un diaporama pour l'artiste que vous êtes en train d'écouter.</description>
+		<description lang="hu">Ez a kiegészítő képeket és további információkat tölt le a Last.FM és htbackdrops.com oldalakról a jelenleg játszott előadóról. A letöltött és helyi képekből diavetítés állítható össze az aktuális előadóról.</description>
+		<description lang="ko">현재 재생중인 아티스트의 이미지와 추가정보를 Last.FM과 htbackdrops.com에서 다운로드합니다. 다운로드한 이미지와 정보는 로컬 이미지와 함께 현재 재생중인 음악의 아티스트 슬라이드쇼에 사용할 수 있습니다.</description>
+		<description lang="nl">Addon om afbeeldingen and bijkomende informatie van Last.FM en htbackdrops.com van de nu spelende artiest binnen te halen. De afbeeldingen, net als lokaal aanwezige artiestafbeeldingen en -info kunnen gebruikt worden door een skin om een diashow te tonen van de artiest die nu beluisterd wordt.</description>
+		<description lang="pl">Wtyczka pobiera obrazy i dodatkowe informacje z Last.FM oraz htbackdrops.com aktualnie odtwarzanego wykonawcy. Ilustracje, wraz z obrazami i informacjami (lokalne) artystów  mogą być wykorzystywane przez skórę do tworzenia pokazu slajdów dla artysty którego aktualnie słuchasz.</description>
+		<description lang="pt">Este addon transfere imagens e informação adicional para o artista em reprodução, a partir de Last.FM e htbackdrops.com. As imagens e a info, juntamente com as imagens locais do artista, podem ser usadas pelo tema para criar uma apresentação de slides para o artista em reprodução nesse momento.</description>
+		<description lang="pt_BR">Add-on para download de imagens e informações adicionais vindas do Last.FM e htbackdrops.com do artista sendo reproduzido no momento da busca. As imagens, juntamente com imagens locais  artistas, mais as informações podem ser utilizados pela skin para criar uma  apresentação do artista que está a ser ouvido.</description>
+		<description lang="ru">Дополнение загружает фото и дополнительную информацию об воспроизводимом исполнителе с Last.FM и htbackdrops.com. Фото наравне с локальными фото и информацией могут быть использованы  для создания слайд-шоу для прослушиваемого исполнителя.</description>
+		<description lang="sv">Tillägg för att ladda ner bilder och ytterligare information om den nu spelande artisten från Last.FM och htbackdrops.com . Bilderna, tillsammans med lokala bilder, och information kan användas av skinet för att skapa ett bildspel när man lyssnar på artisten.</description>
 		<platform>all</platform>
-		<language>sq ar be bg ca zh hr cs da nl en et fi fr de el iw hi hu is in it ja ko lv lt mk no pl pt ro ru sr sk sl es sv th tr uk vi</language>
 	</extension>
 </addon>

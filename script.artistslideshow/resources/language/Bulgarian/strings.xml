@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Bulgarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/bg/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">албански</string>
+    <string id="30202">арабски</string>
+    <string id="30203">беларуски</string>
+    <string id="30204">босненски (Latin)</string>
+    <string id="30205">български</string>
+    <string id="30206">каталонски</string>
+    <string id="30207">китайски</string>
+    <string id="30208">хърватски</string>
+    <string id="30209">чешки</string>
+    <string id="30210">датски</string>
+    <string id="30211">нидерландски (холандски)</string>
+    <string id="30212">английски</string>
+    <string id="30213">естонски</string>
+    <string id="30214">фински (финландски)</string>
+    <string id="30215">френски</string>
+    <string id="30216">немски</string>
+    <string id="30217">гръцки</string>
+    <string id="30218">иврит</string>
+    <string id="30219">хинди</string>
+    <string id="30220">унгарски</string>
+    <string id="30221">исландски</string>
+    <string id="30222">индонезийски</string>
+    <string id="30224">италиански</string>
+    <string id="30225">японкси</string>
+    <string id="30226">корейски</string>
+    <string id="30227">латвийски</string>
+    <string id="30228">литовски</string>
+    <string id="30229">македонски</string>
+    <string id="30230">норвежки</string>
+    <string id="30232">полски</string>
+    <string id="30233">португалски</string>
+    <string id="30234">португалски (Brazil)</string>
+    <string id="30235">румънски</string>
+    <string id="30236">руски</string>
+    <string id="30237">сръбски (Latin)</string>
+    <string id="30238">словашки</string>
+    <string id="30239">словенски</string>
+    <string id="30240">испанки</string>
+    <string id="30242">шведски</string>
+    <string id="30243">тайски (тайландски)</string>
+    <string id="30244">турски</string>
+    <string id="30245">украински</string>
+    <string id="30246">виетнамски</string>
+    <string id="30247">персийски (фарси)</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Сваляне</string>
+    <string id="30301">Сваляне изображения на артиста</string>
+    <string id="30302">Нищо не е свалено</string>
+    <string id="30303">Не са открити изображения за артиста</string>
+    <string id="30304">Свалянето завърши</string>
+    <string id="30305">Свалени са всички зображения на артиста</string>
+
+    <!-- Settings -->
+    <string id="32000">Свали</string>
+    <string id="32001">Сваляй изображения от last.fm</string>
+    <string id="32002">Сваляй изображения от htbackdrops.com</string>
+    <string id="32003">Мин. ширина на изображенията</string>
+    <string id="32004">Мин. височина на изображенията</string>
+    <string id="32007">Сваляй само изображения във формат 16:9</string>
+    <string id="32100">Слайдшоу</string>
+    <string id="32200">Допълнителни</string>
+    <string id="32203">Тип на известията за сваляне</string>
+    <string id="32206">Без</string>
+    <string id="32207">Текстово известяване</string>
+    <string id="32901">Първо ползвай отдалечените изображения</string>
+    <string id="32902">Първо ползвай локалните изображения</string>
+    <string id="32903">Ползвай локални и отдалечени изображения</string>
+</strings>

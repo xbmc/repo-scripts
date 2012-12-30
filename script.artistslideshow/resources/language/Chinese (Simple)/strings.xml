@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Chinese (Simple) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/zh/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">阿尔巴尼亚语</string>
+    <string id="30202">阿拉伯语</string>
+    <string id="30203">白俄罗斯语</string>
+    <string id="30204">波斯尼亚语（拉丁）</string>
+    <string id="30205">保加利亚语</string>
+    <string id="30206">加泰罗尼亚语</string>
+    <string id="30207">中文</string>
+    <string id="30208">克罗地亚语</string>
+    <string id="30209">捷克语</string>
+    <string id="30210">丹麦语</string>
+    <string id="30211">荷兰语</string>
+    <string id="30212">英语</string>
+    <string id="30213">爱沙尼亚语</string>
+    <string id="30214">芬兰语</string>
+    <string id="30215">法语</string>
+    <string id="30216">德语</string>
+    <string id="30217">希腊语</string>
+    <string id="30218">希伯来语</string>
+    <string id="30219">印地语</string>
+    <string id="30220">匈牙利语</string>
+    <string id="30221">冰岛语</string>
+    <string id="30222">印度尼西亚语</string>
+    <string id="30224">意大利语</string>
+    <string id="30225">日语</string>
+    <string id="30226">朝鲜语</string>
+    <string id="30227">拉脱维亚语</string>
+    <string id="30228">立陶宛语</string>
+    <string id="30229">马其顿语</string>
+    <string id="30230">挪威语</string>
+    <string id="30232">波兰语</string>
+    <string id="30233">葡萄牙语</string>
+    <string id="30234">葡萄牙语（巴西）</string>
+    <string id="30235">罗马尼亚语</string>
+    <string id="30236">俄语</string>
+    <string id="30237">塞尔维亚拉丁语</string>
+    <string id="30238">斯洛伐克语</string>
+    <string id="30239">斯洛文尼亚语</string>
+    <string id="30240">西班牙语</string>
+    <string id="30242">瑞典语</string>
+    <string id="30243">泰语</string>
+    <string id="30244">土耳其语</string>
+    <string id="30245">乌克兰语</string>
+    <string id="30246">越南语</string>
+    <string id="30247">波斯语</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">正在下载</string>
+
+    <!-- Settings -->
+    <string id="32000">下载</string>
+    <string id="32100">幻灯片播放</string>
+    <string id="32200">高级</string>
+    <string id="32206">关闭</string>
+</strings>

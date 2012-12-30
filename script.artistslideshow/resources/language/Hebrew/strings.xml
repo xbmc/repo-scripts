@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hebrew language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/he/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">אלבנית</string>
+    <string id="30202">ערבית</string>
+    <string id="30203">בלרוסית</string>
+    <string id="30204">בוסנית(לטינית)</string>
+    <string id="30205">בולגרית</string>
+    <string id="30206">קטלנית</string>
+    <string id="30207">סינית</string>
+    <string id="30208">קרואטית</string>
+    <string id="30209">צכית</string>
+    <string id="30210">דנית</string>
+    <string id="30211">הולנדית</string>
+    <string id="30212">אנגלית</string>
+    <string id="30213">אסטונית</string>
+    <string id="30214">פינית</string>
+    <string id="30215">צרפתית</string>
+    <string id="30216">גרמנית</string>
+    <string id="30217">יוונית</string>
+    <string id="30218">עברית</string>
+    <string id="30219">הינדי</string>
+    <string id="30220">הונגרית</string>
+    <string id="30221">איסלנדית</string>
+    <string id="30222">אינדונזית</string>
+    <string id="30224">איטלקית</string>
+    <string id="30225">יפנית</string>
+    <string id="30226">קוראנית</string>
+    <string id="30227">לטבית</string>
+    <string id="30228">ליטאית</string>
+    <string id="30229">מקדונית</string>
+    <string id="30230">נורווגית</string>
+    <string id="30232">פולנית</string>
+    <string id="30233">פורטוגזית</string>
+    <string id="30234">פורטוגזית(ברזיל)</string>
+    <string id="30235">רומנית</string>
+    <string id="30236">רוסית</string>
+    <string id="30237">סרבית לטינית</string>
+    <string id="30238">סלובקית</string>
+    <string id="30239">סלובקית</string>
+    <string id="30240">ספרדית</string>
+    <string id="30242">שוודית</string>
+    <string id="30243">תאילנדית</string>
+    <string id="30244">תורכית</string>
+    <string id="30245">אוקראינית</string>
+    <string id="30246">ויאטנמית</string>
+    <string id="30247">פרסית</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">מוריד</string>
+    <string id="30301">מוריד תמונות אמן</string>
+    <string id="30302">כלום לא הורד</string>
+    <string id="30303">לא נמצאו תמונות לאומן</string>
+    <string id="30304">הורדה הושלמה</string>
+    <string id="30305">כל תמונות האמן הורדו</string>
+
+    <!-- Settings -->
+    <string id="32000">הורד</string>
+    <string id="32001"> הורד תמונות מ last.fm</string>
+    <string id="32003">רוחב תמונה מינימלי</string>
+    <string id="32004">גובה תמונה מינימלי</string>
+    <string id="32005">הורד מידע אומן נוסף</string>
+    <string id="32006">שפת מידע אומן מועדפת</string>
+    <string id="32007">הורד רק תמונות 16:9</string>
+    <string id="32100">מצגת</string>
+    <string id="32101">תיקית אמן מקומית</string>
+    <string id="32102">עדיפות תמונה</string>
+    <string id="32200">מתקדם</string>
+    <string id="32205">שם חלופי לתיקיית תמונות  מקומית</string>
+    <string id="32206">ללא</string>
+    <string id="32207">הודות טקסט</string>
+    <string id="32208">תמונות מותאמות אישית</string>
+    <string id="32901">השתמש קודם בתמונות מהרשת</string>
+    <string id="32902">השתמש קודם בתמונות מקומיות</string>
+</strings>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Danish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/da/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Albansk</string>
+    <string id="30202">Arabisk</string>
+    <string id="30203">Hviderussisk</string>
+    <string id="30204">Bosnisk (Latin)</string>
+    <string id="30205">Bulgarsk</string>
+    <string id="30206">Catalansk</string>
+    <string id="30207">Kinesisk</string>
+    <string id="30208">Kroatisk</string>
+    <string id="30209">Tjekkisk</string>
+    <string id="30210">Dansk</string>
+    <string id="30211">Hollandsk</string>
+    <string id="30212">Engelsk</string>
+    <string id="30213">Estisk</string>
+    <string id="30214">Finsk</string>
+    <string id="30215">Fransk</string>
+    <string id="30216">Tysk</string>
+    <string id="30217">Græsk</string>
+    <string id="30218">Hebræisk</string>
+    <string id="30219">Hindi</string>
+    <string id="30220">Ungarsk</string>
+    <string id="30221">Islandsk</string>
+    <string id="30222">Indonesisk</string>
+    <string id="30224">Italiensk</string>
+    <string id="30225">Japansk</string>
+    <string id="30226">Koreansk</string>
+    <string id="30227">Lettisk</string>
+    <string id="30228">Litauisk</string>
+    <string id="30229">Makedonsk</string>
+    <string id="30230">Norsk</string>
+    <string id="30232">Polsk</string>
+    <string id="30233">Portugisisk</string>
+    <string id="30234">Portugisisk (Brasilien)</string>
+    <string id="30235">Rumænsk</string>
+    <string id="30236">Russisk</string>
+    <string id="30237">Serbisk</string>
+    <string id="30238">Slovakisk</string>
+    <string id="30239">Slovensk</string>
+    <string id="30240">Spansk</string>
+    <string id="30242">Svensk</string>
+    <string id="30243">Thailandsk</string>
+    <string id="30244">Tyrkisk</string>
+    <string id="30245">Ukrainsk</string>
+    <string id="30246">Vietnamesisk</string>
+    <string id="30247">Farsi</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Henter</string>
+    <string id="30301">Henter kunsterbilleder</string>
+    <string id="30302">Intet hentet</string>
+    <string id="30303">Ingen billeder fundet af kunstner</string>
+    <string id="30304">Download udført</string>
+    <string id="30305">Alle kunstnerbilleder hentet</string>
+
+    <!-- Settings -->
+    <string id="32000">Hent</string>
+    <string id="32001">Hent billeder fra last.fm</string>
+    <string id="32002">Hent billeder fra htbackdrops.com</string>
+    <string id="32003">Minimum billedbredde</string>
+    <string id="32004">Minimum billedhøjde</string>
+    <string id="32005">Hent yderligere information om kunstner</string>
+    <string id="32006">Foretrukket sprog for kunsterinformation</string>
+    <string id="32007">Hent kun 16:9 billeder</string>
+    <string id="32100">Diasshow</string>
+    <string id="32101">Lokal kunstnermappe</string>
+    <string id="32102">Billedeprioritet</string>
+    <string id="32103">Standardmappe til diasshow</string>
+    <string id="32104">Ignorer diasshow-mappe</string>
+    <string id="32200">Avanceret</string>
+    <string id="32201">Begræns størrelse af download-cache</string>
+    <string id="32202">Maximum cachestørrelse (i megabyte)</string>
+    <string id="32203">Beskedtype ved download</string>
+    <string id="32204">Brugerdefineret mappe til besked-billeder</string>
+    <string id="32205">Alternativt navn til lokal fankunst-mappe</string>
+    <string id="32206">Intet</string>
+    <string id="32207">Tekstbeskeder</string>
+    <string id="32208">Brugervalgte billeder</string>
+    <string id="32901">Brug net-billeder først</string>
+    <string id="32902">Brug lokale billeder først</string>
+    <string id="32903">Brug både lokale og net-billeder</string>
+</strings>

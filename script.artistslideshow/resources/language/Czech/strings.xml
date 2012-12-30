@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Czech language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/cs/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Albánština</string>
+    <string id="30202">Arabština</string>
+    <string id="30203">Běloruština</string>
+    <string id="30204">Boesenština (latinka)</string>
+    <string id="30205">Bulharština</string>
+    <string id="30206">Katalánština</string>
+    <string id="30207">Činština</string>
+    <string id="30208">Chorvatština</string>
+    <string id="30209">Čeština</string>
+    <string id="30210">Dánština</string>
+    <string id="30211">Dánština</string>
+    <string id="30212">Angličtina</string>
+    <string id="30213">Estonština</string>
+    <string id="30214">Finština</string>
+    <string id="30215">Francouzština</string>
+    <string id="30216">Němčina</string>
+    <string id="30217">Řečtina</string>
+    <string id="30218">Hebrejština</string>
+    <string id="30219">Hindština</string>
+    <string id="30220">Maďarština</string>
+    <string id="30221">Islandština</string>
+    <string id="30222">Indonézština</string>
+    <string id="30224">Italština</string>
+    <string id="30225">Japonština</string>
+    <string id="30226">Korejština</string>
+    <string id="30227">Lotyština</string>
+    <string id="30228">Litevština</string>
+    <string id="30229">Makedónština</string>
+    <string id="30230">Norština</string>
+    <string id="30232">Polština</string>
+    <string id="30233">Portugalština</string>
+    <string id="30234">Portugalština (Brazílie)</string>
+    <string id="30235">Rumunština</string>
+    <string id="30236">Ruština</string>
+    <string id="30237">Srbština (latinka)</string>
+    <string id="30238">Slovenština</string>
+    <string id="30239">Slovinština</string>
+    <string id="30240">Španělština</string>
+    <string id="30242">Švédština</string>
+    <string id="30243">Thaiština</string>
+    <string id="30244">Turečtina</string>
+    <string id="30245">Ukrajinština</string>
+    <string id="30246">Větnamština</string>
+    <string id="30247">Perština</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Stahuji</string>
+    <string id="30301">Stahuji obrázky interpreta</string>
+    <string id="30302">Nic nebylo staženo</string>
+    <string id="30303">Nebyl nalezen žádný obrázek interpreta</string>
+    <string id="30304">Stahování dokončeno</string>
+    <string id="30305">Všechny obrázky interpreta staženy</string>
+
+    <!-- Settings -->
+    <string id="32000">Stáhnout</string>
+    <string id="32001">Stáhnout obrázky z last.fm</string>
+    <string id="32002">Stáhnout obrázky z htbackdrops.com</string>
+    <string id="32003">Minimální šířka obrázku</string>
+    <string id="32004">Minimální výška obrázku</string>
+    <string id="32005">Stáhnout dodatečné informace o interpretovi</string>
+    <string id="32006">Upřednostňovaný jazyk informací o interpretovi</string>
+    <string id="32007">Stáhnou pouze obrázky 16:9</string>
+    <string id="32100">Promítání</string>
+    <string id="32102">Priorita obrázku</string>
+    <string id="32200">Pokročilé</string>
+    <string id="32206">Žádné</string>
+    <string id="32207">Textová upozornění</string>
+    <string id="32208">Vlastní obrázky</string>
+    <string id="32901">Nejdříve použít vzdálené obrázky</string>
+    <string id="32902">Nejdříve použít lokální obrázky</string>
+    <string id="32903">Použít lokální i vzdálené obrázky</string>
+</strings>

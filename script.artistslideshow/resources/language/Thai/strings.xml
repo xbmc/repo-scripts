@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Thai language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/th/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">แอลเบเนีย</string>
+    <string id="30202">อารบิก</string>
+    <string id="30203">เบลารุส</string>
+    <string id="30204">บอสเนีย (ละติน)</string>
+    <string id="30205">บัลแกเรีย</string>
+    <string id="30206">คาตาลัน</string>
+    <string id="30207">จีน</string>
+    <string id="30208">โครเอเชีย</string>
+    <string id="30209">เช็ก</string>
+    <string id="30210">เดนมาร์ก</string>
+    <string id="30211">ดัตช์</string>
+    <string id="30212">อังกฤษ</string>
+    <string id="30213">เอสโตเนีย</string>
+    <string id="30214">ฟินแลนด์</string>
+    <string id="30215">ฝร่งเศส</string>
+    <string id="30216">เยอรมัน</string>
+    <string id="30217">กรีก</string>
+    <string id="30218">ฮีบรู</string>
+    <string id="30219">ฮินดี</string>
+    <string id="30220">ฮังการี</string>
+    <string id="30221">ไอซ์แลนด์</string>
+    <string id="30222">อินโดนีเซีย</string>
+    <string id="30224">อิตาลี</string>
+    <string id="30225">ญี่ปุ่น</string>
+    <string id="30226">เกาหลี</string>
+    <string id="30227">ลัตเวีย</string>
+    <string id="30228">ลิทัวเนีย</string>
+    <string id="30229">มาซิโดเนีย</string>
+    <string id="30230">นอร์เวย์</string>
+    <string id="30232">โปแลนด์</string>
+    <string id="30233">โปรตุเกส</string>
+    <string id="30234">โปรตุเกส (บราซิล)</string>
+    <string id="30235">โรมาเนีย</string>
+    <string id="30236">รัสเซีย</string>
+    <string id="30237">เซอร์เบียละติน</string>
+    <string id="30238">สโลวัก</string>
+    <string id="30239">สโลวีเนีย</string>
+    <string id="30240">สเปน</string>
+    <string id="30242">สวีเดน</string>
+    <string id="30243">ไทย</string>
+    <string id="30244">ตุรกี</string>
+    <string id="30245">ยูเครน</string>
+    <string id="30246">เวียดนาม</string>
+    <string id="30247">เปอร์เซีย</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">กำลังดาวน์โหลด</string>
+
+    <!-- Settings -->
+    <string id="32000">ดาวน์โหลด</string>
+    <string id="32100">สไลด์โชว์</string>
+    <string id="32206">ไม่มี</string>
+</strings>

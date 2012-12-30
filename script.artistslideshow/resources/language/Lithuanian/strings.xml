@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Lithuanian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/lt/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Albanijos</string>
+    <string id="30202">Arabų</string>
+    <string id="30203">Baltarusijos</string>
+    <string id="30204">Bosnių (lotynų)</string>
+    <string id="30205">Bulgarų</string>
+    <string id="30206">Katalonų</string>
+    <string id="30207">Kinijos</string>
+    <string id="30208">Kroatų</string>
+    <string id="30209">Čekijos</string>
+    <string id="30210">Danijos</string>
+    <string id="30211">Olandijos</string>
+    <string id="30212">Anglijos</string>
+    <string id="30213">Estijos</string>
+    <string id="30214">Suomijos</string>
+    <string id="30215">Prancūzų</string>
+    <string id="30216">Vokietijos</string>
+    <string id="30217">Graikijos</string>
+    <string id="30218">Žydų</string>
+    <string id="30219">Hindi</string>
+    <string id="30220">Vengrijos</string>
+    <string id="30221">Islandijos</string>
+    <string id="30222">Indonezijos</string>
+    <string id="30224">Italijos</string>
+    <string id="30225">Japonijos</string>
+    <string id="30226">Korėjos</string>
+    <string id="30227">Latvijos</string>
+    <string id="30228">Lietuvos</string>
+    <string id="30229">Makedonijos</string>
+    <string id="30230">Norvegijos</string>
+    <string id="30232">Lenkijos</string>
+    <string id="30233">Portugalijos</string>
+    <string id="30234">Portugalų (Brazilija)</string>
+    <string id="30235">Rumunijos</string>
+    <string id="30236">Rusijos</string>
+    <string id="30237">Serbų (lotynų)</string>
+    <string id="30238">Slovakijos</string>
+    <string id="30239">Slovėnijos</string>
+    <string id="30240">Ispanijos</string>
+    <string id="30242">Švedijos</string>
+    <string id="30243">Tailando</string>
+    <string id="30244">Turkijos</string>
+    <string id="30245">Ukrainos</string>
+    <string id="30246">Vietnamo</string>
+    <string id="30247">Persų</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Parsisiuntimas</string>
+
+    <!-- Settings -->
+    <string id="32000">Atsisiųsti</string>
+    <string id="32100">Skaidrių peržiūra</string>
+    <string id="32200">Išplėstinė(-is)</string>
+    <string id="32206">Nieko</string>
+</strings>
