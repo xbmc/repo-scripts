@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Estonian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/et/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Albaania</string>
+    <string id="30202">Araabia</string>
+    <string id="30203">Valgevene</string>
+    <string id="30204">Bosnia (Ladina)</string>
+    <string id="30205">Bulgaaria</string>
+    <string id="30206">Katalaan</string>
+    <string id="30207">Hiina</string>
+    <string id="30208">Horvaatia</string>
+    <string id="30209">Tšehhi</string>
+    <string id="30210">Taani</string>
+    <string id="30211">Hollandi</string>
+    <string id="30212">Inglise</string>
+    <string id="30213">Eesti</string>
+    <string id="30214">Soome</string>
+    <string id="30215">Prantsuse</string>
+    <string id="30216">Saksa</string>
+    <string id="30217">Kreeka</string>
+    <string id="30218">Heebrea</string>
+    <string id="30219">Hindi</string>
+    <string id="30220">Ungari</string>
+    <string id="30221">Island</string>
+    <string id="30222">Indoneesia</string>
+    <string id="30224">Itaalia</string>
+    <string id="30225">Jaapani</string>
+    <string id="30226">Korea</string>
+    <string id="30227">Läti</string>
+    <string id="30228">Leedu</string>
+    <string id="30229">Makedoonia</string>
+    <string id="30230">Norra</string>
+    <string id="30232">Poola</string>
+    <string id="30233">Portugaalia</string>
+    <string id="30234">Portugaalia (Brasiilia)</string>
+    <string id="30235">Rumeenia</string>
+    <string id="30236">Vene</string>
+    <string id="30237">Serbia (Ladina)</string>
+    <string id="30238">Slovakia</string>
+    <string id="30239">Slovenia</string>
+    <string id="30240">Hispaania</string>
+    <string id="30242">Rootsi</string>
+    <string id="30243">Tai</string>
+    <string id="30244">Türgi</string>
+    <string id="30245">Ukraina</string>
+    <string id="30246">Vieetnami</string>
+    <string id="30247">Farsi</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Allalaadimine</string>
+
+    <!-- Settings -->
+    <string id="32000">Lae alla</string>
+    <string id="32100">Slaidiesitlus</string>
+    <string id="32206">Puudub</string>
+</strings>

@@ -1,3 +1,6 @@
+v.1.4.7
+- updated language files from Transifex
+
 v.1.4.6
 - fix for improper parsing of multiple artists
 - fix multiartist display in cases where first artist has no images

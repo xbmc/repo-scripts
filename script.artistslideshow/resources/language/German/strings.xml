@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- German language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/de/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Albanisch</string>
+    <string id="30202">Arabisch</string>
+    <string id="30203">Weißrussisch</string>
+    <string id="30204">Bosnisch (Latein)</string>
+    <string id="30205">Bulgarisch</string>
+    <string id="30206">Katalanisch</string>
+    <string id="30207">Chinesisch</string>
+    <string id="30208">Kroatisch</string>
+    <string id="30209">Tschechisch</string>
+    <string id="30210">Dänisch</string>
+    <string id="30211">Niederländisch</string>
+    <string id="30212">Englisch</string>
+    <string id="30213">Estnisch</string>
+    <string id="30214">Finnishh</string>
+    <string id="30215">Französisch</string>
+    <string id="30216">Deutsch</string>
+    <string id="30217">Griechisch</string>
+    <string id="30218">Hebräisch</string>
+    <string id="30219">Hindi</string>
+    <string id="30220">Ungarisch</string>
+    <string id="30221">Isländisch</string>
+    <string id="30222">Indonesisch</string>
+    <string id="30224">Italienisch</string>
+    <string id="30225">Japanisch</string>
+    <string id="30226">Koreanisch</string>
+    <string id="30227">Lettisch</string>
+    <string id="30228">Litauisch</string>
+    <string id="30229">Mazedonisch</string>
+    <string id="30230">Norwegisch</string>
+    <string id="30232">Polnisch</string>
+    <string id="30233">Portugiesisch</string>
+    <string id="30234">Portugiesisch (Brasilien)</string>
+    <string id="30235">Rumänisch</string>
+    <string id="30236">Russisch</string>
+    <string id="30237">Serbisch (Latein)</string>
+    <string id="30238">Slowakisch</string>
+    <string id="30239">Slowenisch</string>
+    <string id="30240">Spanisch</string>
+    <string id="30242">Schwedisch</string>
+    <string id="30243">Thailändisch</string>
+    <string id="30244">Türkisch</string>
+    <string id="30245">Ukrainisch</string>
+    <string id="30246">Vietnamesisch</string>
+    <string id="30247">Farsi</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Lade herunter</string>
+    <string id="30301">Downloade Künstlerbilder</string>
+    <string id="30302">Nichts heruntergeladen</string>
+    <string id="30303">Keine Bilder für Künstler gefunden</string>
+    <string id="30304">Download fertiggestellt</string>
+    <string id="30305">Alle Künstlerbilder runtergeladen.</string>
+
+    <!-- Settings -->
+    <string id="32000">Herunterladen</string>
+    <string id="32001">Downloade Bilder von Last.fm</string>
+    <string id="32002">Downloade Bilder von htbackdrops.com</string>
+    <string id="32003">Minimale Bildbreite</string>
+    <string id="32004">Minimale Bldhöhe</string>
+    <string id="32005">Downloade zusätzliche Künstlerinformationen</string>
+    <string id="32006">Bevorzugte Sprache für Künstlerinformationen</string>
+    <string id="32007">Downloade nur 16:9 Bilder</string>
+    <string id="32100">Diashow</string>
+    <string id="32101">Lokale Künstlerordner</string>
+    <string id="32102">Bildpriorität</string>
+    <string id="32103">Ausweich-Slideshow Ordner</string>
+    <string id="32104">Überschreibe Slideshowordner</string>
+    <string id="32200">Erweitert</string>
+    <string id="32201">Limit Größe des Downloadcache</string>
+    <string id="32202">Maximale Cachegröße (in Megabytes)</string>
+    <string id="32203">Downloade Benachichtigunstyp</string>
+    <string id="32204">Spezieller Benachichtigungs-Bildordner</string>
+    <string id="32205">Alternativer Name für lokalen FanArt Ordner</string>
+    <string id="32206">Aus</string>
+    <string id="32207">Textbrnachichtigungen</string>
+    <string id="32208">Spezielle Bilder</string>
+    <string id="32901">Nutze externe Bilder zuerst</string>
+    <string id="32902">Nutze interne Bilder zuerst</string>
+    <string id="32903">Nutze interne und externe Bilder</string>
+</strings>

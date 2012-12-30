@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Croatian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/hr/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Albanski</string>
+    <string id="30202">Arapski</string>
+    <string id="30203">Bjeloruski</string>
+    <string id="30204">Bosanski (Latin)</string>
+    <string id="30205">Bugarski</string>
+    <string id="30206">Katalonski</string>
+    <string id="30207">Kineski</string>
+    <string id="30208">Hrvatski</string>
+    <string id="30209">Česki</string>
+    <string id="30210">Danski</string>
+    <string id="30211">Njemački</string>
+    <string id="30212">Engleski</string>
+    <string id="30213">Estonski</string>
+    <string id="30214">Finski</string>
+    <string id="30215">Francuski</string>
+    <string id="30216">Njemački</string>
+    <string id="30217">Grčki</string>
+    <string id="30218">Hebrejski</string>
+    <string id="30219">Hindu</string>
+    <string id="30220">Mađarski</string>
+    <string id="30221">Islandski</string>
+    <string id="30222">Indonezijski</string>
+    <string id="30224">Talijanski</string>
+    <string id="30225">Japanski</string>
+    <string id="30226">Koreanski</string>
+    <string id="30227">Latvijski</string>
+    <string id="30228">Litvanski</string>
+    <string id="30229">Makedonski</string>
+    <string id="30230">Norveški</string>
+    <string id="30232">Poljski</string>
+    <string id="30233">Portugalski</string>
+    <string id="30234">Portugalski (Brazil)</string>
+    <string id="30235">Rumunjski</string>
+    <string id="30236">Ruski</string>
+    <string id="30237">SrbskiLatinica</string>
+    <string id="30238">Slovački</string>
+    <string id="30239">Slovenski</string>
+    <string id="30240">Španjolski</string>
+    <string id="30242">Švedski</string>
+    <string id="30243">Thai</string>
+    <string id="30244">Turski</string>
+    <string id="30245">Ukrainski</string>
+    <string id="30246">Vietnamski</string>
+    <string id="30247">Farsi</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Preuzimanje</string>
+
+    <!-- Settings -->
+    <string id="32000">Preuzmi</string>
+    <string id="32100">Slikovni Niz</string>
+    <string id="32206">Ništa</string>
+</strings>

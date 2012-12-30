@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Arabic language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ar/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">الألبانية</string>
+    <string id="30202">العربية</string>
+    <string id="30203">البيلاروسية</string>
+    <string id="30204">البوسنية (الاتينية)</string>
+    <string id="30205">البلغارية</string>
+    <string id="30206">الكتلانية</string>
+    <string id="30207">الصينية</string>
+    <string id="30208">الكرواتية</string>
+    <string id="30209">التشيكية</string>
+    <string id="30210">الدنماركية</string>
+    <string id="30211">الألمانية</string>
+    <string id="30212">الإنجليزية</string>
+    <string id="30213">الإستونية</string>
+    <string id="30214">إنهاء</string>
+    <string id="30215">الفرنسية</string>
+    <string id="30216">الجرمانية</string>
+    <string id="30217">اليونانية</string>
+    <string id="30218">العبرية</string>
+    <string id="30219">الهندية</string>
+    <string id="30220">الهنغارية</string>
+    <string id="30221">الأيسلاندية</string>
+    <string id="30222">الإندونيسية</string>
+    <string id="30224">الإيطالية</string>
+    <string id="30225">اليابانية</string>
+    <string id="30226">الكورية</string>
+    <string id="30227">اللاتيفية</string>
+    <string id="30228">الليتوانية</string>
+    <string id="30229">المقدونية</string>
+    <string id="30230">النرويجية</string>
+    <string id="30232">البولونية</string>
+    <string id="30233">البرتغالية</string>
+    <string id="30234">البرتغالية (البرازيل)</string>
+    <string id="30235">الرومانية</string>
+    <string id="30236">الروسية</string>
+    <string id="30237">الصربية</string>
+    <string id="30238">السلوفاكية</string>
+    <string id="30239">السلوفينية</string>
+    <string id="30240">الإسبانية</string>
+    <string id="30242">السويدية</string>
+    <string id="30243">التيلاندية</string>
+    <string id="30244">التركية</string>
+    <string id="30245">الأكرانية</string>
+    <string id="30246">الفيتنامية</string>
+    <string id="30247">الفارسية</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">تحميل</string>
+
+    <!-- Settings -->
+    <string id="32000">تحميل</string>
+    <string id="32100">عرض الشرائح</string>
+    <string id="32206">بلا</string>
+</strings>

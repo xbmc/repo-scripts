@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Icelandic language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/is/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30211">Hollenska</string>
+    <string id="30212">Enska</string>
+    <string id="30213">Eistnesks</string>
+    <string id="30214">Finnska</string>
+    <string id="30215">Franska</string>
+    <string id="30216">Þýska</string>
+    <string id="30217">Gríska</string>
+    <string id="30218">Hebreska</string>
+    <string id="30219">Hindí</string>
+    <string id="30220">Ungverska</string>
+    <string id="30221">Íslenska</string>
+    <string id="30222">Indónesíska</string>
+    <string id="30224">Ítalska</string>
+    <string id="30225">Japanska</string>
+    <string id="30226">Kóreska</string>
+    <string id="30227">Lattneska</string>
+    <string id="30228">Litháíska</string>
+    <string id="30230">Norska</string>
+    <string id="30232">Pólska</string>
+    <string id="30233">Portúgalska</string>
+    <string id="30234">Portúgalska (Brasilía)</string>
+    <string id="30235">Rúmenska</string>
+    <string id="30236">Rússneska</string>
+    <string id="30240">Spænska</string>
+    <string id="30242">Sænska</string>
+    <string id="30243">Tælenska</string>
+    <string id="30244">tyrkneska</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Niðurhala</string>
+
+    <!-- Settings -->
+    <string id="32000">Hala niður</string>
+    <string id="32100">Myndasýning</string>
+    <string id="32206">Ekkert</string>
+</strings>

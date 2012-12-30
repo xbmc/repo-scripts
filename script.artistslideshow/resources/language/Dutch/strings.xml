@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Dutch language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/nl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Languages -->
+    <string id="30201">Albanees</string>
+    <string id="30202">Arabisch</string>
+    <string id="30203">Wit-Russisch</string>
+    <string id="30204">Bosnisch</string>
+    <string id="30205">Bulgaars</string>
+    <string id="30206">Catalaans</string>
+    <string id="30207">Chinees</string>
+    <string id="30208">Kroatisch</string>
+    <string id="30209">Tsjechisch </string>
+    <string id="30210">Deens</string>
+    <string id="30211">Nederlands</string>
+    <string id="30212">Engels</string>
+    <string id="30213">Estisch</string>
+    <string id="30214">Fins</string>
+    <string id="30215">Frans</string>
+    <string id="30216">Duits</string>
+    <string id="30217">Grieks</string>
+    <string id="30218">hebreeuws</string>
+    <string id="30219">Hindi</string>
+    <string id="30220">Hongaars</string>
+    <string id="30221">IJslands</string>
+    <string id="30222">Indonesisch</string>
+    <string id="30224">Italiaans</string>
+    <string id="30225">Japans</string>
+    <string id="30226">Koreaans</string>
+    <string id="30227">Lets</string>
+    <string id="30228">Litouws</string>
+    <string id="30229">Macedonisch</string>
+    <string id="30230">Noors</string>
+    <string id="30232">Pools</string>
+    <string id="30233">Portugees</string>
+    <string id="30234">Portugees (Braziliaans)</string>
+    <string id="30235">Roemeens</string>
+    <string id="30236">Russisch</string>
+    <string id="30237">Servisch</string>
+    <string id="30238">Slowaaks</string>
+    <string id="30239">Sloveens</string>
+    <string id="30240">Spaans</string>
+    <string id="30242">Zweeds</string>
+    <string id="30243">Thais</string>
+    <string id="30244">Turks</string>
+    <string id="30245">Oekraïens</string>
+    <string id="30246">Vietnamees</string>
+    <string id="30247">Perzisch</string>
+
+    <!-- Dialog Text -->
+    <string id="30300">Downloaden</string>
+    <string id="30301">Downloaden afbeeldingen artiest</string>
+    <string id="30302">Niets gedownload</string>
+    <string id="30303">Geen afbeeldingen van artiest gevonden</string>
+    <string id="30304">Download voltooid</string>
+    <string id="30305">Alle artiestafbeeldingen gedownload</string>
+
+    <!-- Settings -->
+    <string id="32000">Downloaden</string>
+    <string id="32001">Download afbeeldingen van Last.FM</string>
+    <string id="32002">Download afbeeldingen van htbackdrops.com</string>
+    <string id="32003">Minimale afbeeldingsbreedte</string>
+    <string id="32004">Minimale afbeeldingshoogte</string>
+    <string id="32005">Download additionele artiestinformatie</string>
+    <string id="32006">Voorkeurstaal voor artiestinformatie</string>
+    <string id="32007">Download alleen 16:9 afbeeldingen</string>
+    <string id="32100">Diashow</string>
+    <string id="32101">Lokale artiestfolder</string>
+    <string id="32102">Afbeeldingsvoorkeur</string>
+    <string id="32103">Diashow basisfolder </string>
+    <string id="32104">Diashowfolder negeren</string>
+    <string id="32200">Geavanceerd</string>
+    <string id="32201">Download cache-omvang beperken</string>
+    <string id="32202">Maximale cache-omvang (in megabytes)</string>
+    <string id="32203">Downloadvermelding type</string>
+    <string id="32204">Aangepaste vermelding afbeeldingenfolder</string>
+    <string id="32205">Andere naam voor lokale fanart folder</string>
+    <string id="32206">Geen</string>
+    <string id="32207">Tekstvermeldingen</string>
+    <string id="32208">Aangepaste afbeeldingen</string>
+    <string id="32901">Gebruik externe afbeeldingen eerst</string>
+    <string id="32902">Gebruik lokale afbeeldingen eerst</string>
+    <string id="32903">Gebruik lokale en externe afbeeldingen</string>
+</strings>
