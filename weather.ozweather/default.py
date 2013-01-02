@@ -67,20 +67,22 @@ def striplist(l, chars):
 
 def log(message, inst=None):
     if inst is None:
-      xbmc.log(__plugin__ + ": " + message)
+      xbmc.log(__plugin__ + ": " + message, level=xbmc.LOGDEBUG)
     else:
-      xbmc.log(__plugin__ + ": Exception: " + message + "[" + str(inst) +"]")
+      xbmc.log(__plugin__ + ": Exception: " + message + "[" + str(inst) +"]", level=xbmc.LOGDEBUG)
 
 ################################################################################
 # Just sets window properties we can refer to later in the MyWeather.xml skin file
 
 def set_property(name, value = ""):
+    log("Setting property - Name: [" + name + "] - Value:[" + value +"]")
     WEATHER_WINDOW.setProperty(name, value)
 
 ################################################################################
 # blank out all the window properties
 
 def clearProperties():
+    log("Clearing Properties")
     try:
       set_property('Weather.IsFetched')
       set_property('Radar')
@@ -116,6 +118,7 @@ def clearProperties():
 # set the location and radar code properties
 
 def refresh_locations():
+    log("Refreshing locations from settings")
     location_set1 = __addon__.getSetting('Location1')
     location_set2 = __addon__.getSetting('Location2')
     location_set3 = __addon__.getSetting('Location3')
@@ -155,6 +158,7 @@ def refresh_locations():
         set_property('Location6', '')
     set_property('Locations', str(locations))
 
+    log("Refreshing radar locations")
     radar_set1 = __addon__.getSetting('Radar1')
     radar_set2 = __addon__.getSetting('Radar2')
     radar_set3 = __addon__.getSetting('Radar3')
@@ -201,6 +205,8 @@ def refresh_locations():
 # if the appropriate setting is set
 
 def forecast(url, radarCode):
+    log("Called forecast()")
+
     #pull in the paths
     global radarBackgroundsPath, loopImagesPath
 
@@ -219,12 +225,14 @@ def forecast(url, radarCode):
       radarBackgroundsPath = xbmc.translatePath("special://profile/addon_data/weather.ozweather/radarbackgrounds/" + radarCode + "/");
       loopImagesPath = xbmc.translatePath("special://profile/addon_data/weather.ozweather/currentloop/" + radarCode + "/");
 
+      log("Build radar images")
       buildImages(radarCode)
       radar = ""
       radar = __addon__.getSetting('Radar%s' % sys.argv[1])
       set_property('Radar', radar)
 
     #and now get and set all the temperatures etc.
+    log("Get the forecast data from weatherzone.com.au: " + url)
     try:
       data = common.fetchPage({"link":url})
     except Exception as inst:
@@ -240,14 +248,6 @@ def forecast(url, radarCode):
 def downloadBackground(radarCode, fileName):
     global radarBackgroundsPath, loopImagesPath
 
-    #import PIL only if we need it so the add on can be run for data only
-    #on platforms without PIL
-    #log("Importing PIL as extra features are activated.")
-    from PIL import Image
-
-    #ok get ready to retrieve some images
-    image = urllib.URLopener()
-
     outFileName = fileName
 
     #the legend file doesn't have the radar code int he filename
@@ -257,18 +257,31 @@ def downloadBackground(radarCode, fileName):
       #append the radar code
       fileName = radarCode + "." + fileName
 
+    log("Is the background stale?")
+
     #are the backgrounds stale?
     if xbmcvfs.exists( radarBackgroundsPath + outFileName ):
       fileCreation = os.path.getmtime( radarBackgroundsPath + outFileName)
       now = time.time()
-      dayAgo = now - 60*60*24 # Number of seconds in a day
+      weekAgo = now - 7*60*60*24 # Number of seconds in a week
       #log ("filec " + str(fileCreation) + " dayAgo " + str(dayAgo))
-      if fileCreation < dayAgo:
+      if fileCreation < weekAgo:
         log("Background older than one day - let's refresh - " + outFileName)
         os.remove(radarBackgroundsPath + outFileName)
 
+    log("Are we going to download the background? ....")
     #download the backgrounds only if we don't have them yet
     if not xbmcvfs.exists( radarBackgroundsPath + outFileName ):
+
+        log("....Yep!")
+
+        #import PIL only if we need it so the add on can be run for data only
+        #on platforms without PIL
+        log("Importing PIL as extra features are activated.")
+        from PIL import Image
+        #ok get ready to retrieve some images
+        image = urllib.URLopener()
+
         #the legend image showing the rain scale
         try:
           imageFileIndexed = radarBackgroundsPath + "idx." + fileName
@@ -306,6 +319,9 @@ def downloadBackground(radarCode, fileName):
 
 
 def prepareBackgrounds(radarCode):
+
+    log("Called prepareBackgrounds()")
+
     global radarBackgroundsPath, loopImagesPath
 
     downloadBackground(radarCode, "IDR.legend.0.png")
@@ -314,11 +330,6 @@ def prepareBackgrounds(radarCode):
     downloadBackground(radarCode, "range.png")
     downloadBackground(radarCode, "topography.png")
     downloadBackground(radarCode, "catchments.png")
-    #downloadBackground(radarCode, "waterways.png")
-    #downloadBackground(radarCode, "wthrDistricts.png")
-    #downloadBackground(radarCode, "rail.png")
-    #downloadBackground(radarCode, "roads.png")
-
 
 
 ################################################################################
@@ -329,9 +340,12 @@ def prepareBackgrounds(radarCode):
 
 def buildImages(radarCode):
 
+    log("Called buildImages with: " + radarCode)
+
     #remove the temporary files - we only want fresh radar files
     #this results in maybe ~60k used per update.
     if xbmcvfs.exists( loopImagesPath ):
+      log("Removing previous radar files")
       shutil.rmtree( loopImagesPath , ignore_errors=True)
 
     #we need make the directories to store stuff if they don't exist
@@ -340,18 +354,23 @@ def buildImages(radarCode):
     if not xbmcvfs.exists( loopImagesPath ):
       os.makedirs( loopImagesPath )
 
+    log("Prepare the backgrounds if necessary...")
     prepareBackgrounds(radarCode)
 
     #Ok so we have the backgrounds...now it is time get the loop
     #first we retrieve a list of the available files via ftp
     #ok get ready to retrieve some images
+
+    log("Download the radar loop")
     image = urllib.URLopener()
     files = []
 
+    log("Log in to BOM FTP")
     ftp = ftplib.FTP("ftp.bom.gov.au")
     ftp.login("anonymous", "anonymous@anonymous.org")
     ftp.cwd("/anon/gen/radar/")
 
+    log("Get files list")
     #connected, so let's get the list
     try:
         files = ftp.nlst()
@@ -361,6 +380,7 @@ def buildImages(radarCode):
         else:
             log("Something wrong in the ftp bit of radar images")
 
+    log("Download the files...")
     #ok now we need just the matching radar files...
     loopPicNames = []
     for f in files:
@@ -385,17 +405,16 @@ def buildImages(radarCode):
 
 def propertiesPDOM(page, extendedFeatures):
 
+    log("Use PDOM to pull weather forecast data")
     ####CURRENT DATA
     try:
       #pull data from the current observations table
         ret = common.parseDOM(page, "div", attrs = { "class": "details_lhs" })
         observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" })
         #Observations now looks like - ['18.3&deg;C', '4.7&deg;C', '18.3&deg;C', '41%', 'SSW 38km/h', '48km/h', '1015.7hPa', '-', '0.0mm / -']
-        #log(" *********************************************************** ")
-        #log(" OBESERVATIONS " + str(observations))
+        log("Observations Retrieved: " + str(observations))
         temperature = observations[0].strip( '&deg;C' )
-        #log(" *********************************************************** ")
-        #log(" TEMP " + str(temperature))
+        log(" TEMP " + str(temperature))
         dewPoint = observations[1].strip( '&deg;C' )
         feelsLike = observations[2].strip( '&deg;C')
         humidity = observations[3].strip( '%')
@@ -431,6 +450,8 @@ def propertiesPDOM(page, extendedFeatures):
       shortDesc = common.parseDOM(ret, "span", attrs = { "style": "font-size: 0.9em;" })
       shortDesc = shortDesc[0:7]
 
+      log(" shortDesc is " + str(shortDesc))
+
       for count, desc in enumerate(shortDesc):
         shortDesc[count] = shortDesc[count].title().replace( '-<br />','')
         shortDesc[count] = shortDesc[count].title().replace( '-<Br />','')
@@ -438,7 +459,7 @@ def propertiesPDOM(page, extendedFeatures):
         shortDesc[count] = shortDesc[count].title().replace( 'windy','Windy')
 
       #log the collected data, helpful for finding errors
-      #log("Collected data: shortDesc [" + str(shortDesc) + "] maxList [" + str(maxList) +"] minList [" + str(minList) + "]")
+      log("Collected data: shortDesc [" + str(shortDesc) + "] maxList [" + str(maxList) +"] minList [" + str(minList) + "]")
 
       #and the names of the days
       days = common.parseDOM(ret, "span", attrs = { "style": "font-size: larger;" })
