@@ -26,59 +26,106 @@ Properties return to Home window (id 10000) :
 
 * type=Movie
 
-Playlist<method>Movie<menu>.Type = Movie
-Playlist<method>Movie<menu>.Count = Number of movies in library or playlist
-Playlist<method>Movie<menu>.Unwatched = Number of unwatched movies in library or playlist
-Playlist<method>Movie<menu>.Watched = Number of watched movies in library or playlist
-Playlist<method>Movie<menu>.<# of movie>.Rating = Movie N°# rate
-Playlist<method>Movie<menu>.<# of movie>.Plot = Movie N°# plot
-Playlist<method>Movie<menu>.<# of movie>.RunningTime = Movie N°# running time
-Playlist<method>Movie<menu>.<# of movie>.Path = Movie N°# path (eg : C:\Movies\Movie1\Movie1.mkv)
-Playlist<method>Movie<menu>.<# of movie>.Rootpath = Movie N°# root path (eg : C:\Movies\Movie1\)
-Playlist<method>Movie<menu>.<# of movie>.Fanart = Movie N°# fanart
-Playlist<method>Movie<menu>.<# of movie>.Thumb = Movie N°# thumbnail
-Playlist<method>Movie<menu>.<# of movie>.Title = Movie N°# title
-Playlist<method>Movie<menu>.<# of movie>.Year = Movie N°# year
-Playlist<method>Movie<menu>.<# of movie>.Trailer = Movie N°# trailer
-Playlist<method>Movie<menu>.<# of movie>.Resolution = Movie N°# (values are blank, 480, 540, 576, 720, 1080)
+%s = Playlist<method>Movie<menu>
+%d = Movie number
+
+%s.Type = Movie
+%s.Count = Number of movies in library or playlist
+%s.Unwatched = Number of unwatched movies in library or playlist
+%s.Watched = Number of watched movies in library or playlist
+%s.%d.Title
+%s.%d.Year
+%s.%d.Genre
+%s.%d.Studio
+%s.%d.Plot
+%s.%d.PlotOutline
+%s.%d.Tagline
+%s.%d.Runtime
+%s.%d.Rating
+%s.%d.Trailer
+%s.%d.Art(poster)
+%s.%d.Art(fanart)
+%s.%d.Art(clearlogo)
+%s.%d.Art(clearart)
+%s.%d.Art(landscape)
+%s.%d.Art(banner)
+%s.%d.Art(discart)
+%s.%d.Resume
+%s.%d.PercentPlayed
+%s.%d.Watched
+%s.%d.File
+%s.%d.Path
+%s.%d.Play
+%s.%d.VideoCodec
+%s.%d.VideoResolution
+%s.%d.VideoAspect
+%s.%d.AudioCodec
+%s.%d.AudioChannels
+
 
 * type=Episode
 
-Playlist<method>Episode<menu>.Type = Episode
-Playlist<method>Episode<menu>.Count = Number of episodes in library or playlist
-Playlist<method>Episode<menu>.Unwatched = Number of unwatched episodes in library or playlist
-Playlist<method>Episode<menu>.Watched = Number of watched episodes in library or playlist
-Playlist<method>Episode<menu>.TvShows = Number of TV shows in library or playlist
-Playlist<method>Episode<menu>.<# of episode>.Rating = Episode N°# rate
-Playlist<method>Episode<menu>.<# of episode>.Plot = Episode N°# plot
-Playlist<method>Episode<menu>.<# of episode>.RunningTime = Episode N°# running time
-Playlist<method>Episode<menu>.<# of episode>.Path = Episode N°# path (ex : C:\TVShows\TVShow1\Season1\Episode1.avi)
-Playlist<method>Episode<menu>.<# of episode>.Rootpath = Episode N°# root path (ex : C:\TVShows\TVShow1\)
-Playlist<method>Episode<menu>.<# of episode>.Fanart = Episode N°# fanart
-Playlist<method>Episode<menu>.<# of episode>.Thumb = Episode N°# thumbnail
-Playlist<method>Episode<menu>.<# of episode>.ShowTitle = Episode N°# TV Show title
-Playlist<method>Episode<menu>.<# of episode>.EpisodeTitle = Episode N°# title
-Playlist<method>Episode<menu>.<# of episode>.EpisodeNo = Episode N°# (format sXXeXX)
-Playlist<method>Episode<menu>.<# of episode>.EpisodeSeason = Episode N°# season number
-Playlist<method>Episode<menu>.<# of episode>.EpisodeNumber = Episode N°# number
-Playlist<method>Episode<menu>.<# of episode>.TVShowFanart = TV Show fanart for episode N°#
-Playlist<method>Episode<menu>.<# of episode>.TVShowThumb = TV Show thumbnail for episode N°#
+%s = Playlist<method>Episode<menu>
+%d = Episode number
+
+%s.Type = Episode
+%s.Count = Number of episodes in library or playlist
+%s.Unwatched = Number of unwatched episodes in library or playlist
+%s.Watched = Number of watched episodes in library or playlist
+%s.TvShows = Number of TV shows in library or playlist
+%s.%d.Title
+%s.%d.Episode
+%s.%d.EpisodeNo
+%s.%d.Season
+%s.%d.Plot
+%s.%d.TVshowTitle
+%s.%d.Rating
+%s.%d.Art(thumb)
+%s.%d.Art(tvshow.fanart)
+%s.%d.Art(tvshow.poster)
+%s.%d.Art(tvshow.banner)
+%s.%d.Art(tvshow.clearlogo)
+%s.%d.Art(tvshow.clearart)
+%s.%d.Art(tvshow.landscape)"
+%s.%d.Art(fanart)"
+%s.%d.Art(poster)"
+%s.%d.Art(banner)"
+%s.%d.Art(clearlogo)"
+%s.%d.Art(clearart)"
+%s.%d.Art(landscape)"
+%s.%d.Resume"
+%s.%d.PercentPlayed"
+%s.%d.File"
+%s.%d.Path"
+%s.%d.Play
+%s.%d.VideoCodec"
+%s.%d.VideoResolution"
+%s.%d.VideoAspect"
+%s.%d.AudioCodec"
+%s.%d.AudioChannels"
 
 * type=Music
 
-Playlist<method>Music<menu>.Type = Music
-Playlist<method>Music<menu>.Artists = Number of artists in library or playlist
-Playlist<method>Music<menu>.Albums = Number of albums in library or playlist
-Playlist<method>Music<menu>.Songs = Nombre of songs in library or playlist
-Playlist<method>Music<menu>.<# of album>.Album = Album N°# title
-Playlist<method>Music<menu>.<# of album>.Artist = Album N°# artist name
-Playlist<method>Music<menu>.<# of album>.Year = Album N°# year
-Playlist<method>Music<menu>.<# of album>.Fanart = Album N°# fanart
-Playlist<method>Music<menu>.<# of album>.Thumb = Album N°# thumbnail
-Playlist<method>Music<menu>.<# of album>.ArtistPath = Album N°# artist path (eg : C:\Music\Artist1)
-Playlist<method>Music<menu>.<# of album>.AlbumPath = Album N°# path (ex : C:\Music\Artist1\Album1)
-Playlist<method>Music<menu>.<# of album>.AlbumDesc = Album N°# description
-Playlist<method>Music<menu>.<# of album>.PlayPath = Album N°# for playing (musicdb://3/1/)
+%s = Playlist<method>Music<menu>
+%d = Album number
+%s.Type = Music
+%s.Artists = Number of artists in library or playlist
+%s.Albums = Number of albums in library or playlist
+%s.Songs = Nombre of songs in library or playlist
+%s.%d.Title
+%s.%d.Label  #depricated
+%s.%d.Artist
+%s.%d.Genre
+%s.%d.Year
+%s.%d.RecordLabel
+%s.%d.Description
+%s.%d.Rating
+%s.%d.Thumb  #depricated
+%s.%d.Fanart  #depricated
+%s.%d.Art(thumb)
+%s.%d.Art(fanart)
+%s.%d.Play
+%s.%d.LibraryPath
 
 With :
 XBMC.RunScript(script.RandomAndLastItems,type=Movie,limit=10,method=Random,playlist=special://masterprofile/playlists/video/children.xsp,menu=Menu1)
@@ -90,6 +137,15 @@ PlaylistRandomMovieMenu1.1.Title
 ...
 PlaylistRandomMovieMenu1.10.Title
 
+Code example to play album:
+
+   <onclick>$INFO[Window(Home).Property(RandomAlbum.%d.Play)]</onclick>
+
+Code example to open album:
+
+   <onclick>$INFO[Window(Home).Property(RandomArtist.%d.LibraryPath)]</onclick>
+
+   
 For more information and help please check :
 
 http://forum.xbmc.org/showthread.php?p=1014084

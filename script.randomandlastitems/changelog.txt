@@ -1,3 +1,6 @@
+v2.0.1
+- Updated to Frodo compatible code
+
 v1.2.5
 - [Add] New properties TVShowThumb and TVShowFanart to get TV Show thumbnail and fanart of the episode
 

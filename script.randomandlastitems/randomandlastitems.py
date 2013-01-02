@@ -531,6 +531,7 @@ def _setAlbumPROPERTIES ( _album, _count ):
         if rating == '48':
             rating = ''
         play = 'XBMC.RunScript(' + __addonid__ + ',albumid=' + str(_album.get('id')) + ')'
+        path = 'musicdb://3/' + str(_album.get('id')) + '/'
         _setProperty("%s.%d.Title"       % ( PROPERTY, _count ), _album['title'])
         _setProperty("%s.%d.Label"       % ( PROPERTY, _count ), _album['title']) #needs to be removed
         _setProperty("%s.%d.Artist"      % ( PROPERTY, _count ), " / ".join(_album['artist']))
@@ -544,6 +545,7 @@ def _setAlbumPROPERTIES ( _album, _count ):
         _setProperty("%s.%d.Art(thumb)"  % ( PROPERTY, _count ), _album['thumbnail'])
         _setProperty("%s.%d.Art(fanart)" % ( PROPERTY, _count ), _album['fanart'])
         _setProperty("%s.%d.Play"        % ( PROPERTY, _count ), play)
+        _setProperty("%s.%d.LibraryPath" % ( PROPERTY, _count ), path)
     else:
         _setProperty("%s.%d.Title"       % ( PROPERTY, _count ), '')
     
@@ -587,12 +589,14 @@ def _parse_argv ( ):
                 METHOD = param.replace('method=', '')
             elif 'playlist=' in param:
                 PLAYLIST = param.replace('playlist=', '')
-            elif 'PROPERTY=' in param:
-                PROPERTY = param.replace('PROPERTY=', '')
+            elif 'property=' in param:
+                PROPERTY = param.replace('property=', '')
             elif 'type=' in param:
                 TYPE = param.replace('type=', '')
             elif 'unwatched=' in param:
                 UNWATCHED = param.replace('unwatched=', '')
+                if UNWATCHED == '':
+                    UNWATCHED = 'False'
             elif 'resume=' in param:
                 RESUME = param.replace('resume=', '')
         # If playlist= parameter is set and not type= get type= from playlist
