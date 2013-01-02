@@ -5,8 +5,8 @@ import xbmcgui
 import sys
 from dropbox import client, rest, session
 
-APP_KEY = 'f5wlmek6aoriqax'
-APP_SECRET = 'b1461sje1kxgzet'
+APP_KEY = utils.getSetting('dropbox_key')
+APP_SECRET = utils.getSetting('dropbox_secret')
 
 class Vfs:
     root_path = None
@@ -64,6 +64,10 @@ class DropboxFileSystem(Vfs):
     client = None
     
     def __init__(self):
+        if(APP_KEY == '' or APP_SECRET == ''):
+            xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30058),utils.getString(30059))
+            return
+        
         user_token_key,user_token_secret = self.getToken()
         
         sess = session.DropboxSession(APP_KEY,APP_SECRET,"app_folder")
@@ -84,7 +88,13 @@ class DropboxFileSystem(Vfs):
             sess.set_token(user_token_key,user_token_secret)
         
         self.client = client.DropboxClient(sess)
-        utils.log(str(self.client.account_info()))
+
+        try:
+            utils.log(str(self.client.account_info()))
+        except:
+            #this didn't work, delete the token file
+            self.deleteToken()
+            
 
     def listdir(self,directory):
         if(self.client != None and self.exists(directory)):
@@ -150,6 +160,7 @@ class DropboxFileSystem(Vfs):
             out.close()
         else:
             return False
+        
     def setToken(self,key,secret):
         #write the token files
         token_file = open(xbmc.translatePath(utils.data_dir() + "tokens.txt"),'w')
@@ -166,6 +177,10 @@ class DropboxFileSystem(Vfs):
             return [key,secret]
         else:
             return ["",""]
+
+    def deleteToken(self):
+        if(xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "tokens.txt"))):
+            xbmcvfs.delete(xbmc.translatePath(utils.data_dir() + "tokens.txt"))
             
 
 

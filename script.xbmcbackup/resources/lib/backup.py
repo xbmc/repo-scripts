@@ -62,8 +62,7 @@ class FileManager:
         for aDir in dirs:
             dirPath = xbmc.translatePath(directory + "/" + aDir)
             file_ext = aDir.split('.')[-1]
-
-            self.addFile("-" + dirPath[len(self.vfs.root_path):].decode("UTF-8"))  
+            self.addFile("-" + dirPath[len(self.vfs.root_path):])  
             #catch for "non directory" type files
             if (not any(file_ext in s for s in self.not_dir)):
                 self.walkTree(dirPath)  
@@ -71,9 +70,14 @@ class FileManager:
         #copy all the files
         for aFile in files:
             filePath = xbmc.translatePath(directory + "/" + aFile)
-            self.addFile(filePath[len(self.vfs.root_path):].decode("UTF-8"))
+            self.addFile(filePath[len(self.vfs.root_path):])
                     
     def addFile(self,filename):
+        try:
+            filename = filename.decode('UTF-8')
+        except UnicodeDecodeError:
+            filename = filename.decode('ISO-8859-2')
+            
         #write the full remote path name of this file
         utils.log("Add File: " + filename,xbmc.LOGDEBUG)
         self.fileArray.append(filename)

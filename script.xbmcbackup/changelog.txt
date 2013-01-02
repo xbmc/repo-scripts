@@ -1,3 +1,19 @@
+Version 0.3.3
+
+updated xbmc python version (2.1.0)
+
+Version 0.3.2
+
+added settings for user provided Dropbox key and secret
+
+Version 0.3.1
+
+added try/except for multiple character encodings
+
+remove token.txt file if Dropbox Authorization is revoked
+
+can shutdown xbmc after scheduled backup
+
 Version 0.3.0
 
 major vfs rewrite 
