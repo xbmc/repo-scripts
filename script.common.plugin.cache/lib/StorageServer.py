@@ -33,7 +33,7 @@ except: pass
 
 class StorageServer():
     def __init__(self, table=None, timeout=24, instance=False):
-        self.version = "1.4.0"
+        self.version = "1.5.0"
         self.plugin = "StorageClient-" + self.version
         self.instance = instance
         self.die = False
@@ -68,7 +68,11 @@ class StorageServer():
 
         self.settings = self.xbmcaddon.Addon(id='script.common.plugin.cache')
 
-        self.path = os.path.join(self.xbmc.translatePath("special://database"), 'commoncache.db')
+        self.path = self.xbmc.translatePath(self.settings.getAddonInfo("profile")).decode("utf-8")
+        if not self.xbmcvfs.exists(self.path):
+            self._log("Making path structure: " + repr(self.path))
+            self.xbmcvfs.mkdir(self.path)
+        self.path = os.path.join(self.path, 'commoncache.db')
 
         self.socket = ""
         self.clientsocket = False
@@ -129,10 +133,10 @@ class StorageServer():
             if self.platform == "win32":
                 self._log("Windows", 4)
                 port = 59994
-                self.socket = (socket.gethostname(), port)
+                self.socket = ("127.0.0.1", port)
             else:
                 self._log("POSIX", 4)
-                self.socket = os.path.join(self.xbmc.translatePath("special://temp"), 'commoncache.socket')
+                self.socket = os.path.join(self.xbmc.translatePath(self.settings.getAddonInfo("profile")).decode("utf-8"), 'commoncache.socket')
                 if self.xbmcvfs.exists(self.socket) and check_stale:
                     self._log("Deleting stale socket file : " + self.socket)
                     self.xbmcvfs.delete(self.socket)
