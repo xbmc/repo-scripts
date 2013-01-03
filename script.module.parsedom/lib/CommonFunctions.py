@@ -27,7 +27,7 @@ import HTMLParser
 #import chardet
 import json
 
-version = u"1.3.0"
+version = u"2.5.1"
 plugin = u"CommonFunctions-" + version
 print plugin
 
@@ -93,18 +93,35 @@ def getUserInputNumbers(title=u"Input", default=u""):
     return str(result)
 
 
+def getXBMCVersion():
+    log("", 3)
+    version = xbmc.getInfoLabel( "System.BuildVersion" )
+    log(version, 3)
+    for key in ["-", " "]:
+        if version.find(key) -1:
+            version = version[:version.find(key)]
+    version = float(version)
+    log(repr(version))
+    return version
+
 # Converts the request url passed on by xbmc to the plugin into a dict of key-value pairs
 def getParameters(parameterString):
     log("", 5)
     commands = {}
-    parameterString = urllib.unquote_plus(parameterString)
+    if getXBMCVersion() >= 12.0:
+        parameterString = urllib.unquote_plus(parameterString)
     splitCommands = parameterString[parameterString.find('?') + 1:].split('&')
 
     for command in splitCommands:
         if (len(command) > 0):
             splitCommand = command.split('=')
             key = splitCommand[0]
-            value = splitCommand[1]
+            try: 
+                value = splitCommand[1].encode("utf-8")
+            except:
+                log("Error utf-8 encoding argument value: " + repr(splitCommand[1]))
+                value = splitCommand[1]
+
             commands[key] = value
 
     log(repr(commands), 5)
@@ -173,7 +190,10 @@ def _getDOMContent(html, name, match, ret):  # Cleanup
 
 def _getDOMAttributes(match, name, ret):
     log("", 3)
-    lst = re.compile('<' + name + '.*?' + ret + '=(.[^>]*?)>', re.M | re.S).findall(match)
+
+    lst = re.compile('<' + name + '.*?' + ret + '=([\'"].[^>]*?[\'"])>', re.M | re.S).findall(match)
+    if len(lst) == 0:
+        lst = re.compile('<' + name + '.*?' + ret + '=(.[^>]*?)>', re.M | re.S).findall(match)
     ret = []
     for tmp in lst:
         cont_char = tmp[0]
@@ -203,6 +223,7 @@ def _getDOMAttributes(match, name, ret):
 
 def _getDOMElements(item, name, attrs):
     log("", 3)
+
     lst = []
     for key in attrs:
         lst2 = re.compile('(<' + name + '[^>]*?(?:' + key + '=[\'"]' + attrs[key] + '[\'"].*?>))', re.M | re.S).findall(item)
@@ -233,7 +254,6 @@ def _getDOMElements(item, name, attrs):
 
 def parseDOM(html, name=u"", attrs={}, ret=False):
     log("Name: " + repr(name) + " - Attrs:" + repr(attrs) + " - Ret: " + repr(ret) + " - HTML: " + str(type(html)), 3)
-    #log("BLA: " + repr(type(html)) + " - " + repr(type(name)))
 
     if isinstance(name, str): # Should be handled
         try:
