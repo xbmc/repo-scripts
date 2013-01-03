@@ -4,6 +4,9 @@
 - Add "Trying rtmpdump", "Trying vlc", "Trying mplayer" messages to OSD
 - Fix skin xml issue. 
 
+[B]Version 1.0.0[/B]
+- Fixed: made plugin work on Frodo
+
 [B]Version 0.9.3[/B]
 - Fix UTF-8 issues.
 - Fix mkdirs issues.

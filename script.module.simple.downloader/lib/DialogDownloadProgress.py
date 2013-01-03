@@ -27,14 +27,13 @@ except:
 addonDir = settings.getAddonInfo("path")
 XBMC_SKIN  = xbmc.getSkinDir()
 
-
 class xbmcguiWindowError(Exception):
     def __init__(self, winError=None):
         Exception.__init__(self, winError)
 
         
 class Control:
-    def __init__(self, control, coords=(0, 0), anim=[], **kwargs):
+    def __init__(self, control, ctype, coords=(0, 0), anim=[], **kwargs):
         self.SKINS_PATH = os.path.join(addonDir, "resources", "skins")
         self.ADDON_SKIN = ("default", XBMC_SKIN)[os.path.exists(os.path.join(self.SKINS_PATH, XBMC_SKIN))]
         self.MEDIA_PATH = os.path.join(self.SKINS_PATH, self.ADDON_SKIN, "media")
@@ -48,7 +47,7 @@ class Control:
         except: extra = {}
         option = {}
         x, y, w, h = self.getCoords(coords)
-        if type(self.controlXML) == xbmcgui.ControlImage:
+        if type(self.controlXML) == xbmcgui.ControlImage or ctype == 0:
             # http://passion-xbmc.org/gros_fichiers/XBMC%20Python%20Doc/xbmc_svn/xbmcgui.html#ControlImage
             texture = self.label
             valideOption = "colorKey, aspectRatio, colorDiffuse".split(", ")
@@ -65,7 +64,7 @@ class Control:
             # ControlImage(x, y, width, height, filename[, colorKey, aspectRatio, colorDiffuse])
             self.control = xbmcgui.ControlImage(x, y, w, h, texture, **option)
 
-        elif type(self.controlXML) == xbmcgui.ControlLabel:
+        elif type(self.controlXML) == xbmcgui.ControlLabel or ctype == 1:
             # http://passion-xbmc.org/gros_fichiers/XBMC%20Python%20Doc/xbmc_svn/xbmcgui.html#ControlLabel
             valideOption = "font, textColor, disabledColor, alignment, hasPath, angle".split(", ")
             for key, value in extra.items():
@@ -83,7 +82,7 @@ class Control:
             # ControlLabel(x, y, width, height, label[, font, textColor, disabledColor, alignment, hasPath, angle])
             self.control = xbmcgui.ControlLabel(x, y, w, h, "", **option)
 
-        elif type(self.controlXML) == xbmcgui.ControlProgress:
+        elif type(self.controlXML) == xbmcgui.ControlProgress or ctype == 2:
             # http://passion-xbmc.org/gros_fichiers/XBMC%20Python%20Doc/xbmc_svn/xbmcgui.html#ControlProgress
             valideOption = "texturebg, textureleft, texturemid, textureright, textureoverlay".split(", ")
             for key, value in kwargs.items():
@@ -92,6 +91,8 @@ class Control:
                 option[key] = self.getTexture(value)
             # ControlProgress(x, y, width, height[, texturebg, textureleft, texturemid, textureright, textureoverlay])
             self.control = xbmcgui.ControlProgress(x, y, w, h, **option)
+        else:
+            print "No match for self.controlXML: " + repr(self.controlXML)
 
     def getTexture(self, texture):
         if not xbmc.skinHasImage(texture):
@@ -155,11 +156,11 @@ class DialogDownloadProgressXML(xbmcgui.WindowXMLDialog):
         except:
             print_exc()
 
-        self.controls["background"] = Control(self.getControl(2001), coordinates, c_anim)
+        self.controls["background"] = Control(self.getControl(2001), 0, coordinates, c_anim)
 
-        self.controls["heading"] = Control(self.getControl(2002), coordinates, c_anim)
+        self.controls["heading"] = Control(self.getControl(2002), 1, coordinates, c_anim)
 
-        self.controls["label"] = Control(self.getControl(2003), coordinates, c_anim)
+        self.controls["label"] = Control(self.getControl(2003), 1, coordinates, c_anim)
 
         try:
             v = xbmc.getInfoLabel("Control.GetLabel(2045)").replace(", ", ",")
@@ -167,7 +168,8 @@ class DialogDownloadProgressXML(xbmcgui.WindowXMLDialog):
         except:
             progressTextures = {}
 
-        self.controls["progress"] = Control(self.getControl(2004), coordinates, c_anim, **progressTextures)
+
+        self.controls["progress"] = Control(self.getControl(2004), 2, coordinates, c_anim, **progressTextures)
 
     def onFocus(self, controlID):
         pass
@@ -186,9 +188,8 @@ class Window:
 
         self.SKINS_PATH = os.path.join(addonDir, "resources", "skins")
         self.ADDON_SKIN = ("default", XBMC_SKIN)[os.path.exists(os.path.join(self.SKINS_PATH, XBMC_SKIN))]
-
         windowXml = DialogDownloadProgressXML("DialogDownloadProgress.xml", addonDir, self.ADDON_SKIN)
-        #windowXml = DialogDownloadProgressXML("DialogProgress.xml", addonDir, self.ADDON_SKIN)
+        #windowXml = DialogDownloadProgressXML("DialogProgress.xml", addonDir, self.ADDON_SKIN) # Aeon nox
         self.controls = windowXml.controls
         del windowXml
 
@@ -204,8 +205,10 @@ class Window:
         error = 0
         # get the id for the current 'active' window as an integer.
         # http://wiki.xbmc.org/index.php?title=Window_IDs
-        try: currentWindowId = xbmcgui.getCurrentWindowId()
-        except: currentWindowId = self.window
+        try:
+            currentWindowId = xbmcgui.getCurrentWindowId()
+        except:
+            currentWindowId = self.window
 
         if hasattr(currentWindowId, "__int__") and currentWindowId != self.windowId:
             self.removeControls()
