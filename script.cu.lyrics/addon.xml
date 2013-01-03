@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.cu.lyrics"
        name="CU Lyrics"
-       version="3.0.0"
+       version="3.0.1"
        provider-name="Nuka1195,amet,ronie">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -18,5 +18,6 @@
     <description lang="hu">Dalszövegek keresése letöltése, megjelenítése a LyricWIKI.org webhelyről. A letöltött dalszövegek a userdata/addon_data mappába kerülnek. A dalszöveg OSD gombot aktiválni kell az elérési út megadásával a Beállítások -> Skin -> Szkriptek alatt.</description>
     <description lang="de">Suche, downloade und zeige Lyrics von LyricWIKI.org. Heruntergeladene Lyrics werden in userdata/addon_data gespeichert. Der Lyrics-Button muss im OSD aktiviert werden und der Pfad zu CU Lyrics muss in den Einstellungen spezifiziert werden.</description>
     <platform>all</platform>
+    <broken>Deprecated. Please use CU LRC Lyrics instead</broken>
   </extension>
 </addon>
