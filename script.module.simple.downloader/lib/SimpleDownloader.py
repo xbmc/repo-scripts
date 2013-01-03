@@ -24,12 +24,13 @@ import subprocess
 import DialogDownloadProgress
 
 
+#http://wiki.openelec.tv/index.php?title=How_to_make_OpenELEC_addon_-_on_MuMuDVB_sample
 class SimpleDownloader():
-    dialog = ""
+    dialog = u""
 
     def __init__(self):
-        self.version = "0.9.3"
-        self.plugin = "SimpleDownloader" + self.version
+        self.version = u"0.9.4"
+        self.plugin = u"SimpleDownloader-" + self.version
 
         if hasattr(sys.modules["__main__"], "common"):
             self.common = sys.modules["__main__"].common
@@ -82,7 +83,7 @@ class SimpleDownloader():
 
         self.language = self.settings.getLocalizedString
         self.hide_during_playback = self.settings.getSetting("hideDuringPlayback") == "true"
-        self.notification_length = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10][int(self.settings.getSetting("notification_length"))]
+        self.notification_length = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10][int(self.settings.getSetting("notification_length"))] * 1000
 
         if self.settings.getSetting("rtmp_binary"):
             self.rtmp_binary = self.settings.getSetting("rtmp_binary")
@@ -105,6 +106,7 @@ class SimpleDownloader():
         if not self.xbmcvfs.exists(self.temporary_path):
             self.common.log("Making path structure: " + repr(self.temporary_path))
             self.xbmcvfs.mkdir(self.temporary_path)
+        self.cur_dl = {}
         self.common.log("Done")
 
     def download(self, filename, params={}, async=True):
@@ -131,6 +133,7 @@ class SimpleDownloader():
 
     def _setPaths(self, filename, params={}):
         self.common.log(filename, 5)
+        # Check utf-8 stuff here
         params["path_incomplete"] = os.path.join(self.temporary_path.decode("utf-8"), self.common.makeUTF8(filename))
         params["path_complete"] = os.path.join(params["download_path"].decode("utf-8"), self.common.makeUTF8(filename))
         self.common.log(params["path_incomplete"], 5)
@@ -197,12 +200,13 @@ class SimpleDownloader():
                 if self.dialog:
                     self.dialog.close()
                     self.common.log("Closed dialog")
-                self.dialog = ""
+                self.dialog = u""
 
     def _runCommand(self, args):
         self.common.log(" ".join(args))
         try:
             proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            self.cur_dl["proc"] =  proc
         except:
             self.common.log("Couldn't run command")
             return False
@@ -419,6 +423,18 @@ class SimpleDownloader():
         if not "total_size" in item:
             item["total_size"] = 0
 
+    def _stopCurrentDownload(self):
+        self.common.log("")
+        if "proc" in self.cur_dl:
+            self.common.log("Killing: " + repr(self.cur_dl))
+            proc = self.cur_dl["proc"]
+            try:
+                proc.kill()
+                self.common.log("Killed")
+            except:
+                self.common.log("Couldn't kill")
+        self.common.log("Done")
+
     def _downloadStream(self, filename, item):
         get = item.get
         self.common.log(filename)
@@ -552,7 +568,7 @@ class SimpleDownloader():
 
                 self._generatePercent(item, params)
 
-                self.common.log("recieved chunk: %s - %s" % ( repr(item["percent"] > item["old_percent"]), repr(time.time() - params["queue_mark"])))
+                self.common.log("recieved chunk: %s - %s" % ( repr(item["percent"] > item["old_percent"]), repr(time.time() - params["queue_mark"])), 4)
                 if item["percent"] > item["old_percent"] or time.time() - params["queue_mark"] > 30:
                     self._run_async(self._updateProgress(filename, item, params))
 
@@ -670,20 +686,20 @@ class SimpleDownloader():
             items = {}
 
         if new_mark - get("queue_mark") > 1.5:
-            heading = "[%s] %sKb/s (%.2f%%)" % (len(items), speed, item["percent"])
+            heading = u"[%s] %sKb/s (%.2f%%)" % (len(items), speed, item["percent"])
             self.common.log("Updating %s - %s" % (heading, self.common.makeUTF8(filename)), 2)
             params["queue_mark"] = new_mark
 
         if self.xbmc.Player().isPlaying() and self.xbmc.getCondVisibility("VideoPlayer.IsFullscreen"):
             if self.dialog:
                 self.dialog.close()
-                self.dialog = ""
+                self.dialog = u""
         else:
             if not self.dialog:
                 self.dialog = DialogDownloadProgress.DownloadProgress()
                 self.dialog.create(self.language(201), "")
 
-            heading = "[%s] %s - %.2f%%" % (len(items), self.language(202), item["percent"])
+            heading = u"[%s] %s - %.2f%%" % (len(items), self.language(202), item["percent"])
 
             if iget("Title"):
                 self.dialog.update(percent=item["percent"], heading=heading, label=iget("Title"))
@@ -744,7 +760,7 @@ class SimpleDownloader():
                     items.append((filename, params))
                     self.common.log("Added: " + filename + " to queue - " + str(len(items)))
                 else:
-                    items.insert(0, (filename, params))
+                    items.insert(1, (filename, params)) # 1 or 0?
                     self.common.log("Moved " + filename + " to front of queue. - " + str(len(items)))
 
                 self.cache.set("SimpleDownloaderQueue", repr(items))
@@ -850,4 +866,4 @@ class SimpleDownloader():
 
     # Shows a more user-friendly notification
     def _showMessage(self, heading, message):
-        self.xbmc.executebuiltin('XBMC.Notification("%s", "%s", %s)' % (heading, self.common.makeUTF8(message), self.notification_length))
+        self.xbmc.executebuiltin((u'XBMC.Notification("%s", "%s", %s)' % (heading, self.common.makeUTF8(message), self.notification_length)).encode("utf-8"))
