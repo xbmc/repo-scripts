@@ -27,8 +27,8 @@ import HTMLParser
 #import chardet
 import json
 
-version = u"1.5.0"
-plugin = u"CommonFunctions Beta-" + version
+version = u"1.5.1"
+plugin = u"CommonFunctions-" + version
 print plugin
 
 USERAGENT = u"Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1"
@@ -97,8 +97,9 @@ def getXBMCVersion():
     log("", 3)
     version = xbmc.getInfoLabel( "System.BuildVersion" )
     log(version, 3)
-    if version.find("-") -1:
-        version = version[:version.find("-")]
+    for key in ["-", " "]:
+        if version.find(key) -1:
+            version = version[:version.find(key)]
     version = float(version)
     log(repr(version))
     return version
