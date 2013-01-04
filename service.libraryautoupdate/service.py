@@ -5,6 +5,7 @@ import xbmc
 import xbmcvfs
 import xbmcgui
 import os
+import urllib2
 import resources.lib.utils as utils
 from resources.lib.croniter import croniter
 
@@ -301,7 +302,7 @@ class AutoUpdater:
         if(utils.getSetting("verify_paths") == 'true'):
             response = eval(xbmc.executeJSONRPC('{ "jsonrpc" : "2.0", "method" : "Files.GetSources", "params":{"media":"' + media_type + '"}, "id": 1}'))
             for source in response['result']['sources']:
-                if not xbmcvfs.exists(source['file']):
+                if not self._sourceExists(source['file']):
                     #let the user know this failed, if they subscribe to notifications
                     if(utils.getSetting('notify_next_run') == 'true'):
                         utils.showNotification(utils.getString(30050),"Source " + source['label'] + " does not exist")
@@ -349,5 +350,30 @@ class AutoUpdater:
 
         while(self.scanRunning()):
             time.sleep(5)
+
+    def _sourceExists(self,source):
+        #check if this is a multipath source
+        if(source.startswith('multipath://')):
+            #code adapted from xbmc source MultiPathDirectory.cpp
+            source = source[12:]
+
+            if(source[-1:] == "/"):
+                source = source[:-1]
+
+            splitSource = source.split('/')
+
+            if(len(splitSource) > 0):
+                for aSource in splitSource:
+                    if not xbmcvfs.exists(urllib2.unquote(aSource)):
+                        #if one source in the multi does not exist, return false
+                        return False
+
+                #if we make it here they all exist
+                return True
+            else:
+                return False
+
+        else:
+            return xbmcvfs.exists(source)
 
 
