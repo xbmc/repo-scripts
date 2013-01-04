@@ -62,29 +62,22 @@ class PutlockerResolver(Plugin, UrlResolver, PluginSettings):
         #find playlist code
         r = re.search('\?stream=(.+?)\'', html)
         if r:
-            playlist_code = r.group(1)
+            code = r.group(1)
         else:
             common.addon.log_error('putlocker: playlist code not found')
             return False
         
-        #find download link
-        xml_url = re.sub('/(file|embed)/.+', '/get_file.php?stream=', web_url)
-        xml_url += playlist_code
-        try:
-            html = self.net.http_GET(xml_url).content
-        except urllib2.URLError, e:
-            common.addon.log_error('putlocker: got http error %d fetching %s' %
-                                    (e.code, xml_url))
-            return False
-
-        r = re.search('url="(.+?)"', html)
-        if r:
-            flv_url = r.group(1)
+        #download & return link.
+        if r and 'putlocker' in host:
+            Avi = "http://putlocker.com/get_file.php?stream=%s&original=1"%code
+            html = self.net.http_GET(Avi).content
+            final=re.compile('url="(.+?)"').findall(html)[0]
+            return "%s|User-Agent=%s"%(final,'Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0')
         else:
-            common.addon.log_error('putlocker: stream url not found')
-            return False
-        flv_url = flv_url.replace('&amp;','&') #ghizzu
-        return flv_url
+            Avi = "http://sockshare.com/get_file.php?stream=%s&original=1"%code
+            html = self.net.http_GET(Avi).content
+            final=re.compile('url="(.+?)"').findall(html)[0]
+            return "%s|User-Agent=%s"%(final,'Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0')
 
     def get_url(self, host, media_id):
         if 'putlocker' in host:

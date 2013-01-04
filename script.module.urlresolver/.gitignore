@@ -1,0 +1,10 @@
+*.pyc
+*.pyo
+*.cookies
+*.DS_Store
+temp/*
+script.module.urlresolver/resources/settings.xml
+doc/build
+doc/resources
+.project
+.pydevproject
