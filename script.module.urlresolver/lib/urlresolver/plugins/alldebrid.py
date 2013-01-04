@@ -31,9 +31,9 @@ import cookielib
 from t0mm0.common.net import Net
 
 
-class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, SiteAuth, PluginSettings]
-    name = "realdebrid"
+    name = "AllDebrid"
     profile_path = common.profile_path    
     cookie_file = os.path.join(profile_path, '%s.cookies' % name)
     media_url = None
@@ -55,72 +55,45 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         dialog = xbmcgui.Dialog()
 
         try:
-            url = 'http://real-debrid.com/ajax/deb.php?lang=en&sl=1&link=%s' % media_id.replace('|User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0','')
+            url = 'http://www.alldebrid.com/service.php?link=%s' % media_id
+
             source = self.net.http_GET(url).content
         except Exception, e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
-            dialog.ok(' Real-Debrid ', ' Real-Debrid server timed out ', '', '')
+            dialog.ok(' all-Debrid ', ' all-Debrid server timed out ', '', '')
             return False
         print '************* %s' % source
-        
-        if re.search('Upgrade your account now to generate a link', source):
-            dialog.ok(' Real-Debrid ', ' Upgrade your account now to generate a link ', '', '')
+
+        if re.search('login', source):
+            dialog.ok(' All Debrid Message ', ' Your account may have Expired, please check by going to the website ', '', '')
             return False
-        if source == '<span id="generation-error">Your file is unavailable on the hoster.</span>':
-            dialog.ok(' Real-Debrid ', ' Your file is unavailable on the hoster ', '', '')
+        if re.search('Hoster unsupported or under maintenance', source):
+            dialog.ok(' All Debrid Message ', ' Sorry this hoster is not supported, change the priority level in resolver settings for this host ', '', '')
             return False
-        if re.search('This hoster is not included in our free offer', source):
-            dialog.ok(' Real-Debrid ', ' This hoster is not included in our free offer ', '', '')            
-            return False
-        if re.search('No server is available for this hoster.', source):
-            dialog.ok(' Real-Debrid ', ' No server is available for this hoster ', '', '')            
-            return False
-        link =re.compile('ok"><a href="(.+?)"').findall(source)
+        link =re.compile("href='(.+?)'").findall(source)
 
         if len(link) == 0:
             return False
-        
+
         print 'link is %s' % link[0]
         self.media_url = link[0]
 
-        # avoid servers as configured in the settings to get better playback of your video on XBMC
-##        if self.get_setting('avoidserver') == 'true':
-##            print 'in chooseserver'
-##            server = re.compile('//(.+?)\.').findall(link[0])
-##            if len(server) > 0:
-##                avoid = (self.get_setting('server')).split(',')
-##                if server[0] in avoid:
-##                    check = True
-##                    while check:
-##                        check = False
-##                        new = ''
-##                        gen = random.randint(1, 18)
-##                        if len(str(gen)) == 1:
-##                            new = 's0' + str(gen)
-##                        else:
-##                            new = 's' + str(gen)
-##
-##                        if new in avoid:
-##                            check = True
-##
-##                    link[0] = re.sub('//.+?\.', '//' +new + '.', link[0], count = 1)
-##                    print 'link is %s' % link[0]
         return link[0]
-        
+
     def get_url(self, host, media_id):
         return media_id
-        
-        
+
+
     def get_host_and_id(self, url):
-        return 'www.real-debrid.com', url
+        return 'www.alldebrid.com', url
 
     def get_all_hosters(self):
         if self.allHosters is None:
-            url = 'http://real-debrid.com/lib/api/hosters.php'
+            url = 'http://alldebrid.com/api.php?action=get_host'
             self.allHosters = self.net.http_GET(url).content
-        return self.allHosters 
+        return self.allHosters
 
     def valid_url(self, url, host):
 
@@ -142,35 +115,35 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
             return False
 
     def  checkLogin(self):
-        url = 'http://real-debrid.com/lib/api/account.php'
+        url = 'http://alldebrid.com/service.php'
         if not os.path.exists(self.cookie_file):
                return True
         self.net.set_cookies(self.cookie_file)
         source =  self.net.http_GET(url).content
         print source
-        if re.search('expiration', source):
+        if re.search('login', source):
             print 'checkLogin returning False'
             return False
         else:
             print 'checkLogin returning True'
             return True
-    
+
     #SiteAuth methods
     def login(self):
         if self.checkLogin():
             try:
                 print 'Need to login since session is invalid'
-                login_data = urllib.urlencode({'user' : self.get_setting('username'), 'pass' : self.get_setting('password')})
-                url = 'https://real-debrid.com/ajax/login.php?' + login_data
+                login_data = urllib.urlencode({'action' : 'login','login_login' : self.get_setting('username'), 'login_password' : self.get_setting('password')})
+                url = 'http://alldebrid.com/register/?' + login_data
                 source = self.net.http_GET(url).content
-                if re.search('OK', source):
+                if re.search('Control panel', source):
                     self.net.save_cookies(self.cookie_file)
                     self.net.set_cookies(self.cookie_file)
                     return True
             except:
                     print 'error with http_GET'
                     dialog = xbmcgui.Dialog()
-                    dialog.ok(' Real-Debrid ', ' Unexpected error, Please try again.', '', '')            
+                    dialog.ok(' Real-Debrid ', ' Unexpected error, Please try again.', '', '')
             else:
                 return False
         else:
@@ -179,19 +152,15 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     #PluginSettings methods
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
-        xml += '<setting id="RealDebridResolver_login" '
+        xml += '<setting id="AllDebridResolver_login" '
         xml += 'type="bool" label="login" default="false"/>\n'
-        xml += '<setting id="RealDebridResolver_username" enable="eq(-1,true)" '
+        xml += '<setting id="AllDebridResolver_username" enable="eq(-1,true)" '
         xml += 'type="text" label="username" default=""/>\n'
-        xml += '<setting id="RealDebridResolver_password" enable="eq(-2,true)" '
+        xml += '<setting id="AllDebridResolver_password" enable="eq(-2,true)" '
         xml += 'type="text" label="password" option="hidden" default=""/>\n'
-##        xml += '<setting id="RealDebridResolver_avoidserver" '
-##        xml += 'type="bool" label="Avoid Servers" default="false"/>\n'        
-##        xml += '<setting id="RealDebridResolver_server" '
-##        xml += 'type="text" label="Avoid Servers # (Eg. s01,s02)" default="s09,s18"/>\n'
         return xml
-        
+
     #to indicate if this is a universal resolver
     def isUniversal(self):
-        
+
         return True

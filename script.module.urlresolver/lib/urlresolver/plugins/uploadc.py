@@ -15,7 +15,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
@@ -36,11 +35,12 @@ class UploadcResolver(Plugin, UrlResolver, PluginSettings):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
-        self.pattern = 'http://((?:www.)?uploadc.com)/([0-9a-zA-Z]+)'
+        # modified by mscreations. uploadc now needs the filename after the media id so make sure we match that
+        self.pattern = 'http://((?:www.)?uploadc.com)/([0-9a-zA-Z]+/[0-9a-zA-Z/._]+)'
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-
+        
         #get html
         try:
             html = self.net.http_GET(web_url).content
@@ -62,18 +62,12 @@ class UploadcResolver(Plugin, UrlResolver, PluginSettings):
         else:
             common.addon.log_error(self.name + ': no fields found')
             return False
-
-        # get url from packed javascript
-        r = re.findall("<script type='text/javascript'>eval.*?return p}" +
-            "\((.*?)\)\s*</script>", html, re.DOTALL + re.IGNORECASE)
-        if r:
-            sJavascript = r[1]
-            sUnpacked = jsunpack.unpack(sJavascript)
-            sPattern = '<param name="src"0="(.*?)"'
-            r = re.search(sPattern, sUnpacked)
-            if r:
-                return r.group(1)
-
+            
+        # modified by mscreations. get the file url from the returned javascript
+        match = re.search("addVariable[(]'file','(.+?)'[)]", html, re.DOTALL + re.IGNORECASE)
+        if match:
+            return match.group(1)
+        
         return False
 
     def get_url(self, host, media_id):

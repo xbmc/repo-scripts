@@ -23,14 +23,38 @@ vidxden hosts both avi and flv videos
 In testing there seems to be a timing issue with files coming up as not playable.
 This happens on both the addon and in a browser.
 """
-
-import re
-import urllib2
+import urllib2,urllib,xbmcaddon,socket,re,xbmc,os,xbmcgui
 from t0mm0.common.net import Net
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
+
+#SET DEFAULT TIMEOUT FOR SLOW SERVERS:
+socket.setdefaulttimeout(30)
+
+#SET DIRECTORIES 
+local=xbmcaddon.Addon(id='script.module.urlresolver')
+logo='http://googlechromesupportnow.com/wp-content/uploads/2012/06/Installation-103-error-in-Chrome.png'
+img="%s/resources/puzzle.png"%local.getAddonInfo('path')
+
+class InputWindow(xbmcgui.WindowDialog):# Cheers to Bastardsmkr code already done in Putlocker PRO resolver.
+    def __init__(self, *args, **kwargs):
+        self.cptloc = kwargs.get('captcha')
+        self.img = xbmcgui.ControlImage(335,30,624,180,self.cptloc)
+        self.addControl(self.img)
+        self.kbd = xbmc.Keyboard()
+
+    def get(self):
+        self.show()
+        self.kbd.doModal()
+        if (self.kbd.isConfirmed()):
+            text = self.kbd.getText()
+            self.close()
+            return text
+        self.close()
+        return False
+
 
 class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -44,30 +68,41 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         """ Human Verification """
+
         try:
             resp = self.net.http_GET(web_url)
             html = resp.content
-            post_url = resp.get_url()
-
-            form_values = {}
-            for i in re.finditer('<input name="(.+?)".+?value="(.+?)"', html):
-                form_values[i.group(1)] = i.group(2)
-
-            html = self.net.http_POST(post_url, form_data=form_values).content
-
+            try: os.remove(img)
+            except: pass
+            try:
+                filename=re.compile('<input name="fname" type="hidden" value="(.+?)">').findall(html)[0]
+                noscript=re.compile('<iframe src="(.+?)"').findall(html)[0]
+                check = self.net.http_GET(noscript).content
+                hugekey=re.compile('id="adcopy_challenge" value="(.+?)">').findall(check)[0]
+                headers= {'User-Agent':'Mozilla/6.0 (Macintosh; I; Intel Mac OS X 11_7_9; de-LI; rv:1.9b4) Gecko/2012010317 Firefox/10.0a4',
+                         'Host':'api.solvemedia.com','Referer':resp.get_url(),'Accept':'image/png,image/*;q=0.8,*/*;q=0.5'}
+                open(img, 'wb').write( self.net.http_GET("http://api.solvemedia.com%s"%re.compile('<img src="(.+?)"').findall(check)[0]).content)
+                solver = InputWindow(captcha=img)
+                puzzle = solver.get()
+                if puzzle:
+                    data={'adcopy_response':urllib.quote_plus(puzzle),'adcopy_challenge':hugekey,'op':'download1','method_free':'1','usr_login':'','id':media_id,'fname':filename}
+                    html = self.net.http_POST(resp.get_url(),data).content
+            except:
+                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]VIDXDEN[/COLOR][/B],[COLOR red]No such file or the file has been removed due to copyright infringement issues[/COLOR],2500,'+logo+')')
+                pass
         except urllib2.URLError, e:
             common.addon.log_error('vidxden: got http error %d fetching %s' %
                                   (e.code, web_url))
             return False
-        
+       
         #find packed javascript embed code     
         r = re.search('return p}\(\'(.+?);\',\d+,\d+,\'(.+?)\'\.split',html)
         if r:
             p, k = r.groups()
         else:
             common.addon.log_error('vidxden: packed javascript embed code not found')
-
-        decrypted_data = unpack_js(p, k)
+        try: decrypted_data = unpack_js(p, k)
+        except: pass
         
         #First checks for a flv url, then the if statement is for the avi url
         r = re.search('file.\',.\'(.+?).\'', decrypted_data)
@@ -79,7 +114,7 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error('vidxden: stream url not found')
             return False
 
-        return stream_url
+        return "%s|User-Agent=%s"%(stream_url,'Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0')
 
         
     def get_url(self, host, media_id):
@@ -88,8 +123,7 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
         else:
             host = 'www.vidxden.com'
         return 'http://%s/%s' % (host, media_id)
-        
-        
+       
     def get_host_and_id(self, url):
         r = re.search('//(.+?)/(?:embed-)?([0-9a-z]+)', url)
         if r:
@@ -103,7 +137,7 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
                          '(embed-)?[0-9a-z]+', url) or
                 'vidxden' in host or 'divxden' in host or
                 'vidbux' in host)
-        
+
         
 def unpack_js(p, k):
     '''emulate js unpacking code'''
@@ -135,4 +169,5 @@ def base36encode(number, alphabet='0123456789abcdefghijklmnopqrstuvwxyz'):
         base36 = alphabet[i] + base36
 
     return sign + base36
+        
 
