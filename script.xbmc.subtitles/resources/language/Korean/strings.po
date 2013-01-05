@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -308,6 +308,10 @@ msgstr "- euTorrents Password"
 msgctxt "#30150"
 msgid "No sub(s) in"
 msgstr "자막 없음:"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "수동 또는 폴더명으로 검색!"
 
 msgctxt "#30152"
 msgid "Found sub(s) in"

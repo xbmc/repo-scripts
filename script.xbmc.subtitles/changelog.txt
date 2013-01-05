@@ -1,3 +1,9 @@
+3.9.2
+- xbmc.python -> version="2.1.0"
+- [updated] language files from Transifex
+- Make pausing during UI optional, Ohad Lutzky
+- only run if Video file is playing, notify otherwise
+
 3.9.1
 - [fix] Argenteam service, jurrabi
 - [fix] Napisy24pl service, mrto

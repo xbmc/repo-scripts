@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -19,7 +19,11 @@ msgstr ""
 
 msgctxt "#610"
 msgid "Search "
-msgstr "Przeszukuję "
+msgstr "Przeszukiwanie"
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Powinno być odtwarzane wideo"
 
 msgctxt "#612"
 msgid "Manually enter search string"
@@ -27,19 +31,19 @@ msgstr "Wprowadź nazwę"
 
 msgctxt "#642"
 msgid "Searching subtitles %s"
-msgstr "Szukam napisów %s"
+msgstr "Szukanie napisów %s"
 
 msgctxt "#646"
 msgid "Connecting..."
-msgstr "Łączenie ..."
+msgstr "Łączenie..."
 
 msgctxt "#649"
 msgid "Downloading subtitles..."
-msgstr "Ściągam pliki..."
+msgstr "Pobieranie napisów..."
 
 msgctxt "#652"
 msgid "Subtitles file downloaded and extracted"
-msgstr "Napisy ściągnięte i wypakowane"
+msgstr "Napisy pobrane i wypakowane"
 
 msgctxt "#653"
 msgid "Connection failed"
@@ -71,7 +75,7 @@ msgstr "Szukaj używając nazwy folderu nadrzędnego"
 
 msgctxt "#748"
 msgid "You can't save subtitle to selected destination"
-msgstr "nie można zapisać napisów w podanym katalogu"
+msgstr "Nie można zapisać napisów w podanym katalogu"
 
 msgctxt "#750"
 msgid "Would you like to activate this subtitle temporarily?"
@@ -123,7 +127,7 @@ msgstr "Pobieraj pierwsze zsynchronizowane napisy"
 
 msgctxt "#765"
 msgid "first 'sync' subtitle downloaded"
-msgstr "Pierwsze zsynchronizowane napisy pobrane"
+msgstr "pierwsze zsynchronizowane napisy pobrane"
 
 msgctxt "#766"
 msgid "Choose Subtitle folder"
@@ -287,7 +291,7 @@ msgstr "MPI2"
 
 msgctxt "#30145"
 msgid "Use 'Subs' subfolder for storing subtitles"
-msgstr "Użyj podfolderu Napisów do przechowywania napisów"
+msgstr "Użyj podfolderu 'Subs' do przechowywania napisów"
 
 msgctxt "#30146"
 msgid "- napisy24.pl Username"
@@ -319,15 +323,15 @@ msgstr "Znaleziono napis(y) w"
 
 msgctxt "#30153"
 msgid "Searching Title... Please wait!"
-msgstr "Szykam Tytułu... proszę czekać"
+msgstr "Szukanie tytułu... proszę czekać!"
 
 msgctxt "#30154"
 msgid "Downloading... Please Wait!"
-msgstr "Pobieram... proszę czekać"
+msgstr "Pobieranie... proszę czekać!"
 
 msgctxt "#30155"
 msgid "Extracting... Please Wait!"
-msgstr "Wypaskowuję... proszę czekać"
+msgstr "Wypakowywanie... proszę czekać!"
 
 msgctxt "#30156"
 msgid "Done Extracting!"
@@ -344,6 +348,10 @@ msgstr "- Pipocas Login"
 msgctxt "#30159"
 msgid "- Pipocas Password"
 msgstr "- Pipocas Hasło"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Wstrzymaj odtwarzanie po otwarciu"
 
 msgctxt "#30201"
 msgid "Albanian"

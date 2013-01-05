@@ -22,16 +22,19 @@ sys.path.append (__resource__)
 import gui
 from utilities import Pause
 
-if ( __name__ == "__main__" ):
+if xbmc.Player().isPlayingVideo():
   pause = Pause()
   ui = gui.GUI( "script-XBMC-Subtitles-main.xml" , __cwd__ , "Default")
   if (not ui.set_allparam() or not ui.Search_Subtitles(False)):
-    pause.pause()
+    if __addon__.getSetting("pause") == "true":
+      pause.pause()
     ui.doModal()
         
   del ui
   pause.restore()
   sys.modules.clear()
+else:
+  xbmc.executebuiltin('Notification(%s,%s,%s)' %(__scriptname__, __language__(611), "1000")) 
 
 
   

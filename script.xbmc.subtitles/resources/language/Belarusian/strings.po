@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -21,6 +21,10 @@ msgctxt "#610"
 msgid "Search "
 msgstr "Пошук "
 
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Video should be running"
+
 msgctxt "#612"
 msgid "Manually enter search string"
 msgstr "Manually enter search string"
@@ -35,7 +39,7 @@ msgstr "Connecting..."
 
 msgctxt "#649"
 msgid "Downloading subtitles..."
-msgstr "Downloading subtitles..."
+msgstr "Зладоўваюцца субтытры..."
 
 msgctxt "#652"
 msgid "Subtitles file downloaded and extracted"
@@ -127,7 +131,7 @@ msgstr "first 'sync' subtitle downloaded"
 
 msgctxt "#766"
 msgid "Choose Subtitle folder"
-msgstr "Choose Subtitle folder"
+msgstr "Абраць каталёг субтытраў"
 
 msgctxt "#767"
 msgid "No 'sync' subtitle found"
@@ -147,7 +151,7 @@ msgstr "Secondary Language"
 
 msgctxt "#30103"
 msgid "Services"
-msgstr "Services"
+msgstr "Сэрвісы"
 
 msgctxt "#30104"
 msgid "- Podnapisi.net Username"
@@ -345,178 +349,182 @@ msgctxt "#30159"
 msgid "- Pipocas Password"
 msgstr "- Pipocas Password"
 
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Pause while showing UI"
+
 msgctxt "#30201"
 msgid "Albanian"
 msgstr "Albanian"
 
 msgctxt "#30202"
 msgid "Arabic"
-msgstr "Arabic"
+msgstr "Арабская"
 
 msgctxt "#30203"
 msgid "Belarusian"
-msgstr "Belarusian"
+msgstr "Беларуская"
 
 msgctxt "#30204"
 msgid "Bosnian (Latin)"
-msgstr "Bosnian (Latin)"
+msgstr "Басьнійская (лацінка)"
 
 msgctxt "#30205"
 msgid "Bulgarian"
-msgstr "Bulgarian"
+msgstr "Баўгарская"
 
 msgctxt "#30206"
 msgid "Catalan"
-msgstr "Catalan"
+msgstr "Каталёнская"
 
 msgctxt "#30207"
 msgid "Chinese"
-msgstr "Chinese"
+msgstr "Кітайская"
 
 msgctxt "#30208"
 msgid "Croatian"
-msgstr "Croatian"
+msgstr "Харвацкая"
 
 msgctxt "#30209"
 msgid "Czech"
-msgstr "Czech"
+msgstr "Чэская"
 
 msgctxt "#30210"
 msgid "Danish"
-msgstr "Danish"
+msgstr "Дацкая"
 
 msgctxt "#30211"
 msgid "Dutch"
-msgstr "Dutch"
+msgstr "Галяндзкая"
 
 msgctxt "#30212"
 msgid "English"
-msgstr "English"
+msgstr "Ангельская"
 
 msgctxt "#30213"
 msgid "Estonian"
-msgstr "Estonian"
+msgstr "Эстонская"
 
 msgctxt "#30214"
 msgid "Finnish"
-msgstr "Finnish"
+msgstr "Фінская"
 
 msgctxt "#30215"
 msgid "French"
-msgstr "French"
+msgstr "Француская"
 
 msgctxt "#30216"
 msgid "German"
-msgstr "German"
+msgstr "Нямецкая"
 
 msgctxt "#30217"
 msgid "Greek"
-msgstr "Greek"
+msgstr "Грэцкая"
 
 msgctxt "#30218"
 msgid "Hebrew"
-msgstr "Hebrew"
+msgstr "Габрэйская"
 
 msgctxt "#30219"
 msgid "Hindi"
-msgstr "Hindi"
+msgstr "Хіндзі"
 
 msgctxt "#30220"
 msgid "Hungarian"
-msgstr "Hungarian"
+msgstr "Вугорская"
 
 msgctxt "#30221"
 msgid "Icelandic"
-msgstr "Icelandic"
+msgstr "Ісьляндзкая"
 
 msgctxt "#30222"
 msgid "Indonesian"
-msgstr "Indonesian"
+msgstr "Інданэзійская"
 
 msgctxt "#30224"
 msgid "Italian"
-msgstr "Italian"
+msgstr "Італьянская"
 
 msgctxt "#30225"
 msgid "Japanese"
-msgstr "Japanese"
+msgstr "Японская"
 
 msgctxt "#30226"
 msgid "Korean"
-msgstr "Korean"
+msgstr "Карэйская"
 
 msgctxt "#30227"
 msgid "Latvian"
-msgstr "Latvian"
+msgstr "Латыская"
 
 msgctxt "#30228"
 msgid "Lithuanian"
-msgstr "Lithuanian"
+msgstr "Літувіская"
 
 msgctxt "#30229"
 msgid "Macedonian"
-msgstr "Macedonian"
+msgstr "Македонская"
 
 msgctxt "#30230"
 msgid "Norwegian"
-msgstr "Norwegian"
+msgstr "Нарвэская"
 
 msgctxt "#30232"
 msgid "Polish"
-msgstr "Polish"
+msgstr "Польская"
 
 msgctxt "#30233"
 msgid "Portuguese"
-msgstr "Portuguese"
+msgstr "Партугальская"
 
 msgctxt "#30234"
 msgid "Portuguese (Brazil)"
-msgstr "Portuguese (Brazil)"
+msgstr "Партугальская (Бразілія)"
 
 msgctxt "#30235"
 msgid "Romanian"
-msgstr "Romanian"
+msgstr "Румынская"
 
 msgctxt "#30236"
 msgid "Russian"
-msgstr "Russian"
+msgstr "Расейская"
 
 msgctxt "#30237"
 msgid "SerbianLatin"
-msgstr "SerbianLatin"
+msgstr "Сэрбская (лацінка)"
 
 msgctxt "#30238"
 msgid "Slovak"
-msgstr "Slovak"
+msgstr "Славацкая"
 
 msgctxt "#30239"
 msgid "Slovenian"
-msgstr "Slovenian"
+msgstr "Славенская"
 
 msgctxt "#30240"
 msgid "Spanish"
-msgstr "Spanish"
+msgstr "Гішпанская"
 
 msgctxt "#30242"
 msgid "Swedish"
-msgstr "Swedish"
+msgstr "Швэдзкая"
 
 msgctxt "#30243"
 msgid "Thai"
-msgstr "Thai"
+msgstr "Тайская"
 
 msgctxt "#30244"
 msgid "Turkish"
-msgstr "Turkish"
+msgstr "Турэцкая"
 
 msgctxt "#30245"
 msgid "Ukrainian"
-msgstr "Ukrainian"
+msgstr "Украінская"
 
 msgctxt "#30246"
 msgid "Vietnamese"
-msgstr "Vietnamese"
+msgstr "Віетнамская"
 
 msgctxt "#30247"
 msgid "Farsi"
-msgstr "Farsi"
+msgstr "Фарсі"

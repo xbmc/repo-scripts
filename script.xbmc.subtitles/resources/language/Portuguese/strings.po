@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -20,6 +20,10 @@ msgstr ""
 msgctxt "#610"
 msgid "Search "
 msgstr "Procurar em "
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "O video deverá estar a correr"
 
 msgctxt "#612"
 msgid "Manually enter search string"
@@ -111,7 +115,7 @@ msgstr "Deve iniciar sessão para transferir estas legendas,[CR]verifique as def
 
 msgctxt "#762"
 msgid "Addon Settings"
-msgstr "Definição do add-on"
+msgstr "Definições"
 
 msgctxt "#763"
 msgid "Auto downloading first 'sync' subtitle"
@@ -135,7 +139,7 @@ msgstr "Não foi encontrada nenhuma legenda sincronizada"
 
 msgctxt "#30100"
 msgid "Languages"
-msgstr "Seleccionar Idioma"
+msgstr "Idiomas"
 
 msgctxt "#30101"
 msgid "Primary Language"
@@ -147,7 +151,7 @@ msgstr "Idioma Secundário"
 
 msgctxt "#30103"
 msgid "Services"
-msgstr "Selecção de Serviços"
+msgstr "Serviços"
 
 msgctxt "#30104"
 msgid "- Podnapisi.net Username"
@@ -344,6 +348,10 @@ msgstr "- Nome de utilizador Pipocas"
 msgctxt "#30159"
 msgid "- Pipocas Password"
 msgstr "- Palavra passe Pipocas"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Pausar ao mostrar a interface"
 
 msgctxt "#30201"
 msgid "Albanian"

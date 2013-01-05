@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -35,11 +35,11 @@ msgstr "S'està connectant..."
 
 msgctxt "#649"
 msgid "Downloading subtitles..."
-msgstr "Descarregant subtítols..."
+msgstr "S'estan baixant els subtítols..."
 
 msgctxt "#652"
 msgid "Subtitles file downloaded and extracted"
-msgstr "Fitxer de subtítol descarregat i extret"
+msgstr "Fitxer de subtítols baixat i extret"
 
 msgctxt "#653"
 msgid "Connection failed"
@@ -107,23 +107,23 @@ msgstr "Serveis disponibles"
 
 msgctxt "#761"
 msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
-msgstr "Heu d'iniciar la sessió per descarregar aquests subtítols,[CR] verificau les vostres dades a l'apartat de Configuració"
+msgstr "Heu d'iniciar la sessió per baixar aquests subtítols,[CR] verificau les vostres dades a l'apartat de Configuració"
 
 msgctxt "#762"
 msgid "Addon Settings"
-msgstr "Ajustos del afegitó"
+msgstr "Configuració del complement"
 
 msgctxt "#763"
 msgid "Auto downloading first 'sync' subtitle"
-msgstr "Descarrega automàticament el primer subtítol 'sincronitzat'"
+msgstr "Baixa automàticament el primer subtítol 'sincronitzat'"
 
 msgctxt "#764"
 msgid "Downloading first 'sync' sub"
-msgstr "Descarregant primer subtítol 'sync'"
+msgstr "Baixant el primer subtítol 'sincronitzat'"
 
 msgctxt "#765"
 msgid "first 'sync' subtitle downloaded"
-msgstr "Descarregat primer subtítol 'sync'"
+msgstr "El primer subtítol 'sincronitzat' s'ha baixat"
 
 msgctxt "#766"
 msgid "Choose Subtitle folder"
@@ -143,7 +143,7 @@ msgstr "Idioma principal"
 
 msgctxt "#30102"
 msgid "Secondary Language"
-msgstr "idioma secundari"
+msgstr "Idioma secundari"
 
 msgctxt "#30103"
 msgid "Services"
@@ -175,7 +175,7 @@ msgstr "Introdueix manualment la cadena de cerca"
 
 msgctxt "#30111"
 msgid "Third Language"
-msgstr "Tercera llengua"
+msgstr "Tercer idioma"
 
 msgctxt "#30113"
 msgid "Select Default Movie Service"
@@ -231,7 +231,7 @@ msgstr "Cerca al següent servei disponible si no es troben resultats"
 
 msgctxt "#30131"
 msgid "Auto download first \"sync\" subtitle"
-msgstr "Descarrega automàticament el primer subtítol \"sincronitzat\""
+msgstr "Baixa automàticament el primer subtítol \"sincronitzat\""
 
 msgctxt "#30132"
 msgid "- LegendasDivx Username"
@@ -288,6 +288,30 @@ msgstr "MPl2"
 msgctxt "#30145"
 msgid "Use 'Subs' subfolder for storing subtitles"
 msgstr "Emprar carpeta 'Subs' per emmagatzemar els subtítols"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- Nom d'usuari napisy24.pl"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- Contrasenya napisy24.pl"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- Nom d'usuari euTorrents"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- Contrasenya euTorrents"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Nom d'usuari Pipocas"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Contrasenya Pipocas"
 
 msgctxt "#30201"
 msgid "Albanian"

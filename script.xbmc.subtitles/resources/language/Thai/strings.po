@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -21,6 +21,10 @@ msgctxt "#610"
 msgid "Search "
 msgstr "ค้นหา"
 
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "วิดีโอควรกำลังเล่น"
+
 msgctxt "#612"
 msgid "Manually enter search string"
 msgstr "ใส่ข้อความค้นหาด้วยตนเอง"
@@ -37,9 +41,21 @@ msgctxt "#649"
 msgid "Downloading subtitles..."
 msgstr "กำลังดาวน์โหลดคำบรรยาย"
 
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "ดาวน์โหลดและแตกไฟล์คำบรรยายแล้ว"
+
 msgctxt "#653"
 msgid "Connection failed"
 msgstr "การเชื่อมต่อล้มเหลว"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "ข้อผิดพลาดในการแตกไฟล์คำบรรยาย"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "มีคำบรรยายในเครื่องใช้งานได้"
 
 msgctxt "#656"
 msgid "Service did not respond within the time out limit"
@@ -49,13 +65,77 @@ msgctxt "#657"
 msgid "No Subtitles Found!"
 msgstr "ไม่พบคำบรรยาย"
 
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "พบคำบรรยายสำหรับ"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "ค้นหาในแฟ้มหลัก"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "คุณไม่สามารถจัดเก็บคำบรรยายในที่ที่คุณเลือก"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "คุณต้องการเปิดใช้งานคำบรรยายชั่วคราวนี้หรือไม่"
+
 msgctxt "#751"
 msgid "Enter Movie Name (year)"
 msgstr "ใส่ชื่อภาพยนตร์ (ปี)"
 
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "เซิร์ฟเวอร์ทำงานมากเกินไป โปรดลองอีกครั้งในภายหลัง"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "เข้าสู่ระบบล้มเหลว โปรดตรวจสอบการตั้งค่าส่วนเสริมของคุณ"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "เซิร์ฟเวอร์ต้องการให้คุณอนุญาตการบันทึกทับไฟล์รูปเดิม"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "กรุณาตรวจดูที่ส่วนแจ้งเตือน"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "ใส่รหัสจากรูปภาพที่ปรากฏในส่วนแจ้งเตือน"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "บริการที่ใช้งานได้"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "คุณจำเป็นต้องลงชื่อเข้าใช้เพื่อจะดาวน์โหลดคำบรรยายเหล่านี้ [CR]ตรวจสอบการตั้งค่าที่การปรับแต่งส่วนเสริมของคุณ"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "การตั้งค่าส่วนเสริม"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "กำลังดาวน์โหลดคำบรรยายแรกที่ซิงค์ก่อนอัตโนมัติ"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "กำลังดาวน์โหลดคำบรรยายรองที่ซิงค์ก่อน"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "ดาวน์โหลดคำบรรยายที่ซิงค์ก่อนเสร็จเรียบร้อย"
+
 msgctxt "#766"
 msgid "Choose Subtitle folder"
 msgstr "เลือกแฟ้มคำบรรยาย"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "ไม่พบคำบรรยายที่ซิงค์ไว้"
 
 msgctxt "#30100"
 msgid "Languages"
@@ -73,9 +153,121 @@ msgctxt "#30103"
 msgid "Services"
 msgstr "บริการ"
 
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- ชื่อผูใช้งาน Podnapisi.net"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- รหัสผ่าน Podnapisi.net"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "ตัวเลือกขั้นสูง"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "ดาวน์โหลดคำบรรยายจากแฟ้มเดียวกันกับแฟ้มภาพยนตร์"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "- ตั้งค่าเส้นทางดาวน์โหลดคำบรรยายเอง"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "ใส่ค่าการค้นหาด้วยตัวเอง"
+
 msgctxt "#30111"
 msgid "Third Language"
 msgstr "ภาษาที่สาม"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "เลือกบริการพื้นฐานของภาพยนตร์"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "เลือกบริการพื้นฐานของรายการโทรทัศน์"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "แสดงชื่อไฟล์ที่หน้าผลการค้นหา"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "ค้นหาจากแฟ้มหลัก"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "ใส่ชื่อภาษาในชื่อไฟล์"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "ตั้งการหยุดทำงานในเวลาที่กำหนดแบบพื้นฐาน"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- ชื่อผู้ใช้งาน Legendas.TV"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- รหัสผ่าน Legendas.TV"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- ชื่อผู้ใช้งาน Itasa"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- รหัสผ่าน Itasa"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- ชื่อผู้ใช้งาน Titulky"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- รหัสผ่าน Titulky"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "ค้นหาบริการถัดไปที่ใช้งานได้เมื่อค้นหาไม่พบ"
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "ดาวน์โหลดคำบรรยายแรกที่ซิงค์ก่อนอัตโนมัติ"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- ชื่อผู้ใช้งาน LegendasDivx"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- รหัสผ่าน LegendasDivx"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- ชื่อผู้ใช้งาน PTSubs"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- รหัสผ่าน PTSubs"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- ชื่อผู้ใช้งาน OmniSubs"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- รหัสผ่าน OmniSubs"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- ชื่อผู้ใช้งาน LegendasZone"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- รหัสผ่าน LegendasZone"
 
 msgctxt "#30140"
 msgid "- Choose subs type:"
@@ -97,6 +289,38 @@ msgctxt "#30144"
 msgid "MPl2"
 msgstr "MPl2"
 
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "ใช้โฟลเดอร์ย่อย 'Subs' ในการจัดเก็บคำบรรยาย"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- ชื่อผู้ใช้งาน napisy24.pl"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- รหัสผ่าน napisy24.pl"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- ชื่อผู้ใช้งาน euTorrents"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- รหัสผ่าน euTorrents"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "ไม่พบคำบรรยายในนี้"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "ค้นหาจากคู่มือหรือผู้ผลิต"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "พบคำบรรยายในนี้"
+
 msgctxt "#30153"
 msgid "Searching Title... Please wait!"
 msgstr "กำลังค้นหาชื่อ... กรุณารอสักครู่"
@@ -104,6 +328,30 @@ msgstr "กำลังค้นหาชื่อ... กรุณารอส�
 msgctxt "#30154"
 msgid "Downloading... Please Wait!"
 msgstr "กำลังดาวน์โหลด... กรุณารอสักครู่"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "กำลังแตกไฟล์... กรุณารอสักครู่"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "แตกไฟล์เสร็จสมบูรณ์"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "เรื่องที่กำลังเล่น"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- ชื่อผู้ใช้งาน Pipocas"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- รหัสผ่าน Pipocas"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "หยุดชั่วคราวขณะกำลังแสดงส่วนติดต่อผู้ใช้"
 
 msgctxt "#30201"
 msgid "Albanian"
@@ -125,6 +373,26 @@ msgctxt "#30205"
 msgid "Bulgarian"
 msgstr "บัลแกเรีย"
 
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "คาตาลัน"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "จีน"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "โครเอเชีย"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "เช็ก"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "เดนมาร์ก"
+
 msgctxt "#30211"
 msgid "Dutch"
 msgstr "ดัตช์"
@@ -136,6 +404,10 @@ msgstr "อังกฤษ"
 msgctxt "#30213"
 msgid "Estonian"
 msgstr "เอสโตเนีย"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "ฟินแลนด์"
 
 msgctxt "#30215"
 msgid "French"

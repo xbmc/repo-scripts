@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -116,6 +116,22 @@ msgstr "Postavke Dodataka"
 msgctxt "#763"
 msgid "Auto downloading first 'sync' subtitle"
 msgstr "Auto preuzimanje prvog 'Sinkroniziranog' podnaslova"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "Preuzimanje prvi 'Sinhr' podnatpisa"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "Preuzimam prve 'Sinhr' podnatpise"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Izaberi mapu podnatpisa"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "Nedostupni prvi 'Sinhr' podnatpisi"
 
 msgctxt "#30100"
 msgid "Languages"
@@ -248,6 +264,58 @@ msgstr "- LegendasZone Korisničko ime"
 msgctxt "#30139"
 msgid "- LegendasZone Password"
 msgstr "- LegendasZone lozinka"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- Odaberite tip podnatpisa:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "Rip podnatpisi"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TM Izvođač"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl Korisničko ime"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl Zaporka"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents Korisničko ime"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents Zaporka"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Traženje podnatpisa... Molim pričekajte!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Raspakiranje... Molim pričekajte!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas Korisničko ime"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas Zaporka"
 
 msgctxt "#30201"
 msgid "Albanian"

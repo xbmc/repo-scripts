@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -20,6 +20,10 @@ msgstr ""
 msgctxt "#610"
 msgid "Search "
 msgstr "Пребарај"
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Видеото би требало да се репродуцира"
 
 msgctxt "#612"
 msgid "Manually enter search string"
@@ -231,7 +235,7 @@ msgstr "Пребарај следен достапен сервис ако не 
 
 msgctxt "#30131"
 msgid "Auto download first \"sync\" subtitle"
-msgstr "Украински"
+msgstr "Автоматски превземи го првиот \"Синх\" превод"
 
 msgctxt "#30132"
 msgid "- LegendasDivx Username"
@@ -344,6 +348,10 @@ msgstr "- Pipocas Username"
 msgctxt "#30159"
 msgid "- Pipocas Password"
 msgstr "- Pipocas Password"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Паузирај додека е прикажан К.И."
 
 msgctxt "#30201"
 msgid "Albanian"

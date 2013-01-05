@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -105,6 +105,14 @@ msgctxt "#760"
 msgid "Available Services"
 msgstr "Tilgjengelige tjenester"
 
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "Addon instillinger"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Velg undertekst mappe"
+
 msgctxt "#30100"
 msgid "Languages"
 msgstr "Velg språk"
@@ -188,6 +196,110 @@ msgstr "- Itasa Brukernavn"
 msgctxt "#30127"
 msgid "- Itasa Password"
 msgstr "- Itasa Passord"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky brukernavn "
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky passord"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx brukernavn"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx passord"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs brukernavn"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs passord"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs brukernavn"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs passord"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone brukernavn"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone passord"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- Velg undertekst type"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl brukernavn"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl passord"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents brukernavn"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents passord"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "Ingen undertekst(er) i"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "Fant undertekst(er) i"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Søker... Vennligst vent"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "Laster ned... Vennligst vent"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Pakker ut... Vennligst vent"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "Ferdig pakket ut"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas brukernavn"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas passord"
 
 msgctxt "#30201"
 msgid "Albanian"

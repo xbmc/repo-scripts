@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -21,6 +21,10 @@ msgctxt "#610"
 msgid "Search "
 msgstr "Buscar em "
 
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Vídeo deve estar sendo executado"
+
 msgctxt "#612"
 msgid "Manually enter search string"
 msgstr "Busca manual"
@@ -39,15 +43,15 @@ msgstr "Baixando legendas..."
 
 msgctxt "#652"
 msgid "Subtitles file downloaded and extracted"
-msgstr "Legenda baixada e extraída"
+msgstr "Arquivo de legendas baixado e extraído"
 
 msgctxt "#653"
 msgid "Connection failed"
-msgstr "Falha na Conexão."
+msgstr "Falha na conexão"
 
 msgctxt "#654"
 msgid "Error extracting subtitles"
-msgstr "Erro extraindo legenda"
+msgstr "Erro ao extrair legendas"
 
 msgctxt "#655"
 msgid "Local subtitle available"
@@ -55,7 +59,7 @@ msgstr "Legenda local disponível"
 
 msgctxt "#656"
 msgid "Service did not respond within the time out limit"
-msgstr "O serviço não respondeu no tempo disponível"
+msgstr "O serviço não respondeu no tempo limite"
 
 msgctxt "#657"
 msgid "No Subtitles Found!"
@@ -79,19 +83,19 @@ msgstr "Você gostaria de ativar essa legenda temporariamente?"
 
 msgctxt "#751"
 msgid "Enter Movie Name (year)"
-msgstr "Digite o Nome do Filme (ano)"
+msgstr "Insira o Nome do Filme (ano)"
 
 msgctxt "#755"
 msgid "Server is overloaded, please try again later"
-msgstr "O servidor está sobrecarregado, por favor tente mais tarde"
+msgstr "O servidor está sobrecarregado, tente mais tarde"
 
 msgctxt "#756"
 msgid "Login failed. Please verify your settings at the addon Configuration"
-msgstr "O login falhou. Verifique seus dados nas Configurações do addon"
+msgstr "Falha no login. Verifique seus dados nas Configurações do addon"
 
 msgctxt "#757"
 msgid "Server requires you to rewrite code from image"
-msgstr "Servidor requer você reescreva código da imagem"
+msgstr "O servidor requer que você reescreva código da imagem"
 
 msgctxt "#758"
 msgid "Please take look at notification area"
@@ -99,7 +103,7 @@ msgstr "Por favor verifique a área de notificação"
 
 msgctxt "#759"
 msgid "Enter code of image in notification area"
-msgstr "Entre código da imagem na área de notificação"
+msgstr "Insira o código da imagem na área de notificação"
 
 msgctxt "#760"
 msgid "Available Services"
@@ -107,27 +111,27 @@ msgstr "Serviços Disponíveis"
 
 msgctxt "#761"
 msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
-msgstr "Você deve estar logado para efetuar download desta legenda[CR] verifique seus ajustes na configuração do addon."
+msgstr "Você deve estar logado para baixar esta legenda,[CR]verifique seus ajustes na configuração do addon"
 
 msgctxt "#762"
 msgid "Addon Settings"
-msgstr "Ajustes Addon"
+msgstr "Configurações do Addon"
 
 msgctxt "#763"
 msgid "Auto downloading first 'sync' subtitle"
-msgstr "Auto downloading primeira legenda sincronizada"
+msgstr "Baixando automaticamente primeira legenda sincronizada"
 
 msgctxt "#764"
 msgid "Downloading first 'sync' sub"
-msgstr "Downloading primeira legenda sincronizada"
+msgstr "Baixando primeira legenda sincronizada"
 
 msgctxt "#765"
 msgid "first 'sync' subtitle downloaded"
-msgstr "Primeira legenda sincronizada efetuar o download"
+msgstr "primeira legenda sincronizada baixada"
 
 msgctxt "#766"
 msgid "Choose Subtitle folder"
-msgstr "Escolher pasta Legendas"
+msgstr "Escolher pasta das legendas"
 
 msgctxt "#767"
 msgid "No 'sync' subtitle found"
@@ -135,11 +139,11 @@ msgstr "Nenhuma legenda 'sincronizada' encontrada"
 
 msgctxt "#30100"
 msgid "Languages"
-msgstr "Selecionar Idioma"
+msgstr "Idiomas"
 
 msgctxt "#30101"
 msgid "Primary Language"
-msgstr "Idioma Principal"
+msgstr "Idioma Primário"
 
 msgctxt "#30102"
 msgid "Secondary Language"
@@ -147,15 +151,15 @@ msgstr "Idioma Secundário"
 
 msgctxt "#30103"
 msgid "Services"
-msgstr "Seleção de Serviços"
+msgstr "Serviços"
 
 msgctxt "#30104"
 msgid "- Podnapisi.net Username"
-msgstr "- Podnapisi.net Nome Do Usuário"
+msgstr "- Podnapisi.net: Nome de Usuário"
 
 msgctxt "#30105"
 msgid "- Podnapisi.net Password"
-msgstr "- Podnapisi.net Senha"
+msgstr "- Podnapisi.net: Senha"
 
 msgctxt "#30106"
 msgid "Advanced Options"
@@ -163,7 +167,7 @@ msgstr "Opções Avançadas"
 
 msgctxt "#30107"
 msgid "Subtitle Download Folder Same As Movie"
-msgstr "Gravar Legenda na Pasta do Vídeo"
+msgstr "Gravar Legenda na Mesma Pasta do Vídeo"
 
 msgctxt "#30108"
 msgid "- Set Custom Subtitle Download Path"
@@ -195,75 +199,75 @@ msgstr "Procurar usando diretório raiz"
 
 msgctxt "#30121"
 msgid "Add Language To Filename "
-msgstr "Adicionar Língua ao Nome do Arquivo "
+msgstr "Adicionar Idioma ao Nome do Arquivo "
 
 msgctxt "#30122"
 msgid "Set Default Timeout"
-msgstr "Tempo Padrão de Timeout"
+msgstr "Tempo Limite Padrão"
 
 msgctxt "#30123"
 msgid "- Legendas.TV Username"
-msgstr "- Legendas.TV Nome do Usuário"
+msgstr "- Legendas.TV: Nome de Usuário"
 
 msgctxt "#30124"
 msgid "- Legendas.TV Password"
-msgstr "- Legendas.TV Senha"
+msgstr "- Legendas.TV: Senha"
 
 msgctxt "#30126"
 msgid "- Itasa Username"
-msgstr "- Itasa Nome do Usuário"
+msgstr "- Itasa: Nome de Usuário"
 
 msgctxt "#30127"
 msgid "- Itasa Password"
-msgstr "- Itasa Senha"
+msgstr "- Itasa: Senha"
 
 msgctxt "#30128"
 msgid "- Titulky Username"
-msgstr "- Titulky Nome do Usuário"
+msgstr "- Titulky: Nome de Usuário"
 
 msgctxt "#30129"
 msgid "- Titulky Password"
-msgstr "- Titulky Senha"
+msgstr "- Titulky: Senha"
 
 msgctxt "#30130"
 msgid "Search next available service if no results are found"
-msgstr "Search next available service if no results are found"
+msgstr "Procurar no próximo serviço disponível se nenhum resultado for encontrado"
 
 msgctxt "#30131"
 msgid "Auto download first \"sync\" subtitle"
-msgstr "Auto download first \"sync\" subtitle"
+msgstr "Baixar automaticamente primeira legenda sincronizada"
 
 msgctxt "#30132"
 msgid "- LegendasDivx Username"
-msgstr "- LegendasDivx Usuário"
+msgstr "- LegendasDivx: Usuário"
 
 msgctxt "#30133"
 msgid "- LegendasDivx Password"
-msgstr "- LegendasDivx Senha"
+msgstr "- LegendasDivx: Senha"
 
 msgctxt "#30134"
 msgid "- PTSubs Username"
-msgstr "- PTSubs Usuário"
+msgstr "- PTSubs: Usuário"
 
 msgctxt "#30135"
 msgid "- PTSubs Password"
-msgstr "- PTSubs Senha"
+msgstr "- PTSubs: Senha"
 
 msgctxt "#30136"
 msgid "- OmniSubs Username"
-msgstr "- OmniSubs Usuário"
+msgstr "- OmniSubs: Nome de  Usuário"
 
 msgctxt "#30137"
 msgid "- OmniSubs Password"
-msgstr "- OmniSubs Senha"
+msgstr "- OmniSubs: Senha"
 
 msgctxt "#30138"
 msgid "- LegendasZone Username"
-msgstr "- LegendasZone Usuário"
+msgstr "- LegendasZone: Nome de Usuário"
 
 msgctxt "#30139"
 msgid "- LegendasZone Password"
-msgstr "- LegendasZone Senha"
+msgstr "- LegendasZone: Senha"
 
 msgctxt "#30140"
 msgid "- Choose subs type:"
@@ -291,43 +295,43 @@ msgstr "Usar subpastas 'Subs' para armazenar legendas"
 
 msgctxt "#30146"
 msgid "- napisy24.pl Username"
-msgstr "- napisy24.pl Usuário"
+msgstr "- napisy24.pl: Nome de Usuário"
 
 msgctxt "#30147"
 msgid "- napisy24.pl Password"
-msgstr "- napisy24.pl Senha"
+msgstr "- napisy24.pl: Senha"
 
 msgctxt "#30148"
 msgid "- euTorrents Username"
-msgstr "-euTorrents Usuário"
+msgstr "-euTorrents: Nome de Usuário"
 
 msgctxt "#30149"
 msgid "- euTorrents Password"
-msgstr "-euTorrents Senha"
+msgstr "-euTorrents: Senha"
 
 msgctxt "#30150"
 msgid "No sub(s) in"
-msgstr "Nenhuma legenda(s) em"
+msgstr "Nenhuma legenda em"
 
 msgctxt "#30151"
 msgid "Search manual or parent!"
-msgstr "Procura manual ou diretório raiz!"
+msgstr "Busca manual ou diretório raiz!"
 
 msgctxt "#30152"
 msgid "Found sub(s) in"
-msgstr "Encontrado Legenda(s) em"
+msgstr "Legenda(s) encontrada(s) em"
 
 msgctxt "#30153"
 msgid "Searching Title... Please wait!"
-msgstr "Procurando Título...Por favor aguarde! "
+msgstr "Procurando Título... Por favor, aguarde! "
 
 msgctxt "#30154"
 msgid "Downloading... Please Wait!"
-msgstr "Downloading...Por favor aguarde!"
+msgstr "Baixando... Por favor, aguarde!"
 
 msgctxt "#30155"
 msgid "Extracting... Please Wait!"
-msgstr "Extraíndo...Por favor aguarde!"
+msgstr "Extraindo... Por favor, aguarde!"
 
 msgctxt "#30156"
 msgid "Done Extracting!"
@@ -339,11 +343,15 @@ msgstr "Reproduzindo Título!"
 
 msgctxt "#30158"
 msgid "- Pipocas Username"
-msgstr "- Pipocas Usuário"
+msgstr "- Pipocas: Nome de Usuário"
 
 msgctxt "#30159"
 msgid "- Pipocas Password"
-msgstr "- Pipocas Senha"
+msgstr "- Pipocas: Senha"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Pausa enquanto mostrando a Interface do Usuário"
 
 msgctxt "#30201"
 msgid "Albanian"

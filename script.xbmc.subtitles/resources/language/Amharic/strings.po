@@ -1,0 +1,234 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Amharic (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/am/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: am\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "መፈለጊያ "
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "የመፈለጊያ ሀረግ በእጅ ማስገቢያ "
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "ንዑስ አርእስት በመፈለግ ላይ %s"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "በመገናኘት ላይ..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "ንዑስ አርእስት በማውረድ ላይ "
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "መገናኘት አልተቻለም "
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "ንዑስ አርእስት አልተገኘም "
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "ንዑስ አርእስት ተገኝቷል ለ "
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "ያስገቡ የሙቪ ስም እና (አመት)"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "ዝግጁ ግልጋሎቶች"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "የንዑስ አርእስት ፎልደር ይምረጡ "
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "ቋንቋ "
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "ቀዳሚ ቋንቋ "
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "ተከታይ ቋንቋ "
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "ግልጋሎቶች"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "ሶስተኛ ቋንቋ "
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Chinese"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Croatian"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Czech"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Danish"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Dutch"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "English"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Estonian"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Finnish"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "French"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "German"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Greek"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Hebrew"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Hungarian"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Icelandic"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Indonesian"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Italian"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japanese"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Korean"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Latvian"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Lithuanian"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Macedonian"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norwegian"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Polish"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portuguese"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portuguese (Brazil)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Romanian"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Russian"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "SerbianLatin"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Slovak"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Slovenian"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Spanish"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Swedish"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Thai"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Turkish"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ukrainian"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnamese"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Farsi"

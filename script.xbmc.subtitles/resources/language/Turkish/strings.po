@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -43,7 +43,7 @@ msgstr "Altyazı dosyası indirildi ve açıldı"
 
 msgctxt "#653"
 msgid "Connection failed"
-msgstr "Bağlantı hatası"
+msgstr "Bağlantı başarısız"
 
 msgctxt "#654"
 msgid "Error extracting subtitles"
@@ -128,6 +128,10 @@ msgstr "ilk 'sync' altyazı karşıdan yüklendi"
 msgctxt "#766"
 msgid "Choose Subtitle folder"
 msgstr "Altyazı Klasörü Seç"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "'sync' altyazı bulunamadı"
 
 msgctxt "#30100"
 msgid "Languages"
@@ -292,6 +296,42 @@ msgstr "- napisy24.pl Kullanıcı Adı"
 msgctxt "#30147"
 msgid "- napisy24.pl Password"
 msgstr "- napisy24.pl Parola"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents Kullanıcı Adı"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents Parola"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "Altyazı(lar) yok"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "Altyazı(lar) bulundu"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Başlık Aranıyor... Lütfen bekleyin!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "İndiriliyor... Lütfen Bekleyin!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Çıkartılıyor... Lütfen Bekleyin!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas Kullanıcı Adı"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas Parola"
 
 msgctxt "#30201"
 msgid "Albanian"

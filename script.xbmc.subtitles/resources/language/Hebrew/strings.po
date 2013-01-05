@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -21,6 +21,10 @@ msgctxt "#610"
 msgid "Search "
 msgstr "חיפוש"
 
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "וידאו אמור לפעול"
+
 msgctxt "#612"
 msgid "Manually enter search string"
 msgstr "הכנס ביטוי חיפוש ידנית"
@@ -31,7 +35,7 @@ msgstr "מחפש כתוביות %s"
 
 msgctxt "#646"
 msgid "Connecting..."
-msgstr "מתחבר ..."
+msgstr "מתחבר..."
 
 msgctxt "#649"
 msgid "Downloading subtitles..."
@@ -89,9 +93,17 @@ msgctxt "#756"
 msgid "Login failed. Please verify your settings at the addon Configuration"
 msgstr "ההתחברות נכשלה. אנא וודא את פרטיך בהגדרות התוסף"
 
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "השרת דורש שתזין את הקוד מהתמונה שוב"
+
 msgctxt "#758"
 msgid "Please take look at notification area"
-msgstr "אנא הסתכל באזור ההודעות"
+msgstr "נא להביט באזור ההודעות"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "יש להכניס את הקוד מהתמונה באזור ההודעות"
 
 msgctxt "#760"
 msgid "Available Services"
@@ -99,7 +111,7 @@ msgstr "שירותים זמינים"
 
 msgctxt "#761"
 msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
-msgstr "אתה צריך להיות משתמש רשום ע\"מ להוריד כתוביות אלו,[CR]בדוק את ההגדרות שלך בתוסף"
+msgstr "עליך להיות בעל משתמש רשום ע״מ להוריד כתוביות אלו,[CR]נא לבדוק את ההגדרות שלך בתצורת התוסף"
 
 msgctxt "#762"
 msgid "Addon Settings"
@@ -108,6 +120,22 @@ msgstr "הגדרות תוסף"
 msgctxt "#763"
 msgid "Auto downloading first 'sync' subtitle"
 msgstr "מוריד אוטומטית כתוביות 'מסונכרנות' ראשונות"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "מוריד כתוביות מסונכרנות ראשונות"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "כתוביות מסונכרנות ראשונות הורדו"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "בחר תקיית כתוביות"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "לא נמצאו כתוביות מסונכרנות"
 
 msgctxt "#30100"
 msgid "Languages"
@@ -127,11 +155,11 @@ msgstr "שרותים"
 
 msgctxt "#30104"
 msgid "- Podnapisi.net Username"
-msgstr "- Podnapisi.net שם משתמש"
+msgstr "- שם משתמש ב־Podnapisi.net"
 
 msgctxt "#30105"
 msgid "- Podnapisi.net Password"
-msgstr "- Podnapisi.net ססמה"
+msgstr "- ססמה ב־Podnapisi.net"
 
 msgctxt "#30106"
 msgid "Advanced Options"
@@ -139,15 +167,15 @@ msgstr "אפשרויות מתקדמות"
 
 msgctxt "#30107"
 msgid "Subtitle Download Folder Same As Movie"
-msgstr "הורד כתוביות לתיקיית הסרט"
+msgstr "הורדת כתוביות לתיקיית הסרט"
 
 msgctxt "#30108"
 msgid "- Set Custom Subtitle Download Path"
-msgstr "- הגדר נתיב הורדת כתוביות מותאם אישית"
+msgstr "- הגדרת נתיב הורדת כתוביות"
 
 msgctxt "#30110"
 msgid "Manually Enter Search String"
-msgstr "הכנס ביטוי חיפוש ידנית"
+msgstr "הזנה ידנית של ביטוי לחיפוש"
 
 msgctxt "#30111"
 msgid "Third Language"
@@ -155,31 +183,95 @@ msgstr "שפה שלישית"
 
 msgctxt "#30113"
 msgid "Select Default Movie Service"
-msgstr "הגדר שרות ברירת מחדל לסרט"
+msgstr "הגדרת שרות סרטים כבררת מחדל"
 
 msgctxt "#30114"
 msgid "Select Default TV Show Service"
-msgstr "הגדר שרות ברירת מחדל לתכניות טלוויזיה"
+msgstr "הגדרת שרות תכניות טלוויזיה כבררת מחדל"
 
 msgctxt "#30118"
 msgid "Display file name in results page"
-msgstr "הצג שם קובץ במסך תוצאות"
+msgstr "הצגת שם הקובץ במסך התוצאות"
 
 msgctxt "#30119"
 msgid "Search Using Parent Folder"
-msgstr "חיפוש עפ\"י תיקיית אב"
+msgstr "חיפוש עפ״י תיקיית אב"
 
 msgctxt "#30121"
 msgid "Add Language To Filename "
-msgstr "הוסף שם שפה לשם קובץ"
+msgstr "הוספת שם השפה לשם קובץ"
 
 msgctxt "#30122"
 msgid "Set Default Timeout"
-msgstr "הגדר ברירת מחדל לפסק זמן "
+msgstr "הגדרת בררת מחדל לפסק זמן "
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "שם משתמש ב־Legendas.tv"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "ססמה ב־Legendas.tv"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- שם משתמש Itasa"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- סיסמה Itasa"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- שם משתמש ב־Titulky"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- ססמה ב־Titulky"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "חיפוש בשירות הזמין הבא אם לא נמצאו תוצאות"
 
 msgctxt "#30131"
 msgid "Auto download first \"sync\" subtitle"
 msgstr "הורד אוטומטית כתוביות \"מסונכרנות\" ראשונות"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx שם משתמש"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx סיסמא"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs שם משתמש"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs סיסמא"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs שם משתמש"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs סיסמא"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone שם משתמש"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone סיסמא"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- בחירת סוג הכתוביות:"
 
 msgctxt "#30141"
 msgid "SubRip"
@@ -201,6 +293,66 @@ msgctxt "#30145"
 msgid "Use 'Subs' subfolder for storing subtitles"
 msgstr "השתמש בתיקיית 'Subs' לאכסון כתוביות"
 
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl שם משתמש"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl סיסמא"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents שם משתמש"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents סיסמא"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "לא נמצאו כתוביות ב"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "חיפוש ידני או הורה!"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "נמצאו כתוביות ב"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "מחפש כותרת... אנא המתן!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "הורדת כתוביות, אנא המתן ..."
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "פרישת כתוביות, אנא המתן ..."
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "פרישת כתוביות הסתיימה"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "מציג כותרת !"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas שם משתמש"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas סיסמא"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "השהיה בעת הצגת מנשק המשתמש"
+
 msgctxt "#30201"
 msgid "Albanian"
 msgstr "אלבנית"
@@ -215,7 +367,7 @@ msgstr "בלרוסית"
 
 msgctxt "#30204"
 msgid "Bosnian (Latin)"
-msgstr "בוסנית(לטינית)"
+msgstr "בוסנית (לטינית)"
 
 msgctxt "#30205"
 msgid "Bulgarian"
@@ -235,7 +387,7 @@ msgstr "קרואטית"
 
 msgctxt "#30209"
 msgid "Czech"
-msgstr "צכית"
+msgstr "צ׳כית"
 
 msgctxt "#30210"
 msgid "Danish"
@@ -299,7 +451,7 @@ msgstr "יפנית"
 
 msgctxt "#30226"
 msgid "Korean"
-msgstr "קוראנית"
+msgstr "קוריאנית"
 
 msgctxt "#30227"
 msgid "Latvian"
@@ -323,11 +475,11 @@ msgstr "פולנית"
 
 msgctxt "#30233"
 msgid "Portuguese"
-msgstr "פורטוגזית"
+msgstr "פורטוגלית"
 
 msgctxt "#30234"
 msgid "Portuguese (Brazil)"
-msgstr "פורטוגזית(ברזיל)"
+msgstr "פורטוגלית (ברזיל)"
 
 msgctxt "#30235"
 msgid "Romanian"
@@ -345,6 +497,10 @@ msgctxt "#30238"
 msgid "Slovak"
 msgstr "סלובקית"
 
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "סלובנית"
+
 msgctxt "#30240"
 msgid "Spanish"
 msgstr "ספרדית"
@@ -355,7 +511,7 @@ msgstr "שוודית"
 
 msgctxt "#30243"
 msgid "Thai"
-msgstr "תאילנדית"
+msgstr "תאית"
 
 msgctxt "#30244"
 msgid "Turkish"
@@ -367,7 +523,7 @@ msgstr "אוקראינית"
 
 msgctxt "#30246"
 msgid "Vietnamese"
-msgstr "ויאטנמית"
+msgstr "וייטנאמית"
 
 msgctxt "#30247"
 msgid "Farsi"

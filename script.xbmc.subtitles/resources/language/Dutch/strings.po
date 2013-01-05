@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -20,6 +20,10 @@ msgstr ""
 msgctxt "#610"
 msgid "Search "
 msgstr "Doorzoek "
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Video zou af moeten spelen"
 
 msgctxt "#612"
 msgid "Manually enter search string"
@@ -116,6 +120,22 @@ msgstr "Add-on instellingen"
 msgctxt "#763"
 msgid "Auto downloading first 'sync' subtitle"
 msgstr "Automatisch de eerste \"gesynchroniseerde\" ondertitel aan het downloaden "
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "Eerste gesynchroniseerde ondertitel downloaden"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "Eerste gesynchroniseerde ondertitel gedownload"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Kies ondertitel-map"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "Geen gesynchroniseerde ondertitel gevonden"
 
 msgctxt "#30100"
 msgid "Languages"
@@ -249,9 +269,89 @@ msgctxt "#30139"
 msgid "- LegendasZone Password"
 msgstr "- LegendasZone Wachtwoord"
 
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "Kies ondertitel-type"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPI2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "Gebruik de 'Subs' folder voor ondertitel-opslag"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl Gebruikersnaam"
+
 msgctxt "#30147"
 msgid "- napisy24.pl Password"
 msgstr "Wachtwoord"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents Gebruikersnaam"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "-euTorrents wachtwoord"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "Geen ondertitel(s) in"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "Zoek Handmatig of Ouder"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "Ondertitel(s) gevonden in"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Titel zoeken... Een moment geduld!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "Downloaden... Een moment geduld!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Uitpakken... Een moment geduld!"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "Klaar met uitpakken!"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "Nu Speelt Titel"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas Gebruikersnaam"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas Wachtwoord"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Pause tijden weergave UI"
 
 msgctxt "#30201"
 msgid "Albanian"

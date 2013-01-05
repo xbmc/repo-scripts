@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -23,7 +23,9 @@ msgctxt "#610"
 msgid "Search "
 msgstr ""
 
-#empty string with id 611
+msgctxt "#611"
+msgid "Video should be running"
+msgstr ""
 
 msgctxt "#612"
 msgid "Manually enter search string"
@@ -378,7 +380,11 @@ msgctxt "#30159"
 msgid "- Pipocas Password"
 msgstr ""
 
-#empty strings from id 30160 to 30200
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr ""
+
+#empty strings from id 30161 to 30200
 #Languages
 
 msgctxt "#30201"

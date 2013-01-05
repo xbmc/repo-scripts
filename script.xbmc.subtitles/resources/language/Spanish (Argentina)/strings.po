@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: XBMC Subtitles
 # Addon id: script.xbmc.subtitles
-# Addon version: 3.9.0
+# Addon version: 3.9.2
 # Addon Provider: amet, mr_blobby
 msgid ""
 msgstr ""
@@ -20,6 +20,10 @@ msgstr ""
 msgctxt "#610"
 msgid "Search "
 msgstr "Buscar en "
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "El video debería estar reproduciéndose "
 
 msgctxt "#612"
 msgid "Manually enter search string"
@@ -75,7 +79,7 @@ msgstr "No se pueden guardar subtítulos en el destino seleccionado"
 
 msgctxt "#750"
 msgid "Would you like to activate this subtitle temporarily?"
-msgstr "¿Desea activar este subtítulo temporalmente?"
+msgstr "¿Deseas activar este subtítulo temporalmente?"
 
 msgctxt "#751"
 msgid "Enter Movie Name (year)"
@@ -179,11 +183,11 @@ msgstr "Tercer Idioma"
 
 msgctxt "#30113"
 msgid "Select Default Movie Service"
-msgstr "Seleccione Servicio de Películas Predeterminado"
+msgstr "Selecciona Servicio de Películas Predeterminado"
 
 msgctxt "#30114"
 msgid "Select Default TV Show Service"
-msgstr "Seleccione Servicio de Series de TV Predeterminado"
+msgstr "Selecciona Servicio de Series de TV Predeterminado"
 
 msgctxt "#30118"
 msgid "Display file name in results page"
@@ -344,6 +348,10 @@ msgstr "- Usuario Pipocas"
 msgctxt "#30159"
 msgid "- Pipocas Password"
 msgstr "- Contraseña Pipocas"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Pausar mientras se muestra la interfaz de usuario"
 
 msgctxt "#30201"
 msgid "Albanian"
