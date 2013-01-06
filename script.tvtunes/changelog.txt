@@ -1,4 +1,10 @@
-V3.0.2
+v3.0.4
+- changed don't replay tune when navigating with a tv show folder
+
+v3.0.3
+- fix saving themes in custom path
+
+v3.0.2
 - enable fade out by default
 
 v3.0.1

@@ -20,6 +20,11 @@ def log(txt):
     message = u'%s: %s' % (__addonid__, txt)
     xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
+def normalize_string( text ):
+    try: text = unicodedata.normalize( 'NFKD', _unicode( text ) ).encode( 'ascii', 'ignore' )
+    except: pass
+    return text
+
 try:
     # parse sys.argv for params
     log( sys.argv[ 1 ] )
@@ -39,6 +44,7 @@ class mythread( threading.Thread ):
         self.newpath = ""
         self.oldpath = ""
         self.playpath = ""
+        self.prevplaypath = ""
         self.loud = False
         self.enable_custom_path = __addon__.getSetting("custom_path_enable")
         if self.enable_custom_path == "true":
@@ -53,7 +59,9 @@ class mythread( threading.Thread ):
 
                 if xbmc.getCondVisibility( "Container.Content(Seasons)" ) or xbmc.getCondVisibility( "Container.Content(Episodes)" ) and not xbmc.Player().isPlaying() and "plugin://" not in xbmc.getInfoLabel( "ListItem.Path" ) and not xbmc.getInfoLabel( "container.folderpath" ) == "videodb://5/":
                     if self.enable_custom_path == "true":
-                        self.newpath = self.custom_path + xbmc.getInfoLabel( "ListItem.TVShowTitle" )
+                        tvshow = xbmc.getInfoLabel( "ListItem.TVShowTitle" ).replace(":","")
+                        tvshow = normalize_string( tvshow )
+                        self.newpath = os.path.join(self.custom_path, tvshow).decode("utf-8")
                     else:
                         self.newpath = xbmc.getInfoLabel( "ListItem.Path" )
                     if not self.newpath == self.oldpath and not self.newpath == "" and not self.newpath == "videodb://2/2/":
@@ -80,6 +88,11 @@ class mythread( threading.Thread ):
                         xbmc.Player().stop()
                     if self.loud: self.raise_volume()
                     xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
+
+                if xbmc.getInfoLabel( "container.folderpath" ) == "videodb://2/2/":
+                    # clear the last tune path if we are back at the root of the tvshow library
+                    self.prevplaypath = ""
+
                 time.sleep( .5 )
         except:
             print_exc()
@@ -158,6 +171,9 @@ class mythread( threading.Thread ):
         else: self.playpath = False
 
         if self.playpath:
+            if self.playpath == self.prevplaypath: 
+                return # don't play the same tune twice (when moving from season to episodes etc)
+            self.prevplaypath = self.playpath
             if not self.loud: self.lower_volume()
             xbmcgui.Window( 10025 ).setProperty( "TvTunesIsAlive", "true" )
             log( "### start playing %s" % self.playpath )

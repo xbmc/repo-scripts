@@ -8,6 +8,7 @@
 	<string id="32006">Desacagar temas en carpeta personalizada</string>
 	<string id="32007">Carpeta:</string>
 	<string id="32008">Desvanecer tema al salir de la serie</string>
+	<string id="32009">Descargar automáticamente si se encuentra una coincidencia exacta</string>
 	<string id="32101">ERROR</string>
 	<string id="32102">Sitio no encontrado</string>
 	<string id="32103">TvTunes descargas</string>
@@ -25,4 +26,7 @@
 	<string id="32115">TvTunes</string>
 	<string id="32116">Usted puede ayudar a obtener más temas en:</string>
 	<string id="32117">http://www.televisiontunes.com/</string>
+	<string id="32991">Reproducir</string>
+	<string id="32992">Descargar</string>
+	<string id="32993">Sistema de archivos</string>
 </strings>

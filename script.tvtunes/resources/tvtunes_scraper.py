@@ -81,7 +81,9 @@ class TvTunes:
         self.DIALOG_PROGRESS.create( __language__(32105) , __language__(32106) )
         if params.get("mode", "false" ) == "solo":
             if self.enable_custom_path == "true":
-                self.scan(normalize_string( params.get("name", "" ) ),self.custom_path.decode("utf-8"))              
+                tvshow = params.get("name", "" ).replace(":","")
+                tvshow = normalize_string( tvshow )
+                self.scan(normalize_string( params.get("name", "" ) ),os.path.join(self.custom_path, tvshow).decode("utf-8"))
             else:
                 self.scan(normalize_string( params.get("name", "" ) ),params.get("path", "false" ).decode("utf-8"))
         else:
@@ -226,7 +228,7 @@ class TvTunes:
                 tvshow = item['title'].replace(":","")
                 tvshow = normalize_string( tvshow )
                 if self.enable_custom_path == "true":
-                    path = self.custom_path + (tvshow)
+                    path = os.path.join(self.custom_path, tvshow).decode("utf-8")
                 else:
                     path = item['file']
                 TVlist.append( ( tvshow , path ) )
