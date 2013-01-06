@@ -1,6 +1,7 @@
 import xbmc, xbmcgui, xbmcaddon
 import re, sys, os, time
 import random
+import urllib
 from operator import itemgetter
 try:
     import json as simplejson
@@ -62,7 +63,7 @@ def _watchedOrResume ( _total, _watched, _unwatched, _result, _file ):
         _unwatched += 1
     else:
         _watched += 1
-    if (UNWATCHED == 'False' and RESUME == 'False') or (UNWATCHED == 'True' and _playcount == 0) or (RESUME == 'True' and _resume != 0):
+    if (UNWATCHED == 'False' and RESUME == 'False') or (UNWATCHED == 'True' and _playcount == 0) or (RESUME == 'True' and _resume != 0) and _file.get('dateadded'):
         _result.append(_file)
     return _total, _watched, _unwatched, _result
 
@@ -225,7 +226,7 @@ def _getEpisodesFromPlaylist ( ):
             if _file['type'] == 'tvshow':
                 _tvshows += 1
                 # La playlist fournie retourne des series il faut retrouver les episodes
-                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %s, "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "tvshowid", "art", "streamdetails"] }, "id": 1}' %(_file['id']))
+                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %s, "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(_file['id']))
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
                 #log(_json_query)
                 _json_response = simplejson.loads(_json_query)
