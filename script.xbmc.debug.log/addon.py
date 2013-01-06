@@ -3,29 +3,36 @@ import re
 import sys
 import urllib
 import urllib2
-import xbmc
+from xbmc import getCondVisibility as condtition, translatePath as translate
 import xbmcaddon
 import xbmcgui
 
-ADDON_ID = 'script.xbmc.debug.log'
-Addon = xbmcaddon.Addon(id=ADDON_ID)
-ADDON_TITLE = Addon.getAddonInfo('name')
+addon = xbmcaddon.Addon(id='script.xbmc.debug.log')
+ADDON_TITLE = addon.getAddonInfo('name')
 
 DEBUG = False
+
+STRINGS = {
+    'do_upload': 30000,
+    'upload_id': 30001,
+    'upload_url': 30002,
+    'no_email_set': 30003,
+    'email_sent': 30004
+}
+UPLOAD_LINK = 'http://xbmclogs.com/show.php?id=%s'
+UPLOAD_URL = 'http://xbmclogs.com/'
+
+
+# Open Settings on first run
+if not addon.getSetting('already_shown') == 'true':
+    addon.openSettings()
+    addon.setSetting('already_shown', 'true')
 
 
 class LogUploader(object):
 
-    STR_DO_UPLOAD = 30000
-    STR_UPLOADED_ID = 30001
-    STR_UPLOADED_URL = 30002
-    STR_NO_EMAIL_SET = 30003
-    STR_EMAIL_SENT_TO = 30004
-    STR_UPLOAD_LINK = 'http://xbmclogs.com/show.php?id=%s'
-
     def __init__(self):
         self.__log('started')
-        self.first_run()
         self.get_settings()
         found_logs = self.__get_logs()
         uploaded_logs = []
@@ -41,18 +48,12 @@ class LogUploader(object):
             pass
 
     def get_settings(self):
-        self.email_address = Addon.getSetting('email')
+        self.email_address = addon.getSetting('email')
         self.__log('settings: len(email)=%d' % len(self.email_address))
-        self.skip_oldlog = Addon.getSetting('skip_oldlog') == 'true'
+        self.skip_oldlog = addon.getSetting('skip_oldlog') == 'true'
         self.__log('settings: skip_oldlog=%s' % self.skip_oldlog)
 
-    def first_run(self):
-        if not Addon.getSetting('already_shown') == 'true':
-            Addon.openSettings()
-            Addon.setSetting('already_shown', 'true')
-
     def upload_file(self, filepath):
-        url = 'http://xbmclogs.com/'
         self.__log('reading log...')
         file_content = open(filepath, 'r').read()
         self.__log('starting upload "%s"...' % filepath)
@@ -64,7 +65,7 @@ class LogUploader(object):
         elif filepath.endswith('.xml'):
             post_dict['paste_lang'] = 'advancedsettings'
         post_data = urllib.urlencode(post_dict)
-        req = urllib2.Request(url, post_data)
+        req = urllib2.Request(UPLOAD_URL, post_data)
         response = urllib2.urlopen(req).read()
         self.__log('upload done.')
         r_id = re.compile('<id>([0-9]+)</id>', re.DOTALL)
@@ -78,19 +79,18 @@ class LogUploader(object):
 
     def ask_upload(self, logfile):
         Dialog = xbmcgui.Dialog()
-        msg1 = Addon.getLocalizedString(self.STR_DO_UPLOAD) % logfile
+        msg1 = _('do_upload') % logfile
         if self.email_address:
-            msg2 = (Addon.getLocalizedString(self.STR_EMAIL_SENT_TO)
-                    % self.email_address)
+            msg2 = _('email_sent') % self.email_address
         else:
-            msg2 = Addon.getLocalizedString(self.STR_NO_EMAIL_SET)
+            msg2 = _('no_email_set')
         return Dialog.yesno(ADDON_TITLE, msg1, '', msg2)
 
     def report_msg(self, paste_id):
-        url = self.STR_UPLOAD_LINK % paste_id
+        url = UPLOAD_LINK % paste_id
         Dialog = xbmcgui.Dialog()
-        msg1 = Addon.getLocalizedString(self.STR_UPLOADED_ID) % paste_id
-        msg2 = Addon.getLocalizedString(self.STR_UPLOADED_URL) % url
+        msg1 = _('upload_id') % paste_id
+        msg2 = _('upload_url') % url
         return Dialog.ok(ADDON_TITLE, msg1, '', msg2)
 
     def report_mail(self, mail_address, uploaded_logs):
@@ -114,30 +114,21 @@ class LogUploader(object):
             print response
 
     def __get_logs(self):
-        if xbmc.getCondVisibility('system.platform.osx'):
-            if xbmc.getCondVisibility('system.platform.atv2'):
-                log_path = '/var/mobile/Library/Preferences'
-            else:
-                log_path = os.path.join(os.path.expanduser('~'), 'Library/Logs')
-            crashlog_path = os.path.join(os.path.expanduser('~'),
-                                         'Library/Logs/CrashReporter')
+        log_path = translate('special://logpath')
+        crashlog_path = None
+        crashfile_match = None
+        if condtition('system.platform.osx') or condtition('system.platform.ios'):
+            crashlog_path = os.path.join(
+                os.path.expanduser('~'),
+                'Library/Logs/CrashReporter'
+            )
             crashfile_match = 'XBMC'
-        elif xbmc.getCondVisibility('system.platform.ios'):
-            log_path = '/var/mobile/Library/Preferences'
-            crashlog_path = os.path.join(os.path.expanduser('~'),
-                                         'Library/Logs/CrashReporter')
-            crashfile_match = 'XBMC'
-        elif xbmc.getCondVisibility('system.platform.windows'):
-            log_path = xbmc.translatePath('special://home')
+        elif condtition('system.platform.windows'):
             crashlog_path = log_path
             crashfile_match = '.dmp'
-        elif xbmc.getCondVisibility('system.platform.linux'):
-            log_path = xbmc.translatePath('special://home/temp')
+        elif condtition('system.platform.linux'):
             crashlog_path = os.path.expanduser('~')
             crashfile_match = 'xbmc_crashlog'
-        else:
-            # we are on an unknown OS and need to fix that here
-            raise Exception('UNHANDLED OS')
         # get fullpath for xbmc.log and xbmc.old.log
         log = os.path.join(log_path, 'xbmc.log')
         log_old = os.path.join(log_path, 'xbmc.old.log')
@@ -153,15 +144,21 @@ class LogUploader(object):
                                                            crashlog_files)
                 log_crash = os.path.join(crashlog_path, crashlog_files[-1])
         found_logs = []
-        if log and os.path.isfile(log):
-            found_logs.append({'title': 'xbmc.log',
-                               'path': log})
-        if not self.skip_oldlog and log_old and os.path.isfile(log_old):
-            found_logs.append({'title': 'xbmc.old.log',
-                               'path': log_old})
+        if os.path.isfile(log):
+            found_logs.append({
+                'title': 'xbmc.log',
+                'path': log
+            })
+        if not self.skip_oldlog and os.path.isfile(log_old):
+            found_logs.append({
+                'title': 'xbmc.old.log',
+                'path': log_old
+            })
         if log_crash and os.path.isfile(log_crash):
-            found_logs.append({'title': 'crash.log',
-                               'path': log_crash})
+            found_logs.append({
+                'title': 'crash.log',
+                'path': log_crash
+            })
         return found_logs
 
     def __sort_files_by_date(self, path, files):
@@ -169,7 +166,15 @@ class LogUploader(object):
         return files
 
     def __log(self, msg):
-        xbmc.log('%s: %s' % (ADDON_TITLE, msg))
+        xbmc.log(u'%s: %s' % (ADDON_TITLE, msg))
+
+
+def _(string_id):
+    if string_id in STRINGS:
+        return addon.getLocalizedString(STRINGS[string_id])
+    else:
+        self.__log('String is missing: %s' % string_id)
+        return string_id
 
 
 if __name__ == '__main__':

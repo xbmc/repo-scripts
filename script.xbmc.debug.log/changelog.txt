@@ -1,3 +1,9 @@
+12.0.0
+ - use new method for log-file path retrieval
+ - updated translations
+11.0.7
+ - add android support
+ - added Korean translation
 11.0.6
  - fixed log uploading on atv2 (thx jbeluch)
  - added crashfile uploading for windows
