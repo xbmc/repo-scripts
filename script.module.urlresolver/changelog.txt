@@ -1,3 +1,12 @@
+[B]Version 2.0.5[/B]
+- Added streamcloud
+- Added zooupload
+- Fixed divxstage - handle url with .net
+- Fixed flashx.tv - new pattern and embed code
+- Fixed vidstream - new url
+- Fixed ecostream - new embed url pattern
+- Reverted putlocker code, added option for higher vid quality
+
 [B]Version 2.0.4[/B]
 - Frodo branch
 - Updated putlocker and vidxden resolvers

@@ -35,42 +35,41 @@ class VidstreamResolver(Plugin, UrlResolver, PluginSettings):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
-        #e.g. http://vidstream.us/video/7XK5WMYBAM5R/RAONE
-        self.pattern = 'http://((?:www.)?vidstream.us)/video/(.*)'
+        #e.g. http://vidstream.in/xdfaay6ccwqj
+        self.pattern = 'http://((?:www.)?vidstream.in)/(.*)'
 
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-
         try:
-            html = self.net.http_GET(web_url).content
+            resp = self.net.http_GET(web_url)
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                     (e.code, web_url))
             return False
+        html = resp.content
+        post_url = resp.get_url()
 
-        # get settings file
-        sPattern = 'settingsFile:\s*"([^"]+)"'
-        r = re.search(sPattern, html)
+        # get post vars
+        form_values = {}
+        for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
+            form_values[i.group(1)] = i.group(2)
+        try:
+            html = self.net.http_POST(post_url, form_data=form_values).content
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                    (e.code, settings_url))
+            return False
+        # get stream url
+        pattern = 'file:\s*"([^"]+)",'
+        r = re.search(pattern, html)
         if r:
-            settings_url = r.group(1)
-            try:
-                html = self.net.http_GET(settings_url).content
-            except urllib2.URLError, e:
-                common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                        (e.code, settings_url))
-                return False
-
-            # get stream url
-            sPattern = '<videoPath value="([^"]+)"/>'
-            r = re.search(sPattern, html)
-            if r:
-                return r.group(1)
+            return r.group(1)
 
         return False
 
     def get_url(self, host, media_id):
-            return 'http://vidstream.us/video/%s' % (media_id)
+            return 'http://vidstream.in/%s' % (media_id)
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)

@@ -44,7 +44,7 @@ class EcostreamResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id) + "?ss=1"
 
         try:
-            html = self.net.http_GET(web_url).content
+            html = self.net.http_POST(web_url,{'ss':'1'}).content
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                     (e.code, web_url))
@@ -59,12 +59,24 @@ class EcostreamResolver(Plugin, UrlResolver, PluginSettings):
                 sK = str(aEntry[1])
                 sT = str(aEntry[2])
                 sKey = str(aEntry[3])
-
-                # send vars and retrieve stream url
-                sNextUrl = 'http://www.ecostream.tv/object.php?s='+sS+'&k='+sK+'&t='+sT+'&key='+sKey
-
+                # get name of php file
                 try:
-                    html = self.net.http_GET(sNextUrl).content
+                    html = self.net.http_GET('http://www.ecostream.tv/assets/js/common.js').content
+                except urllib2.URLError, e:
+                    common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                    (e.code, web_url))
+                    return False
+                sPattern = "url: '([^=]+)="
+                r = re.search(sPattern, html)
+                if r is None :
+                    common.addon.log_error(self.name + ': name of php file not found')
+                    return False
+                # send vars and retrieve stream url
+                sNextUrl = r.group(1)+'='+sS+'&k='+sK+'&t='+sT+'&key='+sKey
+                postParams = ({'s':sS,'k':sK,'t':sT,'key':sKey})
+                postHeader = ({'Referer':'http://www.ecostream.tv', 'X-Requested-With':'XMLHttpRequest'})
+                try:
+                    html = self.net.http_POST(sNextUrl, postParams,headers = postHeader).content
                 except urllib2.URLError, e:
                     common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                             (e.code, sNextUrl))
@@ -73,7 +85,7 @@ class EcostreamResolver(Plugin, UrlResolver, PluginSettings):
                 sPattern = '<param name="flashvars" value="file=(.*?)&'
                 r = re.search(sPattern, html)
                 if r:
-                    sLinkToFile = r.group(1)
+                    sLinkToFile = 'http://www.ecostream.tv'+r.group(1)
                     return sLinkToFile
 
 

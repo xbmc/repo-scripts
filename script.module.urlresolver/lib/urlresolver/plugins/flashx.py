@@ -36,23 +36,34 @@ class FlashxResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
         #e.g. http://flashx.tv/player/embed_player.php?vid=1503&width=600&height=370&autoplay=no
-        self.pattern = 'http://((?:www.)?flashx.tv)/(?:player/embed_player.php\?vid=|video/)([0-9A-Z]+)'
+        self.pattern = 'http://((?:www.|play.)?flashx.tv)/(?:player/embed_player.php\?vid=|player/embed.php\?vid=|video/)([0-9A-Z]+)'
 
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-
         try:
             html = self.net.http_GET(web_url).content
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                     (e.code, web_url))
             return False
-
         #grab stream url
         sPatternHQ = "var hq_video_file\s*=\s*'([^']+)'"        # .mp4
-        sPatternLQ = "var normal_video_file\s*=\s*'([^']+)'"    # .flv
+        #sPatternLQ = "var normal_video_file\s*=\s*'([^']+)'"    # .flv old
+        sPatternLQ = "\?hash=([^'|&]+)"
         r = re.search(sPatternLQ, html)
+        if r:
+            print r.group(1)
+            media_id = r.group(1)
+            #return r.group(1)
+        try:
+            html = self.net.http_GET("http://play.flashx.tv/nuevo/player/cst.php?hash="+media_id).content
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                    (e.code, web_url))
+            return False
+        pattern = "<file>(.*?)</file>"
+        r = re.search(pattern, html)
         if r:
             return r.group(1)
 
@@ -70,4 +81,5 @@ class FlashxResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        print re.match(self.pattern, url) or self.name in host
         return re.match(self.pattern, url) or self.name in host
