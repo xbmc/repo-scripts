@@ -86,5 +86,5 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
-        return re.match('http://(www.)?divxstage.eu/' +
+        return re.match('http://(www.)?divxstage.(?:eu|net)/' +
                         'video/[0-9A-Za-z]+', url) or 'divxstage' in host
