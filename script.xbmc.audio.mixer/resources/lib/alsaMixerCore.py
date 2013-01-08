@@ -165,10 +165,6 @@ class alsaMixerCore:
 
 		return channels[:(len(channels) - 1)].split("|")
 
-	def saveVolumes(self):
-		stdErr, stdOut, retValue = self.__runSilent("alsactl store -f ~/.asoundrc")
-		return retValue
-
 	def __printDebugLine(self, aLine):
 		if self.gDebugMode>0:
 			print aLine

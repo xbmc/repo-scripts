@@ -195,7 +195,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
           if ( self.controlId >= 1000 ):
               self.slider_onfocus(0)
               self.controlId = 0
-          self.alsaCore.saveVolumes()
           self.exit_script()
 
 

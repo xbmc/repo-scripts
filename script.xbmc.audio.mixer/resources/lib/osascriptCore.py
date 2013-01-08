@@ -123,11 +123,6 @@ class alsaMixerCore:
 
         return channels[:(len(channels) - 1)].split("|")
 
-
-
-    def saveVolumes(self):
-        pass
-
     def __printDebugLine(self, aLine):
         if self.gDebugMode>0:
             print aLine
