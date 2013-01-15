@@ -8,9 +8,9 @@ import logging
 
 from ._collections import RecentlyUsedContainer
 from .connectionpool import HTTPConnectionPool, HTTPSConnectionPool
-from .connectionpool import get_host, connection_from_url, port_by_scheme
-from .exceptions import HostChangedError
+from .connectionpool import connection_from_url, port_by_scheme
 from .request import RequestMethods
+from .util import parse_url
 
 
 __all__ = ['PoolManager', 'ProxyManager', 'proxy_from_url']
@@ -30,8 +30,12 @@ class PoolManager(RequestMethods):
     necessary connection pools for you.
 
     :param num_pools:
-        Number of connection pools to cache before discarding the least recently
-        used pool.
+        Number of connection pools to cache before discarding the least
+        recently used pool.
+
+    :param headers:
+        Headers to include with all requests, unless other headers are given
+        explicitly.
 
     :param \**connection_pool_kw:
         Additional parameters are used to create fresh
@@ -40,27 +44,38 @@ class PoolManager(RequestMethods):
     Example: ::
 
         >>> manager = PoolManager(num_pools=2)
-        >>> r = manager.urlopen("http://google.com/")
-        >>> r = manager.urlopen("http://google.com/mail")
-        >>> r = manager.urlopen("http://yahoo.com/")
+        >>> r = manager.request('GET', 'http://google.com/')
+        >>> r = manager.request('GET', 'http://google.com/mail')
+        >>> r = manager.request('GET', 'http://yahoo.com/')
         >>> len(manager.pools)
         2
 
     """
 
-    # TODO: Make sure there are no memory leaks here.
-
-    def __init__(self, num_pools=10, **connection_pool_kw):
+    def __init__(self, num_pools=10, headers=None, **connection_pool_kw):
+        RequestMethods.__init__(self, headers)
         self.connection_pool_kw = connection_pool_kw
-        self.pools = RecentlyUsedContainer(num_pools)
+        self.pools = RecentlyUsedContainer(num_pools,
+                                           dispose_func=lambda p: p.close())
 
-    def connection_from_host(self, host, port=80, scheme='http'):
+    def clear(self):
+        """
+        Empty our store of pools and direct them all to close.
+
+        This will not affect in-flight connections, but they will not be
+        re-used after completion.
+        """
+        self.pools.clear()
+
+    def connection_from_host(self, host, port=None, scheme='http'):
         """
         Get a :class:`ConnectionPool` based on the host, port, and scheme.
 
-        Note that an appropriate ``port`` value is required here to normalize
-        connection pools in our container most effectively.
+        If ``port`` isn't given, it will be derived from the ``scheme`` using
+        ``urllib3.connectionpool.port_by_scheme``.
         """
+        port = port or port_by_scheme.get(scheme, 80)
+
         pool_key = (scheme, host, port)
 
         # If the scheme, host, or port doesn't match existing open connections,
@@ -86,26 +101,38 @@ class PoolManager(RequestMethods):
         Additional parameters are taken from the :class:`.PoolManager`
         constructor.
         """
-        scheme, host, port = get_host(url)
+        u = parse_url(url)
+        return self.connection_from_host(u.host, port=u.port, scheme=u.scheme)
 
-        port = port or port_by_scheme.get(scheme, 80)
-
-        return self.connection_from_host(host, port=port, scheme=scheme)
-
-    def urlopen(self, method, url, **kw):
+    def urlopen(self, method, url, redirect=True, **kw):
         """
-        Same as :meth:`urllib3.connectionpool.HTTPConnectionPool.urlopen`.
+        Same as :meth:`urllib3.connectionpool.HTTPConnectionPool.urlopen`
+        with custom cross-host redirect logic and only sends the request-uri
+        portion of the ``url``.
 
-        ``url`` must be absolute, such that an appropriate
+        The given ``url`` parameter must be absolute, such that an appropriate
         :class:`urllib3.connectionpool.ConnectionPool` can be chosen for it.
         """
-        conn = self.connection_from_url(url)
-        try:
-            return conn.urlopen(method, url, **kw)
+        u = parse_url(url)
+        conn = self.connection_from_host(u.host, port=u.port, scheme=u.scheme)
 
-        except HostChangedError as e:
-            kw['retries'] = e.retries # Persist retries countdown
-            return self.urlopen(method, e.url, **kw)
+        kw['assert_same_host'] = False
+        kw['redirect'] = False
+        if 'headers' not in kw:
+            kw['headers'] = self.headers
+
+        response = conn.urlopen(method, u.request_uri, **kw)
+
+        redirect_location = redirect and response.get_redirect_location()
+        if not redirect_location:
+            return response
+
+        if response.status == 303:
+            method = 'GET'
+
+        log.info("Redirecting %s -> %s" % (url, redirect_location))
+        kw['retries'] = kw.get('retries', 3) - 1  # Persist retries countdown
+        return self.urlopen(method, redirect_location, **kw)
 
 
 class ProxyManager(RequestMethods):
@@ -118,13 +145,11 @@ class ProxyManager(RequestMethods):
         self.proxy_pool = proxy_pool
 
     def _set_proxy_headers(self, headers=None):
-        headers = headers or {}
+        headers_ = {'Accept': '*/*'}
+        if headers:
+            headers_.update(headers)
 
-        # Same headers are curl passes for --proxy1.0
-        headers['Accept'] = '*/*'
-        headers['Proxy-Connection'] = 'Keep-Alive'
-
-        return headers
+        return headers_
 
     def urlopen(self, method, url, **kw):
         "Same as HTTP(S)ConnectionPool.urlopen, ``url`` must be absolute."

@@ -10,7 +10,7 @@ import zlib
 
 from io import BytesIO
 
-from .exceptions import HTTPError
+from .exceptions import DecodeError
 from .packages.six import string_types as basestring
 
 
@@ -130,7 +130,9 @@ class HTTPResponse(object):
             after having ``.read()`` the file object. (Overridden if ``amt`` is
             set.)
         """
-        content_encoding = self.headers.get('content-encoding')
+        # Note: content-encoding value should be case-insensitive, per RFC 2616
+        # Section 3.5
+        content_encoding = self.headers.get('content-encoding', '').lower()
         decoder = self.CONTENT_DECODERS.get(content_encoding)
         if decode_content is None:
             decode_content = self._decode_content
@@ -148,9 +150,9 @@ class HTTPResponse(object):
             try:
                 if decode_content and decoder:
                     data = decoder(data)
-            except IOError:
-                raise HTTPError("Received response with content-encoding: %s, but "
-                                "failed to decode it." % content_encoding)
+            except (IOError, zlib.error):
+                raise DecodeError("Received response with content-encoding: %s, but "
+                                  "failed to decode it." % content_encoding)
 
             if cache_content:
                 self._body = data
