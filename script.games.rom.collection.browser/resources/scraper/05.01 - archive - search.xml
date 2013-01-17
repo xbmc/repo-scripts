@@ -1,0 +1,7 @@
+<parserConfig>
+	<GameGrammar type="xml" root="games/game">
+		<SearchKey>title</SearchKey>
+		<PlatformSearchKey>system</PlatformSearchKey>
+		<url appendResultTo="http://api.archive.vg/2.0/Game.getInfoByID/%ARCHIVEAPIKEY%/">id</url>
+	</GameGrammar>
+</parserConfig>

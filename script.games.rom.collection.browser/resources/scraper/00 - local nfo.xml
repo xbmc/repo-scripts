@@ -1,0 +1,24 @@
+<parserConfig>
+	<GameGrammar type="xml" root="">
+		<Game>title</Game>
+		<Platform>platform</Platform>
+		<Region>region</Region>		
+		<Genre>genre</Genre>
+		<ReleaseYear>year</ReleaseYear>
+		<Developer>developer</Developer>
+		<Publisher>publisher</Publisher>		
+		<Description>plot</Description>
+		<Media>media</Media>
+		<Controller>controller</Controller>
+		<Players>maxPlayer</Players>
+		<URL>detailUrl</URL>
+		<Rating>rating</Rating>		
+		<Votes>votes</Votes>
+		<Perspective>perspective</Perspective>
+		<OriginalTitle>originalTitle</OriginalTitle>
+		<AlternateTitle>alternateTitle</AlternateTitle>
+		<Version>version</Version>
+		<IsFavorite>isFavorite</IsFavorite>
+		<LaunchCount>launchCount</LaunchCount>
+	</GameGrammar>
+</parserConfig>

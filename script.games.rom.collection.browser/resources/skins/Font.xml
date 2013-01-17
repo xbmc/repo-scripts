@@ -1,0 +1,161 @@
+<!-- 
+
+	Copy the content of this file to the Font.xml file of your default skin.
+	Where find the file:
+		Confluence:	XBMC install dir/addons/skin.confluence/720p
+		All other: 	XBMC userdata/addons/skin.xxx/720p
+		
+	You must copy it to the Default fontset-tag looking like this:	
+	<fontset id="Default" ...>
+		...
+	</fontset>
+
+-->
+		<!-- Confluence -->
+		<font>
+			<name>font10</name>
+			<filename>DejaVuSans.ttf</filename>
+			<size>12</size>
+		</font>
+		<font>
+			<name>font12</name>
+			<filename>DejaVuSans.ttf</filename>
+			<size>16</size>
+		</font>
+		<font>
+			<name>font13</name>
+			<filename>DejaVuSans.ttf</filename>
+			<size>20</size>
+		</font>
+		<font>
+			<name>font13_title</name>
+			<filename>DejaVuSans-Bold.ttf</filename>
+			<size>20</size>
+		</font>
+		<font>
+			<name>font24_title</name>
+			<filename>DejaVuSans-Bold.ttf</filename>
+			<size>24</size>
+		</font>
+		<font>
+			<name>font16caps</name>
+			<filename>DefaultCaps.ttf</filename>
+			<size>25</size>
+		</font>
+
+		<!-- Night -->
+		<font>
+			<name>LiberationSans_Regular_16</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>16</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_18</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>18</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_20</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>20</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_22</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>22</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_24</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>24</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_28</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>28</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_30</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>30</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_34</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>34</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_40</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>40</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_80</name>
+			<filename>LiberationSans-Regular.ttf</filename>
+			<size>80</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>LiberationSans_Regular_Caps_38</name>
+			<filename>LiberationSans-Regular_Caps.ttf</filename>
+			<size>38</size>
+			<linespacing>1</linespacing>
+		</font>
+		<font>
+			<name>DejaVuSans_40</name>
+			<filename>DejaVuSans.ttf</filename>
+			<size>40</size>
+			<linespacing>1</linespacing>
+		</font>
+		
+		
+		<!-- Simplicity -->
+		<font>
+			<name>Simplicity_font10</name>
+			<filename>Simplicity_Default.ttf</filename>
+			<size>12</size>
+		</font>
+		<font>
+			<name>Simplicity_font12</name>
+			<filename>Simplicity_Default.ttf</filename>
+			<size>16</size>
+		</font>
+		<font>
+			<name>Simplicity_font13</name>
+			<filename>Simplicity_Default.ttf</filename>
+			<size>20</size>
+		</font>
+		<font>
+			<name>Simplicity_18</name>
+			<filename>CartoGothicStd-Book.ttf</filename>
+			<size>18</size>
+		</font>
+		<font>
+			<name>Simplicity_20</name>
+			<filename>CartoGothicStd-Book.ttf</filename>
+			<size>20</size>
+		</font>
+		<font>
+			<name>Simplicity_24</name>
+			<filename>CartoGothicStd-Book.ttf</filename>
+			<size>24</size>
+		</font>
+		<font>
+			<name>Simplicity_30</name>
+			<filename>CartoGothicStd-Book.ttf</filename>
+			<size>30</size>
+		</font>
+		<font>
+			<name>Simplicity_40</name>
+			<filename>CartoGothicStd-Book.ttf</filename>
+			<size>40</size>
+		</font>	
