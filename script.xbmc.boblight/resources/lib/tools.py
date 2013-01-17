@@ -48,7 +48,7 @@ def _pbhook(numblocks, blocksize, filesize, url=None,dp=None):
         log("boblight: DOWNLOAD CANCELLED") # need to get this part working
     dp.close()
  
-def tools_downloadLibBoblight(platform):
+def tools_downloadLibBoblight(platform,allowNotify):
   log("boblight: try to fetch libboblight")
   libname = get_libname(platform)
   destdir = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib') )
@@ -60,8 +60,9 @@ def tools_downloadLibBoblight(platform):
     xbmc.executebuiltin('XBMC.Extract("%s.zip","%s")' % (dest, destdir), True)
     os.remove(dest + ".zip")
   except:
-    text = __language__(510)
-    xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,750,__icon__))
+    if allowNotify:
+      text = __language__(510)
+      xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,750,__icon__))
 
 def log(msg):
   xbmc.log("### [%s] - %s" % (__scriptname__,msg,),level=xbmc.LOGDEBUG )

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.boblight" name="XBMC Boblight" version="2.0.2" provider-name="bobo1on1, Memphiz">
+<addon id="script.xbmc.boblight" name="XBMC Boblight" version="2.0.3" provider-name="bobo1on1, Memphiz">
   <requires>
-    <import addon="xbmc.python" version="2.1"/>
+    <import addon="xbmc.python" version="2.1.0"/>
   </requires>
   <extension point="xbmc.service" library="default.py" start="login"></extension>
   <extension point="xbmc.addon.metadata">
-    <summary>XBMC output to boblight.</summary>
-    <description>XBMC output to boblight http://code.google.com/p/boblight/</description>
+    <summary lang="en">XBMC output to boblight.</summary>
+    <description lang="en">XBMC output to boblight http://code.google.com/p/boblight/</description>
     <platform>all</platform>
   </extension>
 </addon>

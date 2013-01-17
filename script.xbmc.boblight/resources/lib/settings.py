@@ -79,6 +79,8 @@ class settings():
     self.other_static_green         = int(float(__addon__.getSetting("other_static_green")))
     self.other_static_blue          = int(float(__addon__.getSetting("other_static_blue")))
     self.other_static_onscreensaver = __addon__.getSetting("other_static_onscreensaver") == "true"
+    self.other_misc_initialflash    = __addon__.getSetting("other_misc_initialflash") == "true"
+    self.other_misc_notifications   = __addon__.getSetting("other_misc_notifications") == "true"
     
     # Movie settings
     self.movie_saturation           = float(__addon__.getSetting("movie_saturation"))
@@ -239,10 +241,14 @@ class settings():
       self.handleGlobalSettings()
       bob.bob_set_priority(128)           # allow lights to be turned on, we will switch them off
                                           # in 'handleStaticBgSettings()' if they are not needed
-      for i in range(len(BLING)):
-        rgb = (c_int * 3)(BLING[i][0],BLING[i][1],BLING[i][2])
+      if self.other_misc_initialflash:
+        for i in range(len(BLING)):
+          rgb = (c_int * 3)(BLING[i][0],BLING[i][1],BLING[i][2])
+          bob.bob_set_static_color(byref(rgb))
+          xbmc.sleep(1000)
+      else:
+        rgb = (c_int * 3)(0,0,0)
         bob.bob_set_static_color(byref(rgb))
-        xbmc.sleep(1000)
       self.run_init = False
       xbmc.sleep(500)
     return True  

@@ -95,14 +95,15 @@ class Main():
     if not ret:
       log("connection to boblightd failed: %s" % bob.bob_geterror())
       text = __language__(500)
-      if self.warning < 3:
+      if self.warning < 3 and settings.other_misc_notifications:
         xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,750,__icon__))
         self.warning += 1
       return False
     else:
       self.warning = 0
-      text = __language__(501)
-      xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,750,__icon__))
+      if settings.other_misc_notifications:
+        text = __language__(501)
+        xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,750,__icon__))
       log("connected to boblightd")
       bob.bob_set_priority(128)  
       return True
@@ -123,7 +124,7 @@ class Main():
         t1 = __language__(504)                     # lib for osx, ios and windows
         t2 = __language__(509)
         if xbmcgui.Dialog().yesno(__scriptname__,t1,t2):
-          tools_downloadLibBoblight(platform)
+          tools_downloadLibBoblight(platform,settings.other_misc_notifications)
           loaded = bob.bob_loadLibBoblight(libpath,platform)
       
         

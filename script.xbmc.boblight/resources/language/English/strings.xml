@@ -41,6 +41,8 @@
   <string id="403">Green</string>
   <string id="404">Blue</string>
   <string id="405">Disable when Screen Saver is on</string>
+  <string id="406">Enable initial light flash</string>
+  <string id="407">Enable status notifications</string>
   
   <!--Notifications-->
   <string id="500">Failed to connect to boblightd!</string>

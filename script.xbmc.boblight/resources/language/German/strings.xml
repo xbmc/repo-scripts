@@ -41,6 +41,8 @@
   <string id="403">Gruen</string>
   <string id="404">Blau</string>
   <string id="405">Waehrend Bildschirmschoner Licht ausschalten</string>
+  <string id="406">Initialen Lichttest aktivieren</string>
+  <string id="407">Statusnachrichten aktivieren</string>
 
   <!--Notifications-->                                                                                                                                                                                           
   <string id="500">Fehler beim Verbinden zu boblightd!</string>

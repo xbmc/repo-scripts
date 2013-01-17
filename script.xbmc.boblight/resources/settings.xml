@@ -41,5 +41,8 @@
     <setting id="other_static_green" type="slider" subsetting="true" enable="eq(-2,true)" label="403" option="int" default="128" range="0,255" />
     <setting id="other_static_blue" type="slider" subsetting="true" enable="eq(-3,true)" label="404" option="int" default="128" range="0,255" />
     <setting id="other_static_onscreensaver" type="bool" label="405" default="false" />
+    <setting id="sep3" type="sep" />
+    <setting id="other_misc_initialflash" type="bool" label="406" default="true" />
+    <setting id="other_misc_notifications" type="bool" label="407" default="true" />
   </category>
 </settings>
