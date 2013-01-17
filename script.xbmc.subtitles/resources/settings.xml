@@ -85,6 +85,7 @@
       <setting id="use_subs_folder" type="bool" label="30145" default="false" />
       <setting id="timeout" type="enum" label="30122" default="6" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25" />
       <setting id="search_next" type="bool" label="30130" default="false" />
+      <setting id="pause" type="bool" label="30160" default="true" />
       <setting id="auto_download" type="bool" label="30131" default="false" />
       <setting id="auto_download_file" visible= "false" type="text" label="" default="" />
     </category>

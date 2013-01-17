@@ -1,3 +1,11 @@
+3.5.2
+- Fix Unicode errors in Subdivx backend, gabomdq
+- Make pausing during UI optional, lutzky
+- Subscene update, IcEBnd
+- Ondertitel update, tweemeterjop
+- Subdivx update, xbmcspain
+- [fix] LegendasDivx,LegendasZone and Pipocas, highlandr
+
 3.5.1
 - [fix] service Ondertitel.com after site redesign, mr-blobby
 - [fix] Bierdopje.com for empty tvdb id's in database, mr-blobby

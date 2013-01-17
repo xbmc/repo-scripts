@@ -28,12 +28,14 @@ if ( __name__ == "__main__" ):
   if (ui.set_allparam()):
     notification = UserNotificationNotifier(__scriptname__, __language__(764), 2000)    
     if not ui.Search_Subtitles(False):
-      __unpause__ = pause()
+      if __addon__.getSetting("pause") == "true":
+        __unpause__ = pause()
       ui.doModal()
     else:
       notification.close(__language__(765), 1000) 
   else:
-    __unpause__ = pause() 
+    if __addon__.getSetting("pause") == "true":
+      __unpause__ = pause()
     ui.doModal()
         
   del ui
