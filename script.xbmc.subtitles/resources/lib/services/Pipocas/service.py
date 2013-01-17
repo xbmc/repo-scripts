@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 
-# Service pipocas.tv version 0.0.3
+# Service pipocas.tv version 0.0.4
 # Code based on Undertext service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
 # Bugs & Features to highlander@teknorage.com
 # http://www.teknorage.com
 # License: GPL v2
+#
+# New on Service Pipocas.tv - v0.0.4:
+# Pipocas now is only for registered users so we had todo some changes to the code.
+# Fixed bug on Openelec based XBMC preventing to download multiple subtitiles inside a compressed file.
+# Some code cleanup
+#
 #
 # New on Service Pipocas.tv - v0.0.3:
 # Fixed bug on the authentication preventing to download the latest subtitles!
@@ -36,6 +42,7 @@ __language__   = __addon__.getLocalizedString
 main_url = "http://pipocas.tv/"
 debug_pretext = "Pipocas.tv"
 subext = ['srt', 'aas', 'ssa', 'sub', 'smi']
+sub_ext = ['srt', 'aas', 'ssa', 'sub', 'smi']
 packext = ['rar', 'zip']
 username = __addon__.getSetting( "Pipocasuser" )
 password = __addon__.getSetting( "Pipocaspass" )
@@ -61,11 +68,11 @@ password = __addon__.getSetting( "Pipocaspass" )
 				<img alt="Poster" src="http://img.pipocas.tv/images/1672723.jpg" />			</li>
 			<li class="sub-box2">
 				<ul>
-					<li><span>Fonte:</span>  Tradu√ß√£o</li>
+					<li><span>Fonte:</span>  TraduÁ„o</li>
 					<li><span>CDs:</span> 1</li>
 					<li><span>FPS:</span> 23.976</li>
 					<li><span>Hits:</span> 30</li>
-					<li><span>Coment√°rios:</span> 2</li>
+					<li><span>Coment·rios:</span> 2</li>
 					<li><span>Enviada por:</span> <a href="my.php?u=23019"><font style="font-weight:normal;"> arodri</font></a> </li>
 				</ul>
 			</li>
@@ -74,7 +81,7 @@ password = __addon__.getSetting( "Pipocaspass" )
 				<ul>
 					<li><span>Portugal <img src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-portugal.png" alt="Portugal"/></span> <a href="legendas.php?release=1672723&amp;linguagem=portugues&amp;grupo=imdb">1</a></li>
 					<li><span>Brasil <img src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-brazil.png" alt="Brasil"/></span> <a href="legendas.php?release=1672723&amp;linguagem=brasileiro&amp;grupo=imdb">1</a></li>
-					<li><span>Espa√±a <img src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-spain.png" alt="Espa√±a"/></span> <a href="legendas.php?release=1672723&amp;linguagem=espanhol&amp;grupo=imdb">0</a></li>
+					<li><span>EspaÒa <img src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-spain.png" alt="EspaÒa"/></span> <a href="legendas.php?release=1672723&amp;linguagem=espanhol&amp;grupo=imdb">0</a></li>
 					<li><span>England <img src="http://img.pipocas.tv/themes/pipocas2/css/img/flag-uk.png" alt="UK"/></span> <a href="legendas.php?release=1672723&amp;linguagem=ingles&amp;grupo=imdb">0</a></li>
 				</ul>
 			</li>
@@ -87,27 +94,27 @@ password = __addon__.getSetting( "Pipocaspass" )
 		
 		<div class="horizontal-divider"></div>
 		
-		<p class="description-title">Descri√ß√£o</p>
+		<p class="description-title">DescriÁ„o</p>
 		<div class="description-box">
 			<center><font color="#2B60DE">Batman: Year One </font></center><br />
 <br />
 <center><b><br />
 <br />
-Vers√£o<br />
+Vers„o<br />
 Batman.Year.One.2011.DVDRiP.XviD-T00NG0D<br />
 <br />
 </b></center><br />
 <br />
-Tradu√ß√£o Brasileira &nbsp;por The_Tozz e Dres<br />
+TraduÁ„o Brasileira &nbsp;por The_Tozz e Dres<br />
 <br />
 <br />
-A adapta√ß√£o PtPt: <center><span style="font-size:12px;"><font face="arial"><font color="#0000A0">arodri</font></font> </span></center><br />
+A adaptaÁ„o PtPt: <center><span style="font-size:12px;"><font face="arial"><font color="#0000A0">arodri</font></font> </span></center><br />
 <br />
-Um agradecimento muito especial √†<br />
+Um agradecimento muito especial ‡<br />
 <br />
 <center><b><font color="#008000"><span style="font-size:14px;">FreedOM</span></font></b></center><br />
 <br />
-Pela revis√£o total...<br />
+Pela revis„o total...<br />
 <br />
 """
 subtitle_pattern = "<a href=\"info/(.+?)\" class=\"info\"></a>"
@@ -134,13 +141,27 @@ def msgnote(site, text, timeout):
 
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
 
+	# LOGIN FIRST AND THEN SEARCH
+	url = main_url + 'vlogin.php'
+	req_headers = {
+	'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
+	'Referer': main_url,
+	'Keep-Alive': '300',
+	'Connection': 'keep-alive'}
+	request = urllib2.Request(url, headers=req_headers)
+	cj = cookielib.CookieJar()
+	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+	login_data = urllib.urlencode({'username' : username, 'password' : password})
+	response = opener.open(request,login_data)
+
 	page = 0
 	if languageshort == "pt":
 		url = main_url + "legendas.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
 	if languageshort == "pb":
 		url = main_url + "legendas.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
 
-	content = geturl(url)
+	content = opener.open(url)
+	content = content.read()
 	content = content.decode('latin1')
 	while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL) and page < 6:
 		#log( __name__ ,"%s Getting '%s' inside while ..." % (debug_pretext, subtitle_pattern))
@@ -159,7 +180,8 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			#desc = string.strip(matches.group(13))
 			#Remove new lines on the commentaries
 			details = matches.group(1)
-			content_details = geturl(main_url + "info/" + details)
+			content_details = opener.open(main_url + "info/" + details)
+			content_details = content_details.read()
 			content_details = content_details.decode('latin1')
 			for namematch in re.finditer(name_pattern, content_details, re.IGNORECASE | re.DOTALL):
 				filename = string.strip(namematch.group(1))
@@ -228,20 +250,11 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			url = main_url + "legendas.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
 		if languageshort == "pb":
 			url = main_url + "legendas.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-		content = geturl(url)
+		content = opener.open(url)
+		content = content.read()
 		content = content.decode('latin1')
 
-	if subtitles_list == []:
-		msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
-		msgnote(debug_pretext,"Try manual or parent dir!", 2000)
-	elif subtitles_list != []:
-		lst = str(subtitles_list)
-		if languagelong in lst:
-			msgnote(debug_pretext,"Found sub(s) in "  + languagelong + ".", 2000)
-		else:
-			msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
-			msgnote(debug_pretext,"Try manual or parent dir!", 2000)
-		
+	
 #	Bubble sort, to put syncs on top
 	for n in range(0,len(subtitles_list)):
 		for i in range(1, len(subtitles_list)):
@@ -250,20 +263,6 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 				subtitles_list[i] = subtitles_list[i-1]
 				subtitles_list[i-1] = temp
 
-
-
-def geturl(url):
-	class MyOpener(urllib.FancyURLopener):
-		version = ''
-	my_urlopener = MyOpener()
-	log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
-	try:
-		response = my_urlopener.open(url)
-		content    = response.read()
-	except:
-		log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
-		content    = None
-	return content
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
 	subtitles_list = []
@@ -355,163 +354,157 @@ def recursive_glob(treeroot, pattern):
 				results.append(os.path.join(base, filename))
 	return results
 
+def get_download(url, download, id):
+    req_headers = {
+		'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
+		'Referer': main_url,
+		'Keep-Alive': '300',
+		'Connection': 'keep-alive'}
+    request = urllib2.Request(url, headers=req_headers)
+    cj = cookielib.CookieJar()
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    login_data = urllib.urlencode({'username' : username, 'password' : password})
+    response = opener.open(request,login_data)
+    download_data = urllib.urlencode({'id' : id})
+    request1 = urllib2.Request(download, download_data, req_headers)
+    f = opener.open(request1)
+    return f 
+
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
 
 	msgnote(debug_pretext,__language__(30154), 6000)
 	id = subtitles_list[pos][ "id" ]
 	sync = subtitles_list[pos][ "sync" ]
 	language = subtitles_list[pos][ "language_name" ]
+	log( __name__ ,"%s Fetching id using url %s" % (debug_pretext, id))
 
 	url = main_url + 'vlogin.php'
 	download = main_url + 'download.php?id=' + id
 	req_headers = {
 	'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
-	'Referer': main_url}
+	'Referer': main_url,
+	'Keep-Alive': '300',
+	'Connection': 'keep-alive'}
 	request = urllib2.Request(url, headers=req_headers)
 	cj = cookielib.CookieJar()
 	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 	login_data = urllib.urlencode({'username' : username, 'password' : password})
 	response = opener.open(request,login_data)
 	download_data = urllib.urlencode({'id' : id})
-	request = urllib2.Request(download, download_data, req_headers)
-	content = opener.open(request)
+	request1 = urllib2.Request(download, download_data, req_headers)
+	content = opener.open(request1)
 
-	if content is not None:
-		log( __name__ ,"%s Content-info: %s" % (debug_pretext, content.info()))
-		header = content.info()['Content-Disposition'].split('filename')[1].split('.')[-1].strip("\"")
-		if header == 'rar':
-			log( __name__ ,"%s file: content is RAR" % (debug_pretext)) #EGO
-			local_tmp_file = os.path.join(tmp_sub_dir, str(uuid.uuid1()) + ".rar")
-			log( __name__ ,"%s file: local_tmp_file %s" % (debug_pretext, local_tmp_file)) #EGO
-			packed = True
-		elif header == 'zip':
-			local_tmp_file = os.path.join(tmp_sub_dir, str(uuid.uuid1()) + ".zip")
-			packed = True
-		else: # never found/downloaded an unpacked subtitles file, but just to be sure ...
-			local_tmp_file = os.path.join(tmp_sub_dir, str(uuid.uuid1()) + ".srt") # assume unpacked sub file is an '.srt'
-			subs_file = local_tmp_file
-			packed = False
-		log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
-		try:
-			log( __name__ ,"%s file: write in %s" % (debug_pretext, local_tmp_file)) #EGO
-			local_file_handle = open(local_tmp_file, "wb")
-			shutil.copyfileobj(content.fp, local_file_handle)
-			local_file_handle.close()
-		except:
-			log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
-		if packed:
-			files = os.listdir(tmp_sub_dir)
-			init_filecount = len(files)
-			log( __name__ ,"%s file: number init_filecount %s" % (debug_pretext, init_filecount)) #EGO
-			filecount = init_filecount
-			max_mtime = 0
-			# determine the newest file from tmp_sub_dir
-			for file in files:
-				if (string.split(file,'.')[-1] in ['srt','sub','txt']):
-					mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
-					if mtime > max_mtime:
-						max_mtime =  mtime
-			init_max_mtime = max_mtime
-			time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
-			msgnote(debug_pretext,__language__(30155), 6000)
-			xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
-			waittime  = 0
-			while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
-				time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
-				files = os.listdir(tmp_sub_dir)
-				log( __name__ ,"%s DIRLIST '%s'" % (debug_pretext, files))
-				filecount = len(files)
-				# determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
-				for file in files:
-					if (string.split(file,'.')[-1] in ['srt','sub','txt']):
-						mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
-						if (mtime > max_mtime):
-							max_mtime =  mtime
-				waittime  = waittime + 1
-			if waittime == 20:
-				log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
-			else:
-				msgnote(debug_pretext,__language__(30156), 3000)
-				log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
-				searchrars = recursive_glob(tmp_sub_dir, packext)
-				searchrarcount = len(searchrars)
-				if searchrarcount > 1:
-					for filerar in searchrars:
-						if filerar != os.path.join(tmp_sub_dir,'ldivx.rar') and filerar != os.path.join(tmp_sub_dir,'ldivx.zip'):
-							xbmc.executebuiltin("XBMC.Extract(" + filerar + "," + tmp_sub_dir +")")
-				time.sleep(1)
-				searchsubs = recursive_glob(tmp_sub_dir, subext)
-				searchsubscount = len(searchsubs)
-				for filesub in searchsubs:
-					nopath = string.split(filesub, tmp_sub_dir)[-1]
-					justfile = nopath.split(os.sep)[-1]
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s DEBUG-nopath: '%s'" % (debug_pretext, nopath))
-					#log( __name__ ,"%s DEBUG-justfile: '%s'" % (debug_pretext, justfile))
-					releasefilename = filesearch[1][:len(filesearch[1])-4]
-					releasedirname = filesearch[0].split(os.sep)
-					if 'rar' in israr:
-						releasedirname = releasedirname[-2]
-					else:
-						releasedirname = releasedirname[-1]
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s DEBUG-releasefilename: '%s'" % (debug_pretext, releasefilename))
-					#log( __name__ ,"%s DEBUG-releasedirname: '%s'" % (debug_pretext, releasedirname))
-					subsfilename = justfile[:len(justfile)-4]
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s DEBUG-subsfilename: '%s'" % (debug_pretext, subsfilename))
-					#log( __name__ ,"%s DEBUG-subscount: '%s'" % (debug_pretext, searchsubscount))
-					#Check for multi CD Releases
-					multicds_pattern = "\+?(cd\d)\+?"
-					multicdsubs = re.search(multicds_pattern, subsfilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
-					multicdsrls = re.search(multicds_pattern, releasefilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
-					#Start choosing the right subtitle(s)
-					if searchsubscount == 1 and sync == True:
-						subs_file = filesub
-						#For DEBUG only uncomment next line
-						#log( __name__ ,"%s DEBUG-inside subscount: '%s'" % (debug_pretext, searchsubscount))
-						break
-					elif string.lower(subsfilename) == string.lower(releasefilename) and sync == True:
-						subs_file = filesub
-						#For DEBUG only uncomment next line
-						#log( __name__ ,"%s DEBUG-subsfile-morethen1: '%s'" % (debug_pretext, subs_file))
-						break
-					elif string.lower(subsfilename) == string.lower(releasedirname) and sync == True:
-						subs_file = filesub
-						#For DEBUG only uncomment next line
-						#log( __name__ ,"%s DEBUG-subsfile-morethen1-dirname: '%s'" % (debug_pretext, subs_file))
-						break
-					elif (multicdsubs != None) and (multicdsrls != None) and sync == True:
-						multicdsubs = string.lower(multicdsubs.group(1))
-						multicdsrls = string.lower(multicdsrls.group(1))
-						#For DEBUG only uncomment next line
-						#log( __name__ ,"%s DEBUG-multicdsubs: '%s'" % (debug_pretext, multicdsubs))
-						#log( __name__ ,"%s DEBUG-multicdsrls: '%s'" % (debug_pretext, multicdsrls))
-						if multicdsrls == multicdsubs:
-							subs_file = filesub
-							break
-				else:
-					#If none is found just open a dialog box for browsing the temporary subtitle folder
-					sub_ext = "srt,aas,ssa,sub,smi"
-					sub_tmp = []
-					for root, dirs, files in os.walk(tmp_sub_dir, topdown=False):
-						for file in files:
-							dirfile = os.path.join(root, file)
-							ext = os.path.splitext(dirfile)[1][1:].lower()
-							if ext in sub_ext:
-								sub_tmp.append(dirfile)
-							elif os.path.isfile(dirfile):
-								os.remove(dirfile)
-					
-					# If there are more than one subtitle in the temp dir, launch a browse dialog
-					# so user can choose. If only one subtitle is found, parse it to the addon.
-					if len(sub_tmp) > 1:
-						dialog = xbmcgui.Dialog()
-						subs_file = dialog.browse(1, 'XBMC', 'files', '', False, False, tmp_sub_dir+"/")
-						if subs_file == tmp_sub_dir+"/": subs_file = ""
-					elif sub_tmp:
-						subs_file = sub_tmp[0]
-		
-		msgnote(debug_pretext,__language__(30157), 3000)
+	#This is where you are logged in and download
+	#content = get_download(main_url+'vlogin.php', main_url+'download.php', id)
 
-		return False, language, subs_file #standard output
+	downloaded_content = content.read()
+
+	#Create some variables
+	subtitle = ""
+	extract_path = os.path.join(tmp_sub_dir, "extracted")
+	
+	fname = os.path.join(tmp_sub_dir,str(id))
+	if content.info().get('Content-Disposition').__contains__('rar'):
+		fname += '.rar'
+	else:
+		fname += '.zip'
+	f = open(fname,'wb')
+	f.write(downloaded_content)
+	f.close()
+	
+	# Use XBMC.Extract to extract the downloaded file, extract it to the temp dir, 
+	# then removes all files from the temp dir that aren't subtitles.
+	msgnote(debug_pretext,__language__(30155), 3000)
+	xbmc.executebuiltin("XBMC.Extract(" + fname + "," + extract_path +")")
+	time.sleep(2)
+	legendas_tmp = []
+	# brunoga fixed solution for non unicode caracters
+	fs_encoding = sys.getfilesystemencoding()
+	for root, dirs, files in os.walk(extract_path.encode(fs_encoding), topdown=False):
+		for file in files:
+			dirfile = os.path.join(root, file)
+			ext = os.path.splitext(dirfile)[1][1:].lower()
+			if ext in sub_ext:
+				legendas_tmp.append(dirfile)
+			elif os.path.isfile(dirfile):
+				os.remove(dirfile)
+	
+	msgnote(debug_pretext,__language__(30156), 3000)
+	searchrars = recursive_glob(extract_path, packext)
+	searchrarcount = len(searchrars)
+	if searchrarcount > 1:
+		for filerar in searchrars:
+			if filerar != os.path.join(extract_path,local_tmp_file) and filerar != os.path.join(extract_path,local_tmp_file):
+				try:
+					xbmc.executebuiltin("XBMC.Extract(" + filerar + "," + extract_path +")")
+				except:
+					return False
+	time.sleep(1)
+	searchsubs = recursive_glob(extract_path, subext)
+	searchsubscount = len(searchsubs)
+	for filesub in searchsubs:
+		nopath = string.split(filesub, extract_path)[-1]
+		justfile = nopath.split(os.sep)[-1]
+		#For DEBUG only uncomment next line
+		#log( __name__ ,"%s DEBUG-nopath: '%s'" % (debug_pretext, nopath))
+		#log( __name__ ,"%s DEBUG-justfile: '%s'" % (debug_pretext, justfile))
+		releasefilename = filesearch[1][:len(filesearch[1])-4]
+		releasedirname = filesearch[0].split(os.sep)
+		if 'rar' in israr:
+			releasedirname = releasedirname[-2]
+		else:
+			releasedirname = releasedirname[-1]
+		#For DEBUG only uncomment next line
+		#log( __name__ ,"%s DEBUG-releasefilename: '%s'" % (debug_pretext, releasefilename))
+		#log( __name__ ,"%s DEBUG-releasedirname: '%s'" % (debug_pretext, releasedirname))
+		subsfilename = justfile[:len(justfile)-4]
+		#For DEBUG only uncomment next line
+		#log( __name__ ,"%s DEBUG-subsfilename: '%s'" % (debug_pretext, subsfilename))
+		#log( __name__ ,"%s DEBUG-subscount: '%s'" % (debug_pretext, searchsubscount))
+		#Check for multi CD Releases
+		multicds_pattern = "\+?(cd\d)\+?"
+		multicdsubs = re.search(multicds_pattern, subsfilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
+		multicdsrls = re.search(multicds_pattern, releasefilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
+		#Start choosing the right subtitle(s)
+		if searchsubscount == 1 and sync == True:
+			subs_file = filesub
+			subtitle = subs_file
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s DEBUG-inside subscount: '%s'" % (debug_pretext, searchsubscount))
+			break
+		elif string.lower(subsfilename) == string.lower(releasefilename):
+			subs_file = filesub
+			subtitle = subs_file
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s DEBUG-subsfile-morethen1: '%s'" % (debug_pretext, subs_file))
+			break
+		elif string.lower(subsfilename) == string.lower(releasedirname):
+			subs_file = filesub
+			subtitle = subs_file
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s DEBUG-subsfile-morethen1-dirname: '%s'" % (debug_pretext, subs_file))
+			break
+		elif (multicdsubs != None) and (multicdsrls != None):
+			multicdsubs = string.lower(multicdsubs.group(1))
+			multicdsrls = string.lower(multicdsrls.group(1))
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s DEBUG-multicdsubs: '%s'" % (debug_pretext, multicdsubs))
+			#log( __name__ ,"%s DEBUG-multicdsrls: '%s'" % (debug_pretext, multicdsrls))
+			if multicdsrls == multicdsubs:
+				subs_file = filesub
+				subtitle = subs_file
+				break
+
+	else:
+	# If there are more than one subtitle in the temp dir, launch a browse dialog
+	# so user can choose. If only one subtitle is found, parse it to the addon.
+		if len(legendas_tmp) > 1:
+			dialog = xbmcgui.Dialog()
+			subtitle = dialog.browse(1, 'XBMC', 'files', '', False, False, extract_path+"/")
+			if subtitle == extract_path+"/": subtitle = ""
+		elif legendas_tmp:
+			subtitle = legendas_tmp[0]
+	
+	msgnote(debug_pretext,__language__(30157), 3000)
+	language = subtitles_list[pos][ "language_name" ]
+	return False, language, subtitle #standard output

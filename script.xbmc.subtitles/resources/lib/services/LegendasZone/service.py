@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 
-# Service Legendas-Zone.org version 0.1.9
-# Code based on Undertext service
+# Service Legendas-Zone.org version 0.2.0
+# Code based on Undertext service and the download function encode fix from legendastv service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
 # Bugs & Features to highlander@teknorage.com
 # http://www.teknorage.com
 # License: GPL v2
+#
+# NEW on Service Legendas-Zone.org v0.2.0:
+# Fixed bug on openelec based XBMC prevent the script to work
+# Removed some XBMC messages from the script who were annoying!
+# Some code cleanup
+#
 #
 # NEW on Service Legendas-Zone.org v0.1.9:
 # Added all site languages (English, Portuguese, Portuguese Brazilian and Spanish)
@@ -42,6 +48,7 @@ __language__   = __addon__.getLocalizedString
 main_url = "http://www.legendas-zone.org/"
 debug_pretext = "Legendas-Zone"
 subext = ['srt', 'aas', 'ssa', 'sub', 'smi']
+sub_ext = ['srt', 'aas', 'ssa', 'sub', 'smi']
 packext = ['rar', 'zip']
 #Grabbing login and pass from xbmc settings
 username = __addon__.getSetting( "LZuser" )
@@ -53,8 +60,6 @@ password = __addon__.getSetting( "LZpass" )
 
 """
 """
-#details_pattern = "<b>CD\#:</b>\s(.+?)\s.+?<b>Hits:</b>\s(.+?)</b>.+?<b>Linguagem:</b>.+?border=\"0\"\salt=\"(.+?)\"\stitle"
-#subtitle_pattern = "onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
 subtitle_pattern = "<b><a\shref=\"legendas.php\?modo=detalhes&amp;(.+?)\".+?[\r\n\t]+?.+?[\r\n\t]+?.+?onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
 # group(1) = ID, group(2) = Name, group(3) = Hits, group(4) = Files, group(5) = Uploader
 multiple_results_pattern = "<td\salign=\"left\".+?<b><a\shref=\"legendas.php\?imdb=(.+?)&l=.+?\"\stitle=\".+?\">.+?</td>"
@@ -334,16 +339,17 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 				#For DEBUG only uncomment next line
 
 
-	if subtitles_list == []:
-		msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
-		msgnote(debug_pretext,"Try manual or parent dir!", 2000)
-	elif subtitles_list != []:
-		lst = str(subtitles_list)
-		if languagelong in lst:
-			msgnote(debug_pretext,"Found sub(s) in "  + languagelong + ".", 2000)
-		else:
-			msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
-			msgnote(debug_pretext,"Try manual or parent dir!", 2000)
+##### ANNOYING #####
+	#if subtitles_list == []:
+		#msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
+		#msgnote(debug_pretext,"Try manual or parent dir!", 2000)
+	#elif subtitles_list != []:
+	#	lst = str(subtitles_list)
+	#	if languagelong in lst:
+	#		msgnote(debug_pretext,"Found sub(s) in "  + languagelong + ".", 2000)
+	#	else:
+			#msgnote(debug_pretext,"No sub in "  + languagelong + "!", 2000)
+			#msgnote(debug_pretext,"Try manual or parent dir!", 2000)
 
 	#Bubble sort, to put syncs on top
 	for n in range(0,len(subtitles_list)):
@@ -354,20 +360,21 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 				subtitles_list[i-1] = temp
 
 
-
 def get_download(url, download, id):
     req_headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
-    'Referer': main_url}
+		'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
+		'Referer': main_url,
+		'Keep-Alive': '300',
+		'Connection': 'keep-alive'}
     request = urllib2.Request(url, headers=req_headers)
     cj = cookielib.CookieJar()
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
     login_data = urllib.urlencode({'username' : username, 'password' : password})
     response = opener.open(request,login_data)
     download_data = urllib.urlencode({'sid' : id, 'submit' : '+', 'action' : 'Download'})
-    request = urllib2.Request(download, download_data, req_headers)
-    f = opener.open(request)
-    return f 
+    request1 = urllib2.Request(download, download_data, req_headers)
+    f = opener.open(request1)
+    return f
 
 def geturl(url):
 	class MyOpener(urllib.FancyURLopener):
@@ -448,6 +455,10 @@ def recursive_glob(treeroot, pattern):
 	for base, dirs, files in os.walk(treeroot):
 		for extension in pattern:
 			for filename in fnmatch.filter(files, '*.' + extension):
+				log( __name__ ,"%s base: %s" % (debug_pretext, base)) #EGO
+				log( __name__ ,"%s filename: %s" % (debug_pretext, filename)) #EGO
+				base = base.decode('latin1')
+				filename = filename.decode('latin1')
 				results.append(os.path.join(base, filename))
 	return results
 
@@ -458,149 +469,120 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	id = string.split(id,"=")
 	id = id[-1]
 	sync = subtitles_list[pos][ "sync" ]
+	language = subtitles_list[pos][ "language_name" ]
 	log( __name__ ,"%s Fetching id using url %s" % (debug_pretext, id))
+
 	#This is where you are logged in and download
 	content = get_download(main_url+'fazendologin.php', main_url+'downloadsub.php', id)
-	#Now you download the subtitles
-	language = subtitles_list[pos][ "language_name" ]
 
-	if content is not None:
-		#added a strip(";") in the end because it was needed ;)
-		header = content.info()['Content-Disposition'].split('filename')[1].split('.')[-1].strip("\"").strip(";")
-		if header == 'rar':
-			log( __name__ ,"%s file: content is RAR" % (debug_pretext)) #EGO
-			local_tmp_file = os.path.join(tmp_sub_dir, str(uuid.uuid1()) + ".rar")
-			log( __name__ ,"%s file: local_tmp_file %s" % (debug_pretext, local_tmp_file)) #EGO
-			packed = True
-		elif header == 'zip':
-			local_tmp_file = os.path.join(tmp_sub_dir, str(uuid.uuid1()) + ".zip")
-			packed = True
-		else: # never found/downloaded an unpacked subtitles file, but just to be sure ...
-			local_tmp_file = os.path.join(tmp_sub_dir, str(uuid.uuid1()) + ".srt") # assume unpacked sub file is an '.srt'
-			subs_file = local_tmp_file
-			packed = False
-		log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
-		try:
-			log( __name__ ,"%s file: write in %s" % (debug_pretext, local_tmp_file)) #EGO
-			local_file_handle = open(local_tmp_file, "wb")
-			shutil.copyfileobj(content.fp, local_file_handle)
-			local_file_handle.close()
-		except:
-			log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
-		if packed:
-			files = os.listdir(tmp_sub_dir)
-			init_filecount = len(files)
-			log( __name__ ,"%s file: number init_filecount %s" % (debug_pretext, init_filecount)) #EGO
-			filecount = init_filecount
-			max_mtime = 0
-			# determine the newest file from tmp_sub_dir
-			for file in files:
-				if (string.split(file,'.')[-1] in ['srt','sub','txt']):
-					mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
-					if mtime > max_mtime:
-						max_mtime =  mtime
-			init_max_mtime = max_mtime
-			time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
-			msgnote(debug_pretext,__language__(30155), 6000)
-			xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
-			waittime  = 0
-			while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
-				time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
-				files = os.listdir(tmp_sub_dir)
-				log( __name__ ,"%s DIRLIST '%s'" % (debug_pretext, files))
-				filecount = len(files)
-				# determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
-				for file in files:
-					if (string.split(file,'.')[-1] in ['srt','sub','txt']):
-						mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
-						if (mtime > max_mtime):
-							max_mtime =  mtime
-				waittime  = waittime + 1
-			if waittime == 20:
-				log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
-			else:
-				msgnote(debug_pretext,__language__(30156), 3000)
-				log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
-				searchrars = recursive_glob(tmp_sub_dir, packext)
-				searchrarcount = len(searchrars)
-				if searchrarcount > 1:
-					for filerar in searchrars:
-						if filerar != os.path.join(tmp_sub_dir,'ldivx.rar') and filerar != os.path.join(tmp_sub_dir,'ldivx.zip'):
-							xbmc.executebuiltin("XBMC.Extract(" + filerar + "," + tmp_sub_dir +")")
-				time.sleep(1)
-				searchsubs = recursive_glob(tmp_sub_dir, subext)
-				searchsubscount = len(searchsubs)
-				for filesub in searchsubs:
-					nopath = string.split(filesub, tmp_sub_dir)[-1]
-					justfile = nopath.split(os.sep)[-1]
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s DEBUG-nopath: '%s'" % (debug_pretext, nopath))
-					#log( __name__ ,"%s DEBUG-justfile: '%s'" % (debug_pretext, justfile))
-					releasefilename = filesearch[1][:len(filesearch[1])-4]
-					releasedirname = filesearch[0].split(os.sep)
-					if 'rar' in israr:
-						releasedirname = releasedirname[-2]
-					else:
-						releasedirname = releasedirname[-1]
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s DEBUG-releasefilename: '%s'" % (debug_pretext, releasefilename))
-					#log( __name__ ,"%s DEBUG-releasedirname: '%s'" % (debug_pretext, releasedirname))
-					subsfilename = justfile[:len(justfile)-4]
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s DEBUG-subsfilename: '%s'" % (debug_pretext, subsfilename))
-					#log( __name__ ,"%s DEBUG-subscount: '%s'" % (debug_pretext, searchsubscount))
-					#Check for multi CD Releases
-					multicds_pattern = "\+?(cd\d)\+?"
-					multicdsubs = re.search(multicds_pattern, subsfilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
-					multicdsrls = re.search(multicds_pattern, releasefilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
-					#Start choosing the right subtitle(s)
-					if searchsubscount == 1 and sync == True:
-						subs_file = filesub
-						#For DEBUG only uncomment next line
-						#log( __name__ ,"%s DEBUG-inside subscount: '%s'" % (debug_pretext, searchsubscount))
-						break
-					elif string.lower(subsfilename) == string.lower(releasefilename) and sync == True:
-						subs_file = filesub
-						#For DEBUG only uncomment next line
-						#log( __name__ ,"%s DEBUG-subsfile-morethen1: '%s'" % (debug_pretext, subs_file))
-						break
-					elif string.lower(subsfilename) == string.lower(releasedirname) and sync == True:
-						subs_file = filesub
-						#For DEBUG only uncomment next line
-						#log( __name__ ,"%s DEBUG-subsfile-morethen1-dirname: '%s'" % (debug_pretext, subs_file))
-						break
-					elif (multicdsubs != None) and (multicdsrls != None) and sync == True:
-						multicdsubs = string.lower(multicdsubs.group(1))
-						multicdsrls = string.lower(multicdsrls.group(1))
-						#For DEBUG only uncomment next line
-						#log( __name__ ,"%s DEBUG-multicdsubs: '%s'" % (debug_pretext, multicdsubs))
-						#log( __name__ ,"%s DEBUG-multicdsrls: '%s'" % (debug_pretext, multicdsrls))
-						if multicdsrls == multicdsubs:
-							subs_file = filesub
-							break
-				else:
-					#If none is found just open a dialog box for browsing the temporary subtitle folder
-					sub_ext = "srt,aas,ssa,sub,smi"
-					sub_tmp = []
-					for root, dirs, files in os.walk(tmp_sub_dir, topdown=False):
-						for file in files:
-							dirfile = os.path.join(root, file)
-							ext = os.path.splitext(dirfile)[1][1:].lower()
-							if ext in sub_ext:
-								sub_tmp.append(dirfile)
-							elif os.path.isfile(dirfile):
-								os.remove(dirfile)
-					
-					# If there are more than one subtitle in the temp dir, launch a browse dialog
-					# so user can choose. If only one subtitle is found, parse it to the addon.
-					if len(sub_tmp) > 1:
-						dialog = xbmcgui.Dialog()
-						subs_file = dialog.browse(1, 'XBMC', 'files', '', False, False, tmp_sub_dir+"/")
-						if subs_file == tmp_sub_dir+"/": subs_file = ""
-					elif sub_tmp:
-						subs_file = sub_tmp[0]
+	downloaded_content = content.read()
+
+	#Create some variables
+	subtitle = ""
+	extract_path = os.path.join(tmp_sub_dir, "extracted")
 	
-		
-		msgnote(debug_pretext,__language__(30157), 3000)
+	fname = os.path.join(tmp_sub_dir,str(id))
+	if content.info().get('Content-Disposition').__contains__('rar'):
+		fname += '.rar'
+	else:
+		fname += '.zip'
+	f = open(fname,'wb')
+	f.write(downloaded_content)
+	f.close()
+	
+	# Use XBMC.Extract to extract the downloaded file, extract it to the temp dir, 
+	# then removes all files from the temp dir that aren't subtitles.
+	msgnote(debug_pretext,__language__(30155), 3000)
+	xbmc.executebuiltin("XBMC.Extract(" + fname + "," + extract_path +")")
+	time.sleep(2)
+	legendas_tmp = []
+	# brunoga fixed solution for non unicode caracters
+	fs_encoding = sys.getfilesystemencoding()
+	for root, dirs, files in os.walk(extract_path.encode(fs_encoding), topdown=False):
+		for file in files:
+			dirfile = os.path.join(root, file)
+			ext = os.path.splitext(dirfile)[1][1:].lower()
+			if ext in sub_ext:
+				legendas_tmp.append(dirfile)
+			elif os.path.isfile(dirfile):
+				os.remove(dirfile)
+	
+	msgnote(debug_pretext,__language__(30156), 3000)
+	searchrars = recursive_glob(extract_path, packext)
+	searchrarcount = len(searchrars)
+	if searchrarcount > 1:
+		for filerar in searchrars:
+			if filerar != os.path.join(extract_path,local_tmp_file) and filerar != os.path.join(extract_path,local_tmp_file):
+				try:
+					xbmc.executebuiltin("XBMC.Extract(" + filerar + "," + extract_path +")")
+				except:
+					return False
+	time.sleep(1)
+	searchsubs = recursive_glob(extract_path, subext)
+	searchsubscount = len(searchsubs)
+	for filesub in searchsubs:
+		nopath = string.split(filesub, extract_path)[-1]
+		justfile = nopath.split(os.sep)[-1]
+		#For DEBUG only uncomment next line
+		#log( __name__ ,"%s DEBUG-nopath: '%s'" % (debug_pretext, nopath))
+		#log( __name__ ,"%s DEBUG-justfile: '%s'" % (debug_pretext, justfile))
+		releasefilename = filesearch[1][:len(filesearch[1])-4]
+		releasedirname = filesearch[0].split(os.sep)
+		if 'rar' in israr:
+			releasedirname = releasedirname[-2]
+		else:
+			releasedirname = releasedirname[-1]
+		#For DEBUG only uncomment next line
+		#log( __name__ ,"%s DEBUG-releasefilename: '%s'" % (debug_pretext, releasefilename))
+		#log( __name__ ,"%s DEBUG-releasedirname: '%s'" % (debug_pretext, releasedirname))
+		subsfilename = justfile[:len(justfile)-4]
+		#For DEBUG only uncomment next line
+		#log( __name__ ,"%s DEBUG-subsfilename: '%s'" % (debug_pretext, subsfilename))
+		#log( __name__ ,"%s DEBUG-subscount: '%s'" % (debug_pretext, searchsubscount))
+		#Check for multi CD Releases
+		multicds_pattern = "\+?(cd\d)\+?"
+		multicdsubs = re.search(multicds_pattern, subsfilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
+		multicdsrls = re.search(multicds_pattern, releasefilename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
+		#Start choosing the right subtitle(s)
+		if searchsubscount == 1 and sync == True:
+			subs_file = filesub
+			subtitle = subs_file
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s DEBUG-inside subscount: '%s'" % (debug_pretext, searchsubscount))
+			break
+		elif string.lower(subsfilename) == string.lower(releasefilename):
+			subs_file = filesub
+			subtitle = subs_file
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s DEBUG-subsfile-morethen1: '%s'" % (debug_pretext, subs_file))
+			break
+		elif string.lower(subsfilename) == string.lower(releasedirname):
+			subs_file = filesub
+			subtitle = subs_file
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s DEBUG-subsfile-morethen1-dirname: '%s'" % (debug_pretext, subs_file))
+			break
+		elif (multicdsubs != None) and (multicdsrls != None):
+			multicdsubs = string.lower(multicdsubs.group(1))
+			multicdsrls = string.lower(multicdsrls.group(1))
+			#For DEBUG only uncomment next line
+			#log( __name__ ,"%s DEBUG-multicdsubs: '%s'" % (debug_pretext, multicdsubs))
+			#log( __name__ ,"%s DEBUG-multicdsrls: '%s'" % (debug_pretext, multicdsrls))
+			if multicdsrls == multicdsubs:
+				subs_file = filesub
+				subtitle = subs_file
+				break
 
-		return False, language, subs_file #standard output
+	else:
+	# If there are more than one subtitle in the temp dir, launch a browse dialog
+	# so user can choose. If only one subtitle is found, parse it to the addon.
+		if len(legendas_tmp) > 1:
+			dialog = xbmcgui.Dialog()
+			subtitle = dialog.browse(1, 'XBMC', 'files', '', False, False, extract_path+"/")
+			if subtitle == extract_path+"/": subtitle = ""
+		elif legendas_tmp:
+			subtitle = legendas_tmp[0]
+	
+	msgnote(debug_pretext,__language__(30157), 3000)
+	language = subtitles_list[pos][ "language_name" ]
+	return False, language, subtitle #standard output

@@ -59,9 +59,10 @@
       <setting id="SubDB" type="bool" label="theSubDB.com" default="false"/>
       <setting id="Subdivx" type="bool" label="Subdivx.com (Spanish subs only)" default="false"/>      
       <setting id="Sublight" type="bool" label="Sublight.si" default="false"/>             
+      <setting id="Subs4Free" type="bool" label="Subs4Free (Greek subs only)" default="false"/>
       <setting id="Subscene" type="bool" label="Subscene.com" default="false"/>
       <setting id="Subscenter" type="bool" label="Subscenter.org" default="false"/>
-      <setting id="SubtitlesGr" type="bool" label="Subtitles.gr (Greek subs only)" default="false"/>
+      <setting id="SubtitlesGR" type="bool" label="Subtitles.gr (Greek subs only)" default="false"/>
       <setting id="SubtitulosES" type="bool" label="Subtitulos.es" default="false"/>
       <setting id="SuperSubtitles" type="bool" label="SuperSubtitles (Feliratok.info)" default="false"/>      
       <setting id="Swesub" type="bool" label="Swesub.nu" default="false"/>

@@ -38,7 +38,7 @@ en:
                                             Dexter.S05E01.720p.HDTV.x264-ORENJI</td>
 """
 sv_subtitle_pattern = "href=\"http://www.undertexter.se/laddatext.php\?id=(\d{1,10}) \">\
-[ \r\n]*?.{100,200}?\(1 cd\)[ \r\n]*?.{200,300}?height=\"3\"><br>[ \r\n]*?([^\r\n\t]*?)</td>"
+[ \r\n]*?.{100,200}?\(1 cd\)[ \r\n]*?.{200,500}?height=\"3\"><br>[ \r\n]*?([^\r\n\t]*?)</td>"
 # group(1) = id, group(2) = filename
 
 en_subtitle_pattern = "<a href=\"http://www.engsub.net/(\d{1,10})/\" alt=\"[^\r\n\t]*?\" title=\"[^\r\n\t]*?\"><b>\

@@ -1,96 +1,215 @@
 # -*- coding: UTF-8 -*-
+import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
+import shutil
 
-import os, sys, re, shutil, xbmc, xbmcgui, string, time, urllib, urllib2
 from utilities import log
 _ = sys.modules[ "__main__" ].__language__
 
-main_url = "http://www.subtitles.gr/"
-#main_url = "http://www.greeksubtitles.info/"
-download_url = "http://www.findsubtitles.eu/getp.php?id="
-debug_pretext = ""
+main_url = "http://www.subtitles.gr"
+debug_pretext = "subtitles.gr"
 
-subtitle_pattern='<img src=.+?flags/el.gif.+?nbsp.+?http://.+?/.+?/.+?/(.+?)/".+?">(.+?)</a>'
-#subtitle_pattern="<img src=.+?flags/el.gif.+?nbsp.+?get_greek_subtitles.php.+?id=(.+?)'>(.+?)</a>"
-
-
-def getallsubs(searchstring, languageshort, languagelong, subtitles_list):
-    url = main_url + "search.php?name=" + urllib.quote_plus(searchstring)
-    content = geturl(url)
-    content=content.replace('\n','')
-    if content is not None:
-        log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
-        for id,filename in re.compile(subtitle_pattern).findall(content):
-            log( __name__ ,"%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, id))
-            subtitles_list.append({'rating': '0', 'no_files': 1, 'filename': filename, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
-
-        
-def geturl(url):
-    class MyOpener(urllib.FancyURLopener):
-        version = ''
-    my_urlopener = MyOpener()
-    log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
-    try:
-        response = my_urlopener.open(url)
-        content = response.read()
-        return_url = response.geturl()
-        if url != return_url:
-            log( __name__ ,"%s Getting redirected url: %s" % (debug_pretext, return_url))
-            if (' ' in return_url):
-                log( __name__ ,"%s Redirected url contains space (workaround a bug in python redirection: 'http://bugs.python.org/issue1153027', should be solved, but isn't)" % (debug_pretext))
-                return_url = return_url.replace(' ','%20')
-            response = my_urlopener.open(return_url)
-            content = response.read()
-            return_url = response.geturl()
-    except:
-        log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
-        content = None
+def get_url(url,referer=None):
+    if referer is None:
+        headers = {'User-agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0'}
+    else:
+        headers = {'User-agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0', 'Referer' : referer}
+    req = urllib2.Request(url,None,headers)
+    response = urllib2.urlopen(req)
+    content = response.read()
+    response.close()
+    content = content.replace('\n','')
     return content
 
+def get_rating(downloads):
+    rating = int(downloads)
+    if (rating < 50):
+        rating = 1
+    elif (rating >= 50 and rating < 100):
+        rating = 2
+    elif (rating >= 100 and rating < 150):
+        rating = 3
+    elif (rating >= 150 and rating < 200):
+        rating = 4
+    elif (rating >= 200 and rating < 250):
+        rating = 5
+    elif (rating >= 250 and rating < 300):
+        rating = 6
+    elif (rating >= 300 and rating < 350):
+        rating = 7
+    elif (rating >= 350 and rating < 400):
+        rating = 8
+    elif (rating >= 400 and rating < 450):
+        rating = 9
+    elif (rating >= 450):
+        rating = 10
+    return rating
 
-def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
+def unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder):
+    files = os.listdir(tmp_sub_dir)
+    init_filecount = len(files)
+    max_mtime = 0
+    filecount = init_filecount
+    # determine the newest file from tmp_sub_dir
+    for file in files:
+        if (string.split(file,'.')[-1] in ['srt','sub','txt']):
+            mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+            if mtime > max_mtime:
+                max_mtime =  mtime
+    init_max_mtime = max_mtime
+    time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
+    xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
+    waittime  = 0
+    while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
+        time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
+        files = os.listdir(tmp_sub_dir)
+        filecount = len(files)
+        # determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
+        for file in files:
+            if (string.split(file,'.')[-1] in ['srt','sub','txt']):
+                mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+                if (mtime > max_mtime):
+                    max_mtime =  mtime
+        waittime  = waittime + 1
+    if waittime == 20:
+        log( __name__ ," Failed to unpack subtitles in '%s'" % (tmp_sub_dir))
+        pass
+    else:
+        log( __name__ ," Unpacked files in '%s'" % (tmp_sub_dir))
+        pass
+        for file in files:
+            # there could be more subtitle files in tmp_sub_dir, so make sure we get the newly created subtitle file
+            if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
+                log( __name__ ," Unpacked subtitles file '%s'" % (file))
+                subs_file = os.path.join(tmp_sub_dir, file)
+
+def search_subtitles(file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack): #standard input
     subtitles_list = []
     msg = ""
-    if len(tvshow) == 0:
-        if str(year) == "":
-            title, year = xbmc.getCleanMovieTitle( title )
-        else:
-            year  = year
-            title = title
-        searchstring = title
-    if len(tvshow) > 0:
-        searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
-        log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
 
-    greek = 0
-    if string.lower(lang1) == "greek": greek = 1
-    elif string.lower(lang2) == "greek": greek = 2
-    elif string.lower(lang3) == "greek": greek = 3
-
-    getallsubs(searchstring, "el", "Greek", subtitles_list)
-    if greek == 0:
+    if not (string.lower(lang1) or string.lower(lang2) or string.lower(lang3)) == "greek":
         msg = "Won't work, subtitles.gr is only for Greek subtitles."
+        return subtitles_list, "", msg #standard output
 
+    try:
+        log( __name__ ,"%s Clean title = %s" % (debug_pretext, title))
+        premiered = year
+        title, year = xbmc.getCleanMovieTitle( title )
+    except:
+        pass
+
+    if len(tvshow) == 0: # Movie
+        searchstring = "%s (%s)" % (title, premiered)
+    elif len(tvshow) > 0 and title == tvshow: # Movie not in Library
+        searchstring = "%s (%#02d%#02d)" % (tvshow, int(season), int(episode))
+    elif len(tvshow) > 0: # TVShow
+        searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
+    else:
+        searchstring = title
+
+    log( __name__ ,"%s Search string = %s" % (debug_pretext, searchstring))
+    get_subtitles_list(searchstring, "el", "Greek", subtitles_list)
     return subtitles_list, "", msg #standard output
 
-def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
-    id = subtitles_list[pos][ "id" ]
+def download_subtitles(subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
     language = subtitles_list[pos][ "language_name" ]
-    if string.lower(language) == "greek": url = download_url + id
-    local_file = open(zip_subs, "w" + "b")
-    f = urllib.urlopen(url)
-    local_file.write(f.read())
-    local_file.close()
-    tmp_new_dir = os.path.join( xbmc.translatePath(tmp_sub_dir) ,"zipsubs" )
-    tmp_new_dir_2 = os.path.join( xbmc.translatePath(tmp_new_dir) ,"subs" )
-    if not os.path.exists(tmp_new_dir): os.makedirs(tmp_new_dir)
-    if not os.path.exists(tmp_new_dir_2): os.makedirs(tmp_new_dir_2)
-    xbmc.executebuiltin("XBMC.Extract(" + zip_subs + "," + tmp_new_dir +")")
-    xbmc.sleep(1000)
-    for file in os.listdir(tmp_new_dir_2): file = os.path.join(tmp_new_dir_2, file)
-    if (file.endswith('.rar') or file.endswith('.zip')):
-        xbmc.executebuiltin("XBMC.Extract(" + file + "," + tmp_sub_dir +")")
-        xbmc.sleep(1000)
-    else: shutil.copy(file, tmp_sub_dir)
-    os.remove(zip_subs)
-    shutil.rmtree(tmp_new_dir)
+    name = subtitles_list[pos][ "filename" ]
+    id = subtitles_list[pos][ "id" ]
+    id = re.compile('(.+?.+?)/').findall(id)[-1]
+    id = 'http://www.findsubtitles.eu/getp.php?id=%s' % (id)
+
+    try:
+        log( __name__ ,"%s Getting url: %s" % (debug_pretext, id))
+        response = urllib.urlopen(id)
+        content = response.read()
+        type = content[:4]
+    except:
+        log( __name__ ,"%s Failed to parse url:%s" % (debug_pretext, id))
+        return True,language, "" #standard output
+
+    if type == 'Rar!':
+        local_tmp_file = os.path.join(tmp_sub_dir, "subtitlesgr.rar")
+    elif type == 'PK':
+        local_tmp_file = os.path.join(tmp_sub_dir, "subtitlesgr.zip")
+    else:
+        log( __name__ ,"%s Failed to get correct content type" % (debug_pretext))
+        return True,language, "" #standard output
+
+    try:
+        log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
+        local_file_handle = open(local_tmp_file, "wb")
+        local_file_handle.write(content)
+        local_file_handle.close()
+
+        log( __name__ ,"%s Extracting temp subtitles" % (debug_pretext))
+        xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
+        time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
+
+        log( __name__ ,"%s Cleaning temp directory:%s" % (debug_pretext, tmp_sub_dir))
+        files = os.listdir(tmp_sub_dir)
+        try:
+            for file in files:
+                file = os.path.join(tmp_sub_dir, file)
+                os.remove(file)
+        except:
+            pass
+
+        log( __name__ ,"%s Getting subtitles from extracted directory" % (debug_pretext))
+        tmp_sub_extract_dir = os.path.join(tmp_sub_dir, "subs")
+        files = os.listdir(tmp_sub_extract_dir)
+        for file in files:
+            local_tmp_extract_file = os.path.join(tmp_sub_extract_dir, file)
+            local_tmp_file = os.path.join(tmp_sub_dir, file)
+            if (file.endswith('.rar') or file.endswith('.zip')):
+                shutil.copy(local_tmp_extract_file, tmp_sub_dir)
+                unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder)
+                return True,language, "" #standard output
+            elif (file.endswith('.srt') or file.endswith('.sub')):
+                shutil.copy(local_tmp_extract_file, tmp_sub_dir)
+                subs_file = local_tmp_file
+                return True,language, "" #standard output
+    except:
+        log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
+        pass
+
     return True,language, "" #standard output
+
+def get_subtitles_list(searchstring, languageshort, languagelong, subtitles_list):
+    url = '%s/search.php?name=%s&sort=downloads+desc' % (main_url, urllib.quote_plus(searchstring))
+    try:
+        log( __name__ ,"%s Getting url: %s" % (debug_pretext, url))
+        content = get_url(url,referer=main_url)
+    except:
+        log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
+        return
+    try:
+        log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
+        subtitles = re.compile('(<img src=.+?flags/el.gif.+?</tr>)').findall(content)
+    except:
+        log( __name__ ,"%s Failed to get subtitles" % (debug_pretext))
+        return
+    for subtitle in subtitles:
+        try:
+            filename = re.compile('">(.+?)</a>').findall(subtitle)[0]
+            id = re.compile('href="(.+?)"').findall(subtitle)[0]
+            try:
+                uploader = re.compile('class="link_from">(.+?)</a>').findall(subtitle)[0]
+                if uploader == 'movieplace': uploader = 'GreekSubtitles'
+                filename = '[%s] %s' % (uploader, filename)
+            except:
+                pass
+            try:
+                downloads = re.compile('class="latest_downloads">(.+?)</td>').findall(subtitle)[0]
+                filename += ' [%s DLs]' % (downloads)
+            except:
+                pass
+            try:
+                rating = get_rating(downloads)
+            except:
+                rating = 0
+                pass
+            if not (uploader == 'Εργαστήρι Υποτίτλων' or uploader == 'subs4series'):
+                log( __name__ ,"%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, id))
+                subtitles_list.append({'rating': str(rating), 'no_files': 1, 'filename': filename, 'sync': False, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+        except:
+            pass
+    return

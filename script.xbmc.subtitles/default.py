@@ -34,7 +34,7 @@ if xbmc.Player().isPlayingVideo():
   pause.restore()
   sys.modules.clear()
 else:
-  xbmc.executebuiltin('Notification(%s,%s,%s)' %(__scriptname__, __language__(611), "1000")) 
+  xbmc.executebuiltin((u'Notification(%s,%s,%s)' %(__scriptname__, __language__(611), "1000")).encode("utf-8")) 
 
 
   

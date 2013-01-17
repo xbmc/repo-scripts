@@ -1,3 +1,11 @@
+3.9.3
+- [fix] Subdivx, XBMCSPAIN
+- Added Subs4Free service,lambda81
+- Updated Subtitles.gr service,lambda81
+- [fix] Undertexter, MutatedHero
+- [fix] LegendasZone, LegendasDivx and Pipocas service, highlandr
+- [fix] crash when string contains non ascii characters, ronie
+
 3.9.2
 - xbmc.python -> version="2.1.0"
 - [updated] language files from Transifex
