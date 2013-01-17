@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="Jump back on unpause">
+    <setting id="jumpbacksecs" type="slider" label="Jump seconds" default="0" range="0,60" />
+    <setting id="waitforjumpback" type="slider" label="Minimum pause before jumpback" default="10" range="0,600" />
+  </category>
+</settings>

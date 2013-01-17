@@ -1,0 +1,5 @@
+2.1.0
+- add setting for specifying the minimum pause time before jumping back
+
+2.0.0
+- initial commit for frodo
