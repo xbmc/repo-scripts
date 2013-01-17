@@ -1,4 +1,4 @@
-<config version="0.9.5">
+<config version="1.0.6">
   <RomCollections>
     
   </RomCollections>
@@ -164,7 +164,7 @@
       <Scraper parseInstruction="04.07 - mobygames - screenshots.xml" source="4" />
     </Site>
 	<Site descFilePerGame="True" name="archive.vg" searchGameByCRC="False">
-      <Scraper encoding="iso-8859-1" parseInstruction="05.01 - archive - search.xml" returnUrl="true" source="http://api.archive.vg/1.0/Archive.search/%ARCHIVEAPIKEY%/%GAME%" />
+      <Scraper encoding="iso-8859-1" parseInstruction="05.01 - archive - search.xml" returnUrl="true" source="http://api.archive.vg/2.0/Archive.search/%ARCHIVEAPIKEY%/%GAME%" />
 	  <Scraper encoding="iso-8859-1" parseInstruction="05.02 - archive - detail.xml" source="1" />
     </Site>
 	<Site name="maws.mameworld.info" descFilePerGame="True" searchGameByCRC="False">

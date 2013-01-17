@@ -142,7 +142,7 @@
 								<texturenofocus></texturenofocus>
 								<visible>!IsEmpty(ListItem.Property(autoplayvideomain)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
 								<animation delay="300" effect="fade" start="100" end="100">Focus</animation>
-								<onfocus>XBMC.PlayMedia($INFO[ListItem.Property(gameplaymain)],1)</onfocus>
+								<onfocus>XBMC.PlayMedia($ESCINFO[ListItem.Property(gameplaymain)],1)</onfocus>
 							</control>
 						</control>						
 					</focusedlayout>
@@ -503,7 +503,7 @@
 							<aligny>center</aligny>
 							<textcolor>FFFFFFFF</textcolor>
 							<selectedcolor>FFe2ff43</selectedcolor>
-							<label>Console: [COLOR=88FFFFFF]$INFO[ListItem.Property(console)][/COLOR]</label>
+							<label>$ADDON[script.games.rom.collection.browser 50006]: [COLOR=88FFFFFF]$INFO[ListItem.Property(console)][/COLOR]</label>
 							<visible>Control.IsVisible(50)</visible>
 						</control>	
 
@@ -515,7 +515,7 @@
 							<posy>80</posy>
 							<width>180</width>
 							<height>25</height>
-							<label>Year: [COLOR=88FFFFFF]$INFO[ListItem.Property(year)][/COLOR]</label>
+							<label>$ADDON[script.games.rom.collection.browser 50000]: [COLOR=88FFFFFF]$INFO[ListItem.Property(year)][/COLOR]</label>
 							<align>left</align>
 							<aligny>center</aligny>
 							<font>Simplicity_20</font>
@@ -529,7 +529,7 @@
 							<posy>110</posy>
 							<width>180</width>
 							<height>25</height>
-							<label>Genre: [COLOR=88FFFFFF]$INFO[ListItem.Property(Genre)][/COLOR]</label>
+							<label>$ADDON[script.games.rom.collection.browser 50001]: [COLOR=88FFFFFF]$INFO[ListItem.Property(Genre)][/COLOR]</label>
 							<align>left</align>
 							<aligny>center</aligny>
 							<font>Simplicity_20</font>
@@ -681,7 +681,7 @@
 								<texturenofocus></texturenofocus>
 								<visible>!IsEmpty(ListItem.Property(autoplayvideomain)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
 								<animation delay="300" effect="fade" start="100" end="100">Focus</animation>								
-								<onfocus>XBMC.PlayMedia($INFO[ListItem.Property(gameplaymain)],1)</onfocus>
+								<onfocus>XBMC.PlayMedia($ESCINFO[ListItem.Property(gameplaymain)],1)</onfocus>
 							</control>
 						</focusedlayout>
 					</control>
@@ -868,7 +868,7 @@
 							<posy>15</posy>
 							<width>80</width>
 							<height>25</height>
-							<label>Year:</label>
+							<label>$ADDON[script.games.rom.collection.browser 50000]:</label>
 							<align>left</align>
 							<aligny>center</aligny>
 							<font>Simplicity_20</font>
@@ -895,7 +895,7 @@
 							<posy>40</posy>
 							<width>80</width>
 							<height>25</height>
-							<label>Genre:</label>
+							<label>$ADDON[script.games.rom.collection.browser 50001]:</label>
 							<align>left</align>
 							<aligny>center</aligny>
 							<font>Simplicity_20</font>
@@ -1047,7 +1047,7 @@
 					<textcolor>88FFFFFF</textcolor>
 					<align>left</align>
 					<align>center</align>
-					<label>[COLOR=FFFFFFFF]Console:[/COLOR]  $INFO[ListItem.Property(console)]</label>
+					<label>[COLOR=FFFFFFFF]$ADDON[script.games.rom.collection.browser 50006]:[/COLOR] $INFO[ListItem.Property(console)]</label>
 					<visible>Control.IsVisible(58)</visible>
 				</control>
 				<!-- Year -->
@@ -1132,7 +1132,7 @@
 				<width>200</width>
 				<height>30</height>
 				<font>font13</font>
-				<label>Favorites</label>
+				<label>$ADDON[script.games.rom.collection.browser 50004]</label>
 				<textcolor>DDFFFFFF</textcolor>
 				<focusedcolor>FFe2ff43</focusedcolor>
 				<texturefocus>rcb-button-focus.png</texturefocus>
@@ -1152,7 +1152,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>Search</label>			
+				<label>$ADDON[script.games.rom.collection.browser 50005]</label>
 				<textcolor>DDFFFFFF</textcolor>
 				<focusedcolor>FFe2ff43</focusedcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>
@@ -1184,7 +1184,7 @@
 					<posy>20</posy>
 					<width>200</width>
 					<textcolor>DDFFFFFF</textcolor>
-					<label>Consoles</label>
+					<label>$ADDON[script.games.rom.collection.browser 50006]</label>
 				</control>		
 				<control type="wraplist" id="500">
 					<posx>0</posx>
@@ -1256,7 +1256,7 @@
 					<posx>210</posx>
 					<posy>20</posy>
 					<textcolor>DDFFFFFF</textcolor>
-					<label>Genre</label>
+					<label>$ADDON[script.games.rom.collection.browser 50001]</label>
 				</control>
 				<control type="wraplist" id="600">
 					<posx>210</posx>
@@ -1328,7 +1328,7 @@
 					<posx>420</posx>
 					<posy>20</posy>
 						<textcolor>DDFFFFFF</textcolor>
-						<label>Year</label>
+						<label>$ADDON[script.games.rom.collection.browser 50000]</label>
 				</control>		
 				<control type="wraplist" id="700">
 					<posx>420</posx>
@@ -1400,7 +1400,7 @@
 					<posx>630</posx>
 					<posy>20</posy>
 					<textcolor>DDFFFFFF</textcolor>
-					<label>Publisher</label>
+					<label>$ADDON[script.games.rom.collection.browser 50002]</label>
 				</control>		
 				<control type="wraplist" id="800">
 					<posx>630</posx>
@@ -1472,7 +1472,7 @@
 					<posx>840</posx>
 					<posy>20</posy>
 					<textcolor>DDFFFFFF</textcolor>
-					<label>A-Z</label>
+					<label>$ADDON[script.games.rom.collection.browser 50007]</label>
 				</control>		
 				<control type="wraplist" id="900">
 					<posx>840</posx>
@@ -1566,7 +1566,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>Change View</label>			
+				<label>$ADDON[script.games.rom.collection.browser 50008]</label>
 				<textcolor>DDFFFFFF</textcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>
 				<align>center</align>
@@ -1594,7 +1594,7 @@
 			<font>Simplicity_20</font>
 			<textcolor>88FFFFFF</textcolor>
 			<shadowcolor>FF000000</shadowcolor>
-			<label>([COLOR=FFFFFFFF]$INFO[Container.NumItems][/COLOR]) Items - Page ([COLOR=FFFFFFFF]$INFO[Container.CurrentPage]/$INFO[Container.NumPages][/COLOR])</label>
+			<label>([COLOR=FFFFFFFF]$INFO[Container.NumItems][/COLOR]) $ADDON[script.games.rom.collection.browser 50010] - $ADDON[script.games.rom.collection.browser 50011] ([COLOR=FFFFFFFF]$INFO[Container.CurrentPage]/$INFO[Container.NumPages][/COLOR])</label>
 		</control>
 		
 		<!-- Messages -->

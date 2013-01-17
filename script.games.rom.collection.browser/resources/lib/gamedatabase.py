@@ -118,19 +118,19 @@ class GameDataBase:
 				newFileName = self.dataBasePath +'.backup ' +dbVersion 
 				
 				if os.path.isfile(newFileName):					
-					return -1, "Error: Cannot backup MyGames.db: Backup File exists."				
+					return -1, util.localize(35030)				
 				try:
 					self.close()
 					shutil.copy(str(self.dataBasePath), str(newFileName))
 					self.connect()
 				except Exception, (exc):					
-					return -1, "Error: Cannot backup MyGames.db: " +str(exc)
+					return -1, util.localize(35031) +": " +str(exc)
 								
 				self.executeSQLScript(alterTableScript)
 				self.commit()
 				return returnCode, message
 			else:
-				return -1, "Error: No Update from version %s to %s." %(dbVersion, util.CURRENT_DB_VERSION)
+				return -1, util.localize(35032) %(dbVersion, util.CURRENT_DB_VERSION)
 			
 		return 0, ""
 	
@@ -150,19 +150,25 @@ class DataBaseObject:
 		#print("Insert INTO %(tablename)s VALUES (%(args)s)" % {'tablename':self.tableName, 'args': ( "?, " * len(args)) })
 		
 	
-	def update(self, columns, args, id):
+	def update(self, columns, argsOrig, id, updateWithNullValues):
 		
-		if(len(columns) != len(args)):
+		if(len(columns) != len(argsOrig)):
 			util.Logutil.log("len columns != len args in gdb.update()", util.LOG_LEVEL_WARNING)			
 			return
 			
+		args = []
 		updateString = "Update %s SET " %self.tableName
 		for i in range(0, len(columns)):
+			#don't update with empty values
+			if(not updateWithNullValues and (argsOrig[i] == '' or argsOrig[i] == None)):
+				continue
+			
+			args.append(argsOrig[i])
 			updateString += columns[i] +  " = ?"
 			if(i < len(columns) -1):
 				updateString += ", "
 				
-		updateString += " WHERE id = " +str(id)		
+		updateString += " WHERE id = " +str(id)
 		self.gdb.cursor.execute(updateString, args)
 		
 	
@@ -251,9 +257,11 @@ class Game(DataBaseObject):
 					
 	filterByNameAndRomCollectionId = "SELECT * FROM Game WHERE name = ? and romCollectionId = ?"
 	
+	filterMostPlayedGames = "Select * From Game Where launchCount > 0 Order by launchCount desc Limit "
+	
 	deleteQuery = "DELETE FROM Game WHERE id = ?"
 	
-	def __init__(self, gdb):		
+	def __init__(self, gdb):
 		self.gdb = gdb
 		self.tableName = "Game"
 		
@@ -261,7 +269,7 @@ class Game(DataBaseObject):
 		args = (romCollectionId, genreId, yearId, publisherId, isFavorite)
 		filterQuery = self.filterQuery %likeStatement
 		util.Logutil.log('searching games with query: ' +filterQuery, util.LOG_LEVEL_DEBUG)
-		util.Logutil.log('searching games with args: romCollectionId = %s, genreId = %s, yearId = %s, publisherId = %s, isFavorite = %s, characterFilter = %s' %(str(romCollectionId), str(genreId), str(yearId), str(publisherId), str(isFavorite), likeStatement), util.LOG_LEVEL_INFO)
+		util.Logutil.log('searching games with args: romCollectionId = %s, genreId = %s, yearId = %s, publisherId = %s, isFavorite = %s, characterFilter = %s' %(str(romCollectionId), str(genreId), str(yearId), str(publisherId), str(isFavorite), likeStatement), util.LOG_LEVEL_DEBUG)
 		games = self.getObjectsByWildcardQuery(filterQuery, args)
 		newList = self.encodeUtf8(games)
 		return newList
@@ -269,6 +277,14 @@ class Game(DataBaseObject):
 	def getGameByNameAndRomCollectionId(self, name, romCollectionId):
 		game = self.getObjectByQuery(self.filterByNameAndRomCollectionId, (name, romCollectionId))
 		return game
+		
+	def getMostPlayedGames(self, count):
+		if(str.isdigit(str(count))):
+			filter = self.filterMostPlayedGames +str(count)
+		else:
+			filter = self.filterMostPlayedGames +str(10)
+		games = self.getObjectsByQuery(filter, [])
+		return games
 		
 	def delete(self, gameId):
 		self.deleteObjectByQuery(self.deleteQuery, (gameId,))

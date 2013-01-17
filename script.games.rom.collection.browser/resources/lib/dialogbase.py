@@ -41,7 +41,7 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 		#Scrapers
 		sitesInList = []		
 		if(not localOnly):
-			sitesInList.append('None')
+			sitesInList.append(util.localize(56004))
 		#get all scrapers
 		
 		for siteName in self.scraperSites:
@@ -51,7 +51,7 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 			#only add scrapers without http
 			if(localOnly):
 				#don't use local nfo scraper
-				if(site.name == 'local nfo'):
+				if(site.name == util.localize(40054)):
 					 continue
 				skipScraper = False
 				
@@ -68,7 +68,7 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 			sitesInList.append(site.name)
 				
 		if(len(sitesInList) == 0):
-			 sitesInList.append('None')
+			 sitesInList.append(util.localize(56004))
 				
 		return sitesInList
 	
@@ -78,7 +78,7 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 		textValue = control.getLabel()
 		
 		keyboard = xbmc.Keyboard()
-		keyboard.setHeading('Enter ' +name)			
+		keyboard.setHeading(util.localize(40032) %name)			
 		keyboard.setDefault(textValue)
 		keyboard.doModal()
 		if (keyboard.isConfirmed()):
@@ -114,7 +114,7 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 		filemask = control.getLabel()
 		
 		keyboard = xbmc.Keyboard()
-		keyboard.setHeading('Enter ' +enterString)
+		keyboard.setHeading(util.localize(40032) %enterString)
 		keyboard.setDefault(filemask)
 		keyboard.doModal()
 		if (keyboard.isConfirmed()):

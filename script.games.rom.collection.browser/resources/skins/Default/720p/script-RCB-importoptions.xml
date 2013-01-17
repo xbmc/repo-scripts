@@ -27,7 +27,7 @@
 				<textcolor>white</textcolor>
 				<align>center</align>
 				<aligny>center</aligny>
-				<label>Rom Collection Browser - Import Games</label>
+				<label>$ADDON[script.games.rom.collection.browser 30000] - $ADDON[script.games.rom.collection.browser 55000]</label>
 			</control>
 			<control type="button" id="5101">
 				<description>Close Window button</description>
@@ -109,8 +109,9 @@
 						<textcolor>88FFFFFF</textcolor>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>Rom Collection</label>
+						<label>$ADDON[script.games.rom.collection.browser 52001]</label>
 						<visible>![Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
 					</control>
 					<control type="label">
 						<posx>7</posx>
@@ -121,8 +122,9 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>Rom Collection</label>
+						<label>$ADDON[script.games.rom.collection.browser 52001]</label>
 						<visible>[Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
 					</control>
 					<control type="label">
 						<posx>570</posx>
@@ -135,6 +137,7 @@
 						<aligny>center</aligny>
 						<label>$INFO[ListItem.Label]</label>
 						<visible>![Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
 					</control>
 					<control type="label">
 						<posx>570</posx>
@@ -147,6 +150,7 @@
 						<aligny>center</aligny>
 						<label>$INFO[ListItem.Label]</label>
 						<visible>[Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
 					</control>
 				</focusedlayout>
 			</control>
@@ -165,6 +169,7 @@
 				<onright>5212</onright>
 				<onup>5101</onup>
 				<ondown>5222</ondown>
+				<enable>!Skin.HasSetting(rcb_disableRomcollections)</enable>
 			</control>
 			<control type="button" id="5212">
 				<description>Menu Item Prev Button</description>
@@ -181,6 +186,7 @@
 				<onright>5300</onright>
 				<onup>5101</onup>
 				<ondown>5223</ondown>
+				<enable>!Skin.HasSetting(rcb_disableRomcollections)</enable>
 			</control>
 			
 			<!-- Scraping mode -->		
@@ -224,7 +230,7 @@
 						<textcolor>88FFFFFF</textcolor>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>Scraping mode</label>
+						<label>$ADDON[script.games.rom.collection.browser 55001]</label>
 						<visible>![Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
 					</control>
 					<control type="label">
@@ -236,7 +242,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>Scraping mode</label>
+						<label>$ADDON[script.games.rom.collection.browser 55001]</label>
 						<visible>[Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
 					</control>
 					<control type="label">
@@ -304,7 +310,7 @@
 				<width>640</width>
 				<height>30</height>
 				<font>font13</font>
-				<label>Change scrapers for this run</label>
+				<label>$ADDON[script.games.rom.collection.browser 55002]</label>
 				<textcolor>88FFFFFF</textcolor>
 				<focusedcolor>FFFFFFFF</focusedcolor>
 				<texturefocus>rcb-MenuItemFO.png</texturefocus>
@@ -362,7 +368,7 @@
 							<textcolor>88FFFFFF</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>Scraper 1</label>
+							<label>$ADDON[script.games.rom.collection.browser 52013]</label>
 							<visible>![Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -375,7 +381,7 @@
 							<textcolor>white</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>Scraper 1</label>
+							<label>$ADDON[script.games.rom.collection.browser 52013]</label>
 							<visible>[Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -482,7 +488,7 @@
 							<textcolor>88FFFFFF</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>Scraper 2</label>
+							<label>$ADDON[script.games.rom.collection.browser 52014]</label>
 							<visible>![Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -495,7 +501,7 @@
 							<textcolor>white</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>Scraper 2</label>
+							<label>$ADDON[script.games.rom.collection.browser 52014]</label>
 							<visible>[Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -602,7 +608,7 @@
 							<textcolor>88FFFFFF</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>Scraper 3</label>
+							<label>$ADDON[script.games.rom.collection.browser 52015]</label>
 							<visible>![Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -615,7 +621,7 @@
 							<textcolor>white</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>Scraper 3</label>
+							<label>$ADDON[script.games.rom.collection.browser 52015]</label>
 							<visible>[Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -695,7 +701,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>Import</label>				
+				<label>$ADDON[script.games.rom.collection.browser 55000]</label>
 				<textcolor>DDFFFFFF</textcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>
 				<align>center</align>
@@ -719,7 +725,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>Cancel</label>				
+				<label>$ADDON[script.games.rom.collection.browser 52035]</label>
 				<textcolor>DDFFFFFF</textcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>
 				<align>center</align>

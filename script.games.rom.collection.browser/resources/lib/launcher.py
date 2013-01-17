@@ -19,12 +19,14 @@ def launchEmu(gdb, gui, gameId, config, settings):
 		romCollection = config.romCollections[str(gameRow[util.GAME_romCollectionId])]
 	except:
 		Logutil.log('Cannot get rom collection with id: ' +str(gameRow[util.GAME_romCollectionId]), util.LOG_LEVEL_ERROR)
-		gui.writeMsg("Error launching game!")
+		gui.writeMsg(util.localize(35034))
 		return
 		
-	gui.writeMsg("Launch Game " + gameRow[util.ROW_NAME])
+	gui.writeMsg(util.localize(40063)+ " " +gameRow[util.ROW_NAME])
 	
 	cmd = ""
+	precmd = ""
+	postcmd = ""
 	
 	#get environment OS
 	env = ( os.environ.get( "OS", "win32" ), "win32", )[ os.environ.get( "OS", "win32" ) == "xbox" ]	
@@ -33,10 +35,15 @@ def launchEmu(gdb, gui, gameId, config, settings):
 	Logutil.log("files for current game: " +str(filenameRows), util.LOG_LEVEL_INFO)
 	
 	escapeCmd = settings.getSetting(util.SETTING_RCB_ESCAPECOMMAND).upper() == 'TRUE'
-	cmd = buildCmd(filenameRows, romCollection, gameRow, escapeCmd)
+	cmd, precmd, postcmd = buildCmd(filenameRows, romCollection, gameRow, escapeCmd, False)
 	if(cmd == ''):
 		Logutil.log('No cmd created. Game will not be launched.', util.LOG_LEVEL_INFO)
 		return
+	if(precmd.strip() == '' or precmd.strip() == 'call'):
+		Logutil.log('No precmd created.', util.LOG_LEVEL_INFO)
+		
+	if(postcmd.strip() == '' or postcmd.strip() == 'call'):
+		Logutil.log('No postcmd created.', util.LOG_LEVEL_INFO)
 		
 	if (romCollection.useEmuSolo):
 		
@@ -64,32 +71,24 @@ def launchEmu(gdb, gui, gameId, config, settings):
 	
 	#update LaunchCount
 	launchCount = gameRow[util.GAME_launchCount]
-	Game(gdb).update(('launchCount',), (launchCount +1,) , gameRow[util.ROW_ID])
+	Game(gdb).update(('launchCount',), (launchCount +1,) , gameRow[util.ROW_ID], True)
 	gdb.commit()
 	
-	Logutil.log("cmd: " +cmd, util.LOG_LEVEL_INFO)			
+	Logutil.log("cmd: " +cmd, util.LOG_LEVEL_INFO)	
+	Logutil.log("precmd: " +precmd, util.LOG_LEVEL_INFO)
+	Logutil.log("postcmd: " +postcmd, util.LOG_LEVEL_INFO)
 	
 	try:
 		if (os.environ.get( "OS", "xbox" ) == "xbox"):			
 			launchXbox(gui, gdb, cmd, romCollection, filenameRows)
 		else:
-			launchNonXbox(cmd, romCollection)
+			launchNonXbox(cmd, romCollection, settings, precmd, postcmd)
 	
 		gui.writeMsg("")
 					
 	except Exception, (exc):
 		Logutil.log("Error while launching emu: " +str(exc), util.LOG_LEVEL_ERROR)
-		gui.writeMsg("Error while launching emu: " +str(exc))
-		
-	try:
-		#delete temporary files (from zip or 7z extraction
-		tempDir = getTempDir()
-		files = os.listdir(tempDir)
-		for file in files:
-			os.remove(os.path.join(tempDir, file))
-	except Exception, (exc):
-		Logutil.log("Error deleting files after launch emu: " +str(exc), util.LOG_LEVEL_ERROR)
-		gui.writeMsg("Error deleting files after launch emu: " +str(exc))
+		gui.writeMsg(util.localize(35035) +": " +str(exc))
 	
 	Logutil.log("End launcher.launchEmu", util.LOG_LEVEL_INFO)
 		
@@ -102,15 +101,16 @@ def launchEmu(gdb, gui, gameId, config, settings):
 ##################
 		
 		
-def buildCmd(filenameRows, romCollection, gameRow, escapeCmd):		
+def buildCmd(filenameRows, romCollection, gameRow, escapeCmd, calledFromSkin):		
 	Logutil.log('launcher.buildCmd', util.LOG_LEVEL_INFO)
 		
 	compressedExtensions = ['7z', 'zip']
 	
 	emuCommandLine = romCollection.emulatorCmd
 	Logutil.log('emuCommandLine: ' +emuCommandLine, util.LOG_LEVEL_INFO)
-	
-	
+	Logutil.log('preCmdLine: ' +romCollection.preCmd, util.LOG_LEVEL_INFO)
+	Logutil.log('postCmdLine: ' +romCollection.postCmd, util.LOG_LEVEL_INFO)
+
 	#handle savestates	
 	stateFile = checkGameHasSaveStates(romCollection, gameRow, filenameRows, escapeCmd)
 		
@@ -127,7 +127,27 @@ def buildCmd(filenameRows, romCollection, gameRow, escapeCmd):
 	#params could be: {-%I% %ROM%}
 	#we have to repeat the part inside the brackets and replace the %I% with the current index
 	emuParams, partToRepeat = prepareMultiRomCommand(emuParams)		
-	
+
+	#ask for disc number if multidisc game
+	diskName = ""
+	if(romCollection.diskPrefix != '' and not '%I%' in emuParams):
+		Logutil.log("Getting Multiple Disc Parameter", util.LOG_LEVEL_INFO)
+		options = []
+		for disk in filenameRows:
+			gamename = os.path.basename(disk[0])
+			match = re.search(romCollection.diskPrefix.lower(), str(gamename).lower())
+			if(match):
+				disk = gamename[match.start():match.end()]
+				options.append(disk)
+		if(len(options) > 1 and not calledFromSkin):
+			diskNum = xbmcgui.Dialog().select(util.localize(40064) +': ', options)
+			if(diskNum < 0):
+				#don't launch game
+				return "", "", ""
+			else:
+				diskName = options[diskNum]
+				Logutil.log('Chosen Disc: %s' % diskName, util.LOG_LEVEL_INFO)
+
 	#insert game specific command
 	gameCmd = ''
 	if(gameRow[util.GAME_gameCmd] != None):
@@ -144,17 +164,19 @@ def buildCmd(filenameRows, romCollection, gameRow, escapeCmd):
 		Logutil.log('rom: ' +str(rom), util.LOG_LEVEL_INFO)
 
 		# If it's a .7z file
-		# Don't extract zip files in case of savestate handling
+		# Don't extract zip files in case of savestate handling and when called From skin
 		filext = rom.split('.')[-1]
 		roms = [rom]
-		if filext in compressedExtensions and not romCollection.doNotExtractZipFiles and stateFile == '':
+		if filext in compressedExtensions and not romCollection.doNotExtractZipFiles and stateFile == '' and not calledFromSkin:
 			roms = handleCompressedFile(filext, rom, romCollection, emuParams)
 			if len(roms) == 0:
-				return ""
+				return "", "", ""
 		
 		del rom
 		
 		for rom in roms:
+			precmd = ""
+			postcmd = ""
 			if fileindex == 0:
 				emuParams = replacePlaceholdersInParams(emuParams, rom, romCollection, gameRow, escapeCmd)
 				if (escapeCmd):
@@ -173,10 +195,27 @@ def buildCmd(filenameRows, romCollection, gameRow, escapeCmd):
 					emuCommandLine = re.escape(emuCommandLine)
 
 				newrepl = newrepl.replace('%I%', str(fileindex))
-				cmd += ' ' +newrepl		
+				cmd += ' ' +newrepl
+				
+			cmdprefix = ''
+			env = ( os.environ.get( "OS", "win32" ), "win32", )[ os.environ.get( "OS", "win32" ) == "xbox" ]
+			if(env == "win32"):
+				cmdprefix = 'call '
+				
+			precmd = cmdprefix + replacePlaceholdersInParams(romCollection.preCmd, rom, romCollection, gameRow, escapeCmd)
+			postcmd = cmdprefix + replacePlaceholdersInParams(romCollection.postCmd, rom, romCollection, gameRow, escapeCmd)
+						
 			fileindex += 1
-	
-	return cmd
+
+	#A disk was chosen by the user, select it here
+	if (diskName):
+		Logutil.log("Choosing Disk: " +str(diskName),util.LOG_LEVEL_INFO)
+		match = re.search(romCollection.diskPrefix.lower(), cmd.lower())
+		replString = cmd[match.start():match.end()]
+		cmd = cmd.replace(replString, diskName)
+		
+			
+	return cmd, precmd, postcmd
 
 
 def checkGameHasSaveStates(romCollection, gameRow, filenameRows, escapeCmd):
@@ -199,10 +238,10 @@ def checkGameHasSaveStates(romCollection, gameRow, filenameRows, escapeCmd):
 		if(re.search('(?i)%ASKNUM%', romCollection.saveStateParams)):
 			return saveStateFiles[0]
 				
-		options = ["Launch game from start"]
+		options = [util.localize(40065)]
 		for file in saveStateFiles:
 			options.append(os.path.basename(file))
-		selectedFile = xbmcgui.Dialog().select('Launch saved state of this game?', options)
+		selectedFile = xbmcgui.Dialog().select(util.localize(40066), options)
 		#If selections is canceled or "Don't launch statefile" option
 		if(selectedFile < 1):
 			return ''
@@ -225,6 +264,19 @@ def prepareMultiRomCommand(emuParams):
 
 
 def handleCompressedFile(filext, rom, romCollection, emuParams):
+	
+	#Note: Trying to delete temporary files (from zip or 7z extraction) from last run
+	#Do this before launching a new game. Otherwise game could be deleted before launch
+	try:
+		Logutil.log("Trying to delete temporary rom files", util.LOG_LEVEL_INFO)	
+		tempDir = getTempDir()
+		files = os.listdir(tempDir)
+		for file in files:
+			os.remove(os.path.join(tempDir, file))
+	except Exception, (exc):
+		Logutil.log("Error deleting files after launch emu: " +str(exc), util.LOG_LEVEL_ERROR)
+		gui.writeMsg(util.localize(35036) +": " +str(exc))
+		
 	
 	roms = []
 	
@@ -333,7 +385,7 @@ def replacePlaceholdersInParams(emuParams, rom, romCollection, gameRow, escapeCm
 	#ask num
 	if(re.search('(?i)%ASKNUM%', emuParams)):
 		options = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-		number = str(xbmcgui.Dialog().select('Select slot of saved game', options))
+		number = str(xbmcgui.Dialog().select(util.localize(40067), options))
 		emuParams = emuParams.replace('%asknum%', number)
 		emuParams = emuParams.replace('%ASKNUM%', number)
 		emuParams = emuParams.replace('%Asknum%', number)
@@ -342,7 +394,7 @@ def replacePlaceholdersInParams(emuParams, rom, romCollection, gameRow, escapeCm
 	if(re.search('(?i)%ASKTEXT%', emuParams)):
 		
 		keyboard = xbmc.Keyboard()
-		keyboard.setHeading('Enter Command Text')
+		keyboard.setHeading(util.localize(40068))
 		keyboard.doModal()
 		command = ''
 		if (keyboard.isConfirmed()):
@@ -399,7 +451,7 @@ def backupAutoexec(gdb, fName):
 			Logutil.log("rcbSetting == None in backupAutoexec", util.LOG_LEVEL_WARNING)
 			return
 		
-		RCBSetting(gdb).update(('autoexecBackupPath',), (newFileName,), rcbSetting[util.ROW_ID])
+		RCBSetting(gdb).update(('autoexecBackupPath',), (newFileName,), rcbSetting[util.ROW_ID], True)
 		gdb.commit()
 		
 	Logutil.log("End launcher.backupAutoexec", util.LOG_LEVEL_INFO)
@@ -411,7 +463,7 @@ def launchXbox(gui, gdb, cmd, romCollection, filenameRows):
 	#on xbox emucmd must be the path to an executable or cut file
 	if (not os.path.isfile(cmd)):
 		Logutil.log("Error while launching emu: File %s does not exist!" %cmd, util.LOG_LEVEL_ERROR)
-		gui.writeMsg("Error while launching emu: File %s does not exist!" %cmd)
+		gui.writeMsg(util.localize(35037) %cmd)
 		return
 					
 	if (romCollection.xboxCreateShortcut):
@@ -420,7 +472,7 @@ def launchXbox(gui, gdb, cmd, romCollection, filenameRows):
 		cutFile = createXboxCutFile(cmd, filenameRows, romCollection)
 		if(cutFile == ""):
 			Logutil.log("Error while creating .cut file. Check xbmc.log for details.", util.LOG_LEVEL_ERROR)
-			gui.writeMsg("Error while creating .cut file. Check xbmc.log for details.")
+			gui.writeMsg(util.localize(35038))
 			return
 			
 		cmd = cutFile
@@ -492,30 +544,59 @@ def getRomfilenameForXboxCutfile(filenameRows, romCollection):
 	return filename
 	
 	
-def launchNonXbox(cmd, romCollection):
+def launchNonXbox(cmd, romCollection, settings, precmd='', postcmd=''):
 	Logutil.log("launchEmu on non-xbox", util.LOG_LEVEL_INFO)							
 				
 	toggledScreenMode = False
 	
 	if (not romCollection.useEmuSolo):
-		screenMode = xbmc.executehttpapi("GetSystemInfoByName(system.screenmode)").replace("<li>","")
+		#screenMode = xbmc.executehttpapi("GetSystemInfoByName(system.screenmode)").replace("<li>","")
+		screenMode = xbmc.getInfoLabel("System.Screenmode")
 		Logutil.log("screenMode: " +screenMode, util.LOG_LEVEL_INFO)
 		isFullScreen = screenMode.endswith("Full Screen")
 		
 		if(isFullScreen):
 			Logutil.log("Toggle to Windowed mode", util.LOG_LEVEL_INFO)
 			#this minimizes xbmc some apps seems to need it
-			xbmc.executehttpapi("Action(199)")
+			try:
+				xbmc.executehttpapi("Action(199)")
+			except:
+				xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Input.ExecuteAction","params":{"action":"togglefullscreen"},"id":"1"}')
+			
 			toggledScreenMode = True
 		
 	Logutil.log("launch emu", util.LOG_LEVEL_INFO)
-	os.system(cmd.encode(sys.getfilesystemencoding()))
+	
+	#pre launch command
+	if(precmd.strip() != '' and precmd.strip() != 'call'):
+		Logutil.log("Got to PRE", util.LOG_LEVEL_INFO)
+		os.system(precmd.encode(sys.getfilesystemencoding()))
+	
+	preDelay = int(float(settings.getSetting(SETTING_RCB_PRELAUNCHDELAY)))
+	xbmc.sleep(preDelay)
+	if(romCollection.usePopen):
+		import subprocess
+		subprocess.Popen(cmd.encode(sys.getfilesystemencoding()), shell=True)
+	else:
+		os.system(cmd.encode(sys.getfilesystemencoding()))
+	
 	Logutil.log("launch emu done", util.LOG_LEVEL_INFO)		
+	
+	postDelay = int(float(settings.getSetting(SETTING_RCB_POSTLAUNCHDELAY)))
+	xbmc.sleep(postDelay)
+	
+	#post launch command
+	if(postcmd.strip() != '' and postcmd.strip() != 'call'):
+		Logutil.log("Got to POST: " + postcmd.strip(), util.LOG_LEVEL_INFO)
+		os.system(postcmd.encode(sys.getfilesystemencoding()))
 	
 	if(toggledScreenMode):
 		Logutil.log("Toggle to Full Screen mode", util.LOG_LEVEL_INFO)
 		#this brings xbmc back
-		xbmc.executehttpapi("Action(199)")
+		try:
+			xbmc.executehttpapi("Action(199)")
+		except:
+			xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Input.ExecuteAction","params":{"action":"togglefullscreen"},"id":"1"}')
 		
 
 def getTempDir():
@@ -543,7 +624,7 @@ def getNames7z(filepath):
 	try:
 		import py7zlib
 	except Exception, (exc):
-		xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Error launching .7z file.', 'Please check XBMC.log for details.')
+		xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35039), util.localize(40029))
 		Logutil.log("You have tried to launch a .7z file but you are missing required libraries to extract the file. You can download the latest RCB version from RCBs project page. It contains all required libraries.", util.LOG_LEVEL_ERROR)
 		Logutil.log("Error: " +str(exc), util.LOG_LEVEL_ERROR)
 		return None
@@ -573,7 +654,7 @@ def getArchives7z(filepath, archiveList):
 	try:
 		import py7zlib
 	except:
-		xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Error launching .7z file.', 'Please check XBMC.log for details.')
+		xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35039), util.localize(40029))
 		Logutil.log("You have tried to launch a .7z file but you are missing required libraries to extract the file. You can download the latest RCB version from RCBs project page. It contains all required libraries.", util.LOG_LEVEL_ERROR)
 		return None
 	

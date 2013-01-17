@@ -1,18 +1,24 @@
 
+import xbmc, xbmcaddon
+
 import os, sys, re
 #import xbmc, time
 import time
 
 
 #
-# CONSTANTS #
+# CONSTANTS AND GLOBALS #
 #
 
 SCRIPTNAME = 'Rom Collection Browser'
 SCRIPTID = 'script.games.rom.collection.browser'
-CURRENT_CONFIG_VERSION = "0.9.5"
+CURRENT_CONFIG_VERSION = "1.0.6"
 CURRENT_DB_VERSION = "0.7.4"
 ISTESTRUN = False
+
+__addon__ = xbmcaddon.Addon(id='%s' %SCRIPTID)
+__language__ = __addon__.getLocalizedString
+
 
 #time to wait before automatic playback starts
 WAITTIME_PLAYERSTART = 500
@@ -50,6 +56,7 @@ SETTING_RCB_LOGLEVEL = 'rcb_logLevel'
 SETTING_RCB_ESCAPECOMMAND = 'rcb_escapeEmulatorCommand'
 SETTING_RCB_CREATENFOFILE = 'rcb_createNfoWhileScraping'
 SETTING_RCB_ENABLEFULLREIMPORT = 'rcb_enableFullReimport'
+SETTING_RCB_ALLOWOVERWRITEWITHNULLVALUES = 'rcb_overwriteWithNullvalues'
 SETTING_RCB_IGNOREGAMEWITHOUTDESC = 'rcb_ignoreGamesWithoutDesc'
 SETTING_RCB_IGNOREGAMEWITHOUTARTWORK = 'rcb_ignoreGamesWithoutArtwork'
 SETTING_RCB_SHOWENTRYALLCONSOLES = 'rcb_showEntryAllConsoles'
@@ -69,9 +76,12 @@ SETTING_RCB_SHOWFAVORITESTARS = 'rcb_showFavoriteStars'
 SETTING_RCB_FAVORITESSELECTED = 'rcb_favoritesSelected'
 SETTING_RCB_SEARCHTEXT = 'rcb_searchText'
 SETTING_RCB_OVERWRITEIMPORTOPTIONS = 'rcb_overwriteImportOptions'
+SETTING_RCB_IMPORTOPTIONS_DISABLEROMCOLLECTIONS = 'rcb_disableRomcollections'
 SETTING_RCB_EDITSCRAPER_DESCFILEPERGAME = 'rcb_editScraper_descFilePerGame'
 SETTING_RCB_USENFOFOLDER = 'rcb_useNfoFolder'
 SETTING_RCB_NFOFOLDER = 'rcb_nfoFolder'
+SETTING_RCB_PRELAUNCHDELAY = 'rcb_prelaunchDelay'
+SETTING_RCB_POSTLAUNCHDELAY = 'rcb_postlaunchDelay'
 
 
 SCRAPING_OPTION_AUTO_ACCURATE = 0
@@ -210,12 +220,16 @@ def html_escape(text):
 
 def getEnvironment():
 	return ( os.environ.get( "OS", "win32" ), "win32", )[ os.environ.get( "OS", "win32" ) == "xbox" ]
-	
+
+def localize(id):
+	try:
+		return __language__(id)
+	except:
+		return "Sorry. No translation available for string with id: " +str(id)
 
 def getAddonDataPath():
 	path = ''
-		
-	import xbmc
+			
 	path = xbmc.translatePath('special://profile/addon_data/%s' %(SCRIPTID))
 		
 	if not os.path.exists(path):
@@ -228,16 +242,13 @@ def getAddonDataPath():
 
 def getAddonInstallPath():
 	path = ''
-		
-	import xbmcaddon
-	addon = xbmcaddon.Addon(id='%s' %SCRIPTID)
-	path = addon.getAddonInfo('path')
+				
+	path = __addon__.getAddonInfo('path')
 	
 	return path
 			
 
-def getAutoexecPath():
-	import xbmc
+def getAutoexecPath():	
 	return xbmc.translatePath('special://profile/autoexec.py')
 
 
@@ -246,16 +257,13 @@ def getConfigXmlPath():
 		addonDataPath = getAddonDataPath() 
 		configFile = os.path.join(addonDataPath, "config.xml")
 	else:
-		configFile = os.path.join(getAddonInstallPath(), "TestDataBase", "config.xml")
+		configFile = os.path.join(getAddonInstallPath(), "resources", "lib", "TestDataBase", "config.xml")
 	
 	Logutil.log('Path to configuration file: ' +str(configFile), LOG_LEVEL_INFO)
 	return configFile
 	
 	
 def getSettings():
-	import xbmc
-	settings = ''
-	import xbmcaddon
 	settings = xbmcaddon.Addon(id='%s' %SCRIPTID)
 	return settings
 

@@ -1,6 +1,113 @@
-1.0.1 (02/2012)
+1.1.2 (01/2013)
 ~~~~~~~~~~~~~
-  * Eden version bump - no changes
+General:
+  * bugfix: asking for Platform "Other" did not work in Add Rom Collection wizard
+  * bugfix: no error message was shown after Add Rom Collection wizard
+  * bugfix: old config.xml structure was not updated with MAME imageplacing options
+
+Browse Games:
+  * bugfix: issues with browsing games in Aeon Nox and Frodo RC3
+  
+Launch Games:
+  * bugfix: using correct json command to toggle fullscreen
+  * bugfix: backward compatibility for fullscreen toggle
+  * new settings: pre- and post-launch delay
+
+1.1.1 (12/2012)
+~~~~~~~~~~~~~
+General:
+  * bugfixes due to localization changes
+
+1.1.0 (12/2012)
+~~~~~~~~~~~~~
+General:
+  * localization
+
+Import Games:
+  * error in scrape on startup: import message did not vanish anymore
+
+Browse Games:
+  * changed logic of applying filters: 1st click applies filter, 2nd click closes filter pane
+
+1.0.9 (11/2012)
+~~~~~~~~~~~~~
+Browse Games:
+  * bugfix: MostPlayedRoms-widget in Aeon Nox caused RCB-loop on startup
+
+1.0.8 (11/2012)
+~~~~~~~~~~~~~
+General:
+  * bugfix: script did not launch from home screen
+
+Browse Games:
+  * Frodo support: info dialog did not work anymore
+  * Frodo support: change viewmode needs to be called manually since Frodo
+
+1.0.7 (11/2012)
+~~~~~~~~~~~~~
+Browse Games:
+  * add fanart and launchCommand for skins to show on home screen
+
+1.0.6 (11/2012)
+~~~~~~~~~~~~~
+Import Games:
+  * import of roms and artwork on smb shares (shares with username and password in path are not supported)
+  * update archive.vg scraper to v2.0
+  * bugfix: "Rom File Mask" changes after rescraping a single game
+  * create artwork parent folder if not present
+
+Browse Games:
+  * Frodo support: games were not shown in Frodo nightlies (changes in addItem method)
+  * provide properties of most played games for skins to show on home screen
+
+Launch Games:
+  * Frodo support: replace method executehttpapi with executejsonrpc
+  * add option to exit disc selector without launching a game
+  * bugfix: disc selector not working with games that have no description
+
+
+1.0.5 (07/2012)
+~~~~~~~~~~~~~
+Import Games:
+  * "First 10 games could not be imported." -> option to continue and ignore error (patch submitted by pantherts)
+  
+Launch Games:
+  * add before and after launch command (patch submitted by carabalb)
+  * select disk in multi disk scenario (patch submitted by pantherts)
+  * new option to use subprocess.Popen to launch emulators
+  * using %PROGRAMFILES% variable in applaunch.bat
+
+1.0.4 (05/2012)
+~~~~~~~~~~~~~
+Import Games:
+  * revert: bugfix for publisher / developer "989" caused problems
+
+1.0.3 (05/2012)
+~~~~~~~~~~~~~
+General:
+  * open Addon settings from context menu
+
+Import Games:
+  * bugfix: error with publisher / developer "989"
+  * bugfix: Import games with () in name with local single file scraper
+  * change default values of "Don't import games without info / artwork"
+  * re-scrape options:
+    * rescrape single game
+    * rescrape selection
+  * new update option: don't overwrite properties with null values
+
+1.0.2 (03/2012)
+~~~~~~~~~~~~~
+General:
+  * missing info / artwork dialog: select criteria to show or hide games with missing info / artwork
+  * changed text of game description options in config wizard
+
+Import Games:
+  * bugfix: local nfo scraper did not find games with () in name
+  
+Browse Games:
+  * bugfix: videos of games with "," in name did not play
+
 
 0.9.9 (02/2012)
 ~~~~~~~~~~~~~

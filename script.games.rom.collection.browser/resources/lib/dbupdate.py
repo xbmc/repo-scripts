@@ -24,12 +24,13 @@ except:
 class DBUpdate:
 	
 	def __init__(self):
+		Logutil.log("init DBUpdate", util.LOG_LEVEL_INFO)
 		pass
+		
 	
-	Settings = util.getSettings()
-	
-	def updateDB(self, gdb, gui, updateOption, romCollections):
+	def updateDB(self, gdb, gui, updateOption, romCollections, settings):
 		self.gdb = gdb
+		self.Settings = settings
 			
 		#self.scrapeResultsFile = self.openFile(os.path.join(util.getAddonDataPath(), 'scrapeResults.txt'))
 		self.missingDescFile = self.openFile(os.path.join(util.getAddonDataPath(), 'scrapeResult_missingDesc.txt'))
@@ -45,11 +46,18 @@ class DBUpdate:
 		matchingRatioIndex = self.Settings.getSetting(util.SETTING_RCB_FUZZYFACTOR)
 		if (matchingRatioIndex == ''):
 			matchingRatioIndex = 2
+		matchingRatioIndex = self.Settings.getSetting(util.SETTING_RCB_FUZZYFACTOR)
+		Logutil.log("matchingRatioIndex: " +str(matchingRatioIndex), util.LOG_LEVEL_INFO)
+		
 		fuzzyFactor = util.FUZZY_FACTOR_ENUM[int(matchingRatioIndex)]
+		Logutil.log("fuzzyFactor: " +str(fuzzyFactor), util.LOG_LEVEL_INFO)
 		
 		enableFullReimport = self.Settings.getSetting(util.SETTING_RCB_ENABLEFULLREIMPORT).upper() == 'TRUE'
+		Logutil.log("enableFullReimport: " +str(enableFullReimport), util.LOG_LEVEL_INFO)
 		
 		continueUpdate = True
+		#Added variable to allow user to continue on errors
+		ignoreErrors = False
 		
 		for romCollection in romCollections.values():
 			
@@ -61,7 +69,7 @@ class DBUpdate:
 				break
 							
 			#prepare Header for ProgressDialog
-			progDialogRCHeader = "Importing Rom Collection (%i / %i): %s" %(rccount, len(romCollections), romCollection.name)
+			progDialogRCHeader = util.localize(40022) +" (%i / %i): %s" %(rccount, len(romCollections), romCollection.name)
 			rccount = rccount + 1
 			
 			Logutil.log("current Rom Collection: " +romCollection.name, util.LOG_LEVEL_INFO)
@@ -103,7 +111,7 @@ class DBUpdate:
 				fileDict = self.buildFileDict(gui, progDialogRCHeader, files, romCollection, firstScraper)
 									
 				try:
-					fileCount = 1
+					fileCount = 0
 					gamenameFromDesc = ''
 					
 					#TODO move to to check preconditions
@@ -135,12 +143,12 @@ class DBUpdate:
 								gamenameFromFile = helper.getGamenameFromFilename(filenamelist[0], romCollection)
 								foldername = self.getFoldernameFromRomFilename(filenamelist[0])
 								
-								continueUpdate = gui.writeMsg(progDialogRCHeader, "Import game: " +str(gamenameFromDesc), "", fileCount)
+								fileCount = fileCount +1
+								
+								continueUpdate = gui.writeMsg(progDialogRCHeader, util.localize(40023) +": " +str(gamenameFromDesc), "", fileCount)
 								if(not continueUpdate):				
 									Logutil.log('Game import canceled by user', util.LOG_LEVEL_INFO)
 									break
-								
-								fileCount = fileCount +1
 								
 								Logutil.log('Start scraping info for game: ' +str(gamenameFromFile), LOG_LEVEL_INFO)
 															
@@ -188,7 +196,7 @@ class DBUpdate:
 					self.missingDescFile.write('%s\n' %gamenameFromDesc)
 					continue
 			else:	
-				fileCount = 1
+				fileCount = 0
 				successfulFiles = 0
 				lastgamename = ''
 				lastGameId = None
@@ -216,7 +224,8 @@ class DBUpdate:
 						
 						Logutil.log('Start scraping info for game: ' + gamenameFromFile, LOG_LEVEL_INFO)						
 						
-						continueUpdate = gui.writeMsg(progDialogRCHeader, "Import game: " +gamenameFromFile, "", fileCount)
+						fileCount = fileCount +1
+						continueUpdate = gui.writeMsg(progDialogRCHeader, util.localize(40023) +": " +gamenameFromFile, "", fileCount)
 						if(not continueUpdate):				
 							Logutil.log('Game import canceled by user', util.LOG_LEVEL_INFO)
 							break
@@ -240,14 +249,13 @@ class DBUpdate:
 						
 						#print results
 						if(len(results) == 0):
-							lastgamename = ""
+							#lastgamename = ""
 							gamedescription = None
 						else:						
 							gamedescription = results
 							
 						filenamelist = []
 						filenamelist.append(filename)
-						fileCount = fileCount +1
 	
 						#Variables to process Art Download Info
 						dialogDict = {'dialogHeaderKey':progDialogRCHeader, 'gameNameKey':gamenameFromFile, 'scraperSiteKey':artScrapers, 'fileCountKey':fileCount}
@@ -258,14 +266,20 @@ class DBUpdate:
 						
 						if (lastGameId != None):
 							successfulFiles = successfulFiles + 1
-							
-						#check if all first 10 games have errors
-						if (fileCount >= 10 and successfulFiles == 0):
-						 	answer = xbmcgui.Dialog().yesno(util.SCRIPTNAME, 'First 10 games could not be imported.', 'Continue anyway?')
-						 	if(answer == False):
-						 		xbmcgui.Dialog().ok(util.SCRIPTNAME, 'Import canceled.', 'Please check xbmc.log for errors.')
-						 		continueUpdate = False
-						 		break
+
+						#check if all first 10 games have errors - Modified to allow user to continue on errors
+						if (fileCount >= 10 and successfulFiles == 0 and ignoreErrors == False):
+							options = []
+							options.append(util.localize(40024))
+							options.append(util.localize(40025))
+							options.append(util.localize(40026))
+							answer = xbmcgui.Dialog().select(util.localize(40027),options)
+							if(answer == 1):
+								ignoreErrors = True
+							elif(answer == 2):
+								xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(40028), util.localize(40029))
+								continueUpdate = False
+								break
 						
 					except Exception, (exc):
 						Logutil.log("an error occured while adding game " +gamenameFromFile, util.LOG_LEVEL_WARNING)
@@ -292,7 +306,7 @@ class DBUpdate:
 		
 		for filename in files:
 			try:
-				gui.writeMsg(progDialogRCHeader, "Building file list...", "", fileCount)
+				gui.writeMsg(progDialogRCHeader, util.localize(40030), "", fileCount)
 				fileCount = fileCount +1
 				
 				gamename = helper.getGamenameFromFilename(filename, romCollection)
@@ -396,7 +410,9 @@ class DBUpdate:
 				del dirs[:]
 		
 		
-	def checkRomfileIsMultirom(self, gamename, lastgamename):		
+	def checkRomfileIsMultirom(self, gamename, lastgamename):
+	
+		Logutil.log("checkRomfileIsMultirom. gamename = %s, lastgamename = %s" %(gamename, lastgamename), util.LOG_LEVEL_INFO)
 	
 		#XBOX Hack: rom files will always be named default.xbe: always detected as multi rom without this hack
 		if(gamename == lastgamename and lastgamename.lower() != 'default'):		
@@ -533,7 +549,7 @@ class DBUpdate:
 		for i in range(startIndex, len(romCollection.scraperSites)):
 			scraperSite = romCollection.scraperSites[i]			
 			
-			gui.writeMsg(progDialogRCHeader, "Import game: " +gamenameFromFile, scraperSite.name + " - downloading info", fileCount)
+			gui.writeMsg(progDialogRCHeader, util.localize(40023) +": " +gamenameFromFile, scraperSite.name + " - " +util.localize(40031), fileCount)
 			Logutil.log('using scraper: ' +scraperSite.name, util.LOG_LEVEL_INFO)
 			
 			if(scraperSite.searchGameByCRC and filecrc == ''):
@@ -735,14 +751,18 @@ class DBUpdate:
 				return self.gdb.cursor.lastrowid
 			else:	
 				if(allowUpdate):
-					#TODO
+					
+					#check if we are allowed to update with null values
+					allowOverwriteWithNullvalues = self.Settings.getSetting(util.SETTING_RCB_ALLOWOVERWRITEWITHNULLVALUES).upper() == 'TRUE'
+					Logutil.log("allowOverwriteWithNullvalues: " +str(allowOverwriteWithNullvalues), util.LOG_LEVEL_INFO)
+					
 					gameRow = None
 					Logutil.log("Game does exist in database. Update game: " +gameName, util.LOG_LEVEL_INFO)
 					Game(self.gdb).update(('name', 'description', 'romCollectionId', 'publisherId', 'developerId', 'reviewerId', 'yearId', 'maxPlayers', 'rating', 'numVotes',
 						'url', 'region', 'media', 'perspective', 'controllerType', 'originalTitle', 'alternateTitle', 'translatedBy', 'version', 'isFavorite', 'launchCount'),
 						(gameName, description, romCollectionId, publisherId, developerId, reviewerId, yearId, players, rating, votes, url, region, media, perspective, controller,
 						originalTitle, alternateTitle, translatedBy, version, int(isFavorite), int(launchCount)),
-						gameId)
+						gameId, allowOverwriteWithNullvalues)
 				else:
 					Logutil.log("Game does exist in database but update is not allowed for current rom collection. game: " +gameName, util.LOG_LEVEL_INFO)
 				
@@ -1040,11 +1060,22 @@ class DBUpdate:
 			
 			#check if folder exists
 			dirname = os.path.dirname(fileName)
+			#check parent folder
+			parent = os.path.dirname(dirname)
+			if(not os.path.isdir(parent)):
+				try:
+					os.mkdir(parent)
+				except Exception, (exc):
+					xbmcgui.Dialog().ok(util.localize(35010), util.localize(35011))
+					Logutil.log("Could not create directory: '%s'. Error message: '%s'" %(parent, str(exc)), util.LOG_LEVEL_ERROR)
+					return False, artworkurls
+				
+			#check artwork specific folders
 			if(not os.path.isdir(dirname)):
 				try:
 					os.mkdir(dirname)
 				except Exception, (exc):
-					xbmcgui.Dialog().ok('Error: Could not create artwork directory.', 'Check xbmc.log for details.')
+					xbmcgui.Dialog().ok(util.localize(35010), util.localize(35011))
 					Logutil.log("Could not create directory: '%s'. Error message: '%s'" %(dirname, str(exc)), util.LOG_LEVEL_ERROR)
 					return False, artworkurls
 				
@@ -1060,7 +1091,7 @@ class DBUpdate:
 						gamenameFromFile = dialogDict["gameNameKey"]
 						scraperSiteName = dialogDict["scraperSiteKey"]
 						fileCount = dialogDict["fileCountKey"]
-						gui.writeMsg(progDialogRCHeader, "Import game: " +gamenameFromFile, str(scraperSiteName[thumbKey]) + " - downloading art", fileCount)
+						gui.writeMsg(progDialogRCHeader, util.localize(40023) +": " +gamenameFromFile, str(scraperSiteName[thumbKey]) + " - downloading art", fileCount)
 				except:
 					pass
 
@@ -1068,7 +1099,7 @@ class DBUpdate:
 				try:
 					urllib.urlretrieve( thumbUrl, str(fileName))
 				except Exception, (exc):
-					xbmcgui.Dialog().ok('Error: Could not create artwork file.', 'Check xbmc.log for details.')
+					xbmcgui.Dialog().ok(util.localize(35012), util.localize(35011))
 					Logutil.log("Could not create file: '%s'. Error message: '%s'" %(str(fileName), str(exc)), util.LOG_LEVEL_ERROR)
 					return False, artworkurls
 				
@@ -1101,4 +1132,4 @@ class DBUpdate:
 		except:
 			pass
 		
-		Logutil.log("Update finished", util.LOG_LEVEL_INFO)		
+		Logutil.log("Update finished", util.LOG_LEVEL_INFO)

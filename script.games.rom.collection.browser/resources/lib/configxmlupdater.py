@@ -17,13 +17,13 @@ class ConfigxmlUpdater:
 	def updateConfig(self, gui):
 		
 		if(not os.path.isfile(self.configFile)):
-			return False, 'File config.xml does not exist'
+			return False, util.localize(35003)
 		
 		
 		tree = ElementTree().parse(self.configFile)
 		if(tree == None):
 			Logutil.log('Could not read config.xml', util.LOG_LEVEL_ERROR)
-			return False, 'Could not read config.xml.'
+			return False, util.localize(35004)
 		
 		self.tree = tree
 	
@@ -46,7 +46,7 @@ class ConfigxmlUpdater:
 			try:
 				shutil.copy(str(self.configFile), str(newFileName))
 			except Exception, (exc):
-				return False, "Error: Cannot backup config.xml: " +str(exc)
+				return False, util.localize(35007) +": " +str(exc)
 		
 		#write current version to config
 		self.tree.attrib['version'] = util.CURRENT_CONFIG_VERSION
@@ -75,6 +75,12 @@ class ConfigxmlUpdater:
 			if(not success):
 				return False, message
 			
+		if(configVersion == '0.9.5'):
+			success, message = self.update_095_to_106()
+			configVersion = '1.0.6'
+			if(not success):
+				return False, message
+			
 		#write file
 		success, message = self.writeFile()	
 				
@@ -89,7 +95,7 @@ class ConfigxmlUpdater:
 			siteName = scraperSiteXml.attrib.get('name')
 			
 			#handle online scrapers
-			if(siteName == 'local nfo'):
+			if(siteName == util.localize(40054)):
 				scraperSiteXml.attrib['descFilePerGame'] = 'True'
 				scraperSiteXml.attrib['searchGameByCRC'] = 'False'
 			elif(siteName == 'thegamesdb.net'):
@@ -177,7 +183,7 @@ class ConfigxmlUpdater:
 	
 	
 	def update_090_to_095(self):
-		#change imagePlacing elements
+		#add archive scraper
 		scraperSitesXml = self.tree.findall('Scrapers/Site')
 		archiveFound = False
 		for scraperSiteXml in scraperSitesXml:			
@@ -205,6 +211,19 @@ class ConfigxmlUpdater:
 			'source' : '1',
 			'encoding' : 'iso-8859-1'			
 			})
+				
+		return True, ''
+	
+	
+	def update_095_to_106(self):
+		#update archive.vg scraper to API v2.0
+		scraperSitesXml = self.tree.findall('Scrapers/Site')
+		for scraperSiteXml in scraperSitesXml:			
+			siteName = scraperSiteXml.attrib.get('name')
+			if(siteName == 'archive.vg'):
+				scraperXml = scraperSiteXml.find('Scraper')
+				scraperXml.attrib['source'] = "http://api.archive.vg/2.0/Archive.search/%ARCHIVEAPIKEY%/%GAME%"
+				break
 				
 		return True, '' 
 			
@@ -237,4 +256,5 @@ class ConfigxmlUpdater:
 			
 		except Exception, (exc):
 			print("Error: Cannot write config.xml: " +str(exc))
-			return False, "Error: Cannot write config.xml: " +str(exc)
+			return False, util.localize(35008) +": " +str(exc)
+		

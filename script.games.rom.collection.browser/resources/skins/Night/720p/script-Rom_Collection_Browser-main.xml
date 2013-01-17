@@ -627,7 +627,7 @@
 									<texturenofocus></texturenofocus>
 									<visible>!IsEmpty(ListItem.Property(autoplayvideomain)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
 									<animation delay="300" effect="fade" start="100" end="100">Focus</animation>
-									<onfocus>XBMC.PlayMedia($INFO[ListItem.Property(gameplaymain)],1)</onfocus>
+									<onfocus>XBMC.PlayMedia($ESCINFO[ListItem.Property(gameplaymain)],1)</onfocus>
 								</control>
 							</control>
 						</focusedlayout>
@@ -694,7 +694,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF15efd9</textcolor>
-						<label>[B]Genre[/B]</label>
+						<label>[B]$ADDON[script.games.rom.collection.browser 50001][/B]</label>						
 					</control>
 					<control type="label"><!--Director-->
 						<posx>0</posx>
@@ -721,7 +721,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF67ffff</textcolor>
-						<label>[B]Publisher[/B]</label>
+						<label>[B]$ADDON[script.games.rom.collection.browser 50002][/B]</label>
 					</control>
 					<control type="label"><!--Writer-->
 						<posx>0</posx>
@@ -748,7 +748,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF15efd9</textcolor>
-						<label>[B]Developer[/B]</label>
+						<label>[B]$ADDON[script.games.rom.collection.browser 50003][/B]</label>
 					</control>
 					<control type="label"><!--Genre-->
 						<posx>0</posx>
@@ -775,7 +775,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF15efd9</textcolor>
-						<label>[B]Rating[/B]</label>
+						<label>[B]$ADDON[script.games.rom.collection.browser 54003][/B]</label>
 					</control>
 					<control type="label"><!--Rating-->
 						<posx>0</posx>
@@ -802,7 +802,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF15efd9</textcolor>
-						<label>[B]Players[/B]</label>
+						<label>[B]$ADDON[script.games.rom.collection.browser 54004][/B]</label>
 					</control>
 					<control type="label"><!--Rating-->
 						<posx>0</posx>
@@ -1278,7 +1278,7 @@
 				<width>200</width>
 				<height>30</height>
 				<font>font13</font>
-				<label>Favorites</label>
+				<label>$ADDON[script.games.rom.collection.browser 50004]</label>
 				<textcolor>FF000000</textcolor>
 				<focusedcolor>FFFFFFFF</focusedcolor>
 				<texturefocus>rcb-button-focus.png</texturefocus>
@@ -1298,7 +1298,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>Search</label>			
+				<label>$ADDON[script.games.rom.collection.browser 50005]</label>
 				<textcolor>FF000000</textcolor>
 				<focusedcolor>FFFFFFFF</focusedcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>
@@ -1331,7 +1331,7 @@
 					<width>200</width>
 					<align>center</align>
 					<textcolor>FF000000</textcolor>
-					<label>Consoles</label>
+					<label>$ADDON[script.games.rom.collection.browser 50006]</label>
 				</control>		
 				<control type="wraplist" id="500">
 					<posx>0</posx>
@@ -1412,7 +1412,7 @@
 					<posy>20</posy>
 					<width>200</width>
 					<textcolor>FF000000</textcolor>
-					<label>Genre</label>
+					<label>$ADDON[script.games.rom.collection.browser 50001]</label>
 					<align>center</align>
 				</control>
 				<control type="wraplist" id="600">
@@ -1495,7 +1495,7 @@
 					<width>200</width>
 					<align>center</align>
 					<textcolor>FF000000</textcolor>
-					<label>Year</label>
+					<label>$ADDON[script.games.rom.collection.browser 50000]</label>
 				</control>		
 				<control type="wraplist" id="700">
 					<posx>420</posx>
@@ -1577,7 +1577,7 @@
 					<width>200</width>
 					<align>center</align>
 					<textcolor>FF000000</textcolor>
-					<label>Publisher</label>
+					<label>$ADDON[script.games.rom.collection.browser 50002]</label>
 				</control>		
 				<control type="wraplist" id="800">
 					<posx>630</posx>
@@ -1659,7 +1659,7 @@
 					<width>60</width>
 					<align>center</align>
 					<textcolor>FF000000</textcolor>
-					<label>A-Z</label>
+					<label>$ADDON[script.games.rom.collection.browser 50007]</label>
 				</control>		
 				<control type="wraplist" id="900">
 					<posx>840</posx>
@@ -1749,7 +1749,7 @@
 				<visible>true</visible>
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
-				<label>Change View</label>			
+				<label>$ADDON[script.games.rom.collection.browser 50008]</label>
 				<textcolor>FF000000</textcolor>
 				<focusedcolor>FFFFFFFF</focusedcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>

@@ -50,7 +50,7 @@ class RemoveRCDialog(xbmcgui.WindowXMLDialog):
 		self.addItemsToList(CONTROL_LIST_ROMCOLLECTIONS, romCollectionList)
 		
 		#Delete Options
-		rcDeleteOptions = ['Delete games and configuration','Delete games only']
+		rcDeleteOptions = [util.localize(40037),util.localize(40038)]
 		self.addItemsToList(CONTROL_LIST_DELETEOPTIONS, rcDeleteOptions)
 		self.updateControls()
 		
@@ -84,7 +84,7 @@ class RemoveRCDialog(xbmcgui.WindowXMLDialog):
 					success, message = configWriterRCDel.removeRomCollection(RCName)
 					if(success == False):
 						Logutil.log(message, util.LOG_LEVEL_ERROR)
-						xbmcgui.Dialog().ok('Error', 'Error Deleting Rom Collection')
+						xbmcgui.Dialog().ok(util.localize(35019), util.localize(35020))
 			Logutil.log('Click Close', util.LOG_LEVEL_INFO)
 			self.close()
 		#Cancel
@@ -105,7 +105,7 @@ class RemoveRCDialog(xbmcgui.WindowXMLDialog):
 			#Check for Remove Roms or Roms and Rom Collection
 			control = self.getControlById(CONTROL_LIST_DELETEOPTIONS)
 			selectedDeleteOption = str(control.getSelectedItem().getLabel())
-			if(selectedDeleteOption == 'Delete games only'):
+			if(selectedDeleteOption == util.localize(40038)):
 				self.romDelete = 'Roms'
 			else:
 				self.romDelete = 'RCollection'

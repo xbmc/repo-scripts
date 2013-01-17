@@ -26,7 +26,7 @@
 			<textcolor>white</textcolor>
 			<align>center</align>
 			<aligny>center</aligny>
-			<label>RCB - Delete Rom Collection</label>
+			<label>$ADDON[script.games.rom.collection.browser 57000]</label>
 		</control>
 		<control type="button" id="5101">
 			<description>Close Window button</description>
@@ -109,7 +109,7 @@
 					<textcolor>88FFFFFF</textcolor>
 					<align>left</align>
 					<aligny>center</aligny>
-					<label>Rom Collection</label>
+					<label>$ADDON[script.games.rom.collection.browser 52001]</label>
 					<visible>![Control.HasFocus(5411) | Control.HasFocus(5412)]</visible>
 				</control>
 				<control type="label">
@@ -121,7 +121,7 @@
 					<textcolor>white</textcolor>
 					<align>left</align>
 					<aligny>center</aligny>
-					<label>Rom Collection</label>
+					<label>$ADDON[script.games.rom.collection.browser 52001]</label>
 					<visible>[Control.HasFocus(5411) | Control.HasFocus(5412)]</visible>
 				</control>
 				<control type="label">
@@ -224,7 +224,7 @@
 					<textcolor>88FFFFFF</textcolor>
 					<align>left</align>
 					<aligny>center</aligny>
-					<label>Removal Option</label>
+					<label>$ADDON[script.games.rom.collection.browser 57001]</label>
 					<visible>![Control.HasFocus(5491) | Control.HasFocus(5492)]</visible>
 				</control>
 				<control type="label">
@@ -236,7 +236,7 @@
 					<textcolor>white</textcolor>
 					<align>left</align>
 					<aligny>center</aligny>
-					<label>Removal Option</label>
+					<label>$ADDON[script.games.rom.collection.browser 57001]</label>
 					<visible>[Control.HasFocus(5491) | Control.HasFocus(5492)]</visible>
 				</control>
 				<control type="label">
@@ -311,7 +311,7 @@
 			<colordiffuse>DDFFFFFF</colordiffuse>
 			<texturefocus>rcb-button-focus.png</texturefocus>
 			<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-			<label>Delete</label>				
+			<label>$ADDON[script.games.rom.collection.browser 57002]</label>
 			<textcolor>88FFFFFF</textcolor>
 			<disabledcolor>80FFFFFF</disabledcolor>
 			<align>center</align>
@@ -335,7 +335,7 @@
 			<colordiffuse>DDFFFFFF</colordiffuse>
 			<texturefocus>rcb-button-focus.png</texturefocus>
 			<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-			<label>Cancel</label>				
+			<label>$ADDON[script.games.rom.collection.browser 52035]</label>
 			<textcolor>88FFFFFF</textcolor>
 			<disabledcolor>80FFFFFF</disabledcolor>
 			<align>center</align>

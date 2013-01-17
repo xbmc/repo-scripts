@@ -25,6 +25,8 @@ CONTROL_LIST_SCRAPER3 = 5290
 CONTROL_BUTTON_RC_DOWN = 5211
 CONTROL_BUTTON_RC_UP = 5212
 
+CONTROL_BUTTON_SCRAPEMODE_UP = 5222
+
 CONTROL_BUTTON_OVERWRITESETTINGS = 5330
 
 
@@ -37,6 +39,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		Logutil.log('init ImportOptions', util.LOG_LEVEL_INFO)
 		
 		self.gui = kwargs[ "gui" ]
+		self.romCollections = kwargs[ "romCollections" ]
 		
 		self.doModal()
 		
@@ -45,11 +48,19 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		Logutil.log('onInit ImportOptions', util.LOG_LEVEL_INFO)
 		
 		#Rom Collections
-		romCollectionList = ['All']
+		romCollectionList = [util.localize(40020)]
 		for rcId in self.gui.config.romCollections.keys():
 			romCollection = self.gui.config.romCollections[rcId]
 			romCollectionList.append(romCollection.name)
 		self.addItemsToList(CONTROL_LIST_ROMCOLLECTIONS, romCollectionList)
+		
+		#deactivate Rom Collection list
+		if(self.romCollections != None):
+			#set overwrite flag to false
+			xbmc.executebuiltin('Skin.SetBool(%s)' %util.SETTING_RCB_IMPORTOPTIONS_DISABLEROMCOLLECTIONS)
+			self.setFocus(self.getControl(CONTROL_BUTTON_SCRAPEMODE_UP))
+		else:
+			xbmc.executebuiltin('Skin.Reset(%s)' %util.SETTING_RCB_IMPORTOPTIONS_DISABLEROMCOLLECTIONS)
 		
 		#Scraping modes
 		options = ['Automatic: Accurate',
@@ -108,7 +119,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 			#get selected Rom Collection
 			for rcId in self.gui.config.romCollections.keys():
 				romCollection = self.gui.config.romCollections[rcId]
-				if((selectedRomCollection == 'All' and romCollection.name != 'MAME')  or len(self.gui.config.romCollections) == 1 or romCollection.name == selectedRomCollection):
+				if((selectedRomCollection == util.localize(40020) and romCollection.name != 'MAME')  or len(self.gui.config.romCollections) == 1 or romCollection.name == selectedRomCollection):
 					sitesInRomCollection = romCollection.scraperSites
 					break
 				
@@ -149,7 +160,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 	
 	def getAvailableScrapers(self):
 		#Scrapers
-		sitesInList = ['None', 'local artwork']
+		sitesInList = [util.localize(56004), util.localize(40053)]
 		#get all scrapers
 		scrapers = self.gui.config.tree.findall('Scrapers/Site')
 		for scraper in scrapers:
@@ -165,15 +176,15 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		if(len(sitesInRomCollection) >= 1):
 			self.selectScraperInList(sitesInList, sitesInRomCollection[0].name, CONTROL_LIST_SCRAPER1)			
 		else:
-			self.selectScraperInList(sitesInList, 'None', CONTROL_LIST_SCRAPER1)
+			self.selectScraperInList(sitesInList, util.localize(56004), CONTROL_LIST_SCRAPER1)
 		if(len(sitesInRomCollection) >= 2):
 			self.selectScraperInList(sitesInList, sitesInRomCollection[1].name, CONTROL_LIST_SCRAPER2)
 		else:
-			self.selectScraperInList(sitesInList, 'None', CONTROL_LIST_SCRAPER2)
+			self.selectScraperInList(sitesInList, util.localize(56004), CONTROL_LIST_SCRAPER2)
 		if(len(sitesInRomCollection) >= 3):
 			self.selectScraperInList(sitesInList, sitesInRomCollection[2].name, CONTROL_LIST_SCRAPER3)
 		else:
-			self.selectScraperInList(sitesInList, 'None', CONTROL_LIST_SCRAPER3)
+			self.selectScraperInList(sitesInList, util.localize(56004), CONTROL_LIST_SCRAPER3)
 			
 	
 	
@@ -209,15 +220,18 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		romCollItem = control.getSelectedItem()
 		selectedRC = romCollItem.getLabel()
 		
-		#TODO add id to list and select rc by id
-		if(selectedRC == 'All'):		
-			romCollections = self.gui.config.romCollections
+		if(self.romCollections != None):
+			romCollections = self.romCollections
 		else:
-			romCollections = {}
-			for romCollection in self.gui.config.romCollections.values():
-				if(romCollection.name == selectedRC):
-					romCollections[romCollection.id] = romCollection
-					break
+			#TODO add id to list and select rc by id
+			if(selectedRC == util.localize(40020)):
+				romCollections = self.gui.config.romCollections
+			else:
+				romCollections = {}
+				for romCollection in self.gui.config.romCollections.values():
+					if(romCollection.name == selectedRC):
+						romCollections[romCollection.id] = romCollection
+						break
 		
 		#check if we should use configured scrapers
 		control = self.getControlById(CONTROL_BUTTON_OVERWRITESETTINGS)
@@ -252,13 +266,13 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		scraperItem = control.getSelectedItem()
 		scraper = scraperItem.getLabel()
 		
-		if(scraper == 'None'):
+		if(scraper == util.localize(56004)):
 			return sites, True
 		
 		#HACK: don't use other scrapers than MAME and local nfo for MAME collections
 		#HACK2: check if scraper name contains mame
 		if(romCollection.name == 'MAME'):
-			if(scraper != 'local nfo' and scraper != 'local artwork' and not bool(re.search('(?i)mame', scraper))):
+			if(scraper != util.localize(40054) and scraper != util.localize(40053) and not bool(re.search('(?i)mame', scraper))):
 				scraper = 'maws.mameworld.info'
 				
 		siteRow = None
@@ -268,9 +282,9 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 				siteRow = element
 				break
 				
-		if(scraper != 'local artwork'):
+		if(scraper != util.localize(40053)):
 			if(siteRow == None):
-				xbmcgui.Dialog().ok('Configuration Error', 'Site %s does not exist in config.xml' %scraper)
+				xbmcgui.Dialog().ok(util.localize(35021), util.localize(35022) %scraper)
 				return None, False
 			site, errorMsg = self.gui.config.readScraper(siteRow, romCollection.name, '', '', True, self.gui.config.tree)
 		else:
@@ -283,9 +297,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 			if(site.scrapers != None):
 				firstScraper = site.scrapers[0]
 				if(firstScraper.source != 'nfo' and not firstScraper.source.startswith('http') and site.name != romCollection.name):			
-					xbmcgui.Dialog().ok('Configuration Error', "Trying to scrape %s games with %s scraper." %(site.name, romCollection.name), 
-									"(Options 'All' and 'Overwrite scraper settings'",
-									"can't be used together with offline scrapers.)")
+					xbmcgui.Dialog().ok(util.localize(35021), util.localize(35027) %(site.name, romCollection.name))
 					return None, False
 			
 			sites.append(site)

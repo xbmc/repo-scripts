@@ -22,7 +22,7 @@ class ConfigXmlWriter:
 		
 		if(not os.path.isfile(configFile)):
 			Logutil.log('File config.xml does not exist. Place a valid config file here: ' +str(configFile), util.LOG_LEVEL_ERROR)
-			return False, 'Error: File config.xml does not exist'
+			return False, util.localize(35003)
 		
 		self.tree = ElementTree().parse(configFile)
 	
@@ -48,9 +48,11 @@ class ConfigXmlWriter:
 			SubElement(romCollectionXml, 'emulatorParams').text = romCollection.emulatorParams
 			
 			for romPath in romCollection.romPaths:
-				SubElement(romCollectionXml, 'romPath').text = str(romPath)
+				romPathTranslated = helper.getPathTranslation(romPath)
+				SubElement(romCollectionXml, 'romPath').text = str(romPathTranslated)
 				
-			SubElement(romCollectionXml, 'saveStatePath').text = romCollection.saveStatePath
+			saveStatePathTranslated = helper.getPathTranslation(romCollection.saveStatePath)
+			SubElement(romCollectionXml, 'saveStatePath').text = saveStatePathTranslated
 			SubElement(romCollectionXml, 'saveStateParams').text = romCollection.saveStateParams
 				
 			for mediaPath in romCollection.mediaPaths:
@@ -58,10 +60,14 @@ class ConfigXmlWriter:
 				success, message = self.searchConfigObjects('FileTypes/FileType', mediaPath.fileType.name, 'FileType')
 				if(not success):
 					return False, message								
-												
-				SubElement(romCollectionXml, 'mediaPath', {'type' : mediaPath.fileType.name}).text = mediaPath.path
+								
+				mediaPathTranslated = helper.getPathTranslation(mediaPath.path)
+				SubElement(romCollectionXml, 'mediaPath', {'type' : mediaPath.fileType.name}).text = mediaPathTranslated
 				
+			SubElement(romCollectionXml, 'preCmd').text = romCollection.preCmd
+			SubElement(romCollectionXml, 'postCmd').text = romCollection.postCmd
 			SubElement(romCollectionXml, 'useEmuSolo').text = str(romCollection.useEmuSolo)
+			SubElement(romCollectionXml, 'usePopen').text = str(romCollection.usePopen)
 			SubElement(romCollectionXml, 'ignoreOnScan').text = str(romCollection.ignoreOnScan)
 			SubElement(romCollectionXml, 'allowUpdate').text = str(romCollection.allowUpdate)
 			SubElement(romCollectionXml, 'autoplayVideoMain').text = str(romCollection.autoplayVideoMain)
@@ -77,6 +83,12 @@ class ConfigXmlWriter:
 				SubElement(romCollectionXml, 'xboxCreateShortcutUseShortGamename').text = str(romCollection.xboxCreateShortcutUseShortGamename)
 				
 			#image placing
+			if(not self.createNew):
+				#in case of an update we have to create new options
+				if(romCollection.name == 'MAME' and not self.createNew):
+					self.addFileTypesForMame()
+					self.addImagePlacingForMame()
+					
 			if(romCollection.imagePlacingMain != None and romCollection.imagePlacingMain.name != ''):
 				success, message = self.searchConfigObjects('ImagePlacing/fileTypeFor', romCollection.imagePlacingMain.name, 'ImagePlacing')
 				if(not success):
@@ -131,18 +143,16 @@ class ConfigXmlWriter:
 							})
 																		
 						scraper = scraperSite.scrapers[0]
+						
+						parseInstructionTranslated = helper.getPathTranslation(scraper.parseInstruction)
+						sourceTranslated = helper.getPathTranslation(scraper.source)
+						
 						SubElement(site, 'Scraper', 
 							{ 
-							'parseInstruction' : scraper.parseInstruction,
-							'source' : scraper.source,
+							'parseInstruction' : parseInstructionTranslated,
+							'source' : sourceTranslated,
 							'encoding' : scraper.encoding
 							})
-			
-			if(not self.createNew):	
-				#in case of an update we have to create new options
-				if(romCollection.name == 'MAME' and not self.createNew):					
-					self.addFileTypesForMame()
-					self.addImagePlacingForMame()
 				
 		success, message = self.writeFile()
 		return success, message
@@ -163,7 +173,7 @@ class ConfigXmlWriter:
 			Logutil.log('write scraper site: ' +str(scraperSite.name), util.LOG_LEVEL_INFO)
 			
 			#Don't write None-Scraper
-			if(scraperSite.name == 'None'):
+			if(scraperSite.name == util.localize(56004)):
 				Logutil.log('None scraper will be skipped', util.LOG_LEVEL_INFO)
 				continue
 			
@@ -184,10 +194,14 @@ class ConfigXmlWriter:
 				if(pathParts[0].upper() == rcbScraperPath.upper()):
 					scraper.parseInstruction = pathParts[1]
 				
+				
+				parseInstructionTranslated = helper.getPathTranslation(scraper.parseInstruction)
+				sourceTranslated = helper.getPathTranslation(scraper.source)
+				
 				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
 					{ 
-					'parseInstruction' : scraper.parseInstruction,
-					'source' : scraper.source,
+					'parseInstruction' : parseInstructionTranslated,
+					'source' : sourceTranslated,
 					'encoding' : scraper.encoding,
 					'returnUrl' : str(scraper.returnUrl)
 					})
@@ -195,6 +209,39 @@ class ConfigXmlWriter:
 		success, message = self.writeFile()
 		return success, message
 	
+	
+	def writeMissingFilter(self, showHideOption, artworkOrGroup, artworkAndGroup, infoOrGroup, infoAndGroup):
+		
+		Logutil.log('write Missing Info Filter', util.LOG_LEVEL_INFO)
+		
+		missingFilterXml = self.tree.find('MissingFilter')
+		
+		#HACK: remove MissingFilter-element
+		if(missingFilterXml != None):				
+			self.tree.remove(missingFilterXml)
+		
+		missingFilterXml = SubElement(self.tree, 'MissingFilter')
+		SubElement(missingFilterXml, 'showHideOption').text = showHideOption
+		
+		if(len(artworkOrGroup) > 0 or len(artworkAndGroup) > 0):
+			missingArtworkXml = SubElement(missingFilterXml, 'missingArtworkFilter')
+			self.addMissingFilterItems(missingArtworkXml, artworkOrGroup, 'orGroup')
+			self.addMissingFilterItems(missingArtworkXml, artworkAndGroup, 'andGroup')
+		if(len(infoOrGroup) > 0 or len(infoAndGroup) > 0):
+			missingInfoXml = SubElement(missingFilterXml, 'missingInfoFilter')
+			self.addMissingFilterItems(missingInfoXml, infoOrGroup, 'orGroup')
+			self.addMissingFilterItems(missingInfoXml, infoAndGroup, 'andGroup')
+				
+		success, message = self.writeFile()
+		return success, message
+		
+		
+	def addMissingFilterItems(self, missingXml, group, groupName):		
+		if(len(group) > 0):
+			groupXml = SubElement(missingXml, groupName)
+			for item in group:
+				SubElement(groupXml, 'item').text = item
+		
 	
 	def searchConfigObjects(self, xPath, nameToCompare, objectType):		
 		objects = self.tree.findall(xPath)
@@ -206,12 +253,15 @@ class ConfigXmlWriter:
 				break
 		
 		if(not objectFound):
-			return False, '%s %s could not be found in config.xml' %(objectType, nameToCompare)
+			return False,  util.localize(35009) %(objectType, nameToCompare)
 		
 		return True, ''
 	
 		
 	def removeRomCollection(self, RCName):
+		
+		Logutil.log('removeRomCollection', util.LOG_LEVEL_INFO)
+		
 		configFile = util.getConfigXmlPath()
 		self.tree = ElementTree().parse(configFile)
 		romCollectionsXml = self.tree.find('RomCollections')
@@ -224,6 +274,7 @@ class ConfigXmlWriter:
 		return success, message
 		
 	def addFileTypesForMame(self):
+		Logutil.log('addFileTypesForMame', util.LOG_LEVEL_INFO)
 		
 		fileTypesXml = self.tree.find('FileTypes')
 				
@@ -242,7 +293,7 @@ class ConfigXmlWriter:
 				marqueeExists = True
 			elif name == 'action':
 				actionExists = True
-			elif name == 'marquee':
+			elif name == 'title':
 				titleExists = True
 			
 			id = fileType.attrib.get('id')
@@ -266,6 +317,7 @@ class ConfigXmlWriter:
 		
 		
 	def addImagePlacingForMame(self):
+		Logutil.log('addImagePlacingForMame', util.LOG_LEVEL_INFO)
 		
 		imagePlacingXml = self.tree.find('ImagePlacing')
 		
@@ -312,7 +364,8 @@ class ConfigXmlWriter:
 		
 						
 	def writeFile(self):
-		#write file		
+		Logutil.log('writeFile', util.LOG_LEVEL_INFO)
+		#write file
 		try:
 			configFile = util.getConfigXmlPath()
 			
@@ -324,4 +377,5 @@ class ConfigXmlWriter:
 			
 		except Exception, (exc):
 			print("Error: Cannot write config.xml: " +str(exc))
-			return False, "Error: Cannot write config.xml: " +str(exc)
+			return False, util.localize(35008) +": " +str(exc)
+		

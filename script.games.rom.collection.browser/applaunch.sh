@@ -1,10 +1,9 @@
 #!/bin/bash
-# App Launch script - Temporarily quit XBMC to launch another program
-# Tx to rodalpho @ # http://xbmc.org/forum/showthread.php?t=34635
+# App Launch script - Quit XBMC to launch another program
+# Thanks to rodalpho @ # http://xbmc.org/forum/showthread.php?t=34635
 # By Redsandro 	2008-07-07
-# By ryosaeba87	2010-08-24
-# Updated:		2010-08-24
-# 	Added support for MacOSX
+# By ryosaeba87	2010-08-24 (Added support for MacOSX)
+# 
 
 
 # Check for agruments
@@ -49,7 +48,7 @@ fi
 # Is XBMC still running?
 if [ -n $XBMC_PID ]
 then
-        kill -9 $XBMC_PID # Force immediate kill
+    kill -9 $XBMC_PID # Force immediate kill
 	echo "Shutdown hard"	
 fi
 

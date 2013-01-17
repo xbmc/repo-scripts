@@ -72,7 +72,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Genre:</label>
+					<label>$ADDON[script.games.rom.collection.browser 50001]:</label>
 				</control>
 				<control type="label" id="6100">
 					<description>Genre value</description>
@@ -92,7 +92,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Year:</label>
+					<label>$ADDON[script.games.rom.collection.browser 50000]:</label>
 				</control>
 				<control type="label" id="6200">
 					<description>Year value</description>
@@ -112,7 +112,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Publisher:</label>
+					<label>$ADDON[script.games.rom.collection.browser 50002]:</label>
 				</control>
 				<control type="label" id="6300">
 					<description>Publisher value</description>
@@ -132,7 +132,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Developer:</label>
+					<label>$ADDON[script.games.rom.collection.browser 50003]:</label>
 				</control>
 				<control type="label" id="6400">
 					<description>Developer value</description>
@@ -152,7 +152,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Region:</label>
+					<label>$ADDON[script.games.rom.collection.browser 54000]:</label>
 				</control>
 				<control type="label" id="6500">
 					<description>Region value</description>
@@ -172,7 +172,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Media:</label>
+					<label>$ADDON[script.games.rom.collection.browser 54001]:</label>
 				</control>
 				<control type="label" id="6600">
 					<description>Media value</description>
@@ -192,7 +192,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Controller:</label>
+					<label>$ADDON[script.games.rom.collection.browser 54002]:</label>
 				</control>
 				<control type="label" id="6700">
 					<description>Controller value</description>
@@ -212,7 +212,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Rating:</label>
+					<label>$ADDON[script.games.rom.collection.browser 54003]:</label>
 				</control>
 				<control type="label" id="6800">
 					<description>Rating value</description>
@@ -232,7 +232,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Max. Players:</label>
+					<label>$ADDON[script.games.rom.collection.browser 54004]:</label>
 				</control>
 				<control type="label" id="7000">
 					<description>Players value</description>
@@ -252,7 +252,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>Launch count:</label>
+					<label>$ADDON[script.games.rom.collection.browser 54005]:</label>
 				</control>
 				<control type="label" id="7400">
 					<description>Launch count value</description>
@@ -475,7 +475,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>Play Game</label>
+				<label>$ADDON[script.games.rom.collection.browser 54006]</label>
 				<!--font12-->
 				<textcolor>DDFFFFFF</textcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>
@@ -504,7 +504,7 @@
 				<texturenofocus></texturenofocus>
 				<visible>!IsEmpty(ListItem.Property(autoplayvideoinfo)) + !IsEmpty(ListItem.Property(gameplayinfo))</visible>
 				<animation delay="500" effect="fade" start="100" end="100">Focus</animation>
-				<onfocus>XBMC.PlayMedia($INFO[ListItem.Property(gameplayinfo)],1)</onfocus>
+				<onfocus>XBMC.PlayMedia($ESCINFO[ListItem.Property(gameplayinfo)],1)</onfocus>
 			</control>
 			
 			<control type="label" id="4000">

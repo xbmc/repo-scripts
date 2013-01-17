@@ -1,38 +1,41 @@
 <settings>
-	<category label="General">
-		<setting id="rcb_skin" label="RCB skin" type="labelenum" values="Confluence|Night|Simplicity" default="Confluence"/>
-		<setting id="rcb_logLevel" label="Log level" type="labelenum" values="ERROR|WARNING|INFO|DEBUG" default="INFO"/>
-		<setting id="rcb_cachingOption" label="Caching option" type="labelenum" values="CACHEALL|CACHEITEM|CACHEITEMANDNEXT" default="CACHEITEMANDNEXT"/>
+	<category label="45000">
+		<setting id="rcb_skin" label="45001" type="labelenum" values="Confluence|Night|Simplicity" default="Confluence"/>
+		<setting id="rcb_logLevel" label="45002" type="labelenum" values="ERROR|WARNING|INFO|DEBUG" default="INFO"/>
+		<setting id="rcb_cachingOption" label="45003" type="labelenum" values="CACHEALL|CACHEITEM|CACHEITEMANDNEXT" default="CACHEITEMANDNEXT"/>
 		<!--<setting id="rcb_memDB" label="Load the DB into memory" value="false" type="bool" default="false"/>-->
-		<setting id="rcb_saveViewStateOnExit" label="Save viewstate on exit" type="bool" default="true"/>
-		<setting id="rcb_saveViewStateOnLaunchEmu" label="Save viewstate on launch emu" type="bool" default="true"/>
+		<setting id="rcb_saveViewStateOnExit" label="45004" type="bool" default="true"/>
+		<setting id="rcb_saveViewStateOnLaunchEmu" label="45005" type="bool" default="true"/>
 	</category>
 	
-	<category label="Import Games">
-		<setting id="rcb_scrapOnStartUP" label="Import games on XBMC startup" value="false" type="bool" default="false"/>
-		<setting id="rcb_showImportOptions" label="Show import options dialog" type="bool" default="true"/>
-		<setting id="rcb_scrapingMode" label="Scraping mode" type="labelenum" values="Automatic: Accurate|Automatic: Guess Matches|Interactive: Select Matches" default="Automatic: Accurate"/>
-		<setting id="rcb_fuzzyFactor" label="Game matching fuzzy factor" type="enum" values="0.5|0.6|0.7|0.8|0.9|1.0" default="2"/>
-		<setting id="rcb_createNfoWhileScraping" label="Create local nfo file while scraping" type="bool" default="true"/>
-		<setting id="rcb_ignoreGamesWithoutDesc" label="Don't import games without description" type="bool" default="true"/>
-		<setting id="rcb_ignoreGamesWithoutArtwork" label="Don't import games without artwork" type="bool" default="true"/>
-		<setting id="rcb_enableFullReimport" label="Always rescan imported games" type="bool" default="false"/>
-		<setting id="rcb_useNfoFolder" label="Use extra nfo folder" type="bool" />
-		<setting id="rcb_nfoFolder" label="nfo folder path" type="folder" enable="eq(-1,true)" />
+	<category label="45006">
+		<setting id="rcb_scrapOnStartUP" label="45007" value="false" type="bool" default="false"/>
+		<setting id="rcb_showImportOptions" label="45008" type="bool" default="true"/>
+		<setting id="rcb_scrapingMode" label="45009" type="labelenum" values="Automatic: Accurate|Automatic: Guess Matches|Interactive: Select Matches" default="Automatic: Accurate"/>
+		<setting id="rcb_fuzzyFactor" label="45010" type="enum" values="0.5|0.6|0.7|0.8|0.9|1.0" default="2"/>
+		<setting id="rcb_createNfoWhileScraping" label="45011" type="bool" default="true"/>
+		<setting id="rcb_ignoreGamesWithoutDesc" label="45012" type="bool" default="false"/>
+		<setting id="rcb_ignoreGamesWithoutArtwork" label="45013" type="bool" default="false"/>
+		<setting id="rcb_enableFullReimport" label="45014" type="bool" default="false"/>
+		<setting id="rcb_overwriteWithNullvalues" label="45015" type="bool" default="false"/>
+		<setting id="rcb_useNfoFolder" label="45016" type="bool" />
+		<setting id="rcb_nfoFolder" label="45017" type="folder" enable="eq(-1,true)" />
 	</category>
 	
-	<category label="Browse Games">
-		<setting id="rcb_showFavoriteStars" label="Show stars for favorites" type="bool" default="true"/>
-		<setting id="rcb_showEntryAllConsoles" label="Show filter All Consoles" type="bool" default="true"/>
-		<setting id="rcb_showEntryAllGenres" label="Show filter All Genres" type="bool" default="true"/>
-		<setting id="rcb_showEntryAllYears" label="Show filter All Years" type="bool" default="true"/>
-		<setting id="rcb_showEntryAllPublisher" label="Show filter All Publishers" type="bool" default="true"/>
-		<setting id="rcb_showEntryAllChars" label="Show filter All Chars" type="bool" default="true"/>
-		<setting id="rcb_preventUnfilteredSearch" label="Prevent unfiltered search" type="bool" default="false"/>
+	<category label="45018">
+		<setting id="rcb_showFavoriteStars" label="45019" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllConsoles" label="45020" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllGenres" label="45021" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllYears" label="45022" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllPublisher" label="45023" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllChars" label="45024" type="bool" default="true"/>
+		<setting id="rcb_preventUnfilteredSearch" label="45025" type="bool" default="false"/>
 	</category>
 	
-	<category label="Launch Games">
-		<setting id="rcb_escapeEmulatorCommand" label="Escape emulator cmd" value="false" type="bool" default="false"/>
+	<category label="45026">
+		<setting id="rcb_escapeEmulatorCommand" label="45027" value="false" type="bool" default="false"/>
+		<setting id="rcb_prelaunchDelay" label="40094" type="slider" default="1000" range="100,100,2000" option="int"/>
+		<setting id="rcb_postlaunchDelay" label="40095" type="slider" default="1000" range="100,100,2000" option="int"/>
 	</category>
 	
 	<setting id="rcb_view_mode" visible="false" value="" type="text"/>

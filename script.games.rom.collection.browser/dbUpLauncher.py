@@ -44,6 +44,7 @@ class ProgressDialogBk:
 		self.paintProgress()
 	
 	def paintProgress(self):
+		print 'paintProgress'
 		
 		self.windowID = xbmcgui.getCurrentWindowId()
 		self.window = xbmcgui.Window(self.windowID)
@@ -73,35 +74,58 @@ class ProgressDialogBk:
 		self.progress.setVisible(True)
 		self.header.setVisible(True)
 			
+	
 	def writeMsg(self, line1, line2, line3, count=0):
+		print 'writeMsg'
+		print 'count = ' +str(count)
 		
-		if self.windowID != xbmcgui.getCurrentWindowId():
-			self.windowID = xbmcgui.getCurrentWindowId()
-			if xbmcgui.getCurrentWindowId() in ALLOWEDWINDOWS:			
-			 self.paintProgress()
-		
-		#check if action was canceled from RCB						  
+		#If we are done, remove progress
+		if(line1 == 'Done.'):
+			try:
+				self.window.removeControl(self.image)
+				self.window.removeControl(self.header)
+				self.window.removeControl(self.label)
+				self.window.removeControl(self.progress)
+			except:
+				pass
+			
+			return False
+				
+		#check if action was canceled from RCB
 		scrapeOnStartupAction = util.getSettings().getSetting(util.SETTING_RCB_SCRAPEONSTARTUPACTION)
+		print 'scrapeOnStartupAction = ' +scrapeOnStartupAction
 		if (scrapeOnStartupAction == 'cancel'):
 			self.label.setLabel("%d %% - %s" % (100, 'Update canceled'))
+			try:
+				self.window.removeControl(self.image)
+				self.window.removeControl(self.header)
+				self.window.removeControl(self.label)
+				self.window.removeControl(self.progress)
+			except:
+				pass
+			
 			return False
 		
 		if not self.label:
 		  return True  
 		elif (count > 0):
+			print 'count > 0'
 			percent = int(count * (float(100) / self.itemCount))
 			self.header.setLabel(line1)
 			self.label.setLabel("%d %% - %s" % (percent, line2))
 			self.progress.setPercent(percent)
-		else:			
-			self.window.remove(self.image)
-			self.window.remove(self.header)
-			self.window.remove(self.label)
-			self.window.remove(self.progress)
+			
+			
+		if self.windowID != xbmcgui.getCurrentWindowId():
+			self.windowID = xbmcgui.getCurrentWindowId()
+			if xbmcgui.getCurrentWindowId() in ALLOWEDWINDOWS:			
+				self.paintProgress()
 			
 		return True
 
 def runUpdate():
+	print 'runUpdate'
+	
 	gdb = GameDataBase(util.getAddonDataPath())
 	gdb.connect()
 	#create db if not existent and maybe update to new version
@@ -116,7 +140,7 @@ def runUpdate():
 	settings.setSetting(util.SETTING_RCB_SCRAPEONSTARTUPACTION, 'update')
 	
 	progress = ProgressDialogBk()
-	dbupdate.DBUpdate().updateDB(gdb, progress, scrapingMode, configFile.romCollections)
+	dbupdate.DBUpdate().updateDB(gdb, progress, scrapingMode, configFile.romCollections, util.getSettings())
 	
 	settings.setSetting(util.SETTING_RCB_SCRAPEONSTARTUPACTION, 'nothing')
 	

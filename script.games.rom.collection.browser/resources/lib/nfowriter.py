@@ -26,13 +26,13 @@ class NfoWriter:
 		romCollections = gui.config.romCollections
 		
 		progressDialog = dialogprogress.ProgressDialogGUI()
-		progressDialog.writeMsg("Export library...", "", "")
+		progressDialog.writeMsg(util.localize(40069), "", "")
 		continueExport = True
 		rccount = 1
 		
 		for romCollection in gui.config.romCollections.values():
 			
-			progDialogRCHeader = "Exporting Rom Collection (%i / %i): %s" %(rccount, len(romCollections), romCollection.name)
+			progDialogRCHeader = util.localize(40070) +" (%i / %i): %s" %(rccount, len(romCollections), romCollection.name)
 			rccount = rccount + 1			
 			
 			Logutil.log("export Rom Collection: " +romCollection.name, util.LOG_LEVEL_INFO)
@@ -46,7 +46,7 @@ class NfoWriter:
 				
 				gamename = self.getGameProperty(gameRow[util.ROW_NAME])
 				
-				continueExport = progressDialog.writeMsg(progDialogRCHeader, "Export game: " +str(gamename), "", gameCount)
+				continueExport = progressDialog.writeMsg(progDialogRCHeader, util.localize(40071) +": " +str(gamename), "", gameCount)
 				if(not continueExport):				
 					Logutil.log('Game export canceled by user', util.LOG_LEVEL_INFO)
 					break
