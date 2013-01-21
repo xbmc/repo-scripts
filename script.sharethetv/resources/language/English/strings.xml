@@ -1,0 +1,28 @@
+<strings>
+    <!-- Settings -->
+    <string id="30000">Login Information</string>
+    <string id="30001">Email</string>
+    <string id="30002">Password</string>
+    
+    <string id="30003">Configuration</string>
+    <string id="30004">Autorun</string>
+    <string id="30005">Notifications</string>
+    
+   	<string id="30006">Troubleshooting</string>
+    <string id="30007">Debug Mode</string>
+
+    <!-- Notices -->
+    <string id="30020">Library update sent</string>
+    <string id="30021">Authentication failed</string>
+    <string id="30022">You must update your addon before syncing</string>
+    <string id="30023">Service unavailable or no internet connection found</string>
+
+    <string id="30024">Configure your account details before submitting</string>
+    <string id="30025">Updating</string>
+    <string id="30026">Building list of local movies</string>
+    <string id="30027">Syncing movie list</string>
+
+    <string id="30028">Unable to retrieve list of movies from XBMC</string>
+    <string id="30029">You have no movies to sync</string>
+   
+</strings>

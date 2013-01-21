@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+   <setting type="lsep" label="30000" />
+   <setting id="email" type="text" label="30001" default=""/>
+   <setting id="password" type="text" option="hidden" label="30002" default="" />
+  
+   <!--<setting type="lsep" label="30003" />
+   <setting id="autorun" type="bool" label="30004" default="true" />
+   <setting id="notifications" type="bool" label="30005" default="true" />-->
+   
+   <setting type="lsep" label="30006" />
+   <setting id="debug" type="bool" label="30007" default="false" />
+</settings> 
