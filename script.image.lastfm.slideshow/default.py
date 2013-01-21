@@ -73,7 +73,7 @@ def add_playlist(images):
 def start_slideshow(name):
         xbmc.executebuiltin("XBMC.Notification("+__language__(30000)+","+__language__(30004)+name+",5000,"+icon+")")
         u_name = name.replace(' & ',' ').replace(',','').replace('(','').replace(' ) ','').replace(' ','+')
-        url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getimages&artist='+u_name+'&autocorrect=1&api_key=71e468a84c1f40d4991ddccc46e40f1b'
+        url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getimages&artist='+u_name+'&autocorrect=1&api_key=1dda8497b435d2597823613e480fc860'
         try:
             req = urllib2.Request(url)
             response = urllib2.urlopen(req)
@@ -87,7 +87,7 @@ def start_slideshow(name):
             if hasattr(e, 'code'):
                 print 'We failed with error code - %s.' % e.code
             xbmc.executebuiltin("XBMC.Notification("+__language__(30000)+","+__language__(30003)+",10000,"+icon+")")
-            return
+            return clear_slideshow()
         soup = BeautifulStoneSoup(link)
         images = soup('image')
         print 'Images = '+ str(len(images))
