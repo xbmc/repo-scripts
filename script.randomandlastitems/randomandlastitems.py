@@ -156,7 +156,6 @@ def _getMovies ( ):
             path = media_path(_movie['file'])
             play = 'XBMC.RunScript(' + __addonid__ + ',movieid=' + str(_movie.get('id')) + ')'
             art = _movie['art']
-            #print _movie['streamdetails']
             streaminfo = media_streamdetails(_movie['file'].encode('utf-8').lower(),
                                        _movie['streamdetails'])
             # Temporary check if runtime is an int or str
@@ -225,10 +224,9 @@ def _getEpisodesFromPlaylist ( ):
                 break
             if _file['type'] == 'tvshow':
                 _tvshows += 1
-                # La playlist fournie retourne des series il faut retrouver les episodes
+                # Playlist return TV Shows - Need to get episodes
                 _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %s, "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(_file['id']))
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-                #log(_json_query)
                 _json_response = simplejson.loads(_json_query)
                 _episodes = _json_response.get( "result", {} ).get( "episodes" )
                 if _episodes:
@@ -236,8 +234,9 @@ def _getEpisodesFromPlaylist ( ):
                         if xbmc.abortRequested:
                             break
                         # Add TV Show fanart and thumbnail for each episode
-                        #_episode["tvshowid"]=_file['id']
                         art = _episode['art']
+                        # Add episode ID when playlist type is TVShow
+                        _episode["id"]=_episode['episodeid']
                         _episode["tvshowfanart"]=art.get('tvshow.fanart')
                         _episode["tvshowthumb"]=art.get('thumb')
                         _total, _watched, _unwatched, _result = _watchedOrResume ( _total, _watched, _unwatched, _result, _episode )
@@ -249,7 +248,7 @@ def _getEpisodesFromPlaylist ( ):
                 if _id not in _tvshowid:
                     _tvshows += 1
                     _tvshowid.append(_id)
-                # La playlist fournie retourne des episodes
+                # Playlist return TV Shows - Nothing else to do
                 _total, _watched, _unwatched, _result = _watchedOrResume ( _total, _watched, _unwatched, _result, _file )
         _setVideoProperties ( _total, _watched, _unwatched )
         _setTvShowsProperties ( _tvshows )
@@ -304,6 +303,8 @@ def _getEpisodes ( ):
             if _id not in _tvshowid:
                 _tvshows += 1
                 _tvshowid.append(_id)
+            # Add episode ID
+            _item["id"]=_item['episodeid']
             _total, _watched, _unwatched, _result = _watchedOrResume ( _total, _watched, _unwatched, _result, _item )
         _setVideoProperties ( _total, _watched, _unwatched )
         _setTvShowsProperties ( _tvshows )
@@ -486,7 +487,6 @@ def _setEpisodeProperties ( _episode, _count ):
             played = '0%'
         art = _episode['art']
         path = media_path(_episode['file'])
-        #log(_episode['streamdetails'])
         play = 'XBMC.RunScript(' + __addonid__ + ',episodeid=' + str(_episode.get('id')) + ')'
         streaminfo = media_streamdetails(_episode['file'].encode('utf-8').lower(),
                                          _episode['streamdetails'])
