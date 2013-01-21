@@ -1,3 +1,6 @@
+Version 1.0.1
+fix new api key
+
 Version 1.0.0
 new for Eden
 added support for radio streams that supply the artist name in the title
