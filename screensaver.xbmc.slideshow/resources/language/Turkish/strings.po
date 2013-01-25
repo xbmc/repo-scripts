@@ -1,14 +1,13 @@
 # XBMC Media Center language file
 # Addon Name: Slideshow
-# Addon id: screensaver.xbmc.builtin.slideshow
-# Addon version: 1.0.0
+# Addon id: screensaver.xbmc.slideshow
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
 "Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
-"POT-Creation-Date: 2012-05-28 15:38+0000\n"
-"PO-Revision-Date: 2012-06-02 10:48+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +18,7 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Slayt gösterisi resimlerinin kaynağı"
+msgstr "Slayt gösterisi resimleri kaynağı"
 
 msgctxt "#30001"
 msgid "Folder"
@@ -39,4 +38,36 @@ msgstr "Resim Klasörü"
 
 msgctxt "#30005"
 msgid "Dim level"
-msgstr "Karartma seviyesi"
+msgstr "Karartma düzeyi"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efekt"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Kaydır"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Çapraz geçiş"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Kaydır ve yakınlaştır"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Her resim için görüntüleme zamanı miktarı"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Devre dışı"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Dosya ismini kullan"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Dizin ismini kullan"

@@ -1,0 +1,45 @@
+# XBMC Media Center language file
+# Addon Name: Slideshow
+# Addon id: screensaver.xbmc.slideshow
+# Addon Provider: Team XBMC
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Amharic (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/am/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: am\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "ፎልደር"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "የምስል ፎልደር"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "የማደብዘዣ ደረጃ"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "ውጤቱ"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "ተንሸራታች"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "እያንሳንዱ ምስል የሚታይበት ጊዜ በሰከንድ"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "ተሰናክሏል "

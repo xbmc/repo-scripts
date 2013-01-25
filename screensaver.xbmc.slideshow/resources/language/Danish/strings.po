@@ -1,14 +1,13 @@
 # XBMC Media Center language file
 # Addon Name: Slideshow
-# Addon id: screensaver.xbmc.builtin.slideshow
-# Addon version: 1.0.0
+# Addon id: screensaver.xbmc.slideshow
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
 "Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
-"POT-Creation-Date: 2012-05-28 15:38+0000\n"
-"PO-Revision-Date: 2012-06-04 10:01+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: Danish (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +18,7 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Kilde til slideshow billeder"
+msgstr "Kilde til billeder i diasshow"
 
 msgctxt "#30001"
 msgid "Folder"
@@ -27,16 +26,56 @@ msgstr "Mappe"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr "Video fankunst"
+msgstr "Video-Fankunst"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr "Musik fankunst"
+msgstr "Musik-Fankunst"
 
 msgctxt "#30004"
 msgid "Image Folder"
-msgstr "Billedmappe"
+msgstr "Billedemappe"
 
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "Dæmpningsniveau"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effekt"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Dias"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Blanding"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Panorering og zoom"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Antal sekunder hvert billede bliver vist"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Skaler billeder til fuld skærm"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Vis billednavn"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Deaktiveret"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Anvend filnavn"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Anvend mappenavn"

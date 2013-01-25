@@ -1,14 +1,13 @@
 # XBMC Media Center language file
 # Addon Name: Slideshow
-# Addon id: screensaver.xbmc.builtin.slideshow
-# Addon version: 1.0.0
+# Addon id: screensaver.xbmc.slideshow
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
 "Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
-"POT-Creation-Date: 2012-05-28 15:38+0000\n"
-"PO-Revision-Date: 2012-06-01 21:10+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: Hebrew (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/he/)\n"
 "MIME-Version: 1.0\n"
@@ -40,3 +39,43 @@ msgstr "תיקיית תמונות"
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "רמת עמעום"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "אפקט"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "מצגת"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "התמזגות"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "תקריב וחיתוך מסך"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "כמות השניות כדי להציג כל תמונה"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "הגדל תמונות למסף מלא"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "הצג שם תמונה"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "מנוטרל"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "השתמש בשם קובץ"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "השתמש בשם תיקיה"

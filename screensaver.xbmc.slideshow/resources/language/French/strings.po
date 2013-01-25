@@ -1,14 +1,13 @@
 # XBMC Media Center language file
 # Addon Name: Slideshow
-# Addon id: screensaver.xbmc.builtin.slideshow
-# Addon version: 1.0.0
+# Addon id: screensaver.xbmc.slideshow
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
 "Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
-"POT-Creation-Date: 2012-05-28 15:38+0000\n"
-"PO-Revision-Date: 2012-06-22 10:57+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: French (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -40,3 +39,43 @@ msgstr "Dossier d'images"
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "Niveau d'assombrissement"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effet"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Diaporama"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Fondu-enchaîné"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Pan et Zoom"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Durée d'affichage de chaque image en secondes"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Redimensionner les images en plein écran"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Afficher le nom de l'image"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Désactivé"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Utiliser le nom du fichier"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Utiliser le nom du dossier"

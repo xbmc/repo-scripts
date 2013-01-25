@@ -1,14 +1,13 @@
 # XBMC Media Center language file
 # Addon Name: Slideshow
-# Addon id: screensaver.xbmc.builtin.slideshow
-# Addon version: 1.0.0
+# Addon id: screensaver.xbmc.slideshow
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
 "Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
-"POT-Creation-Date: 2012-05-28 15:38+0000\n"
-"PO-Revision-Date: 2012-06-03 20:06+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: Norwegian (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/no/)\n"
 "MIME-Version: 1.0\n"
@@ -40,3 +39,43 @@ msgstr "Bilde Mappe"
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "Dim nivå"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effekt"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Skli"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Crossfade"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Pan og zoom"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Antall sekunder hvert bilde vises"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Skaler bilder i fullskjerm"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Vis bilde navn"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Deaktivert"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Bruk filnavn"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Bruk mappenavn"

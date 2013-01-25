@@ -1,16 +1,15 @@
 # XBMC Media Center language file
 # Addon Name: Slideshow
-# Addon id: screensaver.xbmc.builtin.slideshow
-# Addon version: 1.0.0
+# Addon id: screensaver.xbmc.slideshow
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
 "Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
-"POT-Creation-Date: 2012-05-28 15:38+0000\n"
-"PO-Revision-Date: 2012-05-28 23:40+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: Chinese (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/zh/)\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/zh/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -40,3 +39,43 @@ msgstr "图片文件夹"
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "变暗级别"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "特效"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "幻灯片"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "淡入淡出"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "平移缩放"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "图片显示时间"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "图片缩放为全屏"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "显示图片名"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "关闭"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "使用文件名"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "使用文件夹名"

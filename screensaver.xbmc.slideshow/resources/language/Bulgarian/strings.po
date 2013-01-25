@@ -1,16 +1,15 @@
 # XBMC Media Center language file
 # Addon Name: Slideshow
-# Addon id: screensaver.xbmc.builtin.slideshow
-# Addon version: 1.0.0
+# Addon id: screensaver.xbmc.slideshow
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
 "Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
-"POT-Creation-Date: 2012-05-28 15:38+0000\n"
-"PO-Revision-Date: 2012-06-05 19:51+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: Bulgarian <xbmc-bg@freelists.org>\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -40,3 +39,23 @@ msgstr "Папка с изображения"
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "Степен на затъмняване"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Ефект"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Плъзгане"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Плавен преход"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Изобразяване всяко изображение за (Х сек)"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Изключена"

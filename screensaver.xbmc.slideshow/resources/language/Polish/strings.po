@@ -1,14 +1,13 @@
 # XBMC Media Center language file
 # Addon Name: Slideshow
-# Addon id: screensaver.xbmc.builtin.slideshow
-# Addon version: 1.0.0
+# Addon id: screensaver.xbmc.slideshow
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
 "Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
-"POT-Creation-Date: 2012-05-28 15:38+0000\n"
-"PO-Revision-Date: 2012-05-28 23:40+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +18,7 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Source of slideshow images"
+msgstr "Źródło obrazów do pokazu slajdów"
 
 msgctxt "#30001"
 msgid "Folder"
@@ -27,16 +26,56 @@ msgstr "Folder"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr "Video Fanart"
+msgstr "Fanart wideo"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr "Music Fanart"
+msgstr "Fanart muzyki"
 
 msgctxt "#30004"
 msgid "Image Folder"
-msgstr "Image Folder"
+msgstr "Folder obrazów"
 
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "Poziom przyciemnienia"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efekt"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Przesuwany"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Przejście"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Pan i zoom (efekt Kena Burnsa)"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Liczba sekund, aby wyświetlić każdy obraz"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Skaluj obrazy do pełnego ekranu"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Wyświetl nazwę obrazu"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Wyłączony"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Użyj nazwy plików"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Użyj nazwy folderu"

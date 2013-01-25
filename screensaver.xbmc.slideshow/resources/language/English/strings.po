@@ -60,3 +60,45 @@ msgstr ""
 msgctxt "#30010"
 msgid "Amount of seconds to display each image"
 msgstr ""
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr ""
+
+#empty strings from id 30016 to 30020
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr ""

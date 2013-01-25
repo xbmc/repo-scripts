@@ -1,14 +1,13 @@
 # XBMC Media Center language file
 # Addon Name: Slideshow
-# Addon id: screensaver.xbmc.builtin.slideshow
-# Addon version: 1.0.0
+# Addon id: screensaver.xbmc.slideshow
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
 "Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
-"POT-Creation-Date: 2012-05-28 15:38+0000\n"
-"PO-Revision-Date: 2012-10-08 12:38+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -40,3 +39,7 @@ msgstr "مجلد الصور"
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "مستوى ضعيف"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "معطلة"
