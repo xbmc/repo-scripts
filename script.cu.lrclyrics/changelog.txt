@@ -1,3 +1,12 @@
+v1.0.3
+-language update
+
+v1.0.2
+- add a script running window property
+- added lyrics source as a window property
+- make lyrics available as a window property
+- fixed would fail for users with a special char in their username
+
 v1.0.1
 - fixed can't change lyric for track in cue/ape file
 - fixed decode error in scrape minilyrics

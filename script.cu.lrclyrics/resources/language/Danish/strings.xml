@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Danish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/da/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC Sangtekster</string>
+    <string id="30000">Fil</string>
+    <string id="30001">Ingen sangtekster fundet!</string>
+    <string id="30002">Inkodet</string>
+
+    <!-- Settings labels -->
+    <string id="30101">Gem sangtekster</string>
+    <string id="30102">Mappe til gemte</string>
+    <string id="30104">Gem sangtekstfiler i samme mappe som kunstneren</string>
+    <string id="30106">Brug kun filnavn til søgning</string>
+    <string id="30107">Format af filnavn</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">Indlæs sangtekster med samme navn fra undermappe</string>
+    <string id="30112">- Navn på undermappe</string>
+    <string id="30150">Scrapere</string>
+    <string id="30151">Indstillinger</string>
+    <string id="30152">Søg efter inkodede sangtekster</string>
+    <string id="30153">Søg efter lokale sangtekstfiler</string>
+    <string id="30154">Scrapere til synkroniserede sangtekster</string>
+    <string id="30155">Scrapere til almindelige sangtekster</string>
+</strings>

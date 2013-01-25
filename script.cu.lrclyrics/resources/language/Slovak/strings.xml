@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Slovak language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sk/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC Texty skladieb</string>
+    <string id="30000">Súbor</string>
+    <string id="30001">Texty skladieb nenájdené!</string>
+    <string id="30002">Vložené</string>
+
+    <!-- Settings labels -->
+    <string id="30101">Uložiť Texty skladieb</string>
+    <string id="30102">Uložiť priečinok</string>
+    <string id="30104">Uložiť súbory Textov skladieb v priečinku umelca</string>
+    <string id="30106">Použiť len názov súboru pre vyhľadávanie</string>
+    <string id="30107">Formát názvu súboru</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">Načítať texty skladieb s rovnakým menom súboru z podpriečinku</string>
+    <string id="30112">- Názov podpriečinku</string>
+    <string id="30150">Sťahovače</string>
+    <string id="30151">Možnosti</string>
+    <string id="30152">Hľadať vložené Texty skladieb</string>
+    <string id="30153">Hľadať lokálne súbory Textov skladieb</string>
+    <string id="30154">Sťahovače synchronizovaných textov skladieb</string>
+    <string id="30155">Sťahovače bežných textov skladieb</string>
+</strings>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Portuguese (Brazil) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC Lyrics</string>
+    <string id="30000">Arquivo</string>
+    <string id="30001">Nenhuma letra encontrada!</string>
+    <string id="30002">Embutida</string>
+
+    <!-- Settings labels -->
+    <string id="30101">Salvar letras</string>
+    <string id="30102">Salvar na pasta</string>
+    <string id="30104">Salvar arquivos de letras nas pastas dos artistas</string>
+    <string id="30106">Usar somente nome do arquivo para procurar</string>
+    <string id="30107">Formato do nome do arquivo</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">Carregar letras com o mesmo nome da sub pasta</string>
+    <string id="30112">- Nome Sub Pasta</string>
+    <string id="30150">Resumos</string>
+    <string id="30151">Opções</string>
+    <string id="30152">Procurar por letras embutidas</string>
+    <string id="30153">Proutar por arquivos locais de letras</string>
+    <string id="30154">Scrapers de letras sincronizados</string>
+    <string id="30155">Scrapers de letras regular</string>
+</strings>

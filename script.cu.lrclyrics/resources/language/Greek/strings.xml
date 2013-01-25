@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Greek language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/el/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Labels -->
+    <string id="0">Στίχοι XBMC</string>
+    <string id="30000">Αρχείο</string>
+    <string id="30001">Δε βρέθηκαν στίχοι!</string>
+    <string id="30002">Ενσωματωμένοι</string>
+
+    <!-- Settings labels -->
+    <string id="30101">Αποθήκευση στίχων</string>
+    <string id="30102">Φάκελος αποθήκευσης</string>
+    <string id="30104">Αποθήκευση αρχείων στίχων στους φακέλους καλλιτεχνών</string>
+    <string id="30106">Χρήση μόνο ονόματος αρχείων για αναζήτηση</string>
+    <string id="30107">Δομή ονόματος αρχείων</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">Φόρτωση στίχων ίδιου ονόματος από τον υποφάκελο</string>
+    <string id="30112">- Όνομα υποφακέλου</string>
+    <string id="30150">Scraper</string>
+    <string id="30151">Επιλογές</string>
+    <string id="30152">Αναζήτηση για ενσωματωμένους στίχους</string>
+    <string id="30153">Αναζήτηση για τοπικά αρχεία στίχων</string>
+    <string id="30154">Scraper συγχρονισμένων στίχων</string>
+    <string id="30155">Scraper συνηθισμένων στίχων</string>
+</strings>

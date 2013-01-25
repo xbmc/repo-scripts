@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hungarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/hu/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC Dalszöveg</string>
+    <string id="30000">Helyi fájl</string>
+    <string id="30001">Nem található dalszöveg!</string>
+    <string id="30002">Beágyazott</string>
+
+    <!-- Settings labels -->
+    <string id="30101">Dalszöveg mentése</string>
+    <string id="30102">Mentési könyvtár</string>
+    <string id="30104">Az előadó mappákban lévő dalszövegek mentése</string>
+    <string id="30106">Csak a fájlnév használata a keresésnél</string>
+    <string id="30107">Fájlnév formátum</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">Az azonos nevű dalszöveg betöltése az alkönyvtárból</string>
+    <string id="30112">- Alkönyvtár neve</string>
+    <string id="30150">Leolvasók</string>
+    <string id="30151">Lehetőségek</string>
+    <string id="30152">Beágyazott dalszöveg keresése</string>
+    <string id="30153">Helyi dalszövegfájlok keresése</string>
+    <string id="30154">Szinkronizált dalszöveg leolvasók</string>
+    <string id="30155">Hagyományos dalszöveg leolvasók</string>
+</strings>

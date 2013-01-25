@@ -1,4 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Chinese (Simple) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/zh/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
     <!-- Labels -->
     <string id="0">XBMC歌词</string>
@@ -9,7 +13,6 @@
     <!-- Settings labels -->
     <string id="30101">保存歌词</string>
     <string id="30102">保存目录</string>
-    <string id="30103"></string>
     <string id="30104">保存歌词文件到歌手目录</string>
     <string id="30106">仅使用文件名查找</string>
     <string id="30107">文件名格式</string>

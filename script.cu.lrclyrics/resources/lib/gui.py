@@ -25,6 +25,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         except:
             pass
         self.setup_variables()
+        self.win.setProperty('culrc.running', 'true')
         self.get_scraper_list()
         self.getMyPlayer()
         if ( __addon__.getSetting( "save_lyrics_path" ) == "" ):
@@ -49,6 +50,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.fetchedLyrics = []
         self.current_lyrics = Lyrics()
         self.scroll_line = int(self.get_page_lines() / 2)
+        self.win = xbmcgui.Window( 10000 )
 
     def get_page_lines( self ):
         self.getControl( 110 ).setVisible( False )
@@ -230,20 +232,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 lyr = lyrics.lyrics
             else:
                 lyr = lyrics.lyrics.encode('utf-8')
-
-# xbmcvfs.File().write() corrupts files
-# disable it until the bug is fixed
-# http://trac.xbmc.org/ticket/13545
-#            lyrics_file = xbmcvfs.File( self.song_path, "w" )
-#            lyrics_file.write( lyr )
-#            lyrics_file.close()
-
-            tmp_name = os.path.join(__profile__, u'lyrics.tmp')
-            tmp_file = open(tmp_name , "w" )
-            tmp_file.write( lyr )
-            tmp_file.close()
-            xbmcvfs.copy(tmp_name, song_path)
-            xbmcvfs.delete(tmp_name)
+            lyrics_file = xbmcvfs.File( self.song_path, "w" )
+            lyrics_file.write( lyr )
+            lyrics_file.close()
             return True
         except:
             log( "failed to save lyrics" )
@@ -251,11 +242,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def show_error(self):
         self.getControl( 100 ).setText( __language__( 30001 ) )
+        self.win.setProperty('culrc.lyrics', __language__( 30001 ))
         self.show_control( 100 )
-        self.getControl( 200 ).setLabel('')
 
     def show_lyrics( self, lyrics ):
-        self.reset_controls()
+        self.win.setProperty('culrc.lyrics', lyrics.lyrics)
+        self.win.setProperty('culrc.source', lyrics.source)
         if lyrics.list:
             source = '%s (%d)' % (lyrics.source, len(lyrics.list))
         else:
@@ -314,11 +306,16 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 success = self.save_lyrics_to_file( self.current_lyrics )
 
     def reset_controls( self ):
-        self.getControl( 100 ).reset()
+        self.getControl( 100 ).setText(xbmc.getLocalizedString(194))
         self.getControl( 110 ).reset()
         self.getControl( 200 ).setLabel('')
+        self.win.clearProperty('culrc.lyrics')
+        self.win.clearProperty('culrc.source')
 
     def exit_script( self ):
+        self.win.clearProperty('culrc.lyrics')
+        self.win.clearProperty('culrc.source')
+        self.win.clearProperty('culrc.running')
         self.allowtimer = False
         self.stop_refresh()
         self.close()
@@ -351,6 +348,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 song = Song.current()
                 if ( song and ( self.current_lyrics.song != song ) ):
                     self.stop_refresh()
+                    self.reset_controls()
                     lyrics = self.get_lyrics( song )
                     self.current_lyrics = lyrics
                     if lyrics.lyrics:

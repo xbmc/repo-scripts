@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Korean language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ko/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Labels -->
+    <string id="0">XBMC Lyrics</string>
+    <string id="30000">파일</string>
+    <string id="30001">가사 찾을 수 없음!</string>
+
+    <!-- Settings labels -->
+    <string id="30101">가사 저장</string>
+    <string id="30102">저장 폴더</string>
+    <string id="30104">아티스트 폴더에 가사 파일 저장</string>
+    <string id="30107">파일이름 형식</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">하위 폴더에서 같은 이름의 가사 불러오기</string>
+    <string id="30112">- 하위 폴더 이름</string>
+    <string id="30150">자료수집기</string>
+    <string id="30151">옵션</string>
+    <string id="30152">내장된 가사 찾기</string>
+    <string id="30153">로컬 가사 파일 찾기</string>
+</strings>

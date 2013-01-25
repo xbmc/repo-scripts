@@ -73,6 +73,8 @@ class LyricsFetcher:
                 if line.find("Lyrics from:") < 0:
                     lir.append(line)
             lyr = u"\n".join( lir )
+            if lyr.startswith('These lyrics are missing'):
+                return None
             lyrics.lyrics = lyr
             return lyrics
         except:
