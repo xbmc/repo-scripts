@@ -1,3 +1,6 @@
+v5.0.5
+- added characterart property
+
 v5.04
 - silently try to delete the old databases
 

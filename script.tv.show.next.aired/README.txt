@@ -17,7 +17,7 @@ AirTime		    (eg. 'Thursday at 09:00 pm')
 Path		    (tv show path)
 Library		    (eg. videodb://2/2/1/)
 Status		    (eg. 'Returning Series'/'Final Season'/'New Series')
-StatusID        (id of the status)
+StatusID            (id of the status)
 Network		    (name of the tv network that's airing the show)
 Started		    (airdate of the first episode, eg. 'Sep/24/2007')
 Classification	    (type of show, ex. 'Animation'/'Documentary')
@@ -47,6 +47,7 @@ Art(fanart)        (tv show fanart)
 Art(landscape)     (tv show landscape - artwork downloader required)   
 Art(clearlogo)     (tv show logo - artwork downloader required)
 Art(clearart)      (tv show clearart - artwork downloader required)
+Art(characterart)  (tv show characterart - artwork downloader required)
 
 Status ids:
 0 - Returning Series

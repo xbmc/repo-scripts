@@ -479,6 +479,7 @@ class NextAired:
         label.setProperty(prefix + "Art(banner)", art.get("banner", ""))
         label.setProperty(prefix + "Art(landscape)", art.get("landscape", ""))
         label.setProperty(prefix + "Art(clearlogo)", art.get("clearlogo", ""))
+        label.setProperty(prefix + "Art(characterart)", art.get("characterart", ""))
         label.setProperty(prefix + "Art(clearart)", art.get("clearart", ""))
         if item.get("RFC3339" , "" )[:10] == self.datestr:
             label.setProperty(prefix + "Today", "True")
