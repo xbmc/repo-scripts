@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
+    <setting id="show_compact" type="bool" label="30004" default="false" />
+    <setting id="transparency" type="slider" label="30005" default="70" range="10,10,100" visible="eq(-1,true)" enable="eq(-1,true)" option="int" />
     <setting id="log_location" type="folder" label="30000" default="" />
     <setting id="temp_scale" type="labelenum" label="30002" values="Celcius|Farenheit" default="0" />
     <setting id="update_delay" type ="labelenum" label="30003" values="10|20|30|40|50|60|90|120|180|240" default="30" />
