@@ -1,3 +1,10 @@
+[B]Version 1.0.6[/B]
+- Videoweed: Allow Videoweed.eu/files/1423541 type
+- Divstage: Allow embedded urls to resolve
+- Filenuke: Removed www. from regex causing 502 errors
+- Xvidstage: Fixed
+- Stream2k: Fixed
+
 [B]Version 1.0.5[/B]
 - Added streamcloud
 - Added zooupload

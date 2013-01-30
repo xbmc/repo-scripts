@@ -35,6 +35,8 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+        print web_url
+        print host
         #find key
         try:
             html = self.net.http_GET(web_url).content
@@ -47,6 +49,7 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
                       html, re.DOTALL)
         if r:
             filename, filekey = r.groups()
+            print "FILEBLOBS=%s  %s"%(filename,filekey)
         else:
             r = re.search('file no longer exists',html)
             if r:
@@ -59,13 +62,17 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
             return False
         
         #get stream url from api
-        api = 'http://www.novamov.com/api/player.api.php?key=%s&file=%s' % \
-              (filekey, filename)
+        if 'movshare' in host:
+            api = 'http://www.movshare.net/api/player.api.php?key=%s&file=%s' % (filekey, filename)
+        elif 'nowvideo' in host:
+            api = 'http://www.nowvideo.eu/api/player.api.php?key=%s&file=%s' % (filekey, filename)
+        elif 'novamov' in host:
+            api = 'http://www.novamov.com/api/player.api.php?key=%s&file=%s' % (filekey, filename)
+        print api
         try:
             html = self.net.http_GET(api).content
         except urllib2.URLError, e:
-            common.addon.log_error('novamov: got http error %d fetching %s' %
-                                    (e.code, api))
+            common.addon.log_error('novamov: got http error %d fetching %s' % (e.code, api))
             return False
 
         r = re.search('url=(.+?)&title', html)
@@ -86,11 +93,21 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
         
 
     def get_url(self, host, media_id):
-        return 'http://www.novamov.com/video/%s' % media_id
+        if 'movshare' in host:
+            return 'http://www.movshare.net/video/%s' % media_id
+        elif 'nowvideo' in host:
+            return 'http://www.nowvideo.eu/video/%s' % media_id
+        elif 'novamov' in host:
+            return 'http://www.novamov.com/video/%s' % media_id
         
         
     def get_host_and_id(self, url):
-        r = re.search('//(?:embed.)?(.+?)/(?:video/|embed.php\?.+?v=)' + 
+        if 'nowvideo' in url:
+            r = re.search('http://(www.|embed.nowvideo.eu)/(?:video/|embed.php\?v=([0-9a-z]+)&width)', url) 
+        if 'movshare' in url:
+            r = re.search('//(www.movshare.net)/(?:video|embed)/([0-9a-z]+)', url)
+        else:
+            r = re.search('//(?:embed.)?(.+?)/(?:video/|embed.php\?v=)' + 
                       '([0-9a-z]+)', url)
         if r:
             return r.groups()
@@ -99,6 +116,6 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
-        return re.match('http://(www.|embed.)?novamov.com/(video/|embed.php\?)' +
-                        '(?:[0-9a-z]+|width)', url) or 'novamov' in host
+        return re.match('http://(www.|embed.)?no.+?/(video/|embed.php\?)', url) or 'novamov' in host or re.match('http://(?:www.)?movshare.net/(?:video|embed)/',url) or 'movshare' in host or re.match('http://(www.|embed.)?nowvideo.(?:eu)/(video/|embed.php\?)' +
+                        '(?:[0-9a-z]+|width)', url) or 'nowvideo' in host
 
