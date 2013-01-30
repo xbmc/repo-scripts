@@ -4,11 +4,12 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
-    <!-- Plugin Settings -->
     <string id="30000">SpeedFan Log Folder</string>
     <string id="30001">Enable Verbose Logging</string>
     <string id="30002">Log Temperature Scale</string>
     <string id="30003">Window Update Interval (in seconds)</string>
+    <string id="30004">Use Compact Display</string>
+    <string id="30005">    Background Transparency</string>    
     <string id="30100">Temperature Information</string>
     <string id="30101">Fan Speed Information</string>
     <string id="30102">Voltage Information</string>
