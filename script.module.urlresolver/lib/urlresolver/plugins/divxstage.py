@@ -74,17 +74,22 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_url(self, host, media_id):
+        print 'http://www.divxstage.eu/video/%s' % media_id
         return 'http://www.divxstage.eu/video/%s' % media_id
         
         
+        
+        
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/video/([0-9A-Za-z]+)', url)
-        if r:
-            return r.groups()
+        r = re.search('//(.+?)/(?:video/([0-9a-z]+)|embed.php\?v=([0-9a-z]+)&width)', url)
+        if r and 'embed' in r.group(1):
+            return r.group(1),r.group(3)
         else:
+            return r.group(1),r.group(2)
+        if not r:
             return False
 
 
     def valid_url(self, url, host):
-        return re.match('http://(www.)?divxstage.(?:eu|net)/' +
-                        'video/[0-9A-Za-z]+', url) or 'divxstage' in host
+        #http://embed.divxstage.eu/embed.php?v=8da26363e05fd&width=746&height=388&c=000
+        return re.match('http://(?:www.|embed.)?divxstage.(?:eu|net)/' or 'divxstage' in host,url)

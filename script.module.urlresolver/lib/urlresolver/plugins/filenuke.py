@@ -37,6 +37,7 @@ class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
         #e.g. http://www.filenuke.com/embed-rw52re7f5aul.html
+        # http://www.filenuke.com/w8w7ow5nqu7r
         self.pattern = 'http://((?:www.)?filenuke.com)/([0-9a-zA-Z]+)'
 
 
@@ -96,7 +97,7 @@ class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
         return stream_url
 
     def get_url(self, host, media_id):
-            return 'http://www.filenuke.com/%s' % (media_id)
+            return 'http://filenuke.com/%s' % (media_id)# removed www. as it was causing 502 errors.
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)

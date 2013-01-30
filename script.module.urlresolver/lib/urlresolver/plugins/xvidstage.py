@@ -34,6 +34,7 @@ class XvidstageResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
         self.pattern ='http://((?:www.)?xvidstage.com)/([0-9A-Za-z]+)'
+        # http://xvidstage.com/59reflvbp02z
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
@@ -44,30 +45,18 @@ class XvidstageResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                     (e.code, web_url))
             return False
-
-#send all form values except premium
-        sPattern = '<input.*?name="([^"]+)".*?value=([^>]+)>'
-        r = re.findall(sPattern, html)
-        data = {}
-        if r:
-            for match in r:
-                name = match[0]
-                if 'premium' in name : continue
-                value = match[1].replace('"','')
-                data[name] = value
-            html = self.net.http_POST(web_url, data).content
-        else:
-            common.addon.log_error(self.name + ': no fields found')
-            return False
-
+# removed check.
 # get url from packed javascript
-        sPattern = "<div id=\"player_code\"><script type='text/javascript'>eval.*?return p}\((.*?)</script>"
+        sPattern = "src='http://xvidstage.com/player/swfobject.js'></script>.+?<script type='text/javascript'>eval.*?return p}\((.*?)</script>"# Modded
         r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+        print r.groups()
         if r:
             sJavascript = r.group(1)
             sUnpacked = jsunpack.unpack(sJavascript)
-            sPattern = '<param name="src"0="(.*?)"'
+            print sUnpacked
+            sPattern = "'file','(.+?)'"#modded
             r = re.search(sPattern, sUnpacked)
+            print r.groups()
             if r:
                 return r.group(1)
 
