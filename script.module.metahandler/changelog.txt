@@ -1,3 +1,14 @@
+[B]Version 1.0.2[/B]
+- Added MySQL support
+- Added Year column for TV Shows - Temporary upgrade code in place
+- Playcount now set for Watched Status in Frodo
+- Use of common logging function, reduce amount of logs in normal logging mode
+- Remove usage of date conversion routines
+- Sending back TVShowTitle for episodes for subtitles to work proper
+- More error trapping to protect against script errors
+- Backfilling more missing data from IMDB
+- Fixed Votes not populating properly
+
 [B]Version 1.0.1[/B]
 - Updated for changes in IMDB field names
 - Added return of Year for TV Shows - still to do: save Year in DB

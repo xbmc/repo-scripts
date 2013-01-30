@@ -2,5 +2,11 @@
 <settings>
 <category label="Metahandler">
     <setting id="meta_folder_location" type="folder" label="Meta Data Save Location" default="special://profile/addon_data/script.module.metahandler/"/>
+	<setting id="use_remote_db" type="bool" 	label="Use a remote MySQL DB" default="False"/>
+		<setting id="db_address" type="text" 	label="    Address"	enable="eq(-1,true)" default="" />
+		<setting id="db_port" 	 type="integer" label="    Port"		enable="eq(-2,true)" default="" />
+		<setting id="db_user" 	 type="text" 	label="    Username"	enable="eq(-3,true)" default="" />
+		<setting id="db_pass"	 type="text" 	label="    Password" 	enable="eq(-4,true)" default="" option="hidden"/>
+		<setting id="db_name"	 type="text" 	label="    Database" 	enable="eq(-5,true)" default="video_cache" />
 </category>
 </settings>
