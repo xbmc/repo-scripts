@@ -1,7 +1,6 @@
 # XBMC Media Center language file
 # Addon Name: Skin Widgets
 # Addon id: service.skin.widgets
-# Addon version: 0.0.18
 # Addon Provider: Martijn
 msgid ""
 msgstr ""
@@ -24,10 +23,6 @@ msgstr "추천"
 msgctxt "#32002"
 msgid "Random Items"
 msgstr "무작위 항목"
-
-msgctxt "#32003"
-msgid "Only unplayed"
-msgstr "재생하지 않은 것만"
 
 msgctxt "#32004"
 msgid "Randomize time (minutes)"

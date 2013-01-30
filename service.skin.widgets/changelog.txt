@@ -1,3 +1,15 @@
+v0.0.20
+- Use proper Runtime
+- Catch bad JSON results
+- Fix bad default value for randomize time
+- Add new labels
+	RecentMovie.%d.Director
+	RandomMovie.%d.Director
+	RecentEpisode.%d.Premiered
+	RecentEpisode.%d.Runtime
+	RandomEpisode.%d.Premiered
+	RandomEpisode.%d.Runtime
+
 v0.0.19
 - Properly listen to shutdown command in each section since it can take quite some time for them to run
 

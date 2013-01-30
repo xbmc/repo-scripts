@@ -1,7 +1,6 @@
 # XBMC Media Center language file
 # Addon Name: Skin Widgets
 # Addon id: service.skin.widgets
-# Addon version: 0.0.18
 # Addon Provider: Martijn
 msgid ""
 msgstr ""
@@ -23,11 +22,7 @@ msgstr "Recomendados"
 
 msgctxt "#32002"
 msgid "Random Items"
-msgstr "Itens Randômicos"
-
-msgctxt "#32003"
-msgid "Only unplayed"
-msgstr "Somente não vistos"
+msgstr "Randomizar itens"
 
 msgctxt "#32004"
 msgid "Randomize time (minutes)"
@@ -35,7 +30,7 @@ msgstr "Tempo para randomizar (em minutos)"
 
 msgctxt "#32005"
 msgid "Use season folders"
-msgstr "Usar pastas temporadas"
+msgstr "Usar pastas de temporadas"
 
 msgctxt "#32006"
 msgid "Use timer"
@@ -51,8 +46,12 @@ msgstr "Método de atualização"
 
 msgctxt "#32009"
 msgid "Recent Items"
-msgstr "Itens Recentes"
+msgstr "Itens recentes"
 
 msgctxt "#32010"
 msgid "Update each time you enter the home screen"
-msgstr "Atualizar cada vez que entrar na tela da home"
+msgstr "Atualizar cada vez que entrar na tela inicial"
+
+msgctxt "#32011"
+msgid "Only unplayed and unfinished"
+msgstr "Somente não-reproduzidos e não-finalizados"
