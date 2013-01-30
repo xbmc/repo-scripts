@@ -592,7 +592,7 @@ if sys.argv[1].startswith('Location'):
         if not responseurl.endswith('weatherzone.com.au/search/'):
             #we were redirected to an actual result page
             locationName = common.parseDOM(resultPage, "h1", attrs = { "class": "unenclosed" })
-            locationName = str.split(locationName[0], ' Weather')
+            locationName = locationName[0].split('Weather')
             locations = [locationName[0] + ', ' + text]
             locationids = [responseurl]
             log("Single result " + str(locations) + " URL " + str(locationids))
