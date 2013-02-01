@@ -9,13 +9,16 @@
 # 1.2 - Added key field for download URL
 # 1.3 - Fixed null values in website dictionary (changed to None)
 # 1.4 - Fixed key field (Thanks ILRHAES)
+# 1.5 - Added User Agent to getURL, fixed string related bugs and patterns
 #
 # Created by: Ori Varon
+# Changed by MeatHook (1.5)
 #===============================================================================
 import os, re, xbmc, xbmcgui, string, time, urllib2
 from utilities import languageTranslate, log
 
 BASE_URL = "http://www.subscenter.org"
+USER_AGENT = "Mozilla%2F4.0%20(compatible%3B%20MSIE%207.0%3B%20Windows%20NT%206.0)"
 debug_pretext = ""
 
 #===============================================================================
@@ -23,7 +26,8 @@ debug_pretext = ""
 #===============================================================================
 
 MULTI_RESULTS_PAGE_PATTERN = u"עמוד (?P<curr_page>\d*) \( סך הכל: (?P<total_pages>\d*) \)"
-SEARCH_RESULTS_PATTERN = "<div class=\"generalWindowRight\">.*?<a href=\"(?P<sid>.*?)\">"
+MOVIES_SEARCH_RESULTS_PATTERN = "<div class=\"generalWindowRight\">(?:\r|\n|.){1,400}<a href=\"(?P<sid>/he/subtitle/movie/.*?)\">"
+TV_SEARCH_RESULTS_PATTERN = "<div class=\"generalWindowRight\">(?:\r|\n|.){1,400}<a href=\"(?P<sid>/he/subtitle/series/.*?)\">"
 
 #===============================================================================
 # Private utility functions
@@ -33,11 +37,14 @@ SEARCH_RESULTS_PATTERN = "<div class=\"generalWindowRight\">.*?<a href=\"(?P<sid
 # Based on Titlovi's service.py
 def getURL(url):
     # Fix URLs with spaces in them
+
     url = url.replace(" ","%20")
     content = None
     log( __name__ ,"Getting url: %s" % (url))
     try:
-        response = urllib2.urlopen(url)
+        req = urllib2.Request(url)
+        req.add_unredirected_header('User-Agent', USER_AGENT)
+        response = urllib2.urlopen(req)        
         content = response.read()
     except:
         log( __name__ ,"Failed to get url: %s" % (url))
@@ -46,11 +53,15 @@ def getURL(url):
 
 def getURLfilename(url):
     # Fix URLs with spaces in them
+
     url = url.replace(" ","%20")
     filename = None
     log( __name__ ,"Getting url: %s" % (url))
     try:
-        response = urllib2.urlopen(url)
+        req = urllib2.Request(url)
+        req.add_unredirected_header('User-Agent', USER_AGENT)
+        response = urllib2.urlopen(req)        
+        content = response.read()
         filename = response.headers['Content-Disposition']
         filename = filename[filename.index("filename="):]
     except:
@@ -64,7 +75,7 @@ def getURLfilename(url):
 def getAllSubtitles(subtitlePageID,languageList,subtitlesList):
     # Retrieve the subtitles page (html)
     try:
-        subtitlePage = getURL(BASE_URL + subtitlePageID)
+        subtitlePage = getURL(BASE_URL + ''.join(subtitlePageID).lstrip())
     except:
         # Didn't find the page - no such episode?
         return
@@ -165,11 +176,13 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     # List of user languages - easier to manipulate
     languageList = [lang1, lang2, lang3]
     msg = ""
+
     # Check if tvshow and replace spaces with + in either case
     if tvshow:
         searchString = tvshow.replace(" ","+")
     else:
         searchString = title.replace(" ","+")
+
     log( __name__ ,"%s Search string = %s" % (debug_pretext, searchString.lower()))
 
     # Retrieve the search results (html)
@@ -179,14 +192,23 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         return subtitlesList, "", "Search timed out, please try again later."
 
     # Look for subtitles page links
-    subtitleIDs = re.findall(SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+    if tvshow:
+        subtitleIDs = re.findall(TV_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+    else:
+        subtitleIDs = re.findall(MOVIES_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)    
+    
     # Look for more subtitle pages
     pages = re.search(MULTI_RESULTS_PAGE_PATTERN,unicode(searchResults,"utf-8"))
     # If we found them look inside for subtitles page links
     if (pages):
         while (not (int(pages.group("curr_page"))) == int(pages.group("total_pages"))):
             searchResults = getURL(BASE_URL + "/he/subtitle/search/?q="+searchString.lower()+"&page="+str(int(pages.group("curr_page"))+1))
-            tempSIDs = re.findall(SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+
+            if tvshow:
+                tempSIDs = re.findall(TV_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+            else:
+                tempSIDs = re.findall(MOVIES_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+
             for sid in tempSIDs:
                 subtitleIDs.append(sid)
             pages = re.search(MULTI_RESULTS_PAGE_PATTERN,unicode(searchResults,"utf-8"))
@@ -195,7 +217,8 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     # If looking for tvshos try to append season and episode to url
     if tvshow:
         for i in range(len(subtitleIDs)):
-            subtitleIDs[i] += "/"+season+"/"+episode+"/"
+            subtitleIDs[i] += ("/"+season+"/"+episode+"/",)
+
     for sid in subtitleIDs:
         getAllSubtitles(sid,languageList,subtitlesList)
     

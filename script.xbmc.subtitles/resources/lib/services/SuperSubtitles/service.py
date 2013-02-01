@@ -13,25 +13,25 @@ from utilities import *
 
 _ = sys.modules[ "__main__" ].__language__
 
-base_urls = ("http://feliratok.info/", "http://feliratok.hs.vc/", "http://feliratok.na.tl/")
-search_url_postfix = "index.php?nyelv=&searchB=Mehet&search="
+base_urls = ["http://feliratok.info/"]
+search_url_postfix = "?nyelv=&searchB=Mehet&search="
 
 subtitle_pattern =                    '<tr[^>]*>\s*'
 subtitle_pattern = subtitle_pattern +    '<td[^>]*>.*?</table>\s*</td>\s*' # picture
 subtitle_pattern = subtitle_pattern +    '<td[^>]*>\s*<small>(?P<lang>.*?)</small>\s*</td>\s*' # language
-subtitle_pattern = subtitle_pattern +    '<td[^>]*onclick="adatlapnyitas\(\'(?P<id>[0-9]*?)\'\)"[^>]*>\s*'   # onclick="adatlapnyitas\(\'(?P<id>[0-9]*?)\'\)"[^>]*
+subtitle_pattern = subtitle_pattern +    '<td[^>]*onclick="adatlapnyitas\(\'(?P<id>[a-zA-Z_0-9]*)\'\)"[^>]*>\s*'   # onclick="adatlapnyitas\(\'(?P<id>[0-9]*?)\'\)"[^>]*
 subtitle_pattern = subtitle_pattern +      '<div[^>]*>(?P<huntitle>.*?)</div>\s*' # hungarian title
 subtitle_pattern = subtitle_pattern +      '<div[^>]*>(?P<origtitle>.*?)</div>\s*' # original title
 subtitle_pattern = subtitle_pattern +    '</td>\s*'
 subtitle_pattern = subtitle_pattern +    '<td[^>]*>(?P<uploader>.*?)</td>\s*' # uploader
 subtitle_pattern = subtitle_pattern +    '<td[^>]*>(?P<date>.*?)</td>\s*' # date
-subtitle_pattern = subtitle_pattern +    '<td[^>]*>\s*<a href="(?P<link1>.*?fnev=)(?P<link2>[^&"]*)(?P<link3>&[^"]*)?">\s*<img[^>]*>\s*</a>\s*</td>\s*' # download link
+subtitle_pattern = subtitle_pattern +    '<td[^>]*>\s*<a href="(?P<link1>.*?fnev=)(?P<link2>[^&"]*)(?P<link3>&[^"]*)?">.*?</a>\s*</td>\s*' # download link
 subtitle_pattern = subtitle_pattern +  '</tr>'
 
-#subtitle_pattern =                    '<tr.*>.*<'
+#subtitle_pattern =                    '<tr[^>]*>\s*'
 # subtitle_pattern = subtitle_pattern +    '<td[^>]*>.*?</td>\s*' # picture
 # subtitle_pattern = subtitle_pattern +    '<td[^>]*>.*?</td>\s*' # language
-# subtitle_pattern = subtitle_pattern +    '<td[^>]*>.*?</td>\s*'
+# subtitle_pattern = subtitle_pattern +    '<td[^>]*>.*?</td>\s*' # titles
 # subtitle_pattern = subtitle_pattern +    '<td[^>]*>.*?</td>\s*' # uploader
 # subtitle_pattern = subtitle_pattern +    '<td[^>]*>.*?</td>\s*' # date
 # subtitle_pattern = subtitle_pattern +    '<td[^>]*>.*?</td>\s*' # download link
@@ -104,6 +104,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         decode_policy = 'replace'
 
         for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):  #  | re.UNICODE
+            #subenv.debuglog("Found a movie on search page")
             link = (matches.group('link1') + urllib.quote_plus(matches.group('link2')) + matches.group('link3')).decode(html_encoding, decode_policy)
             hun_title = matches.group('huntitle').decode(html_encoding, decode_policy)
             orig_title = matches.group('origtitle').decode(html_encoding, decode_policy)

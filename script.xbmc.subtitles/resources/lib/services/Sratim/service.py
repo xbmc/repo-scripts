@@ -11,8 +11,10 @@
 #       Fixed TV show subtitles (now navigates site to find requested episode)
 # 2.1 - Changed RE patterns again due to layout change (Thanks BBLN for also suggesting different fix).
 # 2.2 - Changed url to subtitle.co.il
+# 2.3 - Added User Agent to getURL, fixed string related bugs and patterns
 #
 # Created by: Ori Varon
+# Changed by MeatHook (2.3)
 #===============================================================================
 import os, re, xbmc, xbmcgui, string, time, urllib2
 from utilities import languageTranslate, log
@@ -24,11 +26,12 @@ debug_pretext = ""
 # Regular expression patterns
 #===============================================================================
 
-TV_SEARCH_RESULTS_PATTERN = "<div style=\"\"><a href=\"viewseries.php\?id=(\d+)"
-SEARCH_RESULTS_PATTERN = "<div style=\"\"><a href=\"view.php\?id=(\d+)"
+TV_SEARCH_RESULTS_PATTERN = "<a href=\"viewseries.php\?id=(\d+)[^>]*?title=.*?>"
+SEARCH_RESULTS_PATTERN = "<a href=\"view.php\?id=(\d+)[^>]*?title=.*?>"
 SUBTITLE_LIST_PATTERN = "downloadsubtitle\.php\?id=(?P<fid>\d*).*?subt_lang.*?title=\"(?P<language>.*?)\".*?subtitle_title.*?title=\"(?P<title>.*?)\""
 TV_SEASON_PATTERN = "seasonlink_(?P<slink>\d+).*?>(?P<snum>\d+)</a>"
 TV_EPISODE_PATTERN = "episodelink_(?P<elink>\d+).*?>(?P<enum>\d+)</a>"
+USER_AGENT = "Mozilla%2F4.0%20(compatible%3B%20MSIE%207.0%3B%20Windows%20NT%206.0)"
 
 #===============================================================================
 # Private utility functions
@@ -51,10 +54,13 @@ def sratimToScript(language):
 # Returns the content of the given URL. Used for both html and subtitle files.
 # Based on Titlovi's service.py
 def getURL(url):
+
     content = None
     log( __name__ ,"Getting url: %s" % (url))
     try:
-        response = urllib2.urlopen(url)
+        req = urllib2.Request(url)
+        req.add_unredirected_header('User-Agent', USER_AGENT)
+        response = urllib2.urlopen(req)        
         content = response.read()
     except:
         log( __name__ ,"Failed to get url:%s" % (url))
@@ -102,7 +108,7 @@ def getAllTVSubtitles(subtitlePageID,languageList,subtitlesList,season,episode):
                             subtitlesList.append({'rating': '0', 'sync': False,
                                                   'filename': title, 'subtitle_id': fid,
                                                   'language_flag': 'flags/' + \
-                                                  toOpenSubtitles_two(sratimToScript(language)) + \
+                                                  languageTranslate(sratimToScript(language),0,2) + \
                                                   '.gif', 'language_name': sratimToScript(language)})
 
 
@@ -173,19 +179,23 @@ def extractAndFindSub(tempSubDir,tempZipFile):
 # rar -> True iff video is inside a rar archive
 # lang1, lang2, lang3 -> Languages selected by the user
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
+
     subtitlesList = []
     # List of user languages - easier to manipulate
     languageList = [lang1, lang2, lang3]
     msg = ""
+ 
     # Check if searching for tv show or movie and build the search string
     if tvshow:
         searchString = tvshow.replace(" ","+")
     else:
         searchString = title.replace(" ","+")
-    log( __name__ ,"%s Search string = %s" % (debug_pretext, searchString))
-
+    	
+    log( __name__ ,"%s Search string = *%s*" % (debug_pretext, title))
+	
     # Retrieve the search results (html)
-    searchResults = getURL(BASE_URL + "browse.php\?q=" + searchString)
+
+    searchResults = getURL(BASE_URL + "browse.php?q=" + searchString)
     # Search most likely timed out, no results
     if (not searchResults):
         return subtitlesList, "", "Search timed out, please try again later."

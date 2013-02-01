@@ -13,7 +13,7 @@ import shutil
 from utilities import log, languageTranslate, getShowId
 from xml.dom import minidom
 
-  
+
 _ = sys.modules[ "__main__" ].__language__
 
 user_agent = 'Mozilla/5.0 (compatible; XBMC.Subtitle; XBMC)'
@@ -44,22 +44,30 @@ def geturl(url):
     return(content)
 
 def getShortTV(title):
-    tvdbid = getShowId()
-    if tvdbid:
-        # get tvshow's url from TVDB's id
-        searchurl = 'http://' + apiurl + '/shows/display/' + tvdbid + '.xml?key=' + apikey
-        log( __name__ , " BetaSeries query : %s" % (searchurl))
+    try:
+        tvdbid = getShowId()
+        if tvdbid:
+            log( __name__ , 'found show from tvdb: %s' % (tvdbid))
+            # get tvshow's url from TVDB's id
+            searchurl = 'http://' + apiurl + '/shows/display/' + tvdbid + '.xml?key=' + apikey
+            log( __name__ , " BetaSeries query : %s" % (searchurl))
 
-        dom = minidom.parse(urllib.urlopen(searchurl))
-        
-        if len(dom.getElementsByTagName('url')):
-            url = dom.getElementsByTagName('url')[0].childNodes[0]
-            url = url.nodeValue
-            return url
+            dom = minidom.parse(urllib.urlopen(searchurl))
 
-    else:
-        log( __name__ , "getShortTV() failed")
+            if len(dom.getElementsByTagName('url')):
+                url = dom.getElementsByTagName('url')[0].childNodes[0]
+                url = url.nodeValue
+                return [url]
 
+        else:
+            log( __name__ , 'show not found from tvdb, try to find from betaseries search')
+            searchurl = 'http://' + apiurl + '/shows/search.xml?title=' + urllib.quote(title) + '&key=' + apikey
+            log( __name__ , "search %s on betaseries" % (searchurl))
+            dom = minidom.parse(urllib.urlopen(searchurl))
+            log( __name__ , " found %s shows" % (dom.getElementsByTagName('url').length) )
+            return [ e.childNodes[0].nodeValue for e in dom.getElementsByTagName('url') ]
+    except Exception as inst:
+        log( __name__, "Error: %s" % (inst))
 
 def search_subtitles( file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack ): #standard input
     subtitles_list = []
@@ -73,96 +81,113 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     if lang1 == 'fr' or lang2 == 'fr' or lang3 == 'fr': querylang += "VF"
     log( __name__ , "query language: '%s'" % (querylang))
 
+    lang_priorities = []
+    for lang in [lang1, lang2, lang3]:
+        if lang not in lang_priorities: lang_priorities.append(lang)
+
     if (len(file_original_path) > 0) and (len(tvshow) > 0) :
 
-        show = getShortTV(tvshow)
-        if show:
+        shows = getShortTV(tvshow)
+        if shows:
+            for show in shows:
+                searchurl = 'http://' + apiurl + '/subtitles/show/' + show + '.xml?season=' + season + '&episode=' + episode + '&language=' + querylang + '&key=' + apikey
+                log( __name__ , "searchurl = '%s'" % (searchurl))
 
-            searchurl = 'http://' + apiurl + '/subtitles/show/' + show + '.xml?season=' + season + '&episode=' + episode + '&language=' + querylang + '&key=' + apikey
-            log( __name__ , "searchurl = '%s'" % (searchurl))
+                try:
+                    # parsing shows from xml
+                    dom = minidom.parse(urllib.urlopen(searchurl))
 
-            try:
-                # parsing shows from xml
-                dom = minidom.parse(urllib.urlopen(searchurl))
-                
-                #time.sleep(1)
-                subtitles = dom.getElementsByTagName('subtitle')
-                log( __name__ , "nb sub found: '%s'" % (len(subtitles)))
-                for subtitle in subtitles:
-                    url = subtitle.getElementsByTagName('url')[0].childNodes[0]
-                    url = url.nodeValue
+                    #time.sleep(1)
+                    subtitles = dom.getElementsByTagName('subtitle')
+                    log( __name__ , "nb sub found for show '%s': '%s'" % (show, len(subtitles)))
+                    for subtitle in subtitles:
+                        url = subtitle.getElementsByTagName('url')[0].childNodes[0]
+                        url = url.nodeValue
 
-                    filename = subtitle.getElementsByTagName('file')[0].childNodes[0]
-                    filename = filename.nodeValue
+                        filename = subtitle.getElementsByTagName('file')[0].childNodes[0]
+                        filename = filename.nodeValue
 
-                    language = subtitle.getElementsByTagName('language')[0].childNodes[0]
-                    language = get_languages(language.nodeValue)
+                        language = subtitle.getElementsByTagName('language')[0].childNodes[0]
+                        language = get_languages(language.nodeValue)
 
-                    rating = subtitle.getElementsByTagName('quality')[0].childNodes[0]
-                    #rating = rating.nodeValue
-                    rating = str(int(round(float(rating.nodeValue) / 5 * 9)))
+                        rating = subtitle.getElementsByTagName('quality')[0].childNodes[0]
+                        #rating = rating.nodeValue
+                        rating = str(int(round(float(rating.nodeValue) / 5 * 9)))
 
-                    ext = os.path.splitext(filename)[1]
-                    #log( __name__ , "file : '%s' ext : '%s'" % (filename,ext))
-                    if ext == '.zip':
-                        if len(subtitle.getElementsByTagName('content'))>0:
-                            #log( __name__ , "zip content ('%s')" % (filename))
-                            content = subtitle.getElementsByTagName('content')[0]
-                            items = content.getElementsByTagName('item')
+                        ext = os.path.splitext(filename)[1]
+                        #log( __name__ , "file : '%s' ext : '%s'" % (filename,ext))
+                        if ext == '.zip':
+                            if len(subtitle.getElementsByTagName('content'))>0:
+                                #log( __name__ , "zip content ('%s')" % (filename))
+                                content = subtitle.getElementsByTagName('content')[0]
+                                items = content.getElementsByTagName('item')
 
-                            for item in items:
-                                if len(item.childNodes) < 1 : continue
-                                subfile = item.childNodes[0].nodeValue
-                                
+                                for item in items:
+                                    if len(item.childNodes) < 1 : continue
+                                    subfile = item.childNodes[0].nodeValue
 
-                                if os.path.splitext(subfile)[1] == '.zip': continue # Not supported yet ;)
-                            
-                                search_string = "(s%#02de%#02d)|(%d%#02d)|(%dx%#02d)" % (int(season), int(episode),int(season), int(episode),int(season), int(episode))
-                                queryep = re.search(search_string, subfile, re.I)
-                                #log( __name__ , "ep: %s found: %s" % (search_string,queryep))
-                                if queryep == None: continue
+                                    if os.path.splitext(subfile)[1] == '.zip': continue # Not supported yet ;)
 
+                                    search_string = "(s%#02de%#02d)|(%d%#02d)|(%dx%#02d)" % (int(season), int(episode),int(season), int(episode),int(season), int(episode))
+                                    queryep = re.search(search_string, subfile, re.I)
+                                    #log( __name__ , "ep: %s found: %s" % (search_string,queryep))
+                                    if queryep == None: continue
 
 
-                                langs = re.search('\.(VF|VO|en|fr)\..*.{3}$',subfile,re.I)
-                                #langs = langs.group(1)
-                                #log( __name__ , "detect language... %s" % (subfile))
-                                try:
-                                    langs = langs.group(1)
-                                    lang = {
-                                    "fr": 'fr',
-                                    "FR": 'fr',
-                                    "en": 'en',
-                                    "EN": 'en',
-                                    "VF": 'fr',
-                                    "vf": 'fr',
-                                    "VO": 'en',
-                                    "vo": 'en'
-                                    }[langs]
-                                    #log( __name__ , "language: %s" % (lang))
-                                except:
-                                    lang = language
-                                
-                                if lang != lang1 and lang != lang2 and lang != lang3: continue
 
-                                #log( __name__ , "subfile = '%s'" % (subfile))
-                                subtitles_list.append({'filename': subfile,'link': url,'language_name': languageTranslate(lang,2,0),'language_id':"0",'language_flag':'flags/' + lang + '.gif',"rating":rating,"sync": False})
+                                    langs = re.search('\.(VF|VO|en|fr)\..*.{3}$',subfile,re.I)
+                                    #langs = langs.group(1)
+                                    #log( __name__ , "detect language... %s" % (subfile))
+                                    try:
+                                        langs = langs.group(1)
+                                        lang = {
+                                            "fr": 'fr',
+                                            "FR": 'fr',
+                                            "en": 'en',
+                                            "EN": 'en',
+                                            "VF": 'fr',
+                                            "vf": 'fr',
+                                            "VO": 'en',
+                                            "vo": 'en'
+                                        }[langs]
+                                        #log( __name__ , "language: %s" % (lang))
+                                    except:
+                                        lang = language
+
+                                    if lang != lang1 and lang != lang2 and lang != lang3: continue
+
+                                    #log( __name__ , "subfile = '%s'" % (subfile))
+                                    subtitles_list.append({
+                                        'filename'          : subfile,
+                                        'link'              : url,
+                                        'language_name'     : languageTranslate(lang,2,0),
+                                        'language_index'    : lang_priorities.index(lang),
+                                        'language_flag'     : 'flags/' + lang + '.gif',
+                                        'rating'            : rating,
+                                        'sync'              : False,
+                                        })
+                            else:
+                                log( __name__ , "not valid content! dumping XML...")
+                                log( __name__ , dom.toxml())
+
                         else:
-                            log( __name__ , "not valid content! dumping XML...")
-                            log( __name__ , dom.toxml())
+                            #log( __name__ , "sub found ('%s')" % (filename))
 
-                    else:
-                        #log( __name__ , "sub found ('%s')" % (filename))
-                        
-                        subtitles_list.append({'filename': filename,'link': url,'language_name': languageTranslate(language,2,0),'language_id':"0",'language_flag':'flags/' + language + '.gif',"rating":rating,"sync": False})
-                    
-            except Exception, inst:
-                log( __name__ , " Error: %s" % (inst))
-                return subtitles_list, "", msg #standard output
+                            subtitles_list.append({
+                                'filename'          : filename,
+                                'link'              : url,
+                                'language_name'     : languageTranslate(language,2,0),
+                                'language_index'    : lang_priorities.index(language),
+                                'language_flag'     : 'flags/' + language + '.gif',
+                                'rating'            : rating,
+                                'sync'              : False
+                                })
 
-    return subtitles_list, "", msg #standard output
+                except Exception, inst:
+                    log( __name__ , " Error: %s" % (inst))
+                    return subtitles_list, "", msg #standard output
 
-    
+    return sorted(subtitles_list, key=lambda x: x['language_index']), "", msg #standard output
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
     link = subtitles_list[pos][ "link" ]

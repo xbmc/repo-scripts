@@ -21,7 +21,7 @@ STATUS_LABEL   = 100
 LOADING_IMAGE  = 110
 SUBTITLES_LIST = 120
 SERVICES_LIST  = 150
-CANCEL_DIALOG  = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
+CANCEL_DIALOG  = ( 9, 10, 13, 92, 216, 247, 257, 275, 61467, 61448, )
 
 SERVICE_DIR    = os.path.join(__cwd__, "resources", "lib", "services")
 
