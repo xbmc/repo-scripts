@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32095">
+        <setting type="sep" />
+        <setting label="32095" type="lsep" />
+        <setting type="sep" />
+        <setting label="" type="lsep" />
+        <setting label="32036" type="folder" id="music_path" default="" source="auto" option="writeable" />
+        <setting label="32018" type="folder" id="backup_path" default="" source="auto" option="writeable" />
+        <setting label="32158" type="bool" id="enable_missing" default="true" />
+        <setting label="32062" type="folder" id="missing_path" default="" source="auto" enable="eq(-1,true)" option="writeable" />
+        <setting label="32097" type="bool" id="enableresize" default="false" />
+        <setting id="folder" type="enum" label="32019" lvalues="32054|32055" default="0"/>
+        <setting type="sep" />
+    </category>
+    <category label="32077"> 
+        <setting type="sep" />
+        <setting label="32077" type="lsep" />
+        <setting type="sep" />
+        <setting label="" type="lsep" />
+        <setting label="32094" type="bool" id="enablecustom" default="false" />
+        <setting label="32087" type="enum" id="recognized" enable="eq(-1,true)" lvalues="32078|32079|32080|32081|32082|32083|32084|32085|32086" default="32078" />
+        <setting label="32088" type="enum" id="unrecognized" enable="eq(-2,true)" lvalues="32078|32079|32080|32081|32082|32083|32084|32085|32086" default="32083" />
+        <setting label="32089" type="enum" id="remote" enable="eq(-3,true)" lvalues="32078|32079|32080|32081|32082|32083|32084|32085|32086" default="32080" />
+        <setting label="32090" type="enum" id="local" enable="eq(-4,true)" lvalues="32078|32079|32080|32081|32082|32083|32084|32085|32086" default="32082" />
+        <setting label="32091" type="enum" id="remotelocal" enable="eq(-5,true)" lvalues="32078|32079|32080|32081|32082|32083|32084|32085|32086" default="32080" /> 
+        <setting label="32092" type="enum" id="unmatched" enable="eq(-6,true)" lvalues="32078|32079|32080|32081|32082|32083|32084|32085|32086" default="32084" />
+        <setting label="32093" type="enum" id="localcdart" enable="eq(-7,true)" lvalues="32078|32079|32080|32081|32082|32083|32084|32085|32086" default="32083" />
+        <setting type="sep" />
+    </category>
+    <category label="32143">
+        <setting type="sep" />
+        <setting label="32143" type="lsep" />
+        <setting type="sep" />
+        <setting label="" type="lsep" />
+        <setting label="32106" type="bool" id="resizeondownload" default="false" />
+        <setting label="32175" type="bool" id="enable_replace_illegal" default ="false" />
+        <setting label="32176" type="text" id="illegal_characters" visible="eq(-1,true)" default=":*&lt;&gt;/\|?&quot;" />
+        <setting label="32177" type="text" id="replace_character" visible="eq(-2,true)" default="_" />
+        <setting label="32180" type="bool" id="change_period_atend" visible="eq(-3,true)" default="true" />
+        <setting label="32171" type="bool" id="enable_hdlogos" default="true" />
+        <setting label="32183" type="bool" id="enable_fanart_limit" default="false" />
+        <setting label="32184" type="slider" id="fanart_limit" option="int" visible="eq(-1,true)" range="1,60" default="10" />
+        <setting type="sep" />
+        <setting label="32115" type="bool" id="notify_in_background" default="false" />
+        <setting label="32142" type="bool" id="enable_all_artists" default="false" />
+        <setting label="32136" type="bool" id="update_musicbrainz" default="true" />
+        <setting type="sep" />
+        <setting label="32148" type="lsep" />
+        <setting label="32114" type="bool" id="check_mbid" default="false" />
+        <setting type="sep" />
+        <setting label="32174" type="number" id="mbid_match_number" default="10" />
+        <setting label="32172" type="bool" id="backup_during_update" default="true" />
+        <setting type="sep" />
+        <setting label="32188" type="bool" id="use_musicbrainz" default="true" />
+        <setting label="32189" type="text" id="musicbrainz_server" visible="eq(-1,false)" default="http://musicbrainz.org" />
+        <setting label="32190" type="slider" id="mb_delay" option="int" visible="eq(-2,false)" range="0,9" default="9" />
+    </category>
+</settings>
