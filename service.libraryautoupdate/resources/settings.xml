@@ -4,6 +4,7 @@
 		<setting id="startup_delay" type="enum" values="0|1|2|3|4|5" label="30008" default="0"  />
 		<setting id="notify_next_run" type="bool" label="30006" default="true" />
 		<setting id="run_during_playback" type="bool" label="30007" default="false" />
+		<setting id="last_run" type="text" label="last_run" default="0" visible="false" />
 	</category>
 	<category id="video_timer" label="30002">
 		<setting id="update_video" type="bool" label="30004" default="true" />
@@ -42,6 +43,8 @@
 		<setting id="library_to_clean" type="enum" lvalues="30055|30002|30003" label="30054" default="0" enable="eq(-1,true)" />
 		<setting id="verify_paths" type="bool" label="30042" default="false" enable="eq(-2,true)"/>
 		<setting id="user_confirm_clean" type="bool" label="30051" default="false" enable="eq(-3,true)" />
-		<setting id="clean_timer" type="enum" lvalues="30044|30045|30046|30047" label="30043" default="0" enable="eq(-4,true)" />
+		<setting id="clean_timer" type="enum" lvalues="30044|30045|30046|30047|30011" label="30043" default="0" enable="eq(-4,true)" />
+		<setting id="clean_video_cron_expression" type="text" label="30056" default="0 0 * * *" enable="eq(-5,true)" visible="eq(-1,4)" />
+		<setting id="clean_music_cron_expression" type="text" label="30057" default="0 2 * * *" enable="eq(-6,true)" visible="eq(-2,4)" />
 	</category>
 </settings>

@@ -1,49 +1,53 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Lithuanian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/lt/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
-    <string id="30000"></string>
-    <string id="30001"></string>
-    <string id="30002"></string>
-    <string id="30003"></string>
-    <string id="30004"></string>
-    <string id="30005"></string>
-    <string id="30006"></string>
-    <string id="30007"></string>
-    <string id="30008"></string>
-    <string id="30009"></string>
-    <string id="30010"></string>
-    <string id="30011"></string>
+    <string id="30000">XBMC bibliotekos(-ų) auto-atnaujinimas</string>
+    <string id="30001">Pagrindinis</string>
+    <string id="30002">Video</string>
+    <string id="30003">Muzika</string>
+    <string id="30004">Atnaujinti video biblioteka</string>
+    <string id="30005">Atnaujinti muzikos biblioteka</string>
+    <string id="30006">Rodyti pranešimus</string>
+    <string id="30007">Vykdyti atkūrimo metu</string>
+    <string id="30008">Paleisties uždelsimas (min.)</string>
+    <string id="30009">Naudoti 'Išplėstinis laikmatis'</string>
+    <string id="30010">Laiko tarpas tarp atnaujinimų (valandos)</string>
+    <string id="30011">Cron ekspresija</string>
 
     <!-- specific paths -->
-    <string id="30020"></string>
-    <string id="30021"></string>
-    <string id="30022"></string>
-    <string id="30023"></string>
+    <string id="30020">Atnaujinti specifinį kelią 1</string>
+    <string id="30021">Atnaujinti specifinį kelią 2</string>
+    <string id="30022">Atnaujinti specifinį kelią 3</string>
+    <string id="30023">Video kelias</string>
 
     <!-- disclaimer -->
-    <string id="30030"></string>
-    <string id="30031"></string>
-    <string id="30032"></string>
-    <string id="30033"></string>
+    <string id="30030">Skaityti atsisakymą</string>
+    <string id="30031">Video kelio atsakomybės apribojimas</string>
+    <string id="30032">Kelias jau turi vaizdo šaltinį su turiniu</string>
+    <string id="30033">Maršrutas turi atitikti tikslų kelią šaltinių nuskaitmui</string>
 
     <!-- cleaning -->
-    <string id="30040"></string>
-    <string id="30041"></string>
-    <string id="30042"></string>
-    <string id="30043"></string>
-    <string id="30044"></string>
-    <string id="30045"></string>
-    <string id="30046"></string>
-    <string id="30047"></string>
-    <string id="30048"></string>
-    <string id="30049"></string>
-    <string id="30050"></string>
-    <string id="30051"></string>
-    <string id="30052"></string>
-    <string id="30053"></string>
-    <string id="30054"></string>
-    <string id="30055"></string>
+    <string id="30040">Valyti</string>
+    <string id="30041">Valyti biblioteką</string>
+    <string id="30042">Patikrinti šaltinius prieš valymą</string>
+    <string id="30043">Dažnis</string>
+    <string id="30044">Po atnaujinimo</string>
+    <string id="30045">Vieną kartą per parą</string>
+    <string id="30046">Kartą per savaitę</string>
+    <string id="30047">Kartą per mėnesį</string>
+    <string id="30048">Valyti video biblioteką</string>
+    <string id="30049">Valyti muzikos biblioteką</string>
+    <string id="30050">Klaida valant duomenų bazę</string>
+    <string id="30051">Klausti prieš valant biblioteką</string>
+    <string id="30052">Duomenų bazė švari, planuoti jos rodymą</string>
+    <string id="30053">Norėtumėte ją paleisti dabar?</string>
+    <string id="30054">Valyti bibliotekąbiblioteką</string>
+    <string id="30055">Abu</string>
 
     <!-- manual run -->
-    <string id="30060"></string>
-    <string id="30061"></string>
+    <string id="30060">Atnaujinimas bus paleistas dar kartą</string>
+    <string id="30061">Ar norite rankiniu būdu paleisti atnaujinimą?</string>
 </strings>

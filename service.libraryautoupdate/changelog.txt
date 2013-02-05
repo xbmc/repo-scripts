@@ -1,3 +1,33 @@
+Version 0.7.8
+
+efficiencies to evalSchedules trigger - thanks Martijn
+
+Version 0.7.7
+
+updated language files from Transifex
+
+Version 0.7.6
+
+make sure cleaning is selected by the user
+
+check for playing media before cleaning library after db update
+
+Version 0.7.5
+
+Added network check before running a scan, if it fails it will try again in 10 seconds
+
+Version 0.7.4
+
+removed common plugin cache dependency - was causing CPU issues
+
+use xbmc.Monitor to check for settings updates
+
+use xbmc.Monitor to monitor db updates
+
+added custom cleaning timers, thanks Ghostdivision
+
+use settings.xml to store last_run data
+
 Version 0.7.3
 
 added support for multipathed sources in verify sources
