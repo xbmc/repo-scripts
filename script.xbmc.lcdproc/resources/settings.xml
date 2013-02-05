@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="32100">
+    <setting id="scrolldelay" type="slider" label="32101" option="int" default="1" range="0,10" />
+    <setting id="scrollmode" type="enum" label="32102" lvalues="32401|32402" default="0" />
+    <setting id="navtimeout" type="slider" label="32103" option="int" default="2" range="1,10" />
+    <setting id="refreshrate" type="slider" label="32104" option="int" default="1" range="1,20" />
+  </category>
+  <category label="32200">
+    <setting id="dimonscreensaver" type="bool" label="32201" default="false" />
+    <setting id="dimonshutdown" type="bool" label="32202" default="false" />
+  </category>
+  <category label="32300">
+    <setting id="remotelcdproc" type="bool" label="32301" default="false" />
+    <setting id="hostip" enable="eq(-1,true)" type="ipaddress" label="32302" default="127.0.0.1" subsetting="true" />
+    <setting id="hostport" enable="eq(-2,true)" type="number" label="32303" default="13666" subsetting="true" />
+    <setting id="sep2" type="sep" />
+    <setting id="heartbeat" type="bool" label="32304" default="false" />
+    <setting id="sep3" type="sep" />
+    <setting id="hideconnpopups" type="bool" label="32305" default="true" />
+  </category>
+</settings>

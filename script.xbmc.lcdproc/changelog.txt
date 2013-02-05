@@ -1,0 +1,16 @@
+1.2.0 / 2.2.0
+- Maintain versions for Eden (1.x.x) and Frodo+ (2.x.x)
+- Support for extra stuff (icons, bars) on supporting displays
+- Extra stuff handling for SoundGraph iMON LCD and Futaba/Targa mdm166a VFD
+  devices (presence will be autodetected)
+- Align each line either left (default), centered or right
+- Fixed connection problem popup annoyance
+- GUI settings cleanup and some more LCD.xml configurables
+- Take care of providing a default LCD.xml in the master profile
+1.1.0
+- greatly improved client/server communication
+- native widgets for bars, icons and bignumbers
+- character conversion left to be done by LCDproc
+- additional configuration options
+1.0.0
+- initial addon release
