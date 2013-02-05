@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-  <defaultcontrol always="true">5011</defaultcontrol>
+  <defaultcontrol always="true">5006</defaultcontrol>
   <allowoverlays>true</allowoverlays>
   <allowoverlay>yes</allowoverlay>
   <animation effect="fade" time="250">WindowOpen</animation>
@@ -281,10 +281,10 @@
         <align>left</align>
         <aligny>center</aligny>
         <scroll>true</scroll>
-        <label></label>
+        <label>-</label>
         <haspath>false</haspath>
         <font>font11</font>
-        <textcolor>55555555</textcolor>
+        <textcolor>44444444</textcolor>
         <wrapmultiline>false</wrapmultiline>
         <scrollspeed>50</scrollspeed>
         <scrollsuffix> - </scrollsuffix>

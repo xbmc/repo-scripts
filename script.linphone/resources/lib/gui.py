@@ -16,19 +16,24 @@ import ConfigParser
 import re
 import subprocess as sub
 import pyinotify
+import string
 
 ##-----------GLOBAL VARIABLES AND CONSTANTS------------##
-is_full_ver = 0
 SYSTEM_USER = os.getenv("USER")
 __scriptId__   = "script.linphone"
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__ = sys.modules[ "__main__" ].__version__
 __settings__ = sys.modules[ "__main__" ].__settings__
+__is_full_ver__ = sys.modules[ "__main__" ].__license__
 __cwd__ = '/home/'+SYSTEM_USER+'/.xbmc/addons/script.linphone'
 __language__ = __settings__.getLocalizedString
 _  = sys.modules[ "__main__" ].__language__
+LINPHONERC = '/home/' + SYSTEM_USER + '/.linphonerc'
 RIGHT_SHIFT = 340
 DOWN_SHIFT = 100
+
+LAST_ANSWER = True
+LAST_HANGUP = True
 
 SIZE_KEYCODE = 58
 SELFVIEW_KEYCODE = 59
@@ -42,7 +47,6 @@ PERCENT2 = ((WIDTH - DOWN_SHIFT) * 100) / WIDTH
 PERCENT = int((PERCENT1 + PERCENT2) / 2)
 
 VIEW_SIZE = 4
-SELF_VIEW_POS = 1
 
 proport = float(WIDTH) / HEIGHT
 
@@ -64,20 +68,23 @@ VIEW_SIZES[3] = [WIDTH - RIGHT_SHIFT / 2, int((WIDTH - RIGHT_SHIFT / 2) / propor
 VIEW_SIZES[4] = [WIDTH, HEIGHT]
 
 SELF_VIEWS = [-1, 0, 3, 1, 2]
+SELF_VIEW_POS = 1
+CALLIDS = {}
 
 wm = pyinotify.WatchManager()
 mask = pyinotify.IN_MODIFY  # watched events
 last_log_pos = 0
-calling_to = ''
-call_status = ''
+CALL_STATUS = ''
 LP_WIN = ''
 list_type = 'contacts'
 selected_list_item = 0
 last_try_exit = 0
 last_try_exit_cnt = 0
-
+CONTACT_NAME = ''
 CAN_CALL = True
-
+ALL_BUTTONS = {}
+SW_LISTS = {}
+NEED2CALL = ''
 ##--------------------Main Window-----------------##
 class GUI( xbmcgui.WindowXML ):
     def __init__( self, *args, **kwargs ):
@@ -97,22 +104,39 @@ class GUI( xbmcgui.WindowXML ):
         wm.add_watch('/home/' + SYSTEM_USER + '/linphone.log', mask)
 
         LP_WIN = self
-        #self.slider.setPercent(PERCENT)
         self.btn_settings.setLabel(__language__(30501))
-        #self.btn_recieved.setLabel(__language__(30503))1
         if list_type == 'contacts':
             for row in pb:
                 self.list_contacts.addItem(row[0])
         else:
             self.list_contacts.addItems(last_calls)
 
-        fixUpDown(False, False)
+        config = ConfigParser.ConfigParser()
+        config.read(LINPHONERC)
+        try:
+            SELF_VIEW_POS = config.get("video", "self_view")
+        except:
+            SELF_VIEW_POS = 1
+        if not SELF_VIEW_POS:
+            SELF_VIEW_POS = 1
+
+        fixUpDown(False, False, 'end')
         self.setFocus(self.btn_contacts)
+        os.system('killall -9 linphonec')
         status_register = initLinphone()
-        self.sttus.setText(status_register)
+        limitLinphonecCodecs()
+        # self.sttus.setText(status_register)
+        if sys.modules[ "__main__" ].FIRST_RUN:
+            linphoneGeneric("quit")
+            settings = xbmcaddon.Addon(__scriptId__)
+            settings.openSettings()
+            del settings
+            initLinphone()
+            limitLinphonecCodecs()
 
     def define_controls(self):
-        global is_full_ver
+        global SW_LISTS
+        global ALL_BUTTONS
         #control ids
         self.control_btn_close_id = 10
         self.control_btn_call_to_id = 5001
@@ -121,9 +145,7 @@ class GUI( xbmcgui.WindowXML ):
         self.control_btn_hangup_id = 5004
         self.control_btn_settings_id = 5005
         self.control_btn_recent_id = 5003
-        #self.control_btn_recieved_id = 5007 #2px
         self.control_list_contacts_id = 5008
-        #self.control_slider_id = 5009
         self.control_btn_scaler_id = 5010
         self.control_btn_add_contact_id = 5011
         self.control_btn_self_view_id = 5012
@@ -141,7 +163,6 @@ class GUI( xbmcgui.WindowXML ):
         self.btn_answer = self.getControl(self.control_btn_answer_id)
         self.btn_settings = self.getControl(self.control_btn_settings_id)
         self.btn_recent = self.getControl(self.control_btn_recent_id)
-        #self.btn_recieved = self.getControl(self.control_btn_recieved_id)
         #self.list_contacts = self.getControl(self.control_list_contacts_id)
         self.btn_add_contact = self.getControl(self.control_btn_add_contact_id)
         self.label_status = self.getControl(self.control_label_status_id)
@@ -160,7 +181,7 @@ class GUI( xbmcgui.WindowXML ):
         self.list_contacts.controlLeft(self.btn_contacts)
         self.list_contacts.controlRight(self.btn_context)
 
-        if is_full_ver > 0:
+        if __is_full_ver__ > 0:
             self.btn_scaler.setVisible(True)
             self.btn_self_view.setVisible(True)
         else:
@@ -170,9 +191,59 @@ class GUI( xbmcgui.WindowXML ):
         self.btn_contacts.controlDown(self.list_contacts)
         self.btn_call_to.controlUp(self.list_contacts)
 
-        self.sttus = xbmcgui.ControlTextBox(973, 460, 300, 200, textColor='0xFF0DD00')
+        self.sttus = xbmcgui.ControlTextBox(973, 460, 300, 200, textColor='0xFFFFFFFF')
         self.addControl(self.sttus)
-        self.sttus.setText("H:" + str(HEIGHT) + " W:" + str(WIDTH))
+        #self.sttus.setText("H:" + str(HEIGHT) + " W:" + str(WIDTH))
+
+        b_list = self.control_list_contacts_id
+        b_callto = self.control_btn_call_to_id
+        b_addcont = self.control_btn_add_contact_id
+        b_up = self.control_btn_answer_id
+        b_down = self.control_btn_hangup_id
+        b_size = self.control_btn_scaler_id
+        b_self = self.control_btn_self_view_id
+        b_sett = self.control_btn_settings_id
+        b_close = self.control_btn_close_id
+        # b_list, b_callto, b_addcont, b_up, b_down, b_size, b_self, b_sett, b_close
+        ALL_BUTTONS = {'b_list' : b_list, 'b_callto' : b_callto, 'b_addcont' : b_addcont, 'b_up' : b_up, 'b_down' : b_down,
+                    'b_size' : b_size, 'b_self' : b_self, 'b_sett' : b_sett, 'b_close' : b_close}
+        #                                  up,       right,     down,     left
+        b_lite = {'end':    {'b_list'   : [0,        0,         b_callto, 0],
+                             'b_callto' : [b_list,   b_addcont, b_sett,   b_addcont],
+                             'b_addcont': [b_list,   b_callto,  b_sett,   b_callto],
+                             'b_sett'   : [b_callto, b_sett,    b_close,  b_sett],
+                             'b_close'  : [b_sett,   0,         0,        0]},
+                  'ringing':{'b_list'   : [0,        0,         b_up,     0],
+                             'b_up'     : [b_list,   b_down,    b_close,  b_down],
+                             'b_down'   : [b_list,   b_up,      b_close,  b_up],
+                             'b_close'  : [b_up,     0,         0,        0]},
+                  'calling':{'b_list'   : [0,        0,         b_down,   0],
+                             'b_down'   : [b_list,   b_down,    b_close,  b_down],
+                             'b_close'  : [b_down,   0,         0,        0]},
+                  'active': {'b_list'   : [0,        0,         b_down,   0],
+                             'b_down'   : [b_list,   b_down,    b_close,  b_down],
+                             'b_close'  : [b_down,   0,         0,        0]},
+                 }
+        b_full = {'end':    {'b_list'   : [0,        0,         b_callto, 0],
+                             'b_callto' : [b_list,   b_addcont, b_size,   b_addcont],
+                             'b_addcont': [b_list,   b_callto,  b_size,   b_callto],
+                             'b_size'   : [b_addcont,b_size,    b_sett,   b_size],
+                             'b_sett'   : [b_size,   b_sett,    b_close,  b_sett],
+                             'b_close'  : [b_sett,   0,         0,        0]},
+                  'ringing':{'b_list'   : [0,        0,         b_up,     0],
+                             'b_up'     : [b_list,   b_down,    b_close,  b_down],
+                             'b_down'   : [b_list,   b_up,      b_close,  b_up],
+                             'b_close'  : [b_up,     0,         0,        0]},
+                  'calling':{'b_list'   : [0,        0,         b_down,   0],
+                             'b_down'   : [b_list,   b_down,    b_close,  b_down],
+                             'b_close'  : [b_down,   0,         0,        0]},
+                  'active': {'b_list'   : [0,        0,         b_down,   0],
+                             'b_down'   : [b_list,   b_down,    b_size,   b_down],
+                             'b_size'   : [b_down,   b_self,    b_close,  b_self],
+                             'b_self'   : [b_down,   b_size,    b_close,  b_size],
+                             'b_close'  : [b_size,   0,         0,        0]},
+                  }
+        SW_LISTS = b_full if __is_full_ver__ else b_lite
 
     ##--------- End Script -----------##
     def exit_script( self, action=None ):
@@ -182,32 +253,20 @@ class GUI( xbmcgui.WindowXML ):
     def onClick( self, controlId ):
         global pb
         global PERCENT
-        global calling_to
-        global call_status
+        global CALL_STATUS
         global list_type
         global selected_list_item
         global current_name
         global CAN_CALL
-
+        global NEED2CALL
         xlog("(onClick)CONTROL ID =  "+str(controlId))
 
         if controlId == self.control_btn_self_view_id:
-            self.changeSelfViewPos()
+            if xbmc.getCondVisibility("[Control.IsVisible(%s)]" % self.control_btn_self_view_id):
+                self.changeSelfViewPos()
 
         if controlId == self.control_btn_scaler_id:
             self.changeViewSize()
-
-        #if controlId == self.control_slider_id:
-        #    prev_percent = PERCENT
-        #    PERCENT = int(self.slider.getPercent())
-        #    height = int((PERCENT * HEIGHT) / 100.0)
-        #    width = int((PERCENT * WIDTH) / 100.0)
-        #    if width < 800 or height < 500:
-        #        self.slider.setPercent(prev_percent)
-        #    else:
-        #        xlog("HEIGHT = %s, WIDTH = %s" % (height, width))
-        #        linphoneGeneric("pwindow size %s %s" % (width, height) )
-        #        linphoneGeneric("scale size %s %s" % (width, height) )
 
         if controlId == self.control_list_contacts_id:
             if CAN_CALL:
@@ -250,7 +309,7 @@ class GUI( xbmcgui.WindowXML ):
             linphoneTerminate()
 
         if controlId == self.control_btn_answer_id:
-            if call_status == 'ringing':
+            if CALL_STATUS == 'ringing':
                 linphoneGeneric("answer")
             else:
                 val = self.message_yesno("Redial", "Call to " + placed[0] + " ?")
@@ -258,13 +317,32 @@ class GUI( xbmcgui.WindowXML ):
                     linphoneCall(placed[0])
 
         if controlId == self.control_btn_settings_id:
-            linphoneGeneric("pwindow hide")
+            soundcards = sub.Popen("/usr/local/bin/linphonecsh generic 'soundcard list'", shell=True, stdout=sub.PIPE).stdout.readlines()
+            linphoneGeneric("quit")
+            new_string = ''
+            for i in soundcards:
+                new_string = new_string + i.strip()[2:] + '|'
+            capture_list = '    <setting id="capture_list" type="enum" label="30311" values="%s" default="0" />\n' % (new_string)
+            playback_list = '    <setting id="playback_list" type="enum" label="30312" values="%s" default="0" />\n' % (new_string)
+
+            f = open(__cwd__+'/resources'+'/settings.xml', 'r')
+            settings = f.readlines()
+            f.close()
+            f = open(__cwd__+'/resources'+'/settings.xml', 'w')
+            for i in settings:
+                if i.find("capture_list") > 0:
+                    f.write(capture_list)
+                elif i.find("playback_list") > 0:
+                    f.write(playback_list)
+                else:
+                    f.write(i)
+            f.close()
             settings = xbmcaddon.Addon(__scriptId__)
             settings.openSettings()
             del settings
-            #os.system("cp /home/"+SYSTEM_USER+"/.linphonerc /home/"+SYSTEM_USER+"/.linphonerc2")
-            linphoneGeneric("quit")
             initLinphone()
+            limitLinphonecCodecs()
+            #os.system("cp /home/"+SYSTEM_USER+"/.linphonerc /home/"+SYSTEM_USER+"/.linphonerc2")
 
         if controlId == self.control_btn_add_contact_id:
             linphoneGeneric("pwindow hide")
@@ -285,6 +363,8 @@ class GUI( xbmcgui.WindowXML ):
                     del contact_action
                     linphoneGeneric("pwindow show")
                 self.setFocus(self.list_contacts)
+                if NEED2CALL:
+                    linphoneCall(NEED2CALL)
 
     ##--------Virtual keyboard --------##
     def get_input(self, title):
@@ -345,10 +425,10 @@ class GUI( xbmcgui.WindowXML ):
         if action.getId() == 10:
             linphoneTerminate()
 
-        if action.getId() == SELFVIEW_KEYCODE and is_full_ver:
+        if action.getId() == SELFVIEW_KEYCODE and __is_full_ver__:
             self.changeSelfViewPos()
 
-        if action.getId() == SIZE_KEYCODE and is_full_ver:
+        if action.getId() == SIZE_KEYCODE and __is_full_ver__:
             self.changeViewSize()
 
 
@@ -356,13 +436,13 @@ class EventHandler(pyinotify.ProcessEvent):
     def process_IN_MODIFY(self, event):
         global LP_WIN
         global notifiers
-        global calling_to
-        global call_status
+        global CONTACT_NAME
+        global CALL_STATUS
         statuss = checkLogFile(self, event)
         if (len(statuss) > 2):
-            call_status = statuss
+            CALL_STATUS = statuss
             if statuss == 'calling':
-                statuss = statuss + ' ' + calling_to
+                statuss = statuss + ' ' + CONTACT_NAME
             LP_WIN.label_status.setLabel("Status: " + statuss + ".")
 
 class ContactAction(xbmcgui.WindowXMLDialog):
@@ -392,6 +472,7 @@ class ContactAction(xbmcgui.WindowXMLDialog):
         global pb
         global current_name
         global selected_list_item
+        global NEED2CALL
         if controlId == self.control_btn_close_id:
             selected_list_item = 0
             current_name = ''
@@ -402,8 +483,8 @@ class ContactAction(xbmcgui.WindowXMLDialog):
             if list_type == 'contacts':
                 for row in pb:
                     if row[0] == item.getLabel():
-                        self.label_uri.setLabel(row[1])
-                self.close()
+                        NEED2CALL = row[1]
+            self.close()
 
         if controlId == self.control_btn_edit_id:
             contact_win = AddContact("add_contact.xml" , __cwd__, "Default")
@@ -480,14 +561,18 @@ class AddContact(xbmcgui.WindowXMLDialog):
             self.name = self.btn_name.getLabel()
             self.number = self.btn_uri.getLabel()
             if len(self.name) > 1  and len(self.number) > 3:
-                if selected_list_item and current_name != self.name:
+                if selected_list_item:
                     pbb = []
                     for row in pb:
-                        if row[0] != current_name:
+                        if row[0] == selected_list_item:
+                            pbb.append([self.name, self.number])
+                        else:
                             pbb.append(row)
                     pb = pbb
-                pb.append([self.name, self.number])
+                else:
+                    pb.append([self.name, self.number])
                 set_phone_book(pb)
+
                 if list_type == 'contacts':
                     LP_WIN.list_contacts.reset()
                     for row in pb:
@@ -530,32 +615,58 @@ def linphonecsh(cmd):
     return os.system("/usr/local/bin/linphonecsh " + cmd)
 
 def limitLinphonecCodecs():
+    vcodec_priority = int(__settings__.getSetting("vcodec_priority"))
+    if vcodec_priority == 1:
+        vcodecs = ['VP8']
+    elif vcodec_priority == 2:
+        vcodecs = ['H264', 'VP8']
+    else:
+        vcodecs = ['H264']
+    #for vcodec in vcodecs:
+    #    xlog('need VCODEC: %s (%s)' %(vcodec, vcodec_priority))
+
     lines = sub.Popen("/usr/local/bin/linphonecsh generic 'vcodec list'", shell=True, stdout=sub.PIPE).stdout.readlines()
     cindex = 0
     for line in lines:
-        if 'H264' not in line and 'enabled' in line:
+        #xlog('VLINE: %s ' %(line))
+        dis = 1
+        for vcodec in vcodecs:
+            if line.find(vcodec) > 0:
+                dis = 0
+        if dis and line.find('enabled') > 0:
             linphoneGeneric("vcodec disable %s" % (cindex))
+        elif not dis and line.find('disabled') > 0:
+            linphoneGeneric("vcodec enable %s" % (cindex))
+        #else:
+        #    xlog('VCODEC not changed: %s %s ' %(dis, line))
         cindex = cindex + 1
 
+    acodecs = sys.modules[ "__main__" ].__audio_codecs__
     lines = sub.Popen("/usr/local/bin/linphonecsh generic 'codec list'", shell=True, stdout=sub.PIPE).stdout.readlines()
     cindex = 0
     for line in lines:
-        if 'PCMU' not in line and 'PCMA' not in line and 'enabled' in line:
+        dis = 1
+        for acodec in acodecs:
+            if line.find(acodec) > 0:
+                dis = 0
+        if dis and line.find('enabled') > 0:
             linphoneGeneric("codec disable %s" % (cindex))
+        elif not dis and line.find('disabled') > 0:
+            linphoneGeneric("codec enable %s" % (cindex))
         cindex = cindex + 1
 
 def linphoneCall(target):
-    global calling_to
-    global call_status
+    global CONTACT_NAME
+    global CALL_STATUS
     global LP_WIN
-    calling_to = target
-    linphonecsh("dial " + calling_to)
-    call_status = 'calling'
-    fixUpDown(False, True)
+    CONTACT_NAME = target
+    linphonecsh("dial " + CONTACT_NAME)
+    CALL_STATUS = 'calling'
+    fixUpDown(False, True, 'calling')
     LP_WIN.setFocus(LP_WIN.btn_hangup)
 
 def linphoneTerminate():
-    global call_status
+    global CALL_STATUS
     global LP_WIN
     global placed
     global recieved
@@ -564,7 +675,8 @@ def linphoneTerminate():
     global last_try_exit_cnt
     global notifier
     global list_type
-    xbmc.log("##### [%s] - Debug msg: %s" % (__scriptname__, call_status),level=xbmc.LOGDEBUG )
+    global VIEW_SIZES
+    xbmc.log("##### [%s] - Debug msg: %s" % (__scriptname__, CALL_STATUS),level=xbmc.LOGDEBUG )
 
     tpass = (time.time() - last_try_exit)
     if tpass < 5:
@@ -576,38 +688,30 @@ def linphoneTerminate():
 
     xbmc.log("##### [%s] - Try to quit: %s / %s / %s" % (__scriptname__, tpass, last_try_exit_cnt, last_try_exit),level=xbmc.LOGDEBUG )
 
-    if last_try_exit_cnt < 2 and (call_status == 'calling' or call_status == 'ringing' or call_status == 'active'):
-        # is_started = os.system("ps aux | grep linphonec")
-        # if len(is_started) > 200:
-        #    self.sttus.setText('EXITED')
+    if last_try_exit_cnt < 2 and (CALL_STATUS == 'calling' or CALL_STATUS == 'ringing' or CALL_STATUS == 'active'):
         linphoneGeneric("terminate")
         linphoneResize(RIGHT_SHIFT, DOWN_SHIFT)
         linphoneGeneric("pwindow pos 0 0")
-        #LP_WIN.setFocus(LP_WIN.btn_hangup)
-        fixUpDown(False, False)
+        linphoneGeneric('pwindow size %s %s'% (VIEW_SIZES[2][0], VIEW_SIZES[2][1]))
+        fixUpDown(False, False, 'end')
         time.sleep(1)
-        placed, recieved, last_calls = parsing('/home/%s/.linphonerc' % (SYSTEM_USER))
+        placed, recieved, last_calls = parsing(LINPHONERC)
         if list_type == 'recent':
             LP_WIN.list_contacts.reset()
             LP_WIN.list_contacts.addItems(last_calls)
-
-        #else:
-        #    LP_WIN.btn_hangup.setVisible(False)
-        #    LP_WIN.btn_answer.setVisible(False)
-        #    self.sttus.setText('FORCED')
     else:
         linphoneGeneric("proxy remove 0")
         linphoneGeneric("quit")
         if notifier:
             notifier.stop()
         time.sleep(1)
-        # LP_WIN.exit_script()
         LP_WIN.close()
-        #os.system('killall -9 xbmc.bin')
-
 
 def checkLogFile(self, the_event):
     global last_log_pos
+    global LP_WIN
+    global CONTACT_NAME
+    global CALL_STATUS
     log_file = the_event.pathname
     fh = open(log_file, 'r')
     full_size = os.path.getsize(log_file)
@@ -619,23 +723,79 @@ def checkLogFile(self, the_event):
     logdata = fh.read(full_size - last_log_pos)
     call_status = ""
     last_log_pos = full_size
-    if 'LinphoneCallOutgoingInit' in logdata:
-        call_status = 'calling'
-        fixUpDown(False, True)
-    if 'LinphoneCallConnected' in logdata:
-        call_status = 'active'
-        fixUpDown(False, True)
-    if 'LinphoneCallIncomingReceived' in logdata or '-CALL_NEW' in logdata:
-        call_status = 'ringing'
-        fixUpDown(True, True)
-    if 'LinphoneCallEnd' in logdata or '-CALL_CLOSED' in logdata:
-        call_status = 'end'
-        fixUpDown(False, False)
-    if 'LinphoneCallError' in logdata:
-        call_status = 'error'
-        fixUpDown(False, False)
+    ldss = logdata.split("\n")
+    last_call_status = ''
+    cur_status = ''
+    for lds in ldss:
+        call_id = ''
+        if 'moving from state' in lds:
+            xlog("New LE: %s" % (lds))
+            m = re.search('Call 0x([0-9a-f]+): moving' ,lds)
+            if m:
+                call_id = m.group(1)
+                call_status = ''
+                if call_id:
+                    if 'LinphoneCallError' in lds:
+                        call_status = 'error'
+                        CONTACT_NAME = ''
+                    elif 'LinphoneCallEnd' in lds or 'LinphoneCallReleased' in lds:
+                        call_status = 'end'
+                        CONTACT_NAME = ''
+                    elif 'LinphoneCallConnected' in lds or 'LinphoneCallStreamsRunning' in lds:
+                        call_status = 'active'
+                    elif 'LinphoneCallIncomingReceived' in lds:
+                        call_status = 'ringing'
+                    elif 'LinphoneCallOutgoingInit' in lds:
+                        call_status = 'calling'
 
-    return call_status
+        if call_status and call_id:
+            last_call_status = call_status
+            CALLIDS[call_id] = call_status
+            xlog("Sch: ID: %s  Status: %s" % (call_id, call_status))
+
+        cont = ''
+        if (last_call_status == 'calling' or CALL_STATUS == 'calling') and 'To: <' in lds:
+            cont = re.search('To: <sip:([^\r\n]+)>' ,lds)
+        elif (last_call_status == 'ringing' or CALL_STATUS == 'ringing') and 'From: <' in lds:
+            cont = re.search('From: <sip:([^\r\n]+)>' ,lds)
+        if cont:
+            CONTACT_NAME = cont.group(1)
+            showStatus(last_call_status or CALL_STATUS, CONTACT_NAME)
+        #if last_call_status == 'error' or last_call_status == 'end':
+        #    showStatus(last_call_status, '')
+        #    CONTACT_NAME = ''
+
+    if last_call_status:
+        b_answer = False
+        b_hangup = False
+        need2del = ''
+        for call_id in CALLIDS:
+            call_status = CALLIDS[call_id]
+            if call_status == 'ringing':
+                b_answer = True
+                cur_status = 'ringing'
+            if call_status == 'calling' or call_status == 'active' or call_status == 'ringing':
+                b_hangup = True
+                if not cur_status or cur_status == 'end' or cur_status == 'error':
+                    cur_status = call_status
+            if call_status == 'end' or call_status == 'error':
+                need2del = call_id
+                if not cur_status:
+                    cur_status = call_status
+
+        if need2del:
+            del CALLIDS[need2del]
+        fixUpDown(b_answer, b_hangup, cur_status)
+        if cur_status == 'end' or cur_status == 'error':
+            showStatus(cur_status, '')
+            CONTACT_NAME = ''
+
+        for call_id in CALLIDS:
+            xlog("Cur stats: %s for %s" % (CALLIDS[call_id], call_id))
+    if not cur_status:
+        cur_status = CALL_STATUS
+    return cur_status
+
     # out:
     # 1.LinphoneCallIdle,
     # 2.LinphoneCallOutgoingInit,
@@ -657,72 +817,53 @@ def checkLogFile(self, the_event):
     # - connected (show contact name + Hangup button near cam win)
     # - disconnected (hide Hangup button)
 
+    #-CALL_PROCEEDING
+    #-CALL_ANSWERED
+    #-CALL_RELEASED
+    #
+    #-CALL_NEW
+    #-call answered
+    #-CALL_ACT
+    #-CALL_CLOSED or CANCELLED
+    #-CALL_RELEASED
 def xlog(msg):
     xbmc.log("##### [%s] - Debug msg: %s" % (__scriptname__,msg,),level=xbmc.LOGDEBUG )
 
-def fixUpDown(answer, hangup):
-    LP_WIN.btn_answer.setVisible(answer)
-    LP_WIN.btn_hangup.setVisible(hangup)
-    if answer or hangup:
-        LP_WIN.btn_settings.setVisible(False)
-        LP_WIN.btn_add_contact.setVisible(False)
-        LP_WIN.btn_call_to.setVisible(False)
-        CAN_CALL = False
-    else:
-        LP_WIN.btn_settings.setVisible(True)
-        LP_WIN.btn_add_contact.setVisible(True)
-        LP_WIN.btn_call_to.setVisible(True)
-        CAN_CALL = True
-
-    if hangup:
-        LP_WIN.btn_self_view.setVisible(True)
-    else:
-        LP_WIN.btn_self_view.setVisible(False)
+def fixUpDown(answer, hangup, callstatus):
+    global LAST_ANSWER
+    global LAST_HANGUP
+    global SW_LISTS
+    global ALL_BUTTONS
+    global CALL_STATUS
+    #if answer == LAST_ANSWER and hangup == LAST_HANGUP and callstatus == CALL_STATUS:
+    #    return
+    CALL_STATUS = callstatus
+    LAST_ANSWER = answer
+    LAST_HANGUP = hangup
+    if callstatus == 'error':
+        callstatus = 'end'
+    # 'end', 'ringing', 'calling', 'active'
     # 5001 - Call to, 5002 - Dial, 5004 - Hangup, 5005 - Settings, 5010 - Size, 5011 - Add contact, 5012 - SelfView
+    # list_contacts / control_list_contacts_id
+    sw_list = SW_LISTS[callstatus]
+    for abtn in ALL_BUTTONS:
+        if abtn not in sw_list:
+            LP_WIN.getControl(ALL_BUTTONS[abtn]).setVisible(False)
+    for button in sw_list:
+        LP_WIN.getControl(ALL_BUTTONS[button]).setVisible(True)
+        if sw_list[button][0]:
+            LP_WIN.getControl(ALL_BUTTONS[button]).controlUp(LP_WIN.getControl(sw_list[button][0]))
+        if sw_list[button][1]:
+            LP_WIN.getControl(ALL_BUTTONS[button]).controlRight(LP_WIN.getControl(sw_list[button][1]))
+        if sw_list[button][2]:
+            LP_WIN.getControl(ALL_BUTTONS[button]).controlDown(LP_WIN.getControl(sw_list[button][2]))
+        if sw_list[button][3]:
+            LP_WIN.getControl(ALL_BUTTONS[button]).controlLeft(LP_WIN.getControl(sw_list[button][3]))
 
-    #5001Down, 5011Down - answer:5002 / hangup:5004 / full:5010 / 5005
-    if answer:
-        b5001Down = 5002
-    elif hangup:
-        b5001Down = 5004
-    elif is_full_ver:
-        b5001Down = 5010
-    else:
-        b5001Down = 5005
-    LP_WIN.getControl(5001).controlDown(LP_WIN.getControl(b5001Down))
-    LP_WIN.getControl(5011).controlDown(LP_WIN.getControl(b5001Down))
-
-    #5002Right, 5002Left - hangup:5004 / 5002
-    #5004Right, 5004Left - answer:5002 / 5004
-    if answer and hangup:
-        LP_WIN.getControl(5002).controlRight(LP_WIN.getControl(5004)) # from Dial to Hangup
-        LP_WIN.getControl(5004).controlLeft(LP_WIN.getControl(5002))
-    elif answer:
-        LP_WIN.getControl(5002).controlRight(LP_WIN.getControl(5002))
-    elif hangup:
-        LP_WIN.getControl(5004).controlLeft(LP_WIN.getControl(5004))
-
-    #5002Down, 5004Down - full:5010 / 5005
-    b500xDown = 5010 if is_full_ver else 5005
-    if answer:
-        LP_WIN.getControl(5002).controlDown(LP_WIN.getControl(b500xDown))
-    if hangup:
-        LP_WIN.getControl(5004).controlDown(LP_WIN.getControl(b500xDown))
-
-    #5010Up - answer:5002 / hangup:5004 / 5001
-    #5012Up - answer:5002 / hangup:5004 / 5001
-    if answer:
-        b500xUp = 5002
-    elif hangup:
-        b500xUp = 5004
-    else:
-        b500xUp = 5001
-    LP_WIN.getControl(5010).controlUp(LP_WIN.getControl(b500xUp))
-    LP_WIN.getControl(5012).controlUp(LP_WIN.getControl(b500xUp))
-
-    #5005Up - full:5010 / answer:5002 / hangup:5004 / 5001
-    b5005Up = 5010 if is_full_ver else b500xUp
-    LP_WIN.getControl(5005).controlUp(LP_WIN.getControl(b5005Up))
+def showStatus(cstatus, contactn):
+    global LP_WIN
+    vstats = {'error':'Unknown error', 'end':'', 'active':'Connected to', 'ringing':'Incoming call from', 'calling':'Calling to'}
+    LP_WIN.sttus.setText("%s %s" % (vstats[cstatus], contactn))
 
 def initLinphone():
     ##------------------Initialisation Settings----------------------##
@@ -764,19 +905,17 @@ def initLinphone():
     else:
         auto_answer = ''
 
-    os.system('killall -9 linphonec')
     if debugging == "true":
-        cmd = 'bash -c "/usr/local/bin/linphonecsh init -V -d %s %s -l \'/home/%s/linphone.log\' -c \'/home/%s/.linphonerc\'"' % (debug_level, auto_answer, SYSTEM_USER, SYSTEM_USER)
+        cmd = 'bash -c "/usr/local/bin/linphonecsh init -V -d %s %s -l \'/home/%s/linphone.log\' -c \'%s\'"' % (debug_level, auto_answer, SYSTEM_USER, LINPHONERC)
     else:
         # need to enable debugger anyway, because status watcher uses linphone log.
-        cmd = 'bash -c "/usr/local/bin/linphonecsh init -V -d %s %s -l \'/home/%s/linphone.log\' -c \'/home/%s/.linphonerc\'"' % (2, auto_answer, SYSTEM_USER, SYSTEM_USER)
-        # cmd = 'bash -c "/usr/local/bin/linphonecsh init -V %s -c \'/home/%s/.linphonerc\'"' % (auto_answer, SYSTEM_USER)
+        cmd = 'bash -c "/usr/local/bin/linphonecsh init -V -d %s %s -l \'/home/%s/linphone.log\' -c \'%s\'"' % (2, auto_answer, SYSTEM_USER, LINPHONERC)
+        # cmd = 'bash -c "/usr/local/bin/linphonecsh init -V %s -c \'%s\'"' % (auto_answer, LINPHONERC)
 
     xlog("Init string: " +cmd)
     os.system(cmd)
     time.sleep(1)
     linphoneResize(RIGHT_SHIFT, DOWN_SHIFT)
-    linphoneGeneric("pwindow pos 0 0")
     if auto_register == "true":
         linphonecsh("register --host '%s' --username '%s' --password '%s'" % (host, str(user), str(password)))
         xlog("HOST = %s USER = %s" % (host, str(user)))
@@ -785,7 +924,10 @@ def initLinphone():
     linphoneGeneric("soundcard capture " + capture_device)
     linphoneGeneric("soundcard playback " + playback_device)
     linphoneGeneric("param video size " + multimedia_size)
-    linphoneGeneric("scale size %s %s" % (WIDTH - 350, HEIGHT))
+    linphoneGeneric("scale size %s %s" % (VIEW_SIZES[2][0], VIEW_SIZES[2][1]))
+
+    linphoneGeneric("pwindow pos 0 0")
+    linphoneGeneric('pwindow size %s %s'% (VIEW_SIZES[2][0], VIEW_SIZES[2][1]))
 
     linphoneGeneric("ports sip " + str(sip_port))
     array = ["sip_port", "sip_tcp_port", "sip_tls_port"]
@@ -816,12 +958,11 @@ def initLinphone():
         linphoneGeneric("ec off")
 
     time.sleep(1)
+
     xlog("SIP_PROTOCOL = %s SIP_PORT = %s DIRECT_CONNECTION = %s" % (sip_protocol, sip_port, direct_connection))
 
     status_register = sub.Popen("/usr/local/bin/linphonecsh status register", shell=True, stdout=sub.PIPE).stdout.readline()
     linphone_friend_list = sub.Popen("/usr/local/bin/linphonecsh generic 'friend list'", shell=True, stdout=sub.PIPE).stdout.read()
-    soundcard_list = sub.Popen("/usr/local/bin/linphonecsh generic 'soundcard list'", shell=True, stdout=sub.PIPE).stdout.readlines()
-    sound_card_list_creating(soundcard_list)
     xlog("Status register: %s Friend list: %s" % (status_register, linphone_friend_list))
     return status_register
 
@@ -862,10 +1003,10 @@ def check_resolution(h,w):
 
 def get_phone_book():
     try:
-        f = open(__cwd__ + "/phone_book.pb", "r+")
+        f = open("/home/"+os.getenv("USER")+"/phone_book.pb", "r+")
     except IOError:
-        os.system("touch " + __cwd__ + "/phone_book.pb")
-        f = open(__cwd__ + "/phone_book.pb", "r+")
+        os.system("touch /home/"+os.getenv("USER")+"/phone_book.pb")
+        f = open("/home/"+os.getenv("USER")+"/phone_book.pb", "r+")
         f.write("[]")
         f.seek(0)
 
@@ -876,24 +1017,12 @@ def get_phone_book():
     return str_pb
 
 def set_phone_book(pb):
-    f = open(__cwd__ + "/phone_book.pb", "w")
+    f = open("/home/"+os.getenv("USER")+"/phone_book.pb", "w")
     str_pb = repr(pb)
     str_pb = str_pb.replace("], [", "], \n[")
     str_pb = str_pb.replace("[u'", "['")
     str_pb = str_pb.replace("', u'", "', '")
     f.write(str_pb)
-    f.close()
-
-def sound_card_list_creating(soundcard_list):
-    if os.path.isfile(__cwd__ + '/soundcards'):
-        limitLinphonecCodecs()
-    try:
-        f = open(__cwd__ + '/soundcards', 'w')
-    except:
-        os.system("touch %s" % __cwd__ + '/soundcards')
-        f = open(__cwd__ + '/soundcards', 'w')
-    for i in soundcard_list:
-        f.write(i)
     f.close()
 
 def parsing(filename):
@@ -906,7 +1035,6 @@ def parsing(filename):
     while 1:
         try:
             a = config.get("call_log_"+str(i), "dir")
-#            res = re.search(r"<.*?:([^:;>]*)", a)
             if a == "0":
                 a = config.get("call_log_"+str(i), "to")
                 res = re.search(r"<.*?:([^:;>]*)", a)
@@ -926,5 +1054,5 @@ def parsing(filename):
             return outgoing, incoming, out_inc[-10:][::-1]
 
 pb = get_phone_book()
-placed, recieved, last_calls = parsing('/home/' + SYSTEM_USER + '/.linphonerc')
+placed, recieved, last_calls = parsing(LINPHONERC)
 cmd = str()

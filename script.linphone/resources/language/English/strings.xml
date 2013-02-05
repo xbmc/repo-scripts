@@ -7,23 +7,23 @@
   <string id="30011">Linphone Connection Info</string>
   <string id="30012">Define here connection settings</string>
   <string id="30013">Hostname or IP Address</string>
-  <string id="30015">Username</string>  
+  <string id="30015">Username</string>
   <string id="30016">Password</string>
   <string id="30017">Enable autoanswer</string>
   <string id="30018">Automatically connect</string>
   <!--Network settings-->
   <string id="30110">Network</string>
-  <string id="30111">Network Settings</string>  
-  <string id="30112">Define here your network settings</string>  
-  <string id="30113">Choose network protocol</string>  
-  <string id="30114">Network port</string>  
-  <string id="30115">Video port</string>  
-  <string id="30116">Audio port</string>  
-  <string id="30117">Direct connection to the internet</string>  
-  <string id="30118">Behind NAT/Firewall (specify gateway IP below)</string>  
-  <string id="30119">Public IP address</string>  
-  <string id="30120">ehind NAT/Firewall (use STUN to resolve)</string>  
-  <string id="30121">Stun server</string>  
+  <string id="30111">Network Settings</string>
+  <string id="30112">Define here your network settings</string>
+  <string id="30113">Choose network protocol</string>
+  <string id="30114">Network port</string>
+  <string id="30115">Video port</string>
+  <string id="30116">Audio port</string>
+  <string id="30117">Direct connection to the internet</string>
+  <string id="30118">Behind NAT/Firewall (specify gateway IP below)</string>
+  <string id="30119">Public IP address</string>
+  <string id="30120">Behind NAT/Firewall (use STUN to resolve)</string>
+  <string id="30121">Stun server</string>
   <string id="30031">Enable/Disable Linphone debugging</string>
   <string id="30032">Debug level</string>
   <!--Multimedia setings -->
@@ -33,6 +33,7 @@
   <string id="30213">Choose video quality</string>
   <string id="30214">Define video quality automatically</string>
   <string id="30215">Echo cancelation</string>
+  <string id="30216">Choose video codec</string>
   <string id="30314">Define here your sound settings</string>
   <string id="30311">Capture device</string>
   <string id="30312">Playback device</string>
