@@ -76,7 +76,7 @@ class YouSeeTVGuideApi(YouSeeApi):
         """
         return self._invoke(AREA_TVGUIDE, 'categories')
 
-    def programs(self, channelId, offset = None, tvdate = None):
+    def programs(self, channelId= None, offset = None, tvdate = None):
         """
         Returns program list
 
@@ -87,7 +87,8 @@ class YouSeeTVGuideApi(YouSeeApi):
         """
 
         params = dict()
-        params['channel_id'] = channelId
+        if channelId is not None:
+            params['channel_id'] = channelId
         if tvdate is not None:
             params['tvdate'] = tvdate.strftime('%Y-%m-%d')
         elif offset is not None:
@@ -99,8 +100,18 @@ class YouSeeTVGuideApi(YouSeeApi):
 
 if __name__ == '__main__':
     api = YouSeeTVGuideApi()
-    json = api.programs(1)
+    json = api.channels()
 
-    s = simplejson.dumps(json, sort_keys=True, indent='    ')
-    print '\n'.join([l.rstrip() for l in  s.splitlines()])
+    entries = dict()
+
+    for channels in json:
+        for channel in channels['channels']:
+            if not entries.has_key(channel['name']):
+                entries[channel['name']] = 'plugin://plugin.video.yousee.tv/?channel=%s' % channel['id']
+
+    for e in sorted(entries.keys()):
+        print e + '=' + entries[e]
+
+    #s = simplejson.dumps(json, sort_keys=True, indent='    ')
+    #print '\n'.join([l.rstrip() for l in  s.splitlines()])
 

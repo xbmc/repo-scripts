@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+    <allowoverlay>no</allowoverlay>
+    <defaultcontrol always="false">101</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <animation effect="fade" start="0" end="100" time="250">WindowOpen</animation>
+    <animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
+    <controls>
+        <control type="label" id="100">
+            <description>tabs visibility marker</description>
+            <visible>false</visible>
+        </control>
+
+
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>tvguide-background-default.jpg</texture>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>tvguide-glasspane.png</texture>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>tvguide-glasspane.png</texture>
+        </control>
+
+        <control type="label">
+            <posx>253</posx>
+            <posy>20</posy>
+            <width>174</width>
+            <height>40</height>
+            <label>$ADDON[script.tvguide 30600]</label>
+            <align>center</align>
+        </control>
+
+        <control type="button" id="101">
+            <posx>60</posx>
+            <posy>60</posy>
+            <width>173</width>
+            <height>40</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <textcolor>ffffffff</textcolor>
+            <label>$ADDON[script.tvguide 30601]</label>
+            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <onleft>103</onleft>
+            <onright>102</onright>
+            <ondown>1001</ondown>
+        </control>
+        <control type="button" id="102">
+            <posx>253</posx>
+            <posy>60</posy>
+            <width>174</width>
+            <height>40</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <textcolor>ffffffff</textcolor>
+            <label>$ADDON[script.tvguide 30602]</label>
+            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <onleft>101</onleft>
+            <onright>103</onright>
+            <ondown>2001</ondown>
+        </control>
+        <control type="button" id="103">
+            <posx>447</posx>
+            <posy>60</posy>
+            <width>173</width>
+            <height>40</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <textcolor>ffffffff</textcolor>
+            <label>$ADDON[script.tvguide 30603]</label>
+            <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+            <texturenofocus>tvguide-program-grey.png</texturenofocus>
+            <onleft>102</onleft>
+            <onright>101</onright>
+            <ondown>3001</ondown>
+        </control>
+
+        <control type="videowindow">
+            <posx>650</posx>
+            <posy>130</posy>
+            <width>600</width>
+            <height>330</height>
+        </control>
+
+        <control type="group" id="1000">
+            <posx>40</posx>
+            <posy>120</posy>
+            <width>800</width>
+            <height>340</height>
+            <visible>StringCompare(Control.GetLabel(100),strm)</visible>
+
+            <control type="textbox">
+                <posx>20</posx>
+                <posy>0</posy>
+                <width>560</width>
+                <height>80</height>
+                <label>$ADDON[script.tvguide 30611]</label>
+                <wrapmultiline>true</wrapmultiline>
+            </control>
+
+            <control type="button" id="1001">
+                <posx>20</posx>
+                <posy>100</posy>
+                <width>173</width>
+                <height>40</height>
+                <label>$ADDON[script.tvguide 30610]</label>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>101</onup>
+                <onright>1002</onright>
+                <ondown>1002</ondown>
+            </control>
+
+            <control type="textbox" id="1005">
+                <posx>20</posx>
+                <posy>160</posy>
+                <width>560</width>
+                <height>80</height>
+                <wrapmultiline>true</wrapmultiline>
+            </control>
+
+
+            <control type="button" id="1002">
+                <posx>640</posx>
+                <posy>515</posy>
+                <width>170</width>
+                <height>40</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <label>$ADDON[script.tvguide 30604]</label>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>101</onup>
+                <onleft>1001</onleft>
+                <onright>1003</onright>
+            </control>
+            <control type="button" id="1003">
+                <posx>830</posx>
+                <posy>515</posy>
+                <width>170</width>
+                <height>40</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <label>$ADDON[script.tvguide 30605]</label>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>101</onup>
+                <onleft>1002</onleft>
+                <onright>1004</onright>
+            </control>
+            <control type="button" id="1004">
+                <posx>1020</posx>
+                <posy>515</posy>
+                <width>170</width>
+                <height>40</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <label>$ADDON[script.tvguide 30606]</label>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>101</onup>
+                <onleft>1003</onleft>
+            </control>
+
+        </control>
+
+        <control type="group" id="2000">
+            <posx>40</posx>
+            <posy>120</posy>
+            <width>800</width>
+            <height>340</height>
+            <visible>StringCompare(Control.GetLabel(100),favourites)</visible>
+
+            <control type="textbox">
+                <posx>20</posx>
+                <posy>0</posy>
+                <width>560</width>
+                <height>80</height>
+                <label>$ADDON[script.tvguide 30620]</label>
+                <wrapmultiline>true</wrapmultiline>
+            </control>
+
+            <control type="list" id="2001">
+                <posx>20</posx>
+                <posy>75</posy>
+                <width>560</width>
+                <height>480</height>
+                <viewtype label="list">list</viewtype>
+                <orientation>vertical</orientation>
+                <focusposition>7</focusposition>
+                <onleft>102</onleft>
+                <onright>2002</onright>
+
+                <itemlayout width="560" height="40">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <texture>tvguide-program-grey.png</texture>
+                    </control>
+                    <control type="label">
+                        <posx>16</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <aligny>center</aligny>
+                        <font>font13</font>
+                        <textcolor>ffffffff</textcolor>
+                        <info>ListItem.Label</info>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="560" height="40">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <texture>tvguide-program-grey.png</texture>
+                        <visible>!Control.HasFocus(2001)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <texture>tvguide-program-grey-focus.png</texture>
+                        <visible>Control.HasFocus(2001)</visible>
+                    </control>
+                    <control type="label">
+                        <posx>16</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <aligny>center</aligny>
+                        <font>font13</font>
+                        <textcolor>ffffffff</textcolor>
+                        <info>ListItem.Label</info>
+                    </control>
+                    <control type="image">
+                        <posx>530</posx>
+                        <posy>9</posy>
+                        <width>20</width>
+                        <height>20</height>
+                        <texture>tvguide-bullet.png</texture>
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <control type="button" id="2002">
+                <posx>640</posx>
+                <posy>515</posy>
+                <width>170</width>
+                <height>40</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <label>$ADDON[script.tvguide 30604]</label>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>102</onup>
+                <onleft>2001</onleft>
+                <onright>2003</onright>
+            </control>
+            <control type="button" id="2003">
+                <posx>830</posx>
+                <posy>515</posy>
+                <width>170</width>
+                <height>40</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <label>$ADDON[script.tvguide 30605]</label>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>102</onup>
+                <onleft>2002</onleft>
+                <onright>2004</onright>
+            </control>
+            <control type="button" id="2004">
+                <posx>1020</posx>
+                <posy>515</posy>
+                <width>170</width>
+                <height>40</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <label>$ADDON[script.tvguide 30606]</label>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>102</onup>
+                <onleft>2003</onleft>
+            </control>
+
+        </control>
+
+
+        <control type="group" id="3000">
+            <posx>40</posx>
+            <posy>120</posy>
+            <width>1280</width>
+            <height>600</height>
+            <visible>StringCompare(Control.GetLabel(100),addons)</visible>
+
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>12</width>
+                <height>212</height>
+                <texture>tvguide-channel-leftarrow.png</texture>
+            </control>
+
+            <control type="wraplist" id="3001">
+                <posx>20</posx>
+                <posy>0</posy>
+                <width>212</width>
+                <height>212</height>
+                <viewtype label="list">list</viewtype>
+                <orientation>horizontal</orientation>
+                <focusposition>0</focusposition>
+                <onup>103</onup>
+                <ondown>3002</ondown>
+
+                <itemlayout width="212" height="212">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>212</width>
+                        <height>212</height>
+                        <texture>tvguide-program-grey.png</texture>
+                    </control>
+                    <control type="image">
+                        <posx>10</posx>
+                        <posy>10</posy>
+                        <width>192</width>
+                        <height>192</height>
+                        <info>ListItem.Icon</info>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="212" height="212">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>212</width>
+                        <height>212</height>
+                        <texture>tvguide-program-grey.png</texture>
+                        <visible>!Control.HasFocus(3001)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>212</width>
+                        <height>212</height>
+                        <texture>tvguide-program-grey-focus.png</texture>
+                        <visible>Control.HasFocus(3001)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>10</posx>
+                        <posy>10</posy>
+                        <width>192</width>
+                        <height>192</height>
+                        <info>ListItem.Icon</info>
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <control type="label" id="3003">
+                <posx>250</posx>
+                <posy>0</posy>
+                <width>330</width>
+                <height>40</height>
+                <label>[B]plugin.video.xxx[/B]</label>
+            </control>
+            <control type="textbox" id="3004">
+                <posx>250</posx>
+                <posy>40</posy>
+                <width>330</width>
+                <height>170</height>
+                <label>description...</label>
+                <wrapmultiline>true</wrapmultiline>
+                <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
+            </control>
+
+            <control type="list" id="3002">
+                <posx>20</posx>
+                <posy>235</posy>
+                <width>560</width>
+                <height>320</height>
+                <viewtype label="list">list</viewtype>
+                <orientation>vertical</orientation>
+                <focusposition>7</focusposition>
+                <onleft>3001</onleft>
+                <onright>3005</onright>
+
+                <itemlayout width="560" height="40">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <texture>tvguide-program-grey.png</texture>
+                    </control>
+                    <control type="label">
+                        <posx>16</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <aligny>center</aligny>
+                        <font>font13</font>
+                        <textcolor>ffffffff</textcolor>
+                        <info>ListItem.Label</info>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="560" height="40">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <texture>tvguide-program-grey.png</texture>
+                        <visible>!Control.HasFocus(3002)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <texture>tvguide-program-grey-focus.png</texture>
+                        <visible>Control.HasFocus(3002)</visible>
+                    </control>
+                    <control type="label">
+                        <posx>16</posx>
+                        <posy>0</posy>
+                        <width>560</width>
+                        <height>38</height>
+                        <aligny>center</aligny>
+                        <font>font13</font>
+                        <textcolor>ffffffff</textcolor>
+                        <info>ListItem.Label</info>
+                    </control>
+                    <control type="image">
+                        <posx>530</posx>
+                        <posy>9</posy>
+                        <width>20</width>
+                        <height>20</height>
+                        <texture>tvguide-bullet.png</texture>
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <control type="button" id="3005">
+                <posx>640</posx>
+                <posy>515</posy>
+                <width>170</width>
+                <height>40</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <label>$ADDON[script.tvguide 30604]</label>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>103</onup>
+                <onleft>3002</onleft>
+                <onright>3006</onright>
+            </control>
+            <control type="button" id="3006">
+                <posx>830</posx>
+                <posy>515</posy>
+                <width>170</width>
+                <height>40</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <label>$ADDON[script.tvguide 30605]</label>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>103</onup>
+                <onleft>3005</onleft>
+                <onright>3007</onright>
+            </control>
+            <control type="button" id="3007">
+                <posx>1020</posx>
+                <posy>515</posy>
+                <width>170</width>
+                <height>40</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>ffffffff</textcolor>
+                <label>$ADDON[script.tvguide 30606]</label>
+                <texturefocus>tvguide-program-grey-focus.png</texturefocus>
+                <texturenofocus>tvguide-program-grey.png</texturenofocus>
+                <onup>103</onup>
+                <onleft>3006</onleft>
+            </control>
+
+        </control>
+
+
+    </controls>
+</window>

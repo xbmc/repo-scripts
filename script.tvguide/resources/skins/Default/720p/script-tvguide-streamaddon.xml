@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+    <allowoverlay>no</allowoverlay>
+    <defaultcontrol always="true">1000</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>320</posx>
+        <posy>210</posy>
+    </coordinates>
+    <animation effect="fade" start="0" end="100" time="250">WindowOpen</animation>
+    <animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
+    <controls>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>640</width>
+            <height>300</height>
+            <texture>tvguide-glasspane.png</texture>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>640</width>
+            <height>300</height>
+            <texture>tvguide-glasspane.png</texture>
+        </control>
+
+        <control type="label" id="4000">
+            <posx>20</posx>
+            <posy>20</posy>
+            <width>600</width>
+            <height>80</height>
+            <textcolor>ffffffff</textcolor>
+            <font>font13</font>
+            <align>center</align>
+            <label>[B]$ADDON[script.tvguide 30700][/B]</label>
+            <wrapmultiline>true</wrapmultiline>
+        </control>
+
+        <control type="fixedlist" id="1000">
+            <posx>20</posx>
+            <posy>100</posy>
+            <width>600</width>
+            <height>180</height>
+            <viewtype label="list">list</viewtype>
+            <orientation>horizontal</orientation>
+            <focusposition>1</focusposition>
+
+            <itemlayout width="200" height="200">
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>200</width>
+                    <height>20180</height>
+                    <texture>tvguide-program-grey.png</texture>
+                </control>
+                <control type="image">
+                    <posx>31</posx>
+                    <posy>16</posy>
+                    <width>128</width>
+                    <height>128</height>
+                    <info>ListItem.Icon</info>
+                </control>
+                <control type="label">
+                    <posx>100</posx>
+                    <posy>140</posy>
+                    <width>200</width>
+                    <height>40</height>
+                    <align>center</align>
+                    <font>font13</font>
+                    <textcolor>ffffffff</textcolor>
+                    <info>ListItem.Label</info>
+                </control>
+            </itemlayout>
+            <focusedlayout width="200" height="200">
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>200</width>
+                    <height>180</height>
+                    <texture>tvguide-program-grey-focus.png</texture>
+                    <visible>Control.HasFocus(1000)</visible>
+                </control>
+                <control type="image">
+                    <posx>31</posx>
+                    <posy>16</posy>
+                    <width>128</width>
+                    <height>128</height>
+                    <info>ListItem.Icon</info>
+                </control>
+                <control type="label">
+                    <posx>100</posx>
+                    <posy>140</posy>
+                    <width>180</width>
+                    <height>40</height>
+                    <align>center</align>
+                    <font>font13</font>
+                    <textcolor>ffffffff</textcolor>
+                    <info>ListItem.Label</info>
+                </control>
+            </focusedlayout>
+        </control>
+    </controls>
+</window>

@@ -2,27 +2,25 @@
 <settings>
 	<category label="30101">
 		<setting id="source" label="30101" type="labelenum" default="YouSee.tv"
-                 values="YouSee.tv|DR.dk|TVTID.dk|XMLTV|ONTV.dk|JSON-URL" />
+                 values="YouSee.tv|XMLTV|ONTV.dk" />
 
         <setting id="youseetv.category" label="30102" type="labelenum" default="Danske"
                  values="Danske|Filmkanaler|Grundpakken|Mellempakken|Fuldpakken|Nordiske|Engelske|Tyske|Latinske|Slaviske|Tyrkiske|Kurdiske|Arabiske|Asiatiske"
                  visible="eq(-1,0)" />
         <setting id="program.background.enabled" label="30107" type="bool" default="true" visible="eq(-2,0)"/>
-        <setting id="youseewebtv.playback" label="30111" type="bool" default="true" visible="eq(-3,0)" enable="System.HasAddon(plugin.video.yousee.tv)" />
 
-        <setting id="xmltv.file" label="30103" type="file" visible="eq(-4,3)" />
-        <setting id="xmltv.logo.folder" label="30116" type="folder" visible="eq(-5,3)"/>
+        <setting id="xmltv.file" label="30103" type="file" visible="eq(-3,1)" />
+        <setting id="xmltv.logo.folder" label="30116" type="folder" visible="eq(-4,1)"/>
 
-        <setting id="ontv.url" label="30117" type="text" visible="eq(-6,4)" default="http://ontv.dk/xmltv/c81e728d9d4c2f636f067f89cc14862c"/>
-        
-        <setting id="json.url" label="30800" type="text" visible="eq(-7,5)" default="http://pvr.ne0.pl/xbmc/tvg-source.php"/>
-
-        <setting id="danishlivetv.playback" label="30113" type="bool" default="true" visible="!eq(-8,5)" enable="System.HasAddon(plugin.video.dr.dk.live) + eq(-5,false)" />
-        <setting id="weebtv.playback" label="30801" type="bool" default="true" visible="eq(-9,5)" enable="System.HasAddon(plugin.video.weeb.tv)" />
-	</category>
+        <setting id="ontv.url" label="30117" type="text" visible="eq(-5,2)" default="http://ontv.dk/xmltv/c81e728d9d4c2f636f067f89cc14862c"/>
+    </category>
 
     <category label="30114">
         <setting id="cache.data.on.xbmc.startup" label="30110" type="bool" default="true" />
+        <setting id="enable.osd" label="30118" type="bool" default="true" enable="eq(2,false)" />
+        <setting label="30119" type="lsep" />
+        <setting id="alternative.playback" label="30120" type="bool" default="false" />
+        <setting label="30121" type="lsep" />
     </category>
 
     <category label="30112">

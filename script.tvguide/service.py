@@ -20,22 +20,28 @@
 import xbmcaddon
 import notification
 import xbmc
-import source as src
+import source
 
-ADDON = xbmcaddon.Addon(id = 'script.tvguide')
-source = src.instantiateSource(ADDON)
-if ADDON.getSetting('cache.data.on.xbmc.startup') == 'true':
-    try:
-        channelList = None
-        if source._isChannelListCacheExpired():
-            channelList = source.updateChannelAndProgramListCaches()
+class Service(object):
+    def __init__(self):
+        self.database = source.Database()
+        self.database.initialize(self.onInit, None)
 
-    except Exception, ex:
-        xbmc.log('[script.tvguide] Unable to update caches: %s' % str(ex) , xbmc.LOGDEBUG)
+    def onInit(self):
+        self.database.updateChannelAndProgramListCaches(self.onCachesUpdated)
 
-if ADDON.getSetting('notifications.enabled') == 'true':
-    try:
-        n = notification.Notification(source, ADDON.getAddonInfo('path'))
-        n.scheduleNotifications()
-    except Exception, ex:
-        xbmc.log('[script.tvguide] Unable to schedules notifications: %s' % str(ex), xbmc.LOGDEBUG)
+    def onCachesUpdated(self):
+
+        if ADDON.getSetting('notifications.enabled') == 'true':
+            n = notification.Notification(self.database, ADDON.getAddonInfo('path'))
+            n.scheduleNotifications()
+
+        self.database.close(None)
+
+try:
+    ADDON = xbmcaddon.Addon(id = 'script.tvguide')
+    if ADDON.getSetting('cache.data.on.xbmc.startup') == 'true':
+        Service()
+
+except Exception, ex:
+    xbmc.log('[script.tvguide] Uncaugt exception in service.py: %s' % str(ex) , xbmc.LOGDEBUG)
