@@ -1,3 +1,7 @@
+[B]0.6.4[/B]
+- now only scans the media source an event appeared in
+- now shows notifications when a media source is not being watched (optional)
+
 [B]0.6.3[/B]
 - added setting for delaying updates
 - no longer scans/cleans during playback

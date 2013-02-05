@@ -72,6 +72,7 @@ from watchdog.utils import platform
 
 if platform.is_linux():
   import os
+  import errno
   import struct
   import threading
   import ctypes
@@ -534,11 +535,10 @@ if platform.is_linux():
       while True:
         try:
           event_buffer = os.read(self._inotify_fd, event_buffer_size)
-          break
         except OSError as e:
           if e.errno == errno.EINTR:
             continue
-          break
+        break
       
       with self._lock:
         event_list = []
