@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+<!--Settings-->
+  <!--Behaviour-->
+  <string id="32100">Verhalten</string>
+  <string id="32101">Geschwindigkeit für gescrollten Text</string>
+  <string id="32102">Scroll-Modus</string>
+  <string id="32103">Anzeigedauer der Navigationsansicht (s)</string>
+  <string id="32104">Display-Aktualisierungsrate (Hz)</string>
+
+  <!--Backlight-->
+  <string id="32200">Beleuchtung</string>
+  <string id="32201">Hintergrundbeleuchtung ausschalten, wenn Bildschirmschoner aktiv</string>
+  <string id="32202">Hintergrundbeleuchtung beim Herunterfahren ausschalten</string>
+
+  <!--Connection-->
+  <string id="32300">Verbindung</string>
+  <string id="32301">Entfernten LCDproc-Server benutzen</string>
+  <string id="32302">LCDd IP</string>
+  <string id="32303">LCDd Port</string>
+  <string id="32304">Heartbeatsymbol anzeigen</string>
+  <string id="32305">Verbindungsfehler-Benachrichtigung verstecken</string>
+
+  <!--Enum values-->
+  <string id="32401">Durchlaufend</string>
+  <string id="32402">Links/Rechts</string>
+
+  <!--Notifications-->
+  <string id="32500">Fehler beim Verbinden zu LCDproc!</string>
+  <string id="32501">Verbunden mit LCDproc!</string>
+  <string id="32502">Warnung! Fehlerhafte LCD.xml oder LCD.xml nicht gefunden!</string>
+
+</strings>
