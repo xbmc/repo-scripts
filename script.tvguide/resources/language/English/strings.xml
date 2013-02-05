@@ -28,6 +28,10 @@
     <string id="30115">- clear cache first</string>
     <string id="30116">Search for channel logos in</string>
     <string id="30117">ONTV Pro URL</string>
+    <string id="30118">Enable OSD menu</string>
+    <string id="30119">Disabling the OSD menu may fix video stuttering.</string>
+    <string id="30120">Use alternate streaming method (required for some addons)</string>
+    <string id="30121">Alternative streaming is not compatible with OSD menu</string>
 
     <string id="30150">Oops, sorry about that!</string>
     <string id="30151">It was not possible to load program data,</string>
@@ -49,24 +53,32 @@
     <string id="30301">Remind</string>
     <string id="30302">Don't remind</string>
     <string id="30303">Cancel</string>
-    <string id="30304">Choose stream file</string>
+    <string id="30304">Choose stream</string>
     <string id="30305">You can choose your own .strm file to play, when you want to watch this channel.</string>
     <string id="30306">Remove stream file</string>
     <string id="30307">Channels</string>
     <string id="30308">Quit</string>
 
-    <string id="30400">The TV guide is configured to stream TV using YouSee</string>
-    <string id="30401">web-tv, but the addon is not installed.</string>
-    <string id="30402">Streaming using that addon is now disabled.</string>
-
-    <string id="30403">The TV guide is configured to stream TV using Danish</string>
-    <string id="30404">Live TV, but the addon i snot installed.</string>
-    <string id="30405">Streaming using that addon is now disabled.</string>
-
     <string id="30500">[B]Edit channel order and visibility[/B]</string>
     <string id="30501">Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position.</string>
     <string id="30502">Save</string>
     <string id="30503">Cancel</string>
+
+    <string id="30600">[B]Setup stream[/B]</string>
+    <string id="30601">.strm file</string>
+    <string id="30602">Favourites</string>
+    <string id="30603">Addons</string>
+    <string id="30604">Preview stream</string>
+    <string id="30605">Save</string>
+    <string id="30606">Cancel</string>
+    <string id="30607">Stop preview</string>
+
+    <string id="30610">Browse...</string>
+    <string id="30611">Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC.</string>
+
+    <string id="30620">Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported.</string>
+
+    <string id="30700">Multiple addons provide this channels.[CR]Choose one to watch the stream.</string>
 
     <!-- weeb.tv mod -->
     <string id="30800">JSON-EPG URL</string>

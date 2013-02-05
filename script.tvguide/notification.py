@@ -21,24 +21,25 @@ import datetime
 import os
 import xbmc
 import xbmcgui
+import source as src
 
 from strings import *
 
 class Notification(object):
-    def __init__(self, source, addonPath):
-        self.source = source
+    def __init__(self, database, addonPath):
+        """
+        @param database: source.Database
+        """
+        self.database = database
         self.addonPath = addonPath
         self.icon = os.path.join(self.addonPath, 'icon.png')
-
-        # reuse conn for now todo less hacky
-        self.conn = self.source.conn
 
     def createAlarmClockName(self, programTitle, startTime):
         return 'tvguide-%s-%s' % (programTitle, startTime)
 
     def scheduleNotifications(self):
         xbmc.log("[script.tvguide] Scheduling notifications")
-        for channelTitle, programTitle, startTime in self.getAllNotifications():
+        for channelTitle, programTitle, startTime in self.database.getNotifications():
             self._scheduleNotification(channelTitle, programTitle, startTime)
 
     def _scheduleNotification(self, channelTitle, programTitle, startTime):
@@ -62,60 +63,23 @@ class Notification(object):
         xbmc.executebuiltin('CancelAlarm(%s-5mins,True)' % name.encode('utf-8', 'replace'))
         xbmc.executebuiltin('CancelAlarm(%s-now,True)' % name.encode('utf-8', 'replace'))
 
-    def addProgram(self, program):
-        """
-        @type program: source.program
-        """
-        c = self.conn.cursor()
-        c.execute("INSERT INTO notifications(channel, program_title, source) VALUES(?, ?, ?)", [program.channel.id, program.title, self.source.KEY])
-        self.conn.commit()
-        c.close()
-
+    def addNotification(self, program):
+        self.database.addNotification(program)
         self._scheduleNotification(program.channel.title, program.title, program.startDate)
 
-    def delProgram(self, program):
-        """
-        @type program: source.program
-        """
-        c = self.conn.cursor()
-        c.execute("DELETE FROM notifications WHERE channel=? AND program_title=? AND source=?", [program.channel.id, program.title, self.source.KEY])
-        self.conn.commit()
-        c.close()
-
+    def removeNotification(self, program):
+        self.database.removeNotification(program)
         self._unscheduleNotification(program.title, program.startDate)
 
 
-    def getAllNotifications(self, daysLimit = 2):
-        start = datetime.datetime.now()
-        end = start + datetime.timedelta(days = daysLimit)
-        c = self.conn.cursor()
-        c.execute("SELECT DISTINCT c.title, p.title, p.start_date FROM notifications n, channels c, programs p WHERE n.channel = c.id AND p.channel = c.id AND n.program_title = p.title AND n.source=? AND p.start_date >= ? AND p.end_date <= ?", [self.source.KEY, start, end])
-        programs = c.fetchall()
-        c.close()
-
-        return programs
-
-    def isNotificationRequiredForProgram(self, program):
-        """
-        @type program: source.program
-        """
-        c = self.conn.cursor()
-        c.execute("SELECT 1 FROM notifications WHERE channel=? AND program_title=? AND source=?", [program.channel.id, program.title, self.source.KEY])
-        result = c.fetchone()
-        c.close()
-
-        return result
-
-    def clearAllNotifications(self):
-        c = self.conn.cursor()
-        c.execute('DELETE FROM notifications')
-        self.conn.commit()
-        c.close()
-
-
 if __name__ == '__main__':
-    ADDON = xbmcaddon.Addon(id = 'script.tvguide')
-    n = Notification(None, ADDON.getAddonInfo('path'))
-    n.clearAllNotifications()
+    database = src.Database()
 
-    xbmcgui.Dialog().ok(strings(CLEAR_NOTIFICATIONS), strings(DONE))
+    def onNotificationsCleared():
+        xbmcgui.Dialog().ok(strings(CLEAR_NOTIFICATIONS), strings(DONE))
+
+    def onInitialized():
+        database.clearAllNotifications()
+        database.close(onNotificationsCleared)
+
+    database.initialize(onInitialized, None)

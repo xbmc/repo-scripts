@@ -28,6 +28,8 @@
     <string id="30115">- slet midlertidige filer først</string>
     <string id="30116">Søg efter kanal logoer i</string>
     <string id="30117">ONTV Pro URL</string>
+    <string id="30118">Aktiver OSD menu</string>
+    <string id="30119">Deaktivering af menuen kan hjælpe på hakkende video.</string>
 
     <string id="30150">Ups, det er pinligt!</string>
     <string id="30151">Det var ikke muligt at indlæse program data,</string>
@@ -49,7 +51,7 @@
     <string id="30301">Påmind</string>
     <string id="30302">Påmind ikke</string>
     <string id="30303">Annuller</string>
-    <string id="30304">Vælg stream fil</string>
+    <string id="30304">Vælg stream</string>
     <string id="30305">Du kan vælge din egen .strm fil som skal afspilles, når du vælger at se denne kanal.</string>
     <string id="30306">Fjern stream fil</string>
     <string id="30307">Kanaler</string>
@@ -67,6 +69,22 @@
     <string id="30501">Flyt op og ned for at ændre placering.[CR]Vælg eller flyt til venstre for at gemme[CR]placeringen.</string>
     <string id="30502">Gem</string>
     <string id="30503">Annuller</string>
+
+    <string id="30600">[B]Vælg stream[/B]</string>
+    <string id="30601">.strm fil</string>
+    <string id="30602">Foretrukne</string>
+    <string id="30603">Addons</string>
+    <string id="30604">Vis stream</string>
+    <string id="30605">Gem</string>
+    <string id="30606">Annuller</string>
+    <string id="30607">Stop stream</string>
+
+    <string id="30610">Gennemse...</string>
+    <string id="30611">Vælg Gennemse... nedenfor og find din stream fil. Når du har valgt filen kan du bruge Vis stream for at teste om den virker i XBMC.</string>
+
+    <string id="30620">Vælg en fortrukken stream herunder. Kun [I]PlayMedia[/I] foretrukne er understøttet.</string>
+
+    <string id="30700">Flere addons har denne kanal.[CR]Vælg en for at se kanalen.</string>
 
     <!-- weeb.tv mod -->
     <string id="30800">JSON-EPG URL</string>
