@@ -1,3 +1,7 @@
+[B]Version 1.0.7[/B]
+- Vidxden: Fixed
+- Added: Sharesix (humla)
+
 [B]Version 1.0.6[/B]
 - Videoweed: Allow Videoweed.eu/files/1423541 type
 - Divstage: Allow embedded urls to resolve
