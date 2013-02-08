@@ -77,8 +77,8 @@ class settings:
     ### Initial limit vars
     def _get_limit(self):    
         self.limit_artwork              = __addon__.getSetting("limit_artwork") == 'true'
-        self.limit_extrafanart_max      = int(__addon__.getSetting("limit_extrafanart_maximum").rstrip('0').rstrip('.'))
-        self.limit_extrafanart_rating   = int(__addon__.getSetting("limit_extrafanart_rating").rstrip('0').rstrip('.'))
+        self.limit_extrafanart_max      = int(float(__addon__.getSetting("limit_extrafanart_maximum"))
+        self.limit_extrafanart_rating   = int(float(__addon__.getSetting("limit_extrafanart_rating"))
         self.limit_size_moviefanart     = int(__addon__.getSetting("limit_size_moviefanart"))
         self.limit_size_tvshowfanart    = int(__addon__.getSetting("limit_size_tvshowfanart"))
         self.limit_extrathumbs          = True

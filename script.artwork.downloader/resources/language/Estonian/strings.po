@@ -1,0 +1,109 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Estonian (http://www.transifex.com/projects/p/xbmc-addons/language/et/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Viga"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Allalaadimine"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Lõpetatud"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Jah"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Ei"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Sulge"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Üldine"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Filmid"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "Teleprogrammid"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Põhjalikumad seaded"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fännipildid"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "Bänner"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Poster"
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "Lisapisipilt"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Kunst"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Keel"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Hinne"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Hinded"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "Hooaeg"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Suurus"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Plaat"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "Info"

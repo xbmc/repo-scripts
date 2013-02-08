@@ -1,3 +1,7 @@
+[B]12.0.13[/B]
+- Add better support for local artwork: allow selection in gui mode and also scrape local artwork without a valid media id
+- Update language files
+
 [B]12.0.12[/B]
 - Update languages
 - Fix script error on some season artwork

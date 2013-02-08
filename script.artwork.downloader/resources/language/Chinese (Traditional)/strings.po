@@ -1,0 +1,109 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Traditional) (http://www.transifex.com/projects/p/xbmc-addons/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "錯誤"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "下載中"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "已完成"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "是"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "否"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "關閉"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "一般設定"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "影片"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "電視劇"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "進階"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32122"
+msgid "Extrafanart"
+msgstr "ExtraFanArt"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "旗幟"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "標誌"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "海報"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "圖片"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "語言"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "評等"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "得票："
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "季"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "大小"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "光碟"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "資訊"

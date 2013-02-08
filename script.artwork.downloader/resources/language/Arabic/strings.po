@@ -1,0 +1,81 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/xbmc-addons/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "خطأ"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "تحميل"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "نعم"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "لا"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "اغلاق"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "عام"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "أفلام"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "منقدم"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "اللغة"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "التقييم"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "اصوات"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "الفصل"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "الحجم"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "القرص"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "معلومات"
