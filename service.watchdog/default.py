@@ -123,14 +123,16 @@ class EventHandler(watchdog.events.FileSystemEventHandler):
     self.event_queue.scan()
   
   def on_deleted(self, event):
-    if not event.is_directory:
-      _, ext = os.path.splitext(str(event.src_path))
-      if EXTENSIONS.find('|%s|' % ext) == -1:
-        return
-    self.event_queue.clean()
+    if CLEAN:
+      if not event.is_directory:
+        _, ext = os.path.splitext(str(event.src_path))
+        if EXTENSIONS.find('|%s|' % ext) == -1:
+          return
+      self.event_queue.clean()
   
   def on_moved(self, event):
-    self.event_queue.clean()
+    if CLEAN:
+      self.event_queue.clean()
     self.event_queue.scan()
   
   def on_any_event(self, event):

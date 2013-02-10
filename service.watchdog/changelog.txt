@@ -1,3 +1,6 @@
+[B]0.6.5[/B]
+- fixed: library was cleaned even if it was disabled
+
 [B]0.6.4[/B]
 - now only scans the media source an event appeared in
 - now shows notifications when a media source is not being watched (optional)
