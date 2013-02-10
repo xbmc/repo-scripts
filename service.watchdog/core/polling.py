@@ -17,6 +17,7 @@ import xbmc
 from functools import partial
 from watchdog.observers.api import EventEmitter, BaseObserver
 from watchdog.events import DirDeletedEvent, DirCreatedEvent
+from main import log
 
 def hidden(path):
   return path.startswith('.')
@@ -75,6 +76,13 @@ class Poller(EventEmitter):
       new_snapshot = self._make_snapshot(self.watch.path)
       created, deleted, modified = self._snapshot.diff(new_snapshot)
       self._snapshot = new_snapshot
+      
+      if deleted:
+        log("poller: delete event appeared in %s" % deleted)
+      if created:
+        log("poller: create event appeared in %s" % created)
+      if modified and not(deleted or created):
+        log("poller: modify event appeared in %s" % modified)
       
       if modified or deleted:
         self.queue_event(DirDeletedEvent(self.watch.path + '*'))

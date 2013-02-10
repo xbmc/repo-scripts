@@ -1,3 +1,6 @@
+[B]0.7.1[/B]
+- fixed: library was cleaned even if it was disabled
+
 [B]0.7.0[/B]
 - support for network shares
 - now only scans the media source an event appeared in
