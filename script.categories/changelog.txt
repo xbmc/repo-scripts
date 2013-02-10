@@ -1,0 +1,20 @@
+1.0.0
+- First Try
+1.0.1
+- Fixed bug while deleting from categories
+1.0.2
+- Fixed bug while handling invalid addon ids
+1.0.3
+- Changed addon id handling
+- Fixed encoding bug
+1.0.4
+- Fixed addon handling for Eden
+1.0.5
+- Small bugfix
+1.0.6
+- Fixed "last category missing" bug
+- Divided category-settings into video/audio/image
+- Added main menu with content selection
+- Added context menu for removing whole category
+1.0.7
+- Added context menu for renaming categories
