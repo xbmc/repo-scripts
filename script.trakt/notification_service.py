@@ -4,12 +4,16 @@
 import xbmc
 import telnetlib
 import socket
+import time
 
 import simplejson as json
 
 import threading
 from utilities import Debug
 from scrobbler import Scrobbler
+from movie_sync import SyncMovies
+from episode_sync import SyncEpisodes
+from sync_exec import do_sync
 
 class NotificationService(threading.Thread):
 	""" Receives XBMC notifications and passes them off as needed """
@@ -34,6 +38,13 @@ class NotificationService(threading.Thread):
 				self._scrobbler.playbackStarted(notification['params']['data'])
 		elif notification['method'] == 'Player.OnPause':
 			self._scrobbler.playbackPaused()
+		elif notification['method'] == 'VideoLibrary.OnScanFinished':
+			if do_sync('movies'):
+				movies = SyncMovies(show_progress=False)
+				movies.Run()
+			if do_sync('episodes'):
+				episodes = SyncEpisodes(show_progress=False)
+				episodes.Run()
 		elif notification['method'] == 'System.OnQuit':
 			self._abortRequested = True
 
@@ -63,18 +74,28 @@ class NotificationService(threading.Thread):
 		#while xbmc is running
 		self._scrobbler = Scrobbler()
 		self._scrobbler.start()
-		telnet = telnetlib.Telnet(self.TELNET_ADDRESS, self.TELNET_PORT)
-
 		while not (self._abortRequested or xbmc.abortRequested):
 			try:
-				data = self._readNotification(telnet)
-			except EOFError:
+				#try to connect, catch errors and retry every 5 seconds
 				telnet = telnetlib.Telnet(self.TELNET_ADDRESS, self.TELNET_PORT)
-				self._notificationBuffer = ""
+				
+				#if connection succeeds
+				while not (self._abortRequested or xbmc.abortRequested):
+					try:
+						#read notification data
+						data = self._readNotification(telnet)
+						Debug("[Notification Service] message: " + str(data))
+						self._forward(data)
+					except EOFError:
+						#if we end up here, it means the connection was lost or reset,
+						# so we empty out the buffer, and exit this loop, which retries
+						# the connection in the outer loop
+						self._notificationBuffer = ""
+						break
+			except:
+				time.sleep(5)
 				continue
 
-			Debug("[Notification Service] message: " + str(data))
-			self._forward(data)
 
 		telnet.close()
 		self._scrobbler.abortRequested = True
