@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Lybilde kilde"
+msgstr "Kilde for bilder"
 
 msgctxt "#30001"
 msgid "Folder"
@@ -34,7 +34,7 @@ msgstr "Musikk Fanart"
 
 msgctxt "#30004"
 msgid "Image Folder"
-msgstr "Bilde Mappe"
+msgstr "Bilde-mappe"
 
 msgctxt "#30005"
 msgid "Dim level"
@@ -62,11 +62,11 @@ msgstr "Antall sekunder hvert bilde vises"
 
 msgctxt "#30011"
 msgid "Scale images fullscreen"
-msgstr "Skaler bilder i fullskjerm"
+msgstr "Forstørr bilder til fullskjerm"
 
 msgctxt "#30012"
 msgid "Display image name"
-msgstr "Vis bilde navn"
+msgstr "Vis bildetittel"
 
 msgctxt "#30013"
 msgid "Disabled"
@@ -79,3 +79,23 @@ msgstr "Bruk filnavn"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Bruk mappenavn"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Vis bildedato"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Vis flere bildetags"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Vis musikkinfo under audioavspilling"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Grunnleggende"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Ytterligere"

@@ -63,3 +63,7 @@ msgstr "Amount of seconds to display each image"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Забаронена"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Basic"

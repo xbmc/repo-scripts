@@ -79,3 +79,7 @@ msgstr "Utilizează nume fișier"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Utilizează nume director"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "De bază"

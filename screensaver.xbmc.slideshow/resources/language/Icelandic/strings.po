@@ -43,3 +43,7 @@ msgstr "Birtustig"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Óvirkt"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Einfalt"

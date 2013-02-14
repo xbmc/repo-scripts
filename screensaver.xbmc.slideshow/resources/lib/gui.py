@@ -37,15 +37,26 @@ IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp',
 EXIF_TYPES  = ('.jpg', '.jpeg', '.tif', '.tiff')
 
 # random effect list to choose from
-EFFECTLIST = ["('effect=zoom start=100 end=400 center=auto time=%i condition=true', 'conditional'),",
-             "('effect=slide start=1280,0 end=-1280,0 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
-             "('effect=slide start=-1280,0 end=1280,0 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
-             "('effect=slide start=0,720 end=0,-720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
-             "('effect=slide start=0,-720 end=0,720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
-             "('effect=slide start=1280,720 end=-1280,-720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
-             "('effect=slide start=-1280,720 end=1280,-720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
-             "('effect=slide start=1280,-720 end=-1280,720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
-             "('effect=slide start=-1280,-720 end=1280,720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')"]
+if xbmcaddon.Addon(id='xbmc.addon').getAddonInfo('version') == '12.0.0':
+    EFFECTLIST = ["('effect=zoom start=100 end=400 center=auto time=%i condition=true', 'conditional'),",
+                 "('effect=slide start=1280,0 end=-1280,0 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
+                 "('effect=slide start=-1280,0 end=1280,0 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
+                 "('effect=slide start=0,720 end=0,-720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
+                 "('effect=slide start=0,-720 end=0,720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
+                 "('effect=slide start=1280,720 end=-1280,-720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
+                 "('effect=slide start=-1280,720 end=1280,-720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
+                 "('effect=slide start=1280,-720 end=-1280,720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')",
+                 "('effect=slide start=-1280,-720 end=1280,720 time=%i condition=true', 'conditional'), ('effect=zoom start=%i end=%i center=auto time=%i condition=true', 'conditional')"]
+else:
+    EFFECTLIST = ["('conditional', 'effect=zoom start=100 end=400 center=auto time=%i condition=true'),",
+                 "('conditional', 'effect=slide start=1280,0 end=-1280,0 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+                 "('conditional', 'effect=slide start=-1280,0 end=1280,0 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+                 "('conditional', 'effect=slide start=0,720 end=0,-720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+                 "('conditional', 'effect=slide start=0,-720 end=0,720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+                 "('conditional', 'effect=slide start=1280,720 end=-1280,-720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+                 "('conditional', 'effect=slide start=-1280,720 end=1280,-720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+                 "('conditional', 'effect=slide start=1280,-720 end=-1280,720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+                 "('conditional', 'effect=slide start=-1280,-720 end=1280,720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')"]
 
 # get local dateformat to localize the exif date tag
 DATEFORMAT = xbmc.getRegion('dateshort')

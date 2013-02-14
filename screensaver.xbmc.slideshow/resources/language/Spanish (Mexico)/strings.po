@@ -43,3 +43,7 @@ msgstr "Nivel de atenuamiento"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Deshabilitado"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Básico"

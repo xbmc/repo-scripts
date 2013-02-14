@@ -63,3 +63,7 @@ msgstr "各画像を表示する秒数"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "無効"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "標準"

@@ -59,3 +59,7 @@ msgstr "Изобразяване всяко изображение за (Х се
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Изключена"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Основни"

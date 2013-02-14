@@ -79,3 +79,23 @@ msgstr "파일명 사용"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "폴더명 사용"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "사진 날짜 표시"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "부가 사진 태그 표시"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "오디오 재생중에 음악 정보 표시"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "기본"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "부가"

@@ -79,3 +79,23 @@ msgstr "השתמש בשם קובץ"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "השתמש בשם תיקיה"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "הצג תאריך תמונה"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "הצג תוויות תמונה נוספות"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "הצג פרטי מוזיקה בזמן ניגון אודיו"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "בסיסי"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "נוסף"

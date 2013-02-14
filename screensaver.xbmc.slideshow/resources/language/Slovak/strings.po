@@ -79,3 +79,23 @@ msgstr "Použiť názov súboru"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Použiť názov priečinku"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Zobraziť dátum obrázku"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Zobraziť dodatočné značky obrázkov"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Zobraziť informácie o hudbe počas prehrávania audia"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Základné"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Dodatočné"

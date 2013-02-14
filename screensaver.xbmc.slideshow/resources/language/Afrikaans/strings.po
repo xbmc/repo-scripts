@@ -63,3 +63,7 @@ msgstr "Hoeveelheid sekondes om elke beeld te vertoon"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Nie in staat gestel"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Basies"

@@ -79,3 +79,23 @@ msgstr "Fájlnév használata"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Mappanév használata"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Képadatok megjelenítése"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Hozzáadott képelemek megjelenítése"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Zene infó megjelenítése lejátszás közben"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Alap"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Hozzáadott"

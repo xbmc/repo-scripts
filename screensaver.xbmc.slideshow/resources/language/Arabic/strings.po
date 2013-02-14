@@ -43,3 +43,7 @@ msgstr "مستوى ضعيف"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "معطلة"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "أساسي"

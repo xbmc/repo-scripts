@@ -47,3 +47,7 @@ msgstr "Diapositiva"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Desactivat"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Bàsic"

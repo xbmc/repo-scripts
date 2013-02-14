@@ -63,3 +63,7 @@ msgstr "tempo en segundos nos que se amosará cada imaxe"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Desactivado"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Básico"

@@ -1,3 +1,7 @@
+v0.0.9
+- silence iptc warnings
+- update code for xbmc 12.1
+
 v0.0.8
 - added music info option
 - localize date format

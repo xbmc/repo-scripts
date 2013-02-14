@@ -79,3 +79,23 @@ msgstr "Χρήση ονόματος αρχείου"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Χρήση ονόματος φακέλου"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Προβολή της ημερομηνίας της εικόνας"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Προβολή επιπλέον ετικετών της εικόνας"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Προβολή μουσικών πληροφοριών κατά την αναπαραγωγή"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Βασικό"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Επιπρόσθετα"

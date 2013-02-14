@@ -79,3 +79,23 @@ msgstr "Kasuta faili nime"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Kasuta kausta nime"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Näita pildi kuupäeva"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Näita pildi täiendavaid silte"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Heli taasesitlusel näita muusika infot"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Põhiline"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Täiendav"

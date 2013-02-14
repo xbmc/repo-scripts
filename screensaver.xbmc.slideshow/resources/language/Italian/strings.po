@@ -79,3 +79,23 @@ msgstr "Usa il nome del file"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Usa il nome della cartella"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Mostra la data delle foto"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Mostra etichette addizionali delle fot"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Mostra le informazioni sulla musica durante l'esecuzione"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Base"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Supplementare"

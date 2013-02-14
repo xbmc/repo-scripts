@@ -79,3 +79,23 @@ msgstr "Naudoti failo pavadinimą"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Naudoti aplanko pavadinimą"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Rodyti nuotraukos datą"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Rodyti papildomas nuotraukų žymes"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Rodyti muzikos info garso atkūrimo metu"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Pagrindinis"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Papildomas"

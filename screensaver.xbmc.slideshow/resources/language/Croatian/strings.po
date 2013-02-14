@@ -40,6 +40,30 @@ msgctxt "#30005"
 msgid "Dim level"
 msgstr "Intenzitet zatamnjenja"
 
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efekt"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Pokaži naziv slike"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Onemogućeno"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Koristi ime datoteke"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Koristi ime mape"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Prikaži datum slike"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Osnovno"

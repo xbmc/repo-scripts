@@ -79,3 +79,23 @@ msgstr "Använd filnamnet"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Använd mappnamnet"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Visa bilddatum"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Visa ytterligare bildtaggar"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Visa musikinfo under uppspelning"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Grundläggande"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Ytterligare"

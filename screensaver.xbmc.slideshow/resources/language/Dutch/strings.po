@@ -79,3 +79,23 @@ msgstr "Gebruik bestandsnaam"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Gebruik mapnaam"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Toon afbeeldingsdatum"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Toon extra afbeelding tags"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Toon muziekinformatie tijdens het afspelen"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Basis"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Extra"

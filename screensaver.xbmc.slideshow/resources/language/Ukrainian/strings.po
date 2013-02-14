@@ -40,6 +40,62 @@ msgctxt "#30005"
 msgid "Dim level"
 msgstr "Рівень затемнення"
 
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Ефект"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Слайд"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Кросфейд"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Панорамування та масштабування"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Кількість секунд для показу кожного малюнку"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Розширити на весь екран"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Показувати назву малюнка"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Вимкн."
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Використати назву файлу"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Використовувати назву теки"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Показати дані малюнка"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Показати додаткові мітки малюнка"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Показувати інформацію про малюнок під час програвання аудіо"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Базовий"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Додатково"

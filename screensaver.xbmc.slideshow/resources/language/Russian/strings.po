@@ -60,6 +60,42 @@ msgctxt "#30010"
 msgid "Amount of seconds to display each image"
 msgstr "Сколько секунд отображать каждый слайд"
 
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Растянуть изображение в полный экран"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Показывать имя изображения"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Откл."
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Использовать имя файла"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Использовать имя папки"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Показывать дату изображения"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Показывать доролнительные данные изображения"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Отображение информации о музыке во время воспроизведения аудио"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Базовый"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Дополнительно"

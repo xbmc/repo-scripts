@@ -79,3 +79,23 @@ msgstr "使用文件名"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "使用文件夹名"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "显示图片日期"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "显示附加图片标签"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "在音频回放时显示音乐信息"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "基本信息"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "附加的"

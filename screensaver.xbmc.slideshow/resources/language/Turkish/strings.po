@@ -60,6 +60,14 @@ msgctxt "#30010"
 msgid "Amount of seconds to display each image"
 msgstr "Her resim için görüntüleme zamanı miktarı"
 
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Resimleri tam ekrana ölçeklendir"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Resim ismini göster"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Devre dışı"
@@ -71,3 +79,23 @@ msgstr "Dosya ismini kullan"
 msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Dizin ismini kullan"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Fotoğrafın tarihini göster"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Diğer resim etiketlerini göster"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Ses çalma sırasında müzik bilgisini göster"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Temel Bilgiler"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Ek"

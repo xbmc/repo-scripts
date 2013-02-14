@@ -63,3 +63,7 @@ msgstr "Yksittäisen kuvan näyttämiseen käytettävä aika sekunneissa"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Ei käytössä"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Perus"
