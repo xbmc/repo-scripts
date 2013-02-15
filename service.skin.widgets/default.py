@@ -38,6 +38,7 @@ __addon__        = xbmcaddon.Addon()
 __addonversion__ = __addon__.getAddonInfo('version')
 __addonid__      = __addon__.getAddonInfo('id')
 __addonname__    = __addon__.getAddonInfo('name')
+__localize__    = __addon__.getLocalizedString
 
 def log(txt):
     message = '%s: %s' % (__addonname__, txt.encode('ascii', 'ignore'))
@@ -86,6 +87,7 @@ class Main:
         self.WINDOW.setProperty('SkinWidgets_RandomItems_Update', 'false')
         self.RANDOMITEMS_UPDATE_METHOD = int(__addon__.getSetting("randomitems_method"))
         self.RECENTITEMS_HOME_UPDATE = __addon__.getSetting("recentitems_homeupdate")
+        self.PLOT_ENABLE = __addon__.getSetting("plot_enable")  == 'true'
         # convert time to seconds, times 2 for 0,5 second sleep compensation
         self.RANDOMITEMS_TIME = int(float(__addon__.getSetting("randomitems_time"))) * 60 * 2
 
@@ -168,6 +170,10 @@ class Main:
                         watched = "true"
                     else:
                         watched = "false"
+                    if not self.PLOT_ENABLE and watched == "false":
+                        plot = __localize__(32014)
+                    else:
+                        plot = item['plot']
                     art = item['art']
                     path = media_path(item['file'])
                     play = 'XBMC.RunScript(' + __addonid__ + ',movieid=' + str(item.get('movieid')) + ')'
@@ -177,7 +183,7 @@ class Main:
                     self.WINDOW.setProperty("%s.%d.Year"            % (request, count), str(item['year']))
                     self.WINDOW.setProperty("%s.%d.Genre"           % (request, count), " / ".join(item['genre']))
                     self.WINDOW.setProperty("%s.%d.Studio"          % (request, count), item['studio'][0])
-                    self.WINDOW.setProperty("%s.%d.Plot"            % (request, count), item['plot'])
+                    self.WINDOW.setProperty("%s.%d.Plot"            % (request, count), plot)
                     self.WINDOW.setProperty("%s.%d.PlotOutline"     % (request, count), item['plotoutline'])
                     self.WINDOW.setProperty("%s.%d.Tagline"         % (request, count), item['tagline'])
                     self.WINDOW.setProperty("%s.%d.Runtime"         % (request, count), str(int((item['runtime'] / 60) + 0.5)))
@@ -235,6 +241,14 @@ class Main:
                     else:
                         resume = "false"
                         played = '0%'
+                    if item2['playcount'] >= 1:
+                        watched = "true"
+                    else:
+                        watched = "false"
+                    if not self.PLOT_ENABLE and watched == "false":
+                        plot = __localize__(32014)
+                    else:
+                        plot = item['plot']
                     art = item['art']
                     path = media_path(item['file'])
                     play = 'XBMC.RunScript(' + __addonid__ + ',episodeid=' + str(item2.get('episodeid')) + ')'
@@ -244,7 +258,7 @@ class Main:
                     self.WINDOW.setProperty("%s.%d.Episode"             % (request, count), episode)
                     self.WINDOW.setProperty("%s.%d.EpisodeNo"           % (request, count), episodeno)
                     self.WINDOW.setProperty("%s.%d.Season"              % (request, count), season)
-                    self.WINDOW.setProperty("%s.%d.Plot"                % (request, count), item2['plot'])
+                    self.WINDOW.setProperty("%s.%d.Plot"                % (request, count), plot)
                     self.WINDOW.setProperty("%s.%d.TVshowTitle"         % (request, count), item2['showtitle'])
                     self.WINDOW.setProperty("%s.%d.Rating"              % (request, count), rating)
                     self.WINDOW.setProperty("%s.%d.Runtime"             % (request, count), str(int((item2['runtime'] / 60) + 0.5)))
@@ -313,6 +327,14 @@ class Main:
                     else:
                         resume = "false"
                         played = '0%'
+                    if item['playcount'] >= 1:
+                        watched = "true"
+                    else:
+                        watched = "false"
+                    if not self.PLOT_ENABLE and watched == "false":
+                        plot = __localize__(32014)
+                    else:
+                        plot = item['plot']
                     art = item['art']
                     path = media_path(item['file'])
                     play = 'XBMC.RunScript(' + __addonid__ + ',episodeid=' + str(item.get('episodeid')) + ')'
@@ -322,7 +344,7 @@ class Main:
                     self.WINDOW.setProperty("%s.%d.Episode"             % (request, count), episode)
                     self.WINDOW.setProperty("%s.%d.EpisodeNo"           % (request, count), episodeno)
                     self.WINDOW.setProperty("%s.%d.Season"              % (request, count), season)
-                    self.WINDOW.setProperty("%s.%d.Plot"                % (request, count), item['plot'])
+                    self.WINDOW.setProperty("%s.%d.Plot"                % (request, count), plot)
                     self.WINDOW.setProperty("%s.%d.TVshowTitle"         % (request, count), item['showtitle'])
                     self.WINDOW.setProperty("%s.%d.Rating"              % (request, count), rating)
                     self.WINDOW.setProperty("%s.%d.Runtime"             % (request, count), str(int((item['runtime'] / 60) + 0.5)))

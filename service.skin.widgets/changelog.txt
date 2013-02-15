@@ -1,3 +1,6 @@
+v0.0.21
+- Add option to hide plot for unwatched items
+
 v0.0.20
 - Use proper Runtime
 - Catch bad JSON results
