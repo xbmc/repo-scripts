@@ -1,3 +1,6 @@
+v0.0.22
+- Fix keyerror
+
 v0.0.21
 - Add option to hide plot for unwatched items
 

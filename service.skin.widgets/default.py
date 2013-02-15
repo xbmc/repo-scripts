@@ -248,7 +248,7 @@ class Main:
                     if not self.PLOT_ENABLE and watched == "false":
                         plot = __localize__(32014)
                     else:
-                        plot = item['plot']
+                        plot = item2['plot']
                     art = item['art']
                     path = media_path(item['file'])
                     play = 'XBMC.RunScript(' + __addonid__ + ',episodeid=' + str(item2.get('episodeid')) + ')'
