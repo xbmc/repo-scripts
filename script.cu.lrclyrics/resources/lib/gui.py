@@ -232,7 +232,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 lyr = lyrics.lyrics
             else:
                 lyr = lyrics.lyrics.encode('utf-8')
-            lyrics_file = xbmcvfs.File( self.song_path, "w" )
+            lyrics_file = xbmcvfs.File( song_path, "w" )
             lyrics_file.write( lyr )
             lyrics_file.close()
             return True

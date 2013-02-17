@@ -4,7 +4,27 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Labels -->
+    <string id="0">XBMC Lyrics</string>
     <string id="30000">Ficheiro</string>
+    <string id="30001">Não foram encontradas letras!</string>
+    <string id="30002">Embutidas</string>
+
+    <!-- Settings labels -->
+    <string id="30101">Guardar letras</string>
+    <string id="30102">Pasta para guardar</string>
+    <string id="30104">Guardar ficheiros de letras nas pastas dos artistas</string>
+    <string id="30106">Usar apenas nome do ficheiro para busca</string>
+    <string id="30107">Formato do nome do ficheiro</string>
+    <string id="30108">%A - %T</string>
+    <string id="30109">%A\%B\%T</string>
+    <string id="30110">%A\%B\%N %T</string>
+    <string id="30111">Carregar letras com o mesmo nome de sub-pasta</string>
+    <string id="30112">- Nome da sub-pasta</string>
     <string id="30150">Scrapers</string>
     <string id="30151">Opções</string>
+    <string id="30152">Procurar letras embutidas</string>
+    <string id="30153">Procurar ficheiros locais de letras</string>
+    <string id="30154">Scrapers de letras sincronizadas</string>
+    <string id="30155">Scrapers de letras normais</string>
 </strings>

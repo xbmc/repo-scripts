@@ -10,6 +10,8 @@
 		<setting id="ttplayer" type="bool" label="TTPlayer" default="true"/>
 		<setting id="baidu" type="bool" label="Baidu" default="true"/>
 		<setting id="lyrdb" type="bool" label="Lyrdb" default="false"/>
+		<setting id="alsong" type="bool" label="Alsong" default="false"/>
+		<setting id="gomaudio" type="bool" label="GomAudio" default="false"/>
 		<setting type="sep" />
 		<setting label="30155" type="lsep"/>
 		<setting id="lyricwiki" type="bool" label="LyricWiki" default="true"/>

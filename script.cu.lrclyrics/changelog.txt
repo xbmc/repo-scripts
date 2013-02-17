@@ -1,3 +1,6 @@
+v1.0.4
+- fixed saving lyrics
+
 v1.0.3
 -language update
 

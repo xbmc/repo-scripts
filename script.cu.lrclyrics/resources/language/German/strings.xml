@@ -4,8 +4,11 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Labels -->
+    <string id="0">XBMC Lyrics</string>
     <string id="30000">Datei</string>
     <string id="30001">Kein Liedtext gefunden!</string>
+    <string id="30002">Enthalten</string>
 
     <!-- Settings labels -->
     <string id="30101">Liedtexte speichern</string>
@@ -20,5 +23,8 @@
     <string id="30112">- Untervezeichnis-Name</string>
     <string id="30150">Scraper</string>
     <string id="30151">Optionen</string>
+    <string id="30152">Suche nach enthaltenen Lyrics</string>
     <string id="30153">Nutze eingebettete Liedtexte</string>
+    <string id="30154">Synchronisiere die Lyrics Scrapper</string>
+    <string id="30155">Standard Lyrics Scrapper</string>
 </strings>
