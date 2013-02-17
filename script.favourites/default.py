@@ -44,7 +44,7 @@ class Main:
         if xbmcvfs.exists( self.fav_file ):
             found = True
             self.doc = parse( self.fav_file )
-            favourites = self.doc.documentElement.getElementsByTagName ( 'favourite' )
+            favourites = self.doc.documentElement.getElementsByTagName( 'favourite' )
         else:
             found = False
             favourites = []
@@ -105,12 +105,17 @@ class MainGui( xbmcgui.WindowXMLDialog ):
                 else:
                     listitem.setIconImage( favourite.attributes[ 'thumb' ].nodeValue )
                     listitem.setProperty( "Icon", favourite.attributes[ 'thumb' ].nodeValue )
-            except: pass
+            except:
+                pass
             if 'RunScript' not in fav_path:
                 fav_path = fav_path.rstrip(')')
                 fav_path = fav_path + ',return)'
             listitem.setProperty( "Path", fav_path )
             self.fav_list.addItem( listitem )
+        # add a dummy item with no action assigned
+        listitem = xbmcgui.ListItem( __language__(452) )
+        listitem.setProperty( "Path", 'noop' )
+        self.fav_list.addItem( listitem )
         self.setFocus(self.fav_list)
 
     def onAction(self, action):

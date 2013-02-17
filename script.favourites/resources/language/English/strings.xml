@@ -2,4 +2,5 @@
 <strings>
 	<string id="450">Do you want to play the playlist instead of entering?</string>
 	<string id="451">None (clear current settings)</string>
+	<string id="452">(no action)</string>
 </strings>

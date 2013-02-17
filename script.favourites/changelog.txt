@@ -1,3 +1,6 @@
+v4.0.8
+- added 'no action' item to the end of the list
+
 v4.0.7
 - add favourite.count window property
 

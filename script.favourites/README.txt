@@ -12,7 +12,8 @@ How to use this addon in your skin:
 
    Additionally you can pass 'changetitle=true' to the script, this will allow the user to change the name of the label.
 
-
+   The first item in the list (none) can be used to remove the current favourite from a button.
+   The last item in the list (no action) can be used to change the label of a button without asigning an action to it.
 
 2) RunScript(script.favourites)
 
