@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xbmc.checkpreviousepisode" name="XBMC Check Previous Episode" version="0.1.0" provider-name="Lucleonhart">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py" start="login"></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>XBMC check previous episode state</summary>
+    <description lang="en">This scripts checks the previous episode from the one you started to watch and warns you if it is missing from your library or unwatched!</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+
