@@ -1,3 +1,10 @@
+3.9.5
+- [fix] LegendasDivx, LegendasZone, Pipocas and euTorrents, highlandr
+- [fix] LegendasTV: some windows downloads bug fixes, gfjardim
+- [fix] init self.session_id in case we crash
+- [add] GomTV service, hojel
+- [fix] Sratim, maortal
+
 3.9.4
 - SuperSubtitles service changed according to the changes in the source of feliratok.info, Istvan Kispal
 - Added SubClub.eu service,Üllar Pajus

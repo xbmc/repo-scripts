@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Service Legendas-Zone.org version 0.2.0
+# Service Legendas-Zone.org version 0.2.1
 # Code based on Undertext service and the download function encode fix from legendastv service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
@@ -8,11 +8,16 @@
 # http://www.teknorage.com
 # License: GPL v2
 #
+# NEW on Service Legendas-Zone.org v0.2.1:
+# Service working again, developers change the page way too much!
+# Fixed download bug when XBMC is set to Portuguese language
+# Removed IMDB search since they are always changing code!
+# Some code cleanup
+#
 # NEW on Service Legendas-Zone.org v0.2.0:
 # Fixed bug on openelec based XBMC prevent the script to work
 # Removed some XBMC messages from the script who were annoying!
 # Some code cleanup
-#
 #
 # NEW on Service Legendas-Zone.org v0.1.9:
 # Added all site languages (English, Portuguese, Portuguese Brazilian and Spanish)
@@ -62,16 +67,24 @@ password = __addon__.getSetting( "LZpass" )
 """
 subtitle_pattern = "<b><a\shref=\"legendas.php\?modo=detalhes&amp;(.+?)\".+?[\r\n\t]+?.+?[\r\n\t]+?.+?onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
 # group(1) = ID, group(2) = Name, group(3) = Hits, group(4) = Files, group(5) = Uploader
-multiple_results_pattern = "<td\salign=\"left\".+?<b><a\shref=\"legendas.php\?imdb=(.+?)&l=.+?\"\stitle=\".+?\">.+?</td>"
+multiple_results_pattern = "<td\salign=\"left\".+?<b><a\shref=\"legendas.php\?imdb=(.+?)\"\stitle=\".+?\">"
 # group(1) = IMDB
-imdb_pattern = "<p><b>Popular\sTitles</b>\s\(Displaying.+?Result.+?<table><tr>.+?<a\shref=\"\/title\/tt(.+?)\/\""
+imdb_pattern = "<td class=\"result_text\"> <a\shref=\"\/title\/tt(.+?)\/\?"
 # group(1) = IMDB
 #====================================================================================================================
 # Functions
 #====================================================================================================================
+def _from_utf8(text):
+    if isinstance(text, str):
+        return text.decode('utf-8')
+    else:
+        return text
+
 def msgnote(site, text, timeout):
 	icon =  os.path.join(__cwd__,"icon.png")
-	xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (site,text,timeout,icon))
+	text = _from_utf8(text)
+	site = _from_utf8(site)
+	xbmc.executebuiltin((u"Notification(%s,%s,%i,%s)" % (site, text, timeout, icon)).encode("utf-8"))
 
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
 
@@ -92,11 +105,13 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 	url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 
 	content = opener.open(url)
-	content = content.read()
+	#log( __name__ ,"%s Content: '%s'" % (debug_pretext, content))
+	content = content.read().decode('latin1')
+	#log( __name__ ,"%s Contentread: '%s'" % (debug_pretext, content.decode('latin1')))
 	if re.search(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) == None:
-		log( __name__ ,"%s Lang: '%s'" % (debug_pretext, languageshort))
+		log( __name__ ,"%s LangSingleSUBS: '%s'" % (debug_pretext, languageshort))
 		log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "Single Title"))
-		while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 6:
+		while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 3:
 			for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 				hits = matches.group(3)
 				downloads = int(matches.group(3)) / 5
@@ -161,7 +176,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 				languageshort = "pb"
 			url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 			content = opener.open(url)
-			content = content.read()
+			content = content.read().decode('latin1')
 			#For DEBUG only uncomment next line
 			#log( __name__ ,"%s Getting '%s' list part xxx..." % (debug_pretext, content))
 	else:
@@ -170,12 +185,12 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			languageshort = "br"
 		url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 		content = opener.open(url)
-		content = content.read()
+		content = content.read().decode('latin1')
 		maxsubs = re.findall(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
-		maxsubs = len(maxsubs)
-		if maxsubs < 10:
-			log( __name__ ,"%s Lang: '%s'" % (debug_pretext, languageshort))
-			log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "Less Then 10 Titles"))
+		#maxsubs = len(maxsubs)
+		if maxsubs != "":
+			log( __name__ ,"%s LangMULTISUBS: '%s'" % (debug_pretext, languageshort))
+			#log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "Less Then 10 Titles"))
 			while re.search(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 1:
 				for resmatches in re.finditer(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
 					imdb = resmatches.group(1)
@@ -185,10 +200,9 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 					content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
 					content1 = content1.read()
 					content1 = content1.decode('latin1')
-					log( __name__ ,"%s Content1 '%s' subs inside less than 10..." % (debug_pretext, content1))
-					while re.search(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
+					while re.search(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page1 == 0:
 						for matches in re.finditer(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
-							log( __name__ ,"%s Getting '%s' subs inside less than 10..." % (debug_pretext, page1))
+							#log( __name__ ,"%s PAGE? '%s'" % (debug_pretext, page1))
 							hits = matches.group(3)
 							downloads = int(matches.group(3)) / 5
 							if (downloads > 10):
@@ -250,93 +264,94 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 							subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 						page1 = page1 + 1
 						content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
-						content1 = content1.read()
+						content1 = content1.read().decode('latin1')
 				page = page + 1
 				if languageshort == "pb":
 					languageshort = "br"
 				url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 				content = opener.open(url)
-				content = content.read()
-		else:
-			url = "http://uk.imdb.com/find?s=all&q=" + urllib.quote_plus(searchstring)
-			content = opener.open(url)
-			content = content.read()
-			imdb = re.findall(imdb_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
-			page1 = 0
-			log( __name__ ,"%s Lang: '%s'" % (debug_pretext, languageshort))
-			if languageshort == "pb":
-				languageshort = "br"
-			content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb[0] + "&page=" + str(page1))
-			content1 = content1.read()
-			#msgnote(pretext, "Too many hits. Grabbing IMDB title!", 6000)
-			while re.search(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
-				log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "IMDB Title"))
-				for matches in re.finditer(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
-					hits = matches.group(3)
-					downloads = int(matches.group(3)) / 5
-					if (downloads > 10):
-						downloads=10
-					id = matches.group(1)
-					filename = string.strip(matches.group(2))
-					desc = string.strip(matches.group(2))
-					#desc = filename + " - uploader: " + desc
-					no_files = matches.group(4)
-					uploader = matches.group(5)
-					#log( __name__ ,"%s filename '%s'" % (debug_pretext, filename))
-					filename_check = string.split(filename,' ')
-					#log( __name__ ,"%s filename '%s'" % (debug_pretext, filename_check))
-					#Remove new lines on the commentaries
-					filename = re.sub('\n',' ',filename)
-					desc = re.sub('\n',' ',desc)
-					desc = re.sub('&quot;','"',desc)
-					#Remove HTML tags on the commentaries
-					filename = re.sub(r'<[^<]+?>','', filename)
-					desc = re.sub(r'<[^<]+?>|[~]',' ', desc)
-					#Find filename on the comentaries to show sync label using filename or dirname (making it global for further usage)
-					#global filesearch
-					filesearch = os.path.abspath(file_original_path)
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s abspath: '%s'" % (debug_pretext, filesearch))
-					filesearch = os.path.split(filesearch)
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s path.split: '%s'" % (debug_pretext, filesearch))
-					dirsearch = filesearch[0].split(os.sep)
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s dirsearch: '%s'" % (debug_pretext, dirsearch))
-					dirsearch_check = string.split(dirsearch[-1], '.')
-					#For DEBUG only uncomment next line
-					#log( __name__ ,"%s dirsearch_check: '%s'" % (debug_pretext, dirsearch_check))
-					if (searchstring_notclean != ""):
-						sync = False
-						if re.search(searchstring_notclean, desc):
-							sync = True
-					else:
-						if (string.lower(dirsearch_check[-1]) == "rar") or (string.lower(dirsearch_check[-1]) == "cd1") or (string.lower(dirsearch_check[-1]) == "cd2"):
-							sync = False
-							if len(dirsearch) > 1 and dirsearch[1] != '':
-								if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-2], desc):
-									sync = True
-							else:
-								if re.search(filesearch[1][:len(filesearch[1])-4], desc):
-									sync = True
-						else:
-							sync = False
-							if len(dirsearch) > 1 and dirsearch[1] != '':
-								if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-1], desc):
-									sync = True
-							else:
-								if re.search(filesearch[1][:len(filesearch[1])-4], desc):
-									sync = True
-					filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
-					if languageshort == "br":
-						languageshort = "pb"
-					subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
-				page1 = page1 + 1
-				if languageshort == "pb":
-					languageshort = "br"
-				content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb[0] + "&page=" + str(page1))
-				content1 = content1.read()
-				#For DEBUG only uncomment next line
+				content = content.read().decode('latin1')
+################### IMDB DISABLED FOR NOW #######################################
+#		else:
+#			url = "http://uk.imdb.com/find?s=all&q=" + urllib.quote_plus(searchstring)
+#			content = opener.open(url)
+#			content = content.read().decode('latin1')
+#			imdb = re.findall(imdb_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
+#			page1 = 0
+#			log( __name__ ,"%s LangIMDB: '%s'" % (debug_pretext, languageshort))
+#			if languageshort == "pb":
+#				languageshort = "br"
+#			content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb[0] + "&page=" + str(page1))
+#			content1 = content1.read().decode('latin1')
+#			#msgnote(pretext, "Too many hits. Grabbing IMDB title!", 6000)
+#			while re.search(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
+#				log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, "IMDB Title"))
+#				for matches in re.finditer(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
+#					hits = matches.group(3)
+#					downloads = int(matches.group(3)) / 5
+#					if (downloads > 10):
+#						downloads=10
+#					id = matches.group(1)
+#					filename = string.strip(matches.group(2))
+#					desc = string.strip(matches.group(2))
+#					#desc = filename + " - uploader: " + desc
+#					no_files = matches.group(4)
+#					uploader = matches.group(5)
+#					#log( __name__ ,"%s filename '%s'" % (debug_pretext, filename))
+#					filename_check = string.split(filename,' ')
+#					#log( __name__ ,"%s filename '%s'" % (debug_pretext, filename_check))
+#					#Remove new lines on the commentaries
+#					filename = re.sub('\n',' ',filename)
+#					desc = re.sub('\n',' ',desc)
+#					desc = re.sub('&quot;','"',desc)
+#					#Remove HTML tags on the commentaries
+#					filename = re.sub(r'<[^<]+?>','', filename)
+#					desc = re.sub(r'<[^<]+?>|[~]',' ', desc)
+#					#Find filename on the comentaries to show sync label using filename or dirname (making it global for further usage)
+#					#global filesearch
+#					filesearch = os.path.abspath(file_original_path)
+#					#For DEBUG only uncomment next line
+#					#log( __name__ ,"%s abspath: '%s'" % (debug_pretext, filesearch))
+#					filesearch = os.path.split(filesearch)
+#					#For DEBUG only uncomment next line
+#					#log( __name__ ,"%s path.split: '%s'" % (debug_pretext, filesearch))
+#					dirsearch = filesearch[0].split(os.sep)
+#					#For DEBUG only uncomment next line
+#					#log( __name__ ,"%s dirsearch: '%s'" % (debug_pretext, dirsearch))
+#					dirsearch_check = string.split(dirsearch[-1], '.')
+#					#For DEBUG only uncomment next line
+#					#log( __name__ ,"%s dirsearch_check: '%s'" % (debug_pretext, dirsearch_check))
+#					if (searchstring_notclean != ""):
+#						sync = False
+#						if re.search(searchstring_notclean, desc):
+#							sync = True
+#					else:
+#						if (string.lower(dirsearch_check[-1]) == "rar") or (string.lower(dirsearch_check[-1]) == "cd1") or (string.lower(dirsearch_check[-1]) == "cd2"):
+#							sync = False
+#							if len(dirsearch) > 1 and dirsearch[1] != '':
+#								if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-2], desc):
+#									sync = True
+#							else:
+#								if re.search(filesearch[1][:len(filesearch[1])-4], desc):
+#									sync = True
+#						else:
+#							sync = False
+#							if len(dirsearch) > 1 and dirsearch[1] != '':
+#								if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-1], desc):
+#									sync = True
+#							else:
+#								if re.search(filesearch[1][:len(filesearch[1])-4], desc):
+#									sync = True
+#					filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
+#					if languageshort == "br":
+#						languageshort = "pb"
+#					subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+#				page1 = page1 + 1
+#				if languageshort == "pb":
+#					languageshort = "br"
+#				content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb[0] + "&page=" + str(page1))
+#				content1 = content1.read().decode('latin1')
+#				#For DEBUG only uncomment next line
 
 
 ##### ANNOYING #####

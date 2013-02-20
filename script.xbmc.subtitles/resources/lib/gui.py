@@ -172,6 +172,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
   def Search_Subtitles( self, gui = True ):
     self.subtitles_list = []
+    self.session_id = ""
     if gui:
       self.getControl( SUBTITLES_LIST ).reset()
       self.getControl( LOADING_IMAGE ).setImage(

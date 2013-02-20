@@ -13,6 +13,9 @@ import unicodedata
 try: import simplejson as json
 except: import json
 
+try: from hashlib import md5
+except: from md5 import new as md5
+
 _              = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
@@ -272,6 +275,19 @@ def addfilehash(name,hash,seek):
         hash =hash & 0xffffffffffffffff
     f.close()    
     return hash
+
+def hashFileMD5(file_path, buff_size=1048576):
+    # calculate MD5 key from file
+    f = xbmcvfs.File(file_path)
+    if f.size() < buff_size:
+        return None
+    f.seek(0,0)
+    buff = f.read(buff_size)    # size=1M
+    f.close()
+    # calculate MD5 key from file
+    m = md5();
+    m.update(buff);
+    return m.hexdigest()
 
 def getShowId():
     try:

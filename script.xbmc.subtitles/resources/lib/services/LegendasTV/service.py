@@ -2,12 +2,12 @@
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt
-# Rev. 2.0.0
+# Rev. 2.0.1
 
 from operator import itemgetter
 from threading import Thread
 from BeautifulSoup import *
-from utilities import log, languageTranslate
+from utilities import *
 import cookielib
 import math
 import os
@@ -78,7 +78,7 @@ class LegendasTV:
     def chomp(self, s):
         s = re.sub("\s{2,20}", " ", s)
         a = re.compile("(\r|\n|^\s|\s$|\'|\"|,|;|[(]|[)])")
-        b = re.compile("(\t|-|:|[/]|[?]|\[|\])")
+        b = re.compile("(\t|-|:|[/]|[?]|\[|\]|\.)")
         s = b.sub(" ", s)
         s = re.sub("[ ]{2,20}", " ", s)
         s = a.sub("", s)
@@ -334,7 +334,7 @@ class LegendasTV:
             discardedResults, filteredResults = self.findID(Movie, TVShow, Year, Season, SearchTitle, SearchTitle)
         if not filteredResults and len(discardedResults):
             filteredResults = []
-            for Result in discardedResults:
+            for Result in discardedResults[0:4]:
                 if Result["ratio"] == discardedResults[0]["ratio"]:
                     filteredResults.append(Result)
             self.Log("Message: Filtration failed, using discarded results.")
@@ -345,7 +345,7 @@ class LegendasTV:
         request = urllib2.Request("http://legendas.tv/index.php?opcao=buscarlegenda&filme=1", search_data)
         Response = urllib2.urlopen(request).read()
         MainIDNumber = 1
-        for MainID in filteredResults:
+        for MainID in filteredResults[0:4]:
             # Find how much pages are to download
             self.Log("Message: Retrieving results to id[%s]" % (MainID["id"]))
             Response = urllib2.urlopen("http://legendas.tv/funcao_lista_legenda.php?f=%s" % (MainID["id"])).read()
@@ -458,7 +458,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
                 temp = f.read()
                 f.close()
                 xbmcvfs.delete(dirfile)
-                dirfile_with_path_name = re.sub(extract_path + r"[/\\]{1,2}","", dirfile)
+                dirfile_with_path_name = os.path.relpath(dirfile, extract_path)
                 dirfile_with_path_name = re.sub(r"[/\\]{1,2}","-", dirfile_with_path_name)
                 dirfile_with_path_name = LTV._UNICODE(dirfile_with_path_name).encode('ascii', 'ignore')
                 new_dirfile = os.path.join(extract_path, dirfile_with_path_name)
@@ -484,13 +484,21 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (fname, extract_path))
     xbmc.sleep(1000)
     extract_and_copy()
-
+    
+    temp = []
+    for sub in legendas_tmp:
+        video_file = LTV.chomp(os.path.basename(sys.modules[ "__main__" ].ui.file_original_path))
+        sub_striped =  LTV.chomp(os.path.basename(sub))
+        Ratio = LTV.CalculateRatio(sub_striped, video_file)
+        temp.append([Ratio, sub])
+    legendas_tmp = sorted(temp, reverse=True)
+    
     if len(legendas_tmp) > 1:
         dialog = xbmcgui.Dialog()
         sel = dialog.select("%s\n%s" % (_( 30152 ).encode("utf-8"), subtitles_list[pos][ "filename" ]) ,
-                             [os.path.basename(x) for x in legendas_tmp])
+                             [os.path.basename(y) for x, y in legendas_tmp])
         if sel >= 0:
-            subtitle = legendas_tmp[sel]
+            subtitle = legendas_tmp[sel][1]
     elif len(legendas_tmp) == 1:
-        subtitle = legendas_tmp[0]
+        subtitle = legendas_tmp[0][1]
     return False, language, subtitle

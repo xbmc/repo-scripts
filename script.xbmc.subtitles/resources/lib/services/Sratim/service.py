@@ -12,6 +12,7 @@
 # 2.1 - Changed RE patterns again due to layout change (Thanks BBLN for also suggesting different fix).
 # 2.2 - Changed url to subtitle.co.il
 # 2.3 - Added User Agent to getURL, fixed string related bugs and patterns
+# 2.3.1 - stripped (year) from tvshow
 #
 # Created by: Ori Varon
 # Changed by MeatHook (2.3)
@@ -187,7 +188,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
  
     # Check if searching for tv show or movie and build the search string
     if tvshow:
-        searchString = tvshow.replace(" ","+")
+        searchString = re.split(r'\s\(\d+\)$',tvshow)[0].replace(" ","+")
     else:
         searchString = title.replace(" ","+")
     	

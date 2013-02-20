@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Service pipocas.tv version 0.0.4
+# Service pipocas.tv version 0.0.5
 # Code based on Undertext service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Help by VaRaTRoN
@@ -8,11 +8,15 @@
 # http://www.teknorage.com
 # License: GPL v2
 #
+# New on Service Pipocas.tv - v0.0.5:
+# Developers changed the site security preventing the service to work. Service now works again.
+# Fixed download bug when XBMC is set to Portuguese language and probably others.
+# Some code cleanup
+#
 # New on Service Pipocas.tv - v0.0.4:
 # Pipocas now is only for registered users so we had todo some changes to the code.
 # Fixed bug on Openelec based XBMC preventing to download multiple subtitiles inside a compressed file.
 # Some code cleanup
-#
 #
 # New on Service Pipocas.tv - v0.0.3:
 # Fixed bug on the authentication preventing to download the latest subtitles!
@@ -117,27 +121,27 @@ Um agradecimento muito especial à<br />
 Pela revisão total...<br />
 <br />
 """
-subtitle_pattern = "<a href=\"info/(.+?)\" class=\"info\"></a>"
-name_pattern = "Release: <input value=\"(.+?)\" style=\"font-size"
-id_pattern = "<a href=\".+?download.php\?id=(.+?)\" class=\"download\"></a>"
+subtitle_pattern = "<a href=\"info.php(.+?)\" class=\"info\"></a>"
+name_pattern = "<h1 class=\"title\">[\r\n\s].+?Release: (.+?)</h1>"
+id_pattern = "download.php\?id=(.+?)\""
 hits_pattern = "<li><span>Hits:</span> (.+?)</li>"
-desc_pattern = "<div class=\"description-box\">([\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*)<center><iframe"
+#desc_pattern = "<div class=\"description-box\">([\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*)<center><iframe"
 uploader_pattern = "<a href=\"/my.php\?u.+?:normal;\"> (.+?)</font></a>"
-#subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>"
-#subtitle_pattern = "Release: <input value=\"(.+?)\" style=\"font-size.+\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*<li><span>Hits:</span> (.+?)</li>\n.*\n.*href=\"my.php\?u.*:normal;\"> (.+?)</font></a>.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*download.php\?id=(.+?)\" class=\"download\">.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*\n.*<p class=\"description-title\">.*\n.*<div class=\"description-box\">((\n|.)*)<center><iframe"
-#subtitle_pattern = "Release: <input value=\"(.+?)\" style=\"font-size.+?[\t\n\r].+?[\t\n\r].+?[\t\n\r].+?[\t\n\r].+?[\t\n\r].+?[\t\n\r]{4}.+?[\t\n\r].+?[\t\n\r]{3}.+?[\t\n\r].+?[\t\n\r]{4}.+?[\t\n\r].+?[\t\n\r]{5}.+?[\t\n\r].+?[\t\n\r]{5}.+?[\t\n\r].+?[\t\n\r]{5}.+?[\t\n\r].+?[\t\n\r]{5}<li><span>Hits:</span> (.+?)</li>"
-#subtitle_pattern = "Release: <input value=\"(.+?)\" style=\"font-size.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+<li><span>Hits:</span> (.+?)</li>\n.+\n.+href=\"my.php\?u.+:normal;\"> (.+?)</font></a>.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+\n.+download.php\?id=(.+?)\" class=\"download\">"
-#subtitle_pattern = "<a href=\"download.php\?id=(.+?)\" class=\"download\"></a>[\r\n\t ]+?[\r\n\t]<a href=\"info/.+?/(.+?).html\" class=\"info\"></a>"
-#subtitle_pattern = "Release: <input value=\"(.+?)\" style=\"font-size"
-#subtitle_pattern1 = "<a href=\"download.php\?id=(.+?)\" class=\"download\"></a>"
-#((\n|.)*)<span>Hits:</span> (.+?)</li>((\n|.)*)<span>Enviada por:</span>.+?<a href=\"my.php.+?<font style=\"font-weight:normal;\"> (.+?)</font>((\n|.)*)<a href=\"download.php\?id=(.+?)\" class=\"download\"></a>((\n|.)*)<div class=\"description-box\">((\n|.)*)www.facebook.com"
-# group(1) = Name, group(2) = Hits, group(3) = Uploader, group(4) = ID, group(5) = Description
 #====================================================================================================================
 # Functions
 #====================================================================================================================
+def _from_utf8(text):
+    if isinstance(text, str):
+        return text.decode('utf-8')
+    else:
+        return text
+
 def msgnote(site, text, timeout):
 	icon =  os.path.join(__cwd__,"icon.png")
-	xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (site,text,timeout,icon))
+	text = _from_utf8(text)
+	site = _from_utf8(site)
+	#log( __name__ ,"%s ipath: %s" % (debug_pretext, icon))
+	xbmc.executebuiltin((u"Notification(%s,%s,%i,%s)" % (site, text, timeout, icon)).encode("utf-8"))
 
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, subtitles_list, searchstring_notclean):
 
@@ -163,7 +167,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 	content = opener.open(url)
 	content = content.read()
 	content = content.decode('latin1')
-	while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL) and page < 6:
+	while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL) and page < 2:
 		#log( __name__ ,"%s Getting '%s' inside while ..." % (debug_pretext, subtitle_pattern))
 		for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
 			#log( __name__ ,"%s FILENAME: '%s' ..." % (debug_pretext, matches.group(1)))
@@ -180,7 +184,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			#desc = string.strip(matches.group(13))
 			#Remove new lines on the commentaries
 			details = matches.group(1)
-			content_details = opener.open(main_url + "info/" + details)
+			content_details = opener.open(main_url + "info.php" + details)
 			content_details = content_details.read()
 			content_details = content_details.decode('latin1')
 			for namematch in re.finditer(name_pattern, content_details, re.IGNORECASE | re.DOTALL):
@@ -393,9 +397,6 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	download_data = urllib.urlencode({'id' : id})
 	request1 = urllib2.Request(download, download_data, req_headers)
 	content = opener.open(request1)
-
-	#This is where you are logged in and download
-	#content = get_download(main_url+'vlogin.php', main_url+'download.php', id)
 
 	downloaded_content = content.read()
 
