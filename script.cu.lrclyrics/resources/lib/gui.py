@@ -301,6 +301,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             while not self.selected:
                 xbmc.sleep(50)
             self.selected = False
+            self.getControl( 110 ).reset()
             self.show_lyrics( self.current_lyrics )
             if ( __addon__.getSetting( "save_lyrics" ) == "true" ):
                 success = self.save_lyrics_to_file( self.current_lyrics )

@@ -17,27 +17,27 @@ class AudioFile(object):
 
     def Open(self,file):
         self.audioStart = 0
-	self.f = xbmcvfs.File(file)
-	ext = os.path.splitext(file)[1].lower()
-	if   ext == '.mp3':  self.AnalyzeMp3()
-	elif ext == '.ogg':  self.AnalyzeOgg()
-	elif ext == '.wma':  self.AnalyzeWma()
-	#elif ext == '.flac':  self.AnalyzeFlac()
-	elif ext == '.flac': pass
-	elif ext == '.ape': pass
-	elif ext == '.wav': pass
-	else:	# not supported format
-	    self.f.close()
-	    self.f = None
-	    raise UnknownFormat
+        self.f = xbmcvfs.File(file)
+        ext = os.path.splitext(file)[1].lower()
+        if   ext == '.mp3':  self.AnalyzeMp3()
+        elif ext == '.ogg':  self.AnalyzeOgg()
+        elif ext == '.wma':  self.AnalyzeWma()
+        #elif ext == '.flac':  self.AnalyzeFlac()
+        elif ext == '.flac': pass
+        elif ext == '.ape': pass
+        elif ext == '.wav': pass
+        else:	# not supported format
+            self.f.close()
+            self.f = None
+            raise UnknownFormat
 
     def Close(self):
         self.f.close()
-	self.f = None
+        self.f = None
 
     def ReadAudioStream(self, len, offset=0):
-	self.f.seek(self.audioStart+offset, 0)
-	return self.f.read(len)
+        self.f.seek(self.audioStart+offset, 0)
+        return self.f.read(len)
 
     def AnalyzeMp3(self):
         # Searching ID3v2 tag
@@ -85,12 +85,12 @@ class AudioFile(object):
             segtbl = struct.unpack('%dB'%numseg, self.f.read(numseg))    # segment table
             for seglen in segtbl:
                 buf = self.f.read(7)    # segment header 
-            	#print "segLen(%s): %d" % (buf[1:7],seglen)
+                #print "segLen(%s): %d" % (buf[1:7],seglen)
                 if buf == "\x05vorbis":
                     self.f.seek(-7,1)   # rollback
                     self.audioStart = self.f.seek(0,1)
-		    return
-            	self.f.seek(seglen-7,1)	# skip to next segment
+                    return
+                self.f.seek(seglen-7,1)	# skip to next segment
 
     def AnalyzeWma(self):
         # Searching GUID
@@ -100,9 +100,9 @@ class AudioFile(object):
                 raise FormatError
             guid = buf.encode("hex");
             if guid == "3626b2758e66cf11a6d900aa0062ce6c":
-            	# ASF_Data_Object
+                # ASF_Data_Object
                 self.f.seek(-16,1)     # rollback
-		self.audioStart = self.f.seek(0,1)
+                self.audioStart = self.f.seek(0,1)
                 return
             else:
                 objlen = struct.unpack('<Q', self.f.read(8))[0]
@@ -110,7 +110,7 @@ class AudioFile(object):
 
     def AnalyzeFlac(self):
         if self.f.read(4) != 'fLaC':
-	    raise UnknownFormat
+            raise UnknownFormat
         # Searching GUID
         while True:
             buf = self.f.read(4)
@@ -120,6 +120,6 @@ class AudioFile(object):
             metalen = buf[1] | (buf[2]<<8) | (buf[3]<<16);
             self.f.seek(metalen,1)   # skip this metadata block
             if buf[0] & 0x80:
-            	# it was the last metadata block
-		self.audioStart = self.f.seek(0,1)
+                # it was the last metadata block
+                self.audioStart = self.f.seek(0,1)
                 return

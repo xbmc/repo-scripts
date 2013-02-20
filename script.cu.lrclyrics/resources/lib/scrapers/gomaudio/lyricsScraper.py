@@ -56,8 +56,8 @@ class LyricsFetcher:
         if not key:
             return None
 
-        url = GOM_URL %(key, urllib.quote(song.title.decode("utf-8").encode("euc-kr")), urllib.quote(song.artist.decode("utf-8").encode("euc-kr")))
         try:
+            url = GOM_URL %(key, urllib.quote(song.title.decode("utf-8").encode("euc-kr")), urllib.quote(song.artist.decode("utf-8").encode("euc-kr")))
             response = urllib.urlopen( url )
             Page = response.read()
         except:

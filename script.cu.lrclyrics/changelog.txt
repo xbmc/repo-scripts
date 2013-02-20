@@ -1,5 +1,10 @@
+v1.0.5
+- fixed can't show lyric right after reselect in list, need reset control
+- handle encode error in scraper GomAudio
+
 v1.0.4
 - fixed saving lyrics
+- add Korean scraper(Alsong, GomAudio), credit for hojel
 
 v1.0.3
 -language update
