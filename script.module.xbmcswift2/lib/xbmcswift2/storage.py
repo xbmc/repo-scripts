@@ -143,6 +143,10 @@ class _Storage(collections.MutableMapping, _PersistentDictMixin):
 
     initial_update = collections.MutableMapping.update
 
+    def clear(self):
+        super(_Storage, self).clear()
+        self.sync()
+
 
 class TimedStorage(_Storage):
     '''A dict with the ability to persist to disk and TTL for items.'''

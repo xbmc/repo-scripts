@@ -108,6 +108,10 @@ class ListItem(object):
         '''Sets a property for the given key and value'''
         return self._listitem.setProperty(key, value)
 
+    def add_stream_info(self, stream_type, stream_values):
+        '''Adds stream details'''
+        return self._listitem.addStreamInfo(stream_type, stream_values)
+
     def get_icon(self):
         '''Returns the listitem's icon image'''
         return self._icon
@@ -181,7 +185,8 @@ class ListItem(object):
     @classmethod
     def from_dict(cls, label=None, label2=None, icon=None, thumbnail=None,
                   path=None, selected=None, info=None, properties=None,
-                  context_menu=None, is_playable=None, info_type='video'):
+                  context_menu=None, replace_context_menu=False,
+                  is_playable=None, info_type='video', stream_info=None):
         '''A ListItem constructor for setting a lot of properties not
         available in the regular __init__ method. Useful to collect all
         the properties in a dict and then use the **dct to call this
@@ -199,12 +204,18 @@ class ListItem(object):
             listitem.set_is_playable(True)
 
         if properties:
+            # Need to support existing tuples, but prefer to have a dict for
+            # properties.
+            if hasattr(properties, 'items'):
+                properties = properties.items()
             for key, val in properties:
                 listitem.set_property(key, val)
 
-        # By default doesn't replace, use .add_context_menu_items if you wish
-        # to set replace_items=True
+        if stream_info:
+            for stream_type, stream_values in stream_info.items():
+                listitem.add_stream_info(stream_type, stream_values)
+
         if context_menu:
-            listitem.add_context_menu_items(context_menu)
+            listitem.add_context_menu_items(context_menu, replace_context_menu)
 
         return listitem

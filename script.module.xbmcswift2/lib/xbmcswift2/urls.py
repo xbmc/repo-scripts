@@ -50,7 +50,11 @@ class UrlRule(object):
         self._url_format = self._url_rule.replace('<', '{').replace('>', '}')
 
         # Make a regex pattern for matching incoming URLs
-        p = self._url_rule.replace('<', '(?P<').replace('>', '>[^/]+?)')
+        rule = self._url_rule
+        if rule != '/':
+            # Except for a path of '/', the trailing slash is optional.
+            rule = self._url_rule.rstrip('/') + '/?'
+        p = rule.replace('<', '(?P<').replace('>', '>[^/]+?)')
 
         try:
             self._regex = re.compile('^' + p + '$')
@@ -130,7 +134,7 @@ class UrlRule(object):
         parameters.
 
         All items will be urlencoded. Any items which are not instances of
-        basestring will be pickled before being urlencoded.
+        basestring, or int/long will be pickled before being urlencoded.
 
         .. warning:: The pickling of items only works for key/value pairs which
                      will be in the query string. This behavior should only be
@@ -139,6 +143,11 @@ class UrlRule(object):
                      hard limit on URL length. See the caching section if you
                      need to persist a large amount of data between requests.
         '''
+        # Convert any ints and longs to strings
+        for key, val in items.items():
+            if isinstance(val, (int, long)):
+                items[key] = str(val)
+
         # First use our defaults passed when registering the rule
         url_items = dict((key, val) for key, val in self._options.items()
                          if key in self._keywords)

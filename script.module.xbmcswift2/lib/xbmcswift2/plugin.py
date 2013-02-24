@@ -96,6 +96,10 @@ class Plugin(XBMCMixin):
         # A flag to keep track of a call to xbmcplugin.endOfDirectory()
         self._end_of_directory = False
 
+        # Keep track of the update_listing flag passed to
+        # xbmcplugin.endOfDirectory()
+        self._update_listing = False
+
         # The plugin's named logger
         self._log = setup_log(self._addon_id)
 
@@ -272,11 +276,18 @@ class Plugin(XBMCMixin):
         Raises AmbiguousUrlException if there is more than one possible
         view for the given endpoint name.
         '''
-        if endpoint not in self._view_functions.keys():
-            raise NotFoundException, ('%s doesn\'t match any known patterns.' %
-                                      endpoint)
+        try:
+            rule = self._view_functions[endpoint]
+        except KeyError:
+            try:
+                rule = (rule for rule in self._view_functions.values() if rule.view_func == endpoint).next()
+            except StopIteration:
+                raise NotFoundException(
+                    '%s doesn\'t match any known patterns.' % endpoint)
 
-        rule = self._view_functions[endpoint]
+        # rule can be None since values of None are allowed in the
+        # _view_functions dict. This signifies more than one view function is
+        # tied to the same name.
         if not rule:
             # TODO: Make this a regular exception
             raise AmbiguousUrlException
@@ -294,14 +305,14 @@ class Plugin(XBMCMixin):
                      path, view_func.__name__)
             listitems = view_func(**items)
 
-            # XXX: The UI Container listing call to plugin or the resolving
-            #      url call always has a handle greater or equals 0. RunPlugin()
-            #      call using a handle -1. we only auto-call endOfDirectory for 
-            #      the UI Container listing call. and set_resolve_url() also
-            #      set the _end_of_directory flag so we do not call finish() for it.
-            # Allow the returning of bare dictionaries so we can cache view
+            # Only call self.finish() for UI container listing calls to plugin
+            # (handle will be >= 0). Do not call self.finish() when called via
+            # RunPlugin() (handle will be -1).
             if not self._end_of_directory and self.handle >= 0:
-                listitems = self.finish(listitems)
+                if listitems is None:
+                    self.finish(succeeded=False)
+                else:
+                    listitems = self.finish(listitems)
 
             return listitems
         raise NotFoundException, 'No matching view found for %s' % path

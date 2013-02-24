@@ -54,12 +54,12 @@ except ImportError:
     from logger import log
 
     # Mock the XBMC modules
-    from mockxbmc import xbmc, xbmcgui, xbmcplugin, xbmcaddon
+    from mockxbmc import xbmc, xbmcgui, xbmcplugin, xbmcaddon, xbmcvfs
     xbmc = module(xbmc)
     xbmcgui = module(xbmcgui)
     xbmcplugin = module(xbmcplugin)
     xbmcaddon = module(xbmcaddon)
-    xbmcvfs = module()
+    xbmcvfs = module(xbmcvfs)
 
 
 from xbmcswift2.storage import TimedStorage
