@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.validictory"
        name="validictory"
-       version="0.8.3"
-       provider-name="Valentin-Costel Hăloiu">
+       version="0.9.0"
+       provider-name="vially">
   <requires>
-    <import addon="xbmc.python" version="2.0"/>
+    <import addon="xbmc.python" version="2.1.0"/>
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />
@@ -13,5 +13,6 @@
     <description>Packed for XBMC from https://github.com/sunlightlabs/validictory</description>
     <license>MIT</license>
     <platform>all</platform>
+    <source>https://github.com/vially/xbmc-validictory</source>
   </extension>
 </addon>
