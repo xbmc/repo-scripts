@@ -19,50 +19,18 @@ import zlib
 from netrc import netrc, NetrcParseError
 
 from . import __version__
+from . import certs
 from .compat import parse_http_list as _parse_list_header
-from .compat import quote, urlparse, bytes, str, OrderedDict
+from .compat import quote, urlparse, bytes, str, OrderedDict, urlunparse
 from .cookies import RequestsCookieJar, cookiejar_from_dict
 
 _hush_pyflakes = (RequestsCookieJar,)
 
-CERTIFI_BUNDLE_PATH = None
-try:
-    # see if requests's own CA certificate bundle is installed
-    from . import certs
-    path = certs.where()
-    if os.path.exists(path):
-        CERTIFI_BUNDLE_PATH = certs.where()
-except ImportError:
-    pass
-
 NETRC_FILES = ('.netrc', '_netrc')
-
-# common paths for the OS's CA certificate bundle
-POSSIBLE_CA_BUNDLE_PATHS = [
-        # Red Hat, CentOS, Fedora and friends (provided by the ca-certificates package):
-        '/etc/pki/tls/certs/ca-bundle.crt',
-        # Ubuntu, Debian, and friends (provided by the ca-certificates package):
-        '/etc/ssl/certs/ca-certificates.crt',
-        # FreeBSD (provided by the ca_root_nss package):
-        '/usr/local/share/certs/ca-root-nss.crt',
-        # openSUSE (provided by the ca-certificates package), the 'certs' directory is the
-        # preferred way but may not be supported by the SSL module, thus it has 'ca-bundle.pem'
-        # as a fallback (which is generated from pem files in the 'certs' directory):
-        '/etc/ssl/ca-bundle.pem',
-]
-
-
-def get_os_ca_bundle_path():
-    """Try to pick an available CA certificate bundle provided by the OS."""
-    for path in POSSIBLE_CA_BUNDLE_PATHS:
-        if os.path.exists(path):
-            return path
-    return None
 
 # if certifi is installed, use its CA bundle;
 # otherwise, try and use the OS bundle
-DEFAULT_CA_BUNDLE_PATH = CERTIFI_BUNDLE_PATH or get_os_ca_bundle_path()
-
+DEFAULT_CA_BUNDLE_PATH = certs.where()
 
 def dict_to_sequence(d):
     """Returns an internal sequence dictionary update."""
@@ -72,6 +40,13 @@ def dict_to_sequence(d):
 
     return d
 
+def super_len(o):
+    if hasattr(o, '__len__'):
+        return len(o)
+    if hasattr(o, 'len'):
+        return o.len
+    if hasattr(o, 'fileno'):
+        return os.fstat(o.fileno()).st_size
 
 def get_netrc_auth(url):
     """Returns the Requests tuple auth for a given url from netrc."""
@@ -593,3 +568,17 @@ def guess_json_utf(data):
             return 'utf-32-le'
         # Did not detect a valid UTF-32 ascii-range character
     return None
+
+
+def prepend_scheme_if_needed(url, new_scheme):
+    '''Given a URL that may or may not have a scheme, prepend the given scheme.
+    Does not replace a present scheme with the one provided as an argument.'''
+    scheme, netloc, path, params, query, fragment = urlparse(url, new_scheme)
+
+    # urlparse is a finicky beast, and sometimes decides that there isn't a
+    # netloc present. Assume that it's being over-cautious, and switch netloc
+    # and path if urlparse decided there was no netloc.
+    if not netloc:
+        netloc, path = path, netloc
+
+    return urlunparse((scheme, netloc, path, params, query, fragment))

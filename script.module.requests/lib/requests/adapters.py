@@ -12,9 +12,11 @@ import socket
 
 from .models import Response
 from .packages.urllib3.poolmanager import PoolManager, proxy_from_url
+from .packages.urllib3.response import HTTPResponse
 from .hooks import dispatch_hook
-from .compat import urlparse, basestring
-from .utils import DEFAULT_CA_BUNDLE_PATH, get_encoding_from_headers
+from .compat import urlparse, basestring, urldefrag
+from .utils import (DEFAULT_CA_BUNDLE_PATH, get_encoding_from_headers,
+                    prepend_scheme_if_needed)
 from .structures import CaseInsensitiveDict
 from .packages.urllib3.exceptions import MaxRetryError
 from .packages.urllib3.exceptions import TimeoutError
@@ -93,6 +95,7 @@ class HTTPAdapter(BaseAdapter):
         # Set encoding.
         response.encoding = get_encoding_from_headers(response.headers)
         response.raw = resp
+        response.reason = response.raw.reason
 
         if isinstance(req.url, bytes):
             response.url = req.url.decode('utf-8')
@@ -116,6 +119,7 @@ class HTTPAdapter(BaseAdapter):
         proxy = proxies.get(urlparse(url).scheme)
 
         if proxy:
+            proxy = prepend_scheme_if_needed(proxy, urlparse(url).scheme)
             conn = proxy_from_url(proxy)
         else:
             conn = self.poolmanager.connection_from_url(url)
@@ -130,27 +134,73 @@ class HTTPAdapter(BaseAdapter):
         """
         self.poolmanager.clear()
 
+    def request_url(self, request, proxies):
+        """Obtain the url to use when making the final request.
+
+        If the message is being sent through a proxy, the full URL has to be
+        used. Otherwise, we should only use the path portion of the URL."""
+        proxies = proxies or {}
+        proxy = proxies.get(urlparse(request.url).scheme)
+
+        if proxy:
+            url, _ = urldefrag(request.url)
+        else:
+            url = request.path_url
+
+        return url
+
     def send(self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None):
         """Sends PreparedRequest object. Returns Response object."""
 
         conn = self.get_connection(request.url, proxies)
 
         self.cert_verify(conn, request.url, verify, cert)
+        url = self.request_url(request, proxies)
+
+        chunked = not (request.body is None or 'Content-Length' in request.headers)
 
         try:
+            if not chunked:
+                resp = conn.urlopen(
+                    method=request.method,
+                    url=url,
+                    body=request.body,
+                    headers=request.headers,
+                    redirect=False,
+                    assert_same_host=False,
+                    preload_content=False,
+                    decode_content=False,
+                    retries=self.max_retries,
+                    timeout=timeout
+                )
+
             # Send the request.
-            resp = conn.urlopen(
-                method=request.method,
-                url=request.path_url,
-                body=request.body,
-                headers=request.headers,
-                redirect=False,
-                assert_same_host=False,
-                preload_content=False,
-                decode_content=False,
-                retries=self.max_retries,
-                timeout=timeout,
-            )
+            else:
+                if hasattr(conn, 'proxy_pool'):
+                    conn = conn.proxy_pool
+
+                low_conn = conn._get_conn(timeout=timeout)
+                low_conn.putrequest(request.method, url, skip_accept_encoding=True)
+
+                for header, value in request.headers.items():
+                    low_conn.putheader(header, value)
+
+                low_conn.endheaders()
+
+                for i in request.body:
+                    low_conn.send(hex(len(i))[2:].encode('utf-8'))
+                    low_conn.send(b'\r\n')
+                    low_conn.send(i)
+                    low_conn.send(b'\r\n')
+                low_conn.send(b'0\r\n\r\n')
+
+                r = low_conn.getresponse()
+                resp = HTTPResponse.from_httplib(r,
+                    pool=conn,
+                    connection=low_conn,
+                    preload_content=False,
+                    decode_content=False
+                )
 
         except socket.error as sockerr:
             raise ConnectionError(sockerr)

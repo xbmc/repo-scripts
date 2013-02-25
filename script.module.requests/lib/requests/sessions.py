@@ -49,9 +49,20 @@ def merge_kwargs(local_kwarg, default_kwarg):
     default_kwarg = from_key_val_list(default_kwarg)
     local_kwarg = from_key_val_list(local_kwarg)
 
-    # Update new values.
+    # Update new values in a case-insensitive way
+    def get_original_key(original_keys, new_key):
+        """
+        Finds the key from original_keys that case-insensitive matches new_key.
+        """
+        for original_key in original_keys:
+            if key.lower() == original_key.lower():
+                return original_key
+        return new_key
+
     kwargs = default_kwarg.copy()
-    kwargs.update(local_kwarg)
+    original_keys = kwargs.keys()
+    for key, value in local_kwarg.items():
+        kwargs[get_original_key(original_keys, key)] = value
 
     # Remove keys that are set to None.
     for (k, v) in local_kwarg.items():
@@ -112,7 +123,6 @@ class SessionRedirectMixin(object):
                     url=url,
                     method=method,
                     headers=headers,
-                    params=req.params,
                     auth=req.auth,
                     cookies=req.cookies,
                     allow_redirects=False,

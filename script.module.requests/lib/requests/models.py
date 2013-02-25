@@ -22,7 +22,7 @@ from .exceptions import HTTPError, RequestException, MissingSchema, InvalidURL
 from .utils import (
     stream_untransfer, guess_filename, requote_uri,
     stream_decode_response_unicode, to_key_val_list, parse_header_links,
-    iter_slices, guess_json_utf)
+    iter_slices, guess_json_utf, super_len)
 from .compat import (
     cookielib, urlparse, urlunparse, urlsplit, urlencode, str, bytes, StringIO,
     is_py2, chardet, json, builtin_str, basestring)
@@ -108,8 +108,12 @@ class RequestEncodingMixin(object):
 
         for (k, v) in files:
             # support for explicit filename
+            ft = None
             if isinstance(v, (tuple, list)):
-                fn, fp = v
+                if len(v) == 2:
+                    fn, fp = v
+                else:
+                    fn, fp, ft = v
             else:
                 fn = guess_filename(v) or k
                 fp = v
@@ -117,7 +121,12 @@ class RequestEncodingMixin(object):
                 fp = StringIO(fp)
             if isinstance(fp, bytes):
                 fp = BytesIO(fp)
-            new_fields.append((k, (fn, fp.read())))
+            
+            if ft:
+                new_v = (fn, fp.read(), ft)
+            else:
+                new_v = (fn, fp.read())
+            new_fields.append((k, new_v))
 
         body, content_type = encode_multipart_formdata(new_fields)
 
@@ -321,37 +330,62 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
     def prepare_body(self, data, files):
         """Prepares the given HTTP body data."""
 
-        # If a generator is provided, error out.
-        if isinstance(data, type(_ for _ in [])):
-            raise NotImplementedError('Generator bodies are not supported yet.')
+        # Check if file, fo, generator, iterator.
+        # If not, run through normal process.
 
         # Nottin' on you.
         body = None
         content_type = None
+        length = None
+        is_stream = False
 
-        # Multi-part file uploads.
-        if files:
-            (body, content_type) = self._encode_files(files, data)
+        is_stream = all([
+            hasattr(data, '__iter__'),
+            not isinstance(data, basestring),
+            not isinstance(data, dict)
+        ])
+
+        try:
+            length = super_len(data)
+        except (TypeError, AttributeError):
+            length = False
+
+        if is_stream:
+            body = data
+
+            if files:
+                raise NotImplementedError('Streamed bodies and files are mutually exclusive.')
+
+            if length:
+                self.headers['Content-Length'] = length
+            else:
+                self.headers['Transfer-Encoding'] = 'chunked'
+        # Check if file, fo, generator, iterator.
+        # If not, run through normal process.
+
         else:
-            if data:
+            # Multi-part file uploads.
+            if files:
+                (body, content_type) = self._encode_files(files, data)
+            else:
+                if data:
+                    body = self._encode_params(data)
+                    if isinstance(data, str) or isinstance(data, builtin_str) or hasattr(data, 'read'):
+                        content_type = None
+                    else:
+                        content_type = 'application/x-www-form-urlencoded'
 
-                body = self._encode_params(data)
-                if isinstance(data, str) or isinstance(data, builtin_str) or hasattr(data, 'read'):
-                    content_type = None
-                else:
-                    content_type = 'application/x-www-form-urlencoded'
+            self.headers['Content-Length'] = '0'
+            if hasattr(body, 'seek') and hasattr(body, 'tell'):
+                body.seek(0, 2)
+                self.headers['Content-Length'] = str(body.tell())
+                body.seek(0, 0)
+            elif body is not None:
+                self.headers['Content-Length'] = str(len(body))
 
-        self.headers['Content-Length'] = '0'
-        if hasattr(body, 'seek') and hasattr(body, 'tell'):
-            body.seek(0, 2)
-            self.headers['Content-Length'] = str(body.tell())
-            body.seek(0, 0)
-        elif body is not None:
-            self.headers['Content-Length'] = str(len(body))
-
-        # Add content-type if it wasn't explicitly provided.
-        if (content_type) and (not 'content-type' in self.headers):
-            self.headers['Content-Type'] = content_type
+            # Add content-type if it wasn't explicitly provided.
+            if (content_type) and (not 'content-type' in self.headers):
+                self.headers['Content-Type'] = content_type
 
         self.body = body
 
