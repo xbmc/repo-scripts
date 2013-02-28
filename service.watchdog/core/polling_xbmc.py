@@ -27,7 +27,7 @@ def _walker_recursive(top):
   yield dirs, files
   for d in dirs:
     for dirs, files in _walker_recursive(d):
-      yield _join_path(top, dirs), _join_path(top, files)
+      yield dirs, files
 
 def _walker_depth_1(top):
   dirs, files = xbmcvfs.listdir(top)

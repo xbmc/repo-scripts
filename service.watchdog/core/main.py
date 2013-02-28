@@ -37,6 +37,7 @@ WATCH_VIDEO = ADDON.getSetting('watchvideo') == 'true'
 WATCH_MUSIC = ADDON.getSetting('watchmusic') == 'true'
 DELAY = int("0"+ADDON.getSetting('delay')) or 1
 SHOW_NOTIFICATIONS = ADDON.getSetting('notifications') == 'true'
+PAUSE_ON_PLAYBACK = ADDON.getSetting('pauseonplayback') == 'true'
 EXTENSIONS = "|.nsv|.m4a|.flac|.aac|.strm|.pls|.rm|.rma|.mpa|.wav|.wma|.ogg|.mp3|.mp2|.m3u|.mod|.amf|.669|.dmf|.dsm|.far|.gdm|.imf|.it|.m15|.med|.okt|.s3m|.stm|.sfx|.ult|.uni|.xm|.sid|.ac3|.dts|.cue|.aif|.aiff|.wpl|.ape|.mac|.mpc|.mp+|.mpp|.shn|.zip|.rar|.wv|.nsf|.spc|.gym|.adx|.dsp|.adp|.ymf|.ast|.afc|.hps|.xsp|.xwav|.waa|.wvs|.wam|.gcm|.idsp|.mpdsp|.mss|.spt|.rsd|.mid|.kar|.sap|.cmc|.cmr|.dmc|.mpt|.mpd|.rmt|.tmc|.tm8|.tm2|.oga|.url|.pxml|.tta|.rss|.cm3|.cms|.dlt|.brstm|.wtv|.mka|.m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.img|.iso|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.bin|.dat|.mpg|.mpeg|.mp4|.mkv|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.rar|.001|.wpl|.zip|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.url|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv|.m4v|.3g2|.3gp|.nsv|.tp|.ts|.ty|.strm|.pls|.rm|.rmvb|.m3u|.m3u8|.ifo|.mov|.qt|.divx|.xvid|.bivx|.vob|.nrg|.img|.iso|.pva|.wmv|.asf|.asx|.ogm|.m2v|.avi|.bin|.dat|.mpg|.mpeg|.mp4|.mkv|.avc|.vp3|.svq3|.nuv|.viv|.dv|.fli|.flv|.rar|.001|.wpl|.zip|.vdr|.dvr-ms|.xsp|.mts|.m2t|.m2ts|.evo|.ogv|.sdp|.avs|.rec|.url|.pxml|.vc1|.h264|.rcv|.rss|.mpls|.webm|.bdmv|.wtv|"
 
 
@@ -44,7 +45,7 @@ class XBMCActor(pykka.ThreadingActor):
   """ Messaging interface to xbmc's executebuiltin calls """
   def _xbmc_is_busy(self):
     sleep(1) # visibility cant be immediately trusted. Give xbmc time to render
-    return (xbmc.Player().isPlaying()
+    return ((xbmc.Player().isPlaying() and PAUSE_ON_PLAYBACK)
         or xbmc.getCondVisibility('Library.IsScanning')
         or xbmc.getCondVisibility('Window.IsActive(10101)'))
   
@@ -53,7 +54,7 @@ class XBMCActor(pykka.ThreadingActor):
     while self._xbmc_is_busy():
       pass
     log("scanning %s (%s)" % (path, library))
-    xbmc.executebuiltin("UpdateLibrary(%s,%s)" % (library, path))
+    xbmc.executebuiltin("UpdateLibrary(%s,\"%s\")" % (library, path))
   
   def clean(self, library, path=None):
     """ Tell xbmc to clean. Returns immediately when scanning has started. """
@@ -161,7 +162,7 @@ def log(msg):
 
 def notify(msg):
   if SHOW_NOTIFICATIONS:
-    xbmc.executebuiltin("XBMC.Notification(Library Watchdog, %s)" % msg)
+    xbmc.executebuiltin("XBMC.Notification(Library Watchdog,\"%s\")" % msg)
 
 def select_observer(path):
   import observers
@@ -176,7 +177,9 @@ def select_observer(path):
 
 def watch(library, xbmc_actor):
   threads = []
-  for path in get_media_sources(library):
+  sources = get_media_sources(library)
+  log("%s sources %s" % (library, sources))
+  for path in sources:
     path = path.encode('utf-8')
     observer_cls = select_observer(path)
     if observer_cls:

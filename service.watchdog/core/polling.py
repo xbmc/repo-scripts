@@ -18,6 +18,10 @@ from functools import partial
 from watchdog.observers.api import EventEmitter, BaseObserver
 from watchdog.events import DirDeletedEvent, DirCreatedEvent
 from main import log
+from main import PAUSE_ON_PLAYBACK
+
+def _paused():
+  return xbmc.Player().isPlaying() and PAUSE_ON_PLAYBACK
 
 def hidden(path):
   return path.startswith('.')
@@ -37,7 +41,6 @@ class PathSnapsot(object):
     self._dirs = set()
     for dirs, files in walker(root):
       self._dirs.update(dirs)
-      self._paths.update(dirs)
       self._paths.update(files)
   
   def path_diff(self, other):
@@ -72,7 +75,7 @@ class Poller(EventEmitter):
   
   def queue_events(self, timeout):
     time.sleep(timeout)
-    if not xbmc.Player().isPlaying():
+    if not _paused():
       new_snapshot = self._make_snapshot(self.watch.path)
       created, deleted, modified = self._snapshot.diff(new_snapshot)
       self._snapshot = new_snapshot
