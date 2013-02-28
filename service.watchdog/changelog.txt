@@ -1,3 +1,6 @@
+[B]0.6.6[/B]
+- fixed: error in settings parsing causing script to fail
+
 [B]0.6.5[/B]
 - fixed: library was cleaned even if it was disabled
 

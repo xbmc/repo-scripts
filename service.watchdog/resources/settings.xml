@@ -7,7 +7,7 @@
     <setting label="30011" id="notifications" type="bool" default="true"/>
   </category>
   <category label="30002">
-    <setting label="30006" id="method" type="select" lvalues="30007|30008" default="0"/>
+    <setting label="30006" id="method" type="enum" lvalues="30007|30008" default="0"/>
     <setting label="30009" id="nonrecursive" type="bool" enable="eq(-1,1)" default="false"/>
     <setting label="30010" id="delay" type="number" default="1"/>
   </category>
