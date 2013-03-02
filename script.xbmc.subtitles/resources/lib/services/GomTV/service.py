@@ -64,12 +64,12 @@ class GomTvWebService:
         html = urllib2.urlopen(req).read()
         if "<div id='search_failed_smi'>" in html:
             log(__name__, "no result found")
-            return None
+            return []
         elif "<script>location.href" in html:
             log(__name__, "redirected")
             if "key=';</script>" in html:
                 log(__name__, "fail to search with given key")
-                return None
+                return []
             q_url = self.parseRedirectionPage(html)
             req = urllib2.Request(q_url)
             req.add_header("User-Agent", self.agent_str)

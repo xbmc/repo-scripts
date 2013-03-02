@@ -1,3 +1,9 @@
+3.9.6
+- [fix] GomTV service: return empty array when no subtitles are found,hojel
+- [fix] Subscene service, thx jowadmax on XBMC Forum
+- [fix] Subdivx, Fix bug on the download calculation + new logo,EnricGodes
+- [fix] Subscene, zip files not getting extracted properly
+
 3.9.5
 - [fix] LegendasDivx, LegendasZone, Pipocas and euTorrents, highlandr
 - [fix] LegendasTV: some windows downloads bug fixes, gfjardim

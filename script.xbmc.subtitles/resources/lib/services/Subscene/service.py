@@ -44,15 +44,22 @@ subtitle_pattern = "..<tr>.{5}<td>.{6}<a class=\"a1\" href=\"/([^\n\r]{10,200}?-
 
 # movie/seasonfound pattern example:
 """
-			<a href="/S-Darko-AKA-S-Darko-A-Donnie-Darko-Tale/subtitles-76635.aspx" class=popular>
-				S. Darko AKA S. Darko: A Donnie Darko Tale (2009)
+			<a href="/inception/subtitles-80839.aspx" class=popular>
+				Inception (2010) 
+				<dfn>(327)</dfn>
 """
-movie_season_pattern = "...<a href=\"/([^\n\r\t]*?/subtitles-\d{1,10}.aspx)\".{1,14}>\r\n.{4}([^\n\r\t]*?) \((\d\d\d\d)\) \r\n"
+movie_season_pattern = "...<a href=\"([^\n\r\t]*?/subtitles-\d{1,10}.aspx)\".{1,14}>\r\n{0,3}.{4}([^\n\r\t\&#]*?) \((\d\d\d\d)\) \r\n{0,3}.{1,4}<dfn>\(.{1,5}</dfn>"
 # group(1) = link, group(2) = movie_season_title,  group(3) = year
 
 
-# (new WebForm_PostBackOptions(&quot;s$lc$bcr$downloadLink&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/arabic/House-MD-Sixth-Season/subtitle-329405-dlpath-78774/zip.zipx&quot;, false, true))
-downloadlink_pattern = "\(new WebForm_PostBackOptions\([^\n\r\t]+?\/([^\n\r\t]+?)&quot;, false, true\)\)"
+
+
+# download link pattern example:
+"""
+		<a href="/subtitle/download?mac=LxawhQiaMYm9O2AsoNMHXbXDYN2b4yBreI8TJIBfpdw7UIo1JP5566Sbb2ei_zUC0" rel="nofollow" onclick="DownloadSubtitle(this)" id="downloadButton" class="button Positive">
+"""
+downloadlink_pattern = "...<a href=\"(.+?)\" rel=\"nofollow\" onclick=\"DownloadSubtitle"
+# group(1) = link
 
 # <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTk1MDk4NjQwM2Rk5ncGq+1a601mEFQDA9lqLwfzjaY=" />
 viewstate_pattern = "<input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value=\"([^\n\r\t]*?)\" />"
@@ -131,6 +138,9 @@ def geturl(url):
     try:
         response   = urllib2.urlopen(url)
         content    = response.read()
+        #Fix non-unicode charachters in movie titles
+        strip_unicode = re.compile("([^-_a-zA-Z0-9!@#%&=,/'\";:~`\$\^\*\(\)\+\[\]\.\{\}\|\?\<\>\\]+|[^\s]+)")
+        content    = strip_unicode.sub('', content)
         return_url = response.geturl()
     except:
         log( __name__ ,"%s Failed to get url:%s" % (debug_pretext, url))
@@ -204,84 +214,88 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     url = subtitles_list[pos][ "link" ]
     language = subtitles_list[pos][ "language_name" ]
     content, response_url = geturl(url)
-    match = re.search(downloadlink_pattern, content, re.IGNORECASE | re.DOTALL)
+    match=  re.compile(downloadlink_pattern).findall(content)
     if match:
-        downloadlink = main_url  + match.group(1)
+        downloadlink = "http://subscene.com"  + match[0]
         log( __name__ ,"%s Downloadlink: %s " % (debug_pretext, downloadlink))
-        match = re.search(viewstate_pattern, content, re.IGNORECASE | re.DOTALL)
-        if match:
-            viewstate = match.group(1)
-            log( __name__ ,"%s Viewstate: %s " % (debug_pretext, viewstate))
-            match = re.search(previouspage_pattern, content, re.IGNORECASE | re.DOTALL)
-            if match:
-                previouspage = match.group(1)
-                log( __name__ ,"%s Previouspage: %s " % (debug_pretext, previouspage))
-                match = re.search(subtitleid_pattern, content, re.IGNORECASE | re.DOTALL)
-                if match:
-                    subtitleid = match.group(1)
-                    log( __name__ ,"%s Subtitleid: %s " % (debug_pretext, subtitleid))
-                    match = re.search(typeid_pattern, content, re.IGNORECASE | re.DOTALL)
-                    if match:
-                        typeid = match.group(1)
-                        log( __name__ ,"%s Typeid: %s " % (debug_pretext, typeid))
-                        match = re.search(filmid_pattern, content, re.IGNORECASE | re.DOTALL)
-                        if match:
-                            filmid = match.group(1)
-                            log( __name__ ,"%s Filmid: %s " % (debug_pretext, filmid))
-                            postparams = urllib.urlencode( { '__EVENTTARGET': 's$lc$bcr$downloadLink', '__EVENTARGUMENT': '' , '__VIEWSTATE': viewstate, '__PREVIOUSPAGE': previouspage, 'subtitleId': subtitleid, 'typeId': typeid, 'filmId': filmid} )
-                            class MyOpener(urllib.FancyURLopener):
-                                version = 'User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)'
-                            my_urlopener = MyOpener()
-                            my_urlopener.addheader('Referer', url)
-                            log( __name__ ,"%s Fetching subtitles using url '%s' with referer header '%s' and post parameters '%s'" % (debug_pretext, downloadlink, url, postparams))
-                            response = my_urlopener.open(downloadlink, postparams)
-                            local_tmp_file = os.path.join(tmp_sub_dir, "subscene." + typeid)
-                            if (typeid != "zip") and (typeid != "rar"):
-                                subs_file = local_tmp_file
-                                packed = False
-                            else:
-                                packed = True
-                            try:
-                                log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
-                                local_file_handle = open(local_tmp_file, "w" + "b")
-                                local_file_handle.write(response.read())
-                                local_file_handle.close()
-                            except:
-                                log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
-                            if packed:
-                                files = os.listdir(tmp_sub_dir)
-                                init_filecount = len(files)
-                                max_mtime = 0
-                                filecount = init_filecount
-                                # determine the newest file from tmp_sub_dir
-                                for file in files:
-                                    if (string.split(file,'.')[-1] in ['srt','sub','txt']):
-                                        mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
-                                        if mtime > max_mtime:
-                                            max_mtime =  mtime
-                                init_max_mtime = max_mtime
-                                time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
-                                xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
-                                waittime  = 0
-                                while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
-                                    time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
-                                    files = os.listdir(tmp_sub_dir)
-                                    filecount = len(files)
-                                    # determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
-                                    for file in files:
-                                        if (string.split(file,'.')[-1] in ['srt','sub','txt']):
-                                            mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
-                                            if (mtime > max_mtime):
-                                                max_mtime =  mtime
-                                    waittime  = waittime + 1
-                                if waittime == 20:
-                                    log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
-                                else:
-                                    log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
-                                    for file in files:
-                                        # there could be more subtitle files in tmp_sub_dir, so make sure we get the newly created subtitle file
-                                        if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
-                                            log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))
-                                            subs_file = os.path.join(tmp_sub_dir, file)
-                            log( __name__ ,"%s Subtitles saved to '%s'" % (debug_pretext, local_tmp_file))
-                            return False, language, subs_file #standard output
+        viewstate = 0
+        previouspage = 0
+        subtitleid = 0
+        typeid = "zip"
+        filmid = 0
+        postparams = urllib.urlencode( { '__EVENTTARGET': 's$lc$bcr$downloadLink', '__EVENTARGUMENT': '' , '__VIEWSTATE': viewstate, '__PREVIOUSPAGE': previouspage, 'subtitleId': subtitleid, 'typeId': typeid, 'filmId': filmid} )
+        class MyOpener(urllib.FancyURLopener):
+            version = 'User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)'
+        my_urlopener = MyOpener()
+        my_urlopener.addheader('Referer', url)
+        log( __name__ ,"%s Fetching subtitles using url '%s' with referer header '%s' and post parameters '%s'" % (debug_pretext, downloadlink, url, postparams))
+        response = my_urlopener.open(downloadlink, postparams)
+        local_tmp_file = os.path.join(tmp_sub_dir, "subscene.xxx")
+        try:
+            log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
+            if not os.path.exists(tmp_sub_dir):
+                os.makedirs(tmp_sub_dir)
+            local_file_handle = open(local_tmp_file, "w" + "b")
+            local_file_handle.write(response.read())
+            local_file_handle.close()
+            #Check archive type (rar/zip/else) through the file header (rar=Rar!, zip=PK)
+            myfile = open(local_tmp_file, "rb")
+            myfile.seek(0)
+            if (myfile.read(1) == 'R'):
+                typeid = "rar"
+                packed = True
+                log( __name__ , "Discovered RAR Archive")
+            else:
+                myfile.seek(0)
+                if (myfile.read(1) == 'P'):
+                    typeid = "zip"
+                    packed = True
+                    log( __name__ , "Discovered ZIP Archive")
+                else:
+                    typeid = "srt"
+                    packed = False
+                    subs_file = local_tmp_file
+                    log( __name__ , "Discovered a non-archive file")
+            myfile.close()
+            local_tmp_file = os.path.join(tmp_sub_dir, "subscene." + typeid)
+            os.rename(os.path.join(tmp_sub_dir, "subscene.xxx"), local_tmp_file)
+            log( __name__ , "%s Saving to %s" % (debug_pretext,local_tmp_file))
+        except:
+            log( __name__ ,"%s Failed to save subtitle to %s" % (debug_pretext, local_tmp_file))
+        if packed:
+            files = os.listdir(tmp_sub_dir)
+            init_filecount = len(files)
+            max_mtime = 0
+            filecount = init_filecount
+            # determine the newest file from tmp_sub_dir
+            for file in files:
+                if (string.split(file,'.')[-1] in ['srt','sub','txt']):
+                    mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+                    if mtime > max_mtime:
+                        max_mtime =  mtime
+            init_max_mtime = max_mtime
+            time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
+            xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
+            waittime  = 0
+            while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
+                time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
+                files = os.listdir(tmp_sub_dir)
+                filecount = len(files)
+                # determine if there is a newer file created in tmp_sub_dir (marks that the extraction had completed)
+                for file in files:
+                    if (string.split(file,'.')[-1] in ['srt','sub','txt']):
+                        mtime = os.stat(os.path.join(tmp_sub_dir, file)).st_mtime
+                        if (mtime > max_mtime):
+                            max_mtime =  mtime
+                waittime  = waittime + 1
+            if waittime == 20:
+                log( __name__ ,"%s Failed to unpack subtitles in '%s'" % (debug_pretext, tmp_sub_dir))
+            else:
+                log( __name__ ,"%s Unpacked files in '%s'" % (debug_pretext, tmp_sub_dir))
+                for file in files:
+                    # there could be more subtitle files in tmp_sub_dir, so make sure we get the newly created subtitle file
+                    if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
+                        log( __name__ ,"%s Unpacked subtitles file '%s'" % (debug_pretext, file))
+                        subs_file = os.path.join(tmp_sub_dir, file)
+        log( __name__ ,"%s Subtitles saved to '%s'" % (debug_pretext, local_tmp_file))
+        return False, language, subs_file #standard output
