@@ -1,0 +1,55 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "SpeedFan Log Folder"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Log Temperature Scale"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr ""
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr ""
+
+#empty strings from id 30006 to 30099
+
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr ""

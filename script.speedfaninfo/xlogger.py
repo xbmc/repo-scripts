@@ -45,15 +45,8 @@ class Logger():
         #the last argument must be the logtype of the data (i.e. standard or verbose)
         #convert
         #l_args = list(args)
-        #the type (i.e. standard or verbose) of the log item is in the last item of the tuple
-        type = args[-1]
-        #if advanced logging is disabled, only non-detailed items are logged
-        verbose = False
-        standard = False
-        if(__addon__.getSetting('advanced_log') == 'true' and type == 'verbose'):
-            verbose = True
-        elif(type =='standard'):
-            standard = True
+        #the log_level is in the last item of the tuple
+        log_level = args[-1]
         #now we need to iterate through all the other args and log them
         for arg in args[:-1]:
             argclass = arg.__class__.__name__
@@ -64,10 +57,7 @@ class Logger():
                 line = self.parseListorTuple(arg, 0)
             else:
                 line = 'no appropriate action found for class ' + argclass
-            if verbose:
-                xbmc.log(__log_preamble__ + ' ' + line)
-            elif standard:
-                xbmc.log(__log_preamble__ + ' ' + line)
+            xbmc.log(__log_preamble__ + ' ' + line, log_level)
 
 
 inst = Logger()
