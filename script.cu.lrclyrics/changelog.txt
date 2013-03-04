@@ -1,8 +1,10 @@
+v1.0.6
+- fixed potential import of a third party scrapers module
+
 v1.0.5
 - fixed can't show lyric right after reselect in list, need reset control
 - handle encode error in scraper GomAudio
 - added option to save lyrics to song folder
-- fixed potential import of a third party scrapers module
 
 v1.0.4
 - fixed saving lyrics
