@@ -1,13 +1,15 @@
 v1.0.5
 - fixed can't show lyric right after reselect in list, need reset control
 - handle encode error in scraper GomAudio
+- added option to save lyrics to song folder
+- fixed potential import of a third party scrapers module
 
 v1.0.4
 - fixed saving lyrics
 - add Korean scraper(Alsong, GomAudio), credit for hojel
 
 v1.0.3
--language update
+- language update
 
 v1.0.2
 - add a script running window property

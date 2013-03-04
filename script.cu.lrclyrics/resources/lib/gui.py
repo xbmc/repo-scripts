@@ -34,7 +34,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def get_scraper_list( self ):
         for scraper in os.listdir(LYRIC_SCRAPER_DIR):
             if os.path.isdir(os.path.join(LYRIC_SCRAPER_DIR, scraper)) and __addon__.getSetting( scraper ) == "true":
-                exec ( "from scrapers.%s import lyricsScraper as lyricsScraper_%s" % (scraper, scraper))
+                exec ( "from culrcscrapers.%s import lyricsScraper as lyricsScraper_%s" % (scraper, scraper))
                 exec ( "self.scrapers.append([lyricsScraper_%s.__priority__,lyricsScraper_%s.LyricsFetcher(),lyricsScraper_%s.__title__,lyricsScraper_%s.__lrc__])" % (scraper, scraper, scraper, scraper))
                 self.scrapers.sort()
 
@@ -148,8 +148,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 lyrics = scraper[1].get_lyrics( song )
                 if ( lyrics ):
                     log('found lrc lyrics online')
-                    if ( __addon__.getSetting( "save_lyrics" ) == "true" ):
-                        success = self.save_lyrics_to_file( lyrics )
+                    self.save_lyrics_to_file( lyrics )
                     return lyrics
 
         # search embedded txt lyrics
@@ -170,8 +169,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 lyrics = scraper[1].get_lyrics( song )
                 if ( lyrics ):
                     log('found txt lyrics online')
-                    if ( __addon__.getSetting( "save_lyrics" ) == "true" ):
-                        success = self.save_lyrics_to_file( lyrics )
+                    self.save_lyrics_to_file( lyrics )
                     return lyrics
         log('no lyrics found')
         lyrics = Lyrics()
@@ -200,13 +198,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         lyrics.source = __language__( 30000 )
         lyrics.lrc = getlrc
 
-        # Search same path with song file
-        song_path = song.path2(getlrc)
-        if xbmcvfs.exists(song_path):
-            lyr = get_textfile( song_path )
-            if lyr:
-                lyrics.lyrics = lyr
-                return lyrics
         # Search save path by Cu LRC Lyrics
         song_path = song.path1(getlrc)
         if xbmcvfs.exists(song_path):
@@ -214,7 +205,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if lyr:
                 lyrics.lyrics = lyr
                 return lyrics
-            return lyrics
+        # Search same path with song file
+        song_path = song.path2(getlrc)
+        if xbmcvfs.exists(song_path):
+            lyr = get_textfile( song_path )
+            if lyr:
+                lyrics.lyrics = lyr
+                return lyrics
         return None
 
     def save_lyrics_to_memory (self, lyrics):
@@ -224,16 +221,23 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.fetchedLyrics =  self.fetchedLyrics[:10]
 
     def save_lyrics_to_file( self, lyrics ):
+        if isinstance (lyrics.lyrics, str):
+            lyr = lyrics.lyrics
+        else:
+            lyr = lyrics.lyrics.encode('utf-8')
+        if ( __addon__.getSetting( "save_lyrics1" ) == "true" ):
+            file_path = lyrics.song.path1(lyrics.lrc)
+            success = self.write_lyrics_file( file_path, lyr)
+        if ( __addon__.getSetting( "save_lyrics2" ) == "true" ):
+            file_path = lyrics.song.path2(lyrics.lrc)
+            success = self.write_lyrics_file( file_path, lyr)
+
+    def write_lyrics_file( self, file, data):
         try:
-            song_path = lyrics.song.path1(lyrics.lrc)
-            if ( not xbmcvfs.exists( os.path.dirname( song_path ) ) ):
-                xbmcvfs.mkdirs( os.path.dirname( song_path ) )
-            if isinstance (lyrics.lyrics, str):
-                lyr = lyrics.lyrics
-            else:
-                lyr = lyrics.lyrics.encode('utf-8')
-            lyrics_file = xbmcvfs.File( song_path, "w" )
-            lyrics_file.write( lyr )
+            if ( not xbmcvfs.exists( os.path.dirname( file ) ) ):
+                xbmcvfs.mkdirs( os.path.dirname( file ) )
+            lyrics_file = xbmcvfs.File( file, "w" )
+            lyrics_file.write( data )
             lyrics_file.close()
             return True
         except:
@@ -303,8 +307,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.selected = False
             self.getControl( 110 ).reset()
             self.show_lyrics( self.current_lyrics )
-            if ( __addon__.getSetting( "save_lyrics" ) == "true" ):
-                success = self.save_lyrics_to_file( self.current_lyrics )
+            self.save_lyrics_to_file( self.current_lyrics )
 
     def reset_controls( self ):
         self.getControl( 100 ).setText(xbmc.getLocalizedString(194))

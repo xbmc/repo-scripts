@@ -21,11 +21,13 @@
 	<category label="30151">
 		<setting id="read_filename" type="bool" label="30106" default="false"/>
 		<setting id="read_filename_format" type="enum" label="30107" default="0" lvalues="30108|30109|30110" />
-		<setting id="read_subfolder" type="bool" label="30111" default="false"/>
-		<setting id="read_subfolder_path" type="text" enable="eq(-1,true)" label="30112" default="lyrics"/>
 		<setting type="sep" />
-		<setting id="save_lyrics" type="bool" label="30101" default="true"/>
+		<setting id="save_lyrics1" type="bool" label="30101" default="true"/>
 		<setting id="save_lyrics_path" type="folder" enable="eq(-1,true)" source="files" label="30102" default="" />
-		<setting id="save_artist_folder" type="bool" enable="eq(-2,true)" label="30104" default="true"/>
+		<setting id="save_filename_format" type="enum" enable="eq(-2,true)" label="30103" default="0" lvalues="30105|30108"/>
+		<setting type="sep" />
+		<setting id="save_lyrics2" type="bool" label="30113" default="false"/>
+		<setting id="save_subfolder" type="bool" label="30111" default="false"/>
+		<setting id="save_subfolder_path" type="text" enable="eq(-1,true)" label="30112" default="lyrics"/>
 	</category>
 </settings>
