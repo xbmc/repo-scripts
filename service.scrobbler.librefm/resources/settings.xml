@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="30000">
+		<setting id="librefmsubmitsongs" type="bool" label="30004" default="true"/>
+		<setting id="librefmsubmitradio" type="bool" label="30005" default="true"/>
+		<setting id="librefmuser" type="text" label="30006" default="" enable="eq(-1,true) | eq(-2,true)"/>
+		<setting id="librefmpass" type="text" label="30007" default="" enable="eq(-2,true) | eq(-3,true)" option="hidden"/>
+	</category>
+</settings>

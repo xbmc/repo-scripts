@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30000">General</string>
+    <string id="30004">Submit songs to Libre.fm</string>
+    <string id="30005">Submit streaming radio to Libre.fm</string>
+    <string id="30006">Libre.fm username</string>
+    <string id="30007">Libre.fm password</string>
+    <string id="32001">Authentication error</string>
+    <string id="32002">Invalid time, please adjust your system clock and restart XBMC</string>
+    <string id="32003">Please update the add-on</string>
+</strings>
