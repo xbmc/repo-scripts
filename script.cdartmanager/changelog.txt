@@ -1,3 +1,9 @@
+3.0.1
+- Fix - Corrected import for download error
+- Fix - Use correct encoding in various parts of the script
+- Fix - Database creation errors
+- Add - fanart.tv Artwork refresh option
+
 2.8.0 - 3.0.0
 - Fix - Set counts to zero at the start of the building of database
 - Fix - MusicBrainz retrieval code

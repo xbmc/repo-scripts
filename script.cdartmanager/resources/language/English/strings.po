@@ -782,3 +782,7 @@ msgstr "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
 msgctxt "#32190"
 msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
 msgstr "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
+
+msgctxt "#32191"
+msgid "Refresh fanart.tv data"
+msgstr "Refresh fanart.tv data"

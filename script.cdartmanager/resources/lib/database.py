@@ -5,7 +5,11 @@ import sys, os, re, datetime, traceback, time
 try:
     from sqlite3 import dbapi2 as sqlite3
 except:
-    from pysqlite2 import dbapi2 as sqlite3    
+    from pysqlite2 import dbapi2 as sqlite3
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
 
 __language__          = sys.modules[ "__main__" ].__language__
 __scriptname__        = sys.modules[ "__main__" ].__scriptname__
@@ -95,15 +99,18 @@ def user_updates( details, type ):
     c.close()
 
 def restore_user_updates():
-    conn = sqlite3.connect(addon_db)
-    c = conn.cursor()
-    c.execute( '''UPDATE lalist SET musicbrainz_artistid = (SELECT artist_updates.musicbrainz_artistid FROM artist_updates WHERE artist_updates.local_id = lalist.local_id ) WHERE EXISTS ( SELECT * FROM artist_updates WHERE artist_updates.name = lalist.name )''' )
-    c.execute( '''UPDATE local_artists SET musicbrainz_artistid = (SELECT artist_updates.musicbrainz_artistid FROM artist_updates WHERE artist_updates.local_id = local_artists.local_id ) WHERE EXISTS ( SELECT * FROM artist_updates WHERE artist_updates.name = local_artists.name )''' )
-    c.execute( '''UPDATE alblist SET musicbrainz_artistid = (SELECT album_updates.musicbrainz_artistid FROM album_updates WHERE album_updates.album_id = alblist.album_id ) WHERE EXISTS ( SELECT * FROM album_updates WHERE album_updates.album_id = alblist.album_id )''' )
-    c.execute( '''UPDATE alblist SET musicbrainz_albumid = (SELECT album_updates.musicbrainz_albumid FROM album_updates WHERE album_updates.album_id = alblist.album_id ) WHERE EXISTS ( SELECT * FROM album_updates WHERE album_updates.album_id = alblist.album_id )''' )
-    conn.commit()
-    c.close()
-    
+    try:
+        conn = sqlite3.connect(addon_db)
+        c = conn.cursor()
+        c.execute( '''UPDATE lalist SET musicbrainz_artistid = (SELECT artist_updates.musicbrainz_artistid FROM artist_updates WHERE artist_updates.local_id = lalist.local_id ) WHERE EXISTS ( SELECT * FROM artist_updates WHERE artist_updates.name = lalist.name )''' )
+        c.execute( '''UPDATE local_artists SET musicbrainz_artistid = (SELECT artist_updates.musicbrainz_artistid FROM artist_updates WHERE artist_updates.local_id = local_artists.local_id ) WHERE EXISTS ( SELECT * FROM artist_updates WHERE artist_updates.name = local_artists.name )''' )
+        c.execute( '''UPDATE alblist SET musicbrainz_artistid = (SELECT album_updates.musicbrainz_artistid FROM album_updates WHERE album_updates.album_id = alblist.album_id ) WHERE EXISTS ( SELECT * FROM album_updates WHERE album_updates.album_id = alblist.album_id )''' )
+        c.execute( '''UPDATE alblist SET musicbrainz_albumid = (SELECT album_updates.musicbrainz_albumid FROM album_updates WHERE album_updates.album_id = alblist.album_id ) WHERE EXISTS ( SELECT * FROM album_updates WHERE album_updates.album_id = alblist.album_id )''' )
+        conn.commit()
+        c.close()
+    except:
+        traceback.print_exc()
+
 def artist_list_to_string( artist ):
     artist_string = ""
     if not ( type( artist ) is list ):
@@ -376,6 +383,8 @@ def store_lalist( local_artist_list, count_artist_local ):
                 c.execute( '''insert into lalist(local_id, name, musicbrainz_artistid, fanarttv_has_art) values (?, ?, ?, ?)''', (artist["local_id"], unicode(artist["name"], 'utf-8', ), artist["musicbrainz_artistid"], artist[ "has_art" ] ))
             except TypeError:
                 c.execute( '''insert into lalist(local_id, name, musicbrainz_artistid, fanarttv_has_art) values (?, ?, ?, ?)''', (artist["local_id"], get_unicode( artist["name"] ), artist["musicbrainz_artistid"], artist[ "has_art" ] ))
+            except:
+                traceback.print_exc()
             artist_count += 1
             percent = int(( artist_count / float( count_artist_local ) ) * 100)
         except:
@@ -448,7 +457,6 @@ def check_local_albumartist( album_artist, local_artist_list, background=False )
     found = False
     local_album_artist_list = []
     for artist in album_artist:        # match album artist to local artist id
-        #log( artist, xbmc.LOGDEBUG )
         album_artist_1 = {}
         name = ""
         name = get_unicode( artist_list_to_string( artist["name"] ) )
@@ -468,8 +476,9 @@ def check_local_albumartist( album_artist, local_artist_list, background=False )
             album_artist_1["has_art"] = "False"
             local_album_artist_list.append( album_artist_1 )
         else:
+            log( "Artist Not Found:", xbmc.LOGDEBUG )
             try:
-                print repr( artist_list_to_string( artist["name"] ) )
+                log( repr( artist_list_to_string( artist["name"] ) ), xbmc.LOGDEBUG )
             except:
                 traceback.print_exc()
     return local_album_artist_list, artist_count
@@ -965,6 +974,8 @@ def update_database( background=False ):
     conn = sqlite3.connect( addon_db )
     c = conn.cursor()
     if xbmcvfs.exists( addon_db ): # if database file still exists even after trying to delete it. Wipe out its contents
+        c.execute('''DROP table IF EXISTS lalist_bk''')   # drop the local artists list backup table
+        c.execute('''DROP table IF EXISTS local_artists_bk''')   # drop local artists backup table
         c.execute('''CREATE TABLE lalist_bk AS SELECT * FROM lalist''') # create a backup of the Album artist table
         c.execute('''CREATE TABLE local_artists_bk AS SELECT * FROM local_artists''') # create a backup of the Local Artist table
         c.execute('''DROP table IF EXISTS counts''')   # drop the count table

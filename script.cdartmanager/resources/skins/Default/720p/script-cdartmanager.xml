@@ -84,7 +84,7 @@ id      | description
 138     - Artist Refresh MBID sub-Menu - Select Artist
 139     - Artist Refresh MBID sub-Menu - All Artists
 140     - Local cdART ListItem
-141     - 
+141     - Refresh fanart.tv has_art
 142     - Local cdART Pop-Up Menu - Back up cdART button
 143     - Local cdART Pop-Up Menu - restore from Backup button
 144     - Local cdART Pop-Up Menu - copy to unique folder for upload
@@ -2090,6 +2090,27 @@ id      | description
                     <onleft>9000</onleft>
                     <onright>9005</onright>
                     <onup>133</onup>
+                    <ondown>141</ondown>
+                </control>
+                <control type="button" id="141"> <!-- Refresh fanart.tv has_art -->
+                    <description>Refresh fanart.tv has_art</description>
+                    <posx>10</posx>
+                    <posy>210</posy>
+                    <height>40</height>
+                    <width>285</width>
+                    <textoffsetx>10</textoffsetx>
+                    <textwidth>260</textwidth>
+                    <aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FFFFFFFF</focusedcolor>
+                    <label>$ADDON[script.cdartmanager 32191]</label>
+                    <texturefocus border="5">cdman-button-focus.png</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <pulseonselect>false</pulseonselect>
+                    <onleft>9000</onleft>
+                    <onright>9005</onright>
+                    <onup>137</onup>
                     <ondown>130</ondown>
                 </control>
             </control>

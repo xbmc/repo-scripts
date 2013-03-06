@@ -353,6 +353,7 @@ def first_check( all_artists, album_artists, background=False, update_db = False
             count += 1
         store_local_artist_table( all_artists_matched, background = background )
     store_fanarttv_datecode( present_datecode )
+    dialog_msg( "close", background = background )
     log( "Finished First Check", xbmc.LOGDEBUG )
     return
 

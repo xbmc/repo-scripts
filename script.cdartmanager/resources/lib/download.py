@@ -33,7 +33,7 @@ enable_fanart_limit= sys.modules[ "__main__" ].enable_fanart_limit
 
 from fanarttv_scraper import remote_banner_list, remote_hdlogo_list, get_recognized, remote_cdart_list, remote_coverart_list, remote_fanart_list, remote_clearlogo_list, remote_artistthumb_list
 from database import get_local_artists_db, get_local_albums_db, artwork_search
-from utils import clear_image_cache, get_unicode, change_characters, log, dialog_msg
+from utils import clear_image_cache, get_unicode, change_characters, log, dialog_msg, smart_unicode, smart_utf8
 from file_item import Thumbnails
 from jsonrpc_calls import get_all_local_artists, retrieve_album_list, retrieve_album_details, get_album_path, get_thumbnail_path, get_fanart_path
 from xbmcvfs import delete as delete_file
@@ -252,7 +252,7 @@ def auto_download( type, artist_list, background=False ):
                 auto_art["musicbrainz_artistid"] = artist["musicbrainz_artistid"]
                 temp_art["artist"] = artist["name"]
                 auto_art["artist"] = artist["name"]
-                path = os.path.join( music_path, change_characters( artist["name"] ) )
+                path = os.path.join( music_path, change_characters( smart_unicode( artist["name"] ) ) )
                 if type == "fanart":
                     art = remote_fanart_list( auto_art )
                 elif type == "clearlogo":

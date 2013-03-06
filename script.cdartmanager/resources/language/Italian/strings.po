@@ -754,3 +754,39 @@ msgstr ""
 msgctxt "#32182"
 msgid "Please check your settings and save settings[CR](press OK in settings)"
 msgstr ""
+
+msgctxt "#32183"
+msgid "Limit number Extrafanarts"
+msgstr ""
+
+msgctxt "#32184"
+msgid "    Extrafanart Limit:"
+msgstr ""
+
+msgctxt "#32185"
+msgid "Checking fanart.tv for new artwork..."
+msgstr ""
+
+msgctxt "#32186"
+msgid "Updating Database to new version..."
+msgstr ""
+
+msgctxt "#32187"
+msgid "Checking fanart.tv for artwork..."
+msgstr ""
+
+msgctxt "#32188"
+msgid "Use http://musicbrainz.org as the MusicBrainz Server"
+msgstr ""
+
+msgctxt "#32189"
+msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
+msgstr ""
+
+msgctxt "#32190"
+msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
+msgstr ""
+
+msgctxt "#32191"
+msgid "Refresh fanart.tv data"
+msgstr ""

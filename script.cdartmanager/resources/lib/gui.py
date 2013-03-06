@@ -45,7 +45,7 @@ enable_missing       = sys.modules[ "__main__" ].enable_missing
 
 # script imports
 from fanarttv_scraper import check_fanart_new_artwork, first_check, remote_banner_list, remote_hdlogo_list, get_recognized, remote_cdart_list, remote_fanart_list, remote_clearlogo_list, remote_coverart_list, remote_artistthumb_list
-from utils import get_html_source, clear_image_cache, get_unicode, change_characters, log, dialog_msg
+from utils import get_html_source, clear_image_cache, get_unicode, change_characters, log, dialog_msg, smart_unicode, smart_utf8
 from download import download_art, auto_download
 from database import user_updates, backup_database, store_alblist, store_lalist, retrieve_distinct_album_artists, store_counts, database_setup, get_local_albums_db, get_local_artists_db, new_local_count, refresh_db, artwork_search, update_database, check_album_mbid, check_artist_mbid, update_missing_artist_mbid, update_missing_album_mbid
 from musicbrainz_utils import get_musicbrainz_artist_id, get_musicbrainz_album, update_musicbrainzid, get_musicbrainz_artists
@@ -1224,7 +1224,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             local_cdart =  ( (self.getControl(122).getSelectedItem().getLabel2() ).split("&&&&")[1] ).split("&&")[0]
             database_id = int( ( ( self.getControl(122).getSelectedItem().getLabel2() ).split("&&&&")[1] ).split("&&")[1] )
             url = ((self.getControl( 122 ).getSelectedItem().getLabel2()).split("&&&&")[0]).split("&&")[0]
-            cdart_path["path"] = ((self.getControl( 122 ).getSelectedItem().getLabel2()).split("&&&&")[0]).split("&&")[1]
+            cdart_path["path"] = ( (self.getControl( 122 ).getSelectedItem().getLabel2() ).split("&&&&")[0]).split("&&")[1]
             try:
                 cdart_path["artist"] = get_unicode( self.getControl( 204 ).getLabel() ).replace( __language__(32038) + "[CR]","")
             except:
@@ -1408,7 +1408,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if self.menu_mode == 7:
                 url = ( self.getControl( 167 ).getSelectedItem().getLabel2() ).split("&&&&")[ 1 ]
                 artist["artist"] = ( self.getControl( 167 ).getSelectedItem().getLabel2() ).split("&&&&")[ 0 ]
-                artist["path"] = os.path.join( music_path, change_characters( artist["artist"] ) )
+                artist["path"] = os.path.join( music_path, change_characters( smart_unicode( artist["artist"] ) ) )
                 selected_item = self.getControl( 167 ).getSelectedPosition()
                 if url:
                     message, success, is_canceled = download_art( url, artist, self.artist_menu["local_id"], "clearlogo", "manual", 0 )
@@ -1423,7 +1423,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if self.menu_mode == 13:
                 url = ( self.getControl( 202 ).getSelectedItem().getLabel2() ).split("&&&&")[ 1 ]
                 artist["artist"] = ( self.getControl( 202 ).getSelectedItem().getLabel2() ).split("&&&&")[ 0 ]
-                artist["path"] = os.path.join( music_path, change_characters( artist["artist"] ) )
+                artist["path"] = os.path.join( music_path, change_characters( smart_unicode( artist["artist"] ) ) )
                 selected_item = self.getControl( 202 ).getSelectedPosition()
                 if url:
                     message, success, is_canceled = download_art( url, artist, self.artist_menu["local_id"], "musicbanner", "manual", 0 )
@@ -1438,7 +1438,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if self.menu_mode == 6:
                 url = ( self.getControl( 160 ).getSelectedItem().getLabel2() ).split("&&&&")[ 1 ]
                 artist["artist"] = ( self.getControl( 160 ).getSelectedItem().getLabel2() ).split("&&&&")[ 0 ]
-                artist["path"] =  os.path.join( music_path, change_characters( artist["artist"] ) )
+                artist["path"] =  os.path.join( music_path, change_characters( smart_unicode( artist["artist"] ) ) )
                 selected_item = self.getControl( 160 ).getSelectedPosition()
                 if url:
                     message, success, is_canceled = download_art( url, artist, self.artist_menu["local_id"], "fanart", "manual", 0 )
@@ -1453,7 +1453,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if self.menu_mode == 9:
                 url = ( self.getControl( 199 ).getSelectedItem().getLabel2() ).split("&&&&")[ 1 ]
                 artist["artist"] = ( self.getControl( 199 ).getSelectedItem().getLabel2() ).split("&&&&")[ 0 ]
-                artist["path"] = os.path.join( music_path, change_characters( artist["artist"] ) )
+                artist["path"] = os.path.join( music_path, change_characters( smart_unicode( artist["artist"] ) ) )
                 selected_item = self.getControl( 199 ).getSelectedPosition()
                 if url:
                     message, success, is_canceled = download_art( url, artist, self.artist_menu["local_id"], "artistthumb", "manual", 0 )
@@ -1676,7 +1676,17 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 else:
                     self.local_albums = get_local_albums_db( self.artist_menu["name"] )
                     self.populate_album_list_mbid( self.local_albums, self.selected_item )
-
+        if controlId == 141:
+            local_artists = get_local_artists_db( mode="album_artists" )
+            if enable_all_artists:
+                all_artists = get_local_artists_db( mode="all_artists" )
+            else:
+                all_artists = []
+            first_check( all_artists, local_artists, background = False, update_db = True )
+            self.all_artists_list, self.album_artists = get_recognized( all_artists, local_artists )
+            all_artist_count, local_album_count, local_artist_count, local_cdart_count = new_local_count()
+            self.refresh_counts( local_album_count, local_artist_count, local_cdart_count )
+            
     def onFocus( self, controlId ):
         if not controlId in( 122, 140, 160, 167, 199 ):
             xbmcgui.Window(10001).clearProperty( "artwork" )

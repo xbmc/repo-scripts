@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import xbmc, xbmcgui
-import urllib2, sys, re, os, socket, urllib, traceback
-import htmlentitydefs
+import urllib2, sys, re, os, socket, urllib, traceback, htmlentitydefs, errno
 
 try:
     from sqlite3 import dbapi2 as sqlite3
@@ -52,6 +51,31 @@ def change_characters( text ):
         else:
             text = temp
     return text
+
+def smart_unicode(s):
+    """credit : sfaxman"""
+    if not s:
+        return ''
+    try:
+        if not isinstance(s, basestring):
+            if hasattr(s, '__unicode__'):
+                s = unicode(s)
+            else:
+                s = unicode(str(s), 'UTF-8')
+        elif not isinstance(s, unicode):
+            s = unicode(s, 'UTF-8')
+    except:
+        if not isinstance(s, basestring):
+            if hasattr(s, '__unicode__'):
+                s = unicode(s)
+            else:
+                s = unicode(str(s), 'ISO-8859-1')
+        elif not isinstance(s, unicode):
+            s = unicode(s, 'ISO-8859-1')
+    return s
+
+def smart_utf8(s):
+    return smart_unicode(s).encode('utf-8')
 
 def get_unicode( to_decode ):
     final = []
@@ -173,9 +197,10 @@ def get_html_source( url, path, save_file = True, overwrite = False ):
             sock.close()
             break
         except IOError, e:
-            print "error: ", e
-            print "e.errno: ", e.errno
-            print "errn.errorcode: ", errno.errorcode[e.errno]
+            log( "error: %s" % e, xbmc.LOGERROR )
+            log( "e.errno: %s" % e.errno, xbmc.LOGERROR )
+            if not e.errno == "socket error":
+                log( "errno.errorcode: %s" % errno.errorcode[e.errno] , xbmc.LOGERROR )
         except:
             traceback.print_exc()
             log( "!!Unable to open page %s" % url, xbmc.LOGDEBUG )
@@ -305,9 +330,7 @@ def dialog_msg(action,
                 xbmc.executebuiltin("XBMC.Notification(%s, %s, 7500, %s)" % ( heading , msg, image ))
 
 def log( text, severity=xbmc.LOGDEBUG ):
-    try:
-        message = ('[%s] - %s' % ( __scriptname__ ,text) )
-        xbmc.log( msg=message, level=severity)
-    except:
-        message = repr('[%s] - %s' % ( __scriptname__ ,text) )
-        xbmc.log( msg=message, level=severity )
+    if type( text).__name__=='unicode':
+        text = text.encode('utf-8')
+    message = ('[%s] - %s' % ( __scriptname__ ,text.__str__() ) )
+    xbmc.log( msg=message, level=severity)
