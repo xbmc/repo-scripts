@@ -55,7 +55,13 @@ class BasePlugin(object):
             self.log('get_tree received %d bytes' % len(html))
         except urllib2.HTTPError, error:
             self.log('HTTPError: %s' % error)
-        tree = BeautifulSoup(html, convertEntities=language)
+        try:
+            tree = BeautifulSoup(html, convertEntities=language)
+        except TypeError:
+            # Temporary fix for wrong encoded utf-8 chars in NewYork
+            # Times Lens Blog. Shame on you.
+            html = html.decode('utf-8', 'ignore')
+            tree = BeautifulSoup(html, convertEntities=language)
         return tree
 
     def _collapse(self, iterable):

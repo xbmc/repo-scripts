@@ -1,2 +1,4 @@
+1.0.1
+ - added temporary fix for new york times lens blog
 1.0.0
 - initial release
