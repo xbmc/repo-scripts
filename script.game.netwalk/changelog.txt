@@ -1,0 +1,10 @@
+0.0.3
+ - In-game help
+ - New icon
+0.0.2
+ - New skin (thanks to Jugger)
+ - Avoid 4-connection tiles
+ - Fix keyboard navigation between buttons and the grid
+ - Code refactoring
+0.0.1
+ - Initial version

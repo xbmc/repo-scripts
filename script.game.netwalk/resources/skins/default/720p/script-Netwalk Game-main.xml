@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window id="3000">
+    <defaultcontrol always="false">3002</defaultcontrol>
+    <controls>
+        <control type="image" id="4000">
+            <description>Background</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>netwalk_hg.png</texture>
+        </control>
+        <control type="image" id="4001">
+            <description>Background</description>
+            <posx>753</posx>
+            <posy>300</posy>
+            <width>530</width>
+            <height>15</height>
+            <texture>netwalk_seperator.png</texture>
+        </control>
+        <control type="textbox">
+            <description>Game Controls Help</description>
+            <posx>780</posx>
+            <posy>320</posy>
+            <width>480</width>
+            <height>150</height>
+            <visible>true</visible>
+            <font>font12</font>
+            <textcolor>FFFFFFFF</textcolor>
+            <label>$LOCALIZE[SCRIPT3010]</label>
+        </control>
+        <control type="textbox">
+            <description>Game Goal Help</description>
+            <posx>780</posx>
+            <posy>470</posy>
+            <width>480</width>
+            <height>150</height>
+            <visible>true</visible>
+            <font>font12</font>
+            <textcolor>FFFFFFFF</textcolor>
+            <label>$LOCALIZE[SCRIPT3011]</label>
+        </control>
+        <control type="label" id="3001">
+            <description>The Grid placeholder. This label should not be shown but its space will be filled with the tiles.</description>
+            <posx>80</posx>
+            <posy>70</posy>
+            <width>600</width>
+            <height>600</height>
+            <font>font12</font>
+            <visible>false</visible>
+            <label></label>
+        </control>
+        <control type="button" id="3002">
+            <description>New Game</description>
+            <posx>820</posx>
+            <posy>40</posy>
+            <width>200</width>
+            <height>70</height>
+            <texturefocus>button_active.png</texturefocus>
+            <texturenofocus>button.png</texturenofocus>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <!-- <onleft></onleft> will be set by code! -->
+            <onright>3006</onright>
+            <focusedcolor>white</focusedcolor>
+            <textcolor>grey</textcolor>
+            <label>$LOCALIZE[SCRIPT3000]</label>
+        </control>
+        <control type="button" id="3006">
+            <description>Exit</description>
+            <posx>1020</posx>
+            <posy>40</posy>
+            <width>200</width>
+            <height>70</height>
+            <texturefocus>button_active.png</texturefocus>
+            <texturenofocus>button.png</texturenofocus>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font12</font>
+            <onleft>3002</onleft>
+            <focusedcolor>white</focusedcolor>
+            <textcolor>grey</textcolor>
+            <label>$LOCALIZE[SCRIPT3001]</label>
+        </control>
+        <control type="label">
+            <description>Game-ID label</description>
+            <posx>950</posx>
+            <posy>130</posy>
+            <width>80</width>
+            <height>36</height>
+            <align>right</align>
+            <font>font12</font>
+            <textcolor>white</textcolor>
+            <visible>true</visible>
+            <label>$LOCALIZE[SCRIPT3006]</label>
+        </control>
+        <control type="label" id="3007">
+            <description>Game-ID value label</description>
+            <posx>1030</posx>
+            <posy>130</posy>
+            <width>200</width>
+            <height>36</height>
+            <align>left</align>
+            <font>font12</font>
+            <textcolor>white</textcolor>
+            <visible>true</visible>
+            <label>$LOCALIZE[SCRIPT3005]</label>
+        </control>
+        <control type="label">
+            <description>Moves label</description>
+            <posx>950</posx>
+            <posy>170</posy>
+            <width>80</width>
+            <height>36</height>
+            <align>right</align>
+            <font>font12</font>
+            <textcolor>white</textcolor>
+            <visible>true</visible>
+            <label>$LOCALIZE[SCRIPT3002]</label>
+        </control>
+        <control type="label" id="3003">
+            <description>Moves count label</description>
+            <posx>1030</posx>
+            <posy>170</posy>
+            <width>80</width>
+            <height>36</height>
+            <align>left</align>
+            <font>font12</font>
+            <textcolor>white</textcolor>
+            <visible>true</visible>
+            <label>$LOCALIZE[SCRIPT3005]</label>
+        </control>
+        <control type="label">
+            <description>Target moves label</description>
+            <posx>950</posx>
+            <posy>210</posy>
+            <width>120</width>
+            <height>36</height>
+            <align>right</align>
+            <font>font12</font>
+            <textcolor>white</textcolor>
+            <visible>true</visible>
+            <label>$LOCALIZE[SCRIPT3003]</label>
+        </control>
+        <control type="label" id="3004">
+            <description>Target moves count label</description>
+            <posx>1030</posx>
+            <posy>210</posy>
+            <width>80</width>
+            <height>36</height>
+            <align>left</align>
+            <font>font12</font>
+            <textcolor>white</textcolor>
+            <visible>true</visible>
+            <label>$LOCALIZE[SCRIPT3005]</label>
+        </control>
+        <control type="label">
+            <description>Time label</description>
+            <posx>950</posx>
+            <posy>250</posy>
+            <width>120</width>
+            <height>36</height>
+            <align>right</align>
+            <font>font12</font>
+            <textcolor>white</textcolor>
+            <visible>true</visible>
+            <label>$LOCALIZE[SCRIPT3004]</label>
+        </control>
+        <control type="label" id="3005">
+            <description>Time value label</description>
+            <posx>1030</posx>
+            <posy>250</posy>
+            <width>80</width>
+            <height>36</height>
+            <align>left</align>
+            <font>font12</font>
+            <textcolor>white</textcolor>
+            <visible>true</visible>
+            <label>$LOCALIZE[SCRIPT3005]</label>
+        </control>
+    </controls>
+</window>
