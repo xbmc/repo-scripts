@@ -253,7 +253,7 @@ class LcdBase():
 
         progressbarSurroundings = element.find("progressbarsurroundings")
         if progressbarSurroundings != None:
-          if str(progressbarSurroundings.text) == "on":
+          if str(progressbarSurroundings.text).lower() in ["on", "true"]:
             self.m_bProgressbarSurroundings = True
 
         # icontext offset setting
@@ -278,7 +278,7 @@ class LcdBase():
 
         allowemptylines = element.find("allowemptylines")
         if allowemptylines != None:
-          if str(allowemptylines.text) == "on":
+          if str(allowemptylines.text).lower() in ["on", "true"]:
             self.m_bAllowEmptyLines = True
 
         # extra progress bars
@@ -701,7 +701,7 @@ class LcdBase():
       self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_ALARM, False)
 
   def SetExtraInfoBars(self, isplaying):
-    for i in range(1, LCD_EXTRABARS_MAX):
+    for i in range(1, LCD_EXTRABARS_MAX + 1):
       if self.m_extraBars[i] == "progress":
         if isplaying:
           self.m_cExtraIcons.SetBar(i, (InfoLabel_GetProgressPercent() * 100))

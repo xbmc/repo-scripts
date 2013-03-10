@@ -4,7 +4,7 @@
     
     Support for extra symbols on SoundGraph iMON LCD displays
     Copyright (C) 2012 Daniel 'herrnst' Scheller
-    Original C implementation (C) 2010 theonlychriss@vdr-portal
+    Original C implementation (C) 2010 Christian Leuschen
     
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

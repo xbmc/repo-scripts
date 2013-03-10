@@ -64,10 +64,10 @@ def settings_initGlobals():
   g_hostip           = "127.0.0.1"
   g_hostport         = 13666
   g_timer            = time.time()   
-  g_heartbeat	     = False
+  g_heartbeat        = False
   g_scrolldelay      = 1
   g_scrollmode       = "0"
-  g_settigsChanged   = True
+  g_settingsChanged  = True
   g_dimonscreensaver = False
   g_dimonshutdown    = False
   g_navtimeout       = 3

@@ -1,3 +1,5 @@
+1.2.1 / 2.2.1
+- Bugfixes, Credits, slightly more convenient configuration option bools
 1.2.0 / 2.2.0
 - Maintain versions for Eden (1.x.x) and Frodo+ (2.x.x)
 - Support for extra stuff (icons, bars) on supporting displays
