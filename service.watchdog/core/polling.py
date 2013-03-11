@@ -62,7 +62,7 @@ class SnapshotWithStat(PathSnapsot):
   def diff(self, other):
     created, deleted = self.path_diff(other)
     modified = []
-    for path in set(self._stat_info) - deleted:
+    for path in set(self._stat_info) - deleted - created:
       if self._stat_info[path] != other._stat_info[path]:
         modified.append(path)
     return created, deleted, modified

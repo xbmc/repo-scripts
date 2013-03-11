@@ -18,10 +18,10 @@ from functools import partial
 from polling import *
 
 def _join_path(base, lst):
-  return [ os.path.join(base, _) for _ in lst if not hidden(_) ]
+  return [ os.path.join(base, _.decode('utf-8')) for _ in lst if not hidden(_) ]
 
 def _walker_recursive(top):
-  dirs, files = xbmcvfs.listdir(top)
+  dirs, files = xbmcvfs.listdir(top) #returns utf-8 encoded str
   dirs = _join_path(top, dirs)
   files = _join_path(top, files)
   yield dirs, files
@@ -30,7 +30,7 @@ def _walker_recursive(top):
       yield dirs, files
 
 def _walker_depth_1(top):
-  dirs, files = xbmcvfs.listdir(top)
+  dirs, files = xbmcvfs.listdir(top) #returns utf-8 encoded str
   yield _join_path(top, dirs), _join_path(top, files)
 
 def _get_mtime(path):

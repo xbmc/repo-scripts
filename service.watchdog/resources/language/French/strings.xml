@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="30001">Général</string>
+  <string id="30002">Avancé</string>
+  <string id="30003">Surveiller les sources vidéo</string>
+  <string id="30004">Surveiller les sources musique</string>
+  <string id="30005">Nettoyer la médiathèque lors de déplacements ou suppressions</string>
+  <string id="30006">Méthode</string>
+  <string id="30007">Auto</string>
+  <string id="30008">Scrutation</string>
+  <string id="30009"></string>
+  <string id="30010">Délai</string>
+  <string id="30011">Afficher les notifications</string>
+  <string id="30012">Méthode de scrutation pour les partages réseaux</string>
+  <string id="30013">Profondeur 1 (répertoire racine uniquement)</string>
+  <string id="30014">Profondeur 2 (répertoire racine et sous-répertoires)</string>
+  <string id="30015">Profondeur inf. (tous les sous-répertoires)</string>
+  <string id="30016">Mettre en pause lors de la lecture</string>
+</strings>

@@ -1,3 +1,9 @@
+[B]0.7.3[/B]
+- added French translation
+- now tries to not scan when when non-media files are added
+- fixed: scanning sometimes failing due to reserved characters not being escaped
+- fixed: poller (depth 2) sometimes failing when files are added
+
 [B]0.7.2[/B]
 - added option for disabling pause on playback
 - other minor tweaks
