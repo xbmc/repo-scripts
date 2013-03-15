@@ -1,3 +1,9 @@
+V0.6.1
+- Bump for Frodo
+- Cleanup, better logging (in debug mode)
+- Refactor & incorporate b808 common code (0.0.8)
+- Bugfix for proxy users   
+
 V0.4.4
 - Minor data cleanup as Weatherzone returns crap data sometimes
 
