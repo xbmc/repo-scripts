@@ -6,15 +6,19 @@
 <strings>
     <string id="3001">Nasumično</string>
     <string id="3002">Nazad</string>
+    <string id="3118">Sakri</string>
+    <string id="3119">-</string>
 
     <!-- Settings -->
     <string id="3200">Općenito</string>
     <string id="3203">Korisničko ime</string>
     <string id="3204">Zaporka</string>
+    <string id="3209">Sve</string>
     <string id="3233">Nasumično</string>
     <string id="3234">Slijedeći</string>
 
     <!-- Functions -->
     <string id="3260">Slijedeći</string>
     <string id="3261">Prethodni</string>
+    <string id="3264">Favorit</string>
 </strings>

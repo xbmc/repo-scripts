@@ -7,15 +7,19 @@
     <string id="3001">Náhodně</string>
     <string id="3002">Zpět</string>
     <string id="3118">Skryté</string>
+    <string id="3119">Třídit</string>
 
     <!-- Settings -->
     <string id="3200">Obecné</string>
+    <string id="3201">Přihlášení</string>
     <string id="3203">Uživatelské jméno</string>
     <string id="3204">Heslo</string>
+    <string id="3209">Vše</string>
     <string id="3233">Náhodně</string>
     <string id="3234">Další</string>
 
     <!-- Functions -->
     <string id="3260">Následující</string>
     <string id="3261">Předchozí</string>
+    <string id="3264">Oblíbené</string>
 </strings>

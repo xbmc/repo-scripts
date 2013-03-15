@@ -16,11 +16,14 @@
     <string id="3055">No se ha podido descargar la imágen</string>
     <string id="3107">Sin solucionar</string>
     <string id="3118">Oculto</string>
+    <string id="3119">Sortear</string>
 
     <!-- Settings -->
     <string id="3200">General</string>
+    <string id="3201">Inicio de sesión</string>
     <string id="3203">Usuario</string>
     <string id="3204">Contraseña</string>
+    <string id="3209">Todos</string>
     <string id="3233">Aleatorio</string>
     <string id="3234">Siguiente</string>
 

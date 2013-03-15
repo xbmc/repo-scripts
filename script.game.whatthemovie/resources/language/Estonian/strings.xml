@@ -9,12 +9,15 @@
 
     <!-- Settings -->
     <string id="3200">Üldine</string>
+    <string id="3201">Logi sisse</string>
     <string id="3203">Kasutajanimi</string>
     <string id="3204">Salasõna</string>
+    <string id="3209">Kõik</string>
     <string id="3233">Juhuslik</string>
     <string id="3234">Järgmine</string>
 
     <!-- Functions -->
     <string id="3260">Järgmine</string>
     <string id="3261">Eelmine</string>
+    <string id="3264">Lemmik</string>
 </strings>

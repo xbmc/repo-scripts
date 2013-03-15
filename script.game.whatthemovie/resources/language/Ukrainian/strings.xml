@@ -5,12 +5,14 @@
 
 <strings>
     <string id="3001">Випадково</string>
+    <string id="3002">Назад</string>
     <string id="3118">Приховані</string>
 
     <!-- Settings -->
     <string id="3200">Загальні</string>
     <string id="3203">Ім'я користувача</string>
     <string id="3204">Пароль</string>
+    <string id="3209">Усі треки</string>
     <string id="3233">Випадково</string>
     <string id="3234">Наступний</string>
 

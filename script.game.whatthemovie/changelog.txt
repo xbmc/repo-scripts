@@ -1,3 +1,7 @@
+1.0.6
+- updated translations
+- cosmetic changes
+
 1.0.5
 - Fix image retrieving (again...)
 - Updated translations

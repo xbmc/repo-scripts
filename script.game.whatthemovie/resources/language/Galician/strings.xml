@@ -6,15 +6,20 @@
 <strings>
     <string id="3001">Ó chou</string>
     <string id="3002">Atrás</string>
+    <string id="3118">Agochado</string>
+    <string id="3119">-</string>
 
     <!-- Settings -->
     <string id="3200">Xeral</string>
+    <string id="3201">Inicio de Sesión</string>
     <string id="3203">Nome de usuario</string>
     <string id="3204">Contrasinal</string>
+    <string id="3209">Todos</string>
     <string id="3233">Ó chou</string>
     <string id="3234">Seguinte</string>
 
     <!-- Functions -->
     <string id="3260">Seguinte</string>
     <string id="3261">Anterior</string>
+    <string id="3264">Favorito</string>
 </strings>

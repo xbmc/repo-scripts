@@ -6,4 +6,10 @@
 <strings>
     <!-- Settings -->
     <string id="3200">പോതുവായത്</string>
+    <string id="3234">അടുത്തത്</string>
+    <string id="3249">കാണുക</string>
+
+    <!-- Functions -->
+    <string id="3260">അടുത്തത്</string>
+    <string id="3261">മുന്‍പുള്ള</string>
 </strings>

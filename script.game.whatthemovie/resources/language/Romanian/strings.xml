@@ -9,8 +9,10 @@
 
     <!-- Settings -->
     <string id="3200">General</string>
+    <string id="3201">Login</string>
     <string id="3203">Utilizator</string>
     <string id="3204">Parolă</string>
+    <string id="3209">Toate</string>
     <string id="3233">Aleator</string>
     <string id="3234">Următorul</string>
 

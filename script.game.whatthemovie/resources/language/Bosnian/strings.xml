@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
-<!-- Serbian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sr/ -->
+<!-- Bosnian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/bs/ -->
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
@@ -10,11 +10,10 @@
     <string id="3200">Opšte</string>
     <string id="3203">Korisničko ime</string>
     <string id="3204">Lozinka</string>
-    <string id="3209">Sve</string>
     <string id="3233">Nasumično</string>
-    <string id="3234">Sledeće</string>
+    <string id="3234">Sljedeće</string>
 
     <!-- Functions -->
-    <string id="3260">Sledeće</string>
+    <string id="3260">Sljedeće</string>
     <string id="3261">Prethodno</string>
 </strings>

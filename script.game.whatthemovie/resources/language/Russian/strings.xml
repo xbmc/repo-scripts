@@ -10,8 +10,10 @@
 
     <!-- Settings -->
     <string id="3200">Выкл.</string>
+    <string id="3201">Вход</string>
     <string id="3203">Имя пользователя</string>
     <string id="3204">Пароль</string>
+    <string id="3209">Все</string>
     <string id="3233">Случайно</string>
     <string id="3234">Следующ.</string>
 

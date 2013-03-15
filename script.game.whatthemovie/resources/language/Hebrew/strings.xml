@@ -7,11 +7,13 @@
     <string id="3001">אקראי</string>
     <string id="3002">אחורה</string>
     <string id="3118">מוסתר</string>
+    <string id="3119">-</string>
 
     <!-- Settings -->
     <string id="3200">כללי</string>
     <string id="3203">שם משתמש</string>
     <string id="3204">סיסמא</string>
+    <string id="3209">הכל</string>
     <string id="3233">אקראי</string>
     <string id="3234">הבא</string>
 

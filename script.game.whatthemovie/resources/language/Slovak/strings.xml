@@ -4,18 +4,117 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Buttons -->
+    <string id="3000">Hádajte!</string>
     <string id="3001">Náhodné</string>
     <string id="3002">Späť</string>
+
+    <!-- Messages -->
+    <string id="3050">Prihlásenie neúspešné</string>
+    <string id="3051">Nesprávne heslo alebo neznáme užívateľské meno: [B]%s[/B]&#10;Prosím zmeňte údaje alebo zakážte prihlasovanie</string>
+    <string id="3052">Zadať ID záberu</string>
+    <string id="3053">Zadajte titul filmu</string>
+    <string id="3054">Prihlasovacia stránka nedostupná</string>
+    <string id="3055">Nepodarilo sa načítať záber</string>
+    <string id="3066">Nepodarilo sa skontrolovať hádanie</string>
+
+    <!-- Labels -->
+    <string id="3100">Overujem: [B]%s[/B]</string>
+    <string id="3101">Správne. Originálny titul je: [B]%s[/B]</string>
+    <string id="3102">Nesprávne: [B]%s[/B]</string>
+    <string id="3103">Neprihlásený</string>
+    <string id="3104">Prihlásený ako užívateľ: [B]%s[/B]</string>
+    <string id="3105">Vaše skóre: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Vyriešené [B][COLOR=ff008B00]%s[/COLOR][/B] krát, poprvé [B]%s[/B]</string>
+    <string id="3107">Ešte neriešené</string>
+    <string id="3108">ID záberu: [B]%s[/B]</string>
+    <string id="3109">Dátum: [B]%s[/B]</string>
+    <string id="3110">Publikoval: [B]%s[/B]</string>
+    <string id="3111">Nezverejnené</string>
+    <string id="3112">Odstránený užívateľ</string>
+    <string id="3113">Nový návrh</string>
+    <string id="3114">Celovečerné filmy</string>
+    <string id="3115">Archív</string>
+    <string id="3116">[B]%s[/B] hlasov</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
     <string id="3118">Skryté</string>
+    <string id="3119">-</string>
+    <string id="3120">Odmietnuté zábery</string>
+    <string id="3121">Tento záber ste už riešili</string>
+    <string id="3122">Správne riešenie bolo: [B]%s[/B]</string>
+    <string id="3123">Tento záber ste publikovali</string>
+    <string id="3124">Prepáčte, nemáte oprávnenie zobraziť záber [B]%s[/B] - presmerovanie na [B]%s[/B]</string>
+    <string id="3125">Trezor</string>
+    <string id="3126">Úžasné. Originálny titul je: [B]%s[/B] +1 bod!</string>
+    <string id="3127">Odstránené zábery</string>
+    <string id="3128">Prepáčte, neexistuje záber [B]%s[/B] - presmerovanie na [B]%s[/B]</string>
 
     <!-- Settings -->
     <string id="3200">Všeobecné</string>
+    <string id="3201">Prihlásenie</string>
+    <string id="3202">Použiť whatthemovie.com účet</string>
     <string id="3203">Užívateľské meno</string>
     <string id="3204">Heslo</string>
+    <string id="3205">Nastavenie pre tlačidlo "Náhodne" (vyžaduje prihlásenie)</string>
+    <string id="3206">Obtiažnosť</string>
+    <string id="3207">Jednoduchá</string>
+    <string id="3208">Jednoduchá + Stredná</string>
+    <string id="3209">Všetky</string>
+    <string id="3210">Zahrnúť archív</string>
+    <string id="3211">Zahrnúť vyriešené</string>
+    <string id="3212">Vzhľad</string>
+    <string id="3213">Pozrieť</string>
+    <string id="3214">Ukázať "Publikoval"</string>
+    <string id="3215">Ukázať "Vyriešil"</string>
+    <string id="3216">Ukázať "ID záberu"</string>
+    <string id="3217">Ukázať "Dátum záberu"</string>
+    <string id="3218">Správanie</string>
+    <string id="3219">Automaticky skočiť po úspešnom uhádnutí</string>
+    <string id="3220">... po x sekundách</string>
+    <string id="3221">Ukázať "Príznaky záberu"</string>
+    <string id="3222">Príznaky</string>
+    <string id="3223">Príznak 1</string>
+    <string id="3224">Príznak 2</string>
+    <string id="3225">Príznak 3</string>
+    <string id="3226">Príznak 4</string>
+    <string id="3227">Príznak 5</string>
+    <string id="3228">Zvoľte ktoré príznaky chcete vidiet</string>
+    <string id="3229">Nastavenie navigácie (vyžaduje prihlásenie)</string>
+    <string id="3230">Len nevyriešené zábery</string>
+    <string id="3231">Ukázať "Hodnotenie záberu"</string>
+    <string id="3232">Skoč na</string>
     <string id="3233">Náhodné</string>
     <string id="3234">Násl.</string>
+    <string id="3235">Ukázať tlačidlá nástrojov</string>
+    <string id="3236">Ukázať navigačné tlačidlá</string>
+    <string id="3237">Tlačidlá</string>
+    <string id="3238">Zvoliť tlačidlá pre akcie</string>
+
+    <!-- Keys -->
+    <string id="3239">Žiadne tlačidlo</string>
+    <string id="3240">predošlá stránka</string>
+    <string id="3241">ďalšia stránka</string>
+    <string id="3242">informácie</string>
+    <string id="3243">pauza</string>
+    <string id="3244">stop</string>
+    <string id="3245">ďalšia položka</string>
+    <string id="3246">predošlá položka</string>
+    <string id="3247">rýchly posun vpred</string>
+    <string id="3248">posunúť dozadu</string>
+    <string id="3249">prehrať</string>
+    <string id="3250">kontextové menu</string>
+    <string id="3251">zvýšiť hlasitosť</string>
+    <string id="3252">znížiť hlasitosť</string>
+    <string id="3253">posunúť nahor</string>
+    <string id="3254">posunúť dole</string>
+    <string id="3255">Domov</string>
+    <string id="3256">koniec</string>
 
     <!-- Functions -->
     <string id="3260">Násl.</string>
     <string id="3261">Pred.</string>
+    <string id="3262">Skok</string>
+    <string id="3263">Záložka</string>
+    <string id="3264">Obľúbené</string>
+    <string id="3265">Vyriešiť</string>
 </strings>

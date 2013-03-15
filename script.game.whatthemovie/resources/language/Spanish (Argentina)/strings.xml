@@ -4,11 +4,18 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <string id="3002">Atrás</string>
+
     <!-- Settings -->
     <string id="3200">General</string>
+    <string id="3201">Ingresar</string>
+    <string id="3203">Usuario</string>
+    <string id="3204">Contraseña</string>
+    <string id="3209">Todos</string>
     <string id="3234">Siguiente</string>
 
     <!-- Functions -->
     <string id="3260">Siguiente</string>
     <string id="3261">Anterior</string>
+    <string id="3264">Favorito</string>
 </strings>

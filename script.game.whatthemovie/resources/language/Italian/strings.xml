@@ -4,19 +4,117 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Buttons -->
+    <string id="3000">Indovina!</string>
     <string id="3001">Casuale</string>
     <string id="3002">Indietro</string>
+
+    <!-- Messages -->
+    <string id="3050">No posso loggarmi</string>
+    <string id="3051">Password errata o nome utente sconosciuto:  [B]%s[/B][CR] Per favore cambia le credenziali o disabilita il login</string>
+    <string id="3052">Inserisci l'ID dell'immagine</string>
+    <string id="3053">Digita il titolo del film</string>
+    <string id="3054">Sito irraggiungibile</string>
+    <string id="3055">Impossibile recuperare l'immagine</string>
+    <string id="3066">Impossibile controllare se hai indovinato</string>
+
+    <!-- Labels -->
+    <string id="3100">Sto verificando: [B]%s[/B]</string>
+    <string id="3101">Esatto. Il titolo originale è [B]%s[/B]</string>
+    <string id="3102">Errato: [B]%s[/B]</string>
+    <string id="3103">Non loggato</string>
+    <string id="3104">Loggato come: [B]%s[/B]</string>
+    <string id="3105">Il tuo punteggio: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Risolto [B][COLOR=ff008B00]%s[/COLOR][/B] volte, il primo è stato [B]%s[B]</string>
+    <string id="3107">Non ancora risolto</string>
+    <string id="3108">ID Immagine: [B]%s[/B]</string>
+    <string id="3109">Data: [B]%s[/B]</string>
+    <string id="3110">Postata da: [B]%s[/B]</string>
+    <string id="3111">Non Rilasciata</string>
+    <string id="3112">Utente Cancellato</string>
+    <string id="3113">Nuovi Invii</string>
+    <string id="3114">Film Preferiti</string>
+    <string id="3115">L'archivio</string>
+    <string id="3116">[B]%s[/B] voti</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
     <string id="3118">Nascosto</string>
+    <string id="3119">-</string>
+    <string id="3120">Immagini rifiutate</string>
+    <string id="3121">Hai già risolto questa immagine</string>
+    <string id="3122">La soluzione corretta era: [B]%s[/B]</string>
+    <string id="3123">Hai postato tu quest'immagine</string>
+    <string id="3124">Scusa ma non sei autorizzato a vedere quest'immagine [B]%s[/B] - reindirizzato a [B]%s[/B] </string>
+    <string id="3125">La Volta</string>
+    <string id="3126">Magnifico. Il titolo originale è: [B]%s[/B] +1 punto!</string>
+    <string id="3127">immagine Eliminata</string>
+    <string id="3128">Scusa nessuna immagine [B]%s[/B] - reindirizzato a [B]%s[/B]</string>
 
     <!-- Settings -->
     <string id="3200">Generale</string>
+    <string id="3201">Login</string>
+    <string id="3202">Usa l'account di whatthemovie.com</string>
     <string id="3203">Nome utente</string>
     <string id="3204">Password</string>
+    <string id="3205">Impostazioni per il tasto "casuale" (è richiesto il login)</string>
+    <string id="3206">Difficolta</string>
+    <string id="3207">Facile</string>
+    <string id="3208">Medio Facile</string>
+    <string id="3209">Tutto</string>
+    <string id="3210">Includi Archivio</string>
+    <string id="3211">Includi Risolti</string>
+    <string id="3212">Guarda Senti</string>
+    <string id="3213">Guarda</string>
+    <string id="3214">Mostra "postato da"</string>
+    <string id="3215">Mostra "risolti"</string>
+    <string id="3216">Mostra "ID immagine"</string>
+    <string id="3217">Mostra "data immagine"</string>
+    <string id="3218">Comportamento</string>
+    <string id="3219">Avanzamento automatico sopo la risposta esatta</string>
+    <string id="3220">.....dopo x secondi</string>
+    <string id="3221">Mostra "bandiere immagini"</string>
+    <string id="3222">Bandiere</string>
+    <string id="3223">Bandiera 1</string>
+    <string id="3224">Bandiera 2</string>
+    <string id="3225">Bandiera 3</string>
+    <string id="3226">Bandiera 4</string>
+    <string id="3227">Bandiera 5</string>
+    <string id="3228">Scegli la bandiera che vuoi vedere</string>
+    <string id="3229">Opzioni di navigazione (è richiesto il login)</string>
+    <string id="3230">Solo immagini irrisolte</string>
+    <string id="3231">Mostra "votazione immagine"</string>
+    <string id="3232">Vai a</string>
     <string id="3233">Casuale</string>
     <string id="3234">Successivo</string>
+    <string id="3235">Mostra bottoni strumento </string>
+    <string id="3236">Mostra bottoni navigazione</string>
+    <string id="3237">Chiavi</string>
+    <string id="3238">Scegli bottoni per azioni</string>
+
+    <!-- Keys -->
+    <string id="3239">Nessuna chiave</string>
+    <string id="3240">pagina su</string>
+    <string id="3241">pagina giù</string>
+    <string id="3242">mostra informazioni</string>
+    <string id="3243">pausa</string>
+    <string id="3244">stop</string>
+    <string id="3245">elemento successivo</string>
+    <string id="3246">elemento precedente</string>
+    <string id="3247">avanti veloce</string>
+    <string id="3248">riavvolgi</string>
+    <string id="3249">esegui</string>
+    <string id="3250">menù contestuale</string>
+    <string id="3251">Alza il Volume</string>
+    <string id="3252">Abbassa il Volume</string>
+    <string id="3253">Scorri verso l'alto</string>
+    <string id="3254">Scorri verso il basso</string>
+    <string id="3255">Casa</string>
+    <string id="3256">fine</string>
 
     <!-- Functions -->
     <string id="3260">Successivo</string>
     <string id="3261">Precedente</string>
+    <string id="3262">Salta</string>
+    <string id="3263">Segnalibri</string>
     <string id="3264">Preferito</string>
+    <string id="3265">Risolvi</string>
 </strings>

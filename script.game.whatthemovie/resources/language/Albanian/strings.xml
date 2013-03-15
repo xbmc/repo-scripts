@@ -4,5 +4,19 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <string id="3001">I Rastësishëm</string>
     <string id="3002">Mbrapa</string>
+    <string id="3118">Fshehur</string>
+
+    <!-- Settings -->
+    <string id="3200">I përgjithsëm</string>
+    <string id="3203">Emër-kalues</string>
+    <string id="3204">Fjalkalim</string>
+    <string id="3209">Gjith</string>
+    <string id="3233">I Rastësishëm</string>
+    <string id="3234">Tjetër</string>
+
+    <!-- Functions -->
+    <string id="3260">Tjetër</string>
+    <string id="3261">I Mëparshëm</string>
 </strings>

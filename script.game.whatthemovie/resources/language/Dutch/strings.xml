@@ -7,11 +7,14 @@
     <string id="3001">Willekeurig</string>
     <string id="3002">Terug</string>
     <string id="3118">Verborgen</string>
+    <string id="3119">-</string>
 
     <!-- Settings -->
     <string id="3200">Algemeen</string>
+    <string id="3201">Inloggen</string>
     <string id="3203">Gebruikersnaam</string>
     <string id="3204">Wachtwoord</string>
+    <string id="3209">Alle</string>
     <string id="3233">Willekeurig</string>
     <string id="3234">Volgende</string>
 

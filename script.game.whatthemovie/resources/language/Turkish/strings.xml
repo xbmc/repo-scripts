@@ -5,16 +5,20 @@
 
 <strings>
     <string id="3001">Rastgele</string>
+    <string id="3002">Geri</string>
     <string id="3118">Gizli</string>
+    <string id="3119">Sırala</string>
 
     <!-- Settings -->
     <string id="3200">Genel</string>
     <string id="3203">Kullanıcı adı</string>
     <string id="3204">Parola</string>
+    <string id="3209">Hepsi</string>
     <string id="3233">Rastgele</string>
     <string id="3234">Sonraki</string>
 
     <!-- Functions -->
     <string id="3260">Sonraki</string>
     <string id="3261">Önceki</string>
+    <string id="3264">Sık Kullanılanlar</string>
 </strings>

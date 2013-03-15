@@ -7,11 +7,14 @@
     <string id="3001">Tilfeldig</string>
     <string id="3002">Tilbake</string>
     <string id="3118">Skjult</string>
+    <string id="3119">-</string>
 
     <!-- Settings -->
     <string id="3200">Generelt</string>
+    <string id="3201">Logg inn</string>
     <string id="3203">Brukernavn</string>
     <string id="3204">Passord</string>
+    <string id="3209">Alle</string>
     <string id="3233">Tilfeldig</string>
     <string id="3234">Neste</string>
 

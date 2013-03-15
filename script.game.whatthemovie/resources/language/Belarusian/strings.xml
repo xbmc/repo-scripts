@@ -6,7 +6,7 @@
 <strings>
     <!-- Buttons -->
     <string id="3000">Guess!</string>
-    <string id="3001">Random</string>
+    <string id="3001">Выпадкова</string>
     <string id="3002">Back</string>
 
     <!-- Messages -->
@@ -111,7 +111,7 @@
     <string id="3256">end</string>
 
     <!-- Functions -->
-    <string id="3260">Next</string>
+    <string id="3260">Наступны</string>
     <string id="3261">Previous</string>
     <string id="3262">Jump</string>
     <string id="3263">Bookmark</string>
