@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <addon id="script.ace.extrapack" name="Ace extrapack" version="1.0.1" provider-name="malte, Wanilton, MarcosQui">
+	<requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="xbmc.addon" version="12.0.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<language/>
+	  <summary lang="en">Ace extrapack</summary>
+	  <summary lang="pt_BR">Ace extrapack</summary>
+		<description lang="en">Downloads extras from skin Ace</description>
+		<description lang="pt_BR">Pacote extra para a skin Ace</description>
+    <platform>all</platform>
+    </extension>
+</addon>
