@@ -1,3 +1,6 @@
+[B]0.7.4[/B]
+- fixed encoding related regression affecting posix systems (OpenElec and other non-standard distributions)
+
 [B]0.7.3[/B]
 - added French translation
 - now tries to not scan when when non-media files are added

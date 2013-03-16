@@ -542,12 +542,12 @@ if platform.is_linux():
       
       with self._lock:
         event_list = []
-        for wd, mask, cookie, name in Inotify._parse_event_buffer(
-          event_buffer):
+        for wd, mask, cookie, name in Inotify._parse_event_buffer(event_buffer):
+          if wd == -1:
+            continue
           wd_path = self._path_for_wd[wd]
           src_path = absolute_path(os.path.join(wd_path, name))
-          inotify_event = InotifyEvent(wd, mask, cookie, name,
-                                       src_path)
+          inotify_event = InotifyEvent(wd, mask, cookie, name, src_path)
 
           if inotify_event.is_moved_from:
             self.remember_move_from_event(inotify_event)
@@ -560,8 +560,7 @@ if platform.is_linux():
               self._wd_for_path[inotify_event.src_path] = moved_wd
               self._path_for_wd[moved_wd] = inotify_event.src_path
             src_path = absolute_path(os.path.join(wd_path, name))
-            inotify_event = InotifyEvent(wd, mask, cookie, name,
-                                         src_path)
+            inotify_event = InotifyEvent(wd, mask, cookie, name, src_path)
 
           if inotify_event.is_ignored:
           # Clean up book-keeping for deleted watches.
@@ -651,7 +650,7 @@ if platform.is_linux():
           Event bit mask.
       """
       wd = inotify_add_watch(self._inotify_fd,
-                             path.encode('utf-8'),
+                             path,
                              mask)
       if wd == -1:
         Inotify._raise_error()
@@ -714,7 +713,7 @@ if platform.is_linux():
       while i + 16 < len(event_buffer):
         wd, mask, cookie, length =\
         struct.unpack_from('iIII', event_buffer, i)
-        name = event_buffer[i + 16:i + 16 + length].rstrip('\0').decode('utf-8')
+        name = event_buffer[i + 16:i + 16 + length].rstrip('\0')
         i += 16 + length
         yield wd, mask, cookie, name
 
