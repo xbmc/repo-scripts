@@ -26,7 +26,7 @@ msgstr "Slučajne Stavke"
 
 msgctxt "#32004"
 msgid "Randomize time (minutes)"
-msgstr "Slučajno vrijeme (minuta)"
+msgstr "Slučajno vrijeme (minute)"
 
 msgctxt "#32005"
 msgid "Use season folders"
@@ -55,3 +55,15 @@ msgstr "Nadogradnja svaki put kad pokrenete u početnom zaslonu"
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "Samo neizvođene i nedovršene"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Općenito"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Prikaži kratak sadržaja nepogledanih stavki"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Skriveno da ne pokvari užitak *"

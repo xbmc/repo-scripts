@@ -19,3 +19,15 @@ msgstr ""
 msgctxt "#32002"
 msgid "Random Items"
 msgstr "รายการ แบบสุ่ม"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "ทั่วไป"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "แสดงเรื่องย่อ สำหรับรายการที่ยังไม่ได้ดู"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* ซ่อนไว้ เพื่อป้องกันการสปอยล์ *"

@@ -51,3 +51,19 @@ msgstr "최근 항목"
 msgctxt "#32010"
 msgid "Update each time you enter the home screen"
 msgstr "홈화면으로 이동할 때마다 업데이트"
+
+msgctxt "#32011"
+msgid "Only unplayed and unfinished"
+msgstr "재생한 적이 없거나 완료하지 않은 것만"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "일반"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "미시청 항목의 줄거리 보기"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* 스포일러 방지위해 숨김 *"

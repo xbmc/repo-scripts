@@ -55,3 +55,15 @@ msgstr "Mise à jour à chaque retour sur l'écran principal"
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "Seulement non lues et non terminées"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Utiliser Media Overlays"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Afficher le résumé pour les médias non visionnés"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Caché pour éviter les spoilers *"

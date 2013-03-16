@@ -51,3 +51,15 @@ msgstr "Recent Items"
 msgctxt "#32010"
 msgid "Update each time you enter the home screen"
 msgstr "Update each time you enter the home screen"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Паказваць непраглежданые"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Hidden to prevent spoilers *"

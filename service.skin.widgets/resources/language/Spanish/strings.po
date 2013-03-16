@@ -55,3 +55,15 @@ msgstr "Actualizar cada vez que entres en la pantalla de inicio"
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "Sólo sin ver y sin acabar"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Utilizar Media Overlays"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Mostrar el argumento de los elementos no vistos"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Oculto para prevenir desenlaces *"

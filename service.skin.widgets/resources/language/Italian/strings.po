@@ -55,3 +55,15 @@ msgstr "Aggiorna ogni volta che entri nella schermata \"home\""
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "Solo non visti e non finiti"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Menu"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Mostra la trama per gli elementi non visti"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Nascosto per prevenire gli spoilers *"

@@ -19,3 +19,15 @@ msgstr ""
 msgctxt "#32002"
 msgid "Random Items"
 msgstr "Ítems Aleatorios"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Ocultar el argumento de elementos no vistos"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Oculto para prevenir SPOILERS *"

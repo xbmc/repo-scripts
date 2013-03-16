@@ -19,3 +19,15 @@ msgstr ""
 msgctxt "#32002"
 msgid "Random Items"
 msgstr "Atsitiktiniai elementai"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Pagrindinis"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Rodyti siužetą neperžiūrėtiems elementams"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Paslėpta, kad išvengti spoilerių *"

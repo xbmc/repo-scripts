@@ -19,3 +19,15 @@ msgstr ""
 msgctxt "#32002"
 msgid "Random Items"
 msgstr "隨機項目"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "一般設定"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "非觀看項目隱藏圖示"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* 隱藏防止被破壞 *"

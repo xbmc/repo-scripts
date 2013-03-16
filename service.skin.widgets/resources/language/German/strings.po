@@ -55,3 +55,15 @@ msgstr "Bei jedem Hauptmenüaufruf aktualisieren"
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "Nur ungespielt und unfertig"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Media Overlays benutzen"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Handlung bei ungesehenen Filmen anzeigen"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Die Handlung wird nicht angezeigt. *"

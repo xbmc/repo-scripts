@@ -19,3 +19,15 @@ msgstr ""
 msgctxt "#32002"
 msgid "Random Items"
 msgstr "Satunnaiset kohteet"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Yleinen"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Näytä juoni katsomattomille kohteille"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Piilotettu juonipaljastusten välttämiseksi *"

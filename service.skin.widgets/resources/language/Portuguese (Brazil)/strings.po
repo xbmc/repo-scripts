@@ -55,3 +55,15 @@ msgstr "Atualizar cada vez que entrar na tela inicial"
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "Somente não-reproduzidos e não-finalizados"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Geral"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Exibir enredo para itens não-vistos"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Escondido para prevenir créditos (spoilers) *"

@@ -55,3 +55,15 @@ msgstr "Uppdatera varje gång du går till hemskärmen"
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "Endast inte spelade och inte färdiga"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Använd Media Overlays"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Visa handling för osedda objekt"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Dold för att inte förstöra handlingen *"

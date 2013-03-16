@@ -19,3 +19,15 @@ msgstr ""
 msgctxt "#32002"
 msgid "Random Items"
 msgstr "Tilfeldige elementer"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Generelt"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Vis omtale for videoer som ikke er sett"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Skjult for ikke å røpe handling *"

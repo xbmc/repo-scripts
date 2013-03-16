@@ -16,6 +16,22 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
+msgctxt "#32001"
+msgid "Recommended"
+msgstr "Рекомендуем"
+
 msgctxt "#32002"
 msgid "Random Items"
 msgstr "Случайные"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Использовать медиа обложки"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Показывать сюжет для непросмотренного"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Скрыто, чтобы избежать спойлеров *"

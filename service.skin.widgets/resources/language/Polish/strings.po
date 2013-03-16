@@ -55,3 +55,15 @@ msgstr "Aktualizuj za każdym razem po wejściu do głównego menu"
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "Tylko nieodtworzone i nieobejrzane"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Korzystanie z mediów Nakladki"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Wyświetlanie opisów nieobejrzanych pozycji"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Ukryte. Poznanie fabuły psuje przyjemność oglądania *"

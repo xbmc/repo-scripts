@@ -16,6 +16,54 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32001"
+msgid "Recommended"
+msgstr "Aangeraden"
+
 msgctxt "#32002"
 msgid "Random Items"
 msgstr "Willekeurige items"
+
+msgctxt "#32004"
+msgid "Randomize time (minutes)"
+msgstr "Willekeurige tijd (minuten)"
+
+msgctxt "#32005"
+msgid "Use season folders"
+msgstr "Gebruik seizoen folders"
+
+msgctxt "#32006"
+msgid "Use timer"
+msgstr "Gebruik timer"
+
+msgctxt "#32007"
+msgid "After database update"
+msgstr "Na een bibliotheek update"
+
+msgctxt "#32008"
+msgid "Update method"
+msgstr "Update methode"
+
+msgctxt "#32009"
+msgid "Recent Items"
+msgstr "Recente items"
+
+msgctxt "#32010"
+msgid "Update each time you enter the home screen"
+msgstr "Update elke keer wanneer je het start scherm opent"
+
+msgctxt "#32011"
+msgid "Only unplayed and unfinished"
+msgstr "Alleen de niet afgespeelde en onvolledige"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Gebruik Media Overlays"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Plot van niet bekeken video's weergeven"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Verborgen om plot niet te verklappen *"

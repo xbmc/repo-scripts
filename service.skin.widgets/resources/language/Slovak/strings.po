@@ -55,3 +55,15 @@ msgstr "Aktualizovať vždy pri otvorení domácej obrazovky"
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "Len neprehraté a nedokončené"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Všeobecné"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Zobrazovať obsah pre nevidené videá"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* nezobrazené pre spoilery *"

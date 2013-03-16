@@ -55,3 +55,15 @@ msgstr "每次进入主界面时更新"
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
 msgstr "仅未播放和未完成的"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "菜单选项"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "显示未观看影片的剧情介绍"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* 未观看之前隐藏 *"

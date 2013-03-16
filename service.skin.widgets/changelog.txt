@@ -1,3 +1,14 @@
+v0.0.24
+- Added *Episode.%d.Watched
+- Added *Episode.%d.DBID
+- Added *Movie.%d.Country
+- Added *Movie.%d.DBID
+- Added resume=false param for the play command
+  (thx phil65)
+
+v0.0.23
+- Fix premiered property for episodes
+
 v0.0.22
 - Fix keyerror
 
