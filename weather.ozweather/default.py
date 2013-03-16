@@ -498,14 +498,14 @@ socket.setdefaulttimeout(100)
 
 #the being called from the settings section where the user enters their postcodes
 if sys.argv[1].startswith('Location'):
-    keyboard = xbmc.Keyboard('', 'Enter your 4 digit postcode e.g. 3000', False)
+    keyboard = xbmc.Keyboard('', LANGUAGE(30195), False)
     keyboard.doModal()
     if (keyboard.isConfirmed() and keyboard.getText() != ''):
         text = keyboard.getText()
 
         log("Doing locations search for " + text)
         #need to submit the postcode to the weatherzone search
-        searchURL = 'http://www.weatherzone.com.au/search/'
+        searchURL = WEATHERZONE_URL + '/search/'
         user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
         host = 'www.weatherzone.com.au'
         headers = { 'User-Agent' : user_agent, 'Host' : host }
@@ -526,22 +526,27 @@ if sys.argv[1].startswith('Location'):
             log("Single result " + str(locations) + " URL " + str(locationids))
         else:
             #we got back a page to choose a more specific location
-            middle = common.parseDOM(resultPage, "div", attrs = { "id": "structure_middle" })
-            skimmed = common.parseDOM(middle, "ul", attrs = { "class": "typ2" })
-            #ok now get two lists - one of the friendly names
-            #and a matchin one of the URLs to store
-            locations = common.parseDOM(skimmed[0], "a")
-            templocs = common.parseDOM(skimmed[0], "a", ret="href")
-            #build the full urls
-            locationids = []
-            for count, loc in enumerate(templocs):
-                locationids.append(WeatherZoneURL + loc)
-            #if we did not get enough data back there are no locations with this postcode
-            if len(locations)<=1:
-                log("No locations found with this postcode")
-                locations = []
+            try:
+                locations=[]
+                locationids=[]
+                middle = common.parseDOM(resultPage, "div", attrs = { "id": "structure_middle" })
+                skimmed = common.parseDOM(middle, "ul", attrs = { "class": "typ2" })
+                #ok now get two lists - one of the friendly names
+                #and a matchin one of the URLs to store
+                locations = common.parseDOM(skimmed[0], "a")
+                templocs = common.parseDOM(skimmed[0], "a", ret="href")
+                #build the full urls
                 locationids = []
-            log("Multiple result " + str(locations) + " URLs " + str(locationids))
+                for count, loc in enumerate(templocs):
+                    locationids.append(WEATHERZONE_URL + '/' + loc)
+                #if we did not get enough data back there are no locations with this postcode
+                if len(locations)<=1:
+                    log("No locations found with this postcode")
+                    locations = []
+                    locationids = []
+                log("Multiple result " + str(locations) + " URLs " + str(locationids))
+            except:
+                log("Error - middle: " + str(middle) + " skimmed " + str(skimmed))
 
 
         #now get them to choose an actual location

@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
 	<string id="30101">OzWeather Settings</string>
-	
-  <string id="30111">Change Postcode 1</string>
-	<string id="30112">Change Postcode 2</string>
-	<string id="30113">Change Postcode 3</string>
-	<string id="30114">Change Postcode 4</string>
-	<string id="30115">Change Postcode 5</string>
-	<string id="30116">Change Postcode 6</string>
-	
-	<string id="30155">Change Radar ID for Postcode 1</string>
-	<string id="30156">Change Radar ID for Postcode 2</string>
-	<string id="30157">Change Radar ID for Postcode 3</string>
-	<string id="30158">Change Radar ID for Postcode 4</string>
-	<string id="30159">Change Radar ID for Postcode 5</string>
-	<string id="30160">Change Radar ID for Postcode 6</string>
+
+    <string id="30111">Change Suburb 1</string>
+	<string id="30112">Change Suburb 2</string>
+	<string id="30113">Change Suburb 3</string>
+
+	<string id="30155">Change Radar ID for Suburb 1 (e.g. IDR022)</string>
+	<string id="30156">Change Radar ID for Suburb 2</string>
+	<string id="30157">Change Radar ID for Suburb 3</string>
 
 	<string id="30194">Use extended features (long forecast, radar loop)</string>
 
+    <string id="30195">Enter suburb name, or your 4 digit postcode e.g. 3051</string>
+
 </strings>
-                      
