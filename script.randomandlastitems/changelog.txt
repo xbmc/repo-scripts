@@ -1,3 +1,11 @@
+v2.0.5
+- Fix statistics for Albums smart playlists
+
+v2.0.4
+- Add Country property for Movies
+- Add DBID property for Movies and Episodes
+- Restart or resume partially watched movies or episodes
+
 v2.0.3
 - Fix missing id error
 

@@ -82,7 +82,7 @@ def _getMovies ( ):
     # Request database using JSON
     if PLAYLIST == "":
         PLAYLIST = "videodb://1/2/"
-    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "playcount", "year", "genre", "studio", "tagline", "plot", "runtime", "file", "plotoutline", "lastplayed", "trailer", "rating", "resume", "art", "streamdetails", "dateadded"]}, "id": 1}' %(PLAYLIST))
+    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "playcount", "year", "genre", "studio", "country", "tagline", "plot", "runtime", "file", "plotoutline", "lastplayed", "trailer", "rating", "resume", "art", "streamdetails", "dateadded"]}, "id": 1}' %(PLAYLIST))
     _json_query = unicode(_json_query, 'utf-8', errors='ignore')
     _json_pl_response = simplejson.loads(_json_query)
     # If request return some results
@@ -92,7 +92,7 @@ def _getMovies ( ):
             if xbmc.abortRequested:
                 break
             if _item['filetype'] == 'directory':
-                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "playcount", "year", "genre", "studio", "tagline", "plot", "runtime", "file", "plotoutline", "lastplayed", "trailer", "rating", "resume", "art", "streamdetails", "dateadded"]}, "id": 1}' %(_item['file']))
+                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "playcount", "year", "genre", "studio", "country", "tagline", "plot", "runtime", "file", "plotoutline", "lastplayed", "trailer", "rating", "resume", "art", "streamdetails", "dateadded"]}, "id": 1}' %(_item['file']))
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
                 _json_set_response = simplejson.loads(_json_query)
                 _movies = _json_set_response.get( "result", {} ).get( "files" ) or []
@@ -164,10 +164,12 @@ def _getMovies ( ):
             else:
                 runtime = _movie['runtime']
             # Set window properties
+            _setProperty( "%s.%d.DBID"            % ( PROPERTY, _count ), str(_movie.get('id')))
             _setProperty( "%s.%d.Title"           % ( PROPERTY, _count ), _movie['label'])
             _setProperty( "%s.%d.Year"            % ( PROPERTY, _count ), str(_movie['year']))
             _setProperty( "%s.%d.Genre"           % ( PROPERTY, _count ), " / ".join(_movie['genre']))
             _setProperty( "%s.%d.Studio"          % ( PROPERTY, _count ), _movie['studio'][0])
+            _setProperty( "%s.%d.Country"         % ( PROPERTY, _count ), _movie['country'][0])
             _setProperty( "%s.%d.Plot"            % ( PROPERTY, _count ), _movie['plot'])
             _setProperty( "%s.%d.PlotOutline"     % ( PROPERTY, _count ), _movie['plotoutline'])
             _setProperty( "%s.%d.Tagline"         % ( PROPERTY, _count ), _movie['tagline'])
@@ -356,11 +358,9 @@ def _getAlbumsFromPlaylist ( ):
                 break
             if _file['type'] == 'album':
                 _albums.append(_file)
-            '''
-            if _file['type'] == 'album':
                 _albumid = _file['id']
                 # Album playlist so get path from songs
-                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"albumid": 1, "Properties": ["albumartistid"]}, "id": 1}' )
+                _json_query = xbmc.executeJSONRPC('{"id":1, "jsonrpc":"2.0", "method":"AudioLibrary.GetSongs", "params":{"filter":{"albumid": %s}, "properties":["artistid", "file"]}}' %_albumid)
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
                 log(_json_query)
                 _json_pl_response = simplejson.loads(_json_query)
@@ -369,23 +369,23 @@ def _getAlbumsFromPlaylist ( ):
                 if _result:
                     _albumpath = os.path.split(_result[0]['file'])[0]
                     _artistpath = os.path.split(_albumpath)[0]
-            _albumid = _file.get('albumid', _file.get('id'))
-            _albumpath = os.path.split(_file['file'])[0]
-            _artistpath = os.path.split(_albumpath)[0]
-            _songs += 1
+                    _artistid = _result[0]['artistid']
+                    if _artistid not in _artistsid:
+                        _artists += 1
+                        _artistsid.append(_artistid)
+            #_albumid = _file.get('albumid', _file.get('id'))
+            #_albumpath = os.path.split(_file['file'])[0]
+            #_artistpath = os.path.split(_albumpath)[0]
+            #_songs += 1
+            '''
             if _albumid not in _albumsid:
                 _file["id"] = _albumid
                 _file["albumPath"] = _albumpath
                 _file["artistPath"] = _artistpath
                 _albums.append(_file)
                 _albumsid.append(_albumid)
-
-            _artistid = _file['artistid']
-            if _artistid not in _artistsid:
-                _artists += 1
-                _artistsid.append(_artistid)
             '''
-        #_setMusicProperties ( _artists, len(_albums), _songs )
+        _setMusicProperties ( _artists, len(_files), _songs )
         '''
         # This doesn't work atm because Files.GetDirectory doesn't retrieve dateadded for albums
         if METHOD == 'Last':
@@ -490,6 +490,7 @@ def _setEpisodeProperties ( _episode, _count ):
         play = 'XBMC.RunScript(' + __addonid__ + ',episodeid=' + str(_episode.get('id')) + ')'
         streaminfo = media_streamdetails(_episode['file'].encode('utf-8').lower(),
                                          _episode['streamdetails'])
+        _setProperty("%s.%d.DBID"                % ( PROPERTY, _count ), str(_episode.get('id')))
         _setProperty("%s.%d.Title"               % ( PROPERTY, _count ), _episode['title'])
         _setProperty("%s.%d.Episode"             % ( PROPERTY, _count ), episode)
         _setProperty("%s.%d.EpisodeNo"           % ( PROPERTY, _count ), episodeno)
@@ -561,9 +562,11 @@ def _parse_argv ( ):
     except:
         params = {}
     if params.get("movieid"):
-        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "movieid": %d }, "options":{ "resume": true } }, "id": 1 }' % int(params.get("movieid")))
+        #xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "movieid": %d }, "options":{ "resume": true } }, "id": 1 }' % int(params.get("movieid")))
+        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "movieid": %d }, "options":{ "resume": %s } }, "id": 1 }' % (int(params.get("movieid","")), params.get("resume","true")))
     elif params.get("episodeid"):
-        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "episodeid": %d }, "options":{ "resume": true }  }, "id": 1 }' % int(params.get("episodeid")))
+        #xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "episodeid": %d }, "options":{ "resume": true }  }, "id": 1 }' % int(params.get("episodeid")))
+        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "episodeid": %d }, "options":{ "resume": %s }  }, "id": 1 }' % (int(params.get("episodeid","")), params.get("resume","true")))
     elif params.get("musicvideoid"):
         xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "musicvideoid": %d } }, "id": 1 }' % int(params.get("musicvideoid")))
     elif params.get("albumid"):

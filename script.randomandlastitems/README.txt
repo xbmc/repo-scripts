@@ -33,10 +33,12 @@ Properties return to Home window (id 10000) :
 %s.Count = Number of movies in library or playlist
 %s.Unwatched = Number of unwatched movies in library or playlist
 %s.Watched = Number of watched movies in library or playlist
+%s.%d.DBID
 %s.%d.Title
 %s.%d.Year
 %s.%d.Genre
 %s.%d.Studio
+%s.%d.Country
 %s.%d.Plot
 %s.%d.PlotOutline
 %s.%d.Tagline
@@ -73,6 +75,7 @@ Properties return to Home window (id 10000) :
 %s.Unwatched = Number of unwatched episodes in library or playlist
 %s.Watched = Number of watched episodes in library or playlist
 %s.TvShows = Number of TV shows in library or playlist
+%s.%d.DBID
 %s.%d.Title
 %s.%d.Episode
 %s.%d.EpisodeNo
