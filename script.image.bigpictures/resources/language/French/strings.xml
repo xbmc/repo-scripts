@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- French language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fr/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
     <!-- Help -->
     <string id="32001">Gauche + Droite = Changer d'album/de photo</string>
@@ -9,6 +13,7 @@
     <string id="32006">Contexte = Télécharger l'album</string>
     <string id="32007">Play = Démarrer le diaporama</string>
     <string id="32008">0 = Changer le ratio de l'image</string>
+
     <!-- Settings -->
     <string id="32100">Ne plus afficher cette aide à l'avenir</string>
     <string id="32110">Ratio de l'image par défaut</string>
@@ -17,9 +22,11 @@
     <string id="32120">Afficher les flèches</string>
     <string id="32130">Diaporama aléatoire</string>
     <string id="32140">Chemin de téléchargement de l'album</string>
+
     <!-- Settings categories -->
     <string id="32200">Aide</string>
     <string id="32201">Paramètres</string>
+
     <!-- Script strings -->
     <string id="32300">Choisir le chemin de téléchargement par défaut</string>
     <string id="32301">Récupération des données...</string>

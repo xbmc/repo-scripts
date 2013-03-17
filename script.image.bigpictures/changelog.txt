@@ -1,3 +1,14 @@
+4.0.0
+  New Scraper: NewYorkTimes.com - Lens Blog
+  New Default Skin (thx Jugger)
+  Fixed Slideshow on Frodo (press PLAY to start)
+  Code rewrite
+  All Scrapers fixed
+
+3.0.5
+  Fixed: Time.com Lightbox photosets
+  Updated Translations
+
 3.0.4
   Fixed: "The Big Picture"-scraper
   Fixed: "Wallstreet Jouarnal"-scraper

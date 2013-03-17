@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Czech language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/cs/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
-    <!-- Help / Nápověda -->
+    <!-- Help -->
     <string id="32001">Vlevo + Vpravo = Procházení alb/fotografií</string>
     <string id="32002">Nahoru + Dolu = Procházení zdrojů</string>
     <string id="32003">Zvolit = Vybrat album</string>
@@ -9,7 +13,8 @@
     <string id="32006">Kontextová nabídka = Stáhnout album</string>
     <string id="32007">Přehrát = Spustit prezentaci</string>
     <string id="32008">0 = Změnit poměr stran</string>
-    <!-- Settings / Nastavení -->
+
+    <!-- Settings -->
     <string id="32100">Příště nezobrazovat tuto nápovědu</string>
     <string id="32110">Výchozí poměr stran</string>
     <string id="32111">škálovat</string>
@@ -17,10 +22,12 @@
     <string id="32120">Zobrazit šipky</string>
     <string id="32130">Náhodné pořadí v prezentaci</string>
     <string id="32140">Umístění stahovaných alb</string>
-    <!-- Settings categories / Kategorie nastavení -->
+
+    <!-- Settings categories -->
     <string id="32200">Nápověda</string>
     <string id="32201">Nastavení</string>
-    <!-- Script strings / Řetězce pro skript -->
+
+    <!-- Script strings -->
     <string id="32300">Zvolte výchozí cestu pro stahování</string>
     <string id="32301">Získávání dat…</string>
     <string id="32302">%d. položka z %d</string>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Korean language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ko/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Left + Right = 앨범/사진 전환</string>
+    <string id="32002">Up + Down = 소스 전환</string>
+    <string id="32003">Select = 앨범 선택</string>
+    <string id="32004">Back = 앨범으로 돌아가기/애드온 종료</string>
+    <string id="32005">Info = 사진 정보 토글</string>
+    <string id="32006">Context = 앨범 다운로드</string>
+    <string id="32007">Play = 슬라이드쇼 시작</string>
+    <string id="32008">0 = 화면비 변경</string>
+
+    <!-- Settings -->
+    <string id="32100">이 도움말 다시 표시하지 않음</string>
+    <string id="32110">기본 화면비</string>
+    <string id="32111">축소/확대</string>
+    <string id="32112">유지</string>
+    <string id="32120">화살표 보기</string>
+    <string id="32130">무작위 슬라이드쇼</string>
+    <string id="32140">앨범 다운로드 경로</string>
+
+    <!-- Settings categories -->
+    <string id="32200">도움말</string>
+    <string id="32201">설정</string>
+
+    <!-- Script strings -->
+    <string id="32300">기본 다운로드 경로 선택</string>
+    <string id="32301">데이터 수집중...</string>
+    <string id="32302">항목 %d/%d</string>
+    <string id="32303">현재 항목: %s %d%%</string>
+    <string id="32304">다운로드: %s</string>
+</strings>
