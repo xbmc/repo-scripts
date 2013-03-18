@@ -1,102 +1,280 @@
 # -*- coding: utf-8 -*-
 """ Handles notifications from XBMC via its own thread and forwards them on to the scrobbler """
 
+import sys
 import xbmc
-import telnetlib
-import socket
-import time
+import xbmcaddon
+import xbmcgui
 
-import simplejson as json
+if sys.version_info < (2, 7):
+	import simplejson as json
+else:
+	import json
 
-import threading
-from utilities import Debug
+import globals
+from traktapi import traktAPI
+from utilities import Debug, checkScrobblingExclusion, xbmcJsonRequest
 from scrobbler import Scrobbler
 from movie_sync import SyncMovies
 from episode_sync import SyncEpisodes
 from sync_exec import do_sync
 
-class NotificationService(threading.Thread):
-	""" Receives XBMC notifications and passes them off as needed """
+class NotificationService:
 
-	TELNET_ADDRESS = 'localhost'
-	TELNET_PORT = 9090
-
-	_abortRequested = False
 	_scrobbler = None
-	_notificationBuffer = ""
+	
+	def __init__(self):
+		self.run()
 
+	def _dispatch(self, data):
+		Debug("[Notification] Dispatch: %s" % data)
+		xbmc.sleep(500)
+		
+		# check if scrobbler thread is still alive
+		if not self._scrobbler.isAlive():
 
-	def _forward(self, notification):
-		""" Fowards the notification recieved to a function on the scrobbler """
-		if not ('method' in notification and 'params' in notification and 'sender' in notification['params'] and notification['params']['sender'] == 'xbmc'):
-			return
+			if self.Player._playing and not self._scrobbler.pinging:
+				# make sure pinging is set
+				self._scrobbler.pinging = True
 
-		if notification['method'] == 'Player.OnStop':
+			Debug("[Notification] Scrobler thread died, restarting.")
+			self._scrobbler.start()
+		
+		action = data["action"]
+		if action == "started":
+			del data["action"]
+			p = {"item": data}
+			self._scrobbler.playbackStarted(p)
+		elif action == "ended" or action == "stopped":
 			self._scrobbler.playbackEnded()
-		elif notification['method'] == 'Player.OnPlay':
-			if 'data' in notification['params'] and 'item' in notification['params']['data'] and 'type' in notification['params']['data']['item']:
-				self._scrobbler.playbackStarted(notification['params']['data'])
-		elif notification['method'] == 'Player.OnPause':
+		elif action == "paused":
 			self._scrobbler.playbackPaused()
-		elif notification['method'] == 'VideoLibrary.OnScanFinished':
+		elif action == "resumed":
+			self._scrobbler.playbackResumed()
+		elif action == "seek" or action == "seekchapter":
+			self._scrobbler.playbackSeek()
+		elif action == "databaseUpdated":
 			if do_sync('movies'):
-				movies = SyncMovies(show_progress=False)
+				movies = SyncMovies(show_progress=False, api=globals.traktapi)
 				movies.Run()
 			if do_sync('episodes'):
-				episodes = SyncEpisodes(show_progress=False)
+				episodes = SyncEpisodes(show_progress=False, api=globals.traktapi)
 				episodes.Run()
-		elif notification['method'] == 'System.OnQuit':
-			self._abortRequested = True
-
-
-	def _readNotification(self, telnet):
-		""" Read a notification from the telnet connection, blocks until the data is available, or else raises an EOFError if the connection is lost """
-		while True:
-			try:
-				addbuffer = telnet.read_some()
-			except socket.timeout:
-				continue
-
-			if addbuffer == "":
-				raise EOFError
-
-			self._notificationBuffer += addbuffer
-			try:
-				data, offset = json.JSONDecoder().raw_decode(self._notificationBuffer)
-				self._notificationBuffer = self._notificationBuffer[offset:]
-			except ValueError:
-				continue
-
-			return data
-
+		elif action == "scanStarted":
+			pass
+		elif action == "settingsChanged":
+			Debug("[Notification] Settings changed, reloading.")
+			globals.traktapi.updateSettings()
+		else:
+			Debug("[Notification] '%s' unknown dispatch action!" % action)
 
 	def run(self):
-		#while xbmc is running
-		self._scrobbler = Scrobbler()
-		self._scrobbler.start()
-		while not (self._abortRequested or xbmc.abortRequested):
-			try:
-				#try to connect, catch errors and retry every 5 seconds
-				telnet = telnetlib.Telnet(self.TELNET_ADDRESS, self.TELNET_PORT)
+		Debug("[Notification] Starting")
+		
+		# setup event driven classes
+		self.Player = traktPlayer(action = self._dispatch)
+		self.Monitor = traktMonitor(action = self._dispatch)
+		
+		# init traktapi class
+		globals.traktapi = traktAPI()
+
+		# initalize scrobbler class
+		self._scrobbler = Scrobbler(globals.traktapi)
+
+		# start loop for events
+		while (not xbmc.abortRequested):
+			xbmc.sleep(500)
+			
+		# we aborted
+		if xbmc.abortRequested:
+			Debug("[Notification] abortRequested received, shutting down.")
+			
+			# delete player/monitor
+			del self.Player
+			del self.Monitor
+			
+			# join scrobbler, to wait for termination
+			Debug("[Notification] Joining scrobbler thread to wait for exit.")
+			self._scrobbler.join()
+
+class traktMonitor(xbmc.Monitor):
+
+	def __init__(self, *args, **kwargs):
+		xbmc.Monitor.__init__(self)
+		self.action = kwargs["action"]
+		Debug("[traktMonitor] Initalized")
+
+	# called when database gets updated and return video or music to indicate which DB has been changed
+	def onDatabaseUpdated(self, database):
+		if database == "video":
+			Debug("[traktMonitor] onDatabaseUpdated(database: %s)" % database)
+			data = {"action": "databaseUpdated"}
+			self.action(data)
+
+	# called when database update starts and return video or music to indicate which DB is being updated
+	def onDatabaseScanStarted(self, database):
+		if database == "video":
+			Debug("[traktMonitor] onDatabaseScanStarted(database: %s)" % database)
+			data = {"action": "scanStarted"}
+			self.action(data)
+
+	def onSettingsChanged(self):
+		data = {"action": "settingsChanged"}
+		self.action(data)
+		
+
+class traktPlayer(xbmc.Player):
+
+	_playing = False
+
+	def __init__(self, *args, **kwargs):
+		xbmc.Player.__init__(self)
+		self.action = kwargs["action"]
+		Debug("[traktPlayer] Initalized")
+
+	# called when xbmc starts playing a file
+	def onPlayBackStarted(self):
+		xbmc.sleep(1000)
+		self.type = None
+		self.id = None
+		
+		# only do anything if we're playing a video
+		if self.isPlayingVideo():
+			# get item data from json rpc
+			result = xbmcJsonRequest({"jsonrpc": "2.0", "method": "Player.GetItem", "params": {"playerid": 1}, "id": 1})
+			Debug("[traktPlayer] onPlayBackStarted() - %s" % result)
+			
+			# check for exclusion
+			_filename = self.getPlayingFile()
+			if checkScrobblingExclusion(_filename):
+				Debug("[traktPlayer] onPlayBackStarted() - '%s' is in exclusion settings, ignoring." % _filename)
+				return
+			
+			self.type = result["item"]["type"]
+
+			data = {"action": "started"}
+			
+			# check type of item
+			if self.type == "unknown":
+				# do a deeper check to see if we have enough data to perform scrobbles
+				Debug("[traktPlayer] onPlayBackStarted() - Started playing a non-library file, checking available data.")
 				
-				#if connection succeeds
-				while not (self._abortRequested or xbmc.abortRequested):
-					try:
-						#read notification data
-						data = self._readNotification(telnet)
-						Debug("[Notification Service] message: " + str(data))
-						self._forward(data)
-					except EOFError:
-						#if we end up here, it means the connection was lost or reset,
-						# so we empty out the buffer, and exit this loop, which retries
-						# the connection in the outer loop
-						self._notificationBuffer = ""
-						break
-			except:
-				time.sleep(5)
-				continue
+				season = xbmc.getInfoLabel("VideoPlayer.Season")
+				episode = xbmc.getInfoLabel("VideoPlayer.Episode")
+				showtitle = xbmc.getInfoLabel("VideoPlayer.TVShowTitle")
+				year = xbmc.getInfoLabel("VideoPlayer.Year")
+				
+				if season and episode and showtitle:
+					# we have season, episode and show title, can scrobble this as an episode
+					self.type = "episode"
+					data["type"] = "episode"
+					data["season"] = int(season)
+					data["episode"] = int(episode)
+					data["showtitle"] = showtitle
+					data["title"] = xbmc.getInfoLabel("VideoPlayer.Title")
+					Debug("[traktPlayer] onPlayBackStarted() - Playing a non-library 'episode' - %s - S%02dE%02d - %s." % (data["title"], data["season"], data["episode"]))
+				elif year and not season and not showtitle:
+					# we have a year and no season/showtitle info, enough for a movie
+					self.type = "movie"
+					data["type"] = "movie"
+					data["year"] = int(year)
+					data["title"] = xbmc.getInfoLabel("VideoPlayer.Title")
+					Debug("[traktPlayer] onPlayBackStarted() - Playing a non-library 'movie' - %s (%d)." % (data["title"], data["year"]))
+				else:
+					Debug("[traktPlayer] onPlayBackStarted() - Non-library file, not enough data for scrobbling, skipping.")
+					return
+			
+			elif self.type == "episode" or self.type == "movie":
+				# get library id
+				self.id = result["item"]["id"]
+				data["id"] = self.id
+				data["type"] = self.type
+			
+				if self.type == "episode":
+					Debug("[traktPlayer] onPlayBackStarted() - Doing multi-part episode check.")
+					result = xbmcJsonRequest({"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodeDetails", "params": {"episodeid": self.id, "properties": ["tvshowid", "season","episode"]}, "id": 1})
+					if result:
+						Debug("[traktPlayer] onPlayBackStarted() - %s" % result)
+						tvshowid = int(result["episodedetails"]["tvshowid"])
+						season = int(result["episodedetails"]["season"])
+						episode = int(result["episodedetails"]["episode"])
+						episode_index = episode - 1
+						
+						result = xbmcJsonRequest({"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"tvshowid": tvshowid, "season": season, "properties": ["episode", "file"], "sort": {"method": "episode"}}, "id": 1})
+						if result:
+							Debug("[traktPlayer] onPlayBackStarted() - %s" % result)
+							# make sure episodes array exists in results
+							if result.has_key("episodes"):
+								multi = []
+								for i in range(episode_index, result["limits"]["total"]):
+									if result["episodes"][i]["file"] == result["episodes"][episode_index]["file"]:
+										multi.append(result["episodes"][i]["episodeid"])
+									else:
+										break
+								if len(multi) > 1:
+									data["multi_episode_data"] = multi
+									data["multi_episode_count"] = len(multi)
+									Debug("[traktPlayer] onPlayBackStarted() - This episode is part of a multi-part episode.")
 
+			else:
+				Debug("[traktPlayer] onPlayBackStarted() - Video type '%s' unrecognized, skipping." % self.type)
+				return
 
-		telnet.close()
-		self._scrobbler.abortRequested = True
-		Debug("Notification service stopping")
+			self._playing = True
+			
+			# send dispatch
+			self.action(data)
+
+	# called when xbmc stops playing a file
+	def onPlayBackEnded(self):
+		if self._playing:
+			Debug("[traktPlayer] onPlayBackEnded() - %s" % self.isPlayingVideo())
+			self._playing = False
+			data = {"action": "ended"}
+			self.action(data)
+
+	# called when user stops xbmc playing a file
+	def onPlayBackStopped(self):
+		if self._playing:
+			Debug("[traktPlayer] onPlayBackStopped() - %s" % self.isPlayingVideo())
+			self._playing = False
+			data = {"action": "stopped"}
+			self.action(data)
+
+	# called when user pauses a playing file
+	def onPlayBackPaused(self):
+		if self._playing:
+			Debug("[traktPlayer] onPlayBackPaused() - %s" % self.isPlayingVideo())
+			data = {"action": "paused"}
+			self.action(data)
+
+	# called when user resumes a paused file
+	def onPlayBackResumed(self):
+		if self._playing:
+			Debug("[traktPlayer] onPlayBackResumed() - %s" % self.isPlayingVideo())
+			data = {"action": "resumed"}
+			self.action(data)
+
+	# called when user queues the next item
+	def onQueueNextItem(self):
+		if self._playing:
+			Debug("[traktPlayer] onQueueNextItem() - %s" % self.isPlayingVideo())
+
+	# called when players speed changes. (eg. user FF/RW)
+	def onPlayBackSpeedChanged(self, speed):
+		if self._playing:
+			Debug("[traktPlayer] onPlayBackSpeedChanged(speed: %s) - %s" % (str(speed), self.isPlayingVideo()))
+
+	# called when user seeks to a time
+	def onPlayBackSeek(self, time, offset):
+		if self._playing:
+			Debug("[traktPlayer] onPlayBackSeek(time: %s, offset: %s) - %s" % (str(time), str(offset), self.isPlayingVideo()))
+			data = {"action": "seek"}
+			self.action(data)
+
+	# called when user performs a chapter seek
+	def onPlayBackSeekChapter(self, chapter):
+		if self._playing:
+			Debug("[traktPlayer] onPlayBackSeekChapter(chapter: %s) - %s" % (str(chapter), self.isPlayingVideo()))
+			data = {"action": "seekchapter"}
+			self.action(data)

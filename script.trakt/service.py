@@ -2,19 +2,22 @@
 #
 
 import xbmcaddon
-from utilities import Debug, checkSettings
+from utilities import Debug
 from notification_service import NotificationService
 
-__settings__ = xbmcaddon.Addon("script.trakt")
-__language__ = __settings__.getLocalizedString
+__addon__ = xbmcaddon.Addon("script.trakt")
+__addonversion__ = __addon__.getAddonInfo('version')
+__addonid__ = __addon__.getAddonInfo('id')
+__language__ = __addon__.getLocalizedString
 
-Debug("loading " + __settings__.getAddonInfo("id") + " version " + __settings__.getAddonInfo("version"))
+Debug("Loading '%s' version '%s'" % (__addonid__, __addonversion__))
 
 # starts update/sync
 def autostart():
-	if checkSettings(True):
-		notificationThread = NotificationService()
-		notificationThread.start()
-		notificationThread.join()
+
+	# startup notification
+	NotificationService()
+	
+	Debug("Plugin shutting down.")
 
 autostart()

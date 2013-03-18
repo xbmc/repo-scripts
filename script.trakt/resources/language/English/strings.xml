@@ -6,7 +6,7 @@
 	<string id="1012">API Key (optional)</string>
 	<string id="1013">Username</string>
 	<string id="1014">Password</string>
-	<string id="1016">Use secure connection (HTTPS)</string>
+	<string id="1017">Number of Retries</string>
 	
 	<string id="1020">Auto Syncing</string>
 	<string id="1021">Auto update Movies Collection at startup</string>
@@ -18,7 +18,7 @@
 	
 	<string id="1030">Rating</string>
 	<string id="1031">Rate Movie after watching</string>
-	<string id="1032">Rate TV Show Episode ater watching</string>
+	<string id="1032">Rate TV Show Episode after watching</string>
 	<string id="1033">Rate each playlist item</string>
 	<string id="1034">Minimum percent watched to display rate dialog</string>
 	
@@ -26,6 +26,12 @@
 	<string id="1041">Scrobble movies</string>
 	<string id="1042">Scrobble TV episodes</string>
 	<string id="1043">Minimum percent watched to scrobble</string>
+	
+	<string id="1050">Exclusions</string>
+	<string id="1051">Exclude Live TV</string>
+	<string id="1052">Exclude HTTP sources</string>	
+	<string id="1053">Exclude path</string>
+	<string id="1054">Folder's path (and subfolders)</string>
 	
 	<!-- Info -->
 	<string id="1105"></string>
@@ -95,6 +101,17 @@
 	<string id="1310">Successfully added to watch-list</string>
 	<string id="1311">Failed to remove from watch-list</string>
 	<string id="1312">Successfully removed from watch-list</string>
+	<string id="1313">What Did You Think?</string>
+	<string id="1314">Totaly Ninja!</string>
+	<string id="1315">Weak Sauce :(</string>
+	<string id="1316">Terrible</string>
+	<string id="1317">Bad</string>
+	<string id="1318">Poor</string>
+	<string id="1319">Meh</string>
+	<string id="1320">Fair</string>
+	<string id="1321">Good</string>
+	<string id="1322">Great</string>
+	<string id="1323">Superb</string>
 
 	<!-- auto update / sync -->
 	<string id="1180">start movie collection update</string>
