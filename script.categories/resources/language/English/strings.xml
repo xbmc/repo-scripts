@@ -15,6 +15,11 @@
   <string id="30013">Settings</string>
   <string id="30014">Force View</string>
   <string id="30015">ViewID</string>
+  <string id="30016">Show number of addons in category title</string>
+  <string id="30017">Show add-on version in title</string>
+  <string id="30018">Added {addon} to category {cat}</string>
+  <string id="30019">Removed {addon} from category {cat}</string>
+  <string id="30020">Show notifications</string>
   <string id="30100">Category 01</string>
   <string id="30101">Category 02</string>
   <string id="30102">Category 03</string>
