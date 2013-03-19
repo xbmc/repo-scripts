@@ -1,3 +1,6 @@
+v3.0.5
+- if exact match is disabled don't auto download if there's only one result
+
 v3.0.4
 - changed don't replay tune when navigating with a tv show folder
 

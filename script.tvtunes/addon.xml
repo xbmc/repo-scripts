@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvtunes" name="TvTunes" version="3.0.4" provider-name="Ppic, Frost, ronie">
+<addon id="script.tvtunes" name="TvTunes" version="3.0.5" provider-name="Ppic|Frost|ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -22,5 +22,8 @@
 		<disclaimer lang="es">Skinners, por favor, revisad changelog.txt para saber como integrarlo en vuestras skins</disclaimer>
 		<disclaimer lang="fr">Skinneurs, lisez le changelog.txt pour obtenir les infos pour l'intégrer à votre skin</disclaimer>
 		<disclaimer lang="pt">Skinners, favor ver o changelog.txt para saber como integrar TVTunes em sua skin.</disclaimer>
+		<platform>all</platform>
+		<forum>http://forum.xbmc.org/showthread.php?tid=83925</forum>
+		<source>https://code.google.com/p/ronie/source/</source>
 	</extension>
 </addon>

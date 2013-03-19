@@ -103,14 +103,14 @@ class TvTunes:
             if not self.ERASE and xbmcvfs.exists(os.path.join(show[1],"theme.mp3")):
                 log( "### %s already exists, ERASE is set to %s" % ( os.path.join(show[1],"theme.mp3"), [False,True][self.ERASE] ) )
             else:
-                self.DIALOG_PROGRESS.update( (count*100)/total , __language__(32107) + ' ' + show[0] , "")
+                self.DIALOG_PROGRESS.update( (count*100)/total , __language__(32107) + ' ' + show[0] , ' ')
                 if self.DIALOG_PROGRESS.iscanceled():
                     self.DIALOG_PROGRESS.close()
                     xbmcgui.Dialog().ok(__language__(32108),__language__(32109))
                     break
                 theme_list = self.search_theme_list( show[0])
                 #log( theme_list )
-                if len(theme_list) == 1: 
+                if (len(theme_list) == 1) and (exact_match == 'true'): 
                     theme_url = self.download_url % theme_list[0]["url"].replace("http://www.televisiontunes.com/", "").replace(".html" , "")
                 else:
                     theme_url = self.get_user_choice( theme_list , show[0] )
