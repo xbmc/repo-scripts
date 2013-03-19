@@ -1,5 +1,5 @@
 import os, sys, unicodedata
-import xbmc, xbmcgui, xbmcaddon
+import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 from elementtree import ElementTree as xmltree
 
 __addon__        = xbmcaddon.Addon()
@@ -8,9 +8,9 @@ __addonversion__ = __addon__.getAddonInfo('version')
 
 def log(txt):
     if isinstance (txt,str):
-        txt = txt.decode("utf-8")
+        txt = txt.decode('utf-8')
     message = u'%s: %s' % (__addonid__, txt)
-    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+    xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
 
 class Main:
     def __init__( self ):
@@ -45,7 +45,7 @@ class Main:
         else:
             return
         try:
-            dirlist = os.listdir( xbmc.translatePath( path ).decode("utf-8") )
+            dirlist = os.listdir( xbmc.translatePath( path ).decode('utf-8') )
         except:
             dirlist = []
         log('dirlist: %s' % dirlist)
@@ -53,12 +53,14 @@ class Main:
             playlist = os.path.join( path, item)
             playlistfile = xbmc.translatePath( playlist )
             if item.endswith('.xsp'):
-                with open(playlistfile, 'r') as contents:
-                    contents_data = unicodedata.normalize('NFKD', unicode(unicode(contents.read(), 'utf-8'))).encode('ascii','ignore')
-                    xmldata = xmltree.fromstring(contents_data)
+                contents = xbmcvfs.File(playlistfile, 'r')
+                contents_data = contents.read().decode('utf-8')
+                xmldata = xmltree.fromstring(contents_data.encode('utf-8'))
                 for line in xmldata.getiterator():
                     if line.tag == "name":
                         name = line.text
+                        if not name:
+                            name = item[:-4]
                         self.playlists.append( (name, playlist) )
                         break
             elif item.endswith('.m3u'):
@@ -68,7 +70,7 @@ class Main:
 
     def _set_properties( self ):
 	for count, item in enumerate( self.playlists ):
-            self.WINDOW.setProperty( 'ScriptPlaylist.%d.Name' % (count + 1), str( item[0] ) )
+            self.WINDOW.setProperty( 'ScriptPlaylist.%d.Name' % (count + 1), item[0] )
             self.WINDOW.setProperty( 'ScriptPlaylist.%d.Path' % (count + 1), item[1] )
 
 if ( __name__ == "__main__" ):
