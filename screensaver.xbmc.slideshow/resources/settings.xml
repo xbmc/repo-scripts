@@ -8,6 +8,7 @@
 		<setting label="30006" type="enum" id="effect" default="2" lvalues="30007|30008|30009"/>
 	</category>
 	<category label="30025">
+		<setting label="30016" type="bool" id="random" default="true"/>
 		<setting label="30011" type="bool" id="scale" default="false"/>
 		<setting type="sep"/>
 		<setting label="30012" type="enum" id="label" default="0" lvalues="30013|30014|30015"/>
@@ -15,5 +16,9 @@
 		<setting label="30022" type="bool" id="iptc" default="false"/>
 		<setting type="sep"/>
 		<setting label="30023" type="bool" id="music" default="false"/>
+	</category>
+	<category label="30026">
+		<setting label="30017" type="bool" id="cache" default="true"/>
+		<setting label="30018" type="action" id="create" enable="eq(-1,true)" action="RunScript(screensaver.xbmc.slideshow,cache=true)"/>
 	</category>
 </settings>

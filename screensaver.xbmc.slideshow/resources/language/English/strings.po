@@ -80,7 +80,25 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr ""
 
-#empty strings from id 30016 to 30020
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Create cache"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr ""
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -100,4 +118,8 @@ msgstr ""
 
 msgctxt "#30025"
 msgid "Additional"
+msgstr ""
+
+msgctxt "#30026"
+msgid "Advanced"
 msgstr ""

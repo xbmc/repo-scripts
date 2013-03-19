@@ -13,11 +13,12 @@
 # *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 # *  http://www.gnu.org/copyleft/gpl.html
 
-import os, sys, random, urllib
-import xbmc, xbmcgui, xbmcaddon, xbmcvfs
+import random
+import xbmcgui, xbmcaddon
 import EXIFvfs
 from iptcinfovfs import IPTCInfo
 from xml.dom.minidom import parse
+from utils import *
 if sys.version_info < (2, 7):
     import simplejson
 else:
@@ -29,9 +30,6 @@ __cwd__      = sys.modules[ "__main__" ].__cwd__
 __skindir__  = xbmc.getSkinDir().decode('utf-8')
 __skinhome__ = xbmc.translatePath( os.path.join( 'special://home/addons/', __skindir__, 'addon.xml' ).encode('utf-8') ).decode('utf-8')
 __skinxbmc__ = xbmc.translatePath( os.path.join( 'special://xbmc/addons/', __skindir__, 'addon.xml' ).encode('utf-8') ).decode('utf-8')
-
-# supported image types by the screensaver
-IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico')
 
 # images types that can contain exif/iptc data
 EXIF_TYPES  = ('.jpg', '.jpeg', '.tif', '.tiff')
@@ -60,12 +58,6 @@ else:
 
 # get local dateformat to localize the exif date tag
 DATEFORMAT = xbmc.getRegion('dateshort')
-
-def log(txt):
-    if isinstance (txt,str):
-        txt = txt.decode('utf-8')
-    message = u'%s: %s' % (__addonid__, txt)
-    xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
 
 class Screensaver(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
@@ -108,11 +100,13 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.slideshow_time   = int(__addon__.getSetting('time'))
         # convert float to hex value usable by the skin
         self.slideshow_dim    = hex(int('%.0f' % (float(__addon__.getSetting('level')) * 2.55)))[2:] + 'ffffff'
+        self.slideshow_random = __addon__.getSetting('random')
         self.slideshow_scale  = __addon__.getSetting('scale')
         self.slideshow_name   = __addon__.getSetting('label')
         self.slideshow_date   = __addon__.getSetting('date')
         self.slideshow_iptc   = __addon__.getSetting('iptc')
-        self.slideshow_music   = __addon__.getSetting('music')
+        self.slideshow_music  = __addon__.getSetting('music')
+        self.slideshow_cache  = __addon__.getSetting('cache')
         # select which image controls from the xml we are going to use
         if self.slideshow_scale == 'false':
             self.image1 = self.getControl(1)
@@ -145,7 +139,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             # iterate through all the images
             for img in items:
                 # add image to gui
-                cur_img.setImage(img)
+                cur_img.setImage(img[0])
                 # give xbmc some time to load the image
                 if not self.startup:
                     xbmc.sleep(1000)
@@ -158,8 +152,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 keywords = ''
                 exif = False
                 iptc = False
-                if ((self.slideshow_date == 'true') or (self.slideshow_iptc == 'true')) and (os.path.splitext(img)[1].lower() in EXIF_TYPES):
-                    imgfile = xbmcvfs.File(img)
+                if ((self.slideshow_date == 'true') or (self.slideshow_iptc == 'true')) and (os.path.splitext(img[0])[1].lower() in EXIF_TYPES):
+                    imgfile = xbmcvfs.File(img[0])
                     # get exif date
                     if self.slideshow_date == 'true':
                         try:
@@ -215,9 +209,12 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 # get the file or foldername if enabled in settings
                 if self.slideshow_name != '0':
                     if self.slideshow_name == '1':
-                        NAME, EXT = os.path.splitext(os.path.basename(img))
+                        if self.slideshow_type == "2":
+                            NAME, EXT = os.path.splitext(os.path.basename(img[0]))
+                        else:
+                            NAME = img[1]
                     elif self.slideshow_name == '2':
-                        ROOT, NAME = os.path.split(os.path.dirname(img))
+                        ROOT, NAME = os.path.split(os.path.dirname(img[0]))
                     self.namelabel.setLabel('[B]' + NAME + '[/B]')
                 # set animations
                 if self.slideshow_effect == "0":
@@ -252,7 +249,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
     def _get_items(self):
 	# check if we have an image folder, else fallback to video fanart
         if self.slideshow_type == "2":
-            items = self._walk(self.slideshow_path)
+            if self.slideshow_cache == 'true' and xbmcvfs.exists(CACHEFILE):
+                items = self._read_cache()
+            else:
+                items = walk(self.slideshow_path)
             if not items:
                 self.slideshow_type = "0"
 	# video fanart
@@ -271,33 +271,20 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 if json_response.has_key('result') and json_response['result'] != None and json_response['result'].has_key(method[1]):
                     for item in json_response['result'][method[1]]:
                         if item['fanart']:
-                            items.append(item['fanart'])
+                            items.append([item['fanart'], item['label']])
         # randomize
-        random.shuffle(items, random.random)
+        if self.slideshow_random == 'true':
+            random.shuffle(items, random.random)
         return items
 
-    def _walk(self, path):
-        images = []
-        folders = []
-        # multipath support
-        if path.startswith('multipath://'):
-            # get all paths from the multipath
-            paths = path[12:-1].split('/')
-            for item in paths:
-                folders.append(urllib.unquote_plus(item))
-        else:
-            folders.append(path)
-        for folder in folders:
-            if xbmcvfs.exists(xbmc.translatePath(folder)):
-                # get all files and subfolders
-                dirs,files = xbmcvfs.listdir(folder)
-                for item in files:
-                    # filter out all images
-                    if os.path.splitext(item)[1].lower() in IMAGE_TYPES:
-                        images.append(os.path.join(folder,item))
-                for item in dirs:
-                    # recursively scan all subfolders
-                    images += self._walk(os.path.join(folder,item))
+    def _read_cache(self):
+        images = ''
+        try:
+            cache = xbmcvfs.File(CACHEFILE)
+            images = eval(cache.read())
+            cache.close()
+        except:
+            pass
         return images
 
     def _anim(self, cur_img):

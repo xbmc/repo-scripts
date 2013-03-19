@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.xbmc.slideshow" name="Slideshow" version="0.0.9" provider-name="Team XBMC">
+<addon id="screensaver.xbmc.slideshow" name="Slideshow" version="0.1.1" provider-name="Team XBMC">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -92,5 +92,7 @@
 		<description lang="zh">幻灯片屏保将使用各种过渡效果以幻灯片形式显示您的图片。你可以设置它显示音乐或视频资料库同人画，或某个文件夹中的图片。</description>
 		<description lang="zh_TW">幻燈片屏幕保護程序可以顯示使用各種過場效果的幻燈片播放。它可以被配置為顯示您的圖書館音樂模式或視頻圖庫，或自行定義的文件夾中的圖像。</description>
 		<platform>all</platform>
+		<forum>http://forum.xbmc.org/showthread.php?tid=154032</forum>
+		<source>https://code.google.com/p/ronie/source/</source>
 	</extension>
 </addon>
