@@ -18,3 +18,8 @@
 - Added context menu for removing whole category
 1.0.7
 - Added context menu for renaming categories
+1.0.8 / 2.0.8
+- Added Portuguese (Brazil) strings (thx@Wanilton)
+- Fixed problem with addons using the "content_type" parameter
+- Added setting for showing the number of addons and addon version in title
+- Added setting for notifications

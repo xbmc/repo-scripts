@@ -9,8 +9,11 @@ addonsFolder=xbmc.translatePath('special://home/addons/')
 catsFile=xbmc.translatePath(addon_work_folder+'/categories.list')
 addon = xbmcaddon.Addon(id=addonID)
 translation = addon.getLocalizedString
-forceViewMode=addon.getSetting("forceViewMode")
+forceViewMode=addon.getSetting("forceView")
 viewMode=str(addon.getSetting("viewMode"))
+catCount=addon.getSetting("catCount")
+versionInTitle=str(addon.getSetting("versionInTitle"))
+showMessages=str(addon.getSetting("showMessages"))
 if not os.path.isdir(addon_work_folder):
   os.mkdir(addon_work_folder)
 
@@ -27,11 +30,16 @@ def indexMain():
           elif plType==translation(30008):
             xbmc.executebuiltin('XBMC.ActivateWindow(10002,plugin://script.categories/?content_type=image)')
 
-def index(cType):
-        addDir(translation(30001), "all", "listCat", "")
+def index():
+        allCount=getAllCount()
+        if catCount=="true" and allCount>0:
+          allTitle=translation(30001)+" ("+str(allCount)+")"
+        else:
+          allTitle=translation(30001)
+        addDir(allTitle, "all", "listCat", "")
         cats = []
         if os.path.exists(catsFile):
-          json_result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": {"content": "'+cType+'"}, "id": 1}' )
+          json_result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": {"content": "'+contentType+'"}, "id": 1}' )
           fh = open(catsFile, 'r')
           if '"Method not found."' in json_result:
             for line in fh:
@@ -45,7 +53,7 @@ def index(cType):
               types=match[0]
               cat = line[line.find("#")+1:]
               cat = cat[:cat.find("#END")]
-              if cType in types and cat not in cats:
+              if contentType in types and cat not in cats:
                 cats.append(cat)
           else:
             for line in fh:
@@ -57,13 +65,55 @@ def index(cType):
                   cats.append(cat)
           fh.close()
           for cat in cats:
-            addRDir(cat, cat, "listCat", "")
+            catsCount=getCatCount(cat)
+            if catCount=="true" and catsCount>0:
+              catTitle=cat+" ("+str(catsCount)+")"
+            else:
+              catTitle=cat
+            addRDir(catTitle, cat, "listCat", "")
         xbmcplugin.endOfDirectory(pluginhandle)
+        if forceViewMode=="true":
+          xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
-def listCat(cat,cType):
+def getAllCount():
+        json_result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": {"content": "'+contentType+'"}, "id": 1}' )
+        match=re.compile('"addonid"', re.DOTALL).findall(json_result)
+        return len(match)-1
+
+def getCatCount(category):
+        count=0
+        if os.path.exists(catsFile):
+          json_result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": {"content": "'+contentType+'"}, "id": 1}' )
+          fh = open(catsFile, 'r')
+          if '"Method not found."' in json_result:
+            for line in fh:
+              id = line[:line.find("#")]
+              currentAddon = xbmcaddon.Addon(id=id)
+              path = xbmc.translatePath('special://home/addons/'+id+'/addon.xml')
+              fh = open(path, 'r')
+              xml = fh.read()
+              fh.close()
+              match=re.compile('<provides>(.+?)</provides>', re.DOTALL).findall(xml)
+              types=match[0]
+              cat = line[line.find("#")+1:]
+              cat = cat[:cat.find("#END")]
+              if contentType in types and cat==category:
+                count+=1
+          else:
+            for line in fh:
+              id = line[:line.find("#")]
+              if id in json_result:
+                cat = line[line.find("#")+1:]
+                cat = cat[:cat.find("#END")]
+                if cat==category:
+                  count+=1
+          fh.close()
+        return count
+
+def listCat(cat):
         xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
         addons = os.listdir(addonsFolder)
-        json_result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": {"content": "'+cType+'"}, "id": 1}' )
+        json_result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": {"content": "'+contentType+'"}, "id": 1}' )
         if '"Method not found."' in json_result:
           if cat == "all":
             for a in addons:
@@ -76,11 +126,15 @@ def listCat(cat,cType):
                 types=match[0]
               except:
                 types=""
-              if a!="script.categories" and cType in types:
+              if a!="script.categories" and contentType in types:
                 try:
                   currentAddon = xbmcaddon.Addon(id=a)
+                  if versionInTitle=="true":
+                    title = currentAddon.getAddonInfo('name')+" ("+currentAddon.getAddonInfo('version')+")"
+                  else:
+                    title = currentAddon.getAddonInfo('name')
                   desc = "Version: "+currentAddon.getAddonInfo('version')+" ("+currentAddon.getAddonInfo('author')+")\n"+currentAddon.getAddonInfo('description')
-                  addAddonDir(currentAddon.getAddonInfo('name'),a,currentAddon.getAddonInfo('icon'),desc,cType)
+                  addAddonDir(title,a,currentAddon.getAddonInfo('icon'),desc,contentType)
                 except:
                   pass
           else:
@@ -98,11 +152,15 @@ def listCat(cat,cType):
                   types=match[0]
                 except:
                   types=""
-                if a!="script.categories" and cType in types and a+"#"+cat in content:
+                if a!="script.categories" and contentType in types and a+"#"+cat in content:
                   try:
                     currentAddon = xbmcaddon.Addon(id=a)
+                    if versionInTitle=="true":
+                      title = currentAddon.getAddonInfo('name')+" ("+currentAddon.getAddonInfo('version')+")"
+                    else:
+                      title = currentAddon.getAddonInfo('name')
                     desc = "Version: "+currentAddon.getAddonInfo('version')+" ("+currentAddon.getAddonInfo('author')+")\n"+currentAddon.getAddonInfo('description')
-                    addAddonRDir(currentAddon.getAddonInfo('name'),a,currentAddon.getAddonInfo('icon'),cat,desc)
+                    addAddonRDir(title,a,currentAddon.getAddonInfo('icon'),cat,desc)
                   except:
                     pass
 
@@ -113,8 +171,12 @@ def listCat(cat,cType):
               try:
                 if addonid!="script.categories":
                   currentAddon = xbmcaddon.Addon(id=addonid)
+                  if versionInTitle=="true":
+                    title = currentAddon.getAddonInfo('name')+" ("+currentAddon.getAddonInfo('version')+")"
+                  else:
+                    title = currentAddon.getAddonInfo('name')
                   desc = "Version: "+currentAddon.getAddonInfo('version')+" ("+currentAddon.getAddonInfo('author')+")\n"+currentAddon.getAddonInfo('description')
-                  addAddonDir(currentAddon.getAddonInfo('name'),addonid,currentAddon.getAddonInfo('icon'),desc,cType)
+                  addAddonDir(title,addonid,currentAddon.getAddonInfo('icon'),desc,contentType)
               except:
                 pass
           else:
@@ -127,8 +189,12 @@ def listCat(cat,cType):
                   try:
                     if addonid!="script.categories":
                       currentAddon = xbmcaddon.Addon(id=addonid)
+                      if versionInTitle=="true":
+                        title = currentAddon.getAddonInfo('name')+" ("+currentAddon.getAddonInfo('version')+")"
+                      else:
+                        title = currentAddon.getAddonInfo('name')
                       desc = "Version: "+currentAddon.getAddonInfo('version')+" ("+currentAddon.getAddonInfo('author')+")\n"+currentAddon.getAddonInfo('description')
-                      addAddonRDir(currentAddon.getAddonInfo('name'),addonid,currentAddon.getAddonInfo('icon'),cat,desc)
+                      addAddonRDir(title,addonid,currentAddon.getAddonInfo('icon'),cat,desc)
                   except:
                     pass
         xbmcplugin.endOfDirectory(pluginhandle)
@@ -189,8 +255,13 @@ def addAddon(args):
               fh=open(catsFile, 'a')
               fh.write(playlistEntry+"\n")
               fh.close()
+          if showMessages=="true":
+            xbmc.executebuiltin('XBMC.Notification(Info:,'+translation(30018).format(addon=xbmcaddon.Addon(id=addonID).getAddonInfo('name'), cat=pl)+',5000)')
 
 def deleteAddon(args):
+        match=re.compile('(.+?)#(.+?)#', re.DOTALL).findall(args)
+        id=match[0][0]
+        cat=match[0][1]
         fh = open(catsFile, 'r')
         content=fh.read()
         fh.close()
@@ -198,6 +269,8 @@ def deleteAddon(args):
         fh.write(content.replace(args+"\n",""))
         fh.close()
         xbmc.executebuiltin("Container.Refresh")
+        if showMessages=="true":
+          xbmc.executebuiltin('XBMC.Notification(Info:,'+translation(30019).format(addon=xbmcaddon.Addon(id=id).getAddonInfo('name'), cat=cat)+',5000)')
 
 def deleteCat(args):
         dialog = xbmcgui.Dialog()
@@ -260,7 +333,7 @@ def addAddonDir(name,url,iconimage,desc="",cType=""):
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name, "Plot": desc } )
         liz.addContextMenuItems([(translation(30002), 'RunPlugin(plugin://script.categories/?mode=addAddon&url='+urllib.quote_plus(cType+"#"+url)+')',)])
-        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url="plugin://"+url+"/",listitem=liz,isFolder=True)
+        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url="plugin://"+url+"/?content_type="+contentType,listitem=liz,isFolder=True)
         return ok
 
 def addAddonRDir(name,url,iconimage,cat,desc=""):
@@ -268,7 +341,7 @@ def addAddonRDir(name,url,iconimage,cat,desc=""):
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name, "Plot": desc } )
         liz.addContextMenuItems([(translation(30003), 'RunPlugin(plugin://script.categories/?mode=deleteAddon&url='+urllib.quote_plus(url+"#"+cat+"#END")+')',)])
-        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url="plugin://"+url+"/",listitem=liz,isFolder=True)
+        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url="plugin://"+url+"/?content_type="+contentType,listitem=liz,isFolder=True)
         return ok
 
 def addRDir(name,url,mode,iconimage):
@@ -276,7 +349,7 @@ def addRDir(name,url,mode,iconimage):
         ok=True
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
-        liz.addContextMenuItems([(translation(30009), 'RunPlugin(plugin://script.categories/?mode=deleteCat&url='+urllib.quote_plus(name)+')',),(translation(30012), 'RunPlugin(plugin://script.categories/?mode=renameCat&url='+urllib.quote_plus(name)+')',)])
+        liz.addContextMenuItems([(translation(30009), 'RunPlugin(plugin://script.categories/?mode=deleteCat&url='+urllib.quote_plus(url)+')',),(translation(30012), 'RunPlugin(plugin://script.categories/?mode=renameCat&url='+urllib.quote_plus(url)+')',)])
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
         return ok
 
@@ -301,7 +374,7 @@ if type(url)==type(str()):
 if contentType == "":
     indexMain()
 elif mode == 'listCat':
-    listCat(url,contentType)
+    listCat(url)
 elif mode == 'addAddon':
     addAddon(url)
 elif mode == 'deleteAddon':
@@ -311,4 +384,4 @@ elif mode == 'deleteCat':
 elif mode == 'renameCat':
     renameCat(url)
 else:
-    index(contentType)
+    index()

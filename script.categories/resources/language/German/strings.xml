@@ -14,6 +14,11 @@
   <string id="30012">Kategorie umbenennen</string>
   <string id="30013">Einstellungen</string>
   <string id="30014">View erzwingen</string>
+  <string id="30016">Anzahl der Add-ons im Titel anzeigen</string>
+  <string id="30017">Add-on Version im Titel anzeigen</string>
+  <string id="30018">{addon} zu Kategorie {cat} hinzugefuegt</string>
+  <string id="30019">{addon} aus Kategorie {cat} entfernt</string>
+  <string id="30020">Hinweis-Meldungen anzeigen</string>
   <string id="30100">Kategorie 01</string>
   <string id="30101">Kategorie 02</string>
   <string id="30102">Kategorie 03</string>
