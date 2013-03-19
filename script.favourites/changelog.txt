@@ -1,3 +1,6 @@
+v4.0.9
+- fix encoding issue
+
 v4.0.8
 - added 'no action' item to the end of the list
 

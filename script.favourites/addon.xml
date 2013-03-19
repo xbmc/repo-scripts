@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.favourites" name="Favourites script" version="4.0.8" provider-name="ronie|`Black">
+<addon id="script.favourites" name="Favourites script" version="4.0.9" provider-name="ronie|`Black">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>
