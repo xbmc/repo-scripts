@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artworkorganizer" name="Artwork Organizer" version="1.1.1" provider-name="ronie">
+<addon id="script.artworkorganizer" name="Artwork Organizer" version="1.2.0" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -12,5 +12,7 @@
 		<summary>Copies your fanart and thumbs into a separate directories</summary>
 		<description>This script can be used to copy your movie, tvshow, artist and album fanart and thumbs into a separate directories.</description>
 		<platform>all</platform>
+		<forum>http://forum.xbmc.org/showthread.php?tid=109304</forum>
+		<source>https://code.google.com/p/ronie/source/</source>
 	</extension>
 </addon>

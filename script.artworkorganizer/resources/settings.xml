@@ -13,6 +13,8 @@
 		<setting id="musicvideothumbs" type="bool" label="32009" default="true"/>
 		<setting id="artistthumbs" type="bool" label="32010" default="true"/>
 		<setting id="albumthumbs" type="bool" label="32011" default="true"/>
+		<setting id="source" type="bool" label="32015" default="false"/>
+		<setting id="path" type="folder" label="32016" subsetting="true" enable="eq(-1,true)"/>
 		<setting id="directory" type="folder" label="32012"/>
 	</category>
 </settings>
