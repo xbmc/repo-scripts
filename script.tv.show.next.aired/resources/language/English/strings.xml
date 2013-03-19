@@ -12,6 +12,7 @@
 	<string id="32008">Download next aired info every day at:</string>
 	<string id="32009">Hour</string>
 	<string id="32010">Minute</string>
+	<string id="32011">Download posters (Artwork Downloader required)</string>
 	<string id="32101">TV Show - Next Aired</string>
 	<string id="32102">Getting information...</string>
 	<string id="32103">CANCELLED</string>
@@ -26,6 +27,8 @@
 	<string id="32208">On Hiatus</string>
 	<string id="32209">Pilot Ordered</string>
 	<string id="32210">Pilot Rejected</string>
-	<string id="32011">Download posters (Artwork Downloader required)</string>
+	<string id="32211">Cancelled</string>
+	<string id="32212">Ended</string>
+	<string id="32013">Show All TV Shows for home screen (needs skin Support)</string>
 </strings>
 

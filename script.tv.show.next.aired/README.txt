@@ -39,8 +39,6 @@ LatestEpisodeNumber (episode number of the last episode)
 LatestSeasonNumber  (season number of the last episode)
 AirDay		    (day of the week the show is aired, eg 'Tuesday')
 ShortTime	    (time the show is aired, eg. '08:00 pm')
-
-New art properties for XBMC 12.0 'Frodo':
 Art(poster)        (tv show poster)
 Art(banner)        (tv show banner)
 Art(fanart)        (tv show fanart)
@@ -60,6 +58,8 @@ Status ids:
 7 - On Hiatus
 8 - Pilot Ordered
 9 - Pilot Rejected
+10 - Cancelled
+11 - Ended
 -1 - Undefined
 
 ---

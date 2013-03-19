@@ -37,6 +37,8 @@ STATUS = { 'Returning Series' : __language__(32201),
            'On Hiatus' : __language__(32208),
            'Pilot Ordered' : __language__(32209),
            'Pilot Rejected' : __language__(32210),
+           'Canceled' : __language__(32211),
+           'Ended' : __language__(32212),
            '' : ''}
            
 STATUS_ID = { 'Returning Series' : '0',
@@ -49,6 +51,8 @@ STATUS_ID = { 'Returning Series' : '0',
               'On Hiatus' : '7',
               'Pilot Ordered' : '8',
               'Pilot Rejected' : '9',
+              'Canceled' : '10',
+              'Ended' : '11',
               '' : '-1'}
 
 # Get localized date format
@@ -143,6 +147,7 @@ class NextAired:
                         current_hour = '%.2i' % current_time.tm_hour
                         current_minute = '%.2i' % current_time.tm_min
                         while (current_hour == self.update_hour) and (current_minute == self.update_minute) and (not xbmc.abortRequested):
+                            # don't run update multiple times within the same minute
                             xbmc.sleep(1000)
                             current_time = localtime()
                             current_hour = '%.2i' % current_time.tm_hour
@@ -237,7 +242,7 @@ class NextAired:
                 self.get_show_info( current_show )
                 self.localize_show_datetime( current_show )
                 log( "### %s" % current_show )
-                if current_show.get("Status") == "Canceled/Ended":
+                if (current_show.get("Status") == "Canceled/Ended") or (current_show.get("Status") == "Canceled") or (current_show.get("Status") == "Ended"):
                     self.canceled.append(current_show)
                 else:
                     self.current_show_data.append(current_show)
@@ -399,9 +404,43 @@ class NextAired:
         self.WINDOW.setProperty("NextAired.TodayShow" , str(self.todaylist).strip("[]"))
         for count in range( len(self.nextlist) ):
             self.WINDOW.clearProperty("NextAired.%d.Label" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Thumb" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.AirTime" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Path" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Library" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Status" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.StatusID" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Network" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Started" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Classification" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Genre" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Premiered" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Country" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Runtime" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Fanart" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Art(fanart)" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Art(poster)" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Art(landscape)" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Art(banner)" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Art(clearlogo)" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Art(characterart)" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Art(clearart)" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Today" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.NextDate" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.NextTitle" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.NextNumber" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.NextEpisodeNumber" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.NextSeasonNumber" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.LatestDate" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.LatestTitle" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.LatestNumber" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.LatestEpisodeNumber" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.LatestSeasonNumber" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.Airday" % ( count + 1, ))
+            self.WINDOW.clearProperty("NextAired.%d.ShortTime" % ( count + 1, ))
         self.count = 0
         for current_show in self.nextlist:
-            if current_show.get("RFC3339" , "" )[:10] == self.datestr:
+            if ((current_show.get("RFC3339" , "" )[:10] == self.datestr) or (__addon__.getSetting( "ShowAllTVShowsOnHome" ) == 'true')):
                 self.count += 1
                 self.set_labels('windowpropertytoday', current_show)
 
@@ -446,6 +485,10 @@ class NextAired:
                 prefix = 'NextAired.'
             else:
                 prefix = 'NextAired.' + str(self.count) + '.'
+                if __addon__.getSetting( "ShowAllTVShowsOnHome" ) == 'true':
+                    label.setProperty('NextAired.' + "ShowAllTVShows", "true")
+                else:
+                    label.setProperty('NextAired.' + "ShowAllTVShows", "false")
             label.setProperty(prefix + "Label", item.get("localname", ""))
             label.setProperty(prefix + "Thumb", item.get("thumbnail", ""))
         else:

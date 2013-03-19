@@ -1,3 +1,7 @@
+v5.0.6
+- add seperate entries for canceled and ended
+- added script option to set properties for all tvshows, not only today´s ones.
+
 v5.0.5
 - added characterart property
 
