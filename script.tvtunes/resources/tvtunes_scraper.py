@@ -73,6 +73,7 @@ class TvTunes:
         self.download_url = "http://www.televisiontunes.com/download.php?f=%s"
         self.theme_file = "theme.mp3"
         self.enable_custom_path = __addon__.getSetting("custom_path_enable")
+        self.exact_match = __addon__.getSetting('exact_match')
         if self.enable_custom_path == "true":
             self.custom_path = __addon__.getSetting("custom_path").decode("utf-8")
         self.TVlist = self.listing()
@@ -110,7 +111,7 @@ class TvTunes:
                     break
                 theme_list = self.search_theme_list( show[0])
                 #log( theme_list )
-                if (len(theme_list) == 1) and (exact_match == 'true'): 
+                if (len(theme_list) == 1) and (self.exact_match == 'true'): 
                     theme_url = self.download_url % theme_list[0]["url"].replace("http://www.televisiontunes.com/", "").replace(".html" , "")
                 else:
                     theme_url = self.get_user_choice( theme_list , show[0] )
@@ -185,7 +186,6 @@ class TvTunes:
         next = True
         url = self.search_url % urllib.quote_plus(showname)
         urlpage = ""
-        exact_match = __addon__.getSetting('exact_match')
         while next == True:
             ### on recup le result de la recherche
             data = get_html_source( url + urlpage )
@@ -201,7 +201,7 @@ class TvTunes:
                 theme["url"] = i[0] or ""
                 theme["name"] = i[1] or ""
                 # in case of an exact match (when enabled) only return this theme
-                if exact_match == 'true' and theme["name"] == showname:
+                if self.exact_match == 'true' and theme["name"] == showname:
                     theme_list = []
                     theme_list.append(theme)
                     return theme_list

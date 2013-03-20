@@ -1,3 +1,6 @@
+v3.0.6
+- fix scraper crash due to missing exact_match setting check
+
 v3.0.5
 - if exact match is disabled don't auto download if there's only one result
 
