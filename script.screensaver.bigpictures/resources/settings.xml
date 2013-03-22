@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+        <setting id="picture_duration" type="enum" label="32110" default="5" values="5|10|15|25|30"/>
+</settings>
