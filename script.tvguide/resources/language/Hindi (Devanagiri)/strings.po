@@ -1,0 +1,57 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hindi (Devanagiri) (http://www.transifex.com/projects/p/xbmc-addons/language/hi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "कटना"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "सामान्य"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "अधिसूचनाएं"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "कटना"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "छोड़ो"
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "बचाना"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "कटना"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "प्रिय"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "बचाना"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "कटना"

@@ -1,0 +1,309 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "Ingen beskrivning"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]Laddar data från extern källa...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Beräknar återstående tid..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "Ungefär %d sekunder kvar..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Laddning av data pågår redan..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Muskontroll"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Nu"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Tips![/B]Du kan också använda skrollhjulet"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Menyer"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "Källa"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Visa kanaler från kategori"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XML-TV-fil"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Rensa buffert..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Klar!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "Visa notifiering innan valt program startar"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "Använd programbild som bakgrund"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Rensa alla påminnelser..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "Kom ihåg att rensa buffert när du byter källa"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "Uppdatera programinformation vid XBMC start"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "Spela kanaler med YouSee web-tv tillägget"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Notifieringar"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "Spela kanaler med Danish Live TV tillägget"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "Uppstart"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- rensa buffert först"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Sök efter kanallogotyper i"
+
+msgctxt "#30117"
+msgid "ONTV Pro URL"
+msgstr "ONTV Pro URL"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "Aktivera OSD-meny"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "Inaktivera OSD-menyn kan fixa videohackning"
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Använd alternativ strömningsmetod (krävs för några tillägg)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "Alternativ strömning är inte kompatibel med OSD-menyn"
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "Hoppsan, ledsen för det!"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "Det var inte möjligt att ladda programdata,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "kontrollera inställningarna eller försök senare..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "för att inställningarna är inte giltiga!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "Det verkar som ditt nuvarande skal har en speciell"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "version av TV-Guide-skalet som inte är uppdaterat."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Var god försök med ett annat skal..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Det verkar som TV-Guide-databasen är trasig."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "Databasen kommer att tas bort och återskapas."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "Kanalkonfiguration m.m. förloras tyvärr."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "på [B]%s[/B] om 5 minuter..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "på [B]%s[/B] startar nu..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "Titta på %s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Påminn"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Påminn inte"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Välj ström"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "Du kan välja din egna .strm-fil att spela, när du vill se på denna kanal."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Ta bort strömfil"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Kanaler"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Avsluta"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]Redigera kanalordning och synlighet[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "Flytta upp och ner för att ändra positionen för[CR]kanalen. Välj eller navigera till vänster för att acceptera[CR]positionen."
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "Spara"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]Ställ in ström[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr ".strm-fil"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Favoriter"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Tillägg"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Förhandsvisa ström"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Spara"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Stoppa förhandsvisning"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Bläddra..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Klicka på bläddra... nedan och navigera till din ström-fil. När du har valt din fil kan du förhandsvisa strömmen för att prova att det fungerar i XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Välj en favorit nedan. Endast [I]PlayMedia[/I] favoriter stödjs."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Flera tillägg tillhandahåller dessa kanaler.[CR]Välj ett för att titta på strömmen."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "JSON-EPG URL"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Spela kanaler med Weeb.Tv tillägget"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "TV-Guide är konfigurerat att strömma med Weeb.Tv"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "tillägg som inte är installerat."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Strömning med det tillägget är nu inaktiverat."

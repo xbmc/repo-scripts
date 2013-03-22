@@ -1,0 +1,73 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Traditional) (http://www.transifex.com/projects/p/xbmc-addons/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "現在"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "一般設定"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "來源"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "通知"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "頻道"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "退出"
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "儲存"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "我的最愛"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "儲存"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "瀏覽…"

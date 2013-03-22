@@ -1,0 +1,309 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "Χωρίς περιγραφή"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]Φόρτωση δεδομένων από εξωτερική πηγή...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Υπολογισμός εναπομείναντος χρόνου..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "Απομένουν περίπου %d δευτερόλεπτα..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Η φόρτωση δεδομένων είναι ήδη σε εξέλιξη..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Έλεγχος με ποντίκι"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Τώρα"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Συμβουλή![/B] Μπορείτε να χρησιμοποιήσετε και τη ροδέλα κύλισης"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "Πηγή"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Προβολή καναλιών από κατηγορία"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "Αρχείο XMLTV"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Εκκαθάριση λανθάνουσας μνήμης..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Έγινε!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "Εμφάνιση ειδοποίησης πριν την έναρξη των επιλεγμένων εφαρμογών"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "Χρήση εικόνας εφαρμογής ως υπόβαθρο"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Εκκαθάριση όλων των υπενθυμίσεων"
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "Μην ξεχάσετε να καθαρίσετε τη λανθάνουσα μνήμη όταν αλλάζετε πηγή"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "Ενημέρωση πληροφοριών εφαρμογής κατά την εκκίνηση του XBMC"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "Αναπαραγωγή καναλιών μέσω του πρόσθετου web-tv YouSee"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Ειδοποιήσεις"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "Αναπαραγωγή καναλιών μέσω του πρόσθετου Danish Live TV"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "Εκκίνηση"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- καθαρίστε τη λανθάνουσα μνήμη πρώτα"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Αναζήτηση για λογότυπα καναλιών σε"
+
+msgctxt "#30117"
+msgid "ONTV Pro URL"
+msgstr "URL του ONTV Pro"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "Ενεργοποίηση του OSD μενού"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "Απενεργοποιώντας το OSD μενού μπορεί να βελτιωθεί η αναπαραγωγή βίντεο."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Χρήση εναλλακτικής μεθόδου ροής (απαιτείται από κάποια πρόσθετα)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "Η εναλλακτική μέθοδος ροής δεν είναι συμβατή με το OSD μενού"
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "Ουπς, συγγνώμη για αυτό!"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "Αδυναμία φόρτωσης δεδομένων εφαρμογής,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "ελέγξτε τις ρυθμίσεις ή δοκιμάστε ξανά αργότερα..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "γιατί οι ρυθμίσεις είναι λανθασμένες!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "Φαίνεται ότι το τρέχον κέλυφός σας έχει μια ειδική"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "έκδοση του Οδηγού TV που δεν είναι ενημερωμένη."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Δοκιμάστε με διαφορετικό κέλυφος..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Φαίνεται ότι η βάση δεδομένων του Οδηγού TV είναι κατεστραμμένη."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "Η βάση δεδομένων θα διαγραφεί και θα επαναδημιουργηθεί."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "Η διαμόρφωση καναλιών, κτλ. δυστυχώς έχει χαθεί."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "στο [B]%s[/B] σε 5 λεπτά..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "στο [B]%s[/B] αρχίζει τώρα..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "Προβολή %s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Υπενθύμιση"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Χωρίς υπενθύμιση"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Επιλογή ροής"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "Μπορείτε να επιλέξετε τα δικά σας αρχεία .strm για αναπαραγωγή όταν παρακολουθείτε αυτό το κανάλι."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Αφαίρεση αρχείου ροής"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Κανάλια"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Έξοδος"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]Αλλαγή ταξινόμησης καναλιών και ορατότητα[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "Μετακινηθείτε πάνω και κάτω για να αλλάξετε[CR]τη θέση του καναλιού. Πιέστε ΕΠΙΛΟΓΗ ή ΑΡΙΣΤΕΡΑ[CR]για αποδοχή της θέσης."
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "Αποθήκευση"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]Διαμόρφωση ροής[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr "Αρχείο .strm"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Αγαπημένα"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Πρόσθετα"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Προεπισκόπηση ροής"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Αποθήκευση"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Διακοπή προεπισκόπησης"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Περιήγηση..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Πιέστε 'Περιήγηση...' παρακάτω και μεταφερθείτε στο αρχείο ροής. Μόλις το επιλέξετε μπορείτε να κάνετε προεπισκόπηση της ροής για να δοκιμάσετε αν δουλεύει στο XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Επιλέξτε ένα αγαπημένο παρακάτω. Μόνο αγαπημένα [I]Αναπαραγωγής Πολυμέσων[/I] υποστηρίζονται."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Πολλαπλά πρόσθετα παρέχουν αυτό το κανάλι.[CR]Επιλέξτε ένα για να παρακολουθήσετε τη ροή."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "URL του JSON-EPG"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Αναπαραγωγή καναλιών μέσω του πρόσθετου Weeb.Tv"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "Ο Οδηγός TV είναι πλέον ρυθμισμένος για ροές μέσω Weeb.Tv"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "πρόσθετο που δεν είναι εγκατεστημένο."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Η ροή πολυμέσων μέσω αυτού του πρόσθετου απενεργοποιήθηκε."

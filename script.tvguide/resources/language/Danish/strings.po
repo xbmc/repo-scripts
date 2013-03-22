@@ -1,0 +1,301 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/xbmc-addons/language/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "Ingen beskrivelse"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]Indlæser data fra ekstern kilde...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Beregner resterende tid..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "ca. %d sekunder tilbage..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Indlæsning af data allerede påbegyndt..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Musekontrol"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Nu"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Tip![/B] Du kan også bruge scrollhjulet"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Annuller"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Generelt"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "Kilde"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Vis kanaler i kategori"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV fil"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Slet midlertidige filer..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Færdig!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "Vis notifikation før udvalgte programmer starter"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "Brug program billede som baggrund"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Slet alle påmindelser..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "Husk at slette midlertidige filer, når du skifter kilde"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "Opdater program information når XBMC starter"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "Afspil kanaler via YouSee web-tv addon"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Påmindelser"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "Afspil kanaler via Danish Live TV addon"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "Opstart"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- slet midlertidige filer først"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Søg efter kanal logoer i"
+
+msgctxt "#30117"
+msgid "ONTV Pro URL"
+msgstr "ONTV Pro URL"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "Aktiver OSD menu"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "Deaktivering af menuen kan hjælpe på hakkende video."
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "Ups, det er pinligt!"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "Det var ikke muligt at indlæse program data,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "kontroller indstillingerne eller prøv igen senere..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "fordi indstillingerne er ugyldige!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "Det ser ud til dit nuværende skin har en special"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "version af TV Guide skinnet som ikke er opdateret."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Prøv med et andet skin..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Det ser ud til TV Guidens database er gået i stykker."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "Database vil blive slettet og oprettet på ny."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "Kanalopsætning, mv. går desværre tabt."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "på [B]%s[/B] om 5 minutter..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "på [B]%s[/B] starter nu..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "Se %s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Påmind"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Påmind ikke"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "Annuller"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Vælg stream"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "Du kan vælge din egen .strm fil som skal afspilles, når du vælger at se denne kanal."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Fjern stream fil"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Kanaler"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Afslut"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]Rediger kanaler og synlighed[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "Flyt op og ned for at ændre placering.[CR]Vælg eller flyt til venstre for at gemme[CR]placeringen."
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "Gem"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Annuller"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]Vælg stream[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr ".strm fil"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Foretrukne"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Addons"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Vis stream"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Gem"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Annuller"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Stop stream"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Gennemse..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Vælg Gennemse... nedenfor og find din stream fil. Når du har valgt filen kan du bruge Vis stream for at teste om den virker i XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Vælg en fortrukken stream herunder. Kun [I]PlayMedia[/I] foretrukne er understøttet."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Flere addons har denne kanal.[CR]Vælg en for at se kanalen."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "JSON-EPG URL"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Afspil kanaler via Weeb.Tv addon"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "TV guiden er indstillet til at streame TV via Weeb.Tv,"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "men denne addon er ikke installeret."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Streaming via denne addon deaktiveres nu."

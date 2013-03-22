@@ -1,0 +1,73 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Сега"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Отказ"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "General"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "Източник"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Известия"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "Отказ"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Канали"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Изход от XBMC"
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "Запиши"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Отказ"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Любими"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Запиши"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Отказ"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Преглед..."
