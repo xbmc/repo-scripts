@@ -1,3 +1,8 @@
+[B]Version 1.4.1 - 2013-03-06[/B]
+- Fixed minor problems with stream setup UI
+- Fixed problem with the hour being displayed twice in start/end times
+- Update language files from Transifex
+
 [B]Version 1.4.0 - 2013-02-03[/B]
 New version with many improvements.
 If you have problems with video streaming please try

@@ -108,6 +108,7 @@ class Database(object):
         self.updateInProgress = False
         self.updateFailed = False
         self.sourceNotConfigured = False
+        self.settingsChanged = None
 
         #buggalo.addExtraData('source', self.source.KEY)
         #for key in SETTINGS_TO_CHECK:
@@ -220,7 +221,8 @@ class Database(object):
     def _close(self):
         try:
             # rollback any non-commit'ed changes to avoid database lock
-            self.conn.rollback()
+            if self.conn:
+                self.conn.rollback()
         except sqlite3.OperationalError:
             pass # no transaction is active
         self.conn.close()
@@ -556,17 +558,18 @@ class Database(object):
         c.close()
         return expired
 
-
     def setCustomStreamUrl(self, channel, stream_url):
-        self._invokeAndBlockForResult(self._setCustomStreamUrl, channel, stream_url)
+        if stream_url is not None:
+            self._invokeAndBlockForResult(self._setCustomStreamUrl, channel, stream_url)
         # no result, but block until operation is done
 
     def _setCustomStreamUrl(self, channel, stream_url):
-        c = self.conn.cursor()
-        c.execute("DELETE FROM custom_stream_url WHERE channel=?", [channel.id])
-        c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channel.id, stream_url.decode('utf-8', 'ignore')])
-        self.conn.commit()
-        c.close()
+        if stream_url is not None:
+            c = self.conn.cursor()
+            c.execute("DELETE FROM custom_stream_url WHERE channel=?", [channel.id])
+            c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channel.id, stream_url.decode('utf-8', 'ignore')])
+            self.conn.commit()
+            c.close()
 
     def getCustomStreamUrl(self, channel):
         return self._invokeAndBlockForResult(self._getCustomStreamUrl, channel)

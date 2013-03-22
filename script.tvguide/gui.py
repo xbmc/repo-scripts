@@ -877,7 +877,7 @@ class TVGuide(xbmcgui.WindowXML):
                 control.setVisible(False)
 
     def formatTime(self, timestamp):
-        format = xbmc.getRegion('time').replace(':%S', '')
+        format = xbmc.getRegion('time').replace(':%S', '').replace('%H%H', '%H')
         return timestamp.strftime(format)
 
     def formatDate(self, timestamp):
@@ -907,7 +907,12 @@ class TVGuide(xbmcgui.WindowXML):
             control = self.getControl(self.C_MAIN_TIMEBAR)
             if control:
                 (x, y) = control.getPosition()
-                control.setVisible(timeDelta.days == 0)
+                try:
+                    # Sometimes raises:
+                    # exceptions.RuntimeError: Unknown exception thrown from the call "setVisible"
+                    control.setVisible(timeDelta.days == 0)
+                except:
+                    pass
                 control.setPosition(self._secondsToXposition(timeDelta.seconds), y)
 
             if scheduleTimer and not xbmc.abortRequested and not self.isClosing:
@@ -1224,15 +1229,17 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         elif controlId == self.C_STREAM_ADDONS_OK:
             listControl = self.getControl(self.C_STREAM_ADDONS_STREAMS)
             item = listControl.getSelectedItem()
-            stream = item.getProperty('stream')
-            self.database.setCustomStreamUrl(self.channel, stream)
+            if item:
+                stream = item.getProperty('stream')
+                self.database.setCustomStreamUrl(self.channel, stream)
             self.close()
 
         elif controlId == self.C_STREAM_FAVOURITES_OK:
             listControl = self.getControl(self.C_STREAM_FAVOURITES)
             item = listControl.getSelectedItem()
-            stream = item.getProperty('stream')
-            self.database.setCustomStreamUrl(self.channel, stream)
+            if item:
+                stream = item.getProperty('stream')
+                self.database.setCustomStreamUrl(self.channel, stream)
             self.close()
 
         elif controlId == self.C_STREAM_STRM_OK:
