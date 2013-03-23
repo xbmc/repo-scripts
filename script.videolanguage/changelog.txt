@@ -1,3 +1,14 @@
+v 0.0.9
+- music video support
+- exception handling
+- optimization
+
+v 0.0.8
+- added option to force type
+
+v 0.0.7
+- added backend mode
+
 v 0.0.6
 - fixed script error if dbid is -1 (e.g. in the trailers add-on)
 
