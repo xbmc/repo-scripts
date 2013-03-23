@@ -1,3 +1,6 @@
+v 0.1.0
+- catch error if dbid is empty or no number
+
 v 0.0.9
 - music video support
 - exception handling

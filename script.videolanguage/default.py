@@ -42,7 +42,9 @@ class Main:
         except:
             params = {}
         log("params: %s" % params)
-        self.movieid = int(params.get("movieid", "-1"))
+        self.movieid = -1
+        try: self.movieid = int(params.get("movieid", "-1"))
+        except: pass
         self.backend = params.get("backend", False)
         self.type = str(params.get("type", False))
 
