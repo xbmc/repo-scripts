@@ -127,7 +127,7 @@ def getID3Lyrics(filename, getlrc):
                 lyrics += "%s%s\r\n" % (ms2timestamp(timems), text.replace('\n','').replace('\r','').strip())
                 content = content[pos+5:]
             return lyrics
-        elif getlrc and tag.fid == txxx:
+        elif tag.fid == txxx:
             """
             Frame data in rawdata[]:
             Text encoding     $xx
@@ -145,7 +145,10 @@ def getID3Lyrics(filename, getlrc):
                 lyrics = raw[pos+1:]
                 if (enc == 'latin_1'):
                     enc = chardet.detect(lyrics)['encoding']
-                return lyrics.decode(enc)
+                lyr = lyrics.decode(enc)
+                match1 = re.compile('\[(\d+):(\d\d)(\.\d+|)\]').search(lyr)
+                if (getlrc and match1) or ((not getlrc) and (not match1)):
+                    return lyr
         elif (not getlrc) and tag.fid == uslt:
             """
             Frame data in rawdata[]:

@@ -40,6 +40,14 @@ msgctxt "#30102"
 msgid "- Lyrics folder"
 msgstr "Verzeichnis speichern"
 
+msgctxt "#30103"
+msgid "- Save format"
+msgstr "- Speicherformat"
+
+msgctxt "#30105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
 msgctxt "#30106"
 msgid "Use only filename for search"
 msgstr "Nur nach Dateinamen suchen"
@@ -67,6 +75,10 @@ msgstr "Lade gleichnamige Liedtexte aus einem Unterverzeichnis "
 msgctxt "#30112"
 msgid "- Sub folder name"
 msgstr "- Untervezeichnis-Name"
+
+msgctxt "#30113"
+msgid "Save lyrics to song folder"
+msgstr "Liedtexte im Lied-Verzeichnis speichern"
 
 msgctxt "#30150"
 msgid "Scrapers"

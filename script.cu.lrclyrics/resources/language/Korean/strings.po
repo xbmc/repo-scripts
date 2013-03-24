@@ -40,6 +40,14 @@ msgctxt "#30102"
 msgid "- Lyrics folder"
 msgstr "저장 폴더"
 
+msgctxt "#30103"
+msgid "- Save format"
+msgstr "- 저장 형식"
+
+msgctxt "#30105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
 msgctxt "#30106"
 msgid "Use only filename for search"
 msgstr "검색에 파일명만 사용"
@@ -67,6 +75,10 @@ msgstr "하위 폴더에서 같은 이름의 가사 불러오기"
 msgctxt "#30112"
 msgid "- Sub folder name"
 msgstr "- 하위 폴더 이름"
+
+msgctxt "#30113"
+msgid "Save lyrics to song folder"
+msgstr "노래 폴더에 가사 저장"
 
 msgctxt "#30150"
 msgid "Scrapers"

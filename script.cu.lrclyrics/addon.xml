@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="1.0.6" provider-name="Taxigps|ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="1.0.7" provider-name="Taxigps|ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.chardet" version="2.1.1"/>
@@ -11,6 +11,7 @@
 		<summary lang="el">Στίχοι CU LRC</summary>
 		<summary lang="en">CU LRC Lyrics</summary>
 		<summary lang="es">CU LRC Letras</summary>
+		<summary lang="gl">Letras de CU LRC</summary>
 		<summary lang="hr">CU LRC Lyrics</summary>
 		<summary lang="hu">CU LRC Dalszöveg</summary>
 		<summary lang="it">CU LRC Lyrics</summary>
@@ -26,6 +27,7 @@
 		<description lang="el">Οι Στίχοι CU LRC είναι ένα script στίχων για το XBMC. Υποστηρίζει συνηθισμένους στίχους καθώς και Στίχους LRC. Το script μπορεί να αναζητήσει συγχρονισμένους και μη στίχους, ενσωματωμένους, από αρχεία ή από scraper. Μπορεί να διαβάσει αρχεία στίχων τύπου .lrc/.txt που βρίσκονται στον ίδιο φάκελο και έχουν το ίδιο όνομα με το .mp3 (ή άλλης κατάληξης μουσική).</description>
 		<description lang="en">CU LRC Lyrics is a lyrics script for XBMC. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music).</description>
 		<description lang="es">Letras de CRI de CU es un script de letras para XBMC. El soporte es regular como el de Lyrics LRC. La secuencia de comandos puede buscar letras sincronizadas/de sincronizadas incrustadas, por archivo o por scrapers. Puede leer .lrc/.txt de archivo de letras guardado en la misma carpeta con el mismo nombre del archivo con. mp3 (u otro tipo de música).</description>
+		<description lang="gl">Letras CU LRC é un script de letras para XBMC. Soporta letras normais como as LRC. O script pode buscar letras sincronizadas/non sincronizadas incrustadas, ou buscar a partir dun ficheiro ou de scrapers. Pode ler letras de ficheiros .lrc/.txt gardados no mesmo camiño do ficheiro .mp3 (ou outro tipo de música).</description>
 		<description lang="hu">A CU LRC Dalszöveg egy kiegészítő az XBMC-hez, ami támogatja  a hagyományos és az LRC dalszövegek keresését, megjelenítését. A dalszöveg lehet szinkronizált, vagy szinkronizálatlan, a zenefájlba beágyazott, vagy leolvasókkal letöltött, vagy akár származhat a zene könyvtárában található .lrc vagy .txt fájlokból is.</description>
 		<description lang="it">CU LRC Lyrics è uno script per i testi per XBMC. Supporta testi come LRC. Lo script può cercare testi incorporati sincronizzati e non, da file o tramite scapers. Legge file .lrc/.txt salvati nello stesso percorso e con lo stesso nome dell'.mp3 (o altri tipi di musica)</description>
 		<description lang="ko">CU LRC Lyrics는 XBMC를 위한 가사 스크래퍼입니다. 일반 가사와 LRC 가사를 지원하며, 파일에 내장되어 있거나 스크래퍼로 부터 동기/비동기 가사를 검색합니다. mp3 또는 다른 형식의 음악 파일과 같은 경로에 저장되어 있는 .lrc/.txt 형식의 가사를 읽어옵니다.</description>

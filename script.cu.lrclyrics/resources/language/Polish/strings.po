@@ -38,7 +38,15 @@ msgstr "Zapisuj teksty na dysk"
 
 msgctxt "#30102"
 msgid "- Lyrics folder"
-msgstr "Zapisz do .."
+msgstr "- Zapisz do ..."
+
+msgctxt "#30103"
+msgid "- Save format"
+msgstr "- Format zapisu"
+
+msgctxt "#30105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
 
 msgctxt "#30106"
 msgid "Use only filename for search"
@@ -67,6 +75,10 @@ msgstr "Wczytaj tekst o tej samej nazwie z podfolderu"
 msgctxt "#30112"
 msgid "- Sub folder name"
 msgstr "- Nazwa podfolderu"
+
+msgctxt "#30113"
+msgid "Save lyrics to song folder"
+msgstr "Zapisuj teksty do folderu utworu"
 
 msgctxt "#30150"
 msgid "Scrapers"

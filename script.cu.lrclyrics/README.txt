@@ -16,6 +16,9 @@ depending on which options you've enabled, the script searches for lyrics in thi
 - lrc lyrics file
 - minilyrics scraper
 - ttplayer scraper
+- alsong scraper
+- baidu scraper
+- gomaudio scraper
 - lyrdb scraper
 - embedded text lyrics
 - text lyrics file

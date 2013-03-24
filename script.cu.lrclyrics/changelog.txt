@@ -1,3 +1,8 @@
+v1.0.7
+- fixed blank string in settings
+- changed txxx field now supports both synchronised and regular lyrics
+- fixed potential crash due to unhandled exceptions
+
 v1.0.6
 - fixed potential import of a third party scrapers module
 

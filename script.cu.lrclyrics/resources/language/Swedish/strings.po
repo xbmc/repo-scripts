@@ -40,6 +40,14 @@ msgctxt "#30102"
 msgid "- Lyrics folder"
 msgstr "Spara mapp"
 
+msgctxt "#30103"
+msgid "- Save format"
+msgstr "- Spara format"
+
+msgctxt "#30105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
 msgctxt "#30106"
 msgid "Use only filename for search"
 msgstr "Använd endast filnamn för sökning"
@@ -67,6 +75,10 @@ msgstr "Ladda texter med samma namn från undermapp"
 msgctxt "#30112"
 msgid "- Sub folder name"
 msgstr "- Undermappsnamn"
+
+msgctxt "#30113"
+msgid "Save lyrics to song folder"
+msgstr "Spara sångtext till sångmapp"
 
 msgctxt "#30150"
 msgid "Scrapers"

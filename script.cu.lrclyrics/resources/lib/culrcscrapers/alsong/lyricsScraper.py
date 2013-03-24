@@ -69,11 +69,10 @@ class LyricsFetcher:
         lyrics.source = __title__
         lyrics.lrc = __lrc__
 
-        key = alsongClient.GetKeyFromFile( song.filepath )
-        if not key:
-            return None
-
         try:
+            key = alsongClient.GetKeyFromFile( song.filepath )
+            if not key:
+                return None
             headers = { 'Content-Type' : 'text/xml; charset=utf-8' }
             request = urllib2.Request(ALSONG_URL, ALSONG_TMPL % key, headers)
             response = urllib2.urlopen(request)

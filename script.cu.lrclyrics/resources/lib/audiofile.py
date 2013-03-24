@@ -7,6 +7,9 @@ import os
 import struct
 import xbmcvfs
 
+class UnknownFormat(Exception):pass
+class FormatError(Exception):pass
+
 class AudioFile(object):
     f = None
     audioStart = 0

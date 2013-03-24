@@ -76,6 +76,10 @@ msgctxt "#30112"
 msgid "- Sub folder name"
 msgstr "- 子目录名"
 
+msgctxt "#30113"
+msgid "Save lyrics to song folder"
+msgstr "保存歌词到歌曲目录"
+
 msgctxt "#30150"
 msgid "Scrapers"
 msgstr "刮削器"

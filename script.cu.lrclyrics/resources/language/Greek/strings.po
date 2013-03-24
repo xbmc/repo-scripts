@@ -40,6 +40,14 @@ msgctxt "#30102"
 msgid "- Lyrics folder"
 msgstr "Φάκελος αποθήκευσης"
 
+msgctxt "#30103"
+msgid "- Save format"
+msgstr "- Αποθήκευση μορφής"
+
+msgctxt "#30105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
 msgctxt "#30106"
 msgid "Use only filename for search"
 msgstr "Χρήση μόνο ονόματος αρχείων για αναζήτηση"
@@ -67,6 +75,10 @@ msgstr "Φόρτωση στίχων ίδιου ονόματος από τον υ
 msgctxt "#30112"
 msgid "- Sub folder name"
 msgstr "- Όνομα υποφακέλου"
+
+msgctxt "#30113"
+msgid "Save lyrics to song folder"
+msgstr "Αποθήκευση στίχων στο φάκελο του τραγουδιού"
 
 msgctxt "#30150"
 msgid "Scrapers"
