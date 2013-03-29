@@ -1,6 +1,6 @@
 '''
-Stagevu urlresolver plugin
-Copyright (C) 2011 anilkuj
+watchfreeinhd urlresolver plugin
+Copyright (C) 2013 voinage
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,9 +25,9 @@ import urllib2
 from urlresolver import common
 import os
 
-class StagevuResolver(Plugin, UrlResolver, PluginSettings):
+class watchfreeResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "stagevu"
+    name = "watchfreeinhd"
 
 
     def __init__(self):
@@ -38,17 +38,16 @@ class StagevuResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        link = self.net.http_GET(web_url).content
-        p=re.compile('<embed type="video/divx" src="(.+?)"')
-        match=p.findall(link)
-        return match[0]
+        html=self.net.http_POST(web_url,{'agree':'Yes, let me watch'}).content
+        link=re.compile('<a href="(.+?)" id="player" name="player">').findall(html)[0]
+        return link
 
     def get_url(self, host, media_id):
-        return 'http://www.stagevu.com/video/%s' % media_id 
+        return 'http://www.%s.com/%s' % (host,media_id)
         
         
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/video/([0-9a-zA-Z/]+)', url)
+        r = re.match(r'http://www.(watchfreeinhd).com/([0-9A-Za-z]+)',url)
         if r:
             return r.groups()
         else:
@@ -57,6 +56,4 @@ class StagevuResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www.)?stagevu.com/video/' +
-                         '[0-9A-Za-z]+', url) or
-                         'stagevu' in host)
+        return (re.match(r'http://www.(watchfreeinhd).com/([0-9A-Za-z]+)',url) or 'watchfree' in host)

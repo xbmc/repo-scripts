@@ -32,13 +32,10 @@ class hostingbulkResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
 
     def get_media_url(self, host, media_id):
-        
-        print 'host %s media_id %s' %(host, media_id)
         html = net.http_GET("http://www.hostingbulk.com/" + media_id + ".html").content
         m = re.match('addParam|(?P<port>)|(?P<ip4>)|(?P<ip3>)|(?P<ip2>)|(?P<ip1>).+?video|(?P<file>)|',html)
 	if (len(m) > 0 ):
             videoLink = 'http://'+m.group("ip1")+'.'+m.group("ip2")+'.'+m.group("ip3")+'.'+m.group("ip4")+':'+m.group("port")+'/d/'+m.group("file")+'/video.flv?start=0'
-            print 'video id is %' % videoLink
             return videoLink
 
         print 'could not obtain video url'
@@ -68,8 +65,9 @@ class hostingbulkResolver(Plugin, UrlResolver, PluginSettings):
             return False
 
     def valid_url(self, url, host):
-        #return re.match('http://(.+)?hostingbulk.com/[0-9]+', url) or 'hostingbulk' in host
-        return False
+        if self.get_setting('enabled') == 'false': return False
+        return re.match('http://(.+)?hostingbulk.com/[0-9]+', url) or 'hostingbulk' in host
+        # return False
 
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)

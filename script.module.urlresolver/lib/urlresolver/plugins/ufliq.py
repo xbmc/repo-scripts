@@ -62,7 +62,6 @@ class UfliqResolver(Plugin, UrlResolver, PluginSettings):
             return False
 
         r = re.search('url: \'(.+?)\', autoPlay: false,onBeforeFinish:', html)
-        print r
         if r:
             return r.group(1)
 
@@ -80,4 +79,5 @@ class UfliqResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match(self.pattern, url) or self.name in host

@@ -41,14 +41,12 @@ class MovpodResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        #print web_url
         
         """ Human Verification """
         try:
             resp = self.net.http_GET(web_url)
             html = resp.content
             post_url = resp.get_url()
-            #print post_url
 
 
             form_values = {}
@@ -82,4 +80,5 @@ class MovpodResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match(self.pattern, url) or self.name in host

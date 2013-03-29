@@ -35,7 +35,6 @@ class vidpeResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
 
     def get_media_url(self, host, media_id):
-        print '******* vidpe: in get_media_url %s %s' %(host, media_id)
         web_url = self.get_url(host, media_id)
         try:
             html = self.net.http_GET(web_url).content
@@ -73,8 +72,6 @@ class vidpeResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_host_and_id(self, url):
-        print 'vidpe resolver: in get_host_and_id %s' % url
-
         r = re.search('http://(.+?)/embed-([\w]+)-', url)
         if r:
             return r.groups()
@@ -99,6 +96,7 @@ class vidpeResolver(Plugin, UrlResolver, PluginSettings):
         return domain
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.search('http://(.+)?(vidpe|hostingcup|hostingbulk).com/.+?.html',url) or 'vidpe' in host or 'hostingbulk' in host or 'hostingcup' in host
 
     def get_settings_xml(self):

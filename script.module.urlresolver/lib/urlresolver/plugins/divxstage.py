@@ -91,5 +91,6 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         #http://embed.divxstage.eu/embed.php?v=8da26363e05fd&width=746&height=388&c=000
         return re.match('http://(?:www.|embed.)?divxstage.(?:eu|net)/' or 'divxstage' in host,url)

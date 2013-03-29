@@ -51,11 +51,9 @@ class GorillavidResolver(Plugin, UrlResolver, PluginSettings):
             form_values = {}
             for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
                 form_values[i.group(1)] = i.group(2)
-                print 'form_values'
-                print form_values
                 
             html = self.net.http_POST(post_url, form_data=form_values).content
-            #print html
+
 
         except urllib2.URLError, e:
             common.addon.log_error('gorillavid: got http error %d fetching %s' %
@@ -82,4 +80,5 @@ class GorillavidResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match(self.pattern, url) or self.name in host

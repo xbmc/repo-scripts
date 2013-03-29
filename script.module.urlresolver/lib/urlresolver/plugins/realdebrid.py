@@ -37,13 +37,13 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     profile_path = common.profile_path    
     cookie_file = os.path.join(profile_path, '%s.cookies' % name)
     media_url = None
-    allHosters = None
 
 
     def __init__(self):
         p = self.get_setting('priority') or 1
         self.priority = int(p)
         self.net = Net()
+        self.patterns = None
         try:
             os.makedirs(os.path.dirname(self.cookie_file))
         except OSError:
@@ -51,7 +51,6 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     #UrlResolver methods
     def get_media_url(self, host, media_id):
-        print 'in get_media_url %s : %s' % (host, media_id)
         dialog = xbmcgui.Dialog()
 
         try:
@@ -63,7 +62,6 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
             print(exc_type, fname, exc_tb.tb_lineno)
             dialog.ok(' Real-Debrid ', ' Real-Debrid server timed out ', '', '')
             return False
-        print '************* %s' % source
         
         if re.search('Upgrade your account now to generate a link', source):
             dialog.ok(' Real-Debrid ', ' Upgrade your account now to generate a link ', '', '')
@@ -81,8 +79,7 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
         if len(link) == 0:
             return False
-        
-        print 'link is %s' % link[0]
+
         self.media_url = link[0]
 
         # avoid servers as configured in the settings to get better playback of your video on XBMC
@@ -117,13 +114,16 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         return 'www.real-debrid.com', url
 
     def get_all_hosters(self):
-        if self.allHosters is None:
-            url = 'http://real-debrid.com/lib/api/hosters.php'
-            self.allHosters = self.net.http_GET(url).content
-        return self.allHosters 
+        if self.patterns is None:
+            url = 'http://www.real-debrid.com/api/regex.php?type=all'
+            response = self.net.http_GET(url).content
+            hosters = response.split('/g,/')
+            print 'RealDebrid patterns: %s' %hosters
+            self.patterns = [re.compile(pattern) for pattern in hosters]
+        return self.patterns
 
     def valid_url(self, url, host):
-
+        if self.get_setting('enabled') == 'false': return False
         if self.get_setting('login') == 'false':
             return False
         print 'in valid_url %s : %s' % (url, host)
@@ -135,6 +135,8 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
                 domain = 'megashares.com'
             elif 'megashare' in domain:
                 domain = 'megashare.com'
+            elif 'mixturecloud' in domain :
+                domain = 'mixturevideo.com'
             print 'domain is %s ' % domain
         if (domain in self.get_all_hosters()) or (len(host) > 0 and host in self.get_all_hosters()):
             return True

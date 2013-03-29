@@ -76,4 +76,5 @@ class Stream2kResolver(Plugin, UrlResolver, PluginSettings):
             return False
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match(self.pattern, url) or re.match('http://([^/]*stream2k.com)/.+?s=([0-9A-Za-z]+).+?', url) or self.name in host

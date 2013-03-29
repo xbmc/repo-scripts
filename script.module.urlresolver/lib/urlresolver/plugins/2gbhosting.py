@@ -87,6 +87,7 @@ class TwogbhostingResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return (re.match('http://(www.)?2gb-hosting.com/videos/' +
                          '[0-9A-Za-z]+/[0-9a-zA-Z]+.*', url) or
                          '2gb-hosting' in host)

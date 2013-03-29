@@ -50,7 +50,7 @@ class ZoouploadResolver(Plugin, UrlResolver, PluginSettings):
         if re.search('>File Not Found<',html):
             dialog.ok( 'UrlResolver', 'File was deleted', '', '')
             return False #1
-        r = re.search("<div id=\"player_code\"><script type='text/javascript'>(.*?)</script>",html,re.DOTALL)
+        r = re.search('<div id="player_code"><script type=.+?text/javascript.+?>(.+?)</script>',html,re.DOTALL)
         if r:
             js = jsunpack.unpack(r.group(1))
             r = re.search('src="([^"]+)"', js)
@@ -70,6 +70,5 @@ class ZoouploadResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.)?zooupload.com/[0-9A-Za-z]+', url) or 'zooupload' in host
-
-

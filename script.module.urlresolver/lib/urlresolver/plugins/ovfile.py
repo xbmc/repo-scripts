@@ -39,7 +39,6 @@ class OvfileResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_media_url(self, host, media_id):
-        print 'ovfile: in get_media_url %s %s' % (host, media_id)
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
 
@@ -77,12 +76,10 @@ class OvfileResolver(Plugin, UrlResolver, PluginSettings):
     
 
     def get_url(self, host, media_id):
-        print 'ovfile: in get_url %s %s' % (host, media_id)
         return 'http://www.ovfile.com/%s' % media_id 
         
         
     def get_host_and_id(self, url):
-        print 'ovfile: in get_host_and_id %s' % (url)
         r = re.search('http://(.+?)/embed-([\w]+)-', url)
         if r:
             return r.groups()
@@ -95,6 +92,7 @@ class OvfileResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return (re.match('http://(www.)?ovfile.com/' +
                          '[0-9A-Za-z]+', url) or
                          'ovfile' in host)

@@ -1,6 +1,6 @@
 '''
-Stagevu urlresolver plugin
-Copyright (C) 2011 anilkuj
+Crunchyroll urlresolver plugin
+Copyright (C) 2013 voinage
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,38 +25,40 @@ import urllib2
 from urlresolver import common
 import os
 
-class StagevuResolver(Plugin, UrlResolver, PluginSettings):
+class crunchyrollResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "stagevu"
+    name = "crunchyroll"
 
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
-
+        #http://www.crunchyroll.co.uk/07-ghost/episode-2-nostalgic-memories-accompany-pain-573286
+        #http://www.crunchyroll.com/07-ghost/episode-2-nostalgic-memories-accompany-pain-573286
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        link = self.net.http_GET(web_url).content
-        p=re.compile('<embed type="video/divx" src="(.+?)"')
-        match=p.findall(link)
-        return match[0]
+        html=self.net.http_GET('http://www.crunchyroll.com/android_rpc/?req=RpcApiAndroid_GetVideoWithAcl&media_id=%s'%media_id,{'Host':'www.crunchyroll.com',
+             'X-Device-Uniqueidentifier':'ffffffff-931d-1f73-ffff-ffffaf02fc5f',
+             'X-Device-Manufacturer':'HTC',
+             'X-Device-Model':'HTC Desire',
+             'X-Application-Name':'com.crunchyroll.crunchyroid',
+             'X-Device-Product':'htc_bravo',
+             'X-Device-Is-GoogleTV':'0'}).content
+        mp4=re.compile(r'"video_url":"(.+?)","h"').findall(html.replace('\\',''))[0]
+        return mp4
 
     def get_url(self, host, media_id):
-        return 'http://www.stagevu.com/video/%s' % media_id 
-        
+        return 'http://www.crunchyroll.com/android_rpc/?req=RpcApiAndroid_GetVideoWithAcl&media_id=%s' % media_id
         
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/video/([0-9a-zA-Z/]+)', url)
+        r = re.match(r'http://www.(crunchyroll).+?/.+?/.+?([^a-zA-Z-+]{6})', url)
         if r:
             return r.groups()
         else:
             return False
 
-
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www.)?stagevu.com/video/' +
-                         '[0-9A-Za-z]+', url) or
-                         'stagevu' in host)
+        return (re.match(r'http://www.(crunchyroll).+?/.+?/.+?([^a-zA-Z-+]{6})', url) or 'crunchyroll' in host)

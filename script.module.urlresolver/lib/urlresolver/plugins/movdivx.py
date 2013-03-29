@@ -29,95 +29,87 @@ import re
 
 
 class MovDivxResolver(Plugin, UrlResolver, PluginSettings):
-	implements = [UrlResolver, PluginSettings]
-	name = "movdivx"
+    implements = [UrlResolver, PluginSettings]
+    name = "movdivx"
 
-	def __init__(self):
-		p = self.get_setting('priority') or 100
-		self.priority = int(p)
-		self.net = Net()
-		#e.g. http://movdivx.com/trrrw4r6bjqu/American_Dad__s_1_e_3_p1-1.flv.html
-		self.pattern = 'http://(movdivx.com)/(.+?).html'
+    def __init__(self):
+        p = self.get_setting('priority') or 100
+        self.priority = int(p)
+        self.net = Net()
+        #e.g. http://movdivx.com/trrrw4r6bjqu/American_Dad__s_1_e_3_p1-1.flv.html
+        self.pattern = 'http://(movdivx.com)/(.+?).html'
 
 
-	def get_media_url(self, host, media_id):
-		web_url = self.get_url(host, media_id)
+    def get_media_url(self, host, media_id):
+        web_url = self.get_url(host, media_id)
 
-		try:
-			html = self.net.http_GET(web_url).content
-		except urllib2.URLError, e:
-			common.addon.log_error(self.name + ': got http error %d fetching %s' %
-									(e.code, web_url))
-			return False
-		#print 'XXXXXXXXXXXXXXXX Printing HTML:\n%s' % html
-		r =  'name="op" value="(.+?)">.+?'
-		r += 'name="usr_login" value="(.+?)?">.+?'
-		r += 'name="id" value="(.+?)".+?'
-		r += 'name="fname" value="(.+?)".+?'
+        try:
+            html = self.net.http_GET(web_url).content
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                    (e.code, web_url))
+            return False
+        r =  'name="op" value="(.+?)">.+?'
+        r += 'name="usr_login" value="(.+?)?">.+?'
+        r += 'name="id" value="(.+?)".+?'
+        r += 'name="fname" value="(.+?)".+?'
 
-		r = re.search(r,html,re.DOTALL)
-		op,usr_login,id,fname = r.groups()
-		data =  {'op':op}
-		data['usr_login'] = usr_login
-		data['id'] = id
-		data['fname'] = fname
-		data['referer'] = web_url
-		data['method_free'] = 'Continue to Stream'
+        r = re.search(r,html,re.DOTALL)
+        op,usr_login,id,fname = r.groups()
+        data =  {'op':op}
+        data['usr_login'] = usr_login
+        data['id'] = id
+        data['fname'] = fname
+        data['referer'] = web_url
+        data['method_free'] = 'Continue to Stream'
 
-		try:
-			html = self.net.http_POST(web_url, data).content
-			print 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX Post response:\n %s' % html
-		except urllib2.URLError, e:
-			common.addon.log_error(self.name + ': got http error %d fetching %s' %
-									(e.code, web_url))
-			return False
-		# get url from packed javascript
-		sPattern =  '<div id="player_code"><script type=(?:"|\')text/javascript(?:"|\')>'
-		sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.+?DivXBrowserPlugin.+?)</script>'
-		
-		r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
-		
-		if r:
-			sJavascript = r.group(1) + ")))"
-#			print("1")
-#			print(sJavascript)
-			sUnpacked = jsunpack.unpack(sJavascript)
-			print(sUnpacked)
-			sPattern = 'type="video/divx"src="(.+?)"custommode='
-#			sPattern = "'file','([^']*)'";
-			r = re.search(sPattern, sUnpacked)
-			if r:
-				return r.group(1)
-		else:
-			sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>'
-			sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.*SWFObject.*)'
-	    	
-			r2 = re.search(sPattern, html, re.IGNORECASE)
+        try:
+            html = self.net.http_POST(web_url, data).content
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                    (e.code, web_url))
+            return False
+        # get url from packed javascript
+        sPattern =  '<div id="player_code"><script type=(?:"|\')text/javascript(?:"|\')>'
+        sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.+?DivXBrowserPlugin.+?)</script>'
+        
+        r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+        
+        if r:
+            sJavascript = r.group(1) + ")))"
+            sUnpacked = jsunpack.unpack(sJavascript)
+            sPattern = 'type="video/divx"src="(.+?)"custommode='
+            r = re.search(sPattern, sUnpacked)
+            if r:
+                return r.group(1)
+        else:
+            sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>'
+            sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.*SWFObject.*)'
             
-			if r2:
-				sJavascript = r2.group(1) + ")))"
-#				print("1")
-#				print(sJavascript)
-				sUnpacked = jsunpack.unpack(sJavascript)
-				print(sUnpacked)
-				sPattern = "'file','([^']*)'";
-				r = re.search(sPattern, sUnpacked)
-				if r:
-					return r.group(1)
+            r2 = re.search(sPattern, html, re.IGNORECASE)
+            
+            if r2:
+                sJavascript = r2.group(1) + ")))"
+                sUnpacked = jsunpack.unpack(sJavascript)
+                sPattern = "'file','([^']*)'";
+                r = re.search(sPattern, sUnpacked)
+                if r:
+                    return r.group(1)
                 
             
-		return False
+        return False
 
-	def get_url(self, host, media_id):
-			return 'http://movdivx.com/%s.html' % (media_id)
+    def get_url(self, host, media_id):
+            return 'http://movdivx.com/%s.html' % (media_id)
 
-	def get_host_and_id(self, url):
-		r = re.search(self.pattern, url)
-		if r:
-			return r.groups()
-		else:
-			return False
+    def get_host_and_id(self, url):
+        r = re.search(self.pattern, url)
+        if r:
+            return r.groups()
+        else:
+            return False
 
 
-	def valid_url(self, url, host):
-		return re.match(self.pattern, url) or self.name in host
+    def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
+        return re.match(self.pattern, url) or self.name in host

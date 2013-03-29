@@ -34,9 +34,6 @@ class VeohResolver(Plugin, UrlResolver, PluginSettings):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
-        print 'veoh resolver: in get_media_url'
-        print 'host %s media_id %s' %(host, media_id)
-
         html = self.net.http_GET("http://www.veoh.com/iphone/views/watch.php?id=" + media_id + "&__async=true&__source=waBrowse").content
         if not re.search('This video is not available on mobile', html):
             r = re.compile("watchNow\('(.+?)'").findall(html)
@@ -44,7 +41,6 @@ class VeohResolver(Plugin, UrlResolver, PluginSettings):
                 return r[0]
 
         url = 'http://www.veoh.com/rest/video/'+media_id+'/details'
-        print 'url is %s' %url
         html = self.net.http_GET(url).content
         file = re.compile('fullPreviewHashPath="(.+?)"').findall(html)
 
@@ -52,7 +48,6 @@ class VeohResolver(Plugin, UrlResolver, PluginSettings):
             print 'coult not obtain video url'
             return False
 
-        print 'video link is %s' % file[0]
         return file[0]
 
     def get_url(self, host, media_id):
@@ -77,6 +72,7 @@ class VeohResolver(Plugin, UrlResolver, PluginSettings):
             return False
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.search('www.veoh.com/watch/.+',url) or re.search('www.veoh.com/.+?permalinkId=.+',url) or 'veoh' in host
 
     def get_settings_xml(self):

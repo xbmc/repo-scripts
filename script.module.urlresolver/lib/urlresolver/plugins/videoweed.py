@@ -89,6 +89,7 @@ class VideoweedResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.|embed.)?videoweed.(?:es|com)/(video/|file|embed.php\?|file/)' +
                         '(?:[0-9a-z]+|width)', url) or 'videoweed' in host
 
