@@ -272,6 +272,9 @@ class PluginSettings(Interface):
         '''
         xml = '<setting id="%s_priority" ' % self.__class__.__name__
         xml += 'type="number" label="Priority" default="100"/>\n'
+
+        xml += '<setting id="%s_enabled" ' % self.__class__.__name__
+        xml += 'type="bool" label="Enabled" default="true"/>\n'
         return xml 
         
     

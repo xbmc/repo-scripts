@@ -1,3 +1,21 @@
+[B]Version 1.0.8[/B]
+- Added Bayfiles
+- Added CrunchyRoll
+- Added Movreel
+- Added Played
+- Added RPNet
+- Updated Sharesix
+- Added TheFile
+- Added Vureel
+- Added WatchFreeInHD
+- Fixed ZooUpload
+- Added BillionUploads
+- Added HugeFiles
+- Added ShareRepo
+- Added VidBull
+- Fixed VeeHD
+- Fixed VidHog
+
 [B]Version 1.0.7[/B]
 - Vidxden: Fixed
 - Added: Sharesix (humla)

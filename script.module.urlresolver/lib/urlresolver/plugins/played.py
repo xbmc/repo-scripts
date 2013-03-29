@@ -1,6 +1,6 @@
-'''
-Stagevu urlresolver plugin
-Copyright (C) 2011 anilkuj
+"""
+Played urlresolver plugin
+Copyright (C) 2013 voinage
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,41 +14,43 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
 import urllib2
 from urlresolver import common
-import os
+import xbmcgui
+import re
 
-class StagevuResolver(Plugin, UrlResolver, PluginSettings):
+
+class playedResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "stagevu"
-
+    name = "played"
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
 
-
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        link = self.net.http_GET(web_url).content
-        p=re.compile('<embed type="video/divx" src="(.+?)"')
-        match=p.findall(link)
-        return match[0]
+        html=self.net.http_GET(web_url,{'host':'played.to'}).content
+        id=re.compile('<input type="hidden" name="id" value="(.+?)">').findall(html)[0]
+        fname=re.compile('<input type="hidden" name="fname" value="(.+?)">').findall(html)[0]
+        hash=re.compile('<input type="hidden" name="hash" value="(.+?)">').findall(html)[0]
+        data={'op':'download1','usr_login':'','id':id,'fname':fname,'referer':'','hash':hash,'imhuman':'Continue+to+Video'}
+        html=self.net.http_POST(web_url,data).content
+        played=re.compile('file: "(.+?)"').findall(html)[0]
+        return played
 
     def get_url(self, host, media_id):
-        return 'http://www.stagevu.com/video/%s' % media_id 
-        
-        
+            return 'http://played.to/%s' % (media_id)
+
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/video/([0-9a-zA-Z/]+)', url)
+        r = re.match(r'http://(played).to/([0-9a-zA-Z]+)', url)
         if r:
             return r.groups()
         else:
@@ -57,6 +59,6 @@ class StagevuResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www.)?stagevu.com/video/' +
-                         '[0-9A-Za-z]+', url) or
-                         'stagevu' in host)
+        return re.match(r'http://(played).to/([0-9a-zA-Z]+)', url) or 'played' in host
+
+

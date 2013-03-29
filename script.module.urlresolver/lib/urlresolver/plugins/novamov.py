@@ -116,6 +116,7 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.|embed.)?no.+?/(video/|embed.php\?)', url) or 'novamov' in host or re.match('http://(?:www.)?movshare.net/(?:video|embed)/',url) or 'movshare' in host or re.match('http://(www.|embed.)?nowvideo.(?:eu)/(video/|embed.php\?)' +
                         '(?:[0-9a-z]+|width)', url) or 'nowvideo' in host
 

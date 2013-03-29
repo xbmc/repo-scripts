@@ -73,5 +73,6 @@ class DailymotionResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.)?dailymotion.com/video/[0-9A-Za-z]+', url) or \
                re.match('http://(www.)?dailymotion.com/swf/[0-9A-Za-z]+', url) or self.name in host

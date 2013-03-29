@@ -1,5 +1,5 @@
 '''
-sharesix urlresolver plugin
+sharesix/sharerepo urlresolver plugin
 Copyright (C) 2011 humla
 
 This program is free software: you can redistribute it and/or modify
@@ -39,8 +39,17 @@ class SharesixResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id)
 
         dialog = xbmcgui.Dialog()
+
         try:
-            html = self.net.http_GET(web_url).content
+            if ('sharerepo' in host): # If the host is sharerepo then make a post request to get the actual url content
+                form_values = {}
+                form_values["id"]=media_id
+                form_values["referer"]=web_url
+                form_values["method_free"]="Free+Download"
+                form_values["op"]="download1"
+                html = self.net.http_POST(web_url,form_values).content
+            else:   # Otherwise just use the original url to get the content. For sharesix
+                html = self.net.http_GET(web_url).content
         except urllib2.URLError, e:
             dialog.ok(' UrlResolver ' , ' Unable to establish connection with the website. ', '', '')
             return False;
@@ -52,18 +61,18 @@ class SharesixResolver(Plugin, UrlResolver, PluginSettings):
         # To build the streamable link, we need 
         # # the IPv4 addr (first 4 content below)
         # # the hash of the file
-        metadata = re.compile('player\|(\d+)\|(\d+)\|(\d+)\|(\d+)\|.+?video\|(.+?)\|file').findall(html)
+        metadata = re.compile('\|\|?(\d+)\|\|?(\d+)\|\|?(\d+)\|\|?(\d+)\|.+?video\|(.+?)\|\|?file').findall(html)
 
         if (len(metadata) > 0):
             metadata = metadata[0]
-            stream_url="http://"+metadata[3]+"."+metadata[2]+"."+metadata[1]+"."+metadata[0]+"/d/"+ metadata[4]+"/video.flv?start=0"
+            stream_url="http://"+metadata[3]+"."+metadata[2]+"."+metadata[1]+"."+metadata[0]+"/d/"+ metadata[4]+"/video.flv"
             return stream_url
 
         dialog.ok(' UrlResolver ' , ' Error while retrieving playable link. ', '', '')
         return False
 
     def get_url(self, host, media_id):
-        return 'http://www.sharesix.com/%s' % media_id 
+        return 'http://%s/%s' % (host, media_id)
         
     def get_host_and_id(self, url):
         r = re.search('//(.+?)/([0-9a-zA-Z/]+)', url)
@@ -74,6 +83,7 @@ class SharesixResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
-        return (re.match('http://(www.)?sharesix.com/' +
+        if self.get_setting('enabled') == 'false': return False
+        return (re.match('http://(www.)?(sharesix|sharerepo).com/' +
                          '[0-9A-Za-z]+', url) or
-                         'sharesix' in host)
+                         'sharesix' in host or 'sharerepo' in host)

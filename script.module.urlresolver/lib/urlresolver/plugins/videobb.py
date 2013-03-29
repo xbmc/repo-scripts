@@ -103,6 +103,7 @@ class VideobbResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.)?videobb.com/' +
                         '(e/|video/|watch_video.php\?v=)' +
                         '[0-9A-Za-z]+', url) or 'videobb' in host

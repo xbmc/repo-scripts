@@ -79,7 +79,6 @@ class FlashxResolver(Plugin, UrlResolver, PluginSettings):
         else:
             return False
 
-
     def valid_url(self, url, host):
-        print re.match(self.pattern, url) or self.name in host
+        if self.get_setting('enabled') == 'false': return False
         return re.match(self.pattern, url) or self.name in host

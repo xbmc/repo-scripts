@@ -50,6 +50,7 @@ class SeeonResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.)?seeon.tv/view/(?:\d+)', 
                         url) or 'seeon' in host 
     
