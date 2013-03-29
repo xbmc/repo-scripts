@@ -1,0 +1,344 @@
+# XBMC Media Center language file
+# Addon Name: Web Viewer
+# Addon id: script.web.viewer
+# Addon version: 0.9.10
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-03-28 21:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Simple web browser"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "\nWeb Viewer is a linear text web browser. It is linear because it doesn't render pages, it filters them and displays text in the order it is found in the original HTML.\n\nWeb viewer also allows addon developers to process application authorization (ie. facebook,flickr etc.) with little programming and without violating terms of use.\n\nWhat it does:\n    *You can follow links, fill out forms, view images\n    *Stream video/audio links\n    *It has back/forward history\n    *Bookmarks\n    \nWhat it doesn't do:\n    *Handle style sheets, javascript, flash, etc.\n    *Make web pages look good :)\n    *Lots of other stuff\n    "
+msgstr ""
+
+#All {0} and {1} must remain in string but can change position
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Add Submit Button If Missing"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Goto URL option edits current URL"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Simple Controls (ie ATV2)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Eperimental: Enable Inline Frames"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Show Frames At Bottom (More Compatible)"
+msgstr ""
+
+#empty strings from id 32006 to 32099
+
+msgctxt "#32100"
+msgid "Error loading page."
+msgstr ""
+
+msgctxt "#32101"
+msgid "Processing Data"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Redirecting"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Opening Page"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Reading Data"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Submitting Form"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Reading Result"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Waiting"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Waiting for threads to close..."
+msgstr ""
+
+msgctxt "#32109"
+msgid "Done"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Options"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Enter URL"
+msgstr ""
+
+msgctxt "#32112"
+msgid "History"
+msgstr ""
+
+msgctxt "#32113"
+msgid "File"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Download File?"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Type: {0}"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Multi-Select"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Select File"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Select"
+msgstr ""
+
+msgctxt "#32119"
+msgid "{0} Selected"
+msgstr ""
+
+msgctxt "#32120"
+msgid "Add Bookmark"
+msgstr ""
+
+msgctxt "#32121"
+msgid "Manage Bookmarks"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Bookmarks Menu"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Enter Title"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Select A Bookmark To Delete"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Really?"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Remove Bookmark:"
+msgstr ""
+
+#. Example: Remove Bookmark: {0}? where {0} is bookmark title
+msgctxt "#32127"
+msgid "{0}?"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Save Link"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Downloading"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Downloaded File"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Go To URL"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Bookmarks"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Open Link"
+msgstr ""
+
+msgctxt "#32135"
+msgid "Save Link"
+msgstr ""
+
+msgctxt "#32136"
+msgid "View Link Image"
+msgstr ""
+
+msgctxt "#32137"
+msgid "View Target Image"
+msgstr ""
+
+msgctxt "#32138"
+msgid "View Image"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Save Image"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Submit Form"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Preferences"
+msgstr ""
+
+msgctxt "#32142"
+msgid "Set Home/Start Page"
+msgstr ""
+
+msgctxt "#32143"
+msgid "Home/Start Page Set To:"
+msgstr ""
+
+#. Example: File 2 of 9
+msgctxt "#32144"
+msgid "File {0} of {1}"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Downloading {0}"
+msgstr ""
+
+msgctxt "#32146"
+msgid "Help"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Submit"
+msgstr ""
+
+msgctxt "#32148"
+msgid "Close Web Viewer?"
+msgstr ""
+
+msgctxt "#32149"
+msgid "Search Google"
+msgstr ""
+
+msgctxt "#32150"
+msgid "Enter Search Terms"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Unknown URL Type"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Web Viewer cannot open links of type:"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Search Page"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Not Found"
+msgstr ""
+
+msgctxt "#32155"
+msgid "Match Not Found"
+msgstr ""
+
+msgctxt "#32156"
+msgid "Try again from top of page?"
+msgstr ""
+
+msgctxt "#32157"
+msgid "View Page Source"
+msgstr ""
+
+msgctxt "#32158"
+msgid "Back"
+msgstr ""
+
+msgctxt "#32159"
+msgid "Forward"
+msgstr ""
+
+msgctxt "#32160"
+msgid "Refresh"
+msgstr ""
+
+msgctxt "#32161"
+msgid "Exit Web Viewer"
+msgstr ""
+
+msgctxt "#32162"
+msgid "Read View"
+msgstr ""
+
+msgctxt "#32163"
+msgid "Play Page Video"
+msgstr ""
+
+msgctxt "#32164"
+msgid "Play Video?"
+msgstr ""
+
+msgctxt "#32165"
+msgid "Play the video the link points to,"
+msgstr ""
+
+msgctxt "#32166"
+msgid "or follow the link to the page?"
+msgstr ""
+
+msgctxt "#32167"
+msgid "Follow Link"
+msgstr ""
+
+msgctxt "#32168"
+msgid "Play Video"
+msgstr ""
+
+msgctxt "#32169"
+msgid "Failed"
+msgstr ""
+
+msgctxt "#32170"
+msgid "File download failed."
+msgstr ""
+
+msgctxt "#32171"
+msgid "Failed to copy file to target directory."
+msgstr ""

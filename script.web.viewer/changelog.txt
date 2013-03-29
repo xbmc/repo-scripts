@@ -1,6 +1,57 @@
-Web Viewer Changelog
+Web Viewer Changelog 
 
-Current Version : 0.9.1
+TODO:
+	Handle more video types
+
+Current Version : 0.9.10
+
+*** 0.9.10 ***
+
+Fix string IDs
+Convert static strings to string IDs
+Metacafe now falls back to metacafe addon for playing
+Metacafe now handles CBS based video if "appropriate" addon is installed
+Convert %s to .format() method
+Files can now be downloaded to writable network locations
+Added failed download dialogs
+Cleaned up code warnings
+
+*** 0.9.9 ***
+
+Added Metacafe to list of supported video URLs
+
+*** 0.9.8 ***
+
+Added Dailymotion to list of supported video URLs
+
+*** 0.9.7 ***
+
+Fix for image dialog not closing on 'Previous Menu' button
+Fix for inline frames links and images having incorrect URLs
+Added setting 'Show Frames At Bottom (More Compatible)' - helps prevent, for instance, the frame from being in the middle of a form
+
+*** 0.9.6 ***
+
+Added setting 'Experimental: Enable Inline Frames' which, when enabled, loads frames into the page
+Now processes embed tags as links
+Can now play YouTube, Vimeo and flickr video from links (asks if you want to view the video or visit the page)
+Context menu now shows 'Play Page Video' when on a video's page - also pressing play when on a video's page will play the video (if possible)
+
+*** 0.9.5 ***
+
+Added 'accept' header to mechanize.browser to avoid '403 Bad Behavior' errors on some sites
+
+*** 0.9.4 ***
+
+Improved labeling of form inputs
+
+*** 0.9.3 ***
+
+Fixed a bug causing some controls not to work in FRODO - so now you can exit the browser :)
+
+*** 0.9.2 ***
+
+Fixed a bug in onAction() causing errors in FRODO - (log said ignoring the error could cause memory leaks, so perhaps fixed a memory leak :) )
 
 *** 0.9.1 ***
 

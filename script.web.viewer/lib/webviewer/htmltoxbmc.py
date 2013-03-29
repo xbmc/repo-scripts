@@ -25,15 +25,15 @@ class HTMLConverter:
 #		self.linkReplace = unicode.encode('[CR]\g<text> (%s: [B]\g<url>[/B])' % u'Link','utf8')
 		self.linkReplace = '[COLOR '+self.linkColor+']%s[/COLOR] '
 		self.frameReplace = '[CR][COLOR '+self.frameColor+']FRAME%s[/COLOR][CR]'
-		self.formReplace = '[CR][COLOR '+self.formColorA+']______________________________[/COLOR][CR][COLOR '+self.formColorB+'][B]- FORM: %s -[/B][/COLOR][CR]%s[CR][COLOR '+self.formColorC+']______________________________[/COLOR][CR][CR]'
+		self.formReplace = '[CR][COLOR '+self.formColorA+']'+'_'*200+'[/COLOR][CR][COLOR '+self.formColorB+'][B]- FORM: %s -[/B][/COLOR][CR]%s[CR][COLOR '+self.formColorC+']'+'_'*200+'[/COLOR][CR][CR]'
 		self.submitReplace = '[\g<value>] '
 		#static filters
-		self.linkFilter = re.compile('<a[^>]+?href=["\'](?P<url>[^>"]+?)["\'][^>]*?(?:title=["\'](?P<title>[^>"]+?)["\'][^>]*?)?>(?P<text>.*?)</a>',re.I|re.S|re.U)
+		self.linkFilter = re.compile('<(?:a|embed)[^>]+?(?:href|src)=["\'](?P<url>[^>"]+?)["\'][^>]*?(?:title=["\'](?P<title>[^>"]+?)["\'][^>]*?)?>(?P<text>.*?)</(?:a|embed)>',re.I|re.S|re.U)
 		self.imageFilter = re.compile('<img[^>]+?src=["\'](?P<url>[^>"]+?)["\'][^>]*?>',re.I|re.S|re.U)
 		self.scriptFilter = re.compile('<script[^>]*?>.*?</script>',re.S|re.I)
 		self.styleFilter = re.compile('<style[^>]*?>.+?</style>',re.I)
 		self.commentFilter = re.compile('<!.*?-->')
-		self.formFilter = re.compile('<form[^>]*?(?:id=["\'](?P<id>[^>"]+?)["\'][^>]*?)?>(?P<contents>.+?)(?:</form>|<form>|$)',re.I)
+		self.formFilter = re.compile('<form[^>]*?(?:id=["\'](?P<id>[^>"]+?)["\'][^>]*?)?>(?P<contents>.+?)(?:</form>|<form>|$)(?is)')
 		self.labelFilter = re.compile('<label[^>]*?(?:(?:for=["\'])|(?:>\s*<input[^>]*?id="))(?P<inputid>[^>"].*?)["\'][^>]*?>(?P<label>.*?)</label>',re.I)
 		self.altLabelFilter = re.compile('>(?:(?P<header>[^<>]*?)<(?!input|select)\w+[^>]*?>)?(?P<label>[^<>]+?)(?:<(?!input|select)\w+[^>]*?>)?(?:<input |<select )[^>]*?(?:id|name)="(?P<inputid>[^>"]+?)"',re.I)
 		self.submitFilter = re.compile('<input type=["\']submit["\'][^>]+?value=["\'](?P<value>[^>"\']+?)["\'][^>]*?>',re.I)
@@ -61,8 +61,6 @@ class HTMLConverter:
 		
 		#Secondary Filters
 		self.lineItemLineFilter = re.compile('<li[^>]*?>(.+?)</li>',re.I)
-		self.charCodeFilter = re.compile('&#(\d{1,5});',re.I)
-		self.charNameFilter = re.compile('&(\w+?);')
 		self.imageAltFilter = re.compile('alt="([^"]+?)"',re.I)
 		self.titleAttrFilter = re.compile('title="([^>"]*?)"',re.I)
 		self.nameAttrFilter = re.compile('name="([^>"]*?)"',re.I)
@@ -295,15 +293,21 @@ class HTMLConverter:
 		else: bullet = '*'
 		return  '%s %s\n' % (bullet,m.group(1))
 	
-	def cUConvert(self,m): return unichr(int(m.group(1)))
-	def cTConvert(self,m):
-		return unichr(htmlentitydefs.name2codepoint.get(m.group(1),32))
-		
 	def convertHTMLCodes(self,html):
-		try:
-			html = self.charCodeFilter.sub(self.cUConvert,html)
-			html = self.charNameFilter.sub(self.cTConvert,html)
-		except:
-			pass
-		return html
+		return convertHTMLCodes(html)
+
+charCodeFilter = re.compile('&#(\d{1,5});',re.I)
+charNameFilter = re.compile('&(\w+?);')
+		
+def cUConvert(m): return unichr(int(m.group(1)))
+def cTConvert(m):
+	return unichr(htmlentitydefs.name2codepoint.get(m.group(1),32))
+	
+def convertHTMLCodes(html):
+	try:
+		html = charCodeFilter.sub(cUConvert,html)
+		html = charNameFilter.sub(cTConvert,html)
+	except:
+		pass
+	return html
 	

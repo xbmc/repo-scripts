@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.web.viewer"
        name="Web Viewer"
-       version="0.9.1"
+       version="0.9.10"
        provider-name="Rick Phillips (ruuk)">
   <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8.1"/>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
   </requires>
   <extension point="xbmc.python.script"
              library="lib/webviewer/webviewer.py">
@@ -32,5 +32,8 @@ What it doesn't do:
     *Make web pages look good :)
     *Lots of other stuff
     </description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://forum.xbmc.org/showthread.php?tid=90007</forum>
+    <source>http://github.com/ruuk/script.web.viewer</source>
   </extension>
 </addon>
