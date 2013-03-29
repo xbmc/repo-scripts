@@ -1,3 +1,25 @@
+v0.0.25
+- Added *Episode.%d.Art(tvshow.characterart)
+- Added *Episode.%d.mpaa
+- Added *Movies.%d.OriginalTitle
+- Added *MusicVideo.d%.DBID
+- Added *MusicVideo.d%.Resume
+- Added *MusicVideo.d%.PercentPlayed
+- Added *MusicVideo.d%.Watched
+- Added *Albums.d%.Theme
+- Added *Albums.d%.Mood
+- Added *Albums.d%.Style
+- Added *Albums.d%.Type
+- Added *Artist.d%.Born
+- Added *Artist.d%.Died
+- Added *Artist.d%.Formed
+- Added *Artist.d%.Disbanded
+- Added *Artist.d%.YearsActive
+- Added *Artist.d%.Style
+- Added *Artist.d%.Mood
+- Added *Artist.d%.Instrument
+- Added *Artist.d%.
+
 v0.0.24
 - Added *Episode.%d.Watched
 - Added *Episode.%d.DBID
