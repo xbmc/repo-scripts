@@ -1,3 +1,26 @@
+v2.1.1
+- Fix runtime property to use duration from streamdetails
+- Fix play property for albums
+- Add art(thumb) for movies (same value as art(poster) but easiest for skinner to deal with albums and movies smart playlists)
+
+v2.1.0
+- Fix issue when album have no songs
+- Fix resolution when movie or TV show is not anaylized yet (not height and weight in DB)
+
+v2.0.9
+- Fix quoted or not quoted path for smart playlist
+- Add Theme, Mood, Style and Type properties for Music
+- Remove Thumb and Fanart properties for Music (depricated and replaced by Art(thumb) and Art(fanart) properties)
+
+v2.0.8
+- Add MPAA and Studio properties for TV Shows
+
+v2.0.7
+- Add MPAA and Director properties for movies
+
+v2.0.6
+- Add OriginalTitle property for movies
+
 v2.0.5
 - Fix statistics for Albums smart playlists
 

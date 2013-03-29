@@ -35,6 +35,7 @@ Properties return to Home window (id 10000) :
 %s.Watched = Number of watched movies in library or playlist
 %s.%d.DBID
 %s.%d.Title
+%s.%d.OriginalTitle
 %s.%d.Year
 %s.%d.Genre
 %s.%d.Studio
@@ -45,6 +46,9 @@ Properties return to Home window (id 10000) :
 %s.%d.Runtime
 %s.%d.Rating
 %s.%d.Trailer
+%s.%d.MPAA
+%s.%d.Director
+%s.%d.Art(thumb) (same value as Art(poster) but make skinner life easier ;)
 %s.%d.Art(poster)
 %s.%d.Art(fanart)
 %s.%d.Art(clearlogo)
@@ -99,6 +103,8 @@ Properties return to Home window (id 10000) :
 %s.%d.Resume"
 %s.%d.PercentPlayed"
 %s.%d.File"
+%s.%d.MPAA"
+%s.%d.Studio"
 %s.%d.Path"
 %s.%d.Play
 %s.%d.VideoCodec"
@@ -116,15 +122,16 @@ Properties return to Home window (id 10000) :
 %s.Albums = Number of albums in library or playlist
 %s.Songs = Nombre of songs in library or playlist
 %s.%d.Title
-%s.%d.Label  #depricated
 %s.%d.Artist
 %s.%d.Genre
 %s.%d.Year
+%s.%d.Theme
+%s.%d.Mood
+%s.%d.Style
+%s.%d.Type
 %s.%d.RecordLabel
 %s.%d.Description
 %s.%d.Rating
-%s.%d.Thumb  #depricated
-%s.%d.Fanart  #depricated
 %s.%d.Art(thumb)
 %s.%d.Art(fanart)
 %s.%d.Play
