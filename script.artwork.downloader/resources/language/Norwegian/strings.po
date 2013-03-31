@@ -84,6 +84,10 @@ msgctxt "#32126"
 msgid "Logo"
 msgstr "Logo"
 
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Plakater"
+
 msgctxt "#32133"
 msgid "Artwork"
 msgstr "Artwork"

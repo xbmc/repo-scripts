@@ -2,7 +2,7 @@
 <addon
     id="script.artwork.downloader"
     name="Artwork Downloader"
-    version="12.0.14"
+    version="12.0.15"
     provider-name="Martijn"
     >
   <requires>
@@ -23,7 +23,7 @@
     <summary lang="de">Lade Artworks fÃ¼r Filme, Serien und Musikvideos deiner Bibliothek herunter</summary>
     <summary lang="el">Κατεβάζει Εικόνες για τις Τηλεοπτικές Σειρές, τις Ταινίες και τα Μουσικά Βίντεο της συλλογής σας</summary>
     <summary lang="en">Downloads Artwork for TV shows, Movies and Musicvideos in your library</summary>
-    <summary lang="es">Descargue Artwork de Series, PelÃ­culas y Videoclips a su biblioteca</summary>
+    <summary lang="es">Descargue Artwork de Series, Pelí­culas y Videoclips a su biblioteca</summary>
     <summary lang="fr">Téléchargez les Artworks pour les séries TV, les films et les clip vidéo de votre médiathèque</summary>
     <summary lang="he">מורי עטיפות לתוכניות טלויזיה,סרטים,וסרטי מוסיקה בספריה שלך</summary>
     <summary lang="hu">Művészképek letöltése TV műsorok, filmek és videóklipek számára</summary>

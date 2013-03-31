@@ -24,6 +24,10 @@ msgctxt "#32009"
 msgid "Downloading"
 msgstr "Descargando"
 
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Rematado"
+
 msgctxt "#32025"
 msgid "Yes"
 msgstr "Si"
@@ -40,9 +44,21 @@ msgctxt "#32031"
 msgid "General"
 msgstr "Xeral"
 
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
 msgctxt "#32071"
 msgid "Movies"
 msgstr "Películas"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "Series de TV"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
 
 msgctxt "#32101"
 msgid "Advanced"
@@ -51,6 +67,22 @@ msgstr "Avanzado"
 msgctxt "#32121"
 msgid "Fanart"
 msgstr "Cartel"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "Cartaz"
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr "Cartazes das Tempadas"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Póster"
 
 msgctxt "#32133"
 msgid "Artwork"

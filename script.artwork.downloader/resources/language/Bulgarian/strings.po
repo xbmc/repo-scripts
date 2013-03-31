@@ -56,6 +56,10 @@ msgctxt "#32121"
 msgid "Fanart"
 msgstr "Fanart"
 
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Плакат"
+
 msgctxt "#32133"
 msgid "Artwork"
 msgstr "Изображения"

@@ -16,6 +16,74 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32006"
+msgid "Error"
+msgstr "Lỗi"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Đang tải về"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Đã xong"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Có"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Không"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Đóng"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Tổng Quan"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Phim"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Nâng cao"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Poster"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Ảnh bìa"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Chấm điểm"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Lượt bình chọn"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Dung lượng"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Đĩa"
+
 msgctxt "#32181"
 msgid "Info"
 msgstr "Thông Tin"

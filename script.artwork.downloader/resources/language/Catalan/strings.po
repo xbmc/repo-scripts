@@ -24,6 +24,10 @@ msgctxt "#32009"
 msgid "Downloading"
 msgstr "S'està baixant"
 
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Finalitzat"
+
 msgctxt "#32025"
 msgid "Yes"
 msgstr "Sí"
@@ -48,6 +52,10 @@ msgctxt "#32081"
 msgid "TV Shows"
 msgstr "Sèries de TV"
 
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Avançat"
+
 msgctxt "#32121"
 msgid "Fanart"
 msgstr "Fanart"
@@ -55,6 +63,10 @@ msgstr "Fanart"
 msgctxt "#32126"
 msgid "Logo"
 msgstr "Logotip"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Cartell"
 
 msgctxt "#32133"
 msgid "Artwork"

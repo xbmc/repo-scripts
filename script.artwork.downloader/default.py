@@ -145,6 +145,7 @@ class Main:
         self.failed_items = []
         self.download_list = []
         self.download_art_succes = False
+        self.cancelled = False
 
     ### load settings and initialise needed directories
     def initialise(self):
@@ -254,7 +255,7 @@ class Main:
         if not xbmc.abortRequested:
             # Show dialog/notification
             if self.settings.background:
-                dialog_msg('okdialog', line0 = summary_notify, line1 = provider_msg1 + ' ' + provider_msg2, background = self.settings.background)
+                dialog_msg('okdialog', line0 = summary_notify, line1 = provider_msg1 + ' ' + provider_msg2, background = self.settings.background, cancelled = self.cancelled)
             else:
                 # When chosen no in the 'yes/no' dialog execute the viewer.py and parse 'downloadreport'
                 if dialog_msg('yesno', line1 = summary, line2 = provider_msg1, line3 = provider_msg2, background = self.settings.background, nolabel = __localize__(32027), yeslabel = __localize__(32028)):
@@ -720,23 +721,52 @@ class Main:
     def _gui_mode(self):
         # Close the 'checking for artwork' dialog before opening the GUI list
         dialog_msg('close', background = self.settings.background)
-        # Create empty list and set bool to false that there is a list
-        self.GUI_type_list = []
-        imagelist = False
-        # Fill GUI art type list
-        for item in self.settings.available_arttypes:
-            if item['solo_enabled'] == 'true' and self.mediatype == item['media_type'] and self._hasimages(item['art_type']):
-                gui = item['gui_string']
-                self.GUI_type_list.append (gui)
-        # Not sure what this does again
-        if len(self.GUI_type_list) == 1:
-            self.GUI_type_list[0] = 'True'
-        # Fills imagelist with image that fit the selected imagetype
-        if (len(self.GUI_type_list) == 1) or self._choice_type():
-            imagelist = self._gui_imagelist(self.gui_selected_type)
-            # Some debug log output
-            for item in imagelist:
-                log('- Image put to GUI: %s' %item)
+        
+        self.download_arttypes = []
+        # Look for argument matching artwork types
+        for item in sys.argv:
+            for type in self.settings.available_arttypes:
+                if item == type['art_type'] and self.mediatype == type['media_type']:
+                    log('- Custom %s mode arttype: %s' %(type['media_type'],type['art_type']))
+                    self.download_arttypes.append(item)
+        
+        # If only one specified and not extrafanart/extrathumbs
+        if (len(self.download_arttypes) == 1) and not self.dbid == '' and not 'extrathumbs' in self.download_arttypes and not 'extrafanart' in self.download_arttypes:
+            imagelist = False
+            self.gui_selected_type = ''
+            for gui_arttype in self.download_arttypes:
+                self.gui_selected_type = gui_arttype
+                break
+            # Add parse the image restraints
+            if self.gui_selected_type != '':
+                for item in self.settings.available_arttypes:
+                    if self.gui_selected_type == item['art_type'] and self.mediatype == item['media_type']:
+                        self.gui_selected_filename = item['filename']
+                        self.gui_selected_msg = item['gui_string']
+                        # Get image list for that specific imagetype
+                        imagelist = self._gui_imagelist(self.gui_selected_type)
+                        # Some debug log output
+                        for item in imagelist:
+                            log('- Image put to GUI: %s' %item)
+                        break
+        else:
+            # Create empty list and set bool to false that there is a list
+            self.GUI_type_list = []
+            imagelist = False
+            # Fill GUI art type list
+            for item in self.settings.available_arttypes:
+                if item['solo_enabled'] == 'true' and self.mediatype == item['media_type'] and self._hasimages(item['art_type']):
+                    gui = item['gui_string']
+                    self.GUI_type_list.append (gui)
+            # Not sure what this does again
+            if len(self.GUI_type_list) == 1:
+                self.GUI_type_list[0] = 'True'
+            # Fills imagelist with image that fit the selected imagetype
+            if (len(self.GUI_type_list) == 1) or self._choice_type():
+                imagelist = self._gui_imagelist(self.gui_selected_type)
+                # Some debug log output
+                for item in imagelist:
+                    log('- Image put to GUI: %s' %item)
         
         # Download the selected image
         # If there's a list, send the imagelist to the selection dialog
@@ -759,7 +789,7 @@ class Main:
         # Selection was cancelled
         else:
             log('- Cancelled')
-            dialog_msg('okdialog', line1 = __localize__(32017) , line2 =  __localize__(32018))
+            self.cancelled = True
 
     # This creates the art type selection dialog. The string id is the selection constraint for what type has been chosen.
     def _choice_type(self):
@@ -793,7 +823,7 @@ class Main:
                     self.download_arttypes.append(item)
 
         # If only one specified and not extrafanart/extrathumbs
-        if (len(self.download_arttypes) == 1) and not self.medianame == '' and not 'extrathumbs' in self.download_arttypes and not 'extrafanart' in self.download_arttypes:
+        if (len(self.download_arttypes) == 1) and not self.dbid == '' and not 'extrathumbs' in self.download_arttypes and not 'extrafanart' in self.download_arttypes:
             # Get image list for that specific imagetype
             for gui_arttype in self.download_arttypes:
                 imagelist = self._gui_imagelist(gui_arttype)
@@ -817,7 +847,7 @@ class Main:
                     log('- Download succesfull')
                 else:
                     log('- Cancelled')
-                    dialog_msg('okdialog', line1 = __localize__(32017) , line2 = __localize__(32018))
+                    self.cancelled = True
             else:
                 self._download_process()
                 log('- More than 1 image available')
@@ -854,8 +884,6 @@ class Main:
 class MainGui(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self)
-        xbmc.executebuiltin('Skin.Reset(AnimeWindowXMLDialogClose)')
-        xbmc.executebuiltin('Skin.SetBool(AnimeWindowXMLDialogClose)')
         self.listing = kwargs.get('listing')
         self.selected_id = ''
 

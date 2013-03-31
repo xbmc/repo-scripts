@@ -24,6 +24,10 @@ msgctxt "#32009"
 msgid "Downloading"
 msgstr "Завантаження…"
 
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Завершено"
+
 msgctxt "#32025"
 msgid "Yes"
 msgstr "Так"
@@ -44,9 +48,17 @@ msgctxt "#32071"
 msgid "Movies"
 msgstr "Фільми"
 
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Більше"
+
 msgctxt "#32121"
 msgid "Fanart"
 msgstr "Фанарт"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Обкладинка"
 
 msgctxt "#32141"
 msgid "Language"

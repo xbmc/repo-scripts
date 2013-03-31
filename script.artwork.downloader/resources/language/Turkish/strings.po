@@ -24,6 +24,10 @@ msgctxt "#32009"
 msgid "Downloading"
 msgstr "Karşıdan yükleniyor"
 
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Tamamlandı"
+
 msgctxt "#32025"
 msgid "Yes"
 msgstr "Evet"

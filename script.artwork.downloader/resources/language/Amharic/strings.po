@@ -32,6 +32,10 @@ msgctxt "#32026"
 msgid "No"
 msgstr "አይ"
 
+msgctxt "#32027"
+msgid "Close"
+msgstr "መዝጊያ"
+
 msgctxt "#32031"
 msgid "General"
 msgstr "ባጠቃላይ"

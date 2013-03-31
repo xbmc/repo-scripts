@@ -16,6 +16,22 @@ msgstr ""
 "Language: fa_IR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32006"
+msgid "Error"
+msgstr "خطا"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "در حال دریافت"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "عمومی"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "فیلم ها"
+
 msgctxt "#32121"
 msgid "Fanart"
 msgstr "فن آرت"
@@ -31,3 +47,7 @@ msgstr "لوگو"
 msgctxt "#32128"
 msgid "Poster"
 msgstr "پوستر"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "رتبه بندی"

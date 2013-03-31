@@ -80,7 +80,8 @@ def dialog_msg(action,
                line3 = '',
                background = False,
                nolabel = __localize__(32026),
-               yeslabel = __localize__(32025)):
+               yeslabel = __localize__(32025),
+               cancelled = False):
     # Fix possible unicode errors 
     line0 = line0.encode( 'utf-8', 'ignore' )
     line1 = line1.encode( 'utf-8', 'ignore' )
@@ -114,7 +115,8 @@ def dialog_msg(action,
                 msg = line1
             else:
                 msg = line1 + ': ' + line2
-            xbmc.executebuiltin("XBMC.Notification(%s, %s, 7500, %s)" % (line0, msg, __icon__))
+            if cancelled == False:
+                xbmc.executebuiltin("XBMC.Notification(%s, %s, 7500, %s)" % (line0, msg, __icon__))
 
 # Retrieve JSON data from cache function
 def get_data(url, data_type ='json'):

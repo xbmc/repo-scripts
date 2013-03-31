@@ -208,18 +208,6 @@ msgctxt "#32058"
 msgid "Minimum fanart size: TV Shows"
 msgstr "Minimum fanart grootte: TV Series"
 
-msgctxt "#32059"
-msgid "1080"
-msgstr "1080"
-
-msgctxt "#32060"
-msgid "720"
-msgstr "720"
-
-msgctxt "#32061"
-msgid "480"
-msgstr "480"
-
 msgctxt "#32062"
 msgid "Minimum fanart size: Musicvideos"
 msgstr "Minimum fanart grootte: Muziekvideos"

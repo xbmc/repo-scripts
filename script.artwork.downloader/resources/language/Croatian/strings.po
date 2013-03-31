@@ -36,9 +36,21 @@ msgctxt "#32027"
 msgid "Close"
 msgstr "Zatvori"
 
+msgctxt "#32028"
+msgid "Report"
+msgstr "Izvješće"
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr "[I](Nakon što su promjene napravljene morate ponovno pokrenuti XBMC) [/I]"
+
 msgctxt "#32031"
 msgid "General"
 msgstr "Općenito"
+
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
 
 msgctxt "#32071"
 msgid "Movies"
@@ -47,6 +59,10 @@ msgstr "Filmovi"
 msgctxt "#32081"
 msgid "TV Shows"
 msgstr "TV Emisija"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
 
 msgctxt "#32101"
 msgid "Advanced"
@@ -59,6 +75,14 @@ msgstr "Fanart"
 msgctxt "#32122"
 msgid "Extrafanart"
 msgstr "Dodatni FanArt"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "Transparenti"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logo"
 
 msgctxt "#32128"
 msgid "Poster"
@@ -91,3 +115,23 @@ msgstr "Disk"
 msgctxt "#32181"
 msgid "Info"
 msgstr "Info"
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr "[I]www.xbmc.org [/I]"
+
+msgctxt "#32184"
+msgid "[I]fanart.tv [/I]"
+msgstr "[I]fanart.tv [/I]"
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr "[I]www.thetvdb.com [/I]"
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr "[I]www.themoviedb.org [/I]"
+
+msgctxt "#32188"
+msgid "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+msgstr "[I]paddycarey, Martijn Kaijser, putneyj [/I]"

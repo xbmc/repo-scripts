@@ -208,18 +208,6 @@ msgctxt "#32058"
 msgid "Minimum fanart size: TV Shows"
 msgstr "Tamaño mínimo fanart: Series"
 
-msgctxt "#32059"
-msgid "1080"
-msgstr "1080"
-
-msgctxt "#32060"
-msgid "720"
-msgstr "720"
-
-msgctxt "#32061"
-msgid "480"
-msgstr "480"
-
 msgctxt "#32062"
 msgid "Minimum fanart size: Musicvideos"
 msgstr "Tamaño mínimo fanart: Videoclips"
@@ -262,7 +250,7 @@ msgstr "[B]Más opciones de ajustes avanzados[/B]"
 
 msgctxt "#32103"
 msgid "Use local files"
-msgstr "-"
+msgstr "Usar archivos locales"
 
 msgctxt "#32106"
 msgid "Use XBMC pre-caching [I](caches images to thumbnails folder while downloading) [/I]"
@@ -346,7 +334,7 @@ msgstr "Resolución"
 
 msgctxt "#32146"
 msgid "Disc"
-msgstr "Disc"
+msgstr "Disco"
 
 msgctxt "#32147"
 msgid "below limit setting"

@@ -215,6 +215,8 @@ msgctxt "#32058"
 msgid "Minimum fanart size: TV Shows"
 msgstr ""
 
+#empty strings from id 32059 to 32061
+
 msgctxt "#32062"
 msgid "Minimum fanart size: Musicvideos"
 msgstr ""
