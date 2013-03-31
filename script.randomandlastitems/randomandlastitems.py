@@ -234,7 +234,7 @@ def _getEpisodesFromPlaylist ( ):
             if _file['type'] == 'tvshow':
                 _tvshows += 1
                 # Playlist return TV Shows - Need to get episodes
-                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %s, "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "studio", "mpaa", "rating", "resume", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(_file['id']))
+                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %s, "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(_file['id']))
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
                 _json_response = simplejson.loads(_json_query)
                 _episodes = _json_response.get( "result", {} ).get( "episodes" )
@@ -248,6 +248,9 @@ def _getEpisodesFromPlaylist ( ):
                         _episode["id"]=_episode['episodeid']
                         _episode["tvshowfanart"]=art.get('tvshow.fanart')
                         _episode["tvshowthumb"]=art.get('thumb')
+                        # Set MPAA and studio for all episodes
+                        _episode["mpaa"]=_file['mpaa']
+                        _episode["studio"]=_file['studio']
                         _total, _watched, _unwatched, _result = _watchedOrResume ( _total, _watched, _unwatched, _result, _episode )
                 else:
                     log("[RandomAndLastItems] ## PLAYLIST %s COULD NOT BE LOADED ##" %(PLAYLIST))

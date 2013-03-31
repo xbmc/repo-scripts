@@ -1,3 +1,7 @@
+v2.1.2
+- Fix script error on tvshow playlist
+- Also set MPAA and studio for episodes in some cases
+
 v2.1.1
 - Fix runtime property to use duration from streamdetails
 - Fix play property for albums
