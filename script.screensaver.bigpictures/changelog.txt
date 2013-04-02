@@ -1,2 +1,5 @@
-0.0.1
+0.0.2 (02.04.2013)
+ - fixed image duration
+
+0.0.1 (21.03.2013)
  - initial version

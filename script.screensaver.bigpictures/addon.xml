@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.screensaver.bigpictures" name="The Big Pictures Screensaver" version="0.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
+<addon id="script.screensaver.bigpictures" name="The Big Pictures Screensaver" version="0.0.2" provider-name="Tristan Fischer (sphere@dersphere.de)">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.bigpictures" version="1.0.1"/>
@@ -7,6 +7,11 @@
     <extension point="xbmc.ui.screensaver" library="screensaver.py" />
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
+        <language/>
+        <website></website>
+        <source>https://github.com/dersphere/script.screensaver.bigpictures</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=160347</forum>
+        <email>sphere@dersphere.de</email>
         <summary lang="en">Photojournalism Screensaver</summary>
         <description lang="en">The Image Script "The Big Pictures" as Screensaver.</description>
     </extension>
