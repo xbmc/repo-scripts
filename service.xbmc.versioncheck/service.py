@@ -169,6 +169,7 @@ def _versioncheckapt(package):
     # initial vars
     oldversion = False
     msg = ''
+    result = ''
     
     # try to import apt
     try:
@@ -180,10 +181,13 @@ def _versioncheckapt(package):
         sys.exit(0)
     apt_client = client.AptClient()
     try:
-        trans = apt_client.update_cache()
-        trans.run(reply_handler=_apttransstarted, error_handler=_apterrorhandler)
+        result = apt_client.update_cache(wait=True)
+        if (result == "exit-success"):
+            log("Finished updating the cache")
+        else:
+            log("Error updating the cache %s" %result) 
     except errors.NotAuthorizedError:
-        log("You are not allowed to update the cache!")
+        log("You are not allowed to update the cache")
         sys.exit(0)
     
     trans = apt_client.upgrade_packages([package])
@@ -215,7 +219,11 @@ def _apterrorhandler(error):
 def _upgrademessage(msg):
     # Don't show while watching a video
     while(xbmc.Player().isPlayingVideo() and not xbmc.abortRequested):
-        xbmc.sleep(500)
+        xbmc.sleep(1000)
+    i = 0
+    while(i < 5 and not xbmc.abortRequested):
+        xbmc.sleep(1000)
+        i += 1
     # Detect if it's first run and only show OK dialog + ask to disable on that
     firstrun = __addon__.getSetting("versioncheck_firstrun") != 'false'
     if firstrun and not xbmc.abortRequested:
