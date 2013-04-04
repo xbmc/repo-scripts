@@ -1,48 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Arabic language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ar/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
-    <string id="30010"></string>
-    <string id="30011"></string>
-    <string id="30012"></string>
-    <string id="30013"></string>
-    <string id="30016"></string>
-    <string id="30017"></string>
-    <string id="30018"></string>
-    <string id="30019"></string>
-    <string id="30020"></string>
-    <string id="30021"></string>
-    <string id="30022"></string>
-    <string id="30023"></string>
-    <string id="30024"></string>
-    <string id="30025"></string>
-    <string id="30030"></string>
-    <string id="30031"></string>
-    <string id="30032"></string>
-    <string id="30033"></string>
-    <string id="30034"></string>
-    <string id="30035"></string>
-    <string id="30045"></string>
-    <string id="30046"></string>
-    <string id="30047"></string>
-    <string id="30048"></string>
-    <string id="30049"></string>
-    <string id="30050"></string>
-    <string id="30051"></string>
-    <string id="30052"></string>
-    <string id="30053"></string>
-    <string id="30060"></string>
-    <string id="30061"></string>
-    <string id="30062"></string>
-    <string id="30063"></string>
-    <string id="30064"></string>
-    <string id="30065"></string>
-    <string id="30066"></string>
-    <string id="30067"></string>
-    <string id="30068"></string>
-    <string id="30069"></string>
-    <string id="30070"></string>
-    <string id="30071"></string>
-    <string id="30072"></string>
-    <string id="30073"></string>
-    <string id="30074"></string>
-    <string id="30075"></string>
+    <string id="30010">نسخ احتياطي XBMC</string>
+    <string id="30011">عام</string>
+    <string id="30012">تحديد ملف</string>
+    <string id="30013">جدولة</string>
+    <string id="30016">نسخ احتياطي</string>
+    <string id="30017">استعادة</string>
+    <string id="30018">استعراض مسار</string>
+    <string id="30019">نوع مسار</string>
+    <string id="30020">استعراض مسار خارجي</string>
+    <string id="30021">اسم مجلد النسخ الاحتياطي</string>
+    <string id="30022">تشغيل صامت</string>
+    <string id="30023">الوضع</string>
+    <string id="30024"> مسار نوع خارجي</string>
+    <string id="30025">نوع مسار خارجي</string>
+    <string id="30030">مستخدم إضافات</string>
+    <string id="30032">قاعدة البيانات</string>
+    <string id="30033">قائمة التشغيل</string>
+    <string id="30065">الاحد</string>
+    <string id="30066">الاثنين</string>
+    <string id="30067">الثلاثاء</string>
+    <string id="30068">الاربعاء</string>
+    <string id="30069">الخميس</string>
+    <string id="30070">الجمعة</string>
+    <string id="30071">السبت</string>
 </strings>

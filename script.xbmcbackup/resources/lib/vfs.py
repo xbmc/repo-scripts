@@ -11,6 +11,9 @@ APP_SECRET = utils.getSetting('dropbox_secret')
 class Vfs:
     root_path = None
 
+    def __init__(self,rootString):
+        self.set_root(rootString)
+        
     def set_root(self,rootString):
         old_root = self.root_path
         self.root_path = rootString
@@ -44,7 +47,7 @@ class Vfs:
         return True
         
 class XBMCFileSystem(Vfs):
-    
+
     def listdir(self,directory):
         return xbmcvfs.listdir(directory)
 
@@ -63,7 +66,11 @@ class XBMCFileSystem(Vfs):
 class DropboxFileSystem(Vfs):
     client = None
     
-    def __init__(self):
+    def __init__(self,rootString):
+        self.set_root(rootString)
+        self.setup()
+
+    def setup(self):
         if(APP_KEY == '' or APP_SECRET == ''):
             xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30058),utils.getString(30059))
             return
@@ -94,7 +101,6 @@ class DropboxFileSystem(Vfs):
         except:
             #this didn't work, delete the token file
             self.deleteToken()
-            
 
     def listdir(self,directory):
         if(self.client != None and self.exists(directory)):
@@ -114,6 +120,7 @@ class DropboxFileSystem(Vfs):
             
 
     def mkdir(self,directory):
+        directory = self._fix_slashes(directory)
         if(self.client != None):
             if(not self.exists(directory)):
                 self.client.file_create_folder(directory)
@@ -122,12 +129,14 @@ class DropboxFileSystem(Vfs):
             return False
 
     def rmdir(self,directory):
+        directory = self._fix_slashes(directory)
         if(self.client != None and self.exists(directory)):
             self.client.file_delete(directory)
         else:
             return False
 
     def exists(self,aFile):
+        aFile = self._fix_slashes(aFile)
         if(self.client != None):
             try:
                 meta_data = self.client.metadata(aFile)
@@ -138,7 +147,9 @@ class DropboxFileSystem(Vfs):
         else:
             return False
 
-    def put(self,source,dest):        
+    def put(self,source,dest):
+        dest = self._fix_slashes(dest)
+        
         if(self.client != None):
             f = open(source,'rb')
             try:
@@ -158,9 +169,13 @@ class DropboxFileSystem(Vfs):
             f = self.client.get_file(source).read()
             out.write(f)
             out.close()
+            return True
         else:
             return False
-        
+
+    def _fix_slashes(self,filename):
+        return filename.replace('\\','/')
+    
     def setToken(self,key,secret):
         #write the token files
         token_file = open(xbmc.translatePath(utils.data_dir() + "tokens.txt"),'w')

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- French language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fr/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
     <string id="30010">Sauvegarde XBMC</string>
     <string id="30011">Général</string>
@@ -14,12 +18,18 @@
     <string id="30023">Mode</string>
     <string id="30024">Saisir le chemin de sauvegarde</string>
     <string id="30025">Mode de saisie du chemin</string>
+    <string id="30026">Sauvegardes à conserver (0 pour tous)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox Clé</string>
+    <string id="30029">Dropbox Secret</string>
     <string id="30030">Addons de l'utilisaeur</string>
     <string id="30031">Données des addons</string>
     <string id="30032">Base de données</string>
     <string id="30033">Playliste</string>
     <string id="30034">Miniatures / Fanart</string>
     <string id="30035">Fichiers de configuration</string>
+    <string id="30036">Répertoire personnalisé 1</string>
+    <string id="30037">Répertoire personnalisé 2</string>
     <string id="30045">Erreur : chemin distant n'existe pas</string>
     <string id="30046">Démarrage</string>
     <string id="30047">Dossier Local</string>
@@ -29,6 +39,11 @@
     <string id="30051">Création de la liste des fichiers</string>
     <string id="30052">Ecriture du fichier</string>
     <string id="30053">Démarrage de la sauvegarde planifiée</string>
+    <string id="30054">Suppression de la sauvegarde</string>
+    <string id="30056">Vérifiez le journal pour vérifier l'URL de Dropbox</string>
+    <string id="30057">Cliquez sur OK s'il y est autorisé</string>
+    <string id="30058">Code développeur Dropbox nécessaire</string>
+    <string id="30059">Visit https://www.dropbox.com/developers</string>
     <string id="30060">Activer le planificateur</string>
     <string id="30061">Planifier</string>
     <string id="30062">Heure</string>
@@ -45,4 +60,5 @@
     <string id="30073">Chaque semaine</string>
     <string id="30074">Premier jour du mois</string>
     <string id="30075">Planification personnalisée</string>
+    <string id="30076">Arrêter après la sauvegarde</string>
 </strings>

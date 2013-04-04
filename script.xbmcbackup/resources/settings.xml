@@ -16,6 +16,10 @@
 		<setting id="backup_playlists" type="bool" label="30033" default="true" />
 		<setting id="backup_thumbnails" type="bool" label="30034" default="true" />
 		<setting id="backup_config" type="bool" label="30035" default="true" />
+		<setting id="custom_dir_1_enable" type="bool" label="30036" default="false" />
+		<setting id="backup_custom_dir_1" type="folder" label="30018" default="" visible="eq(-1,true)"/>
+		<setting id="custom_dir_2_enable" type="bool" label="30037" default="false" />
+		<setting id="backup_custom_dir_2" type="folder" label="30018" default="" visible="eq(-1,true)"/>
 	</category>
 	<category id="scheduling" label="30013">
 		<setting id="enable_scheduler" type="bool" label="30060" default="false" />

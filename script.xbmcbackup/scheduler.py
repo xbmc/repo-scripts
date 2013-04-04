@@ -7,11 +7,12 @@ from resources.lib.croniter import croniter
 from resources.lib.backup import XbmcBackup
 
 class BackupScheduler:
+    monitor = None
     enabled = "false"
     next_run = 0
-    settings_update_time = 0
     
     def __init__(self):
+        self.monitor = UpdateMonitor(update_method = self.settingsChanged)
         self.enabled = utils.getSetting("enable_scheduler")
 
         if(self.enabled == "true"):
@@ -20,21 +21,13 @@ class BackupScheduler:
     def setup(self):
         #scheduler was turned on, find next run time
         utils.log("scheduler enabled, finding next run time")
-        self.findNextRun(time.time(),True)
+        self.findNextRun(time.time())
         utils.log("scheduler will run again on " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
         
     def start(self):
         while(not xbmc.abortRequested):
-            current_enabled = utils.getSetting("enable_scheduler")
             
-            if(current_enabled == "true" and self.enabled == "false"):
-                #scheduler was just turned on
-                self.enabled = current_enabled
-                self.setup()
-            elif (current_enabled == "false" and self.enabled == "true"):
-                #schedule was turn off
-                self.enabled = current_enabled
-            elif(self.enabled == "true"):
+            if(self.enabled == "true"):
                 #scheduler is still on
                 now = time.time()
 
@@ -52,35 +45,35 @@ class BackupScheduler:
                         xbmc.executebuiltin('ShutDown()')
                     else:
                         #find the next run time like normal
-                        self.findNextRun(now,True)
-                else:
-                    self.findNextRun(now)
+                        self.findNextRun(now)
 
-            time.sleep(10)
+            xbmc.sleep(500)
 
-    def findNextRun(self,now,forceUpdate = False):
-        mod_time = self.settings_update_time
+    def findNextRun(self,now):
+        #find the cron expression and get the next run time
+        cron_exp = self.parseSchedule()
+
+        cron_ob = croniter(cron_exp,datetime.datetime.fromtimestamp(now))
+        new_run_time = cron_ob.get_next(float)
+
+        if(new_run_time != self.next_run):
+            self.next_run = new_run_time
+            utils.log("scheduler will run again on " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
+                
+    def settingsChanged(self):
+        current_enabled = utils.getSetting("enable_scheduler")
         
-        #check if the schedule has been modified
-        try:
-            #get the last modified time of the file
-            mod_time = os.path.getmtime(xbmc.translatePath(utils.data_dir()) + "settings.xml")
-        except:
-            #don't do anything here
-            mod_time = self.settings_update_time
+        if(current_enabled == "true" and self.enabled == "false"):
+            #scheduler was just turned on
+            self.enabled = current_enabled
+            self.setup()
+        elif (current_enabled == "false" and self.enabled == "true"):
+            #schedule was turn off
+            self.enabled = current_enabled
 
-        if(mod_time > self.settings_update_time or forceUpdate):
-            self.settings_update_time = mod_time
-            
-            #find the cron expression and get the next run time
-            cron_exp = self.parseSchedule()
-
-            cron_ob = croniter(cron_exp,datetime.datetime.fromtimestamp(now))
-            new_run_time = cron_ob.get_next(float)
-
-            if(new_run_time != self.next_run):
-                self.next_run = new_run_time
-                utils.log("scheduler will run again on " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
+        if(self.enabled == "true"):
+            #always recheck the next run time after an update
+            self.findNextRun(time.time())
 
     def parseSchedule(self):
         schedule_type = int(utils.getSetting("schedule_interval"))
@@ -100,5 +93,15 @@ class BackupScheduler:
             cron_exp = "0 " + str(hour_of_day) + " 1 * *"
 
         return cron_exp    
+
+class UpdateMonitor(xbmc.Monitor):
+    update_method = None
+
+    def __init__(self,*args, **kwargs):
+        xbmc.Monitor.__init__(self)
+        self.update_method = kwargs['update_method']
+
+    def onSettingsChanged(self):
+        self.update_method()
         
 BackupScheduler().start()

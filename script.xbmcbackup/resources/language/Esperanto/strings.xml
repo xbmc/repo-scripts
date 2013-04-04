@@ -1,48 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Esperanto language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/eo/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
 <strings>
-    <string id="30010"></string>
-    <string id="30011"></string>
-    <string id="30012"></string>
-    <string id="30013"></string>
-    <string id="30016"></string>
-    <string id="30017"></string>
-    <string id="30018"></string>
-    <string id="30019"></string>
-    <string id="30020"></string>
-    <string id="30021"></string>
-    <string id="30022"></string>
-    <string id="30023"></string>
-    <string id="30024"></string>
-    <string id="30025"></string>
-    <string id="30030"></string>
-    <string id="30031"></string>
-    <string id="30032"></string>
-    <string id="30033"></string>
-    <string id="30034"></string>
-    <string id="30035"></string>
-    <string id="30045"></string>
-    <string id="30046"></string>
-    <string id="30047"></string>
-    <string id="30048"></string>
-    <string id="30049"></string>
-    <string id="30050"></string>
-    <string id="30051"></string>
-    <string id="30052"></string>
-    <string id="30053"></string>
-    <string id="30060"></string>
-    <string id="30061"></string>
-    <string id="30062"></string>
-    <string id="30063"></string>
-    <string id="30064"></string>
-    <string id="30065"></string>
-    <string id="30066"></string>
-    <string id="30067"></string>
-    <string id="30068"></string>
-    <string id="30069"></string>
-    <string id="30070"></string>
-    <string id="30071"></string>
-    <string id="30072"></string>
-    <string id="30073"></string>
-    <string id="30074"></string>
-    <string id="30075"></string>
+    <string id="30011">Generalo</string>
+    <string id="30023">Mode</string>
+    <string id="30032">Datinbanko</string>
+    <string id="30065">Dimanĉo</string>
+    <string id="30066">Lundo</string>
+    <string id="30067">Mardo</string>
+    <string id="30068">Merkredo</string>
+    <string id="30069">Ĵaŭdo</string>
+    <string id="30070">Vendredo</string>
+    <string id="30071">Sabato</string>
 </strings>
