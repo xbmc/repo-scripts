@@ -1,3 +1,7 @@
+2.2.0
+- add exclude settings
+- add jumpback/forward after fwd or rwd based on the fwd/rwd speed (can be adjusted for each speed separately for fwd and rwd).
+
 2.1.0
 - add setting for specifying the minimum pause time before jumping back
 
