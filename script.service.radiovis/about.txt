@@ -1,0 +1,24 @@
+This service implements basic support for icecast/shoutcast (icy-url) RadioVIS visualization
+(text and image).
+The RadioVIS standard is part of the RadioDNS project
+(http://www.radiodns.org, http://www.radiodns.info) and works by querying the service records of
+the servers RadioVIS extension with the fully qualified domain name
+(FQDN) and service identifier (SID) of the icy-url to acquire topic and
+url for the correlating STOMP server, if it has been implemented.
+RadioDNS is the next step for a more feature rich radio listening
+experience, which will probably be more and more common, as multiple
+hardware manufactures are starting to add functionality for newer devices.
+
+As by now, messages (text and image) are shown as notifications, since
+containers for them are not present in the skin layouts (only possibility would be cover art and title/artist, 
+but these are too small
+to show a detailed picture
+with info on it). This prototype is primarily meant for add-on developers to 
+try out RadioVIS functionality and for XBMC developers to maybe define some space 
+for additional radio infos in the skin classes.
+
+Some of the STOMP message handling code is taken out of BBCs RadioVIS
+demo application (available at https://github.com/bbcrd/RadioVisDemo).
+
+Resolution of FM broadcasts may also be resolved with Sam Starlings pyradiodns library 
+(https://github.com/radiodns/pyradiodns), but this is not implemented right now.

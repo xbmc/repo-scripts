@@ -1,0 +1,5 @@
+TODO
+
+- Add bigger display containers for displaying the received messages(information)
+- Support for other streaming servers (ASF, Flash Audio)
+- pyradio integration for FM receivers

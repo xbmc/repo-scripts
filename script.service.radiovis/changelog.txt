@@ -1,0 +1,2 @@
+[B]Version 0.1.0 - 2013-04-02[/B]
+- Initial version, can hook up to RadioVIS stomp servers for icecast stations
