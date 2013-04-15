@@ -1,0 +1,53 @@
+Version 3.0.0
+===============
+- Frodo compatibility
+- Music videos support (use TheAudioDB.com scraper)
+- New option to only delete while not playing video
+- New option to not delete videos that are in progress
+- New option to not clean during video playback
+- New option to hide notifications during video playback
+- New option to delete the parent folder of the file being deleted, if that folder is now empty (configurable)
+- No more individual notifications, but a summary instead (see logs for more details)
+- Redesigned addon settings
+- JSON-RPC is used to find watched videos (backward compatibility with Eden is effectively lost)
+
+Version 2.0.0
+===============
+- Eden compatibility
+- Addon now runs as a service
+- Totally revamped the settings page
+- Added several new options to configure, such as delayed start and scan interval
+- Removed obsolete setting to delete files after x days in the holding folder, as the queries only take into account files that are not in the holding folder
+- Fixed a bug in settings that disallowed users to disable expiration checks
+- Fixed disk space checking for Windows
+- Enhanced queries used to select files to be deleted
+- Updated text strings
+- More more descriptive notifications and logging
+- Dutch language support
+
+Version 1.3.5
+===============
+- Bug fixes
+
+Version 1.2.0
+===============
+- Added option to delete based on movie/episode rating
+- Added option to movie to holding folder instead of deleting
+- Code cleanup
+
+Version 1.1.2
+===============
+- Fixed file naming conventions
+- Updated contact details
+- Fixed autoStart method call
+
+Version 1.1.0
+===============
+- Almost entire rewrite of script
+- Created service loop instead of relying on AlarmClock
+- Setting changes will now be detected by the running service
+- Removed 'delete only if watched' option and instead will ONLY delete watched files
+
+Version 1.0.0
+===============
+- Intial version

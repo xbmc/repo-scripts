@@ -1,0 +1,66 @@
+<strings>
+    <!-- Tabbladen -->
+    <string id="32100">Acties</string>
+    <string id="32200">Frequentie</string>
+    <string id="32300">Voorwaarden</string>
+    <string id="32400">Meldingen</string>
+
+    <!-- Actiestabblad -->
+    <string id="32101">[B]Welke video's wil je verwijderen?[/B]</string>
+
+    <string id="32102">[B]Activeer File Cleaner[/B]</string>
+
+    <string id="32103">Verwijder video's [I]permanent [/I]</string>
+    <string id="32104">[I]Selecteer een map waar bekeken video's bewaard worden[/I]</string>
+    <string id="32105">Locatie bewaarmap</string>
+    <string id="32106">Maak submappen aan (bv. [B]..\Artiest[/B], [B]..\Film (Jaar)[/B] en [B]..\Serie\Seizoen xx[/B])</string>
+
+    <string id="32107">Verwijder films</string>
+    <string id="32108">Verwijder TV series</string>
+    <string id="32109">Verwijder videoclips</string>
+
+    <string id="32110">XBMC videobibliotheek opschonen na schoonmaken</string>
+    <string id="32111">Verwijder lege mappen na schoonmaken</string>
+    <string id="32112">Negeer bestanden met de volgende extensies (scheiden met komma's)</string>
+
+    <!-- Frequentietabblad -->
+    <string id="32201">[B]Wanneer moeten bekeken videos verwijderd worden?[/B]</string>
+
+    <string id="32202">Wachttijd bij opstarten (in minuten)</string>
+    <string id="32203">Scan-interval (in minuten)</string>
+
+    <string id="32204">Maak niet schoon als er video afgespeeld wordt</string>
+
+    <string id="32205">Start opschonen zodra afspelen stopt</string>
+
+    <!-- Voorwaardentabblad -->
+    <string id="32301">[B]Aan welke voorwaarden moet een bekeken video voldoen voor hij verwijderd wordt?[/B]</string>
+
+    <string id="32302">Verwijder video's pas een aantal dagen na bekijken</string>
+    <string id="32303">Aantal dagen waarna een bestand als verlopen wordt beschouwd</string>
+    
+    <string id="32304">Verwijder alleen video's met een laag cijfer</string>
+    <string id="32305">[I]Let op: videoclips hebben geen cijfers en negeren deze instellingen [/I]</string>
+    <string id="32306">Verwijder video's met een cijfer lager dan</string>
+    <string id="32307">Negeer video's zonder cijfer</string>
+
+    <string id="32308">Verwijder video's pas bij te weinig vrije schrijfruimte</string>
+    <string id="32309">Minimaal percentage vrije schijfruimte</string>
+    <string id="32310">Locatie om te controleren op vrije schijfruimte</string>
+    
+    <string id="32311">Verwijder geen video's die halverwege gestopt zijn</string>
+    <string id="32312">[I]Videoclips onthouden niet tot hoever ze afgespeeld zijn en negeren dit [/I]</string>
+
+    <!-- Meldingentabblad -->
+    <string id="32401">[B]Hoeveel informatie wil je krijgen?[/B]</string>
+
+    <string id="32402">Toon meldingen</string>
+    <string id="32403">Toon geen meldingen als er video afgespeeld wordt</string>
+
+    <string id="32404">Toon debuginformatie</string>
+
+    <!-- Gelokaliseerde teksten voor XBMC meldingen -->
+    <string id="32511">Fout bij lezen van harde schijf. Controleer de instellingen.</string>
+    <string id="32512">Schijfruimte kon niet worden gecontroleerd. Toegang geweigerd.</string>
+    <string id="32513">Schijfruimte kon niet worden gecontroleerd. Het opgegeven pad bestaat niet.</string>
+</strings>

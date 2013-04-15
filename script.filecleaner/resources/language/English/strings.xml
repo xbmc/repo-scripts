@@ -1,0 +1,66 @@
+<strings>
+    <!-- Options Sections -->
+    <string id="32100">Actions</string>
+    <string id="32200">Frequency</string>
+    <string id="32300">Conditions</string>
+    <string id="32400">Notifications</string>
+
+    <!-- Actions section -->
+    <string id="32101">[B]Which videos do you want to delete?[/B]</string>
+
+    <string id="32102">[B]Enable File Cleaner[/B]</string>
+
+    <string id="32103">Delete videos [I]permanently [/I]</string>
+    <string id="32104">[I]Please specify where to store watched videos [/I]</string>
+    <string id="32105">Holding folder location</string>
+    <string id="32106">Create subdirectories (i.e. [B]..\Artist[/B], [B]..\Movie (Year)[/B] and [B]..\Show\Season xx[/B])</string>
+
+    <string id="32107">Delete movies</string>
+    <string id="32108">Delete TV shows</string>
+    <string id="32109">Delete music videos</string>
+
+    <string id="32110">Clean XBMC video library after cleaning</string>
+    <string id="32111">Delete empty folders after cleaning</string>
+    <string id="32112">Ignore files with the following extensions (separate with commas)</string>
+
+    <!-- Frequency section -->
+    <string id="32201">[B]When should watched videos be deleted?[/B]</string>
+
+    <string id="32202">Delayed start (in minutes)</string>
+    <string id="32203">Scan interval (in minutes)</string>
+
+    <string id="32204">Do not clean during video playback</string>
+
+    <string id="32205">Start cleaning right after playback stops</string>
+
+    <!-- Conditions section -->
+    <string id="32301">[B]Which conditions must be met before a watched video is deleted?[/B]</string>
+
+    <string id="32302">Wait a certain number of days after watching before deleting</string>
+    <string id="32303">Days after which a video is considerd to have expired</string>
+    
+    <string id="32304">Only delete videos with low ratings</string>
+    <string id="32305">[I]Note that music videos do not have ratings and ignore these settings [/I]</string>
+    <string id="32306">Delete a video with a rating lower than</string>
+    <string id="32307">Ignore videos without rating</string>
+
+    <string id="32308">Only delete videos if low on disk space</string>
+    <string id="32309">Minimum percentage of free disk space</string>
+    <string id="32310">Path to check for free disk space</string>
+
+    <string id="32311">Do not delete videos that are still in progress</string>
+    <string id="32312">[I]Note that music videos cannot be partially played and will ignore this [/I]</string>
+
+    <!-- Notifications section -->
+    <string id="32401">[B]How much information do you want to get?[/B]</string>
+
+    <string id="32402">Show notifications</string>
+    <string id="32403">Do not show notifications during video playback</string>
+
+    <string id="32404">Enable debug messages</string>
+    
+    <!-- Localization strings for XBMC notifications -->
+    <string id="32511">Error reading hard disk. Please check your settings.</string>
+    <string id="32512">Could not check disk space. Access denied.</string>
+    <string id="32513">Could not check disk space. Path does not exist.</string>
+</strings>
