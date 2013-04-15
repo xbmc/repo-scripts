@@ -43,7 +43,7 @@ class Main:
             elif sys.argv[0] and sys.argv[1] == 'started':
                 if xbmc.getCondVisibility('System.Platform.Linux'):
                     packages = ['xbmc']
-                    _versionchecklinux(packages)
+                    # _versionchecklinux(packages)
                 else:
                     oldversion, msg = _versioncheck()
                     if oldversion:
