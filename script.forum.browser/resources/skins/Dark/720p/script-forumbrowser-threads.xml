@@ -56,21 +56,21 @@
 				<description>textarea</description>
 				<posx>40</posx>
 				<posy>22</posy>
-				<width>110</width>
+				<width>200</width>
 				<height>40</height>
 				<font>ForumBrowser-font13</font>
 				<textcolor>black</textcolor>
 				<aligny>center</aligny>
 				<align>center</align>
-				<label>[B]Threads[/B]</label>
+				<label>[B]$ADDON[script.forum.browser 32911][/B]</label>
 				<wrapmultiline>true</wrapmultiline>
 			</control>
       
 			<control type="label" id="104">
 				<description>Topic</description>
-				<posx>160</posx>
+				<posx>250</posx>
 				<posy>14</posy>
-				<width>720</width>
+				<width>630</width>
 				<height>60</height>
 				<font>ForumBrowser-font13</font>
 				<textcolor>black</textcolor>
@@ -191,7 +191,7 @@
 					<focusedcolor>FF000000</focusedcolor>
 					<aligny>center</aligny>
 					<align>center</align>
-					<label>[B]$LOCALIZE[SCRIPT3010][/B]</label>
+					<label>[B]$ADDON[script.forum.browser 32910][/B]</label>
 					<colordiffuse>FFFF0000</colordiffuse>
 					<pulseonselect>false</pulseonselect>
 					<texturefocus border="20">forum-browser-dark-white-trans-boxr.png</texturefocus>
@@ -420,29 +420,57 @@
 						<info>ListItem.Label</info>
 						<visible>StringCompare(ListItem.Director,me)</visible>
 					</control>
+					
 					<control type="label">
 						<posx>224</posx>
 						<posy>0</posy>
-						<width>989</width>
+						<width>338</width>
 						<height>38</height>
 						<font>ForumBrowser-font13</font>
 						<aligny>center</aligny>
 						<textcolor>FFCCCCCC</textcolor>
 						<align>left</align>
 						<info>ListItem.Label2</info>
-						<visible>StringCompare(ListItem.property(unread),)</visible>
+						<visible>StringCompare(ListItem.property(unread),) + Control.IsVisible(400)</visible>
 					</control>
 					<control type="label">
 						<posx>224</posx>
 						<posy>0</posy>
-						<width>989</width>
+						<width>338</width>
 						<height>38</height>
 						<font>ForumBrowser-font13</font>
 						<aligny>center</aligny>
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<label>[B]$INFO[ListItem.Label2][/B]</label>
-						<visible>StringCompare(ListItem.property(unread),unread)</visible>
+						<visible>StringCompare(ListItem.property(unread),unread) + Control.IsVisible(400)</visible>
+					</control>
+					<control type="group">
+						<visible>!Control.IsVisible(400)</visible>
+						<control type="label">
+							<posx>224</posx>
+							<posy>0</posy>
+							<width>989</width>
+							<height>38</height>
+							<font>ForumBrowser-font13</font>
+							<aligny>center</aligny>
+							<textcolor>FFCCCCCC</textcolor>
+							<align>left</align>
+							<info>ListItem.Label2</info>
+							<visible>StringCompare(ListItem.property(unread),)</visible>
+						</control>
+						<control type="label">
+							<posx>224</posx>
+							<posy>0</posy>
+							<width>989</width>
+							<height>38</height>
+							<font>ForumBrowser-font13</font>
+							<aligny>center</aligny>
+							<textcolor>white</textcolor>
+							<align>left</align>
+							<label>[B]$INFO[ListItem.Label2][/B]</label>
+							<visible>StringCompare(ListItem.property(unread),unread)</visible>
+						</control>
 					</control>
 				</focusedlayout>
 			</control>
@@ -467,6 +495,34 @@
 				</control>
 			</control>
 
+		</control>
+		<control type="group"  id="400">
+			<visible>Player.Playing + Player.HasVideo + !StringCompare(Window(10000).Property(ForumBrowser_hidePNP),1)</visible>
+			<posx>583</posx>
+			<posy>152</posy>
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-10</posy>
+				<width>700</width>
+				<height>430</height>
+				<texture border="30">forum-browser-dark-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>660</width>
+				<height>400</height>
+				<texture border="20">forum-browser-dark-black-box.png</texture>
+			</control>
+			<control type="videowindow">
+				<description>PIP</description>
+				<posx>10</posx>
+				<posy>20</posy>
+				<width>640</width>
+				<height>360</height>
+				<visible>true</visible>
+			</control>
 		</control>
 	</controls>
 </window>

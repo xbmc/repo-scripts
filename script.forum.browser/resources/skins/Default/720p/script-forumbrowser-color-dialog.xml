@@ -72,7 +72,7 @@
 				<aligny>center</aligny>
 				<align>center</align>
 				<wrapmultiline>true</wrapmultiline>
-				<label>Header Color</label>
+				<label>$ADDON[script.forum.browser 32934]</label>
 			</control>
 
 			<control type="button" id="110">
@@ -365,7 +365,7 @@
 					<textcolor>white</textcolor>
 					<aligny>center</aligny>
 					<align>center</align>
-					<label>All</label>
+					<label>$ADDON[script.forum.browser 32935]</label>
 				</control>
 				
 				<control type="button" id="156">
@@ -652,7 +652,7 @@
 					<visible>true</visible>
 					<font>font13</font>
 					<align>center</align>
-					<label>$LOCALIZE[SCRIPT3013]</label>
+					<label>$ADDON[script.forum.browser 32913]</label>
 					<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
 					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
 					<textcolor>black</textcolor>

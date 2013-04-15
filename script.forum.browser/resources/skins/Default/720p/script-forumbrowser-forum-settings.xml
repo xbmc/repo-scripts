@@ -1,0 +1,535 @@
+<window>
+	<defaultcontrol>320</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>245</posx>
+			<posy>110</posy>
+			<control type="image"  id="100">
+				<description>shadow</description>
+				<posx>-30</posx>
+				<posy>-60</posy>
+				<width>840</width>
+				<height>580</height>
+				<texture border="30">forum-browser-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>-10</posx>
+				<posy>-40</posy>
+				<width>800</width>
+				<height>540</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FF333333</colordiffuse>
+			</control>
+			<control type="label" id="250">
+				<posx>10</posx>
+				<posy>-35</posy>
+				<width>380</width>
+				<height>38</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>white</textcolor>
+				<align>center</align>
+				<label>[B]$ADDON[script.forum.browser 32928][/B]</label>
+			</control>
+			<control type="image">
+				<posx>410</posx>
+				<posy>-20</posy>
+				<width>370</width>
+				<height>500</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+			</control>
+			<control type="textbox" id="310">
+				<posx>420</posx>
+				<posy>-10</posy>
+				<width>350</width>
+				<height>480</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>black</textcolor>
+				<align>left</align>
+				<info>Container(320).ListItem.Property(help)</info>
+			</control>
+			
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>458</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FF999999</colordiffuse>
+			</control>
+			
+			<control type="button" id="100">
+				<description>OK</description>
+				<onleft>101</onleft>
+				<onright>101</onright>
+				<onup>320</onup>
+				<ondown>320</ondown>
+				<posx>20</posx>
+				<posy>435</posy>
+				<width>170</width>
+				<height>40</height>
+				<visible>true</visible>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>ForumBrowser-font13</font>
+				<align>center</align>
+				<label>$ADDON[script.forum.browser 32938]</label>
+				<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
+				<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+				<textcolor>black</textcolor>
+				<disabledcolor>60000000</disabledcolor>
+				<focusedcolor>white</focusedcolor>
+			</control>
+			<control type="button" id="101">
+				<description>Cancel</description>
+				<onleft>100</onleft>
+				<onright>100</onright>
+				<onup>320</onup>
+				<ondown>320</ondown>
+				<posx>210</posx>
+				<posy>435</posy>
+				<width>170</width>
+				<height>40</height>
+				<visible>true</visible>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>ForumBrowser-font13</font>
+				<align>center</align>
+				<label>$ADDON[script.forum.browser 32939]</label>
+				<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
+				<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+				<textcolor>black</textcolor>
+				<disabledcolor>60000000</disabledcolor>
+				<focusedcolor>white</focusedcolor>
+			</control>
+				
+			<!-- ** Required ** Do not change <id> or <type> -->
+			<control type="list" id="320">
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>380</width>
+				<height>430</height>
+				<onleft>101</onleft>
+				<onright>100</onright>
+				<onup>100</onup>
+				<ondown>100</ondown>
+				<viewtype label="535">list</viewtype>
+				<pagecontrol>121</pagecontrol>
+				<scrolltime>200</scrolltime>
+				<itemlayout height="38">
+					<control type="group">
+						<visible>StringCompare(ListItem.Property(value_type),text)</visible>						
+						<control type="label">
+							<posx>10</posx>
+							<posy>0</posy>
+							<width>170</width>
+							<height>38</height>
+							<font>ForumBrowser-font13</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<align>left</align>
+							<label>[B]$INFO[ListItem.Label][/B]</label>
+						</control>
+						<control type="label">
+							<posx>350</posx>
+							<posy>0</posy>
+							<width>160</width>
+							<height>38</height>
+							<font>ForumBrowser-font13</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<align>right</align>
+							<label>$INFO[ListItem.Label2]</label>
+						</control>	
+					</control>
+					<control type="group">
+						<visible>StringCompare(ListItem.Property(value_type),boolean)</visible>						
+						<control type="label">
+							<posx>10</posx>
+							<posy>0</posy>
+							<width>170</width>
+							<height>38</height>
+							<font>ForumBrowser-font13</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<align>left</align>
+							<label>[B]$INFO[ListItem.Label][/B]</label>
+						</control>
+						<control type="image">
+							<posx>334</posx>
+							<posy>11</posy>
+							<width>16</width>
+							<height>16</height>
+							<texture>forum-browser-logged-in.png</texture>
+							<colordiffuse>FFAAAAAA</colordiffuse>
+							<visible>StringCompare(ListItem.Label2,booleanFalse)</visible>
+						</control>
+						<control type="image">
+							<posx>334</posx>
+							<posy>11</posy>
+							<width>16</width>
+							<height>16</height>
+							<texture>forum-browser-logged-in.png</texture>
+							<colordiffuse>FF00FF00</colordiffuse>
+							<visible>StringCompare(ListItem.Label2,booleanTrue)</visible>
+						</control>
+					</control>
+					<control type="group">
+						<visible>StringCompare(ListItem.Property(value_type),webimage)</visible>						
+						<control type="label">
+							<posx>10</posx>
+							<posy>0</posy>
+							<width>170</width>
+							<height>38</height>
+							<font>ForumBrowser-font13</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<align>left</align>
+							<label>[B]$INFO[ListItem.Label][/B]</label>
+						</control>
+						<control type="image">
+							<posx>190</posx>
+							<posy>1</posy>
+							<width>150</width>
+							<height>36</height>
+							<aspectratio align="right">keep</aspectratio>
+							<texture>$INFO[ListItem.Property(value)]</texture>
+						</control>	
+					</control>
+					<control type="group">
+						<visible>StringCompare(ListItem.Property(value_type),color)</visible>						
+						<control type="label">
+							<posx>10</posx>
+							<posy>0</posy>
+							<width>170</width>
+							<height>38</height>
+							<font>ForumBrowser-font13</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<align>left</align>
+							<label>[B]$INFO[ListItem.Label][/B]</label>
+						</control>
+						<control type="image">
+							<posx>190</posx>
+							<posy>1</posy>
+							<width>150</width>
+							<height>36</height>
+							<aspectratio>stretch</aspectratio>
+							<texture>$INFO[ListItem.Label2]</texture>
+						</control>	
+					</control>
+					<control type="group">
+						<visible>StringCompare(ListItem.Property(value_type),function)</visible>						
+						<control type="label">
+							<posx>10</posx>
+							<posy>0</posy>
+							<width>320</width>
+							<height>38</height>
+							<font>ForumBrowser-font13</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<align>left</align>
+							<label>[B]$INFO[ListItem.Label][/B]</label>
+						</control>	
+					</control>
+					
+					<control type="image">
+						<posx>20</posx>
+						<posy>37</posy>
+						<width>320</width>
+						<height>2</height>
+						<texture>forum-browser-white-box.png</texture>
+						<colordiffuse>FF222222</colordiffuse>
+						<visible>StringCompare(ListItem.Property(separator),separator)</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout height="38">
+								
+					<control type="group">
+						<visible>Control.HasFocus(320)</visible>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>360</width>
+							<height>38</height>
+							<texture border="20">forum-browser-grey-boxr.png</texture>
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),text)</visible>
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>170</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>white</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="label">
+								<posx>350</posx>
+								<posy>0</posy>
+								<width>160</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>white</textcolor>
+								<align>right</align>
+								<label>$INFO[ListItem.Label2]</label>
+							</control>
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),boolean)</visible>						
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>170</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>white</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="image">
+								<posx>334</posx>
+								<posy>11</posy>
+								<width>16</width>
+								<height>16</height>
+								<texture>forum-browser-logged-in.png</texture>
+								<colordiffuse>FFAAAAAA</colordiffuse>
+								<visible>StringCompare(ListItem.Label2,booleanFalse)</visible>
+							</control>
+							<control type="image">
+								<posx>334</posx>
+								<posy>11</posy>
+								<width>16</width>
+								<height>16</height>
+								<texture>forum-browser-logged-in.png</texture>
+								<colordiffuse>FF00FF00</colordiffuse>
+								<visible>StringCompare(ListItem.Label2,booleanTrue)</visible>
+							</control>
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),webimage)</visible>						
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>170</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>white</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="image">
+								<posx>190</posx>
+								<posy>1</posy>
+								<width>150</width>
+								<height>36</height>
+								<aspectratio align="right">keep</aspectratio>
+								<texture>$INFO[ListItem.Property(value)]</texture>
+							</control>	
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),color)</visible>						
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>170</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>white</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="image">
+								<posx>190</posx>
+								<posy>1</posy>
+								<width>150</width>
+								<height>36</height>
+								<aspectratio>stretch</aspectratio>
+								<texture>$INFO[ListItem.Label2]</texture>
+							</control>	
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),function)</visible>						
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>320</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>white</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>	
+						</control>
+					</control>
+					
+					<control type="group">
+						<visible>!Control.HasFocus(320)</visible>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>360</width>
+							<height>38</height>
+							<texture border="20">forum-browser-white-boxr.png</texture>
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),text)</visible>
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>170</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>black</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="label">
+								<posx>350</posx>
+								<posy>0</posy>
+								<width>160</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>black</textcolor>
+								<align>right</align>
+								<label>$INFO[ListItem.Label2]</label>
+							</control>
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),boolean)</visible>						
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>170</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>black</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="image">
+								<posx>334</posx>
+								<posy>11</posy>
+								<width>16</width>
+								<height>16</height>
+								<texture>forum-browser-logged-in.png</texture>
+								<colordiffuse>FFAAAAAA</colordiffuse>
+								<visible>StringCompare(ListItem.Label2,booleanFalse)</visible>
+							</control>
+							<control type="image">
+								<posx>334</posx>
+								<posy>11</posy>
+								<width>16</width>
+								<height>16</height>
+								<texture>forum-browser-logged-in.png</texture>
+								<colordiffuse>FF00FF00</colordiffuse>
+								<visible>StringCompare(ListItem.Label2,booleanTrue)</visible>
+							</control>
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),webimage)</visible>						
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>170</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>black</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="image">
+								<posx>190</posx>
+								<posy>1</posy>
+								<width>150</width>
+								<height>36</height>
+								<aspectratio align="right">keep</aspectratio>
+								<texture>$INFO[ListItem.Property(value)]</texture>
+							</control>	
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),color)</visible>						
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>170</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>black</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="image">
+								<posx>190</posx>
+								<posy>1</posy>
+								<width>150</width>
+								<height>36</height>
+								<aspectratio>stretch</aspectratio>
+								<texture>$INFO[ListItem.Label2]</texture>
+							</control>	
+						</control>
+						<control type="group">
+							<visible>StringCompare(ListItem.Property(value_type),function)</visible>						
+							<control type="label">
+								<posx>10</posx>
+								<posy>0</posy>
+								<width>320</width>
+								<height>38</height>
+								<font>ForumBrowser-font13</font>
+								<aligny>center</aligny>
+								<textcolor>black</textcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>	
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>360</width>
+						<height>38</height>
+						<texture border="20">forum-browser-black-outline.png</texture>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="group">
+				<posx>380</posx>
+				<posy>10</posy>
+				<control type="scrollbar" id="121">
+					<description>scroll bar indicator for lists</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>4</width>
+					<height>430</height>
+					<onleft>320</onleft>
+					<onright>320</onright>
+					<texturesliderbackground border="1">-</texturesliderbackground>
+					<texturesliderbar border="1">forum-browser-panel-full.png</texturesliderbar>
+					<texturesliderbarfocus border="1">forum-browser-panel-full.png</texturesliderbarfocus>
+					<textureslidernib>-</textureslidernib>
+					<textureslidernibfocus>-</textureslidernibfocus>
+					<orientation>vertical</orientation>
+					<showonepage>false</showonepage>
+					<visible>Control.IsVisible(320)</visible>
+					<colordiffuse>FF555555</colordiffuse>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

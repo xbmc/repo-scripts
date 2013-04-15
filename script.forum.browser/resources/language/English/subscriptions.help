@@ -1,8 +1,8 @@
 Subscriptions Window Help
 @item:subslist=Subscriptions List
 If the item is a forum, it will say 'Forum' on the left of the title and have an icon.
-if the item is a thread, the thread starters name will be to to the left of the title.
-At the bottom is either the description or the name of the user who last posted, dependeng on what information is available.
+if the item is a thread, the thread starters name will be to the left of the title.
+At the bottom is either the description or the name of the user who last posted, depending on what information is available.
 
 The context menu gives options to subscribe to/unsubscribe from the selected thread/forum.
 Pressing right or left will select the page button at the top.

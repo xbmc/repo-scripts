@@ -8,6 +8,7 @@
 		<posy>0</posy>
 	</coordinates>
 	<controls>
+		<control type="group" id="199">
 		<control type="group" id="250">
 			<posx>100</posx>
 			<posy>50</posy>
@@ -264,7 +265,7 @@
 					<aligny>center</aligny>
 					<textcolor>white</textcolor>
 					<align>left</align>
-					<label>Functionality</label>
+					<label>$ADDON[script.forum.browser 32936]</label>
 				</control>
 				<control type="label">
 					<posx>100</posx>
@@ -275,7 +276,7 @@
 					<aligny>center</aligny>
 					<textcolor>white</textcolor>
 					<align>left</align>
-					<label>Accuracy</label>
+					<label>$ADDON[script.forum.browser 32937]</label>
 				</control>
 				
 				<visible>
@@ -293,6 +294,7 @@
 				<align>center</align>
 				<info>Container(120).ListItem.Label2</info>
 			</control>
+		</control>
 		</control>
 	</controls>
 </window>

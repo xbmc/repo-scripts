@@ -1,0 +1,671 @@
+<window>
+	<defaultcontrol>127</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>forum-browser-video-black.png</texture>
+		</control>
+		
+		<control type="image">
+			<description>Menu Background</description>
+			<posx>10</posx>
+			<posy>10</posy>
+			<width>290</width>
+			<height>700</height>
+			<texture border="10">forum-browser-video-box.png</texture>
+			<visible>Control.IsVisible(115)</visible>
+		</control>
+		
+		<control type="image">
+			<description>Menu Background</description>
+			<posx>10</posx>
+			<posy>10</posy>
+			<width>1260</width>
+			<height>700</height>
+			<texture border="10">forum-browser-video-box.png</texture>
+			<visible>!Control.IsVisible(115)</visible>
+		</control>
+		
+		<control type="image">
+			<description>Info Area Background</description>
+			<posx>10</posx>
+			<posy>560</posy>
+			<width>1260</width>
+			<height>150</height>
+			<texture border="10">forum-browser-video-box.png</texture>
+			<visible>Control.IsVisible(115)</visible>
+		</control>
+		
+		<control type="label"  id="122">
+			<posx>-10</posx>
+			<posy>-10</posy>
+			<width>5</width>
+			<height>5</height>
+		</control>
+		
+		<control type="textbox" id="124">
+			<visible>Control.isVisible(115)</visible>
+			<posx>20</posx>
+			<posy>560</posy>
+			<width>1240</width>
+			<height>150</height>
+			<pagecontrol>123</pagecontrol>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<font>ForumBrowser-font12</font>
+			<scroll>true</scroll>
+			<textcolor>white</textcolor>
+			<visible>true</visible>
+			<label>$INFO[Control.GetLabel(122)]</label>
+		</control>
+		
+		<control type="textbox" id="125">
+			<visible>!Control.isVisible(115)</visible>
+			<posx>20</posx>
+			<posy>70</posy>
+			<width>1240</width>
+			<height>640</height>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<font>ForumBrowser-font13</font>
+			<scroll>true</scroll>
+			<textcolor>white</textcolor>
+			<visible>true</visible>
+			<pagecontrol>126</pagecontrol>
+			<label>$INFO[Control.GetLabel(122)]</label>
+		</control>
+		
+		<control type="group">
+			<visible>Control.isVisible(115)</visible>
+			<posx>20</posx>
+			<posy>50</posy>
+			<control type="image" id="102">
+				<description>Avatar</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>80</height>
+				<visible>false</visible>
+			</control>
+			<control type="image">
+				<description>Avatar</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>80</width>
+				<height>80</height>
+				<texture fallback="forum-browser-video-avatar-none.png">$INFO[Window.Property(avatar)]</texture>
+			</control>
+			<control type="label" id="105">
+				<description>Date</description>
+				<posx>0</posx>
+				<posy>90</posy>
+				<width>270</width>
+				<height>22</height>
+				<font>ForumBrowser-font10</font>
+				<textcolor>white</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+			</control>
+			<control type="label">
+				<description>Post Title - Loading Status</description>
+				<posx>0</posx>
+				<posy>110</posy>
+				<width>270</width>
+				<height>40</height>
+				<font>ForumBrowser-font10</font>
+				<textcolor>white</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+				<wrapmultiline>true</wrapmultiline>
+				<label>$INFO[Control.GetLabel(104)]</label>
+			</control>
+			<control type="label">
+				<description>Extras</description>
+				<posx>0</posx>
+				<posy>160</posy>
+				<width>270</width>
+				<height>330</height>
+				<font>ForumBrowser-font12</font>
+				<textcolor>white</textcolor>
+				<aligny>top</aligny>
+				<align>left</align>
+				<wrapmultiline>true</wrapmultiline>
+				<label>$INFO[Window.Property(extras)]</label>
+			</control>
+		</control>
+		
+		<control type="image">
+			<description>Edge Mask</description>
+			<posx>-10</posx>
+			<posy>-10</posy>
+			<width>1300</width>
+			<height>740</height>
+			<texture border="30">forum-browser-video-edge-mask.png</texture>
+		</control>
+		
+		<control type="group" id="127">
+			<defaultcontrol>123</defaultcontrol>
+			<control type="scrollbar" id="123">
+				<description>Message Scrollbar</description>
+				<posx>-1</posx>
+				<posy>565</posy>
+				<width>11</width>
+				<height>140</height>
+				<onleft>147</onleft>
+				<onright>149</onright>
+				<onup>123</onup>
+				<ondown>123</ondown>
+				<texturesliderbackground>-</texturesliderbackground>
+				<texturesliderbar>forum-browser-video-white.png</texturesliderbar>
+				<texturesliderbarfocus>forum-browser-video-white.png</texturesliderbarfocus>
+				<textureslidernib>-</textureslidernib>
+				<textureslidernibfocus>-</textureslidernibfocus>
+				<orientation>vertical</orientation>
+				<showonepage>true</showonepage>
+				<colordiffuse>FF224466</colordiffuse>
+				<visible>Control.IsVisible(124)</visible>
+			</control>
+			
+			<control type="scrollbar" id="126">
+				<description>Message Scrollbar</description>
+				<posx>-1</posx>
+				<posy>40</posy>
+				<width>11</width>
+				<height>665</height>
+				<onleft>147</onleft>
+				<onright>149</onright>
+				<onup>126</onup>
+				<ondown>126</ondown>
+				<texturesliderbackground>-</texturesliderbackground>
+				<texturesliderbar>forum-browser-video-white.png</texturesliderbar>
+				<texturesliderbarfocus>forum-browser-video-white.png</texturesliderbarfocus>
+				<textureslidernib>-</textureslidernib>
+				<textureslidernibfocus>-</textureslidernibfocus>
+				<orientation>vertical</orientation>
+				<showonepage>true</showonepage>
+				<colordiffuse>FF224466</colordiffuse>
+				<visible>Control.IsVisible(125)</visible>
+			</control>
+		</control>
+		
+		<control type="image">
+			<description>Outline</description>
+			<posx>10</posx>
+			<posy>560</posy>
+			<width>1260</width>
+			<height>150</height>
+			<texture border="10">forum-browser-video-box-outline.png</texture>
+			<visible>Control.isVisible(115)</visible>
+		</control>
+		
+		<control type="image">
+			<description>Outline</description>
+			<posx>10</posx>
+			<posy>10</posy>
+			<width>1260</width>
+			<height>700</height>
+			<texture border="10">forum-browser-video-box-outline.png</texture>
+			<visible>!Control.isVisible(115)</visible>
+		</control>
+		
+		<control type="image">
+			<description>Menu Indicator Background</description>
+			<posx>-10</posx>
+			<posy>10</posy>
+			<width>310</width>
+			<height>30</height>
+			<texture border="10">forum-browser-video-box-header.png</texture>
+			<visible>Control.IsVisible(115)</visible>
+		</control>
+		
+		<control type="group">
+			<visible>!Control.IsVisible(115)</visible>
+			<posx>310</posx>
+			<posy>14</posy>
+			<width>950</width>
+			<height>22</height>
+			<control type="image">
+				<description>Menu Indicator Background</description>
+				<posx>-320</posx>
+				<posy>-4</posy>
+				<width>1280</width>
+				<height>60</height>
+				<texture border="10">forum-browser-video-box-header.png</texture>
+			</control>
+			<control type="image">
+				<description>Menu Indicator Background</description>
+				<posx>-320</posx>
+				<posy>-4</posy>
+				<width>310</width>
+				<height>30</height>
+				<texture flipy="true" border="10">forum-browser-video-box-header.png</texture>
+			</control>
+			<control type="image">
+				<description>Avatar</description>
+				<posx>0</posx>
+				<posy>3</posy>
+				<width>44</width>
+				<height>44</height>
+				<texture fallback="forum-browser-video-avatar-none.png">$INFO[Window.Property(avatar)]</texture>
+			</control>
+			<control type="image">
+				<description>Logged In</description>
+				<posx>50</posx>
+				<posy>28</posy>
+				<width>20</width>
+				<height>20</height>
+				<texture>forum-browser-video-logged-in.png</texture>
+				<colordiffuse>FF00FF00</colordiffuse>
+				<visible>StringCompare(Window.Property(online),1)</visible>
+			</control>
+			<control type="image">
+				<description>Logged In</description>
+				<posx>50</posx>
+				<posy>28</posy>
+				<width>20</width>
+				<height>20</height>
+				<texture>forum-browser-video-logged-in.png</texture>
+				<colordiffuse>FF555555</colordiffuse>
+				<visible>!StringCompare(Window.Property(online),1)</visible>
+			</control>
+			<control type="label" id="103">
+				<posx>75</posx>
+				<posy>19</posy>
+				<width>200</width>
+				<height>40</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>white</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+			</control>
+			<control type="label" id="104">
+				<description>Forum Title- Loading Status</description>
+				<posx>140r</posx>
+				<posy>25</posy>
+				<width>446</width>
+				<height>22</height>
+				<font>ForumBrowser-font12</font>
+				<textcolor>white</textcolor>
+				<aligny>center</aligny>
+				<align>right</align>
+				<label>[B]$ADDON[script.forum.browser 32915][/B]</label>
+			</control>
+			<control type="label">
+				<description>Date</description>
+				<posx>140r</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>22</height>
+				<font>ForumBrowser-font12</font>
+				<textcolor>FF4488AA</textcolor>
+				<aligny>center</aligny>
+				<align>right</align>
+				<label>$INFO[Control.GetLabel(105)]</label>
+			</control>
+			<control type="image">
+				<description>Divider</description>
+				<posx>130r</posx>
+				<posy>-4</posy>
+				<width>2</width>
+				<height>60</height>
+				<texture>forum-browser-video-white.png</texture>
+			</control>
+			<control type="label">
+				<description>Time</description>
+				<posx>35r</posx>
+				<posy>0</posy>
+				<width>100</width>
+				<height>22</height>
+				<font>ForumBrowser-font12</font>
+				<textcolor>black</textcolor>
+				<aligny>center</aligny>
+				<align>right</align>
+				<label>[COLOR FF808080][B]$INFO[System.Time][/B][/COLOR]</label>
+			</control>
+			
+			<control type="image">
+				<description>Logged In Back</description>
+				<posx>21r</posx>
+				<posy>1</posy>
+				<width>20</width>
+				<height>20</height>
+				<texture>forum-browser-video-logged-in-back.png</texture>
+			</control>
+			<control type="image" id="111">
+				<description>Logged In</description>
+				<posx>19r</posx>
+				<posy>3</posy>
+				<width>17</width>
+				<height>17</height>
+				<texture>forum-browser-video-logged-in.png</texture>
+				<colordiffuse>FF555555</colordiffuse>
+			</control>
+			<control type="label" id="160">
+				<visible>false</visible>
+				<posx>20</posx>
+				<posy>22</posy>
+				<width>100</width>
+				<height>40</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>black</textcolor>
+				<aligny>center</aligny>
+				<align>center</align>
+				<label></label>
+			</control>
+		</control>
+		
+		<control type="group">
+			<visible>StringCompare(Window.Property(haslinks),1)</visible>
+			<posx>20</posx>
+			<posy>10</posy>
+			<control type="image">
+				<description>Left Arrow</description>
+				<posx>0</posx>
+				<posy>5</posy>
+				<width>20</width>
+				<height>20</height>
+				<texture>forum-browser-video-left-arrow.png</texture>
+				<colordiffuse>FF4488AA</colordiffuse>
+				<visible>Control.HasFocus(123) | Control.HasFocus(126)</visible>
+			</control>
+			<control type="label">
+				<description>Menu Label</description>
+				<posx>26</posx>
+				<posy>0</posy>
+				<width>266</width>
+				<height>30</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>FF4488AA</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+				<label>[B]$ADDON[script.forum.browser 32531][/B]</label>
+				<visible>Control.HasFocus(123) | Control.HasFocus(126)</visible>
+			</control>
+		</control>
+		
+		<control type="group">
+			<posx>260</posx>
+			<posy>10</posy>
+			<control type="image">
+				<description>Right Arrow</description>
+				<posx>6</posx>
+				<posy>5</posy>
+				<width>20</width>
+				<height>20</height>
+				<texture flipx="true">forum-browser-video-left-arrow.png</texture>
+				<visible>[Control.HasFocus(123) | Control.HasFocus(126)] + StringCompare(Window.Property(hasimages),1)</visible>
+				<colordiffuse>FF4488AA</colordiffuse>
+			</control>
+			<control type="image">
+				<description>Down Arrow</description>
+				<posx>6</posx>
+				<posy>5</posy>
+				<width>20</width>
+				<height>20</height>
+				<texture flipy="true">forum-browser-video-down-arrow.png</texture>
+				<colordiffuse>FF4488AA</colordiffuse>
+				<visible>Control.HasFocus(150)</visible>
+			</control>
+			<control type="label">
+				<description>Menu Label</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>266</width>
+				<height>30</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>FF4488AA</textcolor>
+				<aligny>center</aligny>
+				<align>right</align>
+				<label>[B]$ADDON[script.forum.browser 32532][/B]</label>
+				<visible>[Control.HasFocus(123) | Control.HasFocus(126)] + StringCompare(Window.Property(hasimages),1)</visible>
+			</control>
+			<control type="label">
+				<description>Menu Label</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>266</width>
+				<height>30</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>FF4488AA</textcolor>
+				<aligny>center</aligny>
+				<align>right</align>
+				<label>[B]$ADDON[script.forum.browser 32528][/B]</label>
+				<visible>Control.HasFocus(150) | Control.HasFocus(148)</visible>
+			</control>
+			<control type="image">
+				<description>Left Arrow</description>
+				<posx>6</posx>
+				<posy>5</posy>
+				<width>20</width>
+				<height>20</height>
+				<texture flipx="true">forum-browser-video-left-arrow.png</texture>
+				<visible>Control.HasFocus(148)</visible>
+				<colordiffuse>FF4488AA</colordiffuse>
+			</control>
+		</control>
+		
+		<control type="image">
+			<posx>298</posx>
+			<posy>360</posy>
+			<width>2</width>
+			<height>200</height>
+			<texture>forum-browser-video-white.png</texture>
+			<visible>Control.isVisible(115)</visible>
+		</control>
+		<control type="image">
+			<posx>300</posx>
+			<posy>0</posy>
+			<width>980</width>
+			<height>560</height>
+			<texture>forum-browser-video-black.png</texture>
+			<visible>Control.isVisible(115)</visible>
+		</control>
+		
+		<control type="group" id="149">
+			<posx>1281</posx>
+			<posy>560</posy>
+			<defaultcontrol>150</defaultcontrol>
+			<animation effect="slide" end="-1271,0" time="400" condition="Control.HasFocus(149)|Control.HasFocus(150)">Conditional</animation>
+			<width>1280</width>
+			<height>150</height>
+			<control type="image">
+				<description>Info Area Background</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>150</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+			</control>
+			<control type="list" id="150">
+				<posx>10</posx>
+				<posy>2</posy>
+				<width>1250</width>
+				<height>148</height>
+				<onup>127</onup>
+				<ondown>127</ondown>
+				<viewtype label="535">list</viewtype>
+				<scrolltime>200</scrolltime>
+				<orientation>horizontal</orientation>
+				<itemlayout width="150">
+					<control type="image">
+						<posx>15</posx>
+						<posy>2</posy>
+						<width>120</width>
+						<height>120</height>
+						<texture fallback="forum-browser-dark-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<visible>true</visible>
+						<colordiffuse>77FFFFFF</colordiffuse>
+						<aspectratio>keep</aspectratio>
+					</control>
+					<control type="label">
+						<posx>75</posx>
+						<posy>130</posy>
+						<width>140</width>
+						<height>14</height>
+						<font>ForumBrowser-font10</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>white</selectedcolor>
+						<align>center</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout width="150">
+					<control type="image">
+						<posx>15</posx>
+						<posy>2</posy>
+						<width>120</width>
+						<height>120</height>
+						<texture fallback="forum-browser-dark-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+						<aspectratio>keep</aspectratio>
+					</control>
+					<control type="label">
+						<posx>75</posx>
+						<posy>130</posy>
+						<width>140</width>
+						<height>14</height>
+						<font>ForumBrowser-font10</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>white</selectedcolor>
+						<align>center</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+
+		<control type="group" id="147">
+			<animation effect="slide" end="290,0" time="200" delay="200" condition="Control.HasFocus(147)|Control.HasFocus(148)">Conditional</animation>
+			<defaultcontrol>197</defaultcontrol>
+			<description>The Buttons</description>
+			<posx>-300</posx>
+			<posy>50</posy>
+			<width>300</width>
+			<height>500</height>
+
+			<control type="image">
+				<description>Buttons Background</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>300</width>
+				<height>490</height>
+				<texture border="10">forum-browser-video-box-light.png</texture>
+			</control>
+			<control type="list" id="148">
+				<posx>10</posx>
+				<posy>2</posy>
+				<width>290</width>
+				<height>720</height>
+				<onleft>127</onleft>
+				<onright>127</onright>
+				<onup>148</onup>
+				<ondown>148</ondown>
+				<viewtype label="535">list</viewtype>
+				<scrolltime>200</scrolltime>
+				<itemlayout height="100">
+					<control type="image">
+						<posx>20</posx>
+						<posy>14</posy>
+						<width>96</width>
+						<height>54</height>
+						<texture fallback="forum-browser-video-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<aspectratio align="left">keep</aspectratio>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="label">
+						<posx>20</posx>
+						<posy>80</posy>
+						<width>260</width>
+						<height>20</height>
+						<font>ForumBrowser-font10</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>108</posy>
+						<width>288</width>
+						<height>1</height>
+						<texture>forum-browser-video-white.png</texture>
+						<colordiffuse>FF333333</colordiffuse>
+					</control>
+				</itemlayout>
+				<focusedlayout height="150">
+					<control type="image">
+						<posx>0</posx>
+						<posy>8</posy>
+						<width>290</width>
+						<height>150</height>
+						<visible>true</visible>
+						<texture border="10">forum-browser-video-select.png</texture>
+					</control>
+					<control type="image">
+						<posx>20</posx>
+						<posy>18</posy>
+						<width>128</width>
+						<height>72</height>
+						<texture fallback="forum-browser-video-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<aspectratio align="left">keep</aspectratio>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="label">
+						<posx>20</posx>
+						<posy>100</posy>
+						<width>260</width>
+						<height>20</height>
+						<font>ForumBrowser-font10</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label">
+						<posx>20</posx>
+						<posy>130</posy>
+						<width>260</width>
+						<height>20</height>
+						<font>ForumBrowser-font10</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<align>left</align>
+						<info>ListItem.Label2</info>
+						<visible>true</visible>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+		
+		<control type="group" id="115">
+			<visible>Player.Playing + Player.HasVideo + !StringCompare(Window(10000).Property(ForumBrowser_hidePNP),1)</visible>
+			<posx>310</posx>
+			<posy>10</posy>
+			<control type="videowindow">
+				<description>PIP</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>960</width>
+				<height>540</height>
+				<visible>true</visible>
+			</control>
+		</control>
+	</controls>
+</window>

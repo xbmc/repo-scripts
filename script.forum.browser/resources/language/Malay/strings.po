@@ -1,0 +1,81 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Malay (http://www.transifex.com/projects/p/xbmc-addons/language/ms/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ms\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Bahasa"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Penyegaran"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Hapus"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Pautan:"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Seting"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Ya"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Tidak Diketahui"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Cari"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Simpan"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Seterusnya"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Seting"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Cari"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Batal"

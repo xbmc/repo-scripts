@@ -1,0 +1,1913 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Browse forums within XBMC"
+msgstr "Περιήγηση σε φόρουμ μέσω του XBMC"
+
+msgctxt "Addon Description"
+msgid "Browse Forums in XBMC. Supports Tapatalk enabled forums (over 30000) and Forumrunner enabled forums. Also supports boxee.tv. View forums, threads, posts, subscriptions and private messages. Follow links in Web Viewer. Post replies, send private messages, delete posts, quote posts. View images in posts, follow post forum links and download post links."
+msgstr "Περιηγηθείτε σε Φόρουμ μέσω του XBMC. Υποστηρίζονται φόρουμ με ενεργό Tapatalk (πάνω από 30000) και Forumrunner, καθώς και το boxee.tv. Δείτε φόρουμ, θέματα, αναρτήσεις, συνδρομές και προσωπικά μηνύματα. Ακολουθήστε συνδέσμους στη Προβολή Ιστού. Αναρτήστε απαντήσεις, στείλτε προσωπικά μηνύματα, διαγράψτε αναρτήσεις, παραθέστε αναρτήσεις. Προβάλλετε εικόνες σε αναρτήσεις, ακολουθήστε συνδέσμους αναρτήσεων λήψεων."
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "#32001"
+msgid "Open Thread At Newest Post"
+msgstr "Άνοιγμα Θέματος στη Νεώτερη Ανάρτηση"
+
+msgctxt "#32002"
+msgid "Reverse Sort Posts"
+msgstr "Αντίστροφη Ταξινόμηση Αναρτήσεων"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Γλώσσα"
+
+msgctxt "#32004"
+msgid "Always Login If Possible"
+msgstr "Συνεχόμενη Σύνδεση αν είναι εφικτό"
+
+msgctxt "#32005"
+msgid "Skin (changes require a restart)"
+msgstr "Κέλυφος (απαιτείται επανεκκίνηση)"
+
+msgctxt "#32006"
+msgid "Use Text Editor (Experimental)"
+msgstr "Χρήση Προγράμματος Επεξεργασίας Κειμένου (Πειραματικό)"
+
+msgctxt "#32007"
+msgid "Use Forum Colors"
+msgstr "Χρήση Χρωμάτων του Φόρουμ"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Για προχωρημένους"
+
+msgctxt "#32009"
+msgid "Automatically Open Subscriptions"
+msgstr "Αυτόματο Άνοιγμα Συνδρομών"
+
+msgctxt "#32010"
+msgid "PIP"
+msgstr "PIP"
+
+msgctxt "#32011"
+msgid "Dark"
+msgstr "Σκοτεινό"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Φωτεινό"
+
+msgctxt "#32013"
+msgid "Hide Signatures In Posts"
+msgstr "Απόκρυψη Υπογραφών στις Αναρτήσεις"
+
+msgctxt "#32014"
+msgid "Always Show OK Button In Message Dialogs"
+msgstr "Πάντα να εμφανίζεται το πλήκτρο OK στα Παράθυρα Μηνυμάτων"
+
+msgctxt "#32015"
+msgid "Confirm Exit On Quit"
+msgstr "Επιβεβαίωση Εξόδου κατά την Αποχώρηση"
+
+msgctxt "#32016"
+msgid "Parser Browser: Ignore Forum Images In Posts"
+msgstr "Περιήγηση Aναλυτή: Αγνόηση Εικόνων Φόρουμ στις Αναρτήσεις"
+
+msgctxt "#32017"
+msgid "Disable Activity Splash"
+msgstr "Απενεργοποίηση της Οθόνης Δραστηριότητας (Splash)"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Ειδοποιήσεις"
+
+msgctxt "#32019"
+msgid "Enable Notifications (Enabling Requires XBMC Restart)"
+msgstr "Ενεργοποίηση Ειδοποιήσεων (Απαιτεί Επανεκκίνηση του XBMC)"
+
+msgctxt "#32020"
+msgid "Check Interval (In Minutes)"
+msgstr "Χρονικό Διάστημα Ελέγχων (Σε Λεπτά)"
+
+msgctxt "#32021"
+msgid "Only At XBMC Start (Disabling Requires XBMC Restart)"
+msgstr "Μόνο κατά την Εκκίνηση του XBMC (Για Απενεργοποίηση Απαιτείται Επανεκκίνηση του XBMC)"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Βίντεο"
+
+msgctxt "#32023"
+msgid "Method"
+msgstr "Μέθοδος"
+
+msgctxt "#32024"
+msgid "Method (During Video)"
+msgstr "Μέθοδος (Κατά την Προβολή Βίντεο) "
+
+msgctxt "#32025"
+msgid "Normal XBMC Popup"
+msgstr "Κανονικό Αναδιδόμενο Παράθυρο XBMC"
+
+msgctxt "#32026"
+msgid "Small Dialog"
+msgstr "Μικρό Παράθυρο"
+
+msgctxt "#32027"
+msgid "Full Dialog"
+msgstr "Πλήρες Παράθυρο"
+
+msgctxt "#32028"
+msgid "XBMC Notice Duration (Seconds)"
+msgstr "Διάρκεια Ειδοποιήσεων XBMC (Δευτερόλεπτα)"
+
+msgctxt "#32029"
+msgid "Dialog Timeout (Seconds - 0 For None)"
+msgstr "Χρονικό Όριο Παραθύρων (Δευτερόλεπτα - 0 για Καθόλου)"
+
+msgctxt "#32030"
+msgid "Only When Playing Video"
+msgstr "Μόνο Κατά την Προβολή Βίντεο"
+
+msgctxt "#32031"
+msgid "Activity Stops Timeout"
+msgstr "Η Δραστηριότητα Διακόπτει το Χρονικό Όριο"
+
+msgctxt "#32032"
+msgid "Ask Before Interrupting Video"
+msgstr "Ερώτηση Πριν τη Διακοπή του Βίντεο"
+
+msgctxt "#32033"
+msgid "Return To Interrupted Video"
+msgstr "Επιστροφή στο Βίντεο"
+
+msgctxt "#32034"
+msgid "Pause Video On Dialogs"
+msgstr "Παύση Βίντεο κατά την εμφάνιση Παραθύρων"
+
+msgctxt "#32035"
+msgid "Hide Video Overlay"
+msgstr "Απόκρυψη Επικάλυψης Βίντεο "
+
+msgctxt "#32036"
+msgid "Stop Forum Video On Forum Browser Close"
+msgstr "Διακοπή του Βίντεο του Φόρουμ με το Κλείσιμο της Εφαρμογής"
+
+msgctxt "#32037"
+msgid "Allow Return To Interrupted Video After Close"
+msgstr "Πάντα να επιστρέφει το Βίντεο μετά το Κλείσιμο"
+
+msgctxt "#32038"
+msgid "Bypass XBMC Resume Dialog"
+msgstr "Παράκαμψη του παραθύρου Συνέχισης"
+
+msgctxt "#32039"
+msgid "Pre-Offset (Seconds)"
+msgstr "Προ-Μετατόπιση (Δευτερόλεπτα)"
+
+msgctxt "#32040"
+msgid "Hours Until Notify Data Considered Stale"
+msgstr "Ώρες Προτού τα Δεδομένα Ειδοποιήσεων Θεωρηθούν Μη Ενημερωμένα"
+
+msgctxt "#32041"
+msgid "Dialog: Only Show Notify Enabled Forums"
+msgstr "Παράθυρο: Εμφάνιση Μόνο των Φόρουμ με Ενεργές Ειδοποιήσεις"
+
+msgctxt "#32042"
+msgid "Resume Video In Overlay"
+msgstr "Συνέχιση του Βίντεο σε Επικάλυψη"
+
+msgctxt "#32043"
+msgid "Start Video In Overlay"
+msgstr "Έναρξη του Βίντεο σε Επικάλυψη"
+
+msgctxt "#32044"
+msgid "Show Post Media Indicators"
+msgstr "Εμφάνιση Δεικτών Πολυμέσων Αναρτήσεων"
+
+msgctxt "#32045"
+msgid "Count Link Images As Images"
+msgstr "Καταμέτρηση των Συνδέσμων Εικόνων ως Εικόνες"
+
+msgctxt "#32046"
+msgid "Searching Posts: Open Thread On Post Click"
+msgstr "Αναζήτηση Αναρτήσεων: Άνοιγμα Θέματος κατά την επιλογή της Ανάρτησης"
+
+msgctxt "#32047"
+msgid "Search: Show Search History"
+msgstr "Αναζήτηση: Εμφάνιση του Ιστορικού Αναζήτησης"
+
+msgctxt "#32048"
+msgid "Show Traceback Dialog On Errors"
+msgstr "Εμφάνιση Παραθύρου Εντοπισμού στα Σφάλματα"
+
+msgctxt "#32050"
+msgid "ERROR"
+msgstr "ΣΦΑΛΜΑ"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Επιλογές"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "Τέλος"
+
+msgctxt "#32053"
+msgid "Please try again."
+msgstr "Δοκιμάστε ξανά."
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Ανανέωση"
+
+msgctxt "#32100"
+msgid "Logging In"
+msgstr "Γίνεται Σύνδεση"
+
+msgctxt "#32101"
+msgid "Opening URL"
+msgstr "Ανοίγει η URL"
+
+msgctxt "#32102"
+msgid "Reading Data"
+msgstr "Γίνεται ανάγνωση Δεδομένων"
+
+msgctxt "#32103"
+msgid "Parsing Data"
+msgstr "Ανάλυση Δεδομένων"
+
+msgctxt "#32105"
+msgid "Processing Form"
+msgstr "Επεξεργασία Φόρμας"
+
+msgctxt "#32106"
+msgid "Submitting Form"
+msgstr "Υποβολή Φόρμας"
+
+msgctxt "#32107"
+msgid "Wating {0} seconds"
+msgstr "Αναμονή {0} δευτερόλεπτα"
+
+msgctxt "#32108"
+msgid "Clearing Notifications"
+msgstr "Εκκαθάριση Ειδοποιήσεων"
+
+msgctxt "#32110"
+msgid "First Page"
+msgstr "Πρώτη Σελίδα"
+
+msgctxt "#32111"
+msgid "Last Page"
+msgstr "Τελευταία Σελίδα"
+
+msgctxt "#32112"
+msgid "Newest Post"
+msgstr "Νεώτερη Ανάρτηση"
+
+msgctxt "#32113"
+msgid "Oldest Post"
+msgstr "Παλαιότερη Ανάρτηση"
+
+msgctxt "#32114"
+msgid "Go to..."
+msgstr "Μετάβαση σε..."
+
+msgctxt "#32115"
+msgid "Go to page number"
+msgstr "Μετάβαση στη σελίδα"
+
+msgctxt "#32116"
+msgid "Enter page number"
+msgstr "Εισαγωγή του αριθμού σελίδας"
+
+msgctxt "#32120"
+msgid "Set Title"
+msgstr "Ορισμός Τίτλου"
+
+msgctxt "#32122"
+msgid "Delete Line"
+msgstr "Διαγραφή Γραμμής"
+
+msgctxt "#32123"
+msgid "Enter Text"
+msgstr "Εισαγωγή Κειμένου"
+
+msgctxt "#32124"
+msgid "Edit Line"
+msgstr "Επεξεργασία Γραμμής"
+
+msgctxt "#32125"
+msgid "Enter Post Title"
+msgstr "Εισαγωγή Τίτλου Ανάρτησης"
+
+msgctxt "#32126"
+msgid "Posting"
+msgstr "Γίνεται Ανάρτηση"
+
+msgctxt "#32127"
+msgid "Posting. Please wait..."
+msgstr "Γίνεται ανάρτηση. Παρακαλώ περιμένετε..."
+
+msgctxt "#32128"
+msgid "Add Line Before"
+msgstr "Προσθήκη Γραμμής Πριν"
+
+msgctxt "#32129"
+msgid "Save Image"
+msgstr "Αποθήκευση Εικόνας"
+
+msgctxt "#32130"
+msgid "Posts"
+msgstr "Αναρτήσεις"
+
+msgctxt "#32131"
+msgid "Error getting posts"
+msgstr "Σφάλμα κατά τη λήψη αναρτήσεων"
+
+msgctxt "#32133"
+msgid "Error filling post list"
+msgstr "Σφάλμα κατά τη συμπλήρωση της λίστας αναρτήσεων."
+
+msgctxt "#32134"
+msgid "Quote"
+msgstr "Παράθεση"
+
+msgctxt "#32135"
+msgid "Error getting private messages"
+msgstr "Σφάλμα κατά τη λήψη προσωπικών μηνυμάτων"
+
+msgctxt "#32136"
+msgid "View Images"
+msgstr "Προβολή Εικόνων"
+
+msgctxt "#32137"
+msgid "View Link Images"
+msgstr "Προβολή Συνδέσμων Εικόνων"
+
+msgctxt "#32138"
+msgid "Follow Thread Link"
+msgstr "Ακολούθηση του Συνδέσμου Θέματος"
+
+msgctxt "#32139"
+msgid "Follow Post Link"
+msgstr "Ακολούθηση του Συνδέσμου Ανάρτησης"
+
+msgctxt "#32140"
+msgid "Download A Link"
+msgstr "Λήψη Συνδέσμου"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Διαγραφή"
+
+msgctxt "#32142"
+msgid "Post ID"
+msgstr "ID Ανάρτησης"
+
+msgctxt "#32143"
+msgid "Thread ID"
+msgstr "ID Θέματος"
+
+msgctxt "#32144"
+msgid "Choose Target Directory"
+msgstr "Επιλέξτε το Φάκελο"
+
+msgctxt "#32145"
+msgid "Downloading File"
+msgstr "Γίνεται Λήψη Αρχείου"
+
+msgctxt "#32146"
+msgid "Downloaded File: "
+msgstr "Αρχείο που Ελήφθη:"
+
+msgctxt "#32148"
+msgid "Downloading Images"
+msgstr "Γίνεται Λήψη Εικόνων"
+
+msgctxt "#32149"
+msgid "Deleting"
+msgstr "Γίνεται Διαγραφή"
+
+msgctxt "#32150"
+msgid "Deleting. Please wait..."
+msgstr "Γίνεται Διαγραφή. Παρακαλώ περιμένετε..."
+
+msgctxt "#32151"
+msgid "PMs"
+msgstr "Προσωπικά Μηνύματα"
+
+msgctxt "#32160"
+msgid "Threads"
+msgstr "Θέματα"
+
+msgctxt "#32161"
+msgid "Error getting threads."
+msgstr "Σφάλμα κατά τη λήψη θεμάτων."
+
+msgctxt "#32162"
+msgid "Last Post By:"
+msgstr "Τελευταία Ανάρτηση Από:"
+
+msgctxt "#32163"
+msgid "Error filling threads list."
+msgstr "Σφάλμα κατά τη συμπλήρωση της λίστας θεμάτων."
+
+msgctxt "#32164"
+msgid "FORUM"
+msgstr "ΦΟΡΟΥΜ"
+
+msgctxt "#32170"
+msgid "Forums"
+msgstr "Φόρουμ"
+
+msgctxt "#32171"
+msgid "Error getting forums."
+msgstr "Σφάλμα κατά τη λήψη των φόρουμ."
+
+msgctxt "#32172"
+msgid "No Description"
+msgstr "Χωρίς Περιγραφή"
+
+msgctxt "#32173"
+msgid "Sub-Forum"
+msgstr "Υπό-Φόρουμ"
+
+msgctxt "#32174"
+msgid "Error filling forum list."
+msgstr "Σφάλμα κατά τη συμπλήρωση της λίστας φόρουμ."
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "Συνδρομές"
+
+msgctxt "#32176"
+msgid "Private Messages"
+msgstr "Προσωπικά Μηνύματα"
+
+msgctxt "#32177"
+msgid "Send PM"
+msgstr "Αποστολή Προσωπικού Μηνύματος"
+
+msgctxt "#32178"
+msgid "Send Message"
+msgstr "Αποστολή Μηνύματος"
+
+msgctxt "#32180"
+msgid "Quote:"
+msgstr "Παράθεση:"
+
+msgctxt "#32181"
+msgid "Originally posted by:"
+msgstr "Αρχική ανάρτηση από:"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Σύνδεσμος:"
+
+msgctxt "#32183"
+msgid "Code:"
+msgstr "Κώδικας:"
+
+msgctxt "#32184"
+msgid "PHP Code:"
+msgstr "Κώδικας PHP:"
+
+msgctxt "#32185"
+msgid "HTML Code:"
+msgstr "Κώδικας HTML:"
+
+msgctxt "#32200"
+msgid "Select Forum"
+msgstr "Επιλογή Φόρουμ"
+
+msgctxt "#32201"
+msgid "Enter Username"
+msgstr "Εισαγωγή Ονόματος Χρήστη"
+
+msgctxt "#32202"
+msgid "Enter Password"
+msgstr "Εισαγωγή Κωδικού Πρόσβασης"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+msgctxt "#32204"
+msgid "Set Logins"
+msgstr "Ορισμός Στοιχείων Σύνδεσης"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Γίνεται λήψη"
+
+msgctxt "#32206"
+msgid "Downloading {0}"
+msgstr "Γίνεται λήψη {0}"
+
+msgctxt "#32207"
+msgid "Turn On Notifications"
+msgstr "Ενεργοποίηση Ειδοποιήσεων"
+
+msgctxt "#32208"
+msgid "Turn Off Notifications"
+msgstr "Απενεργοποίηση Ειδοποιήσεων"
+
+msgctxt "#32209"
+msgid "Manage Notifications"
+msgstr "Διαχείριση Ειδοποιήσεων"
+
+msgctxt "#32220"
+msgid "Waiting..."
+msgstr "Αναμονή..."
+
+msgctxt "#32221"
+msgid "Waiting for thread to stop..."
+msgstr "Αναμονή για παύση του θέματος..."
+
+msgctxt "#32222"
+msgid "Add A Forum"
+msgstr "Προσθήκη Φόρουμ"
+
+msgctxt "#32223"
+msgid "Add Current Forum To Favorites"
+msgstr "Προσθήκη του Τρέχοντος Φόρουμ στα Αγαπημένα"
+
+msgctxt "#32224"
+msgid "Remove Forums"
+msgstr "Αφαίρεση των Φόρουμ"
+
+msgctxt "#32225"
+msgid "Remove A Forum From Favorites"
+msgstr "Αφαίρεση του Φόρουμ από τα Αγαπημένα"
+
+msgctxt "#32226"
+msgid "Add A Forum From The Online Database"
+msgstr "Προσθήκη Φόρουμ από τη Διαδικτυακή Βάση Δεδομένων"
+
+msgctxt "#32227"
+msgid "Posting A Reply Failed:"
+msgstr "Αποτυχία Ανάρτησης Απάντησης:"
+
+msgctxt "#32228"
+msgid "Enable Log Debugging"
+msgstr "Ενεργοποίηση Καταγραφής Σφαλμάτων"
+
+msgctxt "#32229"
+msgid "Empty Forum"
+msgstr "Άδειο Φόρουμ"
+
+msgctxt "#32230"
+msgid "There are no threads in this forum."
+msgstr "Δεν υπάρχουν θέματα σε αυτό το φόρουμ."
+
+msgctxt "#32231"
+msgid "Checking Messages"
+msgstr "Έλεγχος Μηνυμάτων"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+msgctxt "#32233"
+msgid "Enable MyBB edit post bug re-subscribe fix"
+msgstr "Ενεργοποίηση διόρθωσης προβλήματος MyBB επεξεργασίας ανάρτησης ξανά συνδρομή"
+
+msgctxt "#32234"
+msgid "Use skin modifications (Recommended)"
+msgstr "Χρήση τροποποιήσεων κελύφους (Προτείνεται)"
+
+msgctxt "#32235"
+msgid "Enable SSL connections (https)"
+msgstr "Ενεργοποίηση συνδέσεων SSL (https)"
+
+msgctxt "#32236"
+msgid "Subscribe To Thread"
+msgstr "Συνδρομή στο Θέμα"
+
+msgctxt "#32237"
+msgid "Use keyboard mod"
+msgstr "Χρήση τροποποιημένου πληκτρολογίου"
+
+msgctxt "#32238"
+msgid "Password Encryption Type"
+msgstr "Τύπος Κρυπτογράφησης Κωδικού"
+
+msgctxt "#32239"
+msgid "Encryption Key File (Optional)"
+msgstr "Αρχείο Κλειδιού Κρυπτογράφησης (Προαιρετικό) "
+
+msgctxt "#32240"
+msgid "Unsubscribe Thread"
+msgstr "Κατάργηση Συνδρομής στο Θέμα"
+
+msgctxt "#32241"
+msgid "Add Current Forum To Online Database"
+msgstr "Προσθήκη του Τρέχοντος Φόρουμ στη Διαδικτυακή Βάση Δεδομένων"
+
+msgctxt "#32242"
+msgid "Unsubscribe From Forum"
+msgstr "Κατάργηση Συνδρομής στο Φόρουμ"
+
+msgctxt "#32243"
+msgid "Subscribe To Forum"
+msgstr "Συνδρομή στο Φόρουμ"
+
+msgctxt "#32244"
+msgid "Help"
+msgstr "Βοήθεια"
+
+msgctxt "#32245"
+msgid "Cache Logo Images Locally"
+msgstr "Τοπική Αποθήκευση Λογότυπων"
+
+msgctxt "#32246"
+msgid "Sending a private message failed:"
+msgstr "Αποτυχία αποστολής προσωπικού μηνύματος:"
+
+msgctxt "#32247"
+msgid "Disable SSL For Forumrunner"
+msgstr "Απενεργοποίηση του SSL για το Forumrunner"
+
+msgctxt "#32248"
+msgid "Please wait..."
+msgstr "Παρακαλώ περιμένετε..."
+
+msgctxt "#32249"
+msgid "Reply/Forward"
+msgstr "Απάντηση/Προώθηση"
+
+msgctxt "#32250"
+msgid "No posts"
+msgstr "Καμία Ανάρτηση"
+
+msgctxt "#32251"
+msgid "No messages"
+msgstr "Κανένα μήνυμα"
+
+msgctxt "#32252"
+msgid "Create New Thread"
+msgstr "Δημιουργία Νέου Θέματος"
+
+msgctxt "#32253"
+msgid "Send PM to {0}"
+msgstr "Αποστολή Προσωπικού Μηνύματος σε {0}"
+
+msgctxt "#32254"
+msgid "Will Restart After Finish."
+msgstr "Θα γίνει Επανεκκίνηση μετά το Τέλος."
+
+msgctxt "#32255"
+msgid "Video Playing"
+msgstr "Αναπαραγωγή Βίντεο"
+
+msgctxt "#32256"
+msgid "Interrupt Current Video?"
+msgstr "Διακοπή του Τρέχοντος Βίντεο;"
+
+msgctxt "#32257"
+msgid "Failed"
+msgstr "Αποτυχία"
+
+msgctxt "#32258"
+msgid "Failed to download file."
+msgstr "Αποτυχία λήψης του αρχείου."
+
+msgctxt "#32259"
+msgid "Enter Filename"
+msgstr "Εισαγωγή Ονόματος Αρχείου"
+
+msgctxt "#32260"
+msgid "Select Directory"
+msgstr "Επιλογή Φακέλου"
+
+msgctxt "#32261"
+msgid "File Exists"
+msgstr "Το Αρχείο Υπάρχει"
+
+msgctxt "#32262"
+msgid "File Exists!"
+msgstr "Το Αρχείο Υπάρχει!"
+
+msgctxt "#32263"
+msgid "Save As:"
+msgstr "Αποθήκευση Ως:"
+
+msgctxt "#32264"
+msgid "Enter New"
+msgstr "Εισαγωγή Νέου"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Ναι"
+
+msgctxt "#32266"
+msgid "Finished"
+msgstr "Ολοκληρώθηκε"
+
+msgctxt "#32267"
+msgid "File Saved Successfully:"
+msgstr "Επιτυχής Αποθήκευση Αρχείου:"
+
+msgctxt "#32268"
+msgid "Settings Changed"
+msgstr "Οι Ρυθμίσεις Άλλαξαν"
+
+msgctxt "#32269"
+msgid "Settings changed."
+msgstr "Οι ρυθμίσεις άλλαξαν."
+
+msgctxt "#32270"
+msgid "Really discard changes?"
+msgstr "Να απορριφθούν οι αλλαγές;"
+
+msgctxt "#32271"
+msgid "Enter New Value"
+msgstr "Εισαγωγή Νέας Τιμής"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "Επιλογή"
+
+msgctxt "#32273"
+msgid "Choose 'Clear' to clear the URL"
+msgstr "Επιλέξτε 'Εκκαθάριση' για εκκαθάριση της URL"
+
+msgctxt "#32274"
+msgid "Choose 'New' to browse a new URL"
+msgstr "Επιλέξτε 'Νέο' για να ανοίξετε νέα URL"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Αίθριος"
+
+msgctxt "#32276"
+msgid "New"
+msgstr "Νέο"
+
+msgctxt "#32277"
+msgid "Choose 'Edit' to edit the URL"
+msgstr "Επιλέξτε 'Επεξεργασία' για να αλλάξετε τη URL"
+
+msgctxt "#32278"
+msgid "Choose 'Browse' to browse site images"
+msgstr "Επιλέξτε 'Περιήγηση' για να περιηγηθείτε στις εικόνες του ιστότοπου"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Αναζήτηση"
+
+msgctxt "#32281"
+msgid "Edit URL:"
+msgstr "Επεξεργασία URL:"
+
+msgctxt "#32282"
+msgid "Bad Value"
+msgstr "Εσφαλμένη Τιμή"
+
+msgctxt "#32283"
+msgid "Value must be an integer"
+msgstr "Η τιμή πρέπει να είναι αριθμητική"
+
+msgctxt "#32284"
+msgid "Value must be in format {0}"
+msgstr "Η τιμή πρέπει να είναι μορφής {0}"
+
+msgctxt "#32285"
+msgid "Getting Images"
+msgstr "Γίνεται Λήψη Εικόνων"
+
+msgctxt "#32286"
+msgid "Login User"
+msgstr "Όνομα Χρήστη"
+
+msgctxt "#32287"
+msgid "Login Password"
+msgstr "Κωδικός Πρόσβασης"
+
+msgctxt "#32288"
+msgid "Post Attributes"
+msgstr "Ιδιότητες Ανάρτησης"
+
+msgctxt "#32289"
+msgid "Time Offset"
+msgstr "Χρονική Μετατόπιση"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "Περιγραφή"
+
+msgctxt "#32291"
+msgid "Logo"
+msgstr "Λογότυπο"
+
+msgctxt "#32292"
+msgid "Header Color"
+msgstr "Χρώμα Επικεφαλίδας"
+
+msgctxt "#32293"
+msgid "Login Page"
+msgstr "Σελίδα Σύνδεσης"
+
+msgctxt "#32294"
+msgid "Post Parser Rules"
+msgstr "Κανόνες Μετά τον Αναλυτή"
+
+msgctxt "#32295"
+msgid "Forum Browser: New Posts"
+msgstr "Περιήγηση Φόρουμ: Νέες Αναρτήσεις"
+
+msgctxt "#32296"
+msgid "Failed post found"
+msgstr "Βρέθηκε αποτυχημένη ανάρτηση"
+
+msgctxt "#32297"
+msgid "Re-use previous failed post?"
+msgstr "Να χρησιμοποιηθεί ξανά η προηγούμενη αποτυχημένη ανάρτηση;"
+
+msgctxt "#32298"
+msgid "Note"
+msgstr "Σημείωση"
+
+msgctxt "#32299"
+msgid "Posting appears to be moderated"
+msgstr "Φαίνεται ότι γίνεται έλεγχος των αναρτήσεων"
+
+msgctxt "#32300"
+msgid "Your message may not appear right away"
+msgstr "Το μήνυμά σας ενδέχεται να μην εμφανιστεί άμεσα"
+
+msgctxt "#32301"
+msgid "Are You Sure?"
+msgstr "Είστε Σίγουροι;"
+
+msgctxt "#32302"
+msgid "Really close?"
+msgstr "Σίγουρα να κλείσει;"
+
+msgctxt "#32303"
+msgid "Changes will be lost."
+msgstr "Οι αλλαγές θα χαθούν."
+
+msgctxt "#32304"
+msgid "Success"
+msgstr "Επιτυχία"
+
+msgctxt "#32305"
+msgid "Message Sent."
+msgstr "Το Μήνυμα Εστάλη."
+
+msgctxt "#32306"
+msgid "Message Posted."
+msgstr "Το Μήνυμα Αναρτήθηκε."
+
+msgctxt "#32307"
+msgid "Error creating post:"
+msgstr "Σφάλμα κατά τη δημιουργία ανάρτησης:"
+
+msgctxt "#32308"
+msgid "Paste From Clipboard Before:"
+msgstr "Επικόλληση από το Πρόχειρο Πριν:"
+
+msgctxt "#32309"
+msgid "Paste From Clipboard:"
+msgstr "Επικόλληση από το Πρόχειρο:"
+
+msgctxt "#32310"
+msgid "Enter Link Text"
+msgstr "Εισαγωγή Κειμένου Συνδέσμου"
+
+msgctxt "#32311"
+msgid "Getting Video Info..."
+msgstr "Γίνεται Λήψη Πληροφοριών Βίντεο..."
+
+msgctxt "#32312"
+msgid "Link Options"
+msgstr "Επιλογές Συνδέσμου"
+
+msgctxt "#32313"
+msgid "Copy Link To Clipboard"
+msgstr "Αντιγραφή Συνδέσμου στο Πρόχειρο"
+
+msgctxt "#32314"
+msgid "Copy Image URL To Clipboard"
+msgstr "Αντιγραφή URL Εικόνας στο Πρόχειρο"
+
+msgctxt "#32315"
+msgid "Copy Video URL To Clipboard"
+msgstr "Αντιγραφή URL Βίντεο στο Πρόχειρο"
+
+msgctxt "#32316"
+msgid "Image Options"
+msgstr "Επιλογές Εικόνων"
+
+msgctxt "#32317"
+msgid "User/Post Extra Info"
+msgstr "Επιπλέον Πληροφορίες Χρήστη/Ανάρτησης"
+
+msgctxt "#32318"
+msgid "Getting Post For Edit..."
+msgstr "Λήψη Ανάρτησης για Επεξεργασία..."
+
+msgctxt "#32319"
+msgid "Enter Recipient(s)"
+msgstr "Εισαγωγή Παραλήπτη(ων)"
+
+msgctxt "#32320"
+msgid "Really Delete?"
+msgstr "Σίγουρα να Διαγραφεί;"
+
+msgctxt "#32321"
+msgid "Are you sure you want to delete this message?"
+msgstr "Σίγουρα να διαγραφεί αυτό το μήνυμα;"
+
+msgctxt "#32322"
+msgid "Deleting"
+msgstr "Γίνεται Διαγραφή"
+
+msgctxt "#32323"
+msgid "Failed"
+msgstr "Αποτυχία"
+
+msgctxt "#32324"
+msgid "Failed to delete:"
+msgstr "Αποτυχία διαγραφής:"
+
+msgctxt "#32325"
+msgid "Reason unknown"
+msgstr "Άγνωστη αιτία"
+
+msgctxt "#32326"
+msgid "Message deleted."
+msgstr "Το Μήνυμα Διεγράφη."
+
+msgctxt "#32327"
+msgid "Post deleted."
+msgstr "Η Ανάρτηση Διεγράφη."
+
+msgctxt "#32328"
+msgid "Error while deleting post:"
+msgstr "Σφάλμα κατά τη διαγραφή της ανάρτησης:"
+
+msgctxt "#32329"
+msgid "User/Post Info"
+msgstr "Πληροφορίες Χρήστη/Ανάρτησης"
+
+msgctxt "#32330"
+msgid "Enter Search Terms"
+msgstr "Εισαγωγή Όρων Αναζήτησης"
+
+msgctxt "#32331"
+msgid "Select Box"
+msgstr "Επιλογή Θυρίδας"
+
+msgctxt "#32332"
+msgid "Change PM Box"
+msgstr "Αλλαγή Θυρίδας Προσωπικών Μηνυμάτων"
+
+msgctxt "#32333"
+msgid "Like Post"
+msgstr "Μου Αρέσει η Ανάρτηση"
+
+msgctxt "#32334"
+msgid "Unlike Post"
+msgstr "Δε Μου Αρέσει η Ανάρτηση"
+
+msgctxt "#32335"
+msgid "Open Post Thread"
+msgstr "Άνοιγμα Θέματος Ανάρτησης"
+
+msgctxt "#32336"
+msgid "Quote?"
+msgstr "Παράθεση;"
+
+msgctxt "#32337"
+msgid "Quote the message?"
+msgstr "Να παρατεθεί το μήνυμα;"
+
+msgctxt "#32338"
+msgid "Liking"
+msgstr "Μου Αρέσει"
+
+msgctxt "#32339"
+msgid "Un-Liking"
+msgstr "Δε Μου Αρέσει"
+
+msgctxt "#32340"
+msgid "Subscribed to thread."
+msgstr "Έγινε Συνδρομή στο θέμα."
+
+msgctxt "#32341"
+msgid "Failed to subscribe to thread:"
+msgstr "Αποτυχία συνδρομής στο θέμα:"
+
+msgctxt "#32342"
+msgid "Unsubscribed from thread."
+msgstr "Έγινε κατάργηση της συνδρομής στο θέμα."
+
+msgctxt "#32343"
+msgid "Failed to unsubscribe from thread:"
+msgstr "Αποτυχία κατάργησης της συνδρομής στο θέμα:"
+
+msgctxt "#32344"
+msgid "Subscribed to forum."
+msgstr "Έγινε συνδρομή στο φόρουμ."
+
+msgctxt "#32345"
+msgid "Failed to subscribe to forum:"
+msgstr "Αποτυχία συνδρομής στο φόρουμ:"
+
+msgctxt "#32346"
+msgid "Unsubscribed from forum."
+msgstr "Έγινε κατάργηση της συνδρομής στο φόρουμ."
+
+msgctxt "#32347"
+msgid "Failed to unsubscribe from forum:"
+msgstr "Αποτυχία κατάργησης της συνδρομής στο φόρουμ:"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Άγνωστο"
+
+msgctxt "#32349"
+msgid "Creating Thread..."
+msgstr "Δημιουργείται Θέμα..."
+
+msgctxt "#32350"
+msgid "Thread created:"
+msgstr "Το Θέμα δημιουργήθηκε:"
+
+msgctxt "#32351"
+msgid "Failed to create thread:"
+msgstr "Αποτυχία δημιουργίας θέματος:"
+
+msgctxt "#32352"
+msgid "Login Required"
+msgstr "Απαιτείται Σύνδεση"
+
+msgctxt "#32353"
+msgid "This forum does not allow guest access."
+msgstr "Αυτό το φόρουμ δεν επιτρέπει πρόσβαση λειτουργίας επισκέπτη."
+
+msgctxt "#32354"
+msgid "Login required."
+msgstr "Απαιτείται σύνδεση."
+
+msgctxt "#32355"
+msgid "Set login info now?"
+msgstr "Ορισμός στοιχείων σύνδεσης τώρα;"
+
+msgctxt "#32356"
+msgid "Getting User List"
+msgstr "Γίνεται Λήψη Λίστας Χρηστών"
+
+msgctxt "#32357"
+msgid "Not Available"
+msgstr "Μη Διαθέσιμο"
+
+msgctxt "#32358"
+msgid "Online Users"
+msgstr "Συνδεδεμένοι Χρήστες"
+
+msgctxt "#32359"
+msgid "Search posts of {0}"
+msgstr "Αναζήτηση αναρτήσεων του {0}"
+
+msgctxt "#32360"
+msgid "View User Info"
+msgstr "Εμφάνιση Πληροφοριών Χρήστη"
+
+msgctxt "#32361"
+msgid "Getting Info"
+msgstr "Γίνεται Λήψη Πληροφοριών"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Όνομα"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Κατάσταση"
+
+msgctxt "#32364"
+msgid "Post Count"
+msgstr "Μετρητής Αναρτήσεων"
+
+msgctxt "#32365"
+msgid "Join Date"
+msgstr "Ημ/νία Εγγραφής"
+
+msgctxt "#32366"
+msgid "Current Activity"
+msgstr "Τρέχουσα Δραστηριότητα"
+
+msgctxt "#32367"
+msgid "Last Activity Date"
+msgstr "Ημ/νία Τελευταίας Δραστηριότητας"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Πληροφορίες"
+
+msgctxt "#32369"
+msgid "View Online Users"
+msgstr "Εμφάνιση Συνδεδεμένων Χρηστών"
+
+msgctxt "#32370"
+msgid "View Forum Info"
+msgstr "Εμφάνιση Πληροφοριών Φόρουμ"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Αναζήτηση"
+
+msgctxt "#32372"
+msgid "Forum Info"
+msgstr "Πληροφορίες Φόρουμ"
+
+msgctxt "#32373"
+msgid "Really Exit?"
+msgstr "Σίγουρα να γίνει Έξοδος;"
+
+msgctxt "#32374"
+msgid "Skin Changed"
+msgstr "Έγινε Αλλαγή Κελύφους"
+
+msgctxt "#32375"
+msgid "Skin changed. Restart Forum Browser to apply."
+msgstr "Έγινε Αλλαγή Κελύφους. Επανεκκινήστε την Περιήγηση Φόρουμ για να γίνει εφαρμογή."
+
+msgctxt "#32376"
+msgid "Search Options"
+msgstr "Επιλογές Αναζήτησης"
+
+msgctxt "#32377"
+msgid "New Search"
+msgstr "Νέα Αναζήτηση"
+
+msgctxt "#32378"
+msgid "Post Search Results"
+msgstr "Αποτελέσματα Αναζήτησης Αναρτήσεων"
+
+msgctxt "#32379"
+msgid "Thread Search Results"
+msgstr "Αποτελέσματα Αναζήτησης Θεμάτων"
+
+msgctxt "#32380"
+msgid "User Options"
+msgstr "Επιλογές Χρήστη"
+
+msgctxt "#32381"
+msgid "New User"
+msgstr "Νέος Χρήστης"
+
+msgctxt "#32382"
+msgid "Enter Name Of User To Search"
+msgstr "Εισαγωγή Ονόματος Χρήστη προς Αναζήτηση"
+
+msgctxt "#32383"
+msgid "Recent Threads"
+msgstr "Πρόσφατα Θέματα"
+
+msgctxt "#32384"
+msgid "Recent Posts"
+msgstr "Πρόσφατες Αναρτήσεις"
+
+msgctxt "#32385"
+msgid "Post Search Results"
+msgstr "Αποτελέσματα Αναζήτησης Αναρτήσεων"
+
+msgctxt "#32386"
+msgid "Choose Forum"
+msgstr "Επιλογή Φόρουμ"
+
+msgctxt "#32387"
+msgid "Login Not Set"
+msgstr "Δεν Ορίστηκαν Στοιχεία Σύνδεσης"
+
+msgctxt "#32388"
+msgid "Username and password not set."
+msgstr "Δεν Ορίστηκε Όνομα Χρήστη και Κωδικός."
+
+msgctxt "#32389"
+msgid "Login Set"
+msgstr "Ορίστηκαν Στοιχεία Σύνδεσης"
+
+msgctxt "#32390"
+msgid "Username and password set."
+msgstr "Ορίστηκε Όνομα Χρήστη και Κωδικός."
+
+msgctxt "#32391"
+msgid "Use URL?"
+msgstr "Χρήση URL;"
+
+msgctxt "#32392"
+msgid "Use this URL?"
+msgstr "Χρήση αυτής της URL;"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "Ενημέρωση"
+
+msgctxt "#32394"
+msgid "Skin modifications need to be updated. Click OK to continue."
+msgstr "Οι τροποποιήσεις του κελύφους πρέπει να ενημερωθούν. Πιέστε OK για συνέχεια."
+
+msgctxt "#32395"
+msgid "Select Rule:"
+msgstr "Επιλογή Κανόνα:"
+
+msgctxt "#32396"
+msgid "EXTRA"
+msgstr "ΕΠΙΠΛΕΟΝ"
+
+msgctxt "#32397"
+msgid "FILTER"
+msgstr "ΦΙΛΤΡΟ"
+
+msgctxt "#32399"
+msgid "Add Rule"
+msgstr "Προσθήκη Κανόνα"
+
+msgctxt "#32400"
+msgid "Share"
+msgstr "Κοινή Χρήση"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Αποθήκευση"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Τύπος"
+
+msgctxt "#32403"
+msgid "Head Filter"
+msgstr "Φίλτρο Head"
+
+msgctxt "#32404"
+msgid "Tail Filter"
+msgstr "Φίλτρο Tail"
+
+msgctxt "#32405"
+msgid "Enter Name"
+msgstr "Εισαγωγή Ονόματος"
+
+msgctxt "#32406"
+msgid "Enter Python Regular Expression"
+msgstr "Εισαγωγή Κανονικής Έκφρασης Python"
+
+msgctxt "#32407"
+msgid "Enter Phrase"
+msgstr "Εισαγωγή Φράσης"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Επιλογή"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+msgctxt "#32410"
+msgid "HEAD FILTERS"
+msgstr "ΦΙΛΤΡΑ HEAD"
+
+msgctxt "#32411"
+msgid "TAIL FILTERS"
+msgstr "ΦΙΛΤΡΑ TAIL"
+
+msgctxt "#32412"
+msgid "Current Rules"
+msgstr "Τρέχοντες Κανόνες"
+
+msgctxt "#32413"
+msgid "Rules Already Exist For This Forum:"
+msgstr "Υπάρχουν ήδη Κανόνες για αυτό το Φόρουμ:"
+
+msgctxt "#32414"
+msgid "Overwrite?"
+msgstr "Αντικατάσταση;"
+
+msgctxt "#32415"
+msgid "Overwrite existing rules?"
+msgstr "Να γίνει αντικατάσταση των υπαρχόντων κανόνων;"
+
+msgctxt "#32416"
+msgid "Added"
+msgstr "Προστέθηκε"
+
+msgctxt "#32417"
+msgid "Removed"
+msgstr "Αφαιρέθηκε"
+
+msgctxt "#32418"
+msgid "Forum added to favorites!"
+msgstr "Το Φόρουμ προστέθηκε στα αγαπημένα!"
+
+msgctxt "#32419"
+msgid "Forum removed from favorites."
+msgstr "Το Φόρουμ αφαιρέθηκε από τα αγαπημένα."
+
+msgctxt "#32420"
+msgid "Select Category"
+msgstr "Επιλογή Κατηγορίας"
+
+msgctxt "#32421"
+msgid "Search Database"
+msgstr "Αναζήτηση Βάσης Δεδομένων"
+
+msgctxt "#32422"
+msgid "Show All"
+msgstr "Εμφάνιση Όλων"
+
+msgctxt "#32423"
+msgid "Add Forum"
+msgstr "Προσθήκη Φόρουμ"
+
+msgctxt "#32424"
+msgid "Enter Name And Address"
+msgstr "Εισαγωγή Ονόματος και Διεύθυνσης"
+
+msgctxt "#32425"
+msgid "Forum not found or not compatible"
+msgstr "Το Φόρουμ δε βρέθηκε ή δεν είναι συμβατό"
+
+msgctxt "#32426"
+msgid "Enter forum URL"
+msgstr "Εισαγωγή URL του φόρουμ"
+
+msgctxt "#32427"
+msgid "Testing Forum"
+msgstr "Γίνεται Δοκιμή του Φόρουμ"
+
+msgctxt "#32428"
+msgid "Question..."
+msgstr "Ερώτηση..."
+
+msgctxt "#32429"
+msgid "Does this forum require a login?"
+msgstr "Αυτό το φόρουμ απαιτεί σύνδεση;"
+
+msgctxt "#32430"
+msgid "Click YES to set login details."
+msgstr "Πιέστε ΝΑΙ για να ορίσετε λεπτομέρειες στοιχείων σύνδεσης."
+
+msgctxt "#32431"
+msgid "Forum not found or not compatible."
+msgstr "Το Φόρουμ δε βρέθηκε ή δεν είναι συμβατό."
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Βρέθηκαν"
+
+msgctxt "#32433"
+msgid "Forum {0} found"
+msgstr "Βρέθηκε το φόρουμ {0}"
+
+msgctxt "#32434"
+msgid "Getting Description And Images"
+msgstr "Γίνεται λήψη Περιγραφής και Εικόνων"
+
+msgctxt "#32435"
+msgid "Enter Description"
+msgstr "Εισαγωγή Περιγραφής"
+
+msgctxt "#32436"
+msgid "Choose Logo"
+msgstr "Επιλογή Λογότυπου"
+
+msgctxt "#32437"
+msgid "Add To Online Database"
+msgstr "Προσθήκη στη Διαδικτυακή Βάση Δεδομένων"
+
+msgctxt "#32438"
+msgid "Getting Forum List"
+msgstr "Γίνεται λήψη Λίστας Φόρουμ"
+
+msgctxt "#32439"
+msgid "No forums"
+msgstr "Κανένα φόρουμ"
+
+msgctxt "#32440"
+msgid "No forums in that category/search"
+msgstr "Κανένα φόρουμ σε αυτή την κατηγορία/αναζήτηση"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "Κατηγορία"
+
+msgctxt "#32442"
+msgid "Forum Added"
+msgstr "Προστέθηκε Φόρουμ"
+
+msgctxt "#32443"
+msgid "Online database forum rules updated."
+msgstr "Ενημερώθηκε η διαδικτυακή βάση δεδομένων κανόνων φόρουμ."
+
+msgctxt "#32444"
+msgid "Failed to update the online database."
+msgstr "Αποτυχία ενημέρωσης της διαδικτυακής βάσης δεδομένων."
+
+msgctxt "#32445"
+msgid "Add To Database?"
+msgstr "Προσθήκη στη Βάση Δεδομένων;"
+
+msgctxt "#32446"
+msgid "Share to the Forum Browser online datbase?"
+msgstr "Κοινή χρήση με τη διαδικτυακή βάση δεδομένων της Περιήγησης Φόρουμ;"
+
+msgctxt "#32447"
+msgid "Forum must be rated in order to be added to the online database."
+msgstr "Το φόρουμ πρέπει να έχει αξιολόγηση προκειμένου να προστεθεί στη διαδικτυακή βάση δεδομένων."
+
+msgctxt "#32448"
+msgid "Saving To Database"
+msgstr "Γίνεται αποθήκευση στη Βάση Δεδομένων"
+
+msgctxt "#32449"
+msgid "Updated"
+msgstr "Ενημερώθηκε"
+
+msgctxt "#32450"
+msgid "Not Added"
+msgstr "Δεν προστέθηκε"
+
+msgctxt "#32451"
+msgid "Forum added successfully."
+msgstr "Το φόρουμ προστέθηκε επιτυχώς."
+
+msgctxt "#32452"
+msgid "Forum entry exists. Updated successfully."
+msgstr "Η καταχώριση φόρουμ υπάρχει. Ενημερώθηκε επιτυχώς."
+
+msgctxt "#32453"
+msgid "Forum not added"
+msgstr "Το φόρουμ δεν προστέθηκε"
+
+msgctxt "#32454"
+msgid "Function Rating"
+msgstr "Αξιολόγηση Λειτουργικότητας."
+
+msgctxt "#32455"
+msgid "Fully Functional"
+msgstr "Πλήρως Λειτουργικό"
+
+msgctxt "#32456"
+msgid "Partially Functional"
+msgstr "Εν Μέρει Λειτουργικό"
+
+msgctxt "#32457"
+msgid "Not Functional"
+msgstr "Μη Λειτουργικό"
+
+msgctxt "#32458"
+msgid "Accuracy Rating"
+msgstr "Αξιολόγηση Ακρίβειας"
+
+msgctxt "#32459"
+msgid "Full Accuracy"
+msgstr "Πλήρης Ακρίβεια"
+
+msgctxt "#32460"
+msgid "OK Accuracy"
+msgstr "Καλή Ακρίβεια"
+
+msgctxt "#32461"
+msgid "Poor Accuracy"
+msgstr "Μειωμένη Ακρίβεια"
+
+msgctxt "#32462"
+msgid "Color set!"
+msgstr "Ορίστηκε το χρώμα!"
+
+msgctxt "#32463"
+msgid "Online database color updated."
+msgstr "Ενημερώθηκε η διαδικτυακή βάση δεδομένων χρωμάτων."
+
+msgctxt "#32464"
+msgid "Failed to update the online database."
+msgstr "Αποτυχία ενημέρωσης της διαδικτυακής βάσης δεδομένων."
+
+msgctxt "#32465"
+msgid "Choose Forum To Remove"
+msgstr "Επιλογή Φόρουμ Προς Απομάκρυνση"
+
+msgctxt "#32466"
+msgid "Remove?"
+msgstr "Αφαίρεση;"
+
+msgctxt "#32467"
+msgid "Really remove forum?"
+msgstr "Σίγουρα να αφαιρεθεί το φόρουμ;"
+
+msgctxt "#32468"
+msgid "Forum Removed"
+msgstr "Το Φόρουμ Αφαιρέθηκε"
+
+msgctxt "#32469"
+msgid "File {0} of {1}"
+msgstr "Αρχείο {0} από {1}"
+
+msgctxt "#32470"
+msgid "Error accessing forum.\n\nIt apppears the forum may have moved. Check the forum address in a browser and try re-adding it, or if there is a URL listed below, you can try re-adding it with that URL."
+msgstr "Σφάλμα κατά την είσοδο στο φόρουμ.\n\nΦαίνεται ότι το φόρουμ έχει μεταφερθεί. Ελέγξτε τη διεύθυνσή του και δοκιμάστε να το προσθέσετε ξανά, ή αν υπάρχει URL καταχωρημένη παρακάτω, μπορείτε να δοκιμάσετε να το προσθέσετε ξανά με αυτήν τη URL."
+
+msgctxt "#32471"
+msgid "Error accessing forum.\n\nIt apppears the forum interface ({0}) is no longer installed, is missing or has moved.\n\nVerify the forum's URL in a browser and then try re-adding it.\n\nCheck with the forum administrator if the problem persists."
+msgstr "Σφάλμα κατά την είσοδο στο φόρουμ.\n\nΦαίνεται ότι το περιβάλλον εργασίας του φόρουμ ({0}) δεν είναι πλέον εγκατεστημένο, λείπει ή έχει μεταφερθεί.\n\nΕπαληθεύστε τη URL του φόρουμ σε ένα πρόγραμμα περιήγησης και μετά δοκιμάστε να το προσθέσετε ξανά.\n\nΕπικοινωνήστε με το διαχειριστή του φόρουμ αν το πρόβλημα επιμείνει."
+
+msgctxt "#32472"
+msgid "Error accessing forum.\n\nForum interface appears to have changed from {0} to {1}.\n\nTry re-adding it."
+msgstr "Σφάλμα κατά την είσοδο στο φόρουμ.\n\nΤο περιβάλλον εργασίας του φόρουμ άλλαξε από {0} σε {1}.\n\nΔοκιμάστε να το προσθέσετε ξανά."
+
+msgctxt "#32473"
+msgid "Error accessing forum.\n\nPlease contact the forum administrator if this problem continues."
+msgstr "Σφάλμα κατά την είσοδο στο φόρουμ.\n\nΕπικοινωνήστε με το διαχειριστή του φόρουμ αν το πρόβλημα επιμείνει."
+
+msgctxt "#32474"
+msgid "Invalid Hex Color"
+msgstr "Εσφαλμένο Χρώμα Hex"
+
+msgctxt "#32475"
+msgid "Enter 6-Digit Hex Color"
+msgstr "Εισαγωγή 6-ψήφιου Χρώματος Hex"
+
+msgctxt "#32476"
+msgid "Keyboard Mod Removed"
+msgstr "Αφαιρέθηκε το Τροποποιημένο Πληκτρολόγιο"
+
+msgctxt "#32477"
+msgid "Forum Browser will need to be restarted before it takes effect."
+msgstr "Η Περιήγηση Φόρουμ πρέπει να επανεκκινηθεί για να γίνει εφαρμογή."
+
+msgctxt "#32478"
+msgid "Copying files:"
+msgstr "Γίνεται αντιγραφή αρχείων:"
+
+msgctxt "#32479"
+msgid "Skin Mods"
+msgstr "Τροποποιήσεις (mod) Κελύφους"
+
+msgctxt "#32480"
+msgid "Recommended skin modifications not installed."
+msgstr "Δεν εγκαταστάθηκαν οι προτεινόμενες τροποποιήσεις κελύφους."
+
+msgctxt "#32481"
+msgid "(Requires Forum Browser restart to take effect.)"
+msgstr "(Απαιτείται επανεκκίνηση της Περιήγησης Φόρουμ για να γίνει εφαρμογή)"
+
+msgctxt "#32482"
+msgid "Install now?"
+msgstr "Εγκατάσταση τώρα;"
+
+msgctxt "#32483"
+msgid "Aborted"
+msgstr "Ακυρώθηκε"
+
+msgctxt "#32484"
+msgid "Skin modifications were NOT installed."
+msgstr "ΔΕΝ εγκαταστάθηκαν οι τροποποιήσεις κελύφους."
+
+msgctxt "#32485"
+msgid "Enable 'Use skin modifications (Recommended)' in settings if you want to install them at a later time."
+msgstr "Ενεργοποίηση της 'Χρήσης Τροποποιήσεων Κελύφους (Προτείνεται)' στις ρυθμίσεις για εγκατάσταση αργότερα."
+
+msgctxt "#32486"
+msgid "Skin Mod Install"
+msgstr "Εγκατάσταση Τροποποίησης Κελύφους"
+
+msgctxt "#32487"
+msgid "{0} skin not installed in user path."
+msgstr "Το κέλυφος {0} δεν εγκαταστάθηκε στη διαδρομή του χρήστη."
+
+msgctxt "#32488"
+msgid "Click Yes to copy"
+msgstr "Πιέστε ΝΑΙ για αντιγραφή"
+
+msgctxt "#32489"
+msgid "Click No to Abort"
+msgstr "Πιέστε ΟΧΙ για ακύρωση"
+
+msgctxt "#32490"
+msgid "Copying Files"
+msgstr "Γίνεται αντιγραφή Αρχείων"
+
+msgctxt "#32491"
+msgid "Please wait..."
+msgstr "Παρακαλώ περιμένετε..."
+
+msgctxt "#32492"
+msgid "Failed to copy files, aborting."
+msgstr "Αποτυχία αντιγραφής αρχείων, ακυρώνεται."
+
+msgctxt "#32493"
+msgid "Files copied."
+msgstr "Τα αρχεία αντιγράφηκαν."
+
+msgctxt "#32494"
+msgid "Forum Browser needs to be restarted for the mod to take effect."
+msgstr "Η Περιήγηση Φόρουμ πρέπει να επανεκκινήσει για να εφαρμοστεί η τροποποίηση."
+
+msgctxt "#32495"
+msgid "Font installed."
+msgstr "Η γραμματοσειρά εγκαταστάθηκε."
+
+msgctxt "#32496"
+msgid "Keyboard Mod"
+msgstr "Τροποποιημένο Πληκτρολόγιο"
+
+msgctxt "#32497"
+msgid "Install keyboard skin mod?"
+msgstr "Να εγκατασταθεί το τροποποιημένο πληκτρολόγιο του κελύφους;"
+
+msgctxt "#32498"
+msgid "THIS WILL REPLACE THE CURRENT XBMC KEYBOARD"
+msgstr "ΑΥΤΟ ΘΑ ΑΝΤΙΚΑΤΑΣΤΗΣΕΙ ΤΟ ΤΡΕΧΟΝ ΠΛΗΚΤΡΟΛΟΓΙΟ ΤΟΥ XBMC"
+
+msgctxt "#32499"
+msgid "Keyboard installed."
+msgstr "Εγκαταστάθηκε το πληκτρολόγιο."
+
+msgctxt "#32500"
+msgid "Miscellaneous"
+msgstr "Διάφορα"
+
+msgctxt "#32501"
+msgid "Audio/Video Software & Technology"
+msgstr "Λογισμικό Βίντεο/Ήχου & Τεχνολογία"
+
+msgctxt "#32502"
+msgid "Science & Technology"
+msgstr "Επιστήμη & Τεχνολογία"
+
+msgctxt "#32503"
+msgid "Automotive/Motorcycle/Powersports"
+msgstr "Αυτοκίνητα/Μοτοσικλέτες/Μηχανοκίνητος Αθλητισμός"
+
+msgctxt "#32504"
+msgid "Pets"
+msgstr "Κατοικίδια"
+
+msgctxt "#32505"
+msgid "Wildlife & Nature"
+msgstr "Άγρια Ζωή & Φύση"
+
+msgctxt "#32506"
+msgid "Games (Video/Board/Etc)"
+msgstr "Παιχνίδια (Ηλεκτρονικά/Επιτραπέζια/Κτλ.)"
+
+msgctxt "#32507"
+msgid "Sports (Fans)"
+msgstr "Αθλητισμός (Φίλαθλοι)"
+
+msgctxt "#32508"
+msgid "Outdoor & Travel"
+msgstr "Ύπαιθρος & Ταξίδια"
+
+msgctxt "#32509"
+msgid "Society & Culture"
+msgstr "Κοινωνία & Πολιτισμός"
+
+msgctxt "#32510"
+msgid "Food, Drink & Dining"
+msgstr "Φαγητό, Ποτό & Ψυχαγωγία"
+
+msgctxt "#32511"
+msgid "Computers & Software"
+msgstr "Υπολογιστές & Λογισμικό"
+
+msgctxt "#32512"
+msgid "Gadgets & Phones"
+msgstr "Gadget & Τηλέφωνα"
+
+msgctxt "#32513"
+msgid "Hobbies & Collecting"
+msgstr "Χόμπι & Συλλογές"
+
+msgctxt "#32514"
+msgid "Sports (Recreational)"
+msgstr "Αθλητισμός (Ψυχαγωγία)"
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Διαδίκτυο"
+
+msgctxt "#32516"
+msgid "Entertainment (TV/Movies/Music)"
+msgstr "Ψυχαγωγία (Τηλεόραση/Ταινίες/Μουσική)"
+
+msgctxt "#32517"
+msgid "Enter Keywords or Use Wildcards *?"
+msgstr "Εισαγωγή Λέξεων-Κλειδιά ή Χρήση των Χαρακτήρων Υποκατάστασης *?"
+
+msgctxt "#32518"
+msgid "Post User Attributes To Display"
+msgstr "Ιδιότητες Χρήστη Ανάρτησης προς Εμφάνιση"
+
+msgctxt "#32519"
+msgid "Open Subscriptions/PMs Window Automatically On Open Forum"
+msgstr "Άνοιγμα παραθύρου Συνδρομών/Προσωπικών Μηνυμάτων αυτόματα κατά το άνοιγμα του Φόρουμ"
+
+msgctxt "#32520"
+msgid "If Both Subs and PMs, Open Subs Window Instead"
+msgstr "Αν υπάρχουν και Συνδρομές και Προσωπικά Μηνύματα, να ανοίγει το παράθυρο Συνδρομών"
+
+msgctxt "#32521"
+msgid "Keyboard NOT installed."
+msgstr "ΔΕΝ εγκαταστάθηκε το πληκτρολόγιο."
+
+msgctxt "#32522"
+msgid "Enable 'Use keyboard mod' in settings if you want to install it at a later time."
+msgstr "Ενεργοποίηση της 'Χρήσης Τροποποιημένου Πληκτρολογίου' στις ρυθμίσεις για εγκατάσταση αργότερα."
+
+msgctxt "#32523"
+msgid "Select Skin"
+msgstr "Επιλογή Κελύφους"
+
+msgctxt "#32900"
+msgid "Prev"
+msgstr "Προηγ."
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Επόμενο"
+
+msgctxt "#32902"
+msgid "Post Reply"
+msgstr "Ανάρτηση Απάντησης"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "Συνδρομές"
+
+msgctxt "#32905"
+msgid "Forums"
+msgstr "Φόρουμ"
+
+msgctxt "#32906"
+msgid "Add Line"
+msgstr "Προσθήκη Γραμμής"
+
+msgctxt "#32907"
+msgid "Add Lines"
+msgstr "Προσθήκη Γραμμών"
+
+msgctxt "#32908"
+msgid "Submit Post"
+msgstr "Υποβολή Ανάρτησης"
+
+msgctxt "#32909"
+msgid "Messages"
+msgstr "Μηνύματα"
+
+msgctxt "#32910"
+msgid "STOP"
+msgstr "ΔΙΑΚΟΠΗ"
+
+msgctxt "#32911"
+msgid "Threads"
+msgstr "Θέματα"
+
+msgctxt "#32912"
+msgid "Posts"
+msgstr "Αναρτήσεις"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32914"
+msgid "New Search"
+msgstr "Νέα Αναζήτηση"
+
+msgctxt "#32915"
+msgid "Loading..."
+msgstr "Φόρτωση..."
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Αναζήτηση"
+
+msgctxt "#32917"
+msgid "Search Posts"
+msgstr "Αναζήτηση Αναρτήσεων"
+
+msgctxt "#32918"
+msgid "Search Threads"
+msgstr "Αναζήτηση Θεμάτων"
+
+msgctxt "#32919"
+msgid "Search User"
+msgstr "Αναζήτηση Χρήστη"
+
+msgctxt "#32920"
+msgid "Post Reply"
+msgstr "Ανάρτηση Απάντησης"
+
+msgctxt "#32921"
+msgid "Set Title"
+msgstr "Ορισμός Τίτλου"
+
+msgctxt "#32922"
+msgid "Post"
+msgstr "Ανάρτηση"
+
+msgctxt "#32923"
+msgid "Add Forum"
+msgstr "Προσθήκη Φόρουμ"
+
+msgctxt "#32924"
+msgid "Add From Online"
+msgstr "Προσθήκη από το Διαδίκτυο"
+
+msgctxt "#32925"
+msgid "Remove Forum"
+msgstr "Αφαίρεση Φόρουμ"
+
+msgctxt "#32926"
+msgid "Add To Favorites"
+msgstr "Προσθήκη στα Αγαπημένα"
+
+msgctxt "#32927"
+msgid "Remove From Favs"
+msgstr "Αφαίρεση από τα Αγαπημένα"
+
+msgctxt "#32928"
+msgid "Forum Settings"
+msgstr "Ρυθμίσεις Φόρουμ"
+
+msgctxt "#32929"
+msgid "Share To Online DB"
+msgstr "Κοινή Χρήση στη Διαδικτυακή Βάση Δεδομένων (ODB)"
+
+msgctxt "#32930"
+msgid "Share Theme To ODB"
+msgstr "Κοινή Χρήση Θέματος στην ODB"
+
+msgctxt "#32931"
+msgid "Help"
+msgstr "Βοήθεια"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Υπότιτλοι"
+
+msgctxt "#32933"
+msgid "PMs"
+msgstr "Προσωπικά Μηνύματα"
+
+msgctxt "#32934"
+msgid "Header Color"
+msgstr "Χρώμα Επικεφαλίδας"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Όλα"
+
+msgctxt "#32936"
+msgid "Functionality"
+msgstr "Λειτουργικότητα"
+
+msgctxt "#32937"
+msgid "Accuracy"
+msgstr "Ακρίβεια"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgctxt "#32940"
+msgid "Forum Browser: New Posts"
+msgstr "Περιήγηση Φόρουμ: Νέες Αναρτήσεις"

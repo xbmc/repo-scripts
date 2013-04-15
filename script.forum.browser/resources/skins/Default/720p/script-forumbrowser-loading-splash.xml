@@ -1,5 +1,6 @@
 <window>
 	<zorder>1</zorder>
+	<!--   defaultcontrol>200</defaultcontrol -->
 	<coordinates>
 		<system>1</system>
 		<posx>556</posx>
@@ -39,6 +40,24 @@
 				<height>72</height>
 				<texture>forum-browser-loading.gif</texture>
 				<colordiffuse>FFFFFFFF</colordiffuse>
+			</control>
+			<control type="button" id="200">
+				<description>Stop Button</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>168</width>
+				<height>168</height>
+				<font>ForumBrowser-font12</font>
+				<textcolor>FF000000</textcolor>
+				<focusedcolor>FF000000</focusedcolor>
+				<aligny>center</aligny>
+				<align>center</align>
+				<label>[B]$ADDON[script.forum.browser 32910][/B]</label>
+				<colordiffuse>FFFF0000</colordiffuse>
+				<pulseonselect>false</pulseonselect>
+				<texturefocus></texturefocus>
+				<texturenofocus></texturenofocus>
+				<visible>false</visible>
 			</control>
 	</controls>
 </window>

@@ -52,7 +52,7 @@
 				<textcolor>black</textcolor>
 				<aligny>center</aligny>
 				<align>center</align>
-				<label>Posts</label>
+				<label>[B]$ADDON[script.forum.browser 32912][/B]</label>
 				<wrapmultiline>true</wrapmultiline>
 			</control>
 			
@@ -78,7 +78,7 @@
 				<font>ForumBrowser-font12</font>
 				<align>center</align>
 				<aligny>center</aligny>
-				<label>$LOCALIZE[SCRIPT3002]</label>
+				<label>$ADDON[script.forum.browser 32902]</label>
 				<texturefocus border="20">forum-browser-dark-grey-boxr.png</texturefocus>
 				<texturenofocus border="20">forum-browser-dark-black-box.png</texturenofocus>
 				<textcolor>white</textcolor>
@@ -210,7 +210,7 @@
 					<focusedcolor>FF000000</focusedcolor>
 					<aligny>center</aligny>
 					<align>center</align>
-					<label>[B]$LOCALIZE[SCRIPT3010][/B]</label>
+					<label>[B]$ADDON[script.forum.browser 32910][/B]</label>
 					<colordiffuse>FFFF0000</colordiffuse>
 					<pulseonselect>false</pulseonselect>
 					<texturefocus border="20">forum-browser-dark-white-trans-boxr.png</texturefocus>
@@ -357,6 +357,20 @@
 						<align>left</align>
 						<textcolor>FF00BB00</textcolor>
 						<info>ListItem.Property(activity)</info>
+						<visible>!StringCompare(ListItem.Property(activity),)</visible>
+					</control>
+					<control type="label">
+						<posx>10</posx>
+						<posy>30</posy>
+						<width>175</width>
+						<height>10</height>
+						<font>ForumBrowser-font10</font>
+						<aligny>center</aligny>
+						<align>left</align>
+						<textcolor>FFCC99AA</textcolor>
+						<scroll>false</scroll>
+						<info>ListItem.Property(last_seen)</info>
+						<visible>StringCompare(ListItem.Property(activity),)</visible>
 					</control>
 					<control type="label">
 						<posx>10</posx>
@@ -368,7 +382,7 @@
 						<textcolor>FFAAAAAA</textcolor>
 						<selectedcolor>FFAAAAAA</selectedcolor>
 						<align>left</align>
-						<info>ListItem.Property(status)</info>
+						<info>ListItem.Property(alternate1)</info>
 					</control>
 					<control type="image">
 						<posx>10</posx>
@@ -388,8 +402,7 @@
 						<aligny>center</aligny>
 						<textcolor>FF9999BB</textcolor>
 						<align>left</align>
-						<label>$LOCALIZE[SCRIPT3011] $INFO[ListItem.Property(postcount)]</label>
-						<visible>!StringCompare(ListItem.Property(postcount),)</visible>
+						<info>ListItem.Property(alternate2)</info>
 					</control>
 					<control type="label">
 						<posx>42</posx>
@@ -400,8 +413,7 @@
 						<aligny>center</aligny>
 						<textcolor>FFAAAAAA</textcolor>
 						<align>left</align>
-						<label>$LOCALIZE[SCRIPT3012] $INFO[ListItem.Property(joindate)]</label>
-						<visible>!StringCompare(ListItem.Property(joindate),)</visible>
+						<info>ListItem.Property(alternate3)</info>
 					</control>
 					<control type="label">
 						<posx>210</posx>
@@ -455,6 +467,44 @@
 						<align>left</align>
 						<info>ListItem.Property(message)</info>
 						<visible>true</visible>
+					</control>
+					<control type="group">
+						<posx>1158</posx>
+						<posy>60</posy>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>24</width>
+							<height>24</height>
+							<texture>forum-browser-images.png</texture>
+							<visible>StringCompare(ListItem.Property(hasimages),hasimages)</visible>
+						</control>
+						<control type="image">
+							<posx>32</posx>
+							<posy>0</posy>
+							<width>24</width>
+							<height>24</height>
+							<texture>forum-browser-video.png</texture>
+							<visible>StringCompare(ListItem.Property(hasvideo),hasvideo)</visible>
+						</control>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>24</width>
+							<height>24</height>
+							<texture>forum-browser-images.png</texture>
+							<visible>StringCompare(ListItem.Property(hasimages),noimages)</visible>
+							<colordiffuse>22FFFFFF</colordiffuse>
+						</control>
+						<control type="image">
+							<posx>32</posx>
+							<posy>0</posy>
+							<width>24</width>
+							<height>24</height>
+							<texture>forum-browser-video.png</texture>
+							<visible>StringCompare(ListItem.Property(hasvideo),novideo)</visible>
+							<colordiffuse>22FFFFFF</colordiffuse>
+						</control>
 					</control>
 				</itemlayout>
 				<focusedlayout height="200">
@@ -575,6 +625,20 @@
 						<align>left</align>
 						<textcolor>FF00BB00</textcolor>
 						<info>ListItem.Property(activity)</info>
+						<visible>!StringCompare(ListItem.Property(activity),)</visible>
+					</control>
+					<control type="label">
+						<posx>10</posx>
+						<posy>30</posy>
+						<width>175</width>
+						<height>10</height>
+						<font>ForumBrowser-font10</font>
+						<aligny>center</aligny>
+						<align>left</align>
+						<textcolor>FFCC99AA</textcolor>
+						<scroll>false</scroll>
+						<info>ListItem.Property(last_seen)</info>
+						<visible>StringCompare(ListItem.Property(activity),)</visible>
 					</control>
 					<control type="label">
 						<posx>10</posx>
@@ -585,7 +649,7 @@
 						<aligny>center</aligny>
 						<textcolor>FFAAAAAA</textcolor>
 						<align>left</align>
-						<info>ListItem.Property(status)</info>
+						<info>ListItem.Property(alternate1)</info>
 					</control>
 					<control type="label">
 						<posx>10</posx>
@@ -596,8 +660,7 @@
 						<aligny>center</aligny>
 						<textcolor>FF9999BB</textcolor>
 						<align>left</align>
-						<label>$LOCALIZE[SCRIPT3011] $INFO[ListItem.Property(postcount)]</label>
-						<visible>!StringCompare(ListItem.Property(postcount),)</visible>
+						<info>ListItem.Property(alternate2)</info>
 					</control>
 					<control type="label">
 						<posx>10</posx>
@@ -608,8 +671,7 @@
 						<aligny>center</aligny>
 						<textcolor>FFAAAAAA</textcolor>
 						<align>left</align>
-						<label>$LOCALIZE[SCRIPT3012] $INFO[ListItem.Property(joindate)]</label>
-						<visible>!StringCompare(ListItem.Property(joindate),)</visible>
+						<info>ListItem.Property(alternate3)</info>
 					</control>
 					<control type="image">
 						<posx>10</posx>
@@ -682,6 +744,44 @@
 						<info>ListItem.Property(message)</info>
 						<visible>true</visible>
 					</control>
+					<control type="group">
+						<posx>1158</posx>
+						<posy>160</posy>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>24</width>
+							<height>24</height>
+							<texture>forum-browser-images.png</texture>
+							<visible>StringCompare(ListItem.Property(hasimages),hasimages)</visible>
+						</control>
+						<control type="image">
+							<posx>32</posx>
+							<posy>0</posy>
+							<width>24</width>
+							<height>24</height>
+							<texture>forum-browser-video.png</texture>
+							<visible>StringCompare(ListItem.Property(hasvideo),hasvideo)</visible>
+						</control>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>24</width>
+							<height>24</height>
+							<texture>forum-browser-images.png</texture>
+							<visible>StringCompare(ListItem.Property(hasimages),noimages)</visible>
+							<colordiffuse>22FFFFFF</colordiffuse>
+						</control>
+						<control type="image">
+							<posx>32</posx>
+							<posy>0</posy>
+							<width>24</width>
+							<height>24</height>
+							<texture>forum-browser-video.png</texture>
+							<visible>StringCompare(ListItem.Property(hasvideo),novideo)</visible>
+							<colordiffuse>22FFFFFF</colordiffuse>
+						</control>
+					</control>
 				</focusedlayout>
 			</control>
 			<control type="group">
@@ -705,6 +805,34 @@
 				</control>
 			</control>
 
+		</control>
+		<control type="group">
+			<visible>Player.Playing + Player.HasVideo + !StringCompare(Window(10000).Property(ForumBrowser_hidePNP),1)</visible>
+			<posx>723</posx>
+			<posy>330</posy>
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-10</posy>
+				<width>540</width>
+				<height>340</height>
+				<texture border="30">forum-browser-dark-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>500</width>
+				<height>310</height>
+				<texture border="20">forum-browser-dark-black-box.png</texture>
+			</control>
+			<control type="videowindow">
+				<description>PIP</description>
+				<posx>10</posx>
+				<posy>20</posy>
+				<width>480</width>
+				<height>270</height>
+				<visible>true</visible>
+			</control>
 		</control>
 	</controls>
 </window>

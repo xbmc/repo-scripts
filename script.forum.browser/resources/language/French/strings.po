@@ -1,0 +1,633 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xbmc-addons/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Browse forums within XBMC"
+msgstr "Naviguer dans les forums avec XBMC"
+
+msgctxt "Addon Description"
+msgid "Browse Forums in XBMC. Supports Tapatalk enabled forums (over 30000) and Forumrunner enabled forums. Also supports boxee.tv. View forums, threads, posts, subscriptions and private messages. Follow links in Web Viewer. Post replies, send private messages, delete posts, quote posts. View images in posts, follow post forum links and download post links."
+msgstr "Naviguer dans les forums dans XBMC. Supporte Tapatalk  forums activés (plus de 30000) et Forumrunner forums activés. Supporte aussi boxee.tv. Voir les forum, fils de discussion, messages, souscriptions et messages privés.\nSuivre les liens dans Web Viewer. Poster des réponses, envoyer des messages privés, effacer des messages, coter des messages. Voir des images dans les messages, suivre les liens des messages de forum et les télécharger."
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#32001"
+msgid "Open Thread At Newest Post"
+msgstr "Ouvrir Fil de discussion dans un nouveau message"
+
+msgctxt "#32002"
+msgid "Reverse Sort Posts"
+msgstr "Inverser le tri des messages"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Langue"
+
+msgctxt "#32004"
+msgid "Always Login If Possible"
+msgstr "Toujours s'identifier si possible"
+
+msgctxt "#32005"
+msgid "Skin (changes require a restart)"
+msgstr "Skin (modification nécessitant un redémarrage)"
+
+msgctxt "#32006"
+msgid "Use Text Editor (Experimental)"
+msgstr "Utiliser Text Editor (Expérimental)"
+
+msgctxt "#32007"
+msgid "Use Forum Colors"
+msgstr "Utiliser les couleurs du forum"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Avancés"
+
+msgctxt "#32009"
+msgid "Automatically Open Subscriptions"
+msgstr "Ouvrir Automatiquement les Abonnements "
+
+msgctxt "#32010"
+msgid "PIP"
+msgstr "PIP"
+
+msgctxt "#32011"
+msgid "Dark"
+msgstr "Noir"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Léger"
+
+msgctxt "#32013"
+msgid "Hide Signatures In Posts"
+msgstr "Cacher les Signatures dans les Messages"
+
+msgctxt "#32014"
+msgid "Always Show OK Button In Message Dialogs"
+msgstr "Toujours Afficher le Bouton OK dans la Boite de Dialogue des Messages"
+
+msgctxt "#32015"
+msgid "Confirm Exit On Quit"
+msgstr "Confirmer la Sortie lors de l'Arrêt"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Rappels"
+
+msgctxt "#32019"
+msgid "Enable Notifications (Enabling Requires XBMC Restart)"
+msgstr "Activer les Rappels (l'Activation Nécessite le Redémarrage de XBMC)"
+
+msgctxt "#32020"
+msgid "Check Interval (In Minutes)"
+msgstr "Intervalle de Vérification (En Minutes)"
+
+msgctxt "#32021"
+msgid "Only At XBMC Start (Disabling Requires XBMC Restart)"
+msgstr "Uniquement Au Démarrage de XBMC (la Désactivation Nécessite le Redémarrage de XBMC)"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Vidéo"
+
+msgctxt "#32023"
+msgid "Method"
+msgstr "Méthode"
+
+msgctxt "#32024"
+msgid "Method (During Video)"
+msgstr "Méthode (Durant la Vidéo)"
+
+msgctxt "#32025"
+msgid "Normal XBMC Popup"
+msgstr "Pop-Up XBMC Normal"
+
+msgctxt "#32026"
+msgid "Small Dialog"
+msgstr "Petite boîte de dialogue"
+
+msgctxt "#32027"
+msgid "Full Dialog"
+msgstr "Boîte de dialogue Complète"
+
+msgctxt "#32028"
+msgid "XBMC Notice Duration (Seconds)"
+msgstr "Durée de l'Avertissement XBMC (Secondes)"
+
+msgctxt "#32030"
+msgid "Only When Playing Video"
+msgstr "Uniquement lors de la Lecture de Vidéo"
+
+msgctxt "#32032"
+msgid "Ask Before Interrupting Video"
+msgstr "Confirmer Avant d'Interrompre la Vidéo"
+
+msgctxt "#32033"
+msgid "Return To Interrupted Video"
+msgstr "Revenir A la Vidéo Interrompue"
+
+msgctxt "#32036"
+msgid "Stop Forum Video On Forum Browser Close"
+msgstr "Arrêt du Forum Vidéo lors de la clôture du Navigateur de Forum"
+
+msgctxt "#32047"
+msgid "Search: Show Search History"
+msgstr "Chercher: Afficher l'Historique de Recherche"
+
+msgctxt "#32050"
+msgid "ERROR"
+msgstr "ERREUR"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Options"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "Finis"
+
+msgctxt "#32053"
+msgid "Please try again."
+msgstr "Veuillez essayer à nouveau."
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Rafraîchir"
+
+msgctxt "#32100"
+msgid "Logging In"
+msgstr "Connexion en cours"
+
+msgctxt "#32101"
+msgid "Opening URL"
+msgstr "Ouvrir l'URL"
+
+msgctxt "#32102"
+msgid "Reading Data"
+msgstr "Lecture des Données"
+
+msgctxt "#32106"
+msgid "Submitting Form"
+msgstr "Envoi du formulaire"
+
+msgctxt "#32107"
+msgid "Wating {0} seconds"
+msgstr "Attendre {0} secondes"
+
+msgctxt "#32108"
+msgid "Clearing Notifications"
+msgstr "Effacement des Notifications"
+
+msgctxt "#32110"
+msgid "First Page"
+msgstr "Première Page"
+
+msgctxt "#32111"
+msgid "Last Page"
+msgstr "Dernière Page"
+
+msgctxt "#32112"
+msgid "Newest Post"
+msgstr "Nouveau Message"
+
+msgctxt "#32113"
+msgid "Oldest Post"
+msgstr "Message le plus Ancien"
+
+msgctxt "#32114"
+msgid "Go to..."
+msgstr "Aller à..."
+
+msgctxt "#32115"
+msgid "Go to page number"
+msgstr "Aller à la page numéro"
+
+msgctxt "#32116"
+msgid "Enter page number"
+msgstr "Entrer le numéro de page"
+
+msgctxt "#32120"
+msgid "Set Title"
+msgstr "Définir le Titre"
+
+msgctxt "#32122"
+msgid "Delete Line"
+msgstr "Effacer la Ligne"
+
+msgctxt "#32123"
+msgid "Enter Text"
+msgstr "Entrer Texte"
+
+msgctxt "#32124"
+msgid "Edit Line"
+msgstr "Éditer la Ligne"
+
+msgctxt "#32125"
+msgid "Enter Post Title"
+msgstr "Entrer le Titre du Message"
+
+msgctxt "#32126"
+msgid "Posting"
+msgstr "Publication"
+
+msgctxt "#32127"
+msgid "Posting. Please wait..."
+msgstr "Publication. Veuillez attendre..."
+
+msgctxt "#32128"
+msgid "Add Line Before"
+msgstr "Ajouter une Ligne Avant"
+
+msgctxt "#32129"
+msgid "Save Image"
+msgstr "Enregistrer l'Image"
+
+msgctxt "#32130"
+msgid "Posts"
+msgstr "Messages"
+
+msgctxt "#32131"
+msgid "Error getting posts"
+msgstr "Erreur lors de la récupération des messages"
+
+msgctxt "#32133"
+msgid "Error filling post list"
+msgstr "Erreur lors de la création de la liste de messages"
+
+msgctxt "#32134"
+msgid "Quote"
+msgstr "Noter"
+
+msgctxt "#32135"
+msgid "Error getting private messages"
+msgstr "Erreur lors de la récupération des messages privés"
+
+msgctxt "#32136"
+msgid "View Images"
+msgstr "Voir les Images"
+
+msgctxt "#32137"
+msgid "View Link Images"
+msgstr "Voir le Lien des Images"
+
+msgctxt "#32140"
+msgid "Download A Link"
+msgstr "Télécharger un Lien"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Supprimer"
+
+msgctxt "#32144"
+msgid "Choose Target Directory"
+msgstr "Choisir le Répertoire Destination"
+
+msgctxt "#32145"
+msgid "Downloading File"
+msgstr "Téléchargement du Fichier"
+
+msgctxt "#32146"
+msgid "Downloaded File: "
+msgstr "Fichier Téléchargé:"
+
+msgctxt "#32148"
+msgid "Downloading Images"
+msgstr "Téléchargement des Images"
+
+msgctxt "#32149"
+msgid "Deleting"
+msgstr "Effacement"
+
+msgctxt "#32150"
+msgid "Deleting. Please wait..."
+msgstr "Effacement. Veuillez patienter..."
+
+msgctxt "#32164"
+msgid "FORUM"
+msgstr "FORUM"
+
+msgctxt "#32170"
+msgid "Forums"
+msgstr "Forums"
+
+msgctxt "#32172"
+msgid "No Description"
+msgstr "Pas de Déscription"
+
+msgctxt "#32173"
+msgid "Sub-Forum"
+msgstr "Sous Forum"
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "Abonnements"
+
+msgctxt "#32176"
+msgid "Private Messages"
+msgstr "Messages Privés"
+
+msgctxt "#32178"
+msgid "Send Message"
+msgstr "Envoyer Message"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Câble :"
+
+msgctxt "#32183"
+msgid "Code:"
+msgstr "Code:"
+
+msgctxt "#32184"
+msgid "PHP Code:"
+msgstr "Code PHP:"
+
+msgctxt "#32185"
+msgid "HTML Code:"
+msgstr "Code HTML:"
+
+msgctxt "#32200"
+msgid "Select Forum"
+msgstr "Sélectionner Forum"
+
+msgctxt "#32201"
+msgid "Enter Username"
+msgstr "Entrer le Nom d'utilisateur"
+
+msgctxt "#32202"
+msgid "Enter Password"
+msgstr "Entrer le Mot de passe"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Paramètres"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Téléchargement"
+
+msgctxt "#32206"
+msgid "Downloading {0}"
+msgstr "Téléchargement {0}"
+
+msgctxt "#32207"
+msgid "Turn On Notifications"
+msgstr "Activer les Notifications"
+
+msgctxt "#32208"
+msgid "Turn Off Notifications"
+msgstr "Désactiver les Notifications"
+
+msgctxt "#32209"
+msgid "Manage Notifications"
+msgstr "Gérer les Notifications"
+
+msgctxt "#32220"
+msgid "Waiting..."
+msgstr "Attente..."
+
+msgctxt "#32222"
+msgid "Add A Forum"
+msgstr "Ajouter un Forum"
+
+msgctxt "#32223"
+msgid "Add Current Forum To Favorites"
+msgstr "Ajouter le Forum en cours aux Favoris"
+
+msgctxt "#32224"
+msgid "Remove Forums"
+msgstr "Retirer Forums"
+
+msgctxt "#32225"
+msgid "Remove A Forum From Favorites"
+msgstr "Retirer un Forum des Favoris"
+
+msgctxt "#32226"
+msgid "Add A Forum From The Online Database"
+msgstr "Ajouter un Forum depuis la Base de Données en ligne"
+
+msgctxt "#32229"
+msgid "Empty Forum"
+msgstr "Forum Vide"
+
+msgctxt "#32231"
+msgid "Checking Messages"
+msgstr "Vérification des Messages"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "Éditer"
+
+msgctxt "#32235"
+msgid "Enable SSL connections (https)"
+msgstr "Activer les connexions SSL (https)"
+
+msgctxt "#32238"
+msgid "Password Encryption Type"
+msgstr "Type d'encryptage du mot de passe"
+
+msgctxt "#32241"
+msgid "Add Current Forum To Online Database"
+msgstr "Ajouter le Forum en cours à la Base de Données en ligne"
+
+msgctxt "#32242"
+msgid "Unsubscribe From Forum"
+msgstr "Se désinscrire du Forum"
+
+msgctxt "#32243"
+msgid "Subscribe To Forum"
+msgstr "S'inscrire au Forum"
+
+msgctxt "#32244"
+msgid "Help"
+msgstr "Aide"
+
+msgctxt "#32248"
+msgid "Please wait..."
+msgstr "Veuillez patienter..."
+
+msgctxt "#32249"
+msgid "Reply/Forward"
+msgstr "Répondre/Transmettre"
+
+msgctxt "#32250"
+msgid "No posts"
+msgstr "Pas de message"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Oui"
+
+msgctxt "#32266"
+msgid "Finished"
+msgstr "Terminé"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "Choisir"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Dégagé"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "Éditer"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Parcourir"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "Description"
+
+msgctxt "#32291"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32304"
+msgid "Success"
+msgstr "Réussi"
+
+msgctxt "#32322"
+msgid "Deleting"
+msgstr "Effacement"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Inconnu"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Statut"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Information"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Recherche"
+
+msgctxt "#32377"
+msgid "New Search"
+msgstr "Nouvelle recherche"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "Mise à jour"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Enregistrer"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Type"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Sélectionner"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Effacer"
+
+msgctxt "#32417"
+msgid "Removed"
+msgstr "supprimée"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Trouvé"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "Catégorie"
+
+msgctxt "#32491"
+msgid "Please wait..."
+msgstr "Veuillez patienter..."
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Internet"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Suivant"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Paramètres"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "Abonnements"
+
+msgctxt "#32905"
+msgid "Forums"
+msgstr "Forums"
+
+msgctxt "#32912"
+msgid "Posts"
+msgstr "Messages"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32914"
+msgid "New Search"
+msgstr "Nouvelle recherche"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Recherche"
+
+msgctxt "#32921"
+msgid "Set Title"
+msgstr "Définir le Titre"
+
+msgctxt "#32931"
+msgid "Help"
+msgstr "Aide"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Sous-titres"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Toutes"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Annuler"

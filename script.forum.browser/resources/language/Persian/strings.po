@@ -1,0 +1,89 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Persian (http://www.transifex.com/projects/p/xbmc-addons/language/fa/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fa\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "عمومی"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "زبان"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "پیشرفته"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "ویدئو"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "تنظیمات"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "حذف"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "تنظیمات"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "در حال بارگیری"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "بله"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "ناشناخته"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "وضعیت"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "جستجو"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "ذخیره"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "بعدی"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "تنظیمات"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "جستجو"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "همه"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "لغو"

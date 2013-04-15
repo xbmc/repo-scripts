@@ -5,6 +5,8 @@ url:threads=forum/!FORUMID!-/!PAGE!
 url:replies=topic/!THREADID!-/!PAGE!
 
 url:page_arg=page__st__!PAGE!
+format:zero_based_index=True
+filter:main_url_cleaner=/forum(?:/|$)
 
 #------------------------------------- Subscriptions
 url:subscriptions=index.php?app=core&module=search&do=followed
@@ -46,3 +48,10 @@ form:post_submit_wait=1
 #url:deletepost=
 #form:delete_action=
 #form:delete_control1=radio:name.deletepost=delete
+
+#######################################################
+#-- Post Stuff ----------------------------------------
+#######################################################
+filter:quote_class=blockquote
+filter:quote_user_postfix=said:(?i)
+filter:quote_tag=quote name='%s'

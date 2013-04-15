@@ -1,0 +1,52 @@
+#Forum Settings Help
+@item:username
+Set the forum login name.
+@item:password
+Set the forum login password.
+
+Passwords are stored encrypted.
+Encryption options are available in the addon settings under 'Advanced'.
+@item:notify
+This will toggle notifications on and off. This only matters when notifications are enabled in Forum Browser settings.
+@item:extras
+A comma separated list of attributes to display in the posts list below the user name and activity information. This overrides the main Forum Browser setting. 
+Up to three items will be displayed following the order of the specified list and depending on availability of the data.
+There are built in attributes, as well as anything listed in the user extra info.
+
+Examples: status, postcount, reputation, joindate, location, homepage, platform
+@item:time_offset_hours
+Used to correct displayed time being offset from your local time.
+You should set the value to the number of minutes and seconds the forum is offset from your time.
+For instance when your activity shows '1h ago' when it shoud be '3s ago', you would set this to 57:00.
+
+Value must be in the format -mmm:ss and can be positive or negative.
+
+[B]Examples:[/B]
+  110:05
+  -4:15
+  28
+@item:description
+Allows you to edit the forum description. If you want to change the Online DataBase description, share the forum to the ODB after editing.
+@item:logo
+This will allow you to choose a logo from a list of images scraped from the forum site.
+
+This will be shown at the top of the forums window
+@item:header_color
+Opens the color editor to select the header color for this forum.
+
+The color editor allows you to change red/green/blue values or enter the hex value of the color.
+
+Usually you will chose a color that blends with the background of the logo, or matches the logo background on the web page (especially for semi-transparent logos).
+@item:login_url
+Some forums use a non-standard login page.
+
+This will open WebViewer and allow you to browse to the login page. When you exit WebViewer, you will be asked if you want to use the url you were viewing when you exited.
+
+If the login page has already been set, you will first be asked if you want to clear the login page or change it.
+@item:rules
+Open the rules manager to set custom post parser rules for a Parser Browser forum.
+ 
+You can add head and tail filters, which will remove lines that have only the entered phrase (as when the quote button text is showing up at the end of all posts).
+
+You can add 'extras' which are Python regular expressions that match a user info label such as 'Reputation:' and are searched on an html tag by tag basis. For example ^reputation:( \d+)?(?i) is the built in expression to match reputation. The 'extra' name will be the label shown in the post.
+ 

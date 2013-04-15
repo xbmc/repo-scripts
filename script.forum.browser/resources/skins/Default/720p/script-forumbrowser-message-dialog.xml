@@ -56,12 +56,12 @@
 				<description>Caption</description>
 				<posx>35</posx>
 				<posy>14</posy>
-				<width>200</width>
+				<width>600</width>
 				<height>60</height>
 				<font>ForumBrowser-font13</font>
 				<textcolor>black</textcolor>
 				<aligny>center</aligny>
-				<align>center</align>
+				<align>left</align>
 				<wrapmultiline>true</wrapmultiline>
 			</control>
 			
@@ -132,7 +132,7 @@
 					<visible>true</visible>
 					<font>font13</font>
 					<align>center</align>
-					<label>$LOCALIZE[SCRIPT3013]</label>
+					<label>$ADDON[script.forum.browser 32913]</label>
 					<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
 					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
 					<textcolor>black</textcolor>

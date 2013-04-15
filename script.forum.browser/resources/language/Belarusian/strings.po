@@ -1,0 +1,205 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Belarusian (http://www.transifex.com/projects/p/xbmc-addons/language/be/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: be\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Language"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Advanced"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Лёгкі"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Апавяшчэньні"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Відэа"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Options"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "Зроблена"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Refresh"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Delete"
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "Subscriptions"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Злучэньне:"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Налады"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Downloading"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "Рэдагаваць"
+
+msgctxt "#32244"
+msgid "Help"
+msgstr "Help"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Yes"
+
+msgctxt "#32266"
+msgid "Finished"
+msgstr "Finished"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "Абраць"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Сьцерці"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "Рэдагаваць"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Абраць"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "Апісаньне"
+
+msgctxt "#32291"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Невядома"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Назьве"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Статус"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Search"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "Абнавіць"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Save"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Тып"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Абраць"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Выдаліць"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Found"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "Category"
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Сеціва"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Наступны"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Налады"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "Subscriptions"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Search"
+
+msgctxt "#32931"
+msgid "Help"
+msgstr "Help"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Субтытры"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Усе"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Cancel"

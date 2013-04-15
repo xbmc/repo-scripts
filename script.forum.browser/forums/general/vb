@@ -79,7 +79,7 @@ url:unsubscribe_forum=http://forums.boxee.tv/subscription.php?do=removesubscript
 #-- Post Stuff ----------------------------------------
 #######################################################
 filter:quote_class=bbcode_quote
-filter:quote_user_prefix=posted by
+filter:quote_user_prefix=posted by(?i)
 filter:quote_tag=quote=%s
 
 filter:post_url_prefix=showthread.php

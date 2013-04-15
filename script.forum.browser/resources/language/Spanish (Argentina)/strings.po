@@ -1,0 +1,197 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Spanish (Argentina) (http://www.transifex.com/projects/p/xbmc-addons/language/es_AR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_AR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Idioma"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Débil"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Notificaciones"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Opciones"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "Hecho"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Actualizar"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Eliminar"
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "Suscripciones"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Estado del enlace: "
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Configuración"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Descargando"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "- Editar"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Sí"
+
+msgctxt "#32266"
+msgid "Finished"
+msgstr "Finalizado"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "Elegir"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Despejado"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "- Editar"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Buscar"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "Descripción"
+
+msgctxt "#32291"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Desconocido"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Estado"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Buscar"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "Actualizar"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Guardar"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Tipo"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Seleccionar"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Eliminar"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Encontrados"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "Categoría"
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Internet"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Siguiente"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Configuración"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "Suscripciones"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Buscar"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Subtítulos"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Todos"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Cancelar"

@@ -1,0 +1,225 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Általános"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Nyelv"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Haladó"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Könnyű"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Értesítések"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Opciók"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "Rendben"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Frissítés"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Törlés"
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "Feliratkozások"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Kapcsolat: "
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Beállítások"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Letöltés folyamatban"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "Szerkeszt"
+
+msgctxt "#32244"
+msgid "Help"
+msgstr "Segítség"
+
+msgctxt "#32248"
+msgid "Please wait..."
+msgstr "Kérjük várjon..."
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Igen"
+
+msgctxt "#32266"
+msgid "Finished"
+msgstr "Befejeződött"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "Választás"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Tiszta"
+
+msgctxt "#32276"
+msgid "New"
+msgstr "Új"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "Szerkeszt"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Tallózás"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "Leírás"
+
+msgctxt "#32291"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Név"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Állapot"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Információ"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Keresés"
+
+msgctxt "#32377"
+msgid "New Search"
+msgstr "Új keresés"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "Frissítés"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Mentés"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Típus"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Ok"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Törlés"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Találat"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "Kategória"
+
+msgctxt "#32491"
+msgid "Please wait..."
+msgstr "Kérjük várjon..."
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Internet"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Következő"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Beállítások"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "Feliratkozások"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32914"
+msgid "New Search"
+msgstr "Új keresés"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Keresés"
+
+msgctxt "#32931"
+msgid "Help"
+msgstr "Segítség"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Feliratok"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Mind"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Mégsem"

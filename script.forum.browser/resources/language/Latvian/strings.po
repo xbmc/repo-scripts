@@ -1,0 +1,101 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Latvian (http://www.transifex.com/projects/p/xbmc-addons/language/lv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lv\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Vispārīgi"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Valoda"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Iespējas"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Atsvaidzināt"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Dzēst"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Links:"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Iestatījumi"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Jā"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Skaidrs"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Statuss"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Meklēšana"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Saglabāt"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Izvēlēties"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Nākamais"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Iestatījumi"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "Labi"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Meklēšana"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "Labi"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Atcelt"

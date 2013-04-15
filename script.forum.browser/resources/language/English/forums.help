@@ -1,8 +1,6 @@
 Forums Window Help
-@item:options=Options Button
-Opens the options menu.
-
-From here you can do things like add forums and open the addon settings.
+@item:options=Settings Button
+Opens the Forum Browser settings.
 @item:subscriptions=Subscriptions Button
 Opens the subscriptions window.
 
@@ -12,12 +10,12 @@ Opens the private messages window.
 
 When logged in this button will display (unread/total) message counts when available.
 From this window you can view and send private messages.
-@item:changeforum=Change Forum Button
-Opens the forum selection dialog.
+@item:changeforum=Forums Button
+Opens the Forums dialog.
 
-Choose a forum to switch to. Favorites are listed at the top.
+Use this to change forums, view forum notification info and manage forums.
 @item:logo=Logo Area (Upper Left)
-Shows the logo for the forum
+Shows the logo for the forum.
 An icon for the interface type (tapatalk,forumrunner, native, etc) is shown to the left.
 @item:forumname=Forum Name/Progress
 Shows the forum name.
