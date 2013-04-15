@@ -2,3 +2,4 @@
 .project
 .pydevproject
 pysrc
+*.pyc
