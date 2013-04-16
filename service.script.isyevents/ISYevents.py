@@ -29,9 +29,9 @@
 
 # CONSTANTS
 __author__ = 'Humble Robot'
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __url__ = 'https://code.google.com/p/isy-events/'
-__date__ = '11/2012'
+__date__ = '4/2013'
 
 # imports
 # system
@@ -98,4 +98,4 @@ program_events ={
     'onResumeMusic': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_audio_resume'), isy_events.getSetting('progact_audio_resume'))}
 xEvents.AddHandlers(program_events)
 # start events engine
-xEvents.RunMainLoop(0.5)
+xEvents.RunMainLoop()

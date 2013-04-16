@@ -27,6 +27,7 @@
 # xbmc
 import xbmc
 # custom
+import xbmcJSON as json
 import myCollections as mc
 from log import log
 
@@ -49,7 +50,6 @@ class xbmcEvents(object):
     # current status
     _playingMovie = mc.histlist(False)
     _playingMusic = mc.histlist(False)
-    _time = mc.histlist(-1.0)
     _paused = mc.histlist(False)
     
     def __init__(self):
@@ -81,7 +81,7 @@ class xbmcEvents(object):
         for fun in self._events[event]:
             fun()
             
-    def RunMainLoop(self, wait):
+    def RunMainLoop(self, wait = _wait):
         # set loop wait time
         self._wait = wait
     
@@ -99,12 +99,14 @@ class xbmcEvents(object):
             self._playingMusic.set(player.isPlayingAudio())
             
             # check paused status
-            try:
-                self._time.set(player.getTime())
-                self._paused.set(not self._time.delayed_step(3) and self._time.get(1) > -1 and self._time.get(2) > -1)
-            except Exception:
+            if self._playingMovie.get() or self._playingMusic.get():
+                # get player speed
+                player_id = json.GetPlayerID()
+                player_speed = json.GetPlayerSpeed(player_id)
+                # paused if player speed is 0
+                self._paused.set(player_speed == 0)
+            else:
                 self._paused.set(False)
-                self._time.set(-1.0)
                         
             # check for events
             if self._playingMovie.step_on():
@@ -134,7 +136,6 @@ class xbmcEvents(object):
                 self.RaiseEvent('onResumeMusic')
                 
             # wait sleep time
-            # time.sleep(self._wait)
             xbmc.sleep(int(self._wait * 1000))
             
         # raise xbmc quit event

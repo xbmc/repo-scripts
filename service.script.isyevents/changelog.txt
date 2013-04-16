@@ -1,3 +1,4 @@
+0.2.0 - Addressed isue that printed excessive messages to the XBMC log (Issue 4), Updated pause detection to use JSON (Issue 5)
 0.1.0 - First Release to XBMC Repository
 0.0.1 - Alpha Release
 
