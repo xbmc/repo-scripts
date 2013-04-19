@@ -1,7 +1,74 @@
+2.0.6 (04/2013)
+~~~~~~~~~~~~~
+General:
+  * update language files from Transifex (thanks to all translators!)
+  * fixed typo in Edit Rom Collection dialog
+  
+Import Games:
+  * try to scrape games with original name first (including (*) and [*])
+  
+Launch Games:
+  * bugfix: check if delay parameters are available
+
+2.0.5 (03/2013)
+~~~~~~~~~~~~~
+General:
+  * use xbmcvfs for file operations (better smb support and other improvements)
+  * explicitly check for unicode characters when creating config.xml
+
+Launch Games:
+  * bugfix: launch game did not work from gameinfo screen
+  * bugfix: issues with os.chdir in solo mode
+  * always save viewstate before launching games
+
+2.0.4 (03/2013)
+~~~~~~~~~~~~~
+General:
+  * added RCB to new "Game Add-ons" category in RetroPlayer branch
+
+2.0.3 (02/2013)
+~~~~~~~~~~~~~
+General:
+  * check if RomCollections are available in config.xml. Launch config wizard if not.
+  * check if games are available in MyGames.db. Launch game import if not.
+  * check if we have access to rom and artwork paths. Cancel creation of config.xml if not.
+
+Import Games:
+  * always do a full reimport when in rescrape-mode
+  * always do a full reimport when in local artwork-mode
+  * better error handling after encoding errors during import
+  * bugfix: checking subtitles during import did not work
+  
+Browse Games:
+  * don't exit RCB when focus is on filter controls
+  * always show game list after import. Also when import was canceled.
+  * bugfix: check if database is available before gathering widget data
+
+Launch Games:
+  * add some more "intelligence" to applaunch.bat (solo mode)
+  * use python 2.6 libraries for 7z handling (Windows only)
+  * change working directory to emulator dir before launching game
+  * libretro: added option to select gameclient manually
+  * libretro: use "Edit game Command" to configure libretro cores per game
+
+2.0.2 (02/2013)
+~~~~~~~~~~~~~
+Launch Games:
+  * bugfix: better handling of skin widget and solo mode
+  * moved applaunch script files to addon_data folder
+  * new option: use VB script in solo mode
+  * added startup delay to RCB service
+
+2.0.1 (01/2013)
+~~~~~~~~~~~~~
+Launch Games:
+  * skin widget can invoke RCB to launch games
+  * experimental: libretro support
+
 2.0.0 (01/2013)
 ~~~~~~~~~~~~~
 General:
-  * version bump for Frodo repo
+  * Frodo version bump
 
 1.1.2 (01/2013)
 ~~~~~~~~~~~~~

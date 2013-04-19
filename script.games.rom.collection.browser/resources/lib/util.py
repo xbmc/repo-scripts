@@ -82,6 +82,7 @@ SETTING_RCB_USENFOFOLDER = 'rcb_useNfoFolder'
 SETTING_RCB_NFOFOLDER = 'rcb_nfoFolder'
 SETTING_RCB_PRELAUNCHDELAY = 'rcb_prelaunchDelay'
 SETTING_RCB_POSTLAUNCHDELAY = 'rcb_postlaunchDelay'
+SETTING_RCB_USEVBINSOLOMODE = 'rcb_useVBInSoloMode'
 
 
 SCRAPING_OPTION_AUTO_ACCURATE = 0
@@ -213,6 +214,17 @@ def html_escape(text):
 		return text
 
 
+def joinPath(part1, *parts):
+	path = ''
+	if(part1.startswith('smb://')):
+		path = part1
+		for part in parts:
+			path = "%s/%s" %(path, part)
+	else:
+		path = os.path.join(part1, *parts)
+		
+	return path
+
 
 #
 # METHODS #
@@ -250,6 +262,19 @@ def getAddonInstallPath():
 
 def getAutoexecPath():	
 	return xbmc.translatePath('special://profile/autoexec.py')
+
+
+def getTempDir():
+	tempDir = os.path.join(getAddonDataPath(), 'tmp')
+	
+	try:
+		#check if folder exists
+		if(not os.path.isdir(tempDir)):
+			os.mkdir(tempDir)
+		return tempDir
+	except Exception, (exc):
+		Logutil.log('Error creating temp dir: ' +str(exc), LOG_LEVEL_ERROR)
+		return None
 
 
 def getConfigXmlPath():

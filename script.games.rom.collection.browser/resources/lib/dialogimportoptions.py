@@ -40,6 +40,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		
 		self.gui = kwargs[ "gui" ]
 		self.romCollections = kwargs[ "romCollections" ]
+		self.isRescrape = kwargs[ "isRescrape" ]
 		
 		self.doModal()
 		
@@ -210,7 +211,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		romCollections, statusOk = self.setScrapersInConfig()
 		
 		if(statusOk):
-			self.gui.doImport(scrapingMode, romCollections)
+			self.gui.doImport(scrapingMode, romCollections, self.isRescrape)
 		
 		
 	def setScrapersInConfig(self):

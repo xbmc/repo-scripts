@@ -13,7 +13,7 @@ except:
 	Logutil.log("Loading pysqlite2 as DB engine", util.LOG_LEVEL_INFO)
 
 
-class GameDataBase:	
+class GameDataBase:
 	
 	def __init__(self, databaseDir):		
 		self.dataBasePath = os.path.join(databaseDir, 'MyGames.db')
@@ -38,22 +38,19 @@ class GameDataBase:
 	
 	def compact(self):
 		self.cursor.execute("VACUUM")
+		
 	def toMem(self):
 		try:
 			memDB = sqlite.connect(':memory:', check_same_thread = False)
-			
 			dump = os.linesep.join([line for line in self.connection.iterdump()])
-			
 			memDB.executescript(dump)
-			
 			self.connection.close()
-			
 			self.connection = memDB
 			self.cursor = memDB.cursor()
 			return True
 		except Exception, e: 
-				util.Logutil.log("ERROR: %s" % str(e), util.LOG_LEVEL_INFO)
-				return False	
+			util.Logutil.log("ERROR: %s" % str(e), util.LOG_LEVEL_INFO)
+			return False	
 	
 	def toDisk(self):
 		try:
@@ -101,7 +98,7 @@ class GameDataBase:
 			#HACK: reflect changes in RCBSetting
 			dbVersion = rcbSetting[util.RCBSETTING_dbVersion]
 			if(dbVersion == None):
-				dbVersion = rcbSetting[10]				
+				dbVersion = rcbSetting[10]
 			
 		except  Exception, (exc): 
 			self.createTables()
@@ -131,7 +128,11 @@ class GameDataBase:
 				return returnCode, message
 			else:
 				return -1, util.localize(35032) %(dbVersion, util.CURRENT_DB_VERSION)
-			
+					
+		count = Game(self).getCount()
+		if(count == 0):
+			return 1, ""
+		
 		return 0, ""
 	
 
@@ -178,6 +179,12 @@ class DataBaseObject:
 	
 	def deleteObjectByQuery(self, query, args):
 		self.gdb.cursor.execute(query, args)
+		
+	def getCount(self):
+		self.gdb.cursor.execute("SELECT count(*) From '%s'" % self.tableName)
+		count = self.gdb.cursor.fetchall()
+		return count[0][0]
+		
 	def getAll(self):
 		self.gdb.cursor.execute("SELECT * FROM '%s'" % self.tableName)
 		allObjects = self.gdb.cursor.fetchall()

@@ -38,12 +38,12 @@ CONTROL_SCROLLBARS = (2200, 2201, 60, 61, 62)
 
 CONTROL_GAMES_GROUP_START = 50
 CONTROL_GAMES_GROUP_END = 59
-CONTROL_VIEW_NO_VIDEOS = (55, 56, 57, 58)
 
 CONTROL_BUTTON_CHANGE_VIEW = 2
 CONTROL_BUTTON_FAVORITE = 1000
 CONTROL_BUTTON_SEARCH = 1100
 CONTROL_BUTTON_VIDEOFULLSCREEN = (2900, 2901,)
+NON_EXIT_RCB_CONTROLS = (500, 600, 700, 800, 900, 2, 1000, 1100)
 
 CONTROL_LABEL_MSG = 4000
 CONTROL_BUTTON_MISSINGINFODIALOG = 4001
@@ -118,14 +118,8 @@ class UIGameDB(xbmcgui.WindowXML):
 	
 	
 	def __init__(self, strXMLname, strFallbackPath, strDefaultName, forceFallback):
-		# Changing the three varibles passed won't change anything
-		# Doing strXMLname = "bah.xml" will not change anything.
-		# don't put GUI sensitive stuff here (as the xml hasn't been read yet
-		# Idea to initialize your variables here
-		
 		Logutil.log("Init Rom Collection Browser: " + util.RCBHOME, util.LOG_LEVEL_INFO)
-								
-		#this code breaks compatibility with Camelot
+		
 		addon = xbmcaddon.Addon(id='%s' %util.SCRIPTID)
 		Logutil.log("RCB version: " + addon.getAddonInfo('version'), util.LOG_LEVEL_INFO)
 			
@@ -139,6 +133,9 @@ class UIGameDB(xbmcgui.WindowXML):
 			
 		self.initialized = False
 		self.Settings = util.getSettings()
+		
+		#Make sure that we don't start RCB in cycles
+		self.Settings.setSetting('rcb_launchOnStartup', 'false')
 			
 		
 		#check if background game import is running
@@ -148,71 +145,17 @@ class UIGameDB(xbmcgui.WindowXML):
 		
 		#timestamp1 = time.clock()
 		
-		try:
-			self.gdb = GameDataBase(util.getAddonDataPath())
-			self.gdb.connect()
-		except Exception, (exc):
-			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35000), str(exc))
-			Logutil.log('Error accessing database: ' +str(exc), util.LOG_LEVEL_ERROR)
-			self.quit = True
-			return
-		
 		self.quit = False
-		
-		#check if database is up to date
-		#create new one or alter existing one
-		doImport, errorMsg = self.gdb.checkDBStructure()
-		
-		if(doImport == -1):
-			xbmcgui.Dialog().ok(util.SCRIPTNAME, errorMsg)			
-			self.quit = True
-			return		
-		
-		#check if we have config file
-		configFile = util.getConfigXmlPath()
-		if(not os.path.isfile(configFile)):
-			dialog = xbmcgui.Dialog()
-			retValue = dialog.yesno(util.SCRIPTNAME, util.localize(40000), util.localize(40001))
-			if(retValue == False):
-				self.quit = True
-				return
-						
-			statusOk, errorMsg = wizardconfigxml.ConfigXmlWizard().createConfigXml(configFile)
-			if(statusOk == False):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35001), errorMsg)
-				self.quit = True
-				return
-		else:
-			#check if config.xml is up to date
-			returnCode, message = ConfigxmlUpdater().updateConfig(self)
-			if(returnCode == False):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35001), message)
 				
-		if(doImport == 2):
-			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(40002), util.localize(40003))
-		
-		#read config.xml
-		self.config = Config()
-		statusOk, errorMsg = self.config.readXml()
-		if(statusOk == False):
-			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35002), errorMsg)
-			self.quit = True
+		self.config, success = self.initializeConfig()
+		if not success:
+	   		self.quit = True
 			return
-		
-		self.checkImport(doImport, None)
-		
-		#TODO: check why mem db sometimes causes errors
-		"""
-		self.memDB = False		
-		memDB = self.Settings.getSetting(util.SETTING_RCB_MEMDB)
-		
-		if memDB == 'true':
-			self.memDB = True
-			if self.gdb.toMem():
-				Logutil.log("DB loaded to Mem!", util.LOG_LEVEL_INFO)
-			else:
-				Logutil.log("Load DB to Mem failed!", util.LOG_LEVEL_INFO)
-		"""
+	   	
+	   	success = self.initializeDataBase()
+	   	if not success:
+	   		self.quit = True
+			return
 		
 		cachingOptionStr = self.Settings.getSetting(util.SETTING_RCB_CACHINGOPTION)
 		if(cachingOptionStr == 'CACHEALL'):
@@ -239,13 +182,80 @@ class UIGameDB(xbmcgui.WindowXML):
 		self.player.gui = self
 				
 		self.initialized = True
+		
+		
+	def initializeConfig(self):		
+		Logutil.log("initializeConfig", util.LOG_LEVEL_INFO)
+		
+		config = Config(None)
+		createNewConfig = False
+		
+		#check if we have config file
+		configFile = util.getConfigXmlPath()
+		if(not os.path.isfile(configFile)):
+			Logutil.log("No config file available. Create new one.", util.LOG_LEVEL_INFO)
+			dialog = xbmcgui.Dialog()
+			createNewConfig = dialog.yesno(util.SCRIPTNAME, util.localize(40000), util.localize(40001))
+			if(not createNewConfig):
+				return config, False
+		else:
+			rcAvailable, message = config.checkRomCollectionsAvailable()
+			if(not rcAvailable):
+				Logutil.log("No Rom Collections found in config.xml.", util.LOG_LEVEL_INFO)
+				dialog = xbmcgui.Dialog()
+				createNewConfig = dialog.yesno(util.SCRIPTNAME, util.localize(40000), util.localize(40001))
+				if(not createNewConfig):
+					return config, False
+		
+		if (createNewConfig):
+			statusOk, errorMsg = wizardconfigxml.ConfigXmlWizard().createConfigXml(configFile)
+			if(statusOk == False):
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35001), errorMsg)
+				return config, False
+		else:
+			#check if config.xml is up to date
+			returnCode, message = ConfigxmlUpdater().updateConfig(self)
+			if(returnCode == False):
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35001), message)
+		
+		#read config.xml		
+		statusOk, errorMsg = config.readXml()
+		if(statusOk == False):
+			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35002), errorMsg)
+			
+		return config, statusOk
+		
+		
+	def initializeDataBase(self):
+		try:
+			self.gdb = GameDataBase(util.getAddonDataPath())
+			self.gdb.connect()
+		except Exception, (exc):
+			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35000), str(exc))
+			Logutil.log('Error accessing database: ' +str(exc), util.LOG_LEVEL_ERROR)
+			return False
+	   
+	   	#check if database is up to date
+		#create new one or alter existing one
+		doImport, errorMsg = self.gdb.checkDBStructure()
+		
+		if(doImport == -1):
+			xbmcgui.Dialog().ok(util.SCRIPTNAME, errorMsg)
+			return False
+				
+		if(doImport == 2):
+			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(40002), util.localize(40003))
+		
+		self.checkImport(doImport, None, False)
+		return True
 						
 		
 	def onInit(self):
 		
 		Logutil.log("Begin onInit", util.LOG_LEVEL_INFO)
 		
-		if(self.quit):			
+		if(self.quit):
+			Logutil.log("RCB decided not to run. Bye.", util.LOG_LEVEL_INFO)
 			self.close()
 			return
 		
@@ -277,6 +287,16 @@ class UIGameDB(xbmcgui.WindowXML):
 		try:
 			if(action.getId() in ACTION_CANCEL_DIALOG):
 				Logutil.log("onAction: ACTION_CANCEL_DIALOG", util.LOG_LEVEL_INFO)
+					
+				#don't exit RCB here. Just close the filters		
+				if(self.selectedControlId in NON_EXIT_RCB_CONTROLS):
+					Logutil.log("selectedControl in NON_EXIT_RCB_CONTROLS: %s" %self.selectedControlId, util.LOG_LEVEL_INFO)
+					#HACK: when list is empty, focus sits on other controls than game list
+					if(self.getListSize() > 0):
+						self.setFocus(self.getControl(CONTROL_GAMES_GROUP_START))
+						return
+					
+					Logutil.log("ListSize == 0 in onAction. Assume that we have to exit.", util.LOG_LEVEL_WARNING)
 							
 				if(self.player.isPlayingVideo()):
 					self.player.stop()
@@ -312,14 +332,6 @@ class UIGameDB(xbmcgui.WindowXML):
 					
 					label = str(control.getSelectedItem().getLabel())
 					label2 = str(control.getSelectedItem().getLabel2())
-						
-					#filterChanged = False
-					
-					"""
-					#check if filter change is already in process
-					if(self.applyFilterThread != None and self.applyFilterThread.isAlive()):
-						self.applyFilterThreadStopped = True
-					"""
 					
 					if (self.selectedControlId == CONTROL_CONSOLES):
 						if(self.selectedConsoleIndex != control.getSelectedPosition()):
@@ -350,14 +362,6 @@ class UIGameDB(xbmcgui.WindowXML):
 							self.selectedCharacter = label
 							self.selectedCharacterIndex = control.getSelectedPosition()
 							self.filterChanged = True
-							
-					"""
-					if(filterChanged):
-						#start a new thread to apply filters
-						Logutil.log("start apply filter thread", util.LOG_LEVEL_INFO)
-						self.applyFilterThread = Thread(target=self.applyFilters, args=())
-						self.applyFilterThread.start()
-					"""
 				
 			elif(action.getId() in ACTION_INFO):
 				Logutil.log("onAction: ACTION_INFO", util.LOG_LEVEL_DEBUG)
@@ -555,32 +559,6 @@ class UIGameDB(xbmcgui.WindowXML):
 			items.append(xbmcgui.ListItem(row[util.ROW_NAME], str(row[util.ROW_ID]), "", ""))
 			
 		control.addItems(items)
-				
-		"""
-		#return selected id if we are not in "delete rom collection" mode  
-		if((not romsDeleted and not romCollectionDeleted) or not handleConsole):
-			label2 = str(control.getSelectedItem().getLabel2())
-			print 'return selected item: ' +label2 
-			return int(label2)
-		
-				
-		rcSelected = False 
-		consoleCount = 0
-		newSelectedConsoleId = 0
-					
-		#get new index of selected rom collection
-		for romCollection in self.config.romCollections.values():
-			if(int(romCollection.id) == int(self.selectedConsoleId)):
-				rcSelected = True
-				newSelectedConsoleId = int(romCollection.id)
-			consoleCount += 1
-				
-		if(rcSelected == False):
-			#no RC selected
-			return 0
-		else:
-			return int(newSelectedConsoleId)
-		"""
 			
 	
 	def showCharacterFilter(self):
@@ -611,32 +589,10 @@ class UIGameDB(xbmcgui.WindowXML):
 	def applyFilters(self):
 		
 		Logutil.log("Begin applyFilters" , util.LOG_LEVEL_INFO)
-		
-		"""
-		#we have to use a little wait timer before applying the filter
-		timestamp1 = time.clock()
-		while True:
-			timestamp2 = time.clock()
-			diff = (timestamp2 - timestamp1) * 1000
-			if(diff > util.WAITTIME_APPLY_FILTERS):
-				Logutil.log("Filterthread timer ended" , util.LOG_LEVEL_DEBUG)
-				break
-							
-			if(self.applyFilterThreadStopped):
-				self.applyFilterThreadStopped = False
-				Logutil.log("applyFilterThreadStopped" , util.LOG_LEVEL_DEBUG)
-				return
-		
-		if(self.applyFiltersInProgress):
-			Logutil.log("applyFiltersInProgress" , util.LOG_LEVEL_DEBUG)
-			return
-		"""
-		
-		#self.applyFiltersInProgress = True
+				
 		self.updateControls(False, False, False)
 		xbmc.sleep(util.WAITTIME_UPDATECONTROLS)
 		self.showGames()
-		#self.applyFiltersInProgress = False
 		
 
 	def showGames(self):
@@ -805,16 +761,14 @@ class UIGameDB(xbmcgui.WindowXML):
 			#self.player.stoppedByRCB = True
 			self.player.stop()
 		
-		launcher.launchEmu(self.gdb, self, gameId, self.config, self.Settings)
-		Logutil.log("End launchEmu" , util.LOG_LEVEL_INFO)		
+		launcher.launchEmu(self.gdb, self, gameId, self.config, self.Settings, selectedGame)
+		Logutil.log("End launchEmu" , util.LOG_LEVEL_INFO)
 		
 		
 	def startFullscreenVideo(self):
 		Logutil.log("startFullscreenVideo" , util.LOG_LEVEL_INFO)
 
 		self.fullScreenVideoStarted = True
-
-		#self.setFocus(self.getControl(CONTROL_GAMES_GROUP_START))
 		
 		#Hack: On xbox the list is cleared before starting the player
 		if (os.environ.get("OS", "xbox") == "xbox"):
@@ -845,28 +799,36 @@ class UIGameDB(xbmcgui.WindowXML):
 		
 	def updateDB(self):
 		Logutil.log("Begin updateDB" , util.LOG_LEVEL_INFO)
-		
-		self.clearList()
-		self.clearCache()
-		self.checkImport(3, None)
-		self.cacheItems()
-		self.updateControls(True)
-		
+		self.importGames(None, False)
 		Logutil.log("End updateDB" , util.LOG_LEVEL_INFO)
 		
 	
 	def rescrapeGames(self, romCollections):
 		Logutil.log("Begin rescrapeGames" , util.LOG_LEVEL_INFO)
+		self.importGames(romCollections, True)
+		self.config.readXml()
+		Logutil.log("End rescrapeGames" , util.LOG_LEVEL_INFO)
 		
+		
+	def importGames(self, romCollections, isRescrape):
+		self.saveViewState(False)
 		self.clearList()
 		self.clearCache()
-		self.checkImport(3, romCollections)
-		self.cacheItems()
+		self.checkImport(3, romCollections, isRescrape)
+		self.cacheItems()		
 		self.updateControls(True)
+		self.loadViewState()
 		
-		self.config.readXml() 
 		
-		Logutil.log("End rescrapeGames" , util.LOG_LEVEL_INFO)
+	def updateGamelist(self):
+		#only update controls if they are available
+		if(self.initialized):
+			self.showGames()
+			focusControl = self.getControlById(CONTROL_GAMES_GROUP_START)
+			if(focusControl != None):
+				self.setFocus(focusControl)
+			xbmc.sleep(util.WAITTIME_UPDATECONTROLS)
+			self.showGameInfo()
 		
 		
 	def deleteGame(self, gameID):
@@ -910,7 +872,7 @@ class UIGameDB(xbmcgui.WindowXML):
 				progressDialog.writeMsg(util.localize(40006), "", "",count)
 			time.sleep(1)
 			self.gdb.commit()
-			self.config = Config()
+			self.config = Config(None)
 			self.config.readXml()
 			self.clearList()
 			self.rcb_playList.clear()
@@ -1286,7 +1248,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		return item
 	
 	
-	def checkImport(self, doImport, romCollections):
+	def checkImport(self, doImport, romCollections, isRescrape):
 		
 		#doImport: 0=nothing, 1=import Settings and Games, 2=import Settings only, 3=import games only
 		if(doImport == 0):
@@ -1297,7 +1259,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		showImportOptionsDialog = self.Settings.getSetting(util.SETTING_RCB_SHOWIMPORTOPTIONSDIALOG).upper() == 'TRUE'
 		if(showImportOptionsDialog):
 			constructorParam = "720p"
-			iod = dialogimportoptions.ImportOptionsDialog("script-RCB-importoptions.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self, romCollections=romCollections)
+			iod = dialogimportoptions.ImportOptionsDialog("script-RCB-importoptions.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self, romCollections=romCollections, isRescrape=isRescrape)
 			del iod
 		else:
 			message = util.localize(40018)
@@ -1309,29 +1271,20 @@ class UIGameDB(xbmcgui.WindowXML):
 				scrapingMode = util.getScrapingMode(self.Settings)
 				#Import Games
 				if(romCollections == None):
-					self.doImport(scrapingMode, self.config.romCollections)
+					self.doImport(scrapingMode, self.config.romCollections, isRescrape)
 				else:
-					self.doImport(scrapingMode, romCollections)
+					self.doImport(scrapingMode, romCollections, isRescrape)
 		
 		
-	def doImport(self, scrapingmode, romCollections):
+	def doImport(self, scrapingmode, romCollections, isRescrape):
 		progressDialog = dialogprogress.ProgressDialogGUI()
 		progressDialog.writeMsg(util.localize(40011), "", "")
 		
 		updater = dbupdate.DBUpdate()
-		updater.updateDB(self.gdb, progressDialog, scrapingmode, romCollections, self.Settings)
+		updater.updateDB(self.gdb, progressDialog, scrapingmode, romCollections, self.Settings, isRescrape)
 		del updater
 		progressDialog.writeMsg("", "", "", -1)
 		del progressDialog
-		
-		#only update controls if they are available
-		if(self.initialized):
-			self.showGames()
-			focusControl = self.getControlById(CONTROL_GAMES_GROUP_START)
-			if(focusControl != None):
-				self.setFocus(focusControl)
-			xbmc.sleep(util.WAITTIME_UPDATECONTROLS)
-			self.showGameInfo()
 
 
 	def checkUpdateInProgress(self):

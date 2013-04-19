@@ -5,6 +5,9 @@ import codecs
 import zipfile
 import time
 
+import xbmcvfs
+import fnmatch
+
 import util, helper
 from util import *
 from config import *
@@ -28,7 +31,7 @@ class DBUpdate:
 		pass
 		
 	
-	def updateDB(self, gdb, gui, updateOption, romCollections, settings):
+	def updateDB(self, gdb, gui, updateOption, romCollections, settings, isRescrape):
 		self.gdb = gdb
 		self.Settings = settings
 			
@@ -52,7 +55,8 @@ class DBUpdate:
 		fuzzyFactor = util.FUZZY_FACTOR_ENUM[int(matchingRatioIndex)]
 		Logutil.log("fuzzyFactor: " +str(fuzzyFactor), util.LOG_LEVEL_INFO)
 		
-		enableFullReimport = self.Settings.getSetting(util.SETTING_RCB_ENABLEFULLREIMPORT).upper() == 'TRUE'
+		#always do full reimports when in rescrape-mode 
+		enableFullReimport = isRescrape or self.Settings.getSetting(util.SETTING_RCB_ENABLEFULLREIMPORT).upper() == 'TRUE'
 		Logutil.log("enableFullReimport: " +str(enableFullReimport), util.LOG_LEVEL_INFO)
 		
 		continueUpdate = True
@@ -90,20 +94,19 @@ class DBUpdate:
 			Logutil.log("update is allowed for current rom collection: " +str(romCollection.allowUpdate), util.LOG_LEVEL_INFO)
 			Logutil.log("max folder depth: " +str(romCollection.maxFolderDepth), util.LOG_LEVEL_INFO)
 			
-			if enableFullReimport == False:
-				RCId = romCollection.id
-			else:
-				RCId = None
+			firstScraper = romCollection.scraperSites[0]
 			
-			files = self.getRomFilesByRomCollection(romCollection.romPaths, romCollection.maxFolderDepth, RCId=RCId)
+			#check if we are in local artwork mode
+			if(len(romCollection.scraperSites) == 1 and firstScraper.name == util.localize(40053)):
+				Logutil.log("Forcing enableFullReimport because we are in local artwork mode", util.LOG_LEVEL_INFO)
+				enableFullReimport = True
+			
+			files = self.getRomFilesByRomCollection(romCollection, enableFullReimport)
 			
 			#itemCount is used for percentage in ProgressDialogGUI
 			gui.itemCount = len(files) +1
 			
-			#self.scrapeResultsFile.write('%s games total' %(str(len(fileGamenameDict))))
-			
 			#check if first scraper is a multigame scraper
-			firstScraper = romCollection.scraperSites[0]
 			if(not firstScraper.descFilePerGame):
 				
 				#build file hash tables	(key = gamename or crc, value = romfiles)			
@@ -188,12 +191,18 @@ class DBUpdate:
 					#all files still available files-list, are missing entries
 					for filename in files:
 						gamenameFromFile = helper.getGamenameFromFilename(filename, romCollection)
-						self.missingDescFile.write('%s\n' %gamenameFromFile)
+						try:
+							self.missingDescFile.write('%s\n' %gamenameFromFile)
+						except:
+							self.missingDescFile.write('%s\n' %gamenameFromFile.encode('utf-8'))
 							
 				except Exception, (exc):
 					Logutil.log("an error occured while adding game " +gamenameFromDesc, util.LOG_LEVEL_WARNING)
 					Logutil.log("Error: " +str(exc), util.LOG_LEVEL_WARNING)
-					self.missingDescFile.write('%s\n' %gamenameFromDesc)
+					try:
+						self.missingDescFile.write('%s\n' %gamenameFromDesc)
+					except:
+						self.missingDescFile.write('%s\n' %gamenameFromDesc.encode('utf-8'))
 					continue
 			else:	
 				fileCount = 0
@@ -231,7 +240,7 @@ class DBUpdate:
 							break
 						
 						#check if we are in local artwork mode
-						isLocalArtwork = (firstScraper.name == 'local artwork')
+						isLocalArtwork = (firstScraper.name == util.localize(40053))
 						
 						#check if this file already exists in DB
 						continueUpdate, isUpdate, gameId = self.checkRomfileAlreadyExists(filename, enableFullReimport, isLocalArtwork)
@@ -239,7 +248,7 @@ class DBUpdate:
 							continue										
 						
 						results = {}
-						foldername = os.path.dirname(filename)
+						foldername = self.getFoldernameFromRomFilename(filename)
 						filecrc = ''
 												
 						artScrapers = {} 
@@ -284,7 +293,10 @@ class DBUpdate:
 					except Exception, (exc):
 						Logutil.log("an error occured while adding game " +gamenameFromFile, util.LOG_LEVEL_WARNING)
 						Logutil.log("Error: " +str(exc), util.LOG_LEVEL_WARNING)
-						self.missingDescFile.write('%s\n' %gamenameFromFile)
+						try:
+							self.missingDescFile.write('%s\n' %gamenameFromFile)
+						except:
+							self.missingDescFile.write('%s\n' %gamenameFromFile.encode('utf-8'))
 						continue
 					
 			#timestamp2 = time.clock()
@@ -321,13 +333,16 @@ class DBUpdate:
 									
 				#build dictionaries (key=gamename, filecrc or foldername; value=filenames) for later game search
 				if(firstScraper.useFoldernameAsCRC):
+					Logutil.log('useFoldernameAsCRC = True', util.LOG_LEVEL_INFO)
 					foldername = self.getFoldernameFromRomFilename(filename)
 					foldername = foldername.strip()
 					foldername = foldername.lower()
 					fileDict = self.buildFilenameDict(fileDict, isMultiRomGame, filename, foldername)
 				elif(firstScraper.useFilenameAsCRC):
+					Logutil.log('useFilenameAsCRC = True', util.LOG_LEVEL_INFO)
 					fileDict = self.buildFilenameDict(fileDict, isMultiRomGame, filename, gamename)
 				elif(firstScraper.searchGameByCRC):
+					Logutil.log('searchGameByCRC = True', util.LOG_LEVEL_INFO)
 					filecrc = self.getFileCRC(filename)
 					#use crc of first rom if it is a multirom game
 					if(not isMultiRomGame):
@@ -350,18 +365,18 @@ class DBUpdate:
 		
 	
 	
-	def getRomFilesByRomCollection(self, romPaths, maxFolderDepth, RCId = None):
+	def getRomFilesByRomCollection(self, romCollection, enableFullReimport):
 				
-		Logutil.log("Rom path: " +str(romPaths), util.LOG_LEVEL_INFO)
+		Logutil.log("Rom path: " +str(romCollection.romPaths), util.LOG_LEVEL_INFO)
 				
 		Logutil.log("Reading rom files", util.LOG_LEVEL_INFO)
 		files = []
-		for romPath in romPaths:
-			files = self.walkDownPath(files, romPath, maxFolderDepth)
-			
+		for romPath in romCollection.romPaths:
+			files = self.walkDownPath(files, romPath, romCollection.maxFolderDepth)
 		
-		if RCId != None:
-			inDBFiles = DataBaseObject(self.gdb, '').getFileAllFilesByRCId(RCId)
+		#only use files that are not already present in database
+		if enableFullReimport == False:
+			inDBFiles = DataBaseObject(self.gdb, '').getFileAllFilesByRCId(romCollection.id)
 			files = [f.decode('utf-8') for f in files if not f.decode('utf-8') in inDBFiles]			
 		
 		files.sort()
@@ -372,13 +387,15 @@ class DBUpdate:
 		
 	def walkDownPath(self, files, romPath, maxFolderDepth):
 		
-		Logutil.log("walkDownPath romPath: " +romPath, util.LOG_LEVEL_INFO)						
+		Logutil.log("walkDownPath romPath: " +romPath, util.LOG_LEVEL_INFO)
 		
-		dirname = os.path.dirname(romPath)
-		Logutil.log("dirname: " +dirname, util.LOG_LEVEL_INFO)
-		basename = os.path.basename(romPath)
-		Logutil.log("basename: " +basename, util.LOG_LEVEL_INFO)						
+		files = self.walkDown(files, romPath, maxFolderDepth)
+		Logutil.log("files after walkDown = %s" %files, util.LOG_LEVEL_INFO)
+		
+		return files
+		#return []
 				
+		"""
 		Logutil.log("checking sub directories", util.LOG_LEVEL_INFO)
 		dirname = dirname.decode(sys.getfilesystemencoding()).encode('utf-8')
 		for walkRoot, walkDirs, walkFiles in self.walklevel(dirname, maxFolderDepth):
@@ -395,10 +412,42 @@ class DBUpdate:
 		
 			#did not find appendall or something like this
 			files.extend(allFiles)
+		"""
+	
+	
+	def walkDown(self, files, romPath, maxFolderDepth):
+		Logutil.log("Running walkdown on: %s" %romPath, util.LOG_LEVEL_INFO)
+				
+		dirs, newFiles, dirname, filemask = self.getFilesByWildcardExt(romPath)
+		files.extend(newFiles)
 		
+		"""
+		dirname = os.path.dirname(romPath)
+		Logutil.log("dirname: " +dirname, util.LOG_LEVEL_INFO)
+		filemask = os.path.basename(romPath)
+		Logutil.log("filemask: " +filemask, util.LOG_LEVEL_INFO)
+		
+		dirs, filesLocal = xbmcvfs.listdir(dirname)
+		Logutil.log("xbmcvfs dirs: %s" %dirs, util.LOG_LEVEL_INFO)						
+		Logutil.log("xbmcvfs files: %s" %filesLocal, util.LOG_LEVEL_INFO)
+		
+		for file in filesLocal:
+			if(fnmatch.fnmatch(file, filemask)):
+				#allFiles = [f.decode(sys.getfilesystemencoding()).encode('utf-8') for f in glob.glob(newRomPath)]
+				file = util.joinPath(dirname, file)
+				files.append(file)
+		"""
+		
+		for dir in dirs:
+			newRomPath = util.joinPath(dirname, dir, filemask)
+			maxFolderDepth = maxFolderDepth -1
+			if(maxFolderDepth > 0):
+				self.walkDown(files, newRomPath, maxFolderDepth)
+					
 		return files
 	
 	
+	"""
 	def walklevel(self, some_dir, level=1):
 		some_dir = some_dir.rstrip(os.path.sep)
 		assert os.path.isdir(some_dir)
@@ -408,7 +457,7 @@ class DBUpdate:
 			num_sep_this = len([x for x in root if x == os.path.sep])
 			if num_sep + level <= num_sep_this:
 				del dirs[:]
-		
+	"""
 		
 	def checkRomfileIsMultirom(self, gamename, lastgamename):
 	
@@ -470,10 +519,12 @@ class DBUpdate:
 		
 		
 	def getFoldernameFromRomFilename(self, filename):
+		Logutil.log("Begin getFoldernameFromRomFilename: %s" +filename, util.LOG_LEVEL_INFO)		
 		foldername = ''
-		dirname = os.path.dirname(filename)		
+		dirname = os.path.dirname(filename)
+		Logutil.log("dirname: %s" %dirname, util.LOG_LEVEL_INFO)
 		if(dirname != None):
-			pathTuple = os.path.split(dirname)			
+			pathTuple = os.path.split(dirname)
 			if(len(pathTuple) == 2):
 				foldername = pathTuple[1]				
 				
@@ -579,7 +630,10 @@ class DBUpdate:
 			game = self.resolveParseResult(gamedescription, 'Game')
 		else:
 			if(not isLocalArtwork):
-				self.missingDescFile.write('%s\n' %gamename)
+				try:
+					self.missingDescFile.write('%s\n' %gamename)
+				except:
+					self.missingDescFile.write('%s\n' %gamename.encode('utf-8'))
 			
 				ignoreGameWithoutDesc = self.Settings.getSetting(util.SETTING_RCB_IGNOREGAMEWITHOUTDESC).upper() == 'TRUE'
 				if(ignoreGameWithoutDesc):
@@ -646,8 +700,10 @@ class DBUpdate:
 		if(gamedescription != None):
 			gamename = self.resolveParseResult(gamedescription, 'Game')
 			if(gamename != gamenameFromFile):
-				self.possibleMismatchFile.write('%s, %s\n' %(gamename, gamenameFromFile))
-			
+				try:
+					self.possibleMismatchFile.write('%s, %s\n' %(gamename, gamenameFromFile))
+				except:
+					self.possibleMismatchFile.write('%s, %s\n' %(gamename.encode('utf-8'), gamenameFromFile.encode('utf-8')))
 			if(gamename == ""):
 				gamename = gamenameFromFile
 		else:
@@ -659,7 +715,10 @@ class DBUpdate:
 			ignoreGamesWithoutArtwork = self.Settings.getSetting(util.SETTING_RCB_IGNOREGAMEWITHOUTARTWORK).upper() == 'TRUE'
 			if(ignoreGamesWithoutArtwork):								
 				Logutil.log('No artwork found for game "%s". Game will not be imported.' %gamenameFromFile, util.LOG_LEVEL_WARNING)
-				self.missingArtworkFile.write('--> No artwork found for game "%s". Game will not be imported.\n' %gamename)
+				try:
+					self.missingArtworkFile.write('--> No artwork found for game "%s". Game will not be imported.\n' %gamename)
+				except:
+					self.missingArtworkFile.write('--> No artwork found for game "%s". Game will not be imported.\n' %gamename.encode('utf-8'))
 				return None, True
 
 			
@@ -733,7 +792,10 @@ class DBUpdate:
 					artWorkFound = True
 				"""					
 			else:
-				self.missingArtworkFile.write('%s (filename: %s) (%s)\n' %(gamename, gamenameFromFile, path.fileType.name))
+				try:
+					self.missingArtworkFile.write('%s (filename: %s) (%s)\n' %(gamename, gamenameFromFile, path.fileType.name))
+				except:
+					self.missingArtworkFile.write('%s (filename: %s) (%s)\n' %(gamename.encode('utf-8'), gamenameFromFile.encode('utf-8'), path.fileType.name))
 			
 			artworkfiles[path.fileType] = files
 		
@@ -848,10 +910,7 @@ class DBUpdate:
 					Logutil.log("resolved path from rom folder name: " +pathnameFromFolder, util.LOG_LEVEL_INFO)					
 					files = self.getFilesByWildcard(pathnameFromFolder)
 					if(len(files) == 0):
-						files = self.getFilesByGameNameIgnoreCase(pathnameFromFolder)								
-				
-							
-				
+						files = self.getFilesByGameNameIgnoreCase(pathnameFromFolder)
 				
 				
 			#TODO could be done only once per RomCollection
@@ -878,23 +937,53 @@ class DBUpdate:
 			if(len(files) == 0):
 				Logutil.log('No files found for game "%s" at path "%s". Make sure that file names are matching.' %(gamename, path), util.LOG_LEVEL_WARNING)
 			for file in files:
-				if(os.path.exists(file)):
+				if(xbmcvfs.exists(file)):
 					resolvedFiles.append(file)
 					
 		return resolvedFiles
 	
 	
 	def getFilesByWildcard(self, pathName):
+		dirs, files, dirname, filemask = self.getFilesByWildcardExt(pathName)
+		return files
+	
+	
+	def getFilesByWildcardExt(self, pathName):
 		
+		Logutil.log('Begin getFilesByWildcard. pathName = %s' %pathName, util.LOG_LEVEL_INFO)
 		files = []
 		
+		dirname = os.path.dirname(pathName)
+		Logutil.log("dirname: " +dirname, util.LOG_LEVEL_INFO)
+		filemask = os.path.basename(pathName)
+		#HACK: escape [] for use with fnmatch
+		filemask = filemask.replace('[', '[[]')
+		filemask = filemask.replace(']', '[]]')
+		#This might be stupid but it was late...
+		filemask = filemask.replace('[[[]]', '[[]')
+		Logutil.log("filemask: " +filemask, util.LOG_LEVEL_INFO)
+		
+		dirs, filesLocal = xbmcvfs.listdir(dirname)
+		Logutil.log("xbmcvfs dirs: %s" %dirs, util.LOG_LEVEL_INFO)						
+		Logutil.log("xbmcvfs files: %s" %filesLocal, util.LOG_LEVEL_INFO)
+		
+		for file in filesLocal:
+			if(fnmatch.fnmatch(file, filemask)):
+			#allFiles = [f.decode(sys.getfilesystemencoding()).encode('utf-8') for f in glob.glob(newRomPath)]
+				file = util.joinPath(dirname, file)
+				files.append(file)
+				
+		return dirs, files, dirname, filemask
+		
+		"""
 		try:
 			# try glob with * wildcard
 			files = glob.glob(pathName)
+			Logutil.log('files after glob.glob: %s' %files, util.LOG_LEVEL_INFO)
 		except Exception, (exc):
 			Logutil.log("Error using glob function in resolvePath " +str(exc), util.LOG_LEVEL_WARNING)
 			
-		if(len(files) == 0):				
+		if(len(files) == 0):
 			#HACK: removed \s from regular expression. previous version was '\s\[.*\]' 
 			squares = re.findall('\[.*\]',pathName)
 			if(squares != None and len(squares) >= 1):
@@ -910,15 +999,16 @@ class DBUpdate:
 		
 		# glob can't handle []-characters - try it with listdir
 		if(len(files)  == 0):
-			try:				
-				if(os.path.isfile(pathName)):
+			try:
+				if(xbmcvfs.exists(pathName)):
 					files.append(pathName)
 				else:
-					files = os.listdir(pathName)					
+					files = xbmcvfs.listdir(pathName)					
 			except:
 				pass
 		Logutil.log("resolved files: " +str(files), util.LOG_LEVEL_INFO)
-		return files		
+		return files
+		"""	
 		
 		
 	def getFilesByGameNameIgnoreCase(self, pathname):
@@ -929,9 +1019,9 @@ class DBUpdate:
 		basename = os.path.basename(pathname)
 		
 		#search all Files that start with the first character of game name
-		newpath = os.path.join(dirname, basename[0].upper() +'*')
+		newpath = util.joinPath(dirname, basename[0].upper() +'*')
 		filesUpper = glob.glob(newpath)
-		newpath = os.path.join(dirname, basename[0].lower() +'*')
+		newpath = util.joinPath(dirname, basename[0].lower() +'*')
 		filesLower = glob.glob(newpath)
 		
 		allFiles = filesUpper + filesLower
@@ -1062,18 +1152,18 @@ class DBUpdate:
 			dirname = os.path.dirname(fileName)
 			#check parent folder
 			parent = os.path.dirname(dirname)
-			if(not os.path.isdir(parent)):
+			if(not xbmcvfs.exists(parent)):
 				try:
-					os.mkdir(parent)
+					xbmcvfs.mkdir(parent)
 				except Exception, (exc):
 					xbmcgui.Dialog().ok(util.localize(35010), util.localize(35011))
 					Logutil.log("Could not create directory: '%s'. Error message: '%s'" %(parent, str(exc)), util.LOG_LEVEL_ERROR)
 					return False, artworkurls
 				
 			#check artwork specific folders
-			if(not os.path.isdir(dirname)):
+			if(not xbmcvfs.exists(dirname)):
 				try:
-					os.mkdir(dirname)
+					xbmcvfs.mkdir(dirname)
 				except Exception, (exc):
 					xbmcgui.Dialog().ok(util.localize(35010), util.localize(35011))
 					Logutil.log("Could not create directory: '%s'. Error message: '%s'" %(dirname, str(exc)), util.LOG_LEVEL_ERROR)
@@ -1097,7 +1187,14 @@ class DBUpdate:
 
 				# fetch thumbnail and save to filepath
 				try:
-					urllib.urlretrieve( thumbUrl, str(fileName))
+					#download file to local folder and copy it to smb path with xbmcvfs
+					if(fileName.startswith('smb://')):
+						localFile = util.joinPath(util.getTempDir(), os.path.basename(fileName))
+						urllib.urlretrieve( thumbUrl, localFile)
+						xbmcvfs.copy(localFile, fileName)
+						xbmcvfs.delete(localFile)
+					else:
+						urllib.urlretrieve( thumbUrl, str(fileName))
 				except Exception, (exc):
 					xbmcgui.Dialog().ok(util.localize(35012), util.localize(35011))
 					Logutil.log("Could not create file: '%s'. Error message: '%s'" %(str(fileName), str(exc)), util.LOG_LEVEL_ERROR)
@@ -1129,6 +1226,7 @@ class DBUpdate:
 		try:
 			self.missingArtworkFile.close()
 			self.missingDescFile.close()
+			self.possibleMismatchFile.close()
 		except:
 			pass
 		

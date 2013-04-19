@@ -96,7 +96,7 @@ consoleDict = {
 			'SEGA CD' : ['20', 'Sega CD', 'segacd'],
 			'SEGA Master System' : ['26', 'Sega Master System', 'sms'],  
 			'SEGA Saturn' : ['23', 'Sega Saturn', 'saturn'],
-			'SNES' : ['15', 'Super Nintendo (SNES)', 'snes', 'snes'],
+			'SNES' : ['15', 'Super Nintendo (SNES)', 'snes'],
 			'Spectravideo' : ['85', '', ''],
 			'TI-99/4A' : ['47', '', 'ti99'],
 			'TRS-80' : ['58', '', ''],
@@ -212,6 +212,8 @@ class RomCollection:
 	id = -1
 	name = ''
 	
+	useBuiltinEmulator = False
+	gameclient = ''
 	emulatorCmd = ''
 	preCmd = ''
 	postCmd = ''
@@ -249,23 +251,54 @@ class Config:
 	missingFilterArtwork = None
 	
 	tree = None
+	configPath = None
 	
 	
-	def readXml(self):
+	def __init__(self, configFile):
+		Logutil.log('Config() set path to %s' %configFile, util.LOG_LEVEL_INFO)
+		self.configFile = configFile
+				
+	
+	def initXml(self):
+		Logutil.log('initXml', util.LOG_LEVEL_INFO)
 		
-		Logutil.log('Begin readXml', util.LOG_LEVEL_INFO)
+		if(not self.configFile):
+			self.configFile = util.getConfigXmlPath()
 		
-		configFile = util.getConfigXmlPath()		
+		if(not os.path.isfile(self.configFile)):			
+			Logutil.log('File config.xml does not exist. Place a valid config file here: %s' %self.configFile, util.LOG_LEVEL_ERROR)
+			return None, False, util.localize(35003)
 		
-		if(not os.path.isfile(configFile)):			
-			Logutil.log('File config.xml does not exist. Place a valid config file here: ' +str(configFile), util.LOG_LEVEL_ERROR)
-			return False, util.localize(35003)
-		
-		tree = ElementTree().parse(configFile)
-		self.tree = tree
+		tree = ElementTree().parse(self.configFile)
 		if(tree == None):
 			Logutil.log('Could not read config.xml', util.LOG_LEVEL_ERROR)
-			return False, util.localize(35004)
+			return None, False, util.localize(35004)
+		
+		self.tree = tree
+		
+		return tree, True, ''
+	
+	
+	def checkRomCollectionsAvailable(self):
+		Logutil.log('checkRomCollectionsAvailable', util.LOG_LEVEL_INFO)
+	
+		tree, success, errorMsg = self.initXml()
+		if(not success):
+			return False, errorMsg
+		
+		romCollectionRows = tree.findall('RomCollections/RomCollection')
+		numRomCollections = len(romCollectionRows) 
+		Logutil.log("Number of Rom Collections in config.xml: %i" %numRomCollections, util.LOG_LEVEL_INFO)
+				
+		return numRomCollections > 0, ''
+				
+	
+	def readXml(self):
+		Logutil.log('readXml', util.LOG_LEVEL_INFO)
+		
+		tree, success, errorMsg = self.initXml()
+		if(not success):
+			return False, errorMsg	
 		
 		#Rom Collections
 		romCollections, errorMsg = self.readRomCollections(tree)
@@ -279,7 +312,7 @@ class Config:
 			return False, errorMsg		
 		self.scraperSites = scrapers
 				
-		self.fileTypeIdsForGamelist = self.getFileTypeIdsForGameList(romCollections)
+		self.fileTypeIdsForGamelist = self.getFileTypeIdsForGameList(tree, romCollections)
 		
 		#Missing filter settings
 		missingFilter = tree.find('MissingFilter')
@@ -303,13 +336,10 @@ class Config:
 		romCollections = {}
 		
 		romCollectionRows = tree.findall('RomCollections/RomCollection')
-				
-		"""	
-		#TODO Find out how to check result of findall. None, len() and list() don't work
-		if (len(list(romCollections)) == 0):
+								
+		if (len(romCollectionRows) == 0):
 			Logutil.log('Configuration error. config.xml does not contain any RomCollections', util.LOG_LEVEL_ERROR)
 			return None, 'Configuration error. See xbmc.log for details'
-		"""
 			
 		for romCollectionRow in romCollectionRows:
 			
@@ -336,7 +366,7 @@ class Config:
 			
 			#romPath
 			romCollection.romPaths = []
-			romPathRows = romCollectionRow.findall('romPath')		
+			romPathRows = romCollectionRow.findall('romPath')
 			for romPathRow in romPathRows:
 				Logutil.log('Rom path: ' +romPathRow.text, util.LOG_LEVEL_INFO)
 				if(romPathRow.text != None):
@@ -415,6 +445,7 @@ class Config:
 				romCollection.imagePlacingInfo = fileTypeFor
 						
 			#all simple RomCollection properties
+			romCollection.gameclient = self.readTextElement(romCollectionRow, 'gameclient')
 			romCollection.emulatorCmd = self.readTextElement(romCollectionRow, 'emulatorCmd')
 			romCollection.preCmd = self.readTextElement(romCollectionRow, 'preCmd')
 			romCollection.postCmd = self.readTextElement(romCollectionRow, 'postCmd')
@@ -422,6 +453,10 @@ class Config:
 			romCollection.saveStatePath = self.readTextElement(romCollectionRow, 'saveStatePath')
 			romCollection.saveStateParams = self.readTextElement(romCollectionRow, 'saveStateParams')
 						
+			useBuiltinEmulator = self.readTextElement(romCollectionRow, 'useBuiltinEmulator')
+			if(useBuiltinEmulator != ''):
+				romCollection.useBuiltinEmulator = useBuiltinEmulator.upper() == 'TRUE'
+				
 			ignoreOnScan = self.readTextElement(romCollectionRow, 'ignoreOnScan')
 			if(ignoreOnScan != ''):
 				romCollection.ignoreOnScan = ignoreOnScan.upper() == 'TRUE'
@@ -565,6 +600,7 @@ class Config:
 	
 	
 	def readFileType(self, name, tree):
+		
 		fileTypeRow = None 
 		fileTypeRows = tree.findall('FileTypes/FileType')
 		for element in fileTypeRows:
@@ -674,7 +710,7 @@ class Config:
 		return items
 	
 	
-	def getFileTypeIdsForGameList(self, romCollections):
+	def getFileTypeIdsForGameList(self, tree, romCollections):
 		
 		fileTypeIds = []
 		for romCollection in romCollections.values():
@@ -686,7 +722,7 @@ class Config:
 					fileTypeIds.append(fileType.id)
 			
 			#fullscreen video
-			fileType, errorMsg = self.readFileType('gameplay', self.tree)
+			fileType, errorMsg = self.readFileType('gameplay', tree)
 			if(fileType != None):
 				fileTypeIds.append(fileType.id)
 

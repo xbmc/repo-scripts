@@ -131,7 +131,7 @@ def runUpdate():
 	#create db if not existent and maybe update to new version
 	gdb.checkDBStructure()
 	
-	configFile = config.Config()
+	configFile = config.Config(None)
 	statusOk, errorMsg = configFile.readXml()
 	
 	settings = util.getSettings()
@@ -140,7 +140,7 @@ def runUpdate():
 	settings.setSetting(util.SETTING_RCB_SCRAPEONSTARTUPACTION, 'update')
 	
 	progress = ProgressDialogBk()
-	dbupdate.DBUpdate().updateDB(gdb, progress, scrapingMode, configFile.romCollections, util.getSettings())
+	dbupdate.DBUpdate().updateDB(gdb, progress, scrapingMode, configFile.romCollections, util.getSettings(), False)
 	
 	settings.setSetting(util.SETTING_RCB_SCRAPEONSTARTUPACTION, 'nothing')
 	

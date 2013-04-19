@@ -38,8 +38,15 @@ class PyScraper:
 		if(scraper.source == 'nfo'):
 			nfoFile = self.getNfoFile(settings, romCollection, gamenameFromFile, romFile)
 			scraperSource = nfoFile
-														
-		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc, fuzzyFactor, updateOption, romCollection)
+								
+				
+		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc)
+		if(tempResults == None):
+			#try again without (*) and [*]
+			gamenameFromFile = re.sub('\s\(.*\)|\s\[.*\]|\(.*\)|\[.*\]', '', gamenameFromFile)
+			tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc)
+
+		tempResults = self.getBestResults(tempResults, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection)			
 		
 		if(tempResults == None):
 			if(scraper.returnUrl):
@@ -105,64 +112,68 @@ class PyScraper:
 		return nfoFile
 	
 	
-	def parseDescriptionFile(self, scraper, scraperSourceOrig, romFilename, foldername, crc, fuzzyFactor, updateOption, romCollection):
+	def parseDescriptionFile(self, scraper, scraperSource, gamenameFromFile, foldername, crc):
 			
-		try:				
-			#replace configurable tokens
-			replaceKeys = scraper.replaceKeyString.split(',')
-			Logutil.log("replaceKeys: " +str(replaceKeys), util.LOG_LEVEL_DEBUG)						
-			replaceValues = scraper.replaceValueString.split(',')
-			Logutil.log("replaceValues: " +str(replaceValues), util.LOG_LEVEL_DEBUG)
+		scraperSource = self.prepareScraperSource(scraper, scraperSource, gamenameFromFile, foldername, crc)
+		if(scraperSource == ""):
+			return None
 			
-			if(len(replaceKeys) != len(replaceValues)):
-				Logutil.log("Configuration error: replaceKeyString (%s) and replaceValueString(%s) does not have the same number of ','-separated items." %(scraper.replaceKeyString, scraper.replaceValueString), util.LOG_LEVEL_ERROR)
-				return None
-			
-			for i in range(0, len(replaceKeys)):
-				scraperSource = scraperSourceOrig.replace(replaceKeys[i], replaceValues[i])
-				#also replace in gamename for later result matching
-				gamenameFromFile = romFilename.replace(replaceKeys[i], replaceValues[i])
-							
-			#remove (*) and [*]
-			gamenameFromFile = re.sub('\s\(.*\)|\s\[.*\]|\(.*\)|\[.*\]','',gamenameFromFile)
-				
-			if(scraperSource.startswith('http://')):
-				gamenameToParse = urllib.quote(gamenameFromFile, safe='')
-			else:
-				gamenameToParse = gamenameFromFile					
-				
-			scraperSource = scraperSource.replace("%GAME%", gamenameToParse)
-			
-			replaceTokens = ['%FILENAME%', '%FOLDERNAME%', '%CRC%']
-			for key in util.API_KEYS.keys():
-				replaceTokens.append(key)
-				
-			replaceValues = [gamenameFromFile, foldername, crc]
-			for value in util.API_KEYS.values():
-				replaceValues.append(value)
-				
-			for i in range(0, len(replaceTokens)):
-				scraperSource = scraperSource.replace(replaceTokens[i], replaceValues[i])
-			
-			if(not scraperSource.startswith('http://') and not os.path.exists(scraperSource)):
-				#try again with original rom filename
-				scraperSource = scraperSourceOrig.replace("%GAME%", romFilename)
-				if not os.path.exists(scraperSource):
-					Logutil.log("description file for game " +gamenameFromFile +" could not be found. "\
-							"Check if this path exists: " +scraperSource, util.LOG_LEVEL_WARNING)
-					return None
-			
+		try:
 			parser = DescriptionParserFactory.getParser(str(scraper.parseInstruction))
-			Logutil.log("description file (tokens replaced): " +scraperSource, util.LOG_LEVEL_INFO)
-			Logutil.log("Encoding: %s" % scraper.encoding, util.LOG_LEVEL_WARNING)
 			results = parser.parseDescription(scraperSource, scraper.encoding)
 		except Exception, (exc):
 			Logutil.log("an error occured while parsing game description: " +scraperSource, util.LOG_LEVEL_WARNING)
 			Logutil.log("Parser complains about: " +str(exc), util.LOG_LEVEL_WARNING)
-			return None			
-
-		results = self.getBestResults(results, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection)
+			return None
+				
 		return results
+	
+	
+	def prepareScraperSource(self, scraper, scraperSourceOrig, romFilename, foldername, crc):
+		#replace configurable tokens
+		replaceKeys = scraper.replaceKeyString.split(',')
+		Logutil.log("replaceKeys: " +str(replaceKeys), util.LOG_LEVEL_DEBUG)						
+		replaceValues = scraper.replaceValueString.split(',')
+		Logutil.log("replaceValues: " +str(replaceValues), util.LOG_LEVEL_DEBUG)
+		
+		if(len(replaceKeys) != len(replaceValues)):
+			Logutil.log("Configuration error: replaceKeyString (%s) and replaceValueString(%s) does not have the same number of ','-separated items." %(scraper.replaceKeyString, scraper.replaceValueString), util.LOG_LEVEL_ERROR)
+			return None
+		
+		for i in range(0, len(replaceKeys)):
+			scraperSource = scraperSourceOrig.replace(replaceKeys[i], replaceValues[i])
+			#also replace in gamename for later result matching
+			gamenameFromFile = romFilename.replace(replaceKeys[i], replaceValues[i])
+			
+		if(scraperSource.startswith('http://')):
+			gamenameToParse = urllib.quote(gamenameFromFile, safe='')
+		else:
+			gamenameToParse = gamenameFromFile					
+			
+		scraperSource = scraperSource.replace("%GAME%", gamenameToParse)
+		
+		replaceTokens = ['%FILENAME%', '%FOLDERNAME%', '%CRC%']
+		for key in util.API_KEYS.keys():
+			replaceTokens.append(key)
+			
+		replaceValues = [gamenameFromFile, foldername, crc]
+		for value in util.API_KEYS.values():
+			replaceValues.append(value)
+			
+		for i in range(0, len(replaceTokens)):
+			scraperSource = scraperSource.replace(replaceTokens[i], replaceValues[i])
+		
+		if(not scraperSource.startswith('http://') and not os.path.exists(scraperSource)):
+			#try again with original rom filename
+			scraperSource = scraperSourceOrig.replace("%GAME%", romFilename)
+			if not os.path.exists(scraperSource):				
+				Logutil.log("description file for game " +gamenameFromFile +" could not be found. "\
+						"Check if this path exists: " +scraperSource, util.LOG_LEVEL_WARNING)			
+				return ""
+		
+		Logutil.log("description file (tokens replaced): " +scraperSource, util.LOG_LEVEL_INFO)
+		Logutil.log("Encoding: %s" % scraper.encoding, util.LOG_LEVEL_WARNING)
+		return scraperSource
 	
 	
 	def getBestResults(self, results, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection):
@@ -207,8 +218,8 @@ class PyScraper:
 					highestRatio = 0.0
 			
 			if(highestRatio < fuzzyFactor):
-				Logutil.log('No result found with a ratio better than %s. Try again with subtitle search.' %(str(fuzzyFactor),), LOG_LEVEL_WARNING)
-				result, highestRatio = self.matchGamename(results, gamenameFromFile, digits, romes, True)
+				Logutil.log('No result found with a ratio better than %s. Try again with subtitle search.' %(str(fuzzyFactor),), LOG_LEVEL_WARNING)				
+				result, highestRatio = self.matchGamename(results, gamenameFromFile, digits, romes, True, scraperSource, romCollection)
 				#check for sequel numbers because it could be misinteroreted as subtitle
 				bestMatchingGame = self.resolveParseResult(result, 'SearchKey')
 				seqNoIsEqual = self.checkSequelNoIsEqual(gamenameFromFile, bestMatchingGame)

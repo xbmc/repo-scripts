@@ -45,6 +45,8 @@
 	<string id="35038">Fehler beim Erzeugen der .cut Datei.[CR]Siehe xbmc.log für Details.</string>
 	<string id="35039">Fehler beim Laden der .7z Datei.</string>
 	<string id="35040">Fehler: Datei config_template.xml existiert nicht</string>
+	<string id="35041">RCB kann nicht auf den Rom Pfad zugreifen.[CR]Stelle sicher, dass im Pfadnamen keine Sonderzeichen enthalten sind.</string>
+	<string id="35042">RCB kann nicht auf den Artwork Pfad zugreifen.[CR]Stelle sicher, dass im Pfadnamen keine Sonderzeichen enthalten sind.</string>
 
 	
 	<!-- Hints / questions -->
@@ -144,6 +146,8 @@
 	<string id="40093">%s Artwork</string>
 	<string id="40094">Verzögerung davor (ms)</string>
 	<string id="40095">Verzögerung danach (ms)</string>
+	<string id="40096">Start-Verzögerung im Solo Modus (ms)</string>
+	<string id="40097">VB script im Solo Modus (nur Windows)</string>
 
 	
 	<!-- Settings -->

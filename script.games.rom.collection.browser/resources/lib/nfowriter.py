@@ -1,7 +1,7 @@
 
 import os
 
-import xbmc, xbmcgui
+import xbmc, xbmcgui, xbmcvfs
 
 import dialogprogress
 import util, helper
@@ -159,7 +159,13 @@ class NfoWriter:
 			nfoFile = self.getNfoFilePath(romCollectionName, romFile, gameNameFromFile)
 						
 			if(nfoFile != ''):
-				tree.write(nfoFile)
+				if(nfoFile.startswith('smb://')):
+					localFile = util.joinPath(util.getTempDir(), os.path.basename(nfoFile))					
+					tree.write(localFile)
+					xbmcvfs.copy(localFile, nfoFile)
+					xbmcvfs.delete(localFile)
+				else:
+					tree.write(nfoFile)
 			
 		except Exception, (exc):
 			Logutil.log("Error: Cannot write file game.nfo: " +str(exc), util.LOG_LEVEL_WARNING)

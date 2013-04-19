@@ -33,9 +33,11 @@
 	</category>
 	
 	<category label="45026">
+	    <setting id="rcb_useVBInSoloMode" label="40097" type="bool" default="false"/>
+		<setting id="rcb_startupDelay" label="40096" type="slider" default="1000" range="100,100,2000" option="int"/>
 		<setting id="rcb_escapeEmulatorCommand" label="45027" value="false" type="bool" default="false"/>
 		<setting id="rcb_prelaunchDelay" label="40094" type="slider" default="1000" range="100,100,2000" option="int"/>
-		<setting id="rcb_postlaunchDelay" label="40095" type="slider" default="1000" range="100,100,2000" option="int"/>
+		<setting id="rcb_postlaunchDelay" label="40095" type="slider" default="1000" range="100,100,2000" option="int"/>		
 	</category>
 	
 	<setting id="rcb_view_mode" visible="false" value="" type="text"/>

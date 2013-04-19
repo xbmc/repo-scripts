@@ -1,5 +1,6 @@
 
 import xbmc, xbmcgui, xbmcaddon
+import json
 import util
 import dialogeditromcollection, dialogeditscraper, dialogdeleteromcollection, config
 import nfowriter, wizardconfigxml
@@ -120,7 +121,7 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			editRCdialog = dialogeditromcollection.EditRomCollectionDialog("script-RCB-editromcollection.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self.gui)			
 			del editRCdialog
 			
-			self.gui.config = Config()
+			self.gui.config = Config(None)
 			self.gui.config.readXml()
 			
 		elif (controlID == 5117): # edit scraper			
@@ -129,7 +130,7 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			editscraperdialog = dialogeditscraper.EditOfflineScraper("script-RCB-editscraper.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self.gui)			
 			del editscraperdialog
 			
-			self.gui.config = Config()
+			self.gui.config = Config(None)
 			self.gui.config.readXml()
 		
 		elif (controlID == 5113): #Edit Game Command			
@@ -139,15 +140,28 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35015), util.localize(35014))
 				return
 
-			command = self.gameRow[util.GAME_gameCmd]
+			origCommand = self.gameRow[util.GAME_gameCmd]
+			command = ''
 			
-			keyboard = xbmc.Keyboard()
-			keyboard.setHeading(util.localize(40035))
-			if(command != None):
-				keyboard.setDefault(command)
-			keyboard.doModal()
-			if (keyboard.isConfirmed()):
-				command = keyboard.getText()
+			romCollectionId = self.gameRow[util.GAME_romCollectionId]
+			romCollection = self.gui.config.romCollections[str(romCollectionId)]
+			if(romCollection.useBuiltinEmulator):
+				success, selectedcore = self.selectlibretrocore(romCollection.name)
+				if success:
+					command = selectedcore
+				else:
+					Logutil.log("No libretro core was chosen. Won't update game command.", util.LOG_LEVEL_INFO)
+					return
+			else:
+				keyboard = xbmc.Keyboard()
+				keyboard.setHeading(util.localize(40035))
+				if(origCommand != None):
+					keyboard.setDefault(origCommand)
+				keyboard.doModal()
+				if (keyboard.isConfirmed()):
+					command = keyboard.getText()
+					
+			if(command != origCommand):
 				Logutil.log("Updating game '%s' with command '%s'" %(str(self.gameRow[util.ROW_NAME]), command), util.LOG_LEVEL_INFO)
 				Game(self.gui.gdb).update(('gameCmd',), (command,), self.gameRow[util.ROW_ID], True)
 				self.gui.gdb.commit()
@@ -246,3 +260,49 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 		
 		return control
 
+	
+	def selectlibretrocore(self, platform):
+		
+		selectedCore = ''
+		
+		addons = ['None']
+		
+		success, installedAddons = self.readLibretroCores("all", True, platform)
+		if(not success):
+			return False, ""
+		addons.extend(installedAddons)
+		
+		success, uninstalledAddons = self.readLibretroCores("uninstalled", False, platform)
+		if(not success):
+			return False, ""
+		addons.extend(uninstalledAddons)
+		
+		dialog = xbmcgui.Dialog()
+		index = dialog.select('Select libretro core', addons)
+		if(index == -1):
+			return False, ""
+		elif(index == 0):
+			return True, ""
+		else:
+			selectedCore = addons[index]
+			return True, selectedCore
+		
+	
+	def readLibretroCores(self, enabledParam, installedOnlyParam, platform):
+		
+		addons = []
+		addonsJson = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddons", "params": { "type": "xbmc.gameclient", "enabled": "%s" } }' %enabledParam)
+		jsonResult = json.loads(addonsJson)
+		if (str(jsonResult.keys()).find('error') >= 0):
+			Logutil.log("Error while reading addons via json.", util.LOG_LEVEL_WARNING)
+			return False, None
+				
+		for addonObj in jsonResult[u'result'][u'addons']:
+			id = addonObj[u'addonid']
+			addon = xbmcaddon.Addon(id, installedOnly=installedOnlyParam)
+			# extensions and platforms are "|" separated, extensions may or may not have a leading "."
+			if(addon.getAddonInfo('platforms') == platform):
+				addons.append(id)
+		Logutil.log("addons: %s" %str(addons), util.LOG_LEVEL_INFO)
+		return True, addons
+		

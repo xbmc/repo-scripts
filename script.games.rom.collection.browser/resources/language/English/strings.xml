@@ -44,6 +44,8 @@
 	<string id="35038">Error while creating .cut file. Check xbmc.log for details.</string>
 	<string id="35039">Error launching .7z file.</string>
 	<string id="35040">Error: File config_template.xml does not exist</string>
+	<string id="35041">RCB can't acces your rom path.[CR]Make sure it does not contain any non-ascii characters.</string>
+	<string id="35042">RCB can't acces your artwork path.[CR]Make sure it does not contain any non-ascii characters.</string>
 	
 	
 	<!-- Hints / questions -->
@@ -143,6 +145,8 @@
 	<string id="40093">%s Artwork</string>
 	<string id="40094">Pre-Launch delay (ms)</string>
 	<string id="40095">Post-Launch delay (ms)</string>
+	<string id="40096">Solo mode startup delay (ms)</string>
+	<string id="40097">Use VB script in solo mode (Windows only)</string>
 	
 	
 	<!-- Settings -->
@@ -241,7 +245,7 @@
 	<string id="52031">Savestate Params</string>
 	<string id="52032">Pre-Launch Cmd</string>
 	<string id="52033">Post-Launch Cmd</string>
-	<string id="52036">Autoplay Video (Main Window)</string>
+	<string id="52036">Autoplay Video (Info Window)</string>
 	
 	<string id="52034">Save Config</string>
 	<string id="52035">Cancel</string>

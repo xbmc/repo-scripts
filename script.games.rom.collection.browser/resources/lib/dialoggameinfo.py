@@ -52,6 +52,8 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		self.fileDict = kwargs["fileDict"]
 		self.fileTypeGameplay = kwargs["fileTypeGameplay"]
 		
+		self.useRCBService = True
+		
 		self.doModal()
 		
 		
@@ -370,7 +372,7 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		
 		Logutil.log("Begin launchEmu", util.LOG_LEVEL_INFO)				
 		
-		launcher.launchEmu(self.gdb, self, self.selectedGameId, self.config, self.settings)
+		launcher.launchEmu(self.gdb, self, self.selectedGameId, self.config, self.settings, self.selectedGame)
 		Logutil.log("End launchEmu", util.LOG_LEVEL_INFO)
 		
 	
@@ -382,7 +384,7 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		selectedGameIndex = 0
 		
 		helper.saveViewState(self.gdb, isOnExit, 'gameInfoView', selectedGameIndex, self.selectedConsoleIndex, self.selectedGenreIndex, self.selectedPublisherIndex, 
-			self.selectedYearIndex, self.selectedCharacterIndex, self.selectedControlIdMainView, self.selectedControlId)
+			self.selectedYearIndex, self.selectedCharacterIndex, self.selectedControlIdMainView, self.selectedControlId, self.settings)
 			
 		Logutil.log("End saveViewState", util.LOG_LEVEL_INFO)
 			

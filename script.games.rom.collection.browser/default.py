@@ -1,4 +1,4 @@
-# Copyright (C) 2012 Malte Loepmann (maloep@googlemail.com)
+# Copyright (C) 2009-2013 Malte Loepmann (maloep@googlemail.com)
 #
 # This program is free software; you can redistribute it and/or modify it under the terms 
 # of the GNU General Public License as published by the Free Software Foundation; 
@@ -18,18 +18,16 @@
 
 
 
-import os
-import sys
-import re
-
+import os, sys, re
 import xbmcaddon
+
 
 # Shared resources
 addonPath = ''
 addon = xbmcaddon.Addon(id='script.games.rom.collection.browser')
 addonPath = addon.getAddonInfo('path')
 
-		
+
 BASE_RESOURCE_PATH = os.path.join(addonPath, "resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib", "pyparsing" ) )
@@ -52,26 +50,64 @@ if re.match("Linux", env):
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "platform_libraries", env ) )
 
 
+class dummyGUI():
+	useRCBService = True
+	player = xbmc.Player()
+	
+	def writeMsg(self, message):
+		pass
+	
+	def saveViewState(self, isOnExit):
+		pass
+	
 
-print 'sys.argv = ' +str(sys.argv)
-launchRCB = False
-for arg in sys.argv:
-	param = str(arg)
-	print 'param = ' +param
-	if param == '' or param == 'script.games.rom.collection.browser':
-		print 'setting launchRCB = True'
-		launchRCB = True
-			
-	#provide data that skins can show on home screen
-	if 'limit=' in param:
-		print 'setting launchRCB = False'
+class Main():
+	
+	def __init__(self):
+		print 'RCB: sys.argv = ' +str(sys.argv)
 		launchRCB = False
-		
+		for arg in sys.argv:
+			param = str(arg)
+			print 'RCB: param = ' +param
+			if param == '' or param == 'script.games.rom.collection.browser':
+				print 'RCB: setting launchRCB = True'
+				launchRCB = True
+					
+			#provide data that skins can show on home screen
+			if 'limit=' in param:
+				print 'RCB: setting launchRCB = False'
+				launchRCB = False
+				#check if RCB should be launched at startup (via RCB Service)
+				launchOnStartup = addon.getSetting('rcb_launchOnStartup')
+				if(launchOnStartup.lower() == 'true'):
+					print "RCB: RCB will be started via RCB service. Won't gather widget data on this run."					
+				else:
+					self.gatherWidgetData(param)
+				
+			if 'launchid' in param:
+				launchRCB = False
+				self.launchGame(param)
+				
+		# Start the main gui
+		print 'RCB: launchRCB = ' +str(launchRCB)
+		if launchRCB:
+			 import gui
+				
+				
+	def gatherWidgetData(self, param):
+		print 'start gatherWidgetData'
 		import util, helper
-		from gamedatabase import *
-		from config import *
+		from gamedatabase import Game, GameDataBase, File
+		from config import Config, RomCollection
+		
 		gdb = GameDataBase(util.getAddonDataPath())
 		gdb.connect()
+		
+		doImport, errorMsg = gdb.checkDBStructure()
+		if(doImport) > 0:
+			print "RCB: No database available. Won't gather any data."
+			gdb.close()
+			return
 				
 		#cache lookup tables
 		yearDict = helper.cacheYears(gdb)
@@ -82,8 +118,9 @@ for arg in sys.argv:
 				
 		limit = int(param.replace('limit=', ''))
 		games = Game(gdb).getMostPlayedGames(limit)
+		print 'most played games: %s' %games
 		
-		config = Config()
+		config = Config(None)
 		statusOk, errorMsg = config.readXml()
 		
 		settings = util.getSettings()
@@ -94,6 +131,8 @@ for arg in sys.argv:
 		
 			count += 1
 			try:
+				print "Gathering data for rom no %i: %s" %(count, gameRow[util.ROW_NAME])
+				
 				romCollection = config.romCollections[str(gameRow[util.GAME_romCollectionId])]				
 		
 				#get artwork that is chosen to be shown in gamelist
@@ -134,31 +173,10 @@ for arg in sys.argv:
 				version = helper.saveReadString(gameRow[util.GAME_version])
 				playcount = helper.saveReadString(gameRow[util.GAME_launchCount])
 				
-				
 				#get launch command
 				filenameRows = File(gdb).getRomsByGameId(gameRow[util.ROW_ID])
 				
-				env = ( os.environ.get( "OS", "win32" ), "win32", )[ os.environ.get( "OS", "win32" ) == "xbox" ]
-				import launcher
-				cmd, precmd, postcmd = launcher.buildCmd(filenameRows, romCollection, gameRow, False, True)
-				
-				#solo mode does not work when invoked from widget
-				"""
-				if (romCollection.useEmuSolo):
-					settings.setSetting(util.SETTING_RCB_LAUNCHONSTARTUP, 'true')
-					
-					#invoke batch file that kills xbmc before launching the emulator							
-					if(env == "win32"):
-						#There is a problem with quotes passed as argument to windows command shell. This only works with "call"
-						cmd = 'call \"' +os.path.join(util.RCBHOME, 'applaunch.bat') +'\" ' +cmd						
-					else:
-						cmd = os.path.join(re.escape(util.RCBHOME), 'applaunch.sh ') +cmd
-				else:
-				"""
-				#use call to support paths with whitespaces
-				#if(env == "win32" and not (os.environ.get( "OS", "xbox" ) == "xbox")):
-				#	cmd = 'call ' +cmd
-				
+				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.Id" %count, str(gameRow[util.ROW_ID]))
 				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.Console" %count, romCollection.name)
 				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.Title" %count, gameRow[util.ROW_NAME])
 				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.Thumb" %count, thumb)
@@ -181,19 +199,34 @@ for arg in sys.argv:
 				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.Originaltitle" %count, originaltitle)
 				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.Alternatetitle" %count, alternatetitle)
 				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.Translatedby" %count, translatedby)
-				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.Version" %count, version)				
-				
-				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.LaunchCommand" %count, cmd)
+				xbmcgui.Window(10000).setProperty("MostPlayedROM.%d.Version" %count, version)
 								
 			except Exception, (exc):
 				print 'RCB: Error while getting most played games: ' +str(exc)
 		
 		gdb.close()
-
-
-# Start the main gui
-print 'launchRCB = ' +str(launchRCB)
-if launchRCB:
-	import gui	
 	
+	
+	def launchGame(self, param):
+		import launcher, util
+		from gamedatabase import GameDataBase
+		from config import Config
 		
+		gdb = GameDataBase(util.getAddonDataPath())
+		gdb.connect()
+		
+		gameId = int(param.replace('launchid=', ''))
+		
+		config = Config(None)
+		statusOk, errorMsg = config.readXml()
+		
+		settings = util.getSettings()
+		
+		gui = dummyGUI()
+		
+		launcher.launchEmu(gdb, gui, gameId, config, settings, None)
+
+
+if ( __name__ == "__main__" ):
+	print 'RCB started'
+	Main()

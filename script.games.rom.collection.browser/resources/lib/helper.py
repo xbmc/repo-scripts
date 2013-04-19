@@ -352,23 +352,3 @@ def getGamenameFromFilename(filename, romCollection):
 	Logutil.log("gamename (friendly): " +gamename, util.LOG_LEVEL_INFO)		
 	
 	return gamename
-
-
-
-def getPathTranslation(xbmcPath):
-	"""
-	Check if the path is in the network and converts to Python format. 
-	:param xbmcPath: Path given by the system.
-	:return the translated path.
-	
-	"""	
-	if ("smb:" in xbmcPath):
-		Logutil.log("SMB Path Detected. \n original : " +xbmcPath +"\n converted:" + xbmcPath.replace("smb:",""), util.LOG_LEVEL_DEBUG)
-		return xbmcPath.replace("smb:","")
-	if ("nfs:" in xbmcPath):
-		Logutil.log("NFS Path Detected. \n original : " +xbmcPath +"\n converted:" + xbmcPath.replace("smb:",""), util.LOG_LEVEL_DEBUG)
-		return xbmcPath.replace("nfs:","")
-	else: return xbmcPath 
-	
-
-
