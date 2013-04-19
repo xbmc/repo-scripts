@@ -12,7 +12,7 @@
 # if not, see <http://www.gnu.org/licenses/>.
 
 import os
-import xbmcaddon
+import xbmc, xbmcaddon
 
 
 def checkStartupAction():
@@ -29,8 +29,8 @@ def checkStartupAction():
 	print 'RCB Service: launch RCB on startup = ' +str(launchOnStartup)
 	
 	if(launchOnStartup.lower() == 'true'):
-		#make sure that we don't launch it again
-		rcbAddon.setSetting('rcb_launchOnStartup', 'false')
+		startupDelay = int(float(rcbAddon.getSetting('rcb_startupDelay')))
+		xbmc.sleep(startupDelay)
 		path = os.path.join(rcbAddon.getAddonInfo('path'), 'default.py')
 		print 'RCB Service: launch RCB ' +str(path)
 		xbmc.executescript("%s" %path)
