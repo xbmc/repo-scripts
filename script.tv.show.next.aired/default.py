@@ -127,7 +127,9 @@ class NextAired:
         self.update_hour = __addon__.getSetting( "update_hour" )
         self.update_minute = __addon__.getSetting( "update_minute" )
         self._parse_argv()
-        if self.BACKEND:
+        if self.TVSHOWTITLE:
+            self.return_properties(self.TVSHOWTITLE)
+        elif self.BACKEND:
             self.run_backend()
         else:
             self.update_data()
@@ -163,6 +165,7 @@ class NextAired:
         log( "### params: %s" % params )
         self.SILENT = params.get( "silent", "" )
         self.BACKEND = params.get( "backend", False )
+        self.TVSHOWTITLE = params.get( "tvshowtitle", False )
         self.FORCEUPDATE = __addon__.getSetting("ForceUpdate") == "true"
         self.RESET = params.get( "reset", False )
 
@@ -476,6 +479,16 @@ class NextAired:
             if not xbmc.getCondVisibility("Window.IsVisible(10025)"):
                 self.WINDOW.clearProperty("NextAired.Label")
                 self._stop = True
+                
+    def return_properties(self,tvshowtitle):
+        self.complete_show_data = self.get_list(NEXTAIRED_DB)
+       	self.complete_show_data.extend(self.get_list(CANCELLED_DB))
+        log( "return_properties started" )
+        if self.complete_show_data <> "[]":
+            self.WINDOW.clearProperty("NextAired.Label")
+            for item in self.complete_show_data:
+                if tvshowtitle == item.get("localname", ""):
+                    self.set_labels('windowproperty', item)
 
     def set_labels(self, infolabel, item, return_items = False ):
         art = item.get("art", "")
