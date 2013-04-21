@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.categories" name="- Categories" version="2.0.8" provider-name="AddonScriptorDE">
+<addon id="script.categories" name="- Categories" version="2.0.9" provider-name="AddonScriptorDE">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -7,11 +7,15 @@
     <provides>video audio image</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
+    <language></language>
+    <platform>all</platform>
     <summary lang="en">Add your Video/Audio/Image add-ons to categories (via context menu)</summary>
     <summary lang="de">Video/Audio/Image Add-ons per Kontextmenü zu Kategorien hinzufügen</summary>
-    <language></language>
     <description lang="en">Add your Video/Audio/Image add-ons to categories (via context menu)</description>
     <description lang="de">Video/Audio/Image Add-ons per Kontextmenü zu Kategorien hinzufügen</description>
-    <platform>all</platform>
+    <website></website>
+    <source>https://github.com/AddonScriptorDE/script.categories</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=154668</forum>
+    <email>AddonScriptorDE at yahoo dot de</email>
   </extension>
 </addon>
