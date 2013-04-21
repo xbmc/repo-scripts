@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.trakt" name="trakt" version="2.1.0" provider-name="trakt.tv">
+<addon id="script.trakt" name="trakt" version="2.2.0" provider-name="trakt.tv">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
 	</requires>
-	<extension point="xbmc.service" name="trakt.service" library="service.py" start="login" />
-	<extension point="xbmc.python.script" library="sync_exec.py">
+	<extension point="xbmc.python.script" library="manual_sync.py">
 		<provides>executable</provides>
 	</extension>
+	<extension point="xbmc.service" name="trakt.service" library="default.py" start="login" />
 	<extension point="xbmc.addon.metadata" name="trakt.metadata">
 		<language></language>
 		<summary lang="en">TV and movie scrobbler for trakt.tv</summary>
@@ -34,5 +34,9 @@ What can this addon do?
 
 Special thanks to all who contributed to this plugin! Check the commit history and changelog to see these talented developers.</description>
 		<platform>all</platform>
+		<website>http://trakt.tv</website>
+		<source>https://github.com/rectifyer/script.trakt</source>
+		<forum>http://forum.xbmc.org/showthread.php?tid=138745</forum>
+		<email></email>    
 	</extension>
 </addon>
