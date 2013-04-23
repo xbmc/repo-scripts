@@ -1,3 +1,7 @@
+Version 3.0.1
+===============
+- Fixed bug in setting locale that broke the addon
+
 Version 3.0.0
 ===============
 - Frodo compatibility

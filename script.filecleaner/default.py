@@ -66,12 +66,12 @@ class Cleaner:
 
     def __init__(self):
         """Create a Cleaner object that performs regular cleaning of watched videos."""
+        self.reload_settings()
+
         try:
             locale.setlocale(locale.LC_ALL, "English_United Kingdom")
         except locale.Error, le:
             self.debug("Could not change locale: %s" % le)
-
-        self.reload_settings()
 
         service_sleep = 10
         ticker = 0
