@@ -552,6 +552,18 @@ msgctxt "#32253"
 msgid "Send PM to {0}"
 msgstr "Enviar Msg.Prv. para {0}"
 
+msgctxt "#32254"
+msgid "Will Restart After Finish."
+msgstr "Reiniciará quando terminar."
+
+msgctxt "#32255"
+msgid "Video Playing"
+msgstr "Vídeo Em Reprodução"
+
+msgctxt "#32256"
+msgid "Interrupt Current Video?"
+msgstr "Interromper Vídeo Actual?"
+
 msgctxt "#32257"
 msgid "Failed"
 msgstr "Falhou"
@@ -672,6 +684,10 @@ msgctxt "#32287"
 msgid "Login Password"
 msgstr "Sessão: Palavra-Passe"
 
+msgctxt "#32288"
+msgid "Post Attributes"
+msgstr "Atributos da Mensagem"
+
 msgctxt "#32290"
 msgid "Description"
 msgstr "Descrição"
@@ -683,6 +699,14 @@ msgstr "Logotipo"
 msgctxt "#32295"
 msgid "Forum Browser: New Posts"
 msgstr "Forum Browser: Novas Mensagens"
+
+msgctxt "#32296"
+msgid "Failed post found"
+msgstr "Uma Mensagem Não Enviada Foi Encontrada"
+
+msgctxt "#32297"
+msgid "Re-use previous failed post?"
+msgstr "Reutilizar Mensagem Não Enviada?"
 
 msgctxt "#32298"
 msgid "Note"
@@ -731,6 +755,18 @@ msgstr "Obtendo Info do Vídeo..."
 msgctxt "#32316"
 msgid "Image Options"
 msgstr "Opções de Imagem"
+
+msgctxt "#32317"
+msgid "User/Post Extra Info"
+msgstr "Info Extra de Utilizador/Mensagem"
+
+msgctxt "#32318"
+msgid "Getting Post For Edit..."
+msgstr "Obtendo Mensagem Para Edição..."
+
+msgctxt "#32319"
+msgid "Enter Recipient(s)"
+msgstr "Introduzir Destinatário(s)"
 
 msgctxt "#32320"
 msgid "Really Delete?"
@@ -1276,6 +1312,10 @@ msgctxt "#32478"
 msgid "Copying files:"
 msgstr "Copiando ficheiros:"
 
+msgctxt "#32481"
+msgid "(Requires Forum Browser restart to take effect.)"
+msgstr "(É Necessário Reiniciar o Forum Browser para ter efeito.)"
+
 msgctxt "#32482"
 msgid "Install now?"
 msgstr "Instalar agora?"
@@ -1312,6 +1352,10 @@ msgctxt "#32495"
 msgid "Font installed."
 msgstr "O tipo de letra foi instalado."
 
+msgctxt "#32500"
+msgid "Miscellaneous"
+msgstr "Diversos"
+
 msgctxt "#32501"
 msgid "Audio/Video Software & Technology"
 msgstr "Software Áudio/Vídeo e Tecnologia"
@@ -1320,13 +1364,37 @@ msgctxt "#32502"
 msgid "Science & Technology"
 msgstr "Ciência e Tecnologia"
 
+msgctxt "#32503"
+msgid "Automotive/Motorcycle/Powersports"
+msgstr "Automobilismo/Motociclismo/Desportos Radicais"
+
+msgctxt "#32504"
+msgid "Pets"
+msgstr "Animais de Estimação"
+
+msgctxt "#32505"
+msgid "Wildlife & Nature"
+msgstr "Vida Selvagem e Natureza"
+
+msgctxt "#32506"
+msgid "Games (Video/Board/Etc)"
+msgstr "Jogos (Vídeo/Tabuleiro/Etc)"
+
 msgctxt "#32507"
 msgid "Sports (Fans)"
 msgstr "Desporto (Adeptos)"
 
+msgctxt "#32508"
+msgid "Outdoor & Travel"
+msgstr "Ar Livre e Viagens"
+
 msgctxt "#32509"
 msgid "Society & Culture"
 msgstr "Sociedade e Cultura"
+
+msgctxt "#32510"
+msgid "Food, Drink & Dining"
+msgstr "Comida, Bebida e Refeições"
 
 msgctxt "#32511"
 msgid "Computers & Software"
@@ -1339,6 +1407,10 @@ msgstr "Dispositivos e Telefones"
 msgctxt "#32513"
 msgid "Hobbies & Collecting"
 msgstr "Passatempos e Coleccionismo"
+
+msgctxt "#32514"
+msgid "Sports (Recreational)"
+msgstr "Desporto (Recreativo)"
 
 msgctxt "#32515"
 msgid "Internet"
@@ -1375,6 +1447,14 @@ msgstr "Subscrições "
 msgctxt "#32905"
 msgid "Forums"
 msgstr "Fóruns"
+
+msgctxt "#32906"
+msgid "Add Line"
+msgstr "Adicionar Linha"
+
+msgctxt "#32907"
+msgid "Add Lines"
+msgstr "Adicionar Linhas"
 
 msgctxt "#32908"
 msgid "Submit Post"
@@ -1423,10 +1503,6 @@ msgstr "Procurar Tópicos"
 msgctxt "#32919"
 msgid "Search User"
 msgstr "Procurar Utilizador"
-
-msgctxt "#32920"
-msgid "Post Reply"
-msgstr "Publicar Resposta"
 
 msgctxt "#32921"
 msgid "Set Title"

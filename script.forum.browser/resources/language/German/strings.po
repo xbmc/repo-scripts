@@ -1748,6 +1748,14 @@ msgctxt "#32523"
 msgid "Select Skin"
 msgstr "Skin auswählen"
 
+msgctxt "#32524"
+msgid "Disable Asynchronous Connections"
+msgstr "Asynchrone Verbindungen deaktivieren"
+
+msgctxt "#32525"
+msgid "Reverse Sort Search Results"
+msgstr "Sortierung der Suchergebnisse umkehren"
+
 msgctxt "#32900"
 msgid "Prev"
 msgstr "Zurück"
@@ -1827,10 +1835,6 @@ msgstr "Suche Threads"
 msgctxt "#32919"
 msgid "Search User"
 msgstr "Suche Benutzer"
-
-msgctxt "#32920"
-msgid "Post Reply"
-msgstr "Antwort posten"
 
 msgctxt "#32921"
 msgid "Set Title"

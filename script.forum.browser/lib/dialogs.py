@@ -1,29 +1,9 @@
 import os, sys, re, fnmatch, binascii, xbmc, xbmcgui
 import util
+from xbmcconstants import *  # @UnusedWildImport
 
 DEBUG = None
 CACHE_PATH = None
-
-ACTION_MOVE_LEFT      = 1
-ACTION_MOVE_RIGHT     = 2
-ACTION_MOVE_UP        = 3
-ACTION_MOVE_DOWN      = 4
-ACTION_PAGE_UP        = 5
-ACTION_PAGE_DOWN      = 6
-ACTION_SELECT_ITEM    = 7
-ACTION_HIGHLIGHT_ITEM = 8
-ACTION_PARENT_DIR     = 9
-ACTION_PARENT_DIR2	  = 92
-ACTION_PREVIOUS_MENU  = 10
-ACTION_SHOW_INFO      = 11
-ACTION_PAUSE          = 12
-ACTION_STOP           = 13
-ACTION_NEXT_ITEM      = 14
-ACTION_PREV_ITEM      = 15
-ACTION_SHOW_GUI       = 18
-ACTION_PLAYER_PLAY    = 79
-ACTION_MOUSE_LEFT_CLICK = 100
-ACTION_CONTEXT_MENU   = 117
 
 def clearDirFiles(filepath):
 	if not os.path.exists(filepath): return
@@ -42,10 +22,15 @@ def doKeyboard(prompt,default='',hidden=False,mod=False):
 
 def openWindow(windowClass,xmlFilename,return_window=False,modal=True,theme=None,*args,**kwargs):
 	xbmcgui.Window(10000).setProperty('ForumBrowser_hidePNP',util.getSetting('hide_pnp',False) and '1' or '0') #I set the home window, because that's the only way I know to get it to work before the window displays
-	theme = theme or sys.modules["__main__"].THEME
+	THEME = util.getSavedTheme(get_current=True)
 	path = util.__addon__.getAddonInfo('path')
-	src = os.path.join(path,'resources','skins',theme,'720p',xmlFilename)
-	if not os.path.exists(src): theme = 'Default'
+	src = os.path.join(path,'resources','skins',THEME,'720p',xmlFilename)
+	src2 = os.path.join(path,'resources','skins',theme or THEME,'720p',xmlFilename)
+	if os.path.exists(src):
+		theme = THEME
+	elif not os.path.exists(src2):
+		theme = 'Default'
+		
 	if not util.getSetting('use_skin_mods',True):
 		src = os.path.join(path,'resources','skins',theme,'720p',xmlFilename)
 		#path = util.util.__addon__.getAddonInfo('profile')
@@ -66,7 +51,12 @@ def openWindow(windowClass,xmlFilename,return_window=False,modal=True,theme=None
 def showMessage(caption,text,text2='',text3='',error=False,success=None,scroll=False):
 	if text2: text += '[CR]' + text2
 	if text3: text += '[CR]' + text3
-	w = MessageDialog('script-forumbrowser-message-dialog.xml' ,xbmc.translatePath(util.__addon__.getAddonInfo('path')),'Default',caption=caption,text=text,error=error,success=success,scroll=scroll)
+	xmlFilename = 'script-forumbrowser-message-dialog.xml'
+	THEME = util.getSavedTheme(get_current=True)
+	path = xbmc.translatePath(util.__addon__.getAddonInfo('path'))
+	theme = 'Default'
+	if os.path.exists(os.path.join(path,'resources','skins',THEME,'720p',xmlFilename)): theme = THEME
+	w = MessageDialog(xmlFilename ,path,theme,caption=caption,text=text,error=error,success=success,scroll=scroll)
 	if util.getSetting('video_pause_on_dialog',True): sys.modules["__main__"].PLAYER.pauseStack()
 	w.doModal()
 	del w
@@ -142,7 +132,23 @@ def showInfo(infotype):
 	if not os.path.exists(infofilefull): return None
 	showText('Info',open(infofilefull,'r').read())
 	
-class MessageDialog(xbmcgui.WindowXMLDialog):
+
+class BaseDialog(xbmcgui.WindowXMLDialog):
+	def __init__(self, *args, **kwargs):
+		self._externalWindow = None
+		xbmcgui.WindowXMLDialog.__init__( self )
+		
+	def externalWindow(self):
+		if not self._externalWindow: self._externalWindow = self._getExternalWindow()
+		return self._externalWindow
+			
+	def setProperty(self,key,value):
+		self.externalWindow().setProperty(key,value)
+		
+	def _getExternalWindow(self):
+		return xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
+	
+class MessageDialog(BaseDialog):
 	def __init__( self, *args, **kwargs ):
 		self.text = kwargs.get('text') or ''
 		self.caption = kwargs.get('caption') or ''
@@ -150,27 +156,25 @@ class MessageDialog(xbmcgui.WindowXMLDialog):
 		self.success = kwargs.get('success')
 		self.scroll = kwargs.get('scroll')
 		self.started = False
-		xbmcgui.WindowXMLDialog.__init__( self )
+		BaseDialog.__init__( self )
 	
 	def onInit(self):
 		if self.started: return
 		self.started = True
-		self.getControl(104).setLabel(self.caption)
-		textbox = self.getControl(122)
-		textbox.reset()
-		textbox.setText(self.text)
+		self.setProperties()
+		
+	def setProperties(self):
+		self.setProperty('caption',self.caption)
+		self.setProperty('message',self.text)
 		if self.error:
-			self.getControl(250).setColorDiffuse('FFFF0000')
+			self.setProperty('error','error')
 		elif self.success is not None:
 			if self.success:
-				self.getControl(250).setColorDiffuse('FF009900')
+				self.setProperty('error','success')
 			else:
-				self.getControl(250).setColorDiffuse('FF999900')
+				self.setProperty('error','warning')
 		if self.scroll and not util.getSetting('message_dialog_always_show_ok',False):
-			self.getControl(112).setVisible(False)
-			self.setFocusId(123)
-		else:
-			self.setFocusId(111)
+			self.setProperty('hidebutton','hidebutton')
 		
 	def onAction(self,action):
 		if action == 92 or action == 10:
@@ -178,24 +182,24 @@ class MessageDialog(xbmcgui.WindowXMLDialog):
 		
 	def onFocus( self, controlId ): self.controlId = controlId
 
-class TextDialog(xbmcgui.WindowXMLDialog):
+class TextDialog(BaseDialog):
 	def __init__( self, *args, **kwargs ):
 		self.text = kwargs.get('text') or ''
 		self.caption = kwargs.get('caption') or ''
-		xbmcgui.WindowXMLDialog.__init__( self )
+		BaseDialog.__init__( self )
 	
 	def onInit(self):
-		self.getControl(104).setLabel(self.caption)
-		textbox = self.getControl(122)
-		textbox.reset()
-		textbox.setText(self.text)
+		self.setProperty('caption', self.caption)
+		self.setProperty('text', self.text)
+		#self.getControl(104).setLabel(self.caption)
+		#textbox = self.getControl(122)
+		#textbox.reset()
+		#textbox.setText(self.text)
 		
 	def onAction(self,action):
 		if action == 92 or action == 10:
 			self.close()
-		
-	def onFocus( self, controlId ): self.controlId = controlId
-	
+			
 class ImageChoiceDialog(xbmcgui.WindowXMLDialog):
 	def __init__( self, *args, **kwargs ):
 		self.result = None
@@ -299,7 +303,8 @@ class ImageChoiceDialog(xbmcgui.WindowXMLDialog):
 		if action == 92 or action == 10:
 			self.doClose()
 		elif action == 7:
-			self.finish()
+			pass
+			#self.finish()
 		elif action == ACTION_CONTEXT_MENU:
 			self.doMenu()
 	
@@ -309,7 +314,8 @@ class ImageChoiceDialog(xbmcgui.WindowXMLDialog):
 		
 	def onClick( self, controlID ):
 		if controlID == 120:
-			self.finish()
+			pass
+			#self.finish()
 		
 	def doMenu(self):
 		if self.menu.contextCallback:
@@ -365,9 +371,15 @@ class ActivitySplashWindow(xbmcgui.WindowXMLDialog):
 			self.cancel()
 	
 class ActivitySplash():
-	def __init__(self,caption='',cancel_stops_connections=False,modal_callback=None):
+	def __init__(self,caption=util.T(32248),cancel_stops_connections=False,modal_callback=None):
 		self.splash = openWindow(ActivitySplashWindow,'script-forumbrowser-loading-splash.xml',return_window=True,modal=bool(modal_callback),theme='Default',caption=caption,cancel_stops_connections=cancel_stops_connections,modal_callback=modal_callback)
 		self.splash.show()
+		
+	def __enter__(self):
+		return self
+	
+	def __exit__(self):
+		self.close()
 		
 	def update(self,pct,message):
 		self.splash.update(message)
@@ -395,7 +407,60 @@ def showActivitySplash(caption=util.T(32248),cancel_stops_connections=False,moda
 		s = ActivitySplash(caption,cancel_stops_connections=cancel_stops_connections,modal_callback=modal_callback)
 	s.update(0,caption)
 	return s
+
+class DialogYesNo(BaseDialog):
+	def __init__( self, *args, **kwargs ):
+		self.caption = kwargs.get('caption','')
+		self.yesLabel = kwargs.get('yes_label','')
+		self.noLabel = kwargs.get('no_label','')
+		self.text = kwargs.get('text','')
+		self.yesno = None
+		BaseDialog.__init__(self)
+		
+	def onInit(self):
+		self.setProperty('caption',self.caption)
+		self.setProperty('yes_label',self.yesLabel or xbmc.getLocalizedString(107))
+		self.setProperty('no_label',self.noLabel or xbmc.getLocalizedString(106))
+		self.setProperty('text', self.text)
+		
+	def onClick(self,controlID):
+		if controlID == 110:
+			self.yesno = True
+			self.close()
+		elif controlID == 111:
+			self.yesno = False
+			self.close()
+		
+def dialogYesNo(heading, line1='', line2='', line3='', no_label='', yes_label=''):
+	text = '[CR]'.join(filter(bool,(line1,line2,line3)))
+	w = openWindow(DialogYesNo,'script-forumbrowser-dialog-yesno.xml',return_window=True,caption=heading,text=text,no_label=no_label,yes_label=yes_label)
+	yesno = w.yesno
+	del w
+	return yesno
 	
+class DialogSelect(xbmcgui.WindowXMLDialog):
+	def __init__( self, *args, **kwargs ):
+		self.caption = kwargs.get('caption','')
+		self.select = kwargs.get('select',[])
+		self.choice = None
+		xbmcgui.WindowXMLDialog.__init__(self)
+		
+	def onInit(self):
+		window = xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
+		window.setProperty('caption',self.caption)
+		items = []
+		for i in self.select:
+			items.append(xbmcgui.ListItem(i))
+		self.getControl(111).addItems(items)
+		self.setFocusId(111)
+			
+	def onClick(self,controlID):
+		if controlID == 111:
+			pos = self.getControl(111).getSelectedPosition()
+			if pos < 0: return
+			self.choice = pos
+			self.close()	
+		
 class ChoiceMenu():
 	def __init__(self,caption,with_splash=False):
 		self.caption = caption
@@ -422,7 +487,7 @@ class ChoiceMenu():
 		self.hideSplash()
 		
 	def addItem(self,ID,display,icon='',display2='',sep=False,disabled=False,bgcolor='FFFFFFFF',**kwargs):
-		if not ID: return self.addSep()
+		if ID is None: return self.addSep()
 		if disabled:
 			display = "[COLOR FF444444]%s[/COLOR]" % display
 			display2 = "[B]DISABLED[/B][CR][CR][COLOR FF444444]%s[/COLOR]" % display2
@@ -434,7 +499,11 @@ class ChoiceMenu():
 	def getChoiceIndex(self):
 		options = []
 		for i in self.items: options.append(i.get('disp'))
-		return xbmcgui.Dialog().select(self.caption,options)
+		w = openWindow(DialogSelect,'script-forumbrowser-dialog-select.xml',return_window=True,caption=self.caption,select=options)
+		idx = w.choice
+		del w
+		return idx
+		#return xbmcgui.Dialog().select(self.caption,options)
 	
 	def getResult(self,close_on_context=True):
 		self.closeContext = close_on_context
@@ -448,7 +517,14 @@ class ChoiceMenu():
 
 def dialogSelect(heading,ilist,autoclose=0):
 	if util.getSetting('video_pause_on_dialog',True): sys.modules["__main__"].PLAYER.pauseStack()
-	result =  xbmcgui.Dialog().select(heading,ilist,autoclose)
+	c = ChoiceMenu(heading)
+	i=0
+	print ilist
+	for disp in ilist:
+		c.addItem(i,disp)
+		i+=1
+	result = c.getResult()
+	#result =  xbmcgui.Dialog().select(heading,ilist,autoclose)
 	if util.getSetting('video_pause_on_dialog',True): sys.modules["__main__"].PLAYER.resumeStack()
 	return result
 	

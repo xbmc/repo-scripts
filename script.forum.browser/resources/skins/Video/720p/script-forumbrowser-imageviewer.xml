@@ -1,99 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <window>
-  <defaultcontrol>202</defaultcontrol>
-  <coordinates>
-    <system>1</system>
-    <posx>0</posx>
-    <posy>0</posy>
-  </coordinates>
-  <controls>
-    <control type="group">
-      <posx>100</posx>
-      <posy>10</posy>
-      <control type="image">
-        <posx>0</posx>
-        <posy>-5</posy>
-        <width>1110</width>
-        <height>725</height>
-        <texture border="40">forum-browser-dark-white-box.png</texture>
-        <colordiffuse>CC000000</colordiffuse>
-      </control>
-      <control type="image" id="101">
-        <posx>0</posx>
-        <posy>0</posy>
-        <width>1090</width>
-        <height>700</height>
-        <texture border="40">forum-browser-dark-black-box.png</texture>
-      </control>
-      
-      <control type="image">
-        <posx>15</posx>
-        <posy>10</posy>
-        <width>1060</width>
-        <height>610</height>
-        <texture border="20">forum-browser-dark-white-boxr.png</texture>
-      </control>
-      <control type="image" id="102">
-        <posx>25</posx>
-        <posy>20</posy>
-        <width>1040</width>
-        <height>590</height>
-        <aspectratio>keep</aspectratio>
-      </control>
-      
-      <control type="button" id="200">
-       <description>The Button</description>
-       <onleft>202</onleft>
-       <onright>110</onright>
-       <onup>200</onup>
-       <ondown>200</ondown>
-       <posx>320</posx>
-       <posy>625</posy>
-       <width>40</width>
-       <height>60</height>
-       <visible>true</visible>
-       <colordiffuse>FFFFFFFF</colordiffuse>
-       <font>font12</font>
-       <align>right</align>
-       <textcolor>FFFFFFFF</textcolor>
-       <disabledcolor>80555555</disabledcolor>
-       <textoffsetx>35</textoffsetx>
-       <texturefocus>forum-browser-dark-left-focus.png</texturefocus>
-       <texturenofocus>forum-browser-dark-left-nofocus.png</texturenofocus>
-      </control>
-      <control type="button" id="110">
-        <description>Close Button</description>
-        <onleft>200</onleft>
-        <onright>202</onright>
-        <posx>533</posx>
-        <posy>625</posy>
-        <width>32</width>
-        <height>28</height>
-        <texturefocus>forum-browser-dark-close-button-focus.png</texturefocus>
-        <texturenofocus>forum-browser-dark-close-button.png</texturenofocus>
-        <visible>system.getbool(input.enablemouse)</visible>
-        <onclick>PreviousMenu</onclick>
-      </control>
-      <control type="button" id="202">
-       <description>The Button</description>
-       <onleft>110</onleft>
-       <onright>200</onright>
-       <onup>202</onup>
-       <ondown>202</ondown>
-       <posx>738</posx>
-       <posy>625</posy>
-       <width>40</width>
-       <height>60</height>
-       <visible>true</visible>
-       <colordiffuse>FFFFFFFF</colordiffuse>
-       <font>font12</font>
-       <align>left</align>
-       <textcolor>FFFFFFFF</textcolor>
-       <disabledcolor>80555555</disabledcolor>
-       <textoffsetx>35</textoffsetx>
-       <texturefocus>forum-browser-dark-right-focus.png</texturefocus>
-       <texturenofocus>forum-browser-dark-right-nofocus.png</texturenofocus>
-      </control>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>100</posx>
+			<posy>10</posy>
+			<control type="image">
+				<posx>-10</posx>
+				<posy>-10</posy>
+				<width>1110</width>
+				<height>720</height>
+				<texture border="10">forum-browser-video-box-white.png</texture>
+				<colordiffuse>44000000</colordiffuse>
+			</control>
+			<control type="image" id="101">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1090</width>
+				<height>700</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FF4488AA</colordiffuse>
+			</control>
 
-    </control>
-  </controls>
+			<control type="image">
+				<posx>15</posx>
+				<posy>10</posy>
+				<width>1060</width>
+				<height>610</height>
+				<texture border="10">forum-browser-video-box-light.png</texture>
+			</control>
+			<control type="image" id="102">
+				<posx>25</posx>
+				<posy>20</posy>
+				<width>1040</width>
+				<height>590</height>
+				<aspectratio>keep</aspectratio>
+			</control>
+
+			<control type="button" id="200">
+				<description>The Button</description>
+				<posx>320</posx>
+				<posy>625</posy>
+				<width>40</width>
+				<height>60</height>
+				<visible>true</visible>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>font12</font>
+				<align>right</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<disabledcolor>80555555</disabledcolor>
+				<textoffsetx>35</textoffsetx>
+				<texturefocus diffuse="forum-browser-video-box-red-semi-trans.png">forum-browser-video-left-arrow.png</texturefocus>
+				<texturenofocus>forum-browser-video-left-arrow.png</texturenofocus>
+			</control>
+			<control type="button" id="202">
+				<description>The Button</description>
+				<posx>738</posx>
+				<posy>625</posy>
+				<width>40</width>
+				<height>60</height>
+				<visible>true</visible>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>font12</font>
+				<align>left</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<disabledcolor>80555555</disabledcolor>
+				<textoffsetx>35</textoffsetx>
+				<texturefocus flipx="true" diffuse="forum-browser-video-box-red-semi-trans.png">forum-browser-video-left-arrow.png</texturefocus>
+				<texturenofocus flipx="true">forum-browser-video-left-arrow.png</texturenofocus>
+			</control>
+
+		</control>
+	</controls>
 </window>

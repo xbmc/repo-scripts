@@ -1,0 +1,276 @@
+<window>
+	<defaultcontrol>112</defaultcontrol>
+	<zorder>2</zorder>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<visible>!Control.IsVisible(115)</visible>
+			<posx>240</posx>
+			<posy>100</posy>
+			<control type="image">
+				<posx>-10</posx>
+				<posy>-10</posy>
+				<width>820</width>
+				<height>472</height>
+				<texture border="10">forum-browser-video-box-white.png</texture>
+				<colordiffuse>44000000</colordiffuse>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>800</width>
+				<height>452</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FF4488AA</colordiffuse>
+				<visible>StringCompare(Window.Property(error),)</visible>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>800</width>
+				<height>452</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FFFF0000</colordiffuse>
+				<visible>StringCompare(Window.Property(error),error)</visible>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>800</width>
+				<height>452</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FFFFFF00</colordiffuse>
+				<visible>StringCompare(Window.Property(error),warning)</visible>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>800</width>
+				<height>452</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FF00FF00</colordiffuse>
+				<visible>StringCompare(Window.Property(error),success)</visible>
+			</control>
+			<control type="image">
+				<description>Smaller Back</description>
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>780</width>
+				<height>432</height>
+				<texture border="10">forum-browser-video-box-light.png</texture>
+			</control>
+			<control type="image">
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>780</width>
+				<height>40</height>
+				<texture border="10">forum-browser-video-box-header.png</texture>
+			</control>
+
+			<control type="label">
+				<description>Caption</description>
+				<posx>20</posx>
+				<posy>10</posy>
+				<width>760</width>
+				<height>40</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>white</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+				<label>[B]$INFO[Window.Property(caption)][/B]</label>
+			</control>
+			
+			<control type="textbox">
+				<posx>20</posx>
+				<posy>50</posy>
+				<width>725</width>
+				<height>281</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>white</textcolor>
+				<visible>true</visible>
+				<label>$INFO[Window.Property(text)]</label>
+			</control>
+			<control type="group" id="112">
+				<defaultcontrol>111</defaultcontrol>
+				<control type="button" id="110">
+					<description>Ok Button</description>
+					<posx>10</posx>
+					<posy>332</posy>
+					<width>780</width>
+					<height>38</height>
+					<onup>111</onup>
+					<ondown>111</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label>$INFO[Window.Property(yes_label)]</label>
+					<texturefocus border="10">forum-browser-video-select.png</texturefocus>
+					<texturenofocus border="10">forum-browser-video-unselect-gray.png</texturenofocus>
+					<textcolor>FF333333</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+				</control>
+				
+				<control type="button" id="111">
+					<description>Ok Button</description>
+					<posx>10</posx>
+					<posy>380</posy>
+					<width>780</width>
+					<height>38</height>
+					<onup>110</onup>
+					<ondown>110</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label>$INFO[Window.Property(no_label)]</label>
+					<texturefocus border="10">forum-browser-video-select.png</texturefocus>
+					<texturenofocus border="10">forum-browser-video-unselect-gray.png</texturenofocus>
+					<textcolor>FF333333</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+				</control>
+			</control>
+		</control>
+		
+		<control type="group" id="115">
+			<visible>Player.Playing + Player.HasVideo + !StringCompare(Window(10000).Property(ForumBrowser_hidePNP),1)</visible>
+			<posx>10</posx>
+			<posy>20</posy>
+			<control type="image">
+				<posx>-5</posx>
+				<posy>-5</posy>
+				<width>310</width>
+				<height>690</height>
+				<texture border="10">forum-browser-video-box-white.png</texture>
+				<colordiffuse>44000000</colordiffuse>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>300</width>
+				<height>680</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FF4488AA</colordiffuse>
+				<visible>StringCompare(Window.Property(error),)</visible>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>300</width>
+				<height>680</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FFFF0000</colordiffuse>
+				<visible>StringCompare(Window.Property(error),error)</visible>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>300</width>
+				<height>680</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FFFFFF00</colordiffuse>
+				<visible>StringCompare(Window.Property(error),warning)</visible>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>300</width>
+				<height>680</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FF00FF00</colordiffuse>
+				<visible>StringCompare(Window.Property(error),success)</visible>
+			</control>
+			<control type="image">
+				<description>Smaller Back</description>
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>280</width>
+				<height>660</height>
+				<texture border="10">forum-browser-video-box-light.png</texture>
+			</control>
+			<control type="image">
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>280</width>
+				<height>40</height>
+				<texture border="10">forum-browser-video-box-header.png</texture>
+			</control>
+
+			<control type="label">
+				<description>Caption</description>
+				<posx>20</posx>
+				<posy>10</posy>
+				<width>260</width>
+				<height>40</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>white</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+				<label>[B]$INFO[Window.Property(caption)][/B]</label>
+			</control>
+			
+			<control type="textbox">
+				<posx>20</posx>
+				<posy>50</posy>
+				<width>260</width>
+				<height>522</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>white</textcolor>
+				<visible>true</visible>
+				<label>$INFO[Window.Property(text)]</label>
+			</control>
+			<control type="group" id="112">
+				<defaultcontrol>111</defaultcontrol>
+				<control type="button" id="110">
+					<description>Ok Button</description>
+					<posx>10</posx>
+					<posy>572</posy>
+					<width>280</width>
+					<height>38</height>
+					<onup>111</onup>
+					<ondown>111</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label>$INFO[Window.Property(yes_label)]</label>
+					<texturefocus border="10">forum-browser-video-select.png</texturefocus>
+					<texturenofocus border="10">forum-browser-video-unselect-gray.png</texturenofocus>
+					<textcolor>FF333333</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+				</control>
+				<control type="button" id="111">
+					<description>Ok Button</description>
+					<posx>10</posx>
+					<posy>620</posy>
+					<width>280</width>
+					<height>38</height>
+					<onup>110</onup>
+					<ondown>110</ondown>
+					<font>font13</font>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label>$INFO[Window.Property(no_label)]</label>
+					<texturefocus border="10">forum-browser-video-select.png</texturefocus>
+					<texturenofocus border="10">forum-browser-video-unselect-gray.png</texturenofocus>
+					<textcolor>FF333333</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+				</control>
+			</control>
+		</control>
+
+	</controls>
+</window>

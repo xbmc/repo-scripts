@@ -328,7 +328,7 @@ class ForumPost(forumbrowser.ForumPost):
 			val = str(e['value'])
 			if name == 'signature':
 				self.signature = val
-			elif name.lower() == self.userName + '\'s signature' and not self.signature:
+			elif name.lower() == self.userName.lower() + '\'s signature' and not self.signature:
 				self.signature = val
 			else:
 				if val: self.extras[name] = val
@@ -734,11 +734,11 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 				flist = self.server.get_forum()
 			except:
 				em = ERROR('ERROR GETTING FORUMS')
-				callback(-1,'%s' % em)
+				#callback(-1,'%s' % em)
 				return self.finish(FBData(error=em),donecallback)
 			if 'result_text' in flist:
 				em = unicode(str(flist.get('result_text')),'utf-8')
-				callback(-1,'%s' % em)
+				#callback(-1,'%s' % em)
 				return self.finish(FBData(error=em),donecallback)
 			if not callback(40,self.lang(32103)): break
 			forums = []
@@ -769,7 +769,7 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 				flist = self.server.get_subscribed_forum()
 			except:
 				em = ERROR('ERROR GETTING FORUM SUBSCRIPTIONS')
-				callback(-1,'%s' % em)
+				#callback(-1,'%s' % em)
 				return self.finish(FBData(error=em),donecallback)
 			
 			if not callback(40,self.lang(32103)): break
@@ -949,7 +949,7 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 				threads,pd = self._getSubscriptions(callback,donecallback)
 		except:
 			em = ERROR('ERROR GETTING THREADS')
-			callback(-1,'%s' % em)
+			#callback(-1,'%s' % em)
 			return self.finish(FBData(error=em))
 		
 		callback(100,self.lang(32052))
@@ -1011,10 +1011,10 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 				raise forumbrowser.Error(e.faultString)
 			except:
 				em = ERROR('ERROR GETTING POSTS')
-				callback(-1,em)
+				#callback(-1,em)
 				return self.finish(FBData(error=em),donecallback)
 			
-			if not callback(80,self.lang(32103)): break
+			if not callback(95,self.lang(32103)): break
 			pd = self.getPageData(thread,page or 0)
 			pd.searchID = thread.get('search_id')
 			if not search: pd.tid = threadid
@@ -1034,11 +1034,13 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 		sreplies = []
 		posts = thread.get('posts')
 		if not posts:
-			callback(-1,'NO POSTS')
+			#callback(-1,'NO POSTS')
 			return self.finish(FBData(error='NO POSTS'),donecallback)
 		if not callback(60,self.lang(32103)): return None
 		infos = {}
 		ct = page + 1
+		pct_ct = 1
+		tot = len(posts)
 		for p in posts:
 			fp = self.getForumPost(p)
 			fp.postNumber = ct
@@ -1051,7 +1053,9 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 				LOG('Failed to get user info for: %s' % fp.userName)
 				if DEBUG: ERROR('ERROR:')
 			sreplies.append(fp)
-			ct += 1
+			if not self.updateProgress(callback, 60, 35, pct_ct, tot, self.lang(32103)): break
+			ct+=1
+			pct_ct +=1
 		return sreplies
 					
 	def hasPM(self):
@@ -1067,7 +1071,7 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 					pmInfo = self.getPMCounts(20)
 				except:
 					em = ERROR('ERROR GETTING PRIVATE MESSAGES - getPMCounts()')
-					callback(-1,'%s' % em)
+					#callback(-1,'%s' % em)
 					return self.finish(FBData(error=em),donecallback)
 				if not pmInfo: break
 				boxid = pmInfo.get('boxid')
@@ -1077,7 +1081,7 @@ class TapatalkForumBrowser(forumbrowser.ForumBrowser):
 				messages = self.server.get_box(boxid,0,49)
 			except:
 				em = ERROR('ERROR GETTING PRIVATE MESSAGES')
-				callback(-1,'%s' % em)
+				#callback(-1,'%s' % em)
 				return self.finish(FBData(error=em),donecallback)
 			pms = []
 			if not callback(80,self.lang(32103)): break

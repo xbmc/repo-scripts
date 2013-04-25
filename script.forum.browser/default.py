@@ -3,9 +3,9 @@
 import urllib2, re, os, sys, time, urlparse, binascii, math
 import xbmc, xbmcgui #@UnresolvedImport
 from distutils.version import StrictVersion
-import threading
 from lib import util, signals, asyncconnections
 from lib.util import LOG, ERROR, getSetting, setSetting
+from lib.xbmcconstants import * # @UnusedWildImport
 
 try:
 	from webviewer import webviewer #@UnresolvedImport
@@ -29,36 +29,8 @@ __date__ = '1-28-2013'
 __version__ = util.__addon__.getAddonInfo('version')
 T = util.T
 
-THEME = 'Default'
-SKINS = ['Default','Dark','Video']
-try:
-	THEME = SKINS[getSetting('skin',0)]
-except:
-	THEME = 'Default'
+THEME = util.getSavedTheme()
 
-ACTION_MOVE_LEFT      = 1
-ACTION_MOVE_RIGHT     = 2
-ACTION_MOVE_UP        = 3
-ACTION_MOVE_DOWN      = 4
-ACTION_PAGE_UP        = 5
-ACTION_PAGE_DOWN      = 6
-ACTION_SELECT_ITEM    = 7
-ACTION_HIGHLIGHT_ITEM = 8
-ACTION_PARENT_DIR     = 9
-ACTION_PARENT_DIR2	  = 92
-ACTION_PREVIOUS_MENU  = 10
-ACTION_SHOW_INFO      = 11
-ACTION_PAUSE          = 12
-ACTION_STOP           = 13
-ACTION_NEXT_ITEM      = 14
-ACTION_PREV_ITEM      = 15
-ACTION_SHOW_GUI       = 18
-ACTION_PLAYER_PLAY    = 79
-ACTION_MOUSE_LEFT_CLICK = 100
-ACTION_CONTEXT_MENU   = 117
-
-#Actually it's show codec info but I'm using in a threaded callback
-ACTION_RUN_IN_MAIN = 27
 
 PLAYER = None
 SIGNALHUB = None
@@ -71,6 +43,7 @@ CACHE_PATH = xbmc.translatePath(os.path.join(util.__addon__.getAddonInfo('profil
 if not os.path.exists(FORUMS_PATH): os.makedirs(FORUMS_PATH)
 if not os.path.exists(FORUMS_SETTINGS_PATH): os.makedirs(FORUMS_SETTINGS_PATH)
 if not os.path.exists(CACHE_PATH): os.makedirs(CACHE_PATH)
+
 
 STARTFORUM = None
 
@@ -95,7 +68,7 @@ from lib.forumbrowser import texttransform
 from lib.crypto import passmanager
 from lib.forumbrowser import tapatalk
 from webviewer import video #@UnresolvedImport
-from lib import dialogs, mods
+from lib import dialogs, windows, mods
 
 signals.DEBUG = DEBUG
 
@@ -108,445 +81,22 @@ mods.DEBUG = DEBUG
 video.LOG = LOG
 video.ERROR = ERROR
 
-######################################################################################
-# Base Window Classes
-######################################################################################
-def _async_raise(tid, exctype):
-	try:
-		LOG('Trying to kill thread...')
-		import inspect,ctypes
-		'''Raises an exception in the threads with id tid'''
-		if not inspect.isclass(exctype):
-			raise TypeError("Only types can be raised (not instances)")
-		res = ctypes.pythonapi.PyThreadState_SetAsyncExc(tid,
-													  ctypes.py_object(exctype))
-		if res == 0:
-			raise ValueError("invalid thread id")
-		elif res != 1:
-			# "if it returns a number greater than one, you're in trouble,
-			# and you should call it again with exc=NULL to revert the effect"
-			ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, 0)
-			raise SystemError("PyThreadState_SetAsyncExc failed")
-	except:
-		ERROR('Error killing thread')
-
-class StoppableThread(threading.Thread):
-	def __init__(self,group=None, target=None, name=None, args=(), kwargs=None):
-		kwargs = kwargs or {}
-		self._stop = threading.Event()
-		threading.Thread.__init__(self,group=group, target=target, name=name, args=args, kwargs=kwargs)
-		
-	def stop(self):
-		self._stop.set()
-		
-	def stopped(self):
-		return self._stop.isSet()
-	
-	def _get_my_tid(self):
-		"""determines this (self's) thread id
-
-		CAREFUL : this function is executed in the context of the caller
-		thread, to get the identity of the thread represented by this
-		instance.
-		"""
-		if not self.isAlive():
-			raise threading.ThreadError("the thread is not active")
-
-		# do we have it cached?
-		if hasattr(self, "_thread_id"):
-			return self._thread_id
-
-		# no, look for it in the _active dict
-		for tid, tobj in threading._active.items():
-			if tobj is self:
-				self._thread_id = tid
-				return tid
-
-		# TODO: in python 2.6, there's a simpler way to do : self.ident
-
-		raise AssertionError("could not determine the thread's id")
-
-	def raiseExc(self, exctype):
-		"""Raises the given exception type in the context of this thread.
-
-		If the thread is busy in a system call (time.sleep(),
-		socket.accept(), ...), the exception is simply ignored.
-
-		If you are sure that your exception should terminate the thread,
-		one way to ensure that it works is:
-
-			t = ThreadWithExc( ... )
-			...
-			t.raiseExc( SomeException )
-			while t.isAlive():
-				time.sleep( 0.1 )
-				t.raiseExc( SomeException )
-
-		If the exception is to be caught by the thread, you need a way to
-		check that your thread has caught it.
-
-		CAREFUL : this function is executed in the context of the
-		caller thread, to raise an excpetion in the context of the
-		thread represented by this instance.
-		"""
-		_async_raise( self._get_my_tid(), exctype )
-
-		
-class ThreadError:
-	def __init__(self,message='Unknown'):
-		self.message = message
-		
-	def __nonzero__(self):
-		return False
-	
-class StoppableCallbackThread(StoppableThread):
-	def __init__(self,target=None, name='FBUNKOWN'):
-		self._target = target
-		self._stop = threading.Event()
-		self._finishedHelper = None
-		self._finishedCallback = None
-		self._progressHelper = None
-		self._progressCallback = None
-		self._errorHelper = None
-		self._errorCallback = None
-		self._threadName = name
-		StoppableThread.__init__(self,name=name)
-		
-	def setArgs(self,*args,**kwargs):
-		self.args = args
-		self.kwargs = kwargs
-		
-	def run(self):
-		try:
-			self._target(*self.args,**self.kwargs)
-		except forumbrowser.Error,e:
-			LOG('ERROR IN THREAD: ' + e.message)
-			self.errorCallback(ThreadError('%s: %s' % (self._threadName,e.message)))
-		except:
-			err = ERROR('ERROR IN THREAD: ' + self._threadName)
-			self.errorCallback(ThreadError('%s: %s' % (self._threadName,err)))
-		
-	def setFinishedCallback(self,helper,callback):
-		self._finishedHelper = helper
-		self._finishedCallback = callback
-	
-	def setErrorCallback(self,helper,callback):
-		self._errorHelper = helper
-		self._errorCallback = callback
-		
-	def setProgressCallback(self,helper,callback):
-		self._progressHelper = helper
-		self._progressCallback = callback
-		
-	def stop(self):
-		self._stop.set()
-		
-	def stopped(self):
-		return self._stop.isSet()
-		
-	def progressCallback(self,*args,**kwargs):
-		if xbmc.abortRequested:
-			self.stop()
-			return False
-		if self.stopped(): return False
-		if self._progressCallback: self._progressHelper(self._progressCallback,*args,**kwargs)
-		return True
-		
-	def finishedCallback(self,*args,**kwargs):
-		if xbmc.abortRequested:
-			self.stop()
-			return False
-		if self.stopped(): return False
-		if self._finishedCallback: self._finishedHelper(self._finishedCallback,*args,**kwargs)
-		return True
-	
-	def errorCallback(self,error):
-		if xbmc.abortRequested:
-			self.stop()
-			return False
-		if self.stopped(): return False
-		if self._errorCallback: self._errorHelper(self._errorCallback,error)
-		return True
-
-class ThreadWindow:
-	def __init__(self):
-		self._currentThread = None
-		self._stopControl = None
-		self._startCommand = None
-		self._progressCommand = None
-		self._endCommand = None
-		self._isMain = False
-		self._funcID = 0
-		if SIGNALHUB: SIGNALHUB.registerSelfReceiver('RUN_IN_MAIN', self, self.runInMainCallback)
-		self._resetFunction()
-			
-	def setAsMain(self):
-		self._isMain = True
-		
-	def setStopControl(self,control):
-		self._stopControl = control
-		control.setVisible(False)
-		
-	def setProgressCommands(self,start=None,progress=None,end=None):
-		self._startCommand = start
-		self._progressCommand = progress
-		self._endCommand = end
-		
-	def runInMainCallback(self,signal,data):
-		if self._functionStack:
-			func,args,kwargs = self.getNextFunction(data)
-			if not func: return
-			func(*args,**kwargs)
-	
-	def onAction(self,action):
-		if action == ACTION_RUN_IN_MAIN:
-			#print 'yy %s' % repr(self._functionStack)
-			if self._functionStack:
-				self.runInMainCallback(None, None)
-				return True
-			else:
-				signals.sendSignal('RUN_IN_MAIN')
-		elif action == ACTION_PREVIOUS_MENU:
-			asyncconnections.StopConnection()
-			if self._currentThread and self._currentThread.isAlive():
-				self._currentThread.stop()
-				if self._endCommand: self._endCommand()
-				if self._stopControl: self._stopControl.setVisible(False)
-			if self._isMain and len(threading.enumerate()) > 1:
-				d = xbmcgui.DialogProgress()
-				d.create(T(32220),T(32221))
-				d.update(0)
-				self.stopThreads()
-				if d.iscanceled():
-					d.close()
-					return True
-				d.close()
-			return False
-		return False
-	
-	def onClose(self):
-		if SIGNALHUB: SIGNALHUB.unRegister(None, self)
-		
-	def stopThreads(self):
-		for t in threading.enumerate():
-			if isinstance(t,StoppableThread): t.stop()
-		time.sleep(1)
-		while len(threading.enumerate()) > 1:
-			for t in threading.enumerate():
-				#if t != threading.currentThread(): t.join()
-				if isinstance(t,StoppableThread) and t.isAlive(): t.raiseExc(Exception)
-			time.sleep(1)
-	
-	def _resetFunction(self):
-		self._functionStack = []
-	
-	def getNextFunction(self,funcID):
-		if self._functionStack:
-			for i in range(0,len(self._functionStack)):
-				if funcID == self._functionStack[i][3]: return self._functionStack.pop(i)[:-1]
-		return (None,None,None)
-		
-	def addFunction(self,function,args,kwargs,funcID):
-		self._functionStack.append((function,args,kwargs,funcID))
-		
-	def runInMain(self,function,*args,**kwargs):
-		#print 'xx %s' % repr(function)
-		funcID = function.__name__ + ':' + str(self._funcID)
-		self.addFunction(function, args, kwargs,funcID)
-		signals.sendSelfSignal(self,'RUN_IN_MAIN',funcID)
-		self._funcID+=1
-		if self._funcID > 9999: self._funcID = 0
-		#xbmc.executebuiltin('Action(codecinfo)')
-		
-	def endInMain(self,function,*args,**kwargs):
-		if self._endCommand: self._endCommand()
-		if self._stopControl: self._stopControl.setVisible(False)
-		self.runInMain(function,*args,**kwargs)
-		
-	def getThread(self,function,finishedCallback=None,progressCallback=None,errorCallback=None,name='FBUNKNOWN'):
-		if self._currentThread: self._currentThread.stop()
-		if not progressCallback: progressCallback = self._progressCommand
-		t = StoppableCallbackThread(target=function,name=name)
-		t.setFinishedCallback(self.endInMain,finishedCallback)
-		t.setErrorCallback(self.endInMain,errorCallback)
-		t.setProgressCallback(self.runInMain,progressCallback)
-		self._currentThread = t
-		if self._stopControl: self._stopControl.setVisible(True)
-		if self._startCommand: self._startCommand()
-		return t
-		
-	def stopThread(self):
-		asyncconnections.StopConnection()
-		if self._stopControl: self._stopControl.setVisible(False)
-		if self._currentThread:
-			self._currentThread.stop()
-			self._currentThread = None
-			if self._endCommand: self._endCommand()
-		
-class BaseWindowFunctions(ThreadWindow):
-	def __init__( self, *args, **kwargs ):
-		self._progMessageSave = ''
-		self.closed = False
-		self.headerTextFormat = '%s'
-		ThreadWindow.__init__(self)
-		
-	def onClick( self, controlID ):
-		return False
-			
-	def onAction(self,action):
-		if action == ACTION_PARENT_DIR or action == ACTION_PARENT_DIR2:
-			action = ACTION_PREVIOUS_MENU
-		if ThreadWindow.onAction(self,action): return
-		if action == ACTION_PREVIOUS_MENU:
-			self.doClose()
-		#xbmcgui.WindowXML.onAction(self,action)
-	
-	def doClose(self):
-		self.closed = True
-		self.close()
-		self.onClose()
-	
-	def startProgress(self):
-		self._progMessageSave = self.getControl(104).getLabel()
-		#self.getControl(310).setVisible(True)
-	
-	def setProgress(self,pct,message=''):
-		if pct<0:
-			self.stopThread()
-			dialogs.showMessage('ERROR',message,error=True)
-			return False
-		w = int((pct/100.0)*self.getControl(300).getWidth())
-		self.getControl(310).setWidth(w)
-		self.getControl(104).setLabel(self.headerTextFormat % message)
-		return True
-		
-	def endProgress(self):
-		#self.getControl(310).setVisible(False)
-		self.getControl(104).setLabel(self._progMessageSave)
-		
-	def highlightTerms(self,message):
-		message = self.searchRE[0].sub(self.searchReplace,message)
-		for sRE in self.searchRE[1:]: message = sRE.sub(self.searchWordReplace,message)
-		message = message.replace('\r','')
-		message = FB.MC.removeNested(message,'\[/?B\]','[B]')
-		return message
-	
-	def searchReplace(self,m):
-		return '[COLOR FFFF0000][B]%s[/B][/COLOR]' % '\r'.join(list(m.group(0)))
-	
-	def searchWordReplace(self,m):
-		return '[COLOR FFAAAA00][B]%s[/B][/COLOR]' % m.group(0)
-	
-	def setupSearch(self):
-		self.searchRE = None
-		if self.search and not self.search.startswith('@!RECENT'):
-			self.searchRE = [re.compile(re.sub('[\'"]','',self.search),re.I)]
-			words = self.getSearchWords(self.search)
-			if len(words) > 1:
-				for w in words: self.searchRE.append(re.compile(w,re.I))
-	
-	def getSearchWords(self,text):
-		words = []
-		quoted = re.findall('(?P<quote>["\'])(.+?)(?P=quote)',text)
-		for q in quoted: words.append(q[1])
-		words += re.sub('(?P<quote>["\'])(.+?)(?P=quote)','',text).split()
-		return words
-	
-class BaseWindow(xbmcgui.WindowXML,BaseWindowFunctions):
-	def __init__(self, *args, **kwargs):
-		BaseWindowFunctions.__init__(self, *args, **kwargs)
-		xbmcgui.WindowXML.__init__( self )
-		self.closed
-		
-	def onInit(self):
-		pass
-		
-	def onAction(self,action):
-		BaseWindowFunctions.onAction(self,action)
-		
-class BaseWindowDialog(xbmcgui.WindowXMLDialog,BaseWindowFunctions):
-	def __init__(self, *args, **kwargs):
-		BaseWindowFunctions.__init__(self, *args, **kwargs)
-		xbmcgui.WindowXMLDialog.__init__( self )
-	
-	def onInit(self):
-		pass
-		
-	def onAction(self,action):
-		BaseWindowFunctions.onAction(self,action)
-
-class PageWindow(BaseWindow):
-	def __init__( self, *args, **kwargs ):
-		self.next = ''
-		self.prev = ''
-		self.pageData = FB.getPageData(total_items=kwargs.get('total_items',0))
-		self.firstRun = True
-		self._firstPage = T(32110)
-		self._lastPage = T(32111)
-		self._newestPage = None
-		BaseWindow.__init__( self, *args, **kwargs )
-		
-	def onFocus( self, controlId ):
-		self.controlId = controlId
-
-	def onClick( self, controlID ):
-		if controlID == 200:
-			if self.pageData.prev: self.gotoPage(self.pageData.getPrevPage())
-		elif controlID == 202:
-			if self.pageData.next: self.gotoPage(self.pageData.getNextPage())
-		elif controlID == 105:
-			self.pageMenu()
-		BaseWindow.onClick(self,controlID)
-	
-	def onAction(self,action):
-		BaseWindow.onAction(self,action)
-		if action == ACTION_NEXT_ITEM:
-			if self.pageData.next: self.gotoPage(self.pageData.getNextPage())
-		elif action == ACTION_PREV_ITEM:
-			if self.pageData.prev: self.gotoPage(self.pageData.getPrevPage())
-		
-	def pageMenu(self):
-		options = [self._firstPage,self._lastPage]
-		if self._newestPage: options.append(self._newestPage)
-		options.append(T(32115))
-		idx = dialogs.dialogSelect(T(32114),options)
-		if idx < 0: return
-		if options[idx] == self._firstPage: self.gotoPage(self.pageData.getPageNumber(1))
-		elif options[idx] == self._lastPage: self.gotoPage(self.pageData.getPageNumber(-1))
-		elif options[idx] == self._newestPage:
-			self.firstRun = True #For replies window
-			self.gotoPage(self.pageData.getPageNumber(-1))
-		else: self.askPageNumber()
-		
-	def askPageNumber(self):
-		page = xbmcgui.Dialog().numeric(0,T(32116))
-		try: int(page)
-		except: return
-		self.gotoPage(self.pageData.getPageNumber(page))
-		
-	def setupPage(self,pageData):
-		if pageData:
-			self.pageData = pageData
-		else:
-			from lib.forumbrowser.forumbrowser import PageData
-			pageData = PageData(None)
-		self.getControl(200).setVisible(pageData.prev)
-		self.getControl(202).setVisible(pageData.next)
-		self.getControl(105).setLabel(pageData.getPageDisplay())
-		
-	def gotoPage(self,page): pass
+asyncconnections.LOG = LOG
+asyncconnections.setEnabled(not getSetting('disable_async_connections',False))
 
 ######################################################################################
+#
 # Image Dialog
+#
 ######################################################################################
-class ImagesDialog(BaseWindowDialog):
+class ImagesDialog(windows.BaseWindowDialog):
 	def __init__( self, *args, **kwargs ):
 		self.images = kwargs.get('images')
 		self.index = 0
-		BaseWindowDialog.__init__( self, *args, **kwargs )
+		windows.BaseWindowDialog.__init__( self, *args, **kwargs )
 	
 	def onInit(self):
-		BaseWindowDialog.onInit(self)
+		windows.BaseWindowDialog.onInit(self)
 		self.getControl(200).setEnabled(len(self.images) > 1)
 		self.getControl(202).setEnabled(len(self.images) > 1)
 		self.showImage()
@@ -569,7 +119,7 @@ class ImagesDialog(BaseWindowDialog):
 		self.showImage()
 	
 	def onClick( self, controlID ):
-		if BaseWindow.onClick(self, controlID): return
+		if windows.BaseWindow.onClick(self, controlID): return
 		if controlID == 200:
 			self.nextImage()
 		elif controlID == 202:
@@ -578,13 +128,15 @@ class ImagesDialog(BaseWindowDialog):
 	def onAction(self,action):
 		if action == ACTION_PARENT_DIR or action == ACTION_PARENT_DIR2:
 			action = ACTION_PREVIOUS_MENU
-		elif action == ACTION_NEXT_ITEM:
+		elif action == ACTION_NEXT_ITEM or action == ACTION_MOVE_RIGHT:
 			self.nextImage()
-		elif action == ACTION_PREV_ITEM:
+			self.setFocusId(202)
+		elif action == ACTION_PREV_ITEM or action == ACTION_MOVE_LEFT:
 			self.prevImage()
+			self.setFocusId(200)
 		elif action == ACTION_CONTEXT_MENU:
 			self.doMenu()
-		BaseWindowDialog.onAction(self,action)
+		windows.BaseWindowDialog.onAction(self,action)
 		
 	def doMenu(self):
 		d = dialogs.ChoiceMenu(T(32051))
@@ -627,7 +179,7 @@ class ImagesDialog(BaseWindowDialog):
 			filename = fname + '_' + str(ct) + ext
 			ct+=1
 			if os.path.exists(os.path.join(result,filename)): continue
-			yes = xbmcgui.Dialog().yesno(T(32261),T(32262),T(32263),filename + '?',T(32264),T(32265))
+			yes = dialogs.dialogYesNo(T(32261),T(32262),T(32263),filename + '?',T(32264),T(32265))
 			if not yes:
 				ct = 0
 				filename = dialogs.doKeyboard(T(32259), filename)
@@ -639,9 +191,11 @@ class ImagesDialog(BaseWindowDialog):
 		dialogs.showMessage(T(32266),T(32267),os.path.basename(target),success=True)
 
 ######################################################################################
+#
 # Forum Settings Dialog
+#
 ######################################################################################
-class ForumSettingsDialog(BaseWindowDialog):
+class ForumSettingsDialog(windows.BaseWindowDialog):
 	def __init__( self, *args, **kwargs ):
 		self.colorsDir = os.path.join(CACHE_PATH,'colors')
 		self.colorGif = os.path.join(xbmc.translatePath(util.__addon__.getAddonInfo('path')),'resources','media','white1px.gif')
@@ -651,9 +205,10 @@ class ForumSettingsDialog(BaseWindowDialog):
 		self.help = {}
 		self.helpSep = FB.MC.hrReplace
 		self.header = ''
+		self.headerColor = ''
 		self.settingsChanged = False
 		self.OK = False
-		BaseWindowDialog.__init__( self, *args, **kwargs )
+		windows.BaseWindowDialog.__init__( self, *args, **kwargs )
 		
 	def setHeader(self,header):
 		self.header = header
@@ -672,6 +227,7 @@ class ForumSettingsDialog(BaseWindowDialog):
 		elif vtype == 'boolean': valueDisplay = value and 'booleanTrue' or 'booleanFalse'
 		elif vtype.startswith('color.'):
 			valueDisplay = self.makeColorFile(value.upper())
+			self.headerColor = valueDisplay
 		item = xbmcgui.ListItem(name,valueDisplay)
 		item.setProperty('value_type',vtype.split('.',1)[0])
 		item.setProperty('value',str(value))
@@ -687,6 +243,8 @@ class ForumSettingsDialog(BaseWindowDialog):
 		if len(self.items) > 0: self.items[-1].setProperty('separator','separator')
 			
 	def fillList(self):
+		for i in self.items:
+			if i.getProperty('id') == 'logo': i.setProperty('header_color', str(self.headerColor))
 		self.getControl(320).addItems(self.items)
 		
 	def onClick(self,controlID):
@@ -706,7 +264,7 @@ class ForumSettingsDialog(BaseWindowDialog):
 		
 	def cancel(self):
 		if self.settingsChanged:
-			yes = xbmcgui.Dialog().yesno(T(32268),T(32269),T(32270))
+			yes = dialogs.dialogYesNo(T(32268),T(32269),T(32270))
 			if not yes: return
 		self.doClose()
 		
@@ -728,11 +286,11 @@ class ForumSettingsDialog(BaseWindowDialog):
 			item.setLabel2(data['value'] and 'booleanTrue' or 'booleanFalse')
 		elif data['type'].startswith('text'):
 			if data['type'] == 'text.long':
-				val = dialogs.doKeyboard(T(32271),data['value'])
+				val = dialogs.doKeyboard(T(32271),data['value'],mod=True)
 				item.setProperty('help',self.help.get(dID,'') + '[CR][COLOR FF999999]%s[/COLOR][CR][B]Current:[/B][CR][CR]%s' % (self.helpSep,val))
 			elif data['type'].startswith('text.url'):
 				if data['value']:
-					yes = xbmcgui.Dialog().yesno(T(32272),T(32274),T(32273),'',T(32276),T(32275))
+					yes = dialogs.dialogYesNo(T(32272),T(32274),T(32273),'',T(32276),T(32275))
 					if yes:
 						data['value'] = ''
 						item.setLabel2('')
@@ -746,7 +304,8 @@ class ForumSettingsDialog(BaseWindowDialog):
 			item.setLabel2(data['type'] != 'text.password' and val or len(val) * '*')
 		elif data['type'].startswith('webimage.'):
 			url = data['type'].split('.',1)[-1]
-			yes = xbmcgui.Dialog().yesno(T(32272),T(32278),T(32277),'',T(32280),T(32279))
+			yes = dialogs.dialogYesNo(T(32272),T(32278),T(32277),'',T(32280),T(32279))
+			if yes is None: return
 			if yes:
 				logo = dialogs.doKeyboard(T(32281),data['value'] or 'http://')
 				logo = logo or ''
@@ -761,7 +320,10 @@ class ForumSettingsDialog(BaseWindowDialog):
 			color = askColor(forumID,data['value'],logo=(self.data.get('logo') or {}).get('value'))
 			if not color: return
 			data['value'] = color
-			item.setLabel2(self.makeColorFile(color))
+			colorFile = self.makeColorFile(color)
+			item.setLabel2(colorFile)
+			self.headerColor = colorFile
+			self.updateHeaderColor()
 		elif data['type'] == 'function':
 			data['value'][0](*data['value'][1:])
 		
@@ -786,10 +348,19 @@ class ForumSettingsDialog(BaseWindowDialog):
 			return False
 		return True
 				
+	def updateHeaderColor(self):
+		clist = self.getControl(320)
+		for idx in range(0,clist.size()):
+			i = clist.getListItem(idx)
+			if i.getProperty('id') == 'logo':
+				i.setProperty('header_color', str(self.headerColor))
+				self.refreshImage()
+				return
+			
 	def refreshImage(self):
 		cid = self.getFocusId()
 		if not cid: return
-		self.setFocusId(100)
+		#self.setFocusId(100)
 		self.setFocusId(cid)
 		
 	def handleXBMCDialogProgress(self,dialog,pct,msg):
@@ -821,7 +392,9 @@ class ForumSettingsDialog(BaseWindowDialog):
 			replace = chr(255)
 		replace += replace
 		target = os.path.join(path,color + '.gif')
-		open(target,'w').write(open(self.colorGif,'r').read().replace(self.gifReplace,replace))
+		with open(target,'w') as t:
+			with open(self.colorGif,'r') as c:
+				t.write(c.read().replace(self.gifReplace,replace))
 		return target
 		
 def editForumSettings(forumID):
@@ -863,9 +436,11 @@ def editForumSettings(forumID):
 		getCachedLogo(fdata.urls['logo'],forumID,clear=True)
 	
 ######################################################################################
-# Notifications Dialog
+#
+# Forums Manager/ Notifications Dialog
+#
 ######################################################################################
-class NotificationsDialog(BaseWindowDialog):
+class NotificationsDialog(windows.BaseWindowDialog):
 	def __init__( self, *args, **kwargs ):
 		self.forumsWindow = kwargs.get('forumsWindow')
 		self.initialForumID = kwargs.get('forumID')
@@ -878,7 +453,7 @@ class NotificationsDialog(BaseWindowDialog):
 		self.stopTimeout = False
 		self.started = False
 		self.createItems()
-		BaseWindowDialog.__init__( self, *args, **kwargs )
+		windows.BaseWindowDialog.__init__( self, *args, **kwargs )
 	
 	def newPostsCallback(self,signal,data):
 		winid = xbmcgui.getCurrentWindowDialogId()
@@ -889,7 +464,7 @@ class NotificationsDialog(BaseWindowDialog):
 		if self.started: return
 		if SIGNALHUB: SIGNALHUB.registerReceiver('NEW_POSTS', self, self.newPostsCallback)
 		self.started = True
-		BaseWindowDialog.onInit(self)
+		windows.BaseWindowDialog.onInit(self)
 		if not self.forumsWindow: self.getControl(250).setLabel(T(32295))
 		self.fillList()
 		self.startDisplayTimeout()
@@ -899,7 +474,7 @@ class NotificationsDialog(BaseWindowDialog):
 			if self.forumsWindow: self.setFocusId(200)
 		
 	def onClick( self, controlID ):
-		if BaseWindowDialog.onClick(self, controlID): return
+		if windows.BaseWindowDialog.onClick(self, controlID): return
 		forumID = self.getSelectedForumID()
 		if controlID == 220: self.changeForum()
 		elif controlID == 200:
@@ -943,7 +518,7 @@ class NotificationsDialog(BaseWindowDialog):
 			dialogs.showMessage(str(self.getControl(210).getLabel()),dialogs.loadHelp('options.help').get('help',''))
 			
 	def onAction(self,action):
-		BaseWindowDialog.onAction(self,action)
+		windows.BaseWindowDialog.onAction(self,action)
 		self.stopTimeout = True
 		if action == ACTION_CONTEXT_MENU:
 			focusID = self.getFocusId()
@@ -1128,9 +703,11 @@ def getNotifyList():
 		return nlist
 	
 ######################################################################################
+#
 # Post Dialog
+#
 ######################################################################################
-class PostDialog(BaseWindowDialog):
+class PostDialog(windows.BaseWindow):
 	failedPM = None
 	def __init__( self, *args, **kwargs ):
 		self.post = kwargs.get('post')
@@ -1139,14 +716,14 @@ class PostDialog(BaseWindowDialog):
 		self.posted = False
 		self.moderated = False
 		self.display_base = '%s\n \n'
-		BaseWindowDialog.__init__( self, *args, **kwargs )
+		windows.BaseWindow.__init__( self, *args, **kwargs )
 	
 	def onInit(self):
-		BaseWindowDialog.onInit(self)
+		windows.BaseWindow.onInit(self)
 		self.getControl(122).setText(' ') #to remove scrollbar
 		if self.failedPM:
 			if self.failedPM.isPM == self.post.isPM and self.failedPM.tid == self.post.tid and self.failedPM.to == self.post.to:
-				yes = xbmcgui.Dialog().yesno(T(32296),T(32297))
+				yes = dialogs.dialogYesNo(T(32296),T(32297))
 				if yes:
 					self.post = self.failedPM
 					for line in self.post.message.split('\n'): self.addQuote(line)
@@ -1175,18 +752,21 @@ class PostDialog(BaseWindowDialog):
 		if self.isPM() or self.doNotPost: self.setTitle() #We're creating a thread
 	
 	def setTheme(self):
+		self.setProperty('loggedin',FB.isLoggedIn() and 'loggedin' or '')
 		if self.isPM():
-			self.getControl(103).setLabel('[B]%s[/B]' % T(32177))
-			self.getControl(202).setLabel(T(32178))
+			self.setProperty('posttype',T(32177))
+			self.setProperty('submit_button',T(32178))
 		else:
-			self.getControl(103).setLabel('[B]%s[/B]' % T(32902))
-		if self.post.title:
-			self.getControl(104).setLabel(self.post.title)
-		else:
-			self.getControl(104).setLabel(T(32120))
+			self.setProperty('posttype',T(32902))
+			self.setProperty('submit_button',T(32908))
+		self.showTitle(self.post.title)
+			
+	def showTitle(self,title):
+		self.setProperty('title',title or '')
+		self.setProperty('toggle_title',title or T(32921))
 		
 	def onClick( self, controlID ):
-		if BaseWindow.onClick(self, controlID): return
+		if windows.BaseWindow.onClick(self, controlID): return
 		if controlID == 202:
 			self.postReply()
 		elif controlID == 104:
@@ -1197,12 +777,16 @@ class PostDialog(BaseWindowDialog):
 		
 	def onAction(self,action):
 		if action == ACTION_PREVIOUS_MENU:
+			if util.Control.HasFocus(group=196):
+				if self.getControl(120).size():
+					self.setFocusId(120)
+					return
 			if not self.confirmExit(): return
-		BaseWindowDialog.onAction(self,action)
+		windows.BaseWindow.onAction(self,action)
 		
 	def confirmExit(self):
 		if not self.getOutput() and not self.title: return True
-		return xbmcgui.Dialog().yesno(T(32301),T(32302),T(32303))
+		return dialogs.dialogYesNo(T(32301),T(32302),T(32303))
 	
 	def isPM(self):
 		return str(self.post.pid).startswith('PM') or self.post.to
@@ -1214,7 +798,7 @@ class PostDialog(BaseWindowDialog):
 		keyboard.doModal()
 		if not keyboard.isConfirmed(): return
 		title = keyboard.getText()
-		self.getControl(104).setLabel(title)
+		self.showTitle(title)
 		self.title = title
 	
 	def dialogCallback(self,pct,message):
@@ -1401,121 +985,10 @@ class LinePostDialog(PostDialog):
 
 ######################################################################################
 #
-# PlayerMonitor
-#
-######################################################################################
-class PlayerMonitor(xbmc.Player):
-	def __init__(self,core=None):
-		self.init()
-		xbmc.Player.__init__(core)
-		
-	def init(self):
-		self.interrupted = None
-		self.isSelfPlaying = False
-		self.stack = 0
-		self.currentTime = None
-		self.FBisRunning = True
-		
-	def start(self,path):
-		interrupted = None
-		if getSetting('video_return_interrupt',True):
-			interrupted = video.current()
-			self.getCurrentTime()
-		self.interrupted = interrupted
-		self.doPlay(path)
-		
-	def finish(self):
-		self.FBisRunning = False
-		if getSetting('video_stop_on_exit',True):
-			self.doStop()
-			if self.interrupted: self.wait()
-		else:
-			if getSetting('video_return_interrupt_after_exit',False) and self.interrupted:
-				self.waitLong()
-		LOG('PLAYER: Exiting')
-		
-	def doPlay(self,path):
-		self.played = path
-		self.isSelfPlaying = True
-		if getSetting('video_start_preview',True):
-			video.play(path, preview=True)
-		else:
-			self.play(path)
-		
-	def doStop(self):
-		if not self.isSelfPlaying: return
-		LOG('PLAYER: Stopping forum video')
-		self.stop()
-		
-	def wait(self):
-		LOG('PLAYER: Waiting for video to stop...')
-		ct = 0
-		while self.interrupted and not xbmc.abortRequested:
-			xbmc.sleep(1000)
-			ct+=1
-			if ct > 19: break #Don't know if this is necessary, but it's here just in case.
-			
-	def waitLong(self):
-		LOG('PLAYER: Waiting after FB close to resume interrupted video...')
-		while self.interrupted and not xbmc.abortRequested:
-			xbmc.sleep(1000)
-		
-	def playInterrupted(self):
-		if not self.isSelfPlaying: return
-		self.isSelfPlaying = False
-		if self.interrupted:
-			LOG('PLAYER: Playing interrupted video')
-			if getSetting('video_bypass_resume_dialog',True) and self.currentTime:
-				try:
-					xbmc.sleep(1000)
-					video.playAt(self.interrupted, *self.currentTime)
-				except:
-					ERROR('PLAYER: Failed manually resume video - sending to XBMC')
-					xbmc.sleep(1000)
-					video.play(self.interrupted)
-			else:
-				xbmc.sleep(1000)
-				video.play(self.interrupted,getSetting('video_resume_as_preview',False))
-		self.interrupted = None
-		self.currentTime = None
-	
-	def onPlayBackStarted(self):
-		if self.FBisRunning and getSetting('video_resume_as_preview',False) and not self.isSelfPlaying:
-			xbmc.sleep(1000)
-			xbmc.executebuiltin('Action(FullScreen)')
-		
-	def onPlayBackEnded(self):
-		self.playInterrupted()
-		
-	def onPlayBackStopped(self):
-		self.playInterrupted()
-		
-	def pauseStack(self):
-		if not self.stack: video.pause()
-		self.stack += 1
-		
-	def resumeStack(self):
-		self.stack -= 1
-		if self.stack < 1:
-			self.stack = 0
-			video.resume()
-		
-	def getCurrentTime(self):
-		if not video.isPlaying(): return None
-		offset = getSetting('video_resume_offset',0)
-		val = self.getTime() - offset
-		if val < 0: val = 0
-		(ms,tsec) = math.modf(val)
-		m, s = divmod(int(tsec), 60)
-		h, m = divmod(m, 60)
-		self.currentTime = (h,m,s,int(ms*1000))
-		
-######################################################################################
-#
 # Message Window
 #
 ######################################################################################		
-class MessageWindow(BaseWindow):
+class MessageWindow(windows.BaseWindow):
 	def __init__( self, *args, **kwargs ):
 		self.post = kwargs.get('post')
 		self.searchRE = kwargs.get('search_re')
@@ -1527,10 +1000,10 @@ class MessageWindow(BaseWindow):
 		self.hasImages = False
 		self.hasLinks = False
 		self.videoHandler = video.WebVideo()
-		BaseWindow.__init__( self, *args, **kwargs )
+		windows.BaseWindow.__init__( self, *args, **kwargs )
 		
 	def onInit(self):
-		BaseWindow.onInit(self)
+		windows.BaseWindow.onInit(self)
 		if self.started: return
 		self.started = True
 		self.setLoggedIn()
@@ -1548,7 +1021,7 @@ class MessageWindow(BaseWindow):
 		finally:
 			s.close()
 			
-		if self.searchRE: text = self.highlightTerms(text)
+		if self.searchRE: text = self.highlightTerms(FB,text)
 		try:
 			self.getControl(122).setLabel(text)
 		except:
@@ -1632,19 +1105,18 @@ class MessageWindow(BaseWindow):
 			self.getControl(150).getListItem(idx).setIconImage(fname)
 		
 	def setWindowProperties(self):
-		window = xbmcgui.Window(xbmcgui.getCurrentWindowId())
 		extras = showUserExtras(self.post,just_return=True)
-		window.setProperty('extras',extras)
-		window.setProperty('avatar',self.post.avatarFinal)
-		if self.hasLinks: window.setProperty('haslinks','1')
-		if self.hasImages: window.setProperty('hasimages','1')
-		if self.post.online: window.setProperty('online','1')
+		self.setProperty('extras',extras)
+		self.setProperty('avatar',self.post.avatarFinal)
+		if self.hasLinks: self.setProperty('haslinks','1')
+		if self.hasImages: self.setProperty('hasimages','1')
+		if self.post.online: self.setProperty('online','1')
 	
 	def onFocus( self, controlId ):
 		self.controlId = controlId
 		
 	def onClick( self, controlID ):
-		if BaseWindow.onClick(self, controlID): return
+		if windows.BaseWindow.onClick(self, controlID): return
 		if controlID == 148:
 			self.linkSelected()
 		elif controlID == 150:
@@ -1653,7 +1125,7 @@ class MessageWindow(BaseWindow):
 	def showVideo(self,source):
 		if video.isPlaying() and getSetting('video_ask_interrupt',True):
 			line2 = getSetting('video_return_interrupt',True) and T(32254) or ''
-			if not xbmcgui.Dialog().yesno(T(32255),T(32256),line2):
+			if not dialogs.dialogYesNo(T(32255),T(32256),line2):
 				return
 		PLAYER.start(source)
 		#video.play(source)
@@ -1714,7 +1186,7 @@ class MessageWindow(BaseWindow):
 			if self.getFocusId() == 148 or self.getFocusId() == 150:
 				self.setFocusId(127)
 				return
-		BaseWindow.onAction(self,action)
+		windows.BaseWindow.onAction(self,action)
 		
 	def doLinkMenu(self):
 		link = self.getSelectedLink()
@@ -1831,7 +1303,7 @@ def openPostDialog(post=None,pid='',tid='',fid='',editPM=None,donotpost=False,no
 def deletePost(post,is_pm=False):
 	pm = forumbrowser.PostMessage().fromPost(post)
 	if not pm.pid: return
-	yes = xbmcgui.Dialog().yesno(T(32320),T(32321))
+	yes = dialogs.dialogYesNo(T(32320),T(32321))
 	if not yes: return
 	splash = dialogs.showActivitySplash(T(32322))
 	try:
@@ -1867,10 +1339,11 @@ def showUserExtras(post,ignore=None,just_return=False):
 # Replies Window
 #
 ######################################################################################
-class RepliesWindow(PageWindow):
+class RepliesWindow(windows.PageWindow):
 	info_display = {'postcount':'posts','joindate':'joined'}
 	def __init__( self, *args, **kwargs ):
-		PageWindow.__init__( self,total_items=int(kwargs.get('reply_count',0)),*args, **kwargs )
+		windows.PageWindow.__init__( self,total_items=int(kwargs.get('reply_count',0)),*args, **kwargs )
+		self.setPageData(FB)
 		self.pageData.isReplies = True
 		self.threadItem = item = kwargs.get('item')
 		self.dontOpenPD = False
@@ -1921,10 +1394,10 @@ class RepliesWindow(PageWindow):
 				pass 
 	
 	def onInit(self):
-		BaseWindow.onInit(self)
+		windows.BaseWindow.onInit(self)
+		self.setLoggedIn()
 		if self.started: return
 		self.started = True
-		self.setLoggedIn()
 		self.setupPage(None)
 		self.setStopControl(self.getControl(106))
 		self.setProgressCommands(self.startProgress,self.setProgress,self.endProgress)
@@ -2020,12 +1493,12 @@ class RepliesWindow(PageWindow):
 		title = (self.search and post.topic or post.title) or ''
 		item.setProperty('title',title)
 		message = post.messageAsDisplay(short)
-		if self.searchRE: message = self.highlightTerms(message)
+		if self.searchRE: message = self.highlightTerms(FB,message)
 		item.setProperty('message',message)
 	
 	def updateItem(self,item,post):
 		alt = self.getUserInfoAttributes()
-		defAvatar = xbmc.translatePath(os.path.join(util.__addon__.getAddonInfo('path'),'resources','skins',THEME,'media','forum-browser-avatar-none.png'))
+		defAvatar = xbmc.translatePath(os.path.join(util.__addon__.getAddonInfo('path'),'resources','skins','Default','media','forum-browser-avatar-none.png'))
 		webvid = video.WebVideo()
 		showIndicators = getSetting('show_media_indicators',True)
 		countLinkImages = getSetting('smi_count_link_images',False)
@@ -2112,7 +1585,7 @@ class RepliesWindow(PageWindow):
 			return
 		
 		self.empty = False
-		defAvatar = xbmc.translatePath(os.path.join(util.__addon__.getAddonInfo('path'),'resources','skins',THEME,'media','forum-browser-avatar-none.png'))
+		defAvatar = xbmc.translatePath(os.path.join(util.__addon__.getAddonInfo('path'),'resources','skins','Default','media','forum-browser-avatar-none.png'))
 		#xbmcgui.lock()
 		try:
 			self.getControl(120).reset()
@@ -2231,7 +1704,7 @@ class RepliesWindow(PageWindow):
 			self.stopThread()
 			return
 		if self.empty: self.fillRepliesList()
-		PageWindow.onClick(self,controlID)
+		windows.PageWindow.onClick(self,controlID)
 		
 	def onAction(self,action):
 		if action == ACTION_CONTEXT_MENU:
@@ -2241,7 +1714,7 @@ class RepliesWindow(PageWindow):
 					if self.getControl(120).size():
 						self.setFocusId(120)
 						return
-		PageWindow.onAction(self,action)
+		windows.PageWindow.onAction(self,action)
 	
 	def newSearch(self):
 		terms = dialogs.doKeyboard(T(32330),self.search or '')
@@ -2333,7 +1806,7 @@ class RepliesWindow(PageWindow):
 		elif result == 'extras':
 			showUserExtras(post,ignore=(item.getProperty('usedExtras') or '').split(','))
 		elif result == 'pm':
-			quote = xbmcgui.Dialog().yesno(T(32336),T(32337))
+			quote = dialogs.dialogYesNo(T(32336),T(32337))
 			self.openPostDialog(post,force_pm=True,no_quote=not quote)
 		elif result == 'like':
 			splash = dialogs.showActivitySplash(T(32338))
@@ -2460,7 +1933,7 @@ def unSubscribeForum(fid):
 # Threads Window
 #
 ######################################################################################
-class ThreadsWindow(PageWindow):
+class ThreadsWindow(windows.PageWindow):
 	def __init__( self, *args, **kwargs ):
 		self.fid = kwargs.get('fid','')
 		self.topic = kwargs.get('topic','')
@@ -2479,13 +1952,14 @@ class ThreadsWindow(PageWindow):
 		self.highBase = '%s'
 		self.forum_desc_base = '[I]%s [/I]'
 		self.started = False
-		PageWindow.__init__( self, *args, **kwargs )
+		windows.PageWindow.__init__( self, *args, **kwargs )
+		self.setPageData(FB)
 		
 	def onInit(self):
-		BaseWindow.onInit(self)
+		windows.BaseWindow.onInit(self)
+		self.setLoggedIn()
 		if self.started: return
 		self.started = True
-		self.setLoggedIn()
 		self.setupPage(None)
 		self.setStopControl(self.getControl(106))
 		self.setProgressCommands(self.startProgress,self.setProgress,self.endProgress)
@@ -2586,7 +2060,7 @@ class ThreadsWindow(PageWindow):
 			else: starterbase = self.textBase
 			#title = (tdict.get('new_post') and self.newBase or self.textBase) % title
 			titleDisplay = title
-			if self.searchRE: titleDisplay = self.highlightTerms(titleDisplay)
+			if self.searchRE: titleDisplay = self.highlightTerms(FB,titleDisplay)
 			item = xbmcgui.ListItem(label=starterbase % starter,label2=titleDisplay)
 			if tdict.get('new_post'): item.setProperty('unread','unread')
 			item.setInfo('video',{"Genre":sticky})
@@ -2603,7 +2077,7 @@ class ThreadsWindow(PageWindow):
 				if preview: last += '[CR]' + preview
 			else:
 				last = preview
-			if self.searchRE: last = self.highlightTerms(last)
+			if self.searchRE: last = self.highlightTerms(FB,last)
 			item.setProperty("preview",preview)
 			item.setProperty("last",last)
 			item.setProperty("starter",starter)
@@ -2631,6 +2105,7 @@ class ThreadsWindow(PageWindow):
 			item.setInfo('video',{"Genre":'is_forum'})
 			item.setProperty("last",self.forum_desc_base % texttransform.convertHTMLCodes(FB.MC.tagFilter.sub('',FB.MC.brFilter.sub(' ',desc))))
 			item.setProperty("title",title)
+			item.setProperty("topic",title)
 			item.setProperty("id",fid)
 			item.setProperty("fid",fid)
 			item.setProperty("is_forum",'True')
@@ -2681,7 +2156,7 @@ class ThreadsWindow(PageWindow):
 			self.stopThread()
 			return
 		if self.empty: self.fillThreadList()
-		PageWindow.onClick(self,controlID)
+		windows.PageWindow.onClick(self,controlID)
 	
 	def onAction(self,action):
 		if action == ACTION_CONTEXT_MENU:
@@ -2691,7 +2166,7 @@ class ThreadsWindow(PageWindow):
 				if self.getControl(120).size():
 					self.setFocusId(120)
 					return
-		PageWindow.onAction(self,action)
+		windows.PageWindow.onAction(self,action)
 		
 	def doMenu(self):
 		item = self.getControl(120).getSelectedItem()
@@ -2804,9 +2279,9 @@ class ThreadsWindow(PageWindow):
 # Forums Window
 #
 ######################################################################################
-class ForumsWindow(BaseWindow):
+class ForumsWindow(windows.BaseWindow):
 	def __init__( self, *args, **kwargs ):
-		BaseWindow.__init__( self, *args, **kwargs )
+		windows.BaseWindow.__init__( self, *args, **kwargs )
 		#FB.setLogin(self.getUsername(),self.getPassword(),always=getSetting('always_login') == 'true')
 		self.parent = self
 		self.empty = True
@@ -2840,10 +2315,10 @@ class ForumsWindow(BaseWindow):
 		return self.getUsername() != '' and self.getPassword() != ''
 		
 	def onInit(self):
-		BaseWindow.onInit(self)
+		windows.BaseWindow.onInit(self)
+		self.setLoggedIn() #So every time we return to the window we check
 		self.getControl(112).setVisible(False)
 		try:
-			self.setLoggedIn() #So every time we return to the window we check
 			if self.started: return
 			SIGNALHUB.registerReceiver('NEW_POSTS', self, self.newPostsCallback)
 			xbmcgui.Window(xbmcgui.getCurrentWindowId()).setProperty('ForumBrowserMAIN','MAIN')
@@ -2956,13 +2431,13 @@ class ForumsWindow(BaseWindow):
 	
 	def stopThread(self):
 		self.failedToGetForum()
-		ThreadWindow.stopThread(self)
+		windows.ThreadWindow.stopThread(self)
 		
 	def fillForumList(self,first=False):
 		if not FB: return
 		self.setLabels()
 		if not FB.guestOK() and not self.hasLogin():
-			yes = xbmcgui.Dialog().yesno(T(32352),T(32353),T(32354),T(32355))
+			yes = dialogs.dialogYesNo(T(32352),T(32353),T(32354),T(32355))
 			if yes:
 				setLogins()
 				if not self.hasLogin():
@@ -3030,7 +2505,7 @@ class ForumsWindow(BaseWindow):
 		self.setLoggedIn()
 		self.resetForum()
 		if not FB.guestOK() and not FB.isLoggedIn():
-			yes = xbmcgui.Dialog().yesno(T(32352),T(32353),T(32354),T(32355))
+			yes = dialogs.dialogYesNo(T(32352),T(32353),T(32354),T(32355))
 			if yes:
 				setLogins()
 				self.resetForum()
@@ -3124,7 +2599,7 @@ class ForumsWindow(BaseWindow):
 		d = dialogs.OptionsChoiceMenu(T(32358))
 		d.setContextCallback(self.showOnlineContext)
 		for u in users:
-			d.addItem(u.get('userid'),u.get('user'),u.get('avatar') or 'forum-browser-avatar-none.png',u.get('status'))
+			d.addItem(u.get('userid'),u.get('user'),u.get('avatar') or '',u.get('status'))
 		d.getResult(close_on_context=False)
 		
 	def showOnlineContext(self,menu,item):
@@ -3214,7 +2689,7 @@ class ForumsWindow(BaseWindow):
 			self.stopThread()
 			self.setFocusId(202)
 			return
-		if BaseWindow.onClick(self, controlID): return
+		if windows.BaseWindow.onClick(self, controlID): return
 		if self.empty: self.fillForumList()
 	
 	def onAction(self,action):
@@ -3231,7 +2706,7 @@ class ForumsWindow(BaseWindow):
 					self.setFocusId(120)
 					return
 			if not self.preClose(): return
-		BaseWindow.onAction(self,action)
+		windows.BaseWindow.onAction(self,action)
 	
 	def openForumsManager(self,external=False):
 		if self.forumsManagerWindowIsOpen: return
@@ -3302,7 +2777,7 @@ class ForumsWindow(BaseWindow):
 	def preClose(self):
 		if not getSetting('ask_close_on_exit') == 'true': return True
 		if self.closed: return True
-		return xbmcgui.Dialog().yesno(T(32373),T(32373))
+		return dialogs.dialogYesNo(T(32373),T(32373))
 		
 	def resetForum(self,hidelogo=True,no_theme=False):
 		if not FB: return
@@ -3346,10 +2821,121 @@ class ForumsWindow(BaseWindow):
 			self.setPMCounts()
 		self.setLoggedIn()
 		self.resetForum(False)
-		skin = SKINS[getSetting('skin',0)]
+		skin = util.getSavedTheme(current=THEME)
 		if skin != THEME:
 			dialogs.showMessage(T(32374),T(32375))
 		forumbrowser.ForumPost.hideSignature = getSetting('hide_signatures',False)
+		
+######################################################################################
+#
+# PlayerMonitor
+#
+######################################################################################
+class PlayerMonitor(xbmc.Player):
+	def __init__(self,core=None):
+		self.init()
+		xbmc.Player.__init__(core)
+		
+	def init(self):
+		self.interrupted = None
+		self.isSelfPlaying = False
+		self.stack = 0
+		self.currentTime = None
+		self.FBisRunning = True
+		
+	def start(self,path):
+		interrupted = None
+		if getSetting('video_return_interrupt',True):
+			interrupted = video.current()
+			self.getCurrentTime()
+		self.interrupted = interrupted
+		self.doPlay(path)
+		
+	def finish(self):
+		self.FBisRunning = False
+		if getSetting('video_stop_on_exit',True):
+			self.doStop()
+			if self.interrupted: self.wait()
+		else:
+			if getSetting('video_return_interrupt_after_exit',False) and self.interrupted:
+				self.waitLong()
+		LOG('PLAYER: Exiting')
+		
+	def doPlay(self,path):
+		self.played = path
+		self.isSelfPlaying = True
+		if getSetting('video_start_preview',True):
+			video.play(path, preview=True)
+		else:
+			self.play(path)
+		
+	def doStop(self):
+		if not self.isSelfPlaying: return
+		LOG('PLAYER: Stopping forum video')
+		self.stop()
+		
+	def wait(self):
+		LOG('PLAYER: Waiting for video to stop...')
+		ct = 0
+		while self.interrupted and not xbmc.abortRequested:
+			xbmc.sleep(1000)
+			ct+=1
+			if ct > 19: break #Don't know if this is necessary, but it's here just in case.
+			
+	def waitLong(self):
+		LOG('PLAYER: Waiting after FB close to resume interrupted video...')
+		while self.interrupted and not xbmc.abortRequested:
+			xbmc.sleep(1000)
+		
+	def playInterrupted(self):
+		if not self.isSelfPlaying: return
+		self.isSelfPlaying = False
+		if self.interrupted:
+			LOG('PLAYER: Playing interrupted video')
+			if getSetting('video_bypass_resume_dialog',True) and self.currentTime:
+				try:
+					xbmc.sleep(1000)
+					video.playAt(self.interrupted, *self.currentTime)
+				except:
+					ERROR('PLAYER: Failed manually resume video - sending to XBMC')
+					xbmc.sleep(1000)
+					video.play(self.interrupted)
+			else:
+				xbmc.sleep(1000)
+				video.play(self.interrupted,getSetting('video_resume_as_preview',False))
+		self.interrupted = None
+		self.currentTime = None
+	
+	def onPlayBackStarted(self):
+		if self.FBisRunning and getSetting('video_resume_as_preview',False) and not self.isSelfPlaying:
+			xbmc.sleep(1000)
+			xbmc.executebuiltin('Action(FullScreen)')
+		
+	def onPlayBackEnded(self):
+		self.playInterrupted()
+		
+	def onPlayBackStopped(self):
+		self.playInterrupted()
+		
+	def pauseStack(self):
+		if not self.stack: video.pause()
+		self.stack += 1
+		
+	def resumeStack(self):
+		self.stack -= 1
+		if self.stack < 1:
+			self.stack = 0
+			video.resume()
+		
+	def getCurrentTime(self):
+		if not video.isPlaying(): return None
+		offset = getSetting('video_resume_offset',0)
+		val = self.getTime() - offset
+		if val < 0: val = 0
+		(ms,tsec) = math.modf(val)
+		m, s = divmod(int(tsec), 60)
+		h, m = divmod(m, 60)
+		self.currentTime = (h,m,s,int(ms*1000))
 
 # Functions -------------------------------------------------------------------------------------------------------------------------------------------
 def appendSettingList(key,value,limit=0):
@@ -3671,7 +3257,7 @@ def setLoginPage(forumID=None):
 def browseWebURL(url):
 	(url,html) = webviewer.getWebResult(url,dialog=True) #@UnusedVariable
 	if not url: return None
-	yes = xbmcgui.Dialog().yesno(T(32391),str(url),'',T(32392))
+	yes = dialogs.dialogYesNo(T(32391),str(url),'',T(32392))
 	if not yes: return None
 	return url
 	
@@ -3864,7 +3450,7 @@ def shareForumRules(forumID,rules):
 			elif k == 'tail':
 				out.append('[%s] = ' % T(32411) + ', '.join(v.split(';&;')))
 		dialogs.showMessage(T(32412),'%s\n\n%s' % (T(32413),'[CR]'.join(out)),scroll=True)
-		yes = xbmcgui.Dialog().yesno(T(32414),T(32415))
+		yes = dialogs.dialogYesNo(T(32414),T(32415))
 		if not yes: return
 	setRulesODB(forumID, rules)
 	
@@ -3954,7 +3540,7 @@ def addForum(current=False):
 					
 			if not url:
 				dialog.update(16,'%s: Parser Browser' % T(32427))
-				yes = xbmcgui.Dialog().yesno(T(32428),T(32429),'',T(32430))
+				yes = dialogs.dialogYesNo(T(32428),T(32429),'',T(32430))
 				if yes:
 					user = dialogs.doKeyboard(T(32201))
 					if user: password = dialogs.doKeyboard(T(32202),hidden=True)
@@ -3989,7 +3575,7 @@ def addForum(current=False):
 		tmp_desc = texttransform.convertHTMLCodes(tmp_desc).strip()
 		images = info.images()
 		dialog.update(30,T(32435))
-		desc = dialogs.doKeyboard(T(32435),default=tmp_desc)
+		desc = dialogs.doKeyboard(T(32435),default=tmp_desc,mod=True)
 		if not desc: desc = tmp_desc
 		dialog.update(40,T(32436))
 		logo = chooseLogo(forum,images)
@@ -4101,7 +3687,7 @@ def addCurrentForumToOnlineDatabase(forumID=None):
 	addForumToOnlineDatabase(fdata.name,url,fdata.description,fdata.urls.get('logo'),forumID[:2],header_color=fdata.theme.get('header_color','FFFFFF'))
 	
 def addForumToOnlineDatabase(name,url,desc,logo,ftype,header_color='FFFFFF',dialog=None):
-	if not xbmcgui.Dialog().yesno(T(32445),T(32446)): return
+	if not dialogs.dialogYesNo(T(32445),T(32446)): return
 	LOG('Adding Forum To Online Database: %s at URL: %s' % (name,url))
 	frating = arating = '0'
 	if ftype == 'GB':
@@ -4234,7 +3820,7 @@ def removeForum(forum=None):
 		doRemoveForum(forum)
 		
 def doRemoveForum(forum):
-	yes = xbmcgui.Dialog().yesno(T(32466),T(32467),'',forum[3:])
+	yes = dialogs.dialogYesNo(T(32466),T(32467),'',forum[3:])
 	if not yes: return False
 	path = os.path.join(FORUMS_PATH,forum)
 	if not os.path.exists(path): return
@@ -4276,9 +3862,9 @@ class ThreadDownloader:
 	def stop(self):
 		self.thread.stop()
 		
-class DownloadThread(StoppableThread):
+class DownloadThread(util.StoppableThread):
 	def __init__(self,targetdir,urllist,ext='',callback=None,old_thread=None,nothread=False):
-		StoppableThread.__init__(self,name='Downloader')
+		util.StoppableThread.__init__(self,name='Downloader')
 		if not os.path.exists(targetdir): os.makedirs(targetdir)
 		self.callback = callback
 		self.targetdir = targetdir
@@ -4505,6 +4091,7 @@ def startForumBrowser(forumID=None):
 	global PLAYER, SIGNALHUB, STARTFORUM
 	PLAYER = PlayerMonitor()
 	SIGNALHUB = signals.SignalHub()
+	windows.SIGNALHUB = SIGNALHUB
 	updateOldVersion()
 	forumbrowser.ForumPost.hideSignature = getSetting('hide_signatures',False)
 	try:

@@ -1,0 +1,100 @@
+<window>
+	<zorder>1</zorder>
+	<!--   defaultcontrol>200</defaultcontrol -->
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="image" id="115">
+			<posx>-10</posx>
+			<posy>-10</posy>
+			<width>10</width>
+			<height>10</height>
+			<texture></texture>
+			<visible>Player.Playing + Player.HasVideo + !StringCompare(Window(10000).Property(ForumBrowser_hidePNP),1)</visible>
+		</control>
+		<control type="group">
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<animation effect="fade" start="0" end="100" time="100">WindowOpen</animation>
+			<visible>Control.IsVisible(115)</visible>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>310</width>
+				<height>720</height>
+				<texture>forum-browser-video-white.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>310</posx>
+				<posy>560</posy>
+				<width>970</width>
+				<height>160</height>
+				<texture>forum-browser-video-white.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+		</control>
+		<control type="image">
+			<visible>!Control.IsVisible(115)</visible>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>forum-browser-video-white.png</texture>
+			<colordiffuse>AA000000</colordiffuse>
+		</control>
+		<control type="group">
+			<animation effect="slide" end="-486,0" time="300" condition="Control.IsVisible(115)">Conditional</animation>
+			<posx>556</posx>
+			<posy>206</posy>
+			<control type="image">
+				<posx>-5</posx>
+				<posy>-5</posy>
+				<width>178</width>
+				<height>178</height>
+				<texture border="10">forum-browser-video-box-white.png</texture>
+				<colordiffuse>88000000</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>168</width>
+				<height>168</height>
+				<texture border="10">forum-browser-video-box-light.png</texture>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>168</width>
+				<height>30</height>
+				<texture border="10">forum-browser-video-box-header.png</texture>
+			</control>
+			<control type="label" id="100">
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>148</width>
+				<height>10</height>
+				<font>ForumBrowser-font10</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>
+			<control type="image">
+				<posx>48</posx>
+				<posy>58</posy>
+				<width>72</width>
+				<height>72</height>
+				<texture>forum-browser-video-loading.gif</texture>
+			</control>
+			<control type="image">
+				<posx>48</posx>
+				<posy>58</posy>
+				<width>72</width>
+				<height>72</height>
+				<texture>forum-browser-video-box-outline.png</texture>
+			</control>
+		</control>
+	</controls>
+</window>

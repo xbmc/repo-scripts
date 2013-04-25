@@ -16,6 +16,10 @@ msgstr ""
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "Addon Summary"
+msgid "Browse forums within XBMC"
+msgstr "XBMC에서 포럼 탐색"
+
 msgctxt "#32000"
 msgid "General"
 msgstr "일반"
@@ -24,21 +28,69 @@ msgctxt "#32003"
 msgid "Language"
 msgstr "언어"
 
+msgctxt "#32004"
+msgid "Always Login If Possible"
+msgstr "가능하면 항상 로그인"
+
+msgctxt "#32005"
+msgid "Skin (changes require a restart)"
+msgstr "스킨 (재시작 필요)"
+
+msgctxt "#32006"
+msgid "Use Text Editor (Experimental)"
+msgstr "텍스트 에디터 사용 (실험적)"
+
+msgctxt "#32007"
+msgid "Use Forum Colors"
+msgstr "포럼 색상 사용"
+
 msgctxt "#32008"
 msgid "Advanced"
 msgstr "고급"
 
+msgctxt "#32009"
+msgid "Automatically Open Subscriptions"
+msgstr "구독 자동 열기"
+
+msgctxt "#32011"
+msgid "Dark"
+msgstr "어둡게"
+
 msgctxt "#32012"
 msgid "Light"
-msgstr "가벼운"
+msgstr "밝게"
+
+msgctxt "#32013"
+msgid "Hide Signatures In Posts"
+msgstr "게시물에서 서명 숨김"
+
+msgctxt "#32014"
+msgid "Always Show OK Button In Message Dialogs"
+msgstr "쪽지 대화에서 항상 OK 단추 보기"
 
 msgctxt "#32018"
 msgid "Notifications"
 msgstr "알림"
 
+msgctxt "#32019"
+msgid "Enable Notifications (Enabling Requires XBMC Restart)"
+msgstr "알림 사용 (XBMC 재시작 필요)"
+
+msgctxt "#32020"
+msgid "Check Interval (In Minutes)"
+msgstr "확인 주기 (분)"
+
+msgctxt "#32021"
+msgid "Only At XBMC Start (Disabling Requires XBMC Restart)"
+msgstr "XBMC를 시작할 때만 (XBMC 재시작 필요)"
+
 msgctxt "#32022"
 msgid "Video"
 msgstr "비디오"
+
+msgctxt "#32050"
+msgid "ERROR"
+msgstr "오류"
 
 msgctxt "#32051"
 msgid "Options"
@@ -48,9 +100,17 @@ msgctxt "#32052"
 msgid "Done"
 msgstr "완료"
 
+msgctxt "#32053"
+msgid "Please try again."
+msgstr "다시 시도하세요."
+
 msgctxt "#32054"
 msgid "Refresh"
 msgstr "새로고침"
+
+msgctxt "#32100"
+msgid "Logging In"
+msgstr "로그인 중"
 
 msgctxt "#32141"
 msgid "Delete"
@@ -115,6 +175,10 @@ msgstr "설명"
 msgctxt "#32291"
 msgid "Logo"
 msgstr "로고"
+
+msgctxt "#32304"
+msgid "Success"
+msgstr "성공"
 
 msgctxt "#32348"
 msgid "Unknown"

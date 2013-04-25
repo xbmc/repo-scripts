@@ -323,9 +323,8 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 						flist.append((ff,sub))
 			except:
 				em = ERROR('ERROR GETTING FORUMS')
-				callback(-1,'%s' % em)
-				if donecallback: donecallback(FBData(error=em))
-				return FBData(error=em)
+				#callback(-1,'%s' % em)
+				return self.finish(FBData(error=em),donecallback)
 			if not callback(40,self.T(32103)): break
 			forums = []
 			for forum,sub in flist:
@@ -409,7 +408,7 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 				threads,pd = self._getSubscriptions(page or 1,callback)
 		except:
 			em = ERROR('ERROR GETTING THREADS')
-			callback(-1,'%s' % em)
+			#callback(-1,'%s' % em)
 			return self.finish(FBData(error=em),donecallback)
 		
 		callback(100,self.T(32052))
@@ -566,7 +565,7 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 					break
 				posts = thread.get('posts')
 				if not posts:
-					callback(-1,'NO POSTS')
+					#callback(-1,'NO POSTS')
 					return self.finish(FBData(error='NO POSTS'),donecallback)
 				total = int(thread.get('total_posts',1))
 				current = len(thread.get('posts',[]))
@@ -590,7 +589,7 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 					ct+=1
 			except:
 				em = ERROR('ERROR GETTING POSTS')
-				callback(-1,'%s' % em)
+				#callback(-1,'%s' % em)
 				return self.finish(FBData(error=em),donecallback)
 			
 			if not callback(80,self.T(32103)): break
@@ -664,7 +663,7 @@ class ForumrunnerForumBrowser(forumbrowser.ForumBrowser):
 					messages = self.client.get_pms(page=1,perpage=50)
 			except:
 				em = ERROR('ERROR GETTING PRIVATE MESSAGES')
-				callback(-1,'%s' % em)
+				#callback(-1,'%s' % em)
 				return self.finish(FBData(error=em),donecallback)
 			pms = []
 			if not callback(80,self.T(32103)): break

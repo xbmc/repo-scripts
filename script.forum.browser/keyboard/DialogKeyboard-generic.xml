@@ -102,6 +102,96 @@
 				<wrapmultiline>true</wrapmultiline>
 				<textcolor>black</textcolor>
 			</control>
+			
+			<control type="group">
+				<posx>11</posx>
+				<posy>68</posy>
+				<control type="group">
+					<visible>StringCompare(Window(10000).Property(ForumBrowser_modKeyboard),1)</visible>
+					<posx>0</posx>
+					<posy>200</posy>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>24</width>
+						<height>24</height>
+						<aspectratio>stretch</aspectratio>
+						<texture  border="3">forum-browser-keyboard/forum-browser-KeyboardKeyNF.png</texture>
+						<visible>!Control.HasFocus(298)</visible>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>24</width>
+						<height>24</height>
+						<aspectratio>stretch</aspectratio>
+						<texture  border="3">forum-browser-keyboard/forum-browser-KeyboardKey.png</texture>
+						<visible>Control.HasFocus(298)</visible>
+					</control>
+					<control type="button" id="298">
+						<description>Contract</description>
+						<posx>4</posx>
+						<posy>4</posy>
+						<width>16</width>
+						<height>16</height>
+						<onleft>298</onleft>
+						<onright>298</onright>
+						<onup>307</onup>
+						<ondown>299</ondown>
+						<texturenofocus>forum-browser-keyboard/forum-browser-scroll-down.png</texturenofocus>
+						<texturefocus>forum-browser-keyboard/forum-browser-scroll-down-focus.png</texturefocus>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font13</font>
+						<focusedcolor>black</focusedcolor>
+						<onclick>SetProperty(ForumBrowser_modKeyboard,0,10000)</onclick>
+						<onclick>Control.SetFocus(299)</onclick>
+					</control>
+				</control>
+				<control type="group">
+					<visible>!StringCompare(Window(10000).Property(ForumBrowser_modKeyboard),1)</visible>
+					<posx>0</posx>
+					<posy>0</posy>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>24</width>
+						<height>24</height>
+						<aspectratio>stretch</aspectratio>
+						<texture border="3">forum-browser-keyboard/forum-browser-KeyboardKeyNF.png</texture>
+						<visible>!Control.HasFocus(299)</visible>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>24</width>
+						<height>24</height>
+						<aspectratio>stretch</aspectratio>
+						<texture  border="3">forum-browser-keyboard/forum-browser-KeyboardKey.png</texture>
+						<visible>Control.HasFocus(299)</visible>
+					</control>
+					<control type="button" id="299">
+						<description>Expand</description>
+						<posx>4</posx>
+						<posy>4</posy>
+						<width>16</width>
+						<height>16</height>
+						<onleft>299</onleft>
+						<onright>299</onright>
+						<onup>298</onup>
+						<ondown>300</ondown>
+						<texturenofocus>forum-browser-keyboard/forum-browser-scroll-up.png</texturenofocus>
+						<texturefocus>forum-browser-keyboard/forum-browser-scroll-up-focus.png</texturefocus>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font13</font>
+						<focusedcolor>black</focusedcolor>
+						<onclick>SetProperty(ForumBrowser_modKeyboard,1,10000)</onclick>
+						<onclick>Control.SetFocus(298)</onclick>
+					</control>
+				</control>
+			</control>
+			
 			<control type="group">
 				<posx>30</posx>
 				<posy>120</posy>
@@ -115,7 +205,7 @@
 					<label>20177</label>
 					<onleft>57</onleft>
 					<onright>48</onright>
-					<onup>307</onup>
+					<onup>299</onup>
 					<ondown>302</ondown>
 					<texturenofocus border="25,25,5,5">forum-browser-keyboard/forum-browser-KeyboardCornerTopNF.png</texturenofocus>
 					<texturefocus border="25,25,5,5">forum-browser-keyboard/forum-browser-KeyboardCornerTop.png</texturefocus>
@@ -832,7 +922,7 @@
 					<onleft>306</onleft>
 					<onright>32</onright>
 					<onup>304</onup>
-					<ondown>300</ondown>
+					<ondown>298</ondown>
 					<textcolor>white</textcolor><focusedcolor>black</focusedcolor>
 				</control>
 				<control type="button" id="32">

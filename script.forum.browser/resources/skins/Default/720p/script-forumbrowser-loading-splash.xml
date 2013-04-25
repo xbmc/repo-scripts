@@ -7,6 +7,14 @@
 		<posy>206</posy>
 	</coordinates>
 	<controls>
+			<control type="image" id="115">
+				<posx>-10</posx>
+				<posy>-10</posy>
+				<width>10</width>
+				<height>10</height>
+				<texture></texture>
+				<visible>Player.Playing + Player.HasVideo + !StringCompare(Window(10000).Property(ForumBrowser_hidePNP),1)</visible>
+			</control>
 			<control type="image">
 				<posx>-20</posx>
 				<posy>-10</posy>

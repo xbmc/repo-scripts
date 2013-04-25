@@ -28,6 +28,10 @@ msgctxt "#32008"
 msgid "Advanced"
 msgstr "Avanzado"
 
+msgctxt "#32011"
+msgid "Dark"
+msgstr "Escuro"
+
 msgctxt "#32012"
 msgid "Light"
 msgstr "Luz"
@@ -40,6 +44,18 @@ msgctxt "#32022"
 msgid "Video"
 msgstr "Vídeo"
 
+msgctxt "#32030"
+msgid "Only When Playing Video"
+msgstr "So durante a reproducción de video"
+
+msgctxt "#32032"
+msgid "Ask Before Interrupting Video"
+msgstr "Preguntar antes de interrupir video"
+
+msgctxt "#32050"
+msgid "ERROR"
+msgstr "Error"
+
 msgctxt "#32051"
 msgid "Options"
 msgstr "Opcións"
@@ -48,13 +64,81 @@ msgctxt "#32052"
 msgid "Done"
 msgstr "Feito"
 
+msgctxt "#32053"
+msgid "Please try again."
+msgstr "Por favor ténteo outra vez."
+
 msgctxt "#32054"
 msgid "Refresh"
 msgstr "Actualizar"
 
+msgctxt "#32101"
+msgid "Opening URL"
+msgstr "Abrindo URL"
+
+msgctxt "#32107"
+msgid "Wating {0} seconds"
+msgstr "Esperando {0} segundos"
+
+msgctxt "#32114"
+msgid "Go to..."
+msgstr "ir a..."
+
+msgctxt "#32115"
+msgid "Go to page number"
+msgstr "Ir a páxina número"
+
+msgctxt "#32116"
+msgid "Enter page number"
+msgstr "Introduce un número de páxina."
+
+msgctxt "#32120"
+msgid "Set Title"
+msgstr "Escriba o título"
+
+msgctxt "#32122"
+msgid "Delete Line"
+msgstr "Elimina a liña"
+
+msgctxt "#32123"
+msgid "Enter Text"
+msgstr "Introducir Texto"
+
+msgctxt "#32124"
+msgid "Edit Line"
+msgstr "Edita a liña"
+
+msgctxt "#32125"
+msgid "Enter Post Title"
+msgstr "Escribe titulo do post."
+
+msgctxt "#32129"
+msgid "Save Image"
+msgstr "Garda a Imaxen"
+
 msgctxt "#32141"
 msgid "Delete"
 msgstr "Eliminar"
+
+msgctxt "#32162"
+msgid "Last Post By:"
+msgstr "Última entrada de :"
+
+msgctxt "#32164"
+msgid "FORUM"
+msgstr "Foro"
+
+msgctxt "#32170"
+msgid "Forums"
+msgstr "Foros"
+
+msgctxt "#32172"
+msgid "No Description"
+msgstr "Sen descripción"
+
+msgctxt "#32173"
+msgid "Sub-Forum"
+msgstr "Sub-Foro"
 
 msgctxt "#32175"
 msgid "Subscriptions"
@@ -72,13 +156,53 @@ msgctxt "#32205"
 msgid "Downloading"
 msgstr "Descargando"
 
+msgctxt "#32206"
+msgid "Downloading {0}"
+msgstr "Descargando"
+
+msgctxt "#32207"
+msgid "Turn On Notifications"
+msgstr "Activar as notificacións"
+
+msgctxt "#32208"
+msgid "Turn Off Notifications"
+msgstr "Desactivar as notificacións"
+
+msgctxt "#32209"
+msgid "Manage Notifications"
+msgstr "Administar as notificacións"
+
+msgctxt "#32220"
+msgid "Waiting..."
+msgstr "Agardando..."
+
+msgctxt "#32222"
+msgid "Add A Forum"
+msgstr "Engadir un foro"
+
 msgctxt "#32232"
 msgid "Edit"
 msgstr "Editar"
 
+msgctxt "#32238"
+msgid "Password Encryption Type"
+msgstr "Password de tipo encriptado"
+
+msgctxt "#32239"
+msgid "Encryption Key File (Optional)"
+msgstr "Ficheiro de clave encriptada (opcional)"
+
+msgctxt "#32242"
+msgid "Unsubscribe From Forum"
+msgstr "Cancelar subscripción ó foro"
+
 msgctxt "#32244"
 msgid "Help"
 msgstr "Axuda"
+
+msgctxt "#32249"
+msgid "Reply/Forward"
+msgstr "Contestar/Seguinte"
 
 msgctxt "#32265"
 msgid "Yes"
@@ -115,6 +239,10 @@ msgstr "Descrición"
 msgctxt "#32291"
 msgid "Logo"
 msgstr "Logo"
+
+msgctxt "#32304"
+msgid "Success"
+msgstr "Correcto"
 
 msgctxt "#32348"
 msgid "Unknown"
@@ -188,6 +316,10 @@ msgctxt "#32904"
 msgid "Subscriptions"
 msgstr "Subscricións"
 
+msgctxt "#32905"
+msgid "Forums"
+msgstr "Foros"
+
 msgctxt "#32913"
 msgid "OK"
 msgstr "Aceptar"
@@ -199,6 +331,10 @@ msgstr "Nova busca"
 msgctxt "#32916"
 msgid "Search"
 msgstr "Buscar"
+
+msgctxt "#32921"
+msgid "Set Title"
+msgstr "Escriba o título"
 
 msgctxt "#32931"
 msgid "Help"

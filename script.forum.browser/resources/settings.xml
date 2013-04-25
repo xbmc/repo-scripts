@@ -17,8 +17,7 @@
     <setting id="use_keyboard_mod" type="bool" label="32237" subsetting="true" default="false"  enable="eq(-1,true)"/>
     <setting id="enable_ssl" type="bool" label="32235" default="false" visible="false"/>
     <setting id="save_logos" type="bool" label="32245" default="false" />
-    <setting id="skin" type="enum" label="32005" lvalues="32012|32011" default="0" />
-    <!-- setting id="skin" type="enum" label="32005" lvalues="32012|32011|32022" default="0" / -->
+    <setting id="skin" type="enum" label="32005" lvalues="32012|32011|32022" default="0" />
     <setting id="show_media_indicators" type="bool" label="32044" default="true" />
     <setting id="smi_count_link_images" type="bool" label="32045" subsetting="true" default="false" enable="eq(-1,true)"/>
     <setting label="32244" type="action" action="RunScript(script.forum.browser,settingshelp_general)"/>

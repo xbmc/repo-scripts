@@ -421,7 +421,7 @@ class BBMessageConverter(MessageConverter):
 		self.boldFilter = re.compile('\[(/?)b\]')
 		self.italicsFilter = re.compile('\[(/?)i\]')
 		self.indentFilter = re.compile('\[indent\](.*?)\[/indent\](?is)')
-		self.sizeTagFilter = re.compile('\[/?size(?:=\w+)?\](?i)')
+		self.sizeTagFilter = re.compile('\[/?size(?:=[\w-]+)?\](?i)')
 		self.numberedFilter = re.compile('\[list=\d\](.*?)\[/list\](?i)')
 		self.bulletedFilter = re.compile('\[list\](.*?)\[/list\](?i)')
 		self.kissingTagFilter = re.compile('(\[/\w+\])(\[\w+\])')

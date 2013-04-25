@@ -52,7 +52,7 @@
 				<texture border="20">forum-browser-dark-white-box.png</texture>
 			</control>
 			
-			<control type="label" id="103">
+			<control type="label">
 				<description>textarea</description>
 				<posx>20</posx>
 				<posy>30</posy>
@@ -62,7 +62,7 @@
 				<textcolor>black</textcolor>
 				<aligny>center</aligny>
 				<align>center</align>
-				<label>[B]$ADDON[script.forum.browser 32920][/B]</label>
+				<label>[B]$INFO[Window.Property(posttype)][/B]</label>
 				<wrapmultiline>true</wrapmultiline>
 			</control>
 			<control type="button" id="110">
@@ -103,7 +103,7 @@
 				<focusedcolor>white</focusedcolor>
 				<font>ForumBrowser-font13</font>
 				<align>center</align>
-				<label>$ADDON[script.forum.browser 32921]</label>
+				<label>[B]$INFO[Window.Property(toggle_title)][/B]</label>
 			</control>
 			
 			<control type="image">

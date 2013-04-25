@@ -53,7 +53,7 @@
 			</control>
 
 			<control type="label" id="104">
-				<description>Topic</description>
+				<description>Caption</description>
 				<posx>235</posx>
 				<posy>14</posy>
 				<width>600</width>
@@ -63,6 +63,7 @@
 				<aligny>center</aligny>
 				<align>center</align>
 				<wrapmultiline>true</wrapmultiline>
+				<label>[B]$INFO[Window.Property(caption)][/B]</label>
 			</control>
 			
 			<control type="button" id="110">
@@ -90,6 +91,7 @@
 				<scroll>true</scroll>
 				<textcolor>FF000000</textcolor>
 				<visible>true</visible>
+				<label>$INFO[Window.Property(text)]</label>
 			</control>
 
 			<control type="scrollbar" id="123">

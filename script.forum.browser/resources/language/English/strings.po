@@ -1814,6 +1814,14 @@ msgctxt "#32532"
 msgid "IMAGES"
 msgstr ""
 
+msgctxt "#32533"
+msgid "HELP TOPICS"
+msgstr ""
+
+msgctxt "#32534"
+msgid "SHOW HELP"
+msgstr ""
+
 #empty strings from id 32524 to 32899
 
 #. Previous
@@ -1895,10 +1903,6 @@ msgstr ""
 
 msgctxt "#32919"
 msgid "Search User"
-msgstr ""
-
-msgctxt "#32920"
-msgid "Post Reply"
 msgstr ""
 
 msgctxt "#32921"

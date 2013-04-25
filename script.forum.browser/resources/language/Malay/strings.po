@@ -16,6 +16,10 @@ msgstr ""
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32000"
+msgid "General"
+msgstr "Am"
+
 msgctxt "#32003"
 msgid "Language"
 msgstr "Bahasa"
@@ -47,6 +51,10 @@ msgstr "Ya"
 msgctxt "#32348"
 msgid "Unknown"
 msgstr "Tidak Diketahui"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Status"
 
 msgctxt "#32371"
 msgid "Search"

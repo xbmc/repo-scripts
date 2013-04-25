@@ -7,8 +7,8 @@ CACHE_PATH = None
 
 def copyKeyboardModImages(skinPath):
 	dst = os.path.join(skinPath,'media','forum-browser-keyboard')
-	if os.path.exists(dst): return
-	os.makedirs(dst)
+	#if os.path.exists(dst): return
+	if not os.path.exists(dst): os.makedirs(dst)
 	src = os.path.join(xbmc.translatePath(__addon__.getAddonInfo('path')),'keyboard','images')
 	for f in os.listdir(src):
 		s = os.path.join(src,f)

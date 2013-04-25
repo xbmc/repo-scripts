@@ -99,7 +99,7 @@
 				<posy>0</posy>
 				<width>80</width>
 				<height>80</height>
-				<texture fallback="forum-browser-video-avatar-none.png">$INFO[Window.Property(avatar)]</texture>
+				<texture fallback="../../Default/media/forum-browser-video-avatar-none.png">$INFO[Window.Property(avatar)]</texture>
 			</control>
 			<control type="label" id="105">
 				<description>Date</description>
@@ -216,9 +216,9 @@
 		
 		<control type="image">
 			<description>Menu Indicator Background</description>
-			<posx>-10</posx>
+			<posx>10</posx>
 			<posy>10</posy>
-			<width>310</width>
+			<width>290</width>
 			<height>30</height>
 			<texture border="10">forum-browser-video-box-header.png</texture>
 			<visible>Control.IsVisible(115)</visible>
@@ -232,19 +232,19 @@
 			<height>22</height>
 			<control type="image">
 				<description>Menu Indicator Background</description>
-				<posx>-320</posx>
+				<posx>-300</posx>
 				<posy>-4</posy>
-				<width>1280</width>
+				<width>1260</width>
 				<height>60</height>
 				<texture border="10">forum-browser-video-box-header.png</texture>
 			</control>
 			<control type="image">
-				<description>Menu Indicator Background</description>
-				<posx>-320</posx>
+				<description>Divider</description>
+				<posx>-12</posx>
 				<posy>-4</posy>
-				<width>310</width>
-				<height>30</height>
-				<texture flipy="true" border="10">forum-browser-video-box-header.png</texture>
+				<width>2</width>
+				<height>60</height>
+				<texture>forum-browser-video-white.png</texture>
 			</control>
 			<control type="image">
 				<description>Avatar</description>
@@ -252,7 +252,7 @@
 				<posy>3</posy>
 				<width>44</width>
 				<height>44</height>
-				<texture fallback="forum-browser-video-avatar-none.png">$INFO[Window.Property(avatar)]</texture>
+				<texture fallback="../../Default/media/forum-browser-video-avatar-none.png">$INFO[Window.Property(avatar)]</texture>
 			</control>
 			<control type="image">
 				<description>Logged In</description>
@@ -480,7 +480,7 @@
 				<posy>0</posy>
 				<width>1280</width>
 				<height>150</height>
-				<texture border="10">forum-browser-video-box.png</texture>
+				<texture border="10">forum-browser-video-box-light.png</texture>
 			</control>
 			<control type="list" id="150">
 				<posx>10</posx>
@@ -498,7 +498,7 @@
 						<posy>2</posy>
 						<width>120</width>
 						<height>120</height>
-						<texture fallback="forum-browser-dark-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<texture fallback="forum-browser-video-broken-image.png">$INFO[ListItem.Icon]</texture>
 						<visible>true</visible>
 						<colordiffuse>77FFFFFF</colordiffuse>
 						<aspectratio>keep</aspectratio>
@@ -519,11 +519,13 @@
 				</itemlayout>
 				<focusedlayout width="150">
 					<control type="image">
-						<posx>15</posx>
-						<posy>2</posy>
-						<width>120</width>
-						<height>120</height>
-						<texture fallback="forum-browser-dark-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<posx>13</posx>
+						<posy>0</posy>
+						<width>124</width>
+						<height>124</height>
+						<texture fallback="forum-browser-video-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<bordertexture border="6">forum-browser-video-box-white.png</bordertexture>
+      					<bordersize>2</bordersize>
 						<visible>true</visible>
 						<colordiffuse>FFFFFFFF</colordiffuse>
 						<aspectratio>keep</aspectratio>
@@ -555,7 +557,7 @@
 			<height>500</height>
 
 			<control type="image">
-				<description>Buttons Background</description>
+				<description>Links Background</description>
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>300</width>
@@ -566,7 +568,7 @@
 				<posx>10</posx>
 				<posy>2</posy>
 				<width>290</width>
-				<height>720</height>
+				<height>486</height>
 				<onleft>127</onleft>
 				<onright>127</onright>
 				<onup>148</onup>

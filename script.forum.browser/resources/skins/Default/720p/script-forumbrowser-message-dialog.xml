@@ -1,5 +1,5 @@
 <window>
-	<defaultcontrol>123</defaultcontrol>
+	<defaultcontrol>112</defaultcontrol>
 	<zorder>2</zorder>
 	<coordinates>
 		<system>1</system>
@@ -18,15 +18,51 @@
 				<texture border="30">forum-browser-white-box.png</texture>
 				<colordiffuse>AA000000</colordiffuse>
 			</control>
-			<control type="image" id="250">
-				<description>Large Back</description>
+			<control type="group">
 				<posx>0</posx>
 				<posy>-6</posy>
-				<width>800</width>
-				<height>452</height>
-				<texture border="20">forum-browser-white-boxr.png</texture>
-				<colordiffuse>FF444444</colordiffuse>
+				<control type="image">
+					<description>Large Back</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>452</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FF444444</colordiffuse>
+					<visible>StringCompare(Window.Property(error),)</visible>
+				</control>
+				<control type="image">
+					<description>Large Back</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>452</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FFFF0000</colordiffuse>
+					<visible>StringCompare(Window.Property(error),error)</visible>
+				</control>
+				<control type="image">
+					<description>Large Back</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>452</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FFFFFF00</colordiffuse>
+					<visible>StringCompare(Window.Property(error),warning)</visible>
+				</control>
+				<control type="image">
+					<description>Large Back</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>452</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FF00FF00</colordiffuse>
+					<visible>StringCompare(Window.Property(error),success)</visible>
+				</control>
 			</control>
+			
 			<control type="image">
 				<description>Large Back</description>
 				<posx>10</posx>
@@ -52,7 +88,7 @@
 				<texture border="20">forum-browser-white-boxr.png</texture>
 			</control>
 
-			<control type="label" id="104">
+			<control type="label">
 				<description>Caption</description>
 				<posx>35</posx>
 				<posy>14</posy>
@@ -63,9 +99,10 @@
 				<aligny>center</aligny>
 				<align>left</align>
 				<wrapmultiline>true</wrapmultiline>
+				<label>$INFO[Window.Property(caption)]</label>
 			</control>
 			
-			<control type="button" id="110">
+			<control type="button">
 				<description>Close Button</description>
 				<posx>750</posx>
 				<posy>15</posy>
@@ -77,7 +114,7 @@
 				<onclick>PreviousMenu</onclick>
 			</control>
 			
-			<control type="textbox" id="122">
+			<control type="textbox">
 				<posx>30</posx>
 				<posy>97</posy>
 				<width>725</width>
@@ -88,26 +125,7 @@
 				<textcolor>FF000000</textcolor>
 				<visible>true</visible>
 				<pagecontrol>123</pagecontrol>
-			</control>
-			<control type="scrollbar" id="123">
-				<description>Message Scrollbar</description>
-				<posx>774</posx>
-				<posy>97</posy>
-				<width>4</width>
-				<height>326</height>
-				<onleft>111</onleft>
-				<onright>111</onright>
-				<onup>123</onup>
-				<ondown>123</ondown>
-				<texturesliderbackground>-</texturesliderbackground>
-				<texturesliderbar border="1">forum-browser-panel-full.png</texturesliderbar>
-				<texturesliderbarfocus border="1">forum-browser-black-square.png</texturesliderbarfocus>
-				<textureslidernib>-</textureslidernib>
-				<textureslidernibfocus>-</textureslidernibfocus>
-				<orientation>vertical</orientation>
-				<showonepage>false</showonepage>
-				<colordiffuse>FF555555</colordiffuse>
-				<!-- visible>!Control.IsVisible(112)</visible -->
+				<label>$INFO[Window.Property(message)]</label>
 			</control>
 			
 			<control type="group" id="112">
@@ -118,6 +136,7 @@
 					<height>60</height>
 					<texture border="30">forum-browser-white-box.png</texture>
 					<colordiffuse>AA000000</colordiffuse>
+					<visible>StringCompare(Window.Property(hidebutton),)</visible>
 				</control>
 				<control type="button" id="111">
 					<description>Ok Button</description>
@@ -129,7 +148,7 @@
 					<onright>123</onright>
 					<onup>123</onup>
 					<ondown>123</ondown>
-					<visible>true</visible>
+					<visible>StringCompare(Window.Property(hidebutton),)</visible>
 					<font>font13</font>
 					<align>center</align>
 					<label>$ADDON[script.forum.browser 32913]</label>
@@ -139,6 +158,25 @@
 					<disabledcolor>60000000</disabledcolor>
 					<focusedcolor>white</focusedcolor>
 					<onclick>PreviousMenu</onclick>
+				</control>
+				<control type="scrollbar" id="123">
+					<description>Message Scrollbar</description>
+					<posx>774</posx>
+					<posy>97</posy>
+					<width>4</width>
+					<height>326</height>
+					<onleft>111</onleft>
+					<onright>111</onright>
+					<onup>123</onup>
+					<ondown>123</ondown>
+					<texturesliderbackground>-</texturesliderbackground>
+					<texturesliderbar border="1">forum-browser-panel-full.png</texturesliderbar>
+					<texturesliderbarfocus border="1">forum-browser-black-square.png</texturesliderbarfocus>
+					<textureslidernib>-</textureslidernib>
+					<textureslidernibfocus>-</textureslidernibfocus>
+					<orientation>vertical</orientation>
+					<showonepage>false</showonepage>
+					<colordiffuse>FF555555</colordiffuse>
 				</control>
 			</control>
 			

@@ -2,6 +2,7 @@ import sys, re, time, os, urllib2
 import forumbrowser, texttransform
 from forumbrowser import FBData
 from lib.util import LOG, ERROR, __addon__, T
+from lib import asyncconnections
 
 import locale
 loc = locale.getdefaultlocale()
@@ -446,6 +447,10 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 			
 	def checkBrowser(self):
 		if not self.mechanize:
+			from webviewer.mechanize import _urllib2_fork
+			def http_open(self, req):
+				return self.do_open(asyncconnections.Connection, req)
+			_urllib2_fork.HTTPHandler.http_open = http_open
 			from webviewer import mechanize #@UnresolvedImport
 			import xbmc
 			cookiesPath = os.path.join(xbmc.translatePath(__addon__.getAddonInfo('profile')),'cache','cookies')
@@ -726,7 +731,9 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 				data = self.browserReadURL(url,callback)
 		else:
 			if not callback(5,T(32101)): return ''
-			req = urllib2.urlopen(url)
+			h = asyncconnections.Handler()
+			o = urllib2.build_opener(h)
+			req = o.open(url)
 			self.lastURL = req.geturl()
 			encoding = req.info().get('content-type').split('charset=')[-1]
 			if not callback(50,T(32102)): return ''
@@ -907,7 +914,7 @@ class ScraperForumBrowser(forumbrowser.ForumBrowser):
 		
 	def getPMCSVFromForm(self,url):
 		res = self.browserOpen(url)
-		html = res.read()
+		res.read()
 		self.selectForm(self.forms.get('private_messages_csv_action'))
 		res = self.browserSubmit()
 		html = res.read()

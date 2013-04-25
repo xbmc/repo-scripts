@@ -60,9 +60,6 @@ class _AsyncHTTPResponse(httplib.HTTPResponse):
 			resetStopRequest()
 
 AsyncHTTPResponse = _AsyncHTTPResponse
-if getSetting('disable_async_connections',False):
-	LOG('Asynchronous connections: Disabled')
-	AsyncHTTPResponse = httplib.HTTPResponse
 
 class Connection(httplib.HTTPConnection):
 	response_class = AsyncHTTPResponse
@@ -156,8 +153,18 @@ def create_connection(address, timeout=socket._GLOBAL_DEFAULT_TIMEOUT,
 		setStoppable(False)
 		resetStopRequest()
 		
-if not getSetting('disable_async_connections',False):
-	socket.create_connection = create_connection
+def setEnabled(enable=True):
+	if not enable:
+		LOG('Asynchronous connections: Disabled')
+		global AsyncHTTPResponse
+		AsyncHTTPResponse = httplib.HTTPResponse
+		
+		global Handler
+		Handler = urllib2.HTTPHandler
+		
+	if enable:
+		LOG('Asynchronous connections: Enabled')
+		socket.create_connection = create_connection
 
 # h = Handler()
 # o = urllib2.build_opener(h)

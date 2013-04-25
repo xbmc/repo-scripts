@@ -4,7 +4,7 @@ Special thanks to John Hanselman for all his testing which helped make Forum Bro
 
 TODO:
  Short Term:
-  Reset logged in indicator when returning to windows
+  Back on video also goes back a window - see what I can do (and see if other controls are affected)
   
  Long Term:
   Check on optional import behavior
@@ -29,11 +29,74 @@ TODO:
   Skip forward on remote causes XBMC dialog
  
  Awaiting Future Developments:
-  Show more extra info in tapatalk (ie followers) - TTv4
+  Show more extra info in tapatalk (e.g. followers) - TTv4
 
-Current Version : 2.0.0
+Current Version : 2.1.0
 
-*** 2.0.0 ***
+*** 2.1.0 *** 04-24-2013 ***
+
+Created custom skins and handling for Yes/No style dialogs
+When editing a forum logo in the forum settings dialog, now does nothing if you exit the Edit/Browse dialog instead of choosing
+Added text dialog skin for the Video skin (eg. the dialog where you view the changelog)
+Added help dialog skin for the Video skin
+Updated translations
+
+*** 2.0.6 ***
+
+Fixed duplicate error message dialogs
+Fixed a bug causing some signatures not to show
+Tapatalk: Improved progress bar updates on posts view
+Video Skin: Moved progress bar to a slide-out at the bottom of the screen
+Video Skin: Made previous and next page buttons appear disabled (instead of hidden) when no prev/next page
+Added a button on the keyboard mod skins that toggles the large/small view
+
+*** 2.0.5 ***
+
+Moved the base windows classes to their own module
+Moved XBMC constants to their own module
+Logged in indicator now refreshes when returning to a window
+Page menu now uses FB dialog instead of XBMC dialog
+Fixed skin error with Video skin for missing default avatar file
+Moved some of the Video skins lists into groups to get rid of the "Control BLAH in window BLAH has been asked to focus, but it can't" log messages
+In Video skin, made back/edit close the slide out menu (if open) to match rest of skin behavior
+In Video skin, in the full message view, fixed the links list so that it doesn't overflow the background
+In posts view in Video skin, selected post now better highlighted. Changed own post highlight color
+
+*** 2.0.4 ***
+
+Fixed a bug where FB fails on fresh installs
+Shiny new progress bar on Video skin. Moved stop button away from progress bar
+Added asynchronous connections to Parser Browser
+
+*** 2.0.3 ***
+
+Made logged-in indicator on post editor in Video skin work
+Extended button decorations to all skins in Video skin and made it look better
+Added Message dialog skin to Video skin
+When adding a new forum or editing a forum, setting the description now brings up the large keyboard if installed
+The forum logo in forum settings now shows the header color as a background
+Added forum settings skin to Video skin
+Post editor now opens as a window instead of as a dialog, this lowers CPU usage (especially when video is playing) because it stops it from having to render both windows
+Fixed a bug causing the notifications service to fail
+
+*** 2.0.2 ***
+
+Fixed a bug where settings/signals file could become permanently locked causing failure to open Forum Browser
+Fixed a bug where '[size]' tags that included a '-' in the tag (for example [size=x-large]) were not parsed out
+Added post editor skin to Video skin
+Added forums manager skin to Video skin
+Added some elements to buttons on the Video skin forums window and forums manager
+
+*** 2.0.1 ***
+
+Fixed: When viewing a forum that was selected in 'Subscriptions' the context menu would show 'Unsubscribe from forum: ' without the forum name.
+In the image viewer, moving left and right now navigates the images instead of navigating the buttons and highlights the button for the direction pressed
+Re-enable the Video skin in settings
+Fix the image viewer window for the Video skin
+Generic select dialogs now have a custom skin for all skins and move out of the way of video
+Various video skin tweaks
+
+*** 2.0.0 *** 04-14-2013 ***
 
 Added translations from translations project
 

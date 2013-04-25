@@ -195,6 +195,14 @@
 							<posy>1</posy>
 							<width>150</width>
 							<height>36</height>
+							<aspectratio>stretch</aspectratio>
+							<texture>$INFO[ListItem.Property(header_color)]</texture>
+						</control>
+						<control type="image">
+							<posx>190</posx>
+							<posy>1</posy>
+							<width>150</width>
+							<height>36</height>
 							<aspectratio align="right">keep</aspectratio>
 							<texture>$INFO[ListItem.Property(value)]</texture>
 						</control>	
@@ -326,6 +334,14 @@
 								<textcolor>white</textcolor>
 								<align>left</align>
 								<label>[B]$INFO[ListItem.Label][/B]</label>
+							</control>
+							<control type="image">
+								<posx>190</posx>
+								<posy>1</posy>
+								<width>150</width>
+								<height>36</height>
+								<aspectratio>stretch</aspectratio>
+								<texture>$INFO[ListItem.Property(header_color)]</texture>
 							</control>
 							<control type="image">
 								<posx>190</posx>

@@ -1748,6 +1748,14 @@ msgctxt "#32523"
 msgid "Select Skin"
 msgstr "Επιλογή Κελύφους"
 
+msgctxt "#32524"
+msgid "Disable Asynchronous Connections"
+msgstr "Απενεργοποίηση Ασύγχρονων Συνδέσεων"
+
+msgctxt "#32525"
+msgid "Reverse Sort Search Results"
+msgstr "Αντίστροφη Ταξινόμηση Αποτελεσμάτων Αναζήτησης"
+
 msgctxt "#32900"
 msgid "Prev"
 msgstr "Προηγ."
@@ -1827,10 +1835,6 @@ msgstr "Αναζήτηση Θεμάτων"
 msgctxt "#32919"
 msgid "Search User"
 msgstr "Αναζήτηση Χρήστη"
-
-msgctxt "#32920"
-msgid "Post Reply"
-msgstr "Ανάρτηση Απάντησης"
 
 msgctxt "#32921"
 msgid "Set Title"

@@ -79,7 +79,7 @@
 				<aligny>center</aligny>
 				<animation effect="fade" start="0" end="100" time="200" delay="500">WindowOpen</animation>
 				<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
-				<animation effect="slide" end="0,-200" time="200" delay="500" condition="StringCompare(Window(10000).Property(ForumBrowser_modKeyboard),1)">Conditional</animation>
+				<animation effect="slide" end="0,-200" time="0" condition="StringCompare(Window(10000).Property(ForumBrowser_modKeyboard),1)">Conditional</animation>
 			</control>
 			<control type="label" id="310">
 				<description>Edit Text</description>
@@ -241,7 +241,7 @@
 					<height>48</height>
 					<onleft>56</onleft>
 					<onright>48</onright>
-					<onup>304</onup>
+					<onup>298</onup>
 					<ondown>79</ondown>
 					<texturenofocus border="10">key-digit-nofocus.png</texturenofocus>
 					<texturefocus border="10">key-focus.png</texturefocus>
@@ -761,7 +761,7 @@
 					<onleft>305</onleft>
 					<onright>302</onright>
 					<onup>76</onup>
-					<ondown>304</ondown>
+					<ondown>298</ondown>
 					<texturenofocus border="10">key-special-nofocus.png</texturenofocus>
 					<texturefocus border="10">key-focus.png</texturefocus>
 					<align>center</align>
@@ -808,11 +808,11 @@
 					<description>SPACE button</description>
 					<posx>350</posx>
 					<posy>200</posy>
-					<width>318</width>
+					<width>268</width>
 					<height>48</height>
 					<label>20182</label>
 					<onleft>307</onleft>
-					<onright>304</onright>
+					<onright>298</onright>
 					<onup>67</onup>
 					<ondown>51</ondown>
 					<texturenofocus border="10">key-special-nofocus.png</texturenofocus>
@@ -821,6 +821,62 @@
 					<aligny>center</aligny>
 					<font>font-20</font>
 				</control>
+				
+				<control type="group">
+				<posx>620</posx>
+				<posy>200</posy>
+				<control type="group">
+					<visible>StringCompare(Window(10000).Property(ForumBrowser_modKeyboard),1)</visible>
+					<posx>0</posx>
+					<posy>0</posy>
+					<control type="button" id="298">
+						<description>Contract</description>
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<onleft>32</onleft>
+						<onright>299</onright>
+						<onup>299</onup>
+						<ondown>299</ondown>
+						<texturenofocus border="10">key-special-nofocus.png</texturenofocus>
+						<texturefocus border="10">key-focus.png</texturefocus>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font-20</font>
+						<focusedcolor>black</focusedcolor>
+						<onclick>SetProperty(ForumBrowser_modKeyboard,0,10000)</onclick>
+						<onclick>Control.SetFocus(299)</onclick>
+						<label>][</label>
+					</control>
+				</control>
+				<control type="group">
+					<visible>!StringCompare(Window(10000).Property(ForumBrowser_modKeyboard),1)</visible>
+					<posx>0</posx>
+					<posy>0</posy>
+					<control type="button" id="299">
+						<description>Expand</description>
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>48</width>
+						<height>48</height>
+						<onleft>298</onleft>
+						<onright>304</onright>
+						<onup>306</onup>
+						<ondown>57</ondown>
+						<texturenofocus border="10">key-special-nofocus.png</texturenofocus>
+						<texturefocus border="10">key-focus.png</texturefocus>
+						<align>center</align>
+						<aligny>center</aligny>
+						<font>font-20</font>
+						<focusedcolor>black</focusedcolor>
+						<onclick>SetProperty(ForumBrowser_modKeyboard,1,10000)</onclick>
+						<onclick>Control.SetFocus(298)</onclick>
+						<label>[-]</label>
+					</control>
+				</control>
+			</control>
+			
 				<control type="togglebutton" id="304">
 					<description>Symbols button</description>
 					<posx>670</posx>
@@ -828,7 +884,7 @@
 					<width>148</width>
 					<height>48</height>
 					<label>20180</label>
-					<onleft>32</onleft>
+					<onleft>299</onleft>
 					<onright>307</onright>
 					<onup>302</onup>
 					<ondown>8</ondown>

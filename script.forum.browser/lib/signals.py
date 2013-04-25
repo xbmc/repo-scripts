@@ -82,33 +82,24 @@ class SignalHub(xbmc.Monitor): # @UndefinedVariable
 					continue
 		
 def clearSignals():
-	f = open(SIGNAL_CACHE_PATH,'w')
-	f.write('')
-	f.close()
+	with open(SIGNAL_CACHE_PATH,'w') as f:
+		f.write('')
 	
 def getSignals():
-	lock = filelock.FileLock(SIGNAL_CACHE_PATH, timeout=5,delay=0.1)
-	lock.acquire()
-	f = open(SIGNAL_CACHE_PATH,'r+')
-	signals = f.read()
-	f.truncate(0)
-	f.close()
+	with filelock.FileLock(SIGNAL_CACHE_PATH, timeout=5,delay=0.1):
+		with open(SIGNAL_CACHE_PATH,'r+') as f:
+			signals = f.read()
+			f.truncate(0)
 	if not signals: return []
 	return signals.split('\n')
-	lock.release()
-	del lock
 
 def addSignal(signal):
 	signals = getSignals()
 	signals.append(signal)
 	
-	lock = filelock.FileLock(SIGNAL_CACHE_PATH, timeout=5, delay=0.1)
-	lock.acquire()
-	f = open(SIGNAL_CACHE_PATH,'w')
-	f.write('\n'.join(signals))
-	f.close()
-	lock.release()
-	del lock
+	with filelock.FileLock(SIGNAL_CACHE_PATH, timeout=5, delay=0.1):
+		with open(SIGNAL_CACHE_PATH,'w') as f:
+			f.write('\n'.join(signals))
 	
 def sendSignal(signal,data=''):
 	addSignal(signal + ':' + str(data))
