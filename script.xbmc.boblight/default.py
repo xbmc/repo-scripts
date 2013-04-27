@@ -46,16 +46,23 @@ settings       = settings()
 class MyPlayer( xbmc.Player ):
   def __init__( self, *args, **kwargs ):
     xbmc.Player.__init__( self )
+    self.playing = False
     log('MyPlayer - init')
         
   def onPlayBackStopped( self ):
+    self.playing = False
     myPlayerChanged( 'stop' )
   
   def onPlayBackEnded( self ):
+    self.playing = False
     myPlayerChanged( 'stop' )     
   
   def onPlayBackStarted( self ):
+    self.playing = True
     myPlayerChanged( 'start' )
+  
+  def isPlaying( self ):
+    return self.playing
 
 class MyMonitor( xbmc.Monitor ):
   def __init__( self, *args, **kwargs ):
@@ -181,8 +188,7 @@ def run_boblight():
           
         if not settings.staticBobActive:
           capture.waitForCaptureStateChangeEvent(1000)
-          if capture.getCaptureState() == xbmc.CAPTURE_STATE_DONE:
-            bob.bob_set_priority(128)
+          if capture.getCaptureState() == xbmc.CAPTURE_STATE_DONE and player_monitor.isPlaying():
             width = capture.getWidth();
             height = capture.getHeight();
             pixels = capture.getImage();
@@ -195,7 +201,8 @@ def run_boblight():
                 rgb[1] = pixels[row + x * 4 + 1]
                 rgb[2] = pixels[row + x * 4]
                 bob.bob_addpixelxy(x, y, byref(rgb))
-            
+
+            bob.bob_set_priority(128)
             if not bob.bob_sendrgb():
               log("error sending values: %s" % bob.bob_geterror())
               return   

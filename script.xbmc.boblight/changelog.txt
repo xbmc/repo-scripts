@@ -1,3 +1,6 @@
+2.0.4
+-  [fix] - race condition which could lead to boblight turn on after movie stop if static light is not enabled
+
 2.0.3
 - [add] - option for disabling/enabling the initial color blink
 - [add] - option for disabling/enabling any user notifications (connection lost and so on)

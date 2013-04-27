@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.boblight" name="XBMC Boblight" version="2.0.3" provider-name="bobo1on1, Memphiz">
+<addon id="script.xbmc.boblight" name="XBMC Boblight" version="2.0.4" provider-name="bobo1on1|Memphiz">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -8,5 +8,9 @@
     <summary lang="en">XBMC output to boblight.</summary>
     <description lang="en">XBMC output to boblight http://code.google.com/p/boblight/</description>
     <platform>all</platform>
+	<website>http://code.google.com/p/boblight/</website>
+	<source>https://github.com/bobo1on1/script.xbmc.boblight</source>
+	<forum>http://forum.xbmc.org/showthread.php?tid=116331</forum>
+	<email></email>    
   </extension>
 </addon>
