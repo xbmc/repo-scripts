@@ -16,6 +16,10 @@ msgstr ""
 "Language: sq\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#30006"
+msgid "Now"
+msgstr "Tani"
+
 msgctxt "#30008"
 msgid "Cancel"
 msgstr "Anulo"
@@ -24,9 +28,21 @@ msgctxt "#30100"
 msgid "General"
 msgstr "I përgjithsëm"
 
+msgctxt "#30101"
+msgid "Source"
+msgstr "Burimi"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Njoftimet"
+
 msgctxt "#30303"
 msgid "Cancel"
 msgstr "Anulo"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Kanalet"
 
 msgctxt "#30308"
 msgid "Quit"

@@ -20,6 +20,10 @@ msgctxt "#30008"
 msgid "Cancel"
 msgstr "Batal"
 
+msgctxt "#30100"
+msgid "General"
+msgstr "Am"
+
 msgctxt "#30303"
 msgid "Cancel"
 msgstr "Batal"

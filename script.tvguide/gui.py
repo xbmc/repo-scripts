@@ -716,9 +716,10 @@ class TVGuide(xbmcgui.WindowXML):
     def isSourceInitializationCancelled(self):
         return xbmc.abortRequested or self.isClosing
 
-    def onSourceInitialized(self):
-        self.notification = Notification(self.database, ADDON.getAddonInfo('path'))
-        self.onRedrawEPG(0, self.viewStartDate)
+    def onSourceInitialized(self, success):
+        if success:
+            self.notification = Notification(self.database, ADDON.getAddonInfo('path'))
+            self.onRedrawEPG(0, self.viewStartDate)
 
     def onSourceProgressUpdate(self, percentageComplete):
         control = self.getControl(self.C_MAIN_LOADING_PROGRESS)

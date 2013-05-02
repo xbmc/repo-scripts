@@ -32,6 +32,10 @@ msgctxt "#30307"
 msgid "Channels"
 msgstr "Kênh"
 
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Thoát"
+
 msgctxt "#30502"
 msgid "Save"
 msgstr "Lưu"
@@ -39,6 +43,10 @@ msgstr "Lưu"
 msgctxt "#30503"
 msgid "Cancel"
 msgstr "Hủy"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Mục ưa thích"
 
 msgctxt "#30605"
 msgid "Save"

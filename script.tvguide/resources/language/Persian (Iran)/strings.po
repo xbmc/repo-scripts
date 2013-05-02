@@ -47,3 +47,7 @@ msgstr "ذخیره"
 msgctxt "#30606"
 msgid "Cancel"
 msgstr "لغو"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "مرور..."

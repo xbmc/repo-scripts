@@ -1,3 +1,7 @@
+[B]Version 2.0.2 - 2013-04-25[/B]
+- Improved handling of database initalization errors
+- Update language files from Transifex
+
 [B]Version 2.0.1 - 2013-03-06[/B]
 - Fixed minor problems with stream setup UI
 - Fixed problem with the hour being displayed twice in start/end times

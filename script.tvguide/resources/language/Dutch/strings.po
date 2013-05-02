@@ -16,6 +16,22 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#30000"
+msgid "No description"
+msgstr "Geen beschrijving"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Bepalen van de resterende tijd..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "Nog ongeveer %d seconden..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Muis besturing"
+
 msgctxt "#30006"
 msgid "Now"
 msgstr "Nu"
@@ -32,6 +48,22 @@ msgctxt "#30101"
 msgid "Source"
 msgstr "Bron"
 
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV bestand"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Leeg cache..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Klaar!"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Wis alle herinneringen..."
+
 msgctxt "#30112"
 msgid "Notifications"
 msgstr "Mededelingen"
@@ -40,9 +72,25 @@ msgctxt "#30114"
 msgid "Startup"
 msgstr "Gebruik Scrollbar"
 
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "Oeps, sorry voor dat!"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Herinder"
+
 msgctxt "#30303"
 msgid "Cancel"
 msgstr "Afbreken"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Kies stream"
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Verwijder stream bestand"
 
 msgctxt "#30307"
 msgid "Channels"
@@ -75,3 +123,7 @@ msgstr "Afbreken"
 msgctxt "#30610"
 msgid "Browse..."
 msgstr "Bladeren..."
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "addon die niet is geïnstalleerd."

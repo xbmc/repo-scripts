@@ -36,6 +36,10 @@ msgctxt "#30004"
 msgid "Loading of data already in progress..."
 msgstr "Caricamento dei dati già in corso..."
 
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Controllo con il Mouse"
+
 msgctxt "#30006"
 msgid "Now"
 msgstr "Adesso"
@@ -127,6 +131,14 @@ msgstr "Abilità i menu OSD"
 msgctxt "#30119"
 msgid "Disabling the OSD menu may fix video stuttering."
 msgstr "La disabilitazione dei menu OSD può prevenire la riproduzione \"a scatti\""
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Usa ul metodo alternativo (richiesto da alcuni addon)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "Il metodo alternativo non è compatibile con il menù OSD"
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"
@@ -256,6 +268,42 @@ msgctxt "#30606"
 msgid "Cancel"
 msgstr "Annulla"
 
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Ferma l'anteprima"
+
 msgctxt "#30610"
 msgid "Browse..."
 msgstr "Esplora..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Clicca Sfoglia.....sotto e naviga verso i tuoi flussi video. Quando hai scelto il file puoi vederne l'anteprima per testare se funziona in XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Scegli un preferito. Solo i preferiti [I]PlayMedia[/I] sono supportati."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Più add-on forniscono questi canali. [CR] Scegline uno per guardare il flusso."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "JSON-EPG URL"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Riproduci canali usando l'addon Weeb.Tv"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "LA guida TV è configurata per usare Weeb.TV"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "addon che non è installato"
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Rirpodurre usando quell'addon è ora disabilitato"

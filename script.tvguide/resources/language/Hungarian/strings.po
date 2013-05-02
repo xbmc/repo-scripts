@@ -36,6 +36,10 @@ msgctxt "#30112"
 msgid "Notifications"
 msgstr "Értesítések"
 
+msgctxt "#30114"
+msgid "Startup"
+msgstr "Indítás"
+
 msgctxt "#30303"
 msgid "Cancel"
 msgstr "Mégsem"

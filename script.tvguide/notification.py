@@ -78,8 +78,11 @@ if __name__ == '__main__':
     def onNotificationsCleared():
         xbmcgui.Dialog().ok(strings(CLEAR_NOTIFICATIONS), strings(DONE))
 
-    def onInitialized():
-        database.clearAllNotifications()
-        database.close(onNotificationsCleared)
+    def onInitialized(success):
+        if success:
+            database.clearAllNotifications()
+            database.close(onNotificationsCleared)
+        else:
+            database.close()
 
-    database.initialize(onInitialized, None)
+    database.initialize(onInitialized)

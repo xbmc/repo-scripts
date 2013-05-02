@@ -188,6 +188,10 @@ msgctxt "#30602"
 msgid "Favourites"
 msgstr "Favoris"
 
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Extensions"
+
 msgctxt "#30605"
 msgid "Save"
 msgstr "Enregistrer"
