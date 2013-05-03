@@ -153,8 +153,8 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 		url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=30&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
 	elif languageshort == "en":
 		url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=31&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-#	else:
-#		url = main_url + "index.php"
+	else:
+		url = main_url + "index.php"
 
 	content = geturl(url)
 	log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
@@ -224,8 +224,8 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=30&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
 		elif languageshort == "en":
 			url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=31&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-#		else:
-#			url = main_url + "index.php"
+		else:
+			url = main_url + "index.php"
 			
 		content = geturl(url)
 

@@ -1,3 +1,10 @@
+3.9.7
+- [fix] Filename on the beginning of description, EnricGodes
+- [fix] LegendasDivx, LegendasZone and Ondertitel search pattern, highlandr
+- [cosmetic] add extra info to addon.xml, M. Kaijser
+- Modified Subscene to prioritize shows based on amount of subtitles and added fuzzy string matching, IcE
+- Add Torec service, Guy Sheffer
+
 3.9.6
 - [fix] GomTV service: return empty array when no subtitles are found,hojel
 - [fix] Subscene service, thx jowadmax on XBMC Forum

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmc.subtitles"
        name="XBMC Subtitles"
-       version="3.9.6"
+       version="3.9.7"
        provider-name="amet, mr_blobby">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -90,5 +90,9 @@
     <description lang="th">ค้นหาและดาวน์โหลดคำบรรยายจากผู้ให้บริการหลายแหล่ง ปุ่มคำบรรยายที่อยู่ในการแสดงผลหน้าจอจำเป็นต้องเปิดใช้งานและตั้งค่าในส่วนของการตั้งค่าคำบรรยายใน System-&gt; Skin-&gt; Addon Scripts</description>
     <description lang="zh">从多个服务提供者搜索并下载字幕。需要激活视频OSD菜单中的字幕按钮，并将字幕扩展功能设置为XBMC字幕。设置方法：系统设置-&gt;皮肤-&gt;扩展功能</description>
     <platform>all</platform>
+    <website></website>
+    <source>https://github.com/amet/script.xbmc.subtitles</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=126495</forum>
+    <email></email>
   </extension>
 </addon>

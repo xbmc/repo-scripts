@@ -62,6 +62,11 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
                 log( __name__ ,u"%s Subtitles found: %s (id = %s)" % (debug_pretext, filename, id))
             except:
                 pass
+            #Find filename on the commentaries and put it in front
+            title_first_word = re.split('[\W]+', searchstring)
+            version = re.search(title_first_word[0],filename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE)
+            if version != None:
+                filename = filename[version.start():] + " " + filename[: version.start()]
             subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'sync': sync, 'id' : id, 'server' : server, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
         page = page + 1
         url = main_url + "index.php?accion=5&masdesc=&oxdown=1&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)

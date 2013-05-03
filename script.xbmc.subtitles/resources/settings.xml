@@ -73,6 +73,7 @@
       <setting id="Titulky" type="bool" label="Titulky.com (Czech and Slovak subs only)" default="false"/>       
       <setting id="Titulkyuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30128" default=""/>
       <setting id="Titulkypass" type="text" option ="hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30129" default=""/>
+      <setting id="Torec" type="bool" label="Torec.net" default="false"/>
            
       <setting id="Undertexter" type="bool" label="Undertexter.se (Swedish and English subs only)" default="false"/>
     </category>

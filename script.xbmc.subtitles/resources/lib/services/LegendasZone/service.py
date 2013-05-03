@@ -102,7 +102,11 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 	page = 0
 	if languageshort == "pb":
 			languageshort = "br"
-	url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+	#url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+	if languageshort == "pt" or languageshort == "br" or languageshort == "en" or languageshort == "es":
+		url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+	else:
+		url = main_url + "index.php"
 
 	content = opener.open(url)
 	#log( __name__ ,"%s Content: '%s'" % (debug_pretext, content))
@@ -174,7 +178,11 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 			page = page + 1
 			if languageshort == "br":
 				languageshort = "pb"
-			url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+#			url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+			if languageshort == "pt" or languageshort == "br" or languageshort == "en" or languageshort == "es":
+				url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+			else:
+				url = main_url + "index.php"
 			content = opener.open(url)
 			content = content.read().decode('latin1')
 			#For DEBUG only uncomment next line
@@ -183,7 +191,11 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 		page = 0
 		if languageshort == "pb":
 			languageshort = "br"
-		url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+		if languageshort == "pt" or languageshort == "br" or languageshort == "en" or languageshort == "es":
+			url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+		else:
+			url = main_url + "index.php"
+		#url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
 		content = opener.open(url)
 		content = content.read().decode('latin1')
 		maxsubs = re.findall(multiple_results_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE)
@@ -197,7 +209,11 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 					page1 = 0
 					if languageshort == "pb":
 						languageshort = "br"
-					content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
+					if languageshort == "pt" or languageshort == "br" or languageshort == "en" or languageshort == "es":
+						content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
+					else:
+						content1 = main_url + "index.php"
+					#content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
 					content1 = content1.read()
 					content1 = content1.decode('latin1')
 					while re.search(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page1 == 0:
@@ -263,12 +279,20 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
 								languageshort = "pb"
 							subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
 						page1 = page1 + 1
-						content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
+						if languageshort == "pt" or languageshort == "br" or languageshort == "en" or languageshort == "es":
+							content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
+						else:
+							content1 = main_url + "index.php"
+						#content1 = opener.open(main_url + "legendas.php?l=" + languageshort + "&imdb=" + imdb + "&page=" + str(page1))
 						content1 = content1.read().decode('latin1')
 				page = page + 1
 				if languageshort == "pb":
 					languageshort = "br"
-				url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+				#url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+				if languageshort == "pt" or languageshort == "br" or languageshort == "en" or languageshort == "es":
+					url = main_url + "legendas.php?l=" + languageshort + "&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+				else:
+					url = main_url + "index.php"
 				content = opener.open(url)
 				content = content.read().decode('latin1')
 ################### IMDB DISABLED FOR NOW #######################################

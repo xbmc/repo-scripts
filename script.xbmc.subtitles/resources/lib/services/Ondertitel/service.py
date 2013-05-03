@@ -18,8 +18,12 @@ releases_types   = ['web-dl', '480p', '720p', '1080p', 'h264', 'x264', 'xvid', '
 <a href="/ondertitels/info/(500)-Days-of-Summer/44032.html" title="ondertitel (500) Days of Summer" style="color: #000;">(500) Days of Summer</a></strong> <img src="/images/nederlandse_vlag.jpg" height="11" width="18"></div> <div style="float:left;"><a href="http://www.imdb.com/title/tt1022603/" target="_blank"><img src="/images/imdb_logo.gif" border="0"></a> </div><br clear="both"></div>
 							<div style="width: 490px; overflow:hidden; overflow:hidden"><font style="font-size: 11px; color: #444445;"><i>500.Days.of.Summer.2009.720p.BluRay.DTS.x264-WiKi</i></font><br></div>
 """
-subtitle_pattern = "<a href=\"(/ondertitels/info/[^/\n\r\t]+/\d+?\.html)\" title=\"[^/\n\r\t]+\" style=\"color: #000;\">[^\n\r\t]*?[\n\r\t]+\
-<div style=\"width: 490px; overflow:hidden; overflow:hidden\"><font style=\"font-size: 11px; color: #444445;\"><i>([^\n\r\t<]+?)</i></font><br></div>"
+### Old pattern.
+#subtitle_pattern = "<a href=\"(/ondertitels/info/[^/\n\r\t]+/\d+?\.html)\" title=\"[^/\n\r\t]+\" style=\"color: #000;\">[^\n\r\t]*?[\n\r\t]+\
+#<div style=\"width: 490px; overflow:hidden; overflow:hidden\"><font style=\"font-size: 11px; color: #444445;\"><i>([^\n\r\t<]+?)</i></font><br></div>"
+
+### HTML in the search results changed. This pattern fix it. ###
+subtitle_pattern = "<a href=\"(/ondertitels/info/.+?.html)\" style=\"color: #161616;\">.+?[\r\n\t].+?<i>(.+?)</i></font></div>"
 # group(1) = link, group(2) = filename
 
 
