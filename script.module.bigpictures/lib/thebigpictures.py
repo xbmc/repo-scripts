@@ -18,16 +18,16 @@
 #
 
 import random
-import scrapers
+from scrapers import ALL_SCRAPERS, get_scrapers
 
 import xbmc
 
 
 class ScraperManager(object):
 
-    def __init__(self):
-        self.log('__init__')
-        self._scrapers = scrapers.get_scrapers()
+    def __init__(self, enabled_scrapers=None):
+        self.log('__init__ with enabled_scrapers: %s' % enabled_scrapers)
+        self._scrapers = get_scrapers(enabled_scrapers)
         self._current_index = 0
         self._num_scrapers = len(self._scrapers)
 

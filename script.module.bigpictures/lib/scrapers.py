@@ -24,6 +24,16 @@ from BeautifulSoup import BeautifulSoup
 
 import xbmc
 
+ALL_SCRAPERS = (
+    'TheBigPictures',
+    'AtlanticInFocus',
+    'SacBeeFrame',
+    'WallStreetJournal',
+    'TotallyCoolPix',
+    'TimeLightbox',
+    'NewYorkTimesLens',
+)
+
 
 class BasePlugin(object):
 
@@ -75,6 +85,15 @@ class BasePlugin(object):
         xbmc.log('TheBigPictures ScraperPlugin[%s]: %s' % (
             self.__class__.__name__, msg
         ))
+
+    @classmethod
+    def get_scrapers(cls, name_list):
+        enabled_scrapers = []
+        for sub_class in cls.__subclasses__():
+            if sub_class.__name__ in name_list:
+                enabled_scrapers.append(sub_class)
+                print '%s in %s' % (sub_class.__name__, name_list)
+        return enabled_scrapers
 
 
 class TheBigPictures(BasePlugin):
@@ -425,15 +444,11 @@ class NewYorkTimesLens(BasePlugin):
         return txt.replace('&#x2019;s', "'")
 
 
-def get_scrapers():
-    ENABLED_SCRAPERS = (
-        TheBigPictures,
-        AtlanticInFocus,
-        SacBeeFrame,
-        WallStreetJournal,
-        TotallyCoolPix,
-        TimeLightbox,
-        NewYorkTimesLens,
-    )
-    scrapers = [scraper(i) for i, scraper in enumerate(ENABLED_SCRAPERS)]
+def get_scrapers(enabled_scrapers=None):
+    if enabled_scrapers is None:
+        enabled_scrapers = ALL_SCRAPERS
+    scrapers = [
+        scraper(i) for i, scraper
+        in enumerate(BasePlugin.get_scrapers(enabled_scrapers))
+    ]
     return scrapers
