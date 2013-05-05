@@ -6,10 +6,15 @@
     <setting label="30005" id="clean" type="bool" default="false"/>
     <setting label="30011" id="notifications" type="bool" default="true"/>
     <setting label="30016" id="pauseonplayback" type="bool" default="true"/>
+    <setting label="30018" type="lsep"/>
+    <setting label="30019" type="lsep"/>
   </category>
   <category label="30002">
     <setting label="30006" id="method" type="select" lvalues="30007|30008" default="0"/>
     <setting label="30012" id="pollingmethod" type="select" lvalues="30013|30014|30015" default="2"/>
     <setting label="30010" id="delay" type="number" default="1"/>
+    <setting label="30017" id="forceglobalscan" type="bool" default="false"/>
+    <setting label="30018" type="lsep"/>
+    <setting label="30019" type="lsep"/>
   </category>
 </settings>

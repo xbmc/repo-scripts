@@ -16,5 +16,8 @@
   <string id="30014">Depth 2 (Look 2 directories deep)</string>
   <string id="30015">Depth inf. (Look in every subdirectory)</string>
   <string id="30016">Pause on playback</string>
+  <string id="30017">Force global scan (fixes xbmc sometimes not picking up new tv episodes)</string>
+  <string id="30018">Note: You must restart XBMC or disable/re-enable Watchdog</string>
+  <string id="30019">for changes to take effect</string>
 </strings>
 

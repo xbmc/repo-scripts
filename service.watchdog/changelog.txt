@@ -1,3 +1,6 @@
+[B]0.7.5[/B]
+- added option for forcing global scan on video sources. This is a workaround for a bug that cause XBMC to sometimes fail to recognize the newly added files
+
 [B]0.7.4[/B]
 - fixed encoding related regression affecting posix systems (OpenElec and other non-standard distributions)
 
