@@ -1,3 +1,6 @@
+0.1.0 (05.05.2013)
+ - added possibility to choose enabled scrapers
+
 0.0.2 (02.04.2013)
  - fixed image duration
 

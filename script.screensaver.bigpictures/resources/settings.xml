@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-        <setting id="picture_duration" type="labelenum" label="32110" default="5" values="5|15|30|60"/>
+    <setting id="picture_duration" type="labelenum" label="32110" default="5" values="5|15|30|60"/>
+    <setting id="enable_TheBigPictures" type="bool" label="32400" default="true"/>
+    <setting id="enable_AtlanticInFocus" type="bool" label="32401" default="true"/>
+    <setting id="enable_SacBeeFrame" type="bool" label="32402" default="true"/>
+    <setting id="enable_WallStreetJournal" type="bool" label="32403" default="true"/>
+    <setting id="enable_TotallyCoolPix" type="bool" label="32404" default="true"/>
+    <setting id="enable_TimeLightbox" type="bool" label="32405" default="true"/>
+    <setting id="enable_NewYorkTimesLens" type="bool" label="32406" default="true"/>
 </settings>

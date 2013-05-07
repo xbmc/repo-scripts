@@ -23,7 +23,7 @@ import xbmcaddon
 import xbmcgui
 import xbmc
 
-from thebigpictures import ScraperManager
+from thebigpictures import ScraperManager, ALL_SCRAPERS
 
 addon = xbmcaddon.Addon()
 addon_name = addon.getAddonInfo('name')
@@ -55,10 +55,17 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             int(addon.getSetting('picture_duration')) * 1000
         )
 
+        self.get_scrapers()
         self.slideshow()
 
+    def get_scrapers(self):
+        enabled_scrapers = []
+        for scraper in ALL_SCRAPERS:
+            if addon.getSetting('enable_%s' % scraper) == 'true':
+                enabled_scrapers.append(scraper)
+        self.scraper_manager = ScraperManager(enabled_scrapers)
+
     def slideshow(self):
-        self.scraper_manager = ScraperManager()
         self.scraper_manager.shuffle()
         while not self.abort_requested:
             self.scraper_manager.next()
