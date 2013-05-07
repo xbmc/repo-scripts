@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Galician language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/gl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Esquerda + Dereita = Trocar Álbum/Foto</string>
+    <string id="32002">Arriba + Abaixo = Trocar Fonte</string>
+    <string id="32003">Seleccionar = Entrar no álbum</string>
+    <string id="32004">Retroceder = volver ao álbum/saír do complemento</string>
+    <string id="32005">Info = Alternar información en pantalla</string>
+    <string id="32006">Menú contextual = Descargar álbum</string>
+    <string id="32007">Reproducir = Iniciar presentación</string>
+    <string id="32008">0 = Alternar taxa de aspecto</string>
+
+    <!-- Settings -->
+    <string id="32100">Non amosar máis esta axuda </string>
+    <string id="32110">Taxa de aspecto predefinida</string>
+    <string id="32111">escala</string>
+    <string id="32112">manter</string>
+    <string id="32120">Amosar Frechas</string>
+    <string id="32130">Presentación ó chou</string>
+    <string id="32140">Camiño de descarga do álbum</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Axuda</string>
+    <string id="32201">Configuracións</string>
+
+    <!-- Script strings -->
+    <string id="32300">Seleccionar o camiño predefinido para as descargas</string>
+    <string id="32301">Recollendo datos...</string>
+    <string id="32302">Elemento %d/%d</string>
+    <string id="32303">Elemento actual: %s %d%%</string>
+    <string id="32304">Descargando en: %s</string>
+</strings>

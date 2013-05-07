@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Italian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/it/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Sinistra + Destra = Cambia Album/Foto</string>
+    <string id="32002">Su + Giù = Cambia Fonte</string>
+    <string id="32003">Select = Entra nell'album</string>
+    <string id="32004">Indietro = torna all'album/esci dall'addon</string>
+    <string id="32005">Info = abilita/disabilita le informazioni sullo schermo</string>
+    <string id="32006">Contesto = Scarica Album</string>
+    <string id="32007">Paly = Avvia Presentazione</string>
+    <string id="32008">0 = Cambia proporzioni aspetto</string>
+
+    <!-- Settings -->
+    <string id="32100">Non mostrare questo aiuto di nuovo</string>
+    <string id="32110">Proporzione predefinita</string>
+    <string id="32111">scala</string>
+    <string id="32112">mantieni</string>
+    <string id="32120">Mostra le frecce</string>
+    <string id="32130">Presentazione Casuale</string>
+    <string id="32140">Percorso per lo scaricamento delle immagini</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Aiuto</string>
+    <string id="32201">impostazioni</string>
+
+    <!-- Script strings -->
+    <string id="32300">Scegli percorso predefinito per lo scaricamento</string>
+    <string id="32301">Raccolta dati....</string>
+    <string id="32302">Elemento %d/%d</string>
+    <string id="32303">Elemento Attuale: %s %d%%</string>
+    <string id="32304">Scaricamento in: %s</string>
+</strings>

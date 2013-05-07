@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hungarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/hu/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Bal + jobb = Album / Fotó váltás</string>
+    <string id="32002">Fel + le = Forrás váltása</string>
+    <string id="32003">Kiválasztás = Belépés az albuma</string>
+    <string id="32004">Vissza = Vissza az albumhoz / Kiegészítő elhagyása</string>
+    <string id="32005">Info = Képernyőinfó fel/le</string>
+    <string id="32006">Helyi menü = Album letöltése</string>
+    <string id="32007">Lejátszás = Diavetítés indítása</string>
+    <string id="32008">0 = Képarány váltása</string>
+
+    <!-- Settings -->
+    <string id="32100">Ne mutassa többet ezt a súgót</string>
+    <string id="32110">Alapértelmezett képarány</string>
+    <string id="32111">Nagyítás</string>
+    <string id="32112">Tartás</string>
+    <string id="32120">Nyilak mutatása</string>
+    <string id="32130">Diavetítés keverése</string>
+    <string id="32140">Album letöltési útvonala</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Segítség</string>
+    <string id="32201">Beállítások</string>
+
+    <!-- Script strings -->
+    <string id="32300">Alapértelmezett letöltési út választása</string>
+    <string id="32301">Adatok gyűjtése</string>
+    <string id="32302">Elem %d/%d</string>
+    <string id="32303">Aktuális elem: %s %d %%</string>
+    <string id="32304">Letöltés ide: %s</string>
+</strings>

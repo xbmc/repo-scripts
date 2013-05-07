@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Persian (Iran) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fa_IR/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">چپ + راست = تغییر آلبوم / عکس</string>
+    <string id="32002">بالا + پایین = تغییر منبع</string>
+    <string id="32003">انتخاب = ورود به آلبوم</string>
+    <string id="32004">قبل = بازگشت به آلبوم یا خروج از افزودنی</string>
+    <string id="32005">اطلاعات = نمایش اطلاعات روی صفحه</string>
+    <string id="32006">متن = دانلود آلبوم</string>
+    <string id="32007">پخش = شروع اسلاید نمایشی</string>
+    <string id="32008">0 = تغییر نسبت-ابعاد</string>
+
+    <!-- Settings -->
+    <string id="32100">این توضیحات را دیگر نمایش نده</string>
+    <string id="32110">نسبت ابعاد تصویر پیش فرض</string>
+    <string id="32111">تغییر اندازه</string>
+    <string id="32112">نگه داشتن</string>
+    <string id="32120">نمایش جهات</string>
+    <string id="32130">اسلاید نمایشی تصادفی</string>
+    <string id="32140">سیر دانلود آلبوم</string>
+
+    <!-- Settings categories -->
+    <string id="32200">کمک</string>
+    <string id="32201">تنظیمات</string>
+
+    <!-- Script strings -->
+    <string id="32300">اتخاب مسیر دانلود پیش فرض</string>
+    <string id="32301">جمع کردن اطلاعات...</string>
+    <string id="32302">موضوع %d/%d</string>
+    <string id="32303">مورد فعلی: %s %d%%</string>
+    <string id="32304">دانلود در: %s</string>
+</strings>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Chinese (Simple) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/zh/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">左 + 右 = 切换相册/图片</string>
+    <string id="32002">上 + 下 = 切换源</string>
+    <string id="32003">选择 = 进入相册</string>
+    <string id="32004">返回 = 回到相册/退出插件</string>
+    <string id="32005">信息 = 切换屏显信息</string>
+    <string id="32006">上下文菜单 = 下载相册</string>
+    <string id="32007">播放 = 开始幻灯片</string>
+    <string id="32008">0 = 切换宽高比</string>
+
+    <!-- Settings -->
+    <string id="32100">不再显示本帮助信息</string>
+    <string id="32110">默认宽高比</string>
+    <string id="32111">尺寸</string>
+    <string id="32112">保留</string>
+    <string id="32120">显示箭头</string>
+    <string id="32130">随机幻灯片</string>
+    <string id="32140">相册下载目录</string>
+
+    <!-- Settings categories -->
+    <string id="32200">帮助</string>
+    <string id="32201">设置</string>
+
+    <!-- Script strings -->
+    <string id="32300">选择默认下载目录</string>
+    <string id="32301">获取数据...</string>
+    <string id="32302">项 %d/%d</string>
+    <string id="32303">当前项目：%s %d%%</string>
+    <string id="32304">下载到：%s</string>
+</strings>

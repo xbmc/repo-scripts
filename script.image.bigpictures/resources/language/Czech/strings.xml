@@ -29,7 +29,7 @@
 
     <!-- Script strings -->
     <string id="32300">Zvolte výchozí cestu pro stahování</string>
-    <string id="32301">Získávání dat…</string>
+    <string id="32301">Získávám data…</string>
     <string id="32302">%d. položka z %d</string>
     <string id="32303">Aktuální položka: %s %d%%</string>
     <string id="32304">Stahuje se do: %s</string>

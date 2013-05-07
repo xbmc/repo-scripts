@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
-<!-- English language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/en/ -->
+<!-- Belarusian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/be/ -->
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
@@ -26,7 +26,6 @@
     <!-- Settings categories -->
     <string id="32200">Help</string>
     <string id="32201">Settings</string>
-    <string id="32202">Sources</string>
 
     <!-- Script strings -->
     <string id="32300">Choose default download path</string>
@@ -34,12 +33,4 @@
     <string id="32302">Item %d/%d</string>
     <string id="32303">Current item: %s %d%%</string>
     <string id="32304">Downloading to: %s</string>
-    <!-- Scrapers -->
-    <string id="32400">The Big Picture - Boston.com</string>
-    <string id="32401">In Focus - The Atlantic</string>
-    <string id="32402">Sacramento Bee - The Frame</string>
-    <string id="32403">Photo Journal - Wall Street Journal</string>
-    <string id="32404">TotallyCoolPix.com</string>
-    <string id="32405">LightBox - From the photo editors of TIME</string>
-    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

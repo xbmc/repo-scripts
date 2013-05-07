@@ -26,7 +26,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
-from thebigpictures import ScraperManager
+from thebigpictures import ScraperManager, ALL_SCRAPERS
 
 addon = xbmcaddon.Addon()
 addon_path = addon.getAddonInfo('path')
@@ -107,7 +107,14 @@ class GUI(xbmcgui.WindowXML):
 
     def __init__(self, skin_file, addon_path):
         self.log('__init__')
-        self.scraper_manager = ScraperManager()
+        self.getScrapers()
+
+    def getScrapers(self):
+        enabled_scrapers = []
+        for scraper in ALL_SCRAPERS:
+            if addon.getSetting('enable_%s' % scraper) == 'true':
+                enabled_scrapers.append(scraper)
+        self.scraper_manager = ScraperManager(enabled_scrapers)
 
     def onInit(self):
         self.log('onInit')
