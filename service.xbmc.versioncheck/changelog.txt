@@ -1,3 +1,9 @@
+v0.1.6
+- Update with 12.2 Frodo stable
+
+v0.1.5
+- Update with 13.0 Gotham_alpha3
+
 v0.1.4
 - We can now upgrade xbmc on Linux. This works either via polkit or shell wrapper as fallback
 
