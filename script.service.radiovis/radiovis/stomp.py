@@ -74,6 +74,7 @@ try:
 except ImportError:
     from md5 import md5
 
+import xbmc
 import random
 import re
 import socket
@@ -559,7 +560,7 @@ class Connection(object):
                                         reduce(lambda accu, key: accu + ('%s:%s\n' % (key, headers[key])), headers.keys(), ''),
                                         payload)  
             self.__socket.sendall(frame)
-            log.debug("Sent frame: type=%s, headers=%r, body=%r" % (command, headers, payload))
+            xbmc.log("Sent frame: type=%s, headers=%r, body=%r" % (command, headers, payload))
         else:
             raise NotConnectedException()
 
@@ -571,7 +572,7 @@ class Connection(object):
             threading.currentThread().setName("StompReceiver")
 
             while self.__running:
-                log.debug('starting receiver loop')
+                xbmc.log('starting receiver loop')
 
                 self.__attempt_connection()
 
@@ -589,7 +590,7 @@ class Connection(object):
 
                             for frame in frames:
                                 (frame_type, headers, body) = self.__parse_frame(frame)
-                                log.debug("Received frame: result=%r, headers=%r, body=%r" % (frame_type, headers, body))
+                                xbmc.log("Received frame: result=%r, headers=%r, body=%r" % (frame_type, headers, body))
                                 frame_type = frame_type.lower()
                                 if frame_type in [ 'connected', 
                                                    'message', 
@@ -599,9 +600,9 @@ class Connection(object):
                                         if hasattr(listener, 'on_%s' % frame_type):
                                             eval('listener.on_%s(headers, body)' % frame_type)
                                         else:
-                                            log.debug('listener %s has no such method on_%s' % (listener, frame_type)) 
+                                            xbmc.log('listener %s has no such method on_%s' % (listener, frame_type)) 
                                 else:
-                                    log.warning('Unknown response frame type: "%s" (frame length was %d)' % (frame_type, len(frame)))
+                                    xbmc.log('Unknown response frame type: "%s" (frame length was %d)' % (frame_type, len(frame)))
                     finally:
                         try:
                             self.__socket.close()
@@ -611,7 +612,7 @@ class Connection(object):
                         self.__current_host_and_port = None
                 except ConnectionClosedException:
                     if self.__running:
-                        log.error("Lost connection")
+                        xbmc.log("Lost connection")
                         # Notify listeners
                         for listener in self.__listeners:
                             if hasattr(listener, 'on_disconnected'):
@@ -759,10 +760,10 @@ class Connection(object):
         while self.__running and self.__socket is None:
             for host_and_port in self.__host_and_ports:
                 try:
-                    log.debug("Attempting connection to host %s, port %s" % host_and_port)
+                    xbmc.log("Attempting connection to host %s, port %s" % host_and_port)
 
                     if self.__proxy_settings is not None:
-                        log.debug("Using proxy host %s, port %s" % (self.__proxy_settings['host'],
+                        xbmc.log("Using proxy host %s, port %s" % (self.__proxy_settings['host'],
                                                                     self.__proxy_settings['port']))
                         
                         self.__socket = socks.socksocket(socket.AF_INET, socket.SOCK_STREAM)
@@ -774,7 +775,7 @@ class Connection(object):
 
                     self.__socket.connect(host_and_port)
                     self.__current_host_and_port = host_and_port
-                    log.info("Established connection to host %s, port %s" % host_and_port)
+                    xbmc.log("Established connection to host %s, port %s" % host_and_port)
                     break
 
                 except socket.error:
@@ -783,7 +784,7 @@ class Connection(object):
                         exc = sys.exc_info()[1][1]
                     else:
                         exc = sys.exc_info()[1]
-                    log.warning("Could not connect to host %s, port %s: %s" % (host_and_port[0], host_and_port[1], exc))
+                    xbmc.log("Could not connect to host %s, port %s: %s" % (host_and_port[0], host_and_port[1], exc))
 
             if self.__socket is None:
                 if self.__enable_reconnect:
@@ -792,7 +793,7 @@ class Connection(object):
                                            * math.pow(1.0 + self.__reconnect_sleep_increase, sleep_exp)))
                                       * (1.0 + random.random() * self.__reconnect_sleep_jitter))
                     sleep_end = time.time() + sleep_duration
-                    log.debug("Sleeping for %.1f seconds before attempting reconnect" % sleep_duration)
+                    xbmc.log("Sleeping for %.1f seconds before attempting reconnect" % sleep_duration)
                     while self.__running and time.time() < sleep_end:
                         time.sleep(0.2)
 
