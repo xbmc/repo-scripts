@@ -4,13 +4,13 @@
 # Translators:
 # Translators:
 # Translators:
-# Wanilton Campos <>, 2012.
+# Wanilton Campos <>, 2012-2013
 msgid ""
 msgstr ""
 "Project-Id-Version: cdART Manager\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2012-07-03 05:24+0000\n"
-"PO-Revision-Date: 2012-11-02 21:40+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
 "Last-Translator: giftie <giftie61@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgstr "Avançado"
 
 msgctxt "#32012"
 msgid "Refresh Addon Database"
-msgstr "Atualizar Database Local"
+msgstr "Recriar Database Local"
 
 msgctxt "#32013"
 msgid "Clean XBMC's Music Library"
@@ -93,7 +93,7 @@ msgstr "Pasta de Armazenamento da Lista Local do cdART"
 
 msgctxt "#32018"
 msgid "cdART  Backup folder"
-msgstr " Pasta Backup das Imagens"
+msgstr "cdART  Pasta Backup"
 
 msgctxt "#32019"
 msgid "Backup saving format: "
@@ -164,8 +164,8 @@ msgid " *DOWNLOADING Artwork* "
 msgstr " *Baixando Imagens* "
 
 msgctxt "#32036"
-msgid "Path to Music Library(for Artwork)"
-msgstr "Procura de cdARTs"
+msgid "Music folder path(for Artwork)"
+msgstr "Caminho para diretório de músicas (para artwork)"
 
 msgctxt "#32037"
 msgid "Getting local artists"
@@ -185,7 +185,7 @@ msgstr "Completado"
 
 msgctxt "#32041"
 msgid "New Artwork downloaded"
-msgstr "Novos cdARTs baixados"
+msgstr "Novos cdARTs transferidos"
 
 msgctxt "#32042"
 msgid "cdART Manager"
@@ -212,7 +212,7 @@ msgstr "Baixando Imagens Automaticamente"
 
 msgctxt "#32047"
 msgid "Downloading..."
-msgstr "Baixando....."
+msgstr "Transferindo....."
 
 msgctxt "#32048"
 msgid "Retrieving Recognized Artist List...."
@@ -236,7 +236,7 @@ msgstr "Por favor vá em Avançado e"
 
 msgctxt "#32053"
 msgid "Refresh Addon Database"
-msgstr "Atualizar Database do Addon"
+msgstr "Atualize o Database do Addon"
 
 msgctxt "#32054"
 msgid "/Artist/Album.png"
@@ -332,7 +332,7 @@ msgstr "Copiar Para Pasta Única para Upload"
 
 msgctxt "#32077"
 msgid "Custom Label Colors"
-msgstr " Customize Cores"
+msgstr " Customize Cores Etiqueta"
 
 msgctxt "#32078"
 msgid "Green"
@@ -715,7 +715,7 @@ msgctxt "#32173"
 msgid ""
 "Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared "
 "with manual use of cdART Manager"
-msgstr "Número de dias para cache dados fanart.tv(Agendar)[CR]Cache será limpado com uso manual do cdART Manager."
+msgstr "Número de dias para cache dados fanart.tv(Agendar)[CR]Cache será limpo com o uso manual do cdART Manager."
 
 msgctxt "#32174"
 msgid "Number of possible MBID matches:"
@@ -747,44 +747,44 @@ msgstr "        Alterar tempo de escape para substituição de caracter"
 
 msgctxt "#32181"
 msgid "There is an error in Settings."
-msgstr ""
+msgstr "Existe erro nos Ajustes."
 
 msgctxt "#32182"
 msgid "Please check your settings and save settings[CR](press OK in settings)"
-msgstr ""
+msgstr "Por favor verifique seus ajustes e salve-os[CR](pressione OK em ajustes)"
 
 msgctxt "#32183"
 msgid "Limit number Extrafanarts"
-msgstr ""
+msgstr "Número Limite Extrafanarts"
 
 msgctxt "#32184"
 msgid "    Extrafanart Limit:"
-msgstr ""
+msgstr "    Extrafanart Limite:"
 
 msgctxt "#32185"
 msgid "Checking fanart.tv for new artwork..."
-msgstr ""
+msgstr "Verificando fanart.tv para novas artes..."
 
 msgctxt "#32186"
 msgid "Updating Database to new version..."
-msgstr ""
+msgstr "Atualizando banco de dados para nova versão..."
 
 msgctxt "#32187"
 msgid "Checking fanart.tv for artwork..."
-msgstr ""
+msgstr "Verificando fanart.tv por artes.."
 
 msgctxt "#32188"
 msgid "Use http://musicbrainz.org as the MusicBrainz Server"
-msgstr ""
+msgstr "Usar http://musicbrainz.org como Servidor the MusicBrainz "
 
 msgctxt "#32189"
 msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
-msgstr ""
+msgstr "Caminho da Url para o Servidor MusicBrainz(exemplo - http://192.168.1.20)"
 
 msgctxt "#32190"
 msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
-msgstr ""
+msgstr "Atraso entre as solicitações ao servidor MusicBrainz (100 milissegundos)"
 
 msgctxt "#32191"
 msgid "Refresh fanart.tv data"
-msgstr ""
+msgstr "Atualizar dados fanart.tv"

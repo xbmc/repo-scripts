@@ -4,15 +4,16 @@
 # Translators:
 # Translators:
 # Translators:
-#   <javier_benjumea@hotmail.com>, 2012.
-#   <rasensi@gmail.com>, 2012.
-#   <xbmcspain@gmail.com>, 2012.
+# davidmuma <davidmumar@gmail.com>, 2013
+# Ovokx <javier_benjumea@hotmail.com>, 2012
+# rasensi <rasensi@gmail.com>, 2012
+# xbmcero <xbmcspain@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: cdART Manager\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2012-07-03 05:24+0000\n"
-"PO-Revision-Date: 2012-11-02 21:40+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
 "Last-Translator: giftie <giftie61@hotmail.com>\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -166,8 +167,8 @@ msgid " *DOWNLOADING Artwork* "
 msgstr " *DESCARGANDO cdART* "
 
 msgctxt "#32036"
-msgid "Path to Music Library(for Artwork)"
-msgstr "Buscar cdARTs"
+msgid "Music folder path(for Artwork)"
+msgstr ""
 
 msgctxt "#32037"
 msgid "Getting local artists"
@@ -482,7 +483,7 @@ msgstr "Compruebe que la MBID de la Base de datos sea la actual cuando se actual
 
 msgctxt "#32115"
 msgid "Notify while in Background mode"
-msgstr ""
+msgstr "Notificar mientras está en modo 2º plano"
 
 msgctxt "#32116"
 msgid "Notify At End of Background Database Build(displayed for 2 seconds)"
@@ -695,29 +696,29 @@ msgstr "Introducir MBID del álbum - Incluyendo los guiones (36 carácteres)"
 
 msgctxt "#32168"
 msgid "Artist Banners"
-msgstr ""
+msgstr "Banners de artista"
 
 msgctxt "#32169"
 msgid "400px X 155px"
-msgstr ""
+msgstr "400px X 155px"
 
 msgctxt "#32170"
 msgid "800px X 310px"
-msgstr ""
+msgstr "800px X 310px"
 
 msgctxt "#32171"
 msgid "Enable HD Music LOGOs"
-msgstr ""
+msgstr "Activar logos de música en HD"
 
 msgctxt "#32172"
 msgid "Backup addon database during update"
-msgstr ""
+msgstr "Copia de seguridad de base de datos durante la actualización del complemento"
 
 msgctxt "#32173"
 msgid ""
 "Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared "
 "with manual use of cdART Manager"
-msgstr ""
+msgstr "Número de días de caché de datos de fanart.tv (The Scheduler)[CR]La caché se limpia con el manual de uso de cdART Manager"
 
 msgctxt "#32174"
 msgid "Number of possible MBID matches:"

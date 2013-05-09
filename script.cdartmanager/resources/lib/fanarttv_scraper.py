@@ -233,6 +233,7 @@ def retrieve_fanarttv_json( id ):
     artist_artwork.append(hdlogo)
     artist_artwork.append(banner)
     artist_artwork.append(album_art)
+    print artist_artwork
     return artist_artwork
 
 def match_library( local_artist_list ):

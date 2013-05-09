@@ -4,13 +4,14 @@
 # Translators:
 # Translators:
 # Translators:
-#   <jonas.zaugg@yahoo.com>, 2012.
+# giftie <giftie61@hotmail.com>, 2012
+# thebluepotato <jonas.zaugg@yahoo.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: cdART Manager\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2012-07-03 05:24+0000\n"
-"PO-Revision-Date: 2012-11-02 21:40+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
 "Last-Translator: giftie <giftie61@hotmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -164,8 +165,8 @@ msgid " *DOWNLOADING Artwork* "
 msgstr "*TÉLÉCHARGEMENT des artworks*"
 
 msgctxt "#32036"
-msgid "Path to Music Library(for Artwork)"
-msgstr "Recherche cdARTs"
+msgid "Music folder path(for Artwork)"
+msgstr ""
 
 msgctxt "#32037"
 msgid "Getting local artists"

@@ -40,6 +40,27 @@ try:
 except:
     from utils import _makedirs
     
+def mbid_repair():
+    log( "Removing all instances of Johann Sebastian Bach", xbmc.LOGNOTICE )
+    mbid_old = "24f1766e-9635-4d58-a4d4-9413f9f98a4c"
+    conn = sqlite3.connect(addon_db)
+    c = conn.cursor()
+    c.execute('''UPDATE alblist SET musicbrainz_artistid="removed" WHERE musicbrainz_artistid="%s"''' % mbid_old )
+    c.execute('''UPDATE lalist SET musicbrainz_artistid="removed" WHERE musicbrainz_artistid="%s"''' % mbid_old )
+    try:
+        c.execute( '''UPDATE artist_updates SET musicbrainz_artistid="removed" WHERE musicbrainz_artistid="%s"''' % mbid_old )
+    except:
+        log( "No Existing user Artist Edits", xbmc.LOGNOTICE )
+    try:
+        c.execute( '''UPDATE alblist SET musicbrainz_artistid="removed", musicbrainz_albumid="" WHERE musicbrainz_artistid="%s"''' % mbid_old )
+    except:
+        log( "No Existing user Album Edits", xbmc.LOGNOTICE )
+    update_missing_album_mbid( "", background = False, repair = True )
+    update_missing_artist_mbid( "", background = False, mode = "album_artists", repair = True )
+    update_missing_artist_mbid( "", background = False, mode = "all_artists", repair = True )
+    conn.commit()
+    c.close()
+    
 def user_updates( details, type ):
     log( "Storing User edit", xbmc.LOGNOTICE )
     conn = sqlite3.connect(addon_db)
@@ -126,12 +147,13 @@ def artwork_search( cdart_url, id, disc, type ):
     log( "Finding Artwork", xbmc.LOGDEBUG )
     art = {}
     for item in cdart_url:
-        if item["musicbrainz_albumid"] == id and type == "cover":
-            art = item
-            break
-        elif item["musicbrainz_albumid"] == id and item["disc"] == disc and type == "cdart":
-            art = item
-            break
+        if item["musicbrainz_albumid"] == id:
+            if type == "cover":
+                art = item
+                break
+            elif int( item["disc"] ) == int( disc ) and type == "cdart":
+                art = item
+                break
     return art
 
 def get_xbmc_database_info( background=False ):
@@ -551,8 +573,12 @@ def get_local_albums_db( artist_name, background=False ):
             try:
                 c.execute(query)
             except sqlite3.OperationalError:
-                query = '''SELECT DISTINCT album_id, title, artist, path, cdart, cover, disc, musicbrainz_albumid, musicbrainz_artistid FROM alblist WHERE artist="%s" ORDER BY title ASC''' % artist_name
-                c.execute(query)
+                try:
+                    query = '''SELECT DISTINCT album_id, title, artist, path, cdart, cover, disc, musicbrainz_albumid, musicbrainz_artistid FROM alblist WHERE artist="%s" ORDER BY title ASC''' % artist_name
+                    c.execute(query)
+                except sqlite3.OperationalError:
+                    query = '''SELECT DISTINCT album_id, title, artist, path, cdart, cover, disc, musicbrainz_albumid, musicbrainz_artistid FROM alblist WHERE artist='%s' ORDER BY title ASC''' % artist_name
+                    c.execute(query)
             except:
                 traceback.print_exc()
         db=c.fetchall()
@@ -809,7 +835,11 @@ def check_artist_mbid( artists, background=False, mode = "all_artists" ):
     dialog_msg( "close", background = background )
     return updated_artists, canceled
 
-def update_missing_artist_mbid( artists, background=False, mode = "all_artists" ):
+def update_missing_artist_mbid( artists, background=False, mode = "all_artists", repair = False ):
+    if repair:
+        log( "Updating Removed MBID", xbmc.LOGNOTICE )
+    else:
+        log( "Updating Missing MBID", xbmc.LOGNOTICE )
     updated_artists = []
     canceled = False
     percent = 1
@@ -830,7 +860,7 @@ def update_missing_artist_mbid( artists, background=False, mode = "all_artists" 
         if percent > 100:
             percent = 100
         count += 1
-        if len( update_artist["musicbrainz_artistid"] ) != 36:
+        if ( len( update_artist["musicbrainz_artistid"] ) != 36  and not repair ) or ( update_artist["musicbrainz_artistid"] == "removed" and repair ):
             if dialog_msg( "iscanceled", background = background):
                 canceled = True
                 break
@@ -843,7 +873,11 @@ def update_missing_artist_mbid( artists, background=False, mode = "all_artists" 
     dialog_msg( "close", background = background )
     return updated_artists, canceled
     
-def update_missing_album_mbid( albums, background=False ):
+def update_missing_album_mbid( albums, background=False, repair = False ):
+    if repair:
+        log( "Updating Removed MBID", xbmc.LOGNOTICE )
+    else:
+        log( "Updating Missing MBID", xbmc.LOGNOTICE )
     updated_albums = []
     canceled = False
     percent = 1
@@ -861,7 +895,7 @@ def update_missing_album_mbid( albums, background=False ):
         if percent > 100:
             percent = 100
         count += 1
-        if len( album["musicbrainz_albumid"] ) != 36:
+        if ( len( album["musicbrainz_albumid"] ) != 36  and not repair ) or ( album["musicbrainz_albumid"] == "removed" and repair ):
             if dialog_msg( "iscanceled", background = background):
                 canceled = True
                 break

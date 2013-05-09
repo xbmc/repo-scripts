@@ -1,3 +1,13 @@
+3.0.3
+- Add - Remove all MBIDs that match "24f1766e-9635-4d58-a4d4-9413f9f98a4c" then download correct matching MBIDs - only runs on an old database version
+- Update - New Database version
+- Add - addon.xml cosmetics - Thanks Martijn
+- Fix - Fix errors with some disc matching
+- Update - Update language files
+
+3.0.2
+- Fix - Corrected MusicBrainz query
+
 3.0.1
 - Fix - Corrected import for download error
 - Fix - Use correct encoding in various parts of the script

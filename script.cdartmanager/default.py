@@ -291,7 +291,6 @@ def get_script_mode():
     
 if ( __name__ == "__main__" ):
     xbmc.executebuiltin('Dialog.Close(all, true)')
-    xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "True" )
     log( "############################################################", xbmc.LOGNOTICE )
     log( "#    %-50s    #" % __scriptname__, xbmc.LOGNOTICE )
     log( "#        default.py module                                 #", xbmc.LOGNOTICE )
@@ -318,6 +317,11 @@ if ( __name__ == "__main__" ):
         __addon__.openSettings()
         soft_exit = True
     script_mode, provided_mbid, provided_dbid, media_type = get_script_mode()
+    if xbmcgui.Window( 10000 ).getProperty( "cdart_manager_running" ) == "True":
+        log( "cdART Manager Already running, exiting...", xbmc.LOGNOTICE )
+        soft_exit = True
+    else:
+        xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "True" )
     if not soft_exit:
         try:
             xbmc.executebuiltin('Dialog.Close(all, true)') 
@@ -539,4 +543,7 @@ if ( __name__ == "__main__" ):
             raise
             xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "False" )
             xbmcgui.Window( 10000 ).setProperty( "cdart_manager_update", "False" )
+    else:
+        xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "False" )
+        xbmcgui.Window( 10000 ).setProperty( "cdart_manager_update", "False" )
             

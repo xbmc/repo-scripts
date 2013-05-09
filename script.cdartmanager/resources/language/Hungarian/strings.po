@@ -4,13 +4,13 @@
 # Translators:
 # Translators:
 # Translators:
-# Attila Zsigus <>, 2012.
+# Attila Zsigus <>, 2012-2013
 msgid ""
 msgstr ""
 "Project-Id-Version: cdART Manager\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2012-07-03 05:24+0000\n"
-"PO-Revision-Date: 2012-11-02 21:40+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
 "Last-Translator: giftie <giftie61@hotmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -73,11 +73,11 @@ msgstr "Helyi adatbázis frissítése"
 
 msgctxt "#32013"
 msgid "Clean XBMC's Music Library"
-msgstr ""
+msgstr "Zenei adatbázis tisztítása"
 
 msgctxt "#32014"
 msgid "Update XBMC's Music Library"
-msgstr ""
+msgstr "Zenei adatbázis frissítése"
 
 msgctxt "#32015"
 msgid "Delete Addon's Database?"
@@ -164,8 +164,8 @@ msgid " *DOWNLOADING Artwork* "
 msgstr " *CD-KÉP LETÖLTÉSE* "
 
 msgctxt "#32036"
-msgid "Path to Music Library(for Artwork)"
-msgstr "cd-képek keresése"
+msgid "Music folder path(for Artwork)"
+msgstr "Zene mappa elérésének helye (a képekhez)"
 
 msgctxt "#32037"
 msgid "Getting local artists"
@@ -420,7 +420,7 @@ msgstr "Helyi cdART lista"
 
 msgctxt "#32099"
 msgid "Build Addon Database in background"
-msgstr ""
+msgstr "Adatbázis felépítése a háttérben"
 
 msgctxt "#32100"
 msgid "Local Album Count"
@@ -480,7 +480,7 @@ msgstr "MBID adatbázis ellenőrzése és frissítése"
 
 msgctxt "#32115"
 msgid "Notify while in Background mode"
-msgstr ""
+msgstr "Értesítések a háttérben futás közben"
 
 msgctxt "#32116"
 msgid "Notify At End of Background Database Build(displayed for 2 seconds)"
@@ -524,7 +524,7 @@ msgstr "Előadó azonosító:"
 
 msgctxt "#32126"
 msgid "Modify Addon Database"
-msgstr ""
+msgstr "Kiegészítő adatbázis módisítása"
 
 msgctxt "#32127"
 msgid "Edit Album"
@@ -693,23 +693,23 @@ msgstr "Album MBID bevitele (36 karakter)"
 
 msgctxt "#32168"
 msgid "Artist Banners"
-msgstr ""
+msgstr "Előadó banner"
 
 msgctxt "#32169"
 msgid "400px X 155px"
-msgstr ""
+msgstr "400px X 155px"
 
 msgctxt "#32170"
 msgid "800px X 310px"
-msgstr ""
+msgstr "800px X 310px"
 
 msgctxt "#32171"
 msgid "Enable HD Music LOGOs"
-msgstr ""
+msgstr "HD Zene logók engedélyezése"
 
 msgctxt "#32172"
 msgid "Backup addon database during update"
-msgstr ""
+msgstr "Kiegészítő adatbázis biztonsági mentése a frissítés során"
 
 msgctxt "#32173"
 msgid ""
@@ -719,27 +719,27 @@ msgstr ""
 
 msgctxt "#32174"
 msgid "Number of possible MBID matches:"
-msgstr ""
+msgstr "A lehetséges MBID találatok száma:"
 
 msgctxt "#32175"
 msgid "Enable replacement of illegal filename characters in artist names"
-msgstr ""
+msgstr "Nem támogatott fájlnév-karakterek cseréje az előadók nevénél"
 
 msgctxt "#32176"
 msgid "   illegal characters to replace"
-msgstr ""
+msgstr "nem támogatott karakterek cseréje"
 
 msgctxt "#32177"
 msgid "   replacement character"
-msgstr ""
+msgstr "helyettesítő karakterek"
 
 msgctxt "#32178"
 msgid "Yes"
-msgstr ""
+msgstr "Igen"
 
 msgctxt "#32179"
 msgid "No"
-msgstr ""
+msgstr "Nem"
 
 msgctxt "#32180"
 msgid "    change trailing periods to replacement character"
@@ -747,44 +747,44 @@ msgstr ""
 
 msgctxt "#32181"
 msgid "There is an error in Settings."
-msgstr ""
+msgstr "Hiba történt a beállításokban."
 
 msgctxt "#32182"
 msgid "Please check your settings and save settings[CR](press OK in settings)"
-msgstr ""
+msgstr "Kérjük ellenőrizze a beállításokat, majd mentse [CR](OK gomb a beállításokhoz)"
 
 msgctxt "#32183"
 msgid "Limit number Extrafanarts"
-msgstr ""
+msgstr "Extrafanartok számának limitálása"
 
 msgctxt "#32184"
 msgid "    Extrafanart Limit:"
-msgstr ""
+msgstr "Extrafanart Limit:"
 
 msgctxt "#32185"
 msgid "Checking fanart.tv for new artwork..."
-msgstr ""
+msgstr "Új képek keresése a fanart.tv-n..."
 
 msgctxt "#32186"
 msgid "Updating Database to new version..."
-msgstr ""
+msgstr "Adatbázis frissítése új verzióra..."
 
 msgctxt "#32187"
 msgid "Checking fanart.tv for artwork..."
-msgstr ""
+msgstr "Képek keresése a fanart.tv-n..."
 
 msgctxt "#32188"
 msgid "Use http://musicbrainz.org as the MusicBrainz Server"
-msgstr ""
+msgstr "MusicBrainz Szerver (http://musicbrainz.org) használata"
 
 msgctxt "#32189"
 msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
-msgstr ""
+msgstr "URL elérési út a MusicBrainz Szerverhez (példa: http://192.168.1.20)"
 
 msgctxt "#32190"
 msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
-msgstr ""
+msgstr "Késleltetés a MusicBrainz szerver-lekérésekhez (100 ezredmásodperc)"
 
 msgctxt "#32191"
 msgid "Refresh fanart.tv data"
-msgstr ""
+msgstr "fanart.tv adatok frissítése"

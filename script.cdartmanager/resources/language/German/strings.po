@@ -4,13 +4,13 @@
 # Translators:
 # Translators:
 # Translators:
-#   <ebay.gebhard@gmail.com>, 2012.
+# solidsatras <ebay.gebhard@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: cdART Manager\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2012-07-03 05:24+0000\n"
-"PO-Revision-Date: 2012-11-02 21:40+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
 "Last-Translator: giftie <giftie61@hotmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -164,8 +164,8 @@ msgid " *DOWNLOADING Artwork* "
 msgstr " *Grafiken werden heruntergeladen* "
 
 msgctxt "#32036"
-msgid "Path to Music Library(for Artwork)"
-msgstr "Pfad zum Musikverzeichnis(für Grafiken)"
+msgid "Music folder path(for Artwork)"
+msgstr ""
 
 msgctxt "#32037"
 msgid "Getting local artists"

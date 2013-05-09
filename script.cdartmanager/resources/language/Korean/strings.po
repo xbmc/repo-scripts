@@ -4,14 +4,15 @@
 # Translators:
 # Translators:
 # Translators:
-#   <airplanez@gmail.com>, 2012.
-#   <piodio@gmail.com>, 2012.
+# airplanez <airplanez@gmail.com>, 2012
+# Junghwan Oh <junghwan@gmail.com>, 2013
+# piodio <piodio@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: cdART Manager\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2012-07-03 05:24+0000\n"
-"PO-Revision-Date: 2012-11-02 21:40+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
 "Last-Translator: giftie <giftie61@hotmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/ko/)\n"
 "MIME-Version: 1.0\n"
@@ -74,11 +75,11 @@ msgstr "추가기능 데이터베이스 새로 고침"
 
 msgctxt "#32013"
 msgid "Clean XBMC's Music Library"
-msgstr ""
+msgstr "XBMC 음악 라이브러리 정리"
 
 msgctxt "#32014"
 msgid "Update XBMC's Music Library"
-msgstr ""
+msgstr "XBMC 음악 라이브러리 업데이트"
 
 msgctxt "#32015"
 msgid "Delete Addon's Database?"
@@ -165,8 +166,8 @@ msgid " *DOWNLOADING Artwork* "
 msgstr " *아트워크 다운로드 중* "
 
 msgctxt "#32036"
-msgid "Path to Music Library(for Artwork)"
-msgstr "음악 라이브러리 경로 (아트워크 용도)"
+msgid "Music folder path(for Artwork)"
+msgstr "음악 폴더 경로(아트웍에 사용)"
 
 msgctxt "#32037"
 msgid "Getting local artists"
@@ -421,7 +422,7 @@ msgstr "로컬 cdART 목록"
 
 msgctxt "#32099"
 msgid "Build Addon Database in background"
-msgstr ""
+msgstr "백그라운드에서 추가기능 데이터베이스 생성"
 
 msgctxt "#32100"
 msgid "Local Album Count"
@@ -525,7 +526,7 @@ msgstr "아티스트 ID: "
 
 msgctxt "#32126"
 msgid "Modify Addon Database"
-msgstr ""
+msgstr "추가기능 데이터베이스 수정"
 
 msgctxt "#32127"
 msgid "Edit Album"
@@ -658,11 +659,11 @@ msgstr "missing.txt 파일 저장"
 
 msgctxt "#32159"
 msgid "Enter Artist MBID - Including dashes(36 Characters)"
-msgstr "아티스트 MBID 입력 - Inclusing(36 Characters)"
+msgstr "아티스트 MBID 입력 - 대시 포함(36 문자)"
 
 msgctxt "#32160"
 msgid "Please Enter 36 Characters including dashes"
-msgstr "Please Enter 36 Characters including dashes"
+msgstr "대시를 포함해서 36 문자를 입력하세요"
 
 msgctxt "#32161"
 msgid "Do you want to re-enter?"
@@ -690,7 +691,7 @@ msgstr "앨범 선택"
 
 msgctxt "#32167"
 msgid "Enter Album MBID - Including dashes(36 Characters)"
-msgstr "앨범 MBID 입력 - Including dashes(36 Characters)"
+msgstr "앨범 MBID 입력 - 대시 포함(36 문자)"
 
 msgctxt "#32168"
 msgid "Artist Banners"
@@ -716,7 +717,7 @@ msgctxt "#32173"
 msgid ""
 "Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared "
 "with manual use of cdART Manager"
-msgstr "Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared with manual use of cdART Manager"
+msgstr "fanart.tv 데이터 캐시 저장 기간(The Scheduler)[CR]Cache gets cleared with manual use of cdART Manager"
 
 msgctxt "#32174"
 msgid "Number of possible MBID matches:"
@@ -728,11 +729,11 @@ msgstr "아티스트 이름에서 사용할 수 없는 문자 변경"
 
 msgctxt "#32176"
 msgid "   illegal characters to replace"
-msgstr "사용할 수 없는 문자"
+msgstr "   사용할 수 없는 문자"
 
 msgctxt "#32177"
 msgid "   replacement character"
-msgstr "다음 문자로 변경"
+msgstr "   다음 문자로 변경"
 
 msgctxt "#32178"
 msgid "Yes"
@@ -744,48 +745,48 @@ msgstr "아니오"
 
 msgctxt "#32180"
 msgid "    change trailing periods to replacement character"
-msgstr ""
+msgstr "    뒤의 점을 문자로 바꿈"
 
 msgctxt "#32181"
 msgid "There is an error in Settings."
-msgstr ""
+msgstr "설정에 오류가 있습니다."
 
 msgctxt "#32182"
 msgid "Please check your settings and save settings[CR](press OK in settings)"
-msgstr ""
+msgstr "설정을 확인하고 저장하세요[CR](설정에서 OK를 누르세요)"
 
 msgctxt "#32183"
 msgid "Limit number Extrafanarts"
-msgstr ""
+msgstr "추가팬아트 수 제한"
 
 msgctxt "#32184"
 msgid "    Extrafanart Limit:"
-msgstr ""
+msgstr "    추가팬아트 제한:"
 
 msgctxt "#32185"
 msgid "Checking fanart.tv for new artwork..."
-msgstr ""
+msgstr "fanart.tv에서 새 아트워크 확인 중..."
 
 msgctxt "#32186"
 msgid "Updating Database to new version..."
-msgstr ""
+msgstr "데이터베이스를 새 버전으로 업데이트 중..."
 
 msgctxt "#32187"
 msgid "Checking fanart.tv for artwork..."
-msgstr ""
+msgstr "fanart.tv에서 아트워크 확인 중..."
 
 msgctxt "#32188"
 msgid "Use http://musicbrainz.org as the MusicBrainz Server"
-msgstr ""
+msgstr "MusicBrainz 서버로 http://musicbrainz.org 사용"
 
 msgctxt "#32189"
 msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
-msgstr ""
+msgstr "     MusicBrainz 서버 URL (예 - http://192.168.1.20)"
 
 msgctxt "#32190"
 msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
-msgstr ""
+msgstr "     MusicBrainz 서버간 요청 지연시간 (100's of Milliseconds)"
 
 msgctxt "#32191"
 msgid "Refresh fanart.tv data"
-msgstr ""
+msgstr "fanart.tv 데이터 새로 고침"

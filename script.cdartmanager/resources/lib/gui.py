@@ -165,11 +165,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                             url = art_image
                             color = self.unrecognized_color
                     else:
-                        if artwork["picture"]:
+                        if artwork[ "picture" ]:
                             #check to see if artwork already exists
                             # set the matched colour local and distant colour
                             #colour the label to the matched colour if not
-                            url = artwork["picture"]
+                            url = artwork[ "picture" ]
                             if album[type]:
                                 art_image = os.path.join( album["path"], filename ).replace( "\\\\", "\\" )
                                 color = self.remotelocal_color

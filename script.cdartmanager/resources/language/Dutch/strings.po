@@ -4,13 +4,13 @@
 # Translators:
 # Translators:
 # Translators:
-#   <martkuper@hotmail.com>, 2012.
+# martkuper <martkuper@hotmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: cdART Manager\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2012-07-03 05:24+0000\n"
-"PO-Revision-Date: 2012-11-02 21:40+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
 "Last-Translator: giftie <giftie61@hotmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -73,11 +73,11 @@ msgstr "Ververs Addon Database"
 
 msgctxt "#32013"
 msgid "Clean XBMC's Music Library"
-msgstr ""
+msgstr "XBMC's muziek bibliotheek opschonen"
 
 msgctxt "#32014"
 msgid "Update XBMC's Music Library"
-msgstr ""
+msgstr "Update XBMC's muziek bibliotheek"
 
 msgctxt "#32015"
 msgid "Delete Addon's Database?"
@@ -164,8 +164,8 @@ msgid " *DOWNLOADING Artwork* "
 msgstr " *DOWNLOADING Artwork* "
 
 msgctxt "#32036"
-msgid "Path to Music Library(for Artwork)"
-msgstr "cdARTs zoeken"
+msgid "Music folder path(for Artwork)"
+msgstr ""
 
 msgctxt "#32037"
 msgid "Getting local artists"
@@ -420,7 +420,7 @@ msgstr "Lokale cdART Lijst"
 
 msgctxt "#32099"
 msgid "Build Addon Database in background"
-msgstr ""
+msgstr "Bouw de addon database in de achtergrond"
 
 msgctxt "#32100"
 msgid "Local Album Count"
@@ -436,7 +436,7 @@ msgstr "Ophalen Lokale Database"
 
 msgctxt "#32103"
 msgid "Saving Missing Artwork List"
-msgstr ""
+msgstr "Sla missende artwork lijst op"
 
 msgctxt "#32104"
 msgid "Uploading Missing cdART List to website"
@@ -468,19 +468,19 @@ msgstr "Gedownload Artwork"
 
 msgctxt "#32112"
 msgid "Updating Thumbnails and Fanarts"
-msgstr ""
+msgstr "Bijwerken van Thumbnails en Fanarts"
 
 msgctxt "#32113"
 msgid "Finished updating Thumbnails and Fanarts"
-msgstr ""
+msgstr "Klaar met bijwerken van Thumbnails en Fanarts"
 
 msgctxt "#32114"
 msgid "Check Database MBID's to be current during an Update"
-msgstr ""
+msgstr "Controlleer MBID's database of deze up to date is."
 
 msgctxt "#32115"
 msgid "Notify while in Background mode"
-msgstr ""
+msgstr "Waarschuw in achtergrond modus"
 
 msgctxt "#32116"
 msgid "Notify At End of Background Database Build(displayed for 2 seconds)"
@@ -524,7 +524,7 @@ msgstr "Artiest ID:"
 
 msgctxt "#32126"
 msgid "Modify Addon Database"
-msgstr ""
+msgstr "Bewerk de addon database"
 
 msgctxt "#32127"
 msgid "Edit Album"
@@ -544,15 +544,15 @@ msgstr "De XBMC Muziek Database Mist"
 
 msgctxt "#32131"
 msgid "Please insure Music Library is built."
-msgstr ""
+msgstr "Wees er zeker van dat de muziek bibliotheek gebouwd is"
 
 msgctxt "#32132"
 msgid "Updating Missing MusicBrainz Artist's IDs"
-msgstr ""
+msgstr "Bijwerken van missende MBAID's"
 
 msgctxt "#32133"
 msgid "Updating Missing MusicBrainz Album/Artist ID's"
-msgstr ""
+msgstr "Bijwerken van MB Album/Artits ID's"
 
 msgctxt "#32134"
 msgid "Updating Addon Database"
@@ -563,9 +563,8 @@ msgid "Updating Addon Database - Local Artists"
 msgstr "De Addon Database met Lokale Artiesten wordt geüpdated"
 
 msgctxt "#32136"
-msgid ""
-"Enable MusicBrainz ID update during Addon Database update(for missing IDs)"
-msgstr ""
+msgid "Enable MusicBrainz ID update during Addon Database update(for missing IDs)"
+msgstr "Zet MBID's updaten aan tijdens de Addon database update (voor missende ID's)"
 
 msgctxt "#32137"
 msgid "Artist"
@@ -597,11 +596,11 @@ msgstr "Extra instellingen"
 
 msgctxt "#32144"
 msgid "Artist Thumbs"
-msgstr ""
+msgstr "Artiest Thumbs"
 
 msgctxt "#32145"
 msgid "Update XBMC Thumbnails and Fanarts"
-msgstr ""
+msgstr "Update XBMC Thumbnails en Fanarts"
 
 msgctxt "#32146"
 msgid "Settings"
@@ -617,11 +616,11 @@ msgstr "(dit kan een lange tijd duren om te voltooien)"
 
 msgctxt "#32149"
 msgid "Checking Artist MBIDs"
-msgstr ""
+msgstr "Controleren van artits MBID's"
 
 msgctxt "#32150"
 msgid "Checking Album MBIDs"
-msgstr ""
+msgstr "Controleren van album MBID's"
 
 msgctxt "#32151"
 msgid "Find Missing MBIDs"
@@ -641,7 +640,7 @@ msgstr "Controleer Alle MBIDs"
 
 msgctxt "#32155"
 msgid "Enter MBID"
-msgstr ""
+msgstr "Enter MBID"
 
 msgctxt "#32156"
 msgid "Select from search(manual entry)"
@@ -649,23 +648,23 @@ msgstr "Selecteer "
 
 msgctxt "#32157"
 msgid "Select from search(automatic)"
-msgstr ""
+msgstr "Selecteer van de zoekopdracht (automatisch)"
 
 msgctxt "#32158"
 msgid "Enable saving of missing.txt file"
-msgstr ""
+msgstr "Sla missing.txt file op"
 
 msgctxt "#32159"
 msgid "Enter Artist MBID - Including dashes(36 Characters)"
-msgstr ""
+msgstr "Voer Artist MBID in - Inclusief streepjes (36 tekens)"
 
 msgctxt "#32160"
 msgid "Please Enter 36 Characters including dashes"
-msgstr ""
+msgstr "Gelieve Voer 36 tekens inclusief streepjes"
 
 msgctxt "#32161"
 msgid "Do you want to re-enter?"
-msgstr ""
+msgstr "Wilt u het opnieuw in te voeren?"
 
 msgctxt "#32162"
 msgid "Is this MBID Correct?"
@@ -677,11 +676,11 @@ msgstr "Weet u zeker dat u de MBID wilt verwijderen?"
 
 msgctxt "#32164"
 msgid "Enter Artist name to search"
-msgstr ""
+msgstr "Voer naam van de artiest in om te zoeken"
 
 msgctxt "#32165"
 msgid "Enter Album title to search"
-msgstr ""
+msgstr "Voer naam van het album in om te zoeken"
 
 msgctxt "#32166"
 msgid "Select Album"
@@ -689,11 +688,11 @@ msgstr "Selecteer Album"
 
 msgctxt "#32167"
 msgid "Enter Album MBID - Including dashes(36 Characters)"
-msgstr ""
+msgstr "Voer Album MBID in - Inclusief streepjes (36 tekens)"
 
 msgctxt "#32168"
 msgid "Artist Banners"
-msgstr ""
+msgstr "Artist Banners"
 
 msgctxt "#32169"
 msgid "400px X 155px"
@@ -705,17 +704,17 @@ msgstr "800px X 310px"
 
 msgctxt "#32171"
 msgid "Enable HD Music LOGOs"
-msgstr ""
+msgstr "Schakel HD-muziek LOGO's in"
 
 msgctxt "#32172"
 msgid "Backup addon database during update"
 msgstr "Backup de addon database tijdens de update"
 
 msgctxt "#32173"
-msgid ""
-"Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared "
+msgid "Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared "
 "with manual use of cdART Manager"
-msgstr ""
+msgstr "Aantal dagen tot cache fanart.tv gegevens (De Scheduler) wordt gewist "
+"met handmatige gebruik van cdART Manager"
 
 msgctxt "#32174"
 msgid "Number of possible MBID matches:"
@@ -723,15 +722,15 @@ msgstr "Het aantal mogelijke MBID resultaten"
 
 msgctxt "#32175"
 msgid "Enable replacement of illegal filename characters in artist names"
-msgstr ""
+msgstr "Schakel vervanging van illegale bestandsnaam tekens in de namen van artiesten"
 
 msgctxt "#32176"
 msgid "   illegal characters to replace"
-msgstr ""
+msgstr "   ongeldige tekens te vervangen"
 
 msgctxt "#32177"
 msgid "   replacement character"
-msgstr ""
+msgstr "   vervangend teken"
 
 msgctxt "#32178"
 msgid "Yes"
@@ -743,48 +742,48 @@ msgstr "Nee"
 
 msgctxt "#32180"
 msgid "    change trailing periods to replacement character"
-msgstr ""
+msgstr "    veranderen achterstand tijdvakken vervangend teken"
 
 msgctxt "#32181"
 msgid "There is an error in Settings."
-msgstr ""
+msgstr "Er is een probleem in settings"
 
 msgctxt "#32182"
 msgid "Please check your settings and save settings[CR](press OK in settings)"
-msgstr ""
+msgstr "Controleer uw instellingen [CR] (druk op OK in de instellingen) op te slaan"
 
 msgctxt "#32183"
 msgid "Limit number Extrafanarts"
-msgstr ""
+msgstr "Beperk het aantal Extrafanarts"
 
 msgctxt "#32184"
 msgid "    Extrafanart Limit:"
-msgstr ""
+msgstr "    Extrafanart limiet"
 
 msgctxt "#32185"
 msgid "Checking fanart.tv for new artwork..."
-msgstr ""
+msgstr "Controleert fanart.tv voor nieuwe artworks"
 
 msgctxt "#32186"
 msgid "Updating Database to new version..."
-msgstr ""
+msgstr "Updaten Database naar nieuwe versie ..."
 
 msgctxt "#32187"
 msgid "Checking fanart.tv for artwork..."
-msgstr ""
+msgstr "Controleert fanart.tv voor nieuwe artworks"
 
 msgctxt "#32188"
 msgid "Use http://musicbrainz.org as the MusicBrainz Server"
-msgstr ""
+msgstr "Gebruik http://musicbrainz.org als MusicBrainz server"
 
 msgctxt "#32189"
 msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
-msgstr ""
+msgstr "     Url naar MusicBrainz server (bijvoorbeeld - http://192.168.1.20)"
 
 msgctxt "#32190"
 msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
-msgstr ""
+msgstr "     Vertraging tussen MusicBrainz Server verzoeken (100's van milliseconden)"
 
 msgctxt "#32191"
 msgid "Refresh fanart.tv data"
-msgstr ""
+msgstr "Vernieuw fanart.tv data"
