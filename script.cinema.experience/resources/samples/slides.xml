@@ -1,0 +1,7 @@
+<slides>
+    <slide rating="PG">
+        <question format="Q[0-9]+.jpg" />
+        <clue format="Q[0-9]+c.jpg" />
+        <answer format="Q[0-9]+a.jpg" />
+    </slide>
+</slides>

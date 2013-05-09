@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+<!-- Trivia settings -->
+
+    <category label="32801">
+        <setting type="lsep" label="32801" />
+        <setting id="trivia_mode" type="enum"  label="32211" lvalues="32281|32212|32213" default="0" /> <!-- None|Slide Show|Movie Quiz Script -->
+        <setting id="trivia_total_time" type="slider" visible="eq(-1,1)" enable="eq(-1,1)" range="0,60" label="32200" default="5" />        
+        <setting id="trivia_folder" type="folder" visible="eq(-2,1)" source="files" label="32210" default="" />
+        <setting id="trivia_slide_time" type="slider" visible="eq(-3,1)" enable="!eq(-1,)" range="1,30" label="32220" default="15" />
+        <setting id="trivia_music" type="enum" visible="eq(-4,1) + !eq(-3,0)" enable="!eq(-3,0)" lvalues="32281|32243|32244" label="32231" default="0" />
+        <setting id="trivia_music_file" type="audio" visible="eq(-1,1) + eq(-5,1)" enable="!eq(-1,0)" label="32230" default="" />
+        <setting id="trivia_music_folder" type="folder" visible="eq(-2,2) + eq(-6,1)" enable="!eq(-2,0)" label="32230" default="" />
+        <setting id="trivia_adjust_volume" type="bool" visible="!eq(-3,0) + eq(-7,1)" enable="!eq(-3,0)" label="32232" default="true" />
+        <setting id="trivia_music_volume" type="slider" visible="!eq(-1,false) + gt(-4,0) + eq(-8,1)" enable="!eq(-1,false) + gt(-4,0)" range="0,100" label="32240" default="100" />
+        <setting id="trivia_fade_volume" type="bool" visible="!eq(-2,false) + gt(-5,0) + eq(-9,1)" enable="!eq(-2,false) + gt(-5,0)" label="32241" default="true" />
+        <setting id="trivia_fade_time" type="slider" visible="!eq(-3,false) + !eq(-1,false) + gt(-6,0) + eq(-10,1)" enable="!eq(-1,false) + gt(-6,0)" range="0,15" label="32242" default="2" />
+        <setting id="trivia_unwatched_only" type="bool" visible="eq(-11,1)" enable="!eq(-9,)" label="32270" default="false" />
+        <setting type="action" label="32271" visible="eq(-12,1)" enable="!eq(-10,) + eq(-1,true)" action="RunScript($CWD/addon.py,ClearWatchedTrivia)" />
+        <setting id="trivia_moviequiz_mode" type="enum" visible="eq(-13,2)" label="32217" lvalues="32214|32215" default="0" />
+        <setting id="trivia_moviequiz_qlimit" type="slider" visible="eq(-14,2)" label="32216" range="1,60" default="15" />
+        <setting id="trivia_limit_query" type="bool" visible="!eq(-15,0)" label="32290" default="true" />
+        <setting id="trivia_rating" type="labelenum"  visible="!eq(-16,0)"  enable="eq(-1,false)" values="G|PG|PG-13|R|NC-17|--" label="32291" default="--" />
+        <setting id="trivia_intro" type="enum" visible="!eq(-17,0)" lvalues="32281|32282|32283|32284|32285|32286|32287" label="32280" default="0" />
+        <setting id="trivia_intro_file" type="video" visible="!eq(-18,0) + eq(-1,1)" label="32288" default="" />
+        <setting id="trivia_intro_folder" type="folder" visible="!eq(-19,0) + gt(-2,1)" label="32289" default="" />
+        <setting id="trivia_outro" type="enum" visible="!eq(-20,0)" lvalues="32281|32282|32283|32284|32285|32286|32287" label="32250" default="0" />
+        <setting id="trivia_outro_file" type="video" visible="!eq(-21,0) + eq(-1,1)" label="32288" default="" />
+        <setting id="trivia_outro_folder" type="folder" visible="!eq(-22,0) + gt(-2,1)" label="32289" default="" />
+    </category>
+    
+<!-- Special videos settings -->
+
+    <category label="32802">    
+        <setting type="lsep" label="32802" />
+        <setting id="mte_intro" type="enum" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32370" default="0" />
+        <setting id="mte_intro_file" type="video" visible="eq(-1,1)" label="32340" default="" />
+        <setting id="mte_intro_folder" type="folder" visible="gt(-2,1)" source="video" label="32350" default="" />
+        <setting id="mte_outro" type="enum" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32380" default="0" />
+        <setting id="mte_outro_file" type="video" visible="eq(-1,1)" label="32340" default="" />
+        <setting id="mte_outro_folder" type="folder" visible="gt(-2,1)" source="video" label="32350" default="" />
+        <setting id="fpv_intro" type="enum" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32320" default="0" />
+        <setting id="fpv_intro_file" type="video" visible="eq(-1,1)" label="32340" default="" />
+        <setting id="fpv_intro_folder" type="folder" visible="gt(-2,1)" source="video" label="32350" default="" />
+        <setting id="fpv_outro" type="enum" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32330" default="0" />
+        <setting id="fpv_outro_file" type="video" visible="eq(-1,1)" label="32340" default="" />
+        <setting id="fpv_outro_folder" type="folder" visible="gt(-2,1)" source="video" label="32350" default="" />
+        <setting id="enable_ratings" type="bool" label="32301" default="true" />
+        <setting id="rating_videos_folder" type="folder" visible="eq(-1,true)" source="video" label="32300" default="" />
+        <setting id="enable_audio" type="bool" label="32361" default="true" />
+        <setting id="audio_videos_folder" type="folder" visible="eq(-1,true)" source="video" label="32360" default="" />
+        <setting id="countdown_video" type="enum" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32392" default="0" />
+        <setting id="countdown_video_file" type="video" visible="eq(-1,1)" label="32390" default="" />
+        <setting id="countdown_video_folder" type="folder" visible="gt(-2,1)" source="video" label="32391" default="" />
+    </category>
+    
+<!-- Trailers settings -->
+
+    <category label="32800">
+        <setting type="lsep" label="32800" />
+        <setting id="trailer_count" type="enum" lvalues="32101|32102|32103|32104|32105|32106|32107" label="32100" default="0" />
+        <setting id="cav_intro" type="enum" visible="!eq(-1,0)" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32195" default="0" />
+        <setting id="cav_intro_file" type="video" visible="!eq(-2,0) + eq(-1,1)" label="32196" default="" />
+        <setting id="cav_intro_folder" type="folder" visible="!eq(-3,0) + gt(-2,1)" source="video" label="32197" default="" />
+        <setting id="cav_outro" type="enum" visible="!eq(-4,0)" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32198" default="0" />
+        <setting id="cav_outro_file" type="video" visible="!eq(-5,0) + eq(-1,1)" label="32196" default="" />
+        <setting id="cav_outro_folder" type="folder" visible="!eq(-6,0) + gt(-2,1)" source="video" label="32197" default="" />
+        <setting id="trailer_scraper" type="enum" visible="!eq(-7,0)" lvalues="32111|32112|32113|32114" label="32110" default="1" />  <!-- Stream -->
+        <setting id="trailer_play_mode" type="enum" visible="eq(-1,0) | eq(-1,1)" enable="!eq(-1,2) | !eq(-1,3)" lvalues="32186|32187" label="32185" default="0" />
+        <setting type="lsep" label="32921" visible="eq(-1,1)" /> 
+        <setting id="trailer_download_folder" type="folder" visible="!eq(-10,0) + eq(-2,1) + !eq(-3,2) + !eq(-3,3)" source="video" label="32188" default="" />
+        <setting id="trailer_folder" type="folder" visible="!eq(-11,0) + eq(-4,2)" source="video" label="32113" default="" />
+        <setting id="trailer_amt_db_file" type="file" visible="!eq(-12,0) + eq(-5,0)" source="local" mask="AMT.db" label="32120" default="special://profile/addon_data/script.apple.movie.trailers/AMT.db" />
+        <setting id="trailer_newest_only" type="bool" visible="!eq(-13,0) + eq(-6,0)" label="32160" default="false" />
+        <setting id="trailer_quality" type="enum" visible="!eq(-14,0) + !eq(-7,2) + !eq(-7,3)" enable="!eq(-7,2) + !eq(-7,3)" lvalues="32171|32172|32173|32174" label="32170" default="0" />
+        <setting id="trailer_skip_youtube" type="bool" visible="!eq(-15,0) + eq(-8,3)" enable="eq(-8,3)" label="32923" default="true" />
+        <setting id="trailer_hd_only" type="bool" visible="!eq(-16,0) + eq(-9,0)" enable="gt(-2,1)" label="32180" default="false" />
+        <setting id="trailer_limit_mpaa" type="bool" visible="!eq(-17,0)" label="32140" default="true" />
+        <setting id="trailer_limit_genre" type="bool" visible="!eq(-18,0)" label="32141" default="true" />
+        <setting id="trailer_rating" type="labelenum"  visible="!eq(-19,0) + !eq(-8,2)" enable="eq(-3,false)" values="G|PG|PG-13|R|NC-17|--" label="32150" default="--" />
+        <setting id="trailer_unwatched_movie_only" type="bool" visible="eq(-13,3)" label="Only use trailers from unwatched movies" default="true" />
+        <setting id="trailer_unwatched_only" type="bool" visible="!eq(-21,0)" label="32190" default="false" />
+        <setting type="action" label="32191" visible="!eq(-22,0)" enable="eq(-1,true)" action="RunScript($CWD/addon.py,ClearWatchedTrailers)" />
+    </category>
+    
+<!-- Feature Presentations -->
+
+    <category label="32803">    
+        <setting type="lsep" label="32803" />
+        <setting id="enable_notification" type="bool" label="32445" default="true" />
+        <setting id="number_of_features" type="enum" lvalues="32411|32412|32413|32414|32415" label="32410" default="0" />
+        <setting id="intermission_video" type="enum" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32418" default="0" />
+        <setting id="intermission_video_file" type="video" visible="eq(-1,1)" label="32419" default="" />
+        <setting id="intermission_video_folder" type="folder" visible="gt(-2,1)" source="video" label="32420" default="" />
+        <setting id="intermission_audio" type="bool" label="32430" default="true" />
+        <setting id="intermission_ratings" type="bool" label="32440" default="true" />
+    </category>
+    
+<!-- Home Automation Settings -->
+
+    <category label="32805">
+        <setting type="lsep" label="32805" />
+        <setting id="ha_enable" type="bool" label="32920" default="false" />
+        <setting id="ha_multi_trigger" type="bool" label="32900" visible="eq(-1,true)" default="true" />
+        <setting id="ha_script_start" type="bool" label="32901" visible="eq(-2,true)" default="false" />
+        <setting id="ha_trivia_intro" type="bool" label="32902" visible="eq(-3,true)" default="false" />
+        <setting id="ha_trivia_start" type="bool" label="32903" visible="eq(-4,true)" default="false" />
+        <setting id="ha_trivia_outro" type="bool" label="32904" visible="eq(-5,true)" default="false" />
+        <setting id="ha_cav_intro" type="bool" label="32905" visible="eq(-6,true)" default="false" />
+        <setting id="ha_trailer_start" type="bool" label="32906" visible="eq(-7,true)" default="false" />
+        <setting id="ha_cav_outro" type="bool" label="32907" visible="eq(-8,true)" default="false"/>
+        <setting id="ha_mte_intro" type="bool" label="32908" visible="eq(-9,true)" default="false"/>
+        <setting id="ha_countdown_video" type="bool" label="32909" visible="eq(-10,true)" default="false"/>
+        <setting id="ha_mpaa_rating" type="bool" label="32910" visible="eq(-11,true)" default="false"/>
+        <setting id="ha_audio_format" type="bool" label="32911" visible="eq(-12,true)" default="false"/>
+        <setting id="ha_fpv_intro" type="bool" label="32912" visible="eq(-13,true)" default="false"/>
+        <setting id="ha_movie" type="bool" label="32913" visible="eq(-14,true)" default="false"/>
+        <setting id="ha_intermission" type="bool" label="32914" visible="eq(-15,true)" default="false"/>
+        <setting id="ha_fpv_outro" type="bool" label="32915" visible="eq(-16,true)" default="false"/>
+        <setting id="ha_mte_outro" type="bool" label="32916" visible="eq(-17,true)" default="false"/>
+        <setting id="ha_script_end" type="bool" label="32917" visible="eq(-18,true)" default="false" />
+        <setting type="sep" />
+        <setting id="ha_paused" type="bool" label="32918" visible="eq(-20,true)" default="false" />
+        <setting id="ha_resumed" type="bool" label="32919" visible="eq(-21,true)" default="false" />
+    </category>
+    
+<!-- Misc. Settings _-->
+    <category label="32804">    
+        <setting type="lsep" label="32804" />
+<!--        <setting id="autorefresh" type="bool" enable="false" label="32401" default="false" />
+        <setting id="autorefresh_movie" type="bool" enable="false" visible="eq(-1,true)" enable="eq(-1,true)" label="32402" default="false" />
+-->
+        <setting id="voxcommando" type="bool" label="32403" default="false" />
+        <setting id="override_play" type="bool" label="32922" default="false" />
+    </category>
+-->
+</settings>

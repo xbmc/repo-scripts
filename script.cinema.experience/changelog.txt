@@ -1,0 +1,355 @@
+3.0.3
+- fix - Coming Attraction Intro Videos
+- fix - removed code that could cause the music library to flash after trivia
+- add - give user the ability to diable YouTube(or any plug-in required) Trailers
+- fix - stop downloader from trying to download local trailers
+
+3.0.2
+- fix - make sure home_automation.py is moved in service.py if it does not exist
+- fix - have script wait until full screen video is playing before detecting a stop, should fix when XBMC is slow to start
+
+3.0.1
+- fix       - more HTTP-API calls removed(none should be left in functioning code)
+- fix       - Local Folder trailer scraper
+- fix       - XBMC Library trailer scraper
+                - Matches Genre to the first genre type in movie(if enabled)
+                - accurately matches Rating(MPAA and BBFC only)(if enabled)
+                - accurately matches unwatched Movies(if enabled)
+- fix       - trailer downloader
+- improved  - reduce the chance of seeing the Movie Library listing(still flashes but much better)
+- change    - code re-arrange and partial re-write(improvements in speed and function)
+- add       - New starting method available - RunScript(script.cinema.experience,movieid=xxxx) xxxx = database Movie ID($INFO[ListItem.DBID])
+            - this allows the script to be started inside of a skin as such:(taken from Transperency!)
+                <control type="button" id="1112">
+                    <posx>1195</posx>
+                    <posy>471</posy>
+                    <width>48</width>
+                    <height>48</height>
+                    <label>-</label>
+                    <font>-</font>
+                    <texturefocus>cinema-focus.png</texturefocus>
+                    <texturenofocus>cinema-nofocus.png</texturenofocus>
+                    <onleft>11</onleft>
+                    <onright>11</onright>
+                    <onup>1113</onup>
+                    <ondown>50</ondown>
+                    <onclick>Dialog.Close(MovieInformation)</onclick>
+                    <onclick>RunScript(script.cinema.experience,movieid=$INFO[ListItem.DBID])</onclick>
+                    <visible>Container.Content(Movies) + Skin.HasSetting(CinemaScript_MovieInfo)</visible>
+                </control>
+            - starting in this method stops the movie library from jumping to the next item(making a better flow)
+- add       - new service script
+            - allows for pause and resume to function off of xbmc.Player instance(keeps Home Automation scripting fast) - there are still times pause and resume fail to trigger though
+            - allows the script to 'override' the default play action when selecting a video in the Movie Library.
+                - What happens is the the script will see that XBMC has added something to the video playlist then stops the player(about 250ms delay)
+                  You may see the Full Screen video show up for a split second(or longer) but the video should not play, then the script will take over.
+                - Need to adjust the new setting in Miscellaneous( 'Override Play button' )
+                - May not work for every one
+                - also requires a restart of XBMC
+- change    - the home_automation.py scripting has changed(sorry folks, it was needed.)  Will post link to new Event Ghost version
+- change    - reduced the amount of shuffling videos(used to shuffle 5 times, now only once) - should help randomizing the videos when only a few are available
+
+3.0.0 
+- first Frodo Version.
+
+2.0.57
+- fix - trigger is 'Movie' not 'Movies' - fixes turning autorefresh back on for movie if it is the last video in playlist
+
+2.0.56
+- fix trigger for MPAA rating video if enable_ratings is false
+
+2.0.55 
+- add handling of slides being on VFS drive
+- modify testing for stopping of Video
+
+2.0.54
+- fixed testing for stopping of video
+
+2.0.53
+- remove dharma code
+
+1.0.52
+- cleaned up volume checks
+- fix local folder scraper for trailers.  Corrected multiple genre tags
+
+1.0.51
+- Moved Property "CinemaExperienceRunning" to the start of the script.  This allows skin developers to use as a conditional for starting TV Tunes
+
+1.0.48 - 1.0.50
+- Many updates for use with Eden
+- Added skin Property "CinemaExperienceRunning" to window 10025(MyVideoNav.xml)
+      This allows the skinner to Disable the Busy/Buffering dialog or also to Disable the TV Tunes script(I haven't found a way to get the scripts to play nicely)
+      
+      Usage: !SubString(Window(10025).Property(CinemaExperienceRunning),True)   
+
+1.0.47
+- more Ede-pre upgrades
+- separated Dharma code and Eden code
+- Moved Countdown Video to proper placement
+- a lot of internal reworking
+
+1.0.46
+- Fixed - Added missing movie details
+- Enhancement - Improved Debug logging
+- Enhancement - Added Pre-Eden code and Dharma code files to support Dharma and forward moving Git
+- Enhancement - Added 'Enable Pre-Eden' Setting in Misc Settings for those that like being on the Bleeding Edge. - Defaulted off
+- Fixed - Make various changes to script to be valid for Dharma and Pre-Eden
+- Fixed - Corrected mode coding for using Movie Quiz script in place of Trivia
+- Fixed - Added back Slide MPAA Rating
+- Enhancement - Added and MPAA Equivilent Rating for various purposes(Slides, Trailers)
+    - BBFC Rating = MPAA Rating
+    - 12, 12A = PG-13
+    - 15 = R
+    - U = G
+    - 18, R18, MA = NC-17
+ 
+    Used the following page http://en.wikipedia.org/wiki/Motion_picture_rating_system
+    
+1.0.45
+- Fixed - Full Movie details now show when info overlay is shown during movie playback
+- Fixed - Script had a habit of crashing XBMC if the last video is skipped
+- Fixed - Trailers should not be causing errors now
+- Fixed - Script now properly ends(HA script was causing improper ending)
+
+1.0.44
+- Fixed - Single music file for trivia now works
+- Fixed - Non Download trailers
+
+1.0.43
+- Enhancement - Added Paused & Resumed Triggers for Home Automation
+- Fixed - Script now handles being stopped(cleanly shuts script down)
+- Fixed - Properly use thumbnail images when HD-Trailers.net Downloader is used
+
+1.0.42
+- Fixed - the DefaultVideo.png thumbnail was showing up instead of the Movie Trailer thumbnail
+- Fixed - added error catching if user does not have the proper version of Movie Quiz installed and has the Trivia Mode set to Movie Quiz
+- Enhancement - Trailer Downloader now downloads Movie Trailer Posters
+- Fixed - Home Automation module was left out of last version.
+
+1.0.41
+- Fixed - Script crashing when Trivia music is set to None
+
+1.0.40
+- Fixed - Corrected Trivia Music
+- Fixed - Cleaned up Settings
+- Updated - New Spanish Translation.  Thanks KiSUAN
+- Added Home Automation Integration file - PM Giftie for details.
+
+1.0.39
+- Fixed - Corrected Downloader
+- Fixed - Script error on exit
+- Fixed - Auto-refresh Enabling/Disabling Trigger
+- Fixed - Script stopping if User stops or skips through Trivia Intro
+- Change - Download Trailers will fall back on to searching for unwatched Downloaded trailers
+- Enhancement - Added the ability to disable the 'annoying' notification pop up when running from the Home Window
+- Change - Re-arranged Settings to function better
+- Enhancement - Added the ability to select the Movie Quiz as an alternative to Trivia Slides(the Movie Quiz Script is not yet ready for this integration)
+- Change - Trivia Selection now Available: None, Slide Show, or Movie Quiz(see above)
+- Fixed - More proper error handling
+- Enhancement - Added Home Automation Settings to Settings(Note. Not Yet Implemented in Script)
+- Fixed - More proper logging of errors and script details.
+
+1.0.38
+- Enhancement - Added First Step For Home Automation Scripting
+- Enhancement - Changed how auto refresh is triggered.
+
+1.0.37
+- Enhancement - Added XBMC Movie Library Trailer Scraper
+                    - Searches XBMC's Database for trailer paths and urls(not fully tested)
+- Added - Spanish Description Added.  Thanks KiSUAN
+                    
+1.0.36
+- Enhancement - Added NFO scraping for Local Trailers
+                    - Compatible NFO files from HD-Trailers.net Downloader, Apple Movie Trailers Lite and Cinema Experience
+- Enhancement - Local Trailers now can be matched to Movie's Genre or MPAA rating
+                    - If no NFO file is found, the trailer is skipped(no matching Genres or MPAA's)
+                 
+1.0.35
+- Enhancement - Added Trailer Downloader
+                    - Starts to Download Trailers as soon as script starts, Falls back onto streaming if trailers are not downloaded
+                    - Saving folder can be different from the local trailer folder
+                    - Saves an NFO file for future use
+                 
+1.0.34 
+- Fixed - Added back Trivia Intro
+
+1.0.33 
+- Rearranged script to start fixing Trivia Intro, Trailer Downloader
+
+1.0.32
+- Fixed - Corrected placement of Intermission Videos when set to Single File/Playlist
+- Fixed - Corrected use of boolean tests
+
+1.0.31
+- Enhancement - Added sqlquery command
+                    - use: 
+                        RunScript(script.cinema.experience,command<li>sqlquery<li> .. your query ..)
+                        test your queries out before trying them with the script(SQLiteSpy is a great tool for XBMC's default database)
+                        example:
+                            HTTP API -> RunScript(script.cinema.experience,command<li>sqlquery<li>SELECT movieview.c00 FROM movieview WHERE c14 LIKE '%%action%%' ORDER BY RANDOM() LIMIT 10)
+                            Skin -> RunScript(script.cinema.experience,command;sqlquery;SELECT movieview.c00 FROM movieview WHERE c14 LIKE '%%action%%' ORDER BY RANDOM() LIMIT 10)
+                            
+                        A couple of SQL Queries:
+                            
+                            5 Random Movies from the Genre Comedy
+                                SELECT movieview.c00 FROM movieview WHERE c14 LIKE '%%comedy%%' ORDER BY RANDOM() LIMIT 5
+                            
+                            5 Random Movies Based on actor Adam Sandler:
+                                SELECT movieview.c00 FROM movieview JOIN actorlinkmovie ON actorlinkmovie.idMovie=movieview.idMovie JOIN actors ON actorlinkmovie.idActor=actors.idActor WHERE strActor="Adam Sandler" ORDER BY RANDOM() LIMIT 5
+              - Some thanks goes to jitterjames and others on the VoxCommando forum
+                                
+- Fixed - Changed Format for queuing movies with RunScript:
+            Old Format: RunScript(script.cinema.experience,command;movie_title=Avatar) or RunScript(script.cinema.experience,command<li>movie_title=Avatar) - <li> for HTTP API calls
+            New Format: RunScript(script.cinema.experience,command;movie_title;Avatar) or RunScript(script.cinema.experience,command<li>movie_title<li>Avatar) - <li> for HTTP API calls
+
+            Old Format still works
+
+1.0.30
+- Fixed - Changed HTTP API Broadcast
+- Fixed - Corrected database search for multiple movie command
+- Fixed - Updated Spanish Language
+
+1.0.29
+- Enhancement - Added system arguments to script
+                    - Allows a single call to queue a specific movie
+                        ie: XBMC.RunScript(script.cinema.experience,command;movie_title=Avatar) will Queue Avatar and start the script
+                            to use as a web commnand replace the ';' with <li>
+                            XBMC.RunScript(script.cinema.experience,command<li>movie_title=Avatar)
+                    - Added a single call to queue multiple movies(no limit except XBMC's playlist limit)
+                        ie: XBMC.RunScript(script.cinema.experience,command;movie_title=Avatar;Hitch;Hellboy) will Queue Avatar, Hitch and Hellboy then start the script
+                            to use as a web commnand replace the ';' with <li>
+                            XBMC.RunScript(script.cinema.experience,command<li>movie_title=Avatar;Hitch;Hellboy)
+
+1.0.28
+- Fix - script was changing Feature Presentations to 2 when the old way was used.
+
+1.0.27
+- Enhancement - Added system arguments to script
+                    - Allows a single call to queue a specific movie
+                        ie: XBMC.RunScript(script.cinema.experience,command&movie_title=Avatar) will Queue Avatar and start the script
+                            to use as a web commnand replace the '&' with <li>
+                            XBMC.RunScript(script.cinema.experience,command<li>movie_title=Avatar)
+                    - Added a single call to queue multiple movies(no limit except XBMC's playlist limit)
+                        ie: XBMC.RunScript(script.cinema.experience,command&movie_title=Avatar;Hitch;Hellboy) will Queue Avatar, Hitch and Hellboy then start the script
+                            to use as a web commnand replace the '&' with <li>
+                            XBMC.RunScript(script.cinema.experience,command<li>movie_title=Avatar;Hitch;Hellboy)
+- Fixed - Added code to try to capture if a user has stopped the movie(or videos) and then restart the script(keeps new playlist intact)
+
+1.0.26
+- Fixed - Corrected proper folder for DTSHD-MA videos - Thanks D-tyme
+
+1.0.25
+- Fixed - Correctly retrieving Audio Format Videos
+
+1.0.24
+- Move VoxCommando broadcast to a different location
+- Fixed special character error
+
+1.0.23
+- Added code for the old way to still work.
+
+1.0.22
+- Added Checking for BBFC ratings with UK: in front
+
+1.0.21
+- Fixed Notification error
+- Enhancement - Added detection for Dolby TrueHD and DTSHD-MA Audio Codecs(plays proper Audio Format Video)
+
+1.0.20
+- Enhancement - Added Broadcast to VoxCommando - turn on in settings -> Miscellaneous
+
+1.0.19
+- Enhancement - Added code for BBFC
+- Removed - Notification of script ending
+- Enhancement - Improved randomization of videos and slides
+
+1.0.18
+- Fixed - Added strings for hard coded words(allows for translation)
+- Fixed - Close Notification after movie(s) are queued
+- Cosmetics - Cleaned up logging.
+
+1.0.17 
+- Enhancement: Added Intermission Rating Video
+- Removed version testing(doesn't work with lastest and source code)
+
+1.0.16
+- Enhancement: Turn Auto refresh back on for Movie !! Audio Format Videos need to be used for this to work !!
+
+1.0.15
+- Enhancement: Added Ability for skin activate from a sub menu(Genre, Titles, Years, etc.)
+
+1.0.14
+- Enhancement: Added Ability to disable Auto Refresh - should re-enable before movie playback
+- Enhancement: Re-arranged addon.py allowing script to run from Home Window.
+
+1.0.13
+- changed Playlist playing in Trivia(move fade to before playlist)
+- changed logging in fade volume
+
+1.0.12 
+- add Testing to determine what video is playing
+
+1.0.11 
+- Enhancement: More proper logging
+- Enhancement: Multiple Features
+- Enhancement: Added ability to disable videos
+- Enhancement: Added 720p version of the trivia skin
+
+1.0.10 
+- Bug Fix: #81 Overlays displayed over trivia slides
+
+1.0.9
+- Bug Fix: #67 Music playback over trivia breaks script
+- Enhancement: #69 Trivia Music playback from folder
+- Enhancement: #72 Reset watched trivia automatically if all watched
+- Enhancement: Log Entries now prefixed with [script.cinemaexperience]
+
+1.0.8
+- Added an adjustable Fade time for the background music during trivia
+- Fixed Skip Watched Trailers(now it skips the watched ones :) 
+- Fixed Current Volume error(now matching upto 3 digits(ie 100))
+- Fixed ClearWatchedTrivia and ClearWatchedTrailers
+
+1.0.7
+- Fixed a lot of errors in new code.
+- Fix syntax in addon.xml
+
+1.0.6
+- Added the ability to disable volume changes
+   - Lowering of Volume during slides
+   - Fade volume during slides
+- Added myself back as an author(removed during troubleshooting)
+
+1.0.5
+- Added the ability to add Countdown Video before movie starts
+- Added Audio Fade(when Trivia is complete) - Thanks for the code Nuka
+- Added Audio Rise(when first video after Trivia is complete) - Thanks for the code Nuka
+- Changed Trivia Volume Setting to percentage of maximum volume(instead of percentage of current volume)
+- Added Nuka's added code for slide.xml.
+- Oh....  And added myself as one of the authors... :)
+- Trivia Music Playlist - still broken.. :(
+ 
+1.0.4
+- Added German Language files - Thanks Mad-Max
+- Added the ability to have a DTS-MA Audio format Folder
+- Added the ability to disable Trivia Music
+- Fixed Trivia Outro
+
+1.0.3
+- Disabled MPAA ratings for slides(for the time being, until a more reliable handling is added)
+- Added this change log.
+- Added fanart.jpg
+
+1.0.2
+- changed Apple Movie Trailer scraper to find Newest trailers
+- renamed skin file to follow script name(replace HTE with CE)
+
+1.0.1
+- changed name over to Cinema Experience
+- fixed trivia slides upper/lower case - Thanks Nuka
+- added trivia duration of 2 minutes and removed 60 minutes(now the steps are 2 mins, 5 mins, 10 mins, 20 mins, 30 mins and 45 mins). 
+
+1.0.0 
+- Includes work done by Ilia to get the script working with Dharma
+- fixed settings.xml to stop crashing XBMC
+- various programming changes to work with new XBMC features(pysqlite module)

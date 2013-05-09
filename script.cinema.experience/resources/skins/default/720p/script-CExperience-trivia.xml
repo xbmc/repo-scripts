@@ -1,0 +1,24 @@
+<window>
+<!--
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+-->
+    <animation effect="fade" time="200">WindowOpen</animation>
+    <animation effect="fade" time="200">WindowClose</animation>
+    <allowoverlay>false</allowoverlay>
+    <controls>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture background="true">$INFO[Window.Property(Slide)]</texture>
+            <aspectratio>stretch</aspectratio>
+            <fadetime>1000</fadetime>
+            <visible>!Player.HasVideo</visible>
+        </control>
+    </controls>
+</window>
