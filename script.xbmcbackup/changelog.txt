@@ -1,3 +1,7 @@
+Version 0.3.8
+
+added advancedsettings check on restore. prompts user to restore only this file and restart xbmc to continue. This fixes issues where path substitution was not working during restores - thanks ctrlbru
+
 Version 0.3.7
 
 added optional addon.xml tags

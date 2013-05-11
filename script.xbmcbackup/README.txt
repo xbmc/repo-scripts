@@ -1,6 +1,5 @@
 XBMC Backup
 
-WHEN UPDATING TO 0.3.6 OR ABOVE - To fix the very real problem of deleting non xbmc backup files during the backup rotation a simple check for an xbmcbackup.val file is done on each directory to ensure it was created by this addon. To make your old archives compatible with this feature simply create an empty xbmcbackup.val file and put it in each backup archive folder. The easiest way is to create a backup with the new addon and copy the xbmcbackup.val file to your other directories. 
 
 About: 
 I've had to recover my database, thumbnails, and source configuration enough times that I just wanted a quick easy way to back them up. That is what this addon is meant to do. 
@@ -43,9 +42,24 @@ If you wish to script this addon using an outside scheduler or script it can be 
 RunScript(script.xbmcbackup,backup)
 
 
-What this Addon Will Not Do:
+FAQ: 
 
-This is not meant as an XBMC file sync solution. If you have multiple frontends you want to keep in sync this addon may work in a "poor man's" sort of way but it is not intended for that. 
+I can't see any restore points when choosing "Restore", what is the problem? 
 
-This backup will not check the backup destination and delete files that do not match. It is best to only do one backup per day so that each folder is correct. 
+If you've created restore points with an older version of the addon (pre 0.3.6) you may see this issue. New versions of the addon look for a file called xbmcbackup.val to validate that a folder is a valid restore archive. Your older restore folders may not have this file. All you need to do is create a blank text file and rename it to xbmcbackup.val. Then put this file inside the archive directory. Your restore points should show up after selecting "Restore" in the addon again. 
+
+Several settings aren't being restored, this includes views, weather, etc. How do I get these back? 
+
+GUISETTINGS.xml is a configuration file used heavily by XBMC for remembering GUI specific settings. Due to the fact that XBMC reads this file on startup, and writes from memory to this file on shutdown; it is not possible to restore this file while XBMC is running. You must manually move this file from your backup archives if you wish to restore it. User SouthMark has posted the following steps for restoring in the OpenELEC system where this is more difficult: 
+
+1. Run the restore of your backup
+2. SSH using putty to the IP Address of your media centre username: root Password openelec
+3. Type touch /var/lock/xbmc.disabled and then press enter
+4. Type kill all -9 xbmc.bin and then press enter - Your media center machine should now go blank
+5. Connect to your machine using WinSCP and copy the guisettings.xml file to the userdata folder (this is the guisettings.xml file from your backup)
+6. go back to your putty window and type rm /var/lock/xbmc.disabled
+
+Why is the Addon prompting me to restart XBMC to continue? 
+
+If you have an advancedsettings file in your restore folder the addon will ask you if you want to restore this file and restart xbmc to continue. This is because the advancedsettings file may contain path substitution information that you want to be loaded when doing the rest of your restore. By restoring this file and restarting xbmc it will be loaded and the rest of your files will go where they are supposed to. If you know your file does not contain any path substitutions you can select "no" and continue as normal. 
 

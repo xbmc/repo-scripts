@@ -1,4 +1,6 @@
 import xbmc
+import xbmcvfs
+import xbmcgui
 import datetime
 import time
 import os
@@ -10,6 +12,7 @@ class BackupScheduler:
     monitor = None
     enabled = "false"
     next_run = 0
+    restore_point = None
     
     def __init__(self):
         self.monitor = UpdateMonitor(update_method = self.settingsChanged)
@@ -25,6 +28,17 @@ class BackupScheduler:
         utils.log("scheduler will run again on " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
         
     def start(self):
+
+        #check if a backup should be resumed
+        resumeRestore = self._resumeCheck()
+
+        if(resumeRestore):
+            restore = XbmcBackup()
+            restore.selectRestore(self.restore_point)
+            #skip the advanced settings check
+            restore.skipAdvanced()
+            restore.run(XbmcBackup.Restore)
+        
         while(not xbmc.abortRequested):
             
             if(self.enabled == "true"):
@@ -92,7 +106,19 @@ class BackupScheduler:
             #first day of month
             cron_exp = "0 " + str(hour_of_day) + " 1 * *"
 
-        return cron_exp    
+        return cron_exp
+
+    def _resumeCheck(self):
+        shouldContinue = False
+        if(xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "resume.txt"))):
+            rFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "resume.txt"),'r')
+            self.restore_point = rFile.read()
+            rFile.close()
+            xbmcvfs.delete(xbmc.translatePath(utils.data_dir() + "resume.txt"))
+            shouldContinue = xbmcgui.Dialog().yesno(utils.getString(30042),utils.getString(30043),utils.getString(30044))
+
+        return shouldContinue
+        
 
 class UpdateMonitor(xbmc.Monitor):
     update_method = None
