@@ -32,6 +32,7 @@ class Main:
             params = {}
         self.songid = int(params.get( 'songid', False ))
         self.albumid = int(params.get( 'albumid', False ))
+        self.tracknr = int(params.get( 'tracknr', False ))
 
     def _get_albumid( self ):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongDetails", "params": {"properties": ["artist", "album"], "songid":%s }, "id": 1}' % self.songid)
@@ -50,6 +51,8 @@ class Main:
 
     def _play_album( self ):
         xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "albumid": %d } }, "id": 1 }' % self.albumid)
+        if self.tracknr and self.tracknr > 0:
+            xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.GoTo", "params": { "playerid": 0, "to": %d }, "id": 1 }' % (self.tracknr - 1))        
 
 if ( __name__ == "__main__" ):
     Main()

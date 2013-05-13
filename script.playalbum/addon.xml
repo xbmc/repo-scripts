@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.playalbum" name="Play Album Script" version="0.1.2" provider-name="ronie">
+<addon id="script.playalbum" name="Play Album Script" version="0.1.3" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -10,5 +10,7 @@
 		<summary lang="en">Play Album Script</summary>
 		<description lang="en">Script will play a full album when executed in the album info dialog.</description>
 		<platform>all</platform>
+		<forum>http://forum.xbmc.org/showthread.php?tid=104189</forum>
+		<source>https://code.google.com/p/ronie/source/</source>
 	</extension>
 </addon>

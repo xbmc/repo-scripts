@@ -1,3 +1,6 @@
+v0.1.3
+- added tracknr property
+
 v0.1.2
 - python version bump
 
