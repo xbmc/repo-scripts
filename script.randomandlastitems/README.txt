@@ -3,15 +3,15 @@ Parameters (separated by comma , ):
 type = Movie/Episode/Music       | Script will request Movie database or Episode database
                                  | (/!\ Caution : upper and lower case are important)
 limit = #                        | # to limit returned results (default=10)
-method = Last/Random             | Last to get last added items and Random to get random items
+method = Last/Random/Playlist    | Last to get last added items, Random to get random items and Playlist to use the order of the playlist
 playlist = PathAndNameOfPlaylist | Name of the smartplaylist like special://masterprofile/playlists/video/children.xsp
                                  | or empty to request global database
                                  | If you set this parameter, you don't need to set type= because type will be read from playlist file
 menu =                           | Name of custom or standard menu which display the widget
 unwatched = True/False           | unwatched=True to filter only unwatched items
 resume = True/False              | resume=True to filter only partially watched items
-propertie = NameOfTheProperty    | You can overwrite the default properties names Playlist<method><type><menu> by using this parameter
-                                 | example : propertie=CustomMenu1Widget1
+property = NameOfTheProperty     | You can overwrite the default properties names Playlist<method><type><menu> by using this parameter
+                                 | example : property=CustomMenu1Widget1
 
 /!\ CAUTION /!\
 resume=True can slow down script when working on playlist
@@ -33,6 +33,7 @@ Properties return to Home window (id 10000) :
 %s.Count = Number of movies in library or playlist
 %s.Unwatched = Number of unwatched movies in library or playlist
 %s.Watched = Number of watched movies in library or playlist
+%s.Name = Name of the playlist
 %s.%d.DBID
 %s.%d.Title
 %s.%d.OriginalTitle
@@ -79,6 +80,7 @@ Properties return to Home window (id 10000) :
 %s.Unwatched = Number of unwatched episodes in library or playlist
 %s.Watched = Number of watched episodes in library or playlist
 %s.TvShows = Number of TV shows in library or playlist
+%s.Name = Name of the playlist
 %s.%d.DBID
 %s.%d.Title
 %s.%d.Episode
@@ -121,6 +123,7 @@ Properties return to Home window (id 10000) :
 %s.Artists = Number of artists in library or playlist
 %s.Albums = Number of albums in library or playlist
 %s.Songs = Nombre of songs in library or playlist
+%s.Name = Name of the playlist
 %s.%d.Title
 %s.%d.Artist
 %s.%d.Genre

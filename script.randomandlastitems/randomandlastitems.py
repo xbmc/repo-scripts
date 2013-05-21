@@ -17,10 +17,12 @@ from xml.dom.minidom import parse
 # Define global variables
 LIMIT = 20
 METHOD = "Random"
+REVERSE = False
 MENU = ""
 PLAYLIST = ""
 PROPERTY = ""
 RESUME = 'False'
+SORTBY = ""
 START_TIME = time.time()
 TYPE = ''
 UNWATCHED = 'False'
@@ -36,7 +38,10 @@ def log(txt):
     xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 def _getPlaylistType ():
+    global METHOD
     global PLAYLIST
+    global REVERSE
+    global SORTBY
     global TYPE
     _doc = parse(xbmc.translatePath(PLAYLIST))
     _type = _doc.getElementsByTagName('smartplaylist')[0].attributes.item(0).value
@@ -46,6 +51,18 @@ def _getPlaylistType ():
        TYPE = 'Episode'
     if _type == 'songs' or _type == 'albums':
        TYPE = 'Music'
+    # get playlist name
+    _name = _doc.getElementsByTagName('name')[0].firstChild.nodeValue
+    if _name != "":
+        _setProperty( "%s.Name" % PROPERTY, str( _name ) )
+    # get playlist order
+        if METHOD == 'Playlist':
+            if _doc.getElementsByTagName('order'):
+                SORTBY = _doc.getElementsByTagName('order')[0].firstChild.nodeValue
+                if _doc.getElementsByTagName('order')[0].attributes.item(0).value == "descending":
+                    REVERSE = True
+            else:
+                METHOD = ""
 
 def _timeTook( t ):
     t = ( time.time() - t )
@@ -74,6 +91,8 @@ def _getMovies ( ):
     global PLAYLIST
     global PROPERTY
     global RESUME
+    global REVERSE
+    global SORTBY
     global UNWATCHED
     _result = []
     _total = 0
@@ -131,6 +150,8 @@ def _getMovies ( ):
         _count = 0
         if METHOD == 'Last':
             _result = sorted(_result, key=itemgetter('dateadded'), reverse=True)
+        elif METHOD == 'Playlist':
+            _result = sorted(_result, key=itemgetter(SORTBY), reverse=REVERSE)
         else:
             random.shuffle(_result, random.random)
         for _movie in _result:
@@ -214,6 +235,8 @@ def _getEpisodesFromPlaylist ( ):
     global METHOD
     global PLAYLIST
     global RESUME
+    global REVERSE
+    global SORTBY
     global UNWATCHED
     global PROPERTY
     _result = []
@@ -223,7 +246,7 @@ def _getEpisodesFromPlaylist ( ):
     _tvshows = 0
     _tvshowid = []
     # Request database using JSON
-    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "studio", "mpaa", "rating", "resume", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(PLAYLIST))
+    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "studio", "mpaa", "rating", "resume", "runtime", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(PLAYLIST))
     _json_query = unicode(_json_query, 'utf-8', errors='ignore')
     _json_pl_response = simplejson.loads(_json_query)
     _files = _json_pl_response.get( "result", {} ).get( "files" )
@@ -234,7 +257,7 @@ def _getEpisodesFromPlaylist ( ):
             if _file['type'] == 'tvshow':
                 _tvshows += 1
                 # Playlist return TV Shows - Need to get episodes
-                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %s, "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(_file['id']))
+                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %s, "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "runtime", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(_file['id']))
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
                 _json_response = simplejson.loads(_json_query)
                 _episodes = _json_response.get( "result", {} ).get( "episodes" )
@@ -267,6 +290,8 @@ def _getEpisodesFromPlaylist ( ):
         _count = 0
         if METHOD == 'Last':
             _result = sorted(_result, key=itemgetter('dateadded'), reverse=True)
+        elif METHOD == 'Playlist':
+            _result = sorted(_result, key=itemgetter(SORTBY), reverse=REVERSE)
         else:
             random.shuffle(_result, random.random)
         for _episode in _result:
@@ -293,6 +318,8 @@ def _getEpisodes ( ):
     global LIMIT
     global METHOD
     global RESUME
+    global REVERSE
+    global SORTBY
     global UNWATCHED
     _result = []
     _total = 0
@@ -301,7 +328,7 @@ def _getEpisodes ( ):
     _tvshows = 0
     _tvshowid = []
     # Request database using JSON
-    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "studio", "mpaa", "rating", "resume", "tvshowid", "art", "streamdetails", "dateadded"]}, "id": 1}')
+    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "studio", "mpaa", "rating", "resume", "runtime", "tvshowid", "art", "streamdetails", "dateadded"]}, "id": 1}')
     _json_query = unicode(_json_query, 'utf-8', errors='ignore')
     _json_pl_response = simplejson.loads(_json_query)
     # If request return some results
@@ -322,6 +349,8 @@ def _getEpisodes ( ):
         _count = 0
         if METHOD == 'Last':
             _result = sorted(_result, key=itemgetter('dateadded'), reverse=True)
+        elif METHOD == 'Playlist':
+            _result = sorted(_result, key=itemgetter(SORTBY), reverse=REVERSE)
         else:
             random.shuffle(_result, random.random)
         for _episode in _result:
@@ -341,6 +370,8 @@ def _getAlbumsFromPlaylist ( ):
     global LIMIT
     global METHOD
     global PLAYLIST
+    global REVERSE
+    global SORTBY
     _result = []
     _artists = 0
     _artistsid = []
@@ -355,6 +386,11 @@ def _getAlbumsFromPlaylist ( ):
         _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "music", "properties": ["dateadded"], "sort": {"method": "random"}}, "id": 1}' %(PLAYLIST))
     elif METHOD == 'Last':
         _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "music", "properties": ["dateadded"], "sort": {"order": "descending", "method": "dateadded"}}, "id": 1}' %(PLAYLIST))
+    elif METHOD == 'Playlist':
+        order = "ascending"
+        if REVERSE:
+            order = "descending"
+        _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "music", "properties": ["dateadded"], "sort": {"order": "%s", "method": "%s"}}, "id": 1}' %(PLAYLIST, order, SORTBY))
     else:
         _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "music", "properties": ["dateadded"]}, "id": 1}' %(PLAYLIST))
     _json_query = unicode(_json_query, 'utf-8', errors='ignore')
@@ -500,6 +536,7 @@ def _setEpisodeProperties ( _episode, _count ):
         art = _episode['art']
         path = media_path(_episode['file'])
         play = 'XBMC.RunScript(' + __addonid__ + ',episodeid=' + str(_episode.get('id')) + ')'
+        runtime = str(int((_episode['runtime'] / 60) + 0.5))
         streaminfo = media_streamdetails(_episode['file'].encode('utf-8').lower(),
                                          _episode['streamdetails'])
         _setProperty("%s.%d.DBID"                  % ( PROPERTY, _count ), str(_episode.get('id')))
@@ -524,6 +561,7 @@ def _setEpisodeProperties ( _episode, _count ):
         _setProperty("%s.%d.Art(clearart)"         % ( PROPERTY, _count ), art.get('tvshow.clearart',''))
         _setProperty("%s.%d.Art(landscape)"        % ( PROPERTY, _count ), art.get('tvshow.landscape',''))
         _setProperty("%s.%d.Resume"                % ( PROPERTY, _count ), resume)
+        _setProperty("%s.%d.Runtime"               % ( PROPERTY, _count ), runtime)
         _setProperty("%s.%d.PercentPlayed"         % ( PROPERTY, _count ), played)
         _setProperty("%s.%d.File"                  % ( PROPERTY, _count ), _episode['file'])
         _setProperty("%s.%d.MPAA"                  % ( PROPERTY, _count ), _episode['mpaa'])
