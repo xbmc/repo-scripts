@@ -2,17 +2,21 @@
 
 #===============================================================================
 # Subscenter.org subtitles service.
-# Version: 1.4
+# Version: 1.5.1
 #
+# TODO:
+#  Filter title (The Office (US) => The Office)
 # Change log:
 # 1.1 - Fixed downloading of non-Hebrew subtitles.
 # 1.2 - Added key field for download URL
 # 1.3 - Fixed null values in website dictionary (changed to None)
 # 1.4 - Fixed key field (Thanks ILRHAES)
 # 1.5 - Added User Agent to getURL, fixed string related bugs and patterns
+# 1.5.1 - Temp fix, TODO: Go over version 1.5 patterns.
 #
 # Created by: Ori Varon
 # Changed by MeatHook (1.5)
+# Version 1.5.1 by BBLN
 #===============================================================================
 import os, re, xbmc, xbmcgui, string, time, urllib2
 from utilities import languageTranslate, log
@@ -26,8 +30,7 @@ debug_pretext = ""
 #===============================================================================
 
 MULTI_RESULTS_PAGE_PATTERN = u"עמוד (?P<curr_page>\d*) \( סך הכל: (?P<total_pages>\d*) \)"
-MOVIES_SEARCH_RESULTS_PATTERN = "<div class=\"generalWindowRight\">(?:\r|\n|.){1,400}<a href=\"(?P<sid>/he/subtitle/movie/.*?)\">"
-TV_SEARCH_RESULTS_PATTERN = "<div class=\"generalWindowRight\">(?:\r|\n|.){1,400}<a href=\"(?P<sid>/he/subtitle/series/.*?)\">"
+SEARCH_RESULTS_PATTERN = "<div class=\"generalWindowRight\">.*?<a href=\"(?P<sid>.*?)\">"
 
 #===============================================================================
 # Private utility functions
@@ -73,9 +76,10 @@ def getURLfilename(url):
 # languages and the current subtitles list and adds all found subtitles matching
 # the language selection to the subtitles list.
 def getAllSubtitles(subtitlePageID,languageList,subtitlesList):
+    log( __name__ ,"Get all subtitles")
     # Retrieve the subtitles page (html)
     try:
-        subtitlePage = getURL(BASE_URL + ''.join(subtitlePageID).lstrip())
+        subtitlePage = getURL(BASE_URL + str(subtitlePageID).lstrip())
     except:
         # Didn't find the page - no such episode?
         return
@@ -191,39 +195,27 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     if (not searchResults):
         return subtitlesList, "", "Search timed out, please try again later."
 
-    # Look for subtitles page links
-    if tvshow:
-        subtitleIDs = re.findall(TV_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
-    else:
-        subtitleIDs = re.findall(MOVIES_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)    
-    
+    subtitleIDs = re.findall(SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+    log( __name__ , "Looking for page links")
     # Look for more subtitle pages
     pages = re.search(MULTI_RESULTS_PAGE_PATTERN,unicode(searchResults,"utf-8"))
     # If we found them look inside for subtitles page links
     if (pages):
-        while (not (int(pages.group("curr_page"))) == int(pages.group("total_pages"))):
-            searchResults = getURL(BASE_URL + "/he/subtitle/search/?q="+searchString.lower()+"&page="+str(int(pages.group("curr_page"))+1))
-
-            if tvshow:
-                tempSIDs = re.findall(TV_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
-            else:
-                tempSIDs = re.findall(MOVIES_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
-
+        for pageId in xrange(int(pages.group("total_pages"))):
+            searchResults = getURL(BASE_URL + "/he/subtitle/search/?q=" + searchString.lower() + "&page=" + str(pageId))
+            tempSIDs = re.findall(SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
             for sid in tempSIDs:
                 subtitleIDs.append(sid)
-            pages = re.search(MULTI_RESULTS_PAGE_PATTERN,unicode(searchResults,"utf-8"))
     # Uniqify the list
     subtitleIDs=list(set(subtitleIDs))
-    # If looking for tvshos try to append season and episode to url
+    # If looking for tvshows trying to append season and episode to url
     if tvshow:
-        for i in range(len(subtitleIDs)):
-            subtitleIDs[i] += ("/"+season+"/"+episode+"/",)
-
-    for sid in subtitleIDs:
-        getAllSubtitles(sid,languageList,subtitlesList)
-    
-    
-    # Standard output -
+        log( __name__ ,"%s Adding season and episode to urls" % (debug_pretext))
+        for id in xrange(len(subtitleIDs)):
+            subtitleIDs[id] += str("/"+season+"/"+episode+"/")
+    for id in subtitleIDs:
+        getAllSubtitles(id,languageList,subtitlesList)
+    # Standard output
     # subtitles list (list of tuples built in getAllSubtitles),
     # session id (e.g a cookie string, passed on to download_subtitles),
     # message to print back to the user
@@ -248,7 +240,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     archive_name = getURLfilename(url)
     # Get the file content using geturl()
     content = getURL(url)
-    subs_file = ""
+    subs_file = None
     if content:
         local_tmp_file = os.path.join(tmp_sub_dir, archive_name)
         log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))

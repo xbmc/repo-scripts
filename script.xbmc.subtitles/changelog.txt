@@ -1,3 +1,9 @@
+3.9.8
+- [fix] Modified Torec plugin directory structure, Mor Sela
+- [fix] Modified how Subscene handles packed files to remove unnecessary 3s sleep, IcE
+- [fix] Subcenter,BBLN
+- [add] Divxplanet Turkish Subtitles Support
+
 3.9.7
 - [fix] Filename on the beginning of description, EnricGodes
 - [fix] LegendasDivx, LegendasZone and Ondertitel search pattern, highlandr
