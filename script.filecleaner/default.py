@@ -1,6 +1,5 @@
 # encoding: utf-8
 import os
-import platform
 import locale
 import time
 import re
@@ -71,7 +70,7 @@ class Cleaner:
         try:
             locale.setlocale(locale.LC_ALL, "English_United Kingdom")
         except locale.Error, le:
-            self.debug("Could not change locale: %s" % le)
+            self.debug("Could not change locale: %s" % le, xbmc.LOGWARNING)
 
         service_sleep = 10
         ticker = 0
@@ -107,7 +106,7 @@ class Cleaner:
         self.debug("Starting cleaning routine")
 
         if self.delete_when_idle and xbmc.Player().isPlayingVideo():
-            self.debug("A video is currently being played. No cleaning will be performed during this interval.")
+            self.debug("A video is currently playing. No cleaning will be performed this interval.", xbmc.LOGWARNING)
             return
 
         if not self.delete_when_low_disk_space or (self.delete_when_low_disk_space and self.disk_space_low()):
@@ -134,7 +133,7 @@ class Cleaner:
                                     count += 1
                                     self.delete_empty_folders(os.path.dirname(abs_path))
                         else:
-                            self.debug("XBMC could not find the file at %s" % abs_path)
+                            self.debug("XBMC could not find the file at %s" % abs_path, xbmc.LOGWARNING)
                     if count > 0:
                         summary += " %d %s" % (count, self.MOVIES)
 
@@ -158,7 +157,7 @@ class Cleaner:
                                     count += 1
                                     self.delete_empty_folders(os.path.dirname(abs_path))
                         else:
-                            self.debug("XBMC could not find the file at %s" % abs_path)
+                            self.debug("XBMC could not find the file at %s" % abs_path, xbmc.LOGWARNING)
                     if count > 0:
                         summary += " %d %s" % (count, self.TVSHOWS)
 
@@ -183,7 +182,7 @@ class Cleaner:
                                     count += 1
                                     self.delete_empty_folders(os.path.dirname(abs_path))
                         else:
-                            self.debug("XBMC could not find the file at %s" % abs_path)
+                            self.debug("XBMC could not find the file at %s" % abs_path, xbmc.LOGWARNING)
                     if count > 0:
                         summary += " %d %s" % (count, self.MUSIC_VIDEOS)
 
@@ -198,7 +197,7 @@ class Cleaner:
 
                 # Check if the library is being updated before cleaning up
                 if xbmc.getCondVisibility("Library.IsScanningVideo"):
-                    self.debug("The video library is currently being updated. Skipping library cleanup.")
+                    self.debug("The video library is being updated. Skipping library cleanup.", xbmc.LOGWARNING)
                 else:
                     xbmc.executebuiltin("XBMC.CleanLibrary(video)")
 
@@ -285,7 +284,7 @@ class Cleaner:
             if option in ke:
                 pass  # no expired videos found
             else:
-                self.debug("KeyError: %s not found" % ke)
+                self.debug("KeyError: %s not found" % ke, xbmc.LOGWARNING)
                 self.handle_json_error(response)
                 raise
         finally:
@@ -346,7 +345,7 @@ class Cleaner:
         details = error["data"] if "data" in error else "No further details"
 
         # If we cannot do anything about this error, just log it and stop
-        self.debug("JSON error occurred.\nError code: %d\nError message: %s\nError details: %s" % (code, msg, details))
+        self.debug("JSON error occurred.\nCode: %d\nMessage: %s\nDetails: %s" % (code, msg, details), xbmc.LOGERROR)
         return None
 
     def reload_settings(self):
@@ -399,7 +398,8 @@ class Cleaner:
         self.debug("Checking for disk space on path: %s" % path)
         dirs, files = xbmcvfs.listdir(path)
         if dirs or files:  # Workaround for xbmcvfs.exists("C:\")
-            if platform.system() == "Windows":
+            #if platform.system() == "Windows":
+            if xbmc.getCondVisibility("System.Platform.Windows"):
                 self.debug("We are checking disk space from a Windows file system")
                 self.debug("The path to check is %s" % path)
 
@@ -415,7 +415,7 @@ class Cleaner:
                         self.debug("Protocol: %s, User: %s, Password: %s, Host: %s, Share: %s" %
                                    (share["type"], share["user"], share["pass"], share["host"], share["share"]))
                     except AttributeError, ae:
-                        self.debug("%s\nCould not extract required data from %s" % (ae, path))
+                        self.debug("%s\nCould not extract required data from %s" % (ae, path), xbmc.LOGERROR)
                         return percentage
 
                     self.debug("Creating UNC paths so Windows understands the shares")
@@ -427,7 +427,7 @@ class Cleaner:
 
                 if not isinstance(path, unicode):
                     self.debug("Converting path to unicode for disk space checks")
-                    path = path.decode("raw_unicode_escape")
+                    path = path.decode("mbcs")
                     self.debug("New path: %s" % path)
 
                 bytesTotal = c_ulonglong(0)
@@ -440,7 +440,7 @@ class Cleaner:
                     self.debug("Bytes free: %s" % locale.format("%d", bytesFree.value, grouping=True))
                     self.debug("Bytes total: %s" % locale.format("%d", bytesTotal.value, grouping=True))
                 except ZeroDivisionError:
-                    self.notify(self.translate(32511), 15000)
+                    self.notify(self.translate(32511), 15000, level=xbmc.LOGERROR)
             else:
                 self.debug("We are checking disk space from a non-Windows file system")
                 self.debug("Stripping " + path + " of all redundant stuff.")
@@ -454,11 +454,11 @@ class Cleaner:
                     self.debug("Bytes free: %s" % locale.format("%d", diskstats.f_bfree, grouping=True))
                     self.debug("Bytes total: %s" % locale.format("%d", diskstats.f_blocks, grouping=True))
                 except OSError:
-                    self.notify(self.translate(32512))
+                    self.notify(self.translate(32512), 15000, level=xbmc.LOGERROR)
                 except ZeroDivisionError:
-                    self.notify(self.translate(32511), 15000)
+                    self.notify(self.translate(32511), 15000, level=xbmc.LOGERROR)
         else:
-            self.notify(self.translate(32513), 15000)
+            self.notify(self.translate(32513), 15000, level=xbmc.LOGERROR)
 
         self.debug("Free space: %0.2f%%" % percentage)
         return percentage
@@ -485,7 +485,7 @@ class Cleaner:
         if xbmcvfs.exists(location):
             return xbmcvfs.delete(location)
         else:
-            self.debug("XBMC could not find the file at %s" % location)
+            self.debug("XBMC could not find the file at %s" % location, xbmc.LOGERROR)
             return False
 
     def delete_empty_folders(self, folder):
@@ -512,7 +512,7 @@ class Cleaner:
 
         subfolders, files = xbmcvfs.listdir(folder)
 
-        self.debug("Contents of %s:\nSubfolders:\t%s\nFiles:\t%s" % (folder, subfolders, files))
+        self.debug("Contents of %s:\nSubfolders: %s\nFiles: %s" % (folder, subfolders, files))
 
         empty = True
         try:
@@ -520,11 +520,11 @@ class Cleaner:
                 _, ext = os.path.splitext(f)
                 self.debug("File extension: " + ext)
                 if ext not in ignored_file_types:
-                    self.debug("Found video file %s" % f)
+                    self.debug("Found non-ignored file type %s" % ext)
                     empty = False
                     break
         except OSError, oe:
-            self.debug("Error deriving file extension. Errno " + str(oe.errno))
+            self.debug("Error deriving file extension. Errno " + str(oe.errno), xbmc.LOGERROR)
             empty = False
 
         # Only delete directories if we found them to be empty (containing no files or filetypes we ignored)
@@ -544,7 +544,7 @@ class Cleaner:
                 # Finally delete the current folder
                 return xbmcvfs.rmdir(folder)
             except OSError, oe:
-                self.debug("An exception occurred while deleting folders. Errno " + str(oe.errno))
+                self.debug("An exception occurred while deleting folders. Errno " + str(oe.errno), xbmc.LOGERROR)
                 return False
         else:
             self.debug("Directory is not empty and will not be removed")
@@ -557,12 +557,14 @@ class Cleaner:
         Example:
             success = move_file(a, b)
 
-        :type source: str
+        :type source: basestring
         :param source: the source path (absolute)
         :type dest_folder: str
         :param dest_folder: the destination path (absolute)
         :rtype : bool
         """
+        if isinstance(source, unicode):
+            source = source.encode("utf-8")
         dest_folder = xbmc.makeLegalFilename(dest_folder)
         self.debug("Moving %s to %s" % (os.path.basename(source), dest_folder))
         if xbmcvfs.exists(source):
@@ -572,7 +574,7 @@ class Cleaner:
                 if xbmcvfs.mkdirs(dest_folder):
                     self.debug("Successfully created %s" % dest_folder)
                 else:
-                    self.debug("XBMC could not create destination %s" % dest_folder)
+                    self.debug("XBMC could not create destination %s" % dest_folder, xbmc.LOGERROR)
                     return False
 
             new_path = os.path.join(dest_folder, os.path.basename(source))
@@ -595,7 +597,7 @@ class Cleaner:
                 self.debug("Moving %s\nto %s\nNew path: %s" % (source, dest_folder, new_path))
                 return xbmcvfs.rename(source, new_path)
         else:
-            self.debug("XBMC could not find the file at %s" % source)
+            self.debug("XBMC could not find the file at %s" % source, xbmc.LOGWARNING)
             return False
 
     def translate(self, msg_id):
@@ -611,7 +613,7 @@ class Cleaner:
         else:
             return ""
 
-    def notify(self, message, duration=5000, image=__icon__):
+    def notify(self, message, duration=5000, image=__icon__, level=xbmc.LOGNOTICE):
         """Display an XBMC notification and log the message.
 
         :type message: str
@@ -620,21 +622,27 @@ class Cleaner:
         :param duration: the duration the notification is displayed in milliseconds (default 5000)
         :type image: str
         :param image: the path to the image to be displayed on the notification (default "icon.png")
+        :type level: int
+        :param level: (Optional) the log level (supported values are found at xbmc.LOG...)
         :rtype : None
         """
-        self.debug(message)
+        self.debug(message, level)
         if self.notifications_enabled and not (self.notify_when_idle and xbmc.Player().isPlayingVideo()):
             xbmc.executebuiltin("XBMC.Notification(%s, %s, %s, %s)" % (__title__, message, duration, image))
 
-    def debug(self, message):
+    def debug(self, message, level=xbmc.LOGNOTICE):
         """Write a debug message to xbmc.log
 
-        :type message: str
+        :type message: basestring
         :param message: the message to log
+        :type level: int
+        :param level: (Optional) the log level (supported values are found at xbmc.LOG...)
         :rtype : None
         """
         if self.debugging_enabled:
+            if isinstance(message, unicode):
+                message = message.encode("utf-8")
             for line in message.splitlines():
-                xbmc.log(__title__ + ": " + line)
+                xbmc.log(msg=__title__ + ": " + line, level=level)
 
 run = Cleaner()
