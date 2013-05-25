@@ -1,3 +1,6 @@
+v2.1.5
+- Add %s.%d.Watched property for episodes or TV shows
+
 v2.1.4
 - Add %s.%d.Runtime property for episodes or TV shows
 - Add new method 'Playlist' which keeps the playlist order

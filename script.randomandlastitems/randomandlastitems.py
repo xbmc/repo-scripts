@@ -74,11 +74,13 @@ def _watchedOrResume ( _total, _watched, _unwatched, _result, _file ):
     global UNWATCHED
     _total += 1
     _playcount = _file['playcount']
-    if RESUME == 'True':
-        _resume = _file['resume']['position']
+    _resume = _file['resume']['position']
+    # Add Watched flag and counter for episodes
     if _playcount == 0:
+        _file['watched']='False'
         _unwatched += 1
     else:
+        _file['watched']='True'
         _watched += 1
     if (UNWATCHED == 'False' and RESUME == 'False') or (UNWATCHED == 'True' and _playcount == 0) or (RESUME == 'True' and _resume != 0) and _file.get('dateadded'):
         _result.append(_file)
@@ -561,6 +563,7 @@ def _setEpisodeProperties ( _episode, _count ):
         _setProperty("%s.%d.Art(clearart)"         % ( PROPERTY, _count ), art.get('tvshow.clearart',''))
         _setProperty("%s.%d.Art(landscape)"        % ( PROPERTY, _count ), art.get('tvshow.landscape',''))
         _setProperty("%s.%d.Resume"                % ( PROPERTY, _count ), resume)
+        _setProperty("%s.%d.Watched"               % ( PROPERTY, _count ), _episode['watched'])
         _setProperty("%s.%d.Runtime"               % ( PROPERTY, _count ), runtime)
         _setProperty("%s.%d.PercentPlayed"         % ( PROPERTY, _count ), played)
         _setProperty("%s.%d.File"                  % ( PROPERTY, _count ), _episode['file'])

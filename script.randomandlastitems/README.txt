@@ -95,25 +95,27 @@ Properties return to Home window (id 10000) :
 %s.%d.Art(tvshow.banner)
 %s.%d.Art(tvshow.clearlogo)
 %s.%d.Art(tvshow.clearart)
-%s.%d.Art(tvshow.landscape)"
-%s.%d.Art(fanart)"
-%s.%d.Art(poster)"
-%s.%d.Art(banner)"
-%s.%d.Art(clearlogo)"
-%s.%d.Art(clearart)"
-%s.%d.Art(landscape)"
-%s.%d.Resume"
-%s.%d.PercentPlayed"
-%s.%d.File"
-%s.%d.MPAA"
-%s.%d.Studio"
-%s.%d.Path"
+%s.%d.Art(tvshow.landscape)
+%s.%d.Art(fanart)
+%s.%d.Art(poster)
+%s.%d.Art(banner)
+%s.%d.Art(clearlogo)
+%s.%d.Art(clearart)
+%s.%d.Art(landscape)
+%s.%d.Resume
+%s.%d.Watched
+%s.%d.Runtime
+%s.%d.PercentPlayed
+%s.%d.File
+%s.%d.MPAA
+%s.%d.Studio
+%s.%d.Path
 %s.%d.Play
-%s.%d.VideoCodec"
-%s.%d.VideoResolution"
-%s.%d.VideoAspect"
-%s.%d.AudioCodec"
-%s.%d.AudioChannels"
+%s.%d.VideoCodec
+%s.%d.VideoResolution
+%s.%d.VideoAspect
+%s.%d.AudioCodec
+%s.%d.AudioChannels
 
 * type=Music
 
