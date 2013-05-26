@@ -1,3 +1,6 @@
+[B]0.7.6[/B]
+- fixed multiple issues with the depth 2 poller
+
 [B]0.7.5[/B]
 - added option for forcing global scan on video sources. This is a workaround for a bug that cause XBMC to sometimes fail to recognize the newly added files
 
