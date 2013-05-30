@@ -1,3 +1,6 @@
+V0.6.4
+- pan2 changes merged - adds date labels
+
 V0.6.3
 - Can now search by suburb name not just postcode
 

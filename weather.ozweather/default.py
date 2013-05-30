@@ -21,7 +21,7 @@ import re
 import ftplib
 import shutil
 import time
-
+import datetime
 # Minimal code to import bossanova808 common code
 ADDON           = xbmcaddon.Addon()
 CWD             = ADDON.getAddonInfo('path')
@@ -80,7 +80,7 @@ def clearProperties():
             setProperty(WEATHER_WINDOW, 'Day%i.Outlook'     % count)
             setProperty(WEATHER_WINDOW, 'Day%i.OutlookIcon' % count)
             setProperty(WEATHER_WINDOW, 'Day%i.FanartCode'  % count)
-
+            setProperty(WEATHER_WINDOW, 'Daily.%i.ShortDate' % count)
     except Exception as inst:
         log("********** OzWeather Couldn't clear all the properties, sorry!!", inst)
 
@@ -473,6 +473,11 @@ def propertiesPDOM(page, extendedFeatures):
                 weathercode = 'na'
 
             day = days[count]
+            tdate = datetime.date.today() #establishes current date
+            futureDate = tdate + datetime.timedelta(days=count) #establishs the future dates one at a time
+            newdatetuple = time.strptime(str(futureDate),'%Y-%m-%d')#creates a time tuple of that future date
+            goodshortDate = time.strftime('%d %b %a', newdatetuple) #sets the format of the time tuple, taken from this table http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
+            setProperty(WEATHER_WINDOW, 'Daily.%i.ShortDate' % count, str(goodshortDate))
             setProperty(WEATHER_WINDOW, 'Day%i.Title'       % count, day)
             setProperty(WEATHER_WINDOW, 'Day%i.HighTemp'    % count, maxList[count])
             setProperty(WEATHER_WINDOW, 'Day%i.LowTemp'     % count, minList[count])
