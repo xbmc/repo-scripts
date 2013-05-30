@@ -1,0 +1,5 @@
+v0.2.0
+* Added transifex language support
+
+v0.1.0
+* Initial release
