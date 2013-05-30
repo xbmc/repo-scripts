@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <setting id="idle_time_min" type="number" label="32000" default="5" />
+  <setting id="number_trailers" type="number" label="32001" default="10" />
+  <setting id="do_animation" type="bool" label="32002" default="true" />
+  <setting id="do_mute" type="bool" label="32003" default="false" />
+</settings>
