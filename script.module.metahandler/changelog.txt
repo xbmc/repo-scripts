@@ -1,3 +1,9 @@
+[B]Version 2.0.3[/B]
+- Rewrite of get_episode logic - now supports air date
+- Added search/refresh on tv shows - returns list of possible matches
+- Many code clean ups and fixes
+- Early support for batch meta grabs - still WIP
+
 [B]Version 2.0.2[/B]
 - Added MySQL support
 - Added Year column for TV Shows - Temporary upgrade code in place

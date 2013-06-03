@@ -23,6 +23,7 @@ import copy
 
 import elementtree.ElementTree as ET
 #from elementtree.ElementTree import ElementTree as ET
+from cStringIO import StringIO
 
 class TheTVDB(object):
     def __init__(self, api_key='2B8557E0CBF7D720'):
@@ -78,7 +79,7 @@ class TheTVDB(object):
 
             # When this show was last updated
             self.last_updated = datetime.datetime.fromtimestamp(int(node.findtext("lastupdated")))
-        
+
         def __str__(self):
             import pprint
             return pprint.saferepr(self)
@@ -101,7 +102,7 @@ class TheTVDB(object):
 
             # Air date
             self.first_aired = node.findtext("FirstAired")#TheTVDB.convert_date(node.findtext("FirstAired"))
-            
+
             # DVD Information
             self.dvd_chapter = node.findtext("DVD_chapter")
             self.dvd_disc_id = node.findtext("DVD_discid")
@@ -206,21 +207,21 @@ class TheTVDB(object):
         """Get the show object matching this show_id."""
         #url = "%s/series/%s/%s.xml" % (self.base_key_url, show_id, "el")
         url = "%s/series/%s/" % (self.base_key_url, show_id)
-        data = urllib.urlopen(url)
-        temp = urllib.urlopen(url)
-        temp_data = str(temp.read())
+        data = StringIO(urllib.urlopen(url).read())
+        temp_data = data.getvalue()
         print 'data returned from TheTVDB ' + temp_data
         show = None
         if temp_data.startswith('<?xml') == False:
             return show
+
         try:
             tree = ET.parse(data)
             show_node = tree.find("Series")
-        
+
             show = TheTVDB.Show(show_node, self.mirror_url)
         except SyntaxError:
             pass
-        
+
         return show
 
 
@@ -228,9 +229,8 @@ class TheTVDB(object):
         """Get the show object matching this show_id."""
         #url = "%s/series/%s/%s.xml" % (self.base_key_url, show_id, "el")
         url = "%s/GetSeriesByRemoteID.php?imdbid=%s" % (self.base_url, imdb_id)
-        data = urllib.urlopen(url)
-        temp = urllib.urlopen(url)
-        temp_data = str(temp.read())
+        data = StringIO(urllib.urlopen(url).read())
+        temp_data = data.getvalue()
         print 'data returned from TheTVDB ' + temp_data
         tvdb_id = ''
         if temp_data.startswith('<?xml') == False:
@@ -239,10 +239,10 @@ class TheTVDB(object):
             tree = ET.parse(data)
             for show in tree.getiterator("Series"):
                 tvdb_id = show.findtext("seriesid")
-                
+
         except SyntaxError:
             pass
-        
+
         return tvdb_id
 
     def get_episode(self, episode_id):
@@ -258,7 +258,7 @@ class TheTVDB(object):
             episode = TheTVDB.Episode(episode_node, self.mirror_url)
         except SyntaxError:
             pass
-        
+
         return episode
 
 
@@ -266,21 +266,20 @@ class TheTVDB(object):
         """Get the episode object matching this episode_id."""
         #url = "%s/series/%s/default/%s/%s" % (self.base_key_url, show_id, season_num, ep_num)
         '''http://www.thetvdb.com/api/GetEpisodeByAirDate.php?apikey=1D62F2F90030C444&seriesid=71256&airdate=2010-03-29'''
-        
+
         url = "%s/GetEpisodeByAirDate.php?apikey=1D62F2F90030C444&seriesid=%s&airdate=%s" % (self.base_url, show_id, aired)
-        data = urllib.urlopen(url)
+        data = StringIO(urllib.urlopen(url).read())
         
         print url
         episode = None
         
         #code to check if data has been returned
-        temp_data = str(data.read())
+        temp_data = data.getvalue()
         print 'data returned from TheTVDB ' + temp_data
         if temp_data.startswith('<?xml') == False:
             print 'No data returned ', temp_data
             return episode
         
-        data = urllib.urlopen(url)
         try:
             tree = ET.parse(data)
             episode_node = tree.find("Episode")
@@ -296,18 +295,17 @@ class TheTVDB(object):
     def get_episode_by_season_ep(self, show_id, season_num, ep_num):
         """Get the episode object matching this episode_id."""
         url = "%s/series/%s/default/%s/%s" % (self.base_key_url, show_id, season_num, ep_num)
-        data = urllib.urlopen(url)
-        
+        data = StringIO(urllib.urlopen(url).read())
+
         episode = None
         print url
         
         #code to check if data has been returned
-        temp_data = str(data.read())
+        temp_data = data.getvalue()
         if temp_data.startswith('<?xml') == False :
             print 'No data returned ', temp_data
             return episode
         
-        data = urllib.urlopen(url)
         try:
             tree = ET.parse(data)
             episode_node = tree.find("Episode")
