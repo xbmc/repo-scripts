@@ -1,2 +1,12 @@
+v1.0.3 (June, 4, 2013) :
+  - added setting to hide movie info during playback of trailer
+  
+v1.0.2 (June, 3, 2013) :
+  - added feature to allow playing movie of currently playing trailer by pressing enter while trailer is playing
+  - added feature to allow user to press esc to quit currently running trailer
+
+v1.0.1 (May 30, 2013)
+  - added option to not ask for genre filter
+
 v1.0.0 (May 27, 2013) :
   - initial release, includes opitons for selecting genre, nubmer trailers, and to display open and close animation.

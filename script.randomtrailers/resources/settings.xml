@@ -2,4 +2,6 @@
 <settings>
   <setting id="number_trailers" type="number" label="32000" default="10" />
   <setting id="do_animation" type="bool" label="32001" default="true" />
+  <setting id="do_genre" type="bool" label="32002" default="true" />
+  <setting id="hide_info" type="bool" label="32003" default="false" />
 </settings>

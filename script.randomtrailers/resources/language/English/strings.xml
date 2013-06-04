@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-    <!-- All %s must remain in string but can change position -->
-    <string id="32000">Number Of Trailers to Play</string>
+	<!-- All %s must remain in string but can change position -->
+	<string id="32000">Number Of Trailers to Play</string>
 	<string id="32001">Play Opening and Closing Animation</string>
+	<string id="32002">Filter by Genre</string>
+	<string id="32003">Hide Movie Info</string>
 </strings>

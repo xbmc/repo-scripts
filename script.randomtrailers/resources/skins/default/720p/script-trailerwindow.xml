@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+    <controls>
+		<control type="label" id="30002">
+			<description>Label for movie title</description>
+			<posx>20</posx>
+			<posy>20</posy>
+			<width>auto</width>
+			<animation effect="fade" time="500">VisibleChange</animation>
+			<height>20</height>
+			<align>left</align>
+			<aligny>center</aligny>
+			<textcolor>FFFFFFFF</textcolor>
+			<shadowcolor>black</shadowcolor>
+		</control>
+		<control type="label" id="30003">
+			<description>Label for movie title</description>
+			<posx>20</posx>
+			<posy>20</posy>
+			<width>auto</width>
+			<height>20</height>
+			<animation effect="fade" time="500">VisibleChange</animation>
+			<label>Press ESC to quit, Enter to Play Movie</label>
+			<align>left</align>
+			<aligny>center</aligny>
+			<textcolor>FFFFFFFF</textcolor>
+			<shadowcolor>black</shadowcolor>
+		</control>
+	</controls>
+</window>
