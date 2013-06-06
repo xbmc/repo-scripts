@@ -1,5 +1,9 @@
+v0.1.7
+- Update with 13.0 Gotham_alpha4
+
 v0.1.6
 - Update with 12.2 Frodo stable
+- Added Linux full system upgrade
 
 v0.1.5
 - Update with 13.0 Gotham_alpha3

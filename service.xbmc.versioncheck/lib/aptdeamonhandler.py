@@ -90,7 +90,7 @@ class AptdeamonHandler:
 
     def upgrade_system(self):
         try:
-            log("Installing new version")
+            log("Upgrading system")
             if self.aptclient.upgrade_system(wait=True) == "exit-success":
                 return True
         except Exception as error:

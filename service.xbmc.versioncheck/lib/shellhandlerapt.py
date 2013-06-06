@@ -31,19 +31,21 @@ class ShellHandlerApt:
 
     def __init__(self, usesudo=False):
         self.sudo = usesudo
+        installed, candidate = self._check_versions("xbmc", False)
+        if not installed:
+            # there is no package installed via repo, so we exit here
+            log("No installed package found, exiting")
+            import sys
+            sys.exit(0)
 
-
-    def _check_versions(self, package):
+    def _check_versions(self, package, update=True):
         _cmd = "apt-cache policy " + package
 
-        if not self._update_cache():
+        if update and not self._update_cache():
             return False, False
 
         try:
-            if self.sudo:
-                result = check_output('echo \'%s\' | sudo -S %s' %(self._getpassword(), _cmd), shell=True).split("\n")
-            else:
-                result = check_output([_cmd], shell=True).split("\n")
+            result = check_output([_cmd], shell=True).split("\n")
         except Exception as error:
             log("ShellHandlerApt: exception while executing shell command %s: %s" %(_cmd, error))
             return False, False
@@ -51,6 +53,10 @@ class ShellHandlerApt:
         if result[0].replace(":", "") == package:
             installed = result[1].split()[1]
             candidate = result[2].split()[1]
+            if installed == "(none)":
+                installed = False
+            if candidate == "(none)":
+                candiate = False
             return installed, candidate
         else:
             log("ShellHandlerApt: error during version check")
@@ -102,10 +108,11 @@ class ShellHandlerApt:
     def upgrade_system(self):
         _cmd = "apt-get upgrade -y"
         try:
+            log("Upgrading system")
             if self.sudo:
-                x = check_output('echo \'%s\' | sudo -S %s' %(pwd, cmd), shell=True)
+                x = check_output('echo \'%s\' | sudo -S %s' %(self._getpassword(), _cmd), shell=True)
             else:
-                x = check_output(cmd.split())
+                x = check_output(_cmd.split())
         except Exception as error:
             log("Exception while executing shell command %s: %s" %(_cmd, error))
             return False

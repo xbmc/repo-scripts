@@ -73,7 +73,7 @@ msgid "Do you want to restart Xbmc to finish the upgrade?"
 msgstr ""
 
 msgctxt "#32015"
-msgid "Do you want to check for a new version?"
+msgid "Do you want to check the repository for a new version?"
 msgstr ""
 
 msgctxt "#32020"
@@ -86,4 +86,8 @@ msgstr ""
 
 msgctxt "#32022"
 msgid "Please enter your password"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Linux: Upgrade complete system"
 msgstr ""

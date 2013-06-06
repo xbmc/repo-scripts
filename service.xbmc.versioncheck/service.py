@@ -21,7 +21,7 @@
 import platform
 import xbmc
 import lib.common
-from lib.common import log
+from lib.common import log, dialog_yesno
 from lib.common import upgrade_message as _upgrademessage
 
 __addon__        = lib.common.__addon__
@@ -43,7 +43,7 @@ class Main:
             elif sys.argv[0] and sys.argv[1] == 'started':
                 if xbmc.getCondVisibility('System.Platform.Linux'):
                     packages = ['xbmc']
-                    # _versionchecklinux(packages)
+                    _versionchecklinux(packages)
                 else:
                     oldversion, msg = _versioncheck()
                     if oldversion:
@@ -65,7 +65,9 @@ def _versioncheck():
 
 
 def _versionchecklinux(packages):
-    if (platform.dist()[0] == "Ubuntu" or platform.dist()[0] == "Debian"):
+    if platform.dist()[0].lower() in ['ubuntu', 'debian', 'linuxmint']:
+        handler = False
+        result = False
         try:
             # try aptdeamon first
             from lib.aptdeamonhandler import AptdeamonHandler
@@ -73,24 +75,34 @@ def _versionchecklinux(packages):
         except:
             # fallback to shell
             # since we need the user password, ask to check for new version first
-            if _upgrademessage(32015, True):
-                from lib.shellhandlerapt import ShellHandlerApt
-                sudo = True
-                handler = ShellHandlerApt(sudo)
+            from lib.shellhandlerapt import ShellHandlerApt
+            sudo = True
+            handler = ShellHandlerApt(sudo)
+            if dialog_yesno(32015):
+                pass
+            elif dialog_yesno(32009, 32010):
+                log("disabling addon by user request")
+                __addon__.setSetting("versioncheck_enable", 'false')
+                return
 
+        if handler:
+            if handler.check_upgrade_available(packages[0]):
+                if _upgrademessage(32012, True):
+                    if __addon__.getSetting("upgrade_system") == "false":
+                        result = handler.upgrade_package(packages[0])
+                    else:
+                        result = handler.upgrade_system()
+                    if result:
+                        from lib.common import message_upgrade_success, message_restart
+                        message_upgrade_success()
+                        message_restart()
+                    else:
+                        log("Error during upgrade")
+        else:
+            log("Error: no handler found")
     else:
         log("Unsupported platform %s" %platform.dist()[0])
         sys.exit(0)
-
-    if handler:
-        if handler.check_upgrade_available(packages[0]):
-            if _upgrademessage(32012, True):
-                if handler.upgrade_package(packages[0]): 
-                    from lib.common import message_upgrade_success, message_restart
-                    message_upgrade_success()
-                    message_restart()
-    else:
-        log("Error: no handler found")
 
 
 

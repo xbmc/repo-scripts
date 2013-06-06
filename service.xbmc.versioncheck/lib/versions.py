@@ -83,8 +83,10 @@ def compare_version(version_installed, versionlist):
                     oldversion = True
                     log("Version available  %s" %versionlist_prealpha[0])
 
+        log("Nothing to see here, move along. Running a latest non stable release")
         # Nothing to see here, move along
     else:
+        log("Nothing to see here, move along. Running a stable release")
         # Nothing to see here, move along
         pass
     return oldversion, msg

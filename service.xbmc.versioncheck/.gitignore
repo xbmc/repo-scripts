@@ -3,3 +3,4 @@
 .pydevproject
 pysrc
 *.pyc
+.settings
