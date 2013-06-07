@@ -1,3 +1,6 @@
+[B]Version 1.0.4[/B]
+- Quick band aid patch for Eden users - xbmcvfs.mkdirs is not included in Eden
+
 [B]Version 1.0.3[/B]
 - Rewrite of get_episode logic - now supports air date
 - Added search/refresh on tv shows - returns list of possible matches

@@ -98,7 +98,10 @@ class MetaContainer:
 
     def make_dir(self, mypath):
         ''' Creates sub-directories if they are not found. '''
-        if not xbmcvfs.exists(mypath): xbmcvfs.mkdirs(mypath)   
+        try:
+            if not xbmcvfs.exists(mypath): xbmcvfs.mkdirs(mypath)
+        except:
+            if not os.path.exists(mypath): os.makedirs(mypath)  
 
 
     def _del_metadir(self, path=''):
