@@ -1,3 +1,9 @@
+v1.2.2
+- settings descriptions
+
+v1.2.1
+- auto update cache if a different image folder is used
+
 v1.2.0
 - added option to specify custom source
 

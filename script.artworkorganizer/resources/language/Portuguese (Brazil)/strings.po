@@ -1,0 +1,65 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Organizer
+# Addon id: script.artworkorganizer
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#32001"
+msgid "Copy Movie Fanart"
+msgstr "Copiar Fanart de Filmes"
+
+msgctxt "#32002"
+msgid "Copy TV Show Fanart"
+msgstr "Copiar Fanart de Seriados"
+
+msgctxt "#32003"
+msgid "Copy Music Video Fanart"
+msgstr "Copiar Fanart de Vídeos Musicais"
+
+msgctxt "#32004"
+msgid "Copy Artist Fanart"
+msgstr "Copiar Fanart de Artistas"
+
+msgctxt "#32005"
+msgid "Copy Movie Thumbs"
+msgstr "Copiar Miniatura de Filmes"
+
+msgctxt "#32007"
+msgid "Copy Season Thumbs"
+msgstr "Copiar Miniatura de Temporadas"
+
+msgctxt "#32008"
+msgid "Copy Episode Thumbs"
+msgstr "Copiar Miniatura de Episódios"
+
+msgctxt "#32009"
+msgid "Copy Music Video Thumbs"
+msgstr "Copiat Miniatura de Vídeos Musicais"
+
+msgctxt "#32010"
+msgid "Copy Artist Thumbs"
+msgstr "Copiar Miniatura de Artistas"
+
+msgctxt "#32011"
+msgid "Copy Album Thumbs"
+msgstr "Copiar Miniatura de Álbuns"
+
+msgctxt "#32012"
+msgid "Destination directory"
+msgstr "Diretório de destino das imagens"
+
+msgctxt "#32016"
+msgid "Path"
+msgstr "Caminho"
