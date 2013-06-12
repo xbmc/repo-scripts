@@ -1,5 +1,8 @@
-v1.2.2
+v1.2.3
 - settings descriptions
+
+v1.2.2
+- reorganize settings
 
 v1.2.1
 - auto update cache if a different image folder is used
