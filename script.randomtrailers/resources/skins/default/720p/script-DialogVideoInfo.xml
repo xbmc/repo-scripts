@@ -1,0 +1,283 @@
+<window>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <controls>	
+        <control type="group">
+            <!--animation effect="slide" start="0,1280" end="0,0" time="450" delay="0" reversible="false">WindowOpen</animation-->
+            <!--animation effect="slide" start="0,0" end="0,1280" time="450" delay="0" reversible="false">WindowClose</animation-->
+			<animation effect="fade" start="100" end="0" time="2000">WindowClose</animation>
+            <animation effect="fade" start="0" end="100" time="1000">WindowOpen</animation>
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>720</height>
+                <aspectratio>stretch</aspectratio>
+                <texture>black.png</texture>
+                <colordiffuse>FFFFFFFF</colordiffuse>
+            </control>
+        </control>
+        <control type="group" id="30099">
+            <posy>-30</posy>
+            <animation effect="fade" start="100" end="0" time="2000">WindowClose</animation>			
+            <animation effect="fade" start="0" end="100" time="1000">WindowOpen</animation>			
+			<!-- separators -->
+			<control type="group">
+				<posx>100</posx>
+				<posy>10</posy>
+				<!--control type="image">
+					<posx>230</posx>
+					<posy>145</posy>
+					<width>548</width>
+					<height>240</height>
+					<aspectratio>stretch</aspectratio>
+					<texture>white.png</texture>
+					<colordiffuse>20FFFFFF</colordiffuse>
+				</control-->
+				<control type="image">
+					<posx>230</posx>
+					<posy>145</posy>
+					<width>548</width>
+					<height>1</height>
+					<aspectratio>stretch</aspectratio>
+					<texture>white.png</texture>
+					<colordiffuse>20FFFFFF</colordiffuse>
+				</control>
+				<control type="image">
+					<posx>230</posx>
+					<posy>385</posy>
+					<width>548</width>
+					<height>1</height>
+					<aspectratio>stretch</aspectratio>
+					<texture background="true">white.png</texture>
+					<colordiffuse>20FFFFFF</colordiffuse>
+				</control>
+			</control>
+			
+			<!-- POSTER/COVER -->
+			<control type="group">
+				<posx>880</posx>
+				<posy>0</posy>
+				<control type="largeimage" id="30001">
+					<description>Poster</description>
+					<posx>0</posx>
+					<posy>84</posy>
+					<width>400</width>
+					<height>600</height>
+					<aspectratio>scale</aspectratio>
+					<texture background="true">noposter.png</texture>
+				</control>
+				<control type="image">
+					<posx>-1</posx>
+					<posy>83</posy>
+					<width>1</width>
+					<height>602</height>
+					<texture>info/line.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="image">
+					<posx>-1</posx>
+					<posy>83</posy>
+					<width>404</width>
+					<height>1</height>
+					<texture>info/line.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>						
+			</control>
+			
+			<!-- TITLE-->
+			<control type="label" id="30002">
+				<description>Title</description>
+				<posx>20</posx>
+				<posy>50</posy>
+				<width>838</width>
+				<font>addon_font35_title</font>
+				<textcolor>fce7e7e7</textcolor>
+				<textcolor>itemdetail</textcolor>
+				<scroll>true</scroll>
+			</control>
+			<control type="label" id="30012">
+				<description>Tagline</description>
+				<posx>30</posx>
+				<posy>100</posy>
+				<width>840</width>
+				<scrollsuffix> </scrollsuffix>
+				<font>addon_font14</font>
+				<textcolor>fce7e7e7</textcolor>
+				<textcolor>itemdetail</textcolor>
+				<scrollout>false</scrollout>
+				<scrollspeed>50</scrollspeed>
+				<pauseatend>5000</pauseatend>
+			</control>
+			
+			<!-- FANART/TRAILER -->	
+            <control type="group">
+                <posx>0</posx>
+                <posy>9</posy>
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>146</posy>
+                    <width>880</width>
+                    <height>1</height>
+                    <aspectratio>stretch</aspectratio>
+                    <texture background="true">info/line.png</texture>
+                </control>
+				<control type="image">
+                    <posx>0</posx>
+                    <posy>387</posy>
+                    <width>880</width>
+                    <height>1</height>
+                    <aspectratio>keep</aspectratio>
+                    <texture background="true">info/line.png</texture>
+                </control>
+				<control type="image">
+                    <posx>0</posx>
+                    <posy>675</posy>
+                    <width>1280</width>
+                    <height>1</height>
+                    <aspectratio>stretch</aspectratio>
+                    <texture background="true">info/line.png</texture>
+                </control>
+				<!-- movie fanart -->
+                <control type="largeimage" id="30003">
+                    <posx>0</posx>
+                    <posy>147</posy>
+                    <width>427</width>
+                    <height>240</height>
+                    <aspectratio>stretch</aspectratio>
+					<texture background="true">info/preview.jpg</texture>
+                </control>
+            </control>
+
+			<!-- INFO MOVIES - DIRECTOR/WRITER ETC-->
+			<control type="group">
+				<posx>108</posx>
+				<posy>8</posy>	
+				<control type="label">
+					<description>Original Title</description>
+					<posx>330</posx>
+					<posy>150</posy>
+					<width>368</width>
+					<font>addon_font15</font>
+					<label>Original Title</label>
+					<textcolor>fce7e7e7</textcolor>
+				</control>				
+				<control type="label" id="30004">
+					<description>Original Title</description>
+					<posx>330</posx>
+					<posy>175</posy>
+					<width>430</width>
+					<scrollsuffix> - </scrollsuffix>
+					<font>addon_font14</font>
+					<textcolor>white</textcolor>
+				</control>
+				<control type="label">
+					<description>Director</description>
+					<posx>330</posx>
+					<posy>210</posy>
+					<width>368</width>
+					<font>addon_font15</font>
+					<label>Director</label>
+					<textcolor>fce7e7e7</textcolor>
+				</control>
+				<control type="label" id="30005">
+					<description>Director</description>
+					<posx>330</posx>
+					<posy>235</posy>
+					<width>368</width>
+					<font>addon_font14</font>
+					<textcolor>white</textcolor>
+				</control>			
+				<control type="label">
+					<description>Writer</description>
+					<posx>330</posx>
+					<posy>270</posy>
+					<width>368</width>
+					<label>Credits</label>
+					<font>addon_font15</font>
+					<textcolor>fce7e7e7</textcolor>
+				</control>
+				<control type="label" id="30006">
+					<description>Writer</description>
+					<posx>330</posx>
+					<posy>295</posy>
+					<width>368</width>
+					<font>addon_font14</font>
+					<textcolor>white</textcolor>
+				</control>
+				<control type="label">
+					<description>Rating</description>
+					<posx>330</posx>
+					<posy>330</posy>
+					<label>Rating</label>
+					<width>368</width>
+					<scrollsuffix> / </scrollsuffix>
+					<font>addon_font15</font>
+					<textcolor>fce7e7e7</textcolor>
+				</control>
+				<control type="label" id="30007">
+					<description>Rating</description>
+					<posx>330</posx>
+					<posy>355</posy>
+					<width min="0"  max="400">auto</width>
+					<scrollsuffix> / </scrollsuffix>
+					<font>addon_font14</font>
+					<textcolor>white</textcolor>
+				</control>
+			</control>		
+            <control type="group">
+                <posy>15</posy>
+				
+				<!-- PLOT -->
+                <control type="textbox" id="30009">
+                    <description>Plot</description>
+                    <posx>30</posx>
+                    <posy>400</posy>
+                    <width>820</width>
+                    <height>240</height>
+                    <spinposx>500</spinposx>
+                    <spinposy>-30</spinposy>
+                    <spinwidth>20</spinwidth>
+                    <spinheight>11</spinheight>
+                    <font>addon_font14</font>
+                    <align>justify</align>
+                    <textcolor>fce7e7e7</textcolor>
+                    <textureup>-</textureup>
+                    <texturedown flipy="true">-</texturedown>
+                    <textureupfocus>-</textureupfocus>
+                    <texturedownfocus flipy="true">-</texturedownfocus>
+                    <autoscroll delay="15000" time="2500" repeat="10000"></autoscroll>
+                </control>
+            </control>
+						
+			<control type="label" id="30010">
+				<description>Studio/Year</description>
+				<posx>16</posx>
+				<posy>65r</posy>
+				<width>auto</width>
+				<font>addon_font15</font>
+				<textcolor>fce7e7e7</textcolor>
+				<scroll>false</scroll>
+			</control>
+			<control type="label" id="30011">
+				<description>Duration/Genre</description>
+				<posx>16</posx>
+				<posy>34r</posy>
+				<width>auto</width>
+				<font>addon_font12</font>
+				<textcolor>fce7e7e7</textcolor>
+				<scroll>false</scroll>
+			</control>
+			<control type="image" id="30013">
+				<posx>101r</posx>
+				<posy>66r</posy>
+				<height>65</height>
+				<width>115</width>
+				<aspectratio>keep</aspectratio>
+			</control>
+	    </control>
+    </controls>
+</window>

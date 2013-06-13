@@ -4,4 +4,6 @@
   <setting id="do_animation" type="bool" label="32001" default="true" />
   <setting id="do_genre" type="bool" label="32002" default="true" />
   <setting id="hide_info" type="bool" label="32003" default="false" />
+  <setting id="hide_watched" type="bool" label="32004" default="false" />
+  <setting id="watched_days" type="number" enable="!eq(-1,false)" label="32005" default="365" />
 </settings>

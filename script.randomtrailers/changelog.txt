@@ -1,9 +1,18 @@
-v1.0.3 (June, 4, 2013) :
-  - added setting to hide movie info during playback of trailer
+v1.0.5 (June 12, 2013) :
+  - fixed module import issues. fixed font issues
   
-v1.0.2 (June, 3, 2013) :
+v1.0.4 (June 10, 2013) :
+  - improved movie information screen
+  - added feature and setting to exclude recently watched movies from trailers. Set to number of days after movie
+    has been played before including in trailers
+  
+v1.0.3 (June 4, 2013) :
+  - added setting to hide movie info during playback of trailer
+    press I during playback of trailer to toggle info display
+  
+v1.0.2 (June 3, 2013) :
   - added feature to allow playing movie of currently playing trailer by pressing enter while trailer is playing
-  - added feature to allow user to press esc to quit currently running trailer
+  - added feature to allow user to press esc to exit, or X to quit trailer but play remaining.
 
 v1.0.1 (May 30, 2013)
   - added option to not ask for genre filter
