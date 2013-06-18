@@ -24,12 +24,16 @@ import ConfigParser
 import os
 import xbmcaddon
 
+
 class StreamsService(object):
     def __init__(self):
         path = os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources', 'addons.ini')
         self.addonsParser = ConfigParser.ConfigParser(dict_type=OrderedDict)
         self.addonsParser.optionxform = lambda option: option
-        self.addonsParser.read(path)
+        try:
+            self.addonsParser.read(path)
+        except:
+            print 'unable to parse addons.ini'
 
     def loadFavourites(self):
         entries = list()

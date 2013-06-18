@@ -1,3 +1,17 @@
+[B]Version 2.0.5 - 2013-06-04[/B]
+- Fixed encoding problem with XMLTV logo images
+- Fixed problem with invalid channels on last page
+
+[B]Version 2.0.4 - 2013-05-24[/B]
+- Fixed error with detecting updated XMLTV
+- Improved error handling when parsing addons.ini
+
+[B]Version 2.0.3 - 2013-05-03[/B]
+- Changed when source data is reloaded
+  XMLTV files will now reload when they are updated
+- Improved error handling of corrupted XMLTV files
+- Minor bugfixes
+
 [B]Version 2.0.2 - 2013-04-25[/B]
 - Improved handling of database initalization errors
 - Update language files from Transifex

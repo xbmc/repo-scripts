@@ -55,6 +55,7 @@ class Channel(object):
         return 'Channel(id=%s, title=%s, logo=%s, streamUrl=%s)' \
                % (self.id, self.title, self.logo, self.streamUrl)
 
+
 class Program(object):
     def __init__(self, channel, title, startDate, endDate, description, imageLarge = None, imageSmall=None, notificationScheduled = None):
         """
@@ -80,6 +81,7 @@ class Program(object):
     def __repr__(self):
         return 'Program(channel=%s, title=%s, startDate=%s, endDate=%s, description=%s, imageLarge=%s, imageSmall=%s)' % \
             (self.channel, self.title, self.startDate, self.endDate, self.description, self.imageLarge, self.imageSmall)
+
 
 class SourceException(Exception):
     pass
@@ -124,7 +126,7 @@ class Database(object):
             os.makedirs(profilePath)
         self.databasePath = os.path.join(profilePath, Database.SOURCE_DB)
 
-        threading.Thread(name = 'Database Event Loop', target = self.eventLoop).start()
+        threading.Thread(name='Database Event Loop', target=self.eventLoop).start()
 
     def eventLoop(self):
         print 'Database.eventLoop() >>>>>>>>>> starting...'
@@ -279,12 +281,8 @@ class Database(object):
             row = c.fetchone()
             if not row:
                 return True
-            lastUpdated = row['channels_updated']
+            channelsLastUpdated = row['channels_updated']
             c.close()
-
-            today = datetime.datetime.now()
-            if lastUpdated is None or lastUpdated.day != today.day:
-                return True
         except TypeError:
             return True
 
@@ -293,15 +291,13 @@ class Database(object):
         c = self.conn.cursor()
         c.execute('SELECT programs_updated FROM updates WHERE source=? AND date=?', [self.source.KEY, dateStr])
         row = c.fetchone()
-        today = datetime.datetime.now()
-        expired = row is None or row['programs_updated'] is None or row['programs_updated'].day != today.day
+        if row:
+            programsLastUpdated = row['programs_updated']
+        else:
+            programsLastUpdated = datetime.datetime.fromtimestamp(0)
         c.close()
 
-        if not self.source.isUpdated(date):
-            # no reason to update if source has not been modified
-            return False
-
-        return expired
+        return self.source.isUpdated(channelsLastUpdated, programsLastUpdated)
 
     def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, clearExistingProgramList = True):
         self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, clearExistingProgramList])
@@ -331,9 +327,9 @@ class Database(object):
             self.settingsChanged = False # only want to update once due to changed settings
 
             if clearExistingProgramList:
-                c.execute("DELETE FROM updates WHERE source=?", [self.source.KEY]) # cascades and deletes associated programs records
+                c.execute("DELETE FROM updates WHERE source=?", [self.source.KEY])  # cascades and deletes associated programs records
             else:
-                c.execute("DELETE FROM updates WHERE source=? AND date=?", [self.source.KEY, dateStr]) # cascades and deletes associated programs records
+                c.execute("DELETE FROM updates WHERE source=? AND date=?", [self.source.KEY, dateStr])  # cascades and deletes associated programs records
 
             # programs updated
             c.execute("INSERT INTO updates(source, date, programs_updated) VALUES(?, ?, ?)", [self.source.KEY, dateStr, datetime.datetime.now()])
@@ -381,8 +377,8 @@ class Database(object):
         except Exception:
             import traceback as tb
             import sys
-            (type, value, traceback) = sys.exc_info()
-            tb.print_exception(type, value, traceback)
+            (etype, value, traceback) = sys.exc_info()
+            tb.print_exception(etype, value, traceback)
 
             try:
                 self.conn.rollback()
@@ -408,7 +404,6 @@ class Database(object):
             raise SourceException('No channels or programs imported')
 
         return result
-
 
     def _getEPGView(self, channelStart, date, progress_callback, clearExistingProgramList):
         self._updateChannelAndProgramListCaches(date, progress_callback, clearExistingProgramList)
@@ -545,14 +540,17 @@ class Database(object):
 
         channelMap = dict()
         for c in channels:
-            channelMap[c.id] = c
+            if c.id:
+                channelMap[c.id] = c
+
+        if not channels:
+            return []
 
         c = self.conn.cursor()
         c.execute('SELECT p.*, (SELECT 1 FROM notifications n WHERE n.channel=p.channel AND n.program_title=p.title AND n.source=p.source) AS notification_scheduled FROM programs p WHERE p.channel IN (\'' + ('\',\''.join(channelMap.keys())) + '\') AND p.source=? AND p.end_date > ? AND p.start_date < ?', [self.source.KEY, startTime, endTime])
         for row in c:
             program = Program(channelMap[row['channel']], row['title'], row['start_date'], row['end_date'], row['description'], row['image_large'], row['image_small'], row['notification_scheduled'])
             programList.append(program)
-
 
         return programList
 
@@ -756,8 +754,14 @@ class Source(object):
         """
         return None
 
-    def isUpdated(self, lastUpdated):
-        return True
+    def isUpdated(self, channelsLastUpdated, programsLastUpdated):
+        today = datetime.datetime.now()
+        if channelsLastUpdated is None or channelsLastUpdated.day != today.day:
+            return True
+
+        if programsLastUpdated is None or programsLastUpdated.day != today.day:
+            return True
+        return False
 
     def _downloadUrl(self, url):
         u = urllib2.urlopen(url, timeout=30)
@@ -823,10 +827,13 @@ class XMLTVSource(Source):
         context = ElementTree.iterparse(f, events=("start", "end"))
         return parseXMLTV(context, f, f.size, self.logoFolder, progress_callback)
 
-    def isUpdated(self, lastUpdated):
+    def isUpdated(self, channelsLastUpdated, programLastUpdate):
+        if channelsLastUpdated is None or not xbmcvfs.exists(self.xmltvFile):
+            return True
+
         stat = xbmcvfs.Stat(self.xmltvFile)
         fileUpdated = datetime.datetime.fromtimestamp(stat.st_mtime())
-        return fileUpdated > lastUpdated
+        return fileUpdated > channelsLastUpdated
 
 
 class ONTVSource(Source):
@@ -875,7 +882,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                 title = elem.findtext("display-name")
                 logo = None
                 if logoFolder:
-                    logoFile = os.path.join(logoFolder.encode('utf-8', 'ignore'), title.encode('utf-8', 'ignore') + '.png')
+                    logoFile = os.path.join(logoFolder, title + '.png')
                     if xbmcvfs.exists(logoFile):
                         logo = logoFile
                 if not logo:
