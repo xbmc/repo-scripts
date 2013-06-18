@@ -96,6 +96,7 @@ class GUI(xbmcgui.WindowXML):
     CONTROL_VISIBLE = 102
     CONTROL_ASPECT_KEEP = 103
     CONTROL_ARROWS = 104
+    CONTROL_BG = 105
     ACTION_CONTEXT_MENU = [117]
     ACTION_PREVIOUS_MENU = [9, 92, 10]
     ACTION_SHOW_INFO = [11]
@@ -128,6 +129,8 @@ class GUI(xbmcgui.WindowXML):
             self.arrows_controller.setVisible(False)
         if addon.getSetting('aspect_ratio2') == '0':
             self.aspect_controller.setVisible(False)
+        if addon.getSetting('black_background') == 'true':
+            self.bg_controller.setVisible(False)
 
         self.showHelp()
         self.showAlbums()
@@ -141,6 +144,7 @@ class GUI(xbmcgui.WindowXML):
         self.arrows_controller = self.getControl(self.CONTROL_ARROWS)
         self.aspect_controller = self.getControl(self.CONTROL_ASPECT_KEEP)
         self.info_controller = self.getControl(self.CONTROL_VISIBLE)
+        self.bg_controller = self.getControl(self.CONTROL_BG)
 
     def onAction(self, action):
         action_id = action.getId()

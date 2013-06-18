@@ -16,6 +16,7 @@
 
     <!-- Settings -->
     <string id="32100">Don't show this help again</string>
+    <string id="32101">Use black Background (hide Image)</string>
     <string id="32110">Default aspect-ratio</string>
     <string id="32111">scale</string>
     <string id="32112">keep</string>

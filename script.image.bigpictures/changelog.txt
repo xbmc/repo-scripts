@@ -1,3 +1,6 @@
+4.1.1 (17.06.2013)
+  added possibility to hide background image (which results in black background)
+
 4.1.0 (05.05.2013)
   added possibility to choose enabled scrapers
   updated Translations
