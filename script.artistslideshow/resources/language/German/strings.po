@@ -1,0 +1,325 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Albanisch"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Arabisch"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Weißrussisch"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Bosnisch (Latein)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Bulgarisch"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Katalanisch"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Chinesisch"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Kroatisch"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Tschechisch"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Dänisch"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Niederländisch"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Englisch"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Estnisch"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Finnishh"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Französisch"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Deutsch"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Griechisch"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Hebräisch"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Ungarisch"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Isländisch"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Indonesisch"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Italienisch"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japanisch"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Koreanisch"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Lettisch"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Litauisch"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Mazedonisch"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norwegisch"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Polnisch"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portugiesisch"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portugiesisch (Brasilien)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Rumänisch"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Russisch"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "Serbisch (Latein)"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Slowakisch"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Slowenisch"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Spanisch"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Schwedisch"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Thailändisch"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Türkisch"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ukrainisch"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnamesisch"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Farsi"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Lade herunter"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Lade Künstlerbilder"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Nichts heruntergeladen"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Keine Bilder für Künstler gefunden"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Download fertiggestellt"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Alle Künstlerbilder runtergeladen."
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Herunterladen"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Lade Bilder von Last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Lade Bilder von htbackdrops.com"
+
+msgctxt "#32003"
+msgid "Minimal image width"
+msgstr "Minimale Bildbreite"
+
+msgctxt "#32004"
+msgid "Minimal image height"
+msgstr "Minimale Bldhöhe"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Lade zusätzliche Künstlerinformationen"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "Bevorzugte Sprache für Künstlerinformationen"
+
+msgctxt "#32007"
+msgid "Download only 16:9 images"
+msgstr "Lade nur Bilder im 16:9 Format"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Diashow"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Lokale Künstlerordner"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "Bildpriorität"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "Ausweich-Slideshow Ordner"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "Überschreibe Slideshowordner"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "Ausweich-Diashowordner verwenden"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "Überschriebene Diashowbilder verwenden"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Erweitert"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "Limit Größe des Downloadcache"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "Maximale Cachegröße (in Megabytes)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "Download-Benachichtigunstyp"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "Spezieller Benachichtigungs-Bildordner"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "Alternativer Name für lokalen FanArt Ordner"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Aus"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Textbenachrichtigungen"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Spezielle Bilder"
+
+msgctxt "#32901"
+msgid "Use remote images first"
+msgstr "Nutze externe Bilder zuerst"
+
+msgctxt "#32902"
+msgid "Use local images first"
+msgstr "Nutze interne Bilder zuerst"
+
+msgctxt "#32903"
+msgid "Use both local and remote images"
+msgstr "Nutze interne und externe Bilder"

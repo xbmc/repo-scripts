@@ -1,3 +1,19 @@
+v.1.5.2
+- added ability to parse multiple featured artists from title of song
+- fixed bug on Windows where once override or fallback were set they could not be unset
+- updated artist bio infolabel to filter out link to READ MORE on last.fm
+- changed to using JSON call to get artist array from XBMC rather than manually splitting
+- updated unicode support
+- fixed issue where files ending with capitalized extensions were ignored
+- fixed issue where artist bio not downloaded when using override image directory
+- fixed issue where selecting HD Aspect Ratio for Last.fm downloads resulted in no images
+- updated language files from Transifex
+- changed over to Frodo .po language files
+- updated addon.xml with new information and format for repo database
+
+v1.5.1
+internal beta test
+
 v.1.5.0
 - updated language files from Transifex
 - branched Eden and Frodo versions and updated Frodo addon.xml information

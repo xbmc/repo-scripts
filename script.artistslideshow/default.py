@@ -12,12 +12,17 @@
 import urllib, re, os, sys, time, unicodedata, socket, shutil
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 from elementtree import ElementTree as xmltree
+if sys.version_info >= (2, 7):
+    import json
+else:
+    import simplejson as json
+
 
 __addon__        = xbmcaddon.Addon()
 __addonname__    = __addon__.getAddonInfo('id')
 __addonversion__ = __addon__.getAddonInfo('version')
-__addonpath__    = __addon__.getAddonInfo('path')
-__addonicon__    = xbmc.translatePath('%s/icon.png' % __addonpath__ ).decode("utf-8")
+__addonpath__    = __addon__.getAddonInfo('path').decode('utf-8')
+__addonicon__    = xbmc.translatePath('%s/icon.png' % __addonpath__ )
 __language__     = __addon__.getLocalizedString
 
 socket.setdefaulttimeout(10)
@@ -73,9 +78,11 @@ LANGUAGES = (
     ("Portuguese-BR"              , "pb",            "32" ),
     ("Brazilian"                  , "pb",            "32" ) )
 
-def log(txt):
-    message = 'script.artistslideshow: %s' % txt.encode("utf-8")
-    xbmc.log(msg=message, level=xbmc.LOGDEBUG)
+def log(msg, level=xbmc.LOGDEBUG):
+    plugin = "Artist Slideshow"
+    if type(msg).__name__=='unicode':
+        msg = msg.encode('utf-8')
+    xbmc.log("[%s] %s" % (plugin, msg.__str__()), level)
 
 def checkDir(path):
     if not xbmcvfs.exists(path):
@@ -83,10 +90,36 @@ def checkDir(path):
 
 def getCacheThumbName(url, CachePath):
     thumb = xbmc.getCacheThumbName(url)
-    thumbpath = os.path.join(CachePath, thumb)
+    thumbpath = os.path.join(CachePath, thumb.encode("utf-8"))
     return thumbpath
 
+def smart_unicode(s):
+    #"""credit : sfaxman"""
+    if not s:
+        return ''
+    try:
+        if not isinstance(s, basestring):
+            if hasattr(s, '__unicode__'):
+                s = unicode(s)
+            else:
+                s = unicode(str(s), 'UTF-8')
+        elif not isinstance(s, unicode):
+            s = unicode(s, 'UTF-8')
+    except:
+        if not isinstance(s, basestring):
+            if hasattr(s, '__unicode__'):
+                s = unicode(s)
+            else:
+                s = unicode(str(s), 'ISO-8859-1')
+        elif not isinstance(s, unicode):
+            s = unicode(s, 'ISO-8859-1')
+    return s
+
+def smart_utf8(s):
+    return smart_unicode(s).encode('utf-8')
+
 def cleanText(text):
+    text = re.sub('<a href="http://www.last.fm/music/.*</a>.','',text)
     text = re.sub('<(.|\n|\r)*?>','',text)
     text = re.sub('&quot;','"',text)
     text = re.sub('&amp;','&',text)
@@ -97,7 +130,7 @@ def cleanText(text):
 
 def download(src, dst, dst2):
     if (not xbmc.abortRequested):
-        tmpname = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % ( __addonname__ , xbmc.getCacheThumbName(src) )).decode("utf-8")
+        tmpname = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % ( __addonname__ , xbmc.getCacheThumbName(src) ))
         if xbmcvfs.exists(tmpname):
             xbmcvfs.delete(tmpname)
         global __last_time__
@@ -125,19 +158,16 @@ class Main:
             if( xbmc.Player().isPlayingAudio() == False and xbmc.getInfoLabel( self.EXTERNALCALL ) == '' ):
                 log('no music playing')
                 if( self.DAEMON == "False" ):
-                    self.WINDOW.clearProperty("ArtistSlideshowRunning")
-            elif(not self.OVERRIDEPATH == ''):
-                self._set_property("ArtistSlideshow", self.OVERRIDEPATH)
+                    self._set_property("ArtistSlideshowRunning")
             else:
                 log('first song started')
-                time.sleep(0.2) # it may take some time for xbmc to read tag info after playback started
+                time.sleep(0.5) # it may take some time for xbmc to read tag info after playback started
                 self._use_correct_artwork()
                 self._trim_cache()
-            while (not xbmc.abortRequested and self.OVERRIDEPATH == ''):
+            while (not xbmc.abortRequested):
                 time.sleep(0.5)
                 if xbmc.getInfoLabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
                     if( xbmc.Player().isPlayingAudio() == True or xbmc.getInfoLabel( self.EXTERNALCALL ) != '' ):
-                        #if self.NAME not in self._get_current_artist():
                         if set( self.ALLARTISTS ) <> set( self._get_current_artist() ):
                             self._clear_properties()
                             self.UsingFallback = False
@@ -148,7 +178,7 @@ class Main:
                                 log('same artist playing, continue download')
                                 self._use_correct_artwork()
                     else:
-                        time.sleep(1) # doublecheck if playback really stopped
+                        time.sleep(2) # doublecheck if playback really stopped
                         if( xbmc.Player().isPlayingAudio() == False and xbmc.getInfoLabel( self.EXTERNALCALL ) == '' ):
                             if ( self.DAEMON == "False" ):
                                 self._clean_dir( self.MergeDir )
@@ -166,10 +196,16 @@ class Main:
         self.TOTALARTISTS = len(artists)
         self.MergedImagesFound = False
         for artist in artists:
-            log('current artist is %s' % artist.decode("utf-8"))
+            log('current artist is %s' % artist)
             self.ARTISTNUM += 1
             self.NAME = artist
-            if(self.PRIORITY == '1' and not self.LOCALARTISTPATH == ''):
+            if(self.USEOVERRIDE == 'true'):
+                log('using override directory for images')
+                self._set_property("ArtistSlideshow", self.OVERRIDEPATH)
+                if(self.ARTISTNUM == 1):
+                    self._set_cachedir()
+                    self._get_artistinfo()
+            elif(self.PRIORITY == '1' and not self.LOCALARTISTPATH == ''):
                 log('looking for local artwork')
                 self._get_local_images()
                 if(not self.LocalImagesFound):
@@ -187,7 +223,7 @@ class Main:
                     log('no remote artist artwork found, looking for local artwork')
                     self._get_local_images()
         if(not (self.LocalImagesFound or self.CachedImagesFound or self.ImageDownloaded or self.MergedImagesFound)):
-            if (not self.FALLBACKPATH == ''):
+            if (self.USEFALLBACK == 'true'):
                 log('no images found for artist, using fallback slideshow')
                 log('fallbackdir = ' + self.FALLBACKPATH)
                 self.UsingFallback = True
@@ -229,10 +265,12 @@ class Main:
                 self.LANGUAGE = language[1]
                 log('language = %s' % self.LANGUAGE)
                 break
-        self.LOCALARTISTPATH = __addon__.getSetting( "local_artist_path" )
+        self.LOCALARTISTPATH = __addon__.getSetting( "local_artist_path" ).decode("utf-8")
         self.PRIORITY = __addon__.getSetting( "priority" )
-        self.FALLBACKPATH = __addon__.getSetting( "fallback_path" )
-        self.OVERRIDEPATH = __addon__.getSetting( "slideshow_path" )
+        self.USEFALLBACK = __addon__.getSetting( "fallback" )
+        self.FALLBACKPATH = __addon__.getSetting( "fallback_path" ).decode("utf-8")
+        self.USEOVERRIDE = __addon__.getSetting( "slideshow" )
+        self.OVERRIDEPATH = __addon__.getSetting( "slideshow_path" ).decode("utf-8")
         self.RESTRICTCACHE = __addon__.getSetting( "restrict_cache" )
         try:
             self.maxcachesize = int(__addon__.getSetting( "max_cache_size" )) * 1000000
@@ -240,12 +278,12 @@ class Main:
             self.maxcachesize = 1024 * 1000000
         self.NOTIFICATIONTYPE = __addon__.getSetting( "show_progress" )
         if self.NOTIFICATIONTYPE == "2":
-            self.PROGRESSPATH = __addon__.getSetting( "progress_path" )
+            self.PROGRESSPATH = __addon__.getSetting( "progress_path" ).decode("utf-8")
             log('set progress path to %s' % self.PROGRESSPATH)
         else:
             self.PROGRESSPATH = ''
         if len ( __addon__.getSetting( "fanart_folder" ) ) > 0:
-            self.FANARTFOLDER = __addon__.getSetting( "fanart_folder" )
+            self.FANARTFOLDER = __addon__.getSetting( "fanart_folder" ).decode("utf-8")
             log('set fanart folder to %s' % self.FANARTFOLDER)
         else:
             self.FANARTFOLDER = 'extrafanart'
@@ -290,6 +328,11 @@ class Main:
         checkDir(xbmc.translatePath('special://profile/addon_data/%s/ArtistSlideshow' % __addonname__ ).decode("utf-8"))
         checkDir(xbmc.translatePath('special://profile/addon_data/%s/transition' % __addonname__ ).decode("utf-8"))
 
+    def _set_cachedir( self ):
+        CacheName = xbmc.getCacheThumbName(self.NAME).replace('.tbn', '')
+        self.CacheDir = xbmc.translatePath('special://profile/addon_data/%s/ArtistSlideshow/%s/' % ( __addonname__ , CacheName, )).decode("utf-8")
+        checkDir(self.CacheDir)
+
 
     def _start_download( self ):
         self.CachedImagesFound = False
@@ -306,14 +349,12 @@ class Main:
             pass
             #self.CacheDir was successfully set in _get_local_images
         else:
-            CacheName = xbmc.getCacheThumbName(self.NAME).replace('.tbn', '')
-            self.CacheDir = xbmc.translatePath('special://profile/addon_data/%s/ArtistSlideshow/%s/' % ( __addonname__ , CacheName, )).decode("utf-8")
-            checkDir(self.CacheDir)
+            self._set_cachedir()
         log('cachedir = %s' % self.CacheDir)
 
         files = os.listdir(self.CacheDir)
         for file in files:
-            if file.endswith('tbn') or (self.PRIORITY == '2' and self.LocalImagesFound):
+            if file.lower().endswith('tbn') or (self.PRIORITY == '2' and self.LocalImagesFound):
                 self.CachedImagesFound = True
 
         if self.CachedImagesFound:
@@ -327,9 +368,10 @@ class Main:
         else:
             last_time = 0
             if self.ARTISTNUM == 1:
+                #THIS IS WHERE THE CACHE FILES GET IN THE WRONG PLACE
                 for cache_file in ['artistimageshtbackdrops.nfo', 'artistimageslastfm.nfo']:
-                    filename = os.path.join( self.CacheDir, cache_file )
-                    if xbmcvfs.exists( os.path.join( self.CacheDir, filename ) ):
+                    filename = os.path.join( self.CacheDir, cache_file.decode("utf-8") )
+                    if xbmcvfs.exists( filename ):
                         if time.time() - os.path.getmtime(filename) < 1209600:
                             log('cached %s found' % filename)
                             cached_image_info = True
@@ -339,8 +381,8 @@ class Main:
                 if self.NOTIFICATIONTYPE == "1":
                     self._set_property("ArtistSlideshow", self.InitDir)
                     if not cached_image_info:
-                        execute_text = 'XBMC.Notification("' + __language__(30300) + '", "' + __language__(30301) + '", 5000, ' + __addonicon__ + ')'
-                        xbmc.executebuiltin(execute_text.encode("utf-8"))
+                        command = 'XBMC.Notification(%s, %s, %s, %s)' % (smart_utf8(__language__(30300)), smart_utf8(__language__(30301)), 5000, smart_utf8(__addonicon__))
+                        xbmc.executebuiltin(command)
                 elif self.NOTIFICATIONTYPE == "2":
                     if not cached_image_info:
                         self._set_property("ArtistSlideshow", self.PROGRESSPATH)
@@ -409,8 +451,8 @@ class Main:
                 if self.ARTISTNUM == 1:
                     self._refresh_image_directory()
                     if self.NOTIFICATIONTYPE == "1" and not cached_image_info:
-                        execute_text = 'XBMC.Notification("' + __language__(30304) + '", "' + __language__(30305) + '", 5000, ' + __addonicon__ + ')'
-                        xbmc.executebuiltin(execute_text.encode("utf-8"))
+                        command = 'XBMC.Notification(%s, %s, %s, %s)' % (smart_utf8(__language__(30304)), smart_utf8(__language__(30305)), 5000, smart_utf8(__addonicon__))
+                        xbmc.executebuiltin(command)
                 if self.TOTALARTISTS > 1:
                     self._merge_images()
             if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ).decode("utf-8") == self.BlankDir and self.ARTISTNUM == 1):
@@ -427,8 +469,8 @@ class Main:
                     log('clearing ArtistSlideshow property')
                     self._set_property("ArtistSlideshow", self.InitDir)
                     if self.NOTIFICATIONTYPE == "1" and not cached_image_info:
-                        execute_text = 'XBMC.Notification("' + __language__(30302) + '", "' + __language__(30303) + '", 10000, ' + __addonicon__ + ')'
-                        xbmc.executebuiltin(execute_text.encode("utf-8"))
+                        command = 'XBMC.Notification(%s, %s, %s, %s)' % (smart_utf8(__language__(30302)), smart_utf8(__language__(30303)), 10000, smart_utf8(__addonicon__))
+                        xbmc.executebuiltin(command)
                     if( self.ARTISTINFO == "true" and not self._playback_stopped_or_changed() ):
                         self._get_artistinfo()
         elif self.TOTALARTISTS > 1:
@@ -465,22 +507,39 @@ class Main:
             log( 'switching slideshow to ' + self.BlankDir )
 
 
+    def _split_artists( self, response):
+        return response.replace('ft.',' / ').replace('feat.',' / ').split(' / ')
+
+
+    def _get_featured_artists( self, data ):
+        return self._split_artists( data.replace('ft.','feat.').split('feat.')[-1] )
+    
+
     def _get_current_artist( self ):
-        featured_artist = ''
+        featured_artists = ''
+        artists = []
         if( xbmc.Player().isPlayingAudio() == True ):
-            artist = xbmc.Player().getMusicInfoTag().getArtist()
-            if( artist == '' ):
-                artist = xbmc.Player().getMusicInfoTag().getTitle()[0:(artist.find('-'))-1]
-            featured_artist = xbmc.Player().getMusicInfoTag().getTitle().replace('ft.','feat.').split('feat.')
+            response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"Player.GetItem", "params":{"playerid":0, "properties":["artist"]},"id":1}' )
+            try:
+                artists = json.loads(response)['result']['item']['artist']
+            except KeyError:
+                artists = []
+            if( len( artists ) == 0 ):
+                try:
+                    response = xbmc.Player().getMusicInfoTag().getTitle()[0:(response.find('-'))-1]
+                except RuntimeError:
+                    response = ''
+                artists = self._split_artists( response )
+            try:
+                featured_artists = self._get_featured_artists( xbmc.Player().getMusicInfoTag().getTitle() )
+            except RuntimeError:
+                featured_artists = ''
         elif( not xbmc.getInfoLabel( self.SKINARTIST ) == '' ):
-            artist = xbmc.getInfoLabel( self.SKINARTIST )
-            log('current song title from skin is %s' % xbmc.getInfoLabel( self.SKINTITLE ).decode("utf-8"))
-            featured_artist = xbmc.getInfoLabel( self.SKINTITLE ).replace('ft.','feat.').split('feat.')
-        else:
-            artist = ''
-        artists = artist.replace('ft.',' / ').replace('feat.',' / ').split(' / ')
-        if len( featured_artist ) > 1:
-            artists.append( featured_artist[-1] )
+            response = xbmc.getInfoLabel( self.SKINARTIST )
+            artists = self._split_artists( response )
+            featured_artists = self._get_featured_artists( xbmc.getInfoLabel( self.SKINTITLE ) )
+        if len( featured_artists ) > 1:
+            artists.append( featured_artists )
         return [a.strip(' ()') for a in artists]
 
 
@@ -496,14 +555,14 @@ class Main:
         if len(self.NAME) == 0:
             log('no artist name provided')
             return
-        self.CacheDir = os.path.join( self.LOCALARTISTPATH, self.NAME, self.FANARTFOLDER ).decode("utf-8")
+        self.CacheDir = os.path.join( self.LOCALARTISTPATH, self.NAME, self.FANARTFOLDER )
         log('cachedir = %s' % self.CacheDir)
         try:
             files = os.listdir(self.CacheDir)
         except OSError:
             files = []
         for file in files:
-            if(file.endswith('tbn') or file.endswith('jpg') or file.endswith('jpeg') or file.endswith('gif') or file.endswith('png')):
+            if(file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png')):
                 self.LocalImagesFound = True
         if self.LocalImagesFound:
             log('local images found')
@@ -519,7 +578,7 @@ class Main:
         self.MergedImagesFound = True
         files = os.listdir(self.CacheDir)
         for file in files:
-            if(file.endswith('tbn') or file.endswith('jpg') or file.endswith('jpeg') or file.endswith('gif') or file.endswith('png')):
+            if(file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png')):
                 xbmcvfs.copy(os.path.join(self.CacheDir, file), os.path.join(self.MergeDir, file))
         if self.ARTISTNUM == self.TOTALARTISTS:
             self._wait( 9.8 )
@@ -563,10 +622,10 @@ class Main:
         if site == "lastfm":
             self.info = 'artist.getImages'
             self.url = self.LastfmURL + '&method=artist.getImages&artist=' + self.NAME.replace('&','%26').replace(' ','+')
-            log( 'asking for images from: %s' %self.url.decode("utf-8") )
+            log( 'asking for images from: %s' %self.url )
         elif site == "htbackdrops":
             self.url = self.HtbackdropsQueryURL + '&keywords=' + self.NAME.replace('&','%26').replace(' ','+') + '&dmin_w=' + str( self.minwidth ) + '&dmin_h=' + str( self.minheight )
-            log( 'asking for images from: %s' %self.url.decode("utf-8") )
+            log( 'asking for images from: %s' %self.url )
         images = self._get_data(site, 'images')
         return images
 
@@ -674,7 +733,7 @@ class Main:
                             height = element.attrib.get('height')
                             if ( int(width) >= self.minwidth ) and ( int(height) >= self.minheight ):
                                 if(self.HDASPECTONLY == 'true'):
-                                    aspect_ratio = int(width)/int(height)
+                                    aspect_ratio = float(width)/float(height)
                                     if(aspect_ratio > 1.770 and aspect_ratio < 1.787):
                                         data.append(element.text)
                                 else:
@@ -748,7 +807,7 @@ class Main:
         self.WINDOW.setProperty(property_name, value)
       except:
         pass
-        #log(" *************** Exception: Couldn't set propery " + property_name + " value " + value)
+        log(" *************** Exception: Couldn't set propery " + property_name + " value " + value)
 
 
 if ( __name__ == "__main__" ):

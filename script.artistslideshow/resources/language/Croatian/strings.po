@@ -1,0 +1,325 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Croatian (http://www.transifex.com/projects/p/xbmc-addons/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Albanski"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Arapski"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Bjeloruski"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Bosanski (Latin)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Bugarski"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Katalonski"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Kineski"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Hrvatski"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Česki"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Danski"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Njemački"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Engleski"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Estonski"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Finski"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Francuski"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Njemački"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Grčki"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Hebrejski"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hindu"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Mađarski"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Islandski"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Indonezijski"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Talijanski"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japanski"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Koreanski"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Latvijski"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Litvanski"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Makedonski"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norveški"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Poljski"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portugalski"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portugalski (Brazil)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Rumunjski"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Ruski"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "SrbskiLatinica"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Slovački"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Slovenski"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Španjolski"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Švedski"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Thai"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Turski"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ukrainski"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnamski"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Farsi"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Preuzimanje"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Preuzimanje slika za umjetnika"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Neskida ništa"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Nisu pronađene slike za umjetnika"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Preuzimanje Kompletno"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Sve slike od umjetnika  preuzete"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Preuzmi"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Preuzmite slike iz last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Preuzmite slike iz htbackdrops.com"
+
+msgctxt "#32003"
+msgid "Minimal image width"
+msgstr "Minimalna širina slike"
+
+msgctxt "#32004"
+msgid "Minimal image height"
+msgstr "Minimalna visina slike"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Preuzmite dodatne informacije o umjetniku"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "   Željeni jezik za informacija o umjetniku"
+
+msgctxt "#32007"
+msgid "Download only 16:9 images"
+msgstr "Preuzimanje samo 16:09 slika"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Slikovni Niz"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Lokalno mapa za umjetnika"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "Prioritet Slika "
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "Zamjenska mapa slikovnog niza"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "Prepiši mapu slikovnog niza"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "Koristi zamjenski slikovni niz"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "Prepiši slikovni niz"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Napredno"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "Ograničite veličinu memorije preuzimanja"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "Maksimum veličine memorije (u magabajtima)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "Preuzmite tip obavijesti"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "Prilagođena obavijest mape slika"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "Alternativni naziv za lokalnu fanart mapu"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Ništa"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Tekst obavijesti"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Prilagođena slika"
+
+msgctxt "#32901"
+msgid "Use remote images first"
+msgstr "Koristite daljinske slike prve"
+
+msgctxt "#32902"
+msgid "Use local images first"
+msgstr "Koristite lokalne slike prve"
+
+msgctxt "#32903"
+msgid "Use both local and remote images"
+msgstr "Obostrano koristite daljinske i lokalne slike"

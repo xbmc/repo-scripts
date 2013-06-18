@@ -1,0 +1,325 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Αλβανικά"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Αραβικά"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Λευκορώσικα"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Βοσνιακά (Λατινικά)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Βουλγάρικα"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Καταλανικά"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Κινέζικα"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Κροατικά"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Τσέχικα"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Δανικά"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Ολλανδικά"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Αγγλικά"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Εσθονικά"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Φινλανδικά"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Γαλλικά"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Γερμανικά"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Ελληνικά"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Εβραϊκά"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Ινδικά"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Ουγγρικά"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Ισλανδικά"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Ινδονησιακά"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Ιταλικά"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Ιαπωνικά"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Κορεάτικα"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Λετονικά"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Λιθουανικά"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Γλώσσα FYROM"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Νορβηγικά"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Πολωνικά"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Πορτογαλικά"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Πορτογαλικά (Βραζιλίας)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Ρουμανικά"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Ρώσικα"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "Σερβικά Λατινικά"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Σλοβακικά"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Σλοβενικά"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Ισπανικά"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Σουηδικά"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Ταϊλανδικά"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Τούρκικα"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ουκρανικά"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Βιετναμέζικα"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Φαρσί"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Γίνεται λήψη"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Λαμβάνονται εικόνες καλλιτεχνών"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Δεν ελήφθη τίποτα"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Δε βρέθηκαν εικόνες για τον καλλιτέχνη"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Ολοκλήρωση λήψης"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Ελήφθησαν όλες οι εικόνες καλλιτέχνη"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Λήψη"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Εικόνες από last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Εικόνες από htbackdrops.com"
+
+msgctxt "#32003"
+msgid "Minimal image width"
+msgstr "Ελάχιστο πλάτος εικόνας"
+
+msgctxt "#32004"
+msgid "Minimal image height"
+msgstr "Ελάχιστο ύψος εικόνας"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Λήψη επιπλέον πληροφοριών καλλιτέχνη"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "Προτιμώμενη γλώσσα πληροφοριών καλλιτέχνη"
+
+msgctxt "#32007"
+msgid "Download only 16:9 images"
+msgstr "Λήψη μόνο εικόνων αναλογίας 16:9"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Παρουσίαση διαφανειών"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Τοπικός φάκελος καλλιτεχνών"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "Προτεραιότητα Εικόνας"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "Φάκελος εφεδρικής παρουσίασης"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "Φάκελος παρουσίασης παράκαμψης"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "Χρήση εφεδρικής παρουσίασης διαφανειών"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "Φάκελος παρουσίασης παράκαμψης"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Για προχωρημένους"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "Περιορισμός της λανθάνουσας μνήμης λήψεων"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "Μέγιστο μέγεθος λανθάνουσας μνήμης (σε MB)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "Τύπος ειδοποίησης λήψεων"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "Φάκελος προσωπικών εικόνων ειδοποιήσεων"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "Εναλλακτικό όνομα τοπικού φακέλου fanart"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Κανένας"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Ειδοποιήσεις κειμένου"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Προσωπικές εικόνες"
+
+msgctxt "#32901"
+msgid "Use remote images first"
+msgstr "Χρήση πρώτα των απομακρυσμένων εικόνων"
+
+msgctxt "#32902"
+msgid "Use local images first"
+msgstr "Χρήση πρώτα των τοπικών εικόνων"
+
+msgctxt "#32903"
+msgid "Use both local and remote images"
+msgstr "Χρήση τοπικών και απομακρυσμένων εικόνων"

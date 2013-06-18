@@ -12,8 +12,10 @@
     <category label="32100">
         <setting id="local_artist_path" type="folder" label="32101" default="" />
         <setting id="priority" type="enum" label="32102" lvalues="32901|32902|32903" default="0" />
-        <setting id="fallback_path" type="folder" label="32103" default="" />
-        <setting id="slideshow_path" type="folder" label="32104" default="" />
+        <setting id="fallback" type="bool" label="32105" default="false" />
+        <setting id="fallback_path" type="folder" label="32103" default="" enable="eq(-1,true)" />
+        <setting id="slideshow" type="bool" label="32106" default="false" />
+        <setting id="slideshow_path" type="folder" label="32104" default="" enable="eq(-1,true)" />
     </category>
     <category label="32200">
         <setting id="restrict_cache" type="bool" label="32201" default="false" />

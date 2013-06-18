@@ -1,0 +1,325 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Albanês"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Árabe"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Bielorrusso"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Bósnio (Latino)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Búlgaro"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Catalão"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Chinês"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Croata"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Checo"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Dinamarquês"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Holandês"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Inglês"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Estoniano"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Finlandês"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Francês"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Alemão"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Grego"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Hebraico"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Indiano"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Húngaro"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Islandês"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "indonésio"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Italiano"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japonês"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Coreano"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Letão"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Lituano"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Macedônio"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norueguês"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Polonês"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Português"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Português (Brasileiro)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Romeno"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Russo"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "Sérvio"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Eslovaco"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Esloveno"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Espanhol"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Sueco"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Tailandês"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Turco"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ucraniano"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnamita"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Persa"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Transferindo"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Transferências de imagens de artistas"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Nenhuma transferência efetuada"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Não localizei imagens para este artista"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Transferência finalizada"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Foram efetuadas transferências de todas as imagens"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Baixar"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Transferência de imagens do last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Transferência de imagens do htbackdrops.com"
+
+msgctxt "#32003"
+msgid "Minimal image width"
+msgstr "Comprimento mínimo da imagem"
+
+msgctxt "#32004"
+msgid "Minimal image height"
+msgstr "Altura mínima da imagem"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Transferência  de informações adicionais dos artistas"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "     Linguagem Preferida para informações dos artistas"
+
+msgctxt "#32007"
+msgid "Download only 16:9 images"
+msgstr "Transferência somente de imagens 16:9"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Apresentação"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Pasta Artistas Locais"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "   Imagem Prioritária"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "Pasta reserva para o slideshow"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "Pasta preferencial para o slideshow"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "Usar fallback slideshow"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "Usar override slideshow"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Avançado"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "Tamanho Limite do cache para transferência"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "     Tamanho do cache máximo (em megabytes)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "Transferência pelo tipo de notificação"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "     Pasta de imagens para notificação customizada"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "Nome alternativo para a pasta local de fanarts"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Nenhum"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Notificações texto"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Imagens customizadas"
+
+msgctxt "#32901"
+msgid "Use remote images first"
+msgstr "Usar imagens remotas primeiro"
+
+msgctxt "#32902"
+msgid "Use local images first"
+msgstr "Usar imagens locais primeiro"
+
+msgctxt "#32903"
+msgid "Use both local and remote images"
+msgstr "Usar imagens locais e remotas, ambas "
