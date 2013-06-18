@@ -22,6 +22,7 @@
 				<font>-</font>
 				<texturenofocus>-</texturenofocus>
 				<texturefocus>-</texturefocus>
+				<onfocus>SetFocus(150)</onfocus>
 				<visible>true</visible>
 			</control>
 			<control type="image">

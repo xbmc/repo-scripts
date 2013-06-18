@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-
 # Subdivx.com subtitles, based on a mod of Undertext subtitles
+# Adaptation: enric_godes@hotmail.com | Please use email address for your comments
+
 import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2
 from utilities import log
 _ = sys.modules[ "__main__" ].__language__
@@ -15,16 +16,14 @@ debug_pretext = "subdivx"
 
 
 #Subtitle pattern example:
-"""
-<div id="menu_titulo_buscador"><a class="titulo_menu_izq" href="http://www.subdivx.com/X6XMjEzMzIyX-iron-man-2-2010.html">Iron Man 2 (2010)</a></div>
-<img src="img/calif5.gif" class="detalle_calif">
-</div><div id="buscador_detalle">
-<div id="buscador_detalle_sub">Para la versión Iron.Man.2.2010.480p.BRRip.XviD.AC3-EVO, sacados de acá. ¡Disfruten!</div><div id="buscador_detalle_sub_datos"><b>Downloads:</b> 4673 <b>Cds:</b> 1 <b>Comentarios:</b> <a rel="nofollow" href="popcoment.php?idsub=MjEzMzIy" onclick="return hs.htmlExpand(this, { objectType: 'iframe' } )">14</a> <b>Formato:</b> SubRip <b>Subido por:</b> <a class="link1" href="http://www.subdivx.com/X9X303157">TrueSword</a> <img src="http://www.subdivx.com/pais/2.gif" width="16" height="12"> <b>el</b> 06/09/2010  <a rel="nofollow" target="new" href="http://www.subdivx.com/bajar.php?id=213322&u=6"><img src="bajar_sub.gif" border="0"></a></div></div>
-<div id="menu_detalle_buscador">
-"""
+#<div id="menu_titulo_buscador"><a class="titulo_menu_izq" href="http://www.subdivx.com/X6XMjEzMzIyX-iron-man-2-2010.html">Iron Man 2 (2010)</a></div>
+#<img src="img/calif5.gif" class="detalle_calif">
+#</div><div id="buscador_detalle">
+#<div id="buscador_detalle_sub">Para la versión Iron.Man.2.2010.480p.BRRip.XviD.AC3-EVO, sacados de acá. ¡Disfruten!</div><div id="buscador_detalle_sub_datos"><b>Downloads:</b> 4673 <b>Cds:</b> 1 <b>Comentarios:</b> <a rel="nofollow" href="popcoment.php?idsub=MjEzMzIy" onclick="return hs.htmlExpand(this, { objectType: 'iframe' } )">14</a> <b>Formato:</b> SubRip <b>Subido por:</b> <a class="link1" href="http://www.subdivx.com/X9X303157">TrueSword</a> <img src="http://www.subdivx.com/pais/2.gif" width="16" height="12"> <b>el</b> 06/09/2010  </a></div></div>
+#<div id="menu_detalle_buscador">
 
-subtitle_pattern =  "<div\sid=\"buscador_detalle_sub\">(.+?)</div><div\sid=\"buscador_detalle_sub_datos\"><b>Downloads:</b>(.+?)<b>Cds:</b>(.+?)<b>Comentarios:</b>\s.+?\s<b>Formato:</b>.+?<b>Subido\spor:</b>\s<a\sclass=\"link1\"\shref=.+?</a>\s<.+?>.*?<a\srel=\"nofollow\"\starget=\"new\"\shref=\"http://www.subdivx.com/bajar.php\?id=(.+?)&u=(.+?)\">"
-# group(1) = user comments, may content filename, group(2)= downloads used for ratings, group(3) = #files, group(4) = id, group(5) = server
+subtitle_pattern =  "<a\sclass=\"titulo_menu_izq\"\shref=\"http://www.subdivx.com/(.+?).html\">.+?<div\sid=\"buscador_detalle_sub\">(.*?)</div>.+?<b>Downloads:</b>(.+?)<b>Cds:</b>.+?</div></div>"
+# group(1) = id to fetch the subs files, group(2) = user comments, may content filename, group(3)= downloads used for ratings
 
 
 
@@ -42,15 +41,15 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
     log( __name__ ,u"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
     while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
         for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE):
-            id = matches.group(4)
-            no_files = matches.group(3)
-            server = matches.group(5)
-            downloads = int(re.sub(r',','',matches.group(2))) / 1000
+            id = matches.group(1)
+            downloads = int(re.sub(r',','',matches.group(3))) / 1000
             if (downloads > 10):
                 downloads=10
-            filename = string.strip(matches.group(1))
+            filename = string.strip(matches.group(2))
             #Remove new lines on the commentaries
             filename = re.sub('\n',' ',filename)
+            #Remove Google Ads on the commentaries
+            filename = re.sub(r'<script.+?script>','', filename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE)
             #Remove HTML tags on the commentaries
             filename = re.sub(r'<[^<]+?>','', filename)
             #Find filename on the comentaries to show sync label
@@ -64,10 +63,16 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
                 pass
             #Find filename on the commentaries and put it in front
             title_first_word = re.split('[\W]+', searchstring)
-            version = re.search(title_first_word[0],filename, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE)
-            if version != None:
-                filename = filename[version.start():] + " " + filename[: version.start()]
-            subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'sync': sync, 'id' : id, 'server' : server, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
+            comments_list = re.split('\s', filename)
+            n = 0
+            version = None
+            while n<len(comments_list) and version == None:
+                version = re.search(title_first_word[0],comments_list[n], re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE)
+                n=n+1
+            if version:
+                filename = comments_list[n-1] + " | " + filename
+            #End search filename
+            subtitles_list.append({'rating': str(downloads), 'filename': filename, 'sync': sync, 'id' : id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
         page = page + 1
         url = main_url + "index.php?accion=5&masdesc=&oxdown=1&pg=" + str(page) + "&buscar=" + urllib.quote_plus(searchstring)
         content = geturl(url)
@@ -79,8 +84,6 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, su
             if subtitles_list[i]["sync"] > subtitles_list[i-1]["sync"]:
                 subtitles_list[i] = subtitles_list[i-1]
                 subtitles_list[i-1] = temp
-
-
 
 
 
@@ -120,20 +123,20 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     return subtitles_list, "", msg #standard output
 
 
+
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
     id = subtitles_list[pos][ "id" ]
-    server = subtitles_list[pos][ "server" ]
+    url = main_url + str(id) #get the page with the subtitle link, ie http://www.subdivx.com/X6XMjE2NDM1X-iron-man-2-2010
+    content = geturl(url)
+    match=re.compile('bajar.php\?id=(.*?)&u=(.*?)\"',re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE).findall(content)
+
     language = subtitles_list[pos][ "language_name" ]
-    if string.lower(language) == "spanish":
-        url = main_url + "bajar.php?id=" + id + "&u=" + server
-    log( __name__ ,u"%s Fetching subtitles using url %s" % (debug_pretext, url))
+    url = main_url + "bajar.php?id=" + match[0][0] + "&u=" + match[0][1]
     content = geturl(url)
     if content is not None:
         header = content[:4]
         if header == 'Rar!':
-            log( __name__ ,u"%s subdivx: el contenido es RAR" % (debug_pretext)) #EGO
             local_tmp_file = os.path.join(tmp_sub_dir, "subdivx.rar")
-            log( __name__ ,u"%s subdivx: local_tmp_file %s" % (debug_pretext, local_tmp_file)) #EGO
             packed = True
         elif header == 'PK':
             local_tmp_file = os.path.join(tmp_sub_dir, "subdivx.zip")
@@ -144,7 +147,6 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
             packed = False
         log( __name__ ,u"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
         try:
-            log( __name__ ,u"%s subdivx: escribo en %s" % (debug_pretext, local_tmp_file)) #EGO
             local_file_handle = open(local_tmp_file, "wb")
             local_file_handle.write(content)
             local_file_handle.close()

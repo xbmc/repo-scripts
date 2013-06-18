@@ -57,6 +57,7 @@
 
       <setting id="RegieLive" type="bool" label="Subtitrari.RegieLive.ro" default="false"/>
 
+      <setting id="SerialZone" type="bool" label="SerialZone.cz (Czech and Slovak subs only)" default="false"/>
       <setting id="Shooter" type="bool" label="Shooter.cn (Chinese and English subs only)" default="false"/>
       <setting id="Sratim" type="bool" label="Sratim.co.il" default="false"/>
       <setting id="SubClub" type="bool" label="SubClub.eu" default="false"/>
