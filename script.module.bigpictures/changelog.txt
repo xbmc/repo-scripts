@@ -1,3 +1,6 @@
+1.1.2 (17.06.2013)
+ - fixed empty photoset on NewYorkTimes.com: Lens Blog
+
 1.1.1 (05.05.2013)
  - added possibility to choose enabled scrapers
 

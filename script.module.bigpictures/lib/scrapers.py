@@ -410,6 +410,8 @@ class NewYorkTimesLens(BasePlugin):
         url = 'http://lens.blogs.nytimes.com/asset-data/'
         tree = self._get_tree(url, language='xml')
         for id, album in enumerate(tree.findAll('post')):
+            if not album.photo.url.string:
+                continue
             self._albums.append({
                 'title': album.title.string,
                 'album_id': id,
