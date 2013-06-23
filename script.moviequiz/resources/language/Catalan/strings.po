@@ -1,0 +1,61 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "Especials"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "Advertència"
+
+msgctxt "#30071"
+msgid "The error message is:"
+msgstr "El missatge d'error és:"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "Surt"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "General"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "Pel·lícules"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "Sèries de TV"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "Baixades"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "Reprodueix"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "Registre de canvis"

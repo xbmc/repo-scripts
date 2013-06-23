@@ -1,3 +1,36 @@
+[B]Version 1.0.0 - 2013-06-22[/B]
+- Updated language files from Transifex
+
+[B]Version 0.9.4 - 2013-06-03[/B]
+- Fixed statistics in menu
+- Fixed Cinema experience integration
+- Updated language files from Transifex
+
+[B]Version 0.9.3 - 2013-04-21[/B]
+- Many smaller fixes
+- New logo, etc. (thanks PatK)
+- Updated language files from Transifex
+
+[B]Version 0.9.2 - 2013-04-13[/B]
+- Complete rewrite of menus
+- Icons from http://www.famfamfam.com/
+- Logo font from http://www.dafont.com/marcelle.font
+
+[B]Version 0.9.1 - 2013-03-02[/B]
+- Fixed rare UnicodeError related to actor names
+- Updated language files from Transifex
+
+[B]Version 0.9.0 - 2012-11-30[/B]
+- Complete rewrite of question logic to use JSON-RPC (instead of direct database access)
+- Changed video bookmark algorithm to use player seeks instead of database access
+- Updated language files from Transifex
+
+[B]Version 0.5.7 - 2012-07-11[/B]
+- Improved handling of database connection errors
+
+[B]Version 0.5.6 - 2012-07-05[/B]
+- Changed database connection handling to hopefully avoid some errors
+
 [B]Version 0.5.5 - 2012-07-02[/B]
 - Fixed compatibility problem with Python 2.6
 

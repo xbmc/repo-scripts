@@ -1,0 +1,161 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr "%d.-dik kérdés, összesen %d"
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr "Összpontszám:"
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr "Kérdés:"
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr "Játék vége"
+
+msgctxt "#30004"
+msgid "You scored %d of %d"
+msgstr "%d pontot ért el, a maximális %d"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "Egyediek"
+
+msgctxt "#30006"
+msgid "Season %i"
+msgstr "%i.-dik évad"
+
+msgctxt "#30007"
+msgid "%B %e, %Y"
+msgstr "%Y-%B-%e"
+
+msgctxt "#30008"
+msgid "[B]Loading[/B]"
+msgstr "[B]Betöltés[/B]"
+
+msgctxt "#30010"
+msgid "Welcome to Movie Quiz, please enter your nickname:"
+msgstr "Üdvözöljük a mozikvízben, adja meg a nevét:"
+
+msgctxt "#30011"
+msgid "Replay"
+msgstr "Újra"
+
+msgctxt "#30012"
+msgid "Quiz"
+msgstr "Kvíz"
+
+msgctxt "#30013"
+msgid "Your score:"
+msgstr "Az Ön pontszáma:"
+
+msgctxt "#30014"
+msgid "Choose player"
+msgstr "Játékos választása"
+
+msgctxt "#30015"
+msgid "Add player"
+msgstr "Játékos hozzáadása"
+
+msgctxt "#30016"
+msgid "You must choose a player to play a game!"
+msgstr "A játékhoz választania kell egy játékost!"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "Figyelmeztetés"
+
+msgctxt "#30051"
+msgid "All movie questions types are disabled,"
+msgstr "Az összes mozis kérdés tiltott,"
+
+msgctxt "#30052"
+msgid "All TV show questions types are disabled,"
+msgstr "Az összes televíziós kérdés tiltott,"
+
+msgctxt "#30053"
+msgid "so this quiz type is not available."
+msgstr "ezért ez a kvíz nem érhető el."
+
+msgctxt "#30054"
+msgid "Missing requirements!"
+msgstr "Hiányzó követelmények!"
+
+msgctxt "#30055"
+msgid "To play the Movie Quiz you must have some movies"
+msgstr "A mozikvíz játékhoz rendelkeznie kell néhány filmmel"
+
+msgctxt "#30056"
+msgid "or TV shows in your Video library."
+msgstr "vagy tévéműsorral a videó könyvtárában."
+
+msgctxt "#30057"
+msgid "See the XBMC wiki for information."
+msgstr "Keresse fel az XBMC wikit további információért."
+
+msgctxt "#30058"
+msgid "Delete %s?"
+msgstr "Törli %s-t?"
+
+msgctxt "#30059"
+msgid "This will delete the user and all related"
+msgstr "Ezzel véglegesen kitörli a felhasználót és"
+
+msgctxt "#30060"
+msgid "highscores permanently!"
+msgstr "minden hozzá tartozó pontszámot!"
+
+msgctxt "#30071"
+msgid "The error message is:"
+msgstr "A hibaüzenet:"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "Kilépés"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "Általános"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "Filmek"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "Letöltések"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "Mégsem"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "Lejátszás"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "Változáslista"

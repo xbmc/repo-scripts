@@ -1,0 +1,653 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr "질문 %d of %d"
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr "총점:"
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr "질문:"
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr "게임 오버"
+
+msgctxt "#30004"
+msgid "You scored %d of %d"
+msgstr "당신의 점수는 %d of %d"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "스페셜"
+
+msgctxt "#30006"
+msgid "Season %i"
+msgstr "시즌 %i"
+
+msgctxt "#30007"
+msgid "%B %e, %Y"
+msgstr "%B %e, %Y"
+
+msgctxt "#30008"
+msgid "[B]Loading[/B]"
+msgstr "[B]로딩 중[/B]"
+
+msgctxt "#30010"
+msgid "Welcome to Movie Quiz, please enter your nickname:"
+msgstr "Movie Quiz에 오신것을 환영합니다, 별명을 입력하세요."
+
+msgctxt "#30011"
+msgid "Replay"
+msgstr "다시 재생"
+
+msgctxt "#30012"
+msgid "Quiz"
+msgstr "퀴즈"
+
+msgctxt "#30013"
+msgid "Your score:"
+msgstr "당신의 점수:"
+
+msgctxt "#30014"
+msgid "Choose player"
+msgstr "플레이어 선택"
+
+msgctxt "#30015"
+msgid "Add player"
+msgstr "플레이어 추가"
+
+msgctxt "#30016"
+msgid "You must choose a player to play a game!"
+msgstr "게임을 하려면 플레이어를 선택하세요!"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "경고"
+
+msgctxt "#30051"
+msgid "All movie questions types are disabled,"
+msgstr "모든 영화 질문 형식을 사용할 수 없습니다,"
+
+msgctxt "#30052"
+msgid "All TV show questions types are disabled,"
+msgstr "모든 TV 쇼 질문 형식을 사용할 수 없습니다,"
+
+msgctxt "#30053"
+msgid "so this quiz type is not available."
+msgstr "따라서 퀴즈 형식을 사용할 수 없습니다."
+
+msgctxt "#30055"
+msgid "To play the Movie Quiz you must have some movies"
+msgstr "Movie Quiz 를 플레이하려면 영화 또는"
+
+msgctxt "#30056"
+msgid "or TV shows in your Video library."
+msgstr "TV 쇼가 라이브러리에 있어야 합니다."
+
+msgctxt "#30057"
+msgid "See the XBMC wiki for information."
+msgstr "XBMC 위키를 참조하세요."
+
+msgctxt "#30058"
+msgid "Delete %s?"
+msgstr "%s 삭제?"
+
+msgctxt "#30059"
+msgid "This will delete the user and all related"
+msgstr "사용자 및 관련 정보를 삭제합니다."
+
+msgctxt "#30060"
+msgid "highscores permanently!"
+msgstr "최고점수여 영원하라!"
+
+msgctxt "#30061"
+msgid "None of your movies or TV shows are marked"
+msgstr "시청한 영화 또는 TV 쇼가"
+
+msgctxt "#30062"
+msgid "as watched, so the [I]Only use watched movies[/I]"
+msgstr "없으므로, [I]시청한 영화에서만[/I]"
+
+msgctxt "#30063"
+msgid "[I]in the questions[/I] setting will be disabled."
+msgstr "[I]질문[/I] 설정을 사용하지 않음."
+
+msgctxt "#30064"
+msgid "None of your movies has a MPAA rating, so the"
+msgstr "MPAA 등급이 있는 영화가 없으므로"
+
+msgctxt "#30065"
+msgid "[I]Limit movie selection based on MPAA rating[/I]"
+msgstr "[I]MPAA 등급을 기준으로 영화 선택 제한[/I]"
+
+msgctxt "#30066"
+msgid "setting will be disabled."
+msgstr "설정을 사용하지 않음."
+
+msgctxt "#30067"
+msgid "None of your movies has a Content rating, so the"
+msgstr "시청 등급이 있는 TV 쇼가 없으므로"
+
+msgctxt "#30068"
+msgid "[I]Limit TV show selection based on Content rating[/I]"
+msgstr "[I]시청 등급을 기준으로 TV 쇼 섵낵 제한[/I]"
+
+msgctxt "#30069"
+msgid "setting will be disabled."
+msgstr "설정을 사용하지 않음."
+
+msgctxt "#30070"
+msgid "There was a problem accessing the XBMC database."
+msgstr "XBMC 데이터베이스 접근에 문제가 있습니다."
+
+msgctxt "#30071"
+msgid "The error message is:"
+msgstr "오류 메시지:"
+
+msgctxt "#30100"
+msgid "Play Movie Quiz"
+msgstr "Movie Quiz 플레이"
+
+msgctxt "#30101"
+msgid "Play TV Quiz"
+msgstr "TV Quiz 플레이"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "종료"
+
+msgctxt "#30110"
+msgid "[B]Movie collection trivia[/B]"
+msgstr "[B]Movie collection trivia[/B]"
+
+msgctxt "#30111"
+msgid "%d movies"
+msgstr "%d 영화"
+
+msgctxt "#30112"
+msgid "%d actors"
+msgstr "%d 배우"
+
+msgctxt "#30113"
+msgid "%d directors"
+msgstr "%d 감독"
+
+msgctxt "#30114"
+msgid "%d studios"
+msgstr "%d 스튜디오"
+
+msgctxt "#30115"
+msgid "%d hours of entertainment"
+msgstr "%d 시간 of entertainment"
+
+msgctxt "#30120"
+msgid "[B]TV shows collection trivia[/B]"
+msgstr "[B]TV shows collection trivia[/B]"
+
+msgctxt "#30121"
+msgid "%d TV shows"
+msgstr "%d TV 쇼"
+
+msgctxt "#30122"
+msgid "%d seasons"
+msgstr "%d 시즌"
+
+msgctxt "#30123"
+msgid "%d episodes"
+msgstr "%d 에피소드"
+
+msgctxt "#30130"
+msgid "One minute"
+msgstr "1 분"
+
+msgctxt "#30131"
+msgid "%s minutes"
+msgstr "%s 분"
+
+msgctxt "#30132"
+msgid "%s questions"
+msgstr "%s 질문"
+
+msgctxt "#30133"
+msgid "%d questions left"
+msgstr "%d 질문 남음"
+
+msgctxt "#30134"
+msgid "Last question"
+msgstr "마지막 질문"
+
+msgctxt "#30135"
+msgid "%d mins. left"
+msgstr "%d 분 남음"
+
+msgctxt "#30400"
+msgid "What movie is this?"
+msgstr "이것은 무슨 영화?"
+
+msgctxt "#30401"
+msgid "What movie is [B]%s[/B] not in?"
+msgstr "[B]%s[/B] 가 출연하지 않은 영화는?"
+
+msgctxt "#30402"
+msgid "What year was [B]%s[/B] released?"
+msgstr "[B]%s[/B] 가 출시된 연도는?"
+
+msgctxt "#30403"
+msgid "What tagline belongs to [B]%s[/B]?"
+msgstr "[B]%s[/B] 의 태그라인은?"
+
+msgctxt "#30404"
+msgid "Who directed [B]%s[/B]?"
+msgstr "[B]%s[/B] 의 감독은?"
+
+msgctxt "#30405"
+msgid "What studio released [B]%s[/B]?"
+msgstr "[B]%s[/B] 를 출시한 스튜디오는?"
+
+msgctxt "#30406"
+msgid "What actor is this?"
+msgstr "이 배우는 누구?"
+
+msgctxt "#30407"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "[B]%s[/B] 를 [B]%s[/B] 에서 연기한 배우는?"
+
+msgctxt "#30408"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "[B]%s[/B] 목소리를 [B]%s[/B] 에서 연기한 배우는?"
+
+msgctxt "#30409"
+msgid "What movie is this quote from?"
+msgstr "이 대사는 어떤 영화에서?"
+
+msgctxt "#30410"
+msgid "What movie is the newest?"
+msgstr "가장 최근의 영화는?"
+
+msgctxt "#30411"
+msgid "What movie is not directed by [B]%s[/B]?"
+msgstr "[B]%s[/B] 가 감독하지 않은 영화는?"
+
+msgctxt "#30412"
+msgid "What actor is in these movies?"
+msgstr "이 영화들에 출연한 배우는?"
+
+msgctxt "#30413"
+msgid "What actor is in [B]%s[/B] besides [B]%s[/B]?"
+msgstr "What actor is in [B]%s[/B] besides [B]%s[/B]?"
+
+msgctxt "#30414"
+msgid "What movie has the longest runtime?"
+msgstr "상영시간이 가장 긴 영화는?"
+
+msgctxt "#30450"
+msgid "What TV show is this?"
+msgstr "이것은 무슨 TV 쇼?"
+
+msgctxt "#30451"
+msgid "What season of [B]%s[/B] is this?"
+msgstr "이것은 [B]%s[/B] 의 몇 시즌?"
+
+msgctxt "#30452"
+msgid "What episode of [B]%s[/B] is this?"
+msgstr "이것은 [B]%s[/B] 의 무슨 에피소드?"
+
+msgctxt "#30453"
+msgid "When was [B]%s[/B] of [B]%s[/B] first aired?"
+msgstr "When was [B]%s[/B] of [B]%s[/B] first aired?"
+
+msgctxt "#30454"
+msgid "When was [B]%s[/B] first aired?"
+msgstr "[B]%s[/B] 가 처음 방송된 때는?"
+
+msgctxt "#30455"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "[B]%s[/B] 를 [B]%s[/B] 에서 연기한 배우는?"
+
+msgctxt "#30456"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "[B]%s[/B] 목소리를 [B]%s[/B] 에서 연기한 배우는?"
+
+msgctxt "#30457"
+msgid "What TV show is this quote from?"
+msgstr "이 대사는 어떤 TV 쇼에서?"
+
+msgctxt "#30458"
+msgid "What TV show is this theme from?"
+msgstr "이것은 어떤 TV 쇼의 테마 음악?"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "일반"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "영화"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "TV 쇼"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "다운로드"
+
+msgctxt "#30504"
+msgid "Highscore"
+msgstr "최고점수"
+
+msgctxt "#30505"
+msgid "Questions"
+msgstr "질문"
+
+msgctxt "#30510"
+msgid "Limit number of questions"
+msgstr "질문 갯수"
+
+msgctxt "#30511"
+msgid "Question limit"
+msgstr "질문 제한"
+
+msgctxt "#30512"
+msgid "Limit movie selection based on MPAA rating"
+msgstr "MPAA 등급을 기준으로 영화 선택 제한"
+
+msgctxt "#30513"
+msgid "Max. MPAA rating"
+msgstr "최대 MPAA 등급"
+
+msgctxt "#30514"
+msgid "Display the correct answer, when you answer incorrectly"
+msgstr "답변이 틀렸을 때 정답 표시"
+
+msgctxt "#30515"
+msgid "Only use watched movies in the questions"
+msgstr "질문에 시청한 영화만 사용"
+
+msgctxt "#30516"
+msgid "Limit TV show selection based on Content rating"
+msgstr "시청 등급을 기준으로 TV 쇼 선택 제한"
+
+msgctxt "#30517"
+msgid "Max. Content rating"
+msgstr "최대 시청 등급"
+
+msgctxt "#30519"
+msgid "Download IMDB data..."
+msgstr "IMDB 데이터 다운로드..."
+
+msgctxt "#30520"
+msgid "Downloading IMDB data..."
+msgstr "IMDB 데이터 다운로드 중..."
+
+msgctxt "#30521"
+msgid "Retrieved %d of %d mb."
+msgstr "전송됨: %d of %d mb."
+
+msgctxt "#30522"
+msgid "Some questions require additional local data,"
+msgstr "어떤 질문은 추가 데이터가 필요하며,"
+
+msgctxt "#30523"
+msgid "which can be downloaded below:"
+msgstr "아래에서 다운로드할 수 있습니다:"
+
+msgctxt "#30524"
+msgid "Submit scores to online highscore"
+msgstr "온라인에 점수 전송"
+
+msgctxt "#30525"
+msgid "Downloading IMDB data... (%d of %d)"
+msgstr "IMDB 데이터 다운로드 중...  (%d of %d)"
+
+msgctxt "#30526"
+msgid "IMDB data downloaded and ready for use."
+msgstr "IMDB 데이터 다운로드 및 사용 준비 완료."
+
+msgctxt "#30550"
+msgid "Use these question types for movies"
+msgstr "영화 퀴즈에 사용할 질문 형식"
+
+msgctxt "#30551"
+msgid "Use these question types for TV shows"
+msgstr "TV 쇼 퀴즈에 사용할 질문 형식"
+
+msgctxt "#30552"
+msgid "What movie is this?"
+msgstr "이것은 무슨 영화?"
+
+msgctxt "#30553"
+msgid "What movie is actor not in?"
+msgstr "배우가 출연하지 않은 영화는?"
+
+msgctxt "#30554"
+msgid "What year was movie released?"
+msgstr "영화가 출시된 연도는?"
+
+msgctxt "#30555"
+msgid "What tagline belongs to movie?"
+msgstr "영화에 해당되는 태그라인은?"
+
+msgctxt "#30556"
+msgid "Who directed this movie?"
+msgstr "이 영화의 감독은?"
+
+msgctxt "#30557"
+msgid "What studio relased this movie?"
+msgstr "이 영화를 출시한 스튜디오는?"
+
+msgctxt "#30558"
+msgid "What actor is this?"
+msgstr "이 배우는 누구?"
+
+msgctxt "#30559"
+msgid "Who played this role in movie?"
+msgstr "이 배역을 연기한 배우는?"
+
+msgctxt "#30560"
+msgid "What movie is this quote from?"
+msgstr "이 대사는 어떤 영화에서?"
+
+msgctxt "#30561"
+msgid "What movie is newest?"
+msgstr "가장 최근의 영화는?"
+
+msgctxt "#30562"
+msgid "What movie was not directed by?"
+msgstr "다음 사람이 감독하지 않은 영화는?"
+
+msgctxt "#30563"
+msgid "What actor is in these movies?"
+msgstr "이 영화들에 출연한 배우는?"
+
+msgctxt "#30564"
+msgid "What actor is in these movie besides other actor?"
+msgstr "What actor is in these movie besides other actor?"
+
+msgctxt "#30565"
+msgid "What movie has longest runtime?"
+msgstr "상영시간이 가장 긴 영화는?"
+
+msgctxt "#30580"
+msgid "What TV show is this?"
+msgstr "이것은 무슨 TV 쇼?"
+
+msgctxt "#30581"
+msgid "What season is this?"
+msgstr "이것은 몇 시즌?"
+
+msgctxt "#30582"
+msgid "What episode is this?"
+msgstr "이것은 어떤 에피소드?"
+
+msgctxt "#30583"
+msgid "When was TV show first aired?"
+msgstr "TV 쇼가 언제 처음 방영되었나?"
+
+msgctxt "#30584"
+msgid "Who played role in TV show?"
+msgstr "TV 쇼에 출연한 배우는?"
+
+msgctxt "#30585"
+msgid "What TV show is this quote from?"
+msgstr "이 대사는 어떤 TV 쇼에서?"
+
+msgctxt "#30586"
+msgid "What TV show is this theme from?"
+msgstr "이것은 어떤 TV쇼의 테마 음악?"
+
+msgctxt "#30600"
+msgid "[B]Choose Movie Quiz game type[/B]"
+msgstr "[B]Movie Quiz 게임 종류 선택[/B]"
+
+msgctxt "#30601"
+msgid "[B]Choose TV Quiz game type[/B]"
+msgstr "[B]TV Quiz 게임 종류 선택[/B]"
+
+msgctxt "#30602"
+msgid "Unlimited"
+msgstr "무제한"
+
+msgctxt "#30603"
+msgid "Time limited"
+msgstr "시간 제한"
+
+msgctxt "#30604"
+msgid "Question limited"
+msgstr "질문 제한"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "취소"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "재생"
+
+msgctxt "#30610"
+msgid "No limit on game time"
+msgstr "게임시간 제한 없음"
+
+msgctxt "#30611"
+msgid "No limit on questions"
+msgstr "질문 제한 없음"
+
+msgctxt "#30612"
+msgid "End the game by using the Exit option"
+msgstr "Exit 옵션으로 게임을 끝내세요."
+
+msgctxt "#30613"
+msgid "Game will ends after"
+msgstr "게임 종료: "
+
+msgctxt "#30700"
+msgid "[B]Game Over[/B]"
+msgstr "[B]게임 오버[/B]"
+
+msgctxt "#30701"
+msgid "Retry"
+msgstr "재도전"
+
+msgctxt "#30703"
+msgid "Local highscore"
+msgstr "로컬 최고점수"
+
+msgctxt "#30704"
+msgid "Main menu"
+msgstr "메인 메뉴"
+
+msgctxt "#30705"
+msgid "Unlimited"
+msgstr "무제한"
+
+msgctxt "#30706"
+msgid "%s questions limit"
+msgstr "%s 질문 제한"
+
+msgctxt "#30707"
+msgid "one minute time limit"
+msgstr "1 분 시간 제한"
+
+msgctxt "#30708"
+msgid "%s minuts time limit"
+msgstr "%s 분 시간 제한"
+
+msgctxt "#30800"
+msgid "Highscores"
+msgstr "최고점수"
+
+msgctxt "#30801"
+msgid "About"
+msgstr "About"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "변경로그"
+
+msgctxt "#30803"
+msgid "Statistics"
+msgstr "통계"
+
+msgctxt "#30810"
+msgid "Movie Quiz"
+msgstr "Movie Quiz"
+
+msgctxt "#30811"
+msgid "TV Show Quiz"
+msgstr "TV Show Quiz"
+
+msgctxt "#30812"
+msgid "[B]Nickname[/B]"
+msgstr "[B]별명[/B]"
+
+msgctxt "#30813"
+msgid "[B]Score[/B]"
+msgstr "[B]점수[/B]"
+
+msgctxt "#30814"
+msgid "[B]Date[/B]"
+msgstr "[B]날짜[/B]"
+
+msgctxt "#30815"
+msgid "Choose type"
+msgstr "종류 선택"
+
+msgctxt "#30820"
+msgid "Statistics based on global highscores data collected since September 2011.[CR][CR][B]%s[/B] unique users in [B]%s[/B] countries has submitted [B]%s[/B] highscores.[CR]A total of [B]%s[/B] questions has been answered with [B]%s[/B] being correct, which is [B]%s[/B] percent."
+msgstr "2011년 9월 이후 모아진 전세계 최고점수 데이터에 기반한 통계입니다. [CR][CR][B]%s[/B] 유니크 사용자가 [B]%s[/B] 국가에서 [B]%s[/B] 최고점수를 전송하였습니다.[CR]총 [B]%s[/B] 질문에 [B]%s[/B] 정답이며 [B]%s[/B] 퍼센트입니다."
+
+msgctxt "#30821"
+msgid "[B]Top countries[/B]"
+msgstr "[B]상위 국가[/B]"
+
+msgctxt "#30822"
+msgid "[B]Top players[/B]"
+msgstr "[B]상위 플레이어[/B]"
+
+msgctxt "#39998"
+msgid "Developed by Tommy Winther"
+msgstr "Developed by Tommy Winther"
+
+msgctxt "#39999"
+msgid "Translated by Tommy Winther"
+msgstr "Translated by Tommy Winther"

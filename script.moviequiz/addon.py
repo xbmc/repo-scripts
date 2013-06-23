@@ -1,5 +1,5 @@
 #
-#      Copyright (C) 2012 Tommy Winther
+#      Copyright (C) 2013 Tommy Winther
 #      http://tommy.winther.nu
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -22,17 +22,23 @@ import os
 import xbmc
 import xbmcaddon
 import buggalo
-from quizlib.gui import MenuGui
+from quizlib.gui import QuizGui
 
-buggalo.SUBMIT_URL = 'http://tommy.winther.nu/exception/submit.php'
-try:
-    # Make sure data dir exists
-    ADDON = xbmcaddon.Addon()
-    if not os.path.exists(xbmc.translatePath(ADDON.getAddonInfo('profile'))):
-        os.makedirs(xbmc.translatePath(ADDON.getAddonInfo('profile')))
+#import sys
+#sys.path.append('/opt/pycharm/pycharm-debug.egg')
+#import pydevd
+#pydevd.settrace('localhost', port=5005, stdoutToServer=True, stderrToServer=True, suspend=False)
 
-    w = MenuGui()
-    w.doModal()
-    del w
-except Exception:
-    buggalo.onExceptionRaised()
+if True:
+    buggalo.SUBMIT_URL = 'http://tommy.winther.nu/exception/submit.php'
+    try:
+        # Make sure data dir exists
+        ADDON = xbmcaddon.Addon()
+        if not os.path.exists(xbmc.translatePath(ADDON.getAddonInfo('profile'))):
+            os.makedirs(xbmc.translatePath(ADDON.getAddonInfo('profile')))
+
+        w = QuizGui()
+        w.doModal()
+        del w
+    except Exception:
+        buggalo.onExceptionRaised()

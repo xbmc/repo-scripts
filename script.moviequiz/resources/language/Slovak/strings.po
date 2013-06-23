@@ -1,0 +1,661 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Slovak (http://www.transifex.com/projects/p/xbmc-addons/language/sk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr "Otázka %d z %d"
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr "Celkové skóre:"
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr "Otázka:"
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr "Koniec Hry"
+
+msgctxt "#30004"
+msgid "You scored %d of %d"
+msgstr "Získali ste %d bodov z %d"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "Špeciálne"
+
+msgctxt "#30006"
+msgid "Season %i"
+msgstr "Sezóna %i"
+
+msgctxt "#30007"
+msgid "%B %e, %Y"
+msgstr "%B %e, %Y"
+
+msgctxt "#30008"
+msgid "[B]Loading[/B]"
+msgstr "[B]Nahrávam[/B]"
+
+msgctxt "#30010"
+msgid "Welcome to Movie Quiz, please enter your nickname:"
+msgstr "Vitajte vo Filmovom kvíze, prosím zadajte Vašu prezývku:"
+
+msgctxt "#30011"
+msgid "Replay"
+msgstr "Opakovanie"
+
+msgctxt "#30012"
+msgid "Quiz"
+msgstr "Kvíz"
+
+msgctxt "#30013"
+msgid "Your score:"
+msgstr "Vaše skóre:"
+
+msgctxt "#30014"
+msgid "Choose player"
+msgstr "Zvoľte hráča"
+
+msgctxt "#30015"
+msgid "Add player"
+msgstr "Pridajte hráča"
+
+msgctxt "#30016"
+msgid "You must choose a player to play a game!"
+msgstr "Musíte zvoliť hráča, aby ste mohli začať hru!"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "Upozornenie"
+
+msgctxt "#30051"
+msgid "All movie questions types are disabled,"
+msgstr "Všetky typy filmových otázok sú zakázané,"
+
+msgctxt "#30052"
+msgid "All TV show questions types are disabled,"
+msgstr "Všetky typy TV seriálových otázok sú zakázané,"
+
+msgctxt "#30053"
+msgid "so this quiz type is not available."
+msgstr "takže tento typ kvízu nie je dostupný."
+
+msgctxt "#30054"
+msgid "Missing requirements!"
+msgstr "Chýbajúce požiadavky!"
+
+msgctxt "#30055"
+msgid "To play the Movie Quiz you must have some movies"
+msgstr "Pre hranie Filmového kvízu musíte mať nejaké filmy"
+
+msgctxt "#30056"
+msgid "or TV shows in your Video library."
+msgstr "alebo TV seriály vo Vašej Video knižnici."
+
+msgctxt "#30057"
+msgid "See the XBMC wiki for information."
+msgstr "Pre bližšie informácie viď XBMC wiki."
+
+msgctxt "#30058"
+msgid "Delete %s?"
+msgstr "Zmazať %s?"
+
+msgctxt "#30059"
+msgid "This will delete the user and all related"
+msgstr "Toto vymaže používateľa a všetky súvisiace"
+
+msgctxt "#30060"
+msgid "highscores permanently!"
+msgstr "skóre natrvalo!"
+
+msgctxt "#30061"
+msgid "None of your movies or TV shows are marked"
+msgstr "Žiadne z Vašich filmov či TV seriálov nie sú označené"
+
+msgctxt "#30062"
+msgid "as watched, so the [I]Only use watched movies[/I]"
+msgstr "ako videné, takže nastavenie [I]Použi len videné filmy[/I]"
+
+msgctxt "#30063"
+msgid "[I]in the questions[/I] setting will be disabled."
+msgstr "[I]v otázkach[/I] bude zakázané."
+
+msgctxt "#30064"
+msgid "None of your movies has a MPAA rating, so the"
+msgstr "Žiadny z Vašich filmov nemá MPAA hodnotenie, takže nastavenie"
+
+msgctxt "#30065"
+msgid "[I]Limit movie selection based on MPAA rating[/I]"
+msgstr "[I]Obmedz voľbu filmov podľa MPAA hodnotenia[/I]"
+
+msgctxt "#30066"
+msgid "setting will be disabled."
+msgstr "bude zakázané."
+
+msgctxt "#30067"
+msgid "None of your movies has a Content rating, so the"
+msgstr "Žiadny z Vašich filmov nemá hodnotenie obsahu, takže nastavenie"
+
+msgctxt "#30068"
+msgid "[I]Limit TV show selection based on Content rating[/I]"
+msgstr "[I]Obmedz voľbu TV seriálov podľa hodnotenia obsahu[/I]"
+
+msgctxt "#30069"
+msgid "setting will be disabled."
+msgstr "bude zakázané."
+
+msgctxt "#30070"
+msgid "There was a problem accessing the XBMC database."
+msgstr "Pri prístupe ku XBMC databáze vznikla chyba."
+
+msgctxt "#30071"
+msgid "The error message is:"
+msgstr "Chybová hláška je:"
+
+msgctxt "#30100"
+msgid "Play Movie Quiz"
+msgstr "Hraj Filmový kvíz"
+
+msgctxt "#30101"
+msgid "Play TV Quiz"
+msgstr "Hraj TV seriálový kvíz"
+
+msgctxt "#30102"
+msgid "Highscores"
+msgstr "Skóre"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "Ukončiť"
+
+msgctxt "#30110"
+msgid "[B]Movie collection trivia[/B]"
+msgstr "[B]Detaily filmovej kolekcie[/B]"
+
+msgctxt "#30111"
+msgid "%d movies"
+msgstr "%d filmov"
+
+msgctxt "#30112"
+msgid "%d actors"
+msgstr "%d hercov"
+
+msgctxt "#30113"
+msgid "%d directors"
+msgstr "%d režisérov"
+
+msgctxt "#30114"
+msgid "%d studios"
+msgstr "%d filmových štúdií"
+
+msgctxt "#30115"
+msgid "%d hours of entertainment"
+msgstr "%d hodín zábavy"
+
+msgctxt "#30120"
+msgid "[B]TV shows collection trivia[/B]"
+msgstr "[B]Detaily TV seriálovej kolekcie[/B]"
+
+msgctxt "#30121"
+msgid "%d TV shows"
+msgstr "%d TV seriálov"
+
+msgctxt "#30122"
+msgid "%d seasons"
+msgstr "%d sezón"
+
+msgctxt "#30123"
+msgid "%d episodes"
+msgstr "%d epizód"
+
+msgctxt "#30130"
+msgid "One minute"
+msgstr "Jedna minúta"
+
+msgctxt "#30131"
+msgid "%s minutes"
+msgstr "%s minút"
+
+msgctxt "#30132"
+msgid "%s questions"
+msgstr "%s otázok"
+
+msgctxt "#30133"
+msgid "%d questions left"
+msgstr "%d zostávajúcich otázok"
+
+msgctxt "#30134"
+msgid "Last question"
+msgstr "Posledná otázka"
+
+msgctxt "#30135"
+msgid "%d mins. left"
+msgstr "%d zostávajúcich minút"
+
+msgctxt "#30400"
+msgid "What movie is this?"
+msgstr "Aký film je to?"
+
+msgctxt "#30401"
+msgid "What movie is [B]%s[/B] not in?"
+msgstr "V ktorom filme [B]%s[/B] nie je?"
+
+msgctxt "#30402"
+msgid "What year was [B]%s[/B] released?"
+msgstr "V ktorom roku bol [B]%s[/B] vydaný?"
+
+msgctxt "#30403"
+msgid "What tagline belongs to [B]%s[/B]?"
+msgstr "Ktorý slogan patrí do [B]%s[/B]?"
+
+msgctxt "#30404"
+msgid "Who directed [B]%s[/B]?"
+msgstr "Kto režíroval [B]%s[/B]?"
+
+msgctxt "#30405"
+msgid "What studio released [B]%s[/B]?"
+msgstr "Ktoré filmové štúdio vydalo [B]%s[/B]?"
+
+msgctxt "#30406"
+msgid "What actor is this?"
+msgstr "Ktorý herec to je?"
+
+msgctxt "#30407"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Kto hrá [B]%s[/B] v [B]%s[/B]?"
+
+msgctxt "#30408"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Kto daboval [B]%s[/B] v [B]%s[/B]?"
+
+msgctxt "#30409"
+msgid "What movie is this quote from?"
+msgstr "Z ktorého filmu je tento citát?"
+
+msgctxt "#30410"
+msgid "What movie is the newest?"
+msgstr "Ktorý film je najnovší?"
+
+msgctxt "#30411"
+msgid "What movie is not directed by [B]%s[/B]?"
+msgstr "Ktorý film nerežíroval [B]%s[/B]?"
+
+msgctxt "#30412"
+msgid "What actor is in these movies?"
+msgstr "Ktorý herec je v týchto filmoch?"
+
+msgctxt "#30413"
+msgid "What actor is in [B]%s[/B] besides [B]%s[/B]?"
+msgstr "Ktorý herec je v [B]%s[/B] popri [B]%s[/B]?"
+
+msgctxt "#30414"
+msgid "What movie has the longest runtime?"
+msgstr "Ktorý film je najdlhší?"
+
+msgctxt "#30450"
+msgid "What TV show is this?"
+msgstr "Ktorý TV seriál je to?"
+
+msgctxt "#30451"
+msgid "What season of [B]%s[/B] is this?"
+msgstr "Ktorá sezóna z [B]%s[/B] je to?"
+
+msgctxt "#30452"
+msgid "What episode of [B]%s[/B] is this?"
+msgstr "Ktorá epizóda z [B]%s[/B] je to?"
+
+msgctxt "#30453"
+msgid "When was [B]%s[/B] of [B]%s[/B] first aired?"
+msgstr "Kedy bol(a) [B]%s[/B] z [B]%s[/B] po prvé vysielaná?"
+
+msgctxt "#30454"
+msgid "When was [B]%s[/B] first aired?"
+msgstr "Kedy bol(a) [B]%s[/B] po prvé vysielaná?"
+
+msgctxt "#30455"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Kto hrá [B]%s[/B] v [B]%s[/B]?"
+
+msgctxt "#30456"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Kto dabuje [B]%s[/B] v [B]%s[/B]?"
+
+msgctxt "#30457"
+msgid "What TV show is this quote from?"
+msgstr "Z ktorého TV seriálu je tento citát?"
+
+msgctxt "#30458"
+msgid "What TV show is this theme from?"
+msgstr "Z ktorého TV seriálu je tento motív?"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "Všeobecné"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "TV Seriály"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "Stiahnutia"
+
+msgctxt "#30504"
+msgid "Highscore"
+msgstr "Skóre"
+
+msgctxt "#30505"
+msgid "Questions"
+msgstr "Otázky"
+
+msgctxt "#30510"
+msgid "Limit number of questions"
+msgstr "Obmedziť počet otázok"
+
+msgctxt "#30511"
+msgid "Question limit"
+msgstr "Limit otázok"
+
+msgctxt "#30512"
+msgid "Limit movie selection based on MPAA rating"
+msgstr "Obmedz voľbu filmov podľa MPAA hodnotenia"
+
+msgctxt "#30513"
+msgid "Max. MPAA rating"
+msgstr "Max. MPAA hodnotenie"
+
+msgctxt "#30514"
+msgid "Display the correct answer, when you answer incorrectly"
+msgstr "Zobraziť správnu odpoveď, ak ste odpovedali nesprávne"
+
+msgctxt "#30515"
+msgid "Only use watched movies in the questions"
+msgstr "Použi len videné filmy v otázkach"
+
+msgctxt "#30516"
+msgid "Limit TV show selection based on Content rating"
+msgstr "Obmedz voľbu TV seriálov podľa hodnotenia obsahu"
+
+msgctxt "#30517"
+msgid "Max. Content rating"
+msgstr "Max. hodnotenia obsahu"
+
+msgctxt "#30519"
+msgid "Download IMDB data..."
+msgstr "Stiahnuť IMDB dáta..."
+
+msgctxt "#30520"
+msgid "Downloading IMDB data..."
+msgstr "Sťahujem IMDB dáta.."
+
+msgctxt "#30521"
+msgid "Retrieved %d of %d mb."
+msgstr "Načítaných %d z %d mb."
+
+msgctxt "#30522"
+msgid "Some questions require additional local data,"
+msgstr "Niektoré otázky vyžadujú dodatočné lokálne dáta,"
+
+msgctxt "#30523"
+msgid "which can be downloaded below:"
+msgstr "ktoré môžu byť stiahnuté nižšie:"
+
+msgctxt "#30524"
+msgid "Submit scores to online highscore"
+msgstr "Odosielať skóre do online rebríčka"
+
+msgctxt "#30525"
+msgid "Downloading IMDB data... (%d of %d)"
+msgstr "Sťahujem IMDB dáta... (%d z %d)"
+
+msgctxt "#30526"
+msgid "IMDB data downloaded and ready for use."
+msgstr "IMDB dáta stiahnuté a pripravené k použitiu."
+
+msgctxt "#30550"
+msgid "Use these question types for movies"
+msgstr "Použi tieto typy otázok pre filmy"
+
+msgctxt "#30551"
+msgid "Use these question types for TV shows"
+msgstr "Použi tieto typy otázok pre TV seriály"
+
+msgctxt "#30552"
+msgid "What movie is this?"
+msgstr "Aký film je to?"
+
+msgctxt "#30553"
+msgid "What movie is actor not in?"
+msgstr "V ktorom filme herec nehral?"
+
+msgctxt "#30554"
+msgid "What year was movie released?"
+msgstr "V ktorom roku bol film vydaný?"
+
+msgctxt "#30555"
+msgid "What tagline belongs to movie?"
+msgstr "Ktorý slogan patrí do filmu?"
+
+msgctxt "#30556"
+msgid "Who directed this movie?"
+msgstr "Kto režíroval tento film?"
+
+msgctxt "#30557"
+msgid "What studio relased this movie?"
+msgstr "Ktoré filmové štúdio vydalo tento film?"
+
+msgctxt "#30558"
+msgid "What actor is this?"
+msgstr "Ktorý herec to je?"
+
+msgctxt "#30559"
+msgid "Who played this role in movie?"
+msgstr "Kto hral túto úlohu vo filme?"
+
+msgctxt "#30560"
+msgid "What movie is this quote from?"
+msgstr "Z ktorého filmu je tento citát?"
+
+msgctxt "#30561"
+msgid "What movie is newest?"
+msgstr "Ktorý film je najnovší?"
+
+msgctxt "#30562"
+msgid "What movie was not directed by?"
+msgstr "Ktorý film nerežíroval?"
+
+msgctxt "#30563"
+msgid "What actor is in these movies?"
+msgstr "Ktorý herec je v týchto filmoch?"
+
+msgctxt "#30564"
+msgid "What actor is in these movie besides other actor?"
+msgstr "Ktorý herec je v týchto filmoch popri nasledujúcom hercovi?"
+
+msgctxt "#30565"
+msgid "What movie has longest runtime?"
+msgstr "Ktorý film je najdlhší?"
+
+msgctxt "#30580"
+msgid "What TV show is this?"
+msgstr "Ktorý TV seriál je to?"
+
+msgctxt "#30581"
+msgid "What season is this?"
+msgstr "Ktorá sezóna je to?"
+
+msgctxt "#30582"
+msgid "What episode is this?"
+msgstr "Ktorá epizóda je to?"
+
+msgctxt "#30583"
+msgid "When was TV show first aired?"
+msgstr "Kedy bol TV seriál po prvé vysielaný?"
+
+msgctxt "#30584"
+msgid "Who played role in TV show?"
+msgstr "Kto hral úlohu v TV seriály?"
+
+msgctxt "#30585"
+msgid "What TV show is this quote from?"
+msgstr "Z ktorého TV seriálu je tento citát?"
+
+msgctxt "#30586"
+msgid "What TV show is this theme from?"
+msgstr "Z ktorého TV seriálu je tento motív?"
+
+msgctxt "#30600"
+msgid "[B]Choose Movie Quiz game type[/B]"
+msgstr "[B]Zvoľte typ hry filmového kvízu[/B]"
+
+msgctxt "#30601"
+msgid "[B]Choose TV Quiz game type[/B]"
+msgstr "[B]Zvoľte typ hry TV seriálového kvízu[/B]"
+
+msgctxt "#30602"
+msgid "Unlimited"
+msgstr "Neobmedzený"
+
+msgctxt "#30603"
+msgid "Time limited"
+msgstr "Časovo obmedzený"
+
+msgctxt "#30604"
+msgid "Question limited"
+msgstr "Obmedzenie otázok"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "Zrušiť"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "Prehrať"
+
+msgctxt "#30610"
+msgid "No limit on game time"
+msgstr "Hrací čas neobmedzený"
+
+msgctxt "#30611"
+msgid "No limit on questions"
+msgstr "Žiadne obmedzenie otázok"
+
+msgctxt "#30612"
+msgid "End the game by using the Exit option"
+msgstr "Ukončite hru použitím možnosti Exit/Ukončiť"
+
+msgctxt "#30613"
+msgid "Game will ends after"
+msgstr "Hra skončí po"
+
+msgctxt "#30700"
+msgid "[B]Game Over[/B]"
+msgstr "[B]Koniec hry[/B]"
+
+msgctxt "#30701"
+msgid "Retry"
+msgstr "Opakovať"
+
+msgctxt "#30703"
+msgid "Local highscore"
+msgstr "Lokálne najvyššie skóre"
+
+msgctxt "#30704"
+msgid "Main menu"
+msgstr "Hlavné menu"
+
+msgctxt "#30705"
+msgid "Unlimited"
+msgstr "Neobmedzený"
+
+msgctxt "#30706"
+msgid "%s questions limit"
+msgstr "Obmedzenie otázok na %s"
+
+msgctxt "#30707"
+msgid "one minute time limit"
+msgstr "Časový limit jedna minúta"
+
+msgctxt "#30708"
+msgid "%s minuts time limit"
+msgstr "Časový limit %s minút"
+
+msgctxt "#30800"
+msgid "Highscores"
+msgstr "Skóre"
+
+msgctxt "#30801"
+msgid "About"
+msgstr "Popis"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "Zmeny"
+
+msgctxt "#30803"
+msgid "Statistics"
+msgstr "Štatistiky"
+
+msgctxt "#30810"
+msgid "Movie Quiz"
+msgstr "Filmový kvíz"
+
+msgctxt "#30811"
+msgid "TV Show Quiz"
+msgstr "TV seriálový kvíz"
+
+msgctxt "#30812"
+msgid "[B]Nickname[/B]"
+msgstr "[B]Prezývka[/B]"
+
+msgctxt "#30813"
+msgid "[B]Score[/B]"
+msgstr "[B]Skóre[/B]"
+
+msgctxt "#30814"
+msgid "[B]Date[/B]"
+msgstr "[B]Dátum[/B]"
+
+msgctxt "#30815"
+msgid "Choose type"
+msgstr "Zvoľte typ"
+
+msgctxt "#30820"
+msgid "Statistics based on global highscores data collected since September 2011.[CR][CR][B]%s[/B] unique users in [B]%s[/B] countries has submitted [B]%s[/B] highscores.[CR]A total of [B]%s[/B] questions has been answered with [B]%s[/B] being correct, which is [B]%s[/B] percent."
+msgstr "Štatistiky založené na dátach z globálneho rebríčka zbierané od Septembra 2011.\n\n[B]%s[/B] jedinečných používateľov v [B]%s[/B] krajinách poslalo [B]%s[/B] bodovaní.\nCelkovo [B]%s[/B] otázok bolo zodpovedaných, pričom [B]%s[/B] bolo správnych, čo predstavuje [B]%s[/B] percent."
+
+msgctxt "#30821"
+msgid "[B]Top countries[/B]"
+msgstr "[B]Top krajiny[/B]"
+
+msgctxt "#30822"
+msgid "[B]Top players[/B]"
+msgstr "[B]Top hráči[/B]"
+
+msgctxt "#39998"
+msgid "Developed by Tommy Winther"
+msgstr "Vyvinul Tommy Winther"
+
+msgctxt "#39999"
+msgid "Translated by Tommy Winther"
+msgstr "Preložil Tommy Winther"

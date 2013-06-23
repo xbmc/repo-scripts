@@ -1,0 +1,677 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr "Ερώτηση %d από %d"
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr "Συνολικό Σκορ:"
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr "Ερώτηση:"
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr "Τέλος"
+
+msgctxt "#30004"
+msgid "You scored %d of %d"
+msgstr "Πετύχατε %d από %d"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "Ιδιαίτερα στοιχεία"
+
+msgctxt "#30006"
+msgid "Season %i"
+msgstr "Κύκλος %i"
+
+msgctxt "#30007"
+msgid "%B %e, %Y"
+msgstr "%B %e, %Y"
+
+msgctxt "#30008"
+msgid "[B]Loading[/B]"
+msgstr "[B]Φόρτωση[/B]"
+
+msgctxt "#30010"
+msgid "Welcome to Movie Quiz, please enter your nickname:"
+msgstr "Καλώς ορίσατε στο Κουίζ Ταινιών, παρακαλώ εισάγετε το ψευδώνυμό σας:"
+
+msgctxt "#30011"
+msgid "Replay"
+msgstr "Επανάληψη"
+
+msgctxt "#30012"
+msgid "Quiz"
+msgstr "Κουίζ"
+
+msgctxt "#30013"
+msgid "Your score:"
+msgstr "Το σκορ σας:"
+
+msgctxt "#30014"
+msgid "Choose player"
+msgstr "Επιλογή παίκτη"
+
+msgctxt "#30015"
+msgid "Add player"
+msgstr "Προσθήκη παίκτη"
+
+msgctxt "#30016"
+msgid "You must choose a player to play a game!"
+msgstr "Πρέπει να επιλέξετε έναν παίκτη για να παίξετε!"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "Προειδοποίηση"
+
+msgctxt "#30051"
+msgid "All movie questions types are disabled,"
+msgstr "Όλοι οι τύποι ερωτήσεων ταινιών έχουν απενεργοποιηθεί,"
+
+msgctxt "#30052"
+msgid "All TV show questions types are disabled,"
+msgstr "Όλοι οι τύποι ερωτήσεων τηλ. σειρών έχουν απενεργοποιηθεί,"
+
+msgctxt "#30053"
+msgid "so this quiz type is not available."
+msgstr "συνεπώς αυτός ο τύπος κουίζ δεν είναι διαθέσιμος."
+
+msgctxt "#30054"
+msgid "Missing requirements!"
+msgstr "Δεν πληρούνται οι απαιτήσεις!"
+
+msgctxt "#30055"
+msgid "To play the Movie Quiz you must have some movies"
+msgstr "Για να παίξετε το Κουίζ Ταινιών πρέπει να έχετε κάποιες ταινίες"
+
+msgctxt "#30056"
+msgid "or TV shows in your Video library."
+msgstr "ή τηλ. σειρές στη Συλλογή σας."
+
+msgctxt "#30057"
+msgid "See the XBMC wiki for information."
+msgstr "Δείτε το wiki του XBMC για πληροφορίες."
+
+msgctxt "#30058"
+msgid "Delete %s?"
+msgstr "Διαγραφή του %s;"
+
+msgctxt "#30059"
+msgid "This will delete the user and all related"
+msgstr "Θα διαγραφεί ο χρήστης και όλα τα σχετικά"
+
+msgctxt "#30060"
+msgid "highscores permanently!"
+msgstr "υψηλά σκορ μόνιμα!"
+
+msgctxt "#30061"
+msgid "None of your movies or TV shows are marked"
+msgstr "Καμία από τις ταινίες ή τις σειρές σας δεν είναι σημειωμένη"
+
+msgctxt "#30062"
+msgid "as watched, so the [I]Only use watched movies[/I]"
+msgstr "ως προβληθείσα, συνεπώς η επιλογή [I]χρήση μόνο[/I]"
+
+msgctxt "#30063"
+msgid "[I]in the questions[/I] setting will be disabled."
+msgstr "[I]προβληθεισών ταινιών στις ερωτήσεις[/I] θα απενεργοποιηθεί."
+
+msgctxt "#30064"
+msgid "None of your movies has a MPAA rating, so the"
+msgstr "Καμία από τις ταινίες σας δεν έχει δείκτη καταλληλότητας MPAA, συνεπώς η επιλογή"
+
+msgctxt "#30065"
+msgid "[I]Limit movie selection based on MPAA rating[/I]"
+msgstr "[I]Περιορισμός ταινιών βάσει της καταλληλότητας MPAA[/I]"
+
+msgctxt "#30066"
+msgid "setting will be disabled."
+msgstr "θα απενεργοποιηθεί."
+
+msgctxt "#30067"
+msgid "None of your movies has a Content rating, so the"
+msgstr "Καμία από τις σειρές σας δεν έχει Αξιολόγηση Περιεχομένου, συνεπώς η επιλογή"
+
+msgctxt "#30068"
+msgid "[I]Limit TV show selection based on Content rating[/I]"
+msgstr "[I]Περιορισμός των τηλ. σειρών βάσει της Αξιολόγησης Περιεχομένου[/I]"
+
+msgctxt "#30069"
+msgid "setting will be disabled."
+msgstr "θα απενεργοποιηθεί."
+
+msgctxt "#30070"
+msgid "There was a problem accessing the XBMC database."
+msgstr "Παρουσιάστηκε ένα πρόβλημα κατά την πρόσβαση στη βάση δεδομένων του XBMC."
+
+msgctxt "#30071"
+msgid "The error message is:"
+msgstr "Το μήνυμα σφάλματος είναι:"
+
+msgctxt "#30100"
+msgid "Play Movie Quiz"
+msgstr "Παίξτε Κουίζ Ταινιών"
+
+msgctxt "#30101"
+msgid "Play TV Quiz"
+msgstr "Παίξτε Κουίζ Τηλεόρασης"
+
+msgctxt "#30102"
+msgid "Highscores"
+msgstr "Υψηλά Σκορ"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "Έξοδος"
+
+msgctxt "#30104"
+msgid "Change player"
+msgstr "Αλλαγή παίκτη"
+
+msgctxt "#30105"
+msgid "Go back"
+msgstr "Επιστροφή"
+
+msgctxt "#30110"
+msgid "[B]Movie collection trivia[/B]"
+msgstr "[B]Στοιχεία συλλογής ταινιών[/B]"
+
+msgctxt "#30111"
+msgid "%d movies"
+msgstr "%d ταινίες"
+
+msgctxt "#30112"
+msgid "%d actors"
+msgstr "%d ηθοποιοί"
+
+msgctxt "#30113"
+msgid "%d directors"
+msgstr "%d σκηνοθέτες"
+
+msgctxt "#30114"
+msgid "%d studios"
+msgstr "%d στούντιο"
+
+msgctxt "#30115"
+msgid "%d hours of entertainment"
+msgstr "%d ώρες ψυχαγωγίας"
+
+msgctxt "#30120"
+msgid "[B]TV shows collection trivia[/B]"
+msgstr "[B]Στοιχεία συλλογής τηλ. σειρών[/B]"
+
+msgctxt "#30121"
+msgid "%d TV shows"
+msgstr "%d Τηλ. Σειρές"
+
+msgctxt "#30122"
+msgid "%d seasons"
+msgstr "%d κύκλοι"
+
+msgctxt "#30123"
+msgid "%d episodes"
+msgstr "%d επεισόδια"
+
+msgctxt "#30130"
+msgid "One minute"
+msgstr "Ένα λεπτό"
+
+msgctxt "#30131"
+msgid "%s minutes"
+msgstr "%s λεπτά"
+
+msgctxt "#30132"
+msgid "%s questions"
+msgstr "%s ερωτήσεις"
+
+msgctxt "#30133"
+msgid "%d questions left"
+msgstr "απομένουν %d ερωτήσεις"
+
+msgctxt "#30134"
+msgid "Last question"
+msgstr "Τελευταία ερώτηση"
+
+msgctxt "#30135"
+msgid "%d mins. left"
+msgstr "απομένουν %d λεπτά"
+
+msgctxt "#30400"
+msgid "What movie is this?"
+msgstr "Ποια ταινία είναι αυτή;"
+
+msgctxt "#30401"
+msgid "What movie is [B]%s[/B] not in?"
+msgstr "Σε ποια ταινία δεν παίζει ο/η [B]%s[/B];"
+
+msgctxt "#30402"
+msgid "What year was [B]%s[/B] released?"
+msgstr "Ποια χρονιά βγήκε το [B]%s[/B];"
+
+msgctxt "#30403"
+msgid "What tagline belongs to [B]%s[/B]?"
+msgstr "Ποιο σλόγκαν ανήκει στο [B]%s[/B];"
+
+msgctxt "#30404"
+msgid "Who directed [B]%s[/B]?"
+msgstr "Ποιος σκηνοθέτησε το [B]%s[/B];"
+
+msgctxt "#30405"
+msgid "What studio released [B]%s[/B]?"
+msgstr "Ποιο στούντιο εβγαλε το [B]%s[/B];"
+
+msgctxt "#30406"
+msgid "What actor is this?"
+msgstr "Ποιος ηθοποιός είναι αυτός;"
+
+msgctxt "#30407"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Ποιος παίζει το [B]%s[/B] στο [B]%s[/B];"
+
+msgctxt "#30408"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Ποιος είναι η φωνή του [B]%s[/B] στο [B]%s[/B];"
+
+msgctxt "#30409"
+msgid "What movie is this quote from?"
+msgstr "Από ποια ταινία είναι αυτή η ατάκα;"
+
+msgctxt "#30410"
+msgid "What movie is the newest?"
+msgstr "Ποια ταινία είναι πιο πρόσφατη;"
+
+msgctxt "#30411"
+msgid "What movie is not directed by [B]%s[/B]?"
+msgstr "Ποια ταινία δεν είναι σκηνοθετημένη από τον [B]%s[/B];"
+
+msgctxt "#30412"
+msgid "What actor is in these movies?"
+msgstr "Ποιος ηθοποιός είναι σε αυτές τις ταινίες;"
+
+msgctxt "#30413"
+msgid "What actor is in [B]%s[/B] besides [B]%s[/B]?"
+msgstr "Ποιος ηθοποιός ήταν στο [B]%s[/B] μαζί με τον/την [B]%s[/B];"
+
+msgctxt "#30414"
+msgid "What movie has the longest runtime?"
+msgstr "Ποια ταινία έχει τη μεγαλύτερη διάρκεια;"
+
+msgctxt "#30450"
+msgid "What TV show is this?"
+msgstr "Ποια τηλ. σειρά είναι αυτή;"
+
+msgctxt "#30451"
+msgid "What season of [B]%s[/B] is this?"
+msgstr "Από ποιον κύκλο του [B]%s[/B] είναι αυτό;"
+
+msgctxt "#30452"
+msgid "What episode of [B]%s[/B] is this?"
+msgstr "Από ποιο επεισόδιο του [B]%s[/B] είναι αυτό;"
+
+msgctxt "#30453"
+msgid "When was [B]%s[/B] of [B]%s[/B] first aired?"
+msgstr "Πότε προβλήθηκε πρώτη φορά το [B]%s[/B] του [B]%s[/B];"
+
+msgctxt "#30454"
+msgid "When was [B]%s[/B] first aired?"
+msgstr "Πότε προβλήθηκε πρώτη φορά το [B]%s[/B];"
+
+msgctxt "#30455"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Ποιος παίζει τον/την [B]%s[/B] στο [B]%s[/B];"
+
+msgctxt "#30456"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Ποιος είναι η φωνή του [B]%s[/B] στο [B]%s[/B];"
+
+msgctxt "#30457"
+msgid "What TV show is this quote from?"
+msgstr "Από ποια τηλ. σειρά είναι αυτή η ατάκα;"
+
+msgctxt "#30458"
+msgid "What TV show is this theme from?"
+msgstr "Από ποια τηλ. σειρά είναι αυτή η μουσική;"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "Ταινίες"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "Τηλεοπτικές Σειρές"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "Λήψεις"
+
+msgctxt "#30504"
+msgid "Highscore"
+msgstr "Υψηλό σκορ"
+
+msgctxt "#30505"
+msgid "Questions"
+msgstr "Ερωτήσεις"
+
+msgctxt "#30510"
+msgid "Limit number of questions"
+msgstr "Όριο στο σύνολο των ερωτήσεων"
+
+msgctxt "#30511"
+msgid "Question limit"
+msgstr "Όριο ερωτήσεων"
+
+msgctxt "#30512"
+msgid "Limit movie selection based on MPAA rating"
+msgstr "Περιορισμός ταινιών βάσει της καταλληλότητας MPAA"
+
+msgctxt "#30513"
+msgid "Max. MPAA rating"
+msgstr "Μέγ. καταλληλότητα MPAA"
+
+msgctxt "#30514"
+msgid "Display the correct answer, when you answer incorrectly"
+msgstr "Εμφάνιση της σωστής απάντησης, αν απαντήσετε λανθασμένα"
+
+msgctxt "#30515"
+msgid "Only use watched movies in the questions"
+msgstr "Να χρησιμοποιούνται στις ερωτήσεις μόνο ταινίες που έχουν προβληθεί"
+
+msgctxt "#30516"
+msgid "Limit TV show selection based on Content rating"
+msgstr "Περιορισμός των τηλ. σειρών βάσει της Αξιολόγησης Περιεχομένου"
+
+msgctxt "#30517"
+msgid "Max. Content rating"
+msgstr "Μεγ. Αξιολόγηση Περιεχομένου"
+
+msgctxt "#30519"
+msgid "Download IMDB data..."
+msgstr "Λήψη δεδομένων IMDb..."
+
+msgctxt "#30520"
+msgid "Downloading IMDB data..."
+msgstr "Λαμβάνονται δεδομένα IMDb..."
+
+msgctxt "#30521"
+msgid "Retrieved %d of %d mb."
+msgstr "Ελήφθησαν %d από %d MB."
+
+msgctxt "#30522"
+msgid "Some questions require additional local data,"
+msgstr "Κάποιες ερωτήσεις απαιτούν επιπλέον τοπικά δεδομένα,"
+
+msgctxt "#30523"
+msgid "which can be downloaded below:"
+msgstr "τα οποία μπορείτε να κατεβάσετε από εδώ:"
+
+msgctxt "#30524"
+msgid "Submit scores to online highscore"
+msgstr "Υποβολή σκορ στα διαδικτυακά υψηλά σκορ"
+
+msgctxt "#30525"
+msgid "Downloading IMDB data... (%d of %d)"
+msgstr "Λαμβάνονται δεδομένα IMDb... (%d από %d)"
+
+msgctxt "#30526"
+msgid "IMDB data downloaded and ready for use."
+msgstr "Ελήφθησαν δεδομένα από το IMDb και είναι έτοιμα για χρήση."
+
+msgctxt "#30550"
+msgid "Use these question types for movies"
+msgstr "Χρήση αυτών των τύπων ερωτήσεων για ταινίες"
+
+msgctxt "#30551"
+msgid "Use these question types for TV shows"
+msgstr "Χρήση αυτών των τύπων ερωτήσεων για τηλ. σειρές"
+
+msgctxt "#30552"
+msgid "What movie is this?"
+msgstr "Ποια ταινία είναι αυτή;"
+
+msgctxt "#30553"
+msgid "What movie is actor not in?"
+msgstr "Σε ποια ταινία δεν παίζει ο/η ηθοποιός;"
+
+msgctxt "#30554"
+msgid "What year was movie released?"
+msgstr "Ποια χρονιά βγήκε η ταινία;"
+
+msgctxt "#30555"
+msgid "What tagline belongs to movie?"
+msgstr "Ποιο σλόγκαν ανήκει στην ταινία;"
+
+msgctxt "#30556"
+msgid "Who directed this movie?"
+msgstr "Ποιος σκηνοθέτησε αυτήν την ταινία;"
+
+msgctxt "#30557"
+msgid "What studio relased this movie?"
+msgstr "Ποιο στούντιο έβγαλε αυτήν την ταινία;"
+
+msgctxt "#30558"
+msgid "What actor is this?"
+msgstr "Ποιος είναι αυτός ο ηθοποιός;"
+
+msgctxt "#30559"
+msgid "Who played this role in movie?"
+msgstr "Ποιος έπαιξε αυτό το ρόλο στην ταινία;"
+
+msgctxt "#30560"
+msgid "What movie is this quote from?"
+msgstr "Από ποια ταινία είναι αυτή η ατάκα;"
+
+msgctxt "#30561"
+msgid "What movie is newest?"
+msgstr "Ποια ταινία είναι πιο πρόσφατη;"
+
+msgctxt "#30562"
+msgid "What movie was not directed by?"
+msgstr "Ποια ταινία δεν είναι σκηνοθετημένη από ...;"
+
+msgctxt "#30563"
+msgid "What actor is in these movies?"
+msgstr "Ποιος ηθοποιός είναι σε αυτές τις ταινίες;"
+
+msgctxt "#30564"
+msgid "What actor is in these movie besides other actor?"
+msgstr "Ποιος ηθοποιός είναι σε αυτές τις ταινίες εκτός του άλλου ηθοποιού;"
+
+msgctxt "#30565"
+msgid "What movie has longest runtime?"
+msgstr "Ποια ταινία έχει μεγαλύτερη διάρκεια;"
+
+msgctxt "#30580"
+msgid "What TV show is this?"
+msgstr "Ποια τηλ. σειρά είναι αυτή;"
+
+msgctxt "#30581"
+msgid "What season is this?"
+msgstr "Ποιος κύκλος είναι αυτός;"
+
+msgctxt "#30582"
+msgid "What episode is this?"
+msgstr "Ποιο επεισόδιο είναι αυτό;"
+
+msgctxt "#30583"
+msgid "When was TV show first aired?"
+msgstr "Πότε προβλήθηκε πρώτη φορά η τηλ. σειρά;"
+
+msgctxt "#30584"
+msgid "Who played role in TV show?"
+msgstr "Ποιος έπαιξε το ρόλο στην τηλ. σειρά;"
+
+msgctxt "#30585"
+msgid "What TV show is this quote from?"
+msgstr "Από ποια τηλ. σειρά είναι αυτή η ατάκα;"
+
+msgctxt "#30586"
+msgid "What TV show is this theme from?"
+msgstr "Από ποια τηλ. σειρά είναι αυτή η μουσική;"
+
+msgctxt "#30600"
+msgid "[B]Choose Movie Quiz game type[/B]"
+msgstr "[B]Επιλογή τύπου Κουίζ Ταινιών[/B]"
+
+msgctxt "#30601"
+msgid "[B]Choose TV Quiz game type[/B]"
+msgstr "[B]Επιλογή τύπου Κουίζ Τηλεόρασης[/B]"
+
+msgctxt "#30602"
+msgid "Unlimited"
+msgstr "Χωρίς όριο"
+
+msgctxt "#30603"
+msgid "Time limited"
+msgstr "Με χρονικό όριο"
+
+msgctxt "#30604"
+msgid "Question limited"
+msgstr "Περιορισμός ερωτήσεων"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "Άκυρο"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "Εκκίνηση"
+
+msgctxt "#30610"
+msgid "No limit on game time"
+msgstr "Χωρίς χρονικό όριο"
+
+msgctxt "#30611"
+msgid "No limit on questions"
+msgstr "Χωρίς όριο ερωτήσεων"
+
+msgctxt "#30612"
+msgid "End the game by using the Exit option"
+msgstr "Λήξη του παιχνιδιού μέσω της επιλογής Εξόδου"
+
+msgctxt "#30613"
+msgid "Game will ends after"
+msgstr "Το παιχνίδι θα τελειώσει μετά από"
+
+msgctxt "#30700"
+msgid "[B]Game Over[/B]"
+msgstr "[B]Τέλος[/B]"
+
+msgctxt "#30701"
+msgid "Retry"
+msgstr "Επανάληψη"
+
+msgctxt "#30702"
+msgid "Global highscore"
+msgstr "Όλα τα υψηλά σκορ"
+
+msgctxt "#30703"
+msgid "Local highscore"
+msgstr "Τοπικό υψηλό σκορ"
+
+msgctxt "#30704"
+msgid "Main menu"
+msgstr "Κεντρικό Μενού"
+
+msgctxt "#30705"
+msgid "Unlimited"
+msgstr "Χωρίς Όριο"
+
+msgctxt "#30706"
+msgid "%s questions limit"
+msgstr "Όριο %s ερωτήσεων"
+
+msgctxt "#30707"
+msgid "one minute time limit"
+msgstr "χρονικό όριο ενός λεπτού"
+
+msgctxt "#30708"
+msgid "%s minuts time limit"
+msgstr "χρονικό όριο %s λεπτών"
+
+msgctxt "#30800"
+msgid "Highscores"
+msgstr "Υψηλά σκορ"
+
+msgctxt "#30801"
+msgid "About"
+msgstr "Σχετικά"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "Αρχείο καταγραφής αλλαγών"
+
+msgctxt "#30803"
+msgid "Statistics"
+msgstr "Στατιστικά"
+
+msgctxt "#30810"
+msgid "Movie Quiz"
+msgstr "Κουίζ Ταινιών"
+
+msgctxt "#30811"
+msgid "TV Show Quiz"
+msgstr "Κουίζ Τηλ. Σειρών"
+
+msgctxt "#30812"
+msgid "[B]Nickname[/B]"
+msgstr "[B]Ψευδώνυμο[/B]"
+
+msgctxt "#30813"
+msgid "[B]Score[/B]"
+msgstr "[B]Σκορ[/B]"
+
+msgctxt "#30814"
+msgid "[B]Date[/B]"
+msgstr "[B]Ημερομηνία[/B]"
+
+msgctxt "#30815"
+msgid "Choose type"
+msgstr "Επιλογή τύπου"
+
+msgctxt "#30816"
+msgid "See complete global highscores at http://tommy.winther.nu/moviequiz/"
+msgstr "Δείτε όλα τα υψηλά σκορ στο http://tommy.winther.nu/moviequiz/"
+
+msgctxt "#30820"
+msgid "Statistics based on global highscores data collected since September 2011.[CR][CR][B]%s[/B] unique users in [B]%s[/B] countries has submitted [B]%s[/B] highscores.[CR]A total of [B]%s[/B] questions has been answered with [B]%s[/B] being correct, which is [B]%s[/B] percent."
+msgstr "Στατιστικά στοιχεία βασισμένα σε δεδομένα υψηλών σκορ ανά τον κόσμο από το Σεπτέμβριο του 2011.[CR][CR][B]%s[/B] χρήστες σε [B]%s[/B] χώρες έχουν υποβάλλει [B]%s[/B] υψηλά σκορ.[CR]Συνολικά [B]%s[/B] ερωτήσεις έχουν απαντηθεί, εκ των οποίων [B]%s[/B] ήταν σωστές, που αντιστοιχεί σε ένα ποσοστό [B]%s[/B] %."
+
+msgctxt "#30821"
+msgid "[B]Top countries[/B]"
+msgstr "[B]Κορυφαίες χώρες[/B]"
+
+msgctxt "#30822"
+msgid "[B]Top players[/B]"
+msgstr "[B]Κορυφαίοι παίκτες[/B]"
+
+msgctxt "#39998"
+msgid "Developed by Tommy Winther"
+msgstr "Αναπτύχθηκε από τον Tommy Winther"
+
+msgctxt "#39999"
+msgid "Translated by Tommy Winther"
+msgstr "Μεταφράστηκε από τον CutSickAss"

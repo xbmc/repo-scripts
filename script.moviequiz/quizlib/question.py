@@ -1,5 +1,5 @@
 #
-#      Copyright (C) 2012 Tommy Winther
+#      Copyright (C) 2013 Tommy Winther
 #      http://tommy.winther.nu
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -21,42 +21,35 @@
 import os
 import random
 import datetime
-import thumb
-import db
-import time
 import re
 import imdb
 import game
+import library
 
-import xbmc
 import xbmcvfs
 
 from strings import *
 
 IMDB = imdb.Imdb()
 
+
 class Answer(object):
-    def __init__(self, id, text, idFile = None, sortWeight = None, correct = False):
+    def __init__(self, id, text, image=None, sortWeight=None, correct=False):
         self.correct = correct
         self.id = id
         self.text = text
-        self.idFile = idFile
-
-        self.coverFile = None
+        self.coverFile = image
         self.sortWeight = sortWeight
 
-
-    def setCoverFile(self, path, filename = None):
-        if filename is None:
-            self.coverFile = path
-        else:
-            self.coverFile = thumb.getCachedVideoThumb(path, filename)
+    def setCoverFile(self, coverFile):
+        self.coverFile = coverFile
 
     def __repr__(self):
         return "<Answer(id=%s, text=%s, correct=%s)>" % (self.id, self.text, self.correct)
 
+
 class Question(object):
-    def __init__(self, displayType = None):
+    def __init__(self, displayType=None):
         """
         Base class for Questions
 
@@ -80,15 +73,12 @@ class Question(object):
         except IndexError:
             return None
 
-    def addCorrectAnswer(self, id, text, idFile = None, path = None, filename = None, sortWeight = None):
-        self.addAnswer(id, text, idFile, path, filename, sortWeight, correct = True)
+    def addCorrectAnswer(self, id, text, image=None, sortWeight=None):
+        self.addAnswer(id, text, image, sortWeight, correct=True)
 
-    def addAnswer(self, id, text, idFile = None, path = None, filename = None, sortWeight = None, correct = False):
-        a = Answer(id, text, idFile, sortWeight, correct)
-        if path or filename:
-            a.setCoverFile(path, filename)
+    def addAnswer(self, id, text, image=None, sortWeight=None, correct=False):
+        a = Answer(id, text, image, sortWeight, correct)
         self.answers.append(a)
-
 
     def getCorrectAnswer(self):
         for answer in self.answers:
@@ -97,10 +87,10 @@ class Question(object):
         return None
 
     def getUniqueIdentifier(self):
-        return "%s-%s" % (self.__class__.__name__, str(self.getCorrectAnswer().id))
+        return "%s-%s" % (self.__class__.__name__, unicode(self.getCorrectAnswer().id))
 
-    def setFanartFile(self, path, filename = None):
-        self.fanartFile = thumb.getCachedVideoFanart(path, filename)
+    def setFanartFile(self, fanartFile):
+        self.fanartFile = fanartFile
 
     def getFanartFile(self):
         return self.fanartFile
@@ -115,31 +105,40 @@ class Question(object):
     def _getMovieIds(self):
         movieIds = list()
         for movie in self.answers:
-            movieIds.append(movie.id)
+            movieIds.append(str(movie.id))
         return movieIds
 
+    def getAnswerTexts(self):
+        texts = list()
+        for answer in self.answers:
+            texts.append(answer.text)
+        return texts
+
     def _isAnimationGenre(self, genre):
-        return genre.lower().find("animation") != -1
+        return "Animation" in genre  # todo case insensitive
 
 #
 # DISPLAY TYPES
 #
 
+
 class DisplayType(object):
     pass
 
-class VideoDisplayType(DisplayType):
-    def setVideoFile(self, path, filename):
-        if filename[0:8] == 'stack://':
-            self.videoFile = filename
-        else:
-            self.videoFile = os.path.join(path, filename)
 
+class VideoDisplayType(DisplayType):
+    def setVideoFile(self, videoFile, resumePoint):
+        self.videoFile = videoFile
+        self.resumePoint = resumePoint
         if not xbmcvfs.exists(self.videoFile):
-            raise QuestionException('Video file not found: %s' % self.videoFile)
+            raise QuestionException('Video file not found: %s' % self.videoFile.encode('utf-8', 'ignore'))
 
     def getVideoFile(self):
         return self.videoFile
+
+    def getResumePoint(self):
+        return self.resumePoint
+
 
 class PhotoDisplayType(DisplayType):
     def setPhotoFile(self, photoFile):
@@ -147,6 +146,7 @@ class PhotoDisplayType(DisplayType):
 
     def getPhotoFile(self):
         return self.photoFile
+
 
 class ThreePhotoDisplayType(DisplayType):
     def addPhoto(self, photo, label):
@@ -158,12 +158,14 @@ class ThreePhotoDisplayType(DisplayType):
     def getPhotoFile(self, index):
         return self.photos[index]
 
+
 class QuoteDisplayType(DisplayType):
     def setQuoteText(self, quoteText):
         self.quoteText = quoteText
 
     def getQuoteText(self):
         return self.quoteText
+
 
 class AudioDisplayType(DisplayType):
     def setAudioFile(self, audioFile):
@@ -176,99 +178,145 @@ class AudioDisplayType(DisplayType):
 # MOVIE QUESTIONS
 #
 
+
 class MovieQuestion(Question):
     pass
 
+
 class WhatMovieIsThisQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         What movie is this?
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         videoDisplayType = VideoDisplayType()
         super(WhatMovieIsThisQuestion, self).__init__(videoDisplayType)
 
-        movies = database.getMovies(maxResults = 1)
-        if not movies:
+        correctAnswer = library.getMovies(['title', 'set', 'genre', 'file', 'resume', 'art']).withFilters(
+            defaultFilters).limitTo(1).asItem()
+        if not correctAnswer:
             raise QuestionException('No movies found')
 
-        correctAnswer = movies[0]
-        self.addCorrectAnswer(correctAnswer['idMovie'], correctAnswer['title'], correctAnswer['idFile'], correctAnswer['strPath'], correctAnswer['strFileName'])
+        self.addCorrectAnswer(id=correctAnswer['movieid'], text=correctAnswer['title'],
+                              image=correctAnswer['art']['poster'])
 
         # Find other movies in set
-        if correctAnswer['idSet'] is not None:
-            otherMoviesInSet = database.getMovies(3, setId = correctAnswer['idSet'], excludeMovieIds = self._getMovieIds())
+        if correctAnswer['set'] is not None:
+            otherMoviesInSet = library.getMovies(['title', 'art']).withFilters(defaultFilters).inSet(
+                correctAnswer['set']).excludeTitles(self.getAnswerTexts()).limitTo(3).asList()
             for movie in otherMoviesInSet:
-                self.addAnswer(movie['idMovie'], movie['title'], movie['idFile'], movie['strPath'], movie['strFileName'])
+                self.addAnswer(id=movie['movieid'], text=movie['title'], image=movie['art']['poster'])
 
         # Find other movies in genre
         if len(self.answers) < 4:
-            try:
-                otherMoviesInGenre = database.getMovies(maxResults = 4 - len(self.answers), genres = correctAnswer['genre'], excludeMovieIds = self._getMovieIds())
-                for movie in otherMoviesInGenre:
-                    self.addAnswer(movie['idMovie'], movie['title'], movie['idFile'], movie['strPath'], movie['strFileName'])
-            except db.DbException:
-                pass # ignore in case user has no other movies in genre
+            otherMoviesInGenre = library.getMovies(['title', 'art']).withFilters(defaultFilters).inGenre(
+                correctAnswer['genre']).excludeTitles(self.getAnswerTexts()).limitTo(4 - len(self.answers)).asList()
+            for movie in otherMoviesInGenre:
+                self.addAnswer(id=movie['movieid'], text=movie['title'], image=movie['art']['poster'])
 
         # Fill with random movies
         if len(self.answers) < 4:
-            theRest = database.getMovies(maxResults = 4 - len(self.answers), excludeMovieIds = self._getMovieIds())
+            theRest = library.getMovies(['title', 'art']).withFilters(defaultFilters).excludeTitles(
+                self.getAnswerTexts()).limitTo(4 - len(self.answers)).asList()
             for movie in theRest:
-                self.addAnswer(movie['idMovie'], movie['title'], movie['idFile'], movie['strPath'], movie['strFileName'])
+                self.addAnswer(id=movie['movieid'], text=movie['title'], image=movie['art']['poster'])
 
         random.shuffle(self.answers)
         self.text = strings(Q_WHAT_MOVIE_IS_THIS)
-        videoDisplayType.setVideoFile(correctAnswer['strPath'], correctAnswer['strFileName'])
+        videoDisplayType.setVideoFile(correctAnswer['file'], correctAnswer['resume']['position'])
 
     @staticmethod
     def isEnabled():
         return ADDON.getSetting('question.whatmovieisthis.enabled') == 'true'
 
+
+class WhatActorIsThisQuestion(MovieQuestion):
+    def __init__(self, defaultFilters):
+        """
+        WhatActorIsThisQuestion
+        """
+        photoDisplayType = PhotoDisplayType()
+        super(WhatActorIsThisQuestion, self).__init__(photoDisplayType)
+
+        # Find a bunch of actors with thumbnails
+        actors = list()
+        names = list()
+        for movie in library.getMovies(['cast']).withFilters(defaultFilters).limitTo(10).asList():
+            for actor in movie['cast']:
+                if 'thumbnail' in actor and actor['name'] not in names:
+                    actors.append(actor)
+                    names.append(actor['name'])
+
+        if not actors:
+            raise QuestionException("Didn't find any actors with thumbnail")
+
+        random.shuffle(actors)
+        actor = actors.pop()
+
+        # The actor
+        self.addCorrectAnswer(id=actor['name'], text=actor['name'])
+
+        # Check gender
+        actorGender = IMDB.isActor(actor['name'])
+
+        for otherActor in actors:
+            if IMDB.isActor(otherActor['name']) == actorGender:
+                self.addAnswer(otherActor['name'].encode('utf-8', 'ignore'), otherActor['name'])
+                if len(self.answers) == 4:
+                    break
+
+        random.shuffle(self.answers)
+        self.text = strings(Q_WHAT_ACTOR_IS_THIS)
+        photoDisplayType.setPhotoFile(actor['thumbnail'])
+
+    @staticmethod
+    def isEnabled():
+        return ADDON.getSetting('question.whatactoristhis.enabled') == 'true'
+
+
 class ActorNotInMovieQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         Actor not in movie?
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         photoDisplayType = PhotoDisplayType()
         super(ActorNotInMovieQuestion, self).__init__(photoDisplayType)
 
-        rows = database.getMovieActors(maxResults = 10, minMovieCount = 3)
+        actors = list()
+        for movie in library.getMovies(['cast']).withFilters(defaultFilters).limitTo(10).asList():
+            for actor in movie['cast']:
+                if 'thubmnail' in actor:
+                    actors.append(actor)
+
+        if not actors:
+            raise QuestionException("Didn't find any actors with thumbnail")
+
+        random.shuffle(actors)
+
         actor = None
-        photoFile = None
-        # try to find an actor with a cached photo (if non are found we bail out)
-        for row in rows:
-            photoFile = thumb.getCachedActorThumb(row['strActor'])
-            if os.path.exists(photoFile):
-                actor = row
-                break
-            else:
-                print "Actor doesn't have a local photoFile"
-                photoFile = None
+        for actor in actors:
+            # Movie actor is in
+            movies = library.getMovies(['title', 'art']).withFilters(defaultFilters).withActor(actor['name']).limitTo(3).asList()
+            if len(movies) < 3:
+                continue
 
-        if actor is None:
-            raise QuestionException("Didn't find any actors with photoFile")
+            for movie in movies:
+                self.addAnswer(-1, movie['title'], image=movie['art']['poster'])
 
-        # Movies actor is not in
-        movies = database.getMovies(maxResults = 1, actorIdNotInMovie = actor['idActor'])
-        if not movies:
-            raise QuestionException('No movies found')
+            # Movies actor is not in
+            correctAnswer = library.getMovies(['title', 'art']).withFilters(defaultFilters).withoutActor(
+                actor['name']).limitTo(1).asItem()
+            if not correctAnswer:
+                raise QuestionException('No movies found')
+            self.addCorrectAnswer(actor['name'], correctAnswer['title'], image=correctAnswer['art']['poster'])
 
-        correctAnswer = movies[0]
-        self.addCorrectAnswer(actor['idActor'], correctAnswer['title'], path = correctAnswer['strPath'], filename = correctAnswer['strFileName'])
+            break
 
-        # Movie actor is in
-        movies = database.getMovies(maxResults = 3, actorIdInMovie = actor['idActor'])
-        for movie in movies:
-            self.addCorrectAnswer(-1, movie['title'], path = movie['strPath'], filename = movie['strFileName'])
+        if not self.answers:
+            raise QuestionException("Didn't find any actors with at least three movies")
 
         random.shuffle(self.answers)
-        self.text = strings(Q_WHAT_MOVIE_IS_ACTOR_NOT_IN, actor['strActor'])
-        photoDisplayType.setPhotoFile(photoFile)
+        self.text = strings(Q_WHAT_MOVIE_IS_ACTOR_NOT_IN, actor['name'])
+        photoDisplayType.setPhotoFile(actor['thumbnail'])
 
     @staticmethod
     def isEnabled():
@@ -276,23 +324,20 @@ class ActorNotInMovieQuestion(MovieQuestion):
 
 
 class WhatYearWasMovieReleasedQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatYearWasMovieReleasedQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         super(WhatYearWasMovieReleasedQuestion, self).__init__()
 
-        movies = database.getMovies(maxResults = 1, minYear = 1900)
-        if not movies:
+        movie = library.getMovies(['title', 'year', 'art']).withFilters(defaultFilters).fromYear(1900).limitTo(
+            1).asItem()
+        if not movie:
             raise QuestionException('No movies found')
 
-        row = movies[0]
         skew = random.randint(0, 10)
-        minYear = int(row['year']) - skew
-        maxYear = int(row['year']) + (10 - skew)
+        minYear = int(movie['year']) - skew
+        maxYear = int(movie['year']) + (10 - skew)
 
         thisYear = datetime.datetime.today().year
         if maxYear > thisYear:
@@ -300,7 +345,7 @@ class WhatYearWasMovieReleasedQuestion(MovieQuestion):
             minYear = thisYear - 10
 
         years = list()
-        years.append(int(row['year']))
+        years.append(int(movie['year']))
         while len(years) < 4:
             year = random.randint(minYear, maxYear)
             if not year in years:
@@ -309,10 +354,10 @@ class WhatYearWasMovieReleasedQuestion(MovieQuestion):
         list.sort(years)
 
         for year in years:
-            self.addAnswer(row['idFile'], str(year), row['idFile'], row['strPath'], row['strFileName'], correct = (year == int(row['year'])))
+            self.addAnswer(id=movie['movieid'], text=str(year), correct=(year == int(movie['year'])))
 
-        self.text = strings(Q_WHAT_YEAR_WAS_MOVIE_RELEASED, row['title'])
-        self.setFanartFile(row['strPath'], row['strFileName'])
+        self.text = strings(Q_WHAT_YEAR_WAS_MOVIE_RELEASED, movie['title'])
+        self.setFanartFile(movie['art']['fanart'])
 
     @staticmethod
     def isEnabled():
@@ -320,182 +365,130 @@ class WhatYearWasMovieReleasedQuestion(MovieQuestion):
 
 
 class WhatTagLineBelongsToMovieQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatTagLineBelongsToMovieQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         super(WhatTagLineBelongsToMovieQuestion, self).__init__()
 
-        movies = database.getMovies(maxResults = 1, mustHaveTagline = True)
-        if not movies:
+        movie = None
+        items = library.getMovies(['title', 'tagline', 'art']).withFilters(defaultFilters).limitTo(10).asList()
+        for item in items:
+            if not item['tagline']:
+                continue
+
+            movie = item
+            break
+
+        if not movie:
             raise QuestionException('No movies found')
-        row = movies[0]
-        self.addCorrectAnswer(row['idMovie'], row['tagline'], row['idFile'], row['strPath'], row['strFileName'])
+        self.addCorrectAnswer(id=movie['movieid'], text=movie['tagline'])
 
-        otherAnswers = database.getMovies(maxResults = 3, excludeMovieIds = row['idMovie'], mustHaveTagline = True)
-        for movie in otherAnswers:
-            self.addAnswer(movie['idMovie'], movie['tagline'], row['idFile'], row['strPath'], row['strFileName'])
+        otherMovies = library.getMovies(['tagline']).withFilters(defaultFilters).excludeTitles(movie['title']).limitTo(
+            10).asList()
+        for otherMovie in otherMovies:
+            if not otherMovie['tagline']:
+                continue
 
-        if len(self.answers) < 3:
-            raise QuestionException('Not enough taglines; got %d taglines' % len(self.answers))
+            self.addAnswer(id=otherMovie['movieid'], text=otherMovie['tagline'])
+            if len(self.answers) == 4:
+                break
 
         random.shuffle(self.answers)
-        self.text = strings(Q_WHAT_TAGLINE_BELONGS_TO_MOVIE, row['title'])
-        self.setFanartFile(row['strPath'], row['strFileName'])
+        self.text = strings(Q_WHAT_TAGLINE_BELONGS_TO_MOVIE, movie['title'])
+        self.setFanartFile(movie['art']['fanart'])
 
     @staticmethod
     def isEnabled():
         return ADDON.getSetting('question.whattaglinebelongstomovie.enabled') == 'true'
 
 
-class WhoDirectedThisMovieQuestion(MovieQuestion):
-    def __init__(self, database):
-        """
-        WhoDirectedThisMovieQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
-        """
-        super(WhoDirectedThisMovieQuestion, self).__init__()
-
-        directors = database.getMovieDirectors(maxResults = 1, minMovieCount = 1)
-        if not directors:
-            raise QuestionException('No directors found')
-        director = directors[0]
-
-        movies = database.getMovies(maxResults = 1, directorId = director['idActor'])
-        if not movies:
-            raise QuestionException('No movies found')
-        row = movies[0]
-        self.addCorrectAnswer(director['idActor'], director['strActor'], row['idFile'], row['strPath'], row['strFileName'])
-
-        otherAnswers = database.getMovieDirectors(maxResults = 3, excludeDirectorId = director['idActor'])
-        for movie in otherAnswers:
-            self.addAnswer(movie['idActor'], movie['strActor'], row['idFile'], row['strPath'], row['strFileName'])
-
-        random.shuffle(self.answers)
-        self.text = strings(Q_WHO_DIRECTED_THIS_MOVIE, row['title'])
-        self.setFanartFile(row['strPath'], row['strFileName'])
-
-    @staticmethod
-    def isEnabled():
-        return ADDON.getSetting('question.whodirectedthismovie.enabled') == 'true'
-
-
 class WhatStudioReleasedMovieQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatStudioReleasedMovieQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         super(WhatStudioReleasedMovieQuestion, self).__init__()
 
-        studios = database.getStudios(maxResults = 1)
-        if not studios:
-            raise QuestionException('No studios found')
-        studio = studios[0]
+        movie = None
+        items = library.getMovies(['title', 'studio', 'art']).withFilters(defaultFilters).limitTo(10).asList()
+        for item in items:
+            if not item['studio']:
+                continue
 
-        movies = database.getMovies(maxResults = 1, studioId = studio['idStudio'])
-        if not movies:
+            movie = item
+            break
+
+        if not movie:
             raise QuestionException('No movies found')
-        row = movies[0]
-        self.addCorrectAnswer(studio['idStudio'], studio['strStudio'], row['idFile'], row['strPath'], row['strFileName'])
 
-        otherAnswers = database.getStudios(maxResults = 3, excludeStudioId = studio['idStudio'])
-        for movie in otherAnswers:
-            self.addAnswer(movie['idStudio'], movie['strStudio'], row['idFile'], row['strPath'], row['strFileName'])
+        studio = random.choice(movie['studio'])
+        self.addCorrectAnswer(id=movie['movieid'], text=studio)
+
+        otherMovies = library.getMovies(['studio']).withFilters(defaultFilters).excludeTitles(movie['title']).limitTo(
+            10).asList()
+        for otherMovie in otherMovies:
+            if not otherMovie['studio']:
+                continue
+
+            studioFound = False
+            for otherStudio in otherMovie['studio']:
+                if otherStudio in self.getAnswerTexts():
+                    studioFound = True
+                    break
+
+            if studioFound:
+                continue
+
+            self.addAnswer(id=otherMovie['movieid'], text=random.choice(otherMovie['studio']))
+            if len(self.answers) == 4:
+                break
 
         random.shuffle(self.answers)
-        self.text = strings(Q_WHAT_STUDIO_RELEASED_MOVIE, row['title'])
-        self.setFanartFile(row['strPath'], row['strFileName'])
+        self.text = strings(Q_WHAT_STUDIO_RELEASED_MOVIE, movie['title'])
+        self.setFanartFile(movie['art']['fanart'])
 
     @staticmethod
     def isEnabled():
         return ADDON.getSetting('question.whatstudioreleasedmovie.enabled') == 'true'
 
 
-class WhatActorIsThisQuestion(MovieQuestion):
-    def __init__(self, database):
-        """
-        WhatActorIsThisQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
-        """
-        photoDisplayType = PhotoDisplayType()
-        super(WhatActorIsThisQuestion, self).__init__(photoDisplayType)
-
-        actor = None
-        photoFile = None
-        rows = database.getMovieActors(maxResults = 10, selectDistinct = True)
-        # try to find an actor with a cached photo
-        for row in rows:
-            photoFile = thumb.getCachedActorThumb(row['strActor'])
-            if os.path.exists(photoFile):
-                actor = row
-                break
-
-        if actor is None:
-            raise QuestionException("Didn't find any actors with photoFile")
-
-        # The actor
-        self.addCorrectAnswer(actor['idActor'], actor['strActor'])
-
-        # Other actors
-        actors = database.getMovieActors(maxResults = 50, excludeActorId = actor['idActor'], appendDefaultClause = False)
-
-        # Check gender
-        actorGender = IMDB.isActor(actor['strActor'])
-
-        for actor in actors:
-            if IMDB.isActor(actor['strActor']) == actorGender:
-                self.addAnswer(actor['idActor'], actor['strActor'])
-                if len(self.answers) == 4:
-                    break
-
-        random.shuffle(self.answers)
-        self.text = strings(Q_WHAT_ACTOR_IS_THIS)
-        photoDisplayType.setPhotoFile(photoFile)
-
-    @staticmethod
-    def isEnabled():
-        return ADDON.getSetting('question.whatactoristhis.enabled') == 'true'
-
-
 class WhoPlayedRoleInMovieQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhoPlayedRoleInMovieQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         super(WhoPlayedRoleInMovieQuestion, self).__init__()
 
-        actors = database.getMovieActors(maxResults = 1, mustHaveRole = True)
-        if not actors:
-            raise QuestionException('No actors found')
-        actor = actors[0]
-        movies = database.getMovies(maxResults = 1, actorIdInMovie = actor['idActor'])
-        if not movies:
-            raise QuestionException('No movies found')
-        movie = movies[0]
-        role = actor['strRole']
-        if re.search('[|/]', role):
-            roles = re.split('[|/]', role)
+        movie = None
+        items = library.getMovies(['title', 'cast', 'genre', 'art']).withFilters(defaultFilters).limitTo(10).asList()
+        for item in items:
+            if len(item['cast']) < 4:
+                continue
+
+            movie = item
+            break
+
+        if not movie:
+            raise QuestionException('No applicable movie found')
+
+        actor = random.choice(movie['cast'])
+        role = actor['role']
+        if re.search('[|/,]', role):
+            roles = re.split('[|/,]', role)
             # find random role
-            role = roles[random.randint(0, len(roles)-1)]
+            role = roles[random.randint(0, len(roles) - 1)]
 
-        self.addCorrectAnswer(actor['idActor'], actor['strActor'], path = thumb.getCachedActorThumb(actor['strActor']))
+        self.addCorrectAnswer(actor['name'], actor['name'], image=actor['thumbnail'])
 
-        actors = database.getMovieActors(maxResults = 3, excludeActorId = actor['idActor'], movieId = movie['idMovie'])
-        for actor in actors:
-            self.addAnswer(actor['idActor'], actor['strActor'], path = thumb.getCachedActorThumb(actor['strActor']))
+        for otherActor in movie['cast']:
+            if otherActor['name'] == actor['name']:
+                continue
+
+            self.addAnswer(otherActor['name'].encode('utf-8', 'ignore'), otherActor['name'], image=otherActor['thumbnail'])
+
+            if len(self.answers) == 4:
+                break
 
         random.shuffle(self.answers)
 
@@ -503,7 +496,7 @@ class WhoPlayedRoleInMovieQuestion(MovieQuestion):
             self.text = strings(Q_WHO_VOICES_ROLE_IN_MOVIE) % (role, movie['title'])
         else:
             self.text = strings(Q_WHO_PLAYS_ROLE_IN_MOVIE) % (role, movie['title'])
-        self.setFanartFile(movie['strPath'], movie['strFileName'])
+        self.setFanartFile(movie['art']['fanart'])
 
     @staticmethod
     def isEnabled():
@@ -511,34 +504,31 @@ class WhoPlayedRoleInMovieQuestion(MovieQuestion):
 
 
 class WhatMovieIsThisQuoteFrom(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatQuoteIsThisFrom
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         quoteDisplayType = QuoteDisplayType()
         super(WhatMovieIsThisQuoteFrom, self).__init__(quoteDisplayType)
 
-        rows = database.getMovies(maxResults = 10, minYear = 1900)
         quoteText = None
         row = None
-        for r in rows:
-            quoteText = IMDB.getRandomQuote(r['title'], maxLength = 128)
+        for item in library.getMovies(['title', 'art']).withFilters(defaultFilters).limitTo(10).asList():
+            quoteText = IMDB.getRandomQuote(item['title'], maxLength=128)
 
             if quoteText is not None:
-                row = r
+                row = item
                 break
 
         if quoteText is None:
             raise QuestionException('Did not find any quotes')
 
-        self.addCorrectAnswer(row['idMovie'], row['title'], path = row['strPath'], filename = row['strFileName'])
+        self.addCorrectAnswer(row['movieid'], row['title'], image=row['art']['poster'])
 
-        theRest = database.getMovies(maxResults = 3, excludeMovieIds = row['idMovie'])
+        theRest = library.getMovies(['title', 'art']).withFilters(defaultFilters).excludeTitles(
+            self.getAnswerTexts()).limitTo(3).asList()
         for movie in theRest:
-            self.addAnswer(movie['idMovie'], movie['title'], path = movie['strPath'], filename = movie['strFileName'])
+            self.addAnswer(movie['movieid'], movie['title'], image=movie['art']['poster'])
 
         random.shuffle(self.answers)
         quoteDisplayType.setQuoteText(quoteText)
@@ -550,27 +540,26 @@ class WhatMovieIsThisQuoteFrom(MovieQuestion):
 
 
 class WhatMovieIsNewestQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatMovieIsNewestQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         super(WhatMovieIsNewestQuestion, self).__init__()
 
-        movies = database.getMovies(maxResults = 1, minYear = 1900)
-        if not movies:
+        movie = library.getMovies(['title', 'year', 'art']).withFilters(defaultFilters).fromYear(1900).limitTo(
+            1).asItem()
+        if not movie:
             raise QuestionException('No movies found')
-        row = movies[0]
-        self.addCorrectAnswer(row['idMovie'], row['title'], row['idFile'], row['strPath'], row['strFileName'])
 
-        movies = database.getMovies(maxResults = 3, minYear = 1900, maxYear = row['year'])
-        if len(movies) < 3:
+        self.addCorrectAnswer(id=movie['movieid'], text=movie['title'], image=movie['art']['poster'])
+
+        otherMovies = library.getMovies(['title', 'art']).withFilters(defaultFilters).fromYear(1900).toYear(
+            movie['year']).limitTo(3).asList()
+        if len(otherMovies) < 3:
             raise QuestionException("Less than 3 movies found; bailing out")
 
-        for movie in movies:
-            self.addAnswer(movie['idMovie'], movie['title'], path = movie['strPath'], filename = movie['strFileName'])
+        for otherMovie in otherMovies:
+            self.addAnswer(otherMovie['movieid'], otherMovie['title'], image=otherMovie['art']['poster'])
 
         random.shuffle(self.answers)
         self.text = strings(Q_WHAT_MOVIE_IS_THE_NEWEST)
@@ -580,48 +569,97 @@ class WhatMovieIsNewestQuestion(MovieQuestion):
         return ADDON.getSetting('question.whatmovieisnewest.enabled') == 'true'
 
 
-class WhatMovieIsNotDirectedByQuestion(MovieQuestion):
-    def __init__(self, database):
+class WhoDirectedThisMovieQuestion(MovieQuestion):
+    def __init__(self, defaultFilters):
         """
-        WhatMovieIsNotDirectedByQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
+        WhoDirectedThisMovieQuestion
         """
-        photoDisplayType = PhotoDisplayType()
-        super(WhatMovieIsNotDirectedByQuestion, self).__init__(photoDisplayType)
+        super(WhoDirectedThisMovieQuestion, self).__init__()
 
-        rows = database.getMovieDirectors(maxResults = 10, minMovieCount = 3)
+        movie = None
+        items = library.getMovies(['title', 'director', 'art']).withFilters(defaultFilters).limitTo(10).asList()
+        for item in items:
+            if not item['director']:
+                continue
 
-        director = None
-        photoFile = None
-        # try to find an actor with a cached photo (if non are found we bail out)
-        for row in rows:
-            photoFile = thumb.getCachedActorThumb(row['strActor'])
-            if os.path.exists(photoFile):
-                director = row
-                break
-            else:
-                photoFile = None
+            movie = item
+            break
 
-        if director is None:
-            raise QuestionException("Didn't find any directors with photoFile")
-
-        # Movies not directed by director
-        movies = database.getMovies(maxResults = 1, excludeDirectorId = director['idActor'])
-        if not movies:
+        if not movie:
             raise QuestionException('No movies found')
-        movie = movies[0]
-        self.addCorrectAnswer(director['idActor'], movie['title'], path = movie['strPath'], filename = movie['strFileName'])
-        
-        # Movie actor is in
-        movies = database.getMovies(maxResults = 3, directorId = director['idActor'])
-        for movie in movies:
-            self.addAnswer(-1, movie['title'], path = movie['strPath'], filename = movie['strFileName'])
+
+        director = random.choice(movie['director'])
+        self.addCorrectAnswer(id=movie['movieid'], text=director)
+
+        otherMovies = library.getMovies(['director']).withFilters(defaultFilters).excludeTitles(movie['title']).limitTo(
+            10).asList()
+        for otherMovie in otherMovies:
+            if not otherMovie['director']:
+                continue
+
+            directorFound = False
+            for otherDirector in otherMovie['director']:
+                if otherDirector in self.getAnswerTexts():
+                    directorFound = True
+                    break
+
+            if directorFound:
+                continue
+
+            self.addAnswer(id=otherMovie['movieid'], text=random.choice(otherMovie['director']))
+            if len(self.answers) == 4:
+                break
 
         random.shuffle(self.answers)
-        self.text = strings(Q_WHAT_MOVIE_IS_NOT_DIRECTED_BY, director['strActor'])
-        photoDisplayType.setPhotoFile(photoFile)
+        self.text = strings(Q_WHO_DIRECTED_THIS_MOVIE, movie['title'])
+        self.setFanartFile(movie['art']['fanart'])
+
+    @staticmethod
+    def isEnabled():
+        return ADDON.getSetting('question.whodirectedthismovie.enabled') == 'true'
+
+
+class WhatMovieIsNotDirectedByQuestion(MovieQuestion):
+    def __init__(self, defaultFilters):
+        """
+        WhatMovieIsNotDirectedByQuestion
+        """
+        super(WhatMovieIsNotDirectedByQuestion, self).__init__()
+
+        # Find a bunch of directors
+        directors = list()
+        items = library.getMovies(['title', 'director']).withFilters(defaultFilters).limitTo(10).asList()
+        for item in items:
+            directors.extend(iter(item['director']))
+
+        # Find one that has at least three movies
+        movies = None
+        director = None
+        for director in directors:
+        #            if not director['thumbnail']:
+        #                continue
+            movies = library.getMovies(['title', 'art']).withFilters(defaultFilters).directedBy(director).limitTo(
+                3).asList()
+
+            if len(movies) >= 3:
+                break
+
+        if len(movies) < 3:
+            raise QuestionException("Didn't find a director with at least three movies")
+
+        # Find movie not directed by director
+        otherMovie = library.getMovies(['title', 'art']).withFilters(defaultFilters).notDirectedBy(director).limitTo(
+            1).asItem()
+        if not otherMovie:
+            raise QuestionException('No movie found')
+        self.addCorrectAnswer(director, otherMovie['title'], image=otherMovie['art']['poster'])
+
+        for movie in movies:
+            self.addAnswer(-1, movie['title'], image=movie['art']['poster'])
+
+        random.shuffle(self.answers)
+        self.text = strings(Q_WHAT_MOVIE_IS_NOT_DIRECTED_BY, director)
+        # todo perhaps set fanart instead?
 
     @staticmethod
     def isEnabled():
@@ -629,32 +667,59 @@ class WhatMovieIsNotDirectedByQuestion(MovieQuestion):
 
 
 class WhatActorIsInTheseMoviesQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatActorIsInTheseMoviesQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         threePhotoDisplayType = ThreePhotoDisplayType()
         super(WhatActorIsInTheseMoviesQuestion, self).__init__(threePhotoDisplayType)
 
-        actors = database.getMovieActors(maxResults = 1, minMovieCount = 3)
-        if not actors:
-            raise QuestionException('No actors found')
-        actor = actors[0]
-        self.addCorrectAnswer(actor['idActor'], actor['strActor'], path = thumb.getCachedActorThumb(actor['strActor']))
+        # Find a bunch of actors
+        actors = list()
+        items = library.getMovies(['title', 'cast']).withFilters(defaultFilters).limitTo(10).asList()
+        for item in items:
+            actors.extend(iter(item['cast']))
 
-        movieIds = list()
-        rows = database.getMovies(maxResults = 3, actorIdInMovie = actor['idActor'])
-        for row in rows:
-            movieIds.append(row['idMovie'])
-            photo = thumb.getCachedVideoThumb(row['strPath'], row['strFileName'])
-            threePhotoDisplayType.addPhoto(photo, row['title'])
+        # Find one that has at least three movies
+        movies = None
+        actor = None
+        for actor in actors:
+            if not 'thumbnail' in actor:
+                continue
+            movies = library.getMovies(['title', 'art']).withFilters(defaultFilters).withActor(actor['name']).limitTo(
+                3).asList()
 
-        otherActors = database.getMovieActors(maxResults = 3, excludeActorId = actor['idActor'], excludeMovieIds = movieIds)
-        for other in otherActors:
-            self.addAnswer(other['idActor'], other['strActor'], path = thumb.getCachedActorThumb(other['strActor']))
+            if len(movies) >= 3:
+                break
+
+        if len(movies) < 3:
+            raise QuestionException("Didn't find an actor with at least three movies")
+
+        # Setup the display with three movies
+        for movie in movies:
+            threePhotoDisplayType.addPhoto(movie['art']['poster'], movie['title'])
+
+        # Find movie without actor
+        otherMovie = library.getMovies(['title', 'art']).withFilters(defaultFilters).withoutActor(
+            actor['name']).limitTo(1).asItem()
+        if not otherMovie:
+            raise QuestionException('No movie found')
+        self.addCorrectAnswer(actor['name'], actor['title'], image=actor['thumbnail'])
+
+        # Find another bunch of actors
+        actors = list()
+        items = library.getMovies(['title', 'cast']).withFilters(defaultFilters).withoutActor(actor['name']).limitTo(
+            10).asList()
+        for item in items:
+            actors.extend(iter(item['cast']))
+
+        random.shuffle(actors)
+        for actor in actors:
+            if not 'thumbnail' in actor:
+                continue
+            self.addAnswer(-1, actor['name'], image=actor['thumbnail'])
+            if len(self.answers) == 4:
+                break
 
         random.shuffle(self.answers)
         self.text = strings(Q_WHAT_ACTOR_IS_IN_THESE_MOVIES)
@@ -665,60 +730,79 @@ class WhatActorIsInTheseMoviesQuestion(MovieQuestion):
 
 
 class WhatActorIsInMovieBesidesOtherActorQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatActorIsInMovieBesidesOtherActorQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         super(WhatActorIsInMovieBesidesOtherActorQuestion, self).__init__()
 
-        movies = database.getMovies(maxResults = 1, minActorCount = 3)
-        if not movies:
-            raise QuestionException('No movies found')
-        movie = movies[0]
-        actors = database.getMovieActors(maxResults = 2, movieId = movie['idMovie'])
-        if len(actors) != 2:
-            raise QuestionException('Not enough actors found')
+        # Find a bunch of movies
+        items = library.getMovies(['title', 'cast', 'art']).withFilters(defaultFilters).limitTo(10).asList()
+        movie = None
+        for item in items:
+            if len(item['cast']) >= 2:
+                movie = item
+                break
+
+        if not movie:
+            raise QuestionException('No movies with two actors found')
+
+        actors = movie['cast']
+        random.shuffle(actors)
         actorOne = actors[0]
         actorTwo = actors[1]
-        self.addCorrectAnswer(actorOne['idActor'], actorOne['strActor'], path = thumb.getCachedActorThumb(actorOne['strActor']))
+        self.addCorrectAnswer(actorOne['name'], actorOne['name'], image=actorOne['thumbnail'])
 
-        otherActors = database.getMovieActors(maxResults = 3, excludeMovieIds = movie['idMovie'], excludeActorId = actorOne['idActor'])
-        for actor in otherActors:
-            self.addAnswer(actor['idActor'], actor['strActor'], path = thumb.getCachedActorThumb(actor['strActor']))
+        # Find another bunch of actors
+        otherActors = list()
+        items = library.getMovies(['title', 'cast']).withFilters(defaultFilters).withoutActor(
+            actorOne['name']).withoutActor(actorTwo['name']).limitTo(10).asList()
+        for item in items:
+            otherActors.extend(iter(item['cast']))
+        random.shuffle(otherActors)
+
+        for otherActor in otherActors:
+            if not 'thumbnail' in otherActor:
+                continue
+            self.addAnswer(otherActor['name'].encode('utf-8', 'ignore'), otherActor['name'], image=otherActor['thumbnail'])
+            if len(self.answers) == 4:
+                break
 
         random.shuffle(self.answers)
-        self.text = strings(Q_WHAT_ACTOR_IS_IN_MOVIE_BESIDES_OTHER_ACTOR, (movie['title'], actorTwo['strActor']))
-        self.setFanartFile(movie['strPath'], movie['strFileName'])
+        self.text = strings(Q_WHAT_ACTOR_IS_IN_MOVIE_BESIDES_OTHER_ACTOR, (movie['title'], actorTwo['name']))
+        self.setFanartFile(movie['art']['fanart'])
 
     @staticmethod
     def isEnabled():
         return ADDON.getSetting('question.whatactorisinmoviebesidesotheractor.enabled') == 'true'
 
+
 class WhatMovieHasTheLongestRuntimeQuestion(MovieQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatMovieHasTheLongestRuntimeQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         super(WhatMovieHasTheLongestRuntimeQuestion, self).__init__()
 
-        movies = database.getMovies(maxResults = 1, mustHaveRuntime = True)
-        if not movies:
-            raise QuestionException('No movies found')
-        correctAnswer = movies[0]
-        self.addCorrectAnswer(correctAnswer['idMovie'], correctAnswer['title'], correctAnswer['idFile'], correctAnswer['strPath'], correctAnswer['strFileName'])
+        # Find a bunch of movies
+        items = library.getMovies(['title', 'runtime', 'art']).withFilters(defaultFilters).limitTo(10).asList()
+        movie = None
+        otherMovies = list()
+        for item in items:
+            if movie is None or movie['runtime'] < item['runtime']:
+                movie = item
+            else:
+                otherMovies.append(item)
 
-        movies = database.getMovies(maxResults = 3, mustHaveRuntime = True, maxRuntime = correctAnswer['runtime'])
-        if len(movies) < 3:
-            raise QuestionException("Less than 3 movies found; bailing out")
+        if not movie or len(otherMovies) < 3:
+            raise QuestionException('Not enough movies found')
 
-        for movie in movies:
-            self.addAnswer(movie['idMovie'], movie['title'], path = movie['strPath'], filename = movie['strFileName'])
+        self.addCorrectAnswer(id=movie['movieid'], text=movie['title'], image=movie['art']['poster'])
+
+        for otherMovie in otherMovies:
+            self.addAnswer(id=otherMovie['movieid'], text=otherMovie['title'], image=otherMovie['art']['poster'])
+            if len(self.answers) == 4:
+                break
 
         random.shuffle(self.answers)
         self.text = strings(Q_WHAT_MOVIE_HAS_THE_LONGEST_RUNTIME)
@@ -731,8 +815,9 @@ class WhatMovieHasTheLongestRuntimeQuestion(MovieQuestion):
 # TV QUESTIONS
 #
 
+
 class TVQuestion(Question):
-    def __init__(self, displayType = None):
+    def __init__(self, displayType=None):
         """
 
         @type displayType: DisplayType
@@ -750,30 +835,31 @@ class TVQuestion(Question):
 
 
 class WhatTVShowIsThisQuestion(TVQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatTVShowIsThisQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
-        videoDisplayType  = VideoDisplayType()
+        videoDisplayType = VideoDisplayType()
         super(WhatTVShowIsThisQuestion, self).__init__(videoDisplayType)
 
-        shows = database.getTVShows(maxResults = 1)
-        if not shows:
+        show = library.getTVShows(['title', 'art']).withFilters(defaultFilters).limitTo(1).asItem()
+        if not show:
             raise QuestionException('No tvshows found')
-        row = shows[0]
-        self.addCorrectAnswer(row['idShow'], row['title'], row['idFile'], path = thumb.getCachedTVShowThumb(row['tvShowPath']))
+        self.addCorrectAnswer(id=show['tvshowid'], text=show['title'], image=show['art']['poster'])
 
-        # Fill with random episodes from other shows
-        shows = database.getTVShows(maxResults = 3, excludeTVShowId = row['idShow'], onlySelectTVShow = True)
-        for show in shows:
-            self.addAnswer(show['idShow'], show['title'], path = thumb.getCachedTVShowThumb(show['tvShowPath']))
+        episode = library.getEpisodes(['file', 'resume']).withFilters(defaultFilters).fromShow(show['title']).limitTo(
+            1).asItem()
+        if not episode:
+            raise QuestionException('TVshow has no episodes')
+
+        otherShows = library.getTVShows(['title', 'art']).withFilters(defaultFilters).excludeTitles(
+            [show['title']]).limitTo(3).asList()
+        for otherShow in otherShows:
+            self.addAnswer(id=otherShow['tvshowid'], text=otherShow['title'], image=otherShow['art']['poster'])
 
         random.shuffle(self.answers)
         self.text = strings(Q_WHAT_TVSHOW_IS_THIS)
-        videoDisplayType.setVideoFile(row['strPath'], row['strFileName'])
+        videoDisplayType.setVideoFile(episode['file'], episode['resume']['position'])
 
     @staticmethod
     def isEnabled():
@@ -781,33 +867,33 @@ class WhatTVShowIsThisQuestion(TVQuestion):
 
 
 class WhatSeasonIsThisQuestion(TVQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatSeasonIsThisQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
-        videoDisplayType  = VideoDisplayType()
+        videoDisplayType = VideoDisplayType()
         super(WhatSeasonIsThisQuestion, self).__init__(videoDisplayType)
 
-        rows = database.getTVShowSeasons(maxResults = 1, minSeasonCount = 3)
-        if not rows:
-            raise QuestionException('No tvshow seasons found')
-        row = rows[0]
-        cover = thumb.getCachedSeasonThumb(row['strPath'], self._get_season_title(row['season']))
-        self.addCorrectAnswer("%s-%s" % (row['idShow'], row['season']), self._get_season_title(row['season']), row['idFile'], path = cover, sortWeight = row['season'])
+        show = library.getTVShows(['title', 'art']).withFilters(defaultFilters).limitTo(1).asItem()
+        if not show:
+            raise QuestionException('No tvshows found')
 
-        # Fill with random seasons from this show
-        shows = database.getTVShowSeasons(maxResults = 3, onlySelectSeason = True, showId = row['idShow'], excludeSeason = row['season'])
-        for show in shows:
-            cover = thumb.getCachedSeasonThumb(row['strPath'], self._get_season_title(show['season']))
-            self.addAnswer("%s-%s" % (row['idShow'], show['season']), self._get_season_title(show['season']), path = cover, sortWeight = show['season'])
+        seasons = library.getSeasons(show['tvshowid'], ['season', 'art']).limitTo(4).asList()
+        correctIdx = random.randint(0, len(seasons) - 1)
+
+        episode = library.getEpisodes(['file', 'resume']).withFilters(defaultFilters).fromShow(
+            show['title']).fromSeason(seasons[correctIdx]['season']).limitTo(1).asItem()
+        if not episode:
+            raise QuestionException('TVshow has no episodes')
+
+        for idx, season in enumerate(seasons):
+            self.addAnswer("%s-%s" % (show['tvshowid'], season['season']), season['label'],
+                           image=season['art']['poster'], sortWeight=season['season'], correct=(idx == correctIdx))
 
         self.answers = sorted(self.answers, key=lambda answer: int(answer.sortWeight))
 
-        self.text = strings(Q_WHAT_SEASON_IS_THIS) % row['title']
-        videoDisplayType.setVideoFile(row['strPath'], row['strFileName'])
+        self.text = strings(Q_WHAT_SEASON_IS_THIS) % show['title']
+        videoDisplayType.setVideoFile(episode['file'], episode['resume']['position'])
 
     @staticmethod
     def isEnabled():
@@ -815,37 +901,34 @@ class WhatSeasonIsThisQuestion(TVQuestion):
 
 
 class WhatEpisodeIsThisQuestion(TVQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatEpisodeIsThisQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
-        videoDisplayType  = VideoDisplayType()
+        videoDisplayType = VideoDisplayType()
         super(WhatEpisodeIsThisQuestion, self).__init__(videoDisplayType)
 
-        rows = database.getTVShowEpisodes(maxResults = 1, minEpisodeCount = 3)
-        if not rows:
-            raise QuestionException('No tvshow episodes found')
-        row = rows[0]
-        answerText = self._get_episode_title(row['season'], row['episode'], row['episodeTitle'])
-        id = "%s-%s-%s" % (row['idShow'], row['season'], row['episode'])
-        cover = thumb.getCachedTVShowThumb(row['strPath'])
-        self.addCorrectAnswer(id, answerText, row['idFile'], path = cover, sortWeight = row['episode'])
+        show = library.getTVShows(['title', 'art']).withFilters(defaultFilters).limitTo(1).asItem()
+        if not show:
+            raise QuestionException('No tvshows found')
 
-        # Fill with random episodes from this show
-        episodes = database.getTVShowEpisodes(maxResults = 3, idShow = row['idShow'], season = row['season'], excludeEpisode = row['episode'])
-        for episode in episodes:
-            answerText = self._get_episode_title(episode['season'], episode['episode'], episode['episodeTitle'])
-            id = "%s-%s-%s" % (row['idShow'], row['season'], episode['episode'])
-            cover = thumb.getCachedTVShowThumb(row['strPath'])
-            self.addAnswer(id, answerText, path = cover, sortWeight = episode['episode'])
+        season = library.getSeasons(show['tvshowid'], ['season', 'art']).limitTo(14).asItem()
+        if not season:
+            raise QuestionException('No seasons found')
+
+        episodes = library.getEpisodes(['episode', 'title', 'file', 'resume']).fromShow(show['title']).fromSeason(
+            season['season']).limitTo(4).asList()
+        correctIdx = random.randint(0, len(episodes) - 1)
+
+        for idx, episode in enumerate(episodes):
+            id = "%s-%s-%s" % (show['tvshowid'], season['season'], episode['episode'])
+            self.addAnswer(id=id, text=episode['label'], image=season['art']['poster'], sortWeight=episode['episode'],
+                           correct=(idx == correctIdx))
 
         self.answers = sorted(self.answers, key=lambda answer: int(answer.sortWeight))
 
-        self.text = strings(Q_WHAT_EPISODE_IS_THIS) % row['title']
-        videoDisplayType.setVideoFile(row['strPath'], row['strFileName'])
+        self.text = strings(Q_WHAT_EPISODE_IS_THIS) % show['title']
+        videoDisplayType.setVideoFile(episodes[correctIdx]['file'], episodes[correctIdx]['resume']['position'])
 
     @staticmethod
     def isEnabled():
@@ -853,24 +936,30 @@ class WhatEpisodeIsThisQuestion(TVQuestion):
 
 
 class WhenWasTVShowFirstAiredQuestion(TVQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhenWasTVShowFirstAiredQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         super(WhenWasTVShowFirstAiredQuestion, self).__init__()
 
-        rows = database.getTVShows(maxResults = 1, excludeSpecials = True, episode = 1, mustHaveFirstAired = True)
-        if not rows:
-            raise QuestionException('no tvshows found')
-        row = rows[0]
-        row['year'] = time.strptime(row['firstAired'], '%Y-%m-%d').tm_year
+        show = library.getTVShows(['title', 'art']).withFilters(defaultFilters).limitTo(1).asItem()
+        if not show:
+            raise QuestionException('No shows found')
+
+        season = library.getSeasons(show['tvshowid'], ['season']).limitTo(1).asItem()
+        if not season:
+            raise QuestionException('No seasons found')
+
+        episode = library.getEpisodes(['firstaired']).withFilters(defaultFilters).episode(1).fromShow(
+            show['title']).fromSeason(season['season']).limitTo(1).asItem()
+        if not episode:
+            raise QuestionException('No episodes found')
+
+        episodeYear = int(episode['firstaired'][0:4])
 
         skew = random.randint(0, 10)
-        minYear = int(row['year']) - skew
-        maxYear = int(row['year']) + (10 - skew)
+        minYear = episodeYear - skew
+        maxYear = episodeYear + (10 - skew)
 
         thisYear = datetime.datetime.today().year
         if maxYear > thisYear:
@@ -878,7 +967,7 @@ class WhenWasTVShowFirstAiredQuestion(TVQuestion):
             minYear = thisYear - 10
 
         years = list()
-        years.append(int(row['year']))
+        years.append(episodeYear)
         while len(years) < 4:
             year = random.randint(minYear, maxYear)
             if not year in years:
@@ -887,11 +976,11 @@ class WhenWasTVShowFirstAiredQuestion(TVQuestion):
         list.sort(years)
 
         for year in years:
-            coverFile = thumb.getCachedTVShowThumb(row['strPath'])
-            self.addAnswer(row['idFile'], str(year), row['idFile'], path = coverFile, correct = (year == int(row['year'])))
+            self.addAnswer(id="%s-%s" % (show['tvshowid'], season['season']), text=str(year),
+                           correct=(year == episodeYear))
 
-        self.text = strings(Q_WHEN_WAS_TVSHOW_FIRST_AIRED) % (row['title'] + ' - ' + self._get_season_title(row['season']))
-        self.setFanartFile(row['strPath'])
+        self.text = strings(Q_WHEN_WAS_TVSHOW_FIRST_AIRED) % (show['title'] + ' - ' + season['label'])
+        self.setFanartFile(show['art']['fanart'])
 
     @staticmethod
     def isEnabled():
@@ -899,69 +988,70 @@ class WhenWasTVShowFirstAiredQuestion(TVQuestion):
 
 
 class WhoPlayedRoleInTVShowQuestion(TVQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhoPlayedRoleInTVShowQuestion
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
-        photoDisplayType = PhotoDisplayType()
-        super(WhoPlayedRoleInTVShowQuestion, self).__init__(photoDisplayType)
+        super(WhoPlayedRoleInTVShowQuestion, self).__init__()
 
-        rows = database.getTVShowActors(maxResults = 1, mustHaveRole = True)
-        if not rows:
-            raise QuestionException('No tvshow actors found')
-        row = rows[0]
-        role = row['strRole']
-        if re.search('[|/]', role):
-            roles = re.split('[|/]', role)
+        show = library.getTVShows(['title', 'genre', 'cast', 'art']).withFilters(defaultFilters).limitTo(1).asItem()
+        if not show or len(show['cast']) < 4:
+            raise QuestionException('No tvshows found')
+
+        otherActors = show['cast']
+        actor = otherActors.pop(random.randint(0, len(otherActors) - 1))
+
+        role = actor['role']
+        if re.search('[|/,]', role):
+            roles = re.split('[|/,]', role)
             # find random role
-            role = roles[random.randint(0, len(roles)-1)]
+            role = roles[random.randint(0, len(roles) - 1)]
 
-        self.addCorrectAnswer(row['idActor'], row['strActor'], path = thumb.getCachedActorThumb(row['strActor']))
+        self.addCorrectAnswer(id=actor['name'], text=actor['name'], image=actor.get('thumbnail'))
 
-        actors = database.getTVShowActors(maxResults = 3, onlySelectActor = True, showId = row['idShow'], excludeActorId = row['idActor'])
-        for actor in actors:
-            self.addAnswer(actor['idActor'], actor['strActor'], path = thumb.getCachedActorThumb(actor['strActor']))
+        for otherActor in otherActors:
+            self.addAnswer(id=otherActor['name'].encode('utf-8', 'ignore'), text=otherActor['name'], image=otherActor.get('thumbnail'))
+
+            if len(self.answers) == 4:
+                break
 
         random.shuffle(self.answers)
 
-        if self._isAnimationGenre(row['genre']):
-            self.text = strings(Q_WHO_VOICES_ROLE_IN_TVSHOW) % (role, row['title'])
+        if self._isAnimationGenre(show['genre']):
+            self.text = strings(Q_WHO_VOICES_ROLE_IN_TVSHOW) % (role, show['title'])
         else:
-            self.text = strings(Q_WHO_PLAYS_ROLE_IN_TVSHOW) % (role, row['title'])
-        photoDisplayType.setPhotoFile(thumb.getCachedTVShowThumb(row['strPath']))
+            self.text = strings(Q_WHO_PLAYS_ROLE_IN_TVSHOW) % (role, show['title'])
+        self.setFanartFile(show['art']['fanart'])
 
     @staticmethod
     def isEnabled():
         return ADDON.getSetting('question.whoplayedroleintvshow.enabled') == 'true'
 
+
 class WhatTVShowIsThisQuoteFrom(TVQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         """
         WhatTVShowIsThisQuoteFrom
-
-        @type database: quizlib.db.Database
-        @param database: Database connection instance to use
         """
         quoteDisplayType = QuoteDisplayType()
         super(WhatTVShowIsThisQuoteFrom, self).__init__(quoteDisplayType)
 
-        rows = database.getTVShows(maxResults = 1)
-        if not rows:
-            raise QuestionException('No tvshows found')
-        row = rows[0]
-        quoteText = IMDB.getRandomQuote(row['title'], season = row['season'], episode = row['episode'], maxLength = 128)
+        episode = library.getEpisodes(['showtitle', 'season', 'episode', 'art']).withFilters(defaultFilters).limitTo(
+            1).asItem()
+        if not episode:
+            raise QuestionException('No episodes found')
+
+        quoteText = IMDB.getRandomQuote(episode['showtitle'], season=episode['season'], episode=episode['episode'],
+                                        maxLength=128)
         if quoteText is None:
             raise QuestionException('Did not find any quotes')
 
-        self.addCorrectAnswer(row['idShow'], row['title'], row['idFile'], path = thumb.getCachedTVShowThumb(row['tvShowPath']))
+        self.addCorrectAnswer(id=episode['showtitle'], text=episode['showtitle'], image=episode['art']['tvshow.poster'])
 
-        # Fill with random episodes from other shows
-        shows = database.getTVShows(maxResults = 3, excludeTVShowId = row['idShow'], onlySelectTVShow = True)
-        for show in shows:
-            self.addAnswer(show['idShow'], show['title'], path = thumb.getCachedTVShowThumb(show['tvShowPath']))
+        otherShows = library.getTVShows(['title', 'art']).withFilters(defaultFilters).excludeTitles(
+            [episode['showtitle']]).limitTo(3).asList()
+        for otherShow in otherShows:
+            self.addAnswer(id=otherShow['title'].encode('utf-8', 'ignore'), text=otherShow['title'], image=otherShow['art']['poster'])
 
         random.shuffle(self.answers)
         quoteDisplayType.setQuoteText(quoteText)
@@ -971,43 +1061,45 @@ class WhatTVShowIsThisQuoteFrom(TVQuestion):
     def isEnabled():
         return ADDON.getSetting('question.whattvshowisthisquotefrom.enabled') == 'true' and IMDB.isDataPresent()
 
+
 class WhatTVShowIsThisThemeFromQuestion(TVQuestion):
-    def __init__(self, database):
+    def __init__(self, defaultFilters):
         audioDisplayType = AudioDisplayType()
         super(WhatTVShowIsThisThemeFromQuestion, self).__init__(audioDisplayType)
 
-        tvShow = None
-        themeSong = None
-        rows = database.getTVShows(maxResults = 10)
-        for row in rows:
-            themeSong = os.path.join(row['tvShowPath'], 'theme.mp3')
-            if xbmcvfs.exists(themeSong):
-                tvShow = row
-                break
+        items = library.getTVShows(['title', 'file', 'art']).withFilters(defaultFilters).limitTo(4).asList()
+        show = None
+        otherShows = list()
+        for item in items:
+            themeSong = os.path.join(item['file'], 'theme.mp3')
+            if show is None and xbmcvfs.exists(themeSong):
+                show = item
+            else:
+                otherShows.append(item)
 
-        if tvShow is None:
+        if show is None:
             raise QuestionException('Unable to find any tv shows with a theme.mp3 file')
 
-        self.addCorrectAnswer(tvShow['idShow'], tvShow['title'], tvShow['idFile'], path = thumb.getCachedTVShowThumb(tvShow['tvShowPath']))
+        self.addCorrectAnswer(id=show['tvshowid'], text=show['title'], image=show['art']['poster'])
 
         # Fill with random episodes from other shows
-        shows = database.getTVShows(maxResults = 3, excludeTVShowId = tvShow['idShow'], onlySelectTVShow = True)
-        for show in shows:
-            self.addAnswer(show['idShow'], show['title'], path = thumb.getCachedTVShowThumb(show['tvShowPath']))
+        for otherShow in otherShows:
+            self.addAnswer(id=otherShow['tvshowid'], text=otherShow['title'], image=otherShow['art']['poster'])
 
         random.shuffle(self.answers)
-        audioDisplayType.setAudioFile(themeSong)
+        audioDisplayType.setAudioFile(os.path.join(show['file'], 'theme.mp3'))
         self.text = strings(Q_WHAT_TVSHOW_IS_THIS_THEME_FROM)
 
     @staticmethod
     def isEnabled():
         return ADDON.getSetting('question.whattvshowisthisthemefrom.enabled') == 'true'
 
+
 class QuestionException(Exception):
     pass
 
 
-def getRandomQuestion(gameInstance, database):
+def getEnabledQuestionCandidates(gameInstance):
     """
         Gets random question from one of the Question subclasses.
     """
@@ -1017,25 +1109,18 @@ def getRandomQuestion(gameInstance, database):
     elif gameInstance.getType() == game.GAMETYPE_TVSHOW:
         questionCandidates = TVQuestion.__subclasses__()
 
-    questionCandidates = [ candidate for candidate in questionCandidates if candidate.isEnabled() ]
-    random.shuffle(questionCandidates)
+    questionCandidates = [candidate for candidate in questionCandidates if candidate.isEnabled()]
 
-    for candidate in questionCandidates:
-        try:
-            return candidate(database)
-        except Exception, ex:
-            xbmc.log("%s in %s" % (ex.__class__.__name__, candidate.__name__))
-            import traceback, sys
-            traceback.print_exc(file = sys.stdout)
+    return questionCandidates
 
-    return None
 
 def isAnyMovieQuestionsEnabled():
     subclasses = MovieQuestion.__subclasses__()
-    subclasses  = [ subclass for subclass in subclasses if subclass.isEnabled() ]
+    subclasses = [subclass for subclass in subclasses if subclass.isEnabled()]
     return subclasses
+
 
 def isAnyTVShowQuestionsEnabled():
     subclasses = TVQuestion.__subclasses__()
-    subclasses  = [ subclass for subclass in subclasses if subclass.isEnabled() ]
+    subclasses = [subclass for subclass in subclasses if subclass.isEnabled()]
     return subclasses

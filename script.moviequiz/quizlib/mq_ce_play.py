@@ -1,5 +1,5 @@
 #
-#      Copyright (C) 2012 Tommy Winther
+#      Copyright (C) 2013 Tommy Winther
 #      http://tommy.winther.nu
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -23,6 +23,10 @@ import xbmc
 from quizlib.game import QuestionLimitedGame
 from quizlib.gui import QuizGui
 
+import buggalo
+buggalo.SUBMIT_URL = 'http://tommy.winther.nu/exception/submit.php'
+
+@buggalo.buggalo_try_except()
 def runCinemaExperience(type, automatic, maxRating, genre, questionLimit):
     """
     Used by Cinema Experience integration. This method will block until the Movie Quiz is exited.
@@ -35,7 +39,7 @@ def runCinemaExperience(type, automatic, maxRating, genre, questionLimit):
     questionLimit -- the number of questions to go through before the quiz ends.
     """
     xbmc.log("Starting Movie Quiz in Cinema Experience mode with params: type=%s, automatic=%s, maxRating=%s, genre=%s, questionLimit=%d"
-        % (type, automatic, maxRating, genre, questionLimit))
+             % (type, automatic, maxRating, genre, questionLimit))
     game = QuestionLimitedGame(type, -1, not automatic, questionLimit)
     w = QuizGui(game)
     w.doModal()

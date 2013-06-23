@@ -1,5 +1,5 @@
 #
-#      Copyright (C) 2012 Tommy Winther
+#      Copyright (C) 2013 Tommy Winther
 #      http://tommy.winther.nu
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -24,6 +24,7 @@ from strings import *
 
 GAMETYPE_MOVIE = "movie"
 GAMETYPE_TVSHOW = "tvshow"
+
 
 class Game(object):
     def __init__(self, type, userId, interactive):
@@ -82,6 +83,7 @@ class Game(object):
         self.correctAnswers = 0
         self.wrongAnswers = 0
 
+
 class UnlimitedGame(Game):
     def __init__(self, type, userId, interactive):
         super(UnlimitedGame, self).__init__(type, userId, interactive)
@@ -94,6 +96,9 @@ class UnlimitedGame(Game):
 
     def __repr__(self):
         return "<UnlimitedGame>"
+
+    def __eq__(self, other):
+        return type(other) == UnlimitedGame and self.type == other.type
 
 
 class QuestionLimitedGame(Game):
@@ -126,6 +131,10 @@ class QuestionLimitedGame(Game):
     def __repr__(self):
         return "<QuestionLimitedGame %s>" % str(self.questionLimit)
 
+    def __eq__(self, other):
+        return type(other) == QuestionLimitedGame and self.type == other.type and self.questionLimit == other.questionLimit
+
+
 class TimeLimitedGame(Game):
     def __init__(self, type, userId, interactive, timeLimitMinutes):
         super(TimeLimitedGame, self).__init__(type, userId, interactive)
@@ -155,4 +164,7 @@ class TimeLimitedGame(Game):
 
     def __repr__(self):
         return "<TimeLimitedGame %s>" % str(self.timeLimitMinutes)
+
+    def __eq__(self, other):
+        return type(other) == TimeLimitedGame and self.type == other.type and self.timeLimitMinutes == other.timeLimitMinutes
 

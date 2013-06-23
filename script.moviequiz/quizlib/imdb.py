@@ -1,5 +1,5 @@
 #
-#      Copyright (C) 2012 Tommy Winther
+#      Copyright (C) 2013 Tommy Winther
 #      http://tommy.winther.nu
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -210,17 +210,21 @@ class Imdb(object):
         """
         # find position using index
         if season is not None and episode is not None:
-            pattern = '\n"%s".*?\(\#%s.%s\)\}\t([0-9]+)\n[^\t]+\t([0-9]+)' % (name, season, episode)
+            pattern = '\n"%s" \([0-9]+\)( \{.*?\(\#%s.%s\)\})?\t([0-9]+)\n[^\t]+\t([0-9]+)' % (name, season, episode)
+            start = 2
+            end = 3
         else:
             pattern = '\n%s [^\t]+\t([0-9]+)\n[^\t]+\t([0-9]+)' % name
+            start = 1
+            end = 2
         m = re.search(pattern, self.quotesIndex, re.DOTALL)
         if m is None:
             return []
 
         # load quotes based on position
         f = open(self.quotesListPath)
-        f.seek(int(m.group(1)))
-        quotes = f.read(int(m.group(2)) - int(m.group(1)))
+        f.seek(int(m.group(start)))
+        quotes = f.read(int(m.group(end)) - int(m.group(start)))
         f.close()
 
         # remove first line and split on double new lines
