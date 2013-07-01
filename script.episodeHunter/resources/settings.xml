@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="10001"><!-- General -->
+        <setting id="username" type="text" label="10011" default="" />
+        <setting id="api_key" type="text" label="10012" default="" />
+        <setting id="offline" type="bool" label="10060" default="false"/>
+    </category>
+    <category label="10002"><!-- Scrobbling -->
+        <setting id="scrobble_movie" type="bool" label="10013" default="true"/>
+        <setting id="scrobble_episode" type="bool" label="10014" default="true"/>
+        <setting id="scrobble_min_view_time" type="slider" label="10015" range="0,5,100" default="85"/>
+    </category>
+</settings>
