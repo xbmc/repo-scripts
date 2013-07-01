@@ -29,7 +29,7 @@
 
 # CONSTANTS
 __author__ = 'Humble Robot'
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 __url__ = 'https://code.google.com/p/isy-events/'
 __date__ = '4/2013'
 
@@ -38,6 +38,7 @@ __date__ = '4/2013'
 import sys
 # xbmc
 import xbmcaddon
+import xbmcgui
 
 # fetch addon information
 isy_events = xbmcaddon.Addon('service.script.isyevents')
@@ -61,7 +62,7 @@ password = isy_browse.getSetting('password')
 host = isy_browse.getSetting('host')
 port = int(isy_browse.getSetting('port'))
 usehttps = isy_browse.getSetting('usehttps') == 'true'
- 
+
 # open isy connection
 isy = pyisy.open(username, password, host, port, usehttps)
 # verify isy opened correctly
@@ -70,32 +71,44 @@ if isy.__dummy__:
     message = log.translator(35002)
     xbmc.executebuiltin('Notification(' + header + ',' + message + ', 15000)')
 
+# check last version run
+last_ver = isy_events.getSetting('last_run_ver')
+if last_ver != __version__:
+    header = log.translator(36000)
+    message = [log.translator(36001), log.translator(36002), log.translator(36003)]
+    xbmcgui.Dialog().ok(header, message[0], message[1], message[2])
+    isy_events.setSetting('last_run_ver', __version__)
+    
 # create xbmc event handler
 xEvents = xb_events.xbmcEvents()
 # add handlers
 node_events = {
-    'onStart': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_xbmc_start'), isy_events.getSetting('devact_xbmc_start')),
-    'onQuit': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_xbmc_quit'), isy_events.getSetting('devact_xbmc_quit')),
-    'onPlayMovie': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_video_start'), isy_events.getSetting('devact_video_start')),
-    'onStopMovie': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_video_end'), isy_events.getSetting('devact_video_end')),
-    'onPauseMovie': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_video_pause'), isy_events.getSetting('devact_video_pause')),
-    'onResumeMovie': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_video_resume'), isy_events.getSetting('devact_video_resume')),
-    'onPlayMusic': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_audio_start'), isy_events.getSetting('devact_audio_start')),
-    'onStopMusic': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_audio_end'), isy_events.getSetting('devact_audio_end')),
-    'onPauseMusic': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_audio_pause'), isy_events.getSetting('devact_audio_pause')),
-    'onResumeMusic': event_actions.ParseActionSettings(isy, isy_events.getSetting('dev_audio_resume'), isy_events.getSetting('devact_audio_resume'))}
+    'onStart': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_xbmc_start'),
+    'onQuit': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_xbmc_quit'),
+    'onScreenSaverOn': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_xbmc_sson'),
+    'onScreenSaverOff': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_xbmc_ssoff'),
+    'onPlayMovie': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_video_start'),
+    'onStopMovie': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_video_end'),
+    'onPauseMovie': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_video_pause'),
+    'onResumeMovie': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_video_resume'),
+    'onPlayMusic': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_audio_start'),
+    'onStopMusic': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_audio_end'),
+    'onPauseMusic': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_audio_pause'),
+    'onResumeMusic': event_actions.ParseDeviceSetting(isy, isy_events, 'dev_audio_resume')}
 xEvents.AddHandlers(node_events)
 program_events ={
-    'onStart': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_xbmc_start'), isy_events.getSetting('progact_xbmc_start')),
-    'onQuit': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_xbmc_quit'), isy_events.getSetting('progact_xbmc_quit')),
-    'onPlayMovie': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_video_start'), isy_events.getSetting('progact_video_start')),
-    'onStopMovie': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_video_end'), isy_events.getSetting('progact_video_end')),
-    'onPauseMovie': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_video_pause'), isy_events.getSetting('progact_video_pause')),
-    'onResumeMovie': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_video_resume'), isy_events.getSetting('progact_video_resume')),
-    'onPlayMusic': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_audio_start'), isy_events.getSetting('progact_audio_start')),
-    'onStopMusic': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_audio_end'), isy_events.getSetting('progact_audio_end')),
-    'onPauseMusic': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_audio_pause'), isy_events.getSetting('progact_audio_pause')),
-    'onResumeMusic': event_actions.ParseActionSettings(isy, isy_events.getSetting('prog_audio_resume'), isy_events.getSetting('progact_audio_resume'))}
+    'onStart': event_actions.ParseProgramSetting(isy, isy_events, 'prog_xbmc_start'),
+    'onQuit': event_actions.ParseProgramSetting(isy, isy_events, 'prog_xbmc_quit'),
+    'onScreenSaverOn': event_actions.ParseProgramSetting(isy, isy_events, 'prog_xbmc_sson'),
+    'onScreenSaverOff': event_actions.ParseProgramSetting(isy, isy_events, 'prog_xbmc_ssoff'),
+    'onPlayMovie': event_actions.ParseProgramSetting(isy, isy_events, 'prog_video_start'),
+    'onStopMovie': event_actions.ParseProgramSetting(isy, isy_events, 'prog_video_end'),
+    'onPauseMovie': event_actions.ParseProgramSetting(isy, isy_events, 'prog_video_pause'),
+    'onResumeMovie': event_actions.ParseProgramSetting(isy, isy_events, 'prog_video_resume'),
+    'onPlayMusic': event_actions.ParseProgramSetting(isy, isy_events, 'prog_audio_start'),
+    'onStopMusic': event_actions.ParseProgramSetting(isy, isy_events, 'prog_audio_end'),
+    'onPauseMusic': event_actions.ParseProgramSetting(isy, isy_events, 'prog_audio_pause'),
+    'onResumeMusic': event_actions.ParseProgramSetting(isy, isy_events, 'prog_audio_resume')}
 xEvents.AddHandlers(program_events)
 # start events engine
 xEvents.RunMainLoop()

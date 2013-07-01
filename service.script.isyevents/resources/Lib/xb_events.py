@@ -45,12 +45,15 @@ class xbmcEvents(object):
         'onPauseMovie': [], \
         'onPauseMusic': [], \
         'onResumeMovie': [], \
-        'onResumeMusic':[]}
+        'onResumeMusic':[], \
+        'onScreenSaverOn': [], \
+        'onScreenSaverOff': []}
         
     # current status
     _playingMovie = mc.histlist(False)
     _playingMusic = mc.histlist(False)
     _paused = mc.histlist(False)
+    _screenSaver = mc.histlist(False)
     
     def __init__(self):
         pass
@@ -92,6 +95,9 @@ class xbmcEvents(object):
         self.RaiseEvent('onStart')
         
         while(not xbmc.abortRequested):
+            # check screen saver status
+            self._screenSaver.set(bool(xbmc.getCondVisibility("System.ScreenSaverActive")))
+        
             # check movie playing status
             self._playingMovie.set(player.isPlayingVideo())
             
@@ -109,6 +115,12 @@ class xbmcEvents(object):
                 self._paused.set(False)
                         
             # check for events
+            if self._screenSaver.step_on():
+                # raise screen saver on event
+                self.RaiseEvent('onScreenSaverOn')
+            if self._screenSaver.step_off():
+                # raise screen saver off event
+                self.RaiseEvent('onScreenSaverOff')
             if self._playingMovie.step_on():
                 # raise started playing movie
                 self.RaiseEvent('onPlayMovie')

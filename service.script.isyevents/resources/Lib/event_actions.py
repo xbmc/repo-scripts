@@ -25,27 +25,32 @@
 
 # dictionary to translate actions
 __act_names__ = {
-    'On': 'NodeOn',
-    'Off': 'NodeOff',
-    'Toggle': 'NodeToggle',
-    'Fast On': 'NodeFastOn',
-    'Fast Off': 'NodeFastOff',
-    'Bright': 'NodeBright',
-    'Dim': 'NodeDim',
-    'On To 25%': 'NodeOn25',
-    'On To 50%': 'NodeOn50',
-    'On To 75%': 'NodeOn75',
-    'On To 100%': 'NodeOn100',
     'Run': 'ProgramRun',
     'Run Then': 'ProgramRunThen',
     'Run Else': 'ProgramRunElse'
     }
     
-def ParseActionSettings(isy, addr, action):
-    if addr == '':
-        return None
-    elif action == 'None':
-        return None
+def ParseDeviceSetting(isy, isy_events, name):
+    enable = isy_events.getSetting(name + '_bool')
+    addr = isy_events.getSetting(name)
+    perc = int(float(isy_events.getSetting(name + '_perc')))
+    
+    if enable == 'true':
+        if perc > 0:
+            return lambda: isy.NodeOn(addr, val=perc*255/100)
+        else:
+            return lambda: isy.NodeOff(addr)
     else:
-        fun = getattr(isy, __act_names__[action])
+        return None
+        
+def ParseProgramSetting(isy, isy_events, name):
+    enable = isy_events.getSetting(name + '_bool')
+    addr = isy_events.getSetting(name)
+    act = isy_events.getSetting(name + '_act')
+    action = __act_names__[act]
+    
+    if enable == 'true':
+        fun = getattr(isy, action)
         return lambda: fun(addr)
+    else:
+        return None
