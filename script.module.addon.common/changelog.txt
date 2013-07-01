@@ -1,0 +1,4 @@
+[B]Version 2.0.0[/B]
+- Cloned from t0mm0.common, renamed
+- Added properties to be passed in to add items
+- Added set_setting() method
