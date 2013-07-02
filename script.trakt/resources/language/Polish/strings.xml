@@ -6,7 +6,6 @@
 <!--$Revision$-->
 <strings>
 	<string id="1010">Główne</string>
-	<string id="1011">Włącz tryb debugowania</string>
 	<string id="1012">Klucz API (dostępny na trakt --&gt; Ustawienia --&gt; API)</string>
 	<string id="1013">Użytkownik</string>
 	<string id="1014">Hasło</string>
@@ -77,7 +76,7 @@
 	<string id="1162">nie znaleziony w Twojej bibliotece XBMC</string>
 	<string id="1163">Pobieram informacje z serwerów Trakt</string>
 	<string id="1166">Ocena usunięta pomyślnie</string>
-	<string id="1167">Ocena wysłana pomyślnie</string>
+	<string id="1167">Ocena dla '%s' został wysłany pomyślnie</string>
 	<string id="1168">Błąd wysyłania oceny</string>
 	<string id="1180">rozpocznij aktualizację kolekcji filmów</string>
 	<string id="1181">rozpocznij aktualizację kolekcji seriali tv</string>
@@ -124,4 +123,5 @@
 	<string id="1310">Pomyślnie dodano do listy do obejrzenia</string>
 	<string id="1311">Błąd przy usuwaniu z listy do obejrzenia</string>
 	<string id="1312">Pomyślnie usunięto z listy do obejrzenia</string>
+	<string id="1701">Włącz tryb debugowania</string>
 </strings>

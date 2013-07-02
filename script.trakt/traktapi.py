@@ -11,7 +11,7 @@ import base64
 
 from utilities import Debug, notification, getSetting, getSettingAsBool, getSettingAsInt, getString, setSetting
 from urllib2 import Request, urlopen, HTTPError, URLError
-from httplib import HTTPException
+from httplib import HTTPException, BadStatusLine
 
 try:
 	import simplejson as json
@@ -50,15 +50,14 @@ class traktAPI(object):
 	__username = ""
 	__password = ""
 
-	def __init__(self):
+	def __init__(self, loadSettings=False):
 		Debug("[traktAPI] Initializing.")
 
 		self.__username = getSetting('username')
 		self.__password = sha1(getSetting('password')).hexdigest()
 
 		self.settings = None
-		if self.testAccount():
-			Debug("[traktAPI] Getting account settings for '%s'." % self.__username)
+		if loadSettings and self.testAccount():
 			self.getAccountSettings()
 
 	def __getData(self, url, args, timeout=60):
@@ -83,6 +82,8 @@ class traktAPI(object):
 			Debug("[traktAPI] __getData(): Response Time: %0.2f ms" % ((t2 - t1) * 1000))
 			Debug("[traktAPI] __getData(): Response Headers: %s" % str(response.info().dict))
 
+		except BadStatusLine, e:
+			raise traktUnknownError("BadStatusLine: '%s' from URL: '%s'" % (e.line, url)) 
 		except IOError, e:
 			if hasattr(e, 'code'): # error 401 or 503, possibly others
 				# read the error document, strip newlines, this will make an html page 1 line
@@ -209,10 +210,12 @@ class traktAPI(object):
 				elif returnOnFailure and data['status'] == 'failure':
 					Debug("[traktAPI] traktRequest(): Return on error set, breaking retry.")
 					break
-				else:
+				elif 'error' in data and data['status'] == 'failure':
 					Debug("[traktAPI] traktRequest(): (%i) JSON Error '%s' -> '%s'" % (i, data['status'], data['error']))
 					xbmc.sleep(1000)
 					continue
+				else:
+					pass
 
 			# check to see if we have data, an empty array is still valid data, so check for None only
 			if not data is None:
@@ -309,15 +312,45 @@ class traktAPI(object):
 
 	# url: http://api.trakt.tv/account/settings/<apikey>
 	# returns: all settings for authenticated user
-	def getAccountSettings(self):
-		if self.testAccount():
-			url = "%s/account/settings/%s" % (self.__baseURL, self.__apikey)
-			Debug("[traktAPI] getAccountSettings(url: %s)" % url)
-			response = self.traktRequest('POST', url, hideResponse=True)
-			if response:
-				if 'status' in response:
+	def getAccountSettings(self, force):
+		_interval = (60 * 60 * 24 * 7) - (60 * 60) # one week less one hour
+
+		_next = getSettingAsInt('trakt_settings_last') + _interval
+		stale = force
+
+		if force:
+			Debug("[traktAPI] Forcing a reload of settings from trakt.tv.")
+
+		if not stale and time.time() >= _next:
+			Debug("[traktAPI] trakt.tv account settings are stale, reloading.")
+			stale = True
+
+		if stale:
+			if self.testAccount():
+				Debug("[traktAPI] Getting account settings for '%s'." % self.__username)
+				url = "%s/account/settings/%s" % (self.__baseURL, self.__apikey)
+				Debug("[traktAPI] getAccountSettings(url: %s)" % url)
+				response = self.traktRequest('POST', url, hideResponse=True)
+				if response and 'status' in response:
 					if response['status'] == 'success':
+						del response['status']
+						setSetting('trakt_settings', json.dumps(response))
+						setSetting('trakt_settings_last', int(time.time()))
 						self.settings = response
+
+		else:
+			Debug("[traktAPI] Loaded cached account settings for '%s'." % self.__username)
+			s = getSetting('trakt_settings')
+			self.settings = json.loads(s)
+
+	# helper to get rating mode, returns the setting from trakt.tv, or 'advanced' if there were problems getting them
+	def getRatingMode(self):
+		if not self.settings:
+			self.getAccountSettings()
+		rating_mode = "advanced"
+		if self.settings and 'viewing' in self.settings:
+			rating_mode = self.settings['viewing']['ratings']['mode']
+		return rating_mode
 
 	# url: http://api.trakt.tv/<show|movie>/watching/<apikey>
 	# returns: {"status":"success","message":"watching The Walking Dead 1x01","show":{"title":"The Walking Dead","year":"2010","imdb_id":"tt123456","tvdb_id":"153021","tvrage_id":"1234"},"season":"1","episode":{"number":"1","title":"Days Gone Bye"},"facebook":false,"twitter":false,"tumblr":false}
@@ -448,22 +481,35 @@ class traktAPI(object):
 	def updateSeenMovie(self, data):
 		return self.updateSeenInLibrary('movie', data)
 
-	# url: http://api.trakt.tv/<show/episode|movie>/summary.format/apikey/title[/season/episode]
-	# returns: returns information for a movie or episode
+	# url: http://api.trakt.tv/<show|show/episode|movie>/summary.format/apikey/title[/season/episode]
+	# returns: returns information for a movie, show or episode
 	def getSummary(self, type, data):
 		if self.testAccount():
 			url = "%s/%s/summary.json/%s/%s" % (self.__baseURL, type, self.__apikey, data)
 			Debug("[traktAPI] getSummary(url: %s)" % url)
 			return self.traktRequest('POST', url)
 
-	def getShowSummary(self, id, season, episode):
+	def getShowSummary(self, id, extended=False):
+		data = str(id)
+		if extended:
+			data = "%s/extended" % data
+		return self.getSummary('show', data)
+	def getEpisodeSummary(self, id, season, episode):
 		data = "%s/%s/%s" % (id, season, episode)
 		return self.getSummary('show/episode', data)
 	def getMovieSummary(self, id):
 		data = str(id)
 		return self.getSummary('movie', data)
 
-	# url: http://api.trakt.tv/rate/<episode|movie>/apikey
+	# url: http://api.trakt.tv/show/season.format/apikey/title/season
+	# returns: returns detailed episode info for a specific season of a show.
+	def getSeasonInfo(self, id, season):
+		if self.testAccount():
+			url = "%s/show/season.json/%s/%s/%d" % (self.__baseURL, self.__apikey, id, season)
+			Debug("[traktAPI] getSeasonInfo(url: %s)" % url)
+			return self.traktRequest('POST', url)
+	
+	# url: http://api.trakt.tv/rate/<show|episode|movie>/apikey
 	# returns: {"status":"success","message":"rated Portlandia 1x01","type":"episode","rating":"love","ratings":{"percentage":100,"votes":2,"loved":2,"hated":0},"facebook":true,"twitter":true,"tumblr":false}
 	def rate(self, type, data):
 		if self.testAccount():
@@ -471,7 +517,103 @@ class traktAPI(object):
 			Debug("[traktAPI] rate(url: %s, data: %s)" % (url, str(data)))
 			return self.traktRequest('POST', url, data, passVersions=True)
 
+	def rateShow(self, data):
+		return self.rate('show', data)
 	def rateEpisode(self, data):
 		return self.rate('episode', data)
 	def rateMovie(self, data):
 		return self.rate('movie', data)
+
+	# url: http://api.trakt.tv/user/lists.json/apikey/<username>
+	# returns: Returns all custom lists for a user.
+	def getUserLists(self):
+		if self.testAccount():
+			url = "%s/user/lists.json/%s/%s" % (self.__baseURL, self.__apikey, self.__username)
+			Debug("[traktAPI] getUserLists(url: %s)" % url)
+			return self.traktRequest('POST', url)
+
+	# url: http://api.trakt.tv/user/list.json/apikey/<username>/<slug>
+	# returns: Returns list details and all items it contains.
+	def getUserList(self, data):
+		if self.testAccount():
+			url = "%s/user/list.json/%s/%s/%s" % (self.__baseURL, self.__apikey, self.__username, data)
+			Debug("[traktAPI] getUserList(url: %s)" % url)
+			return self.traktRequest('POST', url, passVersions=True)
+
+	# url: http://api.trakt.tv/lists/<add|delete|items/add|items/delete>/apikey
+	# returns: {"status": "success","message": ... }
+	# note: return data varies based on method, but all include status/message
+	def userList(self, method, data):
+		if self.testAccount():
+			url = "%s/lists/%s/%s" % (self.__baseURL, method, self.__apikey)
+			Debug("[traktAPI] userList(url: %s, data: %s)" % (url, str(data)))
+			return self.traktRequest('POST', url, data, passVersions=True)
+	
+	def userListAdd(self, list_name, privacy, description=None, allow_shouts=False, show_numbers=False):
+		data = {'name': list_name, 'show_numbers': show_numbers, 'allow_shouts': allow_shouts, 'privacy': privacy}
+		if description:
+			data['description'] = description
+		return self.userList('add', data)
+	def userListDelete(self, slug_name):
+		data = {'slug': slug_name}
+		return self.userList('delete', data)
+	def userListItemAdd(self, data):
+		return self.userList('items/add', data)
+	def userListItemDelete(self, data):
+		return self.userList('items/delete', data)
+	def userListUpdate(self, data):
+		return self.userList('update', data)
+
+	# url: http://api.trakt.tv/user/watchlist/<movies|shows>.json/<apikey>/<username>
+	# returns: [{"title":"GasLand","year":2010,"released":1264320000,"url":"http://trakt.tv/movie/gasland-2010","runtime":107,"tagline":"Can you light your water on fire? ","overview":"It is happening all across America-rural landowners wake up one day to find a lucrative offer from an energy company wanting to lease their property. Reason? The company hopes to tap into a reservoir dubbed the \"Saudi Arabia of natural gas.\" Halliburton developed a way to get the gas out of the ground-a hydraulic drilling process called \"fracking\"-and suddenly America finds itself on the precipice of becoming an energy superpower.","certification":"","imdb_id":"tt1558250","tmdb_id":"40663","inserted":1301130302,"images":{"poster":"http://trakt.us/images/posters_movies/1683.jpg","fanart":"http://trakt.us/images/fanart_movies/1683.jpg"},"genres":["Action","Comedy"]},{"title":"The King's Speech","year":2010,"released":1291968000,"url":"http://trakt.tv/movie/the-kings-speech-2010","runtime":118,"tagline":"God save the king.","overview":"Tells the story of the man who became King George VI, the father of Queen Elizabeth II. After his brother abdicates, George ('Bertie') reluctantly assumes the throne. Plagued by a dreaded stutter and considered unfit to be king, Bertie engages the help of an unorthodox speech therapist named Lionel Logue. Through a set of unexpected techniques, and as a result of an unlikely friendship, Bertie is able to find his voice and boldly lead the country into war.","certification":"R","imdb_id":"tt1504320","tmdb_id":"45269","inserted":1301130174,"images":{"poster":"http://trakt.us/images/posters_movies/8096.jpg","fanart":"http://trakt.us/images/fanart_movies/8096.jpg"},"genres":["Action","Comedy"]}]
+	# note: if nothing in list, returns []
+	def getWatchlist(self, type):
+		if self.testAccount():
+			url = "%s/user/watchlist/%s.json/%s/%s" % (self.__baseURL, type, self.__apikey, self.__username)
+			Debug("[traktAPI] getWatchlist(url: %s)" % url)
+			return self.traktRequest('POST', url)
+
+	def getWatchlistShows(self):
+		return self.getWatchlist('shows')
+	def getWatchlistMovies(self):
+		return self.getWatchlist('movies')
+
+	# url: http://api.trakt.tv/<movie|show>/watchlist/<apikey>
+	# returns: 
+	def watchlistAddItems(self, type, data):
+		if self.testAccount():
+			url = "%s/%s/watchlist/%s" % (self.__baseURL, type, self.__apikey)
+			Debug("[traktAPI] watchlistAddItem(url: %s)" % url)
+			return self.traktRequest('POST', url, data, passVersions=True)
+
+	def watchlistAddShows(self, data):
+		return self.watchlistAddItems('show', data)
+	def watchlistAddMovies(self, data):
+		return self.watchlistAddItems('movie', data)
+
+	# url: http://api.trakt.tv/<movie|show>/unwatchlist/<apikey>
+	# returns: 
+	def watchlistRemoveItems(self, type, data):
+		if self.testAccount():
+			url = "%s/%s/unwatchlist/%s" % (self.__baseURL, type, self.__apikey)
+			Debug("[traktAPI] watchlistRemoveItems(url: %s)" % url)
+			return self.traktRequest('POST', url, data, passVersions=True)
+
+	def watchlistRemoveShows(self, data):
+		return self.watchlistRemoveItems('show', data)
+	def watchlistRemoveMovies(self, data):
+		return self.watchlistRemoveItems('movie', data)
+
+	# url: http://api.trakt.tv/user/ratings/<movies|shows>.json/<apikey>/<username>/<rating>
+	# returns:
+	# note: if no items, returns []
+	def getRatedItems(self, type):
+		if self.testAccount():
+			url = "%s/user/ratings/%s.json/%s/%s/all" % (self.__baseURL, type, self.__apikey, self.__username)
+			Debug("[traktAPI] getRatedItems(url: %s)" % url)
+			return self.traktRequest('POST', url)
+
+	def getRatedMovies(self):
+		return self.getRatedItems('movies')
+	def getRatedShows(self):
+		return self.getRatedItems('shows')
