@@ -82,5 +82,13 @@
             <wrapmultiline>true</wrapmultiline>
             <textcolor>FFDDDDDD</textcolor>
         </control>
+        <control type="largeimage" id="30006">
+            <description>The xext big picture (for preloading)</description>
+            <posx>1280</posx>
+            <posy>0</posy>
+            <width>16</width>
+            <height>9</height>
+            <aspectratio>keep</aspectratio>
+        </control>
     </controls>
 </window>

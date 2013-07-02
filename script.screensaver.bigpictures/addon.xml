@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.screensaver.bigpictures" name="The Big Pictures Screensaver" version="0.1.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
+<addon id="script.screensaver.bigpictures" name="The Big Pictures Screensaver" version="0.1.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.bigpictures" version="1.1.1"/>
@@ -12,7 +12,29 @@
         <source>https://github.com/dersphere/script.screensaver.bigpictures</source>
         <forum>http://forum.xbmc.org/showthread.php?tid=160347</forum>
         <email>sphere@dersphere.de</email>
+        <summary lang="de">Fotojournalismus-Bildschirmschoner</summary>
+        <summary lang="el">Προφύλαξη Οθόνης Φωτορεπορτάζ</summary>
         <summary lang="en">Photojournalism Screensaver</summary>
+        <summary lang="es">Salvapantallas de fotoperiodismo</summary>
+        <summary lang="gl">Protector de pantalla de Fotoperiodismo</summary>
+        <summary lang="it">Salvaschermo Fotogiornalismo</summary>
+        <summary lang="nl">Fotojournalisme screensaver</summary>
+        <summary lang="pl">Wygaszacz z Fotoreportaży</summary>
+        <summary lang="pt">Uma protecção de ecrã de fotojornalismo</summary>
+        <summary lang="pt_BR">Proteção de tela de fotojornalismo</summary>
+        <summary lang="sv">Fotojournalism-skärmsläckare</summary>
+        <summary lang="zh">新闻摄影屏幕保护</summary>
+        <description lang="de">Das Bildscript "The Big Pictures" als Bildschirmschoner.</description>
+        <description lang="el">Χρήση του script "The Big Pictures" σαν Προφύλαξη Οθόνης</description>
         <description lang="en">The Image Script "The Big Pictures" as Screensaver.</description>
+        <description lang="es">Salvapantallas del Script de imágenes "The Big Pictures"</description>
+        <description lang="gl">O Script de Imaxe "The Big Pictures" como Protector de pantalla.</description>
+        <description lang="it">Lo Script "The Big Pictures" come Salvaschermo</description>
+        <description lang="nl">Het afbeelding script "The Big Pictures" als screensaver.</description>
+        <description lang="pl">Skrypt zdjęciowy "The Big Pictures" jako wygaszacz.</description>
+        <description lang="pt">Usar o addon de imagem "The Big Pictures" como protecção de ecrã</description>
+        <description lang="pt_BR">O script de imagens "The Big Pictures" como proteção de tela</description>
+        <description lang="sv">The Image Script "The Big Pictures" som skärmsläckare.</description>
+        <description lang="zh">用“The Big Pictures”做屏幕保护的图片脚本。</description>
     </extension>
 </addon>

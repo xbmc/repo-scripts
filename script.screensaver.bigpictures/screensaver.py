@@ -50,6 +50,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.source_control = self.getControl(30003)
         self.title_control = self.getControl(30004)
         self.description_control = self.getControl(30005)
+        self.next_picture_control = self.getControl(30006)
 
         self.picture_duration = (
             int(addon.getSetting('picture_duration')) * 1000
@@ -74,16 +75,20 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             for album in albums:
                 photos = self.scraper_manager.get_photos(album['album_url'])
                 random.shuffle(photos)
-                for photo in photos:
+                for i, photo in enumerate(photos):
                     photo['source'] = (
                         self.scraper_manager.current_scraper.title
                     )
                     self.set_photo(photo)
+                    if i + 1 < len(photos):
+                        next_photo = photos[i + 1]
+                        self.preload_next_photo(next_photo)
                     for i in xrange(self.picture_duration / 500):
                         #self.log('check abort %d' % (i + 1))
                         if self.abort_requested:
                             self.log('slideshow abort_requested')
                             self.exit()
+                            return
                         xbmc.sleep(500)
 
     def set_photo(self, photo):
@@ -96,6 +101,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.source_control.setLabel(photo['source'])
         self.title_control.setLabel(photo['title'])
         self.description_control.setText(photo['description'])
+
+    def preload_next_photo(self, photo):
+        picture_url = photo['pic']
+        self.next_picture_control.setImage(picture_url)
 
     def exit(self):
         self.abort_requested = True

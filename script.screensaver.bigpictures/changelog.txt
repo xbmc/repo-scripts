@@ -1,3 +1,8 @@
+0.1.1 (23.06.2013)
+ - added preloading of the next image. This improves the sync between image and text
+ - fixed screensaver exit on abort requested
+ - added translations
+
 0.1.0 (05.05.2013)
  - added possibility to choose enabled scrapers
 
