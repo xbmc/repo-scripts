@@ -14,6 +14,8 @@
 
       <setting id="Divxplanet" type="bool" label="Divxplanet.com (English and Turkish subs only)" default="false"/>
 
+      <setting id="Edna" type="bool" label="Edna.cz (Czech and Slovak subs only)" default="false"/>
+
       <setting id="euTorrents" type="bool" label="eutorrents.me" default="false"/>
       <setting id="euTuser" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30148" default=""/>
       <setting id="euTpass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30149" default=""/>

@@ -289,18 +289,24 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( STATUS_LABEL ).setLabel(  _( 763 ) )
       else:
         self.getControl( STATUS_LABEL ).setLabel(  _( 649 ) )
-    zip_subs = os.path.join( self.tmp_sub_dir, "zipsubs.zip")
-    zipped, language, file = self.Service.download_subtitles(self.subtitles_list,
+    compressed_subs = os.path.join( self.tmp_sub_dir, "compressed_subs.ext")
+    compressed, language, file = self.Service.download_subtitles(self.subtitles_list,
                                                              pos,
-                                                             zip_subs,
+                                                             compressed_subs,
                                                              self.tmp_sub_dir,
                                                              self.sub_folder,
                                                              self.session_id
                                                              )
     sub_lang = str(languageTranslate(language,0,2))
 
-    if zipped :
-      self.Extract_Subtitles(zip_subs,sub_lang, gui)
+    if compressed:
+      # backward compatibility
+      if (file == ""):
+        file = "zip"
+      suffixed_compressed_subs = re.sub("\.ext$",".%s" % file,compressed_subs)
+      os.rename(compressed_subs,suffixed_compressed_subs)
+      log(__name__,"Extracting %s" % suffixed_compressed_subs)
+      self.Extract_Subtitles(suffixed_compressed_subs,sub_lang, gui)
     else:
       sub_ext  = os.path.splitext( file )[1]
       if self.temp:
@@ -419,7 +425,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                                  os.path.splitext( zip_entry )[1] )
     else:
       file_name = u"%s%s" % ( name, os.path.splitext( zip_entry )[1] )
-    log( __name__ ,"Sub in Zip [%s], File Name [%s]" % (zip_entry,
+    log( __name__ ,"Sub in Archive [%s], File Name [%s]" % (zip_entry,
                                                         file_name,))
     ret_zip_entry = xbmc.validatePath(os.path.join(self.tmp_sub_dir,zip_entry)).decode("utf-8")
     ret_file_name = xbmc.validatePath(os.path.join(self.sub_folder,file_name)).decode("utf-8")

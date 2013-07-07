@@ -13,12 +13,14 @@ apikey           = "369C2ED4261DE9C3"
 showids_filename = os.path.join( __profile__ ,"bierdopje_show_ids.txt" )
 sleeptime        = 0.6
 releases_types   = ['web-dl', '480p', '720p', '1080p', 'h264', 'x264', 'xvid', 'aac20', 'hdtv', 'dvdrip', 'ac3', 'bluray', 'dd51', 'divx', 'proper', 'repack', 'pdtv', 'rerip', 'dts']
+overloaded       = False
 
 #====================================================================================================================
 # Functions
 #====================================================================================================================
 
 def apicall(command, paramslist):
+    global overloaded
     time.sleep(sleeptime)
     url = apiurl + apikey + "/" + command
     for param in paramslist:
@@ -32,11 +34,15 @@ def apicall(command, paramslist):
         if hasattr(e, 'reason'):
             log( __name__ ," failed to reach Bierdopje site, reason: '%s'." % e.reason )
             okdialog = xbmcgui.Dialog()
-            ok = okdialog.ok("Error", "Failed to reach Bierdopje." % e.reason)
+            ok = okdialog.ok("Error", "Failed to reach Bierdopje: '%s'." % e.reason)
         elif hasattr(e, 'code'):
-            log( __name__ ," Bierdopje site couldn't fulfill the request, HTTP code: '%s'." % e.code )
-            okdialog = xbmcgui.Dialog()
-            ok = okdialog.ok("Error", "Bierdopje  couldn't fulfill the request." % e.code)
+            if e.code == 429: # HTTP Error 429 means: "Too Many Requests"
+                log( __name__ ," Bierdopje is overloaded (HTTP error 429: Too many requests). Reply from bierdopje:\n%s" % e.read() )
+                overloaded = True
+            else:
+                log( __name__ ," Bierdopje site couldn't fulfill the request, HTTP code: '%s'." % e.code )
+                okdialog = xbmcgui.Dialog()
+                ok = okdialog.ok("Error", "Bierdopje couldn't fulfill the request, HTTP code: '%s'." % e.code)
         else:
             log( __name__ ," unkown error while contacting Bierdopje site")
             okdialog = xbmcgui.Dialog()
@@ -78,7 +84,10 @@ def getshowid(showname):
     if showid is None:
         tvdbid = getShowId()
         if tvdbid:
-            response = apicall("GetShowByTVDBID",[tvdbid])
+            if not overloaded:
+                response = apicall("GetShowByTVDBID",[tvdbid])
+            if overloaded:
+                return None
             if response is not None:
                 showid = gettextelements(response,"response/showid")
                 if len(showid) == 1:
@@ -86,7 +95,10 @@ def getshowid(showname):
                     showids[showname] = str(showid[0])
                     file(showids_filename,'w').write(repr(showids))
                     return str(showid[0])
-    response = apicall("GetShowByName",[showname])
+    if not overloaded:
+        response = apicall("GetShowByName",[showname])
+    if overloaded:
+        return None
     if response is not None:
         showid = gettextelements(response,"response/showid")
         if len(showid) == 1:
@@ -95,7 +107,10 @@ def getshowid(showname):
             file(showids_filename,'w').write(repr(showids))
             return str(showid[0])
     if (showid is None) and ("'" in showname):
-        response = apicall("GetShowByName",[string.replace(showname,"'","''")])
+        if not overloaded:
+            response = apicall("GetShowByName",[string.replace(showname,"'","''")])
+        if overloaded:
+            return None
         if response is not None:
             showid = gettextelements(response,"response/showid")
             if len(showid) == 1:
@@ -154,7 +169,10 @@ def isexactmatch(subsfile, videofile):
 
 def getallsubs(showid, file_original_path, tvshow, season, episode, languageshort, languagelong, subtitles_list):
     not_sync_list = []
-    response = apicall("GetAllSubsFor",[showid, str(season), str(episode), languageshort])
+    if not overloaded:
+        response = apicall("GetAllSubsFor",[showid, str(season), str(episode), languageshort])
+    if overloaded:
+        response = None
     if response is not None:
         filenames = gettextelements(response,"response/results/result/filename")
         downloadlinks = gettextelements(response,"response/results/result/downloadlink")
@@ -200,6 +218,8 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
                 msg = "Won't work, Bierdopje is only for Dutch and English subtitles."
     else:
         msg = "Won't work, Bierdopje is only for tv shows."
+    if overloaded:
+        msg = _(755)
     return subtitles_list, "", msg #standard output
 
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input

@@ -41,7 +41,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 	try:
 		file_size, file_hash = hashFile(file_original_path, rar)
 	except:
-		file_size. file_hash = -1, None
+		file_size, file_hash = -1, None
 	log(__name__, "File size: " + str(file_size))
 
 	found_season_subtitles = cli.list_show_subtitles(tvshow_url,season)
