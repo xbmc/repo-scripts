@@ -1,9 +1,13 @@
-[B]Version 2.5.1[/B]
-- Fixed: Rverted changes to socketfile locations since the long pathlenght caused issues on some OS
+[B]Version 1.5.2[/B]
+- Fixed: Dharma error with sqlite. [mswiege]
+- User selectable port on windows
+- Notification of port/socket collision.
 
-[B]Version 2.5.0[/B]
-- Changed: Version bump since team-xbmc decided to pull partial release before we could address their concerns with 1.4
-- Fixed: Move position of socket and database file
+[B]Version 1.5.1[/B]
+- Fixed: Move position of socket and database file back
+
+[B]Version 1.5.0[/B]
+- Changed: Move position of socket and database file
 
 [B]Version 1.4.0[/B]
 - Fixed: edge case where unicode input values would cause cache to crash
