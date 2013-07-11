@@ -5,18 +5,28 @@
     <setting id="scrollmode" type="enum" label="32102" lvalues="32401|32402" default="0" />
     <setting id="navtimeout" type="slider" label="32103" option="int" default="2" range="1,10" />
     <setting id="refreshrate" type="slider" label="32104" option="int" default="1" range="1,20" />
+    <setting id="sep1" type="sep" />
+    <setting id="usealternatecharset" type="bool" label="32105" default="false" />
+    <setting id="charset" enable="eq(-1,true)" type="enum" label="32106" lvalues="32411|32412|32413|32414|32415|32416|32417" default="0" subsetting="true"/>
+    <setting id="sep2" type="sep" />
+    <setting id="useextraelements" type="bool" label="32107" default="true" />
   </category>
   <category label="32200">
-    <setting id="dimonscreensaver" type="bool" label="32201" default="false" />
+    <setting label="32206" type="lsep" />
+    <setting id="dimonvideoplayback" type="bool" label="32203" default="false" subsetting="true" />
+    <setting id="dimonmusicplayback" type="bool" label="32204" default="false" subsetting="true" />
+    <setting id="dimonscreensaver" type="bool" label="32201" default="false" subsetting="true" />
+    <setting id="dimdelay" type="slider" label="32205" default="0" range="0,30" subsetting="true" />
+    <setting id="sep3" type="sep" />
     <setting id="dimonshutdown" type="bool" label="32202" default="false" />
   </category>
   <category label="32300">
     <setting id="remotelcdproc" type="bool" label="32301" default="false" />
     <setting id="hostip" enable="eq(-1,true)" type="ipaddress" label="32302" default="127.0.0.1" subsetting="true" />
     <setting id="hostport" enable="eq(-2,true)" type="number" label="32303" default="13666" subsetting="true" />
-    <setting id="sep2" type="sep" />
+    <setting id="sep4" type="sep" />
     <setting id="heartbeat" type="bool" label="32304" default="false" />
-    <setting id="sep3" type="sep" />
+    <setting id="sep5" type="sep" />
     <setting id="hideconnpopups" type="bool" label="32305" default="true" />
   </category>
 </settings>

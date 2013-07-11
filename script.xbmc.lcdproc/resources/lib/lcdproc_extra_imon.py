@@ -200,6 +200,10 @@ class LCDproc_extra_imon(LCDproc_extra_base):
       self.m_iOutputValueIcons &= IMON_ICONS.ICON_CLEAR_TOPROW
       self._SetIconStateDo(IMON_ICONS.ICON_TOP_MUSIC, state)
 
+    elif icon == LCD_EXTRAICONS.LCD_EXTRAICON_WEBCASTING:
+      self.m_iOutputValueIcons &= IMON_ICONS.ICON_CLEAR_TOPROW
+      self._SetIconStateDo(IMON_ICONS.ICON_TOP_WEBCASTING, state)
+
     elif icon == LCD_EXTRAICONS.LCD_EXTRAICON_WEATHER:
       self.m_iOutputValueIcons &= IMON_ICONS.ICON_CLEAR_TOPROW
       self._SetIconStateDo(IMON_ICONS.ICON_TOP_NEWSWEATHER, state)

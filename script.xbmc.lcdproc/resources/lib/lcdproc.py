@@ -60,6 +60,7 @@ class LCDProc(LcdBase):
     self.m_initRetryInterval = INIT_RETRY_INTERVAL
     self.m_used = True
     self.tn = telnetlib.Telnet()
+    self.tnsocket = None
     self.m_timeLastSockAction = time.time()
     self.m_timeSocketIdleTimeout = 2
     self.m_strLineText = [None]*MAX_ROWS
@@ -70,6 +71,7 @@ class LCDProc(LcdBase):
     self.m_iProgressBarLine = -1
     self.m_strIconName = "BLOCK_FILLED"
     self.m_iBigDigits = int(8) # 12:45:78 / colons count as digit
+    self.m_iOffset = 1
     self.m_strSetLineCmds = ""
     self.m_cExtraIcons = None
     self.m_vPythonVersion = sys.version_info
@@ -90,8 +92,9 @@ class LCDProc(LcdBase):
       sendcmd += "\n"
 
     try:
-      # Send to server
-      self.tn.write(sendcmd)
+      # Send to server via raw socket to prevent telnetlib tampering with
+      # certain chars (especially 0xFF -> telnet IAC)
+      self.tnsocket.sendall(sendcmd)
     except:
       # Something bad happened, abort
       log(xbmc.LOGERROR, "SendCommand: Telnet exception - send")
@@ -211,6 +214,7 @@ class LCDProc(LcdBase):
         self.m_initRetryInterval = INIT_RETRY_INTERVAL
         self.m_bStop = False
         connected = True
+
       else:
         log(xbmc.LOGERROR, "Connection successful but LCD.xml has errors, aborting connect")
 
@@ -231,6 +235,9 @@ class LCDProc(LcdBase):
   def DetermineExtraSupport(self):
     rematch_imon = "SoundGraph iMON(.*)LCD"
     rematch_mdm166a = "Targa(.*)mdm166a"
+    rematch_imonvfd = "Soundgraph(.*)VFD"
+    
+    bUseExtraIcons = settings_getUseExtraElements()
 
     # Never cause script failure/interruption by this! This is totally optional!
     try:
@@ -247,12 +254,22 @@ class LCDProc(LcdBase):
 
       if re.match(rematch_imon, reply):
         log(xbmc.LOGNOTICE, "SoundGraph iMON LCD detected")
-        self.m_cExtraIcons = LCDproc_extra_imon()
-        self.m_cExtraIcons.Initialize()
+        if bUseExtraIcons:
+          self.m_cExtraIcons = LCDproc_extra_imon()
+
+        # override bigdigits counter, the imonlcd driver handles bigdigits
+        # different: digits count for two columns instead of three
+        self.m_iBigDigits = 7
 
       elif re.match(rematch_mdm166a, reply):
         log(xbmc.LOGNOTICE, "Futaba/Targa USB mdm166a VFD detected")
-        self.m_cExtraIcons = LCDproc_extra_mdm166a()
+        if bUseExtraIcons:
+          self.m_cExtraIcons = LCDproc_extra_mdm166a()
+
+      elif re.match(rematch_imonvfd, reply):
+        log(xbmc.LOGNOTICE, "SoundGraph iMON IR/VFD detected")
+
+      if self.m_cExtraIcons is not None:
         self.m_cExtraIcons.Initialize()
 
     except:
@@ -295,16 +312,28 @@ class LCDProc(LcdBase):
       # tell users what's going on
       log(xbmc.LOGNOTICE, "Connected to LCDd at %s:%s, Protocol version %s - Geometry %sx%s characters (%sx%s pixels, %sx%s pixels per character)" % (str(ip), str(port), float(lcdinfo.group(1)), str(self.m_iColumns), str(self.m_iRows), str(self.m_iColumns * self.m_iCellWidth), str(self.m_iRows * self.m_iCellHeight), str(self.m_iCellWidth), str(self.m_iCellHeight)))
 
-      self.DetermineExtraSupport()
-
       # Set up BigNum values based on display geometry
-      if self.m_iColumns < 16:
-        self.m_iBigDigits = 5
+      if self.m_iColumns < 13:
+        self.m_iBigDigits = 0 # No clock
+      elif self.m_iColumns < 17:
+        self.m_iBigDigits = 5 # HH:MM
       elif self.m_iColumns < 20:
-        self.m_iBigDigits = 7
+        self.m_iBigDigits = 7 # H:MM:SS on play, HH:MM on clock
+      else:
+        self.m_iBigDigits = 8 # HH:MM:SS
+
+      # Check LCDproc if we can enable any extras or override values
+      # (might override e.g. m_iBigDigits!)
+      self.DetermineExtraSupport()
 
     except:
       log(xbmc.LOGERROR,"Connect: Caught exception, aborting.")
+      return False
+
+    # retrieve raw socket object
+    self.tnsocket = self.tn.get_socket()
+    if self.tnsocket is None:
+      log(xbmc.LOGERROR, "Retrieval of socket object failed!")
       return False
 
     if not self.SetupScreen():
@@ -314,9 +343,14 @@ class LCDProc(LcdBase):
     return True
 
   def CloseSocket(self):
-    if self.tn.get_socket() != None:
+    if self.tnsocket:
       # no pyexceptions, please, we're disconnecting anyway
       try:
+        # if we served extra elements, (try to) reset them
+        if self.m_cExtraIcons is not None:
+          if not self.SendCommand(self.m_cExtraIcons.GetClearAllCmd(), True):
+            log(xbmc.LOGERROR, "CloseSocket(): Cannot clear extra icons")
+
         # do gracefully disconnect (send directly as we won't get any response on this)
         self.tn.write("bye\n")
         # and close socket afterwards
@@ -325,11 +359,16 @@ class LCDProc(LcdBase):
         # exception caught on this, so what? :)
         pass
 
+    # delete/cleanup extra support instance
+    del self.m_cExtraIcons
+    self.m_cExtraIcons = None
+
+    self.tnsocket = None
     del self.tn
     self.tn = telnetlib.Telnet()
 
   def IsConnected(self):
-    if self.tn.get_socket() == None:
+    if not self.tnsocket:
       return False
 
     # Ping only every SocketIdleTimeout seconds
@@ -343,16 +382,14 @@ class LCDProc(LcdBase):
     return True
 
   def SetBackLight(self, iLight):
-    if self.tn.get_socket() == None:
+    if not self.tnsocket:
       return
     log(xbmc.LOGDEBUG, "Switch Backlight to: " + str(iLight))
 
     # Build command
     if iLight == 0:
-      #self.m_bStop = True
       cmd = "screen_set xbmc -backlight off\n"
     elif iLight > 0:
-      #self.m_bStop = False
       cmd = "screen_set xbmc -backlight on\n"
 
     # Send to server
@@ -369,7 +406,7 @@ class LCDProc(LcdBase):
     self.m_bStop = True
 
   def Suspend(self):
-    if self.m_bStop or self.tn.get_socket() == None:
+    if self.m_bStop or not self.tnsocket:
       return
 
     # Build command to suspend screen
@@ -381,7 +418,7 @@ class LCDProc(LcdBase):
       self.CloseSocket()
 
   def Resume(self):
-    if self.m_bStop or self.tn.get_socket() == None:
+    if self.m_bStop or not self.tnsocket:
       return
 
     # Build command to resume screen
@@ -396,13 +433,15 @@ class LCDProc(LcdBase):
     return int(self.m_iColumns)
 
   def GetBigDigitTime(self):
-      ret = InfoLabel_GetPlayerTime()
+      ret = InfoLabel_GetPlayerTime()[-self.m_iBigDigits:]
 
       if ret == "": # no usable timestring, e.g. not playing anything
-        if self.m_iBigDigits < 8: # return only h:m when display too small
-          ret = time.strftime("%X")[:5] # %X = locale-based currenttime
-        else:
-          ret = time.strftime("%X")[:8]
+        strSysTime = InfoLabel_GetSystemTime()
+
+        if self.m_iBigDigits >= 8: # return h:m:s
+          ret = strSysTime
+        elif self.m_iBigDigits >= 5: # return h:m when display too small
+          ret = strSysTime[:5]
 
       return ret
 
@@ -417,8 +456,18 @@ class LCDProc(LcdBase):
 
     iStringLength = int(len(strTimeString))
 
+    if self.m_bCenterBigDigits:
+      iColons = strTimeString.count(":")
+      iWidth  = 3 * (iStringLength - iColons) + iColons
+      iOffset = 1 + max(self.m_iColumns - iWidth, 0) / 2
+
     if iStringLength > self.m_iBigDigits:
       iStringOffset = len(strTimeString) - self.m_iBigDigits
+      iOffset = 1;
+
+    if self.m_iOffset != iOffset:
+      self.ClearBigDigits()
+      self.m_iOffset = iOffset
 
     for i in range(int(iStringOffset), int(iStringLength)):
       if self.m_strDigits[iDigitCount] != strTimeString[i] or bForceUpdate:
@@ -426,8 +475,10 @@ class LCDProc(LcdBase):
         
         if strTimeString[i] == ":":
           self.m_strSetLineCmds += "widget_set xbmc lineBigDigit%i %i 10\n" % (iDigitCount, iOffset)
-        else:
+        elif strTimeString[i].isdigit():
           self.m_strSetLineCmds += "widget_set xbmc lineBigDigit%i %i %s\n" % (iDigitCount, iOffset, strTimeString[i])
+        else:
+          self.m_strSetLineCmds += "widget_set xbmc lineBigDigit" + str(iDigitCount) + " 0 0\n"
 
       if strTimeString[i] == ":":
         iOffset += 1
@@ -436,10 +487,10 @@ class LCDProc(LcdBase):
 
       iDigitCount += 1
 
-    for j in range(i + 2, int(self.m_iBigDigits + 1)):
+    while iDigitCount <= self.m_iBigDigits:
       if self.m_strDigits[iDigitCount] != "" or bForceUpdate:
         self.m_strDigits[iDigitCount] = ""
-        self.m_strSetLineCmds += "widget_set xbmc lineBigDigit" + str(j) + " 0 0\n"
+        self.m_strSetLineCmds += "widget_set xbmc lineBigDigit" + str(iDigitCount) + " 0 0\n"
       
       iDigitCount += 1
 
@@ -483,9 +534,9 @@ class LCDProc(LcdBase):
     self.m_strSetLineCmds += "widget_set xbmc lineIcon%i 0 0 BLOCK_FILLED\n" % (iLine)
     self.m_strSetLineCmds += "widget_set xbmc lineProgress%i 0 0 0\n" % (iLine)
     self.m_strSetLineCmds += "widget_set xbmc lineScroller%i 1 %i %i %i m 1 \"\"\n" % (iLine, iLine, self.m_iColumns, iLine)
-    
+
   def SetLine(self, iLine, strLine, dictDescriptor, bForce):
-    if self.m_bStop or self.tn.get_socket() == None:
+    if self.m_bStop or not self.tnsocket:
       return
 
     if iLine < 0 or iLine >= int(self.m_iRows):

@@ -79,6 +79,7 @@ def getLcdMode():
   navActive = InfoLabel_IsNavigationActive()
   screenSaver = InfoLabel_IsScreenSaverActive()
   playingVideo = InfoLabel_PlayingVideo()
+  playingTVShow = InfoLabel_PlayingTVShow()
   playingMusic = InfoLabel_PlayingAudio()
   playingPVRTV = InfoLabel_PlayingLiveTV()
   playingPVRRadio = InfoLabel_PlayingLiveRadio()
@@ -91,6 +92,8 @@ def getLcdMode():
     ret = LCD_MODE.LCD_MODE_PVRTV
   elif playingPVRRadio:
     ret = LCD_MODE.LCD_MODE_PVRRADIO
+  elif playingTVShow:
+    ret = LCD_MODE.LCD_MODE_TVSHOW
   elif playingVideo:
     ret = LCD_MODE.LCD_MODE_VIDEO
   elif playingMusic:
@@ -99,34 +102,19 @@ def getLcdMode():
   return ret
 
 def process_lcd():
-  bBacklightDimmed = False
 
   while not xbmc.abortRequested:
     if handleConnectLCD():
       settingsChanged = settings_didSettingsChange()
-      mode = getLcdMode()
 
-      if mode == LCD_MODE.LCD_MODE_SCREENSAVER and settings_getDimOnScreensaver() and not bBacklightDimmed:
-        g_lcdproc.SetBackLight(0)
-        bBacklightDimmed = True
+      if settingsChanged:
+        g_lcdproc.UpdateGUISettings()
 
-      g_lcdproc.Render(mode, settingsChanged)
-
-      # turn the backlight on when leaving screensaver and it was dimmed
-      if mode != LCD_MODE.LCD_MODE_SCREENSAVER and bBacklightDimmed:
-        g_lcdproc.SetBackLight(1)
-        bBacklightDimmed = False
-    
-      if mode == LCD_MODE.LCD_MODE_MUSIC or mode == LCD_MODE.LCD_MODE_PVRRADIO:
-        g_lcdproc.DisableOnPlayback(False, True)
-      elif mode == LCD_MODE.LCD_MODE_VIDEO or mode == LCD_MODE.LCD_MODE_PVRTV:
-        g_lcdproc.DisableOnPlayback(True, False)
-      else:
-        g_lcdproc.DisableOnPlayback(False, False)
+      g_lcdproc.Render(getLcdMode(), settingsChanged)
 
     time.sleep(1.0 / float(settings_getRefreshRate())) # refresh after configured rate
 
-  g_lcdproc.Shutdown(settings_getDimOnShutdown())
+  g_lcdproc.Shutdown()
 
 def handleConnectLCD():
   ret = True
@@ -136,12 +124,10 @@ def handleConnectLCD():
     #check for new settings
     if settings_checkForNewSettings() or not g_lcdproc.IsConnected():    #networksettings changed?
       g_failedConnectionNotified = False  #reset notification flag
-    else:
-      return True
 
-    ret = g_lcdproc.Initialize()
-    if not settings_getHideConnPopups():
-      HandleConnectionNotification(ret)
+      ret = g_lcdproc.Initialize()
+      if not settings_getHideConnPopups():
+        HandleConnectionNotification(ret)
 
   return ret
 

@@ -41,29 +41,26 @@ __icon__ = sys.modules[ "__main__" ].__icon__
 __lcdxml__ = xbmc.translatePath( os.path.join("special://masterprofile","LCD.xml"))
 __lcddefaultxml__ = xbmc.translatePath( os.path.join(__cwd__, "resources", "LCD.xml.defaults"))
 
+from settings import *
 from extraicons import *
 from infolabels import *
+from charset_hd44780 import *
 
 # global functions
 def log(loglevel, msg):
   xbmc.log("### [%s] - %s" % (__scriptname__,msg,),level=loglevel ) 
 
-# enumerations
-class DISABLE_ON_PLAY:
-  DISABLE_ON_PLAY_NONE = 0
-  DISABLE_ON_PLAY_VIDEO = 1
-  DISABLE_ON_PLAY_MUSIC = 2
-  
 class LCD_MODE:
   LCD_MODE_GENERAL     = 0
   LCD_MODE_MUSIC       = 1
   LCD_MODE_VIDEO       = 2
-  LCD_MODE_NAVIGATION  = 3
-  LCD_MODE_SCREENSAVER = 4
-  LCD_MODE_XBE_LAUNCH  = 5
-  LCD_MODE_PVRTV       = 6
-  LCD_MODE_PVRRADIO    = 7
-  LCD_MODE_MAX         = 8
+  LCD_MODE_TVSHOW      = 3
+  LCD_MODE_NAVIGATION  = 4
+  LCD_MODE_SCREENSAVER = 5
+  LCD_MODE_XBE_LAUNCH  = 6
+  LCD_MODE_PVRTV       = 7
+  LCD_MODE_PVRRADIO    = 8
+  LCD_MODE_MAX         = 9
 
 class LCD_LINETYPE:
   LCD_LINETYPE_TEXT      = "text"
@@ -85,23 +82,29 @@ g_dictEmptyLineDescriptor['align'] = LCD_LINEALIGN.LCD_LINEALIGN_LEFT
 
 class LcdBase():
   def __init__(self):
-    self.m_disableOnPlay = DISABLE_ON_PLAY.DISABLE_ON_PLAY_NONE
-    self.m_timeDisableOnPlayTimer = time.time()
+    # configuration vars (from LCD.xml)
     self.m_lcdMode = [None] * LCD_MODE.LCD_MODE_MAX
     self.m_extraBars = [None] * (LCD_EXTRABARS_MAX + 1)
-    self.m_bDimmedOnPlayback = False
-    self.m_iDimOnPlayDelay = 0
-    self.m_strInfoLabelEncoding = "utf-8" # http://forum.xbmc.org/showthread.php?tid=125492&pid=1045926#pid1045926
-    self.m_strLCDEncoding = "iso-8859-1" # LCDproc wants iso-8859-1!
-    self.m_strScrollSeparator = " "
-    self.m_bProgressbarSurroundings = False
-    self.m_iIconTextOffset = 2
     self.m_bAllowEmptyLines = False
-    self.m_strOldVideoCodec = ""
-    self.m_strOldAudioCodec = ""
-    self.m_iOldAudioChannelsVar = 0
+    self.m_bCenterBigDigits = False
+    self.m_bDisablePlayIndicatorOnPause = False
+    self.m_bProgressbarSurroundings = False
+    self.m_iDimOnPlayDelay = 0
+    self.m_iIconTextOffset = 2
+    self.m_strLCDEncoding = "iso-8859-1" # LCDproc default is iso-8859-1!
+    self.m_strScrollSeparator = " "
+
+    # runtime vars/state tracking
+    self.m_strInfoLabelEncoding = "utf-8" # http://forum.xbmc.org/showthread.php?tid=125492&pid=1045926#pid1045926
+    self.m_timeDisableOnPlayTimer = time.time()
+    self.m_bCurrentlyDimmed = False
+    self.m_bHaveHD44780Charmap = False
+    self.m_bVolumeChangeActive = False
     self.m_bWasStopped = True
     self.m_bXMLWarningDisplayed = False
+    self.m_iOldAudioChannelsVar = 0
+    self.m_strOldAudioCodec = ""
+    self.m_strOldVideoCodec = ""
 
 # @abstractmethod
   def _concrete_method(self):
@@ -186,20 +189,52 @@ class LcdBase():
     return ret
 
   def Initialize(self):
-    strXMLFile = __lcdxml__
-    self.m_disableOnPlay = DISABLE_ON_PLAY.DISABLE_ON_PLAY_NONE
+    bGotDefaultSkin = False
+    bSkinHandled = False
 
-    if not self.ManageLCDXML():
-      strXMLFile = __lcddefaultxml__
+    try:
+      if not self.m_bHaveHD44780Charmap:
+        log(xbmc.LOGDEBUG, "Registering HD44780-ROM pseudocodepages")
+        codecs.register(charset_hd44780)
+        self.m_bHaveHD44780Charmap = True
+    except:
+      log(xbmc.LOGERROR, "Failed to register custom HD44780-ROM pseudocodepage, expect problems with alternative charsets!")
 
-    if not self.LoadSkin(strXMLFile):
+    # make sure we got reasonable defaults for users who didn't adapt to newest additions
+    bGotDefaultSkin = self.LoadSkin(__lcddefaultxml__, True)
+
+    # check for user-LCD.xml, optionally create it
+    bSkinHandled = self.ManageLCDXML()
+
+    # try to load user setup
+    if not self.LoadSkin(__lcdxml__, False) and not bGotDefaultSkin:
+      log(xbmc.LOGERROR, "No usable mode configuration/skin could be loaded, check your addon installation!")
       return False
 
+    # force-update GUI settings
+    self.UpdateGUISettings()
+
+    self.m_bCurrentlyDimmed = False
     return True
 
-  def LoadSkin(self, xmlFile):
-    self.Reset()
+  def UpdateGUISettings(self):
+    str_charset = settings_getCharset()
+    if str_charset != self.m_strLCDEncoding:
+      if (str_charset == "hd44780-a00" or str_charset == "hd44780-a02") and not self.m_bHaveHD44780Charmap:
+        str_charset = "iso8859-1"
+
+      self.m_strLCDEncoding = str_charset
+      log(xbmc.LOGDEBUG, "Setting character encoding to %s" % (self.m_strLCDEncoding))
+
+    self.m_iDimOnPlayDelay = settings_getDimDelay()
+
+  def LoadSkin(self, xmlFile, doReset):
+    if doReset == True:
+      self.Reset()
+
     bHaveSkin = False
+
+    log(xbmc.LOGNOTICE, "Loading settings from %s" % (xmlFile))
 
     try:
       doc = xmltree.parse(xmlFile)
@@ -216,30 +251,6 @@ class LcdBase():
       #PARSE LCD infos
       if element.tag == "lcd":
         # load our settings  
-
-        # disable on play
-        disableOnPlay = element.find("disableonplay")
-        if disableOnPlay != None:
-          self.m_disableOnPlay = DISABLE_ON_PLAY.DISABLE_ON_PLAY_NONE
-          if str(disableOnPlay.text).find("video") >= 0:
-            self.m_disableOnPlay += DISABLE_ON_PLAY.DISABLE_ON_PLAY_VIDEO
-          if str(disableOnPlay.text).find("music") >= 0:
-            self.m_disableOnPlay += DISABLE_ON_PLAY.DISABLE_ON_PLAY_MUSIC
-
-        # disable on play delay
-        self.m_iDimOnPlayDelay = 0
-
-        disableonplaydelay = element.find("disableonplaydelay")
-        if disableonplaydelay != None and disableonplaydelay.text != None:
-          try:
-            intdelay = int(disableonplaydelay.text)
-          except ValueError, TypeError:
-            log(xbmc.LOGERROR, "Value for disableonplaydelay must be integer (got: %s)" % (disableonplaydelay.text))
-          else:
-            if intdelay < 0:
-              log(xbmc.LOGERROR, "Value %d for disableonplaydelay smaller than zero, ignoring" % (intdelay))
-            else:
-              self.m_iDimOnPlayDelay = intdelay
 
         # apply scrollseparator
         scrollSeparator = element.find("scrollseparator")
@@ -281,12 +292,28 @@ class LcdBase():
           if str(allowemptylines.text).lower() in ["on", "true"]:
             self.m_bAllowEmptyLines = True
 
+        # check for centerbigdigits setting
+        self.m_bCenterBigDigits = False
+
+        centerbigdigits = element.find("centerbigdigits")
+        if centerbigdigits != None:
+          if str(centerbigdigits.text).lower() in ["on", "true"]:
+            self.m_bCenterBigDigits = True
+
+        # check for disableplayindicatoronpause setting
+        self.m_bDisablePlayIndicatorOnPause = False
+
+        disableplayindicatoronpause = element.find("disableplayindicatoronpause")
+        if disableplayindicatoronpause != None:
+          if str(disableplayindicatoronpause.text).lower() in ["on", "true"]:
+            self.m_bDisablePlayIndicatorOnPause = True
+
         # extra progress bars
         for i in range(1, LCD_EXTRABARS_MAX + 1):
           extrabar = None
           extrabar = element.find("extrabar%i" % (i))
           if extrabar != None:
-            if str(extrabar.text).strip() in ["progress", "volume", "menu"]:
+            if str(extrabar.text).strip() in ["progress", "volume", "volumehidden", "menu", "alwayson"]:
               self.m_extraBars[i] = str(extrabar.text).strip()
             else:
               self.m_extraBars[i] = ""
@@ -297,6 +324,9 @@ class LcdBase():
 
         tmpMode = element.find("video")
         self.LoadMode(tmpMode, LCD_MODE.LCD_MODE_VIDEO)
+
+        tmpMode = element.find("tvshow")
+        self.LoadMode(tmpMode, LCD_MODE.LCD_MODE_TVSHOW)
 
         tmpMode = element.find("general")
         self.LoadMode(tmpMode, LCD_MODE.LCD_MODE_GENERAL)
@@ -324,14 +354,24 @@ class LcdBase():
     return bHaveSkin
 
   def LoadMode(self, node, mode):
+    # clear mode (probably overriding defaults), assume the user knows what he wants if an empty node is given
+    self.m_lcdMode[mode] = []
+    
     if node == None:
-      log(xbmc.LOGWARNING, "Empty Mode %d, check LCD.xml" % (mode))
-      self.m_lcdMode[mode].append(g_dictEmptyLineDescriptor)
+      log(xbmc.LOGWARNING, "Empty Mode %d, consider checking LCD.xml" % (mode))
+
+      # if mode is empty, initialise with blank line
+      if len(self.m_lcdMode[mode]) <= 0:
+        self.m_lcdMode[mode].append(g_dictEmptyLineDescriptor)
+
       return
 
     if len(node.findall("line")) <= 0:
-      log(xbmc.LOGWARNING, "Mode %d defined without lines, check LCD.xml" % (mode))
-      self.m_lcdMode[mode].append(g_dictEmptyLineDescriptor)
+      log(xbmc.LOGWARNING, "Mode %d defined without lines, consider checking LCD.xml" % (mode))
+
+      if len(self.m_lcdMode[mode]) <= 0:
+        self.m_lcdMode[mode].append(g_dictEmptyLineDescriptor)
+
       return
 
     # regex to determine any of $INFO[LCD.Time(Wide)21-44]
@@ -403,25 +443,22 @@ class LcdBase():
       self.m_lcdMode[mode].append(linedescriptor)
 
   def Reset(self):
-    self.m_disableOnPlay = DISABLE_ON_PLAY.DISABLE_ON_PLAY_NONE
     for i in range(0,LCD_MODE.LCD_MODE_MAX):
       self.m_lcdMode[i] = []			#clear list
 
-  def Shutdown(self, bDimOnShutdown):
+  def Shutdown(self):
     log(xbmc.LOGNOTICE, "Shutting down")
 
-    if bDimOnShutdown:
+    if settings_getDimOnShutdown():
       self.SetBackLight(0)
-
-    if self.m_cExtraIcons is not None:
-      if not self.SendCommand(self.m_cExtraIcons.GetClearAllCmd(), True):
-        log(xbmc.LOGERROR, "Shutdown(): Cannot clear extra icons")
 
     self.CloseSocket()
 
   def Render(self, mode, bForce):
     outLine = 0
     inLine = 0
+
+    self.HandleBacklight(mode)
 
     while (outLine < int(self.GetRows()) and inLine < len(self.m_lcdMode[mode])):
       #parse the progressbar infolabel by ourselfs!
@@ -434,9 +471,14 @@ class LcdBase():
         if self.m_lcdMode[mode][inLine]['type'] == LCD_LINETYPE.LCD_LINETYPE_ICONTEXT:
           self.SetPlayingStateIcon()
 
-        line = InfoLabel_GetInfoLabel(self.m_lcdMode[mode][inLine]['text'])
+        srcline = InfoLabel_GetInfoLabel(self.m_lcdMode[mode][inLine]['text'])
         if self.m_strInfoLabelEncoding != self.m_strLCDEncoding:
-          line = line.decode(self.m_strInfoLabelEncoding).encode(self.m_strLCDEncoding, "replace")
+          try:
+            line = srcline.decode(self.m_strInfoLabelEncoding).encode(self.m_strLCDEncoding, "replace")
+          except:
+            log(xbmc.LOGDEBUG, "Caught exception on charset conversion: " + srcline)
+            line = "---"
+
         self.SetProgressBar(0, -1)
 
       if self.m_bAllowEmptyLines or len(line) > 0:
@@ -457,24 +499,34 @@ class LcdBase():
 
     self.FlushLines()
 
-  def DisableOnPlayback(self, playingVideo, playingAudio):
-    # check if any dimming is requested and matching config
-    dodim = (playingVideo and (self.m_disableOnPlay & DISABLE_ON_PLAY.DISABLE_ON_PLAY_VIDEO)) or (playingAudio and (self.m_disableOnPlay & DISABLE_ON_PLAY.DISABLE_ON_PLAY_MUSIC))
+  def DoDimOnMusic(self, mode):
+    return (mode == LCD_MODE.LCD_MODE_MUSIC or mode == LCD_MODE.LCD_MODE_PVRRADIO) and settings_getDimOnMusicPlayback()
 
-    # if dimrequest matches, check if pause is active (don't dim then)
-    if dodim:
-      dodim = dodim and not InfoLabel_IsPlayerPaused()
+  def DoDimOnVideo(self, mode):
+    return (mode == LCD_MODE.LCD_MODE_VIDEO or LCD_MODE.LCD_MODE_TVSHOW or mode == LCD_MODE.LCD_MODE_PVRTV) and settings_getDimOnVideoPlayback()
+
+  def DoDimOnScreensaver(self, mode):
+    return (mode == LCD_MODE.LCD_MODE_SCREENSAVER) and settings_getDimOnScreensaver()
+
+  def HandleBacklight(self, mode):
+    # dimming display in case screensaver is active or something is being played back (and not paused!)
+    doDim = False
+
+    if self.DoDimOnScreensaver(mode):
+      doDim = True
+    elif not InfoLabel_IsPlayerPaused() and (self.DoDimOnVideo(mode) or self.DoDimOnMusic(mode)):
+      doDim = True
     
-    if dodim:
-      if not self.m_bDimmedOnPlayback:
+    if doDim:
+      if not self.m_bCurrentlyDimmed:
         if (self.m_timeDisableOnPlayTimer + self.m_iDimOnPlayDelay) < time.time():
           self.SetBackLight(0)
-          self.m_bDimmedOnPlayback = True
+          self.m_bCurrentlyDimmed = True
     else:
       self.m_timeDisableOnPlayTimer = time.time()
-      if self.m_bDimmedOnPlayback:
+      if self.m_bCurrentlyDimmed:
         self.SetBackLight(1)
-        self.m_bDimmedOnPlayback = False
+        self.m_bCurrentlyDimmed = False
 
   def SetExtraInfoPlaying(self, isplaying, isvideo, isaudio):
     # make sure output scaling indicators are off when not playing and/or not playing video
@@ -495,6 +547,8 @@ class LcdBase():
 
         if InfoLabel_PlayingLiveTV():
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_TV, True)
+        elif InfoLabel_IsInternetStream():
+          self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_WEBCASTING, True)
         else:
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_MOVIE, True)
 
@@ -509,7 +563,10 @@ class LcdBase():
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_OUTFIT, True)
 
       elif isaudio:
-        self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_MUSIC, True)
+        if InfoLabel_IsInternetStream():
+          self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_WEBCASTING, True)
+        else:
+          self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_MUSIC, True)
 
     else: # not playing
 
@@ -692,8 +749,10 @@ class LcdBase():
 
     if InfoLabel_WindowIsActive(WINDOW_IDS.WINDOW_DIALOG_VOLUME_BAR):
       self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_VOLUME, True)
+      self.m_bVolumeChangeActive = True
     else:
       self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_VOLUME, False)
+      self.m_bVolumeChangeActive = False
 
     if InfoLabel_WindowIsActive(WINDOW_IDS.WINDOW_DIALOG_KAI_TOAST):
       self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_ALARM, True)
@@ -709,11 +768,18 @@ class LcdBase():
           self.m_cExtraIcons.SetBar(i, 0)
       elif self.m_extraBars[i] == "volume":
         self.m_cExtraIcons.SetBar(i, InfoLabel_GetVolumePercent())
+      elif self.m_extraBars[i] == "volumehidden":
+        if self.m_bVolumeChangeActive:
+          self.m_cExtraIcons.SetBar(i, InfoLabel_GetVolumePercent())
+        else:
+          self.m_cExtraIcons.SetBar(i, 0)
       elif self.m_extraBars[i] == "menu":
         if isplaying:
           self.m_cExtraIcons.SetBar(i, 0)
         else:
           self.m_cExtraIcons.SetBar(i, 100)
+      elif self.m_extraBars[i] == "alwayson":
+        self.m_cExtraIcons.SetBar(i, 100)
       else:
         self.m_cExtraIcons.SetBar(i, 0)
 
@@ -724,7 +790,8 @@ class LcdBase():
     bIsVideo = InfoLabel_PlayingVideo()
     bIsAudio = InfoLabel_PlayingAudio()
 
-    self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_PLAYING, bPlaying)
+    self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_PLAYING,
+      bPlaying and not (bPaused and self.m_bDisablePlayIndicatorOnPause))
 
     self.SetExtraInfoPlaying(bPlaying, bIsVideo, bIsAudio)
     self.SetExtraInfoCodecs(bPlaying, bIsVideo, bIsAudio)
