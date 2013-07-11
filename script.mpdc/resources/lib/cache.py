@@ -25,21 +25,22 @@ import os,xbmc,time
 
 class MPDCache:
 
-	def __init__(self,addon):
+	def __init__(self,addon,profile):
 		self.addon = addon
+		self.profile=profile
 
 	def clear(self):
 		local = xbmc.translatePath(self.addon.getAddonInfo('profile'))
 		if not os.path.exists(local):
 			os.makedirs(local)
-		local = os.path.join(local,'cache')
+		local = os.path.join(local,'cache.'+self.profile)
 		os.remove(local)
 
 	def _load(self):
 		local = xbmc.translatePath(self.addon.getAddonInfo('profile'))
 		if not os.path.exists(local):
 			os.makedirs(local)
-		local = os.path.join(local,'cache')
+		local = os.path.join(local,'cache.'+self.profile)
 		if not os.path.exists(local):
 			return {}
 		# keep cache for a week

@@ -112,8 +112,9 @@ class PMPDClient(object):
 					self.time_poller.send_idle()
 					select.select([self.time_poller],[],[],1)
 					changes = self.time_poller.fetch_idle()
-					if 'player' in changes:
-						status = self.time_poller.status()
+					if changes:
+						if 'player' in changes:
+							status = self.time_poller.status()
 				self.time_callback(self.time_poller,status)
 				self.time_event.wait(0.9)
 				if self.time_event.isSet():

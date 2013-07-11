@@ -1,3 +1,7 @@
+[B]2.0.7[/B]
+- addon.xml fixes for frodo
+- fix control resets (by slevit)
+- fixed utf coding issue
 [B]2.0.6[/B]
 - fixed: queue does not get updated on MPD 16.x
 - added: simple caching of artist list
