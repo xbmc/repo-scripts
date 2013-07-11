@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="1.2.1" provider-name="Team XBMC: Memphiz, Daniel 'herrnst' Scheller">
+<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="1.3.0" provider-name="Team XBMC: Memphiz, Daniel 'herrnst' Scheller">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
     <import addon="xbmc.gui" version="3.0"/>

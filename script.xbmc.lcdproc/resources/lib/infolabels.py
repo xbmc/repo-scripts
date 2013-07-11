@@ -58,20 +58,44 @@ class WINDOW_IDS:
   WINDOW_DIALOG_VOLUME_BAR     = 10104
   WINDOW_DIALOG_KAI_TOAST      = 10107
   
+g_StreamPrefixes = [ \
+ "http", "https", "tcp",   "udp",    "rtp",  \
+ "sdp",  "mms",   "mmst",  "mmsh",   "rtsp", \
+ "rtmp", "rtmpt", "rtmpe", "rtmpte", "rtmps" \
+]
+
 global g_InfoLabel_oldMenu
 global g_InfoLabel_oldSubMenu
 global g_InfoLabel_navTimer
+global g_InfoLabel_oldFilenameandpath
+global g_InfoLabel_CachedFilenameIsStream
 
 def InfoLabel_Initialize():
   global g_InfoLabel_oldMenu
   global g_InfoLabel_oldSubMenu
   global g_InfoLabel_navTimer
+  global g_InfoLabel_oldFilenameandpath
+  global g_InfoLabel_CachedFilenameIsStream
 
   g_InfoLabel_oldMenu = ""
   g_InfoLabel_oldSubMenu = ""
   g_InfoLabel_navTimer = time.time()
+  g_InfoLabel_oldFilenameandpath = ""
+  g_InfoLabel_CachedFilenameIsStream = False
+
+def InfoLabel_GetInfoLabel(strLabel):
+  return xbmc.getInfoLabel(strLabel)
+
+def InfoLabel_GetBool(strBool):
+  return xbmc.getCondVisibility(strBool)
+
+def InfoLabel_GetActiveWindowID():
+  return int(xbmcgui.getCurrentWindowId())
 
 def InfoLabel_timeToSecs(timeAr):
+  # initialise return
+  currentSecs = 0
+
   arLen = len(timeAr)
   if arLen == 1:
     currentSecs = int(timeAr[0])
@@ -79,43 +103,54 @@ def InfoLabel_timeToSecs(timeAr):
     currentSecs = int(timeAr[0]) * 60 + int(timeAr[1])
   elif arLen == 3:
     currentSecs = int(timeAr[0]) * 60 * 60 + int(timeAr[1]) * 60 + int(timeAr[2])
+
   return currentSecs
 
 def InfoLabel_WindowIsActive(WindowID):
-  return xbmc.getCondVisibility("Window.IsActive(" + str(WindowID) + ")")
+  return InfoLabel_GetBool("Window.IsActive(" + str(WindowID) + ")")
 
 def InfoLabel_PlayingVideo():
-  return xbmc.getCondVisibility("Player.HasVideo")
+  return InfoLabel_GetBool("Player.HasVideo")
+
+def InfoLabel_PlayingTVShow():
+  if InfoLabel_PlayingVideo() and len(InfoLabel_GetInfoLabel("VideoPlayer.TVShowTitle")): 
+    return True
+  else:
+    return False
 
 def InfoLabel_PlayingAudio():
-  return xbmc.getCondVisibility("Player.HasAudio")
+  return InfoLabel_GetBool("Player.HasAudio")
 
 def InfoLabel_PlayingLiveTV():
-  return xbmc.getCondVisibility("PVR.IsPlayingTV")
+  return InfoLabel_GetBool("PVR.IsPlayingTV")
 
 def InfoLabel_PlayingLiveRadio():
-  return xbmc.getCondVisibility("PVR.IsPlayingRadio")
+  return InfoLabel_GetBool("PVR.IsPlayingRadio")
+
+def InfoLabel_GetSystemTime():
+  # apply some split magic for 12h format here, as "hh:mm:ss"
+  # makes up for format guessing inside XBMC - fix for post-frodo at
+  # https://github.com/xbmc/xbmc/pull/2321
+  ret = "0" + InfoLabel_GetInfoLabel("System.Time(hh:mm:ss)").split(" ")[0]
+  return ret[-8:]
 
 def InfoLabel_GetPlayerTime():
-  return xbmc.getInfoLabel("Player.Time")
+  return InfoLabel_GetInfoLabel("Player.Time")
 
 def InfoLabel_GetPlayerDuration():
-  return xbmc.getInfoLabel("Player.Duration")
-
-def InfoLabel_GetActiveWindowID():
-  return int(xbmcgui.getCurrentWindowId())
+  return InfoLabel_GetInfoLabel("Player.Duration")
 
 def InfoLabel_IsPlayerPlaying():
-  return xbmc.getCondVisibility("Player.Playing")
+  return InfoLabel_GetBool("Player.Playing")
 
 def InfoLabel_IsPlayerPaused():
-  return xbmc.getCondVisibility("Player.Paused")
+  return InfoLabel_GetBool("Player.Paused")
 
 def InfoLabel_IsPlayerForwarding():
-  return xbmc.getCondVisibility("Player.Forwarding")
+  return InfoLabel_GetBool("Player.Forwarding")
 
 def InfoLabel_IsPlayerRewinding():
-  return xbmc.getCondVisibility("Player.Rewinding")
+  return InfoLabel_GetBool("Player.Rewinding")
 
 def InfoLabel_IsPlayingAny():
   return (InfoLabel_IsPlayerPlaying() |
@@ -123,35 +158,48 @@ def InfoLabel_IsPlayingAny():
           InfoLabel_IsPlayerForwarding() |
           InfoLabel_IsPlayerRewinding())
 
+def InfoLabel_IsInternetStream():
+  global g_InfoLabel_oldFilenameandpath
+  global g_InfoLabel_CachedFilenameIsStream
+
+  fname = InfoLabel_GetInfoLabel("Player.Filenameandpath")
+
+  if fname != g_InfoLabel_oldFilenameandpath:
+    g_InfoLabel_oldFilenameandpath = fname
+    g_InfoLabel_CachedFilenameIsStream = False
+
+    for prefix in g_StreamPrefixes:
+      if fname.find(prefix + "://") == 0:
+        g_InfoLabel_CachedFilenameIsStream = True
+
+  return g_InfoLabel_CachedFilenameIsStream
+
 def InfoLabel_IsPassthroughAudio():
-  return xbmc.getCondVisibility("Player.Passthrough")
+  return InfoLabel_GetBool("Player.Passthrough")
 
 def InfoLabel_IsPVRRecording():
-  return xbmc.getCondVisibility("PVR.IsRecording")
+  return InfoLabel_GetBool("PVR.IsRecording")
 
 def InfoLabel_IsPlaylistRandom():
-  return xbmc.getCondVisibility("Playlist.IsRandom")
+  return InfoLabel_GetBool("Playlist.IsRandom")
 
 def InfoLabel_IsPlaylistRepeatAll():
-  return xbmc.getCondVisibility("Playlist.IsRepeat")
+  return InfoLabel_GetBool("Playlist.IsRepeat")
 
 def InfoLabel_IsPlaylistRepeatOne():
-  return xbmc.getCondVisibility("Playlist.IsRepeatOne")
+  return InfoLabel_GetBool("Playlist.IsRepeatOne")
 
 def InfoLabel_IsPlaylistRepeatAny():
   return (InfoLabel_IsPlaylistRepeatAll() | InfoLabel_IsPlaylistRepeatOne())
 
 def InfoLabel_IsDiscInDrive():
-  return xbmc.getCondVisibility("System.HasMediaDVD")
+  return InfoLabel_GetBool("System.HasMediaDVD")
 
 def InfoLabel_IsScreenSaverActive():
-  return xbmc.getCondVisibility("System.ScreenSaverActive")
-
-def InfoLabel_GetInfoLabel(strLabel):
-  return xbmc.getInfoLabel(strLabel)
+  return InfoLabel_GetBool("System.ScreenSaverActive")
 
 def InfoLabel_GetVolumePercent():
-  volumedb = float(string.replace(string.replace(xbmc.getInfoLabel("Player.Volume"), ",", "."), " dB", ""))
+  volumedb = float(string.replace(string.replace(InfoLabel_GetInfoLabel("Player.Volume"), ",", "."), " dB", ""))
   return (100 * (60.0 + volumedb) / 60)
 
 def InfoLabel_GetPlayerTimeSecs():

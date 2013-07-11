@@ -20,6 +20,13 @@
       <line>$INFO[LCD.ProgressBar]</line>
       <line>Freemem: $INFO[System.FreeMemory]</line>
    </video>
+   <tvshow>
+      <line>$INFO[LCD.PlayIcon] $INFO[Player.Time]/$INFO[Player.Duration]</line>
+      <line>$INFO[VideoPlayer.TVShowTitle]</line>
+      <line>$INFO[VideoPlayer.Title]</line>
+      <line>$INFO[LCD.ProgressBar]</line>
+      <line>Freemem: $INFO[System.FreeMemory]</line>
+   </tvshow> 
    <general>
       <line>XBMC running...</line>
       <line>$INFO[System.Time] $INFO[System.Date]</line>
