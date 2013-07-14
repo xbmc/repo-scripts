@@ -114,25 +114,20 @@ class RadioVISPlayer(xbmc.Player):
 	_active = False
 	
 	def __init__(self, *args):
-		if self.checkFileTime(self._checkinFile, self._addonProfilePath, 86400) == True :
+		if self.checkFileTime(self._checkinFile, self._addonProfilePath) == True :
 			open(self._checkinFile, "w")
 			self._httpComm.get('http://stats.backend-systems.net/xbmc/?plugin='+ self._addon.getAddonInfo('id') + '&version=' + self._addon.getAddonInfo('version'))
 		pass
 			
 
-	def checkFileTime( self, tmpfile, cachedir, timesince ) :
+	def checkFile( self, tmpfile, cachedir ) :
 		#xbmc.executebuiltin('XBMC.Notification("Checking filetime","")')
 		if not os.path.exists( cachedir ) :
 			os.makedirs( cachedir )
 			return False
 		# If file exists, check timestamp
 		if os.path.exists( tmpfile ) :
-			if os.path.getmtime( tmpfile ) > ( time.time() - timesince ) :
-				xbmc.log( 'It has not been ' + str( timesince/60 ) + ' minutes since ' + tmpfile + ' was last updated', xbmc.LOGNOTICE )
-				return False
-			else :
-				xbmc.log( 'The cachefile ' + tmpfile + ' + has expired', xbmc.LOGNOTICE )
-				return True
+			return False
 		# If file does not exist, return true so the file will be created by scraping the page
 		else :
 			xbmc.log( 'The cachefile ' + tmpfile + ' does not exist', xbmc.LOGNOTICE )

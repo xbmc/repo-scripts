@@ -2,3 +2,5 @@
 - Initial version, can hook up to RadioVIS stomp servers for icecast stations
 [B]Version 0.2.0 - 2013-05-08[/B]
 - Fixed a major bug in parsing the correct FQDN from incoming icy-url
+[B]Version 0.2.1 - 2013-07-04[/B]
+- Added installation count tracking to keep us informed if the addon is used
