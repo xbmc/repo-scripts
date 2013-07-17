@@ -1,3 +1,6 @@
+1.1.3 (16.07.2013)
+ - fixed Bosten.com The Big Picture Scraper (Website changes)
+
 1.1.2 (17.06.2013)
  - fixed empty photoset on NewYorkTimes.com: Lens Blog
 

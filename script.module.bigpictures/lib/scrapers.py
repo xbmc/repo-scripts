@@ -92,7 +92,6 @@ class BasePlugin(object):
         for sub_class in cls.__subclasses__():
             if sub_class.__name__ in name_list:
                 enabled_scrapers.append(sub_class)
-                print '%s in %s' % (sub_class.__name__, name_list)
         return enabled_scrapers
 
 
@@ -112,11 +111,13 @@ class TheBigPictures(BasePlugin):
             if not d:
                 continue
             description = self._collapse(d.contents)
-            pic = album.find('img')['src']
+            pic = album.find('img', {'class': 'bpImage'})
+            if not pic:
+                continue
             self._albums.append({
                 'title': title,
                 'album_id': id,
-                'pic': pic,
+                'pic': pic['src'],
                 'description': description,
                 'album_url': album_url}
             )
