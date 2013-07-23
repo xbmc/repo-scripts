@@ -243,11 +243,11 @@ msgid "Download images from htbackdrops.com"
 msgstr ""
 
 msgctxt "#32003"
-msgid "Minimal image width"
+msgid "  Minimal image width"
 msgstr ""
 
 msgctxt "#32004"
-msgid "Minimal image height"
+msgid "  Minimal image height"
 msgstr ""
 
 msgctxt "#32005"
@@ -259,10 +259,18 @@ msgid "  Preferred language for artist information"
 msgstr ""
 
 msgctxt "#32007"
-msgid "Download only 16:9 images"
+msgid "  Download only 16:9 images"
 msgstr ""
 
-#empty strings from id 32008 to 32099
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr ""
+
+#empty strings from id 32010 to 32099
 
 msgctxt "#32100"
 msgid "Slideshow"

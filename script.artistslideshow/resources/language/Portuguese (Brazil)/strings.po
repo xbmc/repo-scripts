@@ -228,14 +228,6 @@ msgctxt "#32002"
 msgid "Download images from htbackdrops.com"
 msgstr "Transferência de imagens do htbackdrops.com"
 
-msgctxt "#32003"
-msgid "Minimal image width"
-msgstr "Comprimento mínimo da imagem"
-
-msgctxt "#32004"
-msgid "Minimal image height"
-msgstr "Altura mínima da imagem"
-
 msgctxt "#32005"
 msgid "Download additional artist information"
 msgstr "Transferência  de informações adicionais dos artistas"
@@ -243,10 +235,6 @@ msgstr "Transferência  de informações adicionais dos artistas"
 msgctxt "#32006"
 msgid "  Preferred language for artist information"
 msgstr "     Linguagem Preferida para informações dos artistas"
-
-msgctxt "#32007"
-msgid "Download only 16:9 images"
-msgstr "Transferência somente de imagens 16:9"
 
 msgctxt "#32100"
 msgid "Slideshow"

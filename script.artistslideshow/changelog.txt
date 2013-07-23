@@ -1,3 +1,24 @@
+v.1.5.4
+- artist bio and album list now come from theaudiodb.com by default (Last.fm as fallback)
+- added download of images from fanart.tv
+- added download of images from theaudiodb.com
+- added musicbrainz ID support
+- updated URL for htbackdrops to htbackdrops.org
+- added advanced feature to exclude files from download
+- rearranged settings some to make options clearer
+- set new location for .nfo files separate from image files
+- added migration code to move old .nfo files to new locations and names
+- updated cache manager to leave .nfo files intact
+- fixed bug where cached images wouldn't be merged for featured artists
+- fixed featured artist parsing
+- fixed last.fm showing unexpected results
+- fixed artists with unicode characters in name returning no results from Last.fm
+- changed over to urllib2 for downloads
+- additional error catching across the board
+
+v1.5.3
+internal beta test
+
 v.1.5.2
 - added ability to parse multiple featured artists from title of song
 - fixed bug on Windows where once override or fallback were set they could not be unset

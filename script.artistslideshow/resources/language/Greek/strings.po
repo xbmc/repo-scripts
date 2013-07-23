@@ -228,14 +228,6 @@ msgctxt "#32002"
 msgid "Download images from htbackdrops.com"
 msgstr "Εικόνες από htbackdrops.com"
 
-msgctxt "#32003"
-msgid "Minimal image width"
-msgstr "Ελάχιστο πλάτος εικόνας"
-
-msgctxt "#32004"
-msgid "Minimal image height"
-msgstr "Ελάχιστο ύψος εικόνας"
-
 msgctxt "#32005"
 msgid "Download additional artist information"
 msgstr "Λήψη επιπλέον πληροφοριών καλλιτέχνη"
@@ -243,10 +235,6 @@ msgstr "Λήψη επιπλέον πληροφοριών καλλιτέχνη"
 msgctxt "#32006"
 msgid "  Preferred language for artist information"
 msgstr "Προτιμώμενη γλώσσα πληροφοριών καλλιτέχνη"
-
-msgctxt "#32007"
-msgid "Download only 16:9 images"
-msgstr "Λήψη μόνο εικόνων αναλογίας 16:9"
 
 msgctxt "#32100"
 msgid "Slideshow"

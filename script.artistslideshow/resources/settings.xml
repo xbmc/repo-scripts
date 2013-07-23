@@ -2,10 +2,12 @@
 <settings>
     <category label="32000">
         <setting id="lastfm" type="bool" label="32001" default="true" />
+        <setting id="hd_aspect_only" type="bool" label="32007" default="false" visible="eq(-1,true)" enable="eq(-1,true)" />
+        <setting id="minwidth" type="text" label="32003" default="0" visible="eq(-2,true)" enable="eq(-2,true)" />
+        <setting id="minheight" type="text" label="32004" default="0" visible="eq(-3,true)" enable="eq(-3,true)" />
+        <setting id="fanarttv" type="bool" label="32008" default="false" />
+        <setting id="theaudiodb" type="bool" label="32009" default="false" />
         <setting id="htbackdrops" type="bool" label="32002" default="false" />
-        <setting id="minwidth" type="text" label="32003" default="0" />
-        <setting id="minheight" type="text" label="32004" default="0" />
-        <setting id="hd_aspect_only" type="bool" label="32007" default="false" />
         <setting id="artistinfo" type="bool" label="32005" default="false" />
         <setting id="language" type="enum" label="32006" enable="eq(-1,true)" default="11" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246" />
     </category>
