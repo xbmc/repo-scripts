@@ -1,3 +1,7 @@
+v2.1.6
+- Add %s.Loaded property to indicate the script is done loading the playlist
+- Fix %s.Name property to get smart playlist name (crash when no name was set up or containing accented characters)
+
 v2.1.5
 - Add %s.%d.Watched property for episodes or TV shows
 

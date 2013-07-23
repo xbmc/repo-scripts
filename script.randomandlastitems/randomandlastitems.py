@@ -52,17 +52,18 @@ def _getPlaylistType ():
     if _type == 'songs' or _type == 'albums':
        TYPE = 'Music'
     # get playlist name
-    _name = _doc.getElementsByTagName('name')[0].firstChild.nodeValue
-    if _name != "":
-        _setProperty( "%s.Name" % PROPERTY, str( _name ) )
+    _name = ""
+    if _doc.getElementsByTagName('name'):
+        _name = _doc.getElementsByTagName('name')[0].firstChild.nodeValue.encode('utf-8')
+    _setProperty( "%s.Name" % PROPERTY, str( _name ) )
     # get playlist order
-        if METHOD == 'Playlist':
-            if _doc.getElementsByTagName('order'):
-                SORTBY = _doc.getElementsByTagName('order')[0].firstChild.nodeValue
-                if _doc.getElementsByTagName('order')[0].attributes.item(0).value == "descending":
-                    REVERSE = True
-            else:
-                METHOD = ""
+    if METHOD == 'Playlist':
+        if _doc.getElementsByTagName('order'):
+            SORTBY = _doc.getElementsByTagName('order')[0].firstChild.nodeValue
+            if _doc.getElementsByTagName('order')[0].attributes.item(0).value == "descending":
+                REVERSE = True
+        else:
+            METHOD = ""
 
 def _timeTook( t ):
     t = ( time.time() - t )
@@ -458,38 +459,16 @@ def _getAlbumsFromPlaylist ( ):
         log("[RandomAndLastItems] JSON RESULT %s" %_json_pl_response)
 
 def _clearProperties ( ):
-    global LIMIT
-    global METHOD
-    global MENU
-    global TYPE
     global WINDOW
     # Reset window Properties
-    if TYPE == "Movie" or TYPE == "Episode":
-        WINDOW.clearProperty( "%s.Count" % ( PROPERTY ) )
-        WINDOW.clearProperty( "%s.Watched" % ( PROPERTY ) )
-        WINDOW.clearProperty( "%s.Unwatched" % ( PROPERTY ) )
-    if TYPE == "Album" or TYPE == "Song":
-        WINDOW.clearProperty( "%s.Artists" % ( PROPERTY ) )
-        WINDOW.clearProperty( "%s.Albums" % ( PROPERTY ) )
-        WINDOW.clearProperty( "%s.Songs" % ( PROPERTY ) )
-    for _count in range( LIMIT ):
-        WINDOW.clearProperty( "%s.%d.Path" % ( PROPERTY, _count + 1 ) )
-        WINDOW.clearProperty( "%s.%d.Rootpath" % ( PROPERTY, _count + 1 ) )
-        WINDOW.clearProperty( "%s.%d.Thumb" % ( PROPERTY, _count + 1 ) )
-        WINDOW.clearProperty( "%s.%d.Fanart" % ( PROPERTY, _count + 1 ) )
-        WINDOW.clearProperty( "%s.%d.Plot" % ( PROPERTY, _count + 1 ) )
-        WINDOW.clearProperty( "%s.%d.Rating" % ( PROPERTY, _count + 1 ) )
-        WINDOW.clearProperty( "%s.%d.RunningTime" % ( PROPERTY, _count + 1 ) )
-        if TYPE == "Movie":
-            WINDOW.clearProperty( "%s.%d.Title" % ( PROPERTY, _count + 1 ) )
-            WINDOW.clearProperty( "%s.%d.Year" % ( PROPERTY, _count + 1 ) )
-            WINDOW.clearProperty( "%s.%d.Trailer" % ( PROPERTY, _count + 1 ) )
-        if TYPE == "Episode":
-            WINDOW.clearProperty( "%s.%d.ShowTitle" % ( PROPERTY, _count + 1 ) )
-            WINDOW.clearProperty( "%s.%d.EpisodeTitle" % ( PROPERTY, _count + 1 ) )
-            WINDOW.clearProperty( "%s.%d.EpisodeNo" % ( PROPERTY, _count + 1 ) )
-            WINDOW.clearProperty( "%s.%d.EpisodeSeason" % ( PROPERTY, _count + 1 ) )
-            WINDOW.clearProperty( "%s.%d.EpisodeNumber" % ( PROPERTY, _count + 1 ) )
+    WINDOW.clearProperty( "%s.Loaded" % ( PROPERTY ) )
+    WINDOW.clearProperty( "%s.Count" % ( PROPERTY ) )
+    WINDOW.clearProperty( "%s.Watched" % ( PROPERTY ) )
+    WINDOW.clearProperty( "%s.Unwatched" % ( PROPERTY ) )
+    WINDOW.clearProperty( "%s.Artists" % ( PROPERTY ) )
+    WINDOW.clearProperty( "%s.Albums" % ( PROPERTY ) )
+    WINDOW.clearProperty( "%s.Songs" % ( PROPERTY ) )
+    WINDOW.clearProperty( "%s.Type" % ( PROPERTY ) )
 
 def _setMusicProperties ( _artists, _albums, _songs ):
     global PROPERTY
@@ -743,7 +722,7 @@ def media_path(path):
 # Parse argv for any preferences
 _parse_argv()
 # Clear Properties
-#_clearProperties()
+_clearProperties()
 # Get movies and fill Properties
 if TYPE == 'Movie':
     _getMovies()
@@ -754,4 +733,5 @@ elif TYPE == 'Episode':
         _getEpisodesFromPlaylist()
 elif TYPE == 'Music':
     _getAlbumsFromPlaylist()
+WINDOW.setProperty( "%s.Loaded" % PROPERTY, "true" )
 log( "Loading Playlist%s%s%s started at %s and take %s" %( METHOD, TYPE, MENU, time.strftime( "%Y-%m-%d %H:%M:%S", time.localtime( START_TIME ) ), _timeTook( START_TIME ) ) )

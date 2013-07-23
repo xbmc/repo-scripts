@@ -24,6 +24,8 @@ will return 10 random movies in Children Smartplaylist.
 
 Properties return to Home window (id 10000) :
 
+%s.Loaded = Will be cleared upon starting the script and set to "true" if the script is done.
+
 * type=Movie
 
 %s = Playlist<method>Movie<menu>
