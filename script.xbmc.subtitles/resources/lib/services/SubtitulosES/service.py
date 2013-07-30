@@ -86,7 +86,7 @@ def getallsubsforurl(url, languageshort, langlong, file_original_path, subtitles
                         estado = re.sub(r'\n', '', estado)
 
                         id = matches.group(6)
-                        id = id[44:61]
+                        id = id[44:62]
                         id = re.sub(r'"', '', id)
 
                         if estado == "green'>Completado" and languagelong == langlong:

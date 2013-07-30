@@ -45,6 +45,7 @@ def get_rating(downloads):
     return rating
 
 def unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder):
+    subs_file = ""
     files = os.listdir(tmp_sub_dir)
     init_filecount = len(files)
     max_mtime = 0
@@ -59,7 +60,7 @@ def unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder):
     time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
     xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + tmp_sub_dir +")")
     waittime  = 0
-    while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
+    while (filecount == init_filecount) and (waittime < 10) and (init_max_mtime == max_mtime): # nothing yet extracted
         time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
         files = os.listdir(tmp_sub_dir)
         filecount = len(files)
@@ -70,7 +71,7 @@ def unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder):
                 if (mtime > max_mtime):
                     max_mtime =  mtime
         waittime  = waittime + 1
-    if waittime == 20:
+    if waittime == 10:
         log( __name__ ," Failed to unpack subtitles in '%s'" % (tmp_sub_dir))
         pass
     else:
@@ -81,6 +82,7 @@ def unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder):
             if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
                 log( __name__ ," Unpacked subtitles file '%s'" % (file))
                 subs_file = os.path.join(tmp_sub_dir, file)
+    return subs_file
 
 def search_subtitles(file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack): #standard input
     subtitles_list = []
@@ -116,6 +118,7 @@ def search_subtitles(file_original_path, title, tvshow, year, season, episode, s
     return subtitles_list, "", msg #standard output
 
 def download_subtitles(subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
+    subs_file = ""
     id = subtitles_list[pos][ "id" ]
     language = subtitles_list[pos][ "language_name" ]
     name = subtitles_list[pos][ "filename" ]
@@ -146,18 +149,35 @@ def download_subtitles(subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, s
         type = response.info()["Content-type"]
     except:
         log( __name__ ,"%s Failed to parse url:%s" % (debug_pretext, id))
-        return True,language, "" #standard output
+        return False, language, subs_file #standard output
 
     if type == 'application/x-rar-compressed':
         local_tmp_file = os.path.join(tmp_sub_dir, "subs4series.rar")
+        redirect = False
         packed = True
     elif type == 'application/zip':
         local_tmp_file = os.path.join(tmp_sub_dir, "subs4series.zip")
+        redirect = False
         packed = True
-    elif not type.startswith('text/html'): # never found/downloaded an unpacked subtitles file, but just to be sure ...
+    elif not type.startswith('text/html'):
         local_tmp_file = os.path.join(tmp_sub_dir, "subs4series.srt") # assume unpacked subtitels file is an '.srt'
         subs_file = local_tmp_file
+        redirect = False
         packed = False
+    else:
+        redirect = True
+
+    if redirect is False:
+        try:
+            log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
+            local_file_handle = open(local_tmp_file, "wb")
+            local_file_handle.write(content)
+            local_file_handle.close()
+            if packed:
+                subs_file = unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder)
+        except:
+            log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
+            pass
     else:
         try:
             log( __name__ ,"%s Getting subtitles by subz.tv" % (debug_pretext))
@@ -176,19 +196,20 @@ def download_subtitles(subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, s
                     if re.search(subz,name) is not None:
                         response = browser.open(id)
                         content = response.read()
-                        type = response.info()["Content-type"]
-                        if type == 'application/x-rar-compressed':
+                        try:
                             local_tmp_file = os.path.join(tmp_sub_dir, "subztv.rar")
-                            packed = True
-                        elif type == 'application/zip':
-                            local_tmp_file = os.path.join(tmp_sub_dir, "subztv.zip")
-                            packed = True
-                        elif not type.startswith('text/html'):
-                            local_tmp_file = os.path.join(tmp_sub_dir, "subztv.srt") # assume unpacked subtitels file is an '.srt'
-                            subs_file = local_tmp_file
-                            packed = False
-                        else:
-                            local_tmp_file = None
+                            log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
+                            local_file_handle = open(local_tmp_file, "wb")
+                            local_file_handle.write(content)
+                            local_file_handle.close()
+                            subs_file = unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder)
+                            if subs_file == "":
+                                local_tmp_file2 = os.path.join(tmp_sub_dir, "subztv.srt")
+                                os.rename(local_tmp_file, local_tmp_file2)
+                                subs_file = local_tmp_file2
+                        except:
+                            log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
+                            pass
                         break
                 except:
                     pass
@@ -196,20 +217,7 @@ def download_subtitles(subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, s
             log( __name__ ,"%s Failed to get subtitles by subz.tv" % (debug_pretext))
             pass
 
-    if local_tmp_file is not None:
-        try:
-            log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))
-            local_file_handle = open(local_tmp_file, "wb")
-            local_file_handle.write(content)
-            local_file_handle.close()
-            if packed:
-                unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder)
-            return True,language, "" #standard output
-        except:
-            log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
-            pass
-
-    return True,language, "" #standard output
+    return False, language, subs_file #standard output
 
 def get_movie_subtitles_list(searchstring, languageshort, languagelong, subtitles_list):
     url = '%s/search_report.php?search=%s&x=14&y=11&searchType=1' % (movie_url, urllib.quote_plus(searchstring))

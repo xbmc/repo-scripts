@@ -1,3 +1,8 @@
+3.9.11
+- [fix] Subs4Free and SubtitlesGR, lambda81
+- [fix] SubtitlesGR, jded76
+- [fix] SubtitulosES, David Soms
+
 3.9.10
 - [fix] serialzone.cz typo,Ondrej Bima
 - [fix] extract other than zip archives,Ondrej Bima

@@ -45,6 +45,7 @@ def get_rating(downloads):
     return rating
 
 def unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder):
+    subs_file = ""
     files = os.listdir(tmp_sub_dir)
     init_filecount = len(files)
     max_mtime = 0
@@ -81,6 +82,7 @@ def unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder):
             if (string.split(file, '.')[-1] in ['srt', 'sub', 'txt']) and (os.stat(os.path.join(tmp_sub_dir, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
                 log( __name__ ," Unpacked subtitles file '%s'" % (file))
                 subs_file = os.path.join(tmp_sub_dir, file)
+    return subs_file
 
 def search_subtitles(file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3, stack): #standard input
     subtitles_list = []
@@ -111,6 +113,7 @@ def search_subtitles(file_original_path, title, tvshow, year, season, episode, s
     return subtitles_list, "", msg #standard output
 
 def download_subtitles(subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
+    subs_file = ""
     language = subtitles_list[pos][ "language_name" ]
     name = subtitles_list[pos][ "filename" ]
     id = subtitles_list[pos][ "id" ]
@@ -161,17 +164,15 @@ def download_subtitles(subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, s
             local_tmp_file = os.path.join(tmp_sub_dir, file)
             if (file.endswith('.rar') or file.endswith('.zip')):
                 shutil.copy(local_tmp_extract_file, tmp_sub_dir)
-                unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder)
-                return True,language, "" #standard output
+                subs_file = unpack_subtitles(local_tmp_file, zip_subs, tmp_sub_dir, sub_folder)
             elif (file.endswith('.srt') or file.endswith('.sub')):
                 shutil.copy(local_tmp_extract_file, tmp_sub_dir)
                 subs_file = local_tmp_file
-                return True,language, "" #standard output
     except:
         log( __name__ ,"%s Failed to save subtitles to '%s'" % (debug_pretext, local_tmp_file))
         pass
 
-    return True,language, "" #standard output
+    return False, language, subs_file #standard output
 
 def get_subtitles_list(searchstring, languageshort, languagelong, subtitles_list):
     url = '%s/search.php?name=%s&sort=downloads+desc' % (main_url, urllib.quote_plus(searchstring))
