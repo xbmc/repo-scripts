@@ -18,6 +18,9 @@ g_jumpBackSecs = 0
 def log(msg):
   xbmc.log("### [%s] - %s" % (__scriptname__,msg,),level=xbmc.LOGDEBUG )
 
+def getSetting(setting):
+  return __addon__.getSetting(setting).strip()
+
 #log( "[%s] - Version: %s Started" % (__scriptname__,__version__))
 
 class MyPlayer( xbmc.Player ):
@@ -82,8 +85,16 @@ class MyPlayer( xbmc.Player ):
                             if(playon):
                                 xbmc.Player().pause()
                             else:
+                                if(getSetting("BrowseForShow").lower() == "true"):
+                                    browsenow = xbmcgui.Dialog().yesno(__language__(32006), __language__(32007))
+                                else:
+                                    browsenow = False
+                                
                                 xbmc.Player().stop()
-
+                                if browsenow:
+                                    command='{"jsonrpc": "2.0", "method": "GUI.ActivateWindow", "params": { "window": "videos", "parameters": [ "videodb://2/2/%d/%d" ] }, "id": 1}' % (playingTvshowid, playingSeason)
+                                    result = xbmc.executeJSONRPC( command )
+                                    result = unicode(result, 'utf-8', errors='ignore')
 player_monitor = MyPlayer()
 
 while not xbmc.abortRequested:
