@@ -1,0 +1,19 @@
+<strings>
+	<!-- Watch History -->
+	<string id="30300">Watch History</string>
+	<string id="30303">Show directory if video has multiple parts/links</string>
+	<string id="30304">Cleanup based on: </string>
+	<string id="30305">       Max number of days to keep an item in history</string>
+	<string id="30306">       Max number of items to keep in history</string>
+	
+    <!-- Database -->
+    <string id="30400">Database</string>
+	<string id="30401">Local Save Location</string>
+	<string id="30402">Use a remote MySQL DB</string>
+	<string id="30403">       Address</string>
+	<string id="30404">       Port</string>
+	<string id="30405">       Username</string>
+	<string id="30406">       Password</string>
+	<string id="30407">       Database</string>
+	
+</strings>

@@ -1,0 +1,5 @@
+[B]v1.0.0[/B]
+Initial Release
+Playback Engine - Implement playback with bookmarking and queuing support
+Favorites - Implement FAVORITES functionality in video addons
+Watch History - Keep track of users' watched videos

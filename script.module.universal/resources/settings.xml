@@ -1,0 +1,18 @@
+<settings>
+	<category label="30300">				
+		<setting id="add_dir" type="bool" label="30303" default="false" />
+		<setting id="cleanup-history" type="enum" values="Max Days|Max Count" label="30304" default="0" />
+		<setting id="cleanup-history-days" type="number" label="30305" default="20" enable="eq(-1,0)"/>
+		<setting id="cleanup-history-count" type="number" label="30306" default="50" enable="eq(-2,1)"/>		
+    </category>
+	
+	<category label="30400">	
+		<setting id="local_save_location" type="folder" label="30401" default="special://profile/addon_data/script.module.universal/"/>
+		<setting id="use_remote_db" type="bool" 	label="30402" default="false"/>
+			<setting id="db_address" type="text" 	label="30403" enable="eq(-1,true)" default="" />
+			<setting id="db_port" 	 type="integer" label="30404" enable="eq(-2,true)" default="" />
+			<setting id="db_user" 	 type="text" 	label="30405" enable="eq(-3,true)" default="" />
+			<setting id="db_pass"	 type="text" 	label="30406" enable="eq(-4,true)" default="" option="hidden"/>
+			<setting id="db_name"	 type="text" 	label="30407" enable="eq(-5,true)" default="xbmc_universal" />
+	</category>
+</settings>
