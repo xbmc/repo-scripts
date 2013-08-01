@@ -40,13 +40,14 @@ class PyScraper:
 			scraperSource = nfoFile
 								
 				
-		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc)
+		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc)		
+		tempResults = self.getBestResults(tempResults, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection)
+		
 		if(tempResults == None):
 			#try again without (*) and [*]
 			gamenameFromFile = re.sub('\s\(.*\)|\s\[.*\]|\(.*\)|\[.*\]', '', gamenameFromFile)
 			tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc)
-
-		tempResults = self.getBestResults(tempResults, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection)			
+			tempResults = self.getBestResults(tempResults, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection)						
 		
 		if(tempResults == None):
 			if(scraper.returnUrl):

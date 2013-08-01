@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="script.games.rom.collection.browser"
-  version="2.0.6"
+  version="2.0.7"
   name="Rom Collection Browser"
   provider-name="carabalb, jimyx17, malte, redkiller">
   <requires>
@@ -9,7 +9,9 @@
     <import addon="script.module.elementtree" version="1.2.7"/>
     <import addon="service.rom.collection.browser" version="1.0.0"/>
   </requires>
-  <extension point="xbmc.python.script" library="default.py"/>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>game</provides>
+  </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="da">Importere, gennemse og starte spil i XBMC</summary>
     <summary lang="de">Importiert, verwaltet und startet Spiele in XBMC</summary>
