@@ -1,3 +1,7 @@
+v0.1.9
+- Update with 13.0 Gotham_alpha6
+- Updated language files from Transifex
+
 v0.1.7
 - Update with 13.0 Gotham_alpha5
 

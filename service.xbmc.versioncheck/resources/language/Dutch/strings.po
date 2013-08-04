@@ -9,87 +9,81 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#32001"
 msgid "We would like to recommend you to upgrade."
-msgstr ""
+msgstr "We bevelen je aan om te upgraden."
 
 msgctxt "#32002"
 msgid "Visit XBMC.org for more information."
-msgstr ""
+msgstr "Bezoek XBMC.org voor meer informatie."
 
 msgctxt "#32003"
 msgid "You are still using an older stable version of XBMC."
-msgstr ""
+msgstr "Je gebruikt nog steeds een oudere stabiele versie van XBMC"
 
 msgctxt "#32004"
 msgid "You are still using an older RC version of XBMC."
-msgstr ""
+msgstr "Je gebruikt nog steeds een oudere RC versie van XBMC"
 
 msgctxt "#32005"
 msgid "You are still using an older beta version of XBMC."
-msgstr ""
+msgstr "Je gebruikt nog steeds een oudere beta versie van XBMC."
 
 msgctxt "#32006"
 msgid "You are still using an older alpha version of XBMC."
-msgstr ""
+msgstr "Je gebruikt nog steeds een oudere alpha versie van XBMC."
 
 msgctxt "#32007"
 msgid "You are still using an older monthly version of XBMC."
-msgstr ""
+msgstr "Je gebruikt nog steeds een oudere maandelijkse versie van XBMC."
 
 msgctxt "#32008"
 msgid "You are still using an older non stable version of XBMC."
-msgstr ""
+msgstr "Je gebruikt nog steeds een oudere niet stabiele versie van XBMC."
 
 msgctxt "#32009"
 msgid "Would you like to remove this reminder?"
-msgstr ""
+msgstr "Will je deze herinneren verwijderen?"
 
 msgctxt "#32010"
 msgid "You can enable/disable it through addon settings."
-msgstr ""
+msgstr "Deze kan je aan/uitzetten in addon settings."
 
 msgctxt "#32011"
 msgid "Use your package manager(apt) to upgrade."
-msgstr ""
+msgstr "Gebruik pakket manager(apt) voor upgraden."
 
 msgctxt "#32012"
 msgid "A new version is available, do you want to upgrade now?"
-msgstr ""
+msgstr "Er is een nieuwe versie beschikbaar, wil je nu upgraden?"
 
 msgctxt "#32013"
 msgid "Upgrade successful"
-msgstr ""
+msgstr "Upgrade succesvol"
 
 msgctxt "#32014"
 msgid "Do you want to restart Xbmc to finish the upgrade?"
-msgstr ""
+msgstr "Wil je XBMC opnieuw starten om de upgrade te voltooien?"
 
 msgctxt "#32015"
 msgid "Do you want to check the repository for a new version?"
-msgstr ""
-
-#empty strings from id 32016 to 32019
+msgstr "Wil je de repository controleren op een nieuwe versie?"
 
 msgctxt "#32020"
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 msgctxt "#32021"
 msgid "Enable XBMC version check?"
-msgstr ""
+msgstr "XBMC versie controle aanzetten?"
 
 msgctxt "#32022"
 msgid "Please enter your password"
-msgstr ""
-
-msgctxt "#32023"
-msgid "Linux: Upgrade complete system"
-msgstr ""
+msgstr "Vul uw wachtwoord in"
