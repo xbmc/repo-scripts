@@ -47,6 +47,94 @@ HTTPSTUB = "http://www.bom.gov.au/products/radar_transparencies/"
 RADAR_BACKGROUNDS_PATH = ""
 LOOP_IMAGES_PATH = ""
 
+# this is fetchpage from parseDOM...
+# added emergency latin 1 decoding for wierd char issues on Weatherzone
+
+def fetchPage(params={}):
+    get = params.get
+    link = get("link")
+    ret_obj = {}
+    if get("post_data"):
+        log("called for : " + repr(params['link']))
+    else:
+        log("called for : " + repr(params))
+
+    if not link or int(get("error", "0")) > 2:
+        log("giving up")
+        ret_obj["status"] = 500
+        return ret_obj
+
+    if get("post_data"):
+        if get("hide_post_data"):
+            log("Posting data", 2)
+        else:
+            log("Posting data: " + urllib.urlencode(get("post_data")), 2)
+
+        request = urllib2.Request(link, urllib.urlencode(get("post_data")))
+        request.add_header('Content-Type', 'application/x-www-form-urlencoded')
+    else:
+        log("Got request", 2)
+        request = urllib2.Request(link)
+
+    if get("headers"):
+        for head in get("headers"):
+            request.add_header(head[0], head[1])
+
+    request.add_header('User-Agent', USERAGENT)
+
+    if get("cookie"):
+        request.add_header('Cookie', get("cookie"))
+
+    if get("refering"):
+        request.add_header('Referer', get("refering"))
+
+    try:
+        log("connecting to server...", 1)
+
+        con = urllib2.urlopen(request)
+        ret_obj["header"] = con.info()
+        ret_obj["new_url"] = con.geturl()
+        if get("no-content", "false") == u"false" or get("no-content", "false") == "false":
+            inputdata = con.read()
+            #data_type = chardet.detect(inputdata)
+            #inputdata = inputdata.decode(data_type["encoding"]
+            try:
+                ret_obj["content"] = inputdata.decode("utf-8")                    
+            except:
+                try:
+                    ret_obj["content"] = inputdata.decode("latin-1")                    
+                except:
+                    raise    
+
+        con.close()
+
+        log("Done")
+        ret_obj["status"] = 200
+        return ret_obj
+
+    except urllib2.HTTPError, e:
+        err = str(e)
+        log("HTTPError : " + err)
+        log("HTTPError - Headers: " + str(e.headers) + " - Content: " + e.fp.read())
+
+        params["error"] = str(int(get("error", "0")) + 1)
+        ret = fetchPage(params)
+
+        if not "content" in ret and e.fp:
+            ret["content"] = e.fp.read()
+            return ret
+
+        ret_obj["status"] = 500
+        return ret_obj
+
+    except urllib2.URLError, e:
+        err = str(e)
+        log("URLError : " + err)
+
+        time.sleep(3)
+        params["error"] = str(int(get("error", "0")) + 1)
+        ret_obj = fetchPage(params)
+        return ret_obj
 
 
 ################################################################################
@@ -172,10 +260,16 @@ def forecast(url, radarCode):
     #and now get and set all the temperatures etc.
     log("Get the forecast data from weatherzone.com.au: " + url)
     try:
-        data = common.fetchPage({"link":url})
+        data = fetchPage({"link":url})
     except Exception as inst:
-        log("Error, couldn't retrieve weather page from WeatherZone - error: ", inst)
-    if data != '':
+        log("Error, couldn't fetchPage weather page from WeatherZone [" + url + "]- error: ", inst)
+        try:
+            data = {}
+            data["content"] = urllib2.urlopen(url)
+        except:
+            log("Error, couldn't urlopen weather page from WeatherZone [" + url + "]- error: ", inst)
+           
+    if data != '' and data is not None:
         propertiesPDOM(data["content"], extendedFeatures)
     else:
         log("Weatherzone returned empty data??!")
@@ -284,9 +378,15 @@ def buildImages(radarCode):
 
     #we need make the directories to store stuff if they don't exist
     if not xbmcvfs.exists( RADAR_BACKGROUNDS_PATH ):
-        os.makedirs( RADAR_BACKGROUNDS_PATH )
+        try:
+            os.makedirs( RADAR_BACKGROUNDS_PATH )
+        except:
+            log("xbmcvfs.exists was false, but couldn't make the directory?!")
     if not xbmcvfs.exists( LOOP_IMAGES_PATH ):
-        os.makedirs( LOOP_IMAGES_PATH )
+        try:
+            os.makedirs( LOOP_IMAGES_PATH )
+        except:
+            log("xbmcvfs.exists was false, but couldn't make the directory?!")
 
     log("Prepare the backgrounds if necessary...")
     prepareBackgrounds(radarCode)

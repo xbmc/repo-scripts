@@ -1,3 +1,6 @@
+V0.6.5 
+- Bit of defensive programming to deal with parsedom and weatherzone issue
+
 V0.6.4
 - pan2 changes merged - adds date labels
 
