@@ -1,3 +1,6 @@
+V0.6.6
+- Use mathematical rounding instead of skin truncating
+
 V0.6.5 
 - Bit of defensive programming to deal with parsedom and weatherzone issue
 

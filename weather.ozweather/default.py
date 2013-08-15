@@ -260,14 +260,19 @@ def forecast(url, radarCode):
     #and now get and set all the temperatures etc.
     log("Get the forecast data from weatherzone.com.au: " + url)
     try:
-        data = fetchPage({"link":url})
-    except Exception as inst:
-        log("Error, couldn't fetchPage weather page from WeatherZone [" + url + "]- error: ", inst)
+        #parsedom's fetchpage shits itself if there is any latin-1 endcoded stuff, but try it first anyway
+        data = common.fetchPage({"link":url})
+    except:
+        #if that fails try our local version as a falback
         try:
-            data = {}
-            data["content"] = urllib2.urlopen(url)
-        except:
-            log("Error, couldn't urlopen weather page from WeatherZone [" + url + "]- error: ", inst)
+            data = fetchPage({"link":url})
+        except Exception as inst:
+            log("Error, couldn't fetchPage weather page from WeatherZone [" + url + "]- error: ", inst)
+            try:
+                data = {}
+                data["content"] = urllib2.urlopen(url)
+            except:
+                log("Error, couldn't urlopen weather page from WeatherZone [" + url + "]- error: ", inst)
            
     if data != '' and data is not None:
         propertiesPDOM(data["content"], extendedFeatures)
@@ -447,10 +452,9 @@ def propertiesPDOM(page, extendedFeatures):
         observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" })
         #Observations now looks like - ['18.3&deg;C', '4.7&deg;C', '18.3&deg;C', '41%', 'SSW 38km/h', '48km/h', '1015.7hPa', '-', '0.0mm / -']
         log("Observations Retrieved: " + str(observations))
-        temperature = observations[0].strip( '&deg;C' )
-        log(" TEMP " + str(temperature))
-        dewPoint = observations[1].strip( '&deg;C' )
-        feelsLike = observations[2].strip( '&deg;C')
+        temperature = str(int(round(float(observations[0].strip( '&deg;C' )))))
+        dewPoint = str(int(round(float(observations[1].strip( '&deg;C' )))))
+        feelsLike = str(int(round(float(observations[2].strip( '&deg;C' )))))        
         humidity = observations[3].strip( '%')
         windTemp = observations[4].partition(' ');
         windDirection = windTemp[0]
