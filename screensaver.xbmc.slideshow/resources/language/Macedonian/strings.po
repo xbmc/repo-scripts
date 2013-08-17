@@ -63,3 +63,7 @@ msgstr "Колку секунди да се прикаже секоја слик
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Оневозможено"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Напредно"

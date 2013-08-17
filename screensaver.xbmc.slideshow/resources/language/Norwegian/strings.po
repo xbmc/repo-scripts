@@ -80,6 +80,14 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Bruk mappenavn"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Vis bilder i tilfeldig rekkefølge"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Slå på caching av bilder"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Vis bildedato"
@@ -99,3 +107,7 @@ msgstr "Grunnleggende"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Ytterligere"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Avansert"

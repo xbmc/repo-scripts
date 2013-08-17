@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "השתמש בשם תיקיה"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "הצגת התמונות בסדר אקראי"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "הפעלת מטמון תמונות"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "המטמון נוצר כעת"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "יצירת המטמון הסתיימה"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "הצג תאריך תמונה"
@@ -99,3 +115,7 @@ msgstr "בסיסי"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "נוסף"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "מתקדם"

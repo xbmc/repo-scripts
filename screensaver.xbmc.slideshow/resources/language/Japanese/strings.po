@@ -60,10 +60,46 @@ msgctxt "#30010"
 msgid "Amount of seconds to display each image"
 msgstr "各画像を表示する秒数"
 
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "イメージ名を表示"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "無効"
 
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "ファイル名を使う"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "フォルダ名を使う"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "イメージキャッシュを有効化"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "キャッシュを作成"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "キャッシュは生成されました"
+
 msgctxt "#30024"
 msgid "Basic"
 msgstr "標準"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "追加"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "高度な設定"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "キャッシュをアップデート"

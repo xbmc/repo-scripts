@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Mappanév használata"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Képek véletlenszerű betöltése"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Kép gyorstároló engedélyezése"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Gyorstároló készül"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Gyorstároló kész"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Képadatok megjelenítése"
@@ -99,3 +115,15 @@ msgstr "Alap"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Hozzáadott"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Haladó"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Gyorsítótár frissítése"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "A fanart-ok gyosítótárazása nem támogatott"

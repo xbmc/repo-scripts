@@ -60,10 +60,38 @@ msgctxt "#30010"
 msgid "Amount of seconds to display each image"
 msgstr "Yksittäisen kuvan näyttämiseen käytettävä aika sekunneissa"
 
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Näytä kuvan nimi"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Ei käytössä"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Näytä kuvat satunnaisessa järjestyksessä"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Käytä kuvavälimuistia"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Luodaan välimuistia"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Välimuisti luotu"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Näytä kuvan päiväys"
+
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Perus"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Lisäasetukset"

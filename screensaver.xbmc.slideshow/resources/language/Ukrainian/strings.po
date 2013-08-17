@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Використовувати назву теки"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Показувати малюнки у випадковому порядку"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Включити кеш малюнків"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Створення кешу"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Кеш створено"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Показати дані малюнка"
@@ -99,3 +115,7 @@ msgstr "Базовий"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Додатково"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Більше"

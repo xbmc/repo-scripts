@@ -22,18 +22,7 @@ def _parse_argv():
 if __name__ == '__main__':
     opts = _parse_argv()
     if opts:
-        xbmc.executebuiltin('Notification(%s,%s,%i)' % (__addonid__, __language__(30019), 5000))
-        path = __addon__.getSetting('path')
-        images = walk(path)
-        if not xbmcvfs.exists(CACHEFOLDER):
-            xbmcvfs.mkdir(CACHEFOLDER)
-        try:
-            cache = xbmcvfs.File(CACHEFILE, "w")
-            cache.write(str(images))
-            cache.close()
-        except:
-            log('failed to save cachefile')
-        xbmc.executebuiltin('Notification(%s,%s,%i)' % (__addonid__, __language__(30020), 5000))
+        create_cache()
     else:
         import gui
         screensaver_gui = gui.Screensaver('script-python-slideshow.xml', __cwd__, 'default')

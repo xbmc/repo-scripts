@@ -80,6 +80,46 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Utilizează nume director"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Arată imaginile în ordine aleatoare"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Activează memoria cache pentru imagini"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Creează memoria cache"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Memoria cache creată"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Arata data imaginii"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Arata informații adiționale ale imaginii"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Arată informații despre muzică în timpul redării audio"
+
 msgctxt "#30024"
 msgid "Basic"
 msgstr "De bază"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Adițional "
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Avansat"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Actualizează memoria cache"

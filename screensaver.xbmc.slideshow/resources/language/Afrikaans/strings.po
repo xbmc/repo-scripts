@@ -67,3 +67,7 @@ msgstr "Nie in staat gestel"
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Basies"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Gevorderde"

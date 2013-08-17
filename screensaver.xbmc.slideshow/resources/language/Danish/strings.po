@@ -83,3 +83,7 @@ msgstr "Anvend mappenavn"
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Simpel"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Udvidet"

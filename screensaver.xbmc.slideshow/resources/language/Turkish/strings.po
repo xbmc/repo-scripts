@@ -99,3 +99,7 @@ msgstr "Temel Bilgiler"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Ek"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Gelişmiş"

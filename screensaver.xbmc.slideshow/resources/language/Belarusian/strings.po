@@ -67,3 +67,7 @@ msgstr "Забаронена"
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Basic"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Advanced"

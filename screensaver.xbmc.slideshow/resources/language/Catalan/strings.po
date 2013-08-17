@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Font d'imatges de la presentació"
+msgstr "Font de les imatges de la presentació"
 
 msgctxt "#30001"
 msgid "Folder"
@@ -40,14 +40,74 @@ msgctxt "#30005"
 msgid "Dim level"
 msgstr "Nivell d'atenuació"
 
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efecte"
+
 msgctxt "#30007"
 msgid "Slide"
 msgstr "Diapositiva"
 
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Nombre de segons per mostrar cada imatge"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Escala de les imatges a pantalla completa"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Nom de l'imatge a mostrar per pantalla"
+
 msgctxt "#30013"
 msgid "Disabled"
-msgstr "Desactivat"
+msgstr "Inhabilitat"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Utilitza nom d'arxiu"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Utilitza el nom de la carpeta"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Mostrar les imatges en ordre aleatori"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Habilita memòria cache d'imatges"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Creant memoria cache"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Memoria cache creada"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Mostrar la data de la foto"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Mostra etiquetes d'imatge addicionals"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Mostra informació de música durant la reproducció d'àudio"
 
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Bàsic"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Adicional"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Avançat"

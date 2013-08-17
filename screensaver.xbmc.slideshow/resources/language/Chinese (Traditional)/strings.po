@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "使用資料夾名稱"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "以隨機順序顯示圖片"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "啟用圖片快取"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "建立快取中"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "快取已建立"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "顯示照片日期"
@@ -99,3 +115,15 @@ msgstr "基本"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "額外的"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "進階"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "更新快取"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "專輯資訊不支援快取"

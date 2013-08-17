@@ -16,6 +16,10 @@ msgstr ""
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Folder"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Non Aktif"

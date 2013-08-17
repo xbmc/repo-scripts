@@ -47,3 +47,7 @@ msgstr "Deshabilitado"
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Básico"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Avanzado"

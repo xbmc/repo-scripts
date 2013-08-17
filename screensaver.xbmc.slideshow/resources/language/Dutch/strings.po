@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Source of slideshow images"
+msgstr "Locatie van diavoorstelling afbeeldingen"
 
 msgctxt "#30001"
 msgid "Folder"
@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Gebruik mapnaam"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Afbeeldingen willekeurig weergeven"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Cache voor afbeeldingen inschakelen"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Genereren cache"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Cache aangemaakt"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Toon afbeeldingsdatum"
@@ -99,3 +115,15 @@ msgstr "Basis"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Extra"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Update cache"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "Caching worden niet onderstund met fanart"

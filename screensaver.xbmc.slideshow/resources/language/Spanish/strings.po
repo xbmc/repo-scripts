@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Usar nombre de carpeta"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Mostrar las imágenes en orden aleatorio"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Habilitar caché de imágenes"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Creando caché"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Caché creada"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Mostrar fecha de imagen"
@@ -99,3 +115,15 @@ msgstr "Básico"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Adicional"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Actualizar caché"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "Modo caché no es compatible con fanart"

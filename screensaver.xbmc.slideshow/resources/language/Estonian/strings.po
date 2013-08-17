@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Kasuta kausta nime"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Näita pilte suvalises järjekorras"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Luba piltide puhverdamine"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Puhvri loomine"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Puhver loodud"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Näita pildi kuupäeva"
@@ -99,3 +115,7 @@ msgstr "Põhiline"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Täiendav"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Põhjalikumad seaded"

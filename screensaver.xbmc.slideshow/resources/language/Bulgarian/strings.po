@@ -56,10 +56,50 @@ msgctxt "#30010"
 msgid "Amount of seconds to display each image"
 msgstr "Изобразяване всяко изображение за (Х сек)"
 
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Показвай имената на снимките"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Изключена"
 
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "..името на файла"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "...името на папката"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Показвай изображенията в произволен ред"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Включи кеширането на изображенията"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Създаване на кеш"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Кеширането приключи"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Показвай датата"
+
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Основни"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Допълнителни"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Допълнителни"

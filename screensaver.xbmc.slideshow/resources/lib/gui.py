@@ -17,6 +17,7 @@ import random
 import xbmcgui, xbmcaddon
 import EXIFvfs
 from iptcinfovfs import IPTCInfo
+from XMPvfs import XMP_Tags
 from xml.dom.minidom import parse
 from utils import *
 if sys.version_info < (2, 7):
@@ -24,9 +25,9 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__    = sys.modules[ "__main__" ].__addon__
-__addonid__  = sys.modules[ "__main__" ].__addonid__
-__cwd__      = sys.modules[ "__main__" ].__cwd__
+__addon__    = sys.modules[ '__main__' ].__addon__
+__addonid__  = sys.modules[ '__main__' ].__addonid__
+__cwd__      = sys.modules[ '__main__' ].__cwd__
 __skindir__  = xbmc.getSkinDir().decode('utf-8')
 __skinhome__ = xbmc.translatePath( os.path.join( 'special://home/addons/', __skindir__, 'addon.xml' ).encode('utf-8') ).decode('utf-8')
 __skinxbmc__ = xbmc.translatePath( os.path.join( 'special://xbmc/addons/', __skindir__, 'addon.xml' ).encode('utf-8') ).decode('utf-8')
@@ -138,6 +139,9 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         while (not xbmc.abortRequested) and (not self.stop):
             # iterate through all the images
             for img in items:
+                # cache file may be outdated
+                if self.slideshow_type == '2' and self.slideshow_cache == 'true' and not xbmcvfs.exists(img[0]):
+                    continue
                 # add image to gui
                 cur_img.setImage(img[0])
                 # give xbmc some time to load the image
@@ -151,13 +155,15 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 description = ''
                 keywords = ''
                 exif = False
-                iptc = False
-                if ((self.slideshow_date == 'true') or (self.slideshow_iptc == 'true')) and (os.path.splitext(img[0])[1].lower() in EXIF_TYPES):
+                iptc_ti = False
+                iptc_de = False
+                iptc_ke = False
+                if self.slideshow_type == '2' and ((self.slideshow_date == 'true') or (self.slideshow_iptc == 'true')) and (os.path.splitext(img[0])[1].lower() in EXIF_TYPES):
                     imgfile = xbmcvfs.File(img[0])
                     # get exif date
                     if self.slideshow_date == 'true':
                         try:
-                            exiftags = EXIFvfs.process_file(imgfile, details=False, stop_tag="DateTimeOriginal")
+                            exiftags = EXIFvfs.process_file(imgfile, details=False, stop_tag='DateTimeOriginal')
                             if exiftags.has_key('EXIF DateTimeOriginal'):
                                 datetime = str(exiftags['EXIF DateTimeOriginal']).decode('utf-8')
                                 # sometimes exif date returns useless data, probably no date set on camera
@@ -170,8 +176,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                                         time = datetime[10:]
                                         if DATEFORMAT[1] == 'm':
                                             datetime = date[1] + '-' + date[2] + '-' + date[0] + '  ' + time
-                                        else:
+                                        elif DATEFORMAT[1] == 'd':
                                             datetime = date[2] + '-' + date[1] + '-' + date[0] + '  ' + time
+                                        else:
+                                            datetime = date[0] + '-' + date[1] + '-' + date[2] + '  ' + time
                                     except:
                                         pass
                                     exif = True
@@ -184,15 +192,29 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                             iptctags = iptc.data
                             if iptctags.has_key(105):
                                 title = iptctags[105].decode('utf-8')
-                                iptc = True
+                                iptc_ti = True
                             if iptctags.has_key(120):
                                 description = iptctags[120].decode('utf-8')
-                                iptc = True
+                                iptc_de = True
                             if iptctags.has_key(25):
                                 keywords = ', '.join(iptctags[25]).decode('utf-8')
-                                iptc = True
+                                iptc_ke = True
                         except:
                             pass
+                        if (not iptc_ti or not iptc_de or not iptc_ke):
+                            try:
+                                tags = XMP_Tags().get_xmp(img[0]) # passing the imgfile object does not work for some reason
+                                if (not iptc_ti) and tags.has_key('dc:title'):
+                                    title = tags['dc:title']
+                                    iptc_ti = True
+                                if (not iptc_de) and tags.has_key('dc:description'):
+                                    description = tags['dc:description']
+                                    iptc_de = True
+                                if (not iptc_ke) and tags.has_key('dc:subject'):
+                                    keywords = tags['dc:subject'].replace('||',', ')
+                                    iptc_ke = True
+                            except:
+                                pass
                     imgfile.close()
                 # display exif date if we have one
                 if exif:
@@ -201,7 +223,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 else:
                     self.datelabel.setVisible(False)
                 # display iptc data if we have any
-                if iptc:
+                if iptc_ti or iptc_de or iptc_ke:
                     self.textbox.setText(title + '[CR]' + description + '[CR]' + keywords)
                     self.textbox.setVisible(True)
                 else:
@@ -209,7 +231,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 # get the file or foldername if enabled in settings
                 if self.slideshow_name != '0':
                     if self.slideshow_name == '1':
-                        if self.slideshow_type == "2":
+                        if self.slideshow_type == '2':
                             NAME, EXT = os.path.splitext(os.path.basename(img[0]))
                         else:
                             NAME = img[1]
@@ -217,13 +239,13 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                         ROOT, NAME = os.path.split(os.path.dirname(img[0]))
                     self.namelabel.setLabel('[B]' + NAME + '[/B]')
                 # set animations
-                if self.slideshow_effect == "0":
+                if self.slideshow_effect == '0':
                     # add slide anim
                     self._set_prop('Slide%d' % order[0], '0')
                     self._set_prop('Slide%d' % order[1], '1')
                 else:
                     # add random slide/zoom anim
-                    if self.slideshow_effect == "2":
+                    if self.slideshow_effect == '2':
                         # add random slide/zoom anim
                         self._anim(cur_img)
                     # add fade anim, used for both fade and slide/zoom anim
@@ -248,21 +270,24 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
     def _get_items(self):
 	# check if we have an image folder, else fallback to video fanart
-        if self.slideshow_type == "2":
-            if self.slideshow_cache == 'true' and xbmcvfs.exists(CACHEFILE):
-                items = self._read_cache()
+        if self.slideshow_type == '2':
+            if self.slideshow_cache == 'true':
+                hexfile = checksum(self.slideshow_path)
+                if not xbmcvfs.exists(CACHEFILE % hexfile):
+                    create_cache()
+                items = self._read_cache(hexfile)
             else:
                 items = walk(self.slideshow_path)
             if not items:
-                self.slideshow_type = "0"
+                self.slideshow_type = '0'
 	# video fanart
-        if self.slideshow_type == "0":
+        if self.slideshow_type == '0':
             methods = [('VideoLibrary.GetMovies', 'movies'), ('VideoLibrary.GetTVShows', 'tvshows')]
 	# music fanart
-        elif self.slideshow_type == "1":
+        elif self.slideshow_type == '1':
             methods = [('AudioLibrary.GetArtists', 'artists')]
         # query the db
-        if not self.slideshow_type == "2":
+        if not self.slideshow_type == '2':
             items = []
             for method in methods:
                 json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "' + method[0] + '", "params": {"properties": ["fanart"]}, "id": 1}')
@@ -277,10 +302,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             random.shuffle(items, random.random)
         return items
 
-    def _read_cache(self):
+    def _read_cache(self, hexfile):
         images = ''
         try:
-            cache = xbmcvfs.File(CACHEFILE)
+            cache = xbmcvfs.File(CACHEFILE % hexfile)
             images = eval(cache.read())
             cache.close()
         except:

@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Использовать имя папки"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Показывать изображения в случайном порядке"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Использовать кеш изображений"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Создаю кеш"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Кеш создан"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Показывать дату изображения"
@@ -98,4 +114,8 @@ msgstr "Базовый"
 
 msgctxt "#30025"
 msgid "Additional"
+msgstr "Дополнительно"
+
+msgctxt "#30026"
+msgid "Advanced"
 msgstr "Дополнительно"

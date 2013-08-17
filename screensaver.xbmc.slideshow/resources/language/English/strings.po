@@ -88,9 +88,7 @@ msgctxt "#30017"
 msgid "Enable image cache"
 msgstr ""
 
-msgctxt "#30018"
-msgid "Create cache"
-msgstr ""
+#empty string with id 30018
 
 msgctxt "#30019"
 msgid "Creating cache"
@@ -122,4 +120,12 @@ msgstr ""
 
 msgctxt "#30026"
 msgid "Advanced"
+msgstr ""
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
 msgstr ""

@@ -99,3 +99,7 @@ msgstr "Pagrindinis"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Papildomas"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Išplėstinė(-is)"

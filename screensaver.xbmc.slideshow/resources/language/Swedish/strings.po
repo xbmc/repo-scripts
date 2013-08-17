@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Använd mappnamnet"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Visa bilder i slumpmässig ordning"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Aktivera bildbuffert"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Skapar buffert"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Buffert skapad"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Visa bilddatum"
@@ -99,3 +115,15 @@ msgstr "Grundläggande"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Ytterligare"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Avancerad"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Uppdatera buffert"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "Buffert har inte stöd för fanart"

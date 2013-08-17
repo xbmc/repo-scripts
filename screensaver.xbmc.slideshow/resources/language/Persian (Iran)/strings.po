@@ -16,6 +16,10 @@ msgstr ""
 "Language: fa_IR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#30001"
+msgid "Folder"
+msgstr "پوشه"
+
 msgctxt "#30007"
 msgid "Slide"
 msgstr "اسلاید"

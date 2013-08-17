@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Sử dụng thư mục"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Hiện ảnh theo thứ tự ngẫu nhiên"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Bật bộ nhớ đệm cho ảnh"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Đang tạo bộ nhớ đệm"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Đã tạo bộ nhớ đệm"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Hiện ngày tạo ảnh"
@@ -99,3 +115,7 @@ msgstr "Cơ bản"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Thêm"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Nâng cao"

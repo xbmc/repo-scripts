@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Použiť názov priečinku"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Zobrazovať obrázky v náhodnom poradí"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Povoliť cache pamäť pre obrázky"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Vytvára sa cache pamäť"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Cache pamäť vytvorená"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Zobraziť dátum obrázku"
@@ -99,3 +115,7 @@ msgstr "Základné"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Dodatočné"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Pokročilé"

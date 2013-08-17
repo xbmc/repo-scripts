@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Χρήση ονόματος φακέλου"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Εμφάνιση εικόνων σε τυχαία σειρά"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Λανθάνουσα μνήμη εικόνων"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Δημιουργείται η λανθ. μνήμη"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Δημιουργήθηκε η λανθ. μνήμη"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Προβολή της ημερομηνίας της εικόνας"
@@ -99,3 +115,15 @@ msgstr "Βασικό"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Επιπρόσθετα"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Για προχωρημένους"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Ενημέρωση λανθ. μνήμης"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "Η λανθ. μνήμης δεν υποστηρίζεται με τα fanart"

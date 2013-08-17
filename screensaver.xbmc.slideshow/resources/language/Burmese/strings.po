@@ -79,3 +79,7 @@ msgstr "အခြေခံ"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "နောက်ထပ်"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "အဆင့်မြင့်သော"

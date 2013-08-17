@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "使用文件夹名"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "以随机顺序显示图片"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "启用图片缓存"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "缓存创建中"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "缓存已创建"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "显示图片日期"
@@ -99,3 +115,15 @@ msgstr "基本信息"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "附加的"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "高级"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "更新缓存"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "不支持同人画缓存"

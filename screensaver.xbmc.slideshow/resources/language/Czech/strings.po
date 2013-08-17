@@ -80,6 +80,22 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Použít název složky"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Zobrazit obrázky v náhodném pořadí"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Povolit mezipaměť obrázků"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Vytvářím mezipaměť"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Mezipaměť vytvořena"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Zobrazit datum obrázku"
@@ -99,3 +115,15 @@ msgstr "Základní"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Další"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Aktualizovat mezipaměť"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "S fanartem není mezipaměť podporována"
