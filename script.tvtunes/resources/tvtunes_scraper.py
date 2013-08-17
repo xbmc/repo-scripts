@@ -114,7 +114,7 @@ class TvTunes:
                 if (len(theme_list) == 1) and (self.exact_match == 'true'): 
                     theme_url = self.download_url % theme_list[0]["url"].replace("http://www.televisiontunes.com/", "").replace(".html" , "")
                 else:
-                    theme_url = self.get_user_choice( theme_list , show[0] )
+                    theme_url = self.get_user_choice( theme_list , show[2] )
                 if theme_url:
                     self.download(theme_url , show[1])
 
@@ -225,13 +225,14 @@ class TvTunes:
         TVlist = []
         if json_response['result'].has_key('tvshows'):
             for item in json_response['result']['tvshows']:
+                orgname = item['title']
                 tvshow = item['title'].replace(":","")
                 tvshow = normalize_string( tvshow )
                 if self.enable_custom_path == "true":
                     path = os.path.join(self.custom_path, tvshow).decode("utf-8")
                 else:
                     path = item['file']
-                TVlist.append( ( tvshow , path ) )
+                TVlist.append( ( tvshow , path, orgname ) )
         return TVlist   
               
 if ( __name__ == "__main__" ):

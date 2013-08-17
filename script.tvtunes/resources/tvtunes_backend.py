@@ -126,21 +126,21 @@ class mythread( threading.Thread ):
 
     def fade_out( self ):
         cur_vol = self.get_volume()
-        cur_vol_prec = 100 + (cur_vol * (100/60.0))
-        vol_step = cur_vol_prec / 10
+        cur_vol_perc = 100 + (cur_vol * (100/60.0))
+        vol_step = cur_vol_perc / 10
         # do not mute completely else the mute icon shows up
         for step in range (0,9):
-            vol = cur_vol_prec - vol_step
+            vol = cur_vol_perc - vol_step
             log( "### vol: %s" % str(vol) )
             xbmc.executebuiltin('XBMC.SetVolume(%d)' % vol)
-            cur_vol_prec = vol
+            cur_vol_perc = vol
             xbmc.sleep(200)
         xbmc.Player().stop()
         # wait till player is stopped before raising the volume
         while xbmc.Player().isPlaying():
             xbmc.sleep(50)
-        pre_vol_prec = 100 + (cur_vol * (100/60.0))
-        xbmc.executebuiltin('XBMC.SetVolume(%d)' % pre_vol_prec)
+        pre_vol_perc = 100 + (cur_vol * (100/60.0))
+        xbmc.executebuiltin('XBMC.SetVolume(%d)' % pre_vol_perc)
         # wait till xbmc has adjusted the volume before continuing
         xbmc.sleep(200)
 

@@ -1,3 +1,9 @@
+v3.0.8
+- show original title in dialogs
+
+v3.0.7
+- cosmetics, fix typo in code
+
 v3.0.6
 - fix scraper crash due to missing exact_match setting check
 

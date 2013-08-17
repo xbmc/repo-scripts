@@ -1,0 +1,133 @@
+# XBMC Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: Ppic|Frost|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Italian (http://www.transifex.com/projects/p/xbmc-addons/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Esegui il tema in loop"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Volume più basso"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Usa condivisioni SMB protette"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Nome Utente"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Password"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Salva i brani in un percorso personalizzato"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Percorso:"
+
+msgctxt "#32008"
+msgid "Fade tune when you exit a tv show"
+msgstr "Sfuma il brano quando esci dalla serie tv"
+
+msgctxt "#32009"
+msgid "Automatically download if an exact match is found"
+msgstr "Scarica automaticamente se un risultato identico è stato trovato"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "Errore"
+
+msgctxt "#32102"
+msgid "site unreacheable"
+msgstr "sito inraggiungibile"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "Scaricatore TvTune "
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Sostituisci il tema esistente?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "Brani TV"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Ottenere informazioni ..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Ricerca"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "CANCELLATO"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Operazione cancellata dell'utente."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "In download:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "a:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Scegli per"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "INSERISCI RICERCA MANUALE"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Scarica questo?"
+
+msgctxt "#32115"
+msgid "TvTunes"
+msgstr "TvTunes"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Puoi aiutare ad ottenere più temi su:"
+
+msgctxt "#32117"
+msgid "http://www.televisiontunes.com/"
+msgstr "http://www.televisiontunes.com/"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Riproduzione"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Scarica"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "File system"

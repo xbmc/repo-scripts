@@ -1,0 +1,133 @@
+# XBMC Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: Ppic|Frost|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Επαναλαμβανόμενη αναπαραγωγή μουσικού θέματος"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Χαμηλότερη ένταση ήχου"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Χρήση Προστατευόμενης SMB Κοινής Χρήσης"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Όνομα Χρήστη:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Κωδικός:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Αποθήκευση μουσικής σε προσαρμοσμένο φάκελο"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Διαδρομή:"
+
+msgctxt "#32008"
+msgid "Fade tune when you exit a tv show"
+msgstr "Σταδιακό σβήσιμο της μουσικής κατά την έξοδο από την τηλ. σειρά"
+
+msgctxt "#32009"
+msgid "Automatically download if an exact match is found"
+msgstr "Αυτόματη λήψη αν βρεθεί ακριβής ταύτιση"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "ΣΦΑΛΜΑ"
+
+msgctxt "#32102"
+msgid "site unreacheable"
+msgstr "αδυναμία σύνδεσης με την ιστοσελίδα"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "Λήψη TvTunes"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Αντικατάσταση του υπάρχοντος θέματος;"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TVTunes"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Γίνεται λήψη πληροφοριών..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Αναζήτηση για"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "ΑΚΥΡΩΘΗΚΕ"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Η διαδικασία ακυρώθηκε από το χρήστη."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Γίνεται λήψη:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "σε:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Επιλογή για"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "ΕΙΣΑΓΩΓΗ ΧΕΙΡΟΚΙΝΗΤΗΣ ΑΝΑΖΗΤΗΣΗΣ"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Να γίνει λήψη αυτού;"
+
+msgctxt "#32115"
+msgid "TvTunes"
+msgstr "TvTunes"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Βοηθήστε στην επαύξηση των μουσικών θεμάτων στο:"
+
+msgctxt "#32117"
+msgid "http://www.televisiontunes.com/"
+msgstr "http://www.televisiontunes.com/"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Αναπαραγωγή"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Λήψη"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Σύστημα αρχείων"

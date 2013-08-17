@@ -1,0 +1,133 @@
+# XBMC Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: Ppic|Frost|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Reprodueix el tema en bucle"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Valor vaix del so"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Utilitza el recurs compartit SMB protegit"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Usuari:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Contrasenya:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Emmagatzemar els temes en una ruta personalitzada"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Camí:"
+
+msgctxt "#32008"
+msgid "Fade tune when you exit a tv show"
+msgstr "Suavitzar el tema en sortir del programa de TV"
+
+msgctxt "#32009"
+msgid "Automatically download if an exact match is found"
+msgstr "Descarrega automàticament si es troba una coincidència exacta"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "ERROR"
+
+msgctxt "#32102"
+msgid "site unreacheable"
+msgstr "lloc inaccesible"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "Descarregador TvTune"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Sobrescriure el tema existent?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TvTunes"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Obtenin Informació"
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Cerca per"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "CANCEL·LAT"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Operació canceL·lada per l'usuari."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Descarregant:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "a:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Trieu per"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "ENTRAR CERCA MANUAL"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Descarregar aquesta?"
+
+msgctxt "#32115"
+msgid "TvTunes"
+msgstr "TvTunes"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Pots ajudar a obtenir mes temes a:"
+
+msgctxt "#32117"
+msgid "http://www.televisiontunes.com/"
+msgstr "http://www.televisiontunes.com/"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Reproducció"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Descarregar"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Arxius del sistema"
