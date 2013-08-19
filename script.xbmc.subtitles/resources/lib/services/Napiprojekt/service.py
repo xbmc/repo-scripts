@@ -4,6 +4,7 @@ import sys
 import os
 from utilities import languageTranslate
 import xbmc
+import xbmcvfs
 import urllib
 
 try:
@@ -43,8 +44,8 @@ def set_filehash(path,rar):
     d = md5();    
     qpath=urllib.quote(path)
     if rar:
-        path="""rar://"""+qpath       
-    d.update(open(path,"rb").read(10485760))    
+        path="""rar://"""+qpath
+    d.update(xbmcvfs.File(path,"rb").read(10485760))
     return d
 
 def f(z):

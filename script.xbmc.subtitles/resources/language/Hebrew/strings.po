@@ -137,6 +137,14 @@ msgctxt "#767"
 msgid "No 'sync' subtitle found"
 msgstr "לא נמצאו כתוביות מסונכרנות"
 
+msgctxt "#30098"
+msgid "- Subtitle.co.il Email"
+msgstr "- כתובת אימייל בסרטים"
+
+msgctxt "#30099"
+msgid "- Subtitle.co.il Password"
+msgstr "- סיסמה ב-סרטים"
+
 msgctxt "#30100"
 msgid "Languages"
 msgstr "שפות"

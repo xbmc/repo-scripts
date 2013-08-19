@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 import os
 import re
@@ -29,9 +29,9 @@ CANCEL_DIALOG  = ( 9, 10, 13, 92, 216, 247, 257, 275, 61467, 61448, )
 SERVICE_DIR    = os.path.join(__cwd__, "resources", "lib", "services")
 
 LANGUAGES      = (
-    
+
     # Full Language name[0]     podnapisi[1]  ISO 639-1[2]   ISO 639-1 Code[3]   Script Setting Language[4]   localized name id number[5]
-    
+
     ("Albanian"                   , "29",       "sq",            "alb",                 "0",                     30201  ),
     ("Arabic"                     , "12",       "ar",            "ara",                 "1",                     30202  ),
     ("Belarusian"                 , "0" ,       "hy",            "arm",                 "2",                     30203  ),
@@ -95,7 +95,7 @@ LANGUAGES      = (
 
 
 REGEX_EXPRESSIONS = [ '[Ss]([0-9]+)[][._-]*[Ee]([0-9]+)([^\\\\/]*)$',
-                      '[\._ \-]([0-9]+)x([0-9]+)([^\\/]*)',                     # foo.1x09 
+                      '[\._ \-]([0-9]+)x([0-9]+)([^\\/]*)',                     # foo.1x09
                       '[\._ \-]([0-9]+)([0-9][0-9])([\._ \-][^\\/]*)',          # foo.109
                       '([0-9]+)([0-9][0-9])([\._ \-][^\\/]*)',
                       '[\\\\/\\._ -]([0-9]+)([0-9][0-9])[^\\/]*',
@@ -115,46 +115,46 @@ class Pause:
   def restore(self):
     if self.player_state != xbmc.getCondVisibility('Player.Paused'):
       xbmc.Player().pause()
-      
+
   def pause(self):
     if not xbmc.getCondVisibility('Player.Paused'):
       xbmc.Player().pause()
-   
+
 def log(module,msg):
-  xbmc.log((u"### [%s-%s] - %s" % (__scriptname__,module,msg,)).encode('utf-8'),level=xbmc.LOGDEBUG ) 
+  xbmc.log((u"### [%s-%s] - %s" % (__scriptname__,module,msg,)).encode('utf-8'),level=xbmc.LOGDEBUG )
 
 def regex_tvshow(compare, file, sub = ""):
   sub_info = ""
   tvshow = 0
-  
+
   for regex in REGEX_EXPRESSIONS:
-    response_file = re.findall(regex, file)                  
-    if len(response_file) > 0 : 
+    response_file = re.findall(regex, file)
+    if len(response_file) > 0 :
       log( __name__ , "Regex File Se: %s, Ep: %s," % (str(response_file[0][0]),str(response_file[0][1]),) )
       tvshow = 1
       if not compare :
         title = re.split(regex, file)[0]
-        for char in ['[', ']', '_', '(', ')','.','-']: 
+        for char in ['[', ']', '_', '(', ')','.','-']:
            title = title.replace(char, ' ')
         if title.endswith(" "): title = title[:-1]
         return title,response_file[0][0], response_file[0][1]
       else:
         break
-  
+
   if (tvshow == 1):
-    for regex in regex_expressions:       
+    for regex in regex_expressions:
       response_sub = re.findall(regex, sub)
       if len(response_sub) > 0 :
         try :
           sub_info = "Regex Subtitle Ep: %s," % (str(response_sub[0][1]),)
           if (int(response_sub[0][1]) == int(response_file[0][1])):
             return True
-        except: pass      
+        except: pass
     return False
   if compare :
     return True
   else:
-    return "","",""    
+    return "","",""
 
 def languageTranslate(lang, lang_from, lang_to):
   for x in LANGUAGES:
@@ -166,11 +166,11 @@ def pause():
     xbmc.Player().pause()
     return True
   else:
-    return False  
-    
+    return False
+
 def unpause():
   if xbmc.getCondVisibility('Player.Paused'):
-    xbmc.Player().pause()  
+    xbmc.Player().pause()
 
 def rem_files(directory):
   try:
@@ -178,10 +178,10 @@ def rem_files(directory):
       shutil.rmtree(directory)
   except:
     pass
-    
+
   if not xbmcvfs.exists(directory):
     os.makedirs(directory)
-      
+
 def copy_files( subtitle_file, file_path ):
   subtitle_set = False
   try:
@@ -205,18 +205,18 @@ def normalizeString(str):
 def hashFile(file_path, rar):
     if rar:
       return OpensubtitlesHashRar(file_path)
-      
-    log( __name__,"Hash Standard file")  
+
+    log( __name__,"Hash Standard file")
     longlongformat = 'q'  # long long
     bytesize = struct.calcsize(longlongformat)
     f = xbmcvfs.File(file_path)
-    
+
     filesize = f.size()
     hash = filesize
-    
+
     if filesize < 65536 * 2:
         return "SizeError"
-    
+
     buffer = f.read(65536)
     f.seek(max(0,filesize-65536),0)
     buffer += f.read(65536)
@@ -226,7 +226,7 @@ def hashFile(file_path, rar):
         (l_value,)= struct.unpack(longlongformat, buffer[size:size+bytesize])
         hash += l_value
         hash = hash & 0xFFFFFFFFFFFFFFFF
-    
+
     returnHash = "%016x" % hash
     return filesize,returnHash
 
@@ -240,11 +240,11 @@ def OpensubtitlesHashRar(firsrarfile):
     seek=0
     for i in range(4):
         f.seek(max(0,seek),0)
-        a=f.read(100)        
-        type,flag,size=struct.unpack( '<BHH', a[2:2+5]) 
+        a=f.read(100)
+        type,flag,size=struct.unpack( '<BHH', a[2:2+5])
         if 0x74==type:
             if 0x30!=struct.unpack( '<B', a[25:25+1])[0]:
-                raise Exception('Bad compression method! Work only for "store".')            
+                raise Exception('Bad compression method! Work only for "store".')
             s_partiizebodystart=seek+size
             s_partiizebody,s_unpacksize=struct.unpack( '<II', a[7:7+2*4])
             if (flag & 0x0100):
@@ -273,7 +273,7 @@ def addfilehash(name,hash,seek):
     for i in range(8192):
         hash+=struct.unpack('<q', f.read(8))[0]
         hash =hash & 0xffffffffffffffff
-    f.close()    
+    f.close()
     return hash
 
 def hashFileMD5(file_path, buff_size=1048576):
@@ -298,7 +298,4 @@ def getShowId():
       tvdbid_query = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails", "params": {"tvshowid": ' + str(tvshowid) + ', "properties": ["imdbnumber"]}, "id": 1}'
       return json.loads(xbmc.executeJSONRPC (tvdbid_query))['result']['tvshowdetails']['imdbnumber']
     except:
-      log( __name__ ," Failed to find TVDBid in database")  
-    
-
-
+      log( __name__ ," Failed to find TVDBid in database")

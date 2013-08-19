@@ -190,16 +190,20 @@ def get_subtitles_list(searchstring, languageshort, languagelong, subtitles_list
         return
     for subtitle in subtitles:
         try:
-            filename = re.compile('">(.+?)</a>').findall(subtitle)[0]
+            filename = re.compile('title = "(.+?)"').findall(subtitle)[0]
+            filename = filename.split("subtitles for")[-1]
+            filename = filename.strip()
             id = re.compile('href="(.+?)"').findall(subtitle)[0]
             try:
                 uploader = re.compile('class="link_from">(.+?)</a>').findall(subtitle)[0]
+                uploader = uploader.strip()
                 if uploader == 'movieplace': uploader = 'GreekSubtitles'
                 filename = '[%s] %s' % (uploader, filename)
             except:
                 pass
             try:
                 downloads = re.compile('class="latest_downloads">(.+?)</td>').findall(subtitle)[0]
+                downloads = re.sub("\D", "", downloads)
                 filename += ' [%s DLs]' % (downloads)
             except:
                 pass

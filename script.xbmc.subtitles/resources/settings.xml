@@ -61,7 +61,11 @@
 
       <setting id="SerialZone" type="bool" label="SerialZone.cz (Czech and Slovak subs only)" default="false"/>
       <setting id="Shooter" type="bool" label="Shooter.cn (Chinese and English subs only)" default="false"/>
+      
       <setting id="Sratim" type="bool" label="Sratim.co.il" default="false"/>
+      <setting id="SRAemail" type="text"  visible= "eq(-1,true)" enable="eq(-1,true)" label="30098" default=""/>
+      <setting id="SRApass" type="text" option = "hidden" visible= "eq(-2,true)" enable="eq(-2,true)" label="30099" default=""/>
+
       <setting id="SubClub" type="bool" label="SubClub.eu" default="false"/>
       <setting id="SubDB" type="bool" label="theSubDB.com" default="false"/>
       <setting id="Subdivx" type="bool" label="Subdivx.com (Spanish subs only)" default="false"/>

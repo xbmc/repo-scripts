@@ -1,3 +1,13 @@
+3.9.13
+- [fix] Fixed Sratim A.K.A Subtitle.co.il service, BBLN
+
+3.9.12
+- [fix] Fix for auto-download of subtitles not working when the language name is not the first synonym in the LANGUAGES list, diego nunes
+- [fix] Fixed search on SubtitlesGR service, lambda81
+- [fix] Napiproject, paradix
+- [fix] updated SubScene service for current site version, Marcel Anacker
+- [cleanup] Linting/cleanup, diego nunes
+
 3.9.11
 - [fix] Subs4Free and SubtitlesGR, lambda81
 - [fix] SubtitlesGR, jded76

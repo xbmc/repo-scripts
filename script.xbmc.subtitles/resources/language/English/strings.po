@@ -155,8 +155,16 @@ msgctxt "#767"
 msgid "No 'sync' subtitle found"
 msgstr ""
 
-#empty strings from id 768 to 30099
+#empty strings from id 768 to 30097
 #Script Settings
+
+msgctxt "#30098"
+msgid "- Subtitle.co.il Email"
+msgstr ""
+
+msgctxt "#30099"
+msgid "- Subtitle.co.il Password"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Languages"
