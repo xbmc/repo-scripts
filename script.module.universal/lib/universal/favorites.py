@@ -179,7 +179,8 @@ class Favorites:
                        
         sql_insert = ''
         if self.is_already_in_favorites(section_title, section_addon_title, sub_section_title, sub_section_addon_title, title) == True:
-            common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - already exists in Favorites.', '8000')
+            #common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - already exists in Favorites.', '8000')
+            common.notify(self.addon_id, 'small', '[B]' + fmtd_title + '[/B]', '[B]Already exists in Favorites.[/B]', '8000')
         else:
             if DB == 'mysql':
                 sql_insert = "INSERT INTO favorites(addon_id, hash_title, title, fmtd_title, url, section_title, section_addon_title, sub_section_title, sub_section_addon_title, infolabels, image_url, fanart_url, isfolder, isplayable ) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -194,10 +195,12 @@ class Favorites:
             try:
                 self.dbcur.execute(sql_insert, (self.addon_id, hash_title, title, fmtd_title, url, section_title, section_addon_title, sub_section_title, sub_section_addon_title, str(infolabels), img, fanart, common.bool2str(is_folder), common.bool2str(is_playable) ))            
                 self.dbcon.commit()
-                common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - added successfully to Favorites.', '8000')
+                #common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - added successfully to Favorites.', '8000')
+                common.notify(self.addon_id, 'small', '[B]' + fmtd_title + '[/B]', '[B]Added to Favorites.[/B]', '8000')
             except:
-                common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - unable to add to Favorites.', '8000')                
-                raise
+                #common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - unable to add to Favorites.', '8000')                
+                common.notify(self.addon_id, 'small', '[B]' + fmtd_title + '[/B]', '[B]Unable to add to Favorites.[/B]', '8000')
+                pass
                 
     def delete_item_from_db(self, title, fmtd_title, section_title, section_addon_title, sub_section_title, sub_section_addon_title, item_mode='main'):
     
@@ -223,9 +226,11 @@ class Favorites:
         try:
             self.dbcur.execute(sql_delete, (self.addon_id, section_title, sub_section_title, hash_title) )            
             self.dbcon.commit()
-            common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - removed successfully from Favorites.', '8000')
+            #common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - removed successfully from Favorites.', '8000')
+            common.notify(self.addon_id, 'small', '[B]' + fmtd_title + '[/B]', '[B]Removed from Favorites.[/B]', '8000')
         except:
-            common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - unable to remove from Favorites.', '8000')                
+            #common.notify(self.addon_id, 'small', '', 'Item: ' + fmtd_title + ' - unable to remove from Favorites.', '8000')                
+            common.notify(self.addon_id, 'small', '[B]' + fmtd_title + '[/B]', '[B]Unable to remove from Favorites.[/B]', '8000')
             pass
         
     def build_url(self, queries):
@@ -308,12 +313,20 @@ class Favorites:
         elif item_mode == 'addon':
             item_column_section = 'section_addon_title'
             item_column_sub_section = 'sub_section_addon_title'
+            
+        if DB == 'mysql':
+            params_var = "%s"
+        else:
+            params_var = "?"
+            
+        params = []
 
-        sql_select = "SELECT DISTINCT %s FROM favorites" % item_column_sub_section
+        sql_select = "SELECT DISTINCT " + item_column_sub_section + " FROM favorites"
         
         whereadded = False
         if addon_id != 'all':
-            sql_select = sql_select + ' WHERE addon_id = \'' + addon_id + '\''
+            params.append(addon_id)
+            sql_select = sql_select + ' WHERE addon_id = ' + params_var
             whereadded = True
             
         if whereadded == False:
@@ -321,12 +334,16 @@ class Favorites:
             whereadded = True
         else:
             sql_select = sql_select + ' AND '        
-        sql_select = sql_select + " %s = '%s' AND %s != '' ORDER BY %s ASC" % (item_column_section, section_title, item_column_sub_section, item_column_sub_section)
             
-        common.addon.log('-' + HELPER + '- -' + sql_select, 2)
-
-        self.dbcur.execute(sql_select)
+        params.append(section_title)
+        sql_select = sql_select + item_column_section + " = " + params_var + " AND " + item_column_sub_section + " != '' ORDER BY " + item_column_sub_section + " ASC" 
         
+        params = tuple(params)
+        
+        common.addon.log('-' + HELPER + '- -' + sql_select + ":" + (" %s," * len(params)) % params, 2)
+
+        self.dbcur.execute(sql_select, params)
+                    
         for matchedrow in self.dbcur.fetchall():
         
             match = dict(matchedrow)
@@ -344,19 +361,29 @@ class Favorites:
             item_column_section = 'section_title'
         elif item_mode == 'addon':
             item_column_section = 'section_addon_title'
+            
+        if DB == 'mysql':
+            params_var = "%s"
+        else:
+            params_var = "?"
         
-        sql_select = "SELECT DISTINCT %s FROM favorites" % item_column_section
+        params = []
+        
+        sql_select = "SELECT DISTINCT " + item_column_section + " FROM favorites"
         
         whereadded = False
         if addon_id != 'all':
-            sql_select = sql_select + ' WHERE addon_id = \'' + addon_id + '\''
+            params.append(addon_id)
+            sql_select = sql_select + ' WHERE addon_id = ' + params_var
             whereadded = True
         
-        sql_select = sql_select + " ORDER BY %s ASC" % item_column_section
-            
-        common.addon.log('-' + HELPER + '- -' + sql_select, 2)
+        sql_select = sql_select + " ORDER BY " + item_column_section + " ASC"
+        
+        params = tuple(params)
+        
+        common.addon.log('-' + HELPER + '- -' + sql_select + ":" + (" %s," * len(params)) % params, 2)
 
-        self.dbcur.execute(sql_select)
+        self.dbcur.execute(sql_select, params)
         
         for matchedrow in self.dbcur.fetchall():
         
@@ -380,35 +407,49 @@ class Favorites:
         elif item_mode == 'addon':
             item_column_section = 'section_addon_title'
             item_column_sub_section = 'sub_section_addon_title'
+            
+        if DB == 'mysql':
+            params_var = "%s"
+        else:
+            params_var = "?"
         
         try:
             import json
         except:
             import simplejson as json
+            
+        params = []
 
         sql_select = "SELECT * FROM favorites"
+                
         
         whereadded = False
         if addon_id != 'all':
-            sql_select = sql_select + ' WHERE addon_id = \'' + addon_id + '\''
+            params.append(addon_id)
+            sql_select = sql_select + ' WHERE addon_id = ' + params_var
             whereadded = True
         
         if section_title != 'all':
+            params.append(section_title)
             if whereadded == False:
                 sql_select = sql_select + ' WHERE '
                 whereadded = True
             else:
                 sql_select = sql_select + ' AND '        
-            sql_select = sql_select + " %s = '%s' " % (item_column_section, section_title)
+            sql_select = sql_select + item_column_section + " = " + params_var             
             
             if sub_section_title != 'all':
-                sql_select = sql_select + " AND %s = '%s' " % (item_column_sub_section, sub_section_title)
+                params.append(sub_section_title)
+                sql_select = sql_select + " AND " + item_column_sub_section + " = " + params_var 
+        
         
         sql_select = sql_select + " ORDER BY title ASC"
+        
+        params = tuple(params)
             
-        common.addon.log('-' + HELPER + '- -' + sql_select, 2)
+        common.addon.log('-' + HELPER + '- -' + sql_select + ":" + (" %s," * len(params)) % params, 2)
 
-        self.dbcur.execute(sql_select)
+        self.dbcur.execute(sql_select, params)
         
         for matchedrow in self.dbcur.fetchall():
         

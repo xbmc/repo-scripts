@@ -55,12 +55,15 @@ def str2bool(myinput):
     elif myinput == 'true': return True
     
 def str_conv(data):
-    if isinstance(data, unicode):
-        data = data.encode('utf8')
-    elif isinstance(data, str):
+    if isinstance(data, str):
         # Must be encoded in UTF-8
-        data.decode('utf8')
+        data = data.decode('utf8')
+	
+    import unicodedata
+    data = unicodedata.normalize('NFKD', data).encode('ascii','ignore')
+	
     data = data.decode('string-escape')
+        
     return data
         
 def encode_dict(dict):
@@ -91,7 +94,7 @@ def decode_dict(dict):
         if v.find("<squot>") >= 0:
             v = v.replace("<squot>", "'")
         if v.find('<dquot>') >= 0:
-            v = v.replace("<dquot>", "'")
+            v = v.replace("<dquot>", '"')
         if v.find('<ltbrc>') >= 0:
             v = v.replace('<ltbrc>', '{')
         if v.find('<rtbrc>') >= 0:
@@ -116,7 +119,8 @@ def dict_to_paramstr(dict):
     
 def notify(addon_id, typeq, title, message, times, line2='', line3=''):
     addon_tmp = Addon(addon_id)
-    title=addon_tmp.get_name() + title
+    if title == '' :
+        title='[B]' + addon_tmp.get_name() + '[/B]'
     if typeq == 'small':
         if times == '':
            times='5000'
