@@ -2,10 +2,14 @@ EpisodeHunter
 =============
 
 Plugin for XBMC.
-Automatic scrobble what you are watching to episodehunter.tv  
+Automatic scrobble what you are watching to episodehunter.tv
 
-This plugin is under beta testning.
+You are required to have a EpisodeHunter account for this plugin.
+Register on episodehunter.tv
+
+This plugin is under beta testing.
 No more feature is planned.
+
 However, if you have any suggestions or problem, please
 visit episodehunter.uservoice.com or
 contact us on info@episodehunter.tv

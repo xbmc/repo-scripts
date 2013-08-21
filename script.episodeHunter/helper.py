@@ -4,20 +4,26 @@ import xbmcgui
 
 _name = "EpisodeHunter"
 
-debug = True
-
 
 def Debug(msg):
+    settings = xbmcaddon.Addon("script.episodeHunter")
+    debug = settings.getSetting("debug")
     if debug:
         try:
             print _name + ": " + msg
         except Exception:
-            print _name + ": You are trying to print some bad string, " + msg.encode("utf-8", "ignore")
+            try:
+                print _name + ": You are trying to print some bad string, " + msg.encode("utf-8", "ignore")
+            except Exception:
+                print _name + ": You are trying to print a bad string, I can not even print it"
 
 
-def notification(header, message):
+
+def notification(header, message, level=0):
     settings = xbmcaddon.Addon("script.episodeHunter")
-    xbmc.executebuiltin("XBMC.Notification(%s,%s,%i,%s)" % (header, message, 5000, settings.getAddonInfo("icon")))
+    debug = settings.getSetting("debug")
+    if debug or level == 0:
+        xbmc.executebuiltin("XBMC.Notification(%s,%s,%i,%s)" % (header, message, 5000, settings.getAddonInfo("icon")))
 
 
 # Do we have username and api key?
@@ -29,27 +35,27 @@ def isSettingsOkey(daemon=False, silent=False):
         if silent:
             return False
         elif daemon:
-            notification(_name, language(10063))
+            notification(_name, language(32014))
         else:
-            xbmcgui.Dialog().ok(_name, language(10063))
+            xbmcgui.Dialog().ok(_name, language(32014))
         return False
 
     elif settings.getSetting("username") == "":
         if silent:
             return False
         if daemon:
-            notification(_name, language(10030))
+            notification(_name, language(32012))
         else:
-            xbmcgui.Dialog().ok(_name, language(10030))
+            xbmcgui.Dialog().ok(_name, language(32012))
         return False
 
     elif settings.getSetting("api_key") == "":
         if silent:
             return False
         if daemon:
-            notification(_name, language(10031))
+            notification(_name, language(32013))
         else:
-            xbmcgui.Dialog().ok(_name, language(10031))
+            xbmcgui.Dialog().ok(_name, language(32013))
         return False
 
     return True

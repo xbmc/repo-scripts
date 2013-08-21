@@ -17,7 +17,7 @@ def syncSeenMovies(gui=True):
 
     if gui:
         progress = xbmcgui.DialogProgress()
-        progress.create(_name, _language(10038))  # "Checking XBMC Database for new watched Movies"
+        progress.create(_name, _language(32021))  # "Checking XBMC Database for new watched Movies"
 
     connection = Connection()
 
@@ -40,7 +40,7 @@ def syncSeenMovies(gui=True):
         if gui:
             progress.update(100 / num_movies * i)
             if progress.iscanceled():
-                xbmcgui.Dialog().ok(_name, _language(10039))    # "Progress Aborted"
+                xbmcgui.Dialog().ok(_name, _language(32022))    # "Progress Aborted"
                 break
         try:
             imdb_id = movie['imdbnumber']
@@ -110,30 +110,30 @@ def syncSeenMovies(gui=True):
 
     if num_seen_movies > 0:
         if gui:
-            choice = xbmcgui.Dialog().yesno(_name, str(num_seen_movies) + " " + _language(10040), set_as_seen_title)  # 'Movies will be added as watched on EpisodeHunter'
+            choice = xbmcgui.Dialog().yesno(_name, str(num_seen_movies) + " " + _language(32023), set_as_seen_title)  # 'Movies will be added as watched on EpisodeHunter'
         else:
             choice = 0
 
         if choice == 1 or choice is True:                       # I belive this is OS bedending
-            progress.update(50, _language(10065))               # 'Uploading movies to episodehunter'
+            progress.update(50, _language(32044))               # 'Uploading movies to episodehunter'
             data = connection.setMoviesSeen(set_as_seen)
 
             if data is None:
                 Debug("Error uploading seen movies: response is None")
                 if gui:
-                    xbmcgui.Dialog().ok(_name, _language(10041), "")  # 'Error uploading watched movies'
+                    xbmcgui.Dialog().ok(_name, _language(32024), "")  # 'Error uploading watched movies'
             elif 'status' in data:
                 if data['status'] == 400:
                     Debug("successfully uploaded seen movies")
                     if gui:
-                        xbmcgui.Dialog().ok(_name, _language(10058))    # 'Movie sucessfully updated to EpisodeHunter'
+                        xbmcgui.Dialog().ok(_name, _language(32040))    # 'Movie sucessfully updated to EpisodeHunter'
                 elif data['status'] == 300:
                     Debug("Error uploading seen movies: " + str(data['data']))
                     if gui:
-                        xbmcgui.Dialog().ok(_name, _language(10041), str(data['data']))  # 'Error uploading watched movies'
+                        xbmcgui.Dialog().ok(_name, _language(32024), str(data['data']))  # 'Error uploading watched movies'
     else:
         if gui:
-            xbmcgui.Dialog().ok(_name, _language(10042))  # 'No new watched movies to update for EpisodeHunter'
+            xbmcgui.Dialog().ok(_name, _language(32025))  # 'No new watched movies to update for EpisodeHunter'
 
     if gui:
         progress.close()
@@ -146,7 +146,7 @@ def syncSeenTVShows(gui=True):
 
     if gui:                                       # Are we syncing in a GUI?
         progress = xbmcgui.DialogProgress()       # Create a dialog
-        progress.create(_name, _language(10047))  # And put a title on it (Checking XBMC Database for new watched Episodes)
+        progress.create(_name, _language(32030))  # And put a title on it (Checking XBMC Database for new watched Episodes)
 
     connection = Connection()                     # Create a connection
 
@@ -178,7 +178,7 @@ def syncSeenTVShows(gui=True):
         if gui:
             progress.update(100 / number_tvshows * i)
             if progress.iscanceled():
-                xbmcgui.Dialog().ok(_name, _language(10039))    # "Progress Aborted"
+                xbmcgui.Dialog().ok(_name, _language(32022))    # "Progress Aborted"
                 break
 
         seasons = getSeasonsFromXBMC(xbmc_tvshow)               # Get a list of seasons
@@ -268,7 +268,7 @@ def syncSeenTVShows(gui=True):
 
     if count > 0:
         if gui:
-            choice = xbmcgui.Dialog().yesno(_name, str(count) + " " + _language(10048), set_as_seen_title)  # String: Episodes will be added as watched
+            choice = xbmcgui.Dialog().yesno(_name, str(count) + " " + _language(32031), set_as_seen_title)  # String: Episodes will be added as watched
         else:
             choice = 0
 
@@ -278,7 +278,7 @@ def syncSeenTVShows(gui=True):
             n = len(set_as_seen)
             i = -1
 
-            progress.update(0, _language(10064))  # Uploading shows to episodehunter
+            progress.update(0, _language(32043))  # Uploading shows to episodehunter
 
             for show in set_as_seen:
                 i += 1
@@ -301,17 +301,17 @@ def syncSeenTVShows(gui=True):
 
             if error is None:
                 if gui:
-                    xbmcgui.Dialog().ok(_name, _language(10049))            # Episodes sucessfully updated to EpisodeHunter
+                    xbmcgui.Dialog().ok(_name, _language(32032))            # Episodes sucessfully updated to EpisodeHunter
                 else:
-                    notification(_name, _language(10049))                   # Episodes sucessfully updated to EpisodeHunter
+                    notification(_name, _language(32032))                   # Episodes sucessfully updated to EpisodeHunter
             else:
                 if gui:
-                    xbmcgui.Dialog().ok(_name, _language(10050), error)     # Error uploading watched TVShows
+                    xbmcgui.Dialog().ok(_name, _language(32033), error)     # Error uploading watched TVShows
                 else:
-                    notification(_name, _language(10050) + str(error))      # Error uploading watched TVShows
+                    notification(_name, _language(32033) + str(error))      # Error uploading watched TVShows
     else:
         if gui:
-            xbmcgui.Dialog().ok(_name, _language(10051))                    # No new watched episodes in XBMC library to update
+            xbmcgui.Dialog().ok(_name, _language(32034))                    # No new watched episodes in XBMC library to update
 
     if gui:
         progress.close()

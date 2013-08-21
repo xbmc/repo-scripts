@@ -15,7 +15,7 @@ def menu():
         _settings.openSettings()
         return
 
-    options = [_language(10024), _language(10026), _language(10023)]  # [Movie, TV, Settings]
+    options = [_language(32009), _language(32010), _language(32011)]  # [Movie, TV, Settings]
 
     while True:
         select = xbmcgui.Dialog().select(_name, options)

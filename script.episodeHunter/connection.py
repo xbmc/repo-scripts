@@ -27,7 +27,7 @@ class Connection(object):
             self.connection = HTTPConn(self.URL, 80)
         except socket.timeout:
             Debug("makeConnection: timeout")
-            notification(self.name, self.language(10055))
+            notification(self.name, self.language(32038), 1)                    # Connection timeout
             self.connection = None
 
     # Contact EpisodeHunter
@@ -58,7 +58,7 @@ class Connection(object):
             Debug("The data has left XBMC: " + request)
         except socket.error:
             Debug("makeRequest: Socket error, unable to connect")
-            notification(self.name, self.language(10056))                       # 'Socket error, unable to connect'
+            notification(self.name, self.language(32045), 1)                     # 'Socket error, unable to connect'
             return None
 
         # And off we go
@@ -66,7 +66,7 @@ class Connection(object):
             self.connection.go()
         except Exception:
             Debug("makeRequest: Unable to send data")
-            notification(self.name, self.language(10061))                       # 'Unable to send data'
+            notification(self.name, self.language(32041), 1)                     # 'Unable to send data'
             return None
 
         # Wait for the respond, timeout after 15s
@@ -82,7 +82,7 @@ class Connection(object):
             i = i + 1
             if i >= 15:
                 Debug("makeRequest: Connection timeout")
-                notification(self.name, self.language(10055))
+                notification(self.name, self.language(32038), 1)                # Connection timeout
                 return None
 
         # Ladies and gentlemen, we have a result
@@ -91,7 +91,7 @@ class Connection(object):
             raw = response.read()
         except Exception:
             Debug("Unable to read responce")
-            notification(self.name, self.language(10062))
+            notification(self.name, self.language(32042), 1)                    # Unable to read response
             return None
         finally:
             try:
@@ -105,13 +105,13 @@ class Connection(object):
             data = json.loads(raw)
         except ValueError:
             Debug("makeRequest: Bad JSON responce: " + raw)
-            notification(self.name, self.language(10057))
+            notification(self.name, self.language(32039), 1)                    # Bad JSON response from episodehunter.tv
             return None
 
         # if 'status' in data and 'data' in data:
         #     if data['status'] != 200:
         #         Debug("makeRequest: Error: " + str(data['data']))
-        #         notification(self.name, self.language(10035) + ": " + str(data['data']))  # 'Error'
+        #         notification(self.name, self.language(32018) + ": " + str(data['data']))  # 'Error'
         #         return None
 
         return data
@@ -131,7 +131,7 @@ class Connection(object):
         elif 'status' in responce and 'data' in responce:
             if responce['status'] != 200:
                 Debug("getMoviesFromEP: Error: " + str(responce['data']))
-                notification(self.name, self.language(10035) + ": " + str(responce['data']))  # 'Error'
+                notification(self.name, self.language(32018) + ": " + str(responce['data']))  # 'Error'
                 return None
 
         if 'value' in responce:
@@ -148,7 +148,7 @@ class Connection(object):
         elif 'status' in responce and 'data' in responce:
             if responce['status'] != 200:
                 Debug("getWatchedTVShowsFromEH: Error: " + str(responce['data']))
-                notification(self.name, self.language(10035) + ": " + str(responce['data']))  # 'Error'
+                notification(self.name, self.language(32018) + ": " + str(responce['data']))  # 'Error'
                 return None
 
         if 'value' in responce:

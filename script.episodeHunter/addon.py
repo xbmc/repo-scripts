@@ -163,7 +163,7 @@ class EHPlayer(xbmc.Player):
                         self.valid_user = False
                     if responce['status'] != 200:
                         # If the user settings are wrong, this message is only shown when a user start playing media
-                        notification(self.name, self.language(10035) + ": " + str(responce['data']))  # 'Error:'
+                        notification(self.name, self.language(32018) + ": " + str(responce['data']))  # 'Error:'
             else:
                 Debug("watching: responce is None :(")
 
