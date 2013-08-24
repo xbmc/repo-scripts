@@ -5,7 +5,6 @@
 
 <strings>
     <!-- Dialog strings -->
-    <string id="30000">Você deseja efetuar o upload "%s"?</string>
     <string id="30001">Uploaded com ID: %s</string>
     <string id="30002">URL: %s</string>
     <string id="30003">Nenhum e-mail será enviado (Nenhum e-mail é configurado)</string>

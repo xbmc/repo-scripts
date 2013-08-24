@@ -5,7 +5,6 @@
 
 <strings>
     <!-- Dialog strings -->
-    <string id="30000">Fel akarja tölteni a "%s" fájlt?</string>
     <string id="30001">Feltöltve %s azonosítóval.</string>
     <string id="30002">Webcím: %s</string>
     <string id="30003">Nem fogunk e-mailt küldeni. (Nem adott meg e-mail címet)</string>

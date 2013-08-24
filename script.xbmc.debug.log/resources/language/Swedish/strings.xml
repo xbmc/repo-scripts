@@ -5,7 +5,6 @@
 
 <strings>
     <!-- Dialog strings -->
-    <string id="30000">Vill du ladda upp "%s"?</string>
     <string id="30001">Uppladdat med ID: %s</string>
     <string id="30002">URL: %s</string>
     <string id="30003">Ingen epost kommer att skickas (ingen epostadress är konfigurerad)</string>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Dutch language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/nl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Dialog strings -->
+    <string id="30001">Geüpload met ID: [B]%s[/B]</string>
+    <string id="30002">URL: [B]%s[/B]</string>
+    <string id="30003">E-mail wordt niet verzonden (geen e-mail adres geconfigureerd)</string>
+    <string id="30004">E-mail wordt verstuurd naar: %s</string>
+
+    <!-- Settings -->
+    <string id="31000">E-mail Adres</string>
+    <string id="31001">Negeer altijd xbmc.old.log ( log van vorige keer)</string>
+
+    <!-- Usage help strings in settings dialog -->
+    <string id="32000">Deze Addon upload je logs naar xbmclogs.com</string>
+    <string id="32001">Als je een e-mail wilt ontvangen met directe links</string>
+    <string id="32002">tot je geuploade bestanden dan moet je je e-mail adres instellen</string>
+    <string id="32004">Debug logs kunnen gebruikersnamen en wachtwoorden bevatten</string>
+</strings>

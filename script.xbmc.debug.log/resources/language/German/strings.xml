@@ -5,7 +5,6 @@
 
 <strings>
     <!-- Dialog strings -->
-    <string id="30000">Möchtest du "%s" hochladen?</string>
     <string id="30001">Hochgeladen unter der ID: %s</string>
     <string id="30002">URL: %s</string>
     <string id="30003">Es wird keine Email gesendet - keine Addr. gesetzt</string>

@@ -3,12 +3,13 @@ import re
 import sys
 import urllib
 import urllib2
-from xbmc import getCondVisibility as condtition, translatePath as translate
+from xbmc import getCondVisibility as condition, translatePath as translate
 import xbmcaddon
 import xbmcgui
 
 addon = xbmcaddon.Addon(id='script.xbmc.debug.log')
 ADDON_TITLE = addon.getAddonInfo('name')
+ADDON_VERSION = addon.getAddonInfo('version')
 
 DEBUG = False
 
@@ -21,6 +22,12 @@ STRINGS = {
 }
 UPLOAD_LINK = 'http://xbmclogs.com/show.php?id=%s'
 UPLOAD_URL = 'http://xbmclogs.com/'
+
+REPLACES = (
+    ('//.+?:.+?@', '//USER:PASSWORD@'),
+    ('<user>.+?</user>', '<user>USER</user>'),
+    ('<pass>.+?</pass>', '<pass>PASSWORD</pass>'),
+)
 
 
 # Open Settings on first run
@@ -40,8 +47,10 @@ class LogUploader(object):
             if self.ask_upload(logfile['title']):
                 paste_id = self.upload_file(logfile['path'])
                 if paste_id:
-                    uploaded_logs.append({'paste_id': paste_id,
-                                          'title': logfile['title']})
+                    uploaded_logs.append({
+                        'paste_id': paste_id,
+                        'title': logfile['title']
+                    })
                     self.report_msg(paste_id)
         if uploaded_logs and self.email_address:
             self.report_mail(self.email_address, uploaded_logs)
@@ -56,16 +65,18 @@ class LogUploader(object):
     def upload_file(self, filepath):
         self.__log('reading log...')
         file_content = open(filepath, 'r').read()
+        for pattern, repl in REPLACES:
+            file_content = re.sub(pattern, repl, file_content)
         self.__log('starting upload "%s"...' % filepath)
-        post_dict = {'paste_data': file_content,
-                     'api_submit': True,
-                     'mode': 'xml'}
-        if filepath.endswith('.log'):
-            post_dict['paste_lang'] = 'xbmc'
-        elif filepath.endswith('.xml'):
-            post_dict['paste_lang'] = 'advancedsettings'
+        post_dict = {
+            'paste_data': file_content,
+            'api_submit': True,
+            'mode': 'xml',
+            'paste_lang': 'xbmc'
+        }
         post_data = urllib.urlencode(post_dict)
-        req = urllib2.Request(UPLOAD_URL, post_data)
+        headers = {'User-Agent': '%s-%s' % (ADDON_TITLE, ADDON_VERSION)}
+        req = urllib2.Request(UPLOAD_URL, post_data, headers)
         response = urllib2.urlopen(req).read()
         self.__log('upload done.')
         r_id = re.compile('<id>([0-9]+)</id>', re.DOTALL)
@@ -117,16 +128,16 @@ class LogUploader(object):
         log_path = translate('special://logpath')
         crashlog_path = None
         crashfile_match = None
-        if condtition('system.platform.osx') or condtition('system.platform.ios'):
+        if condition('system.platform.osx') or condition('system.platform.ios'):
             crashlog_path = os.path.join(
                 os.path.expanduser('~'),
                 'Library/Logs/CrashReporter'
             )
             crashfile_match = 'XBMC'
-        elif condtition('system.platform.windows'):
+        elif condition('system.platform.windows'):
             crashlog_path = log_path
             crashfile_match = '.dmp'
-        elif condtition('system.platform.linux'):
+        elif condition('system.platform.linux'):
             crashlog_path = os.path.expanduser('~')
             crashfile_match = 'xbmc_crashlog'
         # get fullpath for xbmc.log and xbmc.old.log
@@ -134,7 +145,7 @@ class LogUploader(object):
         log_old = os.path.join(log_path, 'xbmc.old.log')
         # check for XBMC crashlogs
         log_crash = None
-        if crashlog_path and crashfile_match:
+        if crashlog_path and os.path.isdir(crashlog_path) and crashfile_match:
             crashlog_files = [s for s in os.listdir(crashlog_path)
                               if os.path.isfile(os.path.join(crashlog_path, s))
                               and crashfile_match in s]

@@ -5,7 +5,6 @@
 
 <strings>
     <!-- Dialog strings -->
-    <string id="30000">Ar norite įkelti "%s"?</string>
     <string id="30001">Siunčiama į ID: %s</string>
     <string id="30002">URL: %s</string>
     <string id="30003">eMail nebus išsiųstas(eMail nesukonfiguruotas)</string>

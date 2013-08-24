@@ -5,7 +5,6 @@
 
 <strings>
     <!-- Dialog strings -->
-    <string id="30000">Επιθυμείτε να ανεβάσετε το "%s";</string>
     <string id="30001">Ανέβηκε με ID: %s</string>
     <string id="30002">URL: %s</string>
     <string id="30003">Δε θα αποσταλεί κανένα email (Δεν έχει οριστεί email)</string>

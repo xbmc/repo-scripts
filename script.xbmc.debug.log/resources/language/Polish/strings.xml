@@ -5,7 +5,6 @@
 
 <strings>
     <!-- Dialog strings -->
-    <string id="30000">Chcesz przesłać "%s"?</string>
     <string id="30001">Przesłane z ID: %s</string>
     <string id="30002">URL: %s</string>
     <string id="30003">Żaden email nie zostanie przesłąny (brak zdefiniowanego email-a)</string>
