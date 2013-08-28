@@ -1,21 +1,44 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+#     Copyright (C) 2011-2013 Martijn Kaijser
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
 #import modules
 import os
 import socket
-import urllib2
 import urllib
+import urllib2
 import xbmc
 import xbmcvfs
+import lib.common
 
 ### import libraries
+from lib.script_exceptions import *
+from lib.utils import dialog_msg, log
 from traceback import print_exc
 from urllib2 import HTTPError, URLError
-from resources.lib.script_exceptions import *
-from resources.lib import utils
-from resources.lib.settings import settings
-from resources.lib.utils import log
+
+### get addon info
+__addon__        = lib.common.__addon__
+__addonprofile__ = lib.common.__addonprofile__
+__localize__     = lib.common.__localize__
+
+tempdir = os.path.join(__addonprofile__, 'temp')
 THUMBS_CACHE_PATH = xbmc.translatePath( "special://profile/Thumbnails/Video" )
-
-
 ### adjust default timeout to stop script hanging
 timeout = 10
 socket.setdefaulttimeout(timeout)
@@ -29,21 +52,18 @@ class fileops:
 
     def __init__(self):
         log("Setting up fileops")
-        self.settings = settings()
-        self.settings._get_general()
         self._exists = lambda path: xbmcvfs.exists(path)
         self._rmdir = lambda path: xbmcvfs.rmdir(path)
         self._mkdir = lambda path: xbmcvfs.mkdir(path)
         self._delete = lambda path: xbmcvfs.delete(path)
 
         self.downloadcount = 0
-        self.tempdir = os.path.join(utils.__addonprofile__, 'temp')
-        if not self._exists(self.tempdir):
-            if not self._exists(utils.__addonprofile__):
-                if not self._mkdir(utils.__addonprofile__):
-                    raise CreateDirectoryError(utils.__addonprofile__)
-            if not self._mkdir(self.tempdir):
-                raise CreateDirectoryError(self.tempdir)
+        if not self._exists(tempdir):
+            if not self._exists(__addonprofile__):
+                if not self._mkdir(__addonprofile__):
+                    raise CreateDirectoryError(__addonprofile__)
+            if not self._mkdir(tempdir):
+                raise CreateDirectoryError(tempdir)
         
     def _copy(self, source, target):
         return xbmcvfs.copy(source.encode("utf-8"), target.encode("utf-8"))
@@ -104,31 +124,44 @@ class fileops:
             log("[%s] Copied successfully: %s" % (media_name, targetpath) )
 
     # download file
-    def _downloadfile(self, url, filename, targetdirs, media_name, mode = ""):
+    def _downloadfile(self, item, mode = ""):
         try:
-            temppath = os.path.join(self.tempdir, filename)
+            temppath = os.path.join(tempdir, item['filename'])
             tempfile = open(temppath, "wb")
-            response = urllib2.urlopen(url)
+            response = urllib2.urlopen(item['url'])
             tempfile.write(response.read())
             tempfile.close()
             response.close()
         except HTTPError, e:
             if e.code == 404:
-                raise HTTP404Error(url)
+                raise HTTP404Error(item['url'])
             else:
                 raise DownloadError(str(e))
         except URLError:
-            raise HTTPTimeout(url)
+            raise HTTPTimeout(item['url'])
         except socket.timeout, e:
-            raise HTTPTimeout(url)
+            raise HTTPTimeout(item['url'])
         except Exception, e:
             log(str(e), xbmc.LOGNOTICE)
         else:
-            log("[%s] Downloaded: %s" % (media_name, filename))
+            log("[%s] Downloaded: %s" % (item['media_name'], item['filename']))
             self.downloadcount += 1
-            for targetdir in targetdirs:
+            for targetdir in item['targetdirs']:
                 #targetpath = os.path.join(urllib.url2pathname(targetdir).replace('|',':'), filename)
-                targetpath = os.path.join(targetdir, filename)
-                self._copyfile(temppath, targetpath, media_name)
-                #if self.settings.xbmc_caching_enabled or mode in ['gui','customgui']:
-                #    self.erase_current_cache(targetpath)
+                targetpath = os.path.join(targetdir, item['filename'])
+                self._copyfile(temppath, targetpath, item['media_name'])
+                
+def cleanup():
+    if xbmcvfs.exists(tempdir):
+        dialog_msg('update', percentage = 100, line1 = __localize__(32005), background =  __addon__.getSetting('background'))
+        log('Cleaning up temp files')
+        for x in os.listdir(tempdir):
+            tempfile = os.path.join(tempdir, x)
+            xbmcvfs.delete(tempfile)
+            if xbmcvfs.exists(tempfile):
+                log('Error deleting temp file: %s' % tempfile, xbmc.LOGERROR)
+        xbmcvfs.rmdir(tempdir)
+        if xbmcvfs.exists(tempdir):
+            log('Error deleting temp directory: %s' % tempdir, xbmc.LOGERROR)
+        else:
+            log('Deleted temp directory: %s' % tempdir)

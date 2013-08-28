@@ -28,6 +28,10 @@ msgctxt "#32012"
 msgid "Finished"
 msgstr "Terminat"
 
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr "anulat"
+
 msgctxt "#32025"
 msgid "Yes"
 msgstr "Da"

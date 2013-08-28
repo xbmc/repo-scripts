@@ -36,6 +36,10 @@ msgctxt "#32071"
 msgid "Movies"
 msgstr "सिनेमा"
 
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "उन्नत"
+
 msgctxt "#32141"
 msgid "Language"
 msgstr "बाशा"

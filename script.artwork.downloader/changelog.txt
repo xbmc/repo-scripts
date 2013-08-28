@@ -1,7 +1,14 @@
+[B]12.0.17[/B]
+- Fixed wrong filename for season landscape
+- Fixed extra slash for BDMV and VIDEO_TS
+
+[B]12.0.16[/B]
+- A lot of code cleanup
+- Updated language files from Transifex
+
 [B]12.0.15[/B]
 - Fixed custom mode
 - Added option to show image selection directly if type is specified
-- Added option to hide the ok dialog and notification if the user doesn't choose any image
 
 [B]12.0.14[/B]
 - Fixed missing brackets

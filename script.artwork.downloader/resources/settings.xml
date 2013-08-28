@@ -16,7 +16,7 @@
         <setting label="32029" type="text"      subsetting="true"       enable="false"/>
         <setting type="sep" />
         -->
-        <setting label="32039" type="action"    action="RunScript($CWD/resources/lib/viewer.py, downloadreport)" />
+        <setting label="32039" type="action"    action="RunScript($CWD/lib/viewer.py, downloadreport)" />
         <setting type="sep" />
     </category>
 

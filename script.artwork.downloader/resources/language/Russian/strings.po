@@ -44,6 +44,10 @@ msgctxt "#32031"
 msgid "General"
 msgstr "Выкл."
 
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
 msgctxt "#32071"
 msgid "Movies"
 msgstr "Фильмы"
@@ -51,6 +55,10 @@ msgstr "Фильмы"
 msgctxt "#32081"
 msgid "TV Shows"
 msgstr "Сериалы"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
 
 msgctxt "#32101"
 msgid "Advanced"

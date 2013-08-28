@@ -1,4 +1,24 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+#     Copyright (C) 2011-2013 Martijn Kaijser
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
 #import modules
+import lib.common
 import socket
 import xbmc
 import xbmcgui
@@ -6,28 +26,26 @@ import unicodedata
 import urllib2
 import sys
 
-### get addon info
-__addon__       = ( sys.modules[ "__main__" ].__addon__ )
-__addonname__   = ( sys.modules[ "__main__" ].__addonname__ )
-__icon__        = ( sys.modules[ "__main__" ].__icon__ )
-__localize__    = ( sys.modules[ "__main__" ].__localize__ )
-__addonprofile__= ( sys.modules[ "__main__" ].__addonprofile__ )
-
-
-### import libraries
-from urllib2 import HTTPError, URLError
-from resources.lib.script_exceptions import *
-
 # Use json instead of simplejson when python v2.7 or greater
 if sys.version_info < (2, 7):
-    import json as simplejson
+    import simplejson as json
 else:
-    import simplejson
+    import json
 # Commoncache plugin import
 try:
     import StorageServer
 except:
     import storageserverdummy as StorageServer
+
+### import libraries
+from lib.script_exceptions import *
+from urllib2 import HTTPError, URLError
+
+### get addon info
+__addon__        = lib.common.__addon__
+__localize__     = lib.common.__localize__
+__addonname__    = lib.common.__addonname__
+__icon__         = lib.common.__icon__
 
 cache = StorageServer.StorageServer("ArtworkDownloader",240)
 
@@ -140,7 +158,7 @@ def get_data_new(url, data_type):
             request.add_header("Accept", "application/json")
         req = urllib2.urlopen(request)
         if data_type == 'json':
-            data = simplejson.loads(req.read())
+            data = json.loads(req.read())
             if not data:
                 data = 'Empty'
         else:

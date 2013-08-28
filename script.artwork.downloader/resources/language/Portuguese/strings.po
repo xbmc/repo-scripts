@@ -370,7 +370,7 @@ msgstr "Info"
 
 msgctxt "#32182"
 msgid "Please donate or contribute to the following sites to show your support:"
-msgstr "Por favor, faça uma doação ou contribua para os seguintes sites, mostrando o seu apoio: "
+msgstr "Por favor, apoie-nos fazendo uma doação ou contribuindo para estes sites:"
 
 msgctxt "#32183"
 msgid "[I]www.xbmc.org [/I]"
@@ -402,7 +402,7 @@ msgstr "Agradecimentos a:"
 
 msgctxt "#32190"
 msgid "Team XBMC and the authors of the other addons on which this was based."
-msgstr "Equipa do XBMC e os autores dos outros add-ons nos quais este foi baseado."
+msgstr "Equipa do XBMC e autores dos add-ons nos quais este foi baseado."
 
 msgctxt "#32191"
 msgid "[I]For bugs, requests or general questions visit the [/I]"

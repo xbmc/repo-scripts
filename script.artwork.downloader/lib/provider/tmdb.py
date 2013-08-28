@@ -1,13 +1,31 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+#     Copyright (C) 2011-2013 Martijn Kaijser
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
 #import modules
 import xbmc
 import sys
 
 ### import libraries
-from resources.lib.script_exceptions import NoFanartError
-from resources.lib.utils import *
-from resources.lib.language import *
+from lib.language import *
+from lib.script_exceptions import NoFanartError
+from lib.utils import *
 from operator import itemgetter
-
 
 ### get addon info
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
@@ -39,7 +57,7 @@ class TMDBProvider():
                     image_list.append({'url': BASE_IMAGEURL + 'original' + item['file_path'],
                                        'preview': BASE_IMAGEURL + 'w300' + item['file_path'],
                                        'id': item.get('file_path').lstrip('/').replace('.jpg', ''),
-                                       'type': ['fanart','extrafanart'],
+                                       'art_type': ['fanart','extrafanart'],
                                        'height': item.get('height'),
                                        'width': item.get('width'),
                                        'language': item.get('iso_639_1','n/a'),
@@ -66,7 +84,7 @@ class TMDBProvider():
                     image_list.append({'url': BASE_IMAGEURL + 'w780' + item['file_path'],
                                        'preview': BASE_IMAGEURL + 'w300' + item['file_path'],
                                        'id': item.get('file_path').lstrip('/').replace('.jpg', ''),
-                                       'type': ['extrathumbs'],
+                                       'art_type': ['extrathumbs'],
                                        'height': item.get('height'),
                                        'width': item.get('width'),
                                        'language': item.get('iso_639_1','n/a'),
@@ -93,7 +111,7 @@ class TMDBProvider():
                     image_list.append({'url': BASE_IMAGEURL + 'original' + item['file_path'],
                                        'preview': BASE_IMAGEURL + 'w185' + item['file_path'],
                                        'id': item.get('file_path').lstrip('/').replace('.jpg', ''),
-                                       'type': ['poster'],
+                                       'art_type': ['poster'],
                                        'height': item.get('height'),
                                        'width': item.get('width'),
                                        'language': item.get('iso_639_1','n/a'),

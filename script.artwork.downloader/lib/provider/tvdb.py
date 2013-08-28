@@ -1,12 +1,31 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+#     Copyright (C) 2011-2013 Martijn Kaijser
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
 #import modules
 import sys
 
 #import libraries
 from elementtree import ElementTree as ET
 from operator import itemgetter
-from resources.lib.script_exceptions import NoFanartError
-from resources.lib.utils import *
-from resources.lib.language import *
+from lib.language import *
+from lib.script_exceptions import NoFanartError
+from lib.utils import *
 
 API_URL = 'http://www.thetvdb.com/api/%s/series/%s/banners.xml'
 
@@ -40,21 +59,21 @@ class TVDBProvider():
                     info['id'] = image.findtext('id')
                     # process fanarts
                     if image.findtext('BannerType') == 'fanart':
-                        info['type'] = ['fanart','extrafanart']
+                        info['art_type'] = ['fanart','extrafanart']
                     # process posters
                     elif image.findtext('BannerType') == 'poster':
-                        info['type'] = ['poster']
+                        info['art_type'] = ['poster']
                     # process banners
                     elif image.findtext('BannerType') == 'series' and image.findtext('BannerType2') == 'graphical':
-                        info['type'] = ['banner']
+                        info['art_type'] = ['banner']
                     # process seasonposters
                     elif image.findtext('BannerType') == 'season' and image.findtext('BannerType2') == 'season':
-                        info['type'] = ['seasonposter']
+                        info['art_type'] = ['seasonposter']
                     # process seasonbanners
                     elif image.findtext('BannerType') == 'season' and image.findtext('BannerType2') == 'seasonwide':
-                        info['type'] = ['seasonbanner']
+                        info['art_type'] = ['seasonbanner']
                     else:
-                        info['type'] = ['']
+                        info['art_type'] = ['']
                     # convert image size ...x... in Bannertype2
                     if image.findtext('BannerType2'):
                         try:

@@ -1,12 +1,31 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+#     Copyright (C) 2011-2013 Martijn Kaijser
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
 #import modules
 import sys
 import urllib
 
 ### import libraries
-#from resources.lib.provider.base import BaseProvider
-from resources.lib.script_exceptions import NoFanartError
-from resources.lib.utils import *
-from resources.lib.language import *
+#from lib.provider.base import BaseProvider
+from lib.language import *
+from lib.script_exceptions import NoFanartError
+from lib.utils import *
 from operator import itemgetter
 
 ### get addon info
@@ -77,7 +96,7 @@ class FTV_TVProvider():
                             image_list.append({'url': urllib.quote(item.get('url'), ':/'),
                                                'preview': item.get('url') + '/preview',
                                                'id': item.get('id'),
-                                               'type': [arttypes[art]],
+                                               'art_type': [arttypes[art]],
                                                'size': size,
                                                'season': item.get('season','n/a'),
                                                'language': item.get('lang'),
@@ -133,7 +152,7 @@ class FTV_MovieProvider():
                             image_list.append({'url': urllib.quote(item.get('url'), ':/'),
                                                'preview': item.get('url') + '/preview',
                                                'id': item.get('id'),
-                                               'type': [arttypes[art]],
+                                               'art_type': [arttypes[art]],
                                                'size': size,
                                                'season': item.get('season','n/a'),
                                                'language': item.get('lang'),

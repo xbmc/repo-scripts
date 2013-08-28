@@ -24,6 +24,14 @@ msgctxt "#32009"
 msgid "Downloading"
 msgstr "Niðurhala"
 
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Búið"
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr "fannst ekki !"
+
 msgctxt "#32025"
 msgid "Yes"
 msgstr "Já"
@@ -40,6 +48,10 @@ msgctxt "#32031"
 msgid "General"
 msgstr "Almennt"
 
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
 msgctxt "#32071"
 msgid "Movies"
 msgstr "KVIKMYNDIR"
@@ -47,6 +59,10 @@ msgstr "KVIKMYNDIR"
 msgctxt "#32081"
 msgid "TV Shows"
 msgstr "SJÓNVARPSÞÆTTIR"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
 
 msgctxt "#32121"
 msgid "Fanart"

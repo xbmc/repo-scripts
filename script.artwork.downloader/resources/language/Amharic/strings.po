@@ -20,6 +20,10 @@ msgctxt "#32006"
 msgid "Error"
 msgstr "ስህተት"
 
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "በማውረድ ላይ"
+
 msgctxt "#32012"
 msgid "Finished"
 msgstr "ጨርሷል "
