@@ -77,8 +77,20 @@ class Main:
     def _init_vars(self):
         self.WINDOW = xbmcgui.Window(10000)
         self.Player = Widgets_Player(action = self._update)
-        self.Monitor = Widgets_Monitor(update_listitems = self._update, update_settings = self._init_property)
+        self.Monitor = Widgets_Monitor(update_listitems = self._update, update_settings = self._on_change)
         self.LIMIT = 20
+
+    def _on_change(self):
+        clearlist_groups = ['Recommended','Random','Recent']
+        clearlist_types = ['Movie','Episode','MusicVideo','Album', 'Artist','Song','Addon']
+        for item_group in clearlist_groups:
+            for item_type in clearlist_types:
+                clear = item_group + item_type
+                self._clear_properties(clear)
+        self._init_property()
+        self._fetch_info_randomitems()
+        self._fetch_info_recommended()
+        self._fetch_info_recentitems()
 
     def _init_property(self):
         self.WINDOW.setProperty('SkinWidgets_Recommended', '%s' % __addon__.getSetting("recommended_enable"))
@@ -134,6 +146,8 @@ class Main:
             c = b - a
             log('Total time needed to request random queries: %s' % c)
 
+
+			
     def _fetch_info_recentitems(self):
         a = datetime.datetime.now()
         if __addon__.getSetting("recentitems_enable") == 'true':

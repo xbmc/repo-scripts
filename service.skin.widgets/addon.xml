@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.skin.widgets" name="Skin Widgets" version="0.0.25" provider-name="Martijn|phil65">
+<addon id="service.skin.widgets" name="Skin Widgets" version="0.0.27" provider-name="Martijn|phil65">
     <requires>
         <import addon="xbmc.addon" version="12.0.0"/>
         <import addon="xbmc.json" version="6.0.0"/>
@@ -16,13 +16,13 @@
         <summary lang="es">Skin widgets</summary>
         <summary lang="fr">Skin widgets</summary>
         <summary lang="gl">Widgets do Tema</summary>
-        <summary lang="hr">Dodatci za Izgled</summary>
+        <summary lang="hr">Dodaci za presvlaku</summary>
         <summary lang="hu">Kinézet miniprogram</summary>
         <summary lang="it">Skin widgets</summary>
         <summary lang="ko">스킨 위젯</summary>
         <summary lang="nl">Skin widgets</summary>
         <summary lang="pl">Dodatki Skóry</summary>
-        <summary lang="pt">Widgets para Skin</summary>
+        <summary lang="pt">Widgets para Temas</summary>
         <summary lang="pt_BR">Skin widgets</summary>
         <summary lang="sk">Widgety Vzhľadov</summary>
         <summary lang="sv">Skal widgetar</summary>
@@ -35,26 +35,30 @@
         <description lang="es">Skin widgets</description>
         <description lang="fr">Skin widgets</description>
         <description lang="gl">Widgets do Tema</description>
-        <description lang="hr">Dodatci za Izgled</description>
+        <description lang="hr">Dodaci za presvlaku</description>
         <description lang="hu">Kinézet miniprogram</description>
         <description lang="it">Skin widgets</description>
         <description lang="ko">스킨 위젯</description>
         <description lang="nl">Skin widgets</description>
         <description lang="pl">Dodatki Skóry</description>
-        <description lang="pt">Widgets para Skin</description>
+        <description lang="pt">Widgets para Temas</description>
         <description lang="pt_BR">Skin widgets</description>
         <description lang="sk">Widgety Vzhľadov</description>
         <description lang="sv">Skal widgetar</description>
         <description lang="zh">皮肤微件</description>
+        <disclaimer lang="be">For information visit the wiki page or XBMC forum.</disclaimer>
         <disclaimer lang="de">Besuche für mehr Informationen die Wiki-Seite oder das XBMC-Forum</disclaimer>
         <disclaimer lang="el">Για πληροφορίες επισκεφθείτε τη σελίδα wiki ή το forum του XBMC.</disclaimer>
         <disclaimer lang="en">For information visit the wiki page or XBMC forum.</disclaimer>
         <disclaimer lang="es">Para más información, visite el wiki o los foros de XBMC.</disclaimer>
+        <disclaimer lang="fr">Pour plus d'information, visitez la page du Wiki ou dur forum XBMC.</disclaimer>
         <disclaimer lang="gl">Para máis información visite a páxina wiki ou o foro do XBMC.</disclaimer>
+        <disclaimer lang="hr">Za više informacija posjetite wiki stranicu ili XBMC forum.</disclaimer>
         <disclaimer lang="it">Per le informazioni visita la pagina wiki o il forum</disclaimer>
         <disclaimer lang="ko">위키 페이지나 XBMC 포럼에서 추가 정보를 확인하세요.</disclaimer>
         <disclaimer lang="nl">Bezoek voor informatie de wiki pagina of het XBMC forum.</disclaimer>
         <disclaimer lang="pl">Odwiedź stronę wiki lub forum XBMC by znaleźć więcej informacji.</disclaimer>
+        <disclaimer lang="pt">Para mais informação, visite a página wiki ou o fórum do XBMC.</disclaimer>
         <disclaimer lang="pt_BR">Para informações visite o página do wiki ou fórum XBMC.org.</disclaimer>
         <disclaimer lang="sv">För information, besök wiki-sidan eller XBMC forumet.</disclaimer>
         <disclaimer lang="zh">访问wiki页或XBMC论坛了解更多信息</disclaimer>

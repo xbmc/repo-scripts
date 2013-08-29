@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: Skin Widgets
 # Addon id: service.skin.widgets
-# Addon Provider: Martijn
+# Addon Provider: Martijn|phil65
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -22,27 +22,27 @@ msgstr "Preporučeno"
 
 msgctxt "#32002"
 msgid "Random Items"
-msgstr "Slučajne Stavke"
+msgstr "Naizmjenične stavke"
 
 msgctxt "#32004"
 msgid "Randomize time (minutes)"
-msgstr "Slučajno vrijeme (minute)"
+msgstr "Naizmjenično vrijeme (minute)"
 
 msgctxt "#32005"
 msgid "Use season folders"
-msgstr "Koristite sezone mape"
+msgstr "Koristi mape sezona"
 
 msgctxt "#32006"
 msgid "Use timer"
-msgstr "Koristi brojač"
+msgstr "Koristi zakazano vrijeme"
 
 msgctxt "#32007"
 msgid "After database update"
-msgstr "Nakon aktualizacije baze podataka"
+msgstr "Nakon ažuriranja baze podataka"
 
 msgctxt "#32008"
 msgid "Update method"
-msgstr "Način Nadogradnje"
+msgstr "Način ažuriranja"
 
 msgctxt "#32009"
 msgid "Recent Items"
@@ -50,11 +50,11 @@ msgstr "Nedavne stavke"
 
 msgctxt "#32010"
 msgid "Update each time you enter the home screen"
-msgstr "Nadogradnja svaki put kad pokrenete u početnom zaslonu"
+msgstr "Ažuriraj svaki puta kad pokrenete u početni zaslon"
 
 msgctxt "#32011"
 msgid "Only unplayed and unfinished"
-msgstr "Samo neizvođene i nedovršene"
+msgstr "Samo nereproducirane i nedovršene"
 
 msgctxt "#32012"
 msgid "General"
@@ -66,4 +66,4 @@ msgstr "Prikaži kratak sadržaja nepogledanih stavki"
 
 msgctxt "#32014"
 msgid "* Hidden to prevent spoilers *"
-msgstr "* Skriveno da ne pokvari užitak *"
+msgstr "* Skriveno da ne pokvari ugođaj *"

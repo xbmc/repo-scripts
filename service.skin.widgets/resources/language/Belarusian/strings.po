@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: Skin Widgets
 # Addon id: service.skin.widgets
-# Addon Provider: Martijn
+# Addon Provider: Martijn|phil65
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -52,13 +52,17 @@ msgctxt "#32010"
 msgid "Update each time you enter the home screen"
 msgstr "Update each time you enter the home screen"
 
+msgctxt "#32011"
+msgid "Only unplayed and unfinished"
+msgstr "Only unplayed and unfinished"
+
 msgctxt "#32012"
 msgid "General"
 msgstr "General"
 
 msgctxt "#32013"
 msgid "Show plot for unwatched items"
-msgstr "Паказваць непраглежданые"
+msgstr "Show plot for unwatched items"
 
 msgctxt "#32014"
 msgid "* Hidden to prevent spoilers *"

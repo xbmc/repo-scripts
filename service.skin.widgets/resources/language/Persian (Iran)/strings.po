@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: Skin Widgets
 # Addon id: service.skin.widgets
-# Addon Provider: Martijn
+# Addon Provider: Martijn|phil65
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -16,6 +16,18 @@ msgstr ""
 "Language: fa_IR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32002"
+msgid "Random Items"
+msgstr "آیتم های تصادفی"
+
 msgctxt "#32012"
 msgid "General"
 msgstr "عمومی"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "نمایش خلاصه برای موارد دیده نشده"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* مخفی شده برای جلوگیری از لو رفتن داستان *"

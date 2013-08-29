@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: Skin Widgets
 # Addon id: service.skin.widgets
-# Addon Provider: Martijn
+# Addon Provider: Martijn|phil65
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -38,7 +38,7 @@ msgstr "Usar temporizador"
 
 msgctxt "#32007"
 msgid "After database update"
-msgstr "Após actualização da base de daods"
+msgstr "Após actualizar a base de daods"
 
 msgctxt "#32008"
 msgid "Update method"

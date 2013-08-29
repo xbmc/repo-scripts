@@ -1,3 +1,10 @@
+v0.0.27
+- Fix setting properties reload on settings change
+
+v0.0.26
+- Updated language files from Transifex
+- clear all Title properties on settings changed and get fresh data
+
 v0.0.25
 - Added *Episode.%d.Art(tvshow.characterart)
 - Added *Episode.%d.mpaa

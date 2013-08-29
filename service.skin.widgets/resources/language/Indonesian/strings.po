@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: Skin Widgets
 # Addon id: service.skin.widgets
-# Addon Provider: Martijn
+# Addon Provider: Martijn|phil65
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -19,3 +19,11 @@ msgstr ""
 msgctxt "#32012"
 msgid "General"
 msgstr "Umum"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Tunjukkan alur untuk item yang belum dilihat"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Sembunyikan untuk mencegah spoiler *"
