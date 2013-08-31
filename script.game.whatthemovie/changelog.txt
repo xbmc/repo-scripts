@@ -1,3 +1,6 @@
+1.0.7 (28.08.2013)
+- update translations
+
 1.0.6
 - updated translations
 - cosmetic changes

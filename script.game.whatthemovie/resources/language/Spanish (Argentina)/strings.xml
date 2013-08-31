@@ -4,7 +4,9 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <string id="3001">Aleatorio</string>
     <string id="3002">Atrás</string>
+    <string id="3118">Oculto</string>
 
     <!-- Settings -->
     <string id="3200">General</string>
@@ -12,6 +14,7 @@
     <string id="3203">Usuario</string>
     <string id="3204">Contraseña</string>
     <string id="3209">Todos</string>
+    <string id="3233">Aleatorio</string>
     <string id="3234">Siguiente</string>
 
     <!-- Functions -->

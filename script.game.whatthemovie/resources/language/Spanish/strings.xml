@@ -5,30 +5,116 @@
 
 <strings>
     <!-- Buttons -->
-    <string id="3000">Adivina!</string>
+    <string id="3000">¡Adivina!</string>
     <string id="3001">Aleatorio</string>
     <string id="3002">Volver</string>
 
     <!-- Messages -->
-    <string id="3050">No se ha podido loguear</string>
+    <string id="3050">No se ha podido iniciar sesión</string>
+    <string id="3051">Contraseña equivocada o usuario desconocido: [B]%s[/B][CR]Por favor, cambie las credenciales o desactive el inicio de sesión</string>
+    <string id="3052">Introduce el número de imagen</string>
     <string id="3053">Introduce el título de la película</string>
     <string id="3054">No se ha podido conectar con el sitio de Login</string>
-    <string id="3055">No se ha podido descargar la imágen</string>
+    <string id="3055">No se ha podido descargar la imagen</string>
+    <string id="3066">No se ha podido comprobar la solución</string>
+
+    <!-- Labels -->
+    <string id="3100">Comprobando: [B]%s[/B]</string>
+    <string id="3101">Correcto. El título original es: [B]%s[/B]</string>
+    <string id="3102">Equivocado: [B]%s[/B]</string>
+    <string id="3103">Sesión no iniciada</string>
+    <string id="3104">Conectado como usuario: [B]%s[/B]</string>
+    <string id="3105">Tu puntuación: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Resuelto [B][COLOR=ff008B00]%s[/COLOR][/B] veces, primero por [B]%s[/B]</string>
     <string id="3107">Sin solucionar</string>
+    <string id="3108">Número de imagen: [B]%s[/B]</string>
+    <string id="3109">Fecha: [B]%s[/B]</string>
+    <string id="3110">Enviado por: [B]%s[/B]</string>
+    <string id="3111">No estrenado</string>
+    <string id="3112">Usuario eliminado</string>
+    <string id="3113">Nuevos envíos</string>
+    <string id="3114">Películas destacadas</string>
+    <string id="3115">El Archivo</string>
+    <string id="3116">[B]%s[/B] votos</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
     <string id="3118">Oculto</string>
-    <string id="3119">Sortear</string>
+    <string id="3119">-</string>
+    <string id="3120">Imágenes rechazadas</string>
+    <string id="3121">Ya has resuelto esta imagen</string>
+    <string id="3122">La solución correcta era: [B]%s[/B]</string>
+    <string id="3123">Ya has enviado esta imagen</string>
+    <string id="3124">Lo siento, no tienes permiso para ver la imagen [B]%s[/B] - redirigido a [B]%s[/B]</string>
+    <string id="3125">La Cámara Acorazada</string>
+    <string id="3126">Genial. El título original es: [B]%s[/B] +1 Punto!</string>
+    <string id="3127">Imágenes eliminadas</string>
+    <string id="3128">Lo siento, no existe la imagen [B]%s[/B] - redirigido a [B]%s[/B]</string>
 
     <!-- Settings -->
     <string id="3200">General</string>
     <string id="3201">Inicio de sesión</string>
+    <string id="3202">Usar cuenta de whatthemovie.com</string>
     <string id="3203">Usuario</string>
     <string id="3204">Contraseña</string>
+    <string id="3205">Ajustes del botón "aleatorio" (requiere inicio de sesión)</string>
+    <string id="3206">Dificultad</string>
+    <string id="3207">Fácil</string>
+    <string id="3208">Fácil+media</string>
     <string id="3209">Todos</string>
+    <string id="3210">Incluir archivo</string>
+    <string id="3211">Incluir resueltos</string>
+    <string id="3212">Aparencia</string>
+    <string id="3213">Aspecto</string>
+    <string id="3214">Mostar "enviado por"</string>
+    <string id="3215">Mostar "resuelto"</string>
+    <string id="3216">Mostrar "número de imagen"</string>
+    <string id="3217">Mostar "fecha de imagen"</string>
+    <string id="3218">Comportamiento</string>
+    <string id="3219">Saltar automáticamente cuando la respuesta sea correcta</string>
+    <string id="3220">... después de X segundos</string>
+    <string id="3221">Mostrar "etiquetas de imagen"</string>
+    <string id="3222">Etiquetas</string>
+    <string id="3223">Etiqueta 1</string>
+    <string id="3224">Etiqueta 2</string>
+    <string id="3225">Etiqueta 3</string>
+    <string id="3226">Etiqueta 4</string>
+    <string id="3227">Etiqueta 5</string>
+    <string id="3228">Elige las etiquetas que quieres ver</string>
+    <string id="3229">Opciones de navegación (requiere inicio de sesión)</string>
+    <string id="3230">Solo Imágenes sin resolver</string>
+    <string id="3231">Mostar "calificación de imagen"</string>
+    <string id="3232">Saltar a</string>
     <string id="3233">Aleatorio</string>
     <string id="3234">Siguiente</string>
+    <string id="3235">Mostar botones de herramientas</string>
+    <string id="3236">Mostrar botones de navegación</string>
+    <string id="3237">Teclas</string>
+    <string id="3238">Elige botones para las acciones</string>
+
+    <!-- Keys -->
+    <string id="3239">Sin tecla</string>
+    <string id="3240">página arriba</string>
+    <string id="3241">página abajo</string>
+    <string id="3242">mostrar info</string>
+    <string id="3243">pausa</string>
+    <string id="3244">detener</string>
+    <string id="3245">siguiente elemento</string>
+    <string id="3246">anterior elemento</string>
+    <string id="3247">avance rápido</string>
+    <string id="3248">rebobinar</string>
+    <string id="3249">reproducir</string>
+    <string id="3250">menú contextual</string>
+    <string id="3251">subir volumen</string>
+    <string id="3252">bajar volumen</string>
+    <string id="3253">desplazar arriba</string>
+    <string id="3254">desplazar abajo</string>
+    <string id="3255">inicio</string>
+    <string id="3256">fin</string>
 
     <!-- Functions -->
     <string id="3260">Siguiente</string>
     <string id="3261">Anterior</string>
+    <string id="3262">Saltar</string>
+    <string id="3263">Marcador</string>
     <string id="3264">Favorito</string>
+    <string id="3265">Resolver</string>
 </strings>

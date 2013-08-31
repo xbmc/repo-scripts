@@ -4,6 +4,7 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <string id="3001">Случајно</string>
     <string id="3002">Назад</string>
 
     <!-- Settings -->
@@ -12,8 +13,10 @@
     <string id="3203">Корисничко име</string>
     <string id="3204">Лозинка</string>
     <string id="3209">Се</string>
+    <string id="3233">Случајно</string>
     <string id="3234">Следно</string>
 
     <!-- Functions -->
     <string id="3260">Следно</string>
+    <string id="3261">Претходно</string>
 </strings>

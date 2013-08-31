@@ -6,9 +6,11 @@
 <strings>
     <string id="3001">ランダム</string>
     <string id="3002">戻る</string>
+    <string id="3118">隠された</string>
 
     <!-- Settings -->
     <string id="3200">一般</string>
+    <string id="3201">ログイン</string>
     <string id="3203">ユーザー名</string>
     <string id="3204">パスワード</string>
     <string id="3209">すべて</string>

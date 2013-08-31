@@ -4,22 +4,117 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Buttons -->
+    <string id="3000">Adiviñe!</string>
     <string id="3001">Ó chou</string>
     <string id="3002">Atrás</string>
+
+    <!-- Messages -->
+    <string id="3050">Non se puido iniciar a sesión</string>
+    <string id="3051">Contrasinal incorrecto ou nome de usuario descoñecido: [B]%s[/B][CR]Por favor troque as credenciais ou deshabilite o inicio de sesión</string>
+    <string id="3052">Introduza o ID da instantánea</string>
+    <string id="3053">Escriba o título do filme</string>
+    <string id="3054">Non foi posíbel acceder ao sitio</string>
+    <string id="3055">Non se puido obter a instantánea</string>
+    <string id="3066">Non se puido verificar a resposta</string>
+
+    <!-- Labels -->
+    <string id="3100">Verificando: [B]%s[/B]</string>
+    <string id="3101">Correcto. O título orixinal é: [B]%s[/B]</string>
+    <string id="3102">Incorrecto: [B]%s[/B]</string>
+    <string id="3103">Sen iniciar sesión</string>
+    <string id="3104">Iniciou sesión como o usuario: [B]%s[/B]</string>
+    <string id="3105">A súa puntuación é: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Resolto [B][COLOR=ff008B00]%s[/COLOR][/B] veces, primeiro por [B]%s[/B]</string>
+    <string id="3107">Aínda sen resolver</string>
+    <string id="3108">ID de instantánea: [B]%s[/B]</string>
+    <string id="3109">Data: [B]%s[/B]</string>
+    <string id="3110">Publicado por: [B]%s[/B]</string>
+    <string id="3111">Sen liberar</string>
+    <string id="3112">Usuario eliminado</string>
+    <string id="3113">Novas Propostas</string>
+    <string id="3114">Filmes Destacados</string>
+    <string id="3115">O Arquivo</string>
+    <string id="3116">[B]%s[/B] votos</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
     <string id="3118">Agochado</string>
     <string id="3119">-</string>
+    <string id="3120">Instantánea rexeitadas</string>
+    <string id="3121">Xa resolveu esta instantánea</string>
+    <string id="3122">A solución correcta era: [B]%s[/B]</string>
+    <string id="3123">Publicou esta instantánea</string>
+    <string id="3124">Sentímolo, non pode ver esta instantánea [B]%s[/B] - redirixido a [B]%s[/B]</string>
+    <string id="3125">O Baúl</string>
+    <string id="3126">Incríbel. O título orixinal é: [B]%s[/B] +1 Punto!</string>
+    <string id="3127">Eliminar Tiradas</string>
+    <string id="3128">Sentímolo, esta instantánea non existe [B]%s[/B] - redirixido a [B]%s[/B]</string>
 
     <!-- Settings -->
     <string id="3200">Xeral</string>
     <string id="3201">Inicio de Sesión</string>
+    <string id="3202">Usar a conta de whatthemovie.com</string>
     <string id="3203">Nome de usuario</string>
     <string id="3204">Contrasinal</string>
+    <string id="3205">Configuración para os botóns "ó chou" (ten de iniciar sesión)</string>
+    <string id="3206">Dificultade</string>
+    <string id="3207">Fácil</string>
+    <string id="3208">Fácil+medio</string>
     <string id="3209">Todos</string>
+    <string id="3210">Incluír ficheiro</string>
+    <string id="3211">Incluír resolto</string>
+    <string id="3212">Look+feel</string>
+    <string id="3213">Aspecto</string>
+    <string id="3214">Amosar "publicado por"</string>
+    <string id="3215">Amosar "resolto"</string>
+    <string id="3216">Amosar "ID da instantánea"</string>
+    <string id="3217">Amosar "data da instantánea"</string>
+    <string id="3218">Comportamento</string>
+    <string id="3219">Saltar auto. despois de acertar correctamente</string>
+    <string id="3220">...despois de x segundos</string>
+    <string id="3221">Amosar "etiqueta da instantánea"</string>
+    <string id="3222">Etiquetas</string>
+    <string id="3223">Etiqueta 1</string>
+    <string id="3224">Etiqueta 2</string>
+    <string id="3225">Etiqueta 3</string>
+    <string id="3226">Etiqueta 4</string>
+    <string id="3227">Etiqueta 5</string>
+    <string id="3228">Escoller as etiquetas que quere ver</string>
+    <string id="3229">Opcións de navegación (ten de iniciar sesión)</string>
+    <string id="3230">Só Instantáneas sen resolver</string>
+    <string id="3231">Amosar "valoración da instantánea"</string>
+    <string id="3232">Saltar a</string>
     <string id="3233">Ó chou</string>
     <string id="3234">Seguinte</string>
+    <string id="3235">Amosar botóns das ferramentas</string>
+    <string id="3236">Amosar botóns de navegación</string>
+    <string id="3237">Teclas</string>
+    <string id="3238">Escoller botóns para as accións</string>
+
+    <!-- Keys -->
+    <string id="3239">Sen tecla</string>
+    <string id="3240">Páxina arriba</string>
+    <string id="3241">páxina abaixo</string>
+    <string id="3242">Amosar info.</string>
+    <string id="3243">pausar</string>
+    <string id="3244">deter</string>
+    <string id="3245">seguinte elemento</string>
+    <string id="3246">elemento anterior</string>
+    <string id="3247">adiante</string>
+    <string id="3248">atrás</string>
+    <string id="3249">reproducir</string>
+    <string id="3250">menú contextual</string>
+    <string id="3251">subir volume</string>
+    <string id="3252">baixar volume</string>
+    <string id="3253">desprazar arriba</string>
+    <string id="3254">desprazar abaixo</string>
+    <string id="3255">inicio</string>
+    <string id="3256">final</string>
 
     <!-- Functions -->
     <string id="3260">Seguinte</string>
     <string id="3261">Anterior</string>
+    <string id="3262">saltar</string>
+    <string id="3263">Marcador</string>
     <string id="3264">Favorito</string>
+    <string id="3265">Resolver</string>
 </strings>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.game.whatthemovie" name="WhatTheMovie" version="1.0.6" provider-name="Tristan Fischer (sphere@dersphere.de)|tadi|skiller2k1">
+<addon id="script.game.whatthemovie" name="WhatTheMovie" version="1.0.7" provider-name="Tristan Fischer (sphere@dersphere.de)|tadi|skiller2k1">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.beautifulsoup" version="3.0.8"/>
@@ -8,12 +8,20 @@
     <extension point="xbmc.addon.metadata">
         <language />
         <platform>all</platform>
+        <website>http://www.whatthemovie.com</website>
+        <source>https://github.com/wtm4xbmc/script.game.whatthemovie</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=104097</forum>
+        <email>sphere@dersphere.de</email>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <summary lang="be">A Movie Quiz - Guess Movies by snapshots</summary>
         <summary lang="da">En Filmquiz - Gæt Film ud fra stillbilleder</summary>
         <summary lang="de">Ein Filmquiz - Zu Snapshots Filmtitel erraten</summary>
         <summary lang="el">Κουίζ Ταινιών - Μαντέψτε τις Ταινίες από στιγμιότυπα</summary>
         <summary lang="en">A Movie Quiz - Guess Movies by snapshots</summary>
-        <summary lang="es">Una pregunta de cine - Adivina la película de la imágen</summary>
+        <summary lang="es">Un Concurso de Cine - Adivina la película de la imagen</summary>
+        <summary lang="fr">Un Quizz de Films - Deviner les Films avec des extraits</summary>
+        <summary lang="gl">Un Concurso sobre Filmes - Adiviñe os Filmes a partir dunha instantáneas</summary>
+        <summary lang="hr">Filmski kviz - Odgonetnite film prema snimci</summary>
         <summary lang="hu">Film kvíz - Találja ki a filmet pillanatképek alapján</summary>
         <summary lang="it">Un Quiz su Film - Indovina i Film dalle immagini</summary>
         <summary lang="ko">영화 퀴즈 - 스냅샷을 보고 영화 맞추기</summary>
@@ -23,12 +31,15 @@
         <summary lang="pt_BR">Quiz de Filmes - Adivinha Filmes por instantâneos</summary>
         <summary lang="sk">Filmový kvíz - uhádnite filmy podľa momentiek</summary>
         <summary lang="sv">A Movie Quiz - Gissa filmer från foton</summary>
+        <summary lang="zh">一个电影问答游戏 - 根据电影图片猜电影</summary>
         <description lang="be">Solve snapshots to gain points for the Hall of Fame - powered by the website whatthemovie.com [CR][CR]Currently Main Features are:[CR]- Login with your whatthemovie.com account[CR]- Solve, favourite, bookmark and rate shots[CR]- Zoom the snapshot[CR]- Set random and navigation options[CR]- Jump automatically to the next or random next shot</description>
         <description lang="da">Løs spørgsmål for at samle point til Hall of Fame - drevet af websiden whatthemovie.com [CR][CR]Nuværende hovedfunktioner er:[CR]- Login med din whatthemovie.com konto[CR]- Løs, favoriser, marker og bedøm filmbilleder[CR]- Zoom ind på stillbillederne[CR]- Vælg indstillinger for tilfældige og navigation[CR]- Spring automatisk til det næste billede eller et tilfældigt billede.</description>
         <description lang="de">Löse Snapshots um Punkte für die Hall of Fame zu bekommen - powered by the website whatthemovie.com [CR][CR]Aktuelle Haupt-Features:[CR]- Login mit deinem whatthemovie.com Account[CR]- Löse, favorisiere, bookmarke und bewerte Shots[CR]- Snapshot Zoom[CR]- Zufalls- und Navigations-Einstellungen[CR]- Automatischer Sprung zum nächsten Shot</description>
         <description lang="el">Επιλύστε στιγμιότυπα για να κερδίσετε πόντους και να μπείτε στο Hall of Fame - υποστηρίζεται από την ιστοσελίδα whatthemovie.com [CR][CR]Προς το παρόν οι κύριες λειτουργίες είναι:[CR]- Είσοδος με το λογαριασμό σας στο whatthemovie.com [CR]- Επίλυση, ορισμός αγαπημένων, δημιουργία σελιδοδεικτών και αξιολόγηση στιγμιότυπων[CR]- Ζουμάρισμα σε στιγμιότυπα[CR]- Ορισμός ρυθμίσεων τυχαίων και πλοήγησης[CR]- Αυτόματη μετάβαση στο επόμενο ή σε τυχαίο στιγμιότυπο</description>
         <description lang="en">Solve snapshots to gain points for the Hall of Fame - powered by the website whatthemovie.com [CR][CR]Currently Main Features are:[CR]- Login with your whatthemovie.com account[CR]- Solve, favourite, bookmark and rate shots[CR]- Zoom the snapshot[CR]- Set random and navigation options[CR]- Jump automatically to the next or random next shot</description>
         <description lang="es">Resuelve capturas para ganar puntos de la Sala de la Fama - potenciado por whatthemovie.com [CR][CR]Características generales:[CR]- Identificate con tu cuenta the whatthemovie.com[CR]- Resuelve, marca y puntúa las capturas[CR]-Amplía la captura[CR]- Establece opciones de navegación aleatorias[CR]- Salta automáticamente a la siguiente captura</description>
+        <description lang="gl">Resolva as instantáneas para obter puntos e entrar no Salón da Fama - fornecido por whatthemovie.com [CR][CR]Caracteristicas principais:[CR]- Inicio de sesión coa súa conta de whatthemovie.com[CR]- Resolver, favorito, marcar e puntuar instantáneas[CR]- Ampliar a instantánea[CR]- Estabelecer opcións de aleatoriedade e navegación[CR] - Saltar automaticamente á seguinte instantánea</description>
+        <description lang="hr">Odgonetnite snimku da bi dobili bodove za Kuću slavnih - pogonjeno web stranicom whatthemovie.com [CR][CR]Trenutne glavne značajke su:[CR]- Prijava na vaš whatthemovie.com račun[CR]- rješenja, omiljeno, zabilješke i ocjene snimki[CR]- Zumirajte snimku[CR]- Postavite naizmjenične i navigacijske mogućnosti[CR]- Skočite automatski na slijedeću ili naizmjeničnu snimku</description>
         <description lang="hu">Fejtse meg a képeket, hogy pontokat szerezzen és bekerüljön a legjobbak közé - a whatthemovie.com támogatásával [CR][CR]Jelenlegi tulajdonságok:[CR]- Bejelentkezés a whatthemovie.com fiókjával[CR]- Pillanatképek megfejtése, könyvjelzőzése és értékelése[CR]- Pillanatképek nagyítása[CR]- Automatikus továbblépés a következő képre</description>
         <description lang="it">Indovina l'immagine per guadagnare punti per la Sala delle Celebrità - fornito dal sito web whatthemovie.com [CR][CR] Attualmente le Funzioni Principali sono::[CR]- Login con il tuo account whatthemovie.com personale[CR]- Risolvi, Preferiti, Segnalibri e Vota le Immagini[CR]- Zoom dell'immagine[CR]- Imposta casuale e opzioni di navigazione[CR]- Vai automaticamente all'immagine successiva o successiva casuale</description>
         <description lang="lt">Išspręskite vaizdus, norėdami gauti taškus Hall of Fame (šlovės salėje) - sukurta svetainės whatthemovie.com[CR][CR]Šiuo metu pagrindinės ypatybės yra:[CR]- Prisijungti su savo sąskaita/paskyra prie whatthemovie.com[CR]- Išspręskite, mėgstamas žymas ir normų kadrus. Padidintkite fotografiją[CR]- Nustatykite atsitiktinius ir navigacijos variantus[CR]- Peršokite/pereikite automatiškai kitą arba atsitiktinai kitą fotografiją</description>
