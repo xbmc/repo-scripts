@@ -1,0 +1,69 @@
+# XBMC Media Center language file
+# Addon Name: Netwalk Game
+# Addon id: script.game.netwalk
+# Addon Provider: Tristan Fischer (sphere@dersphere.de)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Portuguese (http://www.transifex.com/projects/p/xbmc-addons/language/pt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#3000"
+msgid "New Game"
+msgstr "Novo Jogo"
+
+msgctxt "#3001"
+msgid "Exit Game"
+msgstr "Sair do Jogo"
+
+msgctxt "#3002"
+msgid "Moves:"
+msgstr "Jogadas:"
+
+msgctxt "#3003"
+msgid "Target Movies:"
+msgstr "Filmes:"
+
+msgctxt "#3004"
+msgid "Time:"
+msgstr "Hora:"
+
+msgctxt "#3005"
+msgid "0"
+msgstr "0"
+
+msgctxt "#3006"
+msgid "Game ID:"
+msgstr "ID do Jogo:"
+
+msgctxt "#3007"
+msgid "You won!"
+msgstr "Ganhou!"
+
+msgctxt "#3008"
+msgid "You won the game."
+msgstr "Ganhou o jogo."
+
+msgctxt "#3009"
+msgid "Exit?"
+msgstr "Sair?"
+
+msgctxt "#3010"
+msgid "[B]Controls[/B][CR]- Focus tile: MOUSE-HOVER, UP, RIGHT, LEFT, DOWN[CR]- Turn focused tile clockwise: RIGHTCLICK, ESC, BACK[CR]- Turn focused tile counter-clockwise: LEFTCLICK, ENTER[CR]- Lock focused tile: MIDDLECLICK, INFO, SPACE[CR]- Exit Game: STOP, EXIT-BUTTON[CR]"
+msgstr "[B]Controlos[/B][CR]- Seleccionar bloco: PASSAR COM RATO SOBRE, CIMA, DIREITA, ESQUERDA, BAIXO[CR]- Rodar bloco seleccionado no sentido dos ponteiros: BOTÃO DIREITO DO RATO, ESC, RETROCEDER[CR]- Rodar bloco seleccionado no sentido contrário aos ponteiros: BOTÃO ESQUERDO DO RATO, ENTER[CR]- Trancar bloco seleccionado: BOTÃO DO MEIO DO RATO, INFO, BARRA DE ESPAÇO[CR]- Sair do Jogo: PARAR, BOTÃO EXIT[CR]"
+
+msgctxt "#3011"
+msgid "[B]Goal[/B][CR]Your goal is to connect all terminals to the server by rotating the tiles[CR]Note, there is only ONE solution possible for each game!"
+msgstr "[B]Objectivo[/B][CR]O objectivo é ligar todos os terminais ao servidor, rodando os blocos.[CR]Nota: há apenas UMA solução possível para cada jogo!"
+
+msgctxt "#3012"
+msgid "Are you sure that you want to exit?"
+msgstr "Tem a certeza que quer sair?"
