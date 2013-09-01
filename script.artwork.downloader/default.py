@@ -298,9 +298,9 @@ class Main:
             # Check if using the centralize option
             if setting['centralize_enable']:
                 if currentmedia['mediatype'] == 'tvshow':
-                    self.target_extrafanartdirs.append(setting['centralfolder_tvshows'])
+                    extrafanartdirs.append(setting['centralfolder_tvshows'])
                 elif currentmedia['mediatype'] == 'movie':
-                    self.target_extrafanartdirs.append(setting['centralfolder_movies'])
+                    extrafanartdirs.append(setting['centralfolder_movies'])
             currentmedia['artworkdir'] = artworkdir
             currentmedia['extrafanartdirs'] = extrafanartdirs
             currentmedia['extrathumbsdirs'] = extrathumbsdirs

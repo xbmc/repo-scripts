@@ -1,3 +1,6 @@
+[B]12.0.18[/B]
+- Fixed wrong variable
+
 [B]12.0.17[/B]
 - Fixed wrong filename for season landscape
 - Fixed extra slash for BDMV and VIDEO_TS
