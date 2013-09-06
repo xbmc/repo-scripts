@@ -1,3 +1,7 @@
+3.9.14
+- [fix] Legendas.TV new layout, gfjardim
+- [fix] Some movie filenames were treated as tvshows causing lookup to fail, arnova
+
 3.9.13
 - [fix] Fixed Sratim A.K.A Subtitle.co.il service, BBLN
 

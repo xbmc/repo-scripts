@@ -97,14 +97,18 @@ class GUI( xbmcgui.WindowXMLDialog ):
       self.title  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title :)
 
     if self.tvshow == "":
-      if str(self.year) == "":
-        title, season, episode = regex_tvshow(False, self.title)
-        if episode != "":
-          self.season = str(int(season))
-          self.episode = str(int(episode))
-          self.tvshow = title
-        else:
-          self.title, self.year = xbmc.getCleanMovieTitle( self.title )
+      if str(self.year) == "":                                            # If we have a year, assume no tv show
+        self.title, self.year = xbmc.getCleanMovieTitle( self.title )     # Clean before trying tvshow regex, else we get false results on some movies
+        if str(self.year) == "":                                          # Still no year: *could* be a tvshow
+          title, season, episode = regex_tvshow(False, self.title)
+          if title != "" and season != "" and episode != "":
+            self.season = str(int(season))
+            self.episode = str(int(episode))
+            self.tvshow = title
+          else:
+            self.season = ""                                              # Reset variables: could contain garbage from tvshow regex above
+            self.episode = ""
+            self.tvshow = ""
     else:
       self.year = ""
 
