@@ -20,7 +20,11 @@
 import random
 from scrapers import ALL_SCRAPERS, get_scrapers
 
-import xbmc
+try:
+    import xbmc
+    XBMC_MODE = True
+except ImportError:
+    XBMC_MODE = False
 
 
 class ScraperManager(object):
@@ -90,7 +94,10 @@ class ScraperManager(object):
         return self._scrapers[self._current_index]
 
     def log(self, msg):
-        xbmc.log('TheBigPictures Manager: %s' % msg)
+        if XBMC_MODE:
+            xbmc.log('TheBigPictures Manager: %s' % msg)
+        else:
+            print('TheBigPictures Manager: %s' % msg)
 
 
 def test():

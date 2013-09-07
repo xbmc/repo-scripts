@@ -22,7 +22,12 @@ import json
 import urllib2
 from BeautifulSoup import BeautifulSoup
 
-import xbmc
+try:
+    import xbmc
+    XBMC_MODE = True
+except ImportError:
+    XBMC_MODE = False
+
 
 ALL_SCRAPERS = (
     'TheBigPictures',
@@ -82,9 +87,14 @@ class BasePlugin(object):
         return self._title
 
     def log(self, msg):
-        xbmc.log('TheBigPictures ScraperPlugin[%s]: %s' % (
-            self.__class__.__name__, msg
-        ))
+        if XBMC_MODE:
+            xbmc.log('TheBigPictures ScraperPlugin[%s]: %s' % (
+                self.__class__.__name__, msg
+            ))
+        else:
+            print('TheBigPictures ScraperPlugin[%s]: %s' % (
+                self.__class__.__name__, msg
+            ))
 
     @classmethod
     def get_scrapers(cls, name_list):
@@ -249,6 +259,8 @@ class WallStreetJournal(BasePlugin):
             if not author == u'By WSJ Staff':
                 continue
             if not album.find('img'):
+                continue
+            if not album.find('h2'):
                 continue
             title = album.find('h2').a.string
             album_url = album.find('h2').a['href']
