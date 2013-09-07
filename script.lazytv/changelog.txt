@@ -1,0 +1,12 @@
+0.1.2
+No longer accessing native XBMC database. Creates copy and accesses that instead.
+
+0.1.3
+Rewrite to use json-rpc api in place of direct SQL queries
+
+0.1.4
+Introduced option to populate random playlist using Smart playlist selected in Settings or Live
+
+0.1.8
+added function to populate list of next to watch episodes for all TV shows
+added function to backfill watched status

@@ -1,0 +1,234 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-08-24 12:58+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#settings
+#filter
+
+msgctxt "#30000"
+msgid "Filter Settings"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Filter by Show"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Shows to exclude"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Filter by Genre"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Genres to exclude"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Filter by Show Length"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Show lengths to exclude"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Filter by Rating"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Ratings to exclude"
+msgstr ""
+
+#heading
+
+msgctxt "#30009"
+msgid "Playlist Settings"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Number of shows in playlist"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Allow multiple episodes of same TV Show"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Include episodes from unwatched TV series"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Exclude partially watched episodes (they start from the beginning)"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Begin playlist with latest partially-watched TV Show (will resume)"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Include streams (warning: very buggy)"
+msgstr ""
+
+#Primary Function
+#empty strings from id 30016 to 30069
+
+msgctxt "#30070"
+msgid "Function Settings"
+msgstr ""
+
+msgctxt "#30071"
+msgid "Select Primary Function of Addon"
+msgstr ""
+
+msgctxt "#30072"
+msgid "Create and launch randomised playlist"
+msgstr ""
+
+msgctxt "#30073"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr ""
+
+msgctxt "#30074"
+msgid "Populate based on ..."
+msgstr ""
+
+msgctxt "#30075"
+msgid "Filter and Playlist Settings"
+msgstr ""
+
+msgctxt "#30076"
+msgid "Specific default playlist"
+msgstr ""
+
+msgctxt "#30077"
+msgid "Let me choose the Smart Playlist on Launch"
+msgstr ""
+
+msgctxt "#30078"
+msgid "Choose Smart Playlist"
+msgstr ""
+
+msgctxt "#30079"
+msgid "Sort list by ..."
+msgstr ""
+
+msgctxt "#30080"
+msgid "Title"
+msgstr ""
+
+msgctxt "#30081"
+msgid "Last Played"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Number of episodes to add to playlist"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Backfill watched status script"
+msgstr ""
+
+#backfill
+
+msgctxt "#30084"
+msgid "Backfill watched status"
+msgstr ""
+
+msgctxt "#30085"
+msgid "All Shows"
+msgstr ""
+
+msgctxt "#30086"
+msgid "Single Show"
+msgstr ""
+
+msgctxt "#30087"
+msgid "Choose Show"
+msgstr ""
+
+#dialog
+#empty strings from id 30088 to 30100
+
+msgctxt "#30101"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Show Genres"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Episode Length (seconds)"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Rating"
+msgstr ""
+
+msgctxt "#30105"
+msgid "Save and Close"
+msgstr ""
+
+msgctxt "#30106"
+msgid "Close"
+msgstr ""
+
+msgctxt "#30107"
+msgid "Exclude All"
+msgstr ""
+
+msgctxt "#30108"
+msgid "Include All"
+msgstr ""
+
+msgctxt "#30109"
+msgid "Excluded"
+msgstr ""
+
+msgctxt "#30110"
+msgid "Choose %s to Exclude"
+msgstr ""
+
+msgctxt "#30111"
+msgid "Unrated"
+msgstr ""
+
+#playlist
+#empty strings from id 30112 to 30149
+
+msgctxt "#30150"
+msgid "No shows available for the playlist."
+msgstr ""
+
+msgctxt "#30151"
+msgid "Initializing..."
+msgstr ""
+
+msgctxt "#30152"
+msgid "Populating lists"
+msgstr ""
+
+msgctxt "#30153"
+msgid "Populating lists - returned"
+msgstr ""
+
+msgctxt "#30154"
+msgid "Creating playlist"
+msgstr ""
+
+msgctxt "#30155"
+msgid "Creating episode list"
+msgstr ""
