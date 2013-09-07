@@ -140,6 +140,13 @@
                 "major": "13",
                 "minor": "0",
                 "tag": "prealpha",
+                "revision": "20130831-2da9c97",
+                "extrainfo": "alpha7"
+            },
+            {
+                "major": "13",
+                "minor": "0",
+                "tag": "prealpha",
                 "revision": "20130630-30f4a79",
                 "extrainfo": "alpha6"
             },
