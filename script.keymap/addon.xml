@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.keymap"
        name="Keymap Editor"
-       version="0.9.0"
+       version="0.9.1"
        provider-name="takoi">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>

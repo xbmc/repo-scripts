@@ -16,7 +16,6 @@ import os
 import sys
 import xbmc
 import io
-from collections import OrderedDict
 from xbmcgui import Dialog
 from common import ACTIONS, WINDOWS, tr
 from editor import Editor

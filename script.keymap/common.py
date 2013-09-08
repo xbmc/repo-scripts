@@ -331,7 +331,7 @@ _windows = [
   "slideshow"                , "Slideshow"
 ]
 
-from collections import OrderedDict
+from collections_backport import OrderedDict
 
 def _get_actions():
   ret = OrderedDict()

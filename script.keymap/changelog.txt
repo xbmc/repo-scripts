@@ -1,0 +1,3 @@
+[B]v0.9.1[/B]
+- fixed: script not working on os x due to missing python libraries
+
