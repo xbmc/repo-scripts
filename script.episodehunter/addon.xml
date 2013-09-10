@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.episodehunter" version="1.0.5" name="EpisodeHunter" provider-name="Episodehunter.tv">
+    <requires>
+        <import addon="xbmc.python"              version="2.1.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+    	<provides>video</provides>
+    </extension>
+    <extension point="xbmc.service" name="episodeHunter.service" library="addon.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary>EpisodeHunter</summary>
+        <description>
+Episodehunter keeps automatically a record of what you are watching and can there by keep a comprehensive history of all TV shows and movies you have watched and give tips on what to see next.
+You are required to have an EpisodeHunter account for this plugin.
+Create an account on episodehunter.tv
+
+This plugin is under beta testing.
+No more feature is planned.
+However, if you have any suggestions or problem, please
+visit episodehunter.uservoice.com or
+contact us on info@episodehunter.tv
+        </description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <language>en</language>
+        <website>http://episodehunter.tv</website>
+        <email>info@episodehunter.tv</email>
+    </extension>
+</addon>
