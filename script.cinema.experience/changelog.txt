@@ -1,12 +1,26 @@
+3.0.5
+- fix       - Movie playing behind trivia
+- fix       - Stop trivia music from playing if it is not selected in settings
+- fix       - add back missing audio formats
+- add       - Allow each type of slide to have a specified timer.
+- fix       - Corrected case for trivia skin
+- add       - Allow slides.xml to be title case(ie Slides.xml)
+- change    - cosmetics
+
+3.0.4
+- fix       - setting error for a single music file during trivia
+- change    - code clean up
+- add       - FSK Ratings added, along with converting to near MPAA rating
+
 3.0.3
-- fix - Coming Attraction Intro Videos
-- fix - removed code that could cause the music library to flash after trivia
-- add - give user the ability to diable YouTube(or any plug-in required) Trailers
-- fix - stop downloader from trying to download local trailers
+- fix       - Coming Attraction Intro Videos
+- fix       - removed code that could cause the music library to flash after trivia
+- add       - give user the ability to diable YouTube(or any plug-in required) Trailers
+- fix       - stop downloader from trying to download local trailers
 
 3.0.2
-- fix - make sure home_automation.py is moved in service.py if it does not exist
-- fix - have script wait until full screen video is playing before detecting a stop, should fix when XBMC is slow to start
+- fix       - make sure home_automation.py is moved in service.py if it does not exist
+- fix       - have script wait until full screen video is playing before detecting a stop, should fix when XBMC is slow to start
 
 3.0.1
 - fix       - more HTTP-API calls removed(none should be left in functioning code)

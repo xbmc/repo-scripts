@@ -62,7 +62,7 @@ def _get_slides( paths, movie_mpaa ):
         # sort in case
         entries.sort()
         # get a slides.xml if it exists
-        slidesxml_exists, mpaa, question_format, clue_format, answer_format = _get_slides_xml( path )
+        slidesxml_exists, mpaa, question_format, clue_format, answer_format, still_format = _get_slides_xml( path )
         # check if rating is ok
         xbmc.log( "[script.cinema.experience] - Movie MPAA: %s" % movie_mpaa, level=xbmc.LOGDEBUG )
         xbmc.log( "[script.cinema.experience] - Slide MPAA: %s" % mpaa, level=xbmc.LOGDEBUG )
@@ -70,7 +70,7 @@ def _get_slides( paths, movie_mpaa ):
             xbmc.log( "[script.cinema.experience] - Slide Rating above movie rating - skipping whole folder", level=xbmc.LOGNOTICE)
             continue
         # initialize these to True so we add a new list item to start
-        question = clue = answer = True
+        question = clue = answer = still = True
         # enumerate through our entries list and combine question, clue, answer
         for entry in entries:
             # if folder add to our folder list to recursively fetch slides
@@ -82,23 +82,29 @@ def _get_slides( paths, movie_mpaa ):
                 if ( question_format and re.search( question_format, os.path.basename( entry ), re.IGNORECASE ) ):
                     if ( question ):
                         tmp_slides += [ [ "", "", "" ] ]
-                        clue = answer = False
-                    tmp_slides[ -1 ][ 0 ] = entry
-                # clue
+                        clue = answer = still = False
+                    tmp_slides[ -1 ][ 0 ] = "__question__" + entry
+                    # clue
                 elif ( clue_format and re.search( clue_format, os.path.basename( entry ), re.IGNORECASE ) ):
                     if ( clue ):
                         tmp_slides += [ [ "", "", "" ] ]
-                        question = answer = False
-                    tmp_slides[ -1 ][ 1 ] = entry
+                        question = answer = still = False
+                    tmp_slides[ -1 ][ 1 ] = "__clue__" + entry
                 # answer
                 elif ( answer_format and re.search( answer_format, os.path.basename( entry ), re.IGNORECASE ) ):
                     if ( answer ):
                         tmp_slides += [ [ "", "", "" ] ]
-                        question = clue = False
-                    tmp_slides[ -1 ][ 2 ] = entry
+                        question = clue = still = False
+                    tmp_slides[ -1 ][ 2 ] = "__answer__" + entry
+                    # still
+                elif ( still_format and re.search( still_format, os.path.basename( entry ), re.IGNORECASE ) ):
+                    if ( still ):
+                        tmp_slides += [ [ "", "", "" ] ]
+                        clue = answer = question = False
+                    tmp_slides[ -1 ][ 0 ] = "__still__" + entry
             # add the file as a question TODO: maybe check for valid picture format?
             elif ( entry and os.path.splitext( entry )[ 1 ].lower() in xbmc.getSupportedMedia( "picture" ) ):
-                tmp_slides += [ [ "", "", entry ] ]
+                tmp_slides += [ [ "", "", "__still__" + entry ] ] 
     # if there are folders call again (we want recursive)
     if ( folders ):
         tmp_slides.extend( _get_slides( folders, movie_mpaa ) )
@@ -107,17 +113,40 @@ def _get_slides( paths, movie_mpaa ):
 def _get_slides_xml( path ):
     source = os.path.join( path, "slides.xml" ).replace("\\\\","\\")
     destination = os.path.join( BASE_CURRENT_SOURCE_PATH, "slides.xml" ).replace("\\\\","\\")
-    # if no slides.xml exists return false
+    # if slides.xml does not exist, try in title case
     if not exists( source ):
-        return False, "", "", "", ""
-    # fetch data
+        source = os.path.join( path, "Slides.xml" ).replace( "\\\\", "\\" )
+        # if no slides.xml exists return false
+        if not exists( source ):
+            return False, "", "", "", "", ""
     file_copy( source, destination )
+    # fetch data
     xml = open( destination ).read()
     # parse info
-    mpaa, theme, question_format, clue_format, answer_format = re.search( "<slides?(?:.+?rating=\"([^\"]*)\")?(?:.+?theme=\"([^\"]*)\")?.*?>.+?<question.+?format=\"([^\"]*)\".*?/>.+?<clue.+?format=\"([^\"]*)\".*?/>.+?<answer.+?format=\"([^\"]*)\".*?/>", xml, re.DOTALL ).groups()
+    #mpaa, theme, question_format, clue_format, answer_format = re.search( "<slides?(?:.+?rating=\"([^\"]*)\")?(?:.+?theme=\"([^\"]*)\")?.*?>.+?<question.+?format=\"([^\"]*)\".*?/>.+?<clue.+?format=\"([^\"]*)\".*?/>.+?<answer.+?format=\"([^\"]*)\".*?/>", xml, re.DOTALL ).groups()
+    mpaa = theme = question_format = clue_format = answer_format = still_format = ""
+    mpaa_match = re.search( '''rating="([^\"]*)"''', xml, re.DOTALL )
+    if mpaa_match:
+        mpaa = mpaa_match.group(1)
+    theme_match = re.search( '''theme="([^\"]*)"''', xml, re.DOTALL )
+    if theme_match:
+        theme = theme_match.group(1)
+    question_match = re.search( '''<question.+?format="([^\"]*)".*?/>''', xml, re.DOTALL )
+    if question_match:
+        question_format = question_match.group(1)
+    clue_match = re.search( '''<clue.+?format="([^\"]*)".*?/>''', xml, re.DOTALL )
+    if clue_match:
+        clue_format = clue_match.group(1)
+    answer_match = re.search( '''<answer.+?format="([^\"]*)".*?/>''', xml, re.DOTALL )
+    if answer_match:
+        answer_format = answer_match.group(1)
+    still_match = re.search( '''<still.+?format="([^\"]*)".*?/>''', xml, re.DOTALL )
+    if still_match:
+        still_format = still_match.group(1)
+    #xbmc.log("[script.cinema.experience] mpaa: %s QF: %s == AF: %s == CF: %s == SF: %s" % (mpaa, question_format, answer_format, clue_format, still_format), xbmc.LOGNOTICE) 
     delete_file ( destination )
-    return True, mpaa, question_format, clue_format, answer_format
-
+    return True, mpaa, question_format, clue_format, answer_format, still_format
+    
 def _shuffle_slides( tmp_slides, watched ):
     xbmc.log( "[script.cinema.experience] - Sorting Watched/Unwatched and Shuffing Slides ", level=xbmc.LOGNOTICE)
     slide_playlist = []

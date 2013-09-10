@@ -26,7 +26,10 @@ triggers                    = ( "Script Start", "Trivia Intro", "Trivia", "Trivi
 
 trivia_settings             = {        "trivia_mode": int( __setting__( "trivia_mode" ) ),
                                  "trivia_total_time": int( float( __setting__( "trivia_total_time" ) ) ),
-                                 "trivia_slide_time": int( float( __setting__( "trivia_slide_time" ) ) ),
+                               "trivia_slide_time_s": int( float( __setting__( "trivia_slide_time_s" ) ) ),
+                               "trivia_slide_time_q": int( float( __setting__( "trivia_slide_time_q" ) ) ),
+                               "trivia_slide_time_c": int( float( __setting__( "trivia_slide_time_c" ) ) ),
+                               "trivia_slide_time_a": int( float( __setting__( "trivia_slide_time_a" ) ) ),
                                       "trivia_music": int( __setting__( "trivia_music" ) ),
                                      "trivia_folder": xbmc.translatePath( __setting__( "trivia_folder" ) ).decode('utf-8'),
                               "trivia_adjust_volume": eval( __setting__( "trivia_adjust_volume" ) ),
@@ -165,7 +168,7 @@ is_paused = False
 prev_trigger = ""
 script_header = "[ %s ]" % __scriptID__
 
-from ce_playlist import _get_special_items, build_music_playlist, _rebuild_playlist, _store_playlist, _get_queued_video_info
+from ce_playlist import _get_special_items, build_music_playlist, _rebuild_playlist, _store_playlist, _get_queued_video_info, _clear_playlists
 from slides import _fetch_slides
 from new_trailer_downloader import downloader
 from utils import settings_to_log
@@ -191,7 +194,6 @@ def _clear_watched_items( clear_type ):
     base_paths = []
     # clear trivia or trailers
     if ( clear_type == "ClearWatchedTrailers" ):
-        # trailer settings, grab them here so we don't need another __setting__() object
         # handle AMT db special
         sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib", "scrapers") )
         from amt_database import scraper as scraper
@@ -217,17 +219,6 @@ def _clear_watched_items( clear_type ):
         message = ( 32532, 32542, )[ sys.argv[ 1 ] == "ClearWatchedTrailers" ]
     # inform user of result
     ok = xbmcgui.Dialog().ok( __language__( 32000 ), __language__( message ) )
-
-def _clear_playlists( mode="both" ):
-    # clear playlists
-    if mode=="video" or mode=="both":
-        vplaylist = playlist
-        vplaylist.clear()
-        xbmc.log( "[ script.cinema.experience ] - Video Playlist Cleared", level=xbmc.LOGNOTICE )
-    if mode=="music" or mode=="both":
-        mplaylist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
-        mplaylist.clear()
-        xbmc.log( "[ script.cinema.experience ] - Music Playlist Cleared", level=xbmc.LOGNOTICE )
 
 def _build_playlist( movies, mode = "movie_titles" ):
     if mode == "movie_titles":

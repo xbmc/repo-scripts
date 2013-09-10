@@ -1,0 +1,869 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-05-10 12:53+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#English Strings
+#Title/Credit strings
+
+msgctxt "#32000"
+msgid "Cinema Experience"
+msgstr ""
+
+#empty string with id 32001
+
+msgctxt "#32002"
+msgid "nuka1195, Giftie, ackbarr"
+msgstr ""
+
+#Movie Trailers settings
+#empty strings from id 32003 to 32099
+
+msgctxt "#32100"
+msgid "Movie Trailers"
+msgstr ""
+
+msgctxt "#32101"
+msgid "None"
+msgstr ""
+
+msgctxt "#32102"
+msgid "1 Trailer"
+msgstr ""
+
+msgctxt "#32103"
+msgid "2 Trailers"
+msgstr ""
+
+msgctxt "#32104"
+msgid "3 Trailers"
+msgstr ""
+
+msgctxt "#32105"
+msgid "4 Trailers"
+msgstr ""
+
+msgctxt "#32106"
+msgid "5 Trailers"
+msgstr ""
+
+msgctxt "#32107"
+msgid "10 Trailers"
+msgstr ""
+
+#empty strings from id 32108 to 32109
+
+msgctxt "#32110"
+msgid "- Trailer Scraper"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Apple Movie Trailers (database)"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Apple Movie Trailers (newest)"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Local Folder"
+msgstr ""
+
+msgctxt "#32114"
+msgid "XBMC Movie Library"
+msgstr ""
+
+#empty strings from id 32115 to 32119
+
+msgctxt "#32120"
+msgid "   - Database Path"
+msgstr ""
+
+#empty strings from id 32121 to 32129
+
+msgctxt "#32130"
+msgid "   - Folder"
+msgstr ""
+
+#empty strings from id 32131 to 32139
+
+msgctxt "#32140"
+msgid "   - Limit Trailers by MPAA Rating of Movie"
+msgstr ""
+
+msgctxt "#32141"
+msgid "   - Limit Trailers by Genre of Movie"
+msgstr ""
+
+#empty strings from id 32142 to 32149
+
+msgctxt "#32150"
+msgid "   - MPAA Rating Limit for Trailers"
+msgstr ""
+
+#empty strings from id 32151 to 32159
+
+msgctxt "#32160"
+msgid "   - Select Trailers from Newest Genre only"
+msgstr ""
+
+#empty strings from id 32161 to 32169
+
+msgctxt "#32170"
+msgid "   - Preferred Trailer Quality"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Standard"
+msgstr ""
+
+msgctxt "#32172"
+msgid "480p"
+msgstr ""
+
+msgctxt "#32173"
+msgid "720p"
+msgstr ""
+
+msgctxt "#32174"
+msgid "1080p"
+msgstr ""
+
+#empty strings from id 32175 to 32179
+
+msgctxt "#32180"
+msgid "      - Select only 720p/1080p Trailers"
+msgstr ""
+
+#empty strings from id 32181 to 32184
+
+msgctxt "#32185"
+msgid "- Trailer play mode"
+msgstr ""
+
+msgctxt "#32186"
+msgid "Stream"
+msgstr ""
+
+msgctxt "#32187"
+msgid "Download"
+msgstr ""
+
+msgctxt "#32188"
+msgid "Downioad Folder"
+msgstr ""
+
+#empty string with id 32189
+
+msgctxt "#32190"
+msgid "- Select only unwatched Trailers"
+msgstr ""
+
+msgctxt "#32191"
+msgid "   - Reset Trailers watched status"
+msgstr ""
+
+#empty strings from id 32192 to 32194
+
+msgctxt "#32195"
+msgid "- Coming Attractions Intro"
+msgstr ""
+
+msgctxt "#32196"
+msgid "   - File"
+msgstr ""
+
+msgctxt "#32197"
+msgid "   - Folder"
+msgstr ""
+
+msgctxt "#32198"
+msgid "- Coming Attractions Outro"
+msgstr ""
+
+#Trivia quiz settings
+#empty string with id 32199
+
+msgctxt "#32200"
+msgid "Duration(in Minutes)"
+msgstr ""
+
+msgctxt "#32201"
+msgid "None"
+msgstr ""
+
+msgctxt "#32202"
+msgid "2 min"
+msgstr ""
+
+msgctxt "#32203"
+msgid "5 min"
+msgstr ""
+
+msgctxt "#32204"
+msgid "10 min"
+msgstr ""
+
+msgctxt "#32205"
+msgid "15 min"
+msgstr ""
+
+msgctxt "#32206"
+msgid "20 min"
+msgstr ""
+
+msgctxt "#32207"
+msgid "30 min"
+msgstr ""
+
+msgctxt "#32208"
+msgid "45 min"
+msgstr ""
+
+#empty string with id 32209
+
+msgctxt "#32210"
+msgid "- Slides Folder"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Trivia Mode"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Slide Show"
+msgstr ""
+
+msgctxt "#32213"
+msgid "Movie Quiz Script"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Automatic"
+msgstr ""
+
+msgctxt "#32215"
+msgid "Manual"
+msgstr ""
+
+msgctxt "#32216"
+msgid "Movie Quiz Script Question Limit"
+msgstr ""
+
+msgctxt "#32217"
+msgid "Movie Quiz Script Mode"
+msgstr ""
+
+#empty strings from id 32218 to 32219
+
+msgctxt "#32220"
+msgid "- Show each Still Slide for(in Seconds)"
+msgstr ""
+
+msgctxt "#32221"
+msgid "- Show each Question Slide for(in Seconds)"
+msgstr ""
+
+msgctxt "#32222"
+msgid "- Show each Answer Slide for(in Seconds)"
+msgstr ""
+
+msgctxt "#32223"
+msgid "- Show each Clue Slide for(in Seconds)"
+msgstr ""
+
+#empty strings from id 32224 to 32229
+
+msgctxt "#32230"
+msgid "- Music"
+msgstr ""
+
+msgctxt "#32231"
+msgid "- Play Music During Trivia Slideshow"
+msgstr ""
+
+msgctxt "#32232"
+msgid "   - Adjust Volume During Slideshow?"
+msgstr ""
+
+#empty strings from id 32233 to 32239
+
+msgctxt "#32240"
+msgid "      - Music Volume (% of Max Volume)"
+msgstr ""
+
+msgctxt "#32241"
+msgid "      - Fade Volume After Slideshow?"
+msgstr ""
+
+msgctxt "#32242"
+msgid "         - Fade Time(in seconds)"
+msgstr ""
+
+msgctxt "#32243"
+msgid "Music File/Playlist"
+msgstr ""
+
+msgctxt "#32244"
+msgid "Music Folder"
+msgstr ""
+
+#empty strings from id 32245 to 32249
+
+msgctxt "#32250"
+msgid "- Outro Video"
+msgstr ""
+
+#empty strings from id 32251 to 32259
+
+msgctxt "#32260"
+msgid "- Outro Music"
+msgstr ""
+
+#empty strings from id 32261 to 32269
+
+msgctxt "#32270"
+msgid "- Select only unwatched Slides"
+msgstr ""
+
+msgctxt "#32271"
+msgid "   - Reset Slides watched status"
+msgstr ""
+
+#empty strings from id 32272 to 32279
+
+msgctxt "#32280"
+msgid "- Intro Video"
+msgstr ""
+
+msgctxt "#32281"
+msgid "None"
+msgstr ""
+
+msgctxt "#32282"
+msgid "Single Video"
+msgstr ""
+
+msgctxt "#32283"
+msgid "1 Random Video"
+msgstr ""
+
+msgctxt "#32284"
+msgid "2 Random Videos"
+msgstr ""
+
+msgctxt "#32285"
+msgid "3 Random Videos"
+msgstr ""
+
+msgctxt "#32286"
+msgid "4 Random Videos"
+msgstr ""
+
+msgctxt "#32287"
+msgid "5 Random Videos"
+msgstr ""
+
+msgctxt "#32288"
+msgid "   - Video File"
+msgstr ""
+
+msgctxt "#32289"
+msgid "   - Video Folder"
+msgstr ""
+
+msgctxt "#32290"
+msgid "- Limit Trivia by Rating of Movie [I](requires slides.xml) [/I]"
+msgstr ""
+
+msgctxt "#32291"
+msgid "- Rating Limit for Trivia [I](requires slides.xml) [/I]"
+msgstr ""
+
+#Special videos settings
+#empty strings from id 32292 to 32299
+
+msgctxt "#32300"
+msgid "Movie Ratings Folder"
+msgstr ""
+
+msgctxt "#32301"
+msgid "Enable Rating Video"
+msgstr ""
+
+#empty strings from id 32302 to 32319
+
+msgctxt "#32320"
+msgid "Feature Presentation Intro"
+msgstr ""
+
+msgctxt "#32321"
+msgid "None"
+msgstr ""
+
+msgctxt "#32322"
+msgid "Single Video/Playlist"
+msgstr ""
+
+msgctxt "#32323"
+msgid "1 Random Video"
+msgstr ""
+
+msgctxt "#32324"
+msgid "2 Random Videos"
+msgstr ""
+
+msgctxt "#32325"
+msgid "3 Random Videos"
+msgstr ""
+
+msgctxt "#32326"
+msgid "4 Random Videos"
+msgstr ""
+
+msgctxt "#32327"
+msgid "5 Random Videos"
+msgstr ""
+
+#empty strings from id 32328 to 32329
+
+msgctxt "#32330"
+msgid "Feature Presentation Outro"
+msgstr ""
+
+#empty strings from id 32331 to 32339
+
+msgctxt "#32340"
+msgid "- File"
+msgstr ""
+
+#empty strings from id 32341 to 32349
+
+msgctxt "#32350"
+msgid "- Folder"
+msgstr ""
+
+#empty strings from id 32351 to 32359
+
+msgctxt "#32360"
+msgid "Audio Format Folder"
+msgstr ""
+
+msgctxt "#32361"
+msgid "Enable Audio Format Video"
+msgstr ""
+
+#empty strings from id 32362 to 32369
+
+msgctxt "#32370"
+msgid "Movie Theatre Intro Clips"
+msgstr ""
+
+#empty strings from id 32371 to 32379
+
+msgctxt "#32380"
+msgid "Movie Theatre Outro Clips"
+msgstr ""
+
+#empty strings from id 32381 to 32389
+
+msgctxt "#32390"
+msgid "Movie Coundown Video File"
+msgstr ""
+
+msgctxt "#32391"
+msgid "Movie Coundown Video Folder"
+msgstr ""
+
+msgctxt "#32392"
+msgid "Movie Coundown Video"
+msgstr ""
+
+#Misc settings
+#empty strings from id 32393 to 32399
+
+msgctxt "#32400"
+msgid "Run script before videos start"
+msgstr ""
+
+msgctxt "#32401"
+msgid "Disable Auto Refresh Setting"
+msgstr ""
+
+msgctxt "#32402"
+msgid "  - Re-Enable Auto Refresh For Movie"
+msgstr ""
+
+msgctxt "#32403"
+msgid "Enable Output to VoxCommando"
+msgstr ""
+
+msgctxt "#32404"
+msgid "Enable Pre-Eden"
+msgstr ""
+
+#Feature Options
+#empty strings from id 32405 to 32409
+
+msgctxt "#32410"
+msgid "Number Of Features"
+msgstr ""
+
+msgctxt "#32411"
+msgid "1 Feature"
+msgstr ""
+
+msgctxt "#32412"
+msgid "2 Features"
+msgstr ""
+
+msgctxt "#32413"
+msgid "3 Features"
+msgstr ""
+
+msgctxt "#32414"
+msgid "4 Features"
+msgstr ""
+
+msgctxt "#32415"
+msgid "5 Features"
+msgstr ""
+
+#empty strings from id 32416 to 32417
+
+msgctxt "#32418"
+msgid "Intermission Video(s)"
+msgstr ""
+
+msgctxt "#32419"
+msgid "Intermission Video File"
+msgstr ""
+
+msgctxt "#32420"
+msgid "Intermission Video Folder"
+msgstr ""
+
+#empty strings from id 32421 to 32429
+
+msgctxt "#32430"
+msgid "Insert Audio Format Video"
+msgstr ""
+
+#empty strings from id 32431 to 32439
+
+msgctxt "#32440"
+msgid "Insert Rating Video"
+msgstr ""
+
+#empty strings from id 32441 to 32444
+
+msgctxt "#32445"
+msgid "Enable Queue Instructions"
+msgstr ""
+
+#Messages
+#empty strings from id 32446 to 32499
+
+msgctxt "#32500"
+msgid "Choosing random trailers..."
+msgstr ""
+
+#empty strings from id 32501 to 32509
+
+msgctxt "#32510"
+msgid "Randomizing trivia slideshow..."
+msgstr ""
+
+msgctxt "#32511"
+msgid "Building Music Playlist..."
+msgstr ""
+
+#empty strings from id 32512 to 32519
+
+msgctxt "#32520"
+msgid "Setting up playlist..."
+msgstr ""
+
+#empty strings from id 32521 to 32529
+
+msgctxt "#32530"
+msgid "Resetting watched trivia slides list..."
+msgstr ""
+
+msgctxt "#32531"
+msgid "Watched trivia slides list reset!"
+msgstr ""
+
+msgctxt "#32532"
+msgid "Resetting watched trivia slides list failed!"
+msgstr ""
+
+#empty strings from id 32533 to 32539
+
+msgctxt "#32540"
+msgid "Resetting watched trailers list..."
+msgstr ""
+
+msgctxt "#32541"
+msgid "Watched trailers list reset!"
+msgstr ""
+
+msgctxt "#32542"
+msgid "Resetting watched trailers list failed!"
+msgstr ""
+
+msgctxt "#32543"
+msgid "Queued - "
+msgstr ""
+
+msgctxt "#32544"
+msgid "Script Canceled"
+msgstr ""
+
+msgctxt "#32545"
+msgid "Script Exiting"
+msgstr ""
+
+msgctxt "#32546"
+msgid "Press 'Q' or '0'(ZERO) to Queue Movie(s)"
+msgstr ""
+
+#Genre/Studio labels
+#Do not Translate
+#empty strings from id 32547 to 32599
+
+msgctxt "#32600"
+msgid "Coming Attractions Intro"
+msgstr ""
+
+msgctxt "#32601"
+msgid "Feature Presentation Intro"
+msgstr ""
+
+msgctxt "#32602"
+msgid "Feature Presentation Outro"
+msgstr ""
+
+msgctxt "#32603"
+msgid "MPAA Rating"
+msgstr ""
+
+msgctxt "#32604"
+msgid "Cinema Experience"
+msgstr ""
+
+msgctxt "#32605"
+msgid "Movie Trailer"
+msgstr ""
+
+msgctxt "#32606"
+msgid "Audio Format"
+msgstr ""
+
+msgctxt "#32607"
+msgid "Movie Theater Intro"
+msgstr ""
+
+msgctxt "#32608"
+msgid "Coming Attractions Outro"
+msgstr ""
+
+msgctxt "#32609"
+msgid "Trivia Intro"
+msgstr ""
+
+msgctxt "#32610"
+msgid "Trivia Outro"
+msgstr ""
+
+msgctxt "#32611"
+msgid "Countdown"
+msgstr ""
+
+msgctxt "#32612"
+msgid "Intermission"
+msgstr ""
+
+msgctxt "#32613"
+msgid "Script Start"
+msgstr ""
+
+msgctxt "#32614"
+msgid "Script End"
+msgstr ""
+
+msgctxt "#32615"
+msgid "Trivia"
+msgstr ""
+
+msgctxt "#32616"
+msgid "Movie"
+msgstr ""
+
+msgctxt "#32617"
+msgid "Movie Theatre Outro"
+msgstr ""
+
+msgctxt "#32618"
+msgid "Pause"
+msgstr ""
+
+msgctxt "#32619"
+msgid "Resume"
+msgstr ""
+
+#Start Translating Again
+#compatible messages
+#empty strings from id 32620 to 32699
+
+msgctxt "#32700"
+msgid "Version"
+msgstr ""
+
+msgctxt "#32701"
+msgid "This version of %s requires an"
+msgstr ""
+
+msgctxt "#32702"
+msgid "XBMC revision of %s or greater to run."
+msgstr ""
+
+msgctxt "#32703"
+msgid "Please update your XBMC."
+msgstr ""
+
+#Label separators
+#empty strings from id 32704 to 32799
+
+msgctxt "#32800"
+msgid "Movie Trailers"
+msgstr ""
+
+msgctxt "#32801"
+msgid "Trivia Slideshow"
+msgstr ""
+
+msgctxt "#32802"
+msgid "Special Videos"
+msgstr ""
+
+msgctxt "#32803"
+msgid "Feature Presentation"
+msgstr ""
+
+msgctxt "#32804"
+msgid "Miscellaneous"
+msgstr ""
+
+msgctxt "#32805"
+msgid "Home Automation"
+msgstr ""
+
+#Home Automation
+#empty strings from id 32806 to 32899
+
+msgctxt "#32900"
+msgid "[B]When Multiple Videos are Involved[/B] - Trigger only once"
+msgstr ""
+
+msgctxt "#32901"
+msgid "Trigger at start of the Script"
+msgstr ""
+
+msgctxt "#32902"
+msgid "Trigger at start of the Trivia Intro(s)"
+msgstr ""
+
+msgctxt "#32903"
+msgid "Trigger at start of the Trivia"
+msgstr ""
+
+msgctxt "#32904"
+msgid "Trigger at start of the Trivia Outro(s)"
+msgstr ""
+
+msgctxt "#32905"
+msgid "Trigger at start of the Coming Attraction Intro(s)"
+msgstr ""
+
+msgctxt "#32906"
+msgid "Trigger at start of the Trailer(s)"
+msgstr ""
+
+msgctxt "#32907"
+msgid "Trigger at start of the Coming Attraction Outro(s)"
+msgstr ""
+
+msgctxt "#32908"
+msgid "Trigger at start of the Movie Theatre Intro(s)"
+msgstr ""
+
+msgctxt "#32909"
+msgid "Trigger at start of the Countdown Video(s)"
+msgstr ""
+
+msgctxt "#32910"
+msgid "Trigger at start of the MPAA Rating Video"
+msgstr ""
+
+msgctxt "#32911"
+msgid "Trigger at start of the Audio Format Video"
+msgstr ""
+
+msgctxt "#32912"
+msgid "Trigger at start of the Feature Presentation Intro(s)"
+msgstr ""
+
+msgctxt "#32913"
+msgid "Trigger at start of the Movie(s)"
+msgstr ""
+
+msgctxt "#32914"
+msgid "Trigger at start of the Intermission Video(s)"
+msgstr ""
+
+msgctxt "#32915"
+msgid "Trigger at start of the Feature Presentation Outro(s)"
+msgstr ""
+
+msgctxt "#32916"
+msgid "Trigger at start of the Movie Theatre Outro(s)"
+msgstr ""
+
+msgctxt "#32917"
+msgid "Trigger at end of the Script"
+msgstr ""
+
+msgctxt "#32918"
+msgid "Trigger when paused"
+msgstr ""
+
+msgctxt "#32919"
+msgid "Trigger when resumed"
+msgstr ""
+
+msgctxt "#32920"
+msgid "Enable the Home Automation Script"
+msgstr ""
+
+msgctxt "#32921"
+msgid "Must use Trivia Slide Show as well to provide time for script to download trailer(s)"
+msgstr ""
+
+msgctxt "#32922"
+msgid "Override Play button - Very Experimental(may not work for everyone)"
+msgstr ""
+
+msgctxt "#32923"
+msgid "   - Skip trailers that use the YouTube Plug-in"
+msgstr ""

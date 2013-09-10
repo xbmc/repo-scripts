@@ -370,3 +370,14 @@ def _get_queued_video_info( feature = 0 ):
     xbmc.log( "%s  %s" % ( log_message, log_sep ), level=xbmc.LOGDEBUG )
     # return results
     return short_mpaa, audio, genre, path, equivalent_mpaa
+
+def _clear_playlists( mode="both" ):
+    # clear playlists
+    if mode in ( "video", "both" ):
+        vplaylist = xbmc.PlayList( xbmc.PLAYLIST_VIDEO )
+        vplaylist.clear()
+        xbmc.log( "[ script.cinema.experience ] - Video Playlist Cleared", level=xbmc.LOGNOTICE )
+    if mode in ( "music", "both" ):
+        mplaylist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
+        mplaylist.clear()
+        xbmc.log( "[ script.cinema.experience ] - Music Playlist Cleared", level=xbmc.LOGNOTICE )

@@ -7,26 +7,29 @@
         <setting id="trivia_mode" type="enum"  label="32211" lvalues="32281|32212|32213" default="0" /> <!-- None|Slide Show|Movie Quiz Script -->
         <setting id="trivia_total_time" type="slider" visible="eq(-1,1)" enable="eq(-1,1)" range="0,60" label="32200" default="5" />        
         <setting id="trivia_folder" type="folder" visible="eq(-2,1)" source="files" label="32210" default="" />
-        <setting id="trivia_slide_time" type="slider" visible="eq(-3,1)" enable="!eq(-1,)" range="1,30" label="32220" default="15" />
-        <setting id="trivia_music" type="enum" visible="eq(-4,1) + !eq(-3,0)" enable="!eq(-3,0)" lvalues="32281|32243|32244" label="32231" default="0" />
-        <setting id="trivia_music_file" type="audio" visible="eq(-1,1) + eq(-5,1)" enable="!eq(-1,0)" label="32230" default="" />
-        <setting id="trivia_music_folder" type="folder" visible="eq(-2,2) + eq(-6,1)" enable="!eq(-2,0)" label="32230" default="" />
-        <setting id="trivia_adjust_volume" type="bool" visible="!eq(-3,0) + eq(-7,1)" enable="!eq(-3,0)" label="32232" default="true" />
-        <setting id="trivia_music_volume" type="slider" visible="!eq(-1,false) + gt(-4,0) + eq(-8,1)" enable="!eq(-1,false) + gt(-4,0)" range="0,100" label="32240" default="100" />
-        <setting id="trivia_fade_volume" type="bool" visible="!eq(-2,false) + gt(-5,0) + eq(-9,1)" enable="!eq(-2,false) + gt(-5,0)" label="32241" default="true" />
-        <setting id="trivia_fade_time" type="slider" visible="!eq(-3,false) + !eq(-1,false) + gt(-6,0) + eq(-10,1)" enable="!eq(-1,false) + gt(-6,0)" range="0,15" label="32242" default="2" />
-        <setting id="trivia_unwatched_only" type="bool" visible="eq(-11,1)" enable="!eq(-9,)" label="32270" default="false" />
-        <setting type="action" label="32271" visible="eq(-12,1)" enable="!eq(-10,) + eq(-1,true)" action="RunScript($CWD/addon.py,ClearWatchedTrivia)" />
-        <setting id="trivia_moviequiz_mode" type="enum" visible="eq(-13,2)" label="32217" lvalues="32214|32215" default="0" />
-        <setting id="trivia_moviequiz_qlimit" type="slider" visible="eq(-14,2)" label="32216" range="1,60" default="15" />
-        <setting id="trivia_limit_query" type="bool" visible="!eq(-15,0)" label="32290" default="true" />
-        <setting id="trivia_rating" type="labelenum"  visible="!eq(-16,0)"  enable="eq(-1,false)" values="G|PG|PG-13|R|NC-17|--" label="32291" default="--" />
-        <setting id="trivia_intro" type="enum" visible="!eq(-17,0)" lvalues="32281|32282|32283|32284|32285|32286|32287" label="32280" default="0" />
-        <setting id="trivia_intro_file" type="video" visible="!eq(-18,0) + eq(-1,1)" label="32288" default="" />
-        <setting id="trivia_intro_folder" type="folder" visible="!eq(-19,0) + gt(-2,1)" label="32289" default="" />
-        <setting id="trivia_outro" type="enum" visible="!eq(-20,0)" lvalues="32281|32282|32283|32284|32285|32286|32287" label="32250" default="0" />
-        <setting id="trivia_outro_file" type="video" visible="!eq(-21,0) + eq(-1,1)" label="32288" default="" />
-        <setting id="trivia_outro_folder" type="folder" visible="!eq(-22,0) + gt(-2,1)" label="32289" default="" />
+        <setting id="trivia_slide_time_q" type="slider" visible="eq(-3,1)" enable="!eq(-1,)" range="1,30" label="32221" default="8" />
+        <setting id="trivia_slide_time_a" type="slider" visible="eq(-4,1)" enable="!eq(-2,)" range="1,30" label="32222" default="4" />
+        <setting id="trivia_slide_time_c" type="slider" visible="eq(-5,1)" enable="!eq(-3,)" range="1,30" label="32223" default="4" />    
+        <setting id="trivia_slide_time_s" type="slider" visible="eq(-6,1)" enable="!eq(-4,)" range="1,30" label="32220" default="10" />
+        <setting id="trivia_music" type="enum" visible="eq(-7,1) + !eq(-7,0)" enable="!eq(-5,0)" lvalues="32281|32243|32244" label="32231" default="0" />
+        <setting id="trivia_music_file" type="audio" visible="eq(-1,1) + eq(-8,1)" enable="!eq(-1,0)" label="32230" default="" />
+        <setting id="trivia_music_folder" type="folder" visible="eq(-2,2) + eq(-9,1)" enable="!eq(-2,0)" label="32230" default="" />
+        <setting id="trivia_adjust_volume" type="bool" visible="!eq(-3,0) + eq(-10,1)" enable="!eq(-3,0)" label="32232" default="true" />
+        <setting id="trivia_music_volume" type="slider" visible="!eq(-1,false) + gt(-4,0) + eq(-11,1)" enable="!eq(-1,false) + gt(-4,0)" range="0,100" label="32240" default="100" />
+        <setting id="trivia_fade_volume" type="bool" visible="!eq(-2,false) + gt(-5,0) + eq(-12,1)" enable="!eq(-2,false) + gt(-5,0)" label="32241" default="true" />
+        <setting id="trivia_fade_time" type="slider" visible="!eq(-3,false) + !eq(-1,false) + gt(-6,0) + eq(-13,1)" enable="!eq(-1,false) + gt(-6,0)" range="0,15" label="32242" default="2" />
+        <setting id="trivia_unwatched_only" type="bool" visible="eq(-14,1)" enable="!eq(-14,)" label="32270" default="false" />
+        <setting type="action" label="32271" visible="eq(-15,1)" enable="!eq(-13,) + eq(-1,true)" action="RunScript($CWD/addon.py,ClearWatchedTrivia)" />
+        <setting id="trivia_moviequiz_mode" type="enum" visible="eq(-16,2)" label="32217" lvalues="32214|32215" default="0" />
+        <setting id="trivia_moviequiz_qlimit" type="slider" visible="eq(-17,2)" label="32216" range="1,60" default="15" />
+        <setting id="trivia_limit_query" type="bool" visible="!eq(-18,0)" label="32290" default="true" />
+        <setting id="trivia_rating" type="labelenum"  visible="!eq(-19,0)"  enable="eq(-1,false)" values="G|PG|PG-13|R|NC-17|--" label="32291" default="--" />
+        <setting id="trivia_intro" type="enum" visible="!eq(-20,0)" lvalues="32281|32282|32283|32284|32285|32286|32287" label="32280" default="0" />
+        <setting id="trivia_intro_file" type="video" visible="!eq(-21,0) + eq(-1,1)" label="32288" default="" />
+        <setting id="trivia_intro_folder" type="folder" visible="!eq(-22,0) + gt(-2,1)" label="32289" default="" />
+        <setting id="trivia_outro" type="enum" visible="!eq(-23,0)" lvalues="32281|32282|32283|32284|32285|32286|32287" label="32250" default="0" />
+        <setting id="trivia_outro_file" type="video" visible="!eq(-24,0) + eq(-1,1)" label="32288" default="" />
+        <setting id="trivia_outro_folder" type="folder" visible="!eq(-25,0) + gt(-2,1)" label="32289" default="" /> 
     </category>
     
 <!-- Special videos settings -->

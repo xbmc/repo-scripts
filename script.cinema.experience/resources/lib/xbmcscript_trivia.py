@@ -36,13 +36,13 @@ class Trivia( xbmcgui.WindowXML ):
         xbmcgui.WindowXML.__init__( self, *args, **kwargs )
         # update dialog
         self.settings = trivia_settings
-        self.playlist = xbmc.PlayList( xbmc.PLAYLIST_VIDEO )
         self.mpaa = movie_mpaa
         self.genre = movie_genre
         # initialize our class variable
         self.plist = plist
         self.slide_playlist = slide_playlist
-        self.music_playlist = xbmc.PlayList( xbmc.PLAYLIST_MUSIC )
+        if self.settings[ "trivia_music" ] > 0:
+            self.music_playlist = xbmc.PlayList( xbmc.PLAYLIST_MUSIC )
         self._init_variables()
         self._get_global_timer( (self.settings[ "trivia_total_time" ] * 60 ) , self._exit_trivia )
         #display slideshow
@@ -74,9 +74,9 @@ class Trivia( xbmcgui.WindowXML ):
         return volume
 
     def _start_slideshow_music( self ):
-        xbmc.log( "[script.cinema.experience] - Starting Tivia Music", level=xbmc.LOGNOTICE)
-        # did user set this preference
         if self.settings[ "trivia_music" ] > 0:
+            xbmc.log( "[script.cinema.experience] - Starting Tivia Music", level=xbmc.LOGNOTICE)
+            # did user set this preference
             # check to see if script is to adjust the volume
             if self.settings[ "trivia_adjust_volume" ]:
                 xbmc.log( "[script.cinema.experience] - Adjusting Volume to %s" % self.settings[ "trivia_music_volume" ], level=xbmc.LOGNOTICE)
@@ -85,8 +85,6 @@ class Trivia( xbmcgui.WindowXML ):
                 # set the volume percent of current volume
                 xbmc.executebuiltin( "XBMC.SetVolume(%d)" % ( volume, ) )
             # play music
-            #if self.settings[ "trivia_music_file" ].endswith(".m3u"):
-            #    xbmc.Player().play( self.music_playlist )
             xbmc.sleep( 200 )
             CEPlayer().play( self.music_playlist )
 
@@ -96,13 +94,11 @@ class Trivia( xbmcgui.WindowXML ):
             self.slide_timer.cancel()
         # increment/decrement count
         self.image_count += slide
-        # check for invalid count, TODO: make sure you don't want to reset timer
-        # check to see if playlist has come to an end
-        if not CEPlayer().isPlayingAudio() and int(self.settings[ "trivia_music" ]) > 0:
-                #build_music_playlist()
+        # check to see if music playlist has come to an end
+        if self.settings[ "trivia_music" ] > 0:
+            if ( not CEPlayer().isPlayingAudio() ):
+                xbmc.log( "Restarting Music Playback", level=xbmc.LOGNOTICE )
                 CEPlayer().play( self.music_playlist )
-        else:
-            pass
         if self.image_count < 0:
             self.image_count = 0
         # if no more slides, exit
@@ -110,18 +106,33 @@ class Trivia( xbmcgui.WindowXML ):
             self._exit_trivia()
         else:     
             # set the property the image control uses
-            xbmcgui.Window( xbmcgui.getCurrentWindowId() ).setProperty( "Slide", self.slide_playlist[ self.image_count ] )
+            myslide = self.slide_playlist[ self.image_count ]
+            slide_type = "still"
+            if (re.search("__question__", myslide)) :
+                slide_type = "question"
+                myslide = myslide.replace("__question__", "")
+            elif (re.search("__answer__", myslide)) :
+                slide_type = "answer"
+                myslide = myslide.replace("__answer__", "")
+            elif (re.search("__clue__", myslide)) :
+                slide_type = "clue"
+                myslide = myslide.replace("__clue__", "")
+            elif (re.search("__still__", myslide)) :
+                slide_type = "still"
+                myslide = myslide.replace("__still__", "")
+            xbmc.log("[script.cinema.experience] Slide #%s Type %s - %s" % (self.image_count, slide_type, myslide), level=xbmc.LOGNOTICE)
+            xbmcgui.Window( xbmcgui.getCurrentWindowId() ).setProperty( "Slide", myslide )
             # add id to watched file TODO: maybe don't add if not user preference
             self.watched += [ xbmc.getCacheThumbName( self.slide_playlist[ self.image_count ] ) ]
             # start slide timer
-            self._get_slide_timer()
+            self._get_slide_timer( slide_type )
         
 
     def _load_watched_trivia_file( self ):
         xbmc.log( "[script.cinema.experience] - Loading Watch Slide List", level=xbmc.LOGNOTICE)
         try:
             # set base watched file path
-            base_path = os.path.join( BASE_CURRENT_SOURCE_PATH, "trivia_watched.txt" )
+            base_path = os.path.join( self.BASE_CURRENT_SOURCE_PATH, "trivia_watched.txt" )
             # open path
             usock = open( base_path, "r" )
             # read source
@@ -135,7 +146,7 @@ class Trivia( xbmcgui.WindowXML ):
         xbmc.log( "[script.cinema.experience] - Saving Watch Slide List", level=xbmc.LOGNOTICE)
         try:
             # base path to watched file
-            base_path = os.path.join( BASE_CURRENT_SOURCE_PATH, "trivia_watched.txt" )
+            base_path = os.path.join( self.BASE_CURRENT_SOURCE_PATH, "trivia_watched.txt" )
             # if the path to the source file does not exist create it
             if not os.path.isdir( os.path.dirname( base_path ) ):
                 os.makedirs( os.path.dirname( base_path ) )
@@ -149,14 +160,23 @@ class Trivia( xbmcgui.WindowXML ):
             traceback.print_exc()
 
     def _reset_watched( self ):
-        base_path = os.path.join( BASE_CURRENT_SOURCE_PATH, "trivia_watched.txt" )
+        base_path = os.path.join( self.BASE_CURRENT_SOURCE_PATH, "trivia_watched.txt" )
         if exists( base_path ):
             delete_file( base_path )
             self.watched = []
 
-    def _get_slide_timer( self ):
-        self.slide_timer = threading.Timer( self.settings[ "trivia_slide_time" ], self._next_slide,() )
-        self.slide_timer.start()
+    def _get_slide_timer( self, slide_type="still" ):
+        if (slide_type and slide_type == "question"): 
+            timer = self.settings[ "trivia_slide_time_q" ]
+        elif (slide_type and slide_type == "answer"): 
+            timer = self.settings[ "trivia_slide_time_a" ]
+        elif (slide_type and slide_type == "clue"):
+            timer = self.settings[ "trivia_slide_time_c" ]
+        elif (slide_type and slide_type == "still"):
+            timer = self.settings[ "trivia_slide_time_s" ]
+        xbmc.log("[script.cinema.experience] Slide delay %s seconds type is %s" % (timer, slide_type), xbmc.LOGNOTICE)
+        self.slide_timer = threading.Timer( timer, self._next_slide,() )
+        self.slide_timer.start() 
 
     def _get_global_timer( self, time, function ):
         self.global_timer = threading.Timer( time, function,() )
@@ -200,6 +220,7 @@ class Trivia( xbmcgui.WindowXML ):
         self.close()
 
     def _cancel_timers( self ):
+        xbmc.log( "[script.cinema.experience] Canceling timers...", xbmc.LOGNOTICE )
         # cancel all timers
         if self.slide_timer is not None:
             self.slide_timer.cancel()
