@@ -30,6 +30,13 @@
     <string id="30035">Config Dateien</string>
     <string id="30036">Benutzerdefiniertes Verzeichnis 1</string>
     <string id="30037">Benutzerdefiniertes Verzeichnis 2</string>
+    <string id="30038">Erweiterte Einstellungen entdeckt</string>
+    <string id="30039">Die Erweiterte Einstellungsdatei sollte zuerst wiederhergestellt werden</string>
+    <string id="30040">Wähle ja um diese Datei wiederherzustellen und XBMC neuzustarten</string>
+    <string id="30041">Wähle Nein um fortzufahren</string>
+    <string id="30042">Wiederherstellung fortsetzen</string>
+    <string id="30043">XBMC Backup hat eine nicht komplette Wiederherstellung entdeckt</string>
+    <string id="30044">Möchtest du fortfahren?</string>
     <string id="30045">Fehler: Entferntes Verzeichnis nicht konfiguriert</string>
     <string id="30046">Starte</string>
     <string id="30047">Lokales Verzeichnis</string>
@@ -61,4 +68,6 @@
     <string id="30074">Erster Tag eines Monats</string>
     <string id="30075">Benutzerdefiniert</string>
     <string id="30076">Herunterfahren nach Backup</string>
+    <string id="30077">XBMC neu starten</string>
+    <string id="30078">Du solltest XBMC neu starten, um fortzufahren</string>
 </strings>

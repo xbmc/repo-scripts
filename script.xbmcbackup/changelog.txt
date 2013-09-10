@@ -1,3 +1,9 @@
+Version 0.3.9
+
+added "just once" scheduler for one-off type backups
+show notification on scheduler update
+updated language files from Transifex
+
 Version 0.3.8
 
 added advancedsettings check on restore. prompts user to restore only this file and restart xbmc to continue. This fixes issues where path substitution was not working during restores - thanks ctrlbru

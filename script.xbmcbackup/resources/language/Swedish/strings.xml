@@ -30,6 +30,13 @@
     <string id="30035">Konfigurationsfiler</string>
     <string id="30036">Egen mapp 1</string>
     <string id="30037">Egen mapp 2</string>
+    <string id="30038">Avancerade inställningar upptäcktes</string>
+    <string id="30039">Filen för avancerade inställningar bör återställas först</string>
+    <string id="30040">Välj Ja för att återställa denna fil och starta om XBMC</string>
+    <string id="30041">Välj Nej för att fortsätta</string>
+    <string id="30042">Återuppta återställning</string>
+    <string id="30043">XBMC Backup har upptäckt en ofärdig återställning</string>
+    <string id="30044">Vill du fortsätta?</string>
     <string id="30045">Fel: Fjärrsökväg existerar inte</string>
     <string id="30046">Startar</string>
     <string id="30047">Lokalmapp</string>
@@ -61,4 +68,6 @@
     <string id="30074">Första dagen i månaden</string>
     <string id="30075">Eget schema</string>
     <string id="30076">Stäng av efter Backup</string>
+    <string id="30077">Starta om XBMC</string>
+    <string id="30078">Du borde starta om XBMC för att fortsätta</string>
 </strings>

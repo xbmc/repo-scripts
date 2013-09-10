@@ -30,6 +30,13 @@
     <string id="30035">Ficheiros de configuração</string>
     <string id="30036">Pasta Personalizada 1</string>
     <string id="30037">Pasta Personalizada 2</string>
+    <string id="30038">Definições Avançadas Detectadas</string>
+    <string id="30039">O ficheiro advancedsettings deve ser restaurado em primeiro lugar</string>
+    <string id="30040">Seleccione Sim para restaurar este ficheiro e reiniciar o XBMC</string>
+    <string id="30041">Seleccione Não para continuar</string>
+    <string id="30042">Retomar a Restauração</string>
+    <string id="30043">O XBMC Backup detectou uma restauração incompleta</string>
+    <string id="30044">Quer continuá-la?</string>
     <string id="30045">Erro: a localização remota não existe</string>
     <string id="30046">Iniciando</string>
     <string id="30047">Pasta local</string>
@@ -61,4 +68,6 @@
     <string id="30074">Primeiro Dia do Mês</string>
     <string id="30075">Agendamento Personalizado</string>
     <string id="30076">Desligar após cópia de segurança</string>
+    <string id="30077">Reiniciar XBMC</string>
+    <string id="30078">Tem de reiniciar o XBMC para continuar</string>
 </strings>

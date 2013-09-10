@@ -30,6 +30,13 @@
     <string id="30035">Ficheiros de configuración</string>
     <string id="30036">Cartafol Personalizado 1</string>
     <string id="30037">Cartafol Personalizado 2</string>
+    <string id="30038">Detectada a Configuración Avanzada</string>
+    <string id="30039">Deberíase restaurar primeiro o ficheiro da configuración avanzada</string>
+    <string id="30040">Seleccione Si para restaurar este ficheiro e reiniciar o XBMC</string>
+    <string id="30041">Seleccione Non para continuar</string>
+    <string id="30042">Continuar a Restauración</string>
+    <string id="30043">O Sistema de Copias do XBMC detectou unha restauración se rematar</string>
+    <string id="30044">Quere continuar?</string>
     <string id="30045">Erro: O camiño remoto non existe</string>
     <string id="30046">Iniciando</string>
     <string id="30047">Cart Local</string>
@@ -61,4 +68,6 @@
     <string id="30074">Primeiro día do mes</string>
     <string id="30075">Programación Personalizada</string>
     <string id="30076">Apagar despois de realizar a copia de seguranza</string>
+    <string id="30077">Reiniciar XBMC</string>
+    <string id="30078">Ten de restaurar o XBMC para continuar</string>
 </strings>

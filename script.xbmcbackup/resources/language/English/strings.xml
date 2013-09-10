@@ -30,13 +30,13 @@
     <string id="30035">Config Files</string>
     <string id="30036">Custom Directory 1</string>
     <string id="30037">Custom Directory 2</string>
-	<string id="30038">Advanced Settings Detected</string>
-	<string id="30039">The advancedsettings file should be restored first</string>
-	<string id="30040">Select Yes to restore this file and restart XBMC</string>
-	<string id="30041">Select No to continue</string>
-	<string id="30042">Resume Restore</string>
-	<string id="30043">XBMC Backup has detected an unfinished restore</string>
-	<string id="30044">Would you like to continue?</string>
+    <string id="30038">Advanced Settings Detected</string>
+    <string id="30039">The advancedsettings file should be restored first</string>
+    <string id="30040">Select Yes to restore this file and restart XBMC</string>
+    <string id="30041">Select No to continue</string>
+    <string id="30042">Resume Restore</string>
+    <string id="30043">XBMC Backup has detected an unfinished restore</string>
+    <string id="30044">Would you like to continue?</string>
     <string id="30045">Error: Remote path doesn't exist</string>
     <string id="30046">Starting</string>
     <string id="30047">Local Dir</string>
@@ -68,6 +68,7 @@
     <string id="30074">First Day of Month</string>
     <string id="30075">Custom Schedule</string>
     <string id="30076">Shutdown After Backup</string>
-	<string id="30077">Restart XBMC</string>
-	<string id="30078">You should restart XBMC to continue</string>
+    <string id="30077">Restart XBMC</string>
+    <string id="30078">You should restart XBMC to continue</string>
+	<string id="30079">Just Today</string>
 </strings>

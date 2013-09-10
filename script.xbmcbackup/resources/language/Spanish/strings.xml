@@ -30,6 +30,13 @@
     <string id="30035">Ficheros de configuración</string>
     <string id="30036">Directorio Personalizado 1</string>
     <string id="30037">Directorio Personalizado 2</string>
+    <string id="30038">Opciones avanzadas detectadas</string>
+    <string id="30039">Primero debería ser restaurado el archivo advancedsettings</string>
+    <string id="30040">Selecciona SI para restaurar este archivo y reiniciar XBMC</string>
+    <string id="30041">Selecciona NO para continuar</string>
+    <string id="30042">Reanudar restauración</string>
+    <string id="30043">XBMC Backup ha detectado una restauración sin terminar</string>
+    <string id="30044">¿Desea continuar?</string>
     <string id="30045">Error: La ruta Remota no existe</string>
     <string id="30046">Empezando</string>
     <string id="30047">Directorio Local</string>
@@ -61,4 +68,6 @@
     <string id="30074">Primer día de la semana</string>
     <string id="30075">Planificador Custom</string>
     <string id="30076">Apagar tras realizar la copia de seguridad</string>
+    <string id="30077">Reiniciar XBMC</string>
+    <string id="30078">Debería reiniciar XBMC para continuar</string>
 </strings>

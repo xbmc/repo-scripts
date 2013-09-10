@@ -30,6 +30,13 @@
     <string id="30035">File di Configurazione</string>
     <string id="30036">Directory Personalizzata 1</string>
     <string id="30037">Directory Personalizzata 2</string>
+    <string id="30038">Rilevate Impostazioni Avanzate</string>
+    <string id="30039">Il file advancedsettings dovrebbe essere ripristinato prima</string>
+    <string id="30040">Seleziona Si per rirpistinare questo file e riavvia XBMC</string>
+    <string id="30041">Selezione No per contunuare</string>
+    <string id="30042">Riprendi Rirpistino</string>
+    <string id="30043">XBMC Backup ha rilevato un errore</string>
+    <string id="30044">Vuoi continuare?</string>
     <string id="30045">Error: Percorso remoto inesistente</string>
     <string id="30046">Avvio in corso</string>
     <string id="30047">Cartella Locale</string>
@@ -61,4 +68,6 @@
     <string id="30074">Primo Giorno del Mese</string>
     <string id="30075">Pianificazione personalizzata</string>
     <string id="30076">Spegni dopo avere effettuato il backup</string>
+    <string id="30077">Riavvia XBMC</string>
+    <string id="30078">Dovresti riavviare XBMC per continuare</string>
 </strings>

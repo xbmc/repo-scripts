@@ -26,6 +26,8 @@
     <string id="30033">רשימת השמעה</string>
     <string id="30034">תמונות ממוזערות/פאנארט</string>
     <string id="30035">קבצי הגדרה</string>
+    <string id="30042">המשך שחזור</string>
+    <string id="30044">אתה רוצה להמשיך?</string>
     <string id="30045">שגיאה: נתיב מרוחק אינו קיים</string>
     <string id="30046">מתחיל</string>
     <string id="30047">כונן מקומי</string>
@@ -55,4 +57,6 @@
     <string id="30074">יום ראשון של החודש</string>
     <string id="30075">תזמון מותאם אישית</string>
     <string id="30076">לכבות לאחר הגיבוי</string>
+    <string id="30077">הפעל מחדש XBMC</string>
+    <string id="30078">אתה להפעיל את XBMC מחדש כדי להמשיך</string>
 </strings>

@@ -52,6 +52,12 @@ class BackupScheduler:
                     backup = XbmcBackup()
                     backup.run(XbmcBackup.Backup,True)
 
+                    #check if this is a "one-off"
+                    if(int(utils.getSetting("schedule_interval")) == 0):
+                        #disable the scheduler after this run
+                        self.enabled = "false"
+                        utils.setSetting('enable_scheduler','false')
+
                     #check if we should shut the computer down
                     if(utils.getSetting("cron_shutdown") == 'true'):
                         #wait 10 seconds to make sure all backup processes and files are completed
@@ -63,6 +69,9 @@ class BackupScheduler:
 
             xbmc.sleep(500)
 
+        #delete monitor to free up memory
+        del self.monitor
+
     def findNextRun(self,now):
         #find the cron expression and get the next run time
         cron_exp = self.parseSchedule()
@@ -72,6 +81,7 @@ class BackupScheduler:
 
         if(new_run_time != self.next_run):
             self.next_run = new_run_time
+            utils.showNotification(utils.getString(30080) + " " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
             utils.log("scheduler will run again on " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
                 
     def settingsChanged(self):
@@ -95,14 +105,14 @@ class BackupScheduler:
 
         hour_of_day = utils.getSetting("schedule_time")
         hour_of_day = int(hour_of_day[0:2])
-        if(schedule_type == 0):
+        if(schedule_type == 0 or schedule_type == 1):
             #every day
             cron_exp = "0 " + str(hour_of_day) + " * * *"
-        elif(schedule_type == 1):
+        elif(schedule_type == 2):
             #once a week
             day_of_week = utils.getSetting("day_of_week")
             cron_exp = "0 " + str(hour_of_day) + " * * " + day_of_week
-        elif(schedule_type == 2):
+        elif(schedule_type == 3):
             #first day of month
             cron_exp = "0 " + str(hour_of_day) + " 1 * *"
 

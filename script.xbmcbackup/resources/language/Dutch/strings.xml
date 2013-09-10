@@ -30,6 +30,13 @@
     <string id="30035">Configuratiebestanden</string>
     <string id="30036">Aangepaste Map 1</string>
     <string id="30037">Aangepaste Map 2</string>
+    <string id="30038">Geavanceerde instellingen gevonden</string>
+    <string id="30039">Het advancedsettingsbestand moet eerst teruggezet worden</string>
+    <string id="30040">Kies Ja om dit bestand terug te zetten en XBMC te herstarten</string>
+    <string id="30041">Selecteer nee of verder te gaan</string>
+    <string id="30042">Verder gaan met herstellen</string>
+    <string id="30043">XBMC Backup heeft een onafgemaakte herstelling gededecteerd</string>
+    <string id="30044">Will je verder gaan?</string>
     <string id="30045">Fout: Externe locatie bestaat niet</string>
     <string id="30046">Starten</string>
     <string id="30047">Lokale map</string>
@@ -61,4 +68,6 @@
     <string id="30074">Eerste dag van de maand</string>
     <string id="30075">Aangepast Rooster</string>
     <string id="30076">Afsluiten na voltooiing back-up</string>
+    <string id="30077">Herstarten XBMC</string>
+    <string id="30078">Herstart XBMC om verder te gaan</string>
 </strings>

@@ -30,6 +30,13 @@
     <string id="30035">Αρχεία Ρυθμίσεων</string>
     <string id="30036">Προσαρμοσμένος Φάκελος 1</string>
     <string id="30037">Προσαρμοσμένος Φάκελος 2</string>
+    <string id="30038">Εντοπίστηκαν Προηγμένες Ρυθμίσεις (Advanced Settings)</string>
+    <string id="30039">Το αρχείο advancedsettings πρέπει να επαναφερθεί πρώτο</string>
+    <string id="30040">Select Yes to restore this file and restart XBMC</string>
+    <string id="30041">Επιλέξτε Όχι για να συνεχίσετε</string>
+    <string id="30042">Συνέχιση Επαναφοράς</string>
+    <string id="30043">Το XBMC Backup εντόπισε μια μη ολοκληρωμένη επαναφορά</string>
+    <string id="30044">Επιθυμείτε να συνεχίσετε;</string>
     <string id="30045">Σφάλμα: Δεν υπάρχει η απομακρυσμένη διαδρομή</string>
     <string id="30046">Έναρξη</string>
     <string id="30047">Τοπικός Φάκελος</string>
@@ -61,4 +68,6 @@
     <string id="30074">Πρώτη του Μηνός</string>
     <string id="30075">Προσαρμοσμένος Προγραμματισμός</string>
     <string id="30076">Τερματισμός μετά τη δημιουργία Αντιγράφου</string>
+    <string id="30077">Επανεκκίνηση XBMC</string>
+    <string id="30078">Πρέπει να επανεκκινήσετε το XBMC για να συνεχίσετε</string>
 </strings>
