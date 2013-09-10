@@ -56,6 +56,9 @@ class AutoUpdater:
 
             xbmc.sleep(self.sleep_time)
 
+        #clean up monitor on exit
+        del self.monitor
+
     def evalSchedules(self):
         if(not self.lock):
             now = time.time()

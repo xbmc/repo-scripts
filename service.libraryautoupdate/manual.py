@@ -19,3 +19,6 @@ if(runUpdate):
     #update the schedules and evaluate them
     autoUpdate.createSchedules(True)
     autoUpdate.evalSchedules()
+
+    #delete the monitor before exiting
+    del autoUpdate.monitor

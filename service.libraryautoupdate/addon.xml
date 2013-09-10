@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.libraryautoupdate"
-    name="XBMC Library Auto Update" version="0.7.9" provider-name="robweber">
+    name="XBMC Library Auto Update" version="0.8.0" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -10,8 +10,6 @@
   <extension point="xbmc.service" library="default.py" start="login">
   </extension>
   <extension point="xbmc.addon.metadata">
-    <forum>http://forum.xbmc.org/showthread.php?tid=119520</forum>
-    <source>https://github.com/robweber/xbmclibraryautoupdate</source>
     <summary lang="be">Update your XBMC Video and Music Libraries on a timer. Timer runs as an XBMC service so you never miss an update.</summary>
     <summary lang="da">Opdater dine XBMC video- og musikbiblioteker ved hjælp af en timer. Timeren kører som en XBMC service, så du aldrig glipper en opdatering</summary>
     <summary lang="de">Update deine XBMC Video- und Musiklibrariers mit einem Timer. Der Timer läuft als ein XBMC service, sodass Du niemals ein Update verpasst.</summary>
@@ -21,7 +19,7 @@
     <summary lang="es_MX">Actualiza tus bibliotecas de video y música de XBMC en base a un temporizador. El temporizador se ejecuta como un servicio de XBMC para que nunca te pierdas una actualización</summary>
     <summary lang="fr">Mettez à jour votre vidéo médiathèques XBMC et votre bibliothèques musicales avec une minuterie. La minuterie fonctionne comme un service XBMC afin que vous ne manquez jamais une mise à jour.</summary>
     <summary lang="gl">Actualizar as súas Bibliotecas de Vídeo e Música mediante un temporizador. Un temporizador execútase no XBMC como un servizo de maneira que nunca esquecerá unha actualización.</summary>
-    <summary lang="hr">Ažurirajte svoj ​​XBMC Video i glazbene knjižnice na sat. Odbrojavanje radi kao XBMC usluga, tako da nikada nećete propustiti ažuriranje.</summary>
+    <summary lang="hr">Ažurirajte svoju ​​XBMC Videoteku i Fonoteku u zakazano vrijeme. Zakazano vrijeme radi kao XBMC usluga, tako da nikada nećete propustiti ažuriranje.</summary>
     <summary lang="hu">Az XBMC videó és zene könyvtárak időzített frissítése. Az időzítő az XBMC szolgáltatásaként fut, így nem marad le egyetlen frissítésről sem.</summary>
     <summary lang="it">Aggiorna le tue librerie Video e Musicali in un momento definito. Il timer sarà eseguito come servizio di XBMC così non perderai nessun aggiornamento.</summary>
     <summary lang="ko">XBMC 비디오, 음악 라이브러리를 타이머로 자동 업데이트 하세요. 타이머는 XBMC 서비스로 실행되므로 업데이트를 잊어버리는 일은 없습니다.</summary>
@@ -42,7 +40,7 @@
     <description lang="es_MX">Esto es un servicio de XBMC que actualiza tus bibliotecas de música y video en base a un temporizador. Puedes seleccionar diferentes intervalos para escanear tus bases de datos de medios (Audio, Video, Ambas) o puedes configurar un temporizador de estilo Cron para un mayor control. Si estas reproduciendo audio o video cuando el temporizador empieza, puede saltarse la actualización de bibliotecas hasta que esta termine, evitando de esta manera una interrupción en la reproducción de medios. Actualizar una ruta específica de video y limpiar bibliotecas de Música/Video se encuentra ahora soportado</description>
     <description lang="fr">Il s'agit d'un service de XBMC qui mettra à jour vos bibliothèques musicale et vidéo sur une minuterie. Vous pouvez sélectionner plusieurs intervalles pour scanner vos bases de données multimédia (Audio,Vidéo,Les deux) ou vous pouvez régler une minuterie pour un meilleur contrôle. Si vous jouez un fichier audio ou vidéo lorsque la minuterie démarre, le processus de mise à jour bibliothèque peut être ignoré jusqu'à ce que la lecture soit terminée afin que votre expérience multimédia ne soit pas interrompue. Mise à jour d’un chemin vidéo spécifique, et nettoyage des bibliothèques de musique/vidéo est maintenant supporté.</description>
     <description lang="gl">É un servizo de XBMC que actualizará as súas bibliotecas de vídeo e música mediante un temporizador. Pode seleccionar un intervalo diferente para escanear a súa base de datos (Son,Vídeo, Ambos) ou pode estabelecer un temporizador ao estilo de cron para un maior control. O temporizador pode omitir a actualización da biblioteca mentres está a reproducir unha canción ou vídeo até que remate. Agora soporta a actualización dun camiño de vídeo especifico e a limpeza das bibliotecas de Música/Video.</description>
-    <description lang="hr">Ovo je XBMC usluga kojom ćete ažurirati svoju glazbenu i video knjižnicu na vrijeme. Možete odabrati neki drugi interval za skeniranje svoje medijske baze podataka (audio, video, I) ili možete postaviti cron-style timer za veću kontrolu. Ako izvodite audio ili video datoteku kada brojač počinje  možete preskočiti postupak nadogradnje knjižnice dok je ne omogućite, tako da si multimedijalno iskustvo ne prekida. Ažurirajte određenu Video zbirku, i Čišćenje Muzičko / Video knjižnice sada je podržana.</description>
+    <description lang="hr">Ovo je XBMC usluga koja će ažurirati vašu Fonoteku i Videoteku u zakazano vrijeme. Možete odabrati neko drugo razdoblje pretraživanja vaše medijske baze podataka (glazba, video, obadvoje) ili možete postaviti cron-stil zakazano vrijeme za veću kontrolu. Ako se reproducira glazba ili video datoteka kada se zakazano vrijeme pokrene, ažuriranje ne započinje dok reprodukcija ne završi zato da se reprodukcija medija ne prekida. Ažuriranje određene Video putanje, i čišćenje Fonoteke i Videoteke sada je podržano.</description>
     <description lang="hu">Ez egy automatikus XBMC szolgáltatás, amely időzítetten frissíti a zenei és videó adatbázisokat. A különböző adatbázisokhoz eltérő időzítés választható vagy a teljesebb irányítás érdekében cron stílusú időzítés is használható. Amennyiben éppen lejátszik valamit, a frissítés elhalasztódik a lejátszás utánra, hogy ne zavarja a lejátszást. Már támogatott az egyedi videó frissítés és a zene/videó adatbázis tisztítás is.</description>
     <description lang="it">Questo è un servizio di XBMC che aggiornerà le tue librerie video e musicali a d una scadenza predefinita. Puoi impostare vari intervalli per scansionare i tuoi db (audio, video o entrambi) o puoi impostare un timer per un miglior controllo. Se stai eseguendo file video o audio quando la scansione sarà rimandata fin quando non avrai finito, così che non sarai interrotto. L'aggiornamento un percorso specifico e pulizia dele librerie Video e Musicali sono ora supportati </description>
     <description lang="ko">음악과 비디오 라이브러리 업데이트를 예약 실행하는 XBMC 서비스입니다. 미디어 데이터베이스(오디오, 비디오, 모두)를 각각 다른 간격으로 업데이트하도록 선택하거나 cron 스타일의 타이머를 설정할 수 있습니다. 타이머가 시작될 때 오디오나 비디오를 재생하고 있다면 재생을 완료할 때까지 라이브러리 업데이트 프로세스를 생략할 수 있습니다. 지정한 비디오 경로 업데이트, 음악/비디오 라이브러리 정리도 지원합니다.</description>
@@ -54,6 +52,8 @@
     <description lang="sk">Toto je XBMC služba, ktorá aktualizuje Vašu XBMC Hudobnú a Video knižnicu podľa časovača. Môžete zvoliť rôzne intervaly aktualizácie databáz (Hudba,Video,oboje) alebo pre väčšiu kontrolu zadáte časovač podobný Cron-u. Pokiaľ práve prehrávate hudobný alebo video súbor počas štartu časovača, môže byť aktualizácia odložená, aby nebol Váš mediálny zážitok narušený. Aktualizácia špecifických ciest a upratovanie Hudobnej/Video databázy je tiež podporované. </description>
     <description lang="sv">Detta är en XBMC-service som schemalagt kommer att uppdatera ditt musik och videobibliotek. Du kan välja olika intervall att skanna dina mediadatabaser (Musik,Video,Båda) eller så kan du ange ett cron-inspirerad schemaläggare för bättre kontroll. Om du spelare en musik eller videofil när schemaläggaren startar, kan det hoppa över biblioteksuppdateringen till uppspelningen är klar så mediaupplevelsen inte avbryts. Uppdatering av en specifik videosökväg och rensning av musik/videobiblioteken stödjs nu.</description>
     <description lang="zh">这是一个定时更新你的音乐和视频资料库的XBMC服务程序。你可以设置不同的时间间隔来扫描媒体库（音频、视频或二者），或者设置一个cron类型的定时器来获得更好的控制。如果定时动作开始时你正在播放一个音频或视频文件，它会跳过此次更新直到播放完毕以避免影响你欣赏媒体。现在已支持更新指定的视频路径以及清理音视频资料库。</description>
+    <forum>http://forum.xbmc.org/showthread.php?tid=119520</forum>
+    <source>https://github.com/robweber/xbmclibraryautoupdate</source>
     <language></language>
   </extension>
 </addon>
