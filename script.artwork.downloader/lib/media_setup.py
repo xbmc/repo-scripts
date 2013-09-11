@@ -41,7 +41,7 @@ def _media_unique(media_type, dbid):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails", "params": {"properties": ["file", "imdbnumber", "art"], "tvshowid":%s}, "id": 1}' %dbid)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         jsonobject = simplejson.loads(json_query)
-        if jsonobject['result'].has_key('tvshowdetails'):
+        if jsonobject.has_key('result') and jsonobject['result'].has_key('tvshowdetails'):
             item = jsonobject['result']['tvshowdetails']
             # Search for season information
             json_query_season = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["season", "art"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' %item.get('tvshowid',''))
@@ -70,7 +70,7 @@ def _media_unique(media_type, dbid):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": {"properties": ["file", "imdbnumber", "year", "trailer", "streamdetails", "art"], "movieid":%s }, "id": 1}' %dbid)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         jsonobject = simplejson.loads(json_query)
-        if jsonobject['result'].has_key('moviedetails'):
+        if jsonobject.has_key('result') and jsonobject['result'].has_key('moviedetails'):
             item = jsonobject['result']['moviedetails']
             disctype = media_disctype(item.get('file','').encode('utf-8').lower(),
                                       item['streamdetails']['video'])
@@ -90,7 +90,7 @@ def _media_unique(media_type, dbid):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideoDetails", "params": {"properties": ["file", "artist", "album", "track", "runtime", "year", "genre", "art"], "movieid":%s }, "id": 1}' %dbid)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         jsonobject = simplejson.loads(json_query)
-        if jsonobject['result'].has_key('musicvideodetails'):
+        if jsonobject.has_key('result') and jsonobject['result'].has_key('musicvideodetails'):
             item = jsonobject['result']['musicvideodetails']
             Medialist.append({'dbid': item.get('musicvideoid',''),
                               'id': '',
@@ -114,7 +114,7 @@ def _media_listing(media_type):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file", "imdbnumber", "art"], "sort": { "method": "label" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         jsonobject = simplejson.loads(json_query)
-        if jsonobject['result'].has_key('tvshows'):
+        if jsonobject.has_key('result') and jsonobject['result'].has_key('tvshows'):
             for item in jsonobject['result']['tvshows']:
                 # Search for season information
                 json_query_season = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["season", "art"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' %item.get('tvshowid',''))
@@ -143,7 +143,7 @@ def _media_listing(media_type):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["file", "imdbnumber", "year", "trailer", "streamdetails", "art"], "sort": { "method": "label" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         jsonobject = simplejson.loads(json_query)
-        if jsonobject['result'].has_key('movies'):
+        if jsonobject.has_key('result') and jsonobject['result'].has_key('movies'):
             for item in jsonobject['result']['movies']:
                 disctype = media_disctype(item.get('file','').encode('utf-8').lower(),
                                           item['streamdetails']['video'])
@@ -162,7 +162,7 @@ def _media_listing(media_type):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["file", "artist", "album", "track", "runtime", "year", "genre", "art"], "sort": { "method": "album" } }, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         jsonobject = simplejson.loads(json_query)
-        if jsonobject['result'].has_key('musicvideos'):
+        if jsonobject.has_key('result') and jsonobject['result'].has_key('musicvideos'):
             for item in jsonobject['result']['musicvideos']:
                 Medialist.append({'dbid': item.get('musicvideoid',''),
                                   'id': '',

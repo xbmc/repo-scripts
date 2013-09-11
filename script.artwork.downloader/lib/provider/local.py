@@ -25,7 +25,7 @@ import xbmcvfs
 
 ### import libraries
 #from resources.lib.provider.base import BaseProvider
-from lib.art_list import artype_list
+from lib.art_list import arttype_list
 from lib.script_exceptions import NoFanartError
 from lib.settings import get_limit
 from lib.utils import *
@@ -33,7 +33,7 @@ from operator import itemgetter
 
 ### get addon info
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
-artype_list = artype_list()
+arttype_list = arttype_list()
 limit = get_limit()
 
 class local():
@@ -41,32 +41,30 @@ class local():
         image_list = []
         file_list = xbmcvfs.listdir(media_item['artworkdir'][0])
         ### Processes the bulk mode downloading of files
-        i = 0
-        j = 0
-        for item in artype_list:
+        i = 0 # needed
+        j = 0 # have
+        for item in arttype_list:
             if item['bulk_enabled'] and media_item['mediatype'] == item['media_type']:
-                #log('finding: %s, arttype counter: %s'%(item['art_type'], j))
-                j += 1
+                #log('finding: %s, arttype counter: %s'%(item['art_type'], i))
+                i += 1
                 # File checking
                 if item['art_type'] == 'extrafanart':
-                    i += 1
                     extrafanart_file_list = ''
-                    if xbmcvfs.exists(media_item['extrafanartdirs'][0]):
+                    if 'extrafanart' in file_list[0]:
                         extrafanart_file_list = xbmcvfs.listdir(media_item['extrafanartdirs'][0])
-                        #log('list of extrafanart files: %s'%file_list)
-                    #log('extrafanart found: %s'%len(file_list))
-                    if len(extrafanart_file_list) <= limit.get('limit_extrafanart_max'):
-                        i += 1
+                        #log('list of extrafanart files: %s'%extrafanart_file_list[1])
+                        #log('extrafanart found: %s'%len(extrafanart_file_list[1]))
+                        if len(extrafanart_file_list[1]) >= limit.get('limit_extrafanart_max'):
+                            j += 1
 
                 elif item['art_type'] == 'extrathumbs':
-                    i += 1
                     extrathumbs_file_list = ''
-                    if xbmcvfs.exists(media_item['extrathumbsdirs'][0]):
+                    if 'extrathumbs' in file_list[0]:
                         extrathumbs_file_list = xbmcvfs.listdir(media_item['extrathumbsdirs'][0])
-                        #log('list of extrathumbs files: %s'%file_list)
-                    #log('extrathumbs found: %s'%len(file_list))
-                    if len(extrathumbs_file_list) <= limit.get('limit_extrathumbs_max'):
-                        i += 1
+                        #log('list of extrathumbs files: %s'%extrathumbs_file_list[1])
+                        #log('extrathumbs found: %s'%len(extrathumbs_file_list[1]))
+                        if len(extrathumbs_file_list[1]) >= limit.get('limit_extrathumbs_max'):
+                            j += 1
 
                 elif item['art_type'] in ['seasonposter']:
                     for season in media_item['seasons']:
@@ -76,9 +74,9 @@ class local():
                             filename = "season-all-poster.jpg"
                         else:
                             filename = (item['filename'] % int(season))
-                        if filename in file_list:
+                        if filename in file_list[1]:
                             url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
-                            i += 1
+                            j += 1
                             generalinfo = '%s: %s  |  ' %( __localize__(32141), 'n/a')
                             generalinfo += '%s: %s  |  ' %( __localize__(32144), season)
                             generalinfo += '%s: %s  |  ' %( __localize__(32143), 'n/a')
@@ -107,7 +105,7 @@ class local():
                             filename = (item['filename'] % int(season))
                         if filename in file_list:
                             url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
-                            i += 1
+                            j += 1
                             generalinfo = '%s: %s  |  ' %( __localize__(32141), 'n/a')
                             generalinfo += '%s: %s  |  ' %( __localize__(32144), season)
                             generalinfo += '%s: %s  |  ' %( __localize__(32143), 'n/a')
@@ -134,13 +132,13 @@ class local():
                             filename = (item['filename'] % int(season))
                         if filename in file_list:
                             url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
-                            i += 1
+                            j += 1
                             generalinfo = '%s: %s  |  ' %( __localize__(32141), 'n/a')
                             generalinfo += '%s: %s  |  ' %( __localize__(32144), season)
                             generalinfo += '%s: %s  |  ' %( __localize__(32143), 'n/a')
                             generalinfo += '%s: %s  |  ' %( __localize__(32145), 'n/a')
                             # Fill list
-                            log ('found: %s'%url)
+                            #log ('found: %s'%url)
                             image_list.append({'url': url,
                                                'preview': url,
                                                'id': filename,
@@ -157,7 +155,7 @@ class local():
                     filename = item['filename']
                     if filename in file_list:
                         url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
-                        i += 1
+                        j += 1
                         generalinfo = '%s: %s  |  ' %( __localize__(32141), 'n/a')
                         generalinfo += '%s: %s  |  ' %( __localize__(32143), 'n/a')
                         generalinfo += '%s: %s  |  ' %( __localize__(32145), 'n/a')
@@ -172,9 +170,9 @@ class local():
                                            'language': 'EN',
                                            'votes': '0',
                                            'generalinfo': generalinfo})
-        log('total local files needed: %s'%j)
-        log('total local files found:  %s'%i)
-        if j > i:
+        #log('total local types needed: %s'%i)
+        #log('total local types found:  %s'%j)
+        if j < i:
             #log('scan providers for more')
             scan_more = True
         else:

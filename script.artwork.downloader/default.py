@@ -38,7 +38,7 @@ __version__      = lib.common.__version__
 from lib import language
 from lib import provider
 from lib.apply_filters import filter
-from lib.art_list import artype_list
+from lib.art_list import arttype_list
 from lib.fileops import fileops, cleanup
 from lib.gui import choose_image, dialog_msg, choice_type, gui_imagelist, hasimages
 from lib.media_setup import _media_listing as media_listing
@@ -53,7 +53,7 @@ from traceback import print_exc
 from urlparse import urlsplit
 from xml.parsers.expat import ExpatError
 
-artype_list = artype_list()
+arttype_list = arttype_list()
 cancelled = False
 download_arttypes = []
 download_counter = {'Total Artwork': 0}
@@ -168,8 +168,13 @@ class Main:
             if arg[0] in args:
                 j = arg[1]
                 startup.update({arg[0]:arg[1]})
-        if startup['mediatype'] and startup['mediatype'] not in ['tvshow', 'movie', 'musicvideo']:
+        if startup['mediatype'] and (startup['mediatype'] not in ['tvshow', 'movie', 'musicvideo']):
             log('Error: invalid mediatype, must be one of movie, tvshow or musicvideo', xbmc.LOGERROR)
+            return False
+        elif startup['dbid'] == '':
+            dialog_msg('okdialog',
+                       line1 = __localize__(32084))
+            log('Error: no valid dbid recieved, item must be scanned into library.', xbmc.LOGERROR)
             return False
         try:
             # Creates temp folder
@@ -408,11 +413,11 @@ class Main:
         if not startup['mode'] == 'custom':
             global download_arttypes
             download_arttypes = []
-            for art_type in artype_list:
+            for art_type in arttype_list:
                 if art_type['bulk_enabled'] and startup['mediatype'] == art_type['media_type']:
                     download_arttypes.append(art_type['art_type'])
         # do the same but for custom mode
-        for art_type in artype_list:
+        for art_type in arttype_list:
             if (art_type['art_type'] in download_arttypes and
                 ((setting['movie_enable'] and startup['mediatype'] == art_type['media_type']) or
                 (setting['tvshow_enable'] and startup['mediatype'] == art_type['media_type']) or
@@ -686,7 +691,7 @@ class Main:
                    background = setting['background'])
         # Look for argument matching artwork types
         for item in sys.argv:
-            for type in artype_list:
+            for type in arttype_list:
                 if item == type['art_type'] and startup['mediatype'] == type['media_type']:
                     log('- Custom %s mode art_type: %s' %(type['media_type'],type['art_type']))
                     download_arttypes.append(item)
@@ -702,8 +707,8 @@ class Main:
                 break
             # Add parse the image restraints
             if gui_selected_type:
-                for artype in artype_list:
-                    if gui_selected_type == artype['art_type'] and startup['mediatype'] == artype['media_type']:
+                for arttype in arttype_list:
+                    if gui_selected_type == arttype['art_type'] and startup['mediatype'] == arttype['media_type']:
                         # Get image list for that specific imagetype
                         imagelist = gui_imagelist(image_list, gui_selected_type)
                         # Some debug log output
@@ -715,17 +720,17 @@ class Main:
             enabled_type_list = []
             imagelist = False
             # Fill GUI art type list
-            for artype in artype_list:
-                if (artype['solo_enabled'] == 'true' and
-                    startup['mediatype'] == artype['media_type'] and
-                    hasimages(image_list, artype['art_type'])):
-                    gui = __localize__(artype['gui_string'])
+            for arttype in arttype_list:
+                if (arttype['solo_enabled'] == 'true' and
+                    startup['mediatype'] == arttype['media_type'] and
+                    hasimages(image_list, arttype['art_type'])):
+                    gui = __localize__(arttype['gui_string'])
                     enabled_type_list.append(gui)
             # Not sure what this does again
             if len(enabled_type_list) == 1:
                 enabled_type_list[0] = 'True'
             # Fills imagelist with image that fit the selected imagetype
-            type_list = choice_type(enabled_type_list, startup, artype_list)
+            type_list = choice_type(enabled_type_list, startup, arttype_list)
             if (len(enabled_type_list) == 1) or type_list:
                 imagelist = gui_imagelist(image_list, type_list['art_type'])
                 # Some debug log output
@@ -740,8 +745,11 @@ class Main:
                 # Create a progress dialog so you can see the progress,
                 #Send the selected image for processing, Initiate the batch download
                 dialog_msg('create')
-                self._download_art(currentmedia, type_list, currentmedia['artworkdir'])
-                self._batch_download(download_list)
+                for art_type in arttype_list:
+                    if image_list['art_type'][0] == art_type['art_type']:
+                        self._download_art(currentmedia, art_type, currentmedia['artworkdir'])
+                        self._batch_download(download_list)
+                        break
                 # When not succesfull show failure dialog
                 if not download_succes:
                     dialog_msg('okdialog',
@@ -752,7 +760,7 @@ class Main:
             log('- No artwork found')
             dialog_msg('okdialog',
                        line1 = currentmedia['name'],
-                       line2 = __localize__(artype['gui_string']) + ' ' + __localize__(32022))
+                       line2 = __localize__(arttype['gui_string']) + ' ' + __localize__(32022))
         # When download succesfull
         elif download_succes:
             log('- Download succesfull')
@@ -767,7 +775,7 @@ class Main:
         global startup
         # Look for argument matching artwork types
         for item in sys.argv:
-            for type in artype_list:
+            for type in arttype_list:
                 if item == type['art_type'] and startup['mediatype'] == type['media_type']:
                     log('- Custom %s mode art_type: %s' %(type['media_type'],type['art_type']))
                     download_arttypes.append(item)
@@ -791,7 +799,7 @@ class Main:
                 if image_list:
                     log('- Chosen: %s'% image_list)
                     dialog_msg('create')
-                    for item in artype_list:
+                    for item in arttype_list:
                         if gui_arttype == item['art_type']:
                             self._download_art(currentmedia,
                                                item,

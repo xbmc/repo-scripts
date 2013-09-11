@@ -247,7 +247,11 @@ msgctxt "#32083"
 msgid "-"
 msgstr ""
 
-#empty strings from id 32084 to 32090
+msgctxt "#32084"
+msgid "No valid library item selected"
+msgstr ""
+
+#empty strings from id 32085 to 32090
 #Add-on settings: Music section id=32091 to 32100
 
 msgctxt "#32091"

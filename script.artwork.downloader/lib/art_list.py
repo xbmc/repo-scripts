@@ -21,7 +21,7 @@
 from lib.settings import get
 
 ### Create list for Artwork types to download
-def artype_list():
+def arttype_list():
     setting = get()
     available_arttypes = [{'media_type': 'movie',
                            'bulk_enabled': setting.get('movie_poster'),
