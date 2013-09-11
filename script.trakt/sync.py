@@ -10,9 +10,12 @@ progress = xbmcgui.DialogProgress()
 
 class Sync():
 
-	def __init__(self, show_progress=False, api=None):
+	def __init__(self, show_progress=False, run_silent=False, api=None):
 		self.traktapi = api
 		self.show_progress = show_progress
+		self.run_silent = run_silent
+		if self.show_progress and self.run_silent:
+			Debug("[Sync] Sync is being run silently.")
 		self.notify = utilities.getSettingAsBool('show_sync_notifications')
 		self.simulate = utilities.getSettingAsBool('simulate_sync')
 		if self.simulate:
@@ -28,7 +31,7 @@ class Sync():
 					self.exclusions.append(_path)
 
 	def isCanceled(self):
-		if self.show_progress and progress.iscanceled():
+		if self.show_progress and not self.run_silent and progress.iscanceled():
 			Debug("[Sync] Sync was canceled by user.")
 			return True
 		elif xbmc.abortRequested:
@@ -38,7 +41,7 @@ class Sync():
 			return False
 
 	def updateProgress(self, *args, **kwargs):
-		if self.show_progress:
+		if self.show_progress and not self.run_silent:
 			kwargs['percent'] = args[0]
 			progress.update(**kwargs)
 
@@ -417,17 +420,21 @@ class Sync():
 	def syncEpisodes(self):
 		if not self.show_progress and utilities.getSettingAsBool('sync_on_update') and self.notify:
 			notification('%s %s' % (utilities.getString(1400), utilities.getString(1406)), utilities.getString(1420)) #Sync started
-		if self.show_progress:
+		if self.show_progress and not self.run_silent:
 			progress.create("%s %s" % (utilities.getString(1400), utilities.getString(1406)), line1=" ", line2=" ", line3=" ")
 
 		xbmcShows = self.xbmcLoadShows()
 		if not isinstance(xbmcShows, list) and not xbmcShows:
 			Debug("[Episodes Sync] XBMC show list is empty, aborting tv show Sync.")
+			if self.show_progress and not self.run_silent:
+				progress.close()
 			return
 
 		traktShows = self.traktLoadShows()
 		if not isinstance(traktShows, list):
 			Debug("[Episodes Sync] Error getting trakt.tv show list, aborting tv show sync.")
+			if self.show_progress and not self.run_silent:
+				progress.close()
 			return
 
 		if utilities.getSettingAsBool('add_episodes_to_trakt') and not self.isCanceled():
@@ -443,13 +450,13 @@ class Sync():
 			self.xbmcUpdateEpisodes(xbmcShowsUpadate)
 
 		if utilities.getSettingAsBool('clean_trakt_episodes') and not self.isCanceled():
-			raktShowsRemove = self.compareShows(traktShows, xbmcShows)
-			self.traktRemoveEpisodes(raktShowsRemove)
+			traktShowsRemove = self.compareShows(traktShows, xbmcShows)
+			self.traktRemoveEpisodes(traktShowsRemove)
 
 		if not self.show_progress and utilities.getSettingAsBool('sync_on_update') and self.notify:
 			notification('%s %s' % (utilities.getString(1400), utilities.getString(1406)), utilities.getString(1421)) #Sync complete
 
-		if not self.isCanceled() and self.show_progress:
+		if not self.isCanceled() and self.show_progress and not self.run_silent:
 			self.updateProgress(100, line1=" ", line2=utilities.getString(1442), line3=" ")
 			progress.close()
 
@@ -554,6 +561,7 @@ class Sync():
 			del(movie['imdbnumber'])
 			del(movie['lastplayed'])
 			del(movie['label'])
+			del(movie['file'])
 
 			xbmc_movies.append(movie)
 
@@ -699,17 +707,21 @@ class Sync():
 	def syncMovies(self):
 		if not self.show_progress and utilities.getSettingAsBool('sync_on_update') and self.notify:
 			notification('%s %s' % (utilities.getString(1400), utilities.getString(1402)), utilities.getString(1420)) #Sync started
-		if self.show_progress:
+		if self.show_progress and not self.run_silent:
 			progress.create("%s %s" % (utilities.getString(1400), utilities.getString(1402)), line1=" ", line2=" ", line3=" ")
 
 		xbmcMovies = self.xbmcLoadMovies()
 		if not isinstance(xbmcMovies, list) and not xbmcMovies:
 			Debug("[Movies Sync] XBMC movie list is empty, aborting movie Sync.")
+			if self.show_progress and not self.run_silent:
+				progress.close()
 			return
 
 		traktMovies = self.traktLoadMovies()
 		if not isinstance(traktMovies, list):
 			Debug("[Movies Sync] Error getting trakt.tv movie list, aborting movie Sync.")
+			if self.show_progress and not self.run_silent:
+				progress.close()
 			return
 
 		if utilities.getSettingAsBool('add_movies_to_trakt') and not self.isCanceled():
@@ -728,7 +740,7 @@ class Sync():
 			traktMoviesToRemove = self.compareMovies(traktMovies, xbmcMovies)
 			self.traktRemoveMovies(traktMoviesToRemove)
 
-		if not self.isCanceled() and self.show_progress:
+		if not self.isCanceled() and self.show_progress and not self.run_silent:
 			self.updateProgress(100, line1=utilities.getString(1431), line2=" ", line3=" ")
 			progress.close()
 
