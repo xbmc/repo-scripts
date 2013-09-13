@@ -86,10 +86,7 @@ class Main():
   def __init__( self, *args, **kwargs ):
     self.warning   = 0
   
-  def connectBoblight(self, force_warning):
-    if force_warning:
-      self.warning = 0
-    
+  def connectBoblight(self):
     bob.bob_set_priority(255)
     
     if settings.hostip == None:
@@ -105,6 +102,9 @@ class Main():
       if self.warning < 3 and settings.other_misc_notifications:
         xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,750,__icon__))
         self.warning += 1
+      settings.reconnect = True
+      settings.run_init = True
+      settings.force_update = True
       return False
     else:
       self.warning = 0
@@ -174,6 +174,7 @@ def run_boblight():
   main = Main()
   xbmc_monitor   = MyMonitor()
   player_monitor = MyPlayer()
+  player_monitor.playing = xbmc.Player().isPlaying()
   if main.startup() == 0:
     capture        = xbmc.RenderCapture()
     capture.capture(capture_width, capture_height, xbmc.CAPTURE_FLAG_CONTINUOUS)
@@ -181,10 +182,11 @@ def run_boblight():
       xbmc.sleep(100)
       if not settings.bobdisable:
         if not bob.bob_ping() or settings.reconnect:
-          if main.connectBoblight(settings.reconnect):
-            if settings.bob_init():
-              check_state()
-          settings.reconnect = False        
+          if not main.connectBoblight():
+            continue
+          if settings.bob_init():
+            check_state()
+          settings.reconnect = False
           
         if not settings.staticBobActive:
           capture.waitForCaptureStateChangeEvent(1000)

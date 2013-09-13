@@ -1,3 +1,6 @@
+2.0.5
+- [fix] recover if boblightd is disconnected while movie is playing - by amet
+
 2.0.4
 -  [fix] - race condition which could lead to boblight turn on after movie stop if static light is not enabled
 
