@@ -6,7 +6,7 @@ from connection import Connection
 from xbmc_helper import *
 from helper import *
 
-_settings = xbmcaddon.Addon("script.episodeHunter")
+_settings = xbmcaddon.Addon("script.episodehunter")
 _language = _settings.getLocalizedString
 _name = "EpisodeHunter"
 

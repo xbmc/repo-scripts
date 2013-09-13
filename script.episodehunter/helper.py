@@ -6,7 +6,7 @@ _name = "EpisodeHunter"
 
 
 def Debug(msg):
-    settings = xbmcaddon.Addon("script.episodeHunter")
+    settings = xbmcaddon.Addon("script.episodehunter")
     debug = settings.getSetting("debug")
     if debug:
         try:
@@ -20,7 +20,7 @@ def Debug(msg):
 
 
 def notification(header, message, level=0):
-    settings = xbmcaddon.Addon("script.episodeHunter")
+    settings = xbmcaddon.Addon("script.episodehunter")
     debug = settings.getSetting("debug")
     if debug or level == 0:
         xbmc.executebuiltin("XBMC.Notification(%s,%s,%i,%s)" % (header, message, 5000, settings.getAddonInfo("icon")))
@@ -28,7 +28,7 @@ def notification(header, message, level=0):
 
 # Do we have username and api key?
 def isSettingsOkey(daemon=False, silent=False):
-    settings = xbmcaddon.Addon("script.episodeHunter")
+    settings = xbmcaddon.Addon("script.episodehunter")
     language = settings.getLocalizedString
 
     if settings.getSetting("username") == "" and settings.getSetting("api_key") == "":

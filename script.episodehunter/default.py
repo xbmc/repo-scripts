@@ -4,7 +4,7 @@ import xbmcaddon
 from helper import *
 from sync import *
 
-_settings = xbmcaddon.Addon("script.episodeHunter")
+_settings = xbmcaddon.Addon("script.episodehunter")
 _language = _settings.getLocalizedString
 _name = "EpisodeHunter"
 

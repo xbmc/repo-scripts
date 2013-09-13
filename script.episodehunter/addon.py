@@ -35,7 +35,7 @@ class EHPlayer(xbmc.Player):
         self.media = None               # Current media
 
         # Reload settings
-        self.settings = xbmcaddon.Addon("script.episodeHunter")
+        self.settings = xbmcaddon.Addon("script.episodehunter")
         self.language = self.settings.getLocalizedString
         self.name = "EpisodeHunter"
 

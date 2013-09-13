@@ -16,7 +16,7 @@ from helper import *
 class Connection(object):
 
     def __init__(self):
-        self.settings = xbmcaddon.Addon("script.episodeHunter")
+        self.settings = xbmcaddon.Addon("script.episodehunter")
         self.language = self.settings.getLocalizedString
         self.name = "EpisodeHunter"
         self.URL = "api.episodehunter.tv"

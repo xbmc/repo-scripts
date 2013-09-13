@@ -1,3 +1,6 @@
+Version 1.0.6:
+        Change add-on id to lowercase
+        See #6 (on github) for more information
 Version 1.0.5:
        Sync bugfix
        See #3 and #4 (on github) for more information
