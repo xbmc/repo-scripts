@@ -18,6 +18,7 @@
 		<setting id="separator" type="lsep" label="54030" visible="eq(-7,true)"/>
 		<setting id="updateVideoLibraryAfterWol" type="bool" label="54031" default="false" visible="eq(-8,true)" />
 		<setting id="updateMusicLibraryAfterWol" type="bool" label="54032" default="false" visible="eq(-9,true)" />
+		<setting id="libraryUpdatesDelay" type="labelenum" label="54033" values="0|10|20|30|60|120" default="10" visible="eq(-10,true)" />
 	</category>
 	<category label="52000">
 		<setting id="enableLaunchNotifies" type="bool" label="52001" default="true" />

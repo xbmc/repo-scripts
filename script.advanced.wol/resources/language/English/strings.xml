@@ -15,6 +15,7 @@
 	<string id="54030">Update libraries after succesful wake-on-launch and wake-after-standby</string>
 	<string id="54031">Update video library</string>
 	<string id="54032">Update music library</string>
+	<string id="54033">Delay library updates (in seconds)</string>
 	
 	<string id="52000">Notifications</string>
     <string id="52001">Enable launch notification</string>

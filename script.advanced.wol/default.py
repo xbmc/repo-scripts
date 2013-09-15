@@ -27,6 +27,7 @@ def main(isAutostart=False):
 	continuousWolAfterStandby = settings.getSetting("continuousWolAfterStandby")
 	updateVideoLibraryAfterWol = settings.getSetting("updateVideoLibraryAfterWol")
 	updateMusicLibraryAfterWol = settings.getSetting("updateMusicLibraryAfterWol")
+	libraryUpdatesDelay = int(settings.getSetting("libraryUpdatesDelay"))
 
 	#if the scrpit was called with a 3rd parameter,
 	#use the mac-address and host/ip from there
@@ -132,10 +133,15 @@ def main(isAutostart=False):
 		# Initiate XBMC-library-updates, if we are in autostart and it is set in the settings.
 		if (isAutostart == True):
 		
+			if (((updateVideoLibraryAfterWol == "true") or (updateMusicLibraryAfterWol == "true")) and (libraryUpdatesDelay > 0)):
+				xbmc.sleep(libraryUpdatesDelay*1000)
+		
 			if (updateVideoLibraryAfterWol == "true"):
+				print 'script.advanced.wol: Initiating Video Library Update'
 				xbmc.executebuiltin('UpdateLibrary("video")')
 				
 			if (updateMusicLibraryAfterWol == "true"):
+				print 'script.advanced.wol: Initiating Music Library Update'
 				xbmc.executebuiltin('UpdateLibrary("music")')
 		
 
