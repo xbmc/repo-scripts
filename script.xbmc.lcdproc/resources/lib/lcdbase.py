@@ -653,8 +653,8 @@ class LcdBase():
         if strAudioCodec in ["mpga", "mp2"]:
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_ACODEC_MPEG, True)
 
-        # any ac3/dolby digital
-        elif strAudioCodec in ["ac3", "truehd"]:
+        # any ac3/dolby digital/dd+/truehd
+        elif strAudioCodec in ["ac3", "eac3", "truehd"]:
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_ACODEC_AC3, True)
 
         # any dts including hires variants

@@ -466,7 +466,8 @@ class LCDProc(LcdBase):
       iOffset = 1;
 
     if self.m_iOffset != iOffset:
-      self.ClearBigDigits()
+      # on offset change, reset numbers (only) to force redraw
+      self.ClearBigDigits(False)
       self.m_iOffset = iOffset
 
     for i in range(int(iStringOffset), int(iStringLength)):
@@ -518,17 +519,19 @@ class LCDProc(LcdBase):
   def GetRows(self):
     return int(self.m_iRows)
 
-  def ClearBigDigits(self):
+  def ClearBigDigits(self, fullredraw = True):
     for i in range(1,int(self.m_iBigDigits + 1)):
       # Clear Digit
-      self.m_strSetLineCmds += "widget_set xbmc lineBigDigit" + str(i) + " 0 0\n"
+      if fullredraw:
+        self.m_strSetLineCmds += "widget_set xbmc lineBigDigit" + str(i) + " 0 0\n"
       self.m_strDigits[i] = ""
 
-    # make sure all widget get redrawn by resetting their type
-    for i in range(0, int(self.GetRows())):
-      self.m_strLineType[i] = ""
-      self.m_strLineText[i] = ""
-      self.m_strLineIcon[i] = ""
+    # on full redraw, make sure all widget get redrawn by resetting their type
+    if fullredraw:
+      for i in range(0, int(self.GetRows())):
+        self.m_strLineType[i] = ""
+        self.m_strLineText[i] = ""
+        self.m_strLineIcon[i] = ""
 
   def ClearLine(self, iLine):
     self.m_strSetLineCmds += "widget_set xbmc lineIcon%i 0 0 BLOCK_FILLED\n" % (iLine)
