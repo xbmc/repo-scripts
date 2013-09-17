@@ -60,15 +60,28 @@
         <setting label="32312" id="musicvideo_progress_info" type="lsep" subsetting="true" visible="eq(-1,true)" />
     </category>
 
-    <!-- Notifications section -->
-    <category label="32400" id="notifications_section">
+    <!-- Exclusions section -->
+    <category label="32400" id="exclusions_section">
         <setting type="sep" />
         <setting label="32401" type="lsep" />
         <setting type="sep" />
 
-        <setting label="32402" id="notifications_enabled" type="bool" default="true" visible="true" />
-        <setting label="32403" id="notify_when_idle" type="bool" default="true" subsetting="true" visible="eq(-1,true)" />
+        <setting label="32402" id="exclusion_enabled" type="bool" default="false" visible="true" />
+        <setting label="32403" type="lsep" subsetting="true" visible="eq(-1,true)" />
+        <setting label="32404" id="exclusion1" type="folder" default="" subsetting="true" visible="eq(-2,true)" />
+        <setting label="32404" id="exclusion2" type="folder" default="" subsetting="true" visible="eq(-3,true)" />
+        <setting label="32404" id="exclusion3" type="folder" default="" subsetting="true" visible="eq(-4,true)" />
+    </category>
 
-        <setting label="32404" id="debugging_enabled" type="bool" default="false" visible="true" />
+    <!-- Notifications section -->
+    <category label="32500" id="notifications_section">
+        <setting type="sep" />
+        <setting label="32501" type="lsep" />
+        <setting type="sep" />
+
+        <setting label="32502" id="notifications_enabled" type="bool" default="true" visible="true" />
+        <setting label="32503" id="notify_when_idle" type="bool" default="true" subsetting="true" visible="eq(-1,true)" />
+
+        <setting label="32504" id="debugging_enabled" type="bool" default="false" visible="true" />
     </category>
 </settings>

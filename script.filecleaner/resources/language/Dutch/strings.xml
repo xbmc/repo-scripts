@@ -3,7 +3,8 @@
     <string id="32100">Acties</string>
     <string id="32200">Frequentie</string>
     <string id="32300">Voorwaarden</string>
-    <string id="32400">Meldingen</string>
+    <string id="32400">Uitzonderingen</string>
+    <string id="32500">Meldingen</string>
 
     <!-- Actiestabblad -->
     <string id="32101">[B]Welke video's wil je verwijderen?[/B]</string>
@@ -51,13 +52,19 @@
     <string id="32311">Verwijder geen video's die halverwege gestopt zijn</string>
     <string id="32312">[I]Videoclips onthouden niet tot hoever ze afgespeeld zijn en negeren dit [/I]</string>
 
+    <!-- Uitzonderingentabblad -->
+    <string id="32401">[B]Welke bestanden mogen niet verwijderd worden?[/B]</string>
+    <string id="32402">Maak een uitzondering</string>
+    <string id="32403">[I]Gebruik hetzelfde soort paden (lokaal, NFS, SMB) als voor de bibliotheek [I]</string>
+    <string id="32404">Locatie van uitzondering</string>
+
     <!-- Meldingentabblad -->
-    <string id="32401">[B]Hoeveel informatie wil je krijgen?[/B]</string>
+    <string id="32501">[B]Hoeveel informatie wil je krijgen?[/B]</string>
 
-    <string id="32402">Toon meldingen</string>
-    <string id="32403">Toon geen meldingen als er video afgespeeld wordt</string>
+    <string id="32502">Toon meldingen</string>
+    <string id="32503">Toon geen meldingen als er video afgespeeld wordt</string>
 
-    <string id="32404">Toon debuginformatie</string>
+    <string id="32504">Toon debuginformatie</string>
 
     <!-- Gelokaliseerde teksten voor XBMC meldingen -->
     <string id="32511">Fout bij lezen van harde schijf. Controleer de instellingen.</string>

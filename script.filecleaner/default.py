@@ -143,17 +143,18 @@ class Cleaner:
                     count = 0
                     for abs_path, show_name, season_number in episodes:
                         if xbmcvfs.exists(abs_path):
-                            cleaning_required = True
                             if not self.delete_files:
                                 if self.create_subdirs:
                                     new_path = os.path.join(self.holding_folder, show_name, "Season %d" % season_number)
                                 else:
                                     new_path = self.holding_folder
                                 if self.move_file(abs_path, new_path):
+                                    cleaning_required = True
                                     count += 1
                                     self.delete_empty_folders(os.path.dirname(abs_path))
                             else:
                                 if self.delete_file(abs_path):
+                                    cleaning_required = True
                                     count += 1
                                     self.delete_empty_folders(os.path.dirname(abs_path))
                         else:
@@ -386,6 +387,77 @@ class Cleaner:
 
         self.not_in_progress = bool(__settings__.getSetting("not_in_progress") == "true")
 
+        self.exclusion_enabled = bool(__settings__.getSetting("exclusion_enabled") == "true")
+        self.exclusion1 = xbmc.translatePath(__settings__.getSetting("exclusion1"))
+        self.exclusion2 = xbmc.translatePath(__settings__.getSetting("exclusion2"))
+        self.exclusion3 = xbmc.translatePath(__settings__.getSetting("exclusion3"))
+
+    def is_excluded(self, full_path):
+        """Check if the file path is part of the excluded sources. Returns True if the file is part of the excluded
+        sources, False otherwise. Also returns False when an error occurs to prevent data loss.
+
+        :type full_path: str
+        :param full_path: the path to the file that should be checked for exclusion
+        :rtype: bool
+        """
+        if not self.exclusion_enabled:
+            self.debug("Path exclusion is disabled.")
+            return False
+
+        if not full_path:
+            self.debug("File path is empty and cannot be checked for exclusions")
+            return False
+
+        exclusions = [self.exclusion1, self.exclusion2, self.exclusion3]
+
+        if r"://" in full_path:
+            self.debug("Detected a network path")
+            pattern = re.compile("(?:smb|afp|nfs)://(?:(?:.+):(?:.+)@)?(?P<tail>.*)$", flags=re.U | re.I)
+
+            self.debug("Converting excluded network paths for easier comparison")
+            normalized_exclusions = []
+            for ex in exclusions:
+                # Strip everything but the folder structure
+                try:
+                    if ex and r"://" in ex:
+                        # Only normalize non-empty excluded paths
+                        normalized_exclusions.append(pattern.match(ex).group("tail").lower())
+                except (AttributeError, IndexError, KeyError):
+                    self.debug("Could not parse the excluded network path '%s'" % ex, xbmc.LOGWARNING)
+                    return True
+
+            self.debug("Conversion result: %s" % normalized_exclusions)
+
+            self.debug("Proceeding to match a file with the exclusion paths")
+            self.debug("The file to match is '%s'" % full_path)
+            result = pattern.match(full_path)
+
+            try:
+                self.debug("Converting file path for easier comparison.")
+                converted_path = result.group("tail").lower()
+                self.debug("Result: '%s'" % converted_path)
+                for ex in normalized_exclusions:
+                    self.debug("Checking against exclusion '%s'" % ex)
+                    if converted_path.startswith(ex):
+                        self.debug("File '%s' matches excluded path '%s'." % (converted_path, ex))
+                        return True
+
+                self.debug("No match was found with an excluded path.")
+                return False
+
+            except (AttributeError, IndexError, KeyError):
+                self.debug("Error converting '%s'. No files will be deleted" % full_path, xbmc.LOGWARNING)
+                return True
+        else:
+            self.debug("Detected a local path")
+            for ex in exclusions:
+                if ex and full_path.startswith(ex):
+                    self.debug("File '%s' matches excluded path '%s'." % (full_path, ex))
+                    return True
+
+            self.debug("No match was found with an excluded path.")
+            return False
+
     def get_free_disk_space(self, path):
         """Determine the percentage of free disk space.
 
@@ -482,6 +554,10 @@ class Cleaner:
         :rtype : bool
         """
         self.debug("Deleting file at %s" % location)
+        if self.is_excluded(location):
+            self.debug("This file is found on an excluded path and will not be deleted.")
+            return False
+
         if xbmcvfs.exists(location):
             return xbmcvfs.delete(location)
         else:
@@ -563,6 +639,9 @@ class Cleaner:
         :param dest_folder: the destination path (absolute)
         :rtype : bool
         """
+        if self.is_excluded(source):
+            self.debug("This file is found on an excluded path and will not be moved.")
+            return False
         if isinstance(source, unicode):
             source = source.encode("utf-8")
         dest_folder = xbmc.makeLegalFilename(dest_folder)

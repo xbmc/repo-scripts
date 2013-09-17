@@ -3,7 +3,8 @@
     <string id="32100">Actions</string>
     <string id="32200">Frequency</string>
     <string id="32300">Conditions</string>
-    <string id="32400">Notifications</string>
+    <string id="32400">Exclusions</string>
+    <string id="32500">Notifications</string>
 
     <!-- Actions section -->
     <string id="32101">[B]Which videos do you want to delete?[/B]</string>
@@ -51,14 +52,20 @@
     <string id="32311">Do not delete videos that are still in progress</string>
     <string id="32312">[I]Note that music videos cannot be partially played and will ignore this [/I]</string>
 
+    <!-- Exclusions section -->
+    <string id="32401">[B]Which paths must not be touched?[/B]</string>
+    <string id="32402">Enable exclusions</string>
+    <string id="32403">[I]Use the same type of path (local, NFS, SMB) you use for the library [/I]</string>
+    <string id="32404">Path to exclude</string>
+
     <!-- Notifications section -->
-    <string id="32401">[B]How much information do you want to get?[/B]</string>
+    <string id="32501">[B]How much information do you want to get?[/B]</string>
 
-    <string id="32402">Show notifications</string>
-    <string id="32403">Do not show notifications during video playback</string>
+    <string id="32502">Show notifications</string>
+    <string id="32503">Do not show notifications during video playback</string>
 
-    <string id="32404">Enable debug messages</string>
-    
+    <string id="32504">Enable debug messages</string>
+
     <!-- Localization strings for XBMC notifications -->
     <string id="32511">Error reading hard disk. Please check your settings.</string>
     <string id="32512">Could not check disk space. Access denied.</string>
