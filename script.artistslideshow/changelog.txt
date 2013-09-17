@@ -1,3 +1,10 @@
+v.1.5.6
+- adjusted artist bio cleanup to better handle HTML code (thx to scott967)
+- fix for SpotiMC stuttering when using Artist Slideshow (thx to McMuzz4)
+
+v.1.5.5
+internal beta test
+
 v.1.5.4
 - artist bio and album list now come from theaudiodb.com by default (Last.fm as fallback)
 - added download of images from fanart.tv
@@ -16,7 +23,7 @@ v.1.5.4
 - changed over to urllib2 for downloads
 - additional error catching across the board
 
-v1.5.3
+v.1.5.3
 internal beta test
 
 v.1.5.2
@@ -32,7 +39,7 @@ v.1.5.2
 - changed over to Frodo .po language files
 - updated addon.xml with new information and format for repo database
 
-v1.5.1
+v.1.5.1
 internal beta test
 
 v.1.5.0

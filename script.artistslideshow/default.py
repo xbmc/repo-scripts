@@ -163,13 +163,13 @@ def grabURL( url, *args, **kwargs ):
     return url_data
 
 def cleanText(text):
-    text = re.sub('<a href="http://www.last.fm/music/.*</a>.','',text)
-    text = re.sub('<(.|\n|\r)*?>','',text)
+    text = re.sub('<a [^>]*>|</a>|<span[^>]*>|</span>','',text)
     text = re.sub('&quot;','"',text)
     text = re.sub('&amp;','&',text)
     text = re.sub('&gt;','>',text)
     text = re.sub('&lt;','<',text)
     text = re.sub('User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.','',text)
+    text = re.sub('Read more about .* on Last.fm.','',text)
     return text.strip()
 
 def path_leaf(path):
@@ -258,11 +258,11 @@ class Main:
                     self._set_property("ArtistSlideshowRunning")
             else:
                 log('first song started')
-                time.sleep(0.5) # it may take some time for xbmc to read tag info after playback started
+                time.sleep(1) # it may take some time for xbmc to read tag info after playback started
                 self._use_correct_artwork()
                 self._trim_cache()
             while (not xbmc.abortRequested):
-                time.sleep(0.5)
+                time.sleep(1)
                 if xbmc.getInfoLabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
                     if( xbmc.Player().isPlayingAudio() == True or xbmc.getInfoLabel( self.EXTERNALCALL ) != '' ):
                         if set( self.ALLARTISTS ) <> set( self._get_current_artists() ):
@@ -420,6 +420,8 @@ class Main:
         self.NAME = ''
         self.ALLARTISTS = []
         self.MBID = ''
+        self.LASTPLAYINGFILE = ''
+        self.LASTJSONRESPONSE = ''
         self.LocalImagesFound = False
         self.CachedImagesFound = False
         self.ImageDownloaded = False
@@ -441,7 +443,6 @@ class Main:
         self.theaudiodbALBUMURL = 'album.php?i='
         self.HtbackdropsQueryURL = 'http://htbackdrops.org/api/' + HtbackdropsApiKey + '/searchXML?default_operator=and&fields=title&aid=1'
         self.HtbackdropsDownloadURL = 'http://htbackdrops.org/api/' + HtbackdropsApiKey + '/download/'
-
 
 
     def _move_info_files( self, old_loc, new_loc, type ):
@@ -718,7 +719,21 @@ class Main:
         artists_info = []
         mbids = []
         if( xbmc.Player().isPlayingAudio() == True ):
-            response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"Player.GetItem", "params":{"playerid":0, "properties":["artist", "musicbrainzartistid"]},"id":1}' )
+            try:
+                playing_file = xbmc.Player().getPlayingFile()
+            except RuntimeError:
+                return artists_info
+            except Exception, e:
+                log( 'unexpected error getting playing file back from XBMC' )
+                log( e )
+                return artists_info
+            if playing_file != self.LASTPLAYINGFILE:
+                # if the same file is playing, use cached JSON response instead of doing a new query
+                response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"Player.GetItem", "params":{"playerid":0, "properties":["artist", "musicbrainzartistid"]},"id":1}' )
+                self.LASTPLAYINGFILE = playing_file
+                self.LASTJSONRESPONSE = response
+            else:
+                response = self.LASTJSONRESPONSE
             try:
                 artist_names = json.loads(response)['result']['item']['artist']
             except (IndexError, KeyError, ValueError):
