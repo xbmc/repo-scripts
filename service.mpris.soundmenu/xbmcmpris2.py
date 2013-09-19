@@ -1,6 +1,6 @@
 '''
     MPRIS D-Bus Interface for XBMC (with Ubuntu Sound-Menu integration)
-    Copyright (C) 2011 Team XBMC
+    Copyright (C) 2011-2013 Team XBMC
     
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
