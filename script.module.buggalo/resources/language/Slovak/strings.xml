@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
-<!-- Danish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/da/ -->
+<!-- Slovak language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sk/ -->
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
@@ -16,14 +16,14 @@
     <string id="90009">[B]You talkin' to me?[/B] ~ Taxi Driver (1976)</string>
     <string id="90010">[B]Round up the usual suspects[/B] ~ Casablanca (1942)</string>
     <string id="90011">[B]You're gonna need a bigger boat[/B] ~ Jaws (1975)</string>
-    <string id="91000">Der er desværre opstået en fejl i [B]%s[/B] addon.</string>
-    <string id="91001">Du kan hjælpe med at løse fejlen ved at indsende en fejlrapport. </string>
-    <string id="91002">Klik [I]Vis fejlrapport[/I] for detaljer. Der sendes ikke personlige oplysninger.</string>
-    <string id="91003">Indsend fejlrapport</string>
-    <string id="91004">Indsend ikke</string>
-    <string id="91005">Tak for dit bidrag!</string>
-    <string id="91006">Vis fejlrapport</string>
-    <string id="91007">Skjul fejlrapport</string>
-    <string id="91008">Der opstod desværre et problem med at vise detaljerne...</string>
-    <string id="91009">Fejlrapporten kunne desværre ikke sendes!</string>
+    <string id="91000">Bohužiaľ sa vyskytla chyba v [B]%s[/B] doplnku.</string>
+    <string id="91001">Môžete pomôcť opraviť problém zaslaním chybového hlásenia.</string>
+    <string id="91002">Kliknite na [I]Zobraz chybové hlásenie[/I] pre podrobnosti. Žiadne osobné údaje nie sú odosielané.</string>
+    <string id="91003">Odoslať chybové hlásenie</string>
+    <string id="91004">Neodosielať</string>
+    <string id="91005">Vďaka za Váš príspevok!</string>
+    <string id="91006">Zobraz chybové hlásenie</string>
+    <string id="91007">Schovať chybové hlásenie</string>
+    <string id="91008">Bohužiaľ sa vyskytla chyba pri zobrazovaní podrobností...</string>
+    <string id="91009">Nie je možné odoslať hlásenie!</string>
 </strings>

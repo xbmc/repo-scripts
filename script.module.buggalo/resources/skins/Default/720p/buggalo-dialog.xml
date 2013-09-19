@@ -195,6 +195,7 @@
                     <height>40</height>
                     <font>font13</font>
                     <textcolor>ffffffff</textcolor>
+                    <focusedcolor>ffffffff</focusedcolor>
                     <label>$ADDON[script.module.buggalo 91004]</label>
                     <align>center</align>
                     <aligny>center</aligny>
@@ -210,6 +211,7 @@
                     <height>40</height>
                     <font>font13</font>
                     <textcolor>ffffffff</textcolor>
+                    <focusedcolor>ffffffff</focusedcolor>
                     <label>$ADDON[script.module.buggalo 91003]</label>
                     <align>center</align>
                     <texturefocus>buggalo-button-focus.png</texturefocus>
@@ -226,6 +228,7 @@
                     <height>40</height>
                     <font>font13</font>
                     <textcolor>ffffffff</textcolor>
+                    <focusedcolor>ffffffff</focusedcolor>
                     <label>$ADDON[script.module.buggalo 91006]</label>
                     <align>center</align>
                     <aligny>center</aligny>
@@ -245,7 +248,7 @@
                 <visible>!Control.IsVisible(98)</visible>
                 <animation effect="fade" start="0" end="100" time="500">Visible</animation>
 
-                <control type="label">
+                <control type="label" id="203">
                     <posx>0</posx>
                     <posy>76</posy>
                     <width>740</width>

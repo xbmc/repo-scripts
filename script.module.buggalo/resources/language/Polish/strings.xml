@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Polish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="90000">[B]To jest to człowieku, gra nad człowiekiem[I]Koniec gry![/I][/B] ~ Aliens (1986)</string>
+    <string id="90001">[B]Nie zniósłbyś prawdy![/B] ~ Ludzie honoru (1992)</string>
+    <string id="90002">[B]Niebezpieczeństwo Will Robinson[/B] ~ Zagubieni w kosmosie (1998)</string>
+    <string id="90003">[B]Dlaczego on płacze Sméagol?[/B] ~ Dwie wieże (2002)</string>
+    <string id="90004">[B]Houston, mamy problem[/B] ~ Apollo 13 (1995)</string>
+    <string id="90005">[B]E.T. dzwonić dom[/B] ~ E.T. (1982)</string>
+    <string id="90006">[B]Szczerze mówiąc, kochana, nic mnie to nie obchodzi[/B] ~ Przeminęło z wiatrem (1939)</string>
+    <string id="90007">[B]Śmiało, zrób mi frajdę[/B] ~ Nagłe zderzenie (1983)</string>
+    <string id="90008">[B]Niech moc będzie z tobą[/B] ~ Star Wars (1977)</string>
+    <string id="90009">[B]Do mnie mówisz[/B] ~ Taksówkarz (1976)</string>
+    <string id="90010">[B]Aresztować podejrzanych, tych co zwykle.[/B] ~ Casablanca (1942)</string>
+    <string id="90011">[B]Będzie potrzebna większa łódź.[/B] ~ Szczęki (1975)</string>
+    <string id="91000">Niestety wystąpił błąd wtyczki [B]%s[B].</string>
+    <string id="91001">Możesz pomóc w rozwiązaniu problemu, przesyłając raport o błędzie.</string>
+    <string id="91002">Kliknij [!]Pokaż raport błędu[/!] by zobaczyć szczegóły. Żadne informacje personalne nie są przesyłane.</string>
+    <string id="91003">Prześlij raport błędu</string>
+    <string id="91004">Nie przesyłaj</string>
+    <string id="91005">Dziękujemy za udział w ulepszaniu wtyczki!</string>
+    <string id="91006">Pokaż raport błędu</string>
+    <string id="91007">Ukryj raport błędu</string>
+    <string id="91008">Wystąpił nieoczekiwany błąd podczas pokazywania szczególów</string>
+    <string id="91009">Niemożna wysłać raportu!</string>
+</strings>

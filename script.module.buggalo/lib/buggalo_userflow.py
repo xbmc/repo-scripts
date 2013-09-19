@@ -1,5 +1,5 @@
 #
-#      Copyright (C) 2012 Tommy Winther
+#      Copyright (C) 2013 Tommy Winther
 #      http://tommy.winther.nu
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -30,6 +30,7 @@ ADDON = xbmcaddon.Addon()
 
 # TODO always send userflow, ie. daily upload for usage statistics
 
+
 def trackUserFlow(value):
     """
     Registers an entry in the user's flow through the addon.
@@ -44,6 +45,7 @@ def trackUserFlow(value):
     userFlow[key] = value
     saveUserFlow(userFlow)
 
+
 def loadUserFlow():
     path = xbmc.translatePath(BUGGALO_ADDON.getAddonInfo('profile'))
     file = os.path.join(path, '%s.json' % ADDON.getAddonInfo('id'))
@@ -57,6 +59,7 @@ def loadUserFlow():
         userFlow = dict()
     return userFlow
 
+
 def saveUserFlow(userFlow):
     path = xbmc.translatePath(BUGGALO_ADDON.getAddonInfo('profile'))
     if not os.path.exists(path):
@@ -64,7 +67,7 @@ def saveUserFlow(userFlow):
             os.makedirs(path)
         except OSError:
             print "unable to create directory for saving userflow; userflow will not be saveds"
-            return # ignore
+            return  # ignore
 
     try:
         file = os.path.join(path, '%s.json' % ADDON.getAddonInfo('id'))
@@ -73,7 +76,7 @@ def saveUserFlow(userFlow):
         # we compare strings rather the datetimes (a little hackish though)
         # but datetime.datetime.strptime() often fail for no apparent reason
         # see http://forum.xbmc.org/showthread.php?tid=112916
-        oneDayAgo = datetime.datetime.now() - datetime.timedelta(days = 1)
+        oneDayAgo = datetime.datetime.now() - datetime.timedelta(days=1)
         oneDayAgoStr = oneDayAgo.isoformat()
         for dateStr in userFlow.keys():
             if dateStr < oneDayAgoStr:

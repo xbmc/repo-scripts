@@ -1,5 +1,5 @@
 #
-#      Copyright (C) 2012 Tommy Winther
+#      Copyright (C) 2013 Tommy Winther
 #      http://tommy.winther.nu
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -25,20 +25,22 @@ import simplejson
 import sys
 import traceback
 import urllib2
-
+import smtplib
+from email.mime.text import MIMEText
 import xbmc
 import xbmcaddon
 
 import buggalo_userflow as userflow
 
-def gatherData(type, value, tracebackInfo, extraData, globalExtraData):
+
+def gatherData(etype, value, tracebackInfo, extraData, globalExtraData):
     data = dict()
     data['version'] = 4
     data['timestamp'] = datetime.datetime.now().isoformat()
 
     exception = dict()
     exception['stacktrace'] = traceback.format_tb(tracebackInfo)
-    exception['type'] = str(type)
+    exception['type'] = str(etype)
     exception['value'] = str(value)
     data['exception'] = exception
 
@@ -106,8 +108,8 @@ def gatherData(type, value, tracebackInfo, extraData, globalExtraData):
         elif extraData is not None:
             extraDataInfo[''] = str(extraData)
     except Exception, ex:
-        (type, value, tb) = sys.exc_info()
-        traceback.print_exception(type, value, tb)
+        (etype, value, tb) = sys.exc_info()
+        traceback.print_exception(etype, value, tb)
         extraDataInfo['exception'] = str(ex)
     data['extraData'] = extraDataInfo
 
@@ -123,8 +125,49 @@ def submitData(serviceUrl, data):
             u = urllib2.urlopen(req)
             u.read()
             u.close()
-            break # success; no further attempts
+            break  # success; no further attempts
         except Exception:
             pass # probably timeout; retry
 
 
+def emailData(recipient, data):
+    """
+
+    @param recipient:
+    @param data:
+    @return:
+    """
+
+    # build html table with data
+    body = '<table border="1">'
+    for group in sorted(data.keys()):
+        values = data[group]
+        if type(values) == dict:
+            body += '<tr><td colspan="2"><h2>%s</h2></td></tr>' % group.capitalize()
+            keys = values.keys()
+            if group == 'userflow':
+                keys = sorted(keys)
+
+            for key in keys:
+                body += '<tr><td>%s</td>' % key
+                if key == 'stacktrace':
+                    body += '<td><pre>'
+                    for item in values[key]:
+                        body += item + '\n'
+                    body += '</pre></td>'
+                else:
+                    body += '<td>%s</td>' % str(values[key])
+                body += '</tr>'
+        else:
+            body += '<tr><td><h2>%s</h2></td><td>%s</td></tr>' % (group.capitalize(), str(values))
+    body += '</table>'
+
+    msg = MIMEText(body, 'html')
+    msg['Subject'] = '[Buggalo][%s] %s' % (data['addon']['id'], data['exception']['value'])
+    msg['From'] = 'Buggalo'
+    msg['To'] = recipient
+    msg['X-Mailer'] = 'Buggalo Exception Collector'
+
+    smtp = smtplib.SMTP('gmail-smtp-in.l.google.com')
+    smtp.sendmail(msg['From'], msg['To'], msg.as_string(9))
+    smtp.quit()

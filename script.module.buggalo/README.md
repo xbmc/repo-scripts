@@ -5,7 +5,8 @@ exception in a Python script as well as information about the
 users system, such as XBMC and Python versions.
 
 The collected information is then posted to the internet at a
-predefined URL where the addon author can investigate the exception.
+predefined URL or Gmail account where the addon author can
+investigate the exception.
 
 The script is somewhat similar to posting the xbmc.log to pastebin,
 but is more specialised and doesn't contain superfluous information.
@@ -15,13 +16,22 @@ has to decide if they want to submit the bug report or not.
 The user will see a dialog as seen in this screenshot:
 http://forum.xbmc.org/showthread.php?tid=121925&pid=1137307#pid1137307
 
+
 HOW TO USE
 ==========
 To use this script you must do these things besides importing it.
 
-1.  Set buggalo.SUBMIT_URL to a full URL where the collected data is submitted.
+1.  Choose whether to submit the collected data to a Gmail account or
+    a private website containing buggalo-web.
 
-2.  Surround the code you want to be covered by this script in a try..except block, such as:
+    *  To use a Gmail account set the buggalo.GMAIL_RECIPIENT to the full
+       gmail.com address of the recipient.
+
+    *  To use a website set buggalo.SUBMIT_URL to a full URL where the
+       collected data is submitted.
+
+2.  Surround the code you want to be covered by this script in a
+    try..except block, such as:
 
     ```python
     try
@@ -40,8 +50,9 @@ To use this script you must do these things besides importing it.
     See this link for an example:
     https://github.com/twinther/script.tvguide/blob/master/gui.py#L140
 
-    Optionally, instead of writing the try..except block yourself, you can decorate the function
-    with @buggalo_try_except(). Function specific may be provide in the decorator:
+    Optionally, instead of writing the try..except block yourself, you
+    can decorate the function with @buggalo_try_except(). Function
+    specific extra data may be provide in the decorator:
 
     ```python
     @buggalo_try_except({'class' : 'MyWindowXML', 'method' : 'onInit', 'other_key' : 'other_value'})
@@ -49,17 +60,25 @@ To use this script you must do these things besides importing it.
         pass
     ```
 
-3.  Finally you must setup the website where the error report is submitted.
-    A good starting point is my buggalo-web module on github:
+3.  If you chose to use a private website in step 1, now is the time to configure that
+    - otherwise there is no step 3...
+
+    A good starting point for the website is my buggalo-web module on github:
     https://github.com/twinther/buggalo-web
     If you want to roll your own custom setup then take a look at the submit.php
     file which store the error report in the database.
     https://github.com/twinther/buggalo-web/blob/master/submit.php
 
-    If you don't want to or can't setup your own website you can use the shared site at:
-    http://buggalo.xbmc.info/
-    In this case buggalo.SUBMIT_URL must be set to:
-    http://buggalo.xbmc.info/submit.php
+
+NOTES ABOUT GMAIL RECIPIENT
+===========================
+Gmail has pretty good spam filtering, but there's a good change the error reports
+will end up in your spam folder. You will have to tweak your spam settings if that
+is the case.
+
+Furthermore all emails are prefixed with [Buggalo] and [addon.id] in the subject,
+so you can use that for making filters.
+
 
 WHAT IS COLLECTED
 =================
@@ -78,9 +97,11 @@ such as date and time.
    Type of exception, message and full stack trace
 *  User flow information
    For plugin-type addons each request is recorded with parameters and timestamp
-   For script-type addons the author must record relevant information by invoking the trackUserFlow() method
+   For script-type addons the author must record relevant information by invoking
+   the trackUserFlow() method
 
-For further details take a look at the code in buggalo.py
+For further details take a look at the code in buggalo_client.py
+
 
 TRACKING USER FLOW
 ==================
@@ -109,4 +130,4 @@ The module is named after a creature in my favorite animated show:
 http://theinfosphere.org/Where_the_Buggalo_Roam
 
 ---------------------------------------------------------------------
-2012.09.19 - twinther
+2012.09.26 - twinther

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
-<!-- Danish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/da/ -->
+<!-- Portuguese (Brazil) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/ -->
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
@@ -16,14 +16,14 @@
     <string id="90009">[B]You talkin' to me?[/B] ~ Taxi Driver (1976)</string>
     <string id="90010">[B]Round up the usual suspects[/B] ~ Casablanca (1942)</string>
     <string id="90011">[B]You're gonna need a bigger boat[/B] ~ Jaws (1975)</string>
-    <string id="91000">Der er desværre opstået en fejl i [B]%s[/B] addon.</string>
-    <string id="91001">Du kan hjælpe med at løse fejlen ved at indsende en fejlrapport. </string>
-    <string id="91002">Klik [I]Vis fejlrapport[/I] for detaljer. Der sendes ikke personlige oplysninger.</string>
-    <string id="91003">Indsend fejlrapport</string>
-    <string id="91004">Indsend ikke</string>
-    <string id="91005">Tak for dit bidrag!</string>
-    <string id="91006">Vis fejlrapport</string>
-    <string id="91007">Skjul fejlrapport</string>
-    <string id="91008">Der opstod desværre et problem med at vise detaljerne...</string>
-    <string id="91009">Fejlrapporten kunne desværre ikke sendes!</string>
+    <string id="91000">Infelizmente um erro ocorreu no addon  [B]%s[/B]</string>
+    <string id="91001">Você pode ajudar com correção do problema mediante a apresentação de um relatório de erro.</string>
+    <string id="91002">Clique[I]Mostrar relatório erro[/I] para detalhes. Nenhuma informação pessoal é enviada.</string>
+    <string id="91003">Submeta relatório erro</string>
+    <string id="91004">Não submeta</string>
+    <string id="91005">Obrigado por sua contribuição!</string>
+    <string id="91006">Mostrar relatório de erros</string>
+    <string id="91007">Ocultar relatório de erros</string>
+    <string id="91008">Infelizmente ocorreu um problema ao mostrar os detalhes ...</string>
+    <string id="91009">Não foi possível enviar relatório de erro!</string>
 </strings>

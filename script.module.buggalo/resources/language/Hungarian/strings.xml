@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hungarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/hu/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="90008">[B]Az Erő legyen veled![/B] ~ Star Wars (1977)</string>
+    <string id="91000">Sajnos hiba következett be a [B]%s[/B] kiegészítőben.</string>
+    <string id="91001">Segíthet a probléma megoldásában azzal, hogy elküldi a hibajelentést.</string>
+    <string id="91002">Kattintson a [I]Hibaüzenet mutatása[/I] feliratra a részletekért. Nem küldünk személyes információkat.</string>
+    <string id="91003">Hibaüzenet küldése</string>
+    <string id="91004">Ne küldje el</string>
+    <string id="91005">Köszönjük segítségét!</string>
+    <string id="91006">Hibaüzenet mutatása</string>
+    <string id="91007">Hibaüzenet elrejtése</string>
+    <string id="91008">Sajnos hiba történt a részletek megmutatása közben</string>
+    <string id="91009">Nem lehetséges hibaüzenet küldése</string>
+</strings>
