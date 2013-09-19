@@ -1,3 +1,6 @@
+1.0.2
+- only start at startup
+- update to repo guidelines
 1.0.1
 - added gnome-shell support
 1.0.0
