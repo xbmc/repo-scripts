@@ -21,7 +21,7 @@
 import sys
 
 #import libraries
-from elementtree import ElementTree as ET
+import xml.etree.ElementTree as ET
 from operator import itemgetter
 from lib.language import *
 from lib.script_exceptions import NoFanartError

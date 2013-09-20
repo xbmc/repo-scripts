@@ -103,7 +103,7 @@ class local():
                             filename = "season-all-banner.jpg"
                         else:
                             filename = (item['filename'] % int(season))
-                        if filename in file_list:
+                        if filename in file_list[1]:
                             url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
                             j += 1
                             generalinfo = '%s: %s  |  ' %( __localize__(32141), 'n/a')
@@ -130,7 +130,7 @@ class local():
                             filename = "season-all-landscape.jpg"
                         else:
                             filename = (item['filename'] % int(season))
-                        if filename in file_list:
+                        if filename in file_list[1]:
                             url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
                             j += 1
                             generalinfo = '%s: %s  |  ' %( __localize__(32141), 'n/a')
@@ -153,7 +153,7 @@ class local():
 
                 else:
                     filename = item['filename']
-                    if filename in file_list:
+                    if filename in file_list[1]:
                         url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
                         j += 1
                         generalinfo = '%s: %s  |  ' %( __localize__(32141), 'n/a')
