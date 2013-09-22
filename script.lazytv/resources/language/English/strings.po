@@ -232,3 +232,11 @@ msgstr ""
 msgctxt "#30155"
 msgid "Creating episode list"
 msgstr ""
+
+msgctxt "#30156"
+msgid "Oh dear, an error has occurred with LazyTV."
+msgstr "
+
+msgctxt "#30157"
+msgid "Install Buggalo 1.1.5 or higher to report the details of the error to the author."
+msgstr "
