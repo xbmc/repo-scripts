@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.lazytv"
        name="LazyTV"
-       version="0.1.10"
+       version="0.1.11"
        provider-name="KodeKarnage">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -16,6 +16,8 @@
         <summary>LazyTV</summary>
         <description>LazyTV can be set to one of two primary functions. The first creates and launches a randomised playlist of the TV episodes. The second populates a new window with the next available episode for each of your TV Shows. LazyTV identifies the last viewed episode for each of your shows, and populates the playlist with the next available episode. You can filter your TV Shows using a built-in, custom filter or an existing Smart Playlist. The custom filter allows you to exclude shows based on show name, genre, episode length, or rating. Other features include: set the number of shows in the playlist; exclude episodes from unwatched series, include multiple episodes of the same show,  begin playlist with latest unfinished TV episode.</description>
         <license>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</license>
+        <email>subliminal.karnage at gmail dot com</email>
+        <forum>http://forum.xbmc.org/showthread.php?tid=170975</forum>
         <source>https://github.com/KODeKarnage/script.lazytv/</source>
     </extension>
 </addon>
