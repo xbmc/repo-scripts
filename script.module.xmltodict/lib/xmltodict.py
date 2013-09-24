@@ -14,7 +14,10 @@ except ImportError: # pragma no cover
 try: # pragma no cover
     from collections import OrderedDict
 except ImportError: # pragma no cover
-    OrderedDict = dict
+    try: 
+        from ordereddict import OrderedDict
+    except ImportError:
+        OrderedDict = dict
 
 try: # pragma no cover
     _basestring = basestring
@@ -26,20 +29,25 @@ except NameError: # pragma no cover
     _unicode = str
 
 __author__ = 'Martin Blech'
-__version__ = '0.2'
+__version__ = '0.7.0'
 __license__ = 'MIT'
 
 class ParsingInterrupted(Exception): pass
 
-class _DictSAXHandler:
+class _DictSAXHandler(object):
     def __init__(self,
-            item_depth=0,
-            item_callback=lambda *args: True,
-            xml_attribs=True,
-            attr_prefix='@',
-            cdata_key='#text',
-            force_cdata=False,
-            cdata_separator=''):
+                 item_depth=0,
+                 item_callback=lambda *args: True,
+                 xml_attribs=True,
+                 attr_prefix='@',
+                 cdata_key='#text',
+                 force_cdata=False,
+                 cdata_separator='',
+                 postprocessor=None,
+                 dict_constructor=OrderedDict,
+                 strip_whitespace=True,
+                 namespace_separator=':',
+                 namespaces=None):
         self.path = []
         self.stack = []
         self.data = None
@@ -47,21 +55,46 @@ class _DictSAXHandler:
         self.item_depth = item_depth
         self.xml_attribs = xml_attribs
         self.item_callback = item_callback
-        self.attr_prefix = attr_prefix;
+        self.attr_prefix = attr_prefix
         self.cdata_key = cdata_key
         self.force_cdata = force_cdata
         self.cdata_separator = cdata_separator
+        self.postprocessor = postprocessor
+        self.dict_constructor = dict_constructor
+        self.strip_whitespace = strip_whitespace
+        self.namespace_separator = namespace_separator
+        self.namespaces = namespaces
 
-    def startElement(self, name, attrs):
+    def _build_name(self, full_name):
+        if not self.namespaces:
+            return full_name
+        i = full_name.rfind(self.namespace_separator)
+        if i == -1:
+            return full_name
+        namespace, name = full_name[:i], full_name[i+1:]
+        short_namespace = self.namespaces.get(namespace, namespace)
+        if not short_namespace:
+            return name
+        else:
+            return self.namespace_separator.join((short_namespace, name))
+
+    def startElement(self, full_name, attrs):
+        name = self._build_name(full_name)
+        attrs = self.dict_constructor(zip(attrs[0::2], attrs[1::2]))
         self.path.append((name, attrs or None))
         if len(self.path) > self.item_depth:
             self.stack.append((self.item, self.data))
-            attrs = OrderedDict((self.attr_prefix+key, value)
+            if self.xml_attribs:
+                attrs = self.dict_constructor(
+                    (self.attr_prefix+key, value)
                     for (key, value) in attrs.items())
-            self.item = self.xml_attribs and attrs or None
+            else:
+                attrs = None
+            self.item = attrs or None
             self.data = None
-    
-    def endElement(self, name):
+
+    def endElement(self, full_name):
+        name = self._build_name(full_name)
         if len(self.path) == self.item_depth:
             item = self.item
             if item is None:
@@ -72,38 +105,46 @@ class _DictSAXHandler:
         if len(self.stack):
             item, data = self.item, self.data
             self.item, self.data = self.stack.pop()
+            if self.strip_whitespace and data is not None:
+                data = data.strip() or None
             if data and self.force_cdata and item is None:
-                item = OrderedDict()
+                item = self.dict_constructor()
             if item is not None:
                 if data:
-                    item[self.cdata_key] = data
-                self.push_data(name, item)
+                    self.push_data(item, self.cdata_key, data)
+                self.item = self.push_data(self.item, name, item)
             else:
-                self.push_data(name, data)
+                self.item = self.push_data(self.item, name, data)
         else:
             self.item = self.data = None
         self.path.pop()
 
     def characters(self, data):
-        if data.strip():
-            if not self.data:
-                self.data = data
-            else:
-                self.data += self.cdata_separator + data
+        if not self.data:
+            self.data = data
+        else:
+            self.data += self.cdata_separator + data
 
-    def push_data(self, key, data):
-        if self.item is None:
-            self.item = OrderedDict()
+    def push_data(self, item, key, data):
+        if self.postprocessor is not None:
+            result = self.postprocessor(self.path, key, data)
+            if result is None:
+                return item
+            key, data = result
+        if item is None:
+            item = self.dict_constructor()
         try:
-            value = self.item[key]
+            value = item[key]
             if isinstance(value, list):
                 value.append(data)
             else:
-                self.item[key] = [value, data]
+                item[key] = [value, data]
         except KeyError:
-            self.item[key] = data
+            item[key] = data
+        return item
 
-def parse(xml_input, *args, **kwargs):
+def parse(xml_input, encoding='utf-8', expat=expat, process_namespaces=False,
+          namespace_separator=':', **kwargs):
     """Parse the given XML input and convert it into a dictionary.
 
     `xml_input` can either be a `string` or a file-like object.
@@ -140,7 +181,7 @@ def parse(xml_input, *args, **kwargs):
         >>> def handle(path, item):
         ...     print 'path:%s item:%s' % (path, item)
         ...     return True
-        ... 
+        ...
         >>> xmltodict.parse(\"\"\"
         ... <a prop="x">
         ...   <b>1</b>
@@ -149,25 +190,60 @@ def parse(xml_input, *args, **kwargs):
         path:[(u'a', {u'prop': u'x'}), (u'b', None)] item:1
         path:[(u'a', {u'prop': u'x'}), (u'b', None)] item:2
 
+    The optional argument `postprocessor` is a function that takes `path`, `key`
+    and `value` as positional arguments and returns a new `(key, value)` pair
+    where both `key` and `value` may have changed. Usage example::
+
+        >>> def postprocessor(path, key, value):
+        ...     try:
+        ...         return key + ':int', int(value)
+        ...     except (ValueError, TypeError):
+        ...         return key, value
+        >>> xmltodict.parse('<a><b>1</b><b>2</b><b>x</b></a>',
+        ...                 postprocessor=postprocessor)
+        OrderedDict([(u'a', OrderedDict([(u'b:int', [1, 2]), (u'b', u'x')]))])
+
+    You can pass an alternate version of `expat` (such as `defusedexpat`) by
+    using the `expat` parameter. E.g:
+
+        >>> import defusedexpat
+        >>> xmltodict.parse('<a>hello</a>', expat=defusedexpat.pyexpat)
+        OrderedDict([(u'a', u'hello')])
+
     """
-    handler = _DictSAXHandler(*args, **kwargs)
-    parser = expat.ParserCreate()
+    handler = _DictSAXHandler(namespace_separator=namespace_separator, **kwargs)
+    parser = expat.ParserCreate(
+        encoding,
+        namespace_separator if process_namespaces else None
+    )
+    parser.ordered_attributes = True
     parser.StartElementHandler = handler.startElement
     parser.EndElementHandler = handler.endElement
     parser.CharacterDataHandler = handler.characters
-    if hasattr(xml_input, 'read'):
+    try:
         parser.ParseFile(xml_input)
-    else:
+    except (TypeError, AttributeError):
+        if isinstance(xml_input, _unicode):
+            xml_input = xml_input.encode(encoding)
         parser.Parse(xml_input, True)
     return handler.item
 
 def _emit(key, value, content_handler,
-         attr_prefix='@',
-         cdata_key='#text',
-         root=True):
+          attr_prefix='@',
+          cdata_key='#text',
+          depth=0,
+          preprocessor=None,
+          pretty=False,
+          newl='\n',
+          indent='\t'):
+    if preprocessor is not None:
+        result = preprocessor(key, value)
+        if result is None:
+            return
+        key, value = result
     if not isinstance(value, (list, tuple)):
         value = [value]
-    if root and len(value) > 1:
+    if depth == 0 and len(value) > 1:
         raise ValueError('document with multiple roots')
     for v in value:
         if v is None:
@@ -187,17 +263,35 @@ def _emit(key, value, content_handler,
                 attrs[ik[len(attr_prefix):]] = iv
                 continue
             children.append((ik, iv))
+        if pretty and depth:
+            content_handler.ignorableWhitespace(newl + indent * depth)
         content_handler.startElement(key, AttributesImpl(attrs))
         for child_key, child_value in children:
             _emit(child_key, child_value, content_handler,
-                 attr_prefix, cdata_key, False)
+                  attr_prefix, cdata_key, depth+1, preprocessor,
+                  pretty, newl, indent)
         if cdata is not None:
             content_handler.characters(cdata)
         content_handler.endElement(key)
+        if pretty and depth:
+            content_handler.ignorableWhitespace(newl + indent * (depth - 1))
 
+def unparse(input_dict, output=None, encoding='utf-8', **kwargs):
+    """Emit an XML document for the given `input_dict` (reverse of `parse`).
 
-def unparse(item, output=None, encoding='utf-8', **kwargs):
-    ((key, value),) = item.items()
+    The resulting XML document is returned as a string, but if `output` (a
+    file-like object) is specified, it is written there instead.
+
+    Dictionary keys prefixed with `attr_prefix` (default=`'@'`) are interpreted
+    as XML node attributes, whereas keys equal to `cdata_key`
+    (default=`'#text'`) are treated as character data.
+
+    The `pretty` parameter (default=`False`) enables pretty-printing. In this
+    mode, lines are terminated with `'\n'` and indented with `'\t'`, but this
+    can be customized with the `newl` and `indent` parameters.
+
+    """
+    ((key, value),) = input_dict.items()
     must_return = False
     if output == None:
         output = StringIO()
@@ -227,8 +321,9 @@ if __name__ == '__main__': # pragma: no cover
 
     try:
         root = parse(sys.stdin,
-                item_depth=item_depth,
-                item_callback=handle_item)
+                     item_depth=item_depth,
+                     item_callback=handle_item,
+                     dict_constructor=dict)
         if item_depth == 0:
             handle_item([], root)
     except KeyboardInterrupt:

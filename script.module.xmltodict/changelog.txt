@@ -1,3 +1,7 @@
+0.7.0 (24.09.2013)
+ Sync with upstream
+ Commit: 594f431bc96bae27cda67deb49aea300111488bd
+
 0.2.0
  Original: https://github.com/martinblech/xmltodict
  Upstream: be842ee121072beb75b643881d8bed5f683cf2c5
