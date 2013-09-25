@@ -142,7 +142,7 @@ def clear():
     set_property('Current.DewPoint'      , '0')
     set_property('Current.OutlookIcon'   , 'na.png')
     set_property('Current.FanartCode'    , 'na')
-    for count in range (0, MAXDAYS+1):
+    for count in range (0, 5):
         set_property('Day%i.Title'       % count, 'N/A')
         set_property('Day%i.HighTemp'    % count, '0')
         set_property('Day%i.LowTemp'     % count, '0')
@@ -183,6 +183,9 @@ def properties(data,loc):
 
 log('version %s started: %s' % (__version__, sys.argv))
 
+set_property('WeatherProvider', __addonname__)
+set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(__cwd__, 'resources', 'banner.png')))
+
 if sys.argv[1].startswith('Location'):
     keyboard = xbmc.Keyboard('', xbmc.getLocalizedString(14024), False)
     keyboard.doModal()
@@ -212,5 +215,4 @@ else:
         clear()
     refresh_locations()
 
-set_property('WeatherProvider', __addonname__)
 log('finished')
