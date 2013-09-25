@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "고급 옵션"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "사용함"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "위치 1"

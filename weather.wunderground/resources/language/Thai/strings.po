@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "ตัวเลือก ขั้นสูง"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "ใช้งาน"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "ตำแหน่งพื้นที่ 1"

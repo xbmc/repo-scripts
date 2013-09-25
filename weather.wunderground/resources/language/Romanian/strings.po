@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "Opţiuni avansate"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "Activat"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "Locaţie 1"

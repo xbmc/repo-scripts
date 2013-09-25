@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "Додаткові налаштування"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "Увімкн."
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "Місцевість 1"

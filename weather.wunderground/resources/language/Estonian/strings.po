@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "Täpsemad seaded"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "Lubatud"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "Asukoht 1"

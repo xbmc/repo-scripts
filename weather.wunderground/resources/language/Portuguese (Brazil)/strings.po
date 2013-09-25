@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "Opções Avançadas"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "Ativado"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "Local 1"
@@ -87,6 +91,30 @@ msgstr "Nível de zoom no mapa"
 msgctxt "#32126"
 msgid "Animated map"
 msgstr "Mapa animado"
+
+msgctxt "#32127"
+msgid "Location 4"
+msgstr "Cidade 4"
+
+msgctxt "#32128"
+msgid "Location 5"
+msgstr "Cidade 5"
+
+msgctxt "#32129"
+msgid "Location 4 display name"
+msgstr "Nome Cidade Local 4"
+
+msgctxt "#32130"
+msgid "Location 5 display name"
+msgstr "Nome Cidade Local 5"
+
+msgctxt "#32131"
+msgid "Location 4 id"
+msgstr "Local 4 id"
+
+msgctxt "#32132"
+msgid "Location 5 id"
+msgstr "Local 5 id"
 
 msgctxt "#32501"
 msgid "New Moon"

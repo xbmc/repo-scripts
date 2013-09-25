@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "進階選項"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "啟用"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "位置1"
@@ -87,6 +91,30 @@ msgstr "地圖縮放等級"
 msgctxt "#32126"
 msgid "Animated map"
 msgstr "動畫地圖"
+
+msgctxt "#32127"
+msgid "Location 4"
+msgstr "位置 4"
+
+msgctxt "#32128"
+msgid "Location 5"
+msgstr "位置 5"
+
+msgctxt "#32129"
+msgid "Location 4 display name"
+msgstr "位置4顯示名稱"
+
+msgctxt "#32130"
+msgid "Location 5 display name"
+msgstr "位置5顯示名稱"
+
+msgctxt "#32131"
+msgid "Location 4 id"
+msgstr "位置4 id"
+
+msgctxt "#32132"
+msgid "Location 5 id"
+msgstr "位置5 id"
 
 msgctxt "#32501"
 msgid "New Moon"

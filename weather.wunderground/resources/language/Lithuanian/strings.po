@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "Išplėstinės parinktys"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "Įjungtas"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "Vietovė 1"

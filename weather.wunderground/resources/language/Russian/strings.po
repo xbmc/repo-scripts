@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "Раширенные опции"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "Вкл."
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "Местоположение 1"
@@ -87,6 +91,18 @@ msgstr "Увеличение карты"
 msgctxt "#32126"
 msgid "Animated map"
 msgstr "Анимированая карта"
+
+msgctxt "#32127"
+msgid "Location 4"
+msgstr "Положение 4"
+
+msgctxt "#32128"
+msgid "Location 5"
+msgstr "Положение5"
+
+msgctxt "#32131"
+msgid "Location 4 id"
+msgstr "Положение 4 id"
 
 msgctxt "#32501"
 msgid "New Moon"

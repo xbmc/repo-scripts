@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.wunderground" name="Weather Underground" version="2.0.0" provider-name="Team XBMC">
+<addon id="weather.wunderground" name="Weather Underground" version="2.0.2" provider-name="Team XBMC">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -24,7 +24,7 @@
 		<summary lang="et">Ilmaennustus portaalist wunderground.com</summary>
 		<summary lang="eu">Eguraldi iragarpena wunderground.com-etik</summary>
 		<summary lang="fi">Sääennusteet wunderground.com-sivustolta</summary>
-		<summary lang="fo">Veðurlíkindi frá wunderground.com</summary>
+		<summary lang="fo">Veðurforsøgn frá wunderground.com</summary>
 		<summary lang="fr">Prévisions météo fournies par wunderground.com</summary>
 		<summary lang="gl">Predición meteorolóxica de wunderground.com</summary>
 		<summary lang="he">תחזית מזג האויר מאת wunderground.com</summary>
@@ -54,6 +54,7 @@
 		<summary lang="uk">Прогноз погоди з wunderground.com</summary>
 		<summary lang="uz">wunderground.com dan ob-havo ma'lumoti</summary>
 		<summary lang="vi">Dự báo thời tiết từ wunderground.com</summary>
+		<summary lang="vi_VN">Dự báo thời tiết từ wunderground.com</summary>
 		<summary lang="zh">来自wunderground.com的天气预报</summary>
 		<summary lang="zh_TW">weatherground.com 上的天氣預報</summary>
 		<description lang="af">Weer voorspelling verskaf deur Weather Underground (http://www.wunderground.com/)</description>
@@ -73,7 +74,7 @@
 		<description lang="es_MX">Pronóstico del tiempo por Weather Underground&#10;(http://www.wunderground.com/)</description>
 		<description lang="et">Ilma ennustab Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="fi">Sääennusteet Weather Underground -sivuston tarjoamina (http://www.wunderground.com/)</description>
-		<description lang="fo">Veðurlíkindi eru veitt av Weather Underground (http://www.wunderground.com)</description>
+		<description lang="fo">Veðurforsøgnin er latin av Weather Underground (http://www.wunderground.com)</description>
 		<description lang="fr">Prévisions météo fournies par Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="gl">Predición meteorolóxica provista por Weather Underground&#10;(http://www.wunderground.com/)</description>
 		<description lang="he">תחזית מזג האויר ניתנת ע"י Weather Underground (http://www.wunderground.com</description>
@@ -99,10 +100,11 @@
 		<description lang="sv">Väderprognos tillhandahållen av Weather Underground&#10;(http://www.wunderground.com/)</description>
 		<description lang="ta_IN">வானிலை முன்னறிவிப்பு வழங்குபவர் வானிலை அண்டர்கிரவுண்டு (http://www.wunderground.com/)</description>
 		<description lang="th">พยากรณ์อากาศโดย Weather Underground &#10;(http://www.wunderground.com/)</description>
-		<description lang="tr">Hava Durumu Weather Underground tarafından sağlanır (http://www.wunderground.com/)</description>
+		<description lang="tr">Hava durumu Weather Underground (http://www.wunderground.com/)  tarafından sağlanır</description>
 		<description lang="uk">Прогноз погоди надано Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="uz">Ob-havo ma'lumoti Weather Underground (http://www.wunderground.com/) tomonidan taqdim etilgan</description>
 		<description lang="vi">Dự báo thời tiết từ Weather Underground (http://www.wunderground.com/)</description>
+		<description lang="vi_VN">Dự báo thời tiết được cung cấp bởi Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="zh">由Weather Underground（http://www.wunderground.com/）提供的天气预报</description>
 		<description lang="zh_TW">天氣預報由 Weather Underground (http://www.wunderground.com/) 所提供</description>
 		<disclaimer lang="af">Die gebruik van hierdie byvoegsel impliseer dat U saamstem met die Terme van Diens uiteengesit op http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
@@ -148,9 +150,10 @@
 		<disclaimer lang="sv">Användning av detta tillägg innebär att ni har accepterat användarvillkoren som går att hitta på&#10;http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="ta_IN">விதிமுறைகள் ஒப்பு கொண்டீர் என்று தெரிகிறது http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="th">ในการใช้บริการโปรแกรมเสริมนี้หมายความว่าคุณได้ยอมรับเงื่อนไขในการให้บริการโดย http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
-		<disclaimer lang="tr">Bu eklentinin kullanımı aynı zamanda http://www.wunderground.com/weather/api/d/terms.html adresindeki Kullanım koşullarını da kabul ettiğiniz anlamına gelir.</disclaimer>
+		<disclaimer lang="tr">Bu eklentinin kullanımı aynı zamanda http://www.wunderground.com/weather/api/d/terms.html adresindeki Kullanım Koşullarını da kabul ettiğiniz anlamına gelir.</disclaimer>
 		<disclaimer lang="uk">Скориставшись цією надбудовою, ви тим самим погоджуєтеся з умовами використання: http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="vi">Khi sử dụng add-on này đồng nghĩa với việc bạn đồng ý với các điều khoản sử dụng dịch vụ của nhà cung cấp tại địa chỉ http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
+		<disclaimer lang="vi_VN">Sử dụng add-on này hàm ý rằng bạn đã đồng ý với các điều khoản của dịch vụ có ở http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="zh">使用此扩展功能意味着你同意此连接下的服务条款：http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="zh_TW">使用這個附加元件代表你同意 http://www.wunderground.com/weather/api/d/terms.html 所載之使用者條款</disclaimer>
 		<language></language>

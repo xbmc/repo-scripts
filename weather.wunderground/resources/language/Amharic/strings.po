@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "የረቀቁ ምርጫዎች"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "ተችሏል"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "አካባቢ 1 "
@@ -163,3 +167,7 @@ msgstr "ባጠቃላይ "
 msgctxt "#32515"
 msgid "Forecast"
 msgstr "ደመናማ "
+
+msgctxt "#32516"
+msgid "Synopsis"
+msgstr "መግለጫ "

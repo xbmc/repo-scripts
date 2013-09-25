@@ -31,7 +31,7 @@ Day%i.FanartCode
 WEATHERPROVIDER
 ----------------
 WeatherProvider
-
+WeatherProviderLogo
 
 
 

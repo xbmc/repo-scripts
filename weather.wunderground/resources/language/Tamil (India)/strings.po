@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "கூடுதல் விருப்பங்கள்"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "செயல்படுத்தபட்டுள்ளது"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "இருப்பிடம் 1"

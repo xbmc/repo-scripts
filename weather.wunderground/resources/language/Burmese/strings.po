@@ -20,6 +20,10 @@ msgctxt "#32101"
 msgid "Location setup"
 msgstr "တည်နေရာ setup"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "ဖွင့်ထားမည်"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "တည်နေရာ ၁"

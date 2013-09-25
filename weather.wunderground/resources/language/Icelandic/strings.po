@@ -16,6 +16,10 @@ msgstr ""
 "Language: is\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "Virkt"
+
 msgctxt "#32121"
 msgid "Weekend"
 msgstr "Helgi"

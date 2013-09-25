@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "Napredne nastavitve"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "Vključen"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "Kraj 1"

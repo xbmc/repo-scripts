@@ -24,6 +24,10 @@ msgctxt "#32102"
 msgid "Advanced options"
 msgstr "Gevorderde opsies"
 
+msgctxt "#32110"
+msgid "Enabled"
+msgstr "In staat gestel"
+
 msgctxt "#32111"
 msgid "Location 1"
 msgstr "Ligging 1"
