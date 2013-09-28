@@ -1,0 +1,9 @@
+<parserConfig>
+	<GameGrammar type="multiline">
+		<SkippableContent closeStmnt="true" skipTo="&lt;div class='thumb'" ></SkippableContent>
+		<SkippableContent closeStmnt="true">&lt;div class='thumb'</SkippableContent>
+		<SkippableContent closeStmnt="true" skipTo="&lt;a href='" ></SkippableContent>
+		<SkippableContent closeStmnt="true">&lt;a href='</SkippableContent>
+		<url closeStmnt="true" skipTo="'" appendResultTo="http://www.mobygames.com"></url>
+	</GameGrammar>
+</parserConfig>

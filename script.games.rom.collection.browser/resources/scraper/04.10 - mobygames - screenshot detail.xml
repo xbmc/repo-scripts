@@ -1,0 +1,1 @@
+<parserConfig>	<GameGrammar type="multiline">		<SkippableContent closeStmnt="true" skipTo="&quot;main&quot;:&quot;"></SkippableContent>		<SkippableContent closeStmnt="true">&quot;main&quot;:&quot;</SkippableContent>		<Filetypescreenshot closeStmnt="true" skipTo="&quot;" appendResultTo="http://www.mobygames.com"></Filetypescreenshot>	</GameGrammar></parserConfig>

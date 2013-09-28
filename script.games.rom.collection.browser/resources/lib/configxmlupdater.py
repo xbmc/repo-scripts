@@ -81,6 +81,12 @@ class ConfigxmlUpdater:
 			if(not success):
 				return False, message
 			
+		if(configVersion == '1.0.6'):
+			success, message = self.update_106_to_208()
+			configVersion = '2.0.8'
+			if(not success):
+				return False, message
+			
 		#write file
 		success, message = self.writeFile()	
 				
@@ -226,6 +232,83 @@ class ConfigxmlUpdater:
 				break
 				
 		return True, '' 
+	
+	
+	def update_106_to_208(self):
+		#update mobygames scraper
+		scraperSitesXml = self.tree.findall('Scrapers/Site')
+		for scraperSiteXml in scraperSitesXml:			
+			siteName = scraperSiteXml.attrib.get('name')
+			if(siteName == 'mobygames.com'):
+				#delete all existing scraper elements
+				scraperElements = scraperSiteXml.findall('Scraper')
+				for scraperElement in scraperElements:
+					self.removeElement(scraperSiteXml, 'Scraper')
+				
+				#add new scraper elements
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.01 - mobygames - gamesearch.xml',
+				'source' : 'http://www.mobygames.com/search/quick?game=%GAME%&amp;p=%PLATFORM%',
+				'returnUrl' : 'true'
+				})
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.02 - mobygames - details.xml',
+				'source' : '1'
+				})
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.03 - mobygames - coverlink front.xml',
+				'source' : '1',
+				'sourceAppend' : 'cover-art',
+				'returnUrl' : 'true'
+				})
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.04 - mobygames - coverdetail front.xml',
+				'source' : '2'
+				})
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.05 - mobygames - coverlink back.xml',
+				'source' : '1',
+				'sourceAppend' : 'cover-art',
+				'returnUrl' : 'true'
+				})
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.06 - mobygames - coverdetail back.xml',
+				'source' : '3'
+				})
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.07 - mobygames - coverlink media.xml',
+				'source' : '1',
+				'sourceAppend' : 'cover-art',
+				'returnUrl' : 'true'
+				})
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.08 - mobygames - coverdetail media.xml',
+				'source' : '4'
+				})
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.09 - mobygames - screenshotlink.xml',
+				'source' : '1',
+				'sourceAppend' : 'screenshots',
+				'returnUrl' : 'true'
+				})
+				scraperXml = SubElement(scraperSiteXml, 'Scraper', 
+				{ 
+				'parseInstruction' : '04.10 - mobygames - screenshot detail.xml',
+				'source' : '5'
+				})
+				
+				break
+				
+		return True, ''
 			
 	
 	#TODO use same as in config

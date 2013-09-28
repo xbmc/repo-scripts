@@ -188,6 +188,7 @@ class MediaPath:
 class Scraper:
 	parseInstruction = ''
 	source = ''
+	sourceAppend = ''
 	encoding = 'utf-8'
 	returnUrl = False
 	replaceKeyString = ''
@@ -588,6 +589,10 @@ class Config:
 			returnUrl = scraperRow.attrib.get('returnUrl')
 			if(returnUrl != None and returnUrl != ''):
 				scraper.returnUrl = returnUrl.upper() == 'TRUE'
+				
+			sourceAppend = scraperRow.attrib.get('sourceAppend')
+			if(sourceAppend != None and sourceAppend != ''):
+				scraper.sourceAppend = sourceAppend
 				
 			scraper.replaceKeyString = inReplaceKeyString
 			scraper.replaceValueString = inReplaceValueString

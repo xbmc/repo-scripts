@@ -1,7 +1,7 @@
 
 from pyparsing import *
 from elementtree.ElementTree import *
-import urllib
+import urllib2
 import time
 import util
 from util import Logutil
@@ -132,9 +132,9 @@ class DescriptionParserFlatFile:
 		fileAsString = ''
 		
 		if(descFile.startswith('http://')):
-			usock = urllib.urlopen(descFile)
-			fileAsString = usock.read()
-			usock.close()
+			req = urllib2.Request(descFile)
+			req.add_unredirected_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31')
+			fileAsString = urllib2.urlopen(req).read()
 		else:
 			fh = open(str(descFile), 'r')
 			fileAsString = fh.read()

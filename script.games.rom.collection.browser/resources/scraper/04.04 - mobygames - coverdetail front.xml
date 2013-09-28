@@ -1,0 +1,7 @@
+<parserConfig>
+	<GameGrammar type="multiline">
+		<SkippableContent skipTo="&quot;main&quot;:&quot;" closeStmnt="true"></SkippableContent>
+		<SkippableContent closeStmnt="true">&quot;main&quot;:&quot;</SkippableContent>
+		<Filetypeboxfront closeStmnt="true" skipTo="&quot;"></Filetypeboxfront>
+	</GameGrammar>
+</parserConfig>

@@ -1,6 +1,6 @@
 
 from elementtree.ElementTree import *
-import urllib
+import urllib2
 import time
 
 import util
@@ -20,7 +20,9 @@ class DescriptionParserXml:
 		results = None						
 						
 		if(descFile.startswith('http://')):
-			descFile = urllib.urlopen(descFile).read()
+			req = urllib2.Request(descFile)
+			req.add_unredirected_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31')
+			descFile = urllib2.urlopen(req).read()
 		else:
 			fh = open(str(descFile), 'r')
 			descFile = fh.read()
@@ -58,7 +60,9 @@ class DescriptionParserXml:
 		Logutil.log('scanDescription: %s' % descFile, util.LOG_LEVEL_INFO)
 		
 		if(descFile.startswith('http://')):
-			descFile = urllib.urlopen(descFile).read()
+			req = urllib2.Request(descFile)
+			req.add_unredirected_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31')
+			descFile = urllib2.urlopen(req).read()
 		else:
 			fh = open(str(descFile), 'r')
 			descFile = fh.read()

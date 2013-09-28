@@ -4,6 +4,7 @@ import getpass, string, glob
 import codecs
 import zipfile
 import time
+import urllib2
 
 import xbmcvfs
 import fnmatch
@@ -1186,15 +1187,22 @@ class DBUpdate:
 					pass
 
 				# fetch thumbnail and save to filepath
-				try:
-					#download file to local folder and copy it to smb path with xbmcvfs
+				try:					
+					target = fileName
 					if(fileName.startswith('smb://')):
-						localFile = util.joinPath(util.getTempDir(), os.path.basename(fileName))
-						urllib.urlretrieve( thumbUrl, localFile)
-						xbmcvfs.copy(localFile, fileName)
-						xbmcvfs.delete(localFile)
-					else:
-						urllib.urlretrieve( thumbUrl, str(fileName))
+						#download file to local folder and copy it to smb path with xbmcvfs
+						target = util.joinPath(util.getTempDir(), os.path.basename(fileName))
+											
+					req = urllib2.Request(thumbUrl)
+					req.add_unredirected_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31')
+					f = open(target,'wb')
+					f.write(urllib2.urlopen(req).read())
+					f.close()
+						
+					if(fileName.startswith('smb://')):	
+						xbmcvfs.copy(target, fileName)
+						xbmcvfs.delete(target)
+						
 				except Exception, (exc):
 					xbmcgui.Dialog().ok(util.localize(35012), util.localize(35011))
 					Logutil.log("Could not create file: '%s'. Error message: '%s'" %(str(fileName), str(exc)), util.LOG_LEVEL_ERROR)

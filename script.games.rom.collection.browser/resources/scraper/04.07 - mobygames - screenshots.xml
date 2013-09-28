@@ -1,7 +1,0 @@
-<parserConfig>
-	<GameGrammar type="multiline">
-		<SkippableContent skipTo="id=&quot;screenshotImg&quot; src=&quot;" closeStmnt="true"></SkippableContent>
-		<SkippableContent closeStmnt="true">id=&quot;screenshotImg&quot; src=&quot;</SkippableContent>
-		<Filetypescreenshot closeStmnt="true" skipTo="&quot;" appendResultTo="http://www.mobygames.com"></Filetypescreenshot>
-	</GameGrammar>
-</parserConfig>

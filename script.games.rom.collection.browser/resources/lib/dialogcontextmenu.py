@@ -299,7 +299,7 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 				
 		for addonObj in jsonResult[u'result'][u'addons']:
 			id = addonObj[u'addonid']
-			addon = xbmcaddon.Addon(id, installedOnly=installedOnlyParam)
+			addon = xbmcaddon.Addon(id, installed=installedOnlyParam)
 			# extensions and platforms are "|" separated, extensions may or may not have a leading "."
 			if(addon.getAddonInfo('platforms') == platform):
 				addons.append(id)
