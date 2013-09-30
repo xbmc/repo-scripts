@@ -1,0 +1,9 @@
+*.git
+*.gz
+*.idea
+*.pyo
+*.tar
+*.xcf
+*.zip
+**/.gitignore
+**/.gitattributes
