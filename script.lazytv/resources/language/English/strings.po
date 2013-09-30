@@ -101,6 +101,10 @@ msgctxt "#30073"
 msgid "Produce a list of 'next episodes' for each TV series"
 msgstr ""
 
+msgctxt "#30088"
+msgid "Let me choose on launch"
+msgstr ""
+
 msgctxt "#30074"
 msgid "Populate based on ..."
 msgstr ""
@@ -160,7 +164,7 @@ msgid "Choose Show"
 msgstr ""
 
 #dialog
-#empty strings from id 30088 to 30100
+#empty strings from id 30089 to 30100
 
 msgctxt "#30101"
 msgid "TV Shows"
@@ -239,4 +243,23 @@ msgstr "
 
 msgctxt "#30157"
 msgid "Install Buggalo 1.1.5 or higher to report the details of the error to the author."
+msgstr "
+
+
+#Choice at launch
+
+msgctxt "#30158"
+msgid "This addon finds the next episode in each TV show."
+msgstr "
+
+msgctxt "#30159"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "
+
+msgctxt "#30160"
+msgid "Show me"
+msgstr "
+
+msgctxt "#30161"
+msgid "Surprise me"
 msgstr "

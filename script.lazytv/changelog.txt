@@ -13,3 +13,7 @@ added function to backfill watched status
 
 0.1.10
 added optional Buggalo 
+
+0.1.12
+multiple empty list fixes
+added option to select primary action on addon launch

@@ -22,7 +22,7 @@
     </category>
     <category label="30070">
         <setting type="lsep" label="30071"/>
-        <setting id="primary_function" type="enum" label="" lvalues="30072|30073"/>
+        <setting id="primary_function" type="enum" label="" lvalues="30072|30073|30088"/>
         <setting id="sort_list_by" type="enum" label="30079" enable="eq(-1,1)" lvalues="30080|30081"/>
         <setting type="lsep" label="30074"/>
         <setting id="populate_by" type="enum" label="" lvalues="30075|30076|30077"/>
