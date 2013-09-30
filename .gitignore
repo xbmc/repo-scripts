@@ -1,9 +1,10 @@
-*.git
-*.gz
-*.idea
+.gz
+.hg
+.idea
 *.pyo
 *.tar
 *.xcf
 *.zip
-**/.gitignore
+**/.git
 **/.gitattributes
+**/.gitignore
