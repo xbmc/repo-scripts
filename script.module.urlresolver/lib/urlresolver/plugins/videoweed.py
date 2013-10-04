@@ -18,12 +18,15 @@
 
 import re
 from t0mm0.common.net import Net
-import urllib2
+import urllib2, os
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import xbmcgui
+
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class VideoweedResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -37,42 +40,37 @@ class VideoweedResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         dialog = xbmcgui.Dialog()
-        
         #grab stream details
         try:
             html = self.net.http_GET(web_url).content
-        except urllib2.URLError, e:
-            common.addon.log_error('videoweed: got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return False
-        
-        r = re.search('flashvars.domain="(.+?)".*flashvars.file="(.+?)".*' + 
+
+            r = re.search('flashvars.domain="(.+?)".*flashvars.file="(.+?)".*' + 
                       'flashvars.filekey="(.+?)"', html, re.DOTALL)
-        
-        #use api to find stream address
-        if r:
-            domain, fileid, filekey = r.groups()
-            api_call = ('%s/api/player.api.php?user=undefined&codes=1&file=%s' +
-                        '&pass=undefined&key=%s') % (domain, fileid, filekey)
-        else:
-            dialog.ok(' Videoweed ', ' The video no longer exists ', '', '')
-            return False
+            #use api to find stream address
+            if r:
+                domain, fileid, filekey = r.groups()
+                api_call = ('%s/api/player.api.php?user=undefined&codes=1&file=%s' +
+                            '&pass=undefined&key=%s') % (domain, fileid, filekey)
+            else:
+                raise Exception ('File Not Found or removed')
 
-        try:
             api_html = self.net.http_GET(api_call).content
-        except urllib2.URLERROR, e:
-            common.addon.log_error('videoweed: failed to call the video API: ' +
-                                   'got http error %d fetching %s' %
-                                                            (e.code, api_call))
-            return False
+            rapi = re.search('url=(.+?)&title=', api_html)
+            if rapi:
+                stream_url = rapi.group(1)
+            else:
+                raise Exception ('File Not Found or removed')
+            return stream_url
 
-        rapi = re.search('url=(.+?)&title=', api_html)
-        if rapi:
-            stream_url = rapi.group(1)
-        else:
-            common.addon.log_error('videoweed: stream url not found')
-
-        return stream_url
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+            return self.unresolvable() 
+        except Exception, e:
+            common.addon.log('**** Videoweed Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]VIDEOWEED[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable() 
 
 
     def get_url(self, host, media_id):

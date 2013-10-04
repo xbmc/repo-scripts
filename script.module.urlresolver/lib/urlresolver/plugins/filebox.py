@@ -21,13 +21,13 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
+import urllib2, re, os, xbmcgui
 from urlresolver import common
 from lib import jsunpack
 import xbmcgui
 
-# Custom imports
-import re
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 
 class FileboxResolver(Plugin, UrlResolver, PluginSettings):
@@ -53,29 +53,31 @@ class FileboxResolver(Plugin, UrlResolver, PluginSettings):
             dialog = xbmcgui.Dialog()
 
             if "video is not available for streaming right now. It's still converting..." in html:
-                dialog.ok('UrlResolver', "video is not available for streaming right now.", "It's still converting...", '')
-                
+                raise Exception ('video is not available for streaming right now.')                
             if "File was deleted" in html:
-                dialog.ok( 'UrlResolver', 'File was deleted', '', '')
+                raise Exception ('File Not Found or removed')
                 
             form_values = {}
             for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
                 form_values[i.group(1)] = i.group(2)
 
             html = self.net.http_POST(post_url, form_data=form_values).content
+            r = re.search('url: \'(.+?)\', autoPlay: false,onBeforeFinish:', html)
+            print r
+            if r:
+                return r.group(1)
 
+            raise Exception ('File Not Found or removed')
 
         except urllib2.URLError, e:
-            common.addon.log_error('gorillavid: got http error %d fetching %s' %
-                                  (e.code, web_url))
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
             return False
-
-        r = re.search('url: \'(.+?)\', autoPlay: false,onBeforeFinish:', html)
-        print r
-        if r:
-            return r.group(1)
-
-        return False
+        except Exception, e:
+            common.addon.log_error('**** Filebox Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]FILEBOX[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
 
     def get_url(self, host, media_id):
             return 'http://www.filebox.com/embed-%s.html' % (media_id)

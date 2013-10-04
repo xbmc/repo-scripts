@@ -20,9 +20,11 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2
+import re, os, urllib2
 from urlresolver import common
+
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class nolimitvideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -38,20 +40,24 @@ class nolimitvideoResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id)
         try:
             html = self.net.http_GET(web_url).content
+            r = re.search('\'file\': \'(.+?)\',', html)
+            stream_url = ""
+            if r:
+                stream_url = r.group(1)
+            else:
+                raise Exception ('File Not Found or removed')
+                
+            return stream_url
+
         except urllib2.URLError, e:
-            common.addon.log_error('nolimitvideo: http error %d fetching %s' %
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return False
-                
-        r = re.search('\'file\': \'(.+?)\',', html)
-        stream_url = ""
-        if r:
-            stream_url = r.group(1)
-        else:
-            common.addon.log_error('nolimitvideo: stream_url not found')
+        except Exception, e:
+            common.addon.log('**** Nolimitvideo Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]Nolimitvideo[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return False
-                
-        return stream_url
 
 
     def get_url(self, host, media_id):

@@ -20,11 +20,12 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2, xbmcgui
+import re, xbmcgui, os
 from urlresolver import common
-import os
 from lib import jsunpack
+
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 net = Net()
 
@@ -40,46 +41,48 @@ class SharerepoResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_media_url(self, host, media_id):
-        print 'Sharerepo: in get_media_url %s %s' % (host, media_id)
-        url = self.get_url(host, media_id)
-        html = self.net.http_GET(url).content
-        #Show dialog box so user knows something is happening
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Sharerepo Link...')       
-        dialog.update(0)
+        try:
+            url = self.get_url(host, media_id)
+            html = self.net.http_GET(url).content
+            dialog = xbmcgui.DialogProgress()
+            dialog.create('Resolving', 'Resolving Sharerepo Link...')       
+            dialog.update(0)
 
-        op = 'download1'
-        usr_login = ''
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
-        referer = ''
-        method_free = re.search('<input type="submit" name="method_free" value="(.+?)">', html).group(1)
-        data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': referer, 'method_free': method_free, 'down_direct': 1}
+            data = {}
+            r = re.findall(r'type="(?:hidden|submit)?" name="(.+?)"\s* value="?(.+?)">', html)
+            for name, value in r:
+                data[name] = value
+                
+            html = net.http_POST(url, data).content
+    
+            dialog.update(50)
+    
+            sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
+            r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
             
-        print 'Sharerepo - Requesting POST URL: %s DATA: %s' % (url, data)
-        html = net.http_POST(url, data).content
-
-        dialog.update(50)
-
-        sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
-        r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
-        
-        if r:
-            sJavascript = r.group(1)
-            sUnpacked = jsunpack.unpack(sJavascript)
-            sPattern  = '''("video/divx"src="|addVariable\('file',')(.+?)video[.]'''
-            r = re.search(sPattern, sUnpacked)              
             if r:
-                link = r.group(2) + fname
-                dialog.close()
-                return link
+                sJavascript = r.group(1)
+                sUnpacked = jsunpack.unpack(sJavascript)
+                sPattern  = '''("video/divx"src="|addVariable\('file',')(.+?)video[.]'''
+                r = re.search(sPattern, sUnpacked)              
+                if r:
+                    link = r.group(2) + fname
+                    dialog.close()
+                    return link
+                raise Exception ('File Not Found or removed')
+            raise Exception ('File Not Found or removed')
 
-        if not link:
-            print '***** Sharerepo - Link Not Found'
-            raise Exception("Unable to resolve Sharerepo")
-        
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+            return False
+        except Exception, e:
+            common.addon.log('**** sharerepo Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]SHAREREPO[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
+            
     def get_url(self, host, media_id):
-        print 'Sharerepo: in get_url %s %s' % (host, media_id)
         return 'http://sharerepo.com/%s' % media_id 
         
 

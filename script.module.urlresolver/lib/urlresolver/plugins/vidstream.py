@@ -20,11 +20,11 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
+import urllib2, re, os
 from urlresolver import common
 
-# Custom imports
-import re
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 
 class VidstreamResolver(Plugin, UrlResolver, PluginSettings):
@@ -43,30 +43,32 @@ class VidstreamResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id)
         try:
             resp = self.net.http_GET(web_url)
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return False
-        html = resp.content
-        post_url = resp.get_url()
 
-        # get post vars
-        form_values = {}
-        for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
-            form_values[i.group(1)] = i.group(2)
-        try:
+            html = resp.content
+            post_url = resp.get_url()
+
+            # get post vars
+            form_values = {}
+            for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
+                form_values[i.group(1)] = i.group(2)
             html = self.net.http_POST(post_url, form_data=form_values).content
+
+            # get stream url
+            pattern = 'file:\s*"([^"]+)",'
+            r = re.search(pattern, html)
+            if r:
+                return r.group(1)
+
+            raise Exception ('File Not Found or removed')
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, settings_url))
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return False
-        # get stream url
-        pattern = 'file:\s*"([^"]+)",'
-        r = re.search(pattern, html)
-        if r:
-            return r.group(1)
-
-        return False
+        except Exception, e:
+            common.addon.log('**** Vidstream Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]VIDSTREAM[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
 
     def get_url(self, host, media_id):
             return 'http://vidstream.in/%s' % (media_id)

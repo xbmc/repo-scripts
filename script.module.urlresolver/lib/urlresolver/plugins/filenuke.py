@@ -20,12 +20,12 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
+import urllib2, re, os
 from urlresolver import common
 from lib import jsunpack
 
-# Custom imports
-import re
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 
 class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
@@ -48,8 +48,6 @@ class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
             resp = self.net.http_GET(web_url)
             html = resp.content
             post_url = resp.get_url()
-            print post_url
-
             form_values = {}
 
             for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
@@ -61,40 +59,35 @@ class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
             form_values[u'usr_login'] = u''
             form_values[u'referer'] = u''
             form_values[u'op'] = u'download1'
-            print form_values
-            
-             
             html = self.net.http_POST(post_url, form_data=form_values).content
-            
+            r = re.findall('return p}\(\'(.+?);\',\d+,\d+,\'(.+?)\'\.split',html)
+            if r:
+                p = r[1][0]
+                k = r[1][1]
+            else:
+                raise Exception ('File Not Found or removed')
+
+            decrypted_data = unpack_js(p, k)
+            #First checks for a flv url, then the if statement is for the avi url
+            r = re.search('file.\',.\'(.+?).\'', decrypted_data)
+            if not r:
+                r = re.search('src="(.+?)"', decrypted_data)
+            if r:
+                stream_url = r.group(1)
+            else:
+                raise Exception ('File Not Found or removed')
+
+            return stream_url
 
         except urllib2.URLError, e:
-            common.addon.log_error('filenuke: got http error %d fetching %s' %
-                                  (e.code, web_url))
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
             return False
-
-        r = re.findall('return p}\(\'(.+?);\',\d+,\d+,\'(.+?)\'\.split',html)
-        if r:
-            p = r[1][0]
-            k = r[1][1]
-        else:
-            common.addon.log_error('filenuke: stream url not found')
+        except Exception, e:
+            common.addon.log_error('**** Filenuke Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]FILENUKE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return False
-
-        decrypted_data = unpack_js(p, k)
-        print decrypted_data
-        print 
-        
-        #First checks for a flv url, then the if statement is for the avi url
-        r = re.search('file.\',.\'(.+?).\'', decrypted_data)
-        if not r:
-            r = re.search('src="(.+?)"', decrypted_data)
-        if r:
-            stream_url = r.group(1)
-        else:
-            common.addon.log_error('filenuke: stream url not found')
-            return False
-
-        return stream_url
 
     def get_url(self, host, media_id):
             return 'http://filenuke.com/%s' % (media_id)# removed www. as it was causing 502 errors.

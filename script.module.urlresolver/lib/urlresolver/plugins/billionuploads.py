@@ -17,13 +17,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
 import re,cookielib,xbmcplugin,xbmcgui,xbmcaddon,xbmc
-import urllib2,time
+import urllib,urllib2,time
+import os
 from urlresolver import common
 from t0mm0.common.net import Net 
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 net = Net()
+
+captcha_img = os.path.join(common.addon_path, 'resources', 'billionuploads_captcha.png')
+logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class billionuploads(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -36,81 +40,172 @@ class billionuploads(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         try:
-            url = 'http://'+host+'/'+media_id
-            #Show dialog box so user knows something is happening
-            dialog = xbmcgui.DialogProgress()
-            dialog.create('Resolving', 'Resolving BillionUploads Link...')       
-            dialog.update(0)
-        
-            print 'BillionUploads - Requesting GET URL: %s' %url
-            html = net.http_GET(url).content
-               
-            #Check page for any error msgs
-            if re.search('This server is in maintenance mode', html):
-                print '***** BillionUploads - Site reported maintenance mode'
-                raise Exception('File is currently unavailable on the host')
-
-            #Captcha
-            captchaimg = re.search('<img src="((http://)?[bB]illion[uU]ploads.com/captchas/.+?)"', html).group(1)
-        
-            dialog.close()
-        
-            #Grab Image and display it
-            img = xbmcgui.ControlImage(550,15,240,100,captchaimg)
-            wdlg = xbmcgui.WindowDialog()
-            wdlg.addControl(img)
-            wdlg.show()
-        
-            #Small wait to let user see image
-            time.sleep(3)
-        
-            #Prompt keyboard for user input
-            kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-            kb.doModal()
-            capcode = kb.getText()
-        
-            #Check input
-            if (kb.isConfirmed()):
-              userInput = kb.getText()
-              if userInput != '':
-                  capcode = kb.getText()
-              elif userInput == '':
-                   Notify('big', 'No text entered', 'You must enter text in the image to access video', '')
-                   return None
-            else:
-                return None
-            wdlg.close()
-
-            #They need to wait for the link to activate in order to get the proper 2nd page
-            dialog.close()
-            #do_wait('Waiting on link to activate', '', 3)
-            time.sleep(3)  
-            dialog.create('Resolving', 'Resolving BillionUploads Link...') 
-            dialog.update(50)
-        
-            #Set POST data values
-            op = 'download2'
-            rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
-            postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-            method_free = re.search('<input type="hidden" name="method_free" value="(.*?)">', html).group(1)
-            down_direct = re.search('<input type="hidden" name="down_direct" value="(.+?)">', html).group(1)
+                url = self.get_url(host, media_id)
                 
-            data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': down_direct, 'code': capcode}
+                #########
+                dialog = xbmcgui.DialogProgress()
+                dialog.create('Resolving', 'Resolving BillionUploads Link...')       
+                dialog.update(0)
+            
+                common.addon.log( self.name + ' - Requesting GET URL: %s' % url )
+                
+                cj = cookielib.CookieJar()
+                normal = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+                normal.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36')]
+                
+                ########################################################
+                ######## CLOUD FLARE STUFF
+                #######################################################
+                class NoRedirection(urllib2.HTTPErrorProcessor):
+                    # Stop Urllib2 from bypassing the 503 page.    
+                    def http_response(self, request, response):
+                        code, msg, hdrs = response.code, response.msg, response.info()
+
+                        return response
+                    https_response = http_response
+
+                opener = urllib2.build_opener(NoRedirection, urllib2.HTTPCookieProcessor(cj))
+                opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36')]
+                response = opener.open(url).read()
+                    
+                jschl=re.compile('name="jschl_vc" value="(.+?)"/>').findall(response)
+                if jschl:
+                    jschl = jschl[0]    
+                
+                    maths=re.compile('value = (.+?);').findall(response)[0].replace('(','').replace(')','')
+
+                    domain_url = re.compile('(https?://.+?/)').findall(url)[0]
+                    domain = re.compile('https?://(.+?)/').findall(domain_url)[0]
+                    
+                    time.sleep(5)
+                    
+                    final= normal.open(domain_url+'cdn-cgi/l/chk_jschl?jschl_vc=%s&jschl_answer=%s'%(jschl,eval(maths)+len(domain))).read()
+                    
+                    html = normal.open(url).read()
+                else:
+                    html = response
+                ################################################################################
+                   
+                #Check page for any error msgs
+                if re.search('This server is in maintenance mode', html):
+                    common.addon.log_error(self.name + ' - Site reported maintenance mode')
+                    xbmc.executebuiltin('XBMC.Notification([B][COLOR white]BILLIONUPLOADS[/COLOR][/B],[COLOR red]Site reported maintenance mode[/COLOR],8000,'+logo+')')
+                    return self.unresolvable(code=2, msg='Site reported maintenance mode')
+                    
+                # Check for file not found
+                if re.search('File Not Found', html):
+                    common.addon.log_error(self.name + ' - File Not Found')
+                    xbmc.executebuiltin('XBMC.Notification([B][COLOR white]BILLIONUPLOADS[/COLOR][/B],[COLOR red]File Not Found[/COLOR],8000,'+logo+')')
+                    return self.unresolvable(code=1, msg='File Not Found')                
+
+                data = {}
+                r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
+                for name, value in r:
+                    data[name] = value
+                    
+                captchaimg = re.search('<img src="((?:http://|www\.)?BillionUploads.com/captchas/.+?)"', html)
         
-            print 'BillionUploads - Requesting POST URL: %s DATA: %s' % (url, data)
-            html = net.http_POST(url, data).content
-            dialog.update(100)
-            link = re.search('&product_download_url=(.+?)"', html).group(1)
-            link = link + "|referer=" + url
-            dialog.close()
-            mediaurl = link
-        
-            return mediaurl
+                if captchaimg:
+                    dialog.close()
+                    img = xbmcgui.ControlImage(550,15,240,100,captchaimg.group(1))
+                    wdlg = xbmcgui.WindowDialog()
+                    wdlg.addControl(img)
+                    wdlg.show()
+            
+                    time.sleep(3)
+            
+                    kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+                    kb.doModal()
+                    capcode = kb.getText()
+            
+                    if (kb.isConfirmed()):
+                        userInput = kb.getText()
+                        if userInput != '':
+                            capcode = kb.getText()
+                        elif userInput == '':
+                            common.addon.show_error_dialog("You must enter the text from the image to access video")
+                            return False
+                    else:
+                        return False
+                    wdlg.close()
+                    dialog.close() 
+                    dialog.create('Resolving', 'Resolving BillionUploads Link...') 
+                    dialog.update(50)
+                    data.update({'code':capcode})
+
+                else:  
+                    dialog.create('Resolving', 'Resolving BillionUploads Link...') 
+                    dialog.update(50)
+                
+                data.update({'submit_btn':''})
+                r = re.search('document\.getElementById\(\'grease\'\)\.innerHTML=decodeURIComponent\(\"(.+?)\"\);', html)
+                if r:
+                    r = re.findall('type="hidden" name="(.+?)" value="(.+?)">', urllib.unquote(r.group(1)).decode('utf8') )
+                    for name, value in r:
+                        data.update({name:value})
+                
+                html = normal.open(url, urllib.urlencode(data)).read()
+                
+                dialog.update(100)
+                
+                def custom_range(start, end, step):
+                    while start <= end:
+                        yield start
+                        start += step
+
+                def checkwmv(e):
+                    s = ""
+                    
+                    # Create an array containing A-Z,a-z,0-9,+,/
+                    i=[]
+                    u=[[65,91],[97,123],[48,58],[43,44],[47,48]]
+                    for z in range(0, len(u)):
+                        for n in range(u[z][0],u[z][1]):
+                            i.append(chr(n))
+                    #print i
+
+                    # Create a dict with A=0, B=1, ...
+                    t = {}
+                    for n in range(0, 64):
+                        t[i[n]]=n
+                    #print t
+
+                    for n in custom_range(0, len(e), 72):
+
+                        a=0
+                        h=e[n:n+72]
+                        c=0
+
+                        #print h
+                        for l in range(0, len(h)):            
+                            f = t.get(h[l], 'undefined')
+                            if f == 'undefined':
+                                continue
+                            a= (a<<6) + f
+                            c = c + 6
+
+                            while c >= 8:
+                                c = c - 8
+                                s = s + chr( (a >> c) % 256 )
+
+                    return s
+
+            
+                dll = re.compile('<input type="hidden" id="dl" value="(.+?)">').findall(html)[0]
+                dl = dll.split('GvaZu')[1]
+                dl = checkwmv(dl)
+                dl = checkwmv(dl)
+                common.addon.log(self.name + ' - Link Found: %s' % dl)                
+
+                return dl
 
         except Exception, e:
-            print '**** BillionUploads Error occured: %s' % e
-            raise
-    
+            common.addon.log_error(self.name + ' - Exception: %s' % e)
+            return self.unresolvable(code=0, msg='Exception: %s' % e)
+        finally:
+            dialog.close()
+
+        
 
     def get_url(self, host, media_id):
         return 'http://www.BillionUploads.com/%s' % media_id

@@ -18,7 +18,7 @@
 
 import re
 from t0mm0.common.net import Net
-import urllib2
+import urllib2, os
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
@@ -35,20 +35,29 @@ class VeohResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         html = self.net.http_GET("http://www.veoh.com/iphone/views/watch.php?id=" + media_id + "&__async=true&__source=waBrowse").content
-        if not re.search('This video is not available on mobile', html):
-            r = re.compile("watchNow\('(.+?)'").findall(html)
-            if (len(r) > 0 ):
-                return r[0]
+        try:
+            if not re.search('This video is not available on mobile', html):
+                r = re.compile("watchNow\('(.+?)'").findall(html)
+                if (len(r) > 0 ):
+                    return r[0]
 
-        url = 'http://www.veoh.com/rest/video/'+media_id+'/details'
-        html = self.net.http_GET(url).content
-        file = re.compile('fullPreviewHashPath="(.+?)"').findall(html)
+            url = 'http://www.veoh.com/rest/video/'+media_id+'/details'
+            html = self.net.http_GET(url).content
+            file = re.compile('fullPreviewHashPath="(.+?)"').findall(html)
 
-        if len(file) == 0:
-            print 'coult not obtain video url'
+            if len(file) == 0:
+                raise Exception ('File Not Found or removed')
+
+            return file[0]
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return False
-
-        return file[0]
+        except Exception, e:
+            common.addon.log('**** Veoh Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]VEOH[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
 
     def get_url(self, host, media_id):
         return 'http://veoh.com/watch/%s' % media_id

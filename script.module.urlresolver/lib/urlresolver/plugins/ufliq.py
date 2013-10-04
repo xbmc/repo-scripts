@@ -20,12 +20,12 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
+import urllib2, os, re
 from urlresolver import common
 from lib import jsunpack
 
-# Custom imports
-import re
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 
 class UfliqResolver(Plugin, UrlResolver, PluginSettings):
@@ -55,17 +55,20 @@ class UfliqResolver(Plugin, UrlResolver, PluginSettings):
 
             html = self.net.http_POST(post_url, form_data=form_values).content
 
+            r = re.search('url: \'(.+?)\', autoPlay: false,onBeforeFinish:', html)
+            if r:
+                return r.group(1)
 
+            raise Exception ('File Not Found or removed')
         except urllib2.URLError, e:
-            common.addon.log_error('gorillavid: got http error %d fetching %s' %
-                                  (e.code, web_url))
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return False
-
-        r = re.search('url: \'(.+?)\', autoPlay: false,onBeforeFinish:', html)
-        if r:
-            return r.group(1)
-
-        return False
+        except Exception, e:
+            common.addon.log('**** ufliq Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]UFLIQ[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
 
     def get_url(self, host, media_id):
             return 'http://www.ufliq.com/embed-%s.html' % (media_id)

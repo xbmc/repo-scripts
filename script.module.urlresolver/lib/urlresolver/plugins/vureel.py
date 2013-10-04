@@ -20,10 +20,12 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2
+import re, os, urllib2
 from urlresolver import common
 import os
+
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class vureelResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -37,9 +39,21 @@ class vureelResolver(Plugin, UrlResolver, PluginSettings):
         
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html=self.net.http_GET('http://www.vureel.com/playwire.php?vid=%s'%media_id).content
-        flv=re.compile(r'<src>(.+?)</src>').findall(html)[0]
-        return flv
+        try:
+            html=self.net.http_GET('http://www.vureel.com/playwire.php?vid=%s'%media_id).content
+            flv=re.findall(r'<src>(.+?)</src>',html)
+            if flv:
+                return flv[0]
+            raise Exception ('File Not Found or removed')
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+            return False
+        except Exception, e:
+            common.addon.log('**** Vureel Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]VUREEL[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
 
     def get_url(self, host, media_id):
         return 'http://www.%s.com/video/%s/' % (host,media_id)

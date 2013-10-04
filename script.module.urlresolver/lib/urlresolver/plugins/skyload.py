@@ -20,11 +20,11 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
+import urllib2, re, os 
 from urlresolver import common
 
-# Custom imports
-import re
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 
 
@@ -44,22 +44,28 @@ class SkyloadResolver(Plugin, UrlResolver, PluginSettings):
 
         try:
             html = self.net.http_GET(web_url).content
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return False
 
-        sPattern = 'var targetURL="([^"]+)"'
-        r = re.search(sPattern, html)
-        if r:
-            return r.group(1)
-        else:
-            sPattern= "file','([^']+)'"
+            sPattern = 'var targetURL="([^"]+)"'
             r = re.search(sPattern, html)
             if r:
                 return r.group(1)
-
-        return False
+            else:
+                sPattern= "file','([^']+)'"
+                r = re.search(sPattern, html)
+                if r:
+                    return r.group(1)
+                raise Exception ('File Not Found or removed')
+            raise Exception ('File Not Found or removed')
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+            return False
+        except Exception, e:
+            common.addon.log('**** Skyload Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]SKYLOAD[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
+            
 
 
     def get_url(self, host, media_id):
