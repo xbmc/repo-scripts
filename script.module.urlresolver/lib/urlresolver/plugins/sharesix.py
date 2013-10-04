@@ -1,5 +1,5 @@
 '''
-sharesix/sharerepo urlresolver plugin
+sharesix urlresolver plugin
 Copyright (C) 2011 humla
 
 This program is free software: you can redistribute it and/or modify
@@ -20,10 +20,11 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2
+import re, urllib2, os, xbmcgui
 from urlresolver import common
-import os, xbmcgui
+
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class SharesixResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -38,38 +39,31 @@ class SharesixResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
 
-        dialog = xbmcgui.Dialog()
-
         try:
-            if ('sharerepo' in host): # If the host is sharerepo then make a post request to get the actual url content
-                form_values = {}
-                form_values["id"]=media_id
-                form_values["referer"]=web_url
-                form_values["method_free"]="Free+Download"
-                form_values["op"]="download1"
-                html = self.net.http_POST(web_url,form_values).content
-            else:   # Otherwise just use the original url to get the content. For sharesix
-                html = self.net.http_GET(web_url).content
+           # Otherwise just use the original url to get the content. For sharesix
+            html = self.net.http_GET(web_url).content
+            # To build the streamable link, we need 
+            # # the IPv4 addr (first 4 content below)
+            # # the hash of the file
+            metadata = re.compile('\|\|?(\d+)\|\|?(\d+)\|\|?(\d+)\|\|?(\d+)\|.+?video\|(.+?)\|\|?file').findall(html)
+
+            if (len(metadata) > 0):
+                metadata = metadata[0]
+                stream_url="http://"+metadata[3]+"."+metadata[2]+"."+metadata[1]+"."+metadata[0]+"/d/"+ metadata[4]+"/video.flv"
+                return stream_url
+            
+            if 'file you were looking for could not be found' in html:
+                raise Exception ('File Not Found or removed')
+
         except urllib2.URLError, e:
-            dialog.ok(' UrlResolver ' , ' Unable to establish connection with the website. ', '', '')
-            return False;
-
-        if 'file you were looking for could not be found' in html:
-            dialog.ok(' UrlResolver ', ' File has been removed. ', '', '')
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
             return False
-
-        # To build the streamable link, we need 
-        # # the IPv4 addr (first 4 content below)
-        # # the hash of the file
-        metadata = re.compile('\|\|?(\d+)\|\|?(\d+)\|\|?(\d+)\|\|?(\d+)\|.+?video\|(.+?)\|\|?file').findall(html)
-
-        if (len(metadata) > 0):
-            metadata = metadata[0]
-            stream_url="http://"+metadata[3]+"."+metadata[2]+"."+metadata[1]+"."+metadata[0]+"/d/"+ metadata[4]+"/video.flv"
-            return stream_url
-
-        dialog.ok(' UrlResolver ' , ' Error while retrieving playable link. ', '', '')
-        return False
+        except Exception, e:
+            common.addon.log_error('**** Sharesix Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]SHARESIX[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
 
     def get_url(self, host, media_id):
         return 'http://%s/%s' % (host, media_id)
@@ -84,6 +78,6 @@ class SharesixResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www.)?(sharesix|sharerepo).com/' +
+        return (re.match('http://(www.)?sharesix.com/' +
                          '[0-9A-Za-z]+', url) or
-                         'sharesix' in host or 'sharerepo' in host)
+                         'sharesix' in host)

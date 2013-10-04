@@ -30,6 +30,9 @@ from urlresolver.plugnplay import Plugin
 from threading import Thread
 import time
 
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+
 class PutlockerResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "putlocker/sockshare"
@@ -67,6 +70,7 @@ class PutlockerResolver(Plugin, UrlResolver, PluginSettings):
         if r:
             session_hash = r.group(1)
         else:
+            common.addon.show_small_popup(title='[B][COLOR white]PUTLOCKER[/COLOR][/B]', msg='[COLOR red]No such file or the file has been removed[/COLOR]', delay=8000, image=error_logo)
             common.addon.log_error('putlocker: session hash not found')
             return False
 

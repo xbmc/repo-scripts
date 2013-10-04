@@ -20,12 +20,12 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2, xbmcgui
+import re, xbmcgui, os, urllib2
 from urlresolver import common
-import os
 from lib import jsunpack
 
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 net = Net()
 
 class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
@@ -40,46 +40,49 @@ class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_media_url(self, host, media_id):
-        print 'Hugefiles: in get_media_url %s %s' % (host, media_id)
-        url = self.get_url(host, media_id)
-        html = self.net.http_GET(url).content
-        #Show dialog box so user knows something is happening
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Hugefiles Link...')       
-        dialog.update(0)
-
-        op = 'download1'
-        usr_login = ''
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
-        referer = ''
-        method_free = 'Free Download'
-        data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': referer, 'method_free': method_free, 'down_direct': 1}
-            
-        print 'Hugefiles - Requesting POST URL: %s DATA: %s' % (url, data)
-        html = net.http_POST(url, data).content
-
-        dialog.update(50)
-
-        sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
-        r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
-        
-        if r:
-            sJavascript = r.group(1)
-            sUnpacked = jsunpack.unpack(sJavascript)
-            sPattern  = '''("video/divx"src="|addVariable\('file',')(.+?)video[.]'''
-            r = re.search(sPattern, sUnpacked)              
+        try:
+            url = self.get_url(host, media_id)
+            html = self.net.http_GET(url).content
+            r = re.findall('File Not Found',html)
             if r:
-                link = r.group(2) + fname
+                raise Exception ('File Not Found or removed')
+            dialog = xbmcgui.DialogProgress()
+            dialog.create('Resolving', 'Resolving Hugefiles Link...')       
+            dialog.update(0)
+    
+            data = {}
+            r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
+            for name, value in r:
+                data[name] = value
+                data.update({'method_free':'Free Download'})
+            html = net.http_POST(url, data).content
+    
+            dialog.update(50)
+    
+            sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
+            r = re.findall(sPattern, html, re.DOTALL|re.I)
+            if r:
+                sUnpacked = jsunpack.unpack(r[0])
+                sUnpacked = sUnpacked.replace("\\'","")
+                r = re.findall('file,(.+?)\)\;s1',sUnpacked)
+                if not r:
+                   r = re.findall('"src"value="(.+?)"/><embed',sUnpacked)
+                dialog.update(100)
                 dialog.close()
-                return link
-
-        if not link:
-            print '***** Hugefiles - Link Not Found'
-            raise Exception("Unable to resolve Hugefiles")
+                return r[0]
+            if not r:
+                return self.unresolvable()
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return False
+        except Exception, e:
+            common.addon.log_error('**** Hugefiles Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]HUGEFILES[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
         
     def get_url(self, host, media_id):
-        print 'Hugefiles: in get_url %s %s' % (host, media_id)
         return 'http://hugefiles.net/%s' % media_id 
         
 

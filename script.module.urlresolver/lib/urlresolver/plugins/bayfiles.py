@@ -17,14 +17,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
 from t0mm0.common.net import Net
-from t0mm0.common.addon import Addon
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import re,urllib2,os,json,time,sys
 from urlresolver import common
 from time import time as wait
-addon = Addon('script.module.urlresolver', sys.argv)
 
 class bayfilesResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -41,7 +39,7 @@ class bayfilesResolver(Plugin, UrlResolver, PluginSettings):
         found = re.search(r'var vfid = (\d+);\s*var delay = (\d+);', html)
         vfid, delay = found.groups()
         response = json.loads(self.net.http_POST('http://bayfiles.com/ajax_download',{"_": wait() * 1000,"action": "startTimer","vfid": vfid}).content)
-        addon.show_countdown(int(delay),'[B][COLOR orange]BAYFILES[/COLOR][/B]','')
+        common.addon.show_countdown(int(delay),'[B][COLOR orange]BAYFILES[/COLOR][/B]','')
         html = self.net.http_POST('http://bayfiles.com/ajax_download',{"token": response['token'],"action": "getLink","vfid": vfid}).content
         final_link = re.search(r"javascript:window.location.href = '([^']+)';", html)
         return final_link.group(1)

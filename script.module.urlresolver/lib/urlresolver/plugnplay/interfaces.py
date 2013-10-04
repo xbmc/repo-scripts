@@ -73,14 +73,43 @@ class UrlResolver(Interface):
     (int) The order in which plugins will be tried. Lower numbers are tried 
     first.
     '''    
-    
-    
+
+    class unresolvable():
+        '''
+        An object returned to indicate that the url could not be resolved
+        
+        This object always evaluates to False to maintain compatibility with
+        legacy implementations.
+        
+        Args:
+            code (int): Identifies the general reason a url could not be
+            resolved from the following list:
+                0: Unknown Error
+                1: The url was resolved, but the file has been permanantly
+                    removed
+                2: The file is temporarily unavailable for example due to
+                    planned site maintenance
+                3. There was an error contacting the site for example a
+                    connection attempt timed out
+
+            msg (str): A string (likely shown to the user) with more
+            detailed information about why the url could not be resolved
+        '''
+
+        def __init__(self, code=0, msg='Unknown Error'):
+            self.code = code
+            self.msg = msg
+
+        def __nonzero__(self):
+            return 0
+
+
     def get_media_url(self, web_url):
         '''
         The part of your plugin that does the actual resolving. You must 
         implement this method.
         
-        Ths method will be passed the URL ofa web page associated with a media
+        Ths method will be passed the URL of a web page associated with a media
         file. It will only get called if your plugin's :meth:`valid_url` method
         has returned ``True`` so it will definitely be a URL for the file host
         (or hosts) your plugin is capable of resolving (assuming you implemented

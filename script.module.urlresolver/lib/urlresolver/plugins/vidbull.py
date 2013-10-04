@@ -20,12 +20,12 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2, xbmcgui, time, xbmc
+import re, urllib2, os
 from urlresolver import common
-import os
+from lib import jsunpack
 
-
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 net = Net()
 
@@ -41,42 +41,55 @@ class VidbullResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_media_url(self, host, media_id):
-        print 'Vidbull: in get_media_url %s %s' % (host, media_id)
-        url = self.get_url(host, media_id)
-        html = self.net.http_GET(url).content
-        #Show dialog box so user knows something is happening
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Vidbull Link...')       
-        dialog.update(0)
+        try:
+            url = self.get_url(host, media_id)
+            html = self.net.http_GET(url).content
+            check = re.compile('File Not Found').findall(html)
+            if check:
+                raise Exception ('File Not Found or removed')
 
-        time.sleep(4)
+            data = {}
+            r = re.findall(r'type="hidden" name="((?!(?:.+premium)).+?)"\s* value="?(.+?)">', html)
+            for name, value in r:
+                data[name] = value
 
-        dialog.create('Resolving', 'Resolving Vidbull Link...') 
-        dialog.update(50)
+            common.addon.show_countdown(4, title='Muchshare', text='Loading Video...')
+            html = net.http_POST(url, data).content
 
-        op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
-        referer = ''
-        method_free = ''
-        down_direct = 1
-        
-        data = {'op': op, 'id': postid, 'rand': rand, 'referer': referer, 'method_free': method_free, 'down_direct': down_direct}
+            sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
+            sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
+            sPattern += '\s+?</script>'
+            r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+            if r:
+    		sJavascript = r.group(1)
+		sUnpacked = jsunpack.unpack(sJavascript)
+		sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)'
+		sPattern += '"custommode='
+		r = re.search(sPattern, sUnpacked)
+		if r:
+		    return r.group(1)
+		raise Exception ('File Not Found or removed')
 
-        print 'Vidbull - Requesting POST URL: %s DATA: %s' % (url, data)
-        html = net.http_POST(url, data).content
-
-        num = re.compile('event\|(.+?)\|aboutlink').findall(html)
-        pre = 'http://'+num[0]+'.vidbull.com:182/d/'
-        preb = re.compile('image\|(.+?)\|video\|(.+?)\|').findall(html)
-        for ext, link in preb:
+            else: 
+                num = re.compile('event\|(.+?)\|aboutlink').findall(html)
+                pre = 'http://'+num[0]+'.vidbull.com:182/d/'
+                preb = re.compile('image\|(.+?)\|video\|(.+?)\|').findall(html)
+                for ext, link in preb:
                     r = pre+link+'/video.'+ext
-                    dialog.update(100)
-                    dialog.close()
                     return r
+                
+                
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+            return False
+        except Exception, e:
+            common.addon.log('**** Vidbull Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]VIDBULL[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
     
     def get_url(self, host, media_id):
-        print 'vidbull: in get_url %s %s' % (host, media_id)
         return 'http://www.vidbull.com/%s' % media_id 
         
 

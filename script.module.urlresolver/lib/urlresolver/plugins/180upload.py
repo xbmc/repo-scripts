@@ -20,14 +20,19 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2
 from urlresolver import common
-import os
+import re, urllib2, os, xbmcgui, xbmc
+
+net = Net()
+
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+datapath = common.profile_path
 
 class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "180upload"
+    
 
 
     def __init__(self):
@@ -39,20 +44,84 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         print '180upload: in get_media_url %s %s' % (host, media_id)
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
+        try:
+            dialog = xbmcgui.DialogProgress()
+            dialog.create('Resolving', 'Resolving 180Upload Link...')
+            dialog.update(0)
+        
+            puzzle_img = os.path.join(datapath, "180_puzzle.png")
+        
+            print '180Upload - Requesting GET URL: %s' % web_url
+            html = net.http_GET(web_url).content
 
-        form_values = {}
-        for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
-            form_values[i.group(1)] = i.group(2)
-            
-        html = self.net.http_POST(web_url, form_data=form_values).content
-        match = re.search('<span style="background:#f9f9f9;border:1px dotted #bbb;padding:7px;">.+?<a href="(.+?)">', html,re.DOTALL)
-        if not match:
-            print 'could not find video'
+            dialog.update(50)
+                
+            data = {}
+            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
+
+            if r:
+                for name, value in r:
+                    data[name] = value
+            else:
+                raise Exception('Unable to resolve 180Upload Link')
+        
+            #Check for SolveMedia Captcha image
+            solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
+
+            if solvemedia:
+                dialog.close()
+                html = net.http_GET(solvemedia.group(1)).content
+                hugekey=re.search('id="adcopy_challenge" value="(.+?)">', html).group(1)
+                open(puzzle_img, 'wb').write(net.http_GET("http://api.solvemedia.com%s" % re.search('<img src="(.+?)"', html).group(1)).content)
+                img = xbmcgui.ControlImage(450,15,400,130, puzzle_img)
+                wdlg = xbmcgui.WindowDialog()
+                wdlg.addControl(img)
+                wdlg.show()
+        
+                xbmc.sleep(3000)
+
+                kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+                kb.doModal()
+                capcode = kb.getText()
+   
+                if (kb.isConfirmed()):
+                    userInput = kb.getText()
+                    if userInput != '':
+                        solution = kb.getText()
+                    elif userInput == '':
+                        Notify('big', 'No text entered', 'You must enter text in the image to access video', '')
+                        return False
+                else:
+                    return False
+               
+                wdlg.close()
+                dialog.create('Resolving', 'Resolving 180Upload Link...') 
+                dialog.update(50)
+                if solution:
+                    data.update({'adcopy_challenge': hugekey,'adcopy_response': solution})
+
+            print '180Upload - Requesting POST URL: %s' % web_url
+            html = net.http_POST(web_url, data).content
+            dialog.update(100)
+        
+            link = re.search('<a href="(.+?)" onclick="thanks\(\)">Download now!</a>', html)
+            if link:
+                print '180Upload Link Found: %s' % link.group(1)
+                return link.group(1)
+            else:
+                raise Exception('Unable to resolve 180Upload Link')
+
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
             return False
-        return match.group(1)
-    
+        except Exception, e:
+            common.addon.log_error('**** 180upload Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]180UPLOAD[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
 
+        
     def get_url(self, host, media_id):
         print '180upload: in get_url %s %s' % (host, media_id)
         return 'http://www.180upload.com/%s' % media_id 

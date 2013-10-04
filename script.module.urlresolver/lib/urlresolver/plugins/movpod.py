@@ -20,11 +20,11 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
+import urllib2, re, os
 from urlresolver import common
 
-# Custom imports
-import re
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 
 class MovpodResolver(Plugin, UrlResolver, PluginSettings):
@@ -54,18 +54,22 @@ class MovpodResolver(Plugin, UrlResolver, PluginSettings):
                 form_values[i.group(1)] = i.group(2)
                 
             html = self.net.http_POST(post_url, form_data=form_values).content
-
-        except urllib2.URLError, e:
-            common.addon.log_error('movpod: got http error %d fetching %s' %
-                                  (e.code, web_url))
-            return False
-
+            r = re.search('file: "http(.+?)"', html)
+            if r:
+                return "http" + r.group(1)
+            else:
+                raise Exception ('Unable to resolve Movpod Link')
         
-        r = re.search('file:"(.+?)"', html)
-        if r:
-            return r.group(1)+'.flv'
-
-        return False
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return self.unresolvable(code=3, msg=e)
+        except Exception, e:
+            common.addon.log_error('**** Movpod Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]MOVPOD[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
+        
 
     def get_url(self, host, media_id):
         #return 'http://(movpod|movpod).(in|com)/%s' % (media_id)

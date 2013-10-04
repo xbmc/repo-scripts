@@ -20,10 +20,8 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2, xbmcgui, time, xbmc
+import re, time
 from urlresolver import common
-import os
 
 net = Net()
 
@@ -39,68 +37,63 @@ class VidhogResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_media_url(self, host, media_id):
-        print 'Vidhog: in get_media_url %s %s' % (host, media_id)
-        url = self.get_url(host, media_id)
-        html = self.net.http_GET(url).content
-        #Show dialog box so user knows something is happening
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Vidhog Link...')       
-        dialog.update(0)
-
-        op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
-        usr_login = ''
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
-        method_free = 'Free Download'
-
-        data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': url, 'method_free': method_free}
-
-        print 'Vidhog - Requesting POST URL: %s DATA: %s' % (url, data)
-        html = net.http_POST(url, data).content
-
-        captchaimg = re.search('<img src="(http://www.vidhog.com/captchas/.+?)"', html).group(1)
-        img = xbmcgui.ControlImage(550,15,240,100,captchaimg)
-        wdlg = xbmcgui.WindowDialog()
-        wdlg.addControl(img)
-        wdlg.show()
-        time.sleep(3)
-        kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-        kb.doModal()
-        capcode = kb.getText()
-        if (kb.isConfirmed()):
-                userInput = kb.getText()
-                if userInput != '':
-                        capcode = kb.getText()
-                elif userInput == '':
-                        Notify('big', 'No text entered', 'You must enter text in the image to access video', '')
-        wdlg.close()
-
-        dialog.create('Resolving', 'Resolving Vidhog Link...') 
-        dialog.update(50)
-
-        op = 'download2'
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
-        method_free = 'Free Download'
-        down_direct = 1
-
-        time.sleep(10)
-        
-        data = {'op': op, 'id': postid, 'rand': rand, 'referer': url, 'method_free': method_free, 'down_direct': down_direct, 'code': capcode}
-
-        print 'Vidhog - Requesting POST URL: %s DATA: %s' % (url, data)
-        html = net.http_POST(url, data).content
-
-        match = re.search("product_download_url=(.+?)'", html)
-
-        if not match:
-            print 'could not find video'
-            return False
-        return match.group(1)
+        try:
+            url = self.get_url(host, media_id)
+            html = self.net.http_GET(url).content
+            check = re.compile('fname').findall(html)
+            if check:
+                data = {}
+                r = re.findall(r'type="(?:hidden|submit)?" name="(.+?)"\s* value="?(.+?)">', html)
+                for name, value in r:
+                    data[name] = value
+                html = net.http_POST(url, data).content
     
+            else:
+                data = {}
+                r = re.findall(r'type="(?:hidden|submit)?" name="(.+?)"\s* value="?(.+?)">', html)
+                for name, value in r:
+                    data[name] = value
+                    
+                captchaimg = re.search('<img src="(http://www.vidhog.com/captchas/.+?)"', html)
+                if captchaimg:
+                    img = xbmcgui.ControlImage(550,15,240,100,captchaimg.group(1))
+                    wdlg = xbmcgui.WindowDialog()
+                    wdlg.addControl(img)
+                    wdlg.show()
+                    time.sleep(3)
+                    kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+                    kb.doModal()
+                    capcode = kb.getText()
+                    if (kb.isConfirmed()):
+                        userInput = kb.getText()
+                        if userInput != '':
+                                capcode = kb.getText()
+                        elif userInput == '':
+                                raise Exception ('You must enter text in the image to access video')
+                    wdlg.close()
+                    common.addon.show_countdown(10, title='Vidhog', text='Loading Video...')
+                    
+                    data.update({'code':capcode})
+    
+                else:
+                    common.addon.show_countdown(20, title='Vidhog', text='Loading Video...')
+                    
+            html = net.http_POST(url, data).content
+            if re.findall('err', html):
+                raise Exception('Wrong Captcha')
+    
+            match = re.search("product_download_url=(.+?)'", html)
+    
+            if not match:
+                raise Exception('could not find video')
+            return match.group(1)
+        
+        except Exception, e:
+            common.addon.log('**** Muchshare Error occured: %s' % e)
+            common.addon.show_small_popup('Error', str(e), 5000, '')
+            return self.unresolvable(code=0, msg='Exception: %s' % e)
         
     def get_url(self, host, media_id):
-        print 'vidhog: in get_url %s %s' % (host, media_id)
         return 'http://www.vidhog.com/%s' % media_id 
         
 

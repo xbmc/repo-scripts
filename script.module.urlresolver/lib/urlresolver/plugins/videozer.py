@@ -20,10 +20,12 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
+import urllib2, os
 from urlresolver import common
 
 # Custom imports
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 import re
 from base64 import b64decode
 from binascii import unhexlify
@@ -53,65 +55,68 @@ class VideozerResolver(Plugin, UrlResolver, PluginSettings):
 
         try:
             html = self.net.http_GET(settings_url).content
+
+            #find highest quality URL
+            max_res = [240, 480, 99999][int(self.get_setting('q'))]
+            r = re.finditer('"l".*?:.*?"(.+?)".+?"u".*?:.*?"(.+?)"', html)
+            chosen_res = 0
+            stream_url = False
+        
+            if r:
+                for match in r:
+                    res, url = match.groups()
+                    if (res == 'LQ' ): res = 240
+                    elif (res == 'SD') : res = 480
+                    else : res = 720
+                    if res > chosen_res and res <= max_res:
+                        stream_url_part1 = url.decode('base-64')
+                        chosen_res = res
+            else:
+                raise Exception ('File Not Found or removed')
+
+            # Try to load the datas from html. This data should be json styled.
+            aData = loads(html)
+
+            # Decode the link from the json data settings.
+            spn_ik = unhexlify(self.__decrypt(aData["cfg"]["login"]["spen"], aData["cfg"]["login"]["salt"], 950569)).split(';')
+            spn = spn_ik[0].split('&')
+            ik = spn_ik[1]
+
+            for item in ik.split('&') :
+                temp = item.split('=')
+                if temp[0] == 'ik' :
+                    key = self.__getKey(temp[1])
+
+            sLink = ""
+            for item in spn :
+                item = item.split('=')
+                if(int(item[1])==1):
+                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["info"]["sece2"], aData["cfg"]["environment"]["rkts"], key) + '&' #decrypt32byte
+                elif(int(item[1]==2)):
+                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["ads"]["g_ads"]["url"],aData["cfg"]["environment"]["rkts"], key) + '&'
+                elif(int(item[1])==3):
+                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["ads"]["g_ads"]["type"],aData["cfg"]["environment"]["rkts"], key,26,25431,56989,93,32589,784152) + '&'
+                elif(int(item[1])==4):
+                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["ads"]["g_ads"]["time"],aData["cfg"]["environment"]["rkts"], key,82,84669,48779,32,65598,115498) + '&'
+                elif(int(item[1])==5):
+                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["login"]["euno"],aData["cfg"]["login"]["pepper"], key,10,12254,95369,39,21544,545555) + '&'
+                elif(int(item[1])==6):
+                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["login"]["sugar"],aData["cfg"]["ads"]["lightbox2"]["time"], key,22,66595,17447,52,66852,400595) + '&'
+        
+            sLink = sLink + "start=0"
+
+            sMediaLink = stream_url_part1 + '&' + sLink
+
+            return sMediaLink
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, settings_url))
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return False
-
-        #find highest quality URL
-        max_res = [240, 480, 99999][int(self.get_setting('q'))]
-        r = re.finditer('"l".*?:.*?"(.+?)".+?"u".*?:.*?"(.+?)"', html)
-        chosen_res = 0
-        stream_url = False
-        
-        if r:
-            for match in r:
-                res, url = match.groups()
-                if (res == 'LQ' ): res = 240
-                elif (res == 'SD') : res = 480
-                else : res = 720
-                if res > chosen_res and res <= max_res:
-                    stream_url_part1 = url.decode('base-64')
-                    chosen_res = res
-        else:
-            common.addon.log_error('videozer: stream url part1 not found')
-            return False
-
-        # Try to load the datas from html. This data should be json styled.
-        aData = loads(html)
-
-        # Decode the link from the json data settings.
-        spn_ik = unhexlify(self.__decrypt(aData["cfg"]["login"]["spen"], aData["cfg"]["login"]["salt"], 950569)).split(';')
-        spn = spn_ik[0].split('&')
-        ik = spn_ik[1]
-
-        for item in ik.split('&') :
-            temp = item.split('=')
-            if temp[0] == 'ik' :
-                key = self.__getKey(temp[1])
-
-        sLink = ""
-        for item in spn :
-            item = item.split('=')
-            if(int(item[1])==1):
-                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["info"]["sece2"], aData["cfg"]["environment"]["rkts"], key) + '&' #decrypt32byte
-            elif(int(item[1]==2)):
-                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["ads"]["g_ads"]["url"],aData["cfg"]["environment"]["rkts"], key) + '&'
-            elif(int(item[1])==3):
-                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["ads"]["g_ads"]["type"],aData["cfg"]["environment"]["rkts"], key,26,25431,56989,93,32589,784152) + '&'
-            elif(int(item[1])==4):
-                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["ads"]["g_ads"]["time"],aData["cfg"]["environment"]["rkts"], key,82,84669,48779,32,65598,115498) + '&'
-            elif(int(item[1])==5):
-                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["login"]["euno"],aData["cfg"]["login"]["pepper"], key,10,12254,95369,39,21544,545555) + '&'
-            elif(int(item[1])==6):
-                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["login"]["sugar"],aData["cfg"]["ads"]["lightbox2"]["time"], key,22,66595,17447,52,66852,400595) + '&'
-        
-        sLink = sLink + "start=0"
-
-        sMediaLink = stream_url_part1 + '&' + sLink
-
-        return sMediaLink
-
+        except Exception, e:
+            common.addon.log('**** Videozer Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]VIDEOZER[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False  
     def get_url(self, host, media_id):
             return 'http://www.videozer.com/video/%s' % (media_id)
 

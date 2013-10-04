@@ -20,12 +20,15 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
+import urllib2, os
 from urlresolver import common
 from lib import jsunpack
 import xbmcgui
 import re
 import time
+
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 
 class StreamcloudResolver(Plugin, UrlResolver, PluginSettings):
@@ -47,26 +50,29 @@ class StreamcloudResolver(Plugin, UrlResolver, PluginSettings):
             dialog = xbmcgui.Dialog()
                 
             if re.search('>(File Not Found)<',html):
-                dialog.ok( 'UrlResolver', 'File was deleted', '', '')
-                return False #1
+                raise Exception ('File Not Found or removed')
                 
             form_values = {}
             for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
                 form_values[i.group(1)] = i.group(2)
             #wait required
-            time.sleep(10)
+            common.addon.show_countdown(11)
             html = self.net.http_POST(post_url, form_data=form_values).content
 
+            r = re.search('file: "(.+?)",', html)
+            if r:
+                return r.group(1)
+            else:
+                raise Exception ('File Not Found or removed')
         except urllib2.URLError, e:
-            common.addon.log_error('streamcloud: got http error %d fetching %s' %
-                                  (e.code, web_url))
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return False
-
-        r = re.search('file: "(.+?)",', html)
-        if r:
-            return r.group(1)
-
-        return False
+        except Exception, e:
+            common.addon.log('**** Streamcloud Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]STREAMCLOUD[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
 
     def get_url(self, host, media_id):
             return 'http://streamcloud.eu/%s' % (media_id)
@@ -82,5 +88,4 @@ class StreamcloudResolver(Plugin, UrlResolver, PluginSettings):
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.)?streamcloud.eu/[0-9A-Za-z]+', url) or 'streamcloud' in host
-
 

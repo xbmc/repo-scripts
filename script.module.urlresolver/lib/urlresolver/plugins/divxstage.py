@@ -20,9 +20,12 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2
+import re, urllib2, os
 from urlresolver import common
+
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+
 
 class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -38,39 +41,32 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id)
         try:
             html = self.net.http_GET(web_url).content
-        except urllib2.URLError, e:
-            common.addon.log_error('Divxstage: got http error %d fetching %s' %
-                                   (e.code, web_url))
-            return False
-
-        r = re.search('<param name="src" value="(.+?)"', html)
-        if r:
-            stream_url = r.group(1)
-        else:
-            message ='Divxstage: 1st attempt at finding the stream_url failed'
-            common.addon.log_debug(message)
-            r = re.search('flashvars.filekey="(.+)"', html)
+            r = re.search('<param name="src" value="(.+?)"', html)
             if r:
-                file_key = r.group(1)
-                player_url = 'http://'+host+'/api/player.api.php?user=undefined&key='+file_key+'&pass=undefined&codes=1&file='+media_id
-                try:
-                    html = self.net.http_GET(player_url).content
-                except urllib2.URLError, e:
-                    common.addon.log_error('Divxstage: got http error %d fetching %s' %
-                                        (e.code, web_url))
-                    return False
-                r = re.search('url=(.+?)&', html)
-                if r:
-                    stream_url = r.group(1)
-                else:
-                    message ='Divxstage: attempt at finding the stream_url failed'
-                    common.addon.log_debug(message)
-                    return False
+                stream_url = r.group(1)
             else:
-                message ='Divxstage: attempt at finding the filekey failed'
-                common.addon.log_debug(message)
-                return False
-        return stream_url
+                r = re.search('flashvars.filekey="(.+)"', html)
+                if r:
+                    file_key = r.group(1)
+                    player_url = 'http://'+host+'/api/player.api.php?user=undefined&key='+file_key+'&pass=undefined&codes=1&file='+media_id
+                    html = self.net.http_GET(player_url).content
+                    r = re.search('url=(.+?)&', html)
+                    if r:
+                        stream_url = r.group(1)
+                    else:
+                        raise Exception ('File Not Found or removed')
+                else:
+                    raise Exception ('File Not Found or removed')
+            return stream_url
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return False
+        except Exception, e:
+            common.addon.log_error('**** Divxstage Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]DIVXSTAGE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return False
 
 
     def get_url(self, host, media_id):
@@ -93,4 +89,4 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         #http://embed.divxstage.eu/embed.php?v=8da26363e05fd&width=746&height=388&c=000
-        return re.match('http://(?:www.|embed.)?divxstage.(?:eu|net)/' or 'divxstage' in host,url)
+        return (re.match('http://(?:www.|embed.)?divxstage.(?:eu|net)/', url) or 'divxstage' in host)

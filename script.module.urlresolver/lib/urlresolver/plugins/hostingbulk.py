@@ -16,30 +16,49 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re
+import os
+import xbmc
 from t0mm0.common.net import Net
-import urllib2
-from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
+import re
+import urllib2, urllib
+from urlresolver import common
+
+logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class hostingbulkResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
+    name = "hostingbulk"
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
+        self.net = Net()
 
     def get_media_url(self, host, media_id):
-        html = net.http_GET("http://www.hostingbulk.com/" + media_id + ".html").content
-        m = re.match('addParam|(?P<port>)|(?P<ip4>)|(?P<ip3>)|(?P<ip2>)|(?P<ip1>).+?video|(?P<file>)|',html)
-	if (len(m) > 0 ):
-            videoLink = 'http://'+m.group("ip1")+'.'+m.group("ip2")+'.'+m.group("ip3")+'.'+m.group("ip4")+':'+m.group("port")+'/d/'+m.group("file")+'/video.flv?start=0'
-            return videoLink
+        try:
+            web_url = self.get_url(host, media_id)
+            link = self.net.http_GET(web_url).content
 
-        print 'could not obtain video url'
-        return False
+            if link.find('File Not Found') >= 0:
+                err_title = 'Content not available.'
+                err_message = 'The requested video was not found.'
+                common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
+                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+__name__+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
+                return self.unresolvable(1, err_message)
+
+            videoUrl = re.compile("\'file\'\s?:\s?\'([\w\/\.\:\-\=\?]+)\'").findall(link)
+
+            if len(videoUrl) > 0:
+                return videoUrl[0]
+            else:
+                return self.unresolvable(0, 'No playable video found.')
+        except urllib2.URLError, e:
+            return self.unresolvable(3, str(e))
+        except Exception, e:
+            return self.unresolvable(0, str(e))
 
 
     def get_url(self, host, media_id):
@@ -49,28 +68,32 @@ class hostingbulkResolver(Plugin, UrlResolver, PluginSettings):
     def get_host_and_id(self, url):
         r = None
         video_id = None
-        
+
+        r = re.search('(http://(?:www.|)(?:.+?)/)([0-9A-Za-z]+)', url)
+        if r:
+            return r.groups()
+        else:
+            r = None
+
         if re.search('embed-', url):
             r = re.compile('embed-(.+?).html').findall(url)
         elif re.search('watch/', url):
             r = re.compile('.com/(.+?).html').findall(url)
-            
+
         if r is not None and len(r) > 0:
             video_id = r[0]
-            
+
         if video_id:
             return ('hostingbulk.com', video_id)
         else:
             common.addon.log_error('hostingbulk: video id not found')
             return False
 
+
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match('http://(.+)?hostingbulk.com/[0-9]+', url) or 'hostingbulk' in host
-        # return False
+        return re.match('http://(.+)?hostingbulk.com/[0-9A_Za-z]+', url) or 'hostingbulk' in host
 
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
-        xml += '<setting label="This plugin calls the hostingbulk addon - '
-        xml += 'change settings there." type="lsep" />\n'
         return xml

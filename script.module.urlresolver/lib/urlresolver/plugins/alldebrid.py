@@ -1,6 +1,6 @@
 """
     urlresolver XBMC Addon
-    Copyright (C) 2011 t0mm0
+    Copyright (C) 2011 t0mm0, JUL1EN094
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,10 +26,13 @@ from urlresolver.plugnplay.interfaces import SiteAuth
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
+import simplejson as json
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
 import cookielib
 from t0mm0.common.net import Net
 
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, SiteAuth, PluginSettings]
@@ -53,38 +56,55 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     def get_media_url(self, host, media_id):
         print 'in get_media_url %s : %s' % (host, media_id)
         dialog = xbmcgui.Dialog()
-
         try:
             url = 'http://www.alldebrid.com/service.php?link=%s' % media_id
-
             source = self.net.http_GET(url).content
+            source = source.decode('utf-8')
         except Exception, e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
             dialog.ok(' all-Debrid ', ' all-Debrid server timed out ', '', '')
-            return False
-        print '************* %s' % source
+            return self.unresolvable(3,'alldebrid : error contacting the site')
+        print '************* %s' % source.encode('utf-8')
 
         if re.search('login', source):
             dialog.ok(' All Debrid Message ', ' Your account may have Expired, please check by going to the website ', '', '')
-            return False
+            return self.unresolvable(0,'alldebrid : Your account may have expired')
         if re.search('Hoster unsupported or under maintenance', source):
             dialog.ok(' All Debrid Message ', ' Sorry this hoster is not supported, change the priority level in resolver settings for this host ', '', '')
-            return False
-        link =re.compile("href='(.+?)'").findall(source)
-
-        if len(link) == 0:
-            return False
-
-        print 'link is %s' % link[0]
-        self.media_url = link[0]
-
-        return link[0]
+            return self.unresolvable(2,'alldebrid : pb for supporting this hoster')
+        #Go
+        finallink = ''
+        #try json return
+        try:
+            link      = json.loads(source)
+            streaming = link['streaming']
+            line      = [] 
+            for item in streaming :
+                line.append(item.encode('utf-8'))
+            result = xbmcgui.Dialog().select('Choose the link', line)
+            if result != -1 :
+                finallink = streaming[str(line[result])].encode('utf-8')                  
+        #classic method
+        except :
+            link =re.compile("href='(.+?)'").findall(source)
+            if len(link) != 0:
+                finallink = link[0].encode('utf-8')               
+        #end
+        print 'finallink is %s' % finallink
+        if finallink != '' :
+            self.media_url = finallink
+            return finallink
+        #false/errors
+        elif 'Invalid link' in source :
+            common.addon.show_small_popup(title='[B][COLOR white]ALLDEBRID[/COLOR][/B]', msg='[COLOR red]INVALID LINK[/COLOR]', delay=15000, image=error_logo)
+            return self.unresolvable(1,'Invalid link')
+        else :
+            return self.unresolvable(0,'No generated_link')
 
     def get_url(self, host, media_id):
         return media_id
-
 
     def get_host_and_id(self, url):
         return 'www.alldebrid.com', url
@@ -108,6 +128,8 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
                 domain = 'megashares.com'
             elif 'megashare' in domain:
                 domain = 'megashare.com'
+            elif 'mixture' in domain :
+                domain = 'mixturevideo.com'
             print 'domain is %s ' % domain
         if (domain in self.get_all_hosters()) or (len(host) > 0 and host in self.get_all_hosters()):
             return True
@@ -162,5 +184,4 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     #to indicate if this is a universal resolver
     def isUniversal(self):
-
         return True

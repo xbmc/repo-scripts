@@ -22,9 +22,13 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import urllib2
 from urlresolver import common
+import os
 
 # Custom imports
 import re
+
+
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 
 class FlashxResolver(Plugin, UrlResolver, PluginSettings):
@@ -36,41 +40,69 @@ class FlashxResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
         #e.g. http://flashx.tv/player/embed_player.php?vid=1503&width=600&height=370&autoplay=no
-        self.pattern = 'http://((?:www.|play.)?flashx.tv)/(?:player/embed_player.php\?vid=|player/embed.php\?vid=|video/)([0-9A-Z]+)'
+        self.pattern = 'http://((?:www.|play.)?flashx.tv)/(?:player/embed_player.php\?vid=|player/embed.php\?vid=|video/)([0-9a-zA-Z/-]+)'
 
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         try:
             html = self.net.http_GET(web_url).content
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return False
-        #grab stream url
-        sPatternHQ = "var hq_video_file\s*=\s*'([^']+)'"        # .mp4
-        #sPatternLQ = "var normal_video_file\s*=\s*'([^']+)'"    # .flv old
-        sPatternLQ = "\?hash=([^'|&]+)"
-        r = re.search(sPatternLQ, html)
-        if r:
-            print r.group(1)
-            media_id = r.group(1)
-            #return r.group(1)
-        try:
-            html = self.net.http_GET("http://play.flashx.tv/nuevo/player/cst.php?hash="+media_id).content
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return False
-        pattern = "<file>(.*?)</file>"
-        r = re.search(pattern, html)
-        if r:
+            if re.search('>Video not found',html):
+                msg = 'File Not Found or removed'
+                common.addon.show_small_popup(title='[B][COLOR white]FLASHX[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' 
+                % msg, delay=5000, image=error_logo)
+                return self.unresolvable(code = 1, msg = msg)
+            if re.search('conversion queue <',html):
+                msg = 'File is still being converted'
+                common.addon.show_small_popup(title='[B][COLOR white]FLASHX[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' 
+                % msg, delay=5000, image=error_logo)
+                return self.unresolvable(code = 2, msg = msg)
+             
+            #get embedded player
+            pattern = '(http://play\.flashx\.tv/player/embed\.php\?vid=[^&]+)'
+            r = re.search(pattern, html)
+            if not r:
+                raise Exception ('Unable to resolve Flashx link. Embedded link not found.')
+            web_url = r.group(1)
+            html = self.net.http_GET(web_url).content
+            form_values = {}
+            #get post var
+            for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
+                form_values[i.group(1)] = i.group(2)
+            if not r:
+                raise Exception ('Unable to resolve Flashx link. Post var not found.')
+            web_url = 'http://play.flashx.tv/player/show.php'
+            html = self.net.http_POST(web_url, form_data=form_values).content
+            #get config url
+            pattern = 'data="([^"]+)"'
+            r = re.search(pattern, html)
+            if not r:
+                raise Exception ('Unable to resolve Flashx link. Config url not found.')
+            web_url = r.group(1)                   
+            html = self.net.http_GET(web_url).content
+            #get player url
+            web_url = web_url.split('config=')[-1]
+            html = self.net.http_GET(web_url).content
+            #get file link
+            pattern = '<file>([^<]+)</file>'
+            r = re.search(pattern, html)
+            if not r:
+                raise Exception ('Unable to resolve Flashx link. Filelink not found.')
             return r.group(1)
-
-        return False
+            
+        except urllib2.URLError, e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                    (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+            return self.unresolvable(code=3, msg='Exception: %s' % e) 
+        except Exception, e:
+            common.addon.log('**** Flashx Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]FLASHX[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' 
+            % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg='Exception: %s' % e) 
 
     def get_url(self, host, media_id):
-            return 'http://www.flashx.tv/player/embed_player.php?vid=%s' % (media_id)
+            return 'http://flashx.tv/video/%s' % (media_id)
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
