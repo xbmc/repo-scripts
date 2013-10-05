@@ -77,7 +77,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -158,7 +158,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -239,7 +239,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -320,7 +320,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -401,7 +401,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -482,7 +482,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -563,7 +563,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -644,7 +644,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -725,7 +725,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -806,7 +806,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -887,7 +887,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -968,7 +968,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1049,7 +1049,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1130,7 +1130,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1211,7 +1211,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1292,7 +1292,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1373,7 +1373,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1454,7 +1454,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1535,7 +1535,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1616,7 +1616,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1696,7 +1696,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1777,7 +1777,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1858,7 +1858,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -1939,7 +1939,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -2020,7 +2020,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -2101,7 +2101,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -2182,7 +2182,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -2263,7 +2263,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -2344,7 +2344,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
@@ -2425,7 +2425,7 @@
 					<height>45</height>
 					<visible>true</visible>
 					<colordiffuse>FFFFFFFF</colordiffuse>
-					<label>$LOCALIZE[SCRIPT10]</label>
+					<label>$ADDON[script.xbmc.audio.mixer 30010]</label>
 					<font>font12</font>
 					<textcolor>FFFFFFFF</textcolor>
 					<texturefocus>alsa-MenuItemFO.png</texturefocus>
