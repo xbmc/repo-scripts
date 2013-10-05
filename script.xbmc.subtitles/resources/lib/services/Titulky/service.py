@@ -55,23 +55,21 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 		img_file = open(os.path.join(tmp_sub_dir,'image.png'),'w')
 		img_file.write(img)
 		img_file.close()
-		dialog = xbmcgui.Dialog()
-		dialog.ok(__scriptname__,_( 757 ),_( 758 ))
-		log(__name__,'Notifying user for 10s')
-		xbmc.executebuiltin("XBMC.Notification(%s,%s,10000,%s)" % (__scriptname__,'',os.path.join(tmp_sub_dir,'image.png')))
-		kb = xbmc.Keyboard('',_( 759 ),False)
-		kb.doModal()
-		if kb.isConfirmed():
-			code = kb.getText()
-			content = client.get_subtitle_page2(content,code,subtitle_id)
+
+		solver = CaptchaInputWindow(captcha = os.path.join(tmp_sub_dir,'image.png'))
+		solution = solver.get()
+		if solution:
+			log(__name__,'Solution provided: %s' %solution)
+			content = client.get_subtitle_page2(content,solution,subtitle_id)
 			control_img2 = client.get_control_image(content)
 			if not control_img2 == None:
 				log(__name__,'Invalid control text')
 				return True,subtitles_list[pos]['language_name'], ""
 		else:
-			# user was not interested 
+			log(__name__,'Dialog was canceled')
 			log(__name__,'Control text not confirmed, returning in error')
 			return True,subtitles_list[pos]['language_name'], ""
+
 	wait_time = client.get_waittime(content)
 	cannot_download = client.get_cannot_download_error(content)
 	if not None == cannot_download:
@@ -95,7 +93,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	zip_file = open(zip_subs,'wb')
 	zip_file.write(data)
 	zip_file.close()
-	return True,subtitles_list[pos]['language_name'], "" #standard output
+	return True,subtitles_list[pos]['language_name'], "zip" #standard output
 
 def lang_titulky2xbmclang(lang):
 	if lang == 'CZ': return 'Czech'
@@ -118,6 +116,24 @@ def get2DigitStr(number):
 def lang2_opensubtitles(lang):
 	lang = lang_titulky2xbmclang(lang)
 	return languageTranslate(lang,0,2)
+
+
+class CaptchaInputWindow(xbmcgui.WindowDialog):
+   def __init__(self, *args, **kwargs):
+      self.cptloc = kwargs.get('captcha')
+      self.img = xbmcgui.ControlImage(435,50,524,90,self.cptloc)
+      self.addControl(self.img)
+      self.kbd = xbmc.Keyboard('',_( 759 ),False)
+
+   def get(self):
+      self.show()
+      self.kbd.doModal()
+      if (self.kbd.isConfirmed()):
+         text = self.kbd.getText()
+         self.close()
+         return text
+      self.close()
+      return False
 
 class TitulkyClient(object):
 
@@ -223,15 +239,11 @@ class TitulkyClient(object):
 			return int(matches.group(1))
 
 	def get_link(self,content):
-		for matches in re.finditer('<a?[= \w\"]+href="([^\"]+)\"', content, re.IGNORECASE | re.DOTALL):
-			return str(matches.group(1))
-
-	def _get_session_id(self,content):
-		for matches in re.finditer('secode.php\?PHPSESSID=([\w\d]+)', content, re.IGNORECASE | re.DOTALL):
+		for matches in re.finditer('<a.+id=\"downlink\" href="([^\"]+)\"', content, re.IGNORECASE | re.DOTALL):
 			return str(matches.group(1))
 
 	def get_control_image(self,content):
-		for matches in re.finditer('(secode.php\?[\w\d=]+)', content, re.IGNORECASE | re.DOTALL):
+		for matches in re.finditer('\.\/(captcha\/captcha\.php)', content, re.IGNORECASE | re.DOTALL):
 			return '/'+str(matches.group(1))
 		return None
 
@@ -246,8 +258,7 @@ class TitulkyClient(object):
 		return content
 
 	def get_subtitle_page2(self,content,code,id):
-		session_id = self._get_session_id(content)
-		url = self.server_url+'/idown.php?'+urllib.urlencode({'PHPSESSID':session_id})
+		url = self.server_url+'/idown.php'
 		post_data = {'downkod':code,'titulky':id,'zip':'z','securedown':'2','histstamp':''}
 		req = urllib2.Request(url,urllib.urlencode(post_data))
 		log(__name__,'Opening %s POST:%s' % (url,str(post_data)))

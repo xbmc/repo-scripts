@@ -2,12 +2,12 @@
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt
-# Rev. 2.1.0
+# Rev. 2.1.1
 
 from operator import itemgetter
 from threading import Thread
 from BeautifulSoup import *
-from utilities import log, languageTranslate
+from utilities import log, languageTranslate, getShowId
 import cookielib
 import math
 import os
@@ -37,31 +37,16 @@ __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __addon__ = sys.modules[ "__main__" ].__addon__
 
 def XBMC_OriginalTitle(OriginalTitle):
-    json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Player.GetItem", "params": { "playerid": 1} ,"id":1}' )
-    json_player_getitem = simplejson.loads(unicode(json_query, 'utf-8', errors='ignore'))
-#        self.Log("JSON_RPC: %s" % (json_player_getitem))
-    if json_player_getitem.has_key('result') and json_player_getitem['result'].has_key('item') and json_player_getitem['result']['item'].has_key('id') and json_player_getitem['result']['item'].has_key('type'):
-        if json_player_getitem['result']['item']['type'] == "movie":
-            json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"VideoLibrary.GetMovieDetails", "params": { "movieid": %s, "properties": ["originaltitle"]} ,"id":1}' % (json_player_getitem['result']['item']['id']) )
-            json_getmoviedetails = simplejson.loads(unicode(json_query, 'utf-8', errors='ignore'))
-#                self.Log("JSON_RPC: %s" % (json_getmoviedetails))
-            if json_getmoviedetails.has_key('result') and json_getmoviedetails['result'].has_key('moviedetails') and json_getmoviedetails['result']['moviedetails'].has_key('originaltitle'):
-                OriginalTitle = json_getmoviedetails['result']['moviedetails']['originaltitle']
-        elif json_player_getitem['result']['item']['type'] == "episode":
-            json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"VideoLibrary.GetEpisodeDetails", "params": { "episodeid": %s, "properties": ["originaltitle", "tvshowid"]} ,"id":1}' % (json_player_getitem['result']['item']['id']) )
-            json_getepisodedetails = simplejson.loads(unicode(json_query, 'utf-8', errors='ignore'))
-#                self.Log("JSON_RPC: %s" % (json_getepisodedetails))
-            if json_getepisodedetails.has_key('result') and json_getepisodedetails['result'].has_key('episodedetails') and json_getepisodedetails['result']['episodedetails'].has_key('tvshowid'):
-                json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"VideoLibrary.GetTVShowDetails", "params": { "tvshowid": %s, "properties": ["originaltitle", "imdbnumber"]} ,"id":1}' % (json_getepisodedetails['result']['episodedetails']['tvshowid']) )
-                json_gettvshowdetails = simplejson.loads(unicode(json_query, 'utf-8', errors='ignore'))
-#                    self.Log("JSON_RPC: %s" % (json_gettvshowdetails))
-                if json_gettvshowdetails.has_key('result') and json_gettvshowdetails['result'].has_key('tvshowdetails') and json_gettvshowdetails['result']['tvshowdetails'].has_key('imdbnumber'):
-                    thetvdb = json_gettvshowdetails['result']['tvshowdetails']['imdbnumber']
-                    HTTPResponse = urllib2.urlopen("http://www.thetvdb.com//data/series/"+str(thetvdb)+"/").read()
-                    if re.findall("<SeriesName>(.*?)</SeriesName>", HTTPResponse, re.IGNORECASE | re.DOTALL):
-                        OriginalTitle = re.findall("<SeriesName>(.*?)</SeriesName>", HTTPResponse, re.IGNORECASE | re.DOTALL)[0]
-    OriginalTitle = OriginalTitle.encode('ascii', 'replace')
-    return OriginalTitle
+    MovieName =  xbmc.getInfoLabel("VideoPlayer.OriginalTitle")
+    if MovieName:
+        OriginalTitle = MovieName
+    else:
+        ShowID = getShowId()
+        if ShowID:
+            HTTPResponse = urllib2.urlopen("http://www.thetvdb.com//data/series/%s/" % str(ShowID)).read()
+            if re.findall("<SeriesName>(.*?)</SeriesName>", HTTPResponse, re.IGNORECASE | re.DOTALL):
+                OriginalTitle = re.findall("<SeriesName>(.*?)</SeriesName>", HTTPResponse, re.IGNORECASE | re.DOTALL)[0]
+    return OriginalTitle.encode('ascii', 'replace')
 
 class LTVThread(Thread):
     def __init__ (self, obj, count, main_id, page):
@@ -84,6 +69,12 @@ class LegendasTV:
     def Log(self, message):
 #        print "####  %s" % message.encode("utf-8")
         log(__name__, message)
+        
+    def _urlopen(self, request):
+        try:
+            return urllib2.urlopen(request).read()
+        except urllib2.HTTPError:
+            return ""
 
     def login(self, username, password):
         if self.cookie:
@@ -122,7 +113,7 @@ class LegendasTV:
     
     def _UNICODE(self,text):
         if text:
-            return unicode(BeautifulSoup(text, smartQuotesTo=None))
+            return unicode(BeautifulSoup(text, fromEncoding="utf-8",  smartQuotesTo=None))
         else:
             return text
         
@@ -149,7 +140,6 @@ class LegendasTV:
                 Ratio = "%.2f" % float(0)
         return Ratio
                 
-
     def _log_List_dict(self, obj, keys="", maxsize=100):
         Content = ""
         if not len(obj):
@@ -181,17 +171,18 @@ class LegendasTV:
 
     def findID(self, Movie, TVShow, Year, Season, SearchTitle, SearchString):
         allResults, discardedResults, filteredResults, LTVSeason, LTVYear = [], [], [], 0, 0
-        Response = urllib2.urlopen("http://minister.legendas.tv/util/busca_titulo/" + urllib.quote_plus(SearchString)).read()
+        Response = self._urlopen("http://minister.legendas.tv/util/busca_titulo/" + urllib.quote_plus(SearchString))
         Response =  simplejson.loads(unicode(Response, 'utf-8', errors='ignore'))
         # Load the results
         # Parse and filter the results
         self.Log("Message: Searching for movie/tvshow list with term(s): [%s]" % SearchString)
         for R in Response:
+            LTVSeason = 0
             if R.has_key('Filme') and R['Filme'].has_key('dsc_nome'):
-                LTVTitle = R['Filme']['dsc_nome']
+                LTVTitle = self.CleanLTVTitle(R['Filme']['dsc_nome'])
                 TitleBR = R['Filme']['dsc_nome_br']
-                if re.findall(".*? - (\d{1,2}).*", TitleBR):
-                    LTVSeason = re.findall(".*? - (\d{1,2}).*", TitleBR)[0]
+                if re.findall(".*? - (\d{1,2}).*?emporada", TitleBR):
+                    LTVSeason = re.findall(".*? - (\d{1,2}).*?emporada", TitleBR)[0]
                 ContentID = R['Filme']['id_filme']
                 # Calculate the probability ratio and append the result
                 Ratio = self.CalculateRatio(LTVTitle, SearchTitle)
@@ -205,7 +196,7 @@ class LegendasTV:
             allResults = sorted(allResults, key=lambda k: k["ratio"], reverse=True)
             for Result in allResults:
                 if TVShow:
-                    if int(Season) == int(Result["season"]):
+                    if int(Season) == int(Result["season"]) or (not Result["season"] and Result["ratio"] == "1.00"):
                         if len(filteredResults):
                             if Result["ratio"] == filteredResults[0]["ratio"]:
                                 filteredResults.append(Result)
@@ -240,7 +231,7 @@ class LegendasTV:
         # Log the page download attempt.
         self.Log("Message: Retrieving page [%s] for Movie[%s], Id[%s]." % (Page, MainID["title"], MainID["id"]))
         
-        Response = urllib2.urlopen("http://minister.legendas.tv/util/carrega_legendas_busca/page:%s/id_filme:%s" % (Page, MainID["id"])).read()
+        Response = self._urlopen("http://minister.legendas.tv/util/carrega_legendas_busca/page:%s/id_filme:%s" % (Page, MainID["id"]))
 
         if not re.findall(regex_1, Response, re.IGNORECASE | re.DOTALL):
             self.Log("Error: Failed retrieving page [%s] for Movie[%s], Id[%s]." % (Page, MainID["title"], MainID["id"]))
@@ -252,11 +243,11 @@ class LegendasTV:
                 release = self._UNICODE(content[1])
                 rating =  content[2]
                 lang = self._UNICODE(content[3])
-                if lang == u"Português-BR": LanguageId = "pb" 
-                elif lang == u"Português-PT": LanguageId = "pt" 
-                elif lang == u"Inglês": LanguageId = "en" 
-                elif lang == u"Espanhol": LanguageId = "es"
-                elif lang == u"Francês": LanguageId = "fr"
+                if re.search("Portugu.s-BR", lang):   LanguageId = "pb" 
+                elif re.search("Portugu.s-PT", lang): LanguageId = "pt"
+                elif re.search("Ingl.s", lang):       LanguageId = "en" 
+                elif re.search("Espanhol", lang):     LanguageId = "es"
+                elif re.search("Franc.s", lang):      LanguageId = "fr"
                 else: continue
                 for Preference, LangName in self.Languages:
                     if LangName == languageTranslate(LanguageId, 2, 0):
@@ -303,16 +294,18 @@ class LegendasTV:
         if Movie: SearchTitle = Movie
         else: SearchTitle = TVShow
         discardedResults, filteredResults = "", ""
-        # Searching for movie titles/tvshow ids using the lengthiest words
-        if len(SearchTitle.split(" ")):
-            for SearchString in sorted(SearchTitle.split(" "), key=len, reverse=True):
-                if SearchString in [ 'The', 'O', 'A', 'Os', 'As', 'El', 'La', 'Los', 'Las', 'Les', 'Le' ] or len(SearchString) < 2:
-                    continue
-                discardedResults, filteredResults = self.findID(Movie, TVShow, Year, Season, SearchTitle, SearchString)
-                if filteredResults: 
-                    break
-        else:
-            discardedResults, filteredResults = self.findID(Movie, TVShow, Year, Season, SearchTitle, SearchTitle)
+        discardedResults, filteredResults = self.findID(Movie, TVShow, Year, Season, SearchTitle, SearchTitle)
+        if not filteredResults:
+            # Searching for movie titles/tvshow ids using the lengthiest words
+            if len(SearchTitle.split(" ")):
+                for SearchString in sorted(SearchTitle.split(" "), key=len, reverse=True):
+                    if SearchString in [ 'The', 'O', 'A', 'Os', 'As', 'El', 'La', 'Los', 'Las', 'Les', 'Le' ] or len(SearchString) < 2:
+                        continue
+                    discardedResults, filteredResults = self.findID(Movie, TVShow, Year, Season, SearchTitle, SearchString)
+                    if filteredResults: 
+                        break
+            else:
+                discardedResults, filteredResults = self.findID(Movie, TVShow, Year, Season, SearchTitle, SearchTitle)
         if not filteredResults and len(discardedResults):
             filteredResults = []
             for Result in discardedResults[0:4]:
@@ -326,7 +319,7 @@ class LegendasTV:
         for MainID in filteredResults[0:4]:
             # Find how much pages are to download
             self.Log("Message: Retrieving results to id[%s]" % (MainID["id"]))
-            Response = urllib2.urlopen("http://minister.legendas.tv/util/carrega_legendas_busca/page:%s/id_filme:%s" % ("1", MainID["id"])).read()
+            Response = self._urlopen("http://minister.legendas.tv/util/carrega_legendas_busca/page:%s/id_filme:%s" % ("1", MainID["id"]))
             regResponse = re.findall(regex_2, Response)
             TotalPages = len(regResponse) +1
             # Form and execute threaded downloads

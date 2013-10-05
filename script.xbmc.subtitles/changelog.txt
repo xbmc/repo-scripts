@@ -1,3 +1,10 @@
+3.9.15
+- update regex for Tv Shows (Season 01 Episode 02)
+- add support for Malay language
+- update $LOCALIZE to $ADDON[]
+- Some bugfixes and XBMC_OriginalTitle function cleanup,gfjardim
+- titulky.com fix and new captcha handling, Andrew Beam
+
 3.9.14
 - [fix] Legendas.TV new layout, gfjardim
 - [fix] Some movie filenames were treated as tvshows causing lookup to fail, arnova

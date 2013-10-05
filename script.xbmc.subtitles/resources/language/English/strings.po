@@ -576,3 +576,7 @@ msgstr ""
 msgctxt "#30247"
 msgid "Farsi"
 msgstr ""
+
+msgctxt "#30248"
+msgid "Malay"
+msgstr ""
