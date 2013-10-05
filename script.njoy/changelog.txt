@@ -1,3 +1,6 @@
+0.2.1
+- fixup localize strings
+
 0.2.0
 - increase zapping speed to 500 miliseconds
 

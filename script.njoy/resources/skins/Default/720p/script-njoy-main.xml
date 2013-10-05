@@ -44,7 +44,7 @@
   			<ondown>115</ondown>
   			<onleft>120</onleft>
   			<onright>120</onright>
-  			<label>$LOCALIZE[SCRIPT667]</label>
+  			<label>$ADDON[script.njoy 667]</label>
   			<font>font13</font>
   			<align>center</align>
   			<aligny>center</aligny>
@@ -60,7 +60,7 @@
   			<ondown>650</ondown>
   			<onleft>120</onleft>
   			<onright>120</onright>
-  			<label>$LOCALIZE[SCRIPT668]</label>
+  			<label>$ADDON[script.njoy 668]</label>
   			<font>font13</font>
   			<align>center</align>
   			<aligny>center</aligny>
@@ -159,7 +159,7 @@
   				<height>32</height>
   				<align>left</align>
   				<aligny>center</aligny>
-  				<label>$LOCALIZE[SCRIPT666]</label>
+  				<label>$ADDON[script.njoy 666]</label>
   				<font>font12</font>
   			</control>
   		</control>
@@ -190,7 +190,7 @@
 			<height>25</height>
 			<align>right</align>
 			<font>font13</font>
-			<label>$LOCALIZE[SCRIPT669]</label>
+			<label>$ADDON[script.njoy 669]</label>
 			<textcolor>FFD7DF21</textcolor>
 		</control>
 		<control type="label" id="205">
@@ -209,7 +209,7 @@
 			<height>25</height>
 			<align>left</align>
 			<font>font13</font>
-			<label>$LOCALIZE[SCRIPT670]</label>
+			<label>$ADDON[script.njoy 670]</label>
 			<textcolor>FFD7DF21</textcolor>
 		</control>
 		<control type="label" id="206">
