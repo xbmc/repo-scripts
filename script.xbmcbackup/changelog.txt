@@ -1,3 +1,11 @@
+Version 0.4.1
+
+added encode() around notifications
+
+Version 0.4.0
+
+fixed settings display error - thanks zer04c
+
 Version 0.3.9
 
 added "just once" scheduler for one-off type backups

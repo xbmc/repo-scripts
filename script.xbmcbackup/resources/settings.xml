@@ -24,9 +24,9 @@
 	<category id="scheduling" label="30013">
 		<setting id="enable_scheduler" type="bool" label="30060" default="false" />
 		<setting id="schedule_interval" type="enum" label="30061" lvalues="30079|30072|30073|30074|30075" default="1" enable="eq(-1,true)"/>
-		<setting id="schedule_time" type="labelenum" label="30062" values="00:00|01:00|02:00|03:00|04:00|05:00|06:00|07:00|08:00|09:00|10:00|11:00|12:00|13:00|14:00|15:00|16:00|17:00|18:00|19:00|20:00|21:00|22:00|23:00" default="00:00" visible="!eq(-1,3)"  enable="eq(-2,true)"/>
-		<setting id="day_of_week" type="enum" label="30063" lvalues="30065|30066|30067|30068|30069|30070|30071" default="0" visible="eq(-2,1)"  enable="eq(-3,true)"/>
-		<setting id="cron_schedule" type="text" label="30064" default="0 0 * * *" visible="eq(-3,3)"  enable="eq(-4,true)"/>
+		<setting id="schedule_time" type="labelenum" label="30062" values="00:00|01:00|02:00|03:00|04:00|05:00|06:00|07:00|08:00|09:00|10:00|11:00|12:00|13:00|14:00|15:00|16:00|17:00|18:00|19:00|20:00|21:00|22:00|23:00" default="00:00" visible="!eq(-1,4)"  enable="eq(-2,true)"/>
+		<setting id="day_of_week" type="enum" label="30063" lvalues="30065|30066|30067|30068|30069|30070|30071" default="0" visible="eq(-2,2)"  enable="eq(-3,true)"/>
+		<setting id="cron_schedule" type="text" label="30064" default="0 0 * * *" visible="eq(-3,4)"  enable="eq(-4,true)"/>
 		<setting id="cron_shutdown" type="bool" label="30076" default="false" enable="eq(-5,true)" />
 	</category>
 </settings>
