@@ -87,3 +87,7 @@ msgstr "Habilitar verificação de versão do XBMC?"
 msgctxt "#32022"
 msgid "Please enter your password"
 msgstr "Por favor entre sua senha"
+
+msgctxt "#32023"
+msgid "Linux: Upgrade complete system"
+msgstr "Linux: Atualizar o sistema completamente"

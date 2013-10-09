@@ -27,15 +27,15 @@ from lib.common import log
 __addonpath__    = lib.common.__addonpath__
 
 if sys.version_info < (2, 7):
-    import simplejson
+    import simplejson as jsoninterface
 else:
-    import json as simplejson
+    import json as jsoninterface
 
 def get_installedversion():
     # retrieve current installed version
     json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["version", "name"]}, "id": 1 }')
     json_query = unicode(json_query, 'utf-8', errors='ignore')
-    json_query = simplejson.loads(json_query)
+    json_query = jsoninterface.loads(json_query)
     version_installed = []
     if json_query.has_key('result') and json_query['result'].has_key('version'):
         version_installed  = json_query['result']['version']
@@ -53,5 +53,5 @@ def get_versionfilelist():
     data = file.read()
     file.close()
     version_query = unicode(data, 'utf-8', errors='ignore')
-    version_query = simplejson.loads(version_query)
+    version_query = jsoninterface.loads(version_query)
     return version_query

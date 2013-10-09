@@ -1,3 +1,11 @@
+v0.1.11
+- Updated language files from Transifex
+- Fix problems with python2.7.5
+- Update with 13.0 Gotham_alpha8
+
+v0.1.11
+- Update with 13.0 Gotham_alpha7
+
 v0.1.9
 - Update with 13.0 Gotham_alpha6
 - Updated language files from Transifex

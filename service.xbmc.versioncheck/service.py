@@ -53,7 +53,7 @@ class Main:
                 
 def _versioncheck():
     # initial vars
-    from lib.json import get_installedversion, get_versionfilelist
+    from lib.jsoninterface import get_installedversion, get_versionfilelist
     from lib.versions import compare_version
     # retrieve versionlists from supplied version file
     versionlist = get_versionfilelist()
