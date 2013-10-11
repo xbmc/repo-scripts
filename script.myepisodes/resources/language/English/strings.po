@@ -1,0 +1,74 @@
+# XBMC Media Center language file
+# Addon Name: MyEpisodes
+# Addon id: script.myepisodes
+# Addon version: 1.0.2
+# Addon Provider: Maxime Hadjinlian
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-06-09 17:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "MyEpisodes"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Automatically set watched episodes on MyEpisodes.com"
+msgstr ""
+
+msgctxt "#30901"
+msgid "General Settings"
+msgstr ""
+
+msgctxt "#30902"
+msgid "Username"
+msgstr ""
+
+msgctxt "#30903"
+msgid "Password"
+msgstr ""
+
+msgctxt "#30904"
+msgid "Mark as watched from"
+msgstr ""
+
+#empty strings from id 30905 to 30910
+
+msgctxt "#30911"
+msgid "connected"
+msgstr ""
+
+msgctxt "#30912"
+msgid "Authentification failed"
+msgstr ""
+
+#empty strings from id 30913 to 30922
+
+msgctxt "#30923"
+msgid "not found."
+msgstr ""
+
+msgctxt "#30924"
+msgid "marked as watched."
+msgstr ""
+
+msgctxt "#30925"
+msgid "added."
+msgstr ""
+
+msgctxt "#30926"
+msgid "can not be added."
+msgstr ""
+
+msgctxt "#30927"
+msgid "unable to retrieve your show lists."
+msgstr ""

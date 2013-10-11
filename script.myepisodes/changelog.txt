@@ -1,0 +1,14 @@
+1.0.5
++ Fix various bugs
++ Reload the plugin when the settings are modified
+1.0.4
++ Fix impossibility to login
+1.0.3
++ Update to new language system
+1.0.2
++ Add Spanish (Thanks to stravieso)
+1.0.1
++ Add Italian and Portuguese (Brazil) language, thanks
+to Julia Vidile <julia.vidile@gmail.com>
+1.0.0
+* initial Frodo commit
