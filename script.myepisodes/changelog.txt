@@ -1,3 +1,7 @@
+1.0.6
++ Fix International issue. The plugin will now work when XBMC is set to
+other lanuages than English.
++ Fix memory issue when exiting plugin.
 1.0.5
 + Fix various bugs
 + Reload the plugin when the settings are modified

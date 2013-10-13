@@ -18,7 +18,7 @@ __resource__      = xbmc.translatePath(__resource_path__).decode('utf-8')
 
 from resources.lib.myepisodes import MyEpisodes
 
-class MyMonitor(xbmc.Monitor):
+class Monitor(xbmc.Monitor):
     def __init__( self, *args, **kwargs ):
         xbmc.Monitor.__init__( self )
         self.action = kwargs['action']
@@ -41,7 +41,7 @@ class Player(xbmc.Player):
         self._min_percent = int(__addon__.getSetting('watched-percent'))
         self._tracker = None
         self._playbackLock = threading.Event()
-        self.Monitor = MyMonitor(action = self._reset)
+        self._monitor = Monitor(action = self._reset)
 
     def _reset(self):
         self._tearDown()
@@ -66,6 +66,7 @@ class Player(xbmc.Player):
     def _tearDown(self):
         if self._playbackLock:
             self._playbackLock.clear()
+        self._monitor = None
         if self._tracker is None:
             return
         if self._tracker.isAlive():
@@ -148,10 +149,11 @@ class Player(xbmc.Player):
 
 def notif(msg, time=5000):
     notif_msg = "%s, %s, %i, %s" % ('MyEpisodes', msg, time, __icon__)
-    xbmc.executebuiltin("XBMC.Notification(%s)" % notif_msg)
+    xbmc.executebuiltin("XBMC.Notification(%s)" % notif_msg.encode('utf-8'))
 
 def log(msg):
-    xbmc.log("### [%s] - %s" % (__scriptname__, msg, ), level=xbmc.LOGDEBUG)
+    xbmc.log("### [%s] - %s" % (__scriptname__, msg.encode('utf-8'), ),
+            level=xbmc.LOGDEBUG)
 
 if ( __name__ == "__main__" ):
     player = Player()
