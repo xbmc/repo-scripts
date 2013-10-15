@@ -503,7 +503,7 @@ class LcdBase():
     return (mode == LCD_MODE.LCD_MODE_MUSIC or mode == LCD_MODE.LCD_MODE_PVRRADIO) and settings_getDimOnMusicPlayback()
 
   def DoDimOnVideo(self, mode):
-    return (mode == LCD_MODE.LCD_MODE_VIDEO or LCD_MODE.LCD_MODE_TVSHOW or mode == LCD_MODE.LCD_MODE_PVRTV) and settings_getDimOnVideoPlayback()
+    return (mode == LCD_MODE.LCD_MODE_VIDEO or mode == LCD_MODE.LCD_MODE_TVSHOW or mode == LCD_MODE.LCD_MODE_PVRTV) and settings_getDimOnVideoPlayback()
 
   def DoDimOnScreensaver(self, mode):
     return (mode == LCD_MODE.LCD_MODE_SCREENSAVER) and settings_getDimOnScreensaver()
