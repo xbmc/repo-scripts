@@ -1,3 +1,6 @@
+2.0.3
+- bump for Frodo
+
 2.0.2
 - fix encoding issues when writing to log
 
