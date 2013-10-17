@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <category label="30000">
-        <setting id="filter_show" type="bool" label="30001" default="false"/>
-        <setting label="30002" type="action" enable="eq(-1,true)" option="close" action="RunScript($CWD/ignore_dialog.py, 'name')"/>
-        <setting id="filter_genre" type="bool" label="30003" default="false"/>
-        <setting label="30004" type="action" enable="eq(-1,true)" option="close" action="RunScript($CWD/ignore_dialog.py, 'genre')"/>
-        <setting id="filter_length" type="bool" label="30005" default="false"/>
-        <setting label="30006" type="action" enable="eq(-1,true)" option="close" action="RunScript($CWD/ignore_dialog.py, 'length')"/>
-        <setting id="filter_rating" type="bool" label="30007" default="false"/>
-        <setting label="30008" type="action" enable="eq(-1,true)" option="close" action="RunScript($CWD/ignore_dialog.py, 'rating')"/>
-    </category>        
-    <category label="30009">
-        <setting label="30010" type="slider" id="length" subsetting="true" default="5" range="1,1,20" option="int" />
+    <category label="32000">
+        <setting id="filter_show" type="bool" label="32001" default="false"/>
+        <setting label="32002" type="action" enable="eq(-1,true)" option="close" action="RunScript($CWD/ignore_dialog.py, 'name')"/>
         <setting type="sep"/>
-        <setting id="multipleshows" type="bool" label="30011" default="false"/>
-        <setting id="premieres" type="bool" label="30012" default="false"/>
-        <setting id="expartials" type="bool" label="30013" default="true"/>
-        <setting id="partial" type="bool" label="30014" default="false"/>
-        <setting id="streams" type="bool" label="30015" default="false"/>
+        <setting id="filter_genre" type="bool" label="32003" default="false"/>
+        <setting label="32004" type="action" enable="eq(-1,true)" option="close" action="RunScript($CWD/ignore_dialog.py, 'genre')"/>
+        <setting type="sep"/>
+        <setting id="filter_length" type="bool" label="32005" default="false"/>
+        <setting label="32006" type="action" enable="eq(-1,true)" option="close" action="RunScript($CWD/ignore_dialog.py, 'length')"/>
+        <setting type="sep"/>
+        <setting id="filter_rating" type="bool" label="32007" default="false"/>
+        <setting label="32008" type="action" enable="eq(-1,true)" option="close" action="RunScript($CWD/ignore_dialog.py, 'rating')"/>
+    </category>        
+    <category label="32009">
+        <setting label="32010" type="slider" id="length" subsetting="true" default="5" range="1,1,20" option="int" />
+        <setting type="sep"/>
+        <setting id="multipleshows" type="bool" label="32011" default="false"/>
+        <setting id="premieres" type="bool" label="32012" default="false"/>
+        <setting id="expartials" type="bool" label="32013" default="true"/>
+        <setting id="partial" type="bool" label="32014" default="false"/>
+        <setting id="streams" type="bool" label="32015" default="false"/>
         <setting id="first_run" type="bool" default="true" visible="false"/>
     </category>
-    <category label="30070">
-        <setting type="lsep" label="30071"/>
-        <setting id="primary_function" type="enum" label="" lvalues="30072|30073|30088"/>
-        <setting id="sort_list_by" type="enum" label="30079" enable="eq(-1,1)" lvalues="30080|30081"/>
-        <setting type="lsep" label="30074"/>
-        <setting id="populate_by" type="enum" label="" lvalues="30075|30076|30077"/>
-        <setting label="30078" type="action" enable="eq(-1,1)" action="RunScript($CWD/set_pl.py)"/>
+    <category label="32070">
+        <setting type="lsep" label="32071"/>
+        <setting id="primary_function" type="enum" label="" lvalues="32072|32073|32088"/>
+        <setting id="sort_list_by" type="enum" label="32079" enable="gt(-1,0)" lvalues="32080|32081"/>
+        <setting type="lsep" label="32074"/>
+        <setting id="populate_by" type="enum" label="" lvalues="32075|32076|32077"/>
+        <setting label="32078" type="action" enable="eq(-1,1)" action="RunScript($CWD/set_pl.py)"/>
         <setting type="sep"/>
-        <setting label="30083" type="action" action="RunScript($CWD/backfill.py)"/>
+        <setting label="32083" type="action" action="RunScript($CWD/backfill.py)"/>
+        <setting type="sep"/>
+        <setting id="debug" type="bool" default="false" label="32210"/>
+        <setting id="debug_type" type="enum" lvalues="32209|32208" enable="eq(-1,true)"/>
     </category>
 </settings>

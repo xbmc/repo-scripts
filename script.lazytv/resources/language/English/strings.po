@@ -1,265 +1,317 @@
 # XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC-Addons\n"
+"Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
-"POT-Creation-Date: 2013-08-24 12:58+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #settings
 #filter
 
-msgctxt "#30000"
+msgctxt "#32000"
 msgid "Filter Settings"
 msgstr ""
 
-msgctxt "#30001"
+msgctxt "#32001"
 msgid "Filter by Show"
 msgstr ""
 
-msgctxt "#30002"
+msgctxt "#32002"
 msgid "Shows to exclude"
 msgstr ""
 
-msgctxt "#30003"
+msgctxt "#32003"
 msgid "Filter by Genre"
 msgstr ""
 
-msgctxt "#30004"
+msgctxt "#32004"
 msgid "Genres to exclude"
 msgstr ""
 
-msgctxt "#30005"
+msgctxt "#32005"
 msgid "Filter by Show Length"
 msgstr ""
 
-msgctxt "#30006"
+msgctxt "#32006"
 msgid "Show lengths to exclude"
 msgstr ""
 
-msgctxt "#30007"
+msgctxt "#32007"
 msgid "Filter by Rating"
 msgstr ""
 
-msgctxt "#30008"
+msgctxt "#32008"
 msgid "Ratings to exclude"
 msgstr ""
 
 #heading
 
-msgctxt "#30009"
+msgctxt "#32009"
 msgid "Playlist Settings"
 msgstr ""
 
-msgctxt "#30010"
+msgctxt "#32010"
 msgid "Number of shows in playlist"
 msgstr ""
 
-msgctxt "#30011"
+msgctxt "#32011"
 msgid "Allow multiple episodes of same TV Show"
 msgstr ""
 
-msgctxt "#30012"
+msgctxt "#32012"
 msgid "Include episodes from unwatched TV series"
 msgstr ""
 
-msgctxt "#30013"
+msgctxt "#32013"
 msgid "Exclude partially watched episodes (they start from the beginning)"
 msgstr ""
 
-msgctxt "#30014"
+msgctxt "#32014"
 msgid "Begin playlist with latest partially-watched TV Show (will resume)"
 msgstr ""
 
-msgctxt "#30015"
+msgctxt "#32015"
 msgid "Include streams (warning: very buggy)"
 msgstr ""
 
+#empty strings from id 32016 to 32069
 #Primary Function
-#empty strings from id 30016 to 30069
 
-msgctxt "#30070"
+msgctxt "#32070"
 msgid "Function Settings"
 msgstr ""
 
-msgctxt "#30071"
+msgctxt "#32071"
 msgid "Select Primary Function of Addon"
 msgstr ""
 
-msgctxt "#30072"
+msgctxt "#32072"
 msgid "Create and launch randomised playlist"
 msgstr ""
 
-msgctxt "#30073"
+msgctxt "#32073"
 msgid "Produce a list of 'next episodes' for each TV series"
 msgstr ""
 
-msgctxt "#30088"
-msgid "Let me choose on launch"
-msgstr ""
-
-msgctxt "#30074"
+msgctxt "#32074"
 msgid "Populate based on ..."
 msgstr ""
 
-msgctxt "#30075"
+msgctxt "#32075"
 msgid "Filter and Playlist Settings"
 msgstr ""
 
-msgctxt "#30076"
+msgctxt "#32076"
 msgid "Specific default playlist"
 msgstr ""
 
-msgctxt "#30077"
+msgctxt "#32077"
 msgid "Let me choose the Smart Playlist on Launch"
 msgstr ""
 
-msgctxt "#30078"
+msgctxt "#32078"
 msgid "Choose Smart Playlist"
 msgstr ""
 
-msgctxt "#30079"
+msgctxt "#32079"
 msgid "Sort list by ..."
 msgstr ""
 
-msgctxt "#30080"
+msgctxt "#32080"
 msgid "Title"
 msgstr ""
 
-msgctxt "#30081"
+msgctxt "#32081"
 msgid "Last Played"
 msgstr ""
 
-msgctxt "#30082"
+msgctxt "#32082"
 msgid "Number of episodes to add to playlist"
 msgstr ""
 
-msgctxt "#30083"
+msgctxt "#32083"
 msgid "Backfill watched status script"
 msgstr ""
 
 #backfill
 
-msgctxt "#30084"
+msgctxt "#32084"
 msgid "Backfill watched status"
 msgstr ""
 
-msgctxt "#30085"
+msgctxt "#32085"
 msgid "All Shows"
 msgstr ""
 
-msgctxt "#30086"
+msgctxt "#32086"
 msgid "Single Show"
 msgstr ""
 
-msgctxt "#30087"
+msgctxt "#32087"
 msgid "Choose Show"
 msgstr ""
 
-#dialog
-#empty strings from id 30089 to 30100
+msgctxt "#32088"
+msgid "Let me choose on launch"
+msgstr ""
 
-msgctxt "#30101"
+#empty strings from id 32089 to 32100
+#dialog
+
+msgctxt "#32101"
 msgid "TV Shows"
 msgstr ""
 
-msgctxt "#30102"
+msgctxt "#32102"
 msgid "Show Genres"
 msgstr ""
 
-msgctxt "#30103"
+msgctxt "#32103"
 msgid "Episode Length (seconds)"
 msgstr ""
 
-msgctxt "#30104"
+msgctxt "#32104"
 msgid "Rating"
 msgstr ""
 
-msgctxt "#30105"
-msgid "Save and Close"
+msgctxt "#32105"
+msgid "Save"
 msgstr ""
 
-msgctxt "#30106"
+msgctxt "#32106"
 msgid "Close"
 msgstr ""
 
-msgctxt "#30107"
+msgctxt "#32107"
 msgid "Exclude All"
 msgstr ""
 
-msgctxt "#30108"
-msgid "Include All"
+msgctxt "#32108"
+msgid "Clear"
 msgstr ""
 
-msgctxt "#30109"
+msgctxt "#32109"
 msgid "Excluded"
 msgstr ""
 
-msgctxt "#30110"
+msgctxt "#32110"
 msgid "Choose %s to Exclude"
 msgstr ""
 
-msgctxt "#30111"
+msgctxt "#32111"
 msgid "Unrated"
 msgstr ""
 
+#empty strings from id 32112 to 32149
 #playlist
-#empty strings from id 30112 to 30149
 
-msgctxt "#30150"
+msgctxt "#32150"
 msgid "No shows available for the playlist."
 msgstr ""
 
-msgctxt "#30151"
+msgctxt "#32151"
 msgid "Initializing..."
 msgstr ""
 
-msgctxt "#30152"
+msgctxt "#32152"
 msgid "Populating lists"
 msgstr ""
 
-msgctxt "#30153"
+msgctxt "#32153"
 msgid "Populating lists - returned"
 msgstr ""
 
-msgctxt "#30154"
+msgctxt "#32154"
 msgid "Creating playlist"
 msgstr ""
 
-msgctxt "#30155"
+msgctxt "#32155"
 msgid "Creating episode list"
 msgstr ""
 
-msgctxt "#30156"
+msgctxt "#32156"
 msgid "Oh dear, an error has occurred with LazyTV."
-msgstr "
+msgstr ""
 
-msgctxt "#30157"
+msgctxt "#32157"
 msgid "Install Buggalo 1.1.5 or higher to report the details of the error to the author."
-msgstr "
-
+msgstr ""
 
 #Choice at launch
 
-msgctxt "#30158"
+msgctxt "#32158"
 msgid "This addon finds the next episode in each TV show."
-msgstr "
+msgstr ""
 
-msgctxt "#30159"
+msgctxt "#32159"
 msgid "Do you want a list or a randomised playlist?"
-msgstr "
+msgstr ""
 
-msgctxt "#30160"
+msgctxt "#32160"
 msgid "Show me"
-msgstr "
+msgstr ""
 
-msgctxt "#30161"
+msgctxt "#32161"
 msgid "Surprise me"
-msgstr "
+msgstr ""
+
+#empty strings from id 32162 to 32199
+#Errors
+
+msgctxt "#32200"
+msgid "Error: JSON failed to complete"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Error: no TV Shows found in library"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Error: criteria eliminated all TV Shows"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Error: no Episodes found in library"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Error: criteria eliminated all TV Shows"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Error: no files found in playlist"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Error: no TV Shows found in playlist"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Error: show failed to play."
+msgstr ""
+<<<<<<< HEAD
+=======
+
+msgctxt "#32208"
+msgid "One-time Debug (resets to false after each run)"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Constant Debug (Use with care: adds a ton of data to the log file)"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Debug - add library data to the xbmc.log file"
+msgstr ""
+>>>>>>> origin/master-working
