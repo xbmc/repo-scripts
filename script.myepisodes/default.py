@@ -105,13 +105,28 @@ class Player(xbmc.Player):
 
     def onPlayBackStarted(self):
         self._setUp()
-        self.title = self.getPlayingFile().decode('utf-8')
-        self.title = os.path.basename(self.title)
-        log('Player - Title : %s' % self.title)
         self._totalTime = self.getTotalTime()
         self._tracker.start()
 
-        self.title, self.season, self.episode = self.mye.get_info(self.title)
+        # Try to find the title with the help of XBMC (Theses came from
+        # XBMC.Subtitles add-ons)
+        self.season = str(xbmc.getInfoLabel("VideoPlayer.Season"))
+        log('Player - Season: %s' % self.season)
+        if self.season != "":
+            self.season = int(self.season)
+        self.episode = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
+        log('Player - Episode: %s' % self.episode)
+        if self.episode != "":
+            self.episode = int(self.episode)
+        self.title = xbmc.getInfoLabel("VideoPlayer.TVshowtitle")
+        log('Player - TVShow: %s' % self.title)
+        if self.title == "":
+            filename = self.getPlayingFile().decode('utf-8')
+            filename = os.path.basename(filename)
+            log('Player - Filename: %s' % filename)
+            self.title, self.season, self.episode = self.mye.get_info(filename)
+            log('Player - TVShow: %s' % self.title)
+
         log("Title: %s - Season: %02d - Ep: %02d" % (self.title, self.season, self.episode))
         if (self.season is None) and (self.episode is None):
             # It's not a show. If it should be recognised as one. Send a bug.
@@ -123,7 +138,7 @@ class Player(xbmc.Player):
             notif("%s %s" % (self.title, __language__(30923)), time=3000)
             self._tearDown()
             return
-            log('Player - Found : %s - %d (S%02d E%02d)' % (self.title,
+        log('Player - Found : %s - %d (S%02d E%02d)' % (self.title,
                 self.showid, self.season, self.episode))
         self._addShow()
 

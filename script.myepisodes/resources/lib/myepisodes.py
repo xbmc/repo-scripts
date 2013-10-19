@@ -94,11 +94,24 @@ class MyEpisodes(object):
         for link in soup.findAll("a", href=True):
             if link.string is None:
                 continue
-            link_str = link.string.lower()
-            if link_str == show_name:
+            if link.string.lower().startswith(show_name):
                 show_href = link.get('href')
                 break
 
+        if show_href is None:
+            # Try to lookup the list of all the shows to find the exact title
+            list_url = "%s/%s?list=%s" % (MYEPISODE_URL, "shows.php",
+                    show_name[0].upper())
+            data = self.send_req(list_url)
+            soup = BeautifulSoup(data)
+            show_href = None
+            for link in soup.findAll("a", href=True):
+                if link.string is None:
+                    continue
+                if link.string.lower() == show_name:
+                    show_href = link.get('href')
+
+        # Really did not find anything :'(
         if show_href is None:
             return None
 

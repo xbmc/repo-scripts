@@ -1,3 +1,8 @@
+1.0.7
++ Improve the way to find a TVShow title, thanks to trogdorsmith and
+greek on the MyEpisodes forum for reporting the issue and testing "beta"
+version.
++ Add a fallback to find a TVShow ID on MyEpisodes
 1.0.6
 + Fix International issue. The plugin will now work when XBMC is set to
 other lanuages than English.
