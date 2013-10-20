@@ -87,3 +87,7 @@ msgstr "XBMC versie controle aanzetten?"
 msgctxt "#32022"
 msgid "Please enter your password"
 msgstr "Vul uw wachtwoord in"
+
+msgctxt "#32023"
+msgid "Linux: Upgrade complete system"
+msgstr "Linux: Upgrade compleet systeem"

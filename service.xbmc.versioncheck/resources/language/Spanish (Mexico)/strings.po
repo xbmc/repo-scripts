@@ -16,6 +16,42 @@ msgstr ""
 "Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32001"
+msgid "We would like to recommend you to upgrade."
+msgstr "Nos gustaria recomendarle actualizar."
+
+msgctxt "#32002"
+msgid "Visit XBMC.org for more information."
+msgstr "Visita XBMC.org para mas informacion."
+
+msgctxt "#32003"
+msgid "You are still using an older stable version of XBMC."
+msgstr "Usted todavia esta utilizando una version vieja estable de XBMC."
+
+msgctxt "#32004"
+msgid "You are still using an older RC version of XBMC."
+msgstr "Usted todavia esta utilizando una version vieja RC de XBMC."
+
+msgctxt "#32005"
+msgid "You are still using an older beta version of XBMC."
+msgstr "Usted todavia esta utilizando una version vieja beta de XBMC."
+
+msgctxt "#32006"
+msgid "You are still using an older alpha version of XBMC."
+msgstr "Usted todavia esta utilizando una version vieja alpha de XBMC."
+
+msgctxt "#32007"
+msgid "You are still using an older monthly version of XBMC."
+msgstr "Usted todavia esta utilizando una vieja version mensual de XBMC."
+
+msgctxt "#32008"
+msgid "You are still using an older non stable version of XBMC."
+msgstr "Usted todavia esta utilizando una version vieja inestable de XBMC."
+
+msgctxt "#32009"
+msgid "Would you like to remove this reminder?"
+msgstr "Usted quiere remover este recordatorio?"
+
 msgctxt "#32020"
 msgid "General"
 msgstr "General"
