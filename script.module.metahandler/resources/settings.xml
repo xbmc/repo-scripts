@@ -9,4 +9,11 @@
 		<setting id="db_pass"	 type="text" 	label="    Password" 	enable="eq(-4,true)" default="" option="hidden"/>
 		<setting id="db_name"	 type="text" 	label="    Database" 	enable="eq(-5,true)" default="video_cache" />
 </category>
+<category label="TMDB (Movies)">
+    <setting id="tmdb_language" label="Language" type="labelenum" default="English (en)" values="English (en)|Český (cs)|Dansk (da)|Deutsch (de)|ελληνικά (el)|Español (es)|Français (fr)|Magyar (hu)|Italiano (it)|Nederlands (nl)|Polski (pl)|Português (pt)|Pусский (ru)|Slovenščina (sk)|Svenska (sv)|Türkçe (tr)"/>
+    <setting id="tmdb_poster_size" label="Poster Size" type="labelenum" default="w342" values="w92|w154|w185|w342|w500|original"/>
+    <setting id="tmdb_backdrop_size" label="Backdrop Size" type="labelenum" default="original" values="w300|w780|w1280|original"/>
+    <setting type="sep" />
+    <setting id="year_lock" label="Year Lock" type="bool" default="false"/>
+</category>
 </settings>

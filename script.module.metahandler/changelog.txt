@@ -1,3 +1,8 @@
+[B]Version 2.1.0[/B]
+- Updated TMDB scraper to use v3 api
+- Added multithreaded support
+- Added language setting
+
 [B]Version 2.0.3[/B]
 - Rewrite of get_episode logic - now supports air date
 - Added search/refresh on tv shows - returns list of possible matches

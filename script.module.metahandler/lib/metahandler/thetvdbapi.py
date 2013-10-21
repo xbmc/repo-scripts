@@ -21,7 +21,8 @@ import datetime
 import re
 import copy
 
-import elementtree.ElementTree as ET
+import xml.etree.ElementTree as ET 
+#import elementtree.ElementTree as ET
 #from elementtree.ElementTree import ElementTree as ET
 from cStringIO import StringIO
 
@@ -193,7 +194,6 @@ class TheTVDB(object):
         print url
         data = urllib.urlopen(url)
         show_list = []
-        print url
         if data:
             try:
                 tree = ET.parse(data)
@@ -209,7 +209,6 @@ class TheTVDB(object):
         url = "%s/series/%s/" % (self.base_key_url, show_id)
         data = StringIO(urllib.urlopen(url).read())
         temp_data = data.getvalue()
-        print 'data returned from TheTVDB ' + temp_data
         show = None
         if temp_data.startswith('<?xml') == False:
             return show
@@ -231,7 +230,6 @@ class TheTVDB(object):
         url = "%s/GetSeriesByRemoteID.php?imdbid=%s" % (self.base_url, imdb_id)
         data = StringIO(urllib.urlopen(url).read())
         temp_data = data.getvalue()
-        print 'data returned from TheTVDB ' + temp_data
         tvdb_id = ''
         if temp_data.startswith('<?xml') == False:
             return tvdb_id
@@ -275,7 +273,6 @@ class TheTVDB(object):
         
         #code to check if data has been returned
         temp_data = data.getvalue()
-        print 'data returned from TheTVDB ' + temp_data
         if temp_data.startswith('<?xml') == False:
             print 'No data returned ', temp_data
             return episode

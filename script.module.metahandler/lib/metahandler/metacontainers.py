@@ -52,8 +52,7 @@ except:
 
 class MetaContainer:
 
-    def __init__(self, path='special://profile/addon_data/script.module.metahandler'):
-        #!!!! This must be matched to the path in meteahandler.py MetaData __init__
+    def __init__(self):
 
         #Check if a path has been set in the addon settings
         settings_path = common.addon.get_setting('meta_folder_location')
@@ -61,7 +60,7 @@ class MetaContainer:
         if settings_path:
             self.path = xbmc.translatePath(settings_path)
         else:
-            self.path = xbmc.translatePath(path)
+            self.path = xbmc.translatePath('special://profile/addon_data/script.module.metahandler')
 
         self.work_path = os.path.join(self.path, 'work')
         self.cache_path = os.path.join(self.path,  'meta_cache')
@@ -98,7 +97,10 @@ class MetaContainer:
 
     def make_dir(self, mypath):
         ''' Creates sub-directories if they are not found. '''
-        if not xbmcvfs.exists(mypath): xbmcvfs.mkdirs(mypath)   
+        try:
+            if not xbmcvfs.exists(mypath): xbmcvfs.mkdirs(mypath)
+        except:
+            if not os.path.exists(mypath): os.makedirs(mypath)  
 
 
     def _del_metadir(self, path=''):
