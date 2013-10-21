@@ -90,7 +90,7 @@ class MetaData:
     '''  
 
      
-    def __init__(self, path='special://profile/addon_data/script.module.metahandler/', preparezip=False):
+    def __init__(self, preparezip=False):
 
         #Check if a path has been set in the addon settings
         settings_path = common.addon.get_setting('meta_folder_location')
@@ -98,7 +98,7 @@ class MetaData:
         if settings_path:
             self.path = xbmc.translatePath(settings_path)
         else:
-            self.path = xbmc.translatePath(path)
+            self.path = xbmc.translatePath('special://profile/addon_data/script.module.metahandler')
         
         self.cache_path = make_dir(self.path, 'meta_cache')
 
@@ -905,7 +905,11 @@ class MetaData:
             meta = self._cache_lookup_by_id(media_type, tmdb_id=tmdb_id)
         else:
             meta = self._cache_lookup_by_name(media_type, name, year)
-        
+            
+        #if no old meta found, the year is probably not in the database
+        if not imdb_id and not tmdb_id:
+            year = ''
+            
         if meta:
             overlay = meta['overlay']
             self._cache_delete_video_meta(media_type, imdb_id, tmdb_id, name, year)
@@ -1013,52 +1017,9 @@ class MetaData:
         common.addon.log('Looking up in local cache by name for: %s %s %s' % (media_type, name, year), 0)
         
         # movie_meta doesn't have a year column
-        if year and media_type == self.type_movie:
-            sql_select = sql_select + " AND year = %s" % year
-        common.addon.log('SQL Select: %s' % sql_select, 0)
-        
-        try:
-            self.dbcur.execute(sql_select)            
-            matchedrow = self.dbcur.fetchone()
-        except Exception, e:
-            common.addon.log('************* Error selecting from cache db: %s' % e, 4)
-            pass
-            
-        if matchedrow:
-            common.addon.log('Found meta information by name in cache table: %s' % dict(matchedrow), 0)
-            return dict(matchedrow)
-        else:
-            common.addon.log('No match in local DB', 0)
-            return None
-
-
-    def _cache_lookup_by_name(self, media_type, name, year=''):
-        '''
-        Lookup in SQL DB for video meta data by name and year
-        
-        Args:
-            media_type (str): 'movie' or 'tvshow'
-            name (str): full name of movie/tvshow you are searching
-        Kwargs:
-            year (str): 4 digit year of video, recommended to include the year whenever possible
-                        to maximize correct search results.
-                        
-        Returns:
-            DICT of matched meta data or None if no match.
-        '''        
-
-        name =  self._clean_string(name.lower())
-        if media_type == self.type_movie:
-            sql_select = "SELECT * FROM movie_meta WHERE title = '%s'" % name
-        elif media_type == self.type_tvshow:
-            sql_select = "SELECT a.*, CASE WHEN b.episode ISNULL THEN 0 ELSE b.episode END AS episode, CASE WHEN c.playcount ISNULL THEN 0 ELSE c.playcount END as playcount FROM tvshow_meta a LEFT JOIN (SELECT imdb_id, count(imdb_id) AS episode FROM episode_meta GROUP BY imdb_id) b ON a.imdb_id = b.imdb_id LEFT JOIN (SELECT imdb_id, count(imdb_id) AS playcount FROM episode_meta WHERE overlay=7 GROUP BY imdb_id) c ON a.imdb_id = c.imdb_id WHERE a.title = '%s'" % name
-            if DB == 'mysql':
-                sql_select = sql_select.replace("ISNULL", "IS NULL")
-        common.addon.log('Looking up in local cache by name for: %s %s %s' % (media_type, name, year), 0)
-        
-        # movie_meta doesn't have a year column
-        # if year and media_type == self.type_movie:
-            # sql_select = sql_select + " AND year = %s" % year
+        if common.addon.get_setting('year_lock')=='true':
+            if year and media_type == self.type_movie:
+                sql_select = sql_select + " AND year = %s" % year
         common.addon.log('SQL Select: %s' % sql_select, 0)
         
         try:
@@ -1257,19 +1218,28 @@ class MetaData:
         cast_list = md.get('cast','')
         if cast_list:
             for cast in cast_list:
-                job=cast.get('job','')
-                if job == 'Actor':
-                    meta['cast'].append((cast.get('name',''),cast.get('character','') ))
-                elif job == 'Director':
-                    meta['director'] = cast.get('name','')
+                char = cast.get('character','')
+                if not char:
+                    char = ''
+                meta['cast'].append((cast.get('name',''),char ))
+                        
+        crew_list = []
+        crew_list = md.get('crew','')
+        if crew_list:
+            for crew in crew_list:
+                job=crew.get('job','')
+                if job == 'Director':
+                    meta['director'] = crew.get('name','')
                 elif job == 'Screenplay':
                     if meta['writer']:
-                        meta['writer'] = meta['writer'] + ' / ' + cast.get('name','')
+                        meta['writer'] = meta['writer'] + ' / ' + crew.get('name','')
                     else:
-                        meta['writer'] = cast.get('name','')
+                        meta['writer'] = crew.get('name','')
                     
         genre_list = []
         genre_list = md.get('genres', '')
+        if(genre_list):
+            meta['genre'] = ''
         for genre in genre_list:
             if meta['genre'] == '':
                 meta['genre'] = genre.get('name','')
@@ -1294,6 +1264,7 @@ class MetaData:
                         pass
         
         meta['cover_url'] = md.get('cover_url', '')
+        meta['backdrop_url'] = md.get('backdrop_url', '')
         if md.has_key('posters'):
             # find first thumb poster url
             for poster in md['posters']:
@@ -1466,13 +1437,15 @@ class MetaData:
         movie_list = []
         meta = tmdb.tmdb_search(name)
         if meta:
-            for movie in meta:
-                if movie['released']:
-                    #year = self._convert_date(movie['released'], '%Y-%m-%d', '%Y')
-                    year = movie['released'][:4]
+            if meta['total_results'] == 0:
+                common.addon.log('No results found', 2)
+                return None
+            for movie in meta['results']:
+                if movie['release_date']:
+                    year = movie['release_date'][:4]
                 else:
                     year = None
-                movie_list.append({'title': movie['name'], 'imdb_id': movie['imdb_id'], 'tmdb_id': movie['id'], 'year': year})
+                movie_list.append({'title': movie['title'],'original_title': movie['original_title'], 'imdb_id': '', 'tmdb_id': movie['id'], 'year': year})
         else:
             common.addon.log('No results found', 2)
             return None
@@ -2070,6 +2043,7 @@ class MetaData:
             season (int): tv show season number    
 
         ''' 
+        sql_select = ''
         if media_type == self.type_movie:
             if imdb_id:
                 sql_select="SELECT overlay FROM movie_meta WHERE imdb_id = '%s'" % imdb_id
@@ -2103,11 +2077,11 @@ class MetaData:
 
         '''       
         if meta['imdb_id']:
-            sql_select = 'SELECT * FROM episode_meta WHERE imdb_id = "%s" AND season = %s AND episode = %s and premiered = "%s"'  % (meta['imdb_id'], meta['season'], meta['episode'], meta['episode'])
+            sql_select = 'SELECT * FROM episode_meta WHERE imdb_id = "%s" AND season = %s AND episode = %s and premiered = "%s"'  % (meta['imdb_id'], meta['season'], meta['episode'], meta['premiered'])
         elif meta['tvdb_id']:
-            sql_select = 'SELECT * FROM episode_meta WHERE tvdb_id = "%s" AND season = %s AND episode = %s and premiered = "%s"'  % (meta['tvdb_id'], meta['season'], meta['episode'], meta['episode'])
+            sql_select = 'SELECT * FROM episode_meta WHERE tvdb_id = "%s" AND season = %s AND episode = %s and premiered = "%s"'  % (meta['tvdb_id'], meta['season'], meta['episode'], meta['premiered'])
         else:         
-            sql_select = 'SELECT * FROM episode_meta WHERE title = "%s" AND season = %s AND episode = %s and premiered = "%s"'  % (self._clean_string(meta['title'].lower()), meta['season'], meta['episode'], meta['episode'])
+            sql_select = 'SELECT * FROM episode_meta WHERE title = "%s" AND season = %s AND episode = %s and premiered = "%s"'  % (self._clean_string(meta['title'].lower()), meta['season'], meta['episode'], meta['premiered'])
         common.addon.log('Getting episode watched status', 0)
         common.addon.log('SQL Select: %s' % sql_select, 0)
         try:
@@ -2482,7 +2456,6 @@ class MetaData:
 
         placeholder= '?'
         placeholders= ', '.join(placeholder for x in batch_ids)
-        print placeholders
         
         ids = []
         if media_type == self.type_movie:
@@ -2521,7 +2494,6 @@ class MetaData:
                 return None
 
         common.addon.log( 'SQL Select: %s' % sql_select, 0)
-        print ids
 
         try:
             self.dbcur.execute(sql_select, ids)

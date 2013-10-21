@@ -1,3 +1,8 @@
+[B]Version 1.1.0[/B]
+- Updated TMDB scraper to use v3 api
+- Added multithreaded support
+- Added language setting
+
 [B]Version 1.0.4[/B]
 - Quick band aid patch for Eden users - xbmcvfs.mkdirs is not included in Eden
 
