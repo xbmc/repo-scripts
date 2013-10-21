@@ -32,7 +32,7 @@ __localize__    = ( sys.modules[ "__main__" ].__localize__ )
 
 API_KEY = '4be68d7eab1fbd1b6fd8a3b80a65a95e'
 API_URL = 'http://api.themoviedb.org/3/movie/%s/images?api_key=%s'
-BASE_IMAGEURL = "http://cf2.imgobject.com/t/p/"
+BASE_IMAGEURL = "http://d3gtl9l2a4fn1j.cloudfront.net/t/p/"
 
 class TMDBProvider():
 
