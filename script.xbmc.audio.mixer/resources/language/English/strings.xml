@@ -6,5 +6,7 @@
   <string id="30012">Save</string>
   
   <string id="30001">Failed to save audio settings</string>
+  <string id="30002">Enable debug logging</string>
+  <string id="30003">Enable debug logging</string>
 </strings>
 

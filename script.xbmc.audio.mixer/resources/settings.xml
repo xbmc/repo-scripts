@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-  <category label="Settings">
-    <setting id="debug" type="bool" label="Enable debug logging" default="true"/>
+  <category label="30002">
+    <setting id="debug" type="bool" label="30003" default="true"/>
   </category>
 </settings>

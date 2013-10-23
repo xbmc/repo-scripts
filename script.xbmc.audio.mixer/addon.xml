@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmc.audio.mixer"
        name="XBMC Audio Mixer"
-       version="2.0.3"
+       version="2.0.4"
        provider-name="Team XBMC">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -16,6 +16,6 @@
 	<forum></forum>
     <website></website>
     <email></email>
-    <source></source>
+    <source>https://github.com/XBMC-Addons/script.xbmc.audio.mixer</source>
   </extension>
 </addon>
