@@ -29,8 +29,6 @@ __addonversion__ = lib.common.__addonversion__
 __addonname__    = lib.common.__addonname__
 __addonpath__    = lib.common.__addonpath__
 __icon__         = lib.common.__icon__
-__localize__     = lib.common.__localize__
-
 
 class Main:
     def __init__(self):

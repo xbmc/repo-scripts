@@ -1,3 +1,7 @@
+v0.1.12
+- Fix encoding text encoding error for some languages
+- Update language files
+
 v0.1.11
 - Updated language files from Transifex
 - Fix problems with python2.7.5

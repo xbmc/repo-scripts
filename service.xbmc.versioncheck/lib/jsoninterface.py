@@ -26,10 +26,7 @@ from lib.common import log
 
 __addonpath__    = lib.common.__addonpath__
 
-if sys.version_info < (2, 7):
-    import simplejson as jsoninterface
-else:
-    import json as jsoninterface
+import json as jsoninterface
 
 def get_installedversion():
     # retrieve current installed version
