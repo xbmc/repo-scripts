@@ -2,13 +2,13 @@
 <addon
 	id="script.extrafanartdownloader"
 	name="Extrafanart Downloader"
-	version="0.2.1"
+	version="9.9.9"
 	provider-name="paddycarey, putneyj, Machine-Sanctum">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.elementtree"/>
   </requires>
-  <extension point="xbmc.python.script" library="default.py">
+  <extension point="xbmc.python.script">
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
@@ -21,5 +21,6 @@
 	Skin integration:[CR]See readme file
 	</description>
     <platform>all</platform>
+    <broken>This add-on is no longer supported</broken>
   </extension>
 </addon>
