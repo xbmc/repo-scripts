@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32101">
+		<setting type="lsep" label="32106"/>
+		<setting id="moviefanart" type="bool" label="32001" default="true"/>
+		<setting id="tvshowfanart" type="bool" label="32002" default="true"/>
+		<setting id="musicvideofanart" type="bool" label="32003" default="true"/>		
+		<setting id="artistfanart" type="bool" label="32004" default="true"/>
+		<setting id="moviethumbs" type="bool" label="32005" default="true"/>
+		<setting id="tvshowbanners" type="bool" label="32013" default="true"/>
+		<setting id="tvshowposters" type="bool" label="32014" default="true"/>
+		<setting id="seasonthumbs" type="bool" label="32007" default="true"/>
+		<setting id="episodethumbs" type="bool" label="32008" default="true"/>
+		<setting id="musicvideothumbs" type="bool" label="32009" default="true"/>
+		<setting id="artistthumbs" type="bool" label="32010" default="true"/>
+		<setting id="albumthumbs" type="bool" label="32011" default="true"/>
+	</category>
+	<category label="32102">
+		<setting type="lsep" label="32107"/>
+		<setting id="source" type="bool" label="32015" default="false"/>
+		<setting id="path" type="folder" label="32016" subsetting="true" enable="eq(-1,true)"/>
+	</category>
+	<category label="32103">
+		<setting type="lsep" label="32104"/>
+		<setting type="lsep" label="32105"/>
+		<setting type="sep"/>
+		<setting type="lsep" label="32108"/>
+		<setting id="directory" type="folder" label="32012"/>
+	</category>
+</settings>

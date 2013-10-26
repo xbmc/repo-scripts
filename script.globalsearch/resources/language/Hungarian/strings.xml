@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="32000">Általános</string>
+	<string id="32001">Filmek keresése</string>
+	<string id="32002">Sorozatok keresése</string>
+	<string id="32003">Epizódok keresése</string>
+	<string id="32004">Videóklippek keresése</string>
+	<string id="32005">Előadók keresése</string>
+	<string id="32006">Albumok keresése</string>
+	<string id="32007">Számok keresése</string>
+	<string id="32101">Adja meg a keresendő szöveget/szövegrészt</string>
+	<string id="32203">ALbumok tallózása</string>
+	<string id="32204">Évad információk</string>
+	<string id="32205">Előzetes lejátszása</string>
+	<string id="32206">Album találatok</string>
+	<string id="32207">Találatok az évadok között</string>
+	<string id="32208">Találatok az epizódok között</string>
+	<string id="32209">Találatok az albumok között</string>
+	<string id="32210">Találatok a számok között</string>
+	<string id="32299">ÚJ KERESÉS</string>
+</strings>
+
+

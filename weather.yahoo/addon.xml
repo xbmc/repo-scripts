@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="weather.yahoo" name="Yahoo! Weather" version="2.0.0" provider-name="ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.12.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+	</requires>
+	<extension point="xbmc.python.weather" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="bg">Синоптична прогноза от www.yahoo.com</summary>
+		<summary lang="de">Wettervorhersage von yahoo.com</summary>
+		<summary lang="el">Πρόγνωση καιρού από το yahoo.com</summary>
+		<summary lang="en">Weather forecast from yahoo.com</summary>
+		<summary lang="it">Servizio meteo di yahoo.com</summary>
+		<summary lang="nl">Weersvoorspelling van yahoo.com</summary>
+		<summary lang="pl">Prognoza pogody z serwisu yahoo.com</summary>
+		<summary lang="pt">Previsão do tempo a partir de yahoo.com</summary>
+		<description lang="bg">Синоптична прогноза с данните от Yahoo! Weather (http://www.yahoo.com/)</description>
+		<description lang="de">Wettervorhersage bereitgestellt durch Yahoo! Weather (http://weather.yahoo.com/)</description>
+		<description lang="el">Η πρόγνωση καιρού παρέχεται από το Yahoo! Weather (http://weather.yahoo.com/)</description>
+		<description lang="en">Weather forecast provided by Yahoo! Weather (http://weather.yahoo.com/)</description>
+		<description lang="it">Servizio meteo fornito da Yahoo! Weather (http://weather.yahoo.com/)</description>
+		<description lang="nl">Weersvoorspelling voorzien door Yahoo! (http://weather/yahoo.com)</description>
+		<description lang="pl">Prognoza pogody jest dostarczona dzięki uprzejmości serwisu Yahoo! (http://weather.yahoo.com/)</description>
+		<description lang="pt">Previsão metereológica fornecida por Yahoo! Weather (http://weather.yahoo.com/)</description>
+		<disclaimer lang="bg">Употребявайки добавката Вие се съгласявате с условията за ползване на услугата, които се намират на http://developer.yahoo.com/weather/#terms</disclaimer>
+		<disclaimer lang="de">Die Benutzung der Erweiterung impliziert, das sie den Nutzungsbedingungen unter http://developer.yahoo.com/weather/#terms zugestimmt haben</disclaimer>
+		<disclaimer lang="el">Χρήση αυτού του πρόσθετου συνεπάγεται την αποδοχή των Όρων Χρήσης της Υπηρεσίας (Terms of Service) οι οποίοι βρίσκονται στο http://developer.yahoo.com/weather/#terms</disclaimer>
+		<disclaimer lang="en">Use of this add-on implies that you have agreed to the Terms of Service located at http://developer.yahoo.com/weather/#terms</disclaimer>
+		<disclaimer lang="it">L'uso di questo add-on implica l'accettazione delle Condizioni di Servizio che trovi su http://developer.yahoo.com/weather/#terms</disclaimer>
+		<disclaimer lang="nl">Het gebruik van deze add-on impliceert dat je akkoord gaat met de service-voorwaarden op http://developer.yahoo.com/weather/#terms</disclaimer>
+		<disclaimer lang="pl">Korzystanie z tego dodatku jest równoznaczne z akceptacją regulaminu dostępnego pod adresem: http://developer.yahoo.com/weather/#terms</disclaimer>
+		<disclaimer lang="pt">O uso deste add-on implica o seu acordo com os Termos de Serviço disponíveis em http://developer.yahoo.com/weather/#terms</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<forum>http://forum.xbmc.org/showthread.php?tid=169410</forum>
+		<source>https://code.google.com/p/ronie/source/</source>
+	</extension>
+</addon>
