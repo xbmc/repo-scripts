@@ -14,6 +14,7 @@
 		<setting id="backup_addon_data" type="bool" label="30031" default="false" />
 		<setting id="backup_database" type="bool" label="30032" default="true" />
 		<setting id="backup_playlists" type="bool" label="30033" default="true" />
+		<setting id="backup_profiles" type="bool" label="30080" default="false" />
 		<setting id="backup_thumbnails" type="bool" label="30034" default="true" />
 		<setting id="backup_config" type="bool" label="30035" default="true" />
 		<setting id="custom_dir_1_enable" type="bool" label="30036" default="false" />

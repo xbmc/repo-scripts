@@ -119,7 +119,11 @@ class XbmcBackup:
             if(utils.getSetting("backup_playlists") == 'true'):
                 self.remote_vfs.mkdir(self.remote_vfs.root_path + "userdata/playlists")
                 fileManager.walkTree(xbmc.translatePath('special://home/userdata/playlists'))
-                
+
+            if(utils.getSetting('backup_profiles') == 'true'):
+                self.remote_vfs.mkdir(self.remote_vfs.root_path + "userdata/profiles")
+                fileManager.walkTree(xbmc.translatePath('special://home/userdata/profiles'))
+            
             if(utils.getSetting("backup_thumbnails") == "true"):
                 self.remote_vfs.mkdir(self.remote_vfs.root_path + "userdata/Thumbnails")
                 fileManager.walkTree(xbmc.translatePath('special://home/userdata/Thumbnails'))
@@ -237,6 +241,10 @@ class XbmcBackup:
             if(utils.getSetting("backup_playlists") == 'true'):
                 self.xbmc_vfs.mkdir(xbmc.translatePath('special://home/userdata/playlists'))
                 fileManager.walkTree(self.remote_vfs.root_path + "userdata/playlists")
+
+            if(utils.getSetting('backup_profiles') == 'true'):
+                self.xbmc_vfs.mkdir(xbmc.translatePath('special://home/userdata/profiles'))
+                fileManager.walkTree(self.remote_vfs.root_path + "userdata/profiles")
                 
             if(utils.getSetting("backup_thumbnails") == "true"):
                 self.xbmc_vfs.mkdir(xbmc.translatePath('special://home/userdata/Thumbnails'))
@@ -371,21 +379,22 @@ class FileManager:
         self.vfs = vfs
 
     def walkTree(self,directory):
-        dirs,files = self.vfs.listdir(directory)
+        if(self.vfs.exists(directory)):
+            dirs,files = self.vfs.listdir(directory)
         
-        #create all the subdirs first
-        for aDir in dirs:
-            dirPath = xbmc.translatePath(directory + "/" + aDir)
-            file_ext = aDir.split('.')[-1]
-            self.addFile("-" + dirPath)  
-            #catch for "non directory" type files
-            if (not any(file_ext in s for s in self.not_dir)):
-                self.walkTree(dirPath)  
+            #create all the subdirs first
+            for aDir in dirs:
+                dirPath = xbmc.translatePath(directory + "/" + aDir)
+                file_ext = aDir.split('.')[-1]
+                self.addFile("-" + dirPath)  
+                #catch for "non directory" type files
+                if (not any(file_ext in s for s in self.not_dir)):
+                    self.walkTree(dirPath)  
             
-        #copy all the files
-        for aFile in files:
-            filePath = xbmc.translatePath(directory + "/" + aFile)
-            self.addFile(filePath)
+            #copy all the files
+            for aFile in files:
+                filePath = xbmc.translatePath(directory + "/" + aFile)
+                self.addFile(filePath)
                     
     def addFile(self,filename):
         try:
