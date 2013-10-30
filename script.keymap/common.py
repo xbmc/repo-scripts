@@ -125,8 +125,9 @@ _actions = [
     "shutdown"          , "Shutdown",
     "reboot"            , "Reboot",
     "hibernate"         , "Hibernate",
-    "Suspend"           , "Suspend",
+    "suspend"           , "Suspend",
     "restartapp"        , "Restart XBMC",
+    "system.logoff"     , "Log off",
     "quit"              , "Quit XBMC",
   ]],
   
