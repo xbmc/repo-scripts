@@ -1,0 +1,49 @@
+# XBMC Media Center language file
+# Addon Name: Libre.fm Scrobbler
+# Addon id: service.scrobbler.librefm
+# Addon Provider: Team-XBMC
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "常用"
+
+msgctxt "#30004"
+msgid "Submit songs to Libre.fm"
+msgstr "将歌曲提交到 Libre.fm"
+
+msgctxt "#30005"
+msgid "Submit streaming radio to Libre.fm"
+msgstr "将流媒体广播提交到 Libre.fm"
+
+msgctxt "#30006"
+msgid "Libre.fm username"
+msgstr "Libre.fm 用户名"
+
+msgctxt "#30007"
+msgid "Libre.fm password"
+msgstr "Libre.fm 密码"
+
+msgctxt "#32001"
+msgid "Authentication error"
+msgstr "验证错误"
+
+msgctxt "#32002"
+msgid "Invalid time, please adjust your system clock and restart XBMC"
+msgstr "时间错误，请校准你的系统时钟并重启XBMC"
+
+msgctxt "#32003"
+msgid "Please update the add-on"
+msgstr "请升级插件。"

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.scrobbler.librefm" name="Libre.fm Scrobbler" version="1.0.0" provider-name="Team-XBMC">
+	<requires>
+		<import addon="xbmc.python" version="2.12.0"/>
+	</requires>
+	<extension point="xbmc.service" library="scrobbler.py" start="login">
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="be">Scrobble service for libre.fm</summary>
+		<summary lang="de">Scrobbler Service für libre.fm</summary>
+		<summary lang="el">Υπηρεσία κοινοποίησης (scrobble) για το libre.fm</summary>
+		<summary lang="en">Scrobble service for libre.fm</summary>
+		<summary lang="es">Envío de canciones a libre.fm</summary>
+		<summary lang="fa_IR">سرویس Scrobble برای libre.fm</summary>
+		<summary lang="gl">Servizo Scrobble para libre.fm</summary>
+		<summary lang="he">שירות Scrobble עבור libre.fm</summary>
+		<summary lang="hi"> libre.fm सेवा के लिए स्क्रोबल करे</summary>
+		<summary lang="hr">Skroblajte uslugu za libre.fm</summary>
+		<summary lang="id">Layanan Scrobble untuk libre.fm</summary>
+		<summary lang="it">Servizio Scrobble per libre.fm</summary>
+		<summary lang="ko">libre.fm 스크로블 서비스</summary>
+		<summary lang="nl">Scrobble service voor libre.fm</summary>
+		<summary lang="pl">Usługa skroblera dla Libre.fm</summary>
+		<summary lang="pt">Serviço de scrobble para libre.fm</summary>
+		<summary lang="pt_BR">Serviço Scrobble para libre.fm</summary>
+		<summary lang="sv">Inskickningstjänst för libre.fm</summary>
+		<summary lang="zh">libre.fm 的 Scrobble 服务</summary>
+		<description lang="be">Scrobbler will submit info of the songs you've been listening to in XBMC to libre.fm</description>
+		<description lang="de">Scrobboler wird Informationen über die Songs welche du in XBMC hörst an libre.fm übermitteln</description>
+		<description lang="el">Το Scrobbler θα υποβάλλει πληροφορίες των τραγουδιών που ακούτε στο libre.fm</description>
+		<description lang="en">Scrobbler will submit info of the songs you've been listening to in XBMC to libre.fm</description>
+		<description lang="es">Scrobble envía información de las canciones que escucha en XBMC a libre.fm</description>
+		<description lang="fa_IR">Scrobbler اطلاعات ترانه هایی که شما در XBMC گوش داده اید را به libre.fm ارائه می دهد</description>
+		<description lang="gl">Scrobbler enviará info. das cancións que está a escoitar en XBMC a libre.fm</description>
+		<description lang="he">Scrobbler ישלח מידע על השירים המושמעים ב-XBMC אל libre.fm</description>
+		<description lang="hi">स्क्रॉबबलेर गानो की सूची को जमा करेगा जो आपने एक्स बी एम सी से लिब्रे.एफ म मे सुना है</description>
+		<description lang="hr">Skrobler će podnositi informacije pjesama koje ste slušali u XBMC-u na libre.fm</description>
+		<description lang="id">Scrobbler akan mengirim info dari lagu yang telah Anda dengarkan di XBMC ke libre.fm</description>
+		<description lang="it">Scrobbler inviera' informazioni delle canzoni che stai ascoltando in xbmc a libre.fm</description>
+		<description lang="ko">스크로블러는 XBMC에서 감상중인 노래 정보를 libre.fm에 전송합니다</description>
+		<description lang="nl">De scrobbler verstuurt informatie over de nummers die u heeft geluisterd in XBMC naar libre.fm</description>
+		<description lang="pl">Skrobler wysyła informacje o utworach, których słuchasz przez XBMC, do serwisu Libre.fm</description>
+		<description lang="pt">O scrobbler enviará info das músicas que tem ouvido no XBMC para o libre.fm</description>
+		<description lang="pt_BR">Scrobbler irá submeter suas músicas quando estiver ouvindo no XBMC para libre.fm</description>
+		<description lang="sv">Inskickningstjänst för att skicka in info om låtarna du har lyssnat på i XBMC till libre.fm</description>
+		<description lang="zh">Scrobbler 会将你在 XBMC 中听过的歌曲信息提交到 libre.fm</description>
+		<language></language>
+		<platform>all</platform>
+		<forum>http://forum.xbmc.org/showthread.php?tid=158540</forum>
+		<source>https://github.com/XBMC-Addons/service.scrobbler.librefm/</source>
+	</extension>
+</addon>

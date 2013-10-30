@@ -1,0 +1,58 @@
+v2.0.5
+- fix encoding issue
+
+v2.0.4
+- gotham release
+
+v2.0.3
+- gui cleanup
+
+v2.0.2
+- fix crash when failing to read lyrics file
+- fixed update scraper list when settings change
+
+v2.0.1
+- fixed don't crash when trying to get embedded lyrics from online streams
+- add option to clean song title
+
+v2.0.0
+- convert script to a service
+- auto-hide window when no lyrics are found
+
+v1.0.7
+- fixed blank string in settings
+- changed txxx field now supports both synchronised and regular lyrics
+- fixed potential crash due to unhandled exceptions
+
+v1.0.6
+- fixed potential import of a third party scrapers module
+
+v1.0.5
+- fixed can't show lyric right after reselect in list, need reset control
+- handle encode error in scraper GomAudio
+- added option to save lyrics to song folder
+
+v1.0.4
+- fixed saving lyrics
+- add Korean scraper(Alsong, GomAudio), credit for hojel
+
+v1.0.3
+- language update
+
+v1.0.2
+- add a script running window property
+- added lyrics source as a window property
+- make lyrics available as a window property
+- fixed would fail for users with a special char in their username
+
+v1.0.1
+- fixed can't change lyric for track in cue/ape file
+- fixed decode error in scrape minilyrics
+- added requires for script.module.chardet
+
+v1.0.0
+- initial release
+
+v0.0.1
+- merge cu and lrc lyrics scripts
+

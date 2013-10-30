@@ -1,0 +1,105 @@
+# XBMC Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#0"
+msgid "XBMC Lyrics"
+msgstr "XBMC歌词"
+
+msgctxt "#30000"
+msgid "File"
+msgstr "文件"
+
+msgctxt "#30001"
+msgid "No lyrics found!"
+msgstr "歌词未找到！"
+
+msgctxt "#30002"
+msgid "Embedded"
+msgstr "内嵌"
+
+msgctxt "#30101"
+msgid "Save lyrics to lyrics folder"
+msgstr "保存歌词到歌词目录"
+
+msgctxt "#30102"
+msgid "- Lyrics folder"
+msgstr "- 歌词目录"
+
+msgctxt "#30103"
+msgid "- Save format"
+msgstr "- 保存格式"
+
+msgctxt "#30105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#30106"
+msgid "Use only filename for search"
+msgstr "仅使用文件名查找"
+
+msgctxt "#30107"
+msgid "Filename format"
+msgstr "文件名格式"
+
+msgctxt "#30108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#30109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#30110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#30111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "同名歌词文件保存在子目录"
+
+msgctxt "#30112"
+msgid "- Sub folder name"
+msgstr "- 子目录名"
+
+msgctxt "#30113"
+msgid "Save lyrics to song folder"
+msgstr "保存歌词到歌曲目录"
+
+msgctxt "#30150"
+msgid "Scrapers"
+msgstr "刮削器"
+
+msgctxt "#30151"
+msgid "Options"
+msgstr "选项"
+
+msgctxt "#30152"
+msgid "Search for embedded lyrics"
+msgstr "搜索内嵌歌词"
+
+msgctxt "#30153"
+msgid "Search for local lyrics files"
+msgstr "搜索本地歌词文件"
+
+msgctxt "#30154"
+msgid "Synchronised lyrics scrapers"
+msgstr "同步歌词刮削器"
+
+msgctxt "#30155"
+msgid "Regular lyrics scrapers"
+msgstr "非同步歌词刮削器"

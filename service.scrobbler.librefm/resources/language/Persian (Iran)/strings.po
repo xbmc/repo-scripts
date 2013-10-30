@@ -1,0 +1,49 @@
+# XBMC Media Center language file
+# Addon Name: Libre.fm Scrobbler
+# Addon id: service.scrobbler.librefm
+# Addon Provider: Team-XBMC
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Persian (Iran) (http://www.transifex.com/projects/p/xbmc-addons/language/fa_IR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fa_IR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "عمومی"
+
+msgctxt "#30004"
+msgid "Submit songs to Libre.fm"
+msgstr "ارسال ترانه ها به Libre.fm"
+
+msgctxt "#30005"
+msgid "Submit streaming radio to Libre.fm"
+msgstr "ثبت کردن استریم های رادیویی به Libre.fm"
+
+msgctxt "#30006"
+msgid "Libre.fm username"
+msgstr " نام کاربری Libre.fm "
+
+msgctxt "#30007"
+msgid "Libre.fm password"
+msgstr " رمز عبور Libre.fm"
+
+msgctxt "#32001"
+msgid "Authentication error"
+msgstr "خطای تأیید اعتبار"
+
+msgctxt "#32002"
+msgid "Invalid time, please adjust your system clock and restart XBMC"
+msgstr "زمان نادرست است ، لطفا ساعت سیستم خود را تنظیم و XBMC را دوباره راه اندازی کنید"
+
+msgctxt "#32003"
+msgid "Please update the add-on"
+msgstr "لطفا add-on را به روز رسانی کنید"
