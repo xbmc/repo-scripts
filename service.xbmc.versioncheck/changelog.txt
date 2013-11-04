@@ -1,3 +1,6 @@
+v0.1.13
+- Update with 13.0 Gotham_alpha9
+
 v0.1.12
 - Fix encoding text encoding error for some languages
 - Update language files
