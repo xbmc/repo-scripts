@@ -54,7 +54,7 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     #UrlResolver methods
     def get_media_url(self, host, media_id):
-        print 'in get_media_url %s : %s' % (host, media_id)
+        common.addon.log('in get_media_url %s : %s' % (host, media_id))
         dialog = xbmcgui.Dialog()
         try:
             url = 'http://www.alldebrid.com/service.php?link=%s' % media_id
@@ -63,10 +63,10 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         except Exception, e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print(exc_type, fname, exc_tb.tb_lineno)
+            common.addon.log(str(exc_type) + " : " + fname + " : " + str(exc_tb.tb_lineno))
             dialog.ok(' all-Debrid ', ' all-Debrid server timed out ', '', '')
             return self.unresolvable(3,'alldebrid : error contacting the site')
-        print '************* %s' % source.encode('utf-8')
+        common.addon.log('************* %s' % source.encode('utf-8'))
 
         if re.search('login', source):
             dialog.ok(' All Debrid Message ', ' Your account may have Expired, please check by going to the website ', '', '')
@@ -92,7 +92,7 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
             if len(link) != 0:
                 finallink = link[0].encode('utf-8')               
         #end
-        print 'finallink is %s' % finallink
+        common.addon.log('finallink is %s' % finallink)
         if finallink != '' :
             self.media_url = finallink
             return finallink
@@ -119,7 +119,7 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         if self.get_setting('enabled') == 'false': return False
         if self.get_setting('login') == 'false':
             return False
-        print 'in valid_url %s : %s' % (url, host)
+        common.addon.log('in valid_url %s : %s' % (url, host))
         tmp = re.compile('//(.+?)/').findall(url)
         domain = ''
         if len(tmp) > 0 :
@@ -130,7 +130,7 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
                 domain = 'megashare.com'
             elif 'mixture' in domain :
                 domain = 'mixturevideo.com'
-            print 'domain is %s ' % domain
+            common.addon.log('domain is %s ' % domain)
         if (domain in self.get_all_hosters()) or (len(host) > 0 and host in self.get_all_hosters()):
             return True
         else:
@@ -142,19 +142,19 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
                return True
         self.net.set_cookies(self.cookie_file)
         source =  self.net.http_GET(url).content
-        print source
+        common.addon.log(source)
         if re.search('login', source):
-            print 'checkLogin returning False'
+            common.addon.log('checkLogin returning False')
             return False
         else:
-            print 'checkLogin returning True'
+            common.addon.log('checkLogin returning True')
             return True
 
     #SiteAuth methods
     def login(self):
         if self.checkLogin():
             try:
-                print 'Need to login since session is invalid'
+                common.addon.log('Need to login since session is invalid')
                 login_data = urllib.urlencode({'action' : 'login','login_login' : self.get_setting('username'), 'login_password' : self.get_setting('password')})
                 url = 'http://alldebrid.com/register/?' + login_data
                 source = self.net.http_GET(url).content
@@ -163,7 +163,7 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
                     self.net.set_cookies(self.cookie_file)
                     return True
             except:
-                    print 'error with http_GET'
+                    common.addon.log('error with http_GET')
                     dialog = xbmcgui.Dialog()
                     dialog.ok(' Real-Debrid ', ' Unexpected error, Please try again.', '', '')
             else:

@@ -42,7 +42,6 @@ class Stream2kResolver(Plugin, UrlResolver, PluginSettings):
        
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        print web_url
         try:
             html = self.net.http_GET(web_url,{'referer': web_url}).content
             if host.find('embed')>0: sPattern = "file=(.+?)&"
@@ -58,11 +57,11 @@ class Stream2kResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log('**** stream2k Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]STREAM2K[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False
+            return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
         if not host.find('embed')>0:

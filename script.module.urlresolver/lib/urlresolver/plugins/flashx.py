@@ -65,13 +65,19 @@ class FlashxResolver(Plugin, UrlResolver, PluginSettings):
                 raise Exception ('Unable to resolve Flashx link. Embedded link not found.')
             web_url = r.group(1)
             html = self.net.http_GET(web_url).content
+            #get form action
+            pattern = 'action="([^"]+)"'
+            r = re.search(pattern, html)
+            if not r:
+                raise Exception ('Unable to resolve Flashx link. Post action not found.')
+            form_action = r.group(1)
             form_values = {}
             #get post var
             for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
                 form_values[i.group(1)] = i.group(2)
             if not r:
-                raise Exception ('Unable to resolve Flashx link. Post var not found.')
-            web_url = 'http://play.flashx.tv/player/show.php'
+                raise Exception ('Unable to resolve Flashx link. Post var not found.')           
+            web_url = web_url[0:web_url.rfind('/')+1] + form_action
             html = self.net.http_POST(web_url, form_data=form_values).content
             #get config url
             pattern = 'data="([^"]+)"'

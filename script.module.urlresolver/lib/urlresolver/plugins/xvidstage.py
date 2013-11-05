@@ -45,14 +45,11 @@ class XvidstageResolver(Plugin, UrlResolver, PluginSettings):
             # get url from packed javascript
             sPattern = "src='http://xvidstage.com/player/swfobject.js'></script>.+?<script type='text/javascript'>eval.*?return p}\((.*?)</script>"# Modded
             r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
-            print r.groups()
             if r:
                 sJavascript = r.group(1)
                 sUnpacked = jsunpack.unpack(sJavascript)
-                print sUnpacked
                 sPattern = "'file','(.+?)'"#modded
                 r = re.search(sPattern, sUnpacked)
-                print r.groups()
                 if r:
                     return r.group(1)
                 raise Exception ('File Not Found or removed')
@@ -63,12 +60,12 @@ class XvidstageResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
 
         except Exception, e:
             common.addon.log('**** Xvidstage Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]XVIDSTAGE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False
+            return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
             return 'http://www.xvidstage.com/%s' % (media_id)

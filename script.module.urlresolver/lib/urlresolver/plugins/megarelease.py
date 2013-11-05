@@ -107,7 +107,7 @@ class MegareleaseResolver(Plugin, UrlResolver, PluginSettings):
                     return r.group(1)
             else:
                 num = re.compile('false\|(.+?)\|(.+?)\|(.+?)\|(.+?)\|divx').findall(html)
-                print 'NUM'+str(num)
+                common.addon.log('NUM: '+str(num))
                 for u1, u2, u3, u4 in num:
                     urlz = u4+'.'+u3+'.'+u2+'.'+u1
                 pre = 'http://'+urlz+':182/d/'

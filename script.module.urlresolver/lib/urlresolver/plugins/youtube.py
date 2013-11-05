@@ -41,8 +41,8 @@ class YoutubeResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_url(self, host, media_id):
         return 'http://youtube.com/watch?v=%s' % media_id
-        
-        
+
+
     def get_host_and_id(self, url):
         if url.find('?') > -1:
             queries = common.addon.parse_query(url.split('?')[1])
@@ -55,9 +55,9 @@ class YoutubeResolver(Plugin, UrlResolver, PluginSettings):
             return ('youtube.com', video_id)
         else:
             common.addon.log_error('youtube: video id not found')
-            return False
-        
-        
+            return self.unresolvable(code=0, msg="youtube: video id not found")
+
+
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         return re.match('http://(((www.)?youtube.+?(v|embed)(=|/))|' +

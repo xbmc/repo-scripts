@@ -42,6 +42,14 @@ class SharesixResolver(Plugin, UrlResolver, PluginSettings):
         try:
            # Otherwise just use the original url to get the content. For sharesix
             html = self.net.http_GET(web_url).content
+            
+            data = {}
+            r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
+            for name, value in r:
+                data[name] = value
+            data["method_free"] = "Free"
+            html = self.net.http_POST(web_url, data).content
+            
             # To build the streamable link, we need 
             # # the IPv4 addr (first 4 content below)
             # # the hash of the file
@@ -59,11 +67,11 @@ class SharesixResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log_error('**** Sharesix Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]SHARESIX[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False
+            return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
         return 'http://%s/%s' % (host, media_id)

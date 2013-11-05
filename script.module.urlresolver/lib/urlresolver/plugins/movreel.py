@@ -111,7 +111,7 @@ class movreelResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
                 html = net.http_POST(url, data).content
 
             dialog.update(100)
-            link = re.search('<a id="lnk_download" href="(.+?)">Download Original Video</a>', html, re.DOTALL).group(1)
+            link = re.search('<a href="(.+)">Download Link</a>', html).group(1)
             
             dialog.close()
             mediurl = link

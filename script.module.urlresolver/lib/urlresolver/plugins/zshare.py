@@ -40,23 +40,13 @@ class ZshareResolver(Plugin, UrlResolver, PluginSettings):
 
         try:
             html = self.net.http_GET(web_url).content
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return False
 
-        # get iframe redirect
-        sPattern = '<iframe src="(http://www.zshare.net[^"]+)"'
-        r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
-        if r:
-            iframe = r.group(1).replace(" ", "+")
-            try:
+            # get iframe redirect
+            sPattern = '<iframe src="(http://www.zshare.net[^"]+)"'
+            r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+            if r:
+                iframe = r.group(1).replace(" ", "+")
                 html = self.net.http_GET(iframe).content
-            except urllib2.URLError, e:
-                common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                        (e.code, iframe))
-                return False
-
 
             # get stream url
             stream_url = ''
@@ -64,7 +54,6 @@ class ZshareResolver(Plugin, UrlResolver, PluginSettings):
             r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
             if r:
                 stream_url = r.group(1).replace(" ", "+") + "?start=0" + '|user-agent=Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.109 Safari/535.1'
-
 
             # get download url
             download_url = ''
@@ -78,20 +67,26 @@ class ZshareResolver(Plugin, UrlResolver, PluginSettings):
                         'imageField.x': 76,
                         'imageField.y': 28
                         }
-                try:
-                    html = self.net.http_POST(buttonlink, data).content
-                except urllib2.URLError, e:
-                    common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                            (e.code, buttonlink))
-                    return False
+                html = self.net.http_POST(buttonlink, data).content
 
                 sPattern = 'new Array\(([^\)]*)\);'
                 r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
                 if r:
                     download_url = r.group(1).replace("'","").replace(",","")
 
+            return stream_url
 
-        return stream_url
+        except urllib2.URLError, e:
+            common.addon.log_error('Zshare: got http error %d fetching %s' %
+                                  (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return self.unresolvable(code=3, msg=e)
+
+        except Exception, e:
+            common.addon.log_error('**** Zshare Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]ZSHARE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
+
 
     def get_url(self, host, media_id):
             return 'http://www.zshare.net/video/%s' % (media_id)

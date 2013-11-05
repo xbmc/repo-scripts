@@ -94,7 +94,7 @@ class LimevideoResolver(Plugin, UrlResolver, PluginSettings):
         except Exception, e:
             common.addon.log('**** Limevideo Error occured: %s' % e)
             common.addon.show_small_popup('Error', str(e), 5000, '')
-            return False
+            return self.unresolvable(code=0, msg=e)
             
         
     def get_url(self, host, media_id):

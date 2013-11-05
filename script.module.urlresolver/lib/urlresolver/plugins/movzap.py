@@ -43,17 +43,24 @@ class MovzapZuzVideoResolver(Plugin, UrlResolver, PluginSettings):
         try:
             resp = self.net.http_GET(web_url)
             html = resp.content
+
+            r = re.search('file: "(.+?)",', html)
+            if r:
+                return r.group(1)
+
+            raise Exception ('movzap|zuzvideo: could not obtain video url')
+        
         except urllib2.URLError, e:
-            common.addon.log_error('movzap|zuzvideo: got http error %d fetching %s' %
+            common.addon.log_error('Movzap: got http error %d fetching %s' %
                                   (e.code, web_url))
-            return False
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return self.unresolvable(code=3, msg=e)
+        
+        except Exception, e:
+            common.addon.log_error('**** Movzap Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]MOVZAP[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
 
-        r = re.search('file: "(.+?)",', html)
-        if r:
-            return r.group(1)
-
-        print 'movzap|zuzvideo: could not obtain video url'
-        return False
 
     def get_url(self, host, media_id):
             return host + media_id

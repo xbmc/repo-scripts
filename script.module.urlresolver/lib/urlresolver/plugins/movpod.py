@@ -36,7 +36,7 @@ class MovpodResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
         #e.g. http://movpod.com/vb80o1esx2eb
-        self.pattern = 'http://((?:www.)?movpod.(?:net|in))/([0-9a-zA-Z]+)'
+        self.pattern = 'http://((?:www.)?movpod.(?:net|in))/(?:embed-)?([0-9a-zA-Z]+)'
 
 
     def get_media_url(self, host, media_id):
@@ -46,6 +46,9 @@ class MovpodResolver(Plugin, UrlResolver, PluginSettings):
         try:
             resp = self.net.http_GET(web_url)
             html = resp.content
+            r = re.findall(r"<title>404 - Not Found</title>",html)
+            if r:
+                raise Exception ('File Not Found or removed')
             post_url = resp.get_url()
 
 
@@ -54,9 +57,9 @@ class MovpodResolver(Plugin, UrlResolver, PluginSettings):
                 form_values[i.group(1)] = i.group(2)
                 
             html = self.net.http_POST(post_url, form_data=form_values).content
-            r = re.search('file: "http(.+?)"', html)
+            r = re.search('file: "(.+?)"', html)
             if r:
-                return "http" + r.group(1)
+                return r.group(1)
             else:
                 raise Exception ('Unable to resolve Movpod Link')
         

@@ -42,17 +42,17 @@ class EcostreamResolver(Plugin, UrlResolver, PluginSettings):
         self.pattern = 'http://((?:www.)?ecostream.tv)/(?:stream|embed)?/([0-9a-zA-Z]+).html'
 
 
-    def get_media_url(self, host, media_id):      
+    def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         try:
-            html = self.net.http_GET(web_url).content()           
+            html = self.net.http_GET(web_url).content
             if re.search('>File not found!<',html):
                 msg = 'File Not Found or removed'
-                common.addon.show_small_popup(title='[B][COLOR white]ECOSTREAM[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' 
+                common.addon.show_small_popup(title='[B][COLOR white]ECOSTREAM[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]'
                 % msg, delay=5000, image=error_logo)
                 return self.unresolvable(code = 1, msg = msg)
             self.net.save_cookies(self.cookie_file)
-            # emulate click on button "Start Stream"                     
+            # emulate click on button "Start Stream"
             postHeader = ({'Referer':web_url, 'X-Requested-With':'XMLHttpRequest'})
             web_url = 'http://www.ecostream.tv/xhr/video/get'
             self.net.set_cookies(self.cookie_file)
@@ -63,15 +63,15 @@ class EcostreamResolver(Plugin, UrlResolver, PluginSettings):
                 raise Exception ('Unable to resolve Ecostream link. Filelink not found.')
             sLinkToFile = 'http://www.ecostream.tv'+r.group(1)
             return urllib2.unquote(sLinkToFile)
-                    
+
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                     (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return self.unresolvable(code=3, msg='Exception: %s' % e) 
+            return self.unresolvable(code=3, msg='Exception: %s' % e)
         except Exception, e:
             common.addon.log('**** Ecostream Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]ECOSTREAM[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' 
+            common.addon.show_small_popup(title='[B][COLOR white]ECOSTREAM[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]'
             % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg='Exception: %s' % e)
 

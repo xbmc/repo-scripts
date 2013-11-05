@@ -40,7 +40,6 @@ class VidplayResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_media_url(self, host, media_id):
-        print 'vidplay: in get_media_url %s %s' % (host, media_id)
         web_url = self.get_url(host, media_id)
         try:
             dialog = xbmcgui.DialogProgress()
@@ -49,7 +48,6 @@ class VidplayResolver(Plugin, UrlResolver, PluginSettings):
         
             puzzle_img = os.path.join(datapath, "vidplay_puzzle.png")
 
-            print 'vidplay - Requesting GET URL: %s' % web_url
             html = net.http_GET(web_url).content
 
             dialog.update(50)
@@ -103,12 +101,10 @@ class VidplayResolver(Plugin, UrlResolver, PluginSettings):
                 if solution:
                     data.update({'adcopy_challenge': hugekey,'adcopy_response': solution})
 
-            print 'vidplay - Requesting POST URL: %s' % web_url
             html = net.http_POST(web_url, data).content
             dialog.update(100)
             link = re.search("file: '([^']+)'", html)
             if link:
-                print 'vidplay Link Found: %s' % link.group(1)
                 return link.group(1)
             else:
                 raise Exception('Unable to resolve vidplay Link')
@@ -117,20 +113,18 @@ class VidplayResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log_error('**** Vidplay Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]VIDPLAY[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False
+            return self.unresolvable(code=0, msg=e)
 
         
     def get_url(self, host, media_id):
-        print 'vidplay: in get_url %s %s' % (host, media_id)
         return 'http://vidplay.net/%s' % media_id 
         
         
     def get_host_and_id(self, url):
-        print 'vidplay: in get_host_and_id %s' % (url)
         r = re.search('http://(.+?)/embed-([\w]+)-', url)
         if r:
             return r.groups()

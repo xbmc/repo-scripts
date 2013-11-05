@@ -30,9 +30,9 @@ import re
 from base64 import b64decode
 from binascii import unhexlify
 try:
-  from json import loads
+    from json import loads
 except ImportError:
-  from simplejson import loads
+    from simplejson import loads
 
 
 
@@ -61,7 +61,7 @@ class VideozerResolver(Plugin, UrlResolver, PluginSettings):
             r = re.finditer('"l".*?:.*?"(.+?)".+?"u".*?:.*?"(.+?)"', html)
             chosen_res = 0
             stream_url = False
-        
+
             if r:
                 for match in r:
                     res, url = match.groups()
@@ -102,21 +102,24 @@ class VideozerResolver(Plugin, UrlResolver, PluginSettings):
                     sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["login"]["euno"],aData["cfg"]["login"]["pepper"], key,10,12254,95369,39,21544,545555) + '&'
                 elif(int(item[1])==6):
                     sLink = sLink + item[0]+ '=' + self.__decrypt(aData["cfg"]["login"]["sugar"],aData["cfg"]["ads"]["lightbox2"]["time"], key,22,66595,17447,52,66852,400595) + '&'
-        
+
             sLink = sLink + "start=0"
 
             sMediaLink = stream_url_part1 + '&' + sLink
 
             return sMediaLink
+
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                   (e.code, web_url))
+                                     (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log('**** Videozer Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]VIDEOZER[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False  
+            return self.unresolvable(code=0, msg=e)
+
+
     def get_url(self, host, media_id):
             return 'http://www.videozer.com/video/%s' % (media_id)
 

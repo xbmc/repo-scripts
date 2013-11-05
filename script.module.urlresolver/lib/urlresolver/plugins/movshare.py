@@ -28,6 +28,8 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
+from lib import unwise
+from lib import jsunpack
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
@@ -40,7 +42,6 @@ class MovshareResolver(Plugin, UrlResolver, PluginSettings):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
-        
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
@@ -56,37 +57,42 @@ class MovshareResolver(Plugin, UrlResolver, PluginSettings):
             """
             r = re.search('<param name="src" value="(.+?)"', html)
             if not r:
-                r = re.search('flashvars.file="(.+?)"', html)
+                html = unwise.unwise_process(html)
+                html = re.compile(r'eval\(function\(p,a,c,k,e,(?:d|r)\).+?\.split\(\'\|\'\).*?\)\)').search(html).group()
+                html = jsunpack.unpack(html)
+                filekey = unwise.resolve_var(html, "flashvars.filekey")
+                
+                #get stream url from api
+                api = 'http://www.movshare.net/api/player.api.php?key=%s&file=%s' % (filekey, media_id)
+                html = self.net.http_GET(api).content
+                r = re.search('url=(.+?)&title', html)
             if r:
                 stream_url = r.group(1)
             else:
                 raise Exception ('File Not Found or removed')
-                                    
+            
             return stream_url
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log_error('**** Movshare Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]MOVSHARE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False
-        
+            return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
         return 'http://www.movshare.net/video/%s' % media_id
-        
-        
+
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/video/([0-9a-z]+)', url)
+        r = re.search('//(.+?)/(?:video|embed)/([0-9a-z]+)', url)
         if r:
             return r.groups()
         else:
             return False
 
-
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match('http://(?:www.)?movshare.net/video/',
+        return re.match('http://(?:www.)?movshare.net/(?:video|embed)/',
                         url) or 'movshare' in host

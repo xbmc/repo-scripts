@@ -1,5 +1,5 @@
 '''
-tunepk urlresolver plugin
+videotanker urlresolver plugin
 Copyright (C) 2013 icharania
 
 This program is free software: you can redistribute it and/or modify
@@ -23,14 +23,14 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import re
-import urllib2, urllib
+import urllib2
 from urlresolver import common
 
-logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
-class TunePkResolver(Plugin, UrlResolver, PluginSettings):
+class VideoTankerResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "tune.pk"
+    name = 'videotanker'
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -42,21 +42,14 @@ class TunePkResolver(Plugin, UrlResolver, PluginSettings):
             web_url = self.get_url(host, media_id)
             link = self.net.http_GET(web_url).content
 
-            if link.find('404 Not Found') >= 0:
+            if link.find('no video details found') >= 0:
                 err_title = 'Content not available.'
                 err_message = 'The requested video was not found.'
                 common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
                 xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+__name__+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
                 return self.unresolvable(1, err_message)
 
-            videoUrl = []
-            # borrowed from AJ's turtle-x
-            html = link.replace('\n\r', '').replace('\r', '').replace('\n', '')
-            sources = re.compile("{(.+?)}").findall(re.compile("sources:(.+?)]").findall(html)[0])
-            for source in sources:
-                video_link = str(re.compile('file[: ]*"(.+?)"').findall(source)[0])
-                videoUrl.append(video_link)
-
+            videoUrl = re.compile("(?:hq_video_file|normal_video_file|mobile_video_file)\s+\=\s+(?:\'|\")([\w\.\/\:\-\?\=]+)(?:\'|\")").findall(link)
 
             vUrl = ''
             vUrlsCount = len(videoUrl)
@@ -81,9 +74,8 @@ class TunePkResolver(Plugin, UrlResolver, PluginSettings):
         except Exception, e:
             return self.unresolvable(0, str(e))
 
-
     def get_url(self, host, media_id):
-        return 'http://embed.tune.pk/play/%s' % media_id
+        return 'http://videotanker.co/player/embed_player.php?vid=%s' % media_id
 
     def get_host_and_id(self, url):
         r = re.search('//(.+?)/player/embed_player\.php\?vid\=(\w+)', url)
@@ -91,12 +83,12 @@ class TunePkResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match('http://(www\.)?tune.pk/player/embed_player\.php\?vid\=(\w+)', url) or \
+        return re.match('http://(www\.)?videotanker.co/player/embed_player\.php\?vid\=(\w+)', url) or \
                self.name in host
 
     #PluginSettings methods
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
         xml += '<setting label="Video Quality" id="%s_quality" ' % self.__class__.__name__
-        xml += 'type="enum" values="High|Medium|Low" default="0" />\n'
+        xml += 'type="enum" values="High|Medium|Low" default="1" />\n'
         return xml
