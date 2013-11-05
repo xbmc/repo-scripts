@@ -39,15 +39,20 @@ class crunchyrollResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html=self.net.http_GET('http://www.crunchyroll.com/android_rpc/?req=RpcApiAndroid_GetVideoWithAcl&media_id=%s'%media_id,{'Host':'www.crunchyroll.com',
-             'X-Device-Uniqueidentifier':'ffffffff-931d-1f73-ffff-ffffaf02fc5f',
-             'X-Device-Manufacturer':'HTC',
-             'X-Device-Model':'HTC Desire',
-             'X-Application-Name':'com.crunchyroll.crunchyroid',
-             'X-Device-Product':'htc_bravo',
-             'X-Device-Is-GoogleTV':'0'}).content
-        mp4=re.compile(r'"video_url":"(.+?)","h"').findall(html.replace('\\',''))[0]
-        return mp4
+        try:
+            html=self.net.http_GET('http://www.crunchyroll.com/android_rpc/?req=RpcApiAndroid_GetVideoWithAcl&media_id=%s'%media_id,{'Host':'www.crunchyroll.com',
+                 'X-Device-Uniqueidentifier':'ffffffff-931d-1f73-ffff-ffffaf02fc5f',
+                 'X-Device-Manufacturer':'HTC',
+                 'X-Device-Model':'HTC Desire',
+                 'X-Application-Name':'com.crunchyroll.crunchyroid',
+                 'X-Device-Product':'htc_bravo',
+                 'X-Device-Is-GoogleTV':'0'}).content
+            mp4=re.compile(r'"video_url":"(.+?)","h"').findall(html.replace('\\',''))[0]
+            return mp4
+        except Exception, e:
+            common.addon.log_error('**** Crunchyroll Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]CRUNCHYROLL[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
         return 'http://www.crunchyroll.com/android_rpc/?req=RpcApiAndroid_GetVideoWithAcl&media_id=%s' % media_id

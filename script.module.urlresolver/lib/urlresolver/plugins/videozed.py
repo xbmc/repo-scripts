@@ -91,11 +91,10 @@ class VideozedResolver(Plugin, UrlResolver, PluginSettings):
         except Exception, e:
             common.addon.log('**** Videozed Error occured: %s' % e)
             common.addon.show_small_popup('Error', str(e), 5000, '')
-            return False
+            return self.unresolvable(code=0, msg=e)
             
         
     def get_url(self, host, media_id):
-        print 'Videozed: in get_url %s %s' % (host, media_id)
         return 'http://www.videozed.net/%s' % media_id 
         
 

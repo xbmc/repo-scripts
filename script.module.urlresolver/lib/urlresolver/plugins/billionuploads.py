@@ -138,7 +138,7 @@ class billionuploads(Plugin, UrlResolver, PluginSettings):
                     dialog.update(50)
                 
                 data.update({'submit_btn':''})
-                r = re.search('document\.getElementById\(\'grease\'\)\.innerHTML=decodeURIComponent\(\"(.+?)\"\);', html)
+                r = re.search('document\.getElementById\(\'.+\'\)\.innerHTML=decodeURIComponent\(\"(.+?)\"\);', html)
                 if r:
                     r = re.findall('type="hidden" name="(.+?)" value="(.+?)">', urllib.unquote(r.group(1)).decode('utf8') )
                     for name, value in r:

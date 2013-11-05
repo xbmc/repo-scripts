@@ -42,7 +42,7 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_media_url(self, host, media_id):
-        print '180upload: in get_media_url %s %s' % (host, media_id)
+        common.addon.log('180upload: in get_media_url %s %s' % (host, media_id))
         web_url = self.get_url(host, media_id)
         try:
             dialog = xbmcgui.DialogProgress()
@@ -51,7 +51,7 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
         
             puzzle_img = os.path.join(datapath, "180_puzzle.png")
         
-            print '180Upload - Requesting GET URL: %s' % web_url
+            common.addon.log('180Upload - Requesting GET URL: %s' % web_url)
             html = net.http_GET(web_url).content
 
             dialog.update(50)
@@ -100,13 +100,13 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
                 if solution:
                     data.update({'adcopy_challenge': hugekey,'adcopy_response': solution})
 
-            print '180Upload - Requesting POST URL: %s' % web_url
+            common.addon.log('180Upload - Requesting POST URL: %s' % web_url)
             html = net.http_POST(web_url, data).content
             dialog.update(100)
         
-            link = re.search('<a href="(.+?)" onclick="thanks\(\)">Download now!</a>', html)
+            link = re.search('id="lnk_download" href="([^"]+)', html)
             if link:
-                print '180Upload Link Found: %s' % link.group(1)
+                common.addon.log('180Upload Link Found: %s' % link.group(1))
                 return link.group(1)
             else:
                 raise Exception('Unable to resolve 180Upload Link')
@@ -115,20 +115,20 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log_error('**** 180upload Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]180UPLOAD[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False
+            return self.unresolvable(code=0, msg=e)
 
         
     def get_url(self, host, media_id):
-        print '180upload: in get_url %s %s' % (host, media_id)
+        common.addon.log('180upload: in get_url %s %s' % (host, media_id))
         return 'http://www.180upload.com/%s' % media_id 
         
         
     def get_host_and_id(self, url):
-        print '180upload: in get_host_and_id %s' % (url)
+        common.addon.log('180upload: in get_host_and_id %s' % (url))
 
         r = re.search('http://(.+?)/embed-([\w]+)-', url)
         if r:

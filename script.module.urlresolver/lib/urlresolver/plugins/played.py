@@ -37,14 +37,27 @@ class playedResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html=self.net.http_GET(web_url,{'host':'played.to'}).content
-        id=re.compile('<input type="hidden" name="id" value="(.+?)">').findall(html)[0]
-        fname=re.compile('<input type="hidden" name="fname" value="(.+?)">').findall(html)[0]
-        hash=re.compile('<input type="hidden" name="hash" value="(.+?)">').findall(html)[0]
-        data={'op':'download1','usr_login':'','id':id,'fname':fname,'referer':'','hash':hash,'imhuman':'Continue+to+Video'}
-        html=self.net.http_POST(web_url,data).content
-        played=re.compile('file: "(.+?)"').findall(html)[0]
-        return played
+        try:
+            html=self.net.http_GET(web_url,{'host':'played.to'}).content
+            id=re.compile('<input type="hidden" name="id" value="(.+?)">').findall(html)[0]
+            fname=re.compile('<input type="hidden" name="fname" value="(.+?)">').findall(html)[0]
+            hash=re.compile('<input type="hidden" name="hash" value="(.+?)">').findall(html)[0]
+            data={'op':'download1','usr_login':'','id':id,'fname':fname,'referer':'','hash':hash,'imhuman':'Continue+to+Video'}
+            html=self.net.http_POST(web_url,data).content
+            played=re.compile('file: "(.+?)"').findall(html)[0]
+            return played
+
+        except urllib2.URLError, e:
+            common.addon.log_error('Played: got http error %d fetching %s' %
+                                  (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return self.unresolvable(code=3, msg=e)
+        
+        except Exception, e:
+            common.addon.log_error('**** Played Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]PLAYED[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
+
 
     def get_url(self, host, media_id):
             return 'http://played.to/%s' % (media_id)

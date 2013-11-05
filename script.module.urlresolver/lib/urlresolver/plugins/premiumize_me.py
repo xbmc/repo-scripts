@@ -55,10 +55,9 @@ class PremiumizeMeResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
             response = json.loads(response)
             link = response['result']['location']
         except Exception, e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print(exc_type, fname, exc_tb.tb_lineno)
-            return False
+            common.addon.log_error('**** Premiumize Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]PREMIUMIZE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
         
         common.addon.log('Premiumize.me: Resolved to %s' %link)
         return link
@@ -90,6 +89,7 @@ class PremiumizeMeResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false':
             return False
+        if self.get_setting('login') == 'false': return False 
         for pattern in self.get_all_hosters():
             if pattern.findall(url):
                 return True
@@ -98,6 +98,8 @@ class PremiumizeMeResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     #PluginSettings methods
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
+        xml += '<setting id="PremiumizeMeResolver_login" '
+        xml += 'type="bool" label="login" default="false"/>\n'        
         xml += '<setting id="PremiumizeMeResolver_username" enable="eq(-1,true)" '
         xml += 'type="text" label="username" default=""/>\n'
         xml += '<setting id="PremiumizeMeResolver_password" enable="eq(-2,true)" '

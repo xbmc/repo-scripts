@@ -35,7 +35,7 @@ class GorillavidResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
         #e.g. http://gorillavid.com/vb80o1esx2eb
-        self.pattern = 'http://((?:www.)?gorillavid.(?:in|com))/([0-9a-zA-Z]+)'
+        self.pattern = 'http://((?:www.)?gorillavid.(?:in|com))/(?:embed-)?([0-9a-zA-Z]+)'
 
 
     def get_media_url(self, host, media_id):

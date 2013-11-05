@@ -16,71 +16,66 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import re, urllib, urllib2, os
 from t0mm0.common.net import Net
+from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2, re, os
-from urlresolver import common
+from lib import unwise
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
-
-class VidstreamResolver(Plugin, UrlResolver, PluginSettings):
+class NowvideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "vidstream"
+    name = "nowvideo"
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
-        #e.g. http://vidstream.in/xdfaay6ccwqj
-        self.pattern = 'http://((?:www.)?vidstream.in)/(.*)'
-
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+        #find key
         try:
-            resp = self.net.http_GET(web_url)
-
-            html = resp.content
-            post_url = resp.get_url()
-
-            # get post vars
-            form_values = {}
-            for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
-                form_values[i.group(1)] = i.group(2)
-            html = self.net.http_POST(post_url, form_data=form_values).content
-
-            # get stream url
-            pattern = 'file:\s*"([^"]+)",'
-            r = re.search(pattern, html)
+            html = self.net.http_GET(web_url).content
+            html = unwise.unwise_process(html)
+            filekey = unwise.resolve_var(html, "flashvars.filekey")
+            
+            #get stream url from api
+            api = 'http://www.nowvideo.sx/api/player.api.php?key=%s&file=%s' % (filekey, media_id)
+            html = self.net.http_GET(api).content
+            r = re.search('url=(.+?)&title', html)
             if r:
-                return r.group(1)
-
-            raise Exception ('File Not Found or removed')
+                stream_url = urllib.unquote(r.group(1))
+            else:
+                r = re.search('file no longer exists',html)
+                if r:
+                    raise Exception ('File Not Found or removed')
+                raise Exception ('Failed to parse url')
+                
+            return stream_url
         except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                   (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+            common.addon.log_error('Nowvideo: got http error %d fetching %s' %
+                                    (e.code, web_url))
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
-            common.addon.log('**** Vidstream Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]VIDSTREAM[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            common.addon.log_error('**** Nowvideo Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]NOVAMOV[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
-            return 'http://vidstream.in/%s' % (media_id)
+        return 'http://www.nowvideo.sx/video/%s' % media_id
 
     def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
+        r = re.search('http://(www.|embed.nowvideo.(?:eu|sx))/(?:video/|embed.php\?v=([0-9a-z]+)&width)', url) 
         if r:
             return r.groups()
         else:
             return False
 
-
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match(self.pattern, url) or self.name in host
+        return re.match('http://(www.|embed.)?nowvideo.(?:eu|sx)/(video/|embed.php\?)(?:[0-9a-z]+|width)', url) or 'nowvideo' in host

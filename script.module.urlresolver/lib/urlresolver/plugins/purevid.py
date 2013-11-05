@@ -59,9 +59,7 @@ class purevid(Plugin, UrlResolver, SiteAuth, PluginSettings):
             try:
                 html = self.net.http_GET(web_url).content
             except urllib2.URLError, e:
-                common.addon.log_error(self.name + '- got http error %d fetching %s' %
-                                       (e.code, web_url))
-                self.unresolvable()
+                raise Exception ('got http error %d fetching %s' % (e.code, web_url))
             data = json.loads(html)                
             if self.get_setting('quality') == '0' :
                 url = data['clip']['bitrates'][-1]['url']
@@ -80,7 +78,7 @@ class purevid(Plugin, UrlResolver, SiteAuth, PluginSettings):
         except Exception, e:
             common.addon.log('**** Purevid Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]PUREVID[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(0,str(e))
+            return self.unresolvable(code=0, msg=e)
                                                                                             
     def get_url(self, host, media_id):
         return 'http://www.purevid.com/?m=video_info_embed_flv&id=%s' % media_id

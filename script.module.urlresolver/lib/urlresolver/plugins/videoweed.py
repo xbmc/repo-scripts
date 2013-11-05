@@ -24,6 +24,7 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import xbmcgui
+from lib import unwise
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
@@ -43,16 +44,12 @@ class VideoweedResolver(Plugin, UrlResolver, PluginSettings):
         #grab stream details
         try:
             html = self.net.http_GET(web_url).content
+            html = unwise.unwise_process(html)
+            filekey = unwise.resolve_var(html, "flashvars.filekey")
 
-            r = re.search('flashvars.domain="(.+?)".*flashvars.file="(.+?)".*' + 
-                      'flashvars.filekey="(.+?)"', html, re.DOTALL)
             #use api to find stream address
-            if r:
-                domain, fileid, filekey = r.groups()
-                api_call = ('%s/api/player.api.php?user=undefined&codes=1&file=%s' +
-                            '&pass=undefined&key=%s') % (domain, fileid, filekey)
-            else:
-                raise Exception ('File Not Found or removed')
+            api_call = ('http://www.videoweed.es/api/player.api.php?user=undefined&codes=1&file=%s' +
+                        '&pass=undefined&key=%s') % (media_id, filekey)
 
             api_html = self.net.http_GET(api_call).content
             rapi = re.search('url=(.+?)&title=', api_html)
@@ -60,23 +57,22 @@ class VideoweedResolver(Plugin, UrlResolver, PluginSettings):
                 stream_url = rapi.group(1)
             else:
                 raise Exception ('File Not Found or removed')
+            
             return stream_url
 
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return self.unresolvable() 
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log('**** Videoweed Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]VIDEOWEED[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable() 
-
+            return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
         return 'http://www.videoweed.es/file/%s' % media_id
-        
-        
+
     def get_host_and_id(self, url):
         r = re.search('//(?:embed.)?(.+?)/(?:video/|embed.php\?v=|file/)' + 
                       '([0-9a-z]+)', url)
@@ -85,9 +81,7 @@ class VideoweedResolver(Plugin, UrlResolver, PluginSettings):
         else:
             return False
 
-
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.|embed.)?videoweed.(?:es|com)/(video/|file|embed.php\?|file/)' +
                         '(?:[0-9a-z]+|width)', url) or 'videoweed' in host
-

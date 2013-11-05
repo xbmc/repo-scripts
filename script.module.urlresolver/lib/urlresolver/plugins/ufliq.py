@@ -47,7 +47,6 @@ class UfliqResolver(Plugin, UrlResolver, PluginSettings):
             resp = self.net.http_GET(web_url)
             html = resp.content
             post_url = resp.get_url()
-            print post_url
 
             form_values = {}
             for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
@@ -64,11 +63,11 @@ class UfliqResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log('**** ufliq Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]UFLIQ[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False
+            return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
             return 'http://www.ufliq.com/embed-%s.html' % (media_id)

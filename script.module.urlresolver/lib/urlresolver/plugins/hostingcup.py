@@ -40,30 +40,35 @@ class HostingcupResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id)
         try:
             html = self.net.http_GET(web_url).content
+            page = ''.join(html.splitlines()).replace('\t','')
+            r = re.search("return p\}\(\'(.+?)\',\d+,\d+,\'(.+?)\'", page)
+            if r:
+                p, k = r.groups()
+            else:
+                raise Exception ('packed javascript embed code not found')
+    
+            decrypted_data = unpack_js(p, k)
+            r = re.search('file.\',.\'(.+?).\'', decrypted_data)
+            if not r:
+                r = re.search('src="(.+?)"', decrypted_data)
+            if r:
+                stream_url = r.group(1)
+            else:
+                raise Exception ('stream url not found')
+    
+            return stream_url
+        
         except urllib2.URLError, e:
-            common.addon.log_error(self.name + '- got http error %d fetching %s' %
-                                   (e.code, web_url))
-            return False
+            common.addon.log_error('Hostingcup: got http error %d fetching %s' %
+                                  (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return self.unresolvable(code=3, msg=e)
+        
+        except Exception, e:
+            common.addon.log_error('**** Hostingcup Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]HOSTINGCUP[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
 
-        page = ''.join(html.splitlines()).replace('\t','')
-        r = re.search("return p\}\(\'(.+?)\',\d+,\d+,\'(.+?)\'", page)
-        if r:
-            p, k = r.groups()
-        else:
-            common.addon.log_error(self.name + '- packed javascript embed code not found')
-            return False
-
-        decrypted_data = unpack_js(p, k)
-        r = re.search('file.\',.\'(.+?).\'', decrypted_data)
-        if not r:
-            r = re.search('src="(.+?)"', decrypted_data)
-        if r:
-            stream_url = r.group(1)
-        else:
-            common.addon.log_error(self.name + '- stream url not found')
-            return False
-
-        return stream_url
 
     def get_url(self, host, media_id):
         return 'http://vidpe.com/%s' % media_id

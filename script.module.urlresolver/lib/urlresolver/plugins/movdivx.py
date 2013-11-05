@@ -45,59 +45,62 @@ class MovDivxResolver(Plugin, UrlResolver, PluginSettings):
 
         try:
             html = self.net.http_GET(web_url).content
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return False
-        r =  'name="op" value="(.+?)">.+?'
-        r += 'name="usr_login" value="(.+?)?">.+?'
-        r += 'name="id" value="(.+?)".+?'
-        r += 'name="fname" value="(.+?)".+?'
 
-        r = re.search(r,html,re.DOTALL)
-        op,usr_login,id,fname = r.groups()
-        data =  {'op':op}
-        data['usr_login'] = usr_login
-        data['id'] = id
-        data['fname'] = fname
-        data['referer'] = web_url
-        data['method_free'] = 'Continue to Stream'
+            r =  'name="op" value="(.+?)">.+?'
+            r += 'name="usr_login" value="(.+?)?">.+?'
+            r += 'name="id" value="(.+?)".+?'
+            r += 'name="fname" value="(.+?)".+?'
+    
+            r = re.search(r,html,re.DOTALL)
+            op,usr_login,id,fname = r.groups()
+            data =  {'op':op}
+            data['usr_login'] = usr_login
+            data['id'] = id
+            data['fname'] = fname
+            data['referer'] = web_url
+            data['method_free'] = 'Continue to Stream'
 
-        try:
             html = self.net.http_POST(web_url, data).content
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return False
-        # get url from packed javascript
-        sPattern =  '<div id="player_code"><script type=(?:"|\')text/javascript(?:"|\')>'
-        sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.+?DivXBrowserPlugin.+?)</script>'
-        
-        r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
-        
-        if r:
-            sJavascript = r.group(1) + ")))"
-            sUnpacked = jsunpack.unpack(sJavascript)
-            sPattern = 'type="video/divx"src="(.+?)"custommode='
-            r = re.search(sPattern, sUnpacked)
+
+            # get url from packed javascript
+            sPattern =  '<div id="player_code"><script type=(?:"|\')text/javascript(?:"|\')>'
+            sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.+?DivXBrowserPlugin.+?)</script>'
+            
+            r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+            
             if r:
-                return r.group(1)
-        else:
-            sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>'
-            sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.*SWFObject.*)'
-            
-            r2 = re.search(sPattern, html, re.IGNORECASE)
-            
-            if r2:
-                sJavascript = r2.group(1) + ")))"
+                sJavascript = r.group(1) + ")))"
                 sUnpacked = jsunpack.unpack(sJavascript)
-                sPattern = "'file','([^']*)'";
+                sPattern = 'type="video/divx"src="(.+?)"custommode='
                 r = re.search(sPattern, sUnpacked)
                 if r:
                     return r.group(1)
+            else:
+                sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>'
+                sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.*SWFObject.*)'
                 
-            
-        return False
+                r2 = re.search(sPattern, html, re.IGNORECASE)
+                
+                if r2:
+                    sJavascript = r2.group(1) + ")))"
+                    sUnpacked = jsunpack.unpack(sJavascript)
+                    sPattern = "'file','([^']*)'";
+                    r = re.search(sPattern, sUnpacked)
+                    if r:
+                        return r.group(1)
+            raise Exception ('failed to parse link')
+
+        except urllib2.URLError, e:
+            common.addon.log_error('Movdivx: got http error %d fetching %s' %
+                                  (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return self.unresolvable(code=3, msg=e)
+        
+        except Exception, e:
+            common.addon.log_error('**** Movdivx Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]MOVDIVX[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
+
 
     def get_url(self, host, media_id):
             return 'http://movdivx.com/%s.html' % (media_id)

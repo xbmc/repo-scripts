@@ -22,10 +22,10 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import re, urllib2, os
 from urlresolver import common
+from lib import unwise
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
 
 class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -36,7 +36,6 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
 
-
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         try:
@@ -45,39 +44,34 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
             if r:
                 stream_url = r.group(1)
             else:
-                r = re.search('flashvars.filekey="(.+)"', html)
+                html = unwise.unwise_process(html)
+                filekey = unwise.resolve_var(html, "flashvars.filekey")
+                
+                player_url = 'http://www.divxstage.eu/api/player.api.php?user=undefined&key='+filekey+'&pass=undefined&codes=1&file='+media_id
+                html = self.net.http_GET(player_url).content
+                r = re.search('url=(.+?)&', html)
                 if r:
-                    file_key = r.group(1)
-                    player_url = 'http://'+host+'/api/player.api.php?user=undefined&key='+file_key+'&pass=undefined&codes=1&file='+media_id
-                    html = self.net.http_GET(player_url).content
-                    r = re.search('url=(.+?)&', html)
-                    if r:
-                        stream_url = r.group(1)
-                    else:
-                        raise Exception ('File Not Found or removed')
+                    stream_url = r.group(1)
                 else:
                     raise Exception ('File Not Found or removed')
+                
             return stream_url
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log_error('**** Divxstage Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]DIVXSTAGE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False
-
+            return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
-        print 'http://www.divxstage.eu/video/%s' % media_id
+        common.addon.log('http://www.divxstage.eu/video/%s' % media_id)
         return 'http://www.divxstage.eu/video/%s' % media_id
-        
-        
-        
-        
+
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/(?:video/([0-9a-z]+)|embed.php\?v=([0-9a-z]+)&width)', url)
+        r = re.search('//(.+?)/(?:video/([0-9a-z]+)|[\?&]v=([^\?&]+))', url)
         if r and 'embed' in r.group(1):
             return r.group(1),r.group(3)
         else:
@@ -85,8 +79,7 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
         if not r:
             return False
 
-
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         #http://embed.divxstage.eu/embed.php?v=8da26363e05fd&width=746&height=388&c=000
-        return re.match('http://(?:www.|embed.)?divxstage.(?:eu|net)/' or 'divxstage' in host,url)
+        return re.match('http://(?:www.|embed.)?divxstage.(?:eu|net)/', url) or 'divxstage' in host

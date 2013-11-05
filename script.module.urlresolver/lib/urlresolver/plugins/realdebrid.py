@@ -56,7 +56,7 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
             url = 'https://real-debrid.com/ajax/unrestrict.php?link=%s' % media_id.replace('|User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0','')
             source = self.net.http_GET(url).content
             jsonresult = json.loads(source)
-            print str(jsonresult)
+            #print str(jsonresult)
             if 'generated_links' in jsonresult :
                 generated_links = jsonresult['generated_links']
                 line            = []
@@ -95,11 +95,14 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     def get_all_hosters(self):
         if self.hosters is None:
-            url = 'http://www.real-debrid.com/api/regex.php?type=all'
-            response = self.net.http_GET(url).content.lstrip('/').rstrip('/g')
-            delim = '/g,/|/g\|-\|/'
-            self.hosters = [re.compile(host) for host in re.split(delim, response)]
-            common.addon.log_debug( 'RealDebrid hosters : %s' %self.hosters)
+            try :
+                url = 'http://www.real-debrid.com/api/regex.php?type=all'
+                response = self.net.http_GET(url).content.lstrip('/').rstrip('/g')
+                delim = '/g,/|/g\|-\|/'
+                self.hosters = [re.compile(host) for host in re.split(delim, response)]
+            except:
+                self.hosters = []
+        common.addon.log_debug( 'RealDebrid hosters : %s' %self.hosters)
         return self.hosters
 
     def valid_url(self, url, host):
@@ -115,7 +118,7 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         return False
 
     def checkLogin(self):
-        url = 'http://real-debrid.com/lib/api/account.php'
+        url = 'https://real-debrid.com/api/account.php'
         if not os.path.exists(self.cookie_file):
                return True
         self.net.set_cookies(self.cookie_file)

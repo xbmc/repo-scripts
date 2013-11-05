@@ -44,57 +44,43 @@ class VidbullResolver(Plugin, UrlResolver, PluginSettings):
         try:
             url = self.get_url(host, media_id)
             html = self.net.http_GET(url).content
-            check = re.compile('File Not Found').findall(html)
-            if check:
-                raise Exception ('File Not Found or removed')
 
             data = {}
-            r = re.findall(r'type="hidden" name="((?!(?:.+premium)).+?)"\s* value="?(.+?)">', html)
+            html = re.search('<Form(.+?)/Form', html, re.DOTALL).group(1)
+            r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.+?)"', html)
             for name, value in r:
                 data[name] = value
 
-            common.addon.show_countdown(4, title='Muchshare', text='Loading Video...')
+            common.addon.show_countdown(4, title='Vidbull', text='Loading Video...')
             html = net.http_POST(url, data).content
 
-            sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
-            sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
-            sPattern += '\s+?</script>'
+            sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>eval\(function\(p,a,c,k,e,[dr]\)(?!.+player_ads.+).+?</script>'
             r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
             if r:
-    		sJavascript = r.group(1)
-		sUnpacked = jsunpack.unpack(sJavascript)
-		sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)'
-		sPattern += '"custommode='
-		r = re.search(sPattern, sUnpacked)
-		if r:
-		    return r.group(1)
-		raise Exception ('File Not Found or removed')
+                sJavascript = r.group()
+                sUnpacked = jsunpack.unpack(sJavascript)
+                stream_url = re.search('[^\w\.]file[\"\']?\s*[:,]\s*[\"\']([^\"\']+)', sUnpacked)
+                if stream_url:
+                    return stream_url.group(1)
+            raise Exception ('File Not Found or removed')
 
-            else: 
-                num = re.compile('event\|(.+?)\|aboutlink').findall(html)
-                pre = 'http://'+num[0]+'.vidbull.com:182/d/'
-                preb = re.compile('image\|(.+?)\|video\|(.+?)\|').findall(html)
-                for ext, link in preb:
-                    r = pre+link+'/video.'+ext
-                    return r
-                
-                
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return False
+            return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log('**** Vidbull Error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]VIDBULL[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return False
-    
+            return self.unresolvable(code=0, msg=e)
+
+
     def get_url(self, host, media_id):
         return 'http://www.vidbull.com/%s' % media_id 
-        
+
 
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/([0-9a-zA-Z]+)',url)
+        r = re.search('//(.+?)/(?:embed-)?([0-9a-zA-Z]+)',url)
         if r:
             return r.groups()
         else:
@@ -104,6 +90,6 @@ class VidbullResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www.)?vidbull.com/' +
+        return (re.match('http://(www.)?vidbull.com/(?:embed-)?' +
                          '[0-9A-Za-z]+', url) or
                          'vidbull' in host)

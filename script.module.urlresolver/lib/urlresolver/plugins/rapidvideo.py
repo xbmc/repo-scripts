@@ -44,18 +44,21 @@ class RapidvideoResolver(Plugin, UrlResolver, PluginSettings):
 
         try:
             html = self.net.http_GET(web_url).content
+
+            # get stream url
+            sPattern = "so.addVariable\(\s*'file'\s*,\s*'([^']+)'\s*\)"
+            return re.search(sPattern, html).group(1)
+
         except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return False
-
-        # get stream url
-        sPattern = "so.addVariable\(\s*'file'\s*,\s*'([^']+)'\s*\)"
-        r = re.search(sPattern, html)
-        if r:
-            return r.group(1)
-
-        return False
+            common.addon.log_error('Rapidvideo: got http error %d fetching %s' %
+                                  (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return self.unresolvable(code=3, msg=e)
+        
+        except Exception, e:
+            common.addon.log_error('**** Rapidvideo Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]RAPIDVIDEO[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
             return 'http://rapidvideo.com/view/%s' % (media_id)

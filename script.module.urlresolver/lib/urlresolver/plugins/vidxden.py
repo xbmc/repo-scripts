@@ -80,7 +80,6 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
             html = resp.content
             try: os.remove(img)
             except: pass
-            try:
                 filename=re.compile('<input name="fname" type="hidden" value="(.+?)">').findall(html)[0]
                 noscript=re.compile('<iframe src="(.+?)"').findall(html)[0]
                 check = self.net.http_GET(noscript).content
@@ -93,35 +92,37 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
                 if puzzle:
                     data={'adcopy_response':urllib.quote_plus(puzzle),'adcopy_challenge':hugekey,'op':'download1','method_free':'1','usr_login':'','id':media_id,'fname':filename}
                     html = self.net.http_POST(resp.get_url(),data).content
-            except Exception, e:
-                print e
-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]VIDXDEN[/COLOR][/B],[COLOR red]No such file or the file has been removed due to copyright infringement issues[/COLOR],2500,'+logo+')')
-                pass
-        except urllib2.URLError, e:
-            common.addon.log_error('vidxden: got http error %d fetching %s' %
-                                  (e.code, web_url))
-            return False
-       
-        #find packed javascript embed code
-        r = re.search('return p}\(\'(.+?);\',\d+,\d+,\'(.+?)\'\.split',html)
-        if r:
-            p, k = r.groups()
-        else:
-            common.addon.log_error('vidxden: packed javascript embed code not found')
-        try: decrypted_data = unpack_js(p, k)
-        except: pass
-        
-        #First checks for a flv url, then the if statement is for the avi url
-        r = re.search('file.\',.\'(.+?).\'', decrypted_data)
-        if not r:
-            r = re.search('src="(.+?)"', decrypted_data)
-        if r:
-            stream_url = r.group(1)
-        else:
-            common.addon.log_error('vidxden: stream url not found')
-            return False
 
-        return "%s|User-Agent=%s"%(stream_url,'Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0')
+            #find packed javascript embed code
+            r = re.search('return p}\(\'(.+?);\',\d+,\d+,\'(.+?)\'\.split',html)
+            if r:
+                p, k = r.groups()
+            else:
+                common.addon.log_error('vidxden: packed javascript embed code not found')
+            try: decrypted_data = unpack_js(p, k)
+            except: pass
+        
+            #First checks for a flv url, then the if statement is for the avi url
+            r = re.search('file.\',.\'(.+?).\'', decrypted_data)
+            if not r:
+                r = re.search('src="(.+?)"', decrypted_data)
+            if r:
+                stream_url = r.group(1)
+            else:
+                raise Exception ('vidxden: stream url not found')
+
+            return "%s|User-Agent=%s"%(stream_url,'Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0')
+
+        except urllib2.URLError, e:
+            common.addon.log_error('Vidxden: got http error %d fetching %s' %
+                                  (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            return self.unresolvable(code=3, msg=e)
+
+        except Exception, e:
+            common.addon.log_error('**** Vidxden Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]VIDXDEN[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            return self.unresolvable(code=0, msg=e)
 
         
     def get_url(self, host, media_id):
