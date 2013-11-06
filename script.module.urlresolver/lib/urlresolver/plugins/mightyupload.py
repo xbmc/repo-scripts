@@ -42,7 +42,7 @@ class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
         try:
             html = self.net.http_GET(web_url).content           
             form_values = {}
-            for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
+            for i in re.finditer('<input type="hidden" name="(.*?)" value="(.*?)"', html):
                 form_values[i.group(1)] = i.group(2)   
             html = self.net.http_POST(web_url, form_data=form_values).content
             r = re.search("<div id=\"player_code\">.*?<script type='text/javascript'>(.*?)</script>",html,re.DOTALL)
@@ -53,6 +53,8 @@ class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
                 return r_temp.group(1)
             js = jsunpack.unpack(r.group(1))
             r = re.search("'file','([^']+)'", js.replace('\\',''))
+            if not r:
+                r = re.search('"src"value="([^"]+)', js.replace('\\',''))
             if not r:
                 raise Exception ('Unable to resolve Mightyupload link. Filelink not found.')
             return r.group(1)

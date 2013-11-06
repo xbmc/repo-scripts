@@ -40,7 +40,7 @@ class vureelResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         try:
-            html=self.net.http_GET('http://www.vureel.com/playwire.php?vid=%s'%media_id).content
+            html=self.net.http_GET('http://www.vureel.com/playwire.php?vid=%s'%media_id, {'Referer': 'http://cdn.playwire.com/bolt.swf'}).content
             flv=re.findall(r'<src>(.+?)</src>',html)
             if flv:
                 return flv[0]

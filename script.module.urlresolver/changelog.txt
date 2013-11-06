@@ -1,3 +1,6 @@
+[B]Version 1.1.2[/B]
+- Vidxden bugfix
+
 [B]Version 1.1.1[/B]
 - New unwise class for new unpacking method some sites are now using
 - Added VideoTanker

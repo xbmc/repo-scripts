@@ -36,7 +36,7 @@ class DaclipsResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
         #e.g. http://daclips.com/vb80o1esx2eb
-        self.pattern = 'http://((?:www.)?daclips.(?:in|com))/(?:embed-)?([0-9a-zA-Z]+)'
+        self.pattern = 'http://((?:www.)?daclips.(?:in|com))/([0-9a-zA-Z]+)'
 
 
     def get_media_url(self, host, media_id):
@@ -45,7 +45,7 @@ class DaclipsResolver(Plugin, UrlResolver, PluginSettings):
         try:
             resp = self.net.http_GET(web_url)
             html = resp.content
-            r = re.findall(r"<title>404 - Not Found</title>",html)
+            r = re.findall(r'<span class="t" id="head_title">404 - File Not Found</span>',html)
             if r:
                 raise Exception ('File Not Found or removed')
             post_url = resp.get_url()
@@ -53,9 +53,9 @@ class DaclipsResolver(Plugin, UrlResolver, PluginSettings):
             for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
                 form_values[i.group(1)] = i.group(2)
             html = self.net.http_POST(post_url, form_data=form_values).content
-            r = re.search('file: "(.+?)"', html)
+            r = re.search('file: "http(.+?)"', html)
             if r:
-                return r.group(1)
+                return "http" + r.group(1)
             else:
                 raise Exception ('Unable to resolve Daclips link')
 

@@ -61,7 +61,7 @@ class UploadcResolver(Plugin, UrlResolver, PluginSettings):
             # modified by mscreations. get the file url from the returned javascript
             match = re.search("addVariable[(]'file','(.+?)'[)]", html, re.DOTALL + re.IGNORECASE)
             if match:
-                return match.group(1)
+                return match.group(1)+'|Referer=http%3A%2F%2Fwww.uploadc.com%2Fplayer%2Fplayer-embed.swf'
         
             raise Exception ('File Not Found or removed')
         except urllib2.URLError, e:
