@@ -43,10 +43,10 @@ class TheFileResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id)
         try:
             html = self.net.http_GET(web_url).content
-            r = re.search("<script type='text/javascript'>(.+?)</script>",html,re.DOTALL)
+            r = re.search('<script\stype=(?:"|\')text/javascript(?:"|\')>eval\(function\(p,a,c,k,e,[dr]\)(?!.+player_ads.+).+?</script>',html,re.DOTALL)
             if r:
                 js = jsunpack.unpack(r.group(1))
-                r = re.search("'file','(.+?)'", js)
+                r = re.search("'file','(.+?)'", js.replace('\\',''))
                 if r:
                     return r.group(1)
             raise Exception ('File Not Found or removed')

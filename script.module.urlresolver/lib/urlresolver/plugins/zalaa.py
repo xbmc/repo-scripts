@@ -46,34 +46,25 @@ class ZalaaResolver(Plugin, UrlResolver, PluginSettings):
 
         try:
             html = self.net.http_GET(web_url).content
-            r =  'method="POST"\s+name=\'frmdownload\'.+?"ipcount_val" value="'
-            r += '([0-9]+)".+?"op"\s+value="(.+?)".+?name="fname"\s+value="(.+?)"'
 
-            r = re.search(r,html,re.DOTALL)
-            ipcount_val,op,fname = r.groups()
-            data =  {'ipcount_val':ipcount_val}
-            data['op'] = op
-            data['usr_login'] = ''
-            data['id'] = media_id
-            data['fname'] = fname
-            data['referer'] = web_url
-            data['method_free'] = 'Slow access'
-
-            html = self.net.http_POST(web_url, data).content
-            # get url from packed javascript
-            sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
-            sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
-            sPattern += '\s+?</script>'
-            r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+            #send all form values
+            sPattern = '<input.*?name="([^"]+)".*?value=([^>]+)>'
+            r = re.findall(sPattern, html)
+            data = {}
             if r:
-                sJavascript = r.group(1)
-                sUnpacked = jsunpack.unpack(sJavascript)
-                common.addon.log(sUnpacked)
-                sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)'
-                sPattern += '"custommode='
-                r = re.search(sPattern, sUnpacked)
-                if r:
-                    return r.group(1)
+                for match in r:
+                    name = match[0]
+                    value = match[1].replace('"','')
+                    data[name] = value
+
+                html = self.net.http_POST(web_url, data).content
+            else:
+                raise Exception ('File Not Found or removed')
+
+            # modified by mscreations. get the file url from the returned javascript
+            match = re.search("addVariable[(]'file','(.+?)'[)]", html, re.DOTALL + re.IGNORECASE)
+            if match:
+                return match.group(1)+'|Referer=http%3A%2F%2Fwww.zalaa.com%2Fplayer%2Fplayer-embed.swf'
 
             raise Exception ('File Not Found or removed')
         except urllib2.URLError, e:

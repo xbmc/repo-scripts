@@ -80,18 +80,18 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
             html = resp.content
             try: os.remove(img)
             except: pass
-                filename=re.compile('<input name="fname" type="hidden" value="(.+?)">').findall(html)[0]
-                noscript=re.compile('<iframe src="(.+?)"').findall(html)[0]
-                check = self.net.http_GET(noscript).content
-                hugekey=re.compile('id="adcopy_challenge" value="(.+?)">').findall(check)[0]
-                headers= {'User-Agent':'Mozilla/6.0 (Macintosh; I; Intel Mac OS X 11_7_9; de-LI; rv:1.9b4) Gecko/2012010317 Firefox/10.0a4',
-                         'Host':'api.solvemedia.com','Referer':resp.get_url(),'Accept':'image/png,image/*;q=0.8,*/*;q=0.5'}
-                open(img, 'wb').write( self.net.http_GET("http://api.solvemedia.com%s"%re.compile('<img src="(.+?)"').findall(check)[0]).content)
-                solver = InputWindow(captcha=img)
-                puzzle = solver.get()
-                if puzzle:
-                    data={'adcopy_response':urllib.quote_plus(puzzle),'adcopy_challenge':hugekey,'op':'download1','method_free':'1','usr_login':'','id':media_id,'fname':filename}
-                    html = self.net.http_POST(resp.get_url(),data).content
+            filename=re.compile('<input name="fname" type="hidden" value="(.+?)">').findall(html)[0]
+            noscript=re.compile('<iframe src="(.+?)"').findall(html)[0]
+            check = self.net.http_GET(noscript).content
+            hugekey=re.compile('id="adcopy_challenge" value="(.+?)">').findall(check)[0]
+            headers= {'User-Agent':'Mozilla/6.0 (Macintosh; I; Intel Mac OS X 11_7_9; de-LI; rv:1.9b4) Gecko/2012010317 Firefox/10.0a4',
+                        'Host':'api.solvemedia.com','Referer':resp.get_url(),'Accept':'image/png,image/*;q=0.8,*/*;q=0.5'}
+            open(img, 'wb').write( self.net.http_GET("http://api.solvemedia.com%s"%re.compile('<img src="(.+?)"').findall(check)[0]).content)
+            solver = InputWindow(captcha=img)
+            puzzle = solver.get()
+            if puzzle:
+                data={'adcopy_response':urllib.quote_plus(puzzle),'adcopy_challenge':hugekey,'op':'download1','method_free':'1','usr_login':'','id':media_id,'fname':filename}
+                html = self.net.http_POST(resp.get_url(),data).content
 
             #find packed javascript embed code
             r = re.search('return p}\(\'(.+?);\',\d+,\d+,\'(.+?)\'\.split',html)
