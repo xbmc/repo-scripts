@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.module.universal"
        name="Universal - An Addons Toolkit"
-       version="1.0.1"
+       version="1.0.2"
        provider-name="the-one">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -15,7 +15,7 @@
     <platform>all</platform>
 	<language></language>
 	<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-	<forum>http://www.xbmchub.com/forums/ones-xbmc-repo/9259-%5Bbeta-release%5D-universal-addons-toolkit.html</forum>
+	<forum>http://www.xunitytalk.com/</forum>
 	<website>https://github.com/the-one-/script.module.universal/wiki</website>
 	<source>https://github.com/the-one-/script.module.universal</source>
 	<email>xs2the1[at]gmail[dot]com</email>
