@@ -19,9 +19,10 @@
 
 
 
-import xbmc, xbmcaddon, os, xbmcgui, xbmcvfs
-import codecs, itertools, ntpath, random, re, sys, time, unicodedata, urllib, urllib2, urlparse, socket, shutil
-from elementtree import ElementTree as xmltree
+import xbmc, xbmcaddon, xbmcgui, xbmcvfs
+import codecs, itertools, ntpath, os, random, re, shutil, socket, sys, time
+import unicodedata, urllib, urllib2, urlparse
+import xml.etree.ElementTree as xmltree
 if sys.version_info >= (2, 7):
     import json
 else:
@@ -347,24 +348,6 @@ class Main:
 
 
     def _get_settings( self ):
-        self.LASTFM = __addon__.getSetting( "lastfm" )
-        try:
-            self.minwidth = int(__addon__.getSetting( "minwidth" ))
-        except ValueError:
-            self.minwidth = 0        
-        except Exception, e:
-            log( 'unexpected error while parsing last.fm width setting' )
-            log( e )
-            self.minwidth = 0
-        try:
-            self.minheight = int(__addon__.getSetting( "minheight" ))
-        except ValueError:
-            self.minheight = 0        
-        except Exception, e:
-            log( 'unexpected error while parsing last.fm height setting' )
-            log( e )
-            self.minheight = 0
-        self.HDASPECTONLY = __addon__.getSetting( "hd_aspect_only" )
         self.FANARTTV = __addon__.getSetting( "fanarttv" )
         self.THEAUDIODB = __addon__.getSetting( "theaudiodb" )
         self.HTBACKDROPS = __addon__.getSetting( "htbackdrops" )
@@ -556,7 +539,7 @@ class Main:
         else:
             self.LASTARTISTREFRESH = 0
             if self.ARTISTNUM == 1:
-                for cache_file in ['fanarttvartistimages.nfo', 'theaudiodbartistbio.nfo', 'lastfmartistimages.nfo', 'htbackdropsartistimages.nfo']:
+                for cache_file in ['fanarttvartistimages.nfo', 'theaudiodbartistbio.nfo', 'htbackdropsartistimages.nfo']:
                     filename = os.path.join( self.InfoDir, cache_file.decode('utf-8') )
                     if xbmcvfs.exists( filename ):
                         if time.time() - os.path.getmtime(filename) < 1209600:
@@ -578,7 +561,6 @@ class Main:
                 else:
                       self._set_property("ArtistSlideshow", self.InitDir)
         sourcelist = []
-        sourcelist.append( ['lastfm', self.LASTFM] )
         sourcelist.append( ['fanarttv', self.FANARTTV] )
         sourcelist.append( ['theaudiodb', self.THEAUDIODB] )
         sourcelist.append( ['htbackdrops', self.HTBACKDROPS] )
@@ -877,10 +859,7 @@ class Main:
 
 
     def _get_images( self, site ):
-        if site == "lastfm":
-            self.url = self.LastfmURL + '&method=artist.getImages&artist=' + urllib.quote_plus( smartUTF8(self.NAME) )
-            log( 'asking for images from: %s' %self.url )
-        elif site == 'fanarttv':
+        if site == 'fanarttv':
             if self.MBID:
                 self.url = self.fanarttvURL + self.MBID + self.fanarttvOPTIONS
                 log( 'asking for images from: %s' %self.url )
@@ -1180,9 +1159,7 @@ class Main:
         data = []
         ForceUpdate = True
         if item == "images":
-            if site == "lastfm":
-                filename = os.path.join( self.InfoDir, 'lastfmartistimages.nfo')
-            elif site == "fanarttv":
+            if site == "fanarttv":
                 filename = os.path.join( self.InfoDir, 'fanarttvartistimages.nfo')
             elif site == "theaudiodb":
                 filename = os.path.join( self.InfoDir, 'theaudiodbartistbio.nfo')
@@ -1243,21 +1220,7 @@ class Main:
             xbmcvfs.delete(filename)
             return data
         if item == "images":
-            if site == "lastfm":
-                for element in xmldata.getiterator():
-                    if element.tag == "size":
-                        if element.attrib.get('name') == "original":
-                            width = element.attrib.get('width')
-                            height = element.attrib.get('height')
-                            if ( int(width) >= self.minwidth ) and ( int(height) >= self.minheight ):
-                                if(self.HDASPECTONLY == 'true'):
-                                    aspect_ratio = float(width)/float(height)
-                                    if(aspect_ratio > 1.76 and aspect_ratio < 1.79):
-                                        log( 'aspect ration is %s. Close enough to 16:9, downloading this image' % str(aspect_ratio) )
-                                        data.append(element.text)
-                                else:
-                                    data.append(element.text)
-            elif site == "fanarttv":
+            if site == "fanarttv":
                 for element in xmldata.getiterator():
                     if element.tag == "url":
                         data.append(element.text)
