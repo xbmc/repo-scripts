@@ -1,3 +1,6 @@
+v2.0.6
+- add xml header
+
 v2.0.5
 - fix encoding issue
 

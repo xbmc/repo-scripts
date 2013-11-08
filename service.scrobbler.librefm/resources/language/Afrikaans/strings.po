@@ -24,6 +24,10 @@ msgctxt "#30004"
 msgid "Submit songs to Libre.fm"
 msgstr "Dien liedjies in by Libre.fm"
 
+msgctxt "#30005"
+msgid "Submit streaming radio to Libre.fm"
+msgstr "Stuur streaming radio na Libre.fm"
+
 msgctxt "#30006"
 msgid "Libre.fm username"
 msgstr "Libre.fm gebruikersnaam"

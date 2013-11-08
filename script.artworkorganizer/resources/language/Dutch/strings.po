@@ -22,7 +22,7 @@ msgstr "kopieeer film Fanart"
 
 msgctxt "#32002"
 msgid "Copy TV Show Fanart"
-msgstr "kopieer tv-show fanart"
+msgstr "kopieer TV serie fanart"
 
 msgctxt "#32003"
 msgid "Copy Music Video Fanart"
@@ -34,31 +34,31 @@ msgstr "kopieer artiesten fanart"
 
 msgctxt "#32005"
 msgid "Copy Movie Thumbs"
-msgstr "kopieer film thumbs"
+msgstr "kopieer film miniaturen"
 
 msgctxt "#32007"
 msgid "Copy Season Thumbs"
-msgstr "Kopieer seizoen af miniatuurafbeelding "
+msgstr "Kopieer seizoen miniaturen"
 
 msgctxt "#32008"
 msgid "Copy Episode Thumbs"
-msgstr "Kopieer aflevering afbeeldingsminiaturen"
+msgstr "Kopieer aflevering miniaturen"
 
 msgctxt "#32009"
 msgid "Copy Music Video Thumbs"
-msgstr "Kopieer Muziekvideo afbeeldingsminiaturen"
+msgstr "Kopieer Muziekvideo miniaturen"
 
 msgctxt "#32010"
 msgid "Copy Artist Thumbs"
-msgstr "Kipieer artiesten afbeeldingsminiaturen"
+msgstr "Kipieer artiesten miniaturen"
 
 msgctxt "#32011"
 msgid "Copy Album Thumbs"
-msgstr "Kopieeer album afbeeldingsminiaturen"
+msgstr "Kopieeer album miniaturen"
 
 msgctxt "#32012"
 msgid "Destination directory"
-msgstr "doelmap"
+msgstr "doelLocatie"
 
 msgctxt "#32013"
 msgid "Copy TV Show Banners"
