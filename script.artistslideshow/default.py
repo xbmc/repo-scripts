@@ -872,7 +872,7 @@ class Main:
             else:
                 return []
         elif site == "htbackdrops":
-            self.url = self.HtbackdropsQueryURL + '&keywords=' + self.NAME.replace('&','%26').replace(' ', '+') + '&dmin_w=' + str( self.minwidth ) + '&dmin_h=' + str( self.minheight )
+            self.url = self.HtbackdropsQueryURL + '&keywords=' + self.NAME.replace('&','%26').replace(' ', '+')
             log( 'asking for images from: %s' %self.url )
         images = self._get_data(site, 'images')
         return images
