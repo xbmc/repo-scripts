@@ -1,3 +1,8 @@
+[B]Version 1.2.0[/B]
+- Reverted back to simplejson import for TMDB scraper
+- Updated metacontainers folder deleting functionality
+- Added legacy check on xbmcvfs.mkdir
+
 [B]Version 1.1.0[/B]
 - Updated TMDB scraper to use v3 api
 - Added multithreaded support

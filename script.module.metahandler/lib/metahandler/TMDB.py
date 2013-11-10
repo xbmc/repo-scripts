@@ -5,10 +5,7 @@
 # also searches imdb (using http://www.imdbapi.com/) for missing info in movies or tvshows
 
 import sys
-if sys.version_info >=  (2, 7):
-    import _json as simplejson
-else:
-    import simplejson as simplejson 
+import simplejson as simplejson 
 
 import urllib, re
 from datetime import datetime
@@ -345,7 +342,7 @@ class TMDB(object):
             ##Retry without the year
             if meta and meta['total_results'] == 0 and year:
                 meta = self._search_movie(name,'')
-            if meta and meta['total_results'] != 0:
+            if meta and meta['total_results'] != 0 and meta['results'][0]:
                 tmdb_id = meta['results'][0]['id']
                 if meta['results'][0].has_key('imdb_id'):
                     imdb_id = meta['results'][0]['imdb_id']

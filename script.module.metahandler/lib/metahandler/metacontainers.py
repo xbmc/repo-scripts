@@ -73,15 +73,7 @@ class MetaContainer:
      
         common.addon.log('---------------------------------------------------------------------------------------', 2)
         #delete and re-create work_path to ensure no previous files are left over
-        if xbmcvfs.exists(self.work_path):
-            import shutil
-            try:
-                common.addon.log('Removing previous work folder: %s' % self.work_path, 2)
-                # shutil.rmtree(self.work_path)
-                xbmcvfs.rmdir(self.work_path)
-            except Exception, e:
-                common.addon.log('Failed to delete work folder: %s' % e, 4)
-                pass
+        self._del_path(self.work_path)
         
         #Re-Create work folder
         self.make_dir(self.work_path)
@@ -103,38 +95,28 @@ class MetaContainer:
             if not os.path.exists(mypath): os.makedirs(mypath)  
 
 
-    def _del_metadir(self, path=''):
-
-        if path:
-            cache_path = path
-        else:
-            catch_path = self.cache_path
-      
-        #Nuke the old meta_caches folder (if it exists) and install this meta_caches folder.
-        #Will only ever delete a meta_caches folder, so is farly safe (won't delete anything it is fed)
-
-        if xbmcvfs.exists(catch_path):
-                try:
-                    shutil.rmtree(catch_path)
-                except:
-                    common.addon.log('Failed to delete old meta', 4)
-                    return False
-                else:
-                    common.addon.log('deleted old meta', 0)
-                    return True
-
-
     def _del_path(self, path):
 
         if xbmcvfs.exists(path):
+            try:
+                common.addon.log('Removing folder: %s' % path, 2)
                 try:
-                    shutil.rmtree(path)
-                except:
-                    common.addon.log('Failed to delete old meta', 4)
-                    return False
-                else:
-                    common.addon.log('deleted old meta', 0)
-                    return True
+                    dirs, files = xbmcvfs.listdir(path)
+                    for file in files:
+                        xbmcvfs.delete(os.path.join(path, file))
+                    success = xbmcvfs.rmdir(path)
+                    if success == 0:
+                        raise
+                except Exception, e:
+                    try:
+                        common.addon.log('Failed to delete path using xbmcvfs: %s' % e, 4)
+                        common.addon.log('Attempting to remove with shutil: %s' % path, 2)
+                        shutil.rmtree(path)
+                    except:
+                        raise
+            except Exception, e:
+                common.addon.log('Failed to delete path: %s' % e, 4)
+                return False
 
 
     def _extract_zip(self, src, dest):
