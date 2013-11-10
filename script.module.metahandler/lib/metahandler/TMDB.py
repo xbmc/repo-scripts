@@ -5,10 +5,7 @@
 # also searches imdb (using http://www.imdbapi.com/) for missing info in movies or tvshows
 
 import sys
-if sys.version_info >=  (2, 7):
-    import _json as simplejson
-else:
-    import simplejson as simplejson 
+import simplejson as simplejson 
 
 import urllib, re
 from datetime import datetime

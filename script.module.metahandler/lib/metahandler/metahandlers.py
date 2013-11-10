@@ -68,7 +68,10 @@ except:
 def make_dir(mypath, dirname):
     ''' Creates sub-directories if they are not found. '''
     subpath = os.path.join(mypath, dirname)
-    if not xbmcvfs.exists(subpath): xbmcvfs.mkdirs(subpath)
+    try:
+        if not xbmcvfs.exists(subpath): xbmcvfs.mkdirs(subpath)
+    except:
+        if not os.path.exists(subpath): os.makedirs(subpath)              
     return subpath
 
 
@@ -541,7 +544,7 @@ class MetaData:
         '''                 
 
         if not xbmcvfs.exists(path):
-            xbmcvfs.mkdirs(path)
+            make_dir(path)
         
         full_path = os.path.join(path, name)
         self._dl_code(url, full_path)              
@@ -1601,6 +1604,8 @@ class MetaData:
             sql_select = "SELECT tvdb_id FROM tvshow_meta WHERE imdb_id = '%s'" % imdb_id
         elif name:
             sql_select = "SELECT tvdb_id FROM tvshow_meta WHERE title = '%s'" % name
+        else:
+            return None
             
         common.addon.log('Retrieving TVDB ID', 0)
         common.addon.log('SQL SELECT: %s' % sql_select, 0)
@@ -1964,6 +1969,7 @@ class MetaData:
             tmp_meta['title'] = name
             tmp_meta['season']  = season
             tmp_meta['episode'] = episode
+            tmp_meta['premiered'] = air_date
             
             if not watched:
                 watched = self._get_watched_episode(tmp_meta)
@@ -2245,7 +2251,7 @@ class MetaData:
         
         try:
             images = tvdb.get_show_image_choices(tvdb_id)
-        except:
+        except Exception, e:
             common.addon.log('************* Error retreiving from thetvdb.com: %s ' % e, 4)
             images = None
             pass
