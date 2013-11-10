@@ -41,6 +41,10 @@ msgctxt "#30904"
 msgid "Mark as watched from"
 msgstr "Segnare come guardato da"
 
+msgctxt "#30905"
+msgid "Automatically add shows"
+msgstr "Aggiungere programma automaticamente"
+
 msgctxt "#30911"
 msgid "connected"
 msgstr "collegato"

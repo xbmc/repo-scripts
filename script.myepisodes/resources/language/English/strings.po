@@ -41,7 +41,11 @@ msgctxt "#30904"
 msgid "Mark as watched from"
 msgstr ""
 
-#empty strings from id 30905 to 30910
+msgctxt "#30905"
+msgid "Automatically add shows"
+msgstr ""
+
+#empty strings from id 30906 to 30910
 
 msgctxt "#30911"
 msgid "connected"

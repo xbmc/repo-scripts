@@ -1,3 +1,7 @@
+1.0.8
++ Add an Auto Add shows settings.
++ Fix a memory leak
++ Fix some potential bug
 1.0.7
 + Improve the way to find a TVShow title, thanks to trogdorsmith and
 greek on the MyEpisodes forum for reporting the issue and testing "beta"

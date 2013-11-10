@@ -41,6 +41,10 @@ msgctxt "#30904"
 msgid "Mark as watched from"
 msgstr "Marcar como visto a partir del "
 
+msgctxt "#30905"
+msgid "Automatically add shows"
+msgstr ""
+
 msgctxt "#30911"
 msgid "connected"
 msgstr "conectado"

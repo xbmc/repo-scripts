@@ -78,14 +78,7 @@ class MyEpisodes(object):
             self.shows.append(int(showid))
         return True
 
-    def find_show_id(self, show_name):
-        # find a show through its name and report its id
-        search_data = urllib.urlencode({
-            'tvshow' : show_name,
-            'action' : 'Search myepisodes.com',
-            })
-        search_url = "%s/%s" % (MYEPISODE_URL, "search.php")
-        data = self.send_req(search_url, search_data)
+    def find_show_link(self, data, show_name, strict=False):
         if data is None:
             return None
         soup = BeautifulSoup(data)
@@ -94,22 +87,32 @@ class MyEpisodes(object):
         for link in soup.findAll("a", href=True):
             if link.string is None:
                 continue
-            if link.string.lower().startswith(show_name):
-                show_href = link.get('href')
-                break
+            if strict:
+                if link.string.lower() == show_name:
+                    show_href = link.get('href')
+                    break
+            else:
+                if link.string.lower().startswith(show_name):
+                    show_href = link.get('href')
+                    break
+        return show_href
+
+    def find_show_id(self, show_name):
+        # find a show through its name and report its id
+        search_data = urllib.urlencode({
+            'tvshow' : show_name,
+            'action' : 'Search myepisodes.com',
+            })
+        search_url = "%s/%s" % (MYEPISODE_URL, "search.php")
+        data = self.send_req(search_url, search_data)
+        show_href = self.find_show_link(data, show_name)
 
         if show_href is None:
             # Try to lookup the list of all the shows to find the exact title
             list_url = "%s/%s?list=%s" % (MYEPISODE_URL, "shows.php",
                     show_name[0].upper())
             data = self.send_req(list_url)
-            soup = BeautifulSoup(data)
-            show_href = None
-            for link in soup.findAll("a", href=True):
-                if link.string is None:
-                    continue
-                if link.string.lower() == show_name:
-                    show_href = link.get('href')
+            show_href = self.find_show_link(data, show_name, strict=True)
 
         # Really did not find anything :'(
         if show_href is None:
@@ -123,16 +126,22 @@ class MyEpisodes(object):
 
     # This is totally stolen from script.xbmc.subtitles plugin !
     def get_info(self, file_name):
+        title = None
+        episode = None
+        season = None
         for regex in REGEX_EXPRESSIONS:
             response_file = re.findall(regex, file_name)
-            if len(response_file) < 0 :
+            if len(response_file) > 0 :
+                episode = response_file[0][0]
+                season = response_file[0][1]
+            else:
                 continue
             title = re.split(regex, file_name)[0]
             for char in ['[', ']', '_', '(', ')', '.', '-']:
                 title = title.replace(char, ' ')
             title = title.strip()
-            return title, int(response_file[0][0]), int(response_file[0][1])
-        return None
+            return title, season, episode
+        return None, None, None
 
     def add_show(self, show_id):
         # Try to add the show to your account.
@@ -146,7 +155,7 @@ class MyEpisodes(object):
     def set_episode_watched(self, show_id, season, episode):
         pre_url = "%s/myshows.php?action=Update" % MYEPISODE_URL
         seen_url = "%s&showid=%d&season=%02d&episode=%02d&seen=1" % (pre_url,
-                show_id, season, episode)
+                show_id, int(season), int(episode))
         data = self.send_req(seen_url)
         if data is None:
             return False
