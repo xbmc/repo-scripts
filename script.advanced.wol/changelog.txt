@@ -1,3 +1,6 @@
+[B]1.2.5[/B]
+- Changed import of xbmc.python to v2.1.0 in addon.xml (needed for Gotham compatibility)
+
 [B]1.2.4[/B]
 - Fix bug regarding log-messages after wakeup, that led to an exception. (thanks to user "Ghostdivision"!)
 
