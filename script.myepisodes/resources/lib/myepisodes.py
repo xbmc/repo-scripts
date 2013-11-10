@@ -132,8 +132,8 @@ class MyEpisodes(object):
         for regex in REGEX_EXPRESSIONS:
             response_file = re.findall(regex, file_name)
             if len(response_file) > 0 :
-                episode = response_file[0][0]
-                season = response_file[0][1]
+                season = response_file[0][0]
+                episode = response_file[0][1]
             else:
                 continue
             title = re.split(regex, file_name)[0]
