@@ -67,9 +67,8 @@
   </category>
   <category label="30013">
     <setting id="catCount" type="bool" label="30016" default="true"/>
-    <setting id="versionInTitle" type="bool" label="30017" default="false"/>
     <setting id="showMessages" type="bool" label="30020" default="false"/>
     <setting id="forceView" type="bool" label="30014" default="true"/>
-    <setting id="viewMode" type="number" label="30015" default="500"/>
+    <setting id="viewMode2" type="number" label="30015" default="550"/>
   </category>
 </settings>
