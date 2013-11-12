@@ -1,2 +1,5 @@
+5.0.1
+- let skin control flag filetype
+
 5.0.0
 - move the service out of XBMC Subtitles

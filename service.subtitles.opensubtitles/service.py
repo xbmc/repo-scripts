@@ -44,9 +44,6 @@ def Search( item ):
           if user_lang_id == item_data["ISO639"]:
             break
           lang_index+=1
-        flag_image = "%s.gif" % item_data["ISO639"]
-      else:                                
-        flag_image = "-.gif"
       if str(item_data["MatchedBy"]) == "moviehash":
         sync = True
       else:                                
@@ -56,7 +53,7 @@ def Search( item ):
                               'filename'      : item_data["SubFileName"],
                               'link'          : item_data["ZipDownloadLink"],
                               'language_name' : item_data["LanguageName"],
-                              'language_flag' : flag_image,
+                              'language_flag' : item_data["ISO639"],
                               'language_id'   : item_data["SubLanguageID"],
                               'ID'            : item_data["IDSubtitleFile"],
                               'rating'        : str(int(round(float(item_data["SubRating"])/2))),
