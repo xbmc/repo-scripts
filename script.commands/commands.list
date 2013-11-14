@@ -8,6 +8,7 @@ Cycle Languages###Action(audionextlanguage)
 Cycle Aspect Ratios###Action(aspectratio)
 Show Subtitle Delay###Action(subtitledelay)
 Show Audio Delay###Action(audiodelay)
+Toggle Audio Output###Action(audiotoggledigital)
 Take Screenshot###TakeScreenshot
 Refresh RSS feeds###RefreshRSS
 Eject Tray###EjectTray
@@ -55,4 +56,3 @@ Visualisation: Next###Action(nextpreset)
 Visualisation: Prev###Action(previouspreset)
 SimplePlaylists: Add###RunPlugin(plugin://script.simpleplaylists/?mode=addCurrentUrl)
 SimplePlaylists: View###RunPlugin(plugin://script.simpleplaylists/?mode=showPlaylists)
-Play Akinator###RunPlugin(plugin://plugin.program.akinator_com)
