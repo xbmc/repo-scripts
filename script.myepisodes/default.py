@@ -139,7 +139,7 @@ class Player(xbmc.Player):
         log('Player - Found : %s - %d (S%s E%s)' % (self.title,
                 self.showid, self.season, self.episode))
 
-        if bool(__addon__.getSetting('auto-add')):
+        if __addon__.getSetting('auto-add') == "true":
             self._addShow()
 
     def onPlayBackStopped(self):

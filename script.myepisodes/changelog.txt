@@ -1,3 +1,5 @@
+1.0.10
++ Fix a bug where Auto Add settings was not honored.
 1.0.9
 + Fix a swapped assignment, episode was season and vice-versa.
 1.0.8
