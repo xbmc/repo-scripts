@@ -1,0 +1,62 @@
+# XBMC Media Center language file
+# Addon Name: Bierdopje
+# Addon id: service.subtitles.bierdopje
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: https://github.com/mr-blobby/service.subtitles.bierdopje\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#Dutch
+
+msgctxt "#32001"
+msgid "Fout"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Niet gelukt om Bierdopje.com te bereiken"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Bierdopje.com kon het verzoek niet inwilligen, HTTP code"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Onbekende fout opgetreden bij het contact opnemen met Bierdopje.com"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Onverwacht antwoord van Bierdopje.com"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Niet gelukt om een show id te vinden op Bierdopje.com"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Bierdopje is alleen voor Nederlandse en Engelse ondertitels"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Bierdopje werkt alleen met tv shows in de bibliotheek modus"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Bierdopje is momenteel overbelast (HTTP fout 429: Te veel verzoeken). Probeer het later nog eens"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Niet gelukt om Bierdopje.com te bereiken"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Niet gelukt om ondertitels op te slaan"
+msgstr ""
