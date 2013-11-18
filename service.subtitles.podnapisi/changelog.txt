@@ -1,0 +1,5 @@
+5.0.1
+- icon.png and added logo.png for skin to use in window
+
+5.0.0
+- move the service out of XBMC Subtitles
