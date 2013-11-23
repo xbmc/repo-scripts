@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvtunes" name="TvTunes" version="3.0.8" provider-name="Ppic|Frost|ronie">
+<addon id="script.tvtunes" name="TvTunes" version="4.0.0" provider-name="Ppic,Frost,ronie,robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -9,13 +9,15 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 	
+		<summary lang="bg">Сваля и възпроивежда мелодиите от вашите филми и сериали</summary>
+	
 		<summary lang="ca">Obtenir i reproduir els temes dels seus programes de televisió</summary>
 	
 		<summary lang="de">Hole und spiele dein TV-Sendungs-Soundthema</summary>
 	
 		<summary lang="el">Λήψη και αναπαραγωγή μουσικών Θεμάτων (TvTunes) των τηλεοπτικών σειρών σας</summary>
 	
-		<summary lang="en">Get and play your Tv shows sound Theme</summary>
+		<summary lang="en">Get and play your Movie and TV shows Themes</summary>
 	
 		<summary lang="es">Descarga y reproduce las bandas sonoras de las series de tu biblioteca</summary>
 	
@@ -29,13 +31,17 @@
 	
 		<summary lang="it">Ottieni ed esegui i temi musicali delle tue Serie tV</summary>
 	
-		<summary lang="pl">Pobierz i odtwórz tematy muzyczne z twoich Seriali</summary>
+		<summary lang="nl">Verkrijg en speel je TV shows themes</summary>
 	
-		<summary lang="pt">Obtenha e reproduza as músicas das suas séries de TV.</summary>
+		<summary lang="pl">Pobierz i odtwórz tematy muzyczne z Filmów i Seriali</summary>
+	
+		<summary lang="pt">Obtenha e reproduza as músicas dos seus filmes e séries de TV.</summary>
 	
 		<summary lang="pt_BR">Obtenha e reproduza o tema musical das suas séries de TV</summary>
 	
 		<summary lang="sv">Hämtar och spelar dina TV-serier-teman</summary>
+	
+		<description lang="bg">Скриптът ще Ви помогне да се сдобиете с мелодии от филми и сериали. Мелодиите се свалят от www.televisiontunes.com и се запаметява в папките на видео файловете като [0-9].mp3. Когато преглеждате инф. за даден филм или епизодите от даден сериал, съответната мелодия ще се възпроизвежда автоматично. За целта е необходимо да ползвате съвместим облик.</description>
 	
 		<description lang="ca">Aquest script t'ajudarà a cercar la banda sonora de les teves sèries en www.televisiontunes.com es guardarà un fitxer theme.mp3 al directori de la teva sèrie i serà reproduït mentre navegues per dins de la carpeta de la sèrie. (Necessites un skin compatible per a aquesta funcionalitat)</description>
 	
@@ -43,7 +49,7 @@
 	
 		<description lang="el">Αυτό το script θα σας βοηθήσει να κατεβάσετε μουσικά θέματα των τηλεοπτικών σας σειρών από το www.televisiontunes.com, θα τα αποθηκεύει σε αρχεία μορφής theme.mp3 στο φάκελο της εκάστοτε σειράς, και θα τα αναπαράγει κατά την περιήγησή σας στη συλλογή τηλ. σειρών σας (απαιτείται να υποστηρίζεται από το κέλυφός σας)</description>
 	
-		<description lang="en">This script will help you to get theme of your tvshow library from www.televisiontunes.com it will save them in theme.mp3 file in each of your tvshow folder then they will be play while browsing your tvshow library when you enter the tvshow folder (need your skin to be compatible for this feature)</description>
+		<description lang="en">This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)</description>
 	
 		<description lang="es">Este script te ayudará a buscar la banda sonora de tus series en www.televisiontunes.com se guardará un fichero theme.mp3 en el directorio de tu serie y será reproducido mientras navegas por dentro de la carpeta de la serie. (Necesitas una skin compatible para esta funcionalidad)</description>
 	
@@ -55,13 +61,17 @@
 	
 		<description lang="it">Questo script ti aiuterà ad ottenere il tema delle serie tv presenti nella tua libreria da www.televisiontunes.com, li salverà nel file theme.mp3 in ogni cartella delle tue serie così quando sfoglierai la serie tv il tema sarà eseguito (il tuo skin deve essere compatibile)</description>
 	
-		<description lang="pl">Skrypt pozwoli ci na pobranie tematów muzycznych twoich seriali z www.televisiontunes.com oraz zapisanie ich w pliku o formacie mp3 w każdym z folderów zawierających  twoje seriale które następnie zostaną odtworzone kiedy będziesz przeglądał zawartość biblioteki z serialami lub wejdziesz do folderu je zawierające (potrzebujesz skóry obsługującej tą funkcjonalność)</description>
+		<description lang="nl">Dit script zoekt thema`s van TV series in jouw TV seriebibliotheek op www.televisiontunes.com en slaat ze op in thema[0-9].mp3 bestand in elke TV serie map. Ze worden afgespeeld wanneer je de  TV serie in bibliotheek modus bekijkt of Video-informatiescherm (Het gebruikte ontwerp moet wel compatibel zijn met dit script)</description>
 	
-		<description lang="pt">Com este addon, poderá obter as músicas das séries TV na sua biblioteca a partir de televisiontunes.com. Serão guardadas num ficheiro theme.mp3 dentro das pastas das séries TV, e reproduzidas durante a navegação pelas temporadas e episódios (é necessário um tema compatível).</description>
+		<description lang="pl">Ten skrypt pozwala pobierać motywy muzyczne dla twoich filmów i seriali ze strony www.televisiontunes.com. Pobrane motywy zostaną zapisane do pliku o nazwie theme[0-9].mp3 w folderze bazowego pliku wideo. Motywy będą odtwarzane podczas przeglądania biblioteki - kiedy wejdziesz do katalogu serialu lub ekranu informacji wideo (niezbędna jest skóra wspierająca tę funkcję).</description>
+	
+		<description lang="pt">Com este addon, poderá obter as músicas dos filmes e séries TV na sua biblioteca a partir de televisiontunes.com. Serão guardadas em ficheiros theme[0-9].mp3 dentro das pastas de vídeo e serão reproduzidas durante a navegação na biblioteca de vídeo, quando entrar dentro da pasta de Séries TV ou no ecrã de Informação de Vídeo (é necessário um tema compatível).</description>
 	
 		<description lang="pt_BR">Este script ajudará você a obter o tema da sua coleção de séries de TV de www.televisiontunes.com, que serão salvos em um arquivo theme.mp3 em cada uma das pastas de suas séries e serão reproduzidos sempre que você acessar uma série na sua coleção (a skin precisa ser compatível com este recurso)</description>
 	
 		<description lang="sv">Detta skript hjälper dig att hitta teman till ditt tv-seriebibliotek från www.televisiontunes.com som sparas i theme.mp3 filer i varje tv-seriemapp som sedan spelas när du öppnar tv-seriemappen (ditt skal måste vara kompatibelt för detta)</description>
+	
+		<disclaimer lang="bg">До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="ca">Skinners, siusplau, reviseu CHANGELOG.txt per saber com integrar-lo a les vostres skins</disclaimer>
 	
@@ -69,7 +79,7 @@
 	
 		<disclaimer lang="el">Skinners, ελέγξτε το αρχείο καταγραφής changelog.txt για πληροφορίες σχετικά με την ενσωμάτωση στο κέλυφός σας</disclaimer>
 	
-		<disclaimer lang="en">Skinners, please see changelog.txt to know how to integrate it in your skin</disclaimer>
+		<disclaimer lang="en">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="es">Skinners, por favor, revisad changelog.txt para saber como integrarlo en vuestras skins</disclaimer>
 	
@@ -81,7 +91,9 @@
 	
 		<disclaimer lang="it">Skinners, guardate il file changelog.txt per sapere come integrare lo script nello skin</disclaimer>
 	
-		<disclaimer lang="pl">Twórcy skórek proszę przeglądnijcie changelog.txt by wiedzieć w jaki sposób zintegrować swoje skóry</disclaimer>
+		<disclaimer lang="nl">Ontwerpers, bekijk de wiki om te zien hoe dit script in je ontwerp dient te integreren:http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="pl">Twórcy skórek zapoznajcie się z wiki by wiedzieć w jaki sposób zintegrować swoje skóry: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="pt">Autores dos temas, por favor vejam o changelog.txt para saber como integrar TVTunes nos vossos temas.</disclaimer>
 	
@@ -92,9 +104,11 @@
 		<language></language>
 	
 		<platform>all</platform>
+		
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 	
-		<forum>http://forum.xbmc.org/showthread.php?tid=83925</forum>
+		<forum>http://forum.xbmc.org/showthread.php?tid=173799</forum>
 	
-		<source>https://code.google.com/p/ronie/source/</source>
+		<source>http://robwebset.googlecode.com/svn/trunk/script.tvtunes/</source>
 	</extension>
 </addon>

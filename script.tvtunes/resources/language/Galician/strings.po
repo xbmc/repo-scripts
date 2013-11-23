@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie
+# Addon Provider: Ppic|Frost|ronie|robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -15,6 +15,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: gl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Get and play your Movie and TV shows Themes"
+msgstr "Obter e reproducir a música das súas Series de TV"
+
+msgctxt "Addon Description"
+msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
+msgstr "Este script axudaralle a obter dende www.televisiontunes.com o tema da súa biblioteca de series, gardándoo no ficheiro theme.mp3 por cada cartafol da biblioteca entón reproduciranse ao entrar nos diferentes cartafoles ao navegar pola biblioteca (precisa de que o seu tema sexa compatíbel con esta carácteristica)"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "Autores de temas, por favor vexan o changelog.txt para saber como integrar tvtunes no seu tema"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
@@ -45,12 +57,56 @@ msgid "Path:"
 msgstr "Ruta:"
 
 msgctxt "#32008"
-msgid "Fade tune when you exit a tv show"
-msgstr "Atenuar a música ao saír dunha serie de tv"
+msgid "Fade tune out when exiting"
+msgstr "Atenuar a música ao saír"
 
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
 msgstr "Baixar automaticamente ao atopar unha coincidencia exacta"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Misturar varias pistas"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Hora de inicio ó chou"
+
+msgctxt "#32012"
+msgid "File Types"
+msgstr "Tipos de Ficheiro"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Aumentar a música ao iniciar"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Engadir sempre temas adicionais (non sobreescribir)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Buscar temas de filmes"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Reproducir música ao navegar pola listaxe de filmes"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Reproducir música ao navegar pola listaxe de series"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Depurado"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Activar rexistro de depurado"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Amosar o botón TvTunes na pantalla de Info. do vídeo"
 
 msgctxt "#32101"
 msgid "ERROR"

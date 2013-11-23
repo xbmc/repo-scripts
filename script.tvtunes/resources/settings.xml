@@ -2,11 +2,23 @@
 <settings>
 	<category label="32991">
 		<setting id="loop" type="bool" label="32001" default="false"/>
-		<setting id="downvolume" label="32002" type="slider" default="0" range="0,1,60" format="%1.f db" />
-		<setting id="fade" type="bool" label="32008" default="true"/>
+		<setting id="downvolume" label="32002" type="slider" default="0" range="0,1,60" option="int" />
+		<setting id="delayStart" label="32024" type="slider" default="0" range="0,1,60" option="int" />
+		<setting id="endafter" label="32021" type="slider" default="0" range="0,1,60" option="int" />
+		<setting id="movielist" type="bool" label="32016" default="false"/>
+		<setting id="tvlist" type="bool" label="32017" default="false"/>
+		<setting id="fadeOut" type="bool" label="32008" default="true"/>
+		<setting id="fadeIn" type="bool" label="32013" default="false"/>
+		<setting id="shuffle" type="bool" label="32010" default="true"/>
+		<setting id="random" type="bool" label="32011" default="false"/>
 	</category>
 	<category label="32992">
 		<setting id="exact_match" type="bool" label="32009" default="true"/>
+		<setting id="multiThemeDownload" type="bool" label="32014" default="false"/>
+		<setting id="searchMovieDownload" type="bool" label="32015" default="false"/>
+		<setting id="showVideoInfoButton" type="bool" label="32020" default="true"/>
+		<setting label="32022" type="lsep"/>
+		<setting label="32023" type="action" action="RunScript($CWD/resources/tvtunes_scraper.py)"/>
 	</category>
 	<category label="32993">
 		<setting id="smb_share" type="bool" label="32003" default="false"/>
@@ -14,5 +26,14 @@
 		<setting id="smb_psw" enable="eq(-2,true)" type="text" option="hidden" label="32005" default="" />
 		<setting id="custom_path_enable" type="bool" label="32006" default="false"/>
 		<setting id="custom_path" enable="eq(-1,true)" type="folder" source="files" label="32007" default="" />
+    	<setting label="32018" type="lsep"/>
+    	<setting id="logEnabled" type="bool" label="32019" default="false"/>
+	</category>
+	<category label="32012">
+		<setting id="mp3" type="text" label="MP3" enable="false" default="true"/>
+		<setting id="wma" type="bool" label="WMA" default="true"/>
+		<setting id="flac" type="bool" label="FLAC" default="true"/>
+		<setting id="m4a" type="bool" label="M4A" default="true"/>
+		<setting id="wav" type="bool" label="WAV" default="true"/>
 	</category>
 </settings>

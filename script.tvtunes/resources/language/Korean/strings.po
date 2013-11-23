@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie
+# Addon Provider: Ppic|Frost|ronie|robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -16,21 +16,93 @@ msgstr ""
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "반복하여 테마 음악 재생"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "소리 작게"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "보안 SMB 공유 사용"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "사용자명:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "비밀번호:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "사용자 지정 경로에 테마 음악 저장"
+
 msgctxt "#32007"
 msgid "Path:"
 msgstr "경로:"
+
+msgctxt "#32009"
+msgid "Automatically download if an exact match is found"
+msgstr "정확히 일치하면 자동으로 다운로드"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "디버깅"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "디버그 로그 사용"
 
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "오류"
 
+msgctxt "#32102"
+msgid "site unreacheable"
+msgstr "사이트 접속불가"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "TvTune 다운로드"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "현재 테마 음악을 덮어 쓰겠습니까?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TVTunes"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "정보 가져오는 중..."
 
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "취소됨"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "사용자가 작업을 취소함."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "다운로드 중:"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "수동 찾기 입력"
+
 msgctxt "#32115"
 msgid "TvTunes"
 msgstr "TvTunes"
+
+msgctxt "#32117"
+msgid "http://www.televisiontunes.com/"
+msgstr "http://www.televisiontunes.com/"
 
 msgctxt "#32991"
 msgid "Playback"
@@ -39,3 +111,7 @@ msgstr "재생"
 msgctxt "#32992"
 msgid "Download"
 msgstr "다운로드"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "파일 시스템"

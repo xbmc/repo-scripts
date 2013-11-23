@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie
+# Addon Provider: Ppic|Frost|ronie|robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -16,6 +16,22 @@ msgstr ""
 "Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Get and play your Movie and TV shows Themes"
+msgstr "קבל ונגן את שירי הנושא של תוכניות הטלוויזיה שלך"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "נגן שיר נושא בלולאה"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "ערך צליל נמוך"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "השתמש בשיתוף SMB מוגן"
+
 msgctxt "#32004"
 msgid "Username:"
 msgstr "שם משתמש:"
@@ -24,33 +40,89 @@ msgctxt "#32005"
 msgid "Password:"
 msgstr "סיסמה:"
 
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "אחסון נעימות בנתיב מותאם אישית"
+
 msgctxt "#32007"
 msgid "Path:"
 msgstr "נתיב:"
 
-msgctxt "#32008"
-msgid "Fade tune when you exit a tv show"
-msgstr "אפקט \"Fade\" כאשר יוצאים מתוכנית טלוויזיה"
+msgctxt "#32009"
+msgid "Automatically download if an exact match is found"
+msgstr "הורד אוטומטית אם התוצאה תואמת במדוייק"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "ניפוי שגיאות"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "הפעל לוג ניפוי שגיאות"
 
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "שגיאה"
 
+msgctxt "#32102"
+msgid "site unreacheable"
+msgstr "אתר לא נגיש"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "TvTune downloader"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "החלף שיר נושא נוכחי?"
+
 msgctxt "#32105"
 msgid "TVTunes"
 msgstr "TVTunes"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "מקבל מידע..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "מחפש"
 
 msgctxt "#32108"
 msgid "CANCELED"
 msgstr "בוטל"
 
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "פעולה בוטלה ע\"י המשתמש."
+
 msgctxt "#32110"
 msgid "Downloading:"
 msgstr "מוריד:"
 
+msgctxt "#32111"
+msgid "to:"
+msgstr "אל:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "בחר עבור"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "הזן חיפוש ידני"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "הורד את זאת?"
+
 msgctxt "#32115"
 msgid "TvTunes"
 msgstr "TvTunes"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "הינך יכול לעזור בהשגת שירי נושא נוספים ב:"
 
 msgctxt "#32117"
 msgid "http://www.televisiontunes.com/"
@@ -63,3 +135,7 @@ msgstr "ניגון"
 msgctxt "#32992"
 msgid "Download"
 msgstr "הורד"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "מערכת קבצים"

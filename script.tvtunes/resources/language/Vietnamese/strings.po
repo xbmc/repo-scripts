@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie
+# Addon Provider: Ppic|Frost|ronie|robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -19,6 +19,10 @@ msgstr ""
 msgctxt "#32007"
 msgid "Path:"
 msgstr "Đường dẫn:"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Tìm sửa lỗi"
 
 msgctxt "#32115"
 msgid "TvTunes"

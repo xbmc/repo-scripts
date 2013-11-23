@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie
+# Addon Provider: Ppic|Frost|ronie|robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -16,13 +16,25 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Get and play your Movie and TV shows Themes"
+msgstr "Obté i reproduieix els temes de les seves pel·lícules i sèries de televisió"
+
+msgctxt "Addon Description"
+msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
+msgstr "Aquest script t'ajudarà a cercar la banda sonora de les teves pel·lícules i sèries de televisió en www.televisiontunes.com Les guardarà en un fitxer theme[0-9].mp3 a la carpeta dels vídeos i seran reproduïdes mentre navegues per la teva col·lecció de vídeos, quant entris a la carpeta d'una sèrie o a la pantalla d'informació de vídeo. (Necessites una pell compatible per a aquesta funcionalitat)"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "Creadors de pells, si us plau, visiteu el wiki per saber com integrar el complement a les vostres pells: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Reprodueix el tema en bucle"
 
 msgctxt "#32002"
 msgid "Lower sound value"
-msgstr "Valor vaix del so"
+msgstr "Valor de so inferior"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -30,7 +42,7 @@ msgstr "Utilitza el recurs compartit SMB protegit"
 
 msgctxt "#32004"
 msgid "Username:"
-msgstr "Usuari:"
+msgstr "Nom d'usuari:"
 
 msgctxt "#32005"
 msgid "Password:"
@@ -45,12 +57,56 @@ msgid "Path:"
 msgstr "Camí:"
 
 msgctxt "#32008"
-msgid "Fade tune when you exit a tv show"
-msgstr "Suavitzar el tema en sortir del programa de TV"
+msgid "Fade tune out when exiting"
+msgstr "Suavitzar la melodia en sortir"
 
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
 msgstr "Descarrega automàticament si es troba una coincidència exacta"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Remena les pistes"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Punt d'inici aleatori"
+
+msgctxt "#32012"
+msgid "File Types"
+msgstr "Tipus de fitxers"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Suavitza la melodia en començar"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Sempre afegir temes addicionals (no sobreescriure)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Buscar temes de pel·lícules"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Reprodueix temes mentre navegui a la llista de pel·lícules"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Reprodueix temes mentre navegui a la llista de sèries"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Depurant"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Habilita el registre de depuració"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Mostrar el boto  de TvTunes a la pantalla d'informació del vídeo"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -58,7 +114,7 @@ msgstr "ERROR"
 
 msgctxt "#32102"
 msgid "site unreacheable"
-msgstr "lloc inaccesible"
+msgstr "lloc inaccessible"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
@@ -66,7 +122,7 @@ msgstr "Descarregador TvTune"
 
 msgctxt "#32104"
 msgid "Replace existing theme?"
-msgstr "Sobrescriure el tema existent?"
+msgstr "Sobreescriure el tema existent?"
 
 msgctxt "#32105"
 msgid "TVTunes"
@@ -74,7 +130,7 @@ msgstr "TvTunes"
 
 msgctxt "#32106"
 msgid "Getting information..."
-msgstr "Obtenin Informació"
+msgstr "Obtenint informació..."
 
 msgctxt "#32107"
 msgid "Searching for"
@@ -86,7 +142,7 @@ msgstr "CANCEL·LAT"
 
 msgctxt "#32109"
 msgid "Operation canceled by user."
-msgstr "Operació canceL·lada per l'usuari."
+msgstr "Operació cancel·lada per l'usuari."
 
 msgctxt "#32110"
 msgid "Downloading:"
@@ -102,7 +158,7 @@ msgstr "Trieu per"
 
 msgctxt "#32113"
 msgid "ENTER MANUAL SEARCH"
-msgstr "ENTRAR CERCA MANUAL"
+msgstr "INTRODUEIX CERCA MANUAL"
 
 msgctxt "#32114"
 msgid "Download this one?"
@@ -126,8 +182,8 @@ msgstr "Reproducció"
 
 msgctxt "#32992"
 msgid "Download"
-msgstr "Descarregar"
+msgstr "Descarrega"
 
 msgctxt "#32993"
 msgid "File system"
-msgstr "Arxius del sistema"
+msgstr "Sistema de fitxers"

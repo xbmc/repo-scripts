@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie
+# Addon Provider: Ppic|Frost|ronie|robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -15,6 +15,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Get and play your Movie and TV shows Themes"
+msgstr "Obtenha e reproduza o tema musical das suas séries de TV"
+
+msgctxt "Addon Description"
+msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
+msgstr "Este script ajudará você a obter o tema da sua coleção de séries de TV de www.televisiontunes.com, que serão salvos em um arquivo theme.mp3 em cada uma das pastas de suas séries e serão reproduzidos sempre que você acessar uma série na sua coleção (a skin precisa ser compatível com este recurso)"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "Criadores de skins, por favor vejam o changelog.txt para aprender como integrá-lo à sua skin"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
@@ -45,12 +57,56 @@ msgid "Path:"
 msgstr "Caminho:"
 
 msgctxt "#32008"
-msgid "Fade tune when you exit a tv show"
-msgstr "Diminuir tema gradativamente ao sair de uma série"
+msgid "Fade tune out when exiting"
+msgstr "Diminuir tema gradativamente ao sair"
 
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
 msgstr "Baixar automaticamente se uma correspondência exata for encontrada"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Randomize se existir múltiplos temas"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Reproduzir o arquivo de áudio a partir de um local aleatório na trilha"
+
+msgctxt "#32012"
+msgid "File Types"
+msgstr "Tipos de Arquivos"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Aumentar o volume da música tema gradualmente ao iniciar reprodução"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Sempre adicionar temas adicionais (sem sobrescrever)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Procurar por temas do filme"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Reproduzir temas quando navegando na coleção de filmes"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Reproduzir temas quando navegando na coleção de seriados"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Debugando"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Ativar log de debug"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Mostrar o botão TvTunes na tela info de video"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -58,7 +114,7 @@ msgstr "ERRO"
 
 msgctxt "#32102"
 msgid "site unreacheable"
-msgstr "site inalcançável"
+msgstr "site indisponível"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
@@ -106,7 +162,7 @@ msgstr "INSIRA PESQUISA MANUAL"
 
 msgctxt "#32114"
 msgid "Download this one?"
-msgstr "Baixar este?"
+msgstr "Baixar este tema?"
 
 msgctxt "#32115"
 msgid "TvTunes"

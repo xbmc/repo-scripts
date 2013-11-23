@@ -15,10 +15,11 @@ __resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode(
 sys.path.append(__resource__)
 
 def log(txt):
-    if isinstance (txt,str):
-        txt = txt.decode("utf-8")
-    message = u'%s: %s' % (__addonid__, txt)
-    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+    if __addon__.getSetting( "logEnabled" ) == "true":
+        if isinstance (txt,str):
+            txt = txt.decode("utf-8")
+        message = u'%s: %s' % (__addonid__, txt)
+        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 log('script version %s started' % __version__)
 
@@ -35,18 +36,10 @@ except:
 log( "params %s" % params )
     
 if params.get("backend", False ): 
-    loop = __addon__.getSetting("loop")
-    downvolume = __addon__.getSetting("downvolume")
-    smb = __addon__.getSetting("smb_share")
-    username = __addon__.getSetting("smb_login")
-    password = __addon__.getSetting("smb_psw")
-    downvolume = downvolume.split(",")[0]
-    downvolume = downvolume.split(".")[0]
-    if xbmc.getInfoLabel( "Window(10025).Property(TvTunesIsRunning)" ) != "true":
-        xbmc.executebuiltin('XBMC.RunScript(%s,loop=%s&downvolume=%s&smb=%s&user=%s&password=%s)' % (os.path.join(__resource__ , "tvtunes_backend.py"), loop , downvolume , smb , username , password))
+    xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__resource__ , "tvtunes_backend.py")))
 
 elif params.get("mode", False ) == "solo":
-    xbmc.executebuiltin('XBMC.RunScript(%s,mode=solo&name=%s&path=%s)' % (os.path.join(__resource__ , "tvtunes_scraper.py") , params.get("tvname", False ) , params.get("tvpath", False )))
+    xbmc.executebuiltin('XBMC.RunScript(%s,mode=solo)' % (os.path.join(__resource__ , "tvtunes_scraper.py")))
 
 else: 
     xbmc.executebuiltin('XBMC.RunScript(%s)' % os.path.join( __resource__ , "tvtunes_scraper.py"))

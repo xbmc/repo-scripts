@@ -1,14 +1,16 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie
+# Addon Provider: Ppic|Frost|ronie|robwebset
+# Translators:
+# Kiril <neohidra@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"PO-Revision-Date: 2013-11-13 20:20+0000\n"
+"Last-Translator: Kiril <neohidra@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,18 +18,181 @@ msgstr ""
 "Language: bg\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Get and play your Movie and TV shows Themes"
+msgstr "Сваля и възпроивежда мелодиите от вашите филми и сериали"
+
+msgctxt "Addon Description"
+msgid ""
+"This script will help you to get themes for your movie and TV show library "
+"from www.televisiontunes.com It will save them in theme[0-9].mp3 file in "
+"each of your video folders then they will be played while browsing your "
+"video library when you enter the TV Show folder or Video Information screen "
+"(need your skin to be compatible for this feature)"
+msgstr "Скриптът ще Ви помогне да се сдобиете с мелодии от филми и сериали. Мелодиите се свалят от www.televisiontunes.com и се запаметява в папките на видео файловете като [0-9].mp3. Когато преглеждате инф. за даден филм или епизодите от даден сериал, съответната мелодия ще се възпроизвежда автоматично. За целта е необходимо да ползвате съвместим облик."
+
+msgctxt "Addon Disclaimer"
+msgid ""
+"Skinners, please see the wiki to know how to integrate it in your skin: "
+"http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Повтаряне на медлодията, без спиране"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Понижаване силата на звука"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Ползване на защитен споделен SMB ресурс"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Потребител:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Парола:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Съхраняване на мелодиите в персонална папка"
+
 msgctxt "#32007"
 msgid "Path:"
 msgstr "Път:"
+
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "Плавно спиране на мелодията при излизане"
+
+msgctxt "#32009"
+msgid "Automatically download if an exact match is found"
+msgstr "Автоматично сваляне при точно съвпадение"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Не възпроизвеждай мелодиите от началото им (произволна точка)"
+
+msgctxt "#32012"
+msgid "File Types"
+msgstr "Тип файлове"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "При стартиране плавно увеличавай силата на звука"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Добавяне на повече от една мелодия (без презаписване)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Търси за филмова мелодия"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Възпроизвеждай мелодии при преглеждане на списъка с филми"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Възпроизвеждай мелодии при преглеждане на списъка с ТВ сериали"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Водене на debug дневник"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr ""
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "ГРЕШКА"
+
+msgctxt "#32102"
+msgid "site unreacheable"
+msgstr "сайтът е недостъпен"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "Сваляне на мелодии"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Замяна на текущата мелодия?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "Телевизионни мелодии"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Сваляне на информация..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Търсене за"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "ОТКАЗ"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Действието е прекъснато от потребитля."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Сваляне:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "в:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Изберете за"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "Ръчно въвеждане"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Да бъде ли свалена?"
 
 msgctxt "#32115"
 msgid "TvTunes"
 msgstr "TvTunes"
 
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Можете да помогнете в обоготяването на библиотеката с мелодии на адрес:"
+
+msgctxt "#32117"
+msgid "http://www.televisiontunes.com/"
+msgstr "http://www.televisiontunes.com/"
+
 msgctxt "#32991"
 msgid "Playback"
-msgstr "Възпроизвеждане"
+msgstr "Възпроизведи"
 
 msgctxt "#32992"
 msgid "Download"
 msgstr "Свали"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Файлова система"
