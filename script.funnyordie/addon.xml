@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.funnyordie"
        name="Funny Or Die"
-       version="0.0.2"
+       version="0.0.3"
        provider-name="divingmule">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -21,5 +21,6 @@
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <source>https://github.com/divingmule/script.funnyordie</source>
     <forum>http://forum.xbmc.org/showthread.php?tid=174829</forum>
+    <website>http://www.funnyordie.com</website>
   </extension>
 </addon>

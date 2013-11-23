@@ -94,14 +94,13 @@ def get_videos(soup):
 
 
 def get_videos_nav(soup):
-    items = [
-        soup.find('div', attrs={'class': 'browse_navigation'})('div', attrs={'id': 'date_filter'})[0],
-        soup.find('div', attrs={'class': 'browse_navigation'})('div', attrs={'id': 'sort_filter'})[0],
-        soup.find('div', attrs={'class': 'browse_navigation'})('div', attrs={'id': 'category_filter'})[0]]
-    nav = {'current': []}
-    for i in items:
-        nav['current'].append([{'label': x.string, 'value': y.string} for x in i('span')[0] for y in i('span')[1].a][0])
-        nav[i['id']] = [{'title': x.string, 'href': x['href']} for x in i('a')]
+    label_tags = soup('span', attrs={'class': "dropdown_label"})
+    nav = [{'name': i.string,
+            'items': [{'title': x.string,
+                       'href': x['href']} for x in
+                          i.findPrevious('ul', attrs={'class': 'options'})('a')],
+            'current': i.findPrevious('a', attrs={'class': 'current'}).contents[0].strip()} for
+                i in label_tags]
     return nav
 
 
@@ -117,11 +116,12 @@ def get_homepage(url):
             href = i.a['href']
             if '/videos/' in href:
                 title = i.h2.string
-                if i.h3.string:
+                if title and i.h3.string:
                     title += ': ' + i.h3.string
                 if title and '&#' in title:
                     title = unescape(title)
-                jumbo.append({'title': title, 'href': href, 'thumb': i.img['src']})
+                thumb = i.img['src'].replace(' ', '%20')
+                jumbo.append({'title': title, 'href': href, 'thumb': thumb})
         cat_items = soup.find('section', attrs={'id': 'browse-menu-featured'})('article')
         celeb_items = soup.find('section', attrs={'id': 'browse-menu-celebrities'})('article')
         link_items = soup.find('ul', attrs={'class': 'quick-links'})('a')
@@ -172,6 +172,8 @@ def get_listitem(item, is_video=False):
     thumb = ''
     if item.has_key('thumb'):
         thumb = item['thumb']
+    if item['title'] is None:
+        item['title'] = ''
     listitem = xbmcgui.ListItem('[B]%s[/B]' %item['title'], thumbnailImage=thumb)
     if is_video:
         listitem.setInfo(type="Video", infoLabels={"Title": item['title']})
@@ -335,14 +337,14 @@ class FunnyOrDieGUI(xbmcgui.WindowXML):
         self.setFocus(v_control)
 
     def set_video_nav(self, nav):
-        for i in nav['current']:
-            if i['label'] == 'VIEWING':
+        for i in nav:
+            if i['name'] == 'VIEWING':
                 control = self.window.getControl(1266)
-            elif i['label'] == 'SORT BY':
+            elif i['name'] == 'SORT BY':
                 control = self.window.getControl(1267)
-            elif i['label'] == 'DATE':
+            elif i['name'] == 'DATE':
                 control = self.window.getControl(1268)
-            control.setLabel('%s :  [B]%s[/B]' %(i['label'], i['value']))
+            control.setLabel('%s :  [B]%s[/B]' %(i['name'], i['current']))
         self.videos_nav = nav
 
     def set_video_filter_button(self, reset=False):
@@ -355,7 +357,7 @@ class FunnyOrDieGUI(xbmcgui.WindowXML):
                 i.controlUp(self.nav_button_1)
 
     def filter_videos(self, filter_type):
-        items = self.videos_nav[filter_type]
+        items = [i['items'] for i in self.videos_nav if i['name'] == filter_type][0]
         for i in items:
             self.filter_list.addItem(get_listitem(i))
         xbmc.executebuiltin("Skin.ToggleSetting(FilterDialog)")
@@ -453,13 +455,13 @@ class FunnyOrDieGUI(xbmcgui.WindowXML):
         # video filter controls
         elif control_id == 1266:
             self.menu = 'FilterDialog'
-            if self.window.getProperty('videos_filter') == 'category_filter':
+            if self.window.getProperty('videos_filter') == 'VIEWING':
                 xbmc.executebuiltin("Skin.ToggleSetting(FilterDialog)")
             else:
                 self.filter_list.reset()
-                self.window.setProperty('videos_filter', 'category_filter')
+                self.window.setProperty('videos_filter', 'VIEWING')
                 self.filter_dialog.setPosition(95, 85)
-                self.filter_videos('category_filter')
+                self.filter_videos('VIEWING')
                 xbmc.sleep(500)
             self.set_video_filter_button()
             self.setFocus(self.filter_list)
@@ -467,13 +469,13 @@ class FunnyOrDieGUI(xbmcgui.WindowXML):
 
         elif control_id == 1267:
             self.menu = 'FilterDialog'
-            if self.window.getProperty('videos_filter') == 'sort_filter':
+            if self.window.getProperty('videos_filter') == 'SORT BY':
                 xbmc.executebuiltin("Skin.ToggleSetting(FilterDialog)")
             else:
                 self.filter_list.reset()
-                self.window.setProperty('videos_filter', 'sort_filter')
+                self.window.setProperty('videos_filter', 'SORT BY')
                 self.filter_dialog.setPosition(435, 85)
-                self.filter_videos('sort_filter')
+                self.filter_videos('SORT BY')
                 xbmc.sleep(500)
             self.set_video_filter_button()
             self.setFocus(self.filter_list)
@@ -481,13 +483,13 @@ class FunnyOrDieGUI(xbmcgui.WindowXML):
 
         elif control_id == 1268:
             self.menu = 'FilterDialog'
-            if self.window.getProperty('videos_filter') == 'date_filter':
+            if self.window.getProperty('videos_filter') == 'DATE':
                 xbmc.executebuiltin("Skin.ToggleSetting(FilterDialog)")
             else:
                 self.filter_list.reset()
-                self.window.setProperty('videos_filter', 'date_filter')
+                self.window.setProperty('videos_filter', 'DATE')
                 self.filter_dialog.setPosition(780, 85)
-                self.filter_videos('date_filter')
+                self.filter_videos('DATE')
                 xbmc.sleep(500)
             self.set_video_filter_button()
             self.setFocus(self.filter_list)
