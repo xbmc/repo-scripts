@@ -154,6 +154,9 @@ class MetaData:
             self.dbcon.row_factory = database.Row # return results indexed by field names and not numbers so we can convert to dict
             self.dbcur = self.dbcon.cursor()
 
+        # initialize cache db
+        self._cache_create_movie_db()
+
 
     def __del__(self):
         ''' Cleanup db when object destroyed '''
@@ -990,7 +993,7 @@ class MetaData:
             matchedrow = self.dbcur.fetchone()
         except Exception, e:
             common.addon.log('************* Error selecting from cache db: %s' % e, 4)
-            pass
+            return None
             
         if matchedrow:
             common.addon.log('Found meta information by name in cache table: %s' % dict(matchedrow), 0)
