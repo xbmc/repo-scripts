@@ -1,0 +1,43 @@
+v1.0.0
+- Initial Official Release
+
+v0.1.0
+- Fix playing theme from TV Show Information
+- Add interface for skinner to get info on extras existing
+
+v0.0.9
+- Fix issue when passed a plugin URL instead of a filename
+- Add Gotham Support
+- Add resume dialog
+
+v0.0.8
+- Support background image on advanced list
+- Change icon to differ more from DVDExtras
+
+v0.0.7:
+- Enable non mouse navigation of extras screen
+- Return to previously selected after playing
+- Support NFO names with non ascii characters
+- Support continued playing of themes
+
+v0.0.6:
+- Video play overlay now displays the Display Name rather than filename
+- Option to have a non "dialog" screen view and have a standard list for extras
+- Option to persist the "resume" location and "watched" flag
+- Option to resume from last stop point
+
+v0.0.5:
+- Language Setup
+
+v0.0.4:
+- Added support for remote extras location
+
+v0.0.3:
+- Fixed smb:// mapped files
+- Add support for NFO files to name and order Extras
+
+v0.0.2:
+- Add option to hide the extras button on the Information Screen
+
+v0.0.1:
+- Initial beta

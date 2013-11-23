@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.videoextras" name="VideoExtras" version="1.0.0" provider-name="robwebset">
+	<requires>
+    	<import addon="xbmc.python" version="2.1.0"/>
+  	</requires>
+  	<extension point="xbmc.python.script" library="default.py" />
+  	<extension point="xbmc.addon.metadata">
+    	<summary lang="en">Add Video Extras to your Movies and TV shows.</summary>
+    	
+    	<description lang="en">Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions.</description>
+    	
+    	<platform>all</platform>
+
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+
+		<forum>http://forum.xbmc.org/showthread.php?tid=125024</forum>
+
+		<source>http://robwebset.googlecode.com/svn/trunk/script.videoextras/</source>
+  </extension>
+</addon>
