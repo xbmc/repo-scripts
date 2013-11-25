@@ -137,7 +137,7 @@ class Settings():
         return self.custom_path
     
     def getDownVolume(self):
-        return int(__addon__.getSetting("downvolume"))
+        return int(float(__addon__.getSetting("downvolume")))
 
     def isLoop(self):
         return __addon__.getSetting("loop") == 'true'
@@ -193,7 +193,7 @@ class Settings():
         return __addon__.getSetting("tvlist") == 'true'
 
     def getPlayDurationLimit(self):
-        return int(__addon__.getSetting("endafter"))
+        return int(float(__addon__.getSetting("endafter")))
 
     # Check if the video info button should be hidden
     @staticmethod
@@ -203,7 +203,7 @@ class Settings():
     # Check the delay start value
     @staticmethod
     def getStartDelaySeconds():
-        return int(__addon__.getSetting("delayStart"))
+        return int(float(__addon__.getSetting("delayStart")))
 
     @staticmethod
     def getXbmcMajorVersion():

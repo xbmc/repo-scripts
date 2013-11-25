@@ -1,3 +1,6 @@
+v4.0.1
+- Fixed issue with Ubuntu and settings slider values
+
 v4.0.0
 - Disable screensaver fix
 
