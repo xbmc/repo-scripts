@@ -130,7 +130,8 @@ class GUI(xbmcgui.WindowXML):
         if addon.getSetting('aspect_ratio2') == '0':
             self.aspect_controller.setVisible(False)
         if addon.getSetting('black_background') == 'true':
-            self.bg_controller.setVisible(False)
+            if self.bg_controller:
+                self.bg_controller.setVisible(False)
 
         self.showHelp()
         self.showAlbums()
@@ -144,7 +145,12 @@ class GUI(xbmcgui.WindowXML):
         self.arrows_controller = self.getControl(self.CONTROL_ARROWS)
         self.aspect_controller = self.getControl(self.CONTROL_ASPECT_KEEP)
         self.info_controller = self.getControl(self.CONTROL_VISIBLE)
-        self.bg_controller = self.getControl(self.CONTROL_BG)
+        try:
+            self.bg_controller = self.getControl(self.CONTROL_BG)
+        except RuntimeError:
+            # catch exception with skins which override the xml
+            # but are not up2date like Aeon Nox
+            self.bg_controller = None
 
     def onAction(self, action):
         action_id = action.getId()
