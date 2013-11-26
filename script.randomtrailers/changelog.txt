@@ -1,3 +1,10 @@
+v1.0.6 (June 14, 2013) :
+  - added arrow controls for remotes without keyboards
+      UP = show info
+      DOWN = hide info
+      RIGHT = next trailer
+      LEFT = exit trailers
+      
 v1.0.5 (June 12, 2013) :
   - fixed module import issues. fixed font issues
   

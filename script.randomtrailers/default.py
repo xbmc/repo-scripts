@@ -1,7 +1,7 @@
 # Random trailer player
 #
 # Author - kzeleny
-# Version - 1.0.4
+# Version - 1.0.6
 # Compatibility - Frodo
 #
 
@@ -127,14 +127,23 @@ class movieWindow(xbmcgui.WindowXMLDialog):
 		ACTION_PREVIOUS_MENU = 10
 		ACTION_ENTER = 7
 		ACTION_I = 11
-		#xbmc.log('action  =' + str(action.getId()))
+		ACTION_LEFT = 1
+		ACTION_RIGHT = 2
+		ACTION_UP = 3
+		ACTION_DOWN = 4
+		
+		xbmc.log('action  =' + str(action.getId()))
+		
 		global exit_requested
 		global movie_file
-		if action == ACTION_PREVIOUS_MENU:
+		if action == ACTION_PREVIOUS_MENU or action == ACTION_LEFT:
 			xbmc.Player().stop()
 			exit_requested = True
 			self.close()
 
+		if action == ACTION_RIGHT:
+			xbmc.Player().stop()
+			
 		if action == ACTION_ENTER:
 			exit_requested = True
 			xbmc.Player().stop()
@@ -142,7 +151,7 @@ class movieWindow(xbmcgui.WindowXMLDialog):
 			self.getControl(30011).setVisible(False)
 			self.close()
 		
-		if action == ACTION_I:
+		if action == ACTION_I or action == ACTION_UP:
 			self.getControl(30011).setVisible(False)
 			w=infoWindow('script-DialogVideoInfo.xml',addon_path,'default')
 			w.doModal()
@@ -214,21 +223,28 @@ class infoWindow(xbmcgui.WindowXMLDialog):
 		ACTION_PREVIOUS_MENU = 10
 		ACTION_ENTER = 7
 		ACTION_I = 11
+		ACTION_LEFT = 1
+		ACTION_RIGHT = 2
+		ACTION_UP = 3
+		ACTION_DOWN = 4
 		#xbmc.log('action  =' + str(action.getId()))
-		if action == ACTION_PREVIOUS_MENU:
-			global do_timeout
-			global exit_requested
+		global do_timeout
+		global exit_requested
+		global movie_file
+		if action == ACTION_PREVIOUS_MENU or action == ACTION_LEFT:
 			do_timeout=False
 			xbmc.Player().stop()
 			exit_requested=True
 			self.close()
 			
-		if action == ACTION_I:
+		if action == ACTION_I or action == ACTION_DOWN:
+			self.close()
+			
+		if action == ACTION_RIGHT:
+			xbmc.Player().stop()
 			self.close()
 
 		if action == ACTION_ENTER:
-			global movie_file
-			global exit_requested
 			movie_file = trailer["file"]
 			xbmc.Player().stop()
 			exit_requested=True
