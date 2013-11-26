@@ -239,17 +239,15 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
         if tvshow_id is not None:
             dutch = 0
             english = 0
-            if 'dut' in languages: dutch = languages.index('dut')
-            if 'eng' in languages: english = languages.index('eng')
+            if 'dut' in languages: dutch = 1
+            if 'eng' in languages: english = 1
             if dutch > 0:
                 getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "nl", "Dutch", subtitles_list)
             if english > 0:
                 getallsubs(tvshow_id, file_original_path, tvshow, season, episode, "en", "English", subtitles_list)
             subtitles_list.sort(key=lambda x: [ x['sync'], x['rating']], reverse = True)
-            if ((dutch > 0) and (english > 0) and (dutch < english)):
+            if ((dutch == 1) and (english == 1)):
                 subtitles_list.sort(key=lambda x: [ x['language_name']])
-            if ((dutch > 0) and (english > 0) and (dutch > english)):
-                subtitles_list.sort(key=lambda x: [ x['language_name']], reverse = True)
             if ((dutch == 0) and (english == 0)):
                 okdialog = xbmcgui.Dialog()
                 # ok = okdialog.ok("Error", "Bierdopje is only for Dutch and English subtitles")
