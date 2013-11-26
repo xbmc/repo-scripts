@@ -20,9 +20,10 @@
     <string id="32108">Delete TV shows</string>
     <string id="32109">Delete music videos</string>
 
-    <string id="32110">Clean XBMC video library after cleaning</string>
-    <string id="32111">Delete empty folders after cleaning</string>
+    <string id="32110">Clean XBMC video library afterwards</string>
+    <string id="32111">Also delete empty folders</string>
     <string id="32112">Ignore files with the following extensions (separate with commas)</string>
+    <string id="32113">Also delete related files with similar names (e.g. subtitles)</string>
 
     <!-- Frequency section -->
     <string id="32201">[B]When should watched videos be deleted?[/B]</string>

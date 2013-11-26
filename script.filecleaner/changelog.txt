@@ -1,3 +1,7 @@
+Version 3.2.0
+==============
+- New option to delete related files with similar names (e.g. subtitles) (thanks WoLpH)
+
 Version 3.1.0
 ===============
 - New option to exclude up to three file paths from being modified

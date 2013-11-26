@@ -19,7 +19,8 @@
 
         <setting label="32110" id="clean_xbmc_library" type="bool" default="true" visible="true" />
         <setting label="32111" id="delete_folders" type="bool" default="false" visible="true" />
-        <setting label="32112" id="ignore_extensions" type="text" default=".nfo, .tbn, .srt, .ass, .srr, .sfv, .nzb" subsetting="true" visible="eq(-1,true)" />
+        <setting label="32112" id="ignore_extensions" type="text" default=".nfo, .nfo-orig, .tbn, .srt, .ass, .srr, .sfv, .nzb" subsetting="true" visible="eq(-1,true)" />
+        <setting label="32113" id="delete_related" type="bool" default="false" visible="true" />
     </category>
 
     <!-- Frequency section -->

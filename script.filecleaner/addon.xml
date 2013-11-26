@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.filecleaner" name="XBMC File Cleaner" version="3.1.0" provider-name="Anthirian">
+<addon id="script.filecleaner" name="XBMC File Cleaner" version="3.2.0" provider-name="Anthirian, drewzh">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="xbmc.json" version="6.0.0"/>
@@ -12,6 +12,8 @@ This addon has the potential to wipe your entire video collection! Please make s
 
 [B][I]DESCRIPTION[/I][/B]
 This addon will automatically scan your library for watched movies, TV show episodes and music videos, and delete them from the file system based on numerous critia such as age, rating, free disk space, etc. All these options and more can be configured via the addon's settings. Also make sure you set the correct path to the disk you wish to check for free space, especially when you store your videos on a secondary drive or a network share.
+
+Original Developer: drewzh (xbmcfilecleaner@drewzh.com)
         </description>
         <summary lang="nl">Verwijdert regelmatig oude films, afleveringen van TV-series en videoclips</summary>
         <description lang="nl">[B][I]LEES DIT VOOR JE VERDER GAAT[/I][/B]
@@ -19,6 +21,8 @@ Deze addon kan in een keer je hele videocollectie verwijderen! Zorg dat je preci
 
 [B][I]BESCHRIJVING[/I][/B]
 Deze addon zal automatisch de videobibliotheek scannen op zoek naar bekeken films, afleveringen van TV-series en videoclips, en deze van de harde schijf verwijderen met inachtneming van verscheidene criteria, zoals leeftijd, cijfer, vrije harde schijfruimte, etc. Al deze opties, en andere, zijn in te stellen via het optiesmenu van de addon. Let er daarbij ook op dat je het juiste pad instelt naar de schijf die je wil gebruiken voor het controleren van de vrije schijfruimte, met name als je videocollectie op een andere harde schijf staat of op een netwerkshare.
+
+Oorspronkelijke ontwikkelaar: drewzh (xbmcfilecleaner@drewzh.com)
         </description>
         <disclaimer lang="en">It is recommended to not delete videos permanently until you are familiar with all of the settings.</disclaimer>
         <disclaimer lang="nl">Het is verstandig om videos pas permanent te verwijderen als je bekend bent met alle instellingen.</disclaimer>

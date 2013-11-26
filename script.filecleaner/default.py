@@ -357,6 +357,7 @@ class Cleaner:
         self.cleaner_enabled = bool(__settings__.getSetting("cleaner_enabled") == "true")
         self.delete_folders = bool(__settings__.getSetting("delete_folders") == "true")
         self.ignore_extensions = str(__settings__.getSetting("ignore_extensions"))
+        self.delete_related = bool(__settings__.getSetting("delete_related") == " true")
         self.delayed_start = float(__settings__.getSetting("delayed_start"))
         self.scan_interval = float(__settings__.getSetting("scan_interval"))
 
@@ -479,7 +480,7 @@ class Cleaner:
                     self.debug("We are dealing with network paths")
                     self.debug("Extracting information from share %s" % path)
 
-                    regex = "(?P<type>smb|nfs|afp)://(?P<user>\w+):(?P<pass>.+)@(?P<host>.+?)/(?P<share>.+?)/"
+                    regex = "(?P<type>smb|nfs|afp)://(?:(?P<user>.+):(?P<pass>.+)@)?(?P<host>.+?)/(?P<share>.+?).*$"
                     pattern = re.compile(regex, flags=re.I | re.U)
                     match = pattern.match(path)
                     try:
@@ -493,7 +494,7 @@ class Cleaner:
                     self.debug("Creating UNC paths so Windows understands the shares")
                     path = os.path.normcase(r"\\" + share["host"] + os.sep + share["share"])
                     self.debug("UNC path: %s" % path)
-                    self.debug("If checks fail because you need credentials, please mount the drive first")
+                    self.debug("If checks fail because you need credentials, please mount the share first")
                 else:
                     self.debug("We are dealing with local paths")
 
@@ -559,6 +560,17 @@ class Cleaner:
             return False
 
         if xbmcvfs.exists(location):
+            if self.delete_related:
+                path, name = os.path.split(location)
+                name, _ = os.path.splitext(name)
+
+                for extra_file in xbmcvfs.listdir(path)[1]:
+                    if extra_file.startswith(name):
+                        extra_file_path = os.path.join(path, extra_file)
+                        if extra_file_path != location:
+                            self.debug('Deleting %r' % extra_file_path)
+                            xbmcvfs.delete(extra_file_path)
+
             return xbmcvfs.delete(location)
         else:
             self.debug("XBMC could not find the file at %s" % location, xbmc.LOGERROR)
@@ -674,6 +686,21 @@ class Cleaner:
                     return self.delete_file(source)
             else:
                 self.debug("Moving %s\nto %s\nNew path: %s" % (source, dest_folder, new_path))
+                if self.delete_related:
+                    path, name = os.path.split(source)
+                    name, ext = os.path.splitext(name)
+
+                    for extra_file in xbmcvfs.listdir(path)[1]:
+                        if extra_file.startswith(name):
+                            extra_file_path = os.path.join(path, extra_file)
+                            new_extra_path = os.path.join(
+                                dest_folder, os.path.basename(extra_file))
+
+                            if new_extra_path != new_path:
+                                self.debug('Renaming %r to %r' % (
+                                    extra_file_path, new_extra_path))
+                                xbmcvfs.rename(extra_file_path, new_extra_path)
+
                 return xbmcvfs.rename(source, new_path)
         else:
             self.debug("XBMC could not find the file at %s" % source, xbmc.LOGWARNING)
