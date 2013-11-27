@@ -125,7 +125,7 @@
 					<posy>0</posy>
 					<width>140</width>
 					<height>140</height>
-					<texture fallback="DefaultAlbumCover.png">$INFO[Player.Art(thumb)]</texture>
+					<texture fallback="DefaultAlbumCover.png">$INFO[MusicPlayer.Cover]</texture>
 					<aspectratio>scale</aspectratio>
 				</control>
 				<control type="label">

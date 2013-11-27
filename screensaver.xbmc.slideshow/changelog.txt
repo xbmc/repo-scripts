@@ -1,3 +1,6 @@
+v1.0.2
+- fix album cover missing when playing music
+
 v1.0.1
 - add xml header
 
