@@ -85,7 +85,7 @@ def addSubtitle(subtitlesList, sync, title, link, referer, rating,cd):
                           'referer': referer,
                           'rating':getFormattedRating(rating),
                           'language_flag': 'flags/ro.gif',
-                          'language_name': cd + " CD",
+                          'language_name': "Romanian",
                           'cd':cd})
     
 # sort subtitlesList first by sync then by rating
@@ -211,7 +211,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     # get the subtitles .zip
     content = getURL(url, referer)
     # write the subs archive in the temp location
-    subs_file = os.path.join(tmp_sub_dir, "zipsubs.zip")
+    subs_file = zip_subs
     try:
         log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, subs_file))
         local_file_handle = open(subs_file, "w" + "b")
@@ -224,4 +224,4 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     # True iff the file is packed as zip: addon will automatically unpack it.
     # language of subtitles,
     # Name of subtitles file if not packed (or if we unpacked it ourselves)
-    return True, language, subs_file
+    return True, language, ''

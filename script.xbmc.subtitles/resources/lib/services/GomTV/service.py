@@ -4,6 +4,7 @@ import sys
 import os
 import urllib2
 import re
+import xbmc, xbmcgui, xbmcvfs
 from BeautifulSoup import BeautifulSoup
 from utilities import log, languageTranslate
 from utilities import hashFileMD5
@@ -17,12 +18,25 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     msg = ""
 
     log(__name__, "Search GomTV with a file name, "+file_original_path)
-    video_hash = hashFileMD5( file_original_path, buff_size=1024*1024 )
+    movieFullPath = xbmc.Player().getPlayingFile()
+    video_hash = hashFileMD5( movieFullPath, buff_size=1024*1024 )
     if video_hash is None:
         msg = _(755)
         return subtitles_list, "", msg  #standard output
     webService = GomTvWebService()
-    subtitles_list = webService.SearchSubtitles( video_hash )
+    if len(tvshow) > 0:                                            # TvShow
+        OS_search_string = ("%s S%.2dE%.2d" % (tvshow,
+                                           int(season),
+                                           int(episode),)
+                                          ).replace(" ","+")      
+    else:                                                          # Movie or not in Library
+        if str(year) == "":                                          # Not in Library
+            title, year = xbmc.getCleanMovieTitle( title )
+        else:                                                        # Movie in Library
+            year  = year
+            title = title
+        OS_search_string = title.replace(" ","+")
+    subtitles_list = webService.SearchSubtitlesFromTitle( OS_search_string ,video_hash)
     log(__name__, "Found %d subtitles in GomTV" %len(subtitles_list))
 
     return subtitles_list, "", msg  #standard output
@@ -43,7 +57,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
         f.close()
     except:
         return False, language, ""
-    return True, language, tmp_fname    #standard output
+    return False, language, tmp_fname    #standard output
   
 class GomTvWebService:
     root_url = "http://gom.gomtv.com"
@@ -52,7 +66,9 @@ class GomTvWebService:
     def __init__ (self):
         pass
 
-    def SearchSubtitles (self, key):
+        
+    def SearchSubtitlesFromTitle (self, searchString,key):
+        subtitles = []
         subtitles = []
 
         q_url = "http://gom.gomtv.com/jmdb/search.html?key=%s" %key
@@ -74,21 +90,29 @@ class GomTvWebService:
             req = urllib2.Request(q_url)
             req.add_header("User-Agent", self.agent_str)
             html = urllib2.urlopen(req).read()
+        elif "<script>top.location.replace" in html:
+            log(__name__, "redirected")
+            if "key=';</script>" in html:
+                log(__name__, "fail to search with given key")
+                return []
+            q_url = self.parseRedirectionPage(html)
+            req = urllib2.Request(q_url)
+            req.add_header("User-Agent", self.agent_str)
+            html = urllib2.urlopen(req).read()
         # regular search result page
         soup = BeautifulSoup(html)
         subtitles = []
-        for row in soup.find("table",{"class":"smi_list"}).findAll("tr")[1:]:
+        for row in soup.find("table",{"class":"tbl_lst"}).findAll("tr")[1:]:
             a_node = row.find("a")
             if a_node is None:
-                    continue
+                continue
             title = a_node.text
+            lang_node_string = row.find("span",{"class":"txt_clr3"}).string
             url = self.root_url + a_node["href"]
-            if title.startswith(u"[한글]"):
+            if u"한글" in lang_node_string:
                 langlong  = "Korean"
-                title = title[4:]
-            elif title.startswith(u"[영문]"):
+            elif u"영문" in lang_node_string:
                 langlong  = "English"
-                title = title[4:]
             else:   # [통합]
                 langlong  = "Korean"
             langshort = languageTranslate(langlong, 0, 2)
@@ -102,19 +126,85 @@ class GomTvWebService:
                 "language_name" : langlong,
                 "language_flag" : "flags/%s.gif" %langshort
             } )            
+            
+        q_url = "http://gom.gomtv.com/main/index.html?ch=subtitles&pt=l&menu=subtitles&lang=0&sValue=%s" %searchString
+        print q_url
+        log(__name__, "search subtitle at %s"  %q_url)
+
+        # main page
+        req = urllib2.Request(q_url)
+        req.add_header("User-Agent", self.agent_str)
+        html = urllib2.urlopen(req).read()
+        if "<div id='search_failed_smi'>" in html:
+            log(__name__, "no result found")
+            return []
+        elif "<script>location.href" in html:
+            log(__name__, "redirected")
+            if "key=';</script>" in html:
+                log(__name__, "fail to search with given key")
+                return []
+            q_url = self.parseRedirectionPage(html)
+            req = urllib2.Request(q_url)
+            req.add_header("User-Agent", self.agent_str)
+            html = urllib2.urlopen(req).read()
+        elif "<script>top.location.replace" in html:
+            log(__name__, "redirected")
+            if "key=';</script>" in html:
+                log(__name__, "fail to search with given key")
+                return []
+            q_url = self.parseRedirectionPage(html)
+            req = urllib2.Request(q_url)
+            req.add_header("User-Agent", self.agent_str)
+            html = urllib2.urlopen(req).read()
+        # regular search result page
+        soup = BeautifulSoup(html)
+        for row in soup.find("table",{"class":"tbl_lst"}).findAll("tr")[1:]:
+            if row is None:
+        	      continue
+            a_node = row.find("a")
+            if a_node is None:
+                continue
+            title = a_node.text
+            lang_node_string = row.find("span",{"class":"txt_clr3"}).string
+            url = self.root_url + a_node["href"]
+            if u"한글" in lang_node_string:
+                langlong  = "Korean"
+            elif u"영문" in lang_node_string:
+                langlong  = "English"
+            else:   # [통합]
+                langlong  = "Korean"
+            langshort = languageTranslate(langlong, 0, 2)
+            subtitles.append( {
+                "link"          : url,
+                "filename"      : title,
+                "ID"            : key,
+                "format"        : "smi",
+                "sync"          : False,
+                "rating"        : "0",
+                "language_name" : langlong,
+                "language_flag" : "flags/%s.gif" %langshort
+            } )            
         return subtitles
 
     def parseRedirectionPage(self, html):
-        match = re.match('''<script>location.href = '([^']*)';</script>''', html)
-        if match is None:
-            raise UnknownFormat
-        url = match.group(1)
+        url = re.split("\'",html)[1]
         if 'noResult' in url:   # no result (old style)
             print "Unusual result page, "+page_url
             return subtitles
-        return self.root_url+'/jmdb/'+url
+        return self.root_url+url
 
     def GetSubtitleUrl (self, page_url):
         html = urllib2.urlopen(page_url).read()
-        downids = re.search('''javascript:save[^\(]*\('(\d+)','(\d+)','[^']*'\);''', html).group(1,2)
-        return self.root_url+"/jmdb/save.html?intSeq=%s&capSeq=%s" %downids
+        sp2 = ""
+        if "a href=\"jamak://gom.gomtv.com" in html:
+            sp = re.split("a href=\"jamak://gom.gomtv.com",html)[1]
+            sp2 = re.split("\"",sp)[0]
+        elif "onclick=\"downJm(" in html:
+            s1 = re.split("onclick=\"downJm",html)[1]
+            intSeq = re.split("'",s1)[1]
+            capSeq = re.split("'",s1)[3]
+            sp2 = "/main/index.html?pt=down&ch=subtitles&intSeq="+intSeq+"&capSeq="+capSeq
+        else:
+       	    return None
+       	print sp2
+        return self.root_url+sp2

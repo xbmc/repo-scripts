@@ -64,6 +64,7 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 			control_img2 = client.get_control_image(content)
 			if not control_img2 == None:
 				log(__name__,'Invalid control text')
+				xbmc.executebuiltin("XBMC.Notification(%s,%s,1000,%s)" % (__scriptname__,"Invalid control text",os.path.join(__cwd__,'icon.png')))
 				return True,subtitles_list[pos]['language_name'], ""
 		else:
 			log(__name__,'Dialog was canceled')
@@ -80,10 +81,9 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	link = client.get_link(content)
 	log(__name__,'Got the link, wait %i seconds before download' % (wait_time))
 	delay = wait_time
-	icon =  os.path.join(__cwd__,'icon.png')
 	for i in range(wait_time+1):
 		line2 = 'Download will start in %i seconds' % (delay,)
-		xbmc.executebuiltin("XBMC.Notification(%s,%s,1000,%s)" % (__scriptname__,line2,icon))
+		xbmc.executebuiltin("XBMC.Notification(%s,%s,1000,%s)" % (__scriptname__,line2,os.path.join(__cwd__,'icon.png')))
 		delay -= 1
 		time.sleep(1)
 
@@ -140,15 +140,25 @@ class TitulkyClient(object):
 	def __init__(self):
 		self.server_url = 'http://www.titulky.com'
 		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.LWPCookieJar()))
-		opener.version = 'User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)'
+		opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)')]
 		urllib2.install_opener(opener)
+
 	def login(self,username,password):
 			log(__name__,'Logging in to Titulky.com')
 			login_postdata = urllib.urlencode({'Login': username, 'Password': password, 'foreverlog': '1','Detail2':''} )
 			request = urllib2.Request(self.server_url + '/index.php',login_postdata)
-			response = urllib2.urlopen(request).read()
+			response = urllib2.urlopen(request)
 			log(__name__,'Got response')
-			return not response.find('BadLogin')>-1
+			if response.read().find('BadLogin')>-1:
+				return False
+
+			log(__name__,'Storing Cookies')
+			self.cookies = {}
+			self.cookies['CRC'] = re.search('CRC=(\S+);', response.headers.get('Set-Cookie'), re.IGNORECASE | re.DOTALL).group(1)
+			self.cookies['LogonLogin'] = re.search('LogonLogin=(\S+);', response.headers.get('Set-Cookie'), re.IGNORECASE | re.DOTALL).group(1)
+			self.cookies['LogonId'] = re.search('LogonId=(\S+);', response.headers.get('Set-Cookie'), re.IGNORECASE | re.DOTALL).group(1)
+
+			return True
 
 	def search_subtitles(self, file_original_path, title, tvshow, year, season, episode, set_temp, rar, lang1, lang2, lang3 ):
 		url = self.server_url+'/index.php?'+urllib.urlencode({'Fulltext':title,'FindUser':''})
@@ -251,7 +261,13 @@ class TitulkyClient(object):
 		url = self.server_url+link
 		log(__name__,'Downloading file %s' % (url))
 		req = urllib2.Request(url)
+		req = self.add_cookies_into_header(req)
 		response = urllib2.urlopen(req)
+		if response.headers.get('Set-Cookie'):
+			phpsessid = re.search('PHPSESSID=(\S+);', response.headers.get('Set-Cookie'), re.IGNORECASE | re.DOTALL)
+			if phpsessid:
+				log(__name__, "Storing PHPSessionID")
+				self.cookies['PHPSESSID'] = phpsessid.group(1)
 		content = response.read()
 		log(__name__,'Done')
 		response.close()
@@ -261,6 +277,7 @@ class TitulkyClient(object):
 		url = self.server_url+'/idown.php'
 		post_data = {'downkod':code,'titulky':id,'zip':'z','securedown':'2','histstamp':''}
 		req = urllib2.Request(url,urllib.urlencode(post_data))
+		req = self.add_cookies_into_header(req)
 		log(__name__,'Opening %s POST:%s' % (url,str(post_data)))
 		response = urllib2.urlopen(req)
 		content = response.read()
@@ -273,9 +290,19 @@ class TitulkyClient(object):
 		url = self.server_url+'/idown.php?'+urllib.urlencode({'R':timestamp,'titulky':id,'histstamp':'','zip':'z'})
 		log(__name__,'Opening %s' % (url))
 		req = urllib2.Request(url)
+		req = self.add_cookies_into_header(req)
 		response = urllib2.urlopen(req)
 		content = response.read()
 		log(__name__,'Done')
 		response.close()
 		return content
+
+	def add_cookies_into_header(self,request):
+		cookies_string = "LogonLogin=" + self.cookies['LogonLogin'] + "; "
+		cookies_string += "LogonId=" + self.cookies['LogonId'] + "; "
+		cookies_string += "CRC=" + self.cookies['CRC']
+		if 'PHPSESSID' in self.cookies:
+			cookies_string += "; PHPSESSID=" + self.cookies['PHPSESSID']
+		request.add_header('Cookie',cookies_string)
+		return request
 

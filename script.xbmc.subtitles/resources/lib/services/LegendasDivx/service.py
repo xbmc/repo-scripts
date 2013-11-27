@@ -69,8 +69,9 @@
 # Filtering languages, shows only European Portuguese flag.
 
 # LegendasDivx.com subtitles, based on a mod of Undertext subtitles
-import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib, shutil, fnmatch, uuid
+import os, sys, re, xbmc, xbmcgui, string, time, urllib, urllib2, cookielib, shutil, fnmatch, uuid, xbmcvfs
 from utilities import languageTranslate, log
+from BeautifulSoup import *
 _ = sys.modules[ "__main__" ].__language__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __addon__ = sys.modules[ "__main__" ].__addon__
@@ -130,10 +131,10 @@ subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\
 # Functions
 #====================================================================================================================
 def _from_utf8(text):
-    if isinstance(text, str):
-        return text.decode('utf-8')
-    else:
-        return text
+	if isinstance(text, str):
+		return text.decode('utf-8')
+	else:
+		return text
 
 def msgnote(site, text, timeout):
 	icon =  os.path.join(__cwd__,"icon.png")
@@ -336,6 +337,7 @@ def recursive_glob(treeroot, pattern):
 def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, session_id): #standard input
 
 	msgnote(debug_pretext,__language__(30154), 6000)
+	legendas_tmp = []
 	id = subtitles_list[pos][ "id" ]
 	sync = subtitles_list[pos][ "sync" ]
 	log( __name__ ,"%s Fetching id using url %s" % (debug_pretext, id))
@@ -369,34 +371,58 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
 	f.write(downloaded_content)
 	f.close()
 	
+	# brunoga fixed solution for non unicode caracters
+	# Ps. Windows allready parses Unicode filenames.
+	fs_encoding = sys.getfilesystemencoding()
+	extract_path = extract_path.encode(fs_encoding)
+	
+	def _UNICODE(text):
+		if text:
+			return unicode(BeautifulSoup(text, fromEncoding="utf-8",  smartQuotesTo=None))
+		else:
+			return text
+
+
 	# Use XBMC.Extract to extract the downloaded file, extract it to the temp dir, 
 	# then removes all files from the temp dir that aren't subtitles.
-	msgnote(debug_pretext,__language__(30155), 3000)
-	xbmc.executebuiltin("XBMC.Extract(" + fname + "," + extract_path +")")
-	time.sleep(2)
-	legendas_tmp = []
-	# brunoga fixed solution for non unicode caracters
-	fs_encoding = sys.getfilesystemencoding()
-	for root, dirs, files in os.walk(extract_path.encode(fs_encoding), topdown=False):
-		for file in files:
-			dirfile = os.path.join(root, file)
-			ext = os.path.splitext(dirfile)[1][1:].lower()
-			if ext in sub_ext:
-				legendas_tmp.append(dirfile)
-			elif os.path.isfile(dirfile):
-				os.remove(dirfile)
-	
-	msgnote(debug_pretext,__language__(30156), 3000)
-	searchrars = recursive_glob(extract_path, packext)
-	searchrarcount = len(searchrars)
-	if searchrarcount > 1:
-		for filerar in searchrars:
-			if filerar != os.path.join(extract_path,local_tmp_file) and filerar != os.path.join(extract_path,local_tmp_file):
-				try:
-					xbmc.executebuiltin("XBMC.Extract(" + filerar + "," + extract_path +")")
-				except:
-					return False
-	time.sleep(1)
+	def extract_and_copy(extraction=0):
+		i = 0
+		for root, dirs, files in os.walk(extract_path, topdown=False):
+			for file in files:
+				dirfile = os.path.join(root, file)
+				
+				# Sanitize filenames - converting them to ASCII - and remove them from folders
+				f = xbmcvfs.File(dirfile)
+				temp = f.read()
+				f.close()
+				xbmcvfs.delete(dirfile)
+				dirfile_with_path_name = os.path.relpath(dirfile, extract_path)
+				dirfile_with_path_name = re.sub(r"[/\\]{1,2}","-", dirfile_with_path_name)
+				dirfile_with_path_name = _UNICODE(dirfile_with_path_name).encode('ascii', 'ignore')
+				new_dirfile = os.path.join(extract_path, dirfile_with_path_name)
+				os.write(os.open(new_dirfile, os.O_RDWR | os.O_CREAT), temp)
+				
+				# Get the file extention
+				ext = os.path.splitext(new_dirfile)[1][1:].lower()
+				if ext in sub_ext and xbmcvfs.exists(new_dirfile):
+					if not new_dirfile in legendas_tmp:
+						#Append the matching file
+						legendas_tmp.append(new_dirfile)
+				elif ext in "rar zip" and not extraction:
+					# Extract compressed files, extracted priorly
+					xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (new_dirfile, extract_path))
+					xbmc.sleep(1000)
+					extract_and_copy(1)
+				elif ext not in "idx": 
+					xbmcvfs.delete(new_dirfile)
+			for dir in dirs:
+				dirfolder = os.path.join(root, dir)
+				xbmcvfs.rmdir(dirfolder)
+
+	xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (fname, extract_path))
+	xbmc.sleep(1000)
+	extract_and_copy()
+
 	searchsubs = recursive_glob(extract_path, subext)
 	searchsubscount = len(searchsubs)
 	for filesub in searchsubs:

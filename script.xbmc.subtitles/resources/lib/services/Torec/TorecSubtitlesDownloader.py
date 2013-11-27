@@ -163,7 +163,6 @@ class TorecSubtitlesDownloader:
         with open( fileName,"wb") as f:
             f.write(data)
         
-        shouldUnzip = True
         if shouldUnzip:
             # Unzip the zip file
             log(__name__ ,"Unzip the zip file")

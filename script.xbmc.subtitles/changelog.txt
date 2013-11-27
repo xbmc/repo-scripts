@@ -1,3 +1,15 @@
+3.9.16
+- Fix Torec support, thx barbedino
+- Fixed broken support for Ondertitel subtitle provider, Robby Holsteyns
+- [fix] download subs from titulky.com (manual cookies handling),Andrew Beam
+- titulky.com - notification about invalid captcha text,Andrew Beam
+- LegendasDivx.com, Fix for latin characters. Connor McLeod
+- Update GomTV service.py, neverdoubt
+- Fix RegieLive subtitles service, Edex
+- fix SubtitulosES, tuxitos
+- Update service.py, reg exp updated, Tux Os
+- 
+
 3.9.15
 - update regex for Tv Shows (Season 01 Episode 02)
 - add support for Malay language
