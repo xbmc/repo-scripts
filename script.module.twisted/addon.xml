@@ -2,7 +2,7 @@
 <addon id="script.module.twisted" name="Twisted" version="13.2.0" provider-name="mablae">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
-		<import addon="script.module.zope-interfaces" version="4.0.5"/>
+		<import addon="script.module.zope-interface" version="4.0.5"/>
 	</requires>
 	<extension point="xbmc.python.module" library="lib" />
 	<extension point="xbmc.addon.metadata">
