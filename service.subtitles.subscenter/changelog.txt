@@ -1,0 +1,16 @@
+1.5.0
+- Porting service to Gotham's format, 
+  code is based on Ori Varon's addon from previous versions
+
+1.4.0
+- Fixed key field (Thanks ILRHAES) (Ori Varon)
+
+1.3.0
+- Fixed null values in website dictionary (changed to None). (Ori Varon)
+
+1.2.0
+- Added key field for download URL. (Ori Varon)
+
+1.1.0
+- Fixed downloading of non-Hebrew subtitles. (Ori Varon)
+
