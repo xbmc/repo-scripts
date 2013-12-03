@@ -73,15 +73,24 @@ class Settings():
 
     @staticmethod
     def isMenuReturnVideoSelection():
-        return __addon__.getSetting( "extrasReturn" ) == __addon__.getLocalizedString(32007)
+        settingsSelect = "extrasReturn"
+        if Settings.isDetailedListScreen():
+            settingsSelect = "detailedReturn"
+        return __addon__.getSetting( settingsSelect ) == __addon__.getLocalizedString(32007)
 
     @staticmethod
     def isMenuReturnHome():
-        return __addon__.getSetting( "extrasReturn" ) == __addon__.getLocalizedString(32009)
+        settingsSelect = "extrasReturn"
+        if Settings.isDetailedListScreen():
+            settingsSelect = "detailedReturn"
+        return __addon__.getSetting( settingsSelect ) == __addon__.getLocalizedString(32009)
 
     @staticmethod
     def isMenuReturnInformation():
-        return __addon__.getSetting( "extrasReturn" ) == __addon__.getLocalizedString(32008)
+        settingsSelect = "extrasReturn"
+        if Settings.isDetailedListScreen():
+            settingsSelect = "detailedReturn"
+        return __addon__.getSetting( settingsSelect ) == __addon__.getLocalizedString(32008)
 
     @staticmethod
     def isForceButtonDisplay():
@@ -167,6 +176,12 @@ class BaseExtrasItem():
     def __init__( self, directory, filename, isFileMatchExtra=False ):
         self.directory = directory
         self.filename = filename
+        # Setup the icon and thumbnail images
+        self.thumbnailImage = ""
+        self.iconImage = ""
+        self.fanart = ""
+        self._loadImages(filename)
+
         # Record if the match was by filename rather than in Extras sub-directory
         self.isFileMatchingExtra = isFileMatchExtra
         # Check if there is an NFO file to process
@@ -202,6 +217,93 @@ class BaseExtrasItem():
     
     def getOrderKey(self):
         return self.orderKey
+
+    def getThumbnailImage(self):
+        return self.thumbnailImage
+
+    def getIconImage(self):
+        return self.iconImage
+
+    def getFanArt(self):
+        if self.fanart == "":
+            self.fanart = SourceDetails.getFanArt()
+        return self.fanart
+
+    # Load the Correct set of images for icons and thumbnails
+    # Image options are
+    # (NFO - Will overwrite these values)
+    # <filename>.tbn/jpg
+    # <filename>-poster.jpg (Auto picked up by player)
+    # <filename>-thumb.jpg
+    # poster.jpg
+    # folder.jpg
+    #
+    # See:
+    # http://wiki.xbmc.org/?title=Thumbnails
+    # http://wiki.xbmc.org/index.php?title=Frodo_FAQ#Local_images
+    def _loadImages(self, filename):
+        imageList = []
+        # Find out the name of the image files
+        fileNoExt = os.path.splitext( filename )[0]
+
+        # Start by searching for the filename match
+        fileNoExtImage = self._loadImageFile( fileNoExt )
+        if fileNoExtImage != "":
+            imageList.append(fileNoExtImage)
+
+        # Check for -poster added to the end
+        fileNoExtImage = self._loadImageFile( fileNoExt + "-poster" )
+        if fileNoExtImage != "":
+            imageList.append(fileNoExtImage)
+
+        if len(imageList) < 2:
+            # Check for -thumb added to the end
+            fileNoExtImage = self._loadImageFile( fileNoExt + "-thumb" )
+            if fileNoExtImage != "":
+                imageList.append(fileNoExtImage)
+
+        if len(imageList) < 2:
+            # Check for poster.jpg
+            fileDir = os.path.join(self.directory, "poster")
+            fileNoExtImage = self._loadImageFile( fileDir )
+            if fileNoExtImage != "":
+                imageList.append(fileNoExtImage)
+
+        if len(imageList) < 2:
+            # Check for folder.jpg
+            fileDir = os.path.join(self.directory, "folder")
+            fileNoExtImage = self._loadImageFile( fileDir )
+            if fileNoExtImage != "":
+                imageList.append(fileNoExtImage)
+                
+        # Set the first one to the thumbnail, and the second the the icon
+        if len(imageList) > 0:
+            self.thumbnailImage = imageList[0]
+            if len(imageList) > 1:
+                self.iconImage = imageList[1]
+
+        # Now check for the fanart
+        # Check for -fanart added to the end
+        fileNoExtImage = self._loadImageFile( fileNoExt + "-fanart" )
+        if fileNoExtImage != "":
+            self.fanart = fileNoExtImage
+        else:
+            # Check for fanart.jpg
+            fileDir = os.path.join(self.directory, "fanart")
+            fileNoExtImage = self._loadImageFile( fileDir )
+            if fileNoExtImage != "":
+                self.fanart = fileNoExtImage
+
+
+    # Searched for a given image name under different extensions
+    def _loadImageFile(self, fileNoExt):
+        if xbmcvfs.exists( fileNoExt + ".tbn" ):
+            return fileNoExt + ".tbn"
+        if xbmcvfs.exists( fileNoExt + ".png" ):
+            return fileNoExt + ".png"
+        if xbmcvfs.exists( fileNoExt + ".jpg" ):
+            return fileNoExt + ".jpg"
+        return ""
 
     # Parses the filename to work out the display name and order key
     def _generateOrderAndDisplay(self, filename):
@@ -301,11 +403,23 @@ class BaseExtrasItem():
                 if (episode == None) or (episode == ""):
                     episode = "0"
                 self.orderKey = "%02d_%02d" % (int(season), int(episode))
-    
+
             else:
                 self.displayName = None
                 self.orderKey = None
                 log("BaseExtrasItem: Unknown NFO format")
+    
+            # Now get the thumbnail - always called the same regardless of
+            # movie of TV
+            thumbnail = self._getNfoThumb(nfoXml)
+            if thumbnail != None:
+                self.thumbnailImage = thumbnail
+
+            # Now get the fanart - always called the same regardless of
+            # movie of TV
+            fanart = self._getNfoFanart(nfoXml)
+            if fanart != None:
+                self.fanart = fanart
     
             del nfoXml
 
@@ -321,6 +435,34 @@ class BaseExtrasItem():
             returnValue = False
 
         return returnValue
+
+    # Reads the thumbnail information from an NFO file
+    def _getNfoThumb(self, nfoXml):
+        # Get the thumbnail
+        thumbnail = nfoXml.findtext('thumb')
+        if (thumbnail != None) and (thumbnail != ""):
+            # Found the thumb entry, check if this is a local path
+            # which just has a filename, this is the case if there are
+            # no forward slashes and no back slashes
+            if (not "/" in thumbnail) and (not "\\" in thumbnail):
+                thumbnail = os.path.join(self.directory, thumbnail)
+        else:
+            thumbnail = None
+        return thumbnail
+
+    # Reads the fanart information from an NFO file
+    def _getNfoFanart(self, nfoXml):
+        # Get the fanart
+        fanart = nfoXml.findtext('fanart')
+        if (fanart != None) and (fanart != ""):
+            # Found the fanart entry, check if this is a local path
+            # which just has a filename, this is the case if there are
+            # no forward slashes and no back slashes
+            if (not "/" in fanart) and (not "\\" in fanart):
+                fanart = os.path.join(self.directory, fanart)
+        else:
+            fanart = None
+        return fanart
 
 
 ####################################################################
@@ -458,8 +600,16 @@ class ExtrasPlayer(xbmc.Player):
     def _getListItem(self, extrasItem):
         listitem = xbmcgui.ListItem()
         # Set the display title on the video play overlay
-        listitem.setInfo('video', {'studio': __addon__.getLocalizedString(32001)})
+        listitem.setInfo('video', {'studio': __addon__.getLocalizedString(32001) + " - " + SourceDetails.getTitle()})
         listitem.setInfo('video', {'Title': extrasItem.getDisplayName()})
+        
+        # If both the Icon and Thumbnail is set, the list screen will choose to show
+        # the thumbnail
+        if extrasItem.getIconImage() != "":
+            listitem.setIconImage(extrasItem.getIconImage())
+        if extrasItem.getThumbnailImage() != "":
+            listitem.setThumbnailImage(extrasItem.getThumbnailImage())
+        
         # Record if the video should start playing part-way through
         if extrasItem.isResumable():
             if extrasItem.getResumePoint() > 1:
@@ -484,9 +634,8 @@ class VideoExtrasDialog(xbmcgui.Window):
 
         # Show the list to the user
         select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32001), displayNameList)
-        
-        infoDialogId = xbmcgui.getCurrentWindowDialogId();
-        # USer has made a selection, -1 is exit
+
+        # User has made a selection, -1 is exit
         if select != -1:
             xbmc.executebuiltin("Dialog.Close(all, true)", True)
             extrasPlayer = ExtrasPlayer()
@@ -512,33 +661,9 @@ class VideoExtrasDialog(xbmcgui.Window):
                 extrasPlayer.play( exList[itemToPlay] )
             while extrasPlayer.isPlayingVideo():
                 xbmc.sleep(100)
-            
-            # The video selection will be the default return location
-            if not Settings.isMenuReturnVideoSelection():
-                if Settings.isMenuReturnHome():
-                    xbmc.executebuiltin("xbmc.ActivateWindow(home)", True)
-                else:
-                    # Put the information dialog back up
-                    xbmc.executebuiltin("xbmc.ActivateWindow(" + str(infoDialogId) + ")")
-                    if not Settings.isMenuReturnInformation():
-                        # Wait for the Info window to open, it can take a while
-                        # this is to avoid the case where the exList dialog displays
-                        # behind the info dialog
-                        while( xbmcgui.getCurrentWindowDialogId() != infoDialogId):
-                            xbmc.sleep(100)
-                        # Allow time for the screen to load - this could result in an
-                        # action such as starting TvTunes
-                        xbmc.sleep(1000)
-                        # Before showing the list, check if someone has quickly
-                        # closed the info screen while it was opening and we were waiting
-                        if xbmcgui.getCurrentWindowDialogId() == infoDialogId:
-                            # Reshow the exList that was previously generated
-                            self.showList(exList)
-
-    @staticmethod
-    def showError(self):
-        # "Info", "No extras found"
-        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32103))
+        else:
+            return False
+        return True
 
 
 ################################################
@@ -707,7 +832,6 @@ class VideoExtrasFinder():
 class VideoExtras():
     def __init__( self, inputArg ):
         log( "VideoExtras: Finding extras for " + inputArg )
-        self.srcDetails = SourceDetails(inputArg)
         self.baseDirectory = inputArg
         if self.baseDirectory.startswith("stack://"):
             self.baseDirectory = self.baseDirectory.split(" , ")[0]
@@ -780,16 +904,46 @@ class VideoExtras():
     def run(self, files):
         # All the files have been retrieved, now need to display them       
         if not files:
-            VideoExtrasDialog.showError()
+            # "Info", "No extras found"
+            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32103))
         else:
+            needsWindowReset = True
+            
             # Check which listing format to use
             if Settings.isDetailedListScreen():
-                extrasWindow = VideoExtrasWindow.createVideoExtrasWindow(files=files, src=self.srcDetails)
+                extrasWindow = VideoExtrasWindow.createVideoExtrasWindow(files=files)
                 xbmc.executebuiltin( "Dialog.Close(movieinformation)", True )
                 extrasWindow.doModal()
             else:
                 extrasWindow = VideoExtrasDialog()
-                extrasWindow.showList( files )
+                needsWindowReset = extrasWindow.showList( files )
+            
+            # The video selection will be the default return location
+            if (not Settings.isMenuReturnVideoSelection()) and needsWindowReset:
+                if Settings.isMenuReturnHome():
+                    xbmc.executebuiltin("xbmc.ActivateWindow(home)", True)
+                else:
+                    infoDialogId = 12003
+                    # Put the information dialog back up
+                    xbmc.executebuiltin("xbmc.ActivateWindow(movieinformation)")
+                    if not Settings.isMenuReturnInformation():
+                        # Wait for the Info window to open, it can take a while
+                        # this is to avoid the case where the exList dialog displays
+                        # behind the info dialog
+                        counter = 0
+                        while( xbmcgui.getCurrentWindowDialogId() != infoDialogId) and (counter <30):
+                            xbmc.sleep(100)
+                            counter = counter + 1
+                        # Allow time for the screen to load - this could result in an
+                        # action such as starting TvTunes
+                        xbmc.sleep(1000)
+                        # Before showing the list, check if someone has quickly
+                        # closed the info screen while it was opening and we were waiting
+                        if xbmcgui.getCurrentWindowDialogId() == infoDialogId:
+                            # Reshow the exList that was previously generated
+                            self.run(files)
+
+
 
 #####################################################################
 # Extras display Window that contains a few more details and looks
@@ -800,14 +954,13 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         # Copy off the key-word arguments
         # The non keyword arguments will be the ones passed to the main WindowXML
         self.files = kwargs.pop('files')
-        self.srcDetails = kwargs.pop('src')
         self.lastRecordedListPosition = -1
 
     # Static method to create the Window class
     @staticmethod
-    def createVideoExtrasWindow(files, src):
+    def createVideoExtrasWindow(files):
 #        return VideoExtrasWindow("MyVideoNav.xml", os.getcwd(), files=files, src=src)
-        return VideoExtrasWindow("script-videoextras-main.xml", __addon__.getAddonInfo('path').decode("utf-8"), files=files, src=src)
+        return VideoExtrasWindow("script-videoextras-main.xml", __addon__.getAddonInfo('path').decode("utf-8"), files=files)
 
     def onInit(self):
         # Need to clear the list of the default items
@@ -816,19 +969,26 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         for anExtra in self.files:
             log("VideoExtrasWindow: filename: " + anExtra.getFilename())
 
-            anItem = xbmcgui.ListItem(anExtra.getDisplayName(), path=self.srcDetails.getFilenameAndPath())
+            anItem = xbmcgui.ListItem(anExtra.getDisplayName(), path=SourceDetails.getFilenameAndPath())
             anItem.setProperty("FileName", anExtra.getFilename())
             anItem.setInfo('video', { 'PlayCount': anExtra.getWatched() })
-            anItem.setInfo('video', { 'Title': self.srcDetails.getTitle() })
-            if self.srcDetails.getTvShowTitle() != "":
-                anItem.setInfo('video', { 'TvShowTitle': self.srcDetails.getTvShowTitle() })
+            anItem.setInfo('video', { 'Title': SourceDetails.getTitle() })
+            if SourceDetails.getTvShowTitle() != "":
+                anItem.setInfo('video', { 'TvShowTitle': SourceDetails.getTvShowTitle() })
+
+            # If both the Icon and Thumbnail is set, the list screen will choose to show
+            # the thumbnail
+            if anExtra.getIconImage() != "":
+                anItem.setIconImage(anExtra.getIconImage())
+            if anExtra.getThumbnailImage() != "":
+                anItem.setThumbnailImage(anExtra.getThumbnailImage())
 
             # The following two will give us the resume flag
             anItem.setProperty("TotalTime", str(anExtra.getTotalDuration()))
             anItem.setProperty("ResumeTime", str(anExtra.getResumePoint()))
 
             # Set the background image
-            anItem.setProperty( "Fanart_Image", self.srcDetails.getFanArt() )
+            anItem.setProperty( "Fanart_Image", anExtra.getFanArt() )
 
             self.addItem(anItem)
         
@@ -1025,43 +1185,60 @@ class ExtrasDB():
 # Class to store the details of the selected item
 ##################################################
 class SourceDetails():
-    def __init__(self, path):
-        self.path = path
-        # Get the title of the Movie or TV Show
-        if WindowShowing.isTv():
-            self.title = xbmc.getInfoLabel( "ListItem.TVShowTitle" )
-            self.tvshowtitle = self.title
-        else:
-            self.title = xbmc.getInfoLabel( "ListItem.Title" )
-            self.tvshowtitle = ""
+    title = None
+    tvshowtitle = None
+    fanart = None
+    filenameAndPath = None
 
-        # This should be the same as the "path" passed in
-        self.FilenameAndPath = xbmc.getInfoLabel( "ListItem.FilenameAndPath" )
+    # Forces the loading of all the source details
+    # This is needed if the "Current Window" is going to
+    # change - and we need a reference to the source before
+    # it changes
+    @staticmethod
+    def forceLoadDetails():
+        SourceDetails.getFanArt()
+        SourceDetails.getFilenameAndPath()
+        SourceDetails.getTitle()
+        SourceDetails.getTvShowTitle()
 
-        # Save the background
-        self.fanart = xbmc.getInfoLabel( "ListItem.Property(Fanart_Image) " )
+    @staticmethod
+    def getTitle():
+        if SourceDetails.title == None:
+            # Get the title of the Movie or TV Show
+            if WindowShowing.isTv():
+                SourceDetails.title = xbmc.getInfoLabel( "ListItem.TVShowTitle" )
+            else:
+                SourceDetails.title = xbmc.getInfoLabel( "ListItem.Title" )
+        return SourceDetails.title
 
-    def getTitle(self):
-        return self.title
-
-    def getTvShowTitle(self):
-        return self.tvshowtitle
+    @staticmethod
+    def getTvShowTitle():
+        if SourceDetails.tvshowtitle == None:
+            if WindowShowing.isTv():
+                SourceDetails.tvshowtitle = xbmc.getInfoLabel( "ListItem.TVShowTitle" )
+            else:
+                SourceDetails.tvshowtitle = ""
+        return SourceDetails.tvshowtitle
 
     # This is a bit of a hack, when we set the path we need to set it an extra
     # directory below where we really are - this path is not used to retrieve
     # the extras files (This class highlights where the script was called from)
     # It is used to trigger the TV Tunes, and for some reason between VideoExtras
     # setting the value and TvTunes getting it, it loses the final directory
-    def getFilenameAndPath(self):
-        return self.FilenameAndPath + "Extras"
-
-    def getPath(self):
-        return self.path
+    @staticmethod
+    def getFilenameAndPath():
+        if SourceDetails.filenameAndPath == None:
+            SourceDetails.filenameAndPath = xbmc.getInfoLabel( "ListItem.FilenameAndPath" ) + "Extras"
+        return SourceDetails.filenameAndPath
     
-    def getFanArt(self):
-        return self.fanart
+    @staticmethod
+    def getFanArt():
+        if SourceDetails.fanart == None:
+            # Save the background
+            SourceDetails.fanart = xbmc.getInfoLabel( "ListItem.Property(Fanart_Image)" )
+        return SourceDetails.fanart
 
-        
+
 #########################
 # Main
 #########################
@@ -1069,6 +1246,9 @@ try:
     if len(sys.argv) > 1:
         # get the type of operation
         log("Operation = " + sys.argv[1])
+
+        # Load the details of the current source of the extras        
+        SourceDetails.forceLoadDetails()
         
         # Should the existing database be removed
         if sys.argv[1] == "cleanDatabase":

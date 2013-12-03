@@ -5,7 +5,8 @@
 		<setting id="enableFileTag" type="bool" label="32004" default="false"/>
 		<setting id="extrasFileTag" enable="eq(-1,true)" type="text" label="32005" default="-extras-"/>
 		<setting id="detailedList" type="bool" label="32025" default="true"/>
-		<setting id="extrasReturn" enable="eq(-1,false)" type="labelenum" label="32006" lvalues="32007|32008|32001|32009" default="32007" />
+		<setting id="extrasReturn" visible="eq(-1,false)" type="labelenum" label="32006" lvalues="32007|32008|32001|32009" default="32007" />
+		<setting id="detailedReturn" visible="eq(-2,true)" type="labelenum" label="32026" lvalues="32007|32008|32009" default="32007" />
 	</category>
 	<category label="32010">
 	    <setting label="32011" type="lsep"/>

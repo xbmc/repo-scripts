@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <window id="3001">
 	<!-- The following property allows TvTunes to keep playing when this window is displayed -->
 	<onload condition="!IsEmpty(ListItem.TvShowTitle)">SetProperty("TvTunesSupported", "TvShows")</onload>
