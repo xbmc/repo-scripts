@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<category id="general" label="30011">
+		<setting id="refresh" type="number" default="10" label="Refresh Time" visible="true" />
+		<setting id="mode" type="labelenum" default="random" label="Mode" values="random|recent" visible="true" />
+	</category>
+</settings>
