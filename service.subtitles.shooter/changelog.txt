@@ -1,0 +1,5 @@
+1.0.1
+- fixed to show language flag
+
+1.0.0
+- move the service out of XBMC Subtitles

@@ -220,10 +220,10 @@ def getSub(fpath, languagesearch, languageshort, languagelong):
                 if (file.ExtName in ["srt", "txt", "ssa", "ass", "smi", "sub"]):
                     showname = ".".join([barename, file.ExtName])
                     listitem = xbmcgui.ListItem(label=languagelong,
-                                      label2=showname,
-                                      iconImage="0",
-                                      thumbnailImage=languageshort + '.gif'
-                                      )
+                                                label2=showname,
+                                                iconImage="0",
+                                                thumbnailImage=languageshort
+                                                )
                     listitem.setProperty( "sync", "true" )
                     listitem.setProperty( "hearing_imp", "false" )
                     url = "plugin://%s/?action=download&filename=%s" % (__scriptid__, local_tmp_file)
@@ -286,7 +286,7 @@ if params['action'] == 'search':
     if item['title'] == "":
         item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
 
-    if item['episode'].lower().find("s") > -1:                                      # Check if season is "Special"
+    if item['episode'].lower().find("s") > -1:                                        # Check if season is "Special"
         item['season'] = "0"                                                          #
         item['episode'] = item['episode'][-1:]
 
