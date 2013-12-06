@@ -141,7 +141,7 @@ if params['action'] == 'search':
   item['3let_language']      = [] #['scc','eng']
   
   for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
-    item['3let_language'].append(languageTranslate(xbmc.convertLanguage(lang,xbmc.ISO_639_2),3,1))
+    item['3let_language'].append(languageTranslate(lang,0,1))
   
   if item['title'] == "":
     log( __name__, "VideoPlayer.OriginalTitle not found")

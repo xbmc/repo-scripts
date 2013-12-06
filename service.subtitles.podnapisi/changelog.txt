@@ -1,3 +1,6 @@
+5.0.2
+- fix missing languages
+
 5.0.1
 - icon.png and added logo.png for skin to use in window
 
