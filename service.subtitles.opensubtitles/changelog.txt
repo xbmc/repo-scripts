@@ -1,3 +1,6 @@
+5.0.3
+- fix Portuguese (Brazil) and Greek
+
 5.0.2
 - icon.png and added logo.png for skin to use in window
 
