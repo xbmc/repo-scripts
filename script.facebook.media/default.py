@@ -15,8 +15,8 @@ from facebook import GraphAPIError, GraphWrapAuthError
 
 __author__ = 'ruuk (Rick Phillips)'
 __url__ = 'http://code.google.com/p/facebook-media/'
-__date__ = '01-26-2012'
-__version__ = '0.6.9'
+__date__ = '01-21-2013'
+__version__ = '0.9.1'
 __addon__ = xbmcaddon.Addon(id='script.facebook.media')
 __lang__ = __addon__.getLocalizedString
 
@@ -51,9 +51,22 @@ ENCODING = loc[1] or 'utf-8'
 
 def ENCODE(string):
 	try:
+		return string.encode('utf-8','replace')
+	except:
+		LOG('ENCODE() - Failed to encode to UTF-8')
+		
+	try:
+		return string.encode('latin','replace')
+	except:
+		LOG('ENCODE() - Failed to encode to latin')
+		
+	try:
 		return string.decode(ENCODING,'replace').encode('utf-8','replace')
 	except:
-		return '**ENCODE ERROR- LOST**'
+		LOG('ENCODE() - Failed to encode to UTF-8 (alt-method) - using repr()')
+		ret = repr(string)
+		if ret.startswith('u'): ret = ret[1:]
+		return ret[1:-1]
 
 def DONOTHING(text):
 	return text
@@ -67,16 +80,72 @@ def ERROR(message):
 	LOG(message)
 	traceback.print_exc()
 	return str(sys.exc_info()[1])
+
+#############################################################################################
+# Password handling
+#############################################################################################
+
+import platform
+original_syscmd_uname = platform._syscmd_uname
+def new_syscmd_uname(option,default=''):
+	try:
+		return platform._syscmd_uname(option,default)
+	except:
+		return default
+platform._syscmd_uname = new_syscmd_uname
+
+import keyring
 	
+def getPassword(user_pass_key):
+	try:
+		password = keyring.get_password('FacebookMedia_XBMC',user_pass_key)
+		checkPass = __addon__.getSetting(user_pass_key)
+		if not password and checkPass:
+			savePassword(user_pass_key,checkPass)
+			__addon__.setSetting(user_pass_key,'')
+			LOG('Password loaded and cleared from settings. Saved via keyring.')
+			return checkPass
+		else:
+			LOG('Password loaded from keyring.')
+		return password
+	except:
+		ERROR('Failed to get password from keyring, getting from settings...')
+		return __addon__.getSetting(user_pass_key) or ''
+
+def savePassword(user_pass_key,password):
+	try:
+		if not password:
+			try:
+				keyring.delete_password('FacebookMedia_XBMC',user_pass_key)
+			except:
+				pass
+		else:
+			keyring.set_password('FacebookMedia_XBMC',user_pass_key,password or '')
+			LOG('Password saved via keyring.')
+		if not password and __addon__.getSetting(user_pass_key):
+			__addon__.setSetting(user_pass_key,'') #Just to make sure the password is not lingering here
+		return True
+	except:
+		ERROR('Failed to set password via keyring, saving to settings...')
+		__addon__.setSetting(user_pass_key,password or '')
+	return False
+
+#############################################################################################
+
 class FacebookUser:
 	def __init__(self,uid):
 		self.id = uid
 		self.email = __addon__.getSetting('login_email_%s' % uid)
-		self.password = __addon__.getSetting('login_pass_%s' % uid)
+		self._password = None
 		self.token = __addon__.getSetting('token_%s' % uid)
 		self.pic = __addon__.getSetting('profile_pic_%s' % uid)
 		self.username = __addon__.getSetting('username_%s' % uid)
 		
+	def password(self):
+		if self._password: return self._password
+		self._password = getPassword('login_pass_%s' % self.id)
+		return self._password
+	
 	def updateToken(self,token):
 		self.token = token
 		__addon__.setSetting('token_%s' % self.id,str(token))
@@ -90,7 +159,7 @@ class WindowState:
 class BaseWindow(xbmcgui.WindowXML):
 	def __init__( self, *args, **kwargs):
 		self.oldWindow = None
-		xbmcgui.WindowXML.__init__( self, *args, **kwargs )
+		xbmcgui.WindowXML.__init__( self )
 		
 	def doClose(self):
 		self.session.window = self.oldWindow
@@ -107,7 +176,7 @@ class BaseWindow(xbmcgui.WindowXML):
 		self.session.window = self
 		
 	def onAction(self,action):
-		if action == ACTION_PARENT_DIR or action == ACTION_PREVIOUS_MENU:
+		if action.getId() == ACTION_PARENT_DIR or action.getId() == ACTION_PREVIOUS_MENU:
 			self.doClose()
 			return True
 		else:
@@ -122,11 +191,15 @@ class MainWindow(BaseWindow):
 		if self.session:
 			self.session.window = self
 		else:
-			self.session = FacebookSession(self)
-			if not self.session.start():
-				self.doClose()
-				return
-			self.getControl(120).selectItem(2)
+			try:
+				self.session = FacebookSession(self)
+				if not self.session.start():
+					self.doClose()
+					return
+				self.getControl(120).selectItem(2)
+			except:
+				ERROR('Unhandled Error')
+				self.close()
 
 		
 	def onClick( self, controlID ):
@@ -140,35 +213,35 @@ class MainWindow(BaseWindow):
 	def onAction(self,action):
 		if self.getFocusId() == 119:
 			self.setFocusId(120)
-			if action == ACTION_MOVE_DOWN:
+			if action.getId() == ACTION_MOVE_DOWN:
 				self.session.menuItemDeSelected()
-			elif action == ACTION_PREVIOUS_MENU:
+			elif action.getId() == ACTION_PREVIOUS_MENU:
 				self.session.menuItemDeSelected(prev_menu=True)
 		if self.getFocusId() == 118:
 			self.setFocusId(120)
 		elif self.getFocusId() == 120:
 			#print action.getId()
 			if self.session.progressVisible: return
-			if action == ACTION_PARENT_DIR or action == ACTION_PARENT_DIR_OLD:
+			if action.getId() == ACTION_PARENT_DIR or action.getId() == ACTION_PARENT_DIR_OLD:
 				self.session.menuItemDeSelected(prev_menu=True)
-			elif action == ACTION_PREVIOUS_MENU:
+			elif action.getId() == ACTION_PREVIOUS_MENU:
 				self.session.menuItemDeSelected(prev_menu=True)
-			elif action == ACTION_MOVE_UP:
+			elif action.getId() == ACTION_MOVE_UP:
 				self.session.menuItemSelected()
 			else:
 				self.session.doNextPrev()
 				
 		elif self.getFocusId() == 125:
-			if action == ACTION_PREVIOUS_MENU:
+			if action.getId() == ACTION_PREVIOUS_MENU:
 				self.doClose()
 		elif self.getFocusId() == 128:
-			if  action == ACTION_PARENT_DIR or action == ACTION_PREVIOUS_MENU or action == ACTION_PARENT_DIR_OLD:
+			if  action.getId() == ACTION_PARENT_DIR or action.getId() == ACTION_PREVIOUS_MENU or action.getId() == ACTION_PARENT_DIR_OLD:
 				self.setFocusId(120)
 		elif self.getFocusId() == 138:
-			if action == ACTION_PARENT_DIR or action == ACTION_PREVIOUS_MENU or action == ACTION_MOVE_LEFT or action == ACTION_MOVE_RIGHT  or action == ACTION_PARENT_DIR_OLD:
+			if action.getId() == ACTION_PARENT_DIR or action.getId() == ACTION_PREVIOUS_MENU or action.getId() == ACTION_MOVE_LEFT or action.getId() == ACTION_MOVE_RIGHT  or action.getId() == ACTION_PARENT_DIR_OLD:
 				self.setFocusId(128)
 		elif self.getFocusId() == 160:
-			if action == ACTION_PREVIOUS_MENU:
+			if action.getId() == ACTION_PREVIOUS_MENU:
 				self.session.cancelProgress()
 		
 class AuthWindow(BaseWindow):
@@ -235,18 +308,18 @@ class SlideshowTagsWindow(BaseWindow):
 			
 	def onAction(self,action):
 		BaseWindow.onAction(self, action)
-		if action == ACTION_MOVE_LEFT:
+		if action.getId() == ACTION_MOVE_LEFT:
 			self.prevPhoto()
-		elif action == ACTION_MOVE_RIGHT:
+		elif action.getId() == ACTION_MOVE_RIGHT:
 			self.nextPhoto()
-		elif action == ACTION_PLAYER_PLAY:
+		elif action.getId() == ACTION_PLAYER_PLAY:
 			if self.slideshowThread:
 				self.stopSlideshow()
 			else:
 				self.startSlideshow()
-		elif action == ACTION_STOP:
+		elif action.getId() == ACTION_STOP:
 			self.stopSlideshow()
-		elif action == ACTION_CONTEXT_MENU:
+		elif action.getId() == ACTION_CONTEXT_MENU:
 			self.session.showPhotoDialog(self.currentPhoto().source(''))
 		else:
 			self.resetSlideshow()
@@ -377,7 +450,41 @@ class SlideshowTagsWindow(BaseWindow):
 		self.getControl(160).setAnimations([('conditional','effect=fade start=100 end=0 time=400 delay=2000 condition=Control.IsVisible(160)')])
 		self.getControl(160).setVisible(True)
 		self.getControl(160).setAnimations([('conditional','effect=fade start=100 end=0 time=400 delay=2000 condition=Control.IsVisible(160)')])
+	
+class ListItemProxy:
+	def __init__(self):
+		self.label = ''
+		self.label2 = ''
+		self.icon = ''
+		self.thumb = ''
+		self.path = ''
+		self.properties = {}
+		self.infos = {}
+	
+	def getLabel(self): return self.label
+	def getLabel2(self): return self.label2
+	def isSelected(self): return False
+	def select(self,selected): pass
+	def setIconImage(self,icon): self.icon = icon
+	def setInfo(self,itype, infoLabels): self.infos[itype] = infoLabels
+	def setLabel(self,label): self.label = label
+	def setLabel2(self,label2): self.label2 = label2
+	def setPath(self,path): self.path = path
+	def setProperty(self,key, value): self.properties[key] = value
+	def setThumbnailImage(self,thumb): self.thumb = thumb
+	
+	def asListItem(self):
+		item = xbmcgui.ListItem()
+		item.setLabel(self.label)
+		item.setLabel2(self.label2)
+		item.setIconImage(self.icon)
+		item.setThumbnailImage(self.thumb)
+		item.setPath(self.path)
+		for k,v in self.properties.items():
+			item.setProperty(k,v)
+		return item
 		
+
 class FacebookSession:
 	def __init__(self,window=None):
 		self.window = window
@@ -421,7 +528,7 @@ class FacebookSession:
 			user = self.getCurrentUser()
 		
 		self.graph = newGraph(	user.email,
-								user.password,
+								user.password(),
 								user.id,
 								user.token,
 								self.newTokenCallback )
@@ -481,7 +588,9 @@ class FacebookSession:
 		if not items:
 			items = self.getListItems(ilist)
 			state.listIndex = ilist.getSelectedPosition()
-		state.items = items
+		storageList = xbmcgui.ControlList(-100,-100,80,80)
+		storageList.addItems(items)
+		state.items = storageList
 		for sett in self.stateSettings: state.settings[sett] = self.getSetting(sett)
 		return state
 	
@@ -492,6 +601,8 @@ class FacebookSession:
 		if not self.states: return False
 		state = self.states.pop()
 		if not clear: self.restoreState(state)
+		del state.items
+		del state
 		return True
 	
 	def restoreState(self,state,onload=False):
@@ -501,7 +612,7 @@ class FacebookSession:
 		for sett in self.stateSettings: self.clearSetting(sett)
 		for sett in self.stateSettings: self.setSetting(sett,state.settings.get(sett,''))
 		ilist = self.window.getControl(120)
-		self.fillList(state.items)
+		self.fillList(self.getListItems(state.items))
 		ilist.selectItem(state.listIndex)
 		self.current_state = state
 		self.setFriend(restore=True)
@@ -597,7 +708,7 @@ class FacebookSession:
 			if friend_thumb: item.setProperty('friend_thumb',friend_thumb)
 			else: item.setProperty('friend_thumb','facebook-media-icon-%s.png' % cid)
 			item.setProperty('background','')
-			item.setProperty('previous',self.getSetting('last_item_name'))
+			item.setProperty('previous',self.getSetting('last_item_name') or 'ERROR')
 			items.append(item)
 				
 		self.fillList(items)
@@ -686,7 +797,7 @@ class FacebookSession:
 			for a in albums:
 				cover = None
 				acp = a.cover_photo()
-				if acp: cover = cover_objects[acp]
+				if acp: cover = cover_objects.get(acp)
 				if cover:
 					tn_url = cover.picture('')
 					self.imageURLCache[a.id] = tn_url
@@ -705,7 +816,7 @@ class FacebookSession:
 #				ct += 1
 				cover = None
 				acp = a.cover_photo()
-				if acp: cover = cover_objects[acp]
+				if acp: cover = cover_objects.get(acp)
 				if cover:
 					tn_url = cover.picture('')
 					src_url = cover.source('')
@@ -725,7 +836,7 @@ class FacebookSession:
 				item.setProperty('album',a.id)
 				item.setProperty('uid',uid)
 				item.setProperty('category','photos')
-				item.setProperty('previous',self.getSetting('last_item_name'))
+				item.setProperty('previous',self.getSetting('last_item_name') or 'ERROR')
 				items.append(item)
 				
 			if albums.next:
@@ -769,7 +880,7 @@ class FacebookSession:
 			modifier = 50.0 / total
 			for s in srt:
 				fid = show[s].id
-				tn_url = show[s].picture('').replace('_q.','_n.')
+				tn_url = show[s].picture('').get('url','').replace('_q.','_n.')
 				ct+=1
 				self.updateProgress(int(ct*modifier)+offset, 100, __lang__(30012) % (ct,total))
 				
@@ -970,13 +1081,13 @@ class FacebookSession:
 		return xml_unescape(urllib.unquote(text),{"&apos;": "'", "&quot;": '"'})
 	
 	def makeCaption(self,obj,uid):
-		name = ''
+		name = u''
 		f_id = obj.from_({}).get('id','')
 		if f_id != uid:
-			name = obj.from_({}).get('name','') or ''
-			if name: name = '[COLOR FF55FF55]'+__lang__(30022) % name +'[/COLOR][CR]'
+			name = obj.from_({}).get('name','') or u''
+			if name: name = u'[COLOR FF55FF55]'+__lang__(30022) % name +u'[/COLOR][CR]'
 		title = obj.name('')
-		if title: title = '[COLOR yellow]%s[/COLOR][CR]' % title
+		if title: title = u'[COLOR yellow]%s[/COLOR][CR]' % title
 		caption = name + title + obj.description('')
 		if not caption: return ''
 		caption += '[CR] '
@@ -1031,15 +1142,15 @@ class FacebookSession:
 		state_len = len(self.states)
 		try:
 			item = self.getFocusedItem(120)
+			name = item.getLabel()
 			
 			cat = item.getProperty('category')
 			uid = item.getProperty('uid') or 'me'
 			
 			if cat == 'friend':
-				name = item.getLabel()
 				self.CATEGORIES(item)
 				self.setFriend(name)
-				self.setSetting('last_item_name',item.getLabel())
+				self.setSetting('last_item_name',name)
 				self.setPathDisplay()
 				return
 			else:
@@ -1069,14 +1180,14 @@ class FacebookSession:
 			elif cat == 'paging':
 				self.doNextPrev()
 				return
-			self.setSetting('last_item_name',item.getLabel())
+			self.setSetting('last_item_name',name)
 			self.setPathDisplay()
 		except GraphWrapAuthError,e:
 			if len(self.states) > state_len: self.popState()
 			if e.type == 'RENEW_TOKEN_FAILURE':
 				response = xbmcgui.Dialog().yesno(__lang__(30030), __lang__(30031), __lang__(30032), __lang__(30033))
 				if response:
-					self.openAddUserWindow(self.currentUser.email, self.currentUser.password)
+					self.openAddUserWindow(self.currentUser.email, self.currentUser.password())
 			else:
 				message = ERROR('UNHANDLED ERROR')
 				xbmcgui.Dialog().ok(__lang__(30034),message)
@@ -1109,7 +1220,7 @@ class FacebookSession:
 			elif action == 'remove_user':
 				self.removeUserMenu()
 			elif action == 'reauth_user':
-				self.openAddUserWindow(self.currentUser.email, self.currentUser.password)
+				self.openAddUserWindow(self.currentUser.email, self.currentUser.password())
 		
 	def photovideoMenuSelected(self):
 		self.window.setFocusId(120)
@@ -1227,7 +1338,7 @@ class FacebookSession:
 	def removeUser(self,uid):
 		self.removeUserFromList(uid)
 		self.clearSetting('login_email_%s' % uid)
-		self.clearSetting('login_pass_%s' % uid)
+		savePassword('login_pass_%s' % uid,'')
 		self.clearSetting('token_%s' % uid)
 		self.clearSetting('profile_pic_%s' % uid)
 		self.clearSetting('username_%s' % uid)
@@ -1240,7 +1351,7 @@ class FacebookSession:
 		path = []
 		for state in self.states:
 			path.append(state.settings.get('last_item_name') or '')
-		path.append(self.getSetting('last_item_name'))
+		path.append(self.getSetting('last_item_name') or '')
 		path = ' : '.join(path[1:])
 		self.window.getControl(195).setLabel(path)
 		LOG('PATH - %s' % path)
@@ -1256,8 +1367,8 @@ class FacebookSession:
 		#	self.window.getControl(181).setLabel('')
 		
 	def setUserDisplay(self):
-		self.window.getControl(140).setImage(self.getSetting('current_user_pic'))
-		self.window.getControl(141).setLabel(self.getSetting('current_user_name'))
+		self.window.getControl(140).setImage(self.getSetting('current_user_pic',''))
+		self.window.getControl(141).setLabel(self.getSetting('current_user_name','ERROR'))
 			
 	def startProgress(self,message='',auto_ct_start=0,auto_total=0,auto_message=''):
 		self.progressVisible = True
@@ -1417,25 +1528,35 @@ class FacebookSession:
 		
 	def closeWindow(self):
 		self.window.doClose()
-	
+			
 	def addUser(self,email=None,password=None):
 		try:
 			LOG("ADD USER PART 1")
 			self.window.getControl(101).setVisible(False)
+			lastEmail = self.getSetting('last_email', '')
+			lastPass = ''
 			if not email:
-				email = doKeyboard(__lang__(30047))
+				email = doKeyboard(__lang__(30047),default=lastEmail)
 			if not email:
 				self.closeWindow()
 				return
+			self.setSetting('last_email', email)
+			if lastEmail == email: lastPass = getPassword('last_password')
+			savePassword('last_password', '')
 			if not password:
-				password = doKeyboard(__lang__(30048),hidden=True)
+				password = doKeyboard(__lang__(30048),default=lastPass,hidden=True)
 			if not password:
 				self.closeWindow()
 				return
+			savePassword('last_password', password)
 			self.newUserCache = (email,password)
 			self.window.getControl(102).setVisible(False)
 			self.window.getControl(111).setVisible(False)
 			token = self.getAuth(email,password)
+			if token == None:
+				self.closeWindow()
+				self.newUserCache = None
+				return
 		except:
 			message = ERROR('ERROR')
 			xbmcgui.Dialog().ok(__lang__(30035),message)
@@ -1459,30 +1580,47 @@ class FacebookSession:
 		#graph.getNewToken()
 		self.window.getControl(122).setVisible(False)
 		self.window.getControl(131).setVisible(False)
+		#retry = False
 		try:
 			user = graph.getObject('me',fields='id,name,picture')
+		#except facebook.GraphWrapAuthError,e:
+		#	if e.type == 'RENEW_TOKEN_FAILURE':
+		#		retry = True
 		except:
 			message = ERROR('ERROR')
 			xbmcgui.Dialog().ok(__lang__(30035),message)
 			self.closeWindow()
 			self.newUserCache = None
 			return
+#		if retry:
+#			token = self.getAuth2(email,password)
+#			try:
+#				user = graph.getObject('me',fields='id,name,picture')
+#			except:
+#				message = ERROR('ERROR')
+#				xbmcgui.Dialog().ok(__lang__(30035),message)
+#				self.closeWindow()
+#				self.newUserCache = None
+#				return
+			
 		uid = user.id
 		username = user.name()
 		if not self.addUserToList(uid):
 			LOG("USER ALREADY ADDED")
 		self.setSetting('login_email_%s' % uid,email)
-		self.setSetting('login_pass_%s' % uid,password)
+		#self.setSetting('login_pass_%s' % uid,password)
+		enc = savePassword('login_pass_%s' % uid, password)
 		self.setSetting('username_%s' % uid,username)
 		self.setSetting('token_%s' % uid,graph.access_token)
 		#if self.token: self.setSetting('token_%s' % uid,self.token)
-		self.setSetting('profile_pic_%s' % uid,user.picture('').replace('_q.','_n.'))
+		self.setSetting('profile_pic_%s' % uid,user.picture('').get('url','').replace('_q.','_n.'))
 		#self.getProfilePic(uid,force=True)
 		self.window.getControl(132).setVisible(False)
 		xbmcgui.Dialog().ok(__lang__(30036),DONOTHING(username))
 		self.closeWindow()
 		self.setSetting('has_user','true')
 		#self.setCurrentUser(uid)
+		if enc: xbmcgui.Dialog().ok(__lang__(30063),__lang__(30062))
 		return uid
 	
 	def getUserList(self):
@@ -1517,7 +1655,7 @@ class FacebookSession:
 		u = self.currentUser
 		self.setSetting('current_user_name', u.username)
 		self.updateUserPic()
-		if self.graph: self.graph.setLogin(u.email,u.password,u.id,u.token)
+		if self.graph: self.graph.setLogin(u.email,u.password(),u.id,u.token)
 		self.setUserDisplay()
 		
 	def getCurrentUser(self):
@@ -1544,7 +1682,7 @@ class FacebookSession:
 		__addon__.setSetting(key,'')
 		
 	def setSetting(self,key,value):
-		__addon__.setSetting(key,value and str(value) or '')
+		__addon__.setSetting(key,value and ENCODE(value) or '')
 		
 	def getSetting(self,key,default=None):
 		setting = __addon__.getSetting(key)
@@ -1552,39 +1690,30 @@ class FacebookSession:
 		if type(default) == type(0):
 			return int(float(setting))
 		elif isinstance(default,bool):
-			return default == 'true'
+			return setting == 'true'
 		return setting
 	
 	def getAuth(self,email='',password='',graph=None,no_auto=False):
-		xbmcgui.Dialog().ok('Authorize','Goto xbmc.2ndmind.net/fb','Authorize the addon, and write down the pin.','Click OK when done')
-		token = doKeyboard('Enter the 4 digit pin')
+		#xbmcgui.Dialog().ok('Authorize','Goto xbmc.2ndmind.net/fb','Authorize the addon, and write down the pin.','Click OK when done')
+		xbmcgui.Dialog().ok('Authorize','Goto xbmc.2ndmind.net/fb','and authorize the addon.','Click OK when done')
+		return '123456789'
+		pin = '-'
+		while (len(pin) != 4 and len(pin) != 12) or not pin.isdigit():
+			if pin != '-':
+				xbmcgui.Dialog().ok('Bad PIN','PIN must be 4 or 12 digits')
+			else:
+				pin = '' 
+			pin = doKeyboard('Enter the 4 or 12 digit pin',pin)
+			if pin == None: return
+			pin = pin.replace('-','')
+			
+		token = urllib2.urlopen('http://xbmc.2ndmind.net/fb/gettoken.php?pin=' + pin).read()
+		if not token:
+			dbg = urllib2.urlopen('http://xbmc.2ndmind.net/fb/getdebug.php?pin=' + pin).read()
+			LOG('Failed to get token. Site debug info:')
+			LOG(dbg)
+		#print 'tkn: ' + token
 		return token
-	
-	def getAuthOld(self,email='',password='',graph=None,no_auto=False):
-		redirect = urllib.quote('http://2ndmind.com/facebookphotos/complete.html')
-		scope = urllib.quote('user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,user_videos,friends_videos,publish_stream,read_stream')
-		url = 'https://graph.facebook.com/oauth/authorize?client_id=150505371652086&redirect_uri=%s&display=page&scope=%s' % (redirect,scope)
-		from webviewer import webviewer #@UnresolvedImport
-		login = {'action':'login.php'}
-		if email and password:
-			login['autofill'] = 'email=%s,pass=%s' % (email,password)
-			login['autosubmit'] = 'true'
-		autoForms = [login,{'action':'uiserver.php'}]
-		autoClose = {'url':'.*access_token=.*','heading':__lang__(30049),'message':__lang__(30050)}
-		webviewer.WR.browser._ua_handlers["_cookies"].cookiejar.clear()
-		if no_auto or self.getSetting('disable_auto_login', False):
-			url,html = webviewer.getWebResult(url) #@UnusedVariable
-		else:
-			url,html = webviewer.getWebResult(url,autoForms=autoForms,autoClose=autoClose) #@UnusedVariable
-		
-		if self.getSetting('debug', False): print html
-		
-		if not graph: graph = self.graph
-		if not graph: graph = newGraph(email, password)
-		token = graph.extractTokenFromURL(url)
-		if graph.tokenIsValid(token):
-			return token
-		return None
 
 def doKeyboard(prompt,default='',hidden=False):
 	keyboard = xbmc.Keyboard(default,prompt)
@@ -1666,7 +1795,7 @@ def openWindow(window_name,session=None,**kwargs):
 		del w
 
 def newGraph(email,password,uid=None,token=None,new_token_callback=None):
-	graph = facebook.GraphWrap(token,new_token_callback=new_token_callback)
+	graph = facebook.GraphWrap(token,new_token_callback=new_token_callback,version=__version__)
 	graph.setAppData('150505371652086',scope='user_photos,friends_photos,user_videos,friends_videos,publish_stream,read_stream')
 	graph.setLogin(email,password,uid)
 	return graph
@@ -1683,7 +1812,7 @@ def registerAsShareTarget():
 	target.name = 'Facebook'
 	target.importPath = 'share'
 	target.shareTypes = ['image','audio','video','imagefile','videofile','status']
-	target.provideTypes = ['feed']
+	target.provideTypes = ['feed','imagestream']
 	ShareSocial.registerShareTarget(target)
 	LOG('Registered as share target with ShareSocial')
 	

@@ -1,6 +1,6 @@
 Facebook Media Changelog
 
-Current Version : 0.6.9
+Current Version : 0.9.1
 
 Known Issues/TODO:
 	-Needs to handle mouse control better (ie no access to photo/video menu)
@@ -8,6 +8,109 @@ Known Issues/TODO:
 	-Album caching (and other caching)
 	-Exit photo/tags view with same photo selected (option?)
 	-Go to tagged friend when selecting tag from photo/tags view
+
+*** 0.9.1 ***
+
+Added XML declarations to xml files
+Removed internal mechanize
+Added import for mechanize to addon.xml
+Removed import for webviewer from addon.xml
+
+*** 0.9.0 ***
+
+Version bump for official repo submission
+
+*** 0.8.9 ***
+
+Will now show a dialog when it detects a probable bad username or password
+
+*** 0.8.8 ***
+
+Small change to hopefully prevent errors during authorization
+
+*** 0.8.7 ***
+
+Added support for saving passwords encrypted via system keyring (should work on most systems, falls back to saving in settings.xml)
+When adding a user, email and password are now saved (pass encrypted if possible) if adding the user fails and reloaded when trying again
+Made changes to addon.xml for Gotham
+Converted strings.xml to strings.po
+
+*** 0.8.6 ***
+
+Fix for token not being properly extracted from the auth reply URL
+
+*** 0.8.5 ***
+
+Fixed a bug generating the error "no form matching nr 0" caused by a redirect page being set to http instead of https when 'Secure Browsing' is enabled in facebook
+
+*** 0.8.4 ***
+
+Simplified authentication
+
+*** 0.8.3 ***
+
+Fixed a bug caused by new longer Facebook token lengths
+Fixed a bug with login notifications forms and improved forms handling (fixes "no control matching name 'submit[Don&#039;t Save]'" errors)
+
+*** 0.8.2 ***
+
+Fixed some issues with unicode errors - hopefully. I hate encodings 
+
+*** 0.8.1 ***
+
+Fixed some issues with unicode errors 
+
+*** 0.8.0 ***
+
+When entering authorization pin, will now no longer accept an invalid pin format
+Added ability to save authorization site debug info to the log
+Authorization site (http://xbmc.2ndmind.com/fb): Now provides an optional 12 digit pin for browsers on a different IP. Now also reacts to and displays errors and saves debug info on errors or failure to get a token
+
+*** 0.7.9 ***
+
+When providing an 'imagestream' for ShareSocial, now sets the title properly to the images title
+
+*** 0.7.8 ***
+
+Added ability to provide an 'imagestream' for ShareSocial (ie. for use in Plugin Slideshow Screensaver)
+Fix for errors when providing the Home 'feed' to ShareSocial
+Fix for some FB errors being interpreted as a bad token issue
+
+*** 0.7.7 ***
+
+Fixed issue causing XBMC to crash when backing up in the hierarchy
+Fixed issues with some changes to Facebook API causing errors with user images and similar
+Fixed authentication code not actually fetching token after 4 digit code was entered
+External: When going to xbmc.2ndmind.com/fb, it now forces the user to re-enter their password, thereby giving a chance to logout the user 
+
+*** 0.7.6 ***
+
+Fixed a bug causing failure to get a new token
+
+*** 0.7.5 ***
+
+Possible fix for some encoding errors
+Fix for bug causing errors when viewing images in albums
+
+*** 0.7.4 ***
+
+Fixed a bug introduced in the last version that causes errors when getting a new token (probably only with ShareSocial)
+
+*** 0.7.3 ***
+
+A fix (hopefully) for problems with 'Login Notifications' enabled on Facebook
+
+*** 0.7.2 ***
+
+Fix for error when viewing albums
+
+*** 0.7.1 ***
+
+Fix for error when viewing albums
+
+*** 0.7.0 ***
+
+Possible fix for encoding errors
 
 *** 0.6.9 ***
 

@@ -1,7 +1,7 @@
 import default
 reload(default)
 from default import newGraph, FacebookUser, LOG, ERROR
-
+fbLOG = LOG
 import xbmcgui, xbmcaddon #@UnresolvedImport
 from urllib2 import HTTPError
 
@@ -76,7 +76,7 @@ class FacebookTargetFunctions(ShareSocial.TargetFunctions):
 		user = {'id':user.id,'name':user.username,'photo':user.pic}
 		
 		if getObject.type == 'feed':
-			LOG('Providing feed to ShareSocial')
+			fbLOG('Providing feed to ShareSocial')
 			feed = graph.getObject('me').connections.home()
 			for f in feed:
 				#print f._data
@@ -94,7 +94,7 @@ class FacebookTargetFunctions(ShareSocial.TargetFunctions):
 						commsObj.addItem(c.from_().get('name'),uimage,c.message(''),c.created_time())
 						commsObj.count = comments.count
 						commsObj.callbackDict['id'] = f.id
-				else:
+				elif comments:
 					commsObj.count = comments.get('count',0)
 					commsObj.callbackDict['id'] = f.id
 				pic = f.picture('')
@@ -103,11 +103,32 @@ class FacebookTargetFunctions(ShareSocial.TargetFunctions):
 						obj_id = f.get('object_id')
 						if obj_id:
 							#print 'test: %s' % obj_id
-							pic = graph.getObject(obj_id).source('')
+							try:
+								pic = graph.getObject(obj_id).source('')
+							except Exception, e:
+								print fbLOG('ERROR: %s' % e.message)
+								
 				userimage = 'http://graph.facebook.com/%s/picture' % f.from_().get('id')
 				share = self.createShareFromPost(f)
 				getObject.addItem(f.from_().get('name'),userimage,' - '.join(msg),f.created_time(),pic,comments=commsObj,share=share,client_user=user)
 			return getObject
+		
+		elif getObject.type == 'imagestream':
+			photos = self.graph.getObject('me').connections.photos__uploaded()
+			shares = []
+			for p in photos:
+				share = ShareSocial.getShare('script.facebook.media',  'image')
+				share.name = 'Facebook Media'
+				share.title = p.name('')
+				share.page = p.link('')
+				share.thumbnail = p.icon('')
+				share.media = p.source('')
+				obj_id = p.id
+				if not obj_id:
+					continue
+				share.callbackData = obj_id
+				shares.append(share)
+			return shares
 		
 	def getShareData(self,share):
 		obj_id = share.callbackData
@@ -169,7 +190,7 @@ class FacebookTargetFunctions(ShareSocial.TargetFunctions):
 							"caption": "Shared From XBMC",
 							"description": share.message,
 							"picture": share.thumbnail }
-			LOG('Sharing: Posting %s to wall' % share.shareType)
+			fbLOG('Sharing: Posting %s to wall' % share.shareType)
 			graph.putWallPost(share.title, attachment=attachement)
 			return share.succeeded()
 		elif share.shareType == 'video' or share.shareType == 'audio':
@@ -179,7 +200,7 @@ class FacebookTargetFunctions(ShareSocial.TargetFunctions):
 							"description": share.message,
 							"picture": share.thumbnail,
 							"source": share.swf or share.media}
-			LOG('Sharing: Posting %s to wall' % share.shareType)
+			fbLOG('Sharing: Posting %s to wall' % share.shareType)
 			graph.putWallPost(share.title, attachment=attachement)
 			return share.succeeded()
 		elif share.shareType == 'imagefile':

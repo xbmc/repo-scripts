@@ -1,9 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <window type="window">
 	<defaultcontrol always="true">120</defaultcontrol>
 	<allowoverlay>no</allowoverlay>
 	<controls>
-		<!-- -------------- BACKGROUND -------------------------------   -->
+		<!--  BACKGROUND    -->
 		<control type="image">
 			<posx>0</posx>
 			<posy>0</posy>
@@ -21,7 +21,7 @@
 			<texture background="true">$INFO[Container(120).ListItem.property(image0)]</texture>
 		</control>
 		
-		<!-- -------------- CAPTION -------------------------------   -->
+		<!--  CAPTION    -->
 		<control type="group" id="210">
 			<animation effect="slide" end="385,0" time="400" condition="!StringCompare(Container(120).ListItem.property(caption),)">Conditional</animation>
 			<animation effect="slide" end="0,0" time="400" condition="StringCompare(Container(120).ListItem.property(caption),)">Conditional</animation>
@@ -216,7 +216,7 @@
 			</control>
 		</control>
 		
-		<!-- -------------- MAIN - FILMSTRIP -------------------------------   -->
+		<!--  MAIN - FILMSTRIP    -->
 		<control type="group">
 			<posx>-151</posx>
 			<posy>478</posy>
@@ -352,7 +352,7 @@
 			<texture>facebook-media-tube-back.png</texture>
 		</control>
 		
-		<!-- --------------CURRENT USER PIC -------------------------------   -->
+		<!-- CURRENT USER PIC    -->
 		<control type="group">
 			<posx>10</posx>
 			<posy>0</posy>
@@ -377,7 +377,7 @@
 			</control>
 		</control>
 		
-		<!-- -------------- HEIRARCHY/FLAGS -------------------------------   -->
+		<!--  HEIRARCHY/FLAGS    -->
 		<control type="group">
 			<posx>800r</posx>
 			<posy>0</posy>
@@ -570,7 +570,7 @@
 			</control>
 		</control>
 		
-		<!-- -------------- INPUT BLOCK OVERLAY -------------------------------   -->
+		<!--  INPUT BLOCK OVERLAY    -->
 		<control type="button" id="160">
 			<animation effect="slide" start="0,0" end="0,720" time="0">Visible</animation>
 			<animation effect="slide" start="0,720" end="0,0" time="0">Hidden</animation>
@@ -588,7 +588,7 @@
 			<visible allowhiddenfocus="true">!StringCompare(Control.GetLabel(152),)</visible>
 		</control>
 		
-		<!-- -------------- PROGRESS BAR -------------------------------   -->
+		<!--  PROGRESS BAR    -->
 		<control type="group" id="150">
 			<animation effect="slide" start="0,0" end="-500,0" time="400">Visible</animation>
 			<animation effect="slide" start="-500,0" end="0,0" time="400">Hidden</animation>

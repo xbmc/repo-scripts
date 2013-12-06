@@ -35,9 +35,12 @@ usage of this module might look like this:
 from poster.encode import multipart_encode
 import poster.streaminghttp
 import urllib, urllib2
-import sys, re
+import sys, re, codecs
 from urllib2 import HTTPError
 from cgi import parse_qs
+
+import os, xbmc, xbmcaddon
+__addon__ = xbmcaddon.Addon(id='script.facebook.media')
 
 poster.streaminghttp.register_openers()
 
@@ -73,7 +76,7 @@ def LOG(string):
 		print "FACEBOOK MEDIA:facebook.py - COULDN'T ENCODE FOR LOG - RETRYING"
 	
 	try:
-		print 'FACEBOOK MEDIA:facebook.py - %s' % str(string)
+		print 'FACEBOOK MEDIA:facebook.py - %s' % repr(string)
 		return
 	except:
 		print "FACEBOOK MEDIA:facebook.py - COULDN'T ENCODE FOR LOG - FINAL"
@@ -216,9 +219,17 @@ class GraphAPI(object):
 				reason = e.headers.get('WWW-Authenticate')
 				LOG('\nMessage: %s\nReason: %s' % (e.msg,reason))
 				if 'invalid_token' in reason or 'invalid_request' in reason:
-					raise GraphAPIError(	'OAuthException',
-											'Expired/bad token')
+					if 'unsupported get request' in reason.lower():
+						raise GraphAPIError(	'BadGetException',
+												'Unsupported get request')
+					else:
+						raise GraphAPIError(	'OAuthException',
+												'Expired/bad token')
 			raise
+		
+		encoding = fileob.info().get('content-type').split('charset=')[-1]
+		fileob = codecs.EncodedFile(fileob, encoding)
+		
 		if update_prog: self.updateProgress(30)
 		try:
 			data = ''
@@ -277,7 +288,8 @@ class Connections(list):
 	def processConnections(self,connections):
 		cons = []
 		for c in connections['data']:
-			cons.append(GraphObject(c['id'],self.graph,c))
+			if hasattr(c,'get'):
+				cons.append(GraphObject(c.get('id'),self.graph,c))
 		self._getPaging(connections,len(cons))
 		self.extend(cons)
 		if self.progress: self.graph.updateProgress(100)
@@ -318,7 +330,7 @@ import UserDict
 class UTF8DictWrap(UserDict.UserDict):
 	def get(self,key,failobj=None):
 		val = UserDict.UserDict.get(self, key, failobj)
-		if hasattr(val,'encode'): return val.encode('utf-8')
+		if hasattr(val,'encode'): return unicode(val.encode('utf-8'),'utf-8')
 		return val
 	
 			
@@ -380,10 +392,12 @@ class GraphObject:
 			if 'data' in val:
 				if as_json:
 					return self._toJSON(val)
-				else:
+				elif isinstance(val['data'],list):
 					return Connections(self.graph,val,progress=False)
+				else:
+					val = val['data']
 			return UTF8DictWrap(val)
-		if hasattr(val,'encode'): return val.encode('utf-8')
+		if hasattr(val,'encode'): return unicode(val.encode('utf-8'),'utf-8')
 		return val
 	
 	def _getObjectData(self,ID,**args):
@@ -418,7 +432,9 @@ class GraphData:
 		if not self._data: self._data = self._getObjectData(self.graphObject.id)
 		
 		def handler(default=None):
-			return self._data.get(prop,default)
+			val = self._data.get(prop,default)
+			if hasattr(val,'encode'): return unicode(val.encode('utf-8'),'utf-8')
+			return val
 			
 		handler.method = prop
 		
@@ -480,7 +496,7 @@ class GraphConnections:
 		return self.graph._processConnections(connections,paging)
 			
 class GraphWrap(GraphAPI):
-	def __init__(self,token,new_token_callback=None):
+	def __init__(self,token,new_token_callback=None,version='8.0'):
 		GraphAPI.__init__(self,token)
 		self.uid = None
 		self._newTokenCallback = new_token_callback
@@ -489,6 +505,8 @@ class GraphWrap(GraphAPI):
 		self._progTotal = 100
 		self._progMessage = ''
 		self.uid = None
+		self.cookieJar = None
+		self.version = version
 	
 	def withProgress(self,callback,modifier=1,total=100,message=''):
 		poster.streaminghttp.PROGRESS_CALLBACK = callback
@@ -566,7 +584,7 @@ class GraphWrap(GraphAPI):
 		self.login_pass = passw
 		if token: self.access_token = token
 		
-	def setAppData(self,aid,redirect='http://www.facebook.com/connect/login_success.html',scope=None):
+	def setAppData(self,aid,redirect='https://www.facebook.com/connect/login_success.html',scope=None):
 		self.client_id = aid
 		self.redirect = redirect
 		self.scope = scope
@@ -580,6 +598,14 @@ class GraphWrap(GraphAPI):
 			fobj.close()
 		return (response == 1)
 		
+	def browserRead(self,readable,post=''):
+		html = readable.read()
+		if False:
+			htmlFile = os.path.join(xbmc.translatePath(__addon__.getAddonInfo('profile')),'cache','DEBUG_HTML%s.html' % post)
+			with open(htmlFile,'w') as f:
+				f.write(html.strip("'"))
+		return html
+		
 	def checkIsAppUser(self):
 		url = 'https://api.facebook.com/method/users.isAppUser?format=json&access_token='+self.access_token
 		fobj = urllib2.urlopen(url)
@@ -592,8 +618,20 @@ class GraphWrap(GraphAPI):
 	def getNewToken(self):
 		import mechanize #@UnresolvedImport
 		br = mechanize.Browser()
+		__addon__ = xbmcaddon.Addon(id='script.facebook.media')
+		cookiesPath = os.path.join(xbmc.translatePath(__addon__.getAddonInfo('profile')),'cache','cookies')
+		LOG('Cookies will be saved to: ' + cookiesPath)
+		cookies = mechanize.LWPCookieJar(cookiesPath)
+		if os.path.exists(cookiesPath): cookies.load()
+		self.cookieJar = cookies
+		opener = mechanize.build_opener(mechanize.HTTPCookieProcessor(cookies))
+		mechanize.install_opener(opener)
+		br.set_cookiejar(self.cookieJar)
 		br._ua_handlers["_cookies"].cookiejar.clear()
 		br.set_handle_robots(False)
+		agent = 'XBMC/{0} Facebook-Media/{1}'.format(xbmc.getInfoLabel('System.BuildVersion'),self.version)
+		LOG('Setting User Agent: {0}'.format(agent))
+		br.addheaders = [('User-agent',agent)]
 		scope = ''
 		if self.scope: scope = '&scope=' + self.scope
 		url = 	'https://www.facebook.com/dialog/oauth?client_id='+self.client_id+\
@@ -619,7 +657,9 @@ class GraphWrap(GraphAPI):
 			
 		if script:
 			#no form, maybe we're logged in and the token is in javascript on the page
-			token = self.parseTokenFromScript(html)
+			url = res.geturl()
+			token = self.extractTokenFromURL(url)
+			if not token: token = self.parseTokenFromScript(html)
 		else:
 			try:
 				#fill out the form and submit
@@ -634,13 +674,23 @@ class GraphWrap(GraphAPI):
 				
 			script = False
 			token = self.extractTokenFromURL(url)
+			html = self.browserRead(res,'-noscript')
+			if not token:
+				#if 'class="checkpoint"' in html:
+				token = self.handleLoginNotificationCrap(br)
+				
 			if not token: script = True
 			
 			if script:
 				LOG("SCRIPT TOKEN")
 				#no token in the url, let's try to parse it from javascript on the page
-				html = res.read()
-				LOG(html)
+				try:
+					__addon__ = xbmcaddon.Addon(id='script.facebook.media')
+					htmlFile = os.path.join(xbmc.translatePath(__addon__.getAddonInfo('profile')),'cache','DEBUG_HTML.html')
+					open(htmlFile,'w').write(html)
+					LOG('html output written to: ' + htmlFile)
+				except:
+					pass
 				token = self.parseTokenFromScript(html)
 				token = urllib.unquote(token.decode('unicode-escape'))
 		
@@ -649,13 +699,72 @@ class GraphWrap(GraphAPI):
 			return False
 		LOG("\n|--------------------\n|TOKEN: %s\n|--------------------"  % token)
 		self.saveToken(token)
+		if self.cookieJar is not None:
+			self.cookieJar.save()
 		return token
 		
+	def handleLoginNotificationCrap(self,br):
+		LOG('Handling Login Notification Crap')
+		br.select_form(nr=0)
+		res = br.submit()
+		self.browserRead(res,'-loginnotifycrap1')
+		#if not 'Media XBMC' in html: return None
+		url = res.geturl()
+		LOG('LN First URL: ' + url)
+		if 'login.php' in url:
+			raise GraphWrapAuthError('BAD_USERPASS','Failed: Probable bad user/pass')
+		if 'access_token' in url: return self.extractTokenFromURL(url)
+		br.select_form(nr=0)
+		try:
+			res = br.submit(name='submit[Continue]')
+		except:
+			res = br.submit()
+		res.read()
+		url = res.geturl()
+		LOG('LN Second URL: ' + url)
+		if 'access_token' in url: return self.extractTokenFromURL(url)
+		br.select_form(nr=0)
+		self.isolateSubmitButton(br, 'save_device')
+		res = br.submit()
+		
+		html = res.read()
+		url = res.geturl()
+		LOG('LN Third URL: ' + url)
+		if 'access_token' in url: return self.extractTokenFromURL(url)
+		if 'name="submit[Continue]"' in html:
+			LOG("Found 'Continue' page: submitting")
+			br.select_form(nr=0)
+			res = br.submit()
+			url = res.geturl()
+			if 'access_token' in url:
+				return self.extractTokenFromURL(url)
+			else:
+				LOG("No Token In URL: {0}".format(url))
+		return None
+	
+	def isolateSubmitButton(self,br,value):
+		return
+		submit_buttons = self.find_controls(br,ctype="submit")
+		for button in submit_buttons[:]:
+			if button.value != value: br.form.controls.remove(button)
+		
+	def find_controls(self, br,name=None, ctype=None, kind=None, cid=None, predicate=None, label=None):
+		i = 0
+		results = []
+	
+		try :
+			while(True):
+				results.append(br.find_control(name, ctype, kind, cid, predicate, label, nr=i))
+				i += 1
+		except Exception as e: #Exception tossed if control not found @UnusedVariable
+			pass
+		return results
+
 	def extractTokenFromURL(self,url):
 		try:
 			#we submitted the form, check the result url for the access token
 			import urlparse
-			token = parse_qs(urlparse.urlparse(url.replace('#','?',1))[4])['access_token'][0]
+			token = parse_qs(urlparse.urlparse(url.replace('#','?',1).replace('??','?'))[4])['access_token'][0]
 			LOG("URL TOKEN: %s" % token)
 			return token
 		except:
@@ -671,7 +780,7 @@ class GraphWrap(GraphAPI):
 			LOG("TOKEN: " + token)
 			raise GraphWrapAuthError('LOGIN_FAILURE',reason)
 			return False
-		if 'html' in token or 'script' in token or len(token) > 160:
+		if 'html' in token or 'script' in token or len(token) > 250:
 			LOG("TOKEN: " + token)
 			raise GraphWrapAuthError('RENEW_TOKEN_FAILURE','Failed to get new token')
 			return False

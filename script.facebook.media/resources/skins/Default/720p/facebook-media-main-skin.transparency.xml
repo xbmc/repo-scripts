@@ -39,7 +39,7 @@
 				<posy>10</posy>
 				<width>330</width>
 				<height>110</height>
-				<font>font12_title</font>
+				<font>font-16d</font>
 				<textcolor>white</textcolor>
 				<info>Container(120).ListItem.property(caption)</info>
 				<shadowcolor>ff000000</shadowcolor>
@@ -86,7 +86,7 @@
 						<posy>0</posy>
 						<width>200</width>
 						<height>30</height>
-						<font>font12_title</font>
+						<font>font-16d</font>
 						<align>center</align>
 						<aligny>center</aligny>
 						<info>ListItem.Label</info>
@@ -136,7 +136,7 @@
 						<posy>0</posy>
 						<width>200</width>
 						<height>30</height>
-						<font>font12_title</font>
+						<font>font-16d</font>
 						<align>center</align>
 						<aligny>center</aligny>
 						<info>ListItem.Label</info>
@@ -147,7 +147,7 @@
 						<posy>31</posy>
 						<width>200</width>
 						<height>10</height>
-						<font>font10_title</font>
+						<font>font-15c</font>
 						<align>center</align>
 						<aligny>center</aligny>
 						<info>ListItem.Property(sublabel)</info>
@@ -180,7 +180,7 @@
 					<posy>10</posy>
 					<width>780</width>
 					<height>240</height>
-					<font>font13_title</font>
+					<font>font-17</font>
 					<pagecontrol>138</pagecontrol>
 					<info>Container(128).ListItem.Property(data)</info>
 					<textcolor>white</textcolor>
@@ -282,7 +282,7 @@
 						<posy>130</posy>
 						<width>200</width>
 						<height>12</height>
-						<font>font10_title</font>
+						<font>font-15c</font>
 						<align>left</align>
 						<aligny>center</aligny>
 						<label>$INFO[ListItem.Label]</label>
@@ -332,7 +332,7 @@
 						<posy>130</posy>
 						<width>200</width>
 						<height>12</height>
-						<font>font10_title</font>
+						<font>font-15c</font>
 						<align>left</align>
 						<aligny>center</aligny>
 						<label>$INFO[ListItem.Label]</label>
@@ -370,7 +370,7 @@
 				<posy>0</posy>
 				<width>320</width>
 				<height>40</height>
-				<font>font24_title</font>
+				<font>font-19</font>
 				<align>left</align>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
@@ -420,7 +420,7 @@
 				<posy>0</posy>
 				<width>760</width>
 				<height>40</height>
-				<font>font12_title</font>
+				<font>font-16d</font>
 				<align>left</align>
 				<aligny>center</aligny>
 				<textcolor>FFFFFFFF</textcolor>
@@ -473,7 +473,7 @@
 						<posy>0</posy>
 						<width>280</width>
 						<height>100</height>
-						<font>font13_title</font>
+						<font>font-17</font>
 						<align>left</align>
 						<aligny>center</aligny>
 						<scroll>false</scroll>
@@ -506,7 +506,7 @@
 						<posy>0</posy>
 						<width>280</width>
 						<height>100</height>
-						<font>font13_title</font>
+						<font>font-17</font>
 						<align>left</align>
 						<aligny>center</aligny>
 						<scroll>false</scroll>
@@ -551,7 +551,7 @@
 				<posy>234</posy>
 				<width>200</width>
 				<height>20</height>
-				<font>font10_title</font>
+				<font>font-15c</font>
 				<align>center</align>
 				<aligny>center</aligny>
 				<label>$INFO[Container(120).ListItem.property(previous)]</label>
@@ -615,7 +615,7 @@
 				<posy>0</posy>
 				<width>400</width>
 				<height>60</height>
-				<font>font24_title</font>
+				<font>font-19</font>
 				<align>center</align>
 				<aligny>center</aligny>
 				<textcolor>white</textcolor>
