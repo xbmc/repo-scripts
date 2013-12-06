@@ -2,7 +2,7 @@ import xbmcaddon, xbmcvfs
 from htmltoxbmc import HTMLConverter
 import re, os, sys, time, urllib2, urlparse
 import xbmc, xbmcgui #@UnresolvedImport
-import mechanize, threading
+import mechanize, threading  # @UnresolvedImport
 import video
 
 
@@ -10,7 +10,7 @@ __plugin__ = 'Web Viewer'
 __author__ = 'ruuk (Rick Phillips)'
 __url__ = 'http://code.google.com/p/webviewer-xbmc/'
 __date__ = '01-21-2013'
-__version__ = '0.9.10'
+__version__ = '0.9.15'
 __addon__ = xbmcaddon.Addon(id='script.web.viewer')
 T = __addon__.getLocalizedString
 
@@ -158,11 +158,20 @@ class WebReader:
 				#xbmcgui.Dialog().ok('ERROR','Error loading page.',err)
 		return resData
 	
+	def getTimeout(self):
+		tmp = __addon__.getSetting('url_open_timeout')
+		try:
+			tmp = int(__addon__.getSetting('url_open_timeout'))
+			if tmp: return tmp
+		except:
+			pass
+		return mechanize._mechanize._sockettimeout._GLOBAL_DEFAULT_TIMEOUT
+		
 	def readURL(self, url, callback):
 		if not callback(5, T(32103)): return None
 		response = None
 		try:
-			response = self.browser.open(url)
+			response = self.browser.open(url,timeout=self.getTimeout())
 		except Exception, e:
 			#If we have a redirect loop, this is a same url cookie issue. Just use the response in the error.
 			if 'redirect' in str(e) and 'infinite loop' in str(e):
@@ -275,7 +284,7 @@ class WebReader:
 	def doForm(self, url, form_name=None, action_match=None, field_dict={}, controls=None, submit_name=None, submit_value=None, wait='1', callback=None):
 		if not callback: callback = self.fakeCallback
 		if not self.checkLogin(callback=callback): return False
-		res = self.browser.open(url)
+		res = self.browser.open(url,timeout=self.getTimeout())
 		html = res.read()
 		selected = False
 		try:
@@ -666,20 +675,21 @@ def fullURL(baseUrl, url):
 	if not (baseUrl.startswith('file://') or baseUrl.startswith('file:///')) and baseUrl.startswith('file:/'): baseUrl = baseUrl.replace('file:/','file:///')
 	pre = baseUrl.split('://', 1)[0] + '://'
 	if not url.startswith(pre):
-		base = baseUrl.split('://', 1)[-1]
-		base = base.rsplit('/', 1)[0]
-		domain = base.split('/', 1)[0]
-		if url.startswith('/'):
-			if url.startswith('//'):
-				url =  pre.split('/', 1)[0] + url
-			else:
-				url =  pre + domain + url
-		elif url.startswith('.'):
-			if not base.endswith('/'): base += '/'
-			url =  pre + base + url
-		else:
-			url =  pre + domain + '/' + url
-	return url
+		return urlparse.urljoin(baseUrl, url)
+# 		base = baseUrl.split('://', 1)[-1]
+# 		base = base.rsplit('/', 1)[0]
+# 		domain = base.split('/', 1)[0]
+# 		if url.startswith('/'):
+# 			if url.startswith('//'):
+# 				url =  pre.split('/', 1)[0] + url
+# 			else:
+# 				url =  pre + domain + url
+# 		elif url.startswith('.'):
+# 			if not base.endswith('/'): base += '/'
+# 			url =  pre + base + url
+# 		else:
+# 			url =  pre + domain + '/' + url
+# 	return url
 
 class URLHistory:
 	def __init__(self, first):

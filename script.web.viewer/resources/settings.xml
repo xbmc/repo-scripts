@@ -7,5 +7,6 @@
     <setting id="simple_controls" type="bool" label="32003" />
     <setting id="inline_frames" type="bool" label="32004" default="false"/>
     <setting id="frames_at_end" type="bool" label="32005" subsetting="true" default="false"  enable="eq(-1,true)"/>
+    <setting label="32007" type="slider" id="url_open_timeout" default="0" range="0,1,60" option="int" />
   </category>
 </settings>

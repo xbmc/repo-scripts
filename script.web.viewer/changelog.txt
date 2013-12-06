@@ -3,7 +3,30 @@ Web Viewer Changelog
 TODO:
 	Handle more video types
 
-Current Version : 0.9.10
+Current Version : 0.9.15
+
+*** 0.9.15 ***
+
+Added XML declarations to XML files
+Removed internal mechanize
+Added mechanize import to addon.xml
+
+*** 0.9.14 ***
+
+Minor formatting change to addon.xml
+Version bump for official repo submission
+
+*** 0.9.13 ***
+
+Video handling library now gets high resolution thumbnails for youtube
+
+*** 0.9.12 ***
+
+Added setting 'URL Open Timeout'
+
+*** 0.9.11 ***
+
+Fixed a bug where sub-urls were not resolving properly
 
 *** 0.9.10 ***
 

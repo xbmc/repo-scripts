@@ -138,7 +138,7 @@ class WebVideo():
 		return 'plugin://plugin.video.dailymotion_com/?mode=playVideo&url=' + ID
 	
 	def getYoutubeThumbURL(self,ID):
-		return 'http://i1.ytimg.com/vi/%s/default.jpg' % ID
+		return 'http://i1.ytimg.com/vi/%s/0.jpg' % ID
 	
 	def getYoutubeSWFUrl(self,ID):
 		return 'http://www.youtube.com/v/' + ID

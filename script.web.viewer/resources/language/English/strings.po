@@ -51,6 +51,10 @@ msgctxt "#32005"
 msgid "Show Frames At Bottom (More Compatible)"
 msgstr ""
 
+msgctxt "#32007"
+msgid "URL Open Timeout (0=Default)"
+msgstr ""
+
 #empty strings from id 32006 to 32099
 
 msgctxt "#32100"
