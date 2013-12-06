@@ -50,14 +50,18 @@ class BackupScheduler:
                         utils.showNotification(utils.getString(30053))
                     #run the job in backup mode, hiding the dialog box
                     backup = XbmcBackup()
-                    backup.run(XbmcBackup.Backup,True)
 
-                    #check if this is a "one-off"
-                    if(int(utils.getSetting("schedule_interval")) == 0):
-                        #disable the scheduler after this run
-                        self.enabled = "false"
-                        utils.setSetting('enable_scheduler','false')
+                    if(backup.remoteConfigured()):
+                        backup.run(XbmcBackup.Backup,True)
 
+                        #check if this is a "one-off"
+                        if(int(utils.getSetting("schedule_interval")) == 0):
+                            #disable the scheduler after this run
+                            self.enabled = "false"
+                            utils.setSetting('enable_scheduler','false')
+                    else:
+                        utils.showNotification(utils.getString(30045))
+                        
                     #check if we should shut the computer down
                     if(utils.getSetting("cron_shutdown") == 'true'):
                         #wait 10 seconds to make sure all backup processes and files are completed
@@ -81,7 +85,7 @@ class BackupScheduler:
 
         if(new_run_time != self.next_run):
             self.next_run = new_run_time
-            utils.showNotification(utils.getString(30080) + " " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
+            utils.showNotification(utils.getString(30081) + " " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
             utils.log("scheduler will run again on " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
                 
     def settingsChanged(self):

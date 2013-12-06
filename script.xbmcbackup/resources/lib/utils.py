@@ -10,6 +10,9 @@ def data_dir():
 def addon_dir():
     return __Addon.getAddonInfo('path')
 
+def openSettings():
+    __Addon.openSettings()
+
 def log(message,loglevel=xbmc.LOGNOTICE):
     xbmc.log(encode(__addon_id__ + ": " + message),level=loglevel)
 

@@ -20,13 +20,19 @@ if(mode != -1):
     #run the profile backup
     backup = XbmcBackup()
 
-    if(mode == backup.Restore):
-        #allow user to select the backup to restore from
-        restorePoints = backup.listBackups()
+    if(backup.remoteConfigured()):
 
-        selectedRestore = xbmcgui.Dialog().select(utils.getString(30010) + " - " + utils.getString(30021),restorePoints)
+        if(mode == backup.Restore):
+            #allow user to select the backup to restore from
+            restorePoints = backup.listBackups()
 
-        if(selectedRestore != -1):
-            backup.selectRestore(restorePoints[selectedRestore])
+            selectedRestore = xbmcgui.Dialog().select(utils.getString(30010) + " - " + utils.getString(30021),restorePoints)
+
+            if(selectedRestore != -1):
+                backup.selectRestore(restorePoints[selectedRestore])
                     
-    backup.run(mode)
+        backup.run(mode)
+    else:
+        #can't go any further
+        xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30045))
+        utils.openSettings()

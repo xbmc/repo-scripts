@@ -44,6 +44,14 @@ class XbmcBackup:
             self.remote_base_path = "/"
             self.remote_vfs = DropboxFileSystem("/")
 
+    def remoteConfigured(self):
+        result = True
+
+        if(self.remote_base_path == ""):
+            result = False
+
+        return result
+
     def listBackups(self):
         result = []
 
