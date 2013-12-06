@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.evernote" name="X-Note (Evernote)" version="0.3.1" provider-name="Rick Phillips (ruuk)">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" />
+		<import addon="script.web.viewer" version="0.9.4" />
+	</requires>
+
+	<extension point="xbmc.python.script" library="lib/xnote.py">
+		<provides>executable</provides>
+	</extension>
+
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">X-Note: Access Evernote</summary>
+		<description>View and manage your Evernote notebooks and notes. Create notes and save XBMC logs and screenshots to Evernote</description>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.xbmc.org/showthread.php?tid=124361</forum>
+		<source>http://github.com/ruuk/script.evernote</source>
+	</extension>
+</addon>

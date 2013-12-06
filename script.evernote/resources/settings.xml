@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- General -->
+  <category label="32000">
+  	<setting label="32000" type="lsep"/>
+    <setting id="choose_user" type="bool" label="32001" default="false" />
+    <setting id="choose_notebook" type="bool" label="32003" default="true" />
+    <setting label="32509" type="action" action="RunScript(script.evernote,auth)" option="close"/>
+  </category>
+</settings>
