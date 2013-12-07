@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="setting_show_seconds" type="bool" label="33111" default="true"/>
+    <setting id="setting_redraw_interval" type="labelenum" label="33112" values="15|30|60" default="30"/>
+</settings>
