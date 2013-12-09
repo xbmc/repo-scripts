@@ -6,7 +6,7 @@ import xbmc
 import urllib
 import xbmcvfs
 import xbmcaddon
-import xbmcgui,xbmcplugin
+import xbmcgui,xbmcplugin,shutil,zipfile
 
 __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
@@ -20,8 +20,7 @@ __profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode(
 __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
 __temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp') ).decode("utf-8")
 
-if not xbmcvfs.exists(__temp__):
-  xbmcvfs.mkdirs(__temp__)
+
 
 sys.path.append (__resource__)
 
@@ -86,6 +85,9 @@ it["ID"],it["filename"])
 
 
 def Download(url,filename):
+  if xbmcvfs.exists(__temp__):
+    shutil.rmtree(__temp__)
+  xbmcvfs.mkdirs(__temp__) 
   subtitle_list = []
   exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
   zip = os.path.join( __temp__, "PN.zip")
@@ -94,14 +96,14 @@ def Download(url,filename):
     subFile.write(f.read())
   subFile.close()
   xbmc.sleep(500)
-  xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
-  for file in xbmcvfs.listdir(zip)[1]:
-    file = os.path.join(__temp__, file)
+  zipf = zipfile.ZipFile(zip, mode='r')
+  for subfile in zipf.namelist():
+    zipf.extract(subfile, __temp__)
+    file = os.path.join(__temp__, subfile)
     if (os.path.splitext( file )[1] in exts):
       subtitle_list.append(file)
     
-  if xbmcvfs.exists(subtitle_list[0]):
-    return subtitle_list
+  return subtitle_list
     
  
 def get_params(string=""):
