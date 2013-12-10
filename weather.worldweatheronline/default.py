@@ -17,6 +17,7 @@
 
 import os, sys
 import urllib
+import base64
 from xml.dom import minidom
 import xbmcgui, xbmcaddon
 from time import strftime, strptime
@@ -36,10 +37,10 @@ sys.path.append (__resource__)
 
 from utilities import *
 
-DEVELOPER_KEY  = "75b745967f114856110511"
+DEVELOPER_KEY  = "Njh2dGpwYWJ1OXg5YW1yY21rbnZiaHBq"
 NUMBER_OF_DAYS = 4
-SEARCH_URL     = "http://free.worldweatheronline.com/feed/search.ashx?key=%s&query=%s&format=xml"
-LOCATION_URL   = "http://free.worldweatheronline.com/feed/weather.ashx?q=%s&format=xml&num_of_days=%i&key=%s"
+SEARCH_URL     = "http://api.worldweatheronline.com/free/v1/search.ashx?key=%s&query=%s&format=xml"
+LOCATION_URL   = "http://api.worldweatheronline.com/free/v1/weather.ashx?q=%s&format=xml&num_of_days=%i&key=%s"
 
 WEATHER_WINDOW = xbmcgui.Window( 12600 )
 
@@ -106,18 +107,19 @@ def get_elements(xml, tag):
 def location(string):
   log("search for '%s'" % (string,))
   loc = []
-  query   = fetch( SEARCH_URL % (DEVELOPER_KEY, string))
+  query   = fetch( SEARCH_URL % (base64.b64decode(DEVELOPER_KEY)[::-1], string))
   locations = query.getElementsByTagName("result")
   for location in locations:
-    try:
-      loc.append("%s,%s,%s" % (get_elements(location, "areaName"), get_elements(location, "region"), get_elements(location, "country")))
-    except:
-      loc.append("%s,%s" % (get_elements(location, "areaName"), get_elements(location, "country")))
+    loc.append("%s,%s" % (get_elements(location, "areaName"), get_elements(location, "country")))
+#    try:
+#      loc.append("%s,%s,%s" % (get_elements(location, "areaName"), get_elements(location, "region"), get_elements(location, "country")))
+#    except:
+#      loc.append("%s,%s" % (get_elements(location, "areaName"), get_elements(location, "country")))
   return loc
 
 def forecast(city):
   log("get forecast for '%s'" % (city,))
-  query    = fetch( LOCATION_URL % (city, NUMBER_OF_DAYS, DEVELOPER_KEY))
+  query    = fetch( LOCATION_URL % (city, NUMBER_OF_DAYS, base64.b64decode(DEVELOPER_KEY)[::-1]))
   current  = query.getElementsByTagName("current_condition")[0]
   celsius  = get_elements(current,"temp_C")
   humidity = get_elements(current,"humidity")
@@ -177,6 +179,7 @@ elif sys.argv[1] == "1" or sys.argv[1] == "2" or sys.argv[1] == "3":            
 
 refresh_locations()
 set_property("WeatherProvider", "WorldWeatherOnline.com")                          # set name of the provider, this will be visible in the Weather page
+set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(__cwd__, 'resources', 'logo.png')).decode("utf-8"))   # set logo of the provider, this will be visible in the Weather page
 
 
 
