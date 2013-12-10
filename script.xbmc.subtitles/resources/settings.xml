@@ -10,7 +10,6 @@
       <setting id="AsiaTeam" type="bool" label="Asia-Team.net" default="false"/>
 
       <setting id="BetaSeries" type="bool" label="betaseries.com" default="false"/>
-      <setting id="Bierdopje" type="bool" label="Bierdopje.com (TV Shows and Dutch/English subs only)" default="false"/>
 
       <setting id="Divxplanet" type="bool" label="Divxplanet.com (English and Turkish subs only)" default="false"/>
 

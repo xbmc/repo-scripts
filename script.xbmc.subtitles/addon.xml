@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmc.subtitles"
        name="XBMC Subtitles"
-       version="3.9.16"
+       version="3.9.17"
        provider-name="amet, mr_blobby">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -77,7 +77,7 @@
     <description lang="ko">다양한 사이트에서 자막을 찾고 다운로드합니다. OSD에서 자막 버튼을 사용하려면 '시스템 &gt; 스킨 &gt; 자막 추가기능' 에서 'XBMC Subtitles'를 선택하여 활성화하여야 합니다.</description>
     <description lang="lt">Ieškoti ir atsisiųsti subtitrus iš Multipe teikėjų. Paantraštės mygtukas OSD turi būti aktyvuotas. Nustatytas kelias iki XBMC Subtitrai -&gt; Sistema -&gt; Teminė išvaizda/Tema -&gt; Addon Skriptai</description>
     <description lang="mk">Барај и превземи преводи од повеќе добавувачи. Копчето за преводи на OSD треба да е активирано и патеката да биде подесена на XBMC Преводи при Систем-&gt; Маска-&gt; Скрипти на додаток</description>
-    <description lang="nl">Zoek en download ondertitels van 19 websites:Bierdopje.com, Italiansubs.net, Legendas.tv, Napiprojekt.pl, OmniSubs.net, Ondertitel.com, OpenSubtitles.org, Podnapisi.net, theSubDB.com, Subdivx.com, Sublight.si, Subscene.com, Swesub.nu, Subscenter.org, Titlovi.com, Titulky.com en Undertexter.se.De ondertitel knop in het OSD scherm moet zijn geactiveerd met het pad naar XBMC Subtitles via Systeem-&gt; Skin-&gt; Addon Scripts.</description>
+    <description lang="nl">Zoek en download ondertitels van meerdere aanbieders. De ondertitel knop in het OSD scherm moet zijn geactiveerd met het pad naar XBMC Subtitles via Systeem-&gt; Skin-&gt; Addon Scripts.</description>
     <description lang="pl">Wyszukaj i pobierz napisy równoczesnie z wielu źródeł. Przycisk napisów w Menu Ekranowym powinien zostać aktywowany w opcjach XBMC. Ścieżka: System-&gt; Skóra-&gt; Skrypty Addon-&gt; XBMC Subtitles</description>
     <description lang="pt">Procure e transfira legendas de vários fornecedores. O botão das legendas deve ser adicionado no visor e a localização definida em Sistema-&gt; Tema-&gt; Addons</description>
     <description lang="pt_BR">Procure e efetue download de legendas de múltiplos provedores. Botão de Legendas na tela OSD precisa ser ativado manualmente e o caminho deve estar definido para o XBMC Legendas em Sistema-&gt; Skin-&gt; Scripts de Addons. </description>
