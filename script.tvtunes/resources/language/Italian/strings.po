@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie|robwebset
+# Addon Provider: Ppic,Frost,ronie,robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -104,6 +104,26 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Attiva il debug logging"
 
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Mostra il pulsante TvTunes sulla schermata di info Video"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Dissolvenza dopo l'esecuzione per (minuti)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Operazioni"
+
+msgctxt "#32023"
+msgid "Perform Complete Search Now"
+msgstr "Esegui una ricerca completa ora"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Ritardo Avvio Tema (Secondi)"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "Errore"
@@ -160,10 +180,6 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Scarica questo?"
 
-msgctxt "#32115"
-msgid "TvTunes"
-msgstr "TvTunes"
-
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Puoi aiutare ad ottenere più temi su:"
@@ -171,6 +187,14 @@ msgstr "Puoi aiutare ad ottenere più temi su:"
 msgctxt "#32117"
 msgid "http://www.televisiontunes.com/"
 msgstr "http://www.televisiontunes.com/"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Ricerca manuale.."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Continua con la successiva ricerca tema?"
 
 msgctxt "#32991"
 msgid "Playback"

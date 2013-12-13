@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie|robwebset
+# Addon Provider: Ppic,Frost,ronie,robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -59,6 +59,18 @@ msgstr "Sökväg:"
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
 msgstr "Ladda ner automatisk om en exakt matching hittas"
+
+msgctxt "#32012"
+msgid "File Types"
+msgstr "Filtyper"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Sök efter filmteman"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Spela teman vid bläddring av filmlistan"
 
 msgctxt "#32018"
 msgid "Debugging"
@@ -123,10 +135,6 @@ msgstr "ANGE MANUELL SÖKNING"
 msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Ladda ner denna?"
-
-msgctxt "#32115"
-msgid "TvTunes"
-msgstr "TvTunes"
 
 msgctxt "#32116"
 msgid "You can help to get more theme on:"

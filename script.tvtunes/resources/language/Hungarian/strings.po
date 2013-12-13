@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie|robwebset
+# Addon Provider: Ppic,Frost,ronie,robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -28,9 +28,9 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Naplózás engedélyezése"
 
-msgctxt "#32115"
-msgid "TvTunes"
-msgstr "TvTunes"
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Információ szerzése...."
 
 msgctxt "#32991"
 msgid "Playback"

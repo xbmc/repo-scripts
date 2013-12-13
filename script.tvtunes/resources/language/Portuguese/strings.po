@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie|robwebset
+# Addon Provider: Ppic,Frost,ronie,robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -163,10 +163,6 @@ msgstr "INTRODUZA BUSCA MANUAL"
 msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Transferir esta música?"
-
-msgctxt "#32115"
-msgid "TvTunes"
-msgstr "TvTunes"
 
 msgctxt "#32116"
 msgid "You can help to get more theme on:"

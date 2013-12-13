@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie|robwebset
+# Addon Provider: Ppic,Frost,ronie,robwebset
 # Translators:
 # Kiril <neohidra@gmail.com>, 2013
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2013-11-13 20:20+0000\n"
+"PO-Revision-Date: 2013-12-09 19:20+0000\n"
 "Last-Translator: Kiril <neohidra@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
-msgstr "Сваля и възпроивежда мелодиите от вашите филми и сериали"
+msgstr "Сваля и възпроизвежда мелодиите от вашите филми и сериали"
 
 msgctxt "Addon Description"
 msgid ""
@@ -39,7 +39,7 @@ msgstr "До авторите на облици: За информация ка�
 
 msgctxt "#32001"
 msgid "Play theme in loop"
-msgstr "Повтаряне на медлодията, без спиране"
+msgstr "Повтаряне на мелодията, без спиране"
 
 msgctxt "#32002"
 msgid "Lower sound value"
@@ -67,7 +67,7 @@ msgstr "Път:"
 
 msgctxt "#32008"
 msgid "Fade tune out when exiting"
-msgstr "Плавно спиране на мелодията при излизане"
+msgstr "Плавно затихване на мелодиите при приключване"
 
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
@@ -75,7 +75,7 @@ msgstr "Автоматично сваляне при точно съвпаден
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
-msgstr ""
+msgstr "Възпроизвеждай различни мелодии (при повече налични)"
 
 msgctxt "#32011"
 msgid "Random start time"
@@ -87,7 +87,7 @@ msgstr "Тип файлове"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
-msgstr "При стартиране плавно увеличавай силата на звука"
+msgstr "Плавно увеличаване на мелодиите при стартиране"
 
 msgctxt "#32014"
 msgid "Always add additional themes (no overwrite)"
@@ -115,7 +115,23 @@ msgstr "Водене на debug дневник"
 
 msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
-msgstr ""
+msgstr "Бутон TvTunes в прозореца \"Информация за филма\""
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Плавно затихване на мелодиите след (минути)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Операции"
+
+msgctxt "#32023"
+msgid "Perform Complete Search Now"
+msgstr "Цялостно търсене"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Стартиране със закъснение (сек)"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -127,11 +143,11 @@ msgstr "сайтът е недостъпен"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
-msgstr "Сваляне на мелодии"
+msgstr "TvTunes - Сваляне на мелодии"
 
 msgctxt "#32104"
 msgid "Replace existing theme?"
-msgstr "Замяна на текущата мелодия?"
+msgstr "Да бъдат ли заменяни вече свалените мелодии?"
 
 msgctxt "#32105"
 msgid "TVTunes"
@@ -151,7 +167,7 @@ msgstr "ОТКАЗ"
 
 msgctxt "#32109"
 msgid "Operation canceled by user."
-msgstr "Действието е прекъснато от потребитля."
+msgstr "Действието е прекъснато от потребителя."
 
 msgctxt "#32110"
 msgid "Downloading:"
@@ -173,17 +189,21 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Да бъде ли свалена?"
 
-msgctxt "#32115"
-msgid "TvTunes"
-msgstr "TvTunes"
-
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
-msgstr "Можете да помогнете в обоготяването на библиотеката с мелодии на адрес:"
+msgstr "Можете да помогнете в обогатяването на библиотеката с мелодии на адрес:"
 
 msgctxt "#32117"
 msgid "http://www.televisiontunes.com/"
 msgstr "http://www.televisiontunes.com/"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Ръчно търсене"
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Да се търсят ли още мелодии?"
 
 msgctxt "#32991"
 msgid "Playback"

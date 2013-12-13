@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie|robwebset
+# Addon Provider: Ppic,Frost,ronie,robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -27,10 +27,6 @@ msgstr "Depuración"
 msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Habilitar trazas de depuración"
-
-msgctxt "#32115"
-msgid "TvTunes"
-msgstr "TvTunes"
 
 msgctxt "#32991"
 msgid "Playback"

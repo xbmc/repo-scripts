@@ -3,10 +3,12 @@
 from traceback import print_exc
 import os
 import re
+import unicodedata
 import random
 import threading
 import time
-from xml.etree.ElementTree import ElementTree
+import traceback
+import xml.etree.ElementTree as ET
 #Modules XBMC
 import xbmc
 import xbmcgui
@@ -36,23 +38,23 @@ def log(txt):
 
 
 def normalize_string( text ):
-    try: text = unicodedata.normalize( 'NFKD', _unicode( text ) ).encode( 'ascii', 'ignore' )
-    except: pass
+    try:
+        text = text.replace(":","")
+        text = text.replace("/","-")
+        text = text.replace("\\","-")
+        text = unicodedata.normalize( 'NFKD', unicode( text, 'utf-8' ) ).encode( 'ascii', 'ignore' )
+    except:
+        pass
     return text
 
 ##############################
 # Stores Various Settings
 ##############################
 class Settings():
+    # Value to calculate which version of XBMC we are using
     xbmcMajorVersion = 0
-    
-    def __init__( self ):
-        # Load the other settings from the addon setting menu
-        self.enable_custom_path = __addon__.getSetting("custom_path_enable")
-        if self.enable_custom_path == "true":
-            self.custom_path = __addon__.getSetting("custom_path")
-        self.themeRegEx = self._loadThemeFileRegEx()
-        self.screensaverTime = self._loadScreensaverSettings()
+    # The time the screensaver is set to (-1 for not set)
+    screensaverTime = 0
 
 
     # Loads the Screensaver settings
@@ -68,7 +70,9 @@ class Settings():
     # so it will reset the time, in Gotham, there will be a way to
     # actually start the screensaver again, but until then there is
     # not mush we can do
-    def _loadScreensaverSettings(self):
+    @staticmethod
+    def loadScreensaverSettings():
+        Settings.screensaverTime = -1
         return -1
 
 #####################################################################
@@ -84,41 +88,88 @@ class Settings():
 ## Option 2 is recommended as will not need re-applying after updates
 #####################################################################
 
-#     def _loadScreensaverSettings(self):
-#         screenTimeOutSeconds = -1
-#         pguisettings = xbmc.translatePath('special://profile/guisettings.xml')
-# 
-#         log("Settings: guisettings.xml location = " + pguisettings)
-# 
-#         # Make sure we found the file and it exists
-#         if os.path.exists(pguisettings):
-#             # Create an XML parser
-#             elemTree = ElementTree()
-#             elemTree.parse(pguisettings)
-#             
-#             # First check to see if any screensaver is set
-#             isEnabled = elemTree.findtext('screensaver/mode')
-#             if (isEnabled == None) or (isEnabled == ""):
-#                 log("Settings: No Screensaver enabled")
-#             else:
-#                 log("Settings: Screensaver set to " + isEnabled)
-# 
-#                 # Get the screensaver setting in minutes
-#                 result = elemTree.findtext('screensaver/time')
-#                 if result != None:
-#                     log("Settings: Screensaver timeout set to " + result)
-#                     # Convert from minutes to seconds, also reduce by 30 seconds
-#                     # as we want to ensure we have time to stop before the
-#                     # screensaver kicks in
-#                     screenTimeOutSeconds = (int(result) * 60) - 10
+#     def loadScreensaverSettings():
+#         if Settings.screensaverTime == 0:
+#             Settings.screenTimeOutSeconds = -1
+#             pguisettings = xbmc.translatePath('special://profile/guisettings.xml')
+#      
+#             log("Settings: guisettings.xml location = " + pguisettings)
+#      
+#             # Make sure we found the file and it exists
+#             if os.path.exists(pguisettings):
+#                 # Create an XML parser
+#                 elemTree = ET.ElementTree()
+#                 elemTree.parse(pguisettings)
+#                 
+#                 # First check to see if any screensaver is set
+#                 isEnabled = elemTree.findtext('screensaver/mode')
+#                 if (isEnabled == None) or (isEnabled == ""):
+#                     log("Settings: No Screensaver enabled")
 #                 else:
-#                     log("Settings: No Screensaver timeout found")
-#             
-#             del elemTree
-#         return screenTimeOutSeconds
+#                     log("Settings: Screensaver set to " + isEnabled)
+#     
+#                     # Get the screensaver setting in minutes
+#                     result = elemTree.findtext('screensaver/time')
+#                     if result != None:
+#                         log("Settings: Screensaver timeout set to " + result)
+#                         # Convert from minutes to seconds, also reduce by 30 seconds
+#                         # as we want to ensure we have time to stop before the
+#                         # screensaver kicks in
+#                         Settings.screenTimeOutSeconds = (int(result) * 60) - 10
+#                     else:
+#                         log("Settings: No Screensaver timeout found")
+#                  
+#                 del elemTree
+#         return Settings.screenTimeOutSeconds
 
+    @staticmethod
+    def isCustomPathEnabled():
+        return __addon__.getSetting("custom_path_enable") == 'true'
+    
+    @staticmethod
+    def getCustomPath():
+        return __addon__.getSetting("custom_path")
+    
+    @staticmethod
+    def getDownVolume():
+        return int(float(__addon__.getSetting("downvolume")))
+
+    @staticmethod
+    def isLoop():
+        return __addon__.getSetting("loop") == 'true'
+    
+    @staticmethod
+    def isFadeOut():
+        return __addon__.getSetting("fadeOut") == 'true'
+
+    @staticmethod
+    def isFadeIn():
+        return __addon__.getSetting("fadeIn") == 'true'
+    
+    @staticmethod
+    def isSmbEnabled():
+        if __addon__.getSetting("smb_share"):
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def getSmbUser():
+        if __addon__.getSetting("smb_login"):
+            return __addon__.getSetting("smb_login")
+        else:
+            return "guest"
+    
+    @staticmethod
+    def getSmbPassword():
+        if __addon__.getSetting("smb_psw"):
+            return __addon__.getSetting("smb_psw")
+        else:
+            return "guest"
+    
     # Calculates the regular expression to use to search for theme files
-    def _loadThemeFileRegEx(self):
+    @staticmethod
+    def getThemeFileRegEx(searchDir=None, extensionOnly=False):
         fileTypes = "mp3" # mp3 is the default that is always supported
         if(__addon__.getSetting("wma") == 'true'):
             fileTypes = fileTypes + "|wma"
@@ -128,71 +179,48 @@ class Settings():
             fileTypes = fileTypes + "|m4a"
         if(__addon__.getSetting("wav") == 'true'):
             fileTypes = fileTypes + "|wav"
-        return '(theme[ _A-Za-z0-9.-]*.(' + fileTypes + ')$)'
-
-    def isCustomPathEnabled(self):
-        return self.enable_custom_path == 'true'
+        themeRegEx = '(theme[ _A-Za-z0-9.-]*.(' + fileTypes + ')$)'
+        # If using the directory method then remove the requirement to have "theme" in the name
+        if (searchDir != None) and Settings.isThemeDirEnabled():
+            # Make sure this is checking the theme directory, not it's parent
+            if searchDir.endswith(Settings.getThemeDirectory()):
+                extensionOnly = True
+        # See if we do not want the theme keyword
+        if extensionOnly:
+            themeRegEx = '(.(' + fileTypes + ')$)'
+        return themeRegEx
     
-    def getCustomPath(self):
-        return self.custom_path
-    
-    def getDownVolume(self):
-        return int(float(__addon__.getSetting("downvolume")))
-
-    def isLoop(self):
-        return __addon__.getSetting("loop") == 'true'
-    
-    def isFadeOut(self):
-        return __addon__.getSetting("fadeOut") == 'true'
-
-    def isFadeIn(self):
-        return __addon__.getSetting("fadeIn") == 'true'
-    
-    def isSmbEnabled(self):
-        if __addon__.getSetting("smb_share"):
-            return True
-        else:
-            return False
-
-    def getSmbUser(self):
-        if __addon__.getSetting("smb_login"):
-            return __addon__.getSetting("smb_login")
-        else:
-            return "guest"
-    
-    def getSmbPassword(self):
-        if __addon__.getSetting("smb_psw"):
-            return __addon__.getSetting("smb_psw")
-        else:
-            return "guest"
-    
-    def getThemeFileRegEx(self):
-        return self.themeRegEx
-    
-    def isShuffleThemes(self):
-        return __addon__.getSetting("shuffle") == 'true'
-    
-    def isRandomStart(self):
-        return __addon__.getSetting("random") == 'true'
-
-    def isTimout(self):
-        if self.screensaverTime == -1:
+    @staticmethod
+    def isTimout():
+        screensaverTime = Settings.loadScreensaverSettings()
+        if screensaverTime == -1:
             return False
         # It is a timeout if the idle time is larger that the time stored
         # for when the screensaver is due to kick in
-        if (xbmc.getGlobalIdleTime() > self.screensaverTime):
+        if (xbmc.getGlobalIdleTime() > screensaverTime):
             log("Settings: Stopping due to screensaver")
             return True
         else:
             return False
+
+    @staticmethod
+    def isShuffleThemes():
+        return __addon__.getSetting("shuffle") == 'true'
     
-    def isPlayMovieList(self):
+    @staticmethod
+    def isRandomStart():
+        return __addon__.getSetting("random") == 'true'
+    
+    @staticmethod
+    def isPlayMovieList():
         return __addon__.getSetting("movielist") == 'true'
 
-    def isPlayTvShowList(self):
+    @staticmethod
+    def isPlayTvShowList():
         return __addon__.getSetting("tvlist") == 'true'
 
-    def getPlayDurationLimit(self):
+    @staticmethod
+    def getPlayDurationLimit():
         return int(float(__addon__.getSetting("endafter")))
 
     # Check if the video info button should be hidden
@@ -220,13 +248,159 @@ class Settings():
             log("Settings: XBMC Version %d (%s)" % (Settings.xbmcMajorVersion, xbmcVer))
         return Settings.xbmcMajorVersion
 
+    @staticmethod
+    def isThemeDirEnabled():
+        # Theme sub directory only supported when not using a custom path
+        if Settings.isCustomPathEnabled():
+            return False
+        return __addon__.getSetting("searchSubDir") == 'true'
+
+    @staticmethod
+    def getThemeDirectory():
+        return __addon__.getSetting("subDirName")
+
+#############################################
+# Reads TvTunes information from an NFO file
+#############################################
+class NfoReader():
+    def __init__( self, directory ):
+        self.themeFiles = []
+        self.themeDirs = []
+        self._loadNfoInfo(directory)
+
+    # Get any themes that were in the NFO file
+    def getThemeFiles(self):
+        return self.themeFiles
+
+    # Get any theme directories that were in the NFO file
+    def getThemeDirs(self):
+        return self.themeDirs
+
+    # Check for an NFO file for this show and reads details out of it
+    # if it exists
+    def _loadNfoInfo(self, directory):
+        # Find out the name of the NFO file
+        nfoFileName = os.path.join(directory, "tvtunes.nfo")
+        
+        log("NfoReader: Searching for NFO file: " + nfoFileName)
+        
+        # Return False if file does not exist
+        if not xbmcvfs.exists( nfoFileName ):
+            log("NfoReader: No NFO file found: " + nfoFileName)
+            return False
+
+        returnValue = False
+
+        try:
+            # Need to first load the contents of the NFO file into
+            # a string, this is because the XML File Parse option will
+            # not handle formats like smb://
+            nfoFile = xbmcvfs.File(nfoFileName)
+            nfoFileStr = nfoFile.read()
+            nfoFile.close()
+
+            # Create an XML parser
+            nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr))
+            rootElement = nfoXml.getroot()
+            
+            log("NfoReader: Root element is = " + rootElement.tag)
+            
+            # Check which format if being used
+            if rootElement.tag == "tvtunes":
+                log("NfoReader: TvTunes format NFO detected")
+                #    <tvtunes>
+                #        <file>theme.mp3</file>
+                #        <directory>c:\my\themes</directory>
+                #        <playlistfile>playlist.m3u</playlistfile>
+                #    </tvtunes>
+
+                # There could be multiple file entries, so loop through all of them
+                for fileElem in nfoXml.findall('file'):
+                    file = None
+                    if fileElem != None:
+                        file = fileElem.text
+
+                    if (file != None) and (file != ""):
+                        if (not "/" in file) and (not "\\" in file):
+                            # Make it a full path if it is not already
+                            file = os.path.join(directory, file)
+                        log("NfoReader: file = " + file)
+                        self.themeFiles.append(file)
+
+                # There could be multiple directory entries, so loop through all of them
+                for dirElem in nfoXml.findall('directory'):
+                    dir = None
+                    if dirElem != None:
+                        dir = dirElem.text
+
+                    if (dir != None) and (dir != ""):
+                        if (not "/" in dir) and (not "\\" in dir):
+                            # Make it a full path if it is not already
+                            dir = os.path.join(directory, dir)
+                        log("NfoReader: directory = " + dir)
+                        self.themeDirs.append(dir)
+
+                # Check for the playlist files
+                for playlistFileElem in nfoXml.findall('playlistfile'):
+                    playlistFile = None
+                    if playlistFileElem != None:
+                        playlistFile = playlistFileElem.text
+
+                    if (playlistFile != None) and (playlistFile != ""):
+                        if (not "/" in playlistFile) and (not "\\" in playlistFile):
+                            # There is just the filename of the playlist without
+                            # a path, check if the file is local or if we should
+                            # read it from the user directory
+                            localFile = os.path.join(directory, playlistFile)
+                            if xbmcvfs.exists(localFile):
+                                # Make it a full path if it is not already
+                                playlistFile = localFile
+                            else:
+                                # default to the music playlist directory if not local
+                                # Check if there is an extension on the name
+                                fileExt = os.path.splitext( playlistFile )[1]
+                                if fileExt == None or fileExt == "":
+                                    playlistFile = playlistFile + ".m3u"
+                                playlistFile = os.path.join(xbmc.translatePath("special://musicplaylists"), playlistFile)
+                        log("NfoReader: playlist file = " + playlistFile)
+                        # Load the playlist into the Playlist object
+                        # An exception if thrown if the file does not exist
+                        try:
+                            xbmcPlaylist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
+                            xbmcPlaylist.load(playlistFile)
+                            i = 0
+                            while i < xbmcPlaylist.size():  
+                                # get the filename from the playlist
+                                file = xbmcPlaylist[i].getfilename()
+                                i = i + 1
+                                if (file != None) and (file != ""):
+                                    log("NfoReader: file from playlist = " + file)
+                                    self.themeFiles.append(file)                            
+                        except:
+                            log("NfoReader: playlist file not found = " + playlistFile)
+
+                returnValue = True
+            else:
+                self.displayName = None
+                self.orderKey = None
+                log("NfoReader: Unknown NFO format")
+    
+            del nfoXml
+
+        except:
+            log("NfoReader: Failed to process NFO: " + nfoFileName)
+            log("NfoReader: " + traceback.format_exc())
+            returnValue = False
+
+        return returnValue
+
+
 
 ##############################
 # Calculates file locations
 ##############################
 class ThemeFiles():
-    def __init__(self, settings, rawPath, pathList=None):
-        self.settings = settings
+    def __init__(self, rawPath, pathList=None):
         self.forceShuffle = False
         self.rawPath = rawPath
         if rawPath == "":
@@ -234,14 +408,14 @@ class ThemeFiles():
         elif (pathList != None) and (len(pathList) > 0):
             self.themeFiles = []
             for aPath in pathList:
-                subThemeList = self._generateThemeFilelist(aPath)
+                subThemeList = self._generateThemeFilelistWithDirs(aPath)
                 # add these files to the existing list
                 self.themeFiles = self._mergeThemeLists(self.themeFiles, subThemeList)
             # If we were given a list, then we should shuffle the themes
             # as we don't always want the first path playing first
             self.forceShuffle = True
         else:
-            self.themeFiles = self._generateThemeFilelist(rawPath)
+            self.themeFiles = self._generateThemeFilelistWithDirs(rawPath)
 
     # Define the equals to be based off of the list of theme files
     def __eq__(self, other):
@@ -287,7 +461,7 @@ class ThemeFiles():
             # Add the theme file to a playlist
             playlist.add( url=aFile )
 
-        if (self.settings.isShuffleThemes() or self.forceShuffle) and playlist.size() > 1:
+        if (Settings.isShuffleThemes() or self.forceShuffle) and playlist.size() > 1:
             playlist.shuffle()
         
         # Now we have the playlist, and it has been shuffled if needed
@@ -295,7 +469,7 @@ class ThemeFiles():
         # Note: The following method (rather than seek) should prevent
         # the seek dialog being displayed on the screen and also prevent
         # the need to start the theme playing before changing the start point
-        if self.settings.isRandomStart() and playlist.size() > 0:
+        if Settings.isRandomStart() and playlist.size() > 0:
             filename = playlist[0].getfilename()
             duration = int(playlist[0].getduration())
 
@@ -326,9 +500,9 @@ class ThemeFiles():
         if workingPath.startswith("stack://"):
             workingPath = workingPath.replace("stack://", "").split(" , ", 1)[0]
         
-        if self.settings.isSmbEnabled() and workingPath.startswith("smb://") : 
+        if Settings.isSmbEnabled() and workingPath.startswith("smb://") : 
             log( "### Try authentication share" )
-            workingPath = workingPath.replace("smb://", "smb://%s:%s@" % (self.settings.getSmbUser(), self.settings.getSmbPassword()) )
+            workingPath = workingPath.replace("smb://", "smb://%s:%s@" % (Settings.getSmbUser(), Settings.getSmbPassword()) )
             log( "### %s" % workingPath )
     
         #######hack for episodes stored as rar files
@@ -349,6 +523,21 @@ class ThemeFiles():
             workingPath = workingPath[:-1]
 
         return workingPath
+    #
+    # Handles the case where there is a theme directory set
+    #
+    def _generateThemeFilelistWithDirs(self, rawPath):
+        themeFiles = []
+        # Check the theme directory if it is set up
+        if Settings.isThemeDirEnabled():
+            themeDir = self._getUsablePath(rawPath)
+            themeDir = os.path.join( themeDir, Settings.getThemeDirectory() )
+            themeFiles = self._generateThemeFilelist(themeDir)
+        
+        # If no themes were found in the directory then search the normal location
+        if len(themeFiles) < 1:
+            themeFiles = self._generateThemeFilelist(rawPath)
+        return themeFiles
 
     #
     # Calculates the location of the theme file
@@ -386,14 +575,22 @@ class ThemeFiles():
         return thepath
 
     # Search for theme files in the given directory
-    def _getThemeFiles(self, directory):
-        log( "ThemeFiles: Searching " + directory + " for " + self.settings.getThemeFileRegEx() )
-        themeFiles = []
+    def _getThemeFiles(self, directory, extensionOnly=False):
+        # First read from the NFO file if it exists
+        nfoRead = NfoReader(directory)
+        themeFiles = nfoRead.getThemeFiles()
+        
+        # Get the theme directories that are referenced and process the data in them
+        for nfoDir in nfoRead.getThemeDirs():
+            # Do not want the theme keyword if looking at an entire directory
+            themeFiles = themeFiles + self._getThemeFiles(nfoDir, True)
+        
+        log( "ThemeFiles: Searching " + directory + " for " + Settings.getThemeFileRegEx(directory,extensionOnly) )
         # check if the directory exists before searching
         if xbmcvfs.exists(directory):
             dirs, files = xbmcvfs.listdir( directory )
             for aFile in files:
-                m = re.search(self.settings.getThemeFileRegEx(), aFile, re.IGNORECASE)
+                m = re.search(Settings.getThemeFileRegEx(directory,extensionOnly), aFile, re.IGNORECASE)
                 if m:
                     path = os.path.join( directory, aFile ).decode("utf-8")
                     log("ThemeFiles: Found match: " + path)
@@ -416,8 +613,7 @@ class ThemeFiles():
 # Custom Player to play the themes
 ###################################
 class Player(xbmc.Player):
-    def __init__(self, settings, *args):
-        self.settings = settings
+    def __init__(self, *args):
         # Save the volume from before any alterations
         self.original_volume = ( 100 + (self._getVolume() *(100/60.0)))
         
@@ -449,12 +645,13 @@ class Player(xbmc.Player):
         log("Player: Restoring player settings" )
         while self.isPlayingAudio():
             xbmc.sleep(1)
-        # restore repeat state
-        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "%s" }, "id": 1 }' % self.repeat)
         # Force the volume to the starting volume
         xbmc.executebuiltin('XBMC.SetVolume(%d)' % self.original_volume, True)
+        # restore repeat state
+        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "%s" }, "id": 1 }' % self.repeat)
         # Record the time that playing was started (0 is stopped)
         self.startTime = 0
+        log("Player: Restored volume to %d" % self.original_volume )
 
 
     def stop(self):
@@ -471,7 +668,7 @@ class Player(xbmc.Player):
             # Perform and lowering of the sound for theme playing
             self._lowerVolume()
 
-            if self.settings.isFadeIn():
+            if Settings.isFadeIn():
                 # Get the current volume - this is out target volume
                 targetVol = self._getVolume()
                 cur_vol_perc = 1
@@ -494,6 +691,11 @@ class Player(xbmc.Player):
                     xbmc.sleep(30)
 
                 for step in range (0,(numSteps-1)):
+                    # If the system is going to be shut down then we need to reset
+                    # everything as quickly as possible
+                    if WindowShowing.isShutdownMenu() or xbmc.abortRequested:
+                        log("Player: Shutdown menu detected, cancelling fade in")
+                        break
                     vol = cur_vol_perc + vol_step
                     log( "Player: fadeIn_vol: %s" % str(vol) )
                     xbmc.executebuiltin('XBMC.SetVolume(%d)' % vol, True)
@@ -504,12 +706,12 @@ class Player(xbmc.Player):
             else:
                 xbmc.Player.play(self, item=item, listitem=listitem, windowed=windowed)
 
-            if self.settings.isLoop():
+            if Settings.isLoop():
                 xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "all" }, "id": 1 }')
                 # If we had a random start and we are looping then we need to make sure
                 # when it comes to play the theme for a second time it starts at the beginning
                 # and not from the same mid-point
-                if self.settings.isRandomStart():
+                if Settings.isRandomStart():
                     item[0].setProperty('StartOffset', "0")
             else:
                 xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "off" }, "id": 1 }')
@@ -529,9 +731,9 @@ class Player(xbmc.Player):
 
     def _lowerVolume( self ):
         try:
-            if self.settings.getDownVolume() != 0:
+            if Settings.getDownVolume() != 0:
                 current_volume = self._getVolume()
-                vol = ((60+current_volume- self.settings.getDownVolume() )*(100/60.0))
+                vol = ((60+current_volume- Settings.getDownVolume() )*(100/60.0))
                 if vol < 0 :
                     vol = 0
                 log( "Player: volume goal: %d%% " % vol )
@@ -543,7 +745,7 @@ class Player(xbmc.Player):
 
     # Graceful end of the playing, will fade if set to do so
     def endPlaying(self, fastFade=False, slowFade=False):
-        if self.isPlayingAudio() and self.settings.isFadeOut():
+        if self.isPlayingAudio() and Settings.isFadeOut():
             cur_vol = self._getVolume()
             cur_vol_perc = 100 + (cur_vol * (100/60.0))
             
@@ -561,7 +763,7 @@ class Player(xbmc.Player):
                 # If the system is going to be shut down then we need to reset
                 # everything as quickly as possible
                 if WindowShowing.isShutdownMenu() or xbmc.abortRequested:
-                    log("Player: Shutdown menu detected, cancelling fade")
+                    log("Player: Shutdown menu detected, cancelling fade out")
                     break
                 vol = cur_vol_perc - vol_step
                 log( "Player: fadeOut_vol: %s" % str(vol) )
@@ -577,7 +779,7 @@ class Player(xbmc.Player):
     def checkEnding(self):
         if self.isPlayingAudio() and (self.startTime > 0):
             # Time in minutes to play for
-            durationLimit = self.settings.getPlayDurationLimit();
+            durationLimit = Settings.getPlayDurationLimit();
             if durationLimit > 0:
                 # Get the current time
                 currTime = time.time()
@@ -734,8 +936,8 @@ class DelayedStartTheme():
 
         # Check is the start playing should be delayed
         if delaySeconds < 1:
-            # Start playing straight away
-            return True
+            # Start playing straight away, but check for List playing built in delay first
+            return self._checkListPlayingDelay(themes)
 
         currentTime = int(time.time())
 
@@ -758,18 +960,38 @@ class DelayedStartTheme():
         self.themesToStart = None
         self.anchorTime = 0
 
+    # Method to support a small delay if running on the list screen
+    def _checkListPlayingDelay(self, themes):
+        # Check if we are playing themes on the list view, in which case we will want to delay them
+        if (Settings.isPlayMovieList() and WindowShowing.isMovies()) or (Settings.isPlayTvShowList() and WindowShowing.isTvShowTitles()):
+            log("DelayedStartTheme: Movie List playing delay detected, anchorTime = " + str(self.anchorTime))
+            if themes != self.themesToStart:
+                # Theme selection has changed
+                self.themesToStart = themes
+                # Reset the current time as we need the delay from here
+                self.anchorTime = 2 # for movie list delay, it is just a counter
+            else:
+                # reduce the anchor by one
+                self.anchorTime = self.anchorTime - 1
+                if self.anchorTime < 1:
+                    self.clear()
+                    return True
+            return False
+
+        # Default is to allow playing
+        return True
+
 #
 # Thread to run the program back-end in
 #
 class TunesBackend( ):
     def __init__( self ):
-        self.settings = Settings()
-        self.themePlayer = Player(settings=self.settings)
+        self.themePlayer = Player()
         self._stop = False
         log( "### starting TvTunes Backend ###" )
-        self.newThemeFiles = ThemeFiles(self.settings, "")
-        self.oldThemeFiles = ThemeFiles(self.settings, "")
-        self.prevThemeFiles = ThemeFiles(self.settings, "")
+        self.newThemeFiles = ThemeFiles("")
+        self.oldThemeFiles = ThemeFiles("")
+        self.prevThemeFiles = ThemeFiles("")
         self.delayedStart = DelayedStartTheme()
         
     def run( self ):
@@ -790,7 +1012,7 @@ class TunesBackend( ):
                 # will be if:
                 # 1) A Video is selected to play
                 # 2) We exit to the main menu away from the video view
-                if (not WindowShowing.isVideoLibrary()) or WindowShowing.isScreensaver() or self.settings.isTimout():
+                if (not WindowShowing.isVideoLibrary()) or WindowShowing.isScreensaver() or Settings.isTimout():
                     log("TunesBackend: Video Library no longer visible")
                     # End playing cleanly (including any fade out) and then stop everything
                     self.themePlayer.endPlaying()
@@ -800,7 +1022,7 @@ class TunesBackend( ):
                     # If we are using Gotham or higher, it is possible for us to re-kick off the
                     # screen-saver, otherwise the action of us stopping the theme will reset the
                     # timeout and the user will have to wait longer
-                    if self.settings.isTimout() and (Settings.getXbmcMajorVersion() > 12):
+                    if Settings.isTimout() and (Settings.getXbmcMajorVersion() > 12):
                         xbmc.executebuiltin("xbmc.ActivateScreensaver", True)
                     break
 
@@ -869,10 +1091,10 @@ class TunesBackend( ):
         if WindowShowing.isEpisodes():
             return True
         # Only valid is wanting theme on movie list
-        if WindowShowing.isMovies() and self.settings.isPlayMovieList():
+        if WindowShowing.isMovies() and Settings.isPlayMovieList():
             return True
         # Only valid is wanting theme on TV list
-        if WindowShowing.isTvShowTitles() and self.settings.isPlayTvShowList():
+        if WindowShowing.isTvShowTitles() and Settings.isPlayTvShowList():
             return True
         # Any other area is deemed to be a non play area
         return False
@@ -883,13 +1105,13 @@ class TunesBackend( ):
         themePath = ""
 
         # Check if the files are stored in a custom path
-        if self.settings.isCustomPathEnabled():
+        if Settings.isCustomPathEnabled():
             if not WindowShowing.isMovies():
                 videotitle = xbmc.getInfoLabel( "ListItem.TVShowTitle" )
             else:
                 videotitle = xbmc.getInfoLabel( "ListItem.Title" )
-            videotitle = normalize_string( videotitle.replace(":","") )
-            themePath = os.path.join(self.settings.getCustomPath(), videotitle).decode("utf-8")
+            videotitle = normalize_string( videotitle )
+            themePath = os.path.join(Settings.getCustomPath(), videotitle).decode("utf-8")
 
         # Looking at the TV Show information page
         elif WindowShowing.isMovieInformation() and (WindowShowing.isTvShowTitles() or WindowShowing.isTvShows()):
@@ -903,17 +1125,17 @@ class TunesBackend( ):
         if WindowShowing.isMovieSet():
             movieSetMap = self._getMovieSetFileList()
 
-            if self.settings.isCustomPathEnabled():
+            if Settings.isCustomPathEnabled():
                 # Need to make the values part (the path) point to the custom path
                 # rather than the video file
                 for aKey in movieSetMap.keys():
-                    videotitle = normalize_string(aKey.replace(":","") )
-                    movieSetMap[aKey] = os.path.join(self.settings.getCustomPath(), videotitle).decode("utf-8")
+                    videotitle = normalize_string(aKey)
+                    movieSetMap[aKey] = os.path.join(Settings.getCustomPath(), videotitle).decode("utf-8")
  
             if len(movieSetMap) < 1:
-                themefile = ThemeFiles(self.settings, "")
+                themefile = ThemeFiles("")
             else:
-                themefile = ThemeFiles(self.settings, themePath, movieSetMap.values())
+                themefile = ThemeFiles(themePath, movieSetMap.values())
 
         # When the reference is into the database and not the file system
         # then don't return it
@@ -921,12 +1143,12 @@ class TunesBackend( ):
             # If in either the Tv Show List or the Movie list then
             # need to stop the theme is selecting the back button
             if WindowShowing.isMovies() or WindowShowing.isTvShowTitles():
-                themefile = ThemeFiles(self.settings, "")
+                themefile = ThemeFiles("")
             else:
                 # Load the previous theme
                 themefile = self.newThemeFiles
         else:
-            themefile = ThemeFiles(self.settings, themePath)
+            themefile = ThemeFiles(themePath)
 
         return themefile
 

@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic|Frost|ronie|robwebset
+# Addon Provider: Ppic,Frost,ronie,robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -16,13 +16,25 @@ msgstr ""
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "Addon Summary"
+msgid "Get and play your Movie and TV shows Themes"
+msgstr "영화와 TV 쇼의 테마 음악을 가져와서 재생합니다"
+
+msgctxt "Addon Description"
+msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
+msgstr "라이브러리의 영화와 TV 쇼 주제 음악을 www.televisiontunes.com 에서 가져와서 theme[0-9].mp3 형식으로 비디오 폴더에 저장합니다. TV 쇼 폴더나 비디오 정보 화면으로 들어가면 비디오 라이브러리를 탐색하는 동안 주제음악이 재생됩니다. (이 기능 사용하려면 스킨에서 지원하여야 합니다.)"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "반복하여 테마 음악 재생"
 
 msgctxt "#32002"
 msgid "Lower sound value"
-msgstr "소리 작게"
+msgstr "최소 음량"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -48,6 +60,22 @@ msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
 msgstr "정확히 일치하면 자동으로 다운로드"
 
+msgctxt "#32012"
+msgid "File Types"
+msgstr "파일 종류"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "영화 테마 음악 찾기"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "영화 목록을 탐색할 때 테마 재생"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "TV 쇼 목록을 탐색할 때 테마 재생"
+
 msgctxt "#32018"
 msgid "Debugging"
 msgstr "디버깅"
@@ -55,6 +83,10 @@ msgstr "디버깅"
 msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "디버그 로그 사용"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "비디오 정보 화면에 TvTunes 버튼 표시"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -66,7 +98,7 @@ msgstr "사이트 접속불가"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
-msgstr "TvTune 다운로드"
+msgstr "TvTune 다운로더"
 
 msgctxt "#32104"
 msgid "Replace existing theme?"
@@ -80,6 +112,10 @@ msgctxt "#32106"
 msgid "Getting information..."
 msgstr "정보 가져오는 중..."
 
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "찾는 중: "
+
 msgctxt "#32108"
 msgid "CANCELED"
 msgstr "취소됨"
@@ -92,13 +128,21 @@ msgctxt "#32110"
 msgid "Downloading:"
 msgstr "다운로드 중:"
 
+msgctxt "#32111"
+msgid "to:"
+msgstr "저장위치:"
+
 msgctxt "#32113"
 msgid "ENTER MANUAL SEARCH"
 msgstr "수동 찾기 입력"
 
-msgctxt "#32115"
-msgid "TvTunes"
-msgstr "TvTunes"
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "이것을 다운로드 하겠습니까?"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "You can help to get more theme on:"
 
 msgctxt "#32117"
 msgid "http://www.televisiontunes.com/"

@@ -1,3 +1,17 @@
+v4.2.0
+- Support of tvtunes.nfo files
+
+v4.1.1
+- Fixed colon in movie name for custom path
+- Support Movie Sets when using Themes sub-directory
+
+v4.1.0
+- Add ability to stop searching if doing a batch search
+- Add automatic 0.5 second (ish) delay on theme playing if on list view
+- Reduce the chance of volume reset issue on quick shutdown
+- Support themes stored in sub-directories
+- Fixed issue with / in title when using custom path
+
 v4.0.1
 - Fixed issue with Ubuntu and settings slider values
 

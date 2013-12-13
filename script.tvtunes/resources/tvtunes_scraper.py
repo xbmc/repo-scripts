@@ -38,8 +38,13 @@ def _unicode( text, encoding='utf-8' ):
     return text
 
 def normalize_string( text ):
-    try: text = unicodedata.normalize( 'NFKD', _unicode( text ) ).encode( 'ascii', 'ignore' )
-    except: pass
+    try:
+        text = text.replace(":","")
+        text = text.replace("/","-")
+        text = text.replace("\\","-")
+        text = unicodedata.normalize( 'NFKD', unicode( text, 'utf-8' ) ).encode( 'ascii', 'ignore' )
+    except:
+        pass
     return text
 
 def get_html_source( url , save=False):
@@ -118,6 +123,14 @@ class TvTunes:
         self.searchMovieDownload =  __addon__.getSetting('searchMovieDownload')
         if self.enable_custom_path == "true":
             self.custom_path = __addon__.getSetting("custom_path").decode("utf-8")
+            self.isThemeDirEnabled = "false"
+        else:
+            # Load the information about storing themes in sub-directories
+            # Only use the Theme dir if custom path is not used
+            self.isThemeDirEnabled = __addon__.getSetting("searchSubDir")
+            if self.isThemeDirEnabled == "true":
+                self.themeDir = __addon__.getSetting("subDirName")
+
         self.TVlist = self.listing()
         self.DIALOG_PROGRESS = xbmcgui.DialogProgress()
         # Only display the erase dialog if we would overwrite
@@ -169,6 +182,10 @@ class TvTunes:
     # Checks if a theme exists in a directory
     def _doesThemeExist(self, directory):
         log("## Checking directory: %s" % directory)
+        # Check for custom theme directory
+        if self.isThemeDirEnabled == "true":
+            directory = os.path.join(directory, self.themeDir)
+
         # check if the directory exists before searching
         if xbmcvfs.exists(directory):
             # Generate the regex
@@ -218,9 +235,21 @@ class TvTunes:
                     theme_url = self.get_user_choice( theme_list , show[2] )
                 if theme_url:
                     self.download(theme_url , show[1])
+                else:
+                    # Give the user an option to stop searching the remaining themes
+                    # as they did not select one for this show, but only prompt
+                    # if there are more to be processed
+                    if count < total:
+                        if not xbmcgui.Dialog().yesno(__language__(32105), __language__(32119)):
+                            break
 
     def download(self , theme_url , path):
         log( "### download :" + theme_url )
+
+        # Check for custom theme directory
+        if self.isThemeDirEnabled == "true":
+            path = os.path.join(path, self.themeDir)
+
         theme_file = self.getNextThemeFileName(path)
         tmpdestination = xbmc.translatePath( 'special://profile/addon_data/%s/temp/%s' % ( __addonid__ , theme_file ) ).decode("utf-8")
         destination = os.path.join( path , theme_file )
@@ -249,10 +278,9 @@ class TvTunes:
             return False 
 
     def get_user_choice(self , theme_list , showname):
-        #### on cree la liste de choix de theme
         theme_url = False
         searchname = showname
-        searchdic = { "name" : "Manual Search..."}
+        searchdic = { "name" : __language__(32118)}
         theme_list.insert(0 , searchdic)
         while theme_url == False:
             select = xbmcgui.Dialog().select(__language__(32112) + ' ' + searchname, [ theme["name"] for theme in theme_list ])
@@ -261,7 +289,7 @@ class TvTunes:
                 #xbmcgui.Dialog().ok("Canceled" , "Download canceled by user" )
                 return False
             else:
-                if theme_list[select]["name"] == "Manual Search...":
+                if theme_list[select]["name"] == __language__(32118):
                     kb = xbmc.Keyboard(showname, __language__(32113), False)
                     kb.doModal()
                     result = kb.getText()
@@ -380,4 +408,4 @@ class TvTunes:
 
 if ( __name__ == "__main__" ):
     TvTunes()
-    xbmcgui.Dialog().ok(__language__(32115),__language__(32116) , __language__(32117))
+    xbmcgui.Dialog().ok(__language__(32105),__language__(32116) , __language__(32117))
