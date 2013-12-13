@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <setting id="number_trailers" type="number" label="32000" default="10" />
+  <setting id="do_animation" type="bool" label="32001" default="true" />
+  <setting id="do_path" type="bool" label="32009" default="false" />
+  <setting id="path" type="folder" enable = "eq(-1,true)" label="32010" default="" />
+  <setting id="do_genre" type="bool" enable = "!eq(-2,true)" label="32002" default="true" />
+  <setting id="hide_watched" type="bool" enable = "!eq(-3,true)" label="32004" default="false" />
+  <setting id="watched_days" type="number" enable="!eq(-4,true)" label="32005" default="365" />
+  <setting id="hide_info" type="bool" enable="!eq(-5,true)" label="32003" default="false" />
+  <setting id="hide_title" type="bool" label="32008" defalt="false"/>
+  <setting id="do_mute" type="bool" label="32006" default="false" />  
+  <setting id="do_fullscreen" type="bool" label="32007" default="false" />
+</settings>
+
