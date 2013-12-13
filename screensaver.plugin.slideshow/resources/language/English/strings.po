@@ -1,0 +1,74 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-11 20:03+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#All %s must remain in string but can change position
+
+msgctxt "#32001"
+msgid "Source Path"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Amount Of Seconds To Display Each Image"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Dim Level"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Effect"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Pan And Zoom"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Slide"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Crossfade"
+msgstr ""
+
+#empty strings from id 32008 to 32009
+
+msgctxt "#32010"
+msgid "Slideshow On XBMC Startup"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Reset Path (Necessary to change Plugin Path)"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Randomize Order"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Show Titles (If Available)"
+msgstr ""
+
+msgctxt "#32014"
+msgid "- Normal XBMC Slideshow (Plugins Only)"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Plugin"
+msgstr ""
+
+msgctxt "#32016"
+msgid "ShareSocial Imagestream"
+msgstr ""

@@ -1,0 +1,54 @@
+Plugin Slideshow Screensaver Changelog
+
+Current Version : 0.0.9
+
+** 0.0.9 ***
+
+Animated loading indicator
+Added progress percent on loading indicator (when available)
+Fix for error image not displaying on error
+Added some code for better pre-loading of images
+Improved exiting screensaver when loading plugin images
+Converted strings.xml to strings.po
+Updated addon.xml for Gotham
+Added missing XML declarations
+
+** 0.0.8 ***
+
+Version change to fix repo
+
+** 0.0.7 ***
+
+Fix for non-latin characters in URLs
+
+** 0.0.6 ***
+
+Rename xbmcplugin.py to fakexbmcplugin.py (thought I already did that, hmm...)
+
+** 0.0.5 ***
+
+Added option in settings 'Show Titles (If Available)'
+Error indicator and message now moves randomly about screen (this is a screensaver, not a screen burner =] )
+Added option in settings under 'Slideshow On XBMC Startup': 'Normal XBMC Slideshow (Plugins Only)'. When checked and path is a plugin, will start with an xbmc slideshow (old behavior). If unchecked (default) will start with the normal screensaver behavior. 
+
+** 0.0.4 ***
+
+Added the ability to use ShareSocial image feeds (Only works with Facebook-Media 0.7.8 at this time and requires ShareSocial 0.2.0 or greater to be installed)
+Improved slideshow image loading (now loads next image while displaying current image, so less instance of black screen)
+Improved the settings dialog
+Added loading indicator and message while waiting for images to load
+Added error indicator and message if error occurs while loading images
+
+** 0.0.3 ***
+
+Fix addon.xml
+
+** 0.0.2 ***
+
+Added version printing to log
+Now cleans up classes on exit
+Cleared some unused code
+
+** 0.0.1 ***
+
+First public release
