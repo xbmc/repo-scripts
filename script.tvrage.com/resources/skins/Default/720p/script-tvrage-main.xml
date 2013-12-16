@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+	<defaultcontrol>200</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<animation effect="fade" time="250">WindowOpen</animation>
+	<animation effect="fade" time="250">WindowClose</animation>
+	<controls>
+		<control type="group">
+			<posx>100</posx>
+			<posy>10</posy>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1090</width>
+				<height>700</height>
+				<texture border="40">default-panel.png</texture>
+			</control>
+			<!-- ** Required ** Do not change <id> or <type> -->
+
+			<control type="image">
+				<description>page header tab icon</description>
+				<posx>20</posx>
+				<posy>11</posy>
+				<width>518</width>
+				<height>120</height>
+				<texture>tvrage_logo.png</texture>
+
+			</control>
+
+
+
+			<control type="label">
+				<description>textarea</description>
+				<posx>580</posx>
+				<posy>30</posy>
+				<width>230</width>
+				<height>80</height>
+				<font>font18</font>
+				<textcolor>white</textcolor>
+				<aligny>center</aligny>
+				<align>center</align>
+				<label>$ADDON[script.tvrage.com 32913]</label>
+				<wrapmultiline>true</wrapmultiline>
+			</control>
+
+			<control type="button" id="200">
+				<description>The Button</description>
+				<onleft>120</onleft>
+				<onright>201</onright>
+				<onup>120</onup>
+				<ondown>120</ondown>
+				<posx>30</posx>
+				<posy>620</posy>
+				<width>330</width>
+				<height>40</height>
+				<visible>true</visible>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>font18</font>
+				<align>center</align>
+				<label>$ADDON[script.tvrage.com 32918]</label>
+				<textcolor>FFFFFFFF</textcolor>
+				<disabledcolor>80FFFFFF</disabledcolor>
+			</control>
+
+			<control type="button" id="201">
+				<description>The Button</description>
+				<onleft>200</onleft>
+				<onright>202</onright>
+				<onup>120</onup>
+				<ondown>120</ondown>
+				<posx>384</posx>
+				<posy>620</posy>
+				<width>330</width>
+				<height>40</height>
+				<visible>true</visible>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>font18</font>
+				<align>center</align>
+				<label>$ADDON[script.tvrage.com 32916]</label>
+				<textcolor>FFFFFFFF</textcolor>
+				<disabledcolor>80FFFFFF</disabledcolor>
+			</control>
+
+			<control type="button" id="202">
+				<description>The Button</description>
+				<onleft>201</onleft>
+				<onright>120</onright>
+				<onup>120</onup>
+				<ondown>120</ondown>
+				<posx>738</posx>
+				<posy>620</posy>
+				<width>330</width>
+				<height>40</height>
+				<visible>true</visible>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>font18</font>
+				<align>center</align>
+				<label>$ADDON[script.tvrage.com 32917]</label>
+				<textcolor>FFFFFFFF</textcolor>
+				<disabledcolor>80FFFFFF</disabledcolor>
+			</control>
+
+			<control type="image">
+				<description>page header tab icon</description>
+				<posx>844</posx>
+				<posy>11</posy>
+				<width>213</width>
+				<height>120</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[Container(120).ListItem.Property(image)]</texture>
+			</control>
+
+			<control type="label">
+				<description>textarea</description>
+				<posx>30</posx>
+				<posy>550</posy>
+				<width>1050</width>
+				<height>40</height>
+				<font>font18</font>
+				<textcolor>white</textcolor>
+				<aligny>center</aligny>
+				<align>center</align>
+				<label>$INFO[Container(120).ListItem.Property(last)]</label>
+			</control>
+
+			<control type="image">
+				<posx>20</posx>
+				<posy>140</posy>
+				<width>1060</width>
+				<height>2</height>
+				<texture>TRseparator.png</texture>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>540</posy>
+				<width>1060</width>
+				<height>2</height>
+				<texture>TRseparator.png</texture>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>544</posy>
+				<width>1060</width>
+				<height>2</height>
+				<texture>TRseparator2.png</texture>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>596</posy>
+				<width>1060</width>
+				<height>2</height>
+				<texture>TRseparator2.png</texture>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>600</posy>
+				<width>1060</width>
+				<height>2</height>
+				<texture>TRseparator.png</texture>
+			</control>
+
+			<!-- ** Required ** Do not change <id> or <type> -->
+			<control type="list" id="120">
+				<posx>20</posx>
+				<posy>152</posy>
+				<width>1040</width>
+				<height>380</height>
+				<onleft>202</onleft>
+				<onright>200</onright>
+				<onup>120</onup>
+				<ondown>120</ondown>
+				<viewtype label="535">list</viewtype>
+				<pagecontrol>121</pagecontrol>
+				<scrolltime>200</scrolltime>
+				<itemlayout height="38">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1040</width>
+						<height>38</height>
+						<texture border="0">todayoverlay.png</texture>
+						<visible>StringCompare(ListItem.Genre,today)</visible>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1040</width>
+						<height>38</height>
+						<texture border="0">tomorrowoverlay.png</texture>
+						<visible>StringCompare(ListItem.Genre,tomorrow)</visible>
+					</control>
+
+					<control type="label">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>315</width>
+						<height>38</height>
+						<font>font18</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+					</control>
+
+					<control type="label">
+						<posx>330</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>38</height>
+						<font>font18</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label2</info>
+					</control>
+					<control type="label">
+						<posx>495</posx>
+						<posy>0</posy>
+						<width>100</width>
+						<height>38</height>
+						<font>font18</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Property(summary)</info>
+					</control>
+					<control type="label">
+						<posx>650</posx>
+						<posy>0</posy>
+						<width>350</width>
+						<height>38</height>
+						<font>font18</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Property(updated)</info>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1040</width>
+						<height>38</height>
+						<texture>white_square.png</texture>
+						<colordiffuse>80000000</colordiffuse>
+						<visible>StringCompare(ListItem.Property(canceled),1)</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout height="38">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1040</width>
+						<height>38</height>
+						<texture border="10">default-list-focus.png</texture>
+						<visible>Control.HasFocus(120)</visible>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1040</width>
+						<height>38</height>
+						<texture border="0">todayoverlay.png</texture>
+						<visible>StringCompare(ListItem.Genre,today)</visible>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1040</width>
+						<height>38</height>
+						<texture border="0">tomorrowoverlay.png</texture>
+						<visible>StringCompare(ListItem.Genre,tomorrow)</visible>
+					</control>
+					<control type="label">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>315</width>
+						<height>38</height>
+						<font>font18</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+					</control>
+
+					<control type="label">
+						<posx>330</posx>
+						<posy>0</posy>
+						<width>150</width>
+						<height>38</height>
+						<font>font18</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label2</info>
+					</control>
+					<control type="label">
+						<posx>495</posx>
+						<posy>0</posy>
+						<width>100</width>
+						<height>38</height>
+						<font>font18</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Property(summary)</info>
+					</control>
+					<control type="label">
+						<posx>650</posx>
+						<posy>0</posy>
+						<width>350</width>
+						<height>38</height>
+						<font>font18</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Property(updated)</info>
+					</control>
+
+				</focusedlayout>
+			</control>
+			<control type="group">
+				<posx>1055</posx>
+				<posy>152</posy>
+				<control type="scrollbar" id="121">
+					<description>scroll bar indicator for lists</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>12</width>
+					<height>380</height>
+					<texturesliderbackground border="6">default-scroll_back.png</texturesliderbackground>
+					<texturesliderbar border="6">default-scroll_mid.png</texturesliderbar>
+					<texturesliderbarfocus border="6">default-scroll_mid.png</texturesliderbarfocus>
+					<textureslidernib>-</textureslidernib>
+					<textureslidernibfocus>-</textureslidernibfocus>
+					<orientation>vertical</orientation>
+					<showonepage>false</showonepage>
+					<visible>Control.IsVisible(120)</visible>
+				</control>
+			</control>
+
+		</control>
+	</controls>
+</window>

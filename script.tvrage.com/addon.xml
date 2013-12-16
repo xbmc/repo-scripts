@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.tvrage.com" name="TVRage-Eps" version="1.1.1" provider-name="Rick Phillips (ruuk)">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" />
+		<import addon="script.module.elementtree" version="1.2.7" />
+		<import addon="script.module.simplejson" version="2.0.9" />
+		<import addon="script.module.requests" version="1.1.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>video executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Quickly see which of your favorite shows are on next, and browse episode lists.</summary>
+		<description lang="en">Search and save a list of your favorite shows to be automatically updated and sorted by what's on next and highlighted for what's on today and tomorrow. Shows next and previous episode details. Select a show to browse an episode list. Select an episode for a summary.
+		</description>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.xbmc.org/showthread.php?tid=82174</forum>
+		<source>http://github.com/ruuk/script.tvrage.com</source>
+	</extension>
+</addon>

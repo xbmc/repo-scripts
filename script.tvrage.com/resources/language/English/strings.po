@@ -1,0 +1,259 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32001"
+msgid "Update every..."
+msgstr ""
+
+msgctxt "#32002"
+msgid "General"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Getting Data"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Please Wait"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Search Shows"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Delete Selected"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Search/Add"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Select Show"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Are you sure?"
+msgstr ""
+
+#. @REPLACE@ must not be translated
+msgctxt "#32010"
+msgid "Really delete @REPLACE@?"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Options"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Previous:"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Reverse Sort"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Notice"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Show already saved."
+msgstr ""
+
+msgctxt "#32016"
+msgid "Adding show..."
+msgstr ""
+
+msgctxt "#32017"
+msgid "Searching..."
+msgstr ""
+
+msgctxt "#32018"
+msgid "Jump To Bottom At Start"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Library Access"
+msgstr ""
+
+msgctxt "#32020"
+msgid "HTTP username"
+msgstr ""
+
+msgctxt "#32021"
+msgid "HTTP password"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Skip canceled shows"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Prompt if match not found"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Airtime offset (hours)"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Loading summary..."
+msgstr ""
+
+msgctxt "#32026"
+msgid "Add All From Library"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Checking..."
+msgstr ""
+
+msgctxt "#32028"
+msgid "ADDING: "
+msgstr ""
+
+msgctxt "#32029"
+msgid "CANCELED"
+msgstr ""
+
+msgctxt "#32030"
+msgid "ENDED"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Error"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Unable to access XBMC server."
+msgstr ""
+
+msgctxt "#32033"
+msgid "Check 'HTTP username' and 'HTTP password'"
+msgstr ""
+
+msgctxt "#32034"
+msgid "in this addons settings."
+msgstr ""
+
+msgctxt "#32035"
+msgid "Unable to connect to XBMC server."
+msgstr ""
+
+msgctxt "#32036"
+msgid "Make sure 'Allow control of XBMC via HTTP'"
+msgstr ""
+
+msgctxt "#32037"
+msgid "is enabled in XBMC network settings."
+msgstr ""
+
+msgctxt "#32038"
+msgid "Access via HTTP"
+msgstr ""
+
+msgctxt "#32039"
+msgid "HTTP address"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Skip"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Done"
+msgstr ""
+
+msgctxt "#32043"
+msgid "@NUMBER1@ of @NUMBER2@ shows added."
+msgstr ""
+
+msgctxt "#32044"
+msgid "@NUMBER@ already in list."
+msgstr ""
+
+msgctxt "#32045"
+msgid "@NUMBER1@ skipped - @NUMBER2@ failed."
+msgstr ""
+
+msgctxt "#32046"
+msgid "File Not Found"
+msgstr ""
+
+msgctxt "#32047"
+msgid "No matching file found."
+msgstr ""
+
+msgctxt "#32048"
+msgid "Add as (Empty): @REPLACE@"
+msgstr ""
+
+msgctxt "#32049"
+msgid "No Data"
+msgstr ""
+
+msgctxt "#32050"
+msgid "No TVRage.com data"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Add: "
+msgstr ""
+
+msgctxt "#32052"
+msgid "Not Matched"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Skip All"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr ""
+
+msgctxt "#32055"
+msgid "Loading episodes..."
+msgstr ""
+
+msgctxt "#32056"
+msgid "No shows in library."
+msgstr ""
+
+#empty strings from id 32056 to 32912
+
+msgctxt "#32913"
+msgid "Press context button/key when in list for show options"
+msgstr ""
+
+#empty strings from id 32914 to 32915
+
+msgctxt "#32916"
+msgid "Add All From Library"
+msgstr ""
+
+msgctxt "#32917"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#32918"
+msgid "Add Show"
+msgstr ""
