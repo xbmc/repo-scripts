@@ -22,6 +22,7 @@ import ftplib
 import shutil
 import time
 import datetime
+
 # Minimal code to import bossanova808 common code
 ADDON           = xbmcaddon.Addon()
 CWD             = ADDON.getAddonInfo('path')
@@ -159,10 +160,17 @@ def clearProperties():
         setProperty(WEATHER_WINDOW, 'Current.UVIndex')
         setProperty(WEATHER_WINDOW, 'Current.OutlookIcon')
         setProperty(WEATHER_WINDOW, 'Current.FanartCode')
+        setProperty(WEATHER_WINDOW, 'Current.Sunrise')
+        setProperty(WEATHER_WINDOW, 'Current.Sunset')
+        setProperty(WEATHER_WINDOW, 'Current.RainSince9')
+        setProperty(WEATHER_WINDOW, 'Current.RainLastHr')
+
 
         #and all the properties for the forecast
         for count in range(0,7):
-            setProperty(WEATHER_WINDOW, 'Day%i.Title'       % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.Title'            % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.RainChance'       % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.RainChanceAmount' % count)
             setProperty(WEATHER_WINDOW, 'Day%i.HighTemp'    % count)
             setProperty(WEATHER_WINDOW, 'Day%i.LowTemp'     % count)
             setProperty(WEATHER_WINDOW, 'Day%i.Outlook'     % count)
@@ -451,12 +459,16 @@ def propertiesPDOM(page, extendedFeatures):
         ret = common.parseDOM(page, "div", attrs = { "class": "details_lhs" })
         observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" })
         #Observations now looks like - ['18.3&deg;C', '4.7&deg;C', '18.3&deg;C', '41%', 'SSW 38km/h', '48km/h', '1015.7hPa', '-', '0.0mm / -']
-        log("Observations Retrieved: " + str(observations))
+        log("Current Conditions Retrieved: " + str(observations))
         temperature = str(int(round(float(observations[0].strip( '&deg;C' )))))
         dewPoint = str(int(round(float(observations[1].strip( '&deg;C' )))))
         feelsLike = str(int(round(float(observations[2].strip( '&deg;C' )))))        
         humidity = observations[3].strip( '%')
         windTemp = observations[4].partition(' ');
+        rainSince = observations[8].partition('/');
+        log("Rain Since: " + str(rainSince))        
+        rainSince9 = str(rainSince[0].strip())
+        rainLastHr = str(rainSince[2].strip())
         windDirection = windTemp[0]
         windSpeed = windTemp[2].strip( 'km/h')
         #there's no UV so we get that from the forecast, see below
@@ -466,6 +478,17 @@ def propertiesPDOM(page, extendedFeatures):
         setProperty(WEATHER_WINDOW, 'Current.ConditionLong', "Error - Couldn't retrieve current weather data from WeatherZone - this is usually just a temporary problem with their server and with any luck they'll fix it soon!")
         setProperty(WEATHER_WINDOW, "Weather.IsFetched", "false")
     ####END CURRENT DATA
+
+    try:
+        #pull data from the atrological table
+        ret = common.parseDOM(page, "div", attrs = { "class": "details_rhs" })
+        observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" })
+        log("Astrological Retrieved: " + str(observations))
+        sunrise = str(observations[0])
+        sunset = str(observations[1])
+    except:
+        log("********** OzWeather Couldn't Parse Astrological Data, sorry!!", inst)
+
 
     ####FORECAST DATA
     try:
@@ -479,10 +502,14 @@ def propertiesPDOM(page, extendedFeatures):
         UV = UVtext[0] + ' (' + UVnumber[0] + ')'
         #get the 7 day max min forecasts
         maxMin = common.parseDOM(ret, "td")
+        #log( "maxmin is " + str(maxMin))
         #for count, element in enumerate(maxMin):
         #   print "********" , count , "^^^" , str(element)
-        maxList = stripList(maxMin[7:14],'&deg;C');
-        minList = stripList(maxMin[14:21],'&deg;C');
+        maxList = stripList(maxMin[7:14],'&deg;C')
+        minList = stripList(maxMin[14:21],'&deg;C')
+        rainChanceList = stripList(maxMin[21:28],'')
+        rainAmountList = stripList(maxMin[28:35],'')
+        log (str(rainChanceList) + str(rainAmountList))
         #and the short forecasts
         shortDesc = common.parseDOM(ret, "td", attrs = { "class": "bg_yellow" })
         shortDesc = common.parseDOM(ret, "span", attrs = { "style": "font-size: 0.9em;" })
@@ -566,6 +593,10 @@ def propertiesPDOM(page, extendedFeatures):
         setProperty(WEATHER_WINDOW, 'Current.FeelsLike'     , feelsLike)
         setProperty(WEATHER_WINDOW, 'Current.DewPoint'      , dewPoint)
         setProperty(WEATHER_WINDOW, 'Current.UVIndex'       , UV)
+        setProperty(WEATHER_WINDOW, 'Current.Sunrise'       , sunrise)
+        setProperty(WEATHER_WINDOW, 'Current.Sunset'        , sunset)
+        setProperty(WEATHER_WINDOW, 'Current.RainSince9'   , rainSince9)
+        setProperty(WEATHER_WINDOW, 'Current.RainLastHr'    , rainLastHr)
         setProperty(WEATHER_WINDOW, 'Current.OutlookIcon'   , '%s.png' % weathercode)
         setProperty(WEATHER_WINDOW, 'Current.FanartCode'    , weathercode)
 
@@ -583,6 +614,8 @@ def propertiesPDOM(page, extendedFeatures):
             goodshortDate = time.strftime('%d %b %a', newdatetuple) #sets the format of the time tuple, taken from this table http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
             setProperty(WEATHER_WINDOW, 'Daily.%i.ShortDate' % count, str(goodshortDate))
             setProperty(WEATHER_WINDOW, 'Day%i.Title'       % count, day)
+            setProperty(WEATHER_WINDOW, 'Day%i.RainChance'       % count, rainChanceList[count])
+            setProperty(WEATHER_WINDOW, 'Day%i.RainChanceAmount'       % count, common.replaceHTMLCodes(rainAmountList[count]))
             setProperty(WEATHER_WINDOW, 'Day%i.HighTemp'    % count, maxList[count])
             setProperty(WEATHER_WINDOW, 'Day%i.LowTemp'     % count, minList[count])
             setProperty(WEATHER_WINDOW, 'Day%i.Outlook'     % count, desc)

@@ -1,8 +1,8 @@
 ### Common Code for bossanova808 addons
-### By bossanova808 2012
+### By bossanova808 2013
 ### Free in all senses....
 
-### VERSION 0.0.8
+### VERSION 0.1.4 Dec 2013
 
 import xbmc
 import xbmcaddon
@@ -13,6 +13,7 @@ import urllib
 import sys
 import os
 import platform
+import socket
 
 from traceback import print_exc
 
@@ -56,15 +57,44 @@ def notify(messageLine1, messageLine2 = "", time = 4000):
 def footprints(startup=True):
 
   if startup:
-    logNotice( ADDONNAME + " (Author: " + AUTHOR + ") ********************* Starting ...")
+    logNotice( ADDONNAME + " (Author: " + AUTHOR + ") Starting ...")
     logNotice( "Called as: " + str(sys.argv))
   else:
-    logNotice( ADDONNAME + " (Author: " + AUTHOR + ") ********************* Exiting ....")
+    logNotice( ADDONNAME + " (Author: " + AUTHOR + ") Exiting ....")
 
 
 ################################################################################
 ################################################################################
 ### MIXED UTILITY FUNCTIONS
+
+################################################################################
+# Log the users local IP address
+
+def logLocalIP():
+    #log the local IP address
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        #connect to google DNS as it's always up...
+        s.connect(('8.8.8.8',80))
+        log("Local IP is " + str(s.getsockname()[0]))
+        s.close()
+    except:
+        pass
+
+################################################################################
+# front pad a string with 0s out to 9 chars long
+
+def frontPadTo9Chars(shortStr):
+    while len(shortStr)<9:
+        shortStr = "0" + shortStr
+    return shortStr
+
+################################################################################
+# Reverse the key value pairs in a dict
+
+def swap_dictionary(original_dict):
+   return dict([(v, k) for (k, v) in original_dict.iteritems()])
+
 
 ################################################################################
 # send a JSON command to XBMC and log the human description, json string, and
@@ -243,7 +273,14 @@ elif "raspbmc" in uname or "armv6l" in uname:
   SYSTEM = "arm"
 
 #log the detemined system type
-log(ADDONNAME + "-" + VERSION + ": ### uname is: " + str(uname))
-log(ADDONNAME + "-" + VERSION + ": ### System is " + SYSTEM)
+log("uname is: " + str(uname))
+log("System is " + SYSTEM)
+
+XBMC_VERSION = "Frodo"
+log(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[0:4])
+version_number = float(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[0:4])
+if version_number >= 12.9:
+    XBMC_VERSION = "Gotham" 
+log("XBMC Version is " + XBMC_VERSION)
 
 
