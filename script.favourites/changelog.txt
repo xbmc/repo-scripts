@@ -1,3 +1,6 @@
+v5.0.2
+- fixed launching of android apps
+
 v5.0.1
 - no reason
 

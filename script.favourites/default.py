@@ -56,7 +56,7 @@ class Main:
         for count, favourite in enumerate(listing):
             name = favourite.attributes[ 'name' ].nodeValue
             path = favourite.childNodes [ 0 ].nodeValue
-            if 'RunScript' not in path:
+            if ('RunScript' not in path) and ('StartAndroidActivity' not in path):
                 path = path.rstrip(')')
                 path = path + ',return)'
             if 'playlists/music' in path or 'playlists/video' in path:
@@ -107,7 +107,7 @@ class MainGui( xbmcgui.WindowXMLDialog ):
                     listitem.setProperty( "Icon", favourite.attributes[ 'thumb' ].nodeValue )
             except:
                 pass
-            if 'RunScript' not in fav_path:
+            if ('RunScript' not in fav_path) and ('StartAndroidActivity' not in fav_path):
                 fav_path = fav_path.rstrip(')')
                 fav_path = fav_path + ',return)'
             listitem.setProperty( "Path", fav_path )
