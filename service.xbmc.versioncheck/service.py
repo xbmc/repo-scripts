@@ -39,7 +39,7 @@ class Main:
                 xbmc.executebuiltin('XBMC.AlarmClock(CheckAtBoot,XBMC.RunScript(service.xbmc.versioncheck, started),00:00:30,silent)')
                 xbmc.executebuiltin('XBMC.AlarmClock(CheckWhileRunning,XBMC.RunScript(service.xbmc.versioncheck, started),24:00:00,silent,loop)')
             elif sys.argv[0] and sys.argv[1] == 'started':
-                if xbmc.getCondVisibility('System.Platform.Linux'):
+                if xbmc.getCondVisibility('System.Platform.Linux') and __addon__.getSetting("upgrade_apt") == 'true':
                     packages = ['xbmc']
                     _versionchecklinux(packages)
                 else:

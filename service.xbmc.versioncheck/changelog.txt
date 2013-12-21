@@ -1,3 +1,6 @@
+v0.1.15
+- Add option for linux to disable check through "apt"
+
 v0.1.14
 - Update with 13.0 Gotham_alpha10
 
