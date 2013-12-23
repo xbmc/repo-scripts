@@ -95,9 +95,9 @@ def fanart(data):
         reason = 'Has text'
         limited = True
     # Correct language
-    elif limit.get('limit_artwork') and not data.get('artwork')['language'] in [data.get('language'), 'n/a']:
-        reason = "Doesn't match preferred language: %s" % limit.get('limit_preferred_language')
-        limited = True
+    #elif limit.get('limit_artwork') and not data.get('artwork')['language'] in [data.get('language'), 'n/a']:
+    #    reason = "Doesn't match preferred language: %s" % limit.get('limit_preferred_language')
+    #    limited = True
     return [limited, reason]
     
 def extrafanart(data):

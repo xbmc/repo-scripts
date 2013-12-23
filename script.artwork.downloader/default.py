@@ -311,9 +311,10 @@ class Main:
             currentmedia['extrathumbsdirs'] = extrathumbsdirs
             # this part check for local files when enabled
             scan_more = True
+            missing = False
             if setting['files_local']:
                 local_list = []
-                local_list, scan_more = local().get_image_list(currentmedia)
+                local_list, scan_more, missing = local().get_image_list(currentmedia)
                 # append local artwork
                 for item in local_list:
                     image_list.append(item)
@@ -334,9 +335,14 @@ class Main:
             elif currentmedia['mediatype'] == 'tvshow' and currentmedia['id'].startswith('tt'):
                 log('- IMDB ID found for TV show, skipping')
                 failed_items.append('[%s]: TVDB ID %s' %(currentmedia['name'], __localize__(32022)))
-
-            # If correct ID found continue
+            #skip scanning for more if local files have been found and not run in gui / custom mode
+            elif not scan_more and not startup['mode'] in ['gui', 'custom']:
+                log('- Already have all files local')
+                pass
+            # If correct ID found and don't already have all artwork retrieve from providers
             else:
+                log('- Still missing some files')
+                log(missing)
                 temp_image_list = []
                 # Run through all providers getting their imagelisting
                 failcount = 0
@@ -345,9 +351,6 @@ class Main:
                         break
                     artwork_result = ''
                     xmlfailcount = 0
-                    #skip skanning for more if local files have been found and not run in gui / custom mode
-                    if not scan_more and not startup['mode'] in ['gui', 'custom']:
-                        artwork_result = 'pass'
                     while not artwork_result == 'pass' and not artwork_result == 'skipping':
                         if artwork_result == 'retrying':
                             xbmc.sleep(setting['api_timedelay'])
@@ -449,21 +452,6 @@ class Main:
         if len(final_image_list) == 0:
             log(' - Nothing to download')
         else:
-            # This total hack adds temporary ability to use local images that are not on fanart.tv
-            # This should be removed asap when rewrite is done
-            arttypes = ['clearlogo','clearart','landscape','discart']
-            if setting['files_local'] and art_item['art_type'] in arttypes:
-                for targetdir in targetdirs:
-                    localfile = os.path.join(targetdir, art_item['filename']).encode('utf-8')
-                    if self.fileops._exists(localfile):
-                        final_image_list.append({'url': localfile,
-                                                 'art_type': [art_item['art_type']],
-                                                 'language': pref_language,
-                                                 'discnumber': '1',
-                                                 'disctype': currentmedia['disctype']})
-                    break
-            # End of hack
-
             # Do some language shit
             # loop two times than skip
             while (i < 2 and not imagefound):
@@ -575,9 +563,11 @@ class Main:
                                             if not self.fileops._exists(os.path.join(targetdir, item['filename'])):
                                                 missingfiles = True
                                     # Check if image already exist in database
-                                    elif (not art_item['art_type'] in ['seasonlandscape','seasonbanner','seasonposter'] and not
-                                          artcheck.get(art_item['art_type'])):
-                                        missingfiles = True
+                                    elif not art_item['art_type'] in ['seasonlandscape','seasonbanner','seasonposter']:
+                                        if setting['files_local']and not self.fileops._exists(item['localfilename']):
+                                            missingfiles = True
+                                        elif not artcheck.get(art_item['art_type']):
+                                            missingfiles = True
                                     if missingfiles:
                                         # If missing add to list
                                         imagefound = True

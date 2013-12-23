@@ -39,6 +39,7 @@ limit = get_limit()
 class local():
     def get_image_list(self,media_item):
         image_list = []
+        missing =[]
         file_list = xbmcvfs.listdir(media_item['artworkdir'][0])
         ### Processes the bulk mode downloading of files
         i = 0 # needed
@@ -56,6 +57,8 @@ class local():
                         #log('extrafanart found: %s'%len(extrafanart_file_list[1]))
                         if len(extrafanart_file_list[1]) >= limit.get('limit_extrafanart_max'):
                             j += 1
+                        else:
+                            missing.append(item['art_type'])
 
                 elif item['art_type'] == 'extrathumbs':
                     extrathumbs_file_list = ''
@@ -65,6 +68,8 @@ class local():
                         #log('extrathumbs found: %s'%len(extrathumbs_file_list[1]))
                         if len(extrathumbs_file_list[1]) >= limit.get('limit_extrathumbs_max'):
                             j += 1
+                        else:
+                            missing.append(item['art_type'])
 
                 elif item['art_type'] in ['seasonposter']:
                     for season in media_item['seasons']:
@@ -74,6 +79,7 @@ class local():
                             filename = "season-all-poster.jpg"
                         else:
                             filename = (item['filename'] % int(season))
+                        #log ('finding: %s'%filename)
                         if filename in file_list[1]:
                             url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
                             j += 1
@@ -93,7 +99,7 @@ class local():
                                                'votes': '0',
                                                'generalinfo': generalinfo})
                         else:
-                            pass
+                            missing.append(filename)
 
                 elif item['art_type'] in ['seasonbanner']:
                     for season in media_item['seasons']:
@@ -103,6 +109,7 @@ class local():
                             filename = "season-all-banner.jpg"
                         else:
                             filename = (item['filename'] % int(season))
+                        #log ('finding: %s'%filename)
                         if filename in file_list[1]:
                             url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
                             j += 1
@@ -122,7 +129,7 @@ class local():
                                                'votes': '0',
                                                'generalinfo': generalinfo})
                         else:
-                            pass
+                            missing.append(filename)
 
                 elif item['art_type'] in ['seasonlandscape']:
                     for season in media_item['seasons']:
@@ -130,6 +137,7 @@ class local():
                             filename = "season-all-landscape.jpg"
                         else:
                             filename = (item['filename'] % int(season))
+                        #log ('finding: %s'%filename) 
                         if filename in file_list[1]:
                             url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
                             j += 1
@@ -149,10 +157,11 @@ class local():
                                                'votes': '0',
                                                'generalinfo': generalinfo})
                         else:
-                            pass
+                            missing.append(filename)
 
                 else:
                     filename = item['filename']
+                    #log ('finding: %s'%filename)
                     if filename in file_list[1]:
                         url = os.path.join(media_item['artworkdir'][0], filename).encode('utf-8')
                         j += 1
@@ -170,6 +179,8 @@ class local():
                                            'language': 'EN',
                                            'votes': '0',
                                            'generalinfo': generalinfo})
+                    else:
+                        missing.append(filename)
         #log('total local types needed: %s'%i)
         #log('total local types found:  %s'%j)
         if j < i:
@@ -179,10 +190,10 @@ class local():
             #log('don''t scan for more')
             scan_more = False
         if image_list == []:
-            return image_list, scan_more
+            return image_list, scan_more, missing
         else:
             # Sort the list before return. Last sort method is primary
             image_list = sorted(image_list, key=itemgetter('votes'), reverse=True)
             image_list = sorted(image_list, key=itemgetter('size'), reverse=False)
             image_list = sorted(image_list, key=itemgetter('language'))
-            return image_list, scan_more
+            return image_list, scan_more, missing
