@@ -1,3 +1,6 @@
+v0.1.16
+- Update with 12.3 Frodo stable
+
 v0.1.15
 - Add option for linux to disable check through "apt"
 

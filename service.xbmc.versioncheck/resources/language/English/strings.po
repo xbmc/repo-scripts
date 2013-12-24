@@ -93,7 +93,3 @@ msgstr ""
 msgctxt "#32023"
 msgid "Linux: Upgrade complete system"
 msgstr ""
-
-msgctxt "#32024"
-msgid "Linux: Check using apt"
-msgstr ""

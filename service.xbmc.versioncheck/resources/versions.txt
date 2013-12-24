@@ -4,6 +4,13 @@
         "stable": [
             {
                 "major": "12",
+                "minor": "3",
+                "tag": "stable",
+                "revision": "20131212-9ed3e58",
+                "extrainfo": "final"
+            },
+            {
+                "major": "12",
                 "minor": "2",
                 "tag": "stable",
                 "revision": "20130502-32b1a5e",
