@@ -13,11 +13,9 @@ import facebook
 
 from facebook import GraphAPIError, GraphWrapAuthError
 
-__author__ = 'ruuk (Rick Phillips)'
-__url__ = 'http://code.google.com/p/facebook-media/'
-__date__ = '01-21-2013'
-__version__ = '0.9.1'
+__author__ = 'Rick Phillips (ruuk)'
 __addon__ = xbmcaddon.Addon(id='script.facebook.media')
+__version__ = __addon__.getAddonInfo('version')
 __lang__ = __addon__.getLocalizedString
 
 THEME = 'Default'
@@ -84,51 +82,59 @@ def ERROR(message):
 #############################################################################################
 # Password handling
 #############################################################################################
-
-import platform
-original_syscmd_uname = platform._syscmd_uname
-def new_syscmd_uname(option,default=''):
-	try:
-		return platform._syscmd_uname(option,default)
-	except:
-		return default
-platform._syscmd_uname = new_syscmd_uname
-
-import keyring
-	
-def getPassword(user_pass_key):
-	try:
-		password = keyring.get_password('FacebookMedia_XBMC',user_pass_key)
-		checkPass = __addon__.getSetting(user_pass_key)
-		if not password and checkPass:
-			savePassword(user_pass_key,checkPass)
-			__addon__.setSetting(user_pass_key,'')
-			LOG('Password loaded and cleared from settings. Saved via keyring.')
-			return checkPass
-		else:
-			LOG('Password loaded from keyring.')
-		return password
-	except:
-		ERROR('Failed to get password from keyring, getting from settings...')
+if xbmc.getCondVisibility('System.Platform.Darwin') or xbmc.getCondVisibility('System.Platform.OSX'):
+	LOG("OSX or Darwin detected: Disabling password keyring")
+	def getPassword(user_pass_key):
 		return __addon__.getSetting(user_pass_key) or ''
-
-def savePassword(user_pass_key,password):
-	try:
-		if not password:
-			try:
-				keyring.delete_password('FacebookMedia_XBMC',user_pass_key)
-			except:
-				pass
-		else:
-			keyring.set_password('FacebookMedia_XBMC',user_pass_key,password or '')
-			LOG('Password saved via keyring.')
-		if not password and __addon__.getSetting(user_pass_key):
-			__addon__.setSetting(user_pass_key,'') #Just to make sure the password is not lingering here
-		return True
-	except:
-		ERROR('Failed to set password via keyring, saving to settings...')
+	
+	def savePassword(user_pass_key,password):
 		__addon__.setSetting(user_pass_key,password or '')
-	return False
+		return False
+else:
+	import platform
+	original_syscmd_uname = platform._syscmd_uname
+	def new_syscmd_uname(option,default=''):
+		try:
+			return platform._syscmd_uname(option,default)
+		except:
+			return default
+	platform._syscmd_uname = new_syscmd_uname
+	
+	import keyring
+		
+	def getPassword(user_pass_key):
+		try:
+			password = keyring.get_password('FacebookMedia_XBMC',user_pass_key)
+			checkPass = __addon__.getSetting(user_pass_key)
+			if not password and checkPass:
+				savePassword(user_pass_key,checkPass)
+				__addon__.setSetting(user_pass_key,'')
+				LOG('Password loaded and cleared from settings. Saved via keyring.')
+				return checkPass
+			else:
+				LOG('Password loaded from keyring.')
+			return password
+		except:
+			ERROR('Failed to get password from keyring, getting from settings...')
+			return __addon__.getSetting(user_pass_key) or ''
+	
+	def savePassword(user_pass_key,password):
+		try:
+			if not password:
+				try:
+					keyring.delete_password('FacebookMedia_XBMC',user_pass_key)
+				except:
+					pass
+			else:
+				keyring.set_password('FacebookMedia_XBMC',user_pass_key,password or '')
+				LOG('Password saved via keyring.')
+			if not password and __addon__.getSetting(user_pass_key):
+				__addon__.setSetting(user_pass_key,'') #Just to make sure the password is not lingering here
+			return True
+		except:
+			ERROR('Failed to set password via keyring, saving to settings...')
+			__addon__.setSetting(user_pass_key,password or '')
+		return False
 
 #############################################################################################
 
