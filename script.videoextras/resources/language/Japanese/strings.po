@@ -1,0 +1,57 @@
+# XBMC Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Japanese (http://www.transifex.com/projects/p/xbmc-addons/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "情報"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "ホーム"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "パス"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "高度な設定"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "デバッグ"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "デバッグログ出力を有効にする"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "データベース"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "全て再生"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "情報"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "最初から再生"

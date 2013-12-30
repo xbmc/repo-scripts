@@ -1,0 +1,53 @@
+# XBMC Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Indonesian (http://www.transifex.com/projects/p/xbmc-addons/language/id/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informasi"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Depan"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Path"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Tingkat Lanjut"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Mendeteksi  Nilai HDD"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Basis Data"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Memulai dari awal"

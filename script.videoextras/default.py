@@ -45,6 +45,21 @@ def log(txt):
         message = u'%s: %s' % (__addonid__, txt)
         xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
+# There has been problems with calling join with non ascii characters,
+# so we have this method to try and do the conversion for us
+def os_path_join( dir, file ):
+    # Convert each argument - if an error, then it will use the default value
+    # that was passed in
+    try:
+        dir = dir.decode("utf-8")
+    except:
+        pass
+    try:
+        file = file.decode("utf-8")
+    except:
+        pass
+    return os.path.join(dir, file)
+
 ##############################
 # Stores Various Settings
 ##############################
@@ -139,7 +154,7 @@ class WindowShowing():
     def getXbmcMajorVersion():
         if WindowShowing.xbmcMajorVersion == 0:
             xbmcVer = xbmc.getInfoLabel('system.buildversion')
-            log("WindowShowing: XBMC Version = " + xbmcVer)
+            log("WindowShowing: XBMC Version = %s" % xbmcVer)
             WindowShowing.xbmcMajorVersion = 12
             try:
                 # Get just the major version number
@@ -191,6 +206,8 @@ class BaseExtrasItem():
 
     # eq and lt defined for sorting order only
     def __eq__(self, other):
+        if other == None:
+            return False
         # Check key, display then filename - all need to be the same for equals
         return ((self.orderKey, self.displayName, self.directory, self.filename, self.isFileMatchingExtra) ==
                 (other.orderKey, other.displayName, other.directory, other.filename, other.isFileMatchingExtra))
@@ -208,6 +225,22 @@ class BaseExtrasItem():
     # Return the filename for the extra
     def getFilename(self):
         return self.filename
+
+    # Compare if a filename matches the existing one
+    def isFilenameMatch(self, compareToFilename):
+        srcFilename = self.filename
+        tgtFilename = compareToFilename
+        try:
+            srcFilename = srcFilename.decode("utf-8")
+        except:
+            pass
+        try:
+            tgtFilename = tgtFilename.decode("utf-8")
+        except:
+            pass
+        if srcFilename == tgtFilename:
+            return True
+        return False
 
     def getDirectory(self):
         return self.directory
@@ -264,14 +297,14 @@ class BaseExtrasItem():
 
         if len(imageList) < 2:
             # Check for poster.jpg
-            fileDir = os.path.join(self.directory, "poster")
+            fileDir = os_path_join(self.directory, "poster")
             fileNoExtImage = self._loadImageFile( fileDir )
             if fileNoExtImage != "":
                 imageList.append(fileNoExtImage)
 
         if len(imageList) < 2:
             # Check for folder.jpg
-            fileDir = os.path.join(self.directory, "folder")
+            fileDir = os_path_join(self.directory, "folder")
             fileNoExtImage = self._loadImageFile( fileDir )
             if fileNoExtImage != "":
                 imageList.append(fileNoExtImage)
@@ -289,7 +322,7 @@ class BaseExtrasItem():
             self.fanart = fileNoExtImage
         else:
             # Check for fanart.jpg
-            fileDir = os.path.join(self.directory, "fanart")
+            fileDir = os_path_join(self.directory, "fanart")
             fileNoExtImage = self._loadImageFile( fileDir )
             if fileNoExtImage != "":
                 self.fanart = fileNoExtImage
@@ -335,11 +368,11 @@ class BaseExtrasItem():
         # Find out the name of the NFO file
         nfoFileName = os.path.splitext( filename )[0] + ".nfo"
         
-        log("BaseExtrasItem: Searching for NFO file: " + nfoFileName)
+        log("BaseExtrasItem: Searching for NFO file: %s" % nfoFileName)
         
         # Return False if file does not exist
         if not xbmcvfs.exists( nfoFileName ):
-            log("BaseExtrasItem: No NFO file found: " + nfoFileName)
+            log("BaseExtrasItem: No NFO file found: %s" % nfoFileName)
             return False
 
         returnValue = False
@@ -356,7 +389,7 @@ class BaseExtrasItem():
             nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr))
             rootElement = nfoXml.getroot()
             
-            log("BaseExtrasItem: Root element is = " + rootElement.tag)
+            log("BaseExtrasItem: Root element is = %s" % rootElement.tag)
             
             # Check which format if being used
             if rootElement.tag == "movie":
@@ -428,10 +461,10 @@ class BaseExtrasItem():
                 # If there is no order specified, use the display name
                 if (self.orderKey == None) or (self.orderKey == ""):
                     self.orderKey = self.displayName
-                log("BaseExtrasItem: Using sort key " + self.orderKey + " for " + self.displayName)
+                log("BaseExtrasItem: Using sort key %s for %s" % (self.orderKey, self.displayName))
         except:
-            log("BaseExtrasItem: Failed to process NFO: " + nfoFileName)
-            log("BaseExtrasItem: " + traceback.format_exc())
+            log("BaseExtrasItem: Failed to process NFO: %s" % nfoFileName)
+            log("BaseExtrasItem: %s" % traceback.format_exc())
             returnValue = False
 
         return returnValue
@@ -445,7 +478,7 @@ class BaseExtrasItem():
             # which just has a filename, this is the case if there are
             # no forward slashes and no back slashes
             if (not "/" in thumbnail) and (not "\\" in thumbnail):
-                thumbnail = os.path.join(self.directory, thumbnail)
+                thumbnail = os_path_join(self.directory, thumbnail)
         else:
             thumbnail = None
         return thumbnail
@@ -459,7 +492,7 @@ class BaseExtrasItem():
             # which just has a filename, this is the case if there are
             # no forward slashes and no back slashes
             if (not "/" in fanart) and (not "\\" in fanart):
-                fanart = os.path.join(self.directory, fanart)
+                fanart = os_path_join(self.directory, fanart)
         else:
             fanart = None
         return fanart
@@ -521,7 +554,7 @@ class ExtrasItem(BaseExtrasItem):
             log("ExtrasItem: Database not enabled")
             return
         
-        log("ExtrasItem: Saving state for " + self.getFilename())
+        log("ExtrasItem: Saving state for %s" % self.getFilename())
         
         # Get a connection to the DB
         conn = self.extrasDb.getConnection()
@@ -541,7 +574,7 @@ class ExtrasItem(BaseExtrasItem):
             log("ExtrasItem: Database not enabled")
             return
         
-        log("ExtrasItem: Loading state for " + self.getFilename())
+        log("ExtrasItem: Loading state for %s" % self.getFilename())
         
         # Get a connection to the DB
         conn = self.extrasDb.getConnection()
@@ -554,7 +587,7 @@ class ExtrasItem(BaseExtrasItem):
             log("ExtrasItem: No entry found in the database")
             return
 
-        log("ExtrasItem: Database info: " + str(row))
+        log("ExtrasItem: Database info: %s" % str(row))
 
         # Return will contain
         # row[0] - Unique Index in the DB
@@ -624,7 +657,7 @@ class VideoExtrasDialog(xbmcgui.Window):
         # Get the list of display names
         displayNameList = []
         for anExtra in exList:
-            log("VideoExtrasDialog: filename: " + anExtra.getFilename())
+            log("VideoExtrasDialog: filename: %s" % anExtra.getFilename())
             displayNameList.append(anExtra.getDisplayName())
 
         addPlayAll = (len(exList) > 1)
@@ -657,7 +690,7 @@ class VideoExtrasDialog(xbmcgui.Window):
                 # in the selection, so add one
                 if addPlayAll == True:
                     itemToPlay = itemToPlay - 1
-                log( "VideoExtrasDialog: Start playing " + exList[itemToPlay].getFilename() )
+                log( "VideoExtrasDialog: Start playing %s" % exList[itemToPlay].getFilename() )
                 extrasPlayer.play( exList[itemToPlay] )
             while extrasPlayer.isPlayingVideo():
                 xbmc.sleep(100)
@@ -683,7 +716,7 @@ class VideoExtrasFinder():
             if path == None:
                 return []
             else:
-                log("VideoExtrasFinder: Searching in custom path " + path)
+                log("VideoExtrasFinder: Searching in custom path %s" % path)
         return self.findExtras(path, filename, exitOnFirst)
 
     # Calculates and checks the path that files should be in
@@ -698,20 +731,24 @@ class VideoExtrasFinder():
         pathLastDir = os.path.split(path)[1]
 
         # Create the path with this added
-        custPath = os.path.join(Settings.getCustomPath(), typeSection, pathLastDir)
-        log("VideoExtrasFinder: Checking existence of custom path " + custPath)
+        custPath = os_path_join(Settings.getCustomPath(), typeSection)
+        custPath = os_path_join(custPath, pathLastDir)
+        log("VideoExtrasFinder: Checking existence of custom path %s" % custPath)
 
         # Check if this path exists
         if not xbmcvfs.exists(custPath):
             # If it doesn't exist, check the path before that, this covers the
             # case where there is a TV Show with each season in it's own directory
             path2ndLastDir = os.path.split((os.path.split(path)[0]))[1]
-            custPath = os.path.join(Settings.getCustomPath(), typeSection, path2ndLastDir, pathLastDir)
-            log("VideoExtrasFinder: Checking existence of custom path " + custPath)
+            custPath = os_path_join(Settings.getCustomPath(), typeSection)
+            custPath = os_path_join(custPath, path2ndLastDir)
+            custPath = os_path_join(custPath, pathLastDir)
+            log("VideoExtrasFinder: Checking existence of custom path %s" % custPath)
             if not xbmcvfs.exists(custPath):
                 # If it still does not exist then check just the 2nd to last path
-                custPath = os.path.join(Settings.getCustomPath(), typeSection, path2ndLastDir)
-                log("VideoExtrasFinder: Checking existence of custom path " + custPath)
+                custPath = os_path_join(Settings.getCustomPath(), typeSection)
+                custPath = os_path_join(custPath, path2ndLastDir)
+                log("VideoExtrasFinder: Checking existence of custom path %s" % custPath)
                 if not xbmcvfs.exists(custPath):
                     custPath = None
 
@@ -746,20 +783,20 @@ class VideoExtrasFinder():
         # If a custom path, then don't looks for the Extras directory
         if not Settings.isCustomPathEnabled():
             # Add the name of the extras directory to the end of the path
-            extrasDir = os.path.join( basepath, Settings.getExtrasDirName() )
+            extrasDir = os_path_join( basepath, Settings.getExtrasDirName() )
         else:
             extrasDir = basepath
-        log( "VideoExtrasFinder: Checking existence for " + extrasDir )
+        log( "VideoExtrasFinder: Checking existence for %s" % extrasDir )
         extras = []
         # Check if the extras directory exists
         if xbmcvfs.exists( extrasDir ):
             # lest everything in the extras directory
             dirs, files = xbmcvfs.listdir( extrasDir )
             for filename in files:
-                log( "VideoExtrasFinder: found file: " + filename)
+                log( "VideoExtrasFinder: found file: %s" % filename)
                 # Check each file in the directory to see if it should be skipped
                 if not self._shouldSkipFile(filename):
-                    extrasFile = os.path.join( extrasDir, filename )
+                    extrasFile = os_path_join( extrasDir, filename )
                     extraItem = ExtrasItem(extrasDir, extrasFile, extrasDb=self.extrasDb)
                     extras.append(extraItem)
                     # Check if we are only looking for the first entry
@@ -772,10 +809,10 @@ class VideoExtrasFinder():
         if xbmcvfs.exists( basepath ):
             dirs, files = xbmcvfs.listdir( basepath )
             for dirname in dirs:
-                dirpath = os.path.join( basepath, dirname )
-                log( "VideoExtrasFinder: Nested check in directory: " + dirpath )
+                dirpath = os_path_join( basepath, dirname )
+                log( "VideoExtrasFinder: Nested check in directory: %s" % dirpath )
                 if( dirname != Settings.getExtrasDirName() ):
-                    log( "VideoExtrasFinder: Check directory: " + dirpath )
+                    log( "VideoExtrasFinder: Check directory: %s" % dirpath )
                     extras.extend( self._getExtrasDirFiles(dirpath, exitOnFirst) )
                      # Check if we are only looking for the first entry
                     if files and (exitOnFirst == True):
@@ -804,8 +841,8 @@ class VideoExtrasFinder():
         dirs, files = xbmcvfs.listdir(directory)
 
         for aFile in files:
-            if not self._shouldSkipFile(aFile) and (extrasTag in aFile):
-                extrasFile = os.path.join( directory, aFile )
+            if not self._shouldSkipFile(aFile) and (extrasTag in aFile) and aFile.startswith(os.path.splitext(filename)[0] + extrasTag):
+                extrasFile = os_path_join( directory, aFile )
                 extraItem = ExtrasItem(directory, extrasFile, True, extrasDb=self.extrasDb)
                 extras.append(extraItem)
                 # Check if we are only looking for the first entry
@@ -822,7 +859,7 @@ class VideoExtrasFinder():
             m = ""
         if m:
             shouldSkip = True
-            log( "VideoExtrasFinder: Skipping file: " + filename)
+            log( "VideoExtrasFinder: Skipping file: %s" % filename)
         return shouldSkip
 
 
@@ -831,11 +868,17 @@ class VideoExtrasFinder():
 #################################
 class VideoExtras():
     def __init__( self, inputArg ):
-        log( "VideoExtras: Finding extras for " + inputArg )
+        log( "VideoExtras: Finding extras for %s" % inputArg )
         self.baseDirectory = inputArg
         if self.baseDirectory.startswith("stack://"):
             self.baseDirectory = self.baseDirectory.split(" , ")[0]
             self.baseDirectory = self.baseDirectory.replace("stack://", "")
+        # There is a problem if some-one is using windows shares with
+        # \\SERVER\Name as when the addon gets called the first \ gets
+        # removed, making an invalid path, so we add it back here
+        elif self.baseDirectory.startswith("\\"):
+            self.baseDirectory = "\\" + self.baseDirectory
+
         # Support special paths like smb:// means that we can not just call
         # os.path.isfile as it will return false even if it is a file
         # (A bit of a shame - but that's the way it is)
@@ -846,7 +889,7 @@ class VideoExtras():
             self.filename = (os.path.split(inputArg))[1]
         else:
             self.filename = None
-        log( "VideoExtras: Root directory: " + self.baseDirectory )
+        log( "VideoExtras: Root directory: %s" % self.baseDirectory )
 
     def findExtras(self, exitOnFirst=False, extrasDb=None):
         # Display the busy icon while searching for files
@@ -856,7 +899,7 @@ class VideoExtras():
             extrasFinder = VideoExtrasFinder(extrasDb)
             files = extrasFinder.loadExtras(self.baseDirectory, self.filename, exitOnFirst )
         except:
-            log("VideoExtras: " + traceback.format_exc())
+            log("VideoExtras: %s" % traceback.format_exc())
         xbmc.executebuiltin( "Dialog.Close(busydialog)" )
         return files
 
@@ -882,7 +925,7 @@ class VideoExtras():
 
     # Checks if the selected value has extras, setting a custom flag
     def hasExtras(self, flag):
-        # Get the current window of dialog
+        # Get the current window or dialog
         try: windowid = xbmcgui.getCurrentWindowDialogId()
         except: windowid = 9999
         if windowid == 9999:
@@ -967,7 +1010,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         self.clearList()
         
         for anExtra in self.files:
-            log("VideoExtrasWindow: filename: " + anExtra.getFilename())
+            log("VideoExtrasWindow: filename: %s" % anExtra.getFilename())
 
             anItem = xbmcgui.ListItem(anExtra.getDisplayName(), path=SourceDetails.getFilenameAndPath())
             anItem.setProperty("FileName", anExtra.getFilename())
@@ -1003,6 +1046,11 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         # Get the item that was clicked on
         extraItem = self._getCurrentSelection()
         
+        if extraItem == None:
+            # Something has gone very wrong, there is no longer the item that was selected
+            log("VideoExtrasWindow: Unable to match item to current selection")
+            return
+        
         if extraItem.getResumePoint() > 0:
             resumeWindow = VideoExtrasResumeWindow.createVideoExtrasResumeWindow(extraItem.getResumePoint())
             resumeWindow.doModal()
@@ -1023,9 +1071,10 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         
         # Get the total duration and round it down to the nearest second
         videoDuration = int(extrasPlayer.getTotalTime())
-        log("VideoExtrasWindow: TotalTime of video = " + str(videoDuration))
+        log("VideoExtrasWindow: TotalTime of video = %d" % videoDuration)
         extraItem.setTotalDuration(videoDuration)
 
+        currentTime = 0
         # Wait for the player to stop
         while extrasPlayer.isPlayingVideo():
             # Keep track of where the current video is up to
@@ -1033,7 +1082,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
             xbmc.sleep(100)
 
         # Record the time that the player actually stopped
-        log("VideoExtrasWindow: Played to time = " + str(currentTime))
+        log("VideoExtrasWindow: Played to time = %d" % currentTime)
         extraItem.setResumePoint(currentTime)
         
         # Now update the database with the fact this has now been watched
@@ -1042,17 +1091,16 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
     # Search the list of extras for a given filename
     def _getCurrentSelection(self):
         self.lastRecordedListPosition = self.getCurrentListPosition()
-        log("VideoExtrasWindow: List position = " + str(self.lastRecordedListPosition))
+        log("VideoExtrasWindow: List position = %d" % self.lastRecordedListPosition)
         anItem = self.getListItem(self.lastRecordedListPosition)
         filename = anItem.getProperty("Filename")
-        log("VideoExtrasWindow: Selected file = " + filename)
+        log("VideoExtrasWindow: Selected file = %s" % filename)
         # Now search the Extras list for a match
         for anExtra in self.files:
-            if anExtra.getFilename() == filename:
-                log("VideoExtrasWindow: Found  = " + filename)
+            if anExtra.isFilenameMatch( filename ):
+                log("VideoExtrasWindow: Found  = %s" % filename)
                 return anExtra
         return None
-        
 
 
 ##################################################
@@ -1124,8 +1172,8 @@ class ExtrasDB():
     def __init__( self ):
         # Start by getting the database location
         self.configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-        self.databasefile = os.path.join(self.configPath, "extras_database.db")
-        log("ExtrasDB: Database file location = " + self.databasefile)
+        self.databasefile = os_path_join(self.configPath, "extras_database.db")
+        log("ExtrasDB: Database file location = %s" % self.databasefile)
 
     def cleanDatabase(self):
         isYes = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32024) + "?")
@@ -1133,9 +1181,9 @@ class ExtrasDB():
             # If the database file exists, delete it
             if xbmcvfs.exists(self.databasefile):
                 xbmcvfs.delete(self.databasefile)
-                log("ExtrasDB: Removed database: " + self.databasefile)
+                log("ExtrasDB: Removed database: %s" % self.databasefile)
             else:
-                log("ExtrasDB: No database exists: " + self.databasefile)
+                log("ExtrasDB: No database exists: %s" % self.databasefile)
     
     def createDatabase(self):
         # Make sure the database does not already exist
@@ -1171,7 +1219,7 @@ class ExtrasDB():
             conn = sqlite3.connect(self.databasefile)
             c = conn.cursor()
             c.execute('SELECT * FROM version')
-            log("Current version number in DB is: " + c.fetchone()[0])
+            log("Current version number in DB is: %s" % c.fetchone()[0])
             conn.close()
 
     # Get a connection to the current database
@@ -1209,6 +1257,12 @@ class SourceDetails():
                 SourceDetails.title = xbmc.getInfoLabel( "ListItem.TVShowTitle" )
             else:
                 SourceDetails.title = xbmc.getInfoLabel( "ListItem.Title" )
+            # There are times when the title has a different encoding
+            try:
+                SourceDetails.title = SourceDetails.title.decode("utf-8")
+            except:
+                pass
+
         return SourceDetails.title
 
     @staticmethod
@@ -1218,6 +1272,12 @@ class SourceDetails():
                 SourceDetails.tvshowtitle = xbmc.getInfoLabel( "ListItem.TVShowTitle" )
             else:
                 SourceDetails.tvshowtitle = ""
+            # There are times when the title has a different encoding
+            try:
+                SourceDetails.tvshowtitle = SourceDetails.tvshowtitle.decode("utf-8")
+            except:
+                pass
+
         return SourceDetails.tvshowtitle
 
     # This is a bit of a hack, when we set the path we need to set it an extra
@@ -1245,7 +1305,7 @@ class SourceDetails():
 try:
     if len(sys.argv) > 1:
         # get the type of operation
-        log("Operation = " + sys.argv[1])
+        log("Operation = %s" % sys.argv[1])
 
         # Load the details of the current source of the extras        
         SourceDetails.forceLoadDetails()
@@ -1287,4 +1347,4 @@ try:
                     # need to display the extras
                     videoExtras.run(files)
 except:
-    log("ExtrasItem: " + traceback.format_exc())
+    log("ExtrasItem: %s" % traceback.format_exc())

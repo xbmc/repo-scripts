@@ -1,0 +1,49 @@
+# XBMC Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Malay (http://www.transifex.com/projects/p/xbmc-addons/language/ms/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ms\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Ekstra"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Maklumat"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Rumah"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Laluan"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Lanjutan"
+
+msgctxt "#32024"
+msgid "Clean Database"
+msgstr "Kosongkan Pangkalan Data"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Main Semua"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Maklumat"

@@ -1,0 +1,65 @@
+# XBMC Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extra"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Information"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Hem"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Sökväg"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Avancerad"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Debuggning"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Aktivera debugloggning"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Databas"
+
+msgctxt "#32024"
+msgid "Clean Database"
+msgstr "Rensa databas"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Spela alla"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Starta från början"

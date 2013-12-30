@@ -1,0 +1,61 @@
+# XBMC Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/xbmc-addons/language/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Další..."
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informace"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Domů"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Cesta"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Ladění"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Povolit zaznamenávání ladících informací"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Databáze"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Přehrát vše"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Informace"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Začít od začátku"
