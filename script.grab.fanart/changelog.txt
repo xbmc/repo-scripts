@@ -1,3 +1,13 @@
+Version 0.12.4
+
+only clear lists when we know there is new content
+added try/catch for index error
+changed some logging to debug only
+
+Version 0.12.3
+
+added script ext back but removed visibility in programs area
+
 Version 0.12.2
 
 Removed Programs extension point. No need for this anymore.

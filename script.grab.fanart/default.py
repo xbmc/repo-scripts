@@ -1,6 +1,6 @@
 import resources.lib.utils as utils
 
-utils.log("starting")
+utils.log("updating settings",xbmc.LOGDEBUG)
 if(len(sys.argv) > 1):
     for arg in sys.argv:
         #make sure it is a key/value pair
