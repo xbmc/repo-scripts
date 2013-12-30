@@ -9,7 +9,9 @@
   <setting id="watched_days" type="number" enable="!eq(-4,true)" label="32005" default="365" />
   <setting id="hide_info" type="bool" enable="!eq(-5,true)" label="32003" default="false" />
   <setting id="hide_title" type="bool" label="32008" defalt="false"/>
-  <setting id="do_mute" type="bool" label="32006" default="false" />  
+  <setting id="do_volume" type="bool" label="32006" default="false" />
+  <setting id="volume" label="32011" type="slider" enable = "eq(-1,true)" default="100" range="0,0,100" option="int" />
   <setting id="do_fullscreen" type="bool" label="32007" default="false" />
 </settings>
+
 

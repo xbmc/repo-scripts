@@ -1,7 +1,7 @@
 # Random trailer player
 #
 # Author - kzeleny
-# Version - 1.1.1
+# Version - 1.1.2
 # Compatibility - Frodo/Gothum
 #
 
@@ -22,7 +22,10 @@ addon = xbmcaddon.Addon()
 number_trailers =  addon.getSetting('number_trailers')
 do_curtains = 'false'
 do_genre = addon.getSetting('do_genre')
-do_mute = addon.getSetting('do_mute')
+do_volume = addon.getSetting('do_volume')
+volume = int(addon.getSetting("volume"))
+currentVolume = xbmc.getInfoLabel("Player.Volume")
+currentVolume = int((float(currentVolume.split(" ")[0])+60.0)/60.0*100.0)
 hide_info = addon.getSetting('hide_info')
 hide_title = addon.getSetting('hide_title')
 trailers_path = addon.getSetting('path')
@@ -366,10 +369,6 @@ def playTrailers():
 	DO_CURTIANS = addon.getSetting('do_animation')
 	DO_EXIT = addon.getSetting('do_exit')
 	NUMBER_TRAILERS =  int(addon.getSetting('number_trailers'))
-	if do_mute == 'true':
-		muted = xbmc.getCondVisibility("Player.Muted")
-		if not muted:
-			xbmc.executebuiltin('xbmc.Mute()')
 	if DO_CURTIANS == 'true':
 		player.play(open_curtain_path)
 		while player.isPlaying():
@@ -395,10 +394,6 @@ def playTrailers():
 				while player.isPlaying():
 					xbmc.sleep(250)
 		exit_requested=True
-	if do_mute == 'true':
-		muted = xbmc.getCondVisibility("Player.Muted")
-		if muted:
-			xbmc.executebuiltin('xbmc.Mute()')
 	if not movie_file == '':
 		xbmc.Player(0).play(movie_file)
 
@@ -410,10 +405,6 @@ def playPath():
 	DO_CURTIANS = addon.getSetting('do_animation')
 	DO_EXIT = addon.getSetting('do_exit')
 	NUMBER_TRAILERS =  int(addon.getSetting('number_trailers'))
-	if do_mute == 'true':
-		muted = xbmc.getCondVisibility("Player.Muted")
-		if not muted:
-			xbmc.executebuiltin('xbmc.Mute()')
 	if DO_CURTIANS == 'true':
 		player.play(open_curtain_path)
 		while player.isPlaying():
@@ -439,11 +430,7 @@ def playPath():
 				while player.isPlaying():
 					xbmc.sleep(250)
 		exit_requested=True
-	if do_mute == 'true':
-		muted = xbmc.getCondVisibility("Player.Muted")
-		if muted:
-			xbmc.executebuiltin('xbmc.Mute()')
-		
+			
 def walk(path):
     trailers = []
     folders = []
@@ -484,12 +471,23 @@ if xbmc.Player().isPlaying() == False:
 
 	bs=blankWindow = blankWindow('script-BlankWindow.xml', addon_path,'default',)
 	bs.show()
-
+	if do_volume == 'true':
+		muted = xbmc.getCondVisibility("Player.Muted")
+		if not muted and volume == 0:
+			xbmc.executebuiltin('xbmc.Mute()')
+		else:
+			xbmc.executebuiltin('XBMC.SetVolume('+str(volume)+')')	
 	if do_path == 'false':
 		playTrailers()
 	else:
 		playPath()
 	del bs
+	if do_volume == 'true':
+		muted = xbmc.getCondVisibility("Player.Muted")
+		if muted and volume == 0:
+			xbmc.executebuiltin('xbmc.Mute()')
+		else:
+			xbmc.executebuiltin('XBMC.SetVolume('+str(currentVolume)+')')		
 else:
 	xbmc.log('Exiting Random Trailers Screen Saver Something is playing!!!!!!')
 
