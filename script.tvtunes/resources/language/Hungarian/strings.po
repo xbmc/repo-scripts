@@ -28,6 +28,10 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Naplózás engedélyezése"
 
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Műveletek"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Információ szerzése...."

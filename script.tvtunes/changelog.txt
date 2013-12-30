@@ -1,3 +1,9 @@
+v4.2.1
+- Handle invalid link to playlist in nfo better
+- Fix non-ascii names on non-windows platform
+- Support Smart Playlists
+- Add support for only play a fraction of each track
+
 v4.2.0
 - Support of tvtunes.nfo files
 

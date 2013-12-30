@@ -104,6 +104,14 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Activer le mode debug"
 
+msgctxt "#32023"
+msgid "Perform Complete Search Now"
+msgstr "Lancer une recherche complète maintenant"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Démarrage différé du générique (secondes)"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "ERREUR"
@@ -167,6 +175,14 @@ msgstr "Vous pouvez aider à obtenir plus de thème sur:"
 msgctxt "#32117"
 msgid "http://www.televisiontunes.com/"
 msgstr "http://www.televisiontunes.com/"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Recherche manuelle..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Poursuivre avec la recherche du générique suivant ?"
 
 msgctxt "#32991"
 msgid "Playback"

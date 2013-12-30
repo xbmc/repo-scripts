@@ -108,6 +108,22 @@ msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
 msgstr "Amosar o botón TvTunes na pantalla de Info. do vídeo"
 
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Esvaecer despois de reproducir durante (minutos)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Operacións"
+
+msgctxt "#32023"
+msgid "Perform Complete Search Now"
+msgstr "Realizar a busca completa agora"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Retraso no Inicio do Tema (Segundos)"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "Error"
@@ -171,6 +187,14 @@ msgstr "Pode axudar a obter máis temas en:"
 msgctxt "#32117"
 msgid "http://www.televisiontunes.com/"
 msgstr "http://www.televisiontunes.com/"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Busca manual"
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Continuar coa busca da próxima canción?"
 
 msgctxt "#32991"
 msgid "Playback"

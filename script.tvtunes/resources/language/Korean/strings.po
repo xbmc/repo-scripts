@@ -2,13 +2,15 @@
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
 # Addon Provider: Ppic,Frost,ronie,robwebset
+# Translators:
+# piodio <piodio@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"PO-Revision-Date: 2013-12-27 23:02+0000\n"
+"Last-Translator: piodio <piodio@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,16 +23,23 @@ msgid "Get and play your Movie and TV shows Themes"
 msgstr "영화와 TV 쇼의 테마 음악을 가져와서 재생합니다"
 
 msgctxt "Addon Description"
-msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
-msgstr "라이브러리의 영화와 TV 쇼 주제 음악을 www.televisiontunes.com 에서 가져와서 theme[0-9].mp3 형식으로 비디오 폴더에 저장합니다. TV 쇼 폴더나 비디오 정보 화면으로 들어가면 비디오 라이브러리를 탐색하는 동안 주제음악이 재생됩니다. (이 기능 사용하려면 스킨에서 지원하여야 합니다.)"
+msgid ""
+"This script will help you to get themes for your movie and TV show library "
+"from www.televisiontunes.com It will save them in theme[0-9].mp3 file in "
+"each of your video folders then they will be played while browsing your "
+"video library when you enter the TV Show folder or Video Information screen "
+"(need your skin to be compatible for this feature)"
+msgstr "라이브러리의 영화와 TV 쇼 테마 음악을 www.televisiontunes.com 에서 가져와서 theme[0-9].mp3 형식으로 비디오 폴더에 저장합니다. TV 쇼 폴더나 비디오 정보 화면으로 들어가면 비디오 라이브러리를 탐색하는 동안 주제음악이 재생됩니다. (이 기능 사용하려면 스킨에서 지원하여야 합니다.)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid ""
+"Skinners, please see the wiki to know how to integrate it in your skin: "
+"http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
-msgstr "반복하여 테마 음악 재생"
+msgstr "테마 음악 반복 재생"
 
 msgctxt "#32002"
 msgid "Lower sound value"
@@ -56,13 +65,33 @@ msgctxt "#32007"
 msgid "Path:"
 msgstr "경로:"
 
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "나갈 때 음량을 점점 작게"
+
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
 msgstr "정확히 일치하면 자동으로 다운로드"
 
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "무작위 위치에서 재생"
+
 msgctxt "#32012"
 msgid "File Types"
 msgstr "파일 종류"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "시작할 때 음량을 점점 크게"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr ""
 
 msgctxt "#32015"
 msgid "Search for movie themes"
@@ -87,6 +116,34 @@ msgstr "디버그 로그 사용"
 msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
 msgstr "비디오 정보 화면에 TvTunes 버튼 표시"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "다음 시간동안 재생 후 점점 작게 (분)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "작업"
+
+msgctxt "#32023"
+msgid "Perform Complete Search Now"
+msgstr "지금 전체 찾기 실행"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "재생 시작 지연 (초)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "디렉터리 이름"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr ""
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -132,6 +189,10 @@ msgctxt "#32111"
 msgid "to:"
 msgstr "저장위치:"
 
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "선택:"
+
 msgctxt "#32113"
 msgid "ENTER MANUAL SEARCH"
 msgstr "수동 찾기 입력"
@@ -142,11 +203,19 @@ msgstr "이것을 다운로드 하겠습니까?"
 
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
-msgstr "You can help to get more theme on:"
+msgstr "더 많은 테마 음악을 위해 도움을 줄 수 있습니다: "
 
 msgctxt "#32117"
 msgid "http://www.televisiontunes.com/"
 msgstr "http://www.televisiontunes.com/"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "수동 찾기..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "계속하여 다음 테마 음악을 찾을까요?"
 
 msgctxt "#32991"
 msgid "Playback"
