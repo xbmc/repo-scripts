@@ -96,7 +96,7 @@ class Player(xbmc.Player):
 
     def _addShow(self):
         # Add the show if it's not already in our account
-        if self.showid in self.mye.shows:
+        if self.showid in self.mye.shows.values():
             notif(self.title, time=2000)
             return
         was_added = self.mye.add_show(self.showid)

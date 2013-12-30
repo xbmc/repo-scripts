@@ -29,7 +29,7 @@ class MyEpisodes(object):
     def __init__(self, userid, password):
         self.userid = userid
         self.password = password
-        self.shows = []
+        self.shows = {}
 
         self.cj = cookielib.CookieJar()
         self.opener = urllib2.build_opener(
@@ -73,9 +73,10 @@ class MyEpisodes(object):
         mylist = soup.find("table", {"class": "mylist"})
         mylist_tr = mylist.findAll("tr")[1:-1]
         for row in mylist_tr:
-            link = row.find('a', {'href': True}).get('href')
-            showid = urlparse.parse_qs(link)['showid'][0]
-            self.shows.append(int(showid))
+            link = row.find('a', {'href': True})
+            link_url = link.get('href')
+            showid = urlparse.parse_qs(link_url)['showid'][0]
+            self.shows[link.text] = int(showid)
         return True
 
     def find_show_link(self, data, show_name, strict=False):
@@ -98,7 +99,26 @@ class MyEpisodes(object):
         return show_href
 
     def find_show_id(self, show_name):
-        # find a show through its name and report its id
+        # Try to find the ID of the show in our account first
+        # Create a slice with only the show that may match
+        slice_show  = {}
+        for k, v in self.shows.iteritems():
+            if show_name in k or show_name.startswith(k):
+                slice_show[k] = v
+        if len(slice_show) > 1:
+            # We loop through a slice containings the possibilities and we
+            # search strictly for the show name.
+            for key, value in slice_show.iteritems():
+                if key == show_name:
+                    return value
+        elif len(slice_show) == 1:
+            return slice_show.values()[0]
+
+        # You should really never fall there, at this point, the show should be
+        # in your account, except if you disabled the feature.
+
+        # It's not in our account yet ?
+        # Try Find a show through its name and report its id
         search_data = urllib.urlencode({
             'tvshow' : show_name,
             'action' : 'Search myepisodes.com',
@@ -150,6 +170,8 @@ class MyEpisodes(object):
         data = self.send_req(url)
         if data is None:
             return False
+        # Update list
+        self.get_show_list()
         return True
 
     def set_episode_watched(self, show_id, season, episode):

@@ -1,3 +1,7 @@
+1.0.11
++ Improve the match between a title and MyEpisode's ID.
+This should solve the issue where a show is not found and misfound when
+its title contains a year, or country reference.
 1.0.10
 + Fix a bug where Auto Add settings was not honored.
 1.0.9
