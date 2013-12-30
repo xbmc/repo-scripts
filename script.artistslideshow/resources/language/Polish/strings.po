@@ -228,6 +228,14 @@ msgctxt "#32002"
 msgid "Download images from htbackdrops.com"
 msgstr "Pobieraj zdjęcia z htbackdrops.com"
 
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "Minimalna szerokość obrazu "
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "Minimalna wysokość obrazu "
+
 msgctxt "#32005"
 msgid "Download additional artist information"
 msgstr "Pobierz dodatkowe informacje o wykonawcy"
@@ -235,6 +243,18 @@ msgstr "Pobierz dodatkowe informacje o wykonawcy"
 msgctxt "#32006"
 msgid "  Preferred language for artist information"
 msgstr "Preferowany język informacji o wykonwacy"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "Pobierz tylko obrazy 16:9 "
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "Pobierz obrazy z fanart.tv "
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "Pobierz obrazy z theaudiodb.com "
 
 msgctxt "#32100"
 msgid "Slideshow"

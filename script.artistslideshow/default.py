@@ -17,12 +17,12 @@
 # *  theaudiodb:   http://www.theaudiodb.com
 # *  htbackdrops:  http://www.htbackdrops.org
 
-
-
 import xbmc, xbmcaddon, xbmcgui, xbmcvfs
 import codecs, itertools, ntpath, os, random, re, shutil, socket, sys, time
 import unicodedata, urllib, urllib2, urlparse
 import xml.etree.ElementTree as xmltree
+from resources.dicttoxml.dicttoxml import dicttoxml
+from resources.fix_utf8.fix_utf8 import smartUTF8
 if sys.version_info >= (2, 7):
     import json
 else:
@@ -34,12 +34,6 @@ __addonversion__ = __addon__.getAddonInfo('version')
 __addonpath__    = __addon__.getAddonInfo('path').decode('utf-8')
 __addonicon__    = xbmc.translatePath('%s/icon.png' % __addonpath__ )
 __language__     = __addon__.getLocalizedString
-
-# to be able to import libraries from the artistslideshow addon directory
-sys.path.append( os.path.join( __addonpath__, "resources" ) )
-sys.path.append( os.path.join( __addonpath__, "resources/dicttoxml" ) )
-
-from dicttoxml import dicttoxml
 
 socket.setdefaulttimeout(10)
 
@@ -108,30 +102,6 @@ def getCacheThumbName(url, CachePath):
     thumb = xbmc.getCacheThumbName(url)
     thumbpath = os.path.join(CachePath, thumb.encode('utf-8'))
     return thumbpath
-
-def smartUnicode(s):
-    if not s:
-        return ''
-    try:
-        if not isinstance(s, basestring):
-            if hasattr(s, '__unicode__'):
-                s = unicode(s)
-            else:
-                s = unicode(str(s), 'UTF-8')
-        elif not isinstance(s, unicode):
-            s = unicode(s, 'UTF-8')
-    except:
-        if not isinstance(s, basestring):
-            if hasattr(s, '__unicode__'):
-                s = unicode(s)
-            else:
-                s = unicode(str(s), 'ISO-8859-1')
-        elif not isinstance(s, unicode):
-            s = unicode(s, 'ISO-8859-1')
-    return s
-
-def smartUTF8(s):
-    return smartUnicode(s).encode('utf-8')
 
 def saveURL( url, filename, *args, **kwargs ):
     data = grabURL( url, *args, **kwargs )
@@ -218,7 +188,7 @@ def writeFile( data, filename ):
         log( 'unable to write data to ' + filename )
         return False
     except Exception, e:
-        log( 'unknown error while writing data to ' + filename, url )
+        log( 'unknown error while writing data to ' + filename )
         log( e )
         return False
     return True
@@ -403,8 +373,10 @@ class Main:
         self.NAME = ''
         self.ALLARTISTS = []
         self.MBID = ''
+        self.VARIOUSARTISTSMBID = '89ad4ac3-39f7-470e-963a-56509c546377'
         self.LASTPLAYINGFILE = ''
         self.LASTJSONRESPONSE = ''
+        self.LASTARTISTREFRESH = 0
         self.LocalImagesFound = False
         self.CachedImagesFound = False
         self.ImageDownloaded = False
@@ -494,16 +466,20 @@ class Main:
         checkDir(xbmc.translatePath('special://profile/addon_data/%s/ArtistInformation' % __addonname__ ).decode('utf-8'))
         checkDir(xbmc.translatePath('special://profile/addon_data/%s/transition' % __addonname__ ).decode('utf-8'))
 
-    def _set_cachedir( self, theartist ):
+
+    def _set_thedir(self, theartist, dirtype):
         CacheName = xbmc.getCacheThumbName(theartist).replace('.tbn', '')
-        self.CacheDir = xbmc.translatePath('special://profile/addon_data/%s/ArtistSlideshow/%s/' % ( __addonname__ , CacheName, )).decode('utf-8')
-        checkDir(self.CacheDir)
+        thedir = xbmc.translatePath('special://profile/addon_data/%s/%s/%s/' % ( __addonname__ , dirtype, CacheName, )).decode('utf-8')
+        checkDir(thedir)
+        return thedir
+
+
+    def _set_cachedir( self, theartist ):
+        self.CacheDir = self._set_thedir( theartist, "ArtistSlideshow" )
 
 
     def _set_infodir( self, theartist ):
-        CacheName = xbmc.getCacheThumbName(theartist).replace('.tbn', '')
-        self.InfoDir = xbmc.translatePath('special://profile/addon_data/%s/ArtistInformation/%s/' % ( __addonname__ , CacheName, )).decode('utf-8')
-        checkDir(self.InfoDir)
+        self.InfoDir = self._set_thedir( theartist, "ArtistInformation" )
 
 
     def _start_download( self ):
@@ -702,7 +678,9 @@ class Main:
         mbids = []
         if( xbmc.Player().isPlayingAudio() == True ):
             try:
-                playing_file = xbmc.Player().getPlayingFile()
+                #playing_file = xbmc.Player().getPlayingFile()
+                playing_file = xbmc.Player().getPlayingFile() + ' - ' + xbmc.Player().getMusicInfoTag().getArtist() + ' - ' + xbmc.Player().getMusicInfoTag().getTitle()
+                log( 'playing file is ' + playing_file )
             except RuntimeError:
                 return artists_info
             except Exception, e:
@@ -986,7 +964,7 @@ class Main:
             else:
                 playing_title = smartUTF8( playing_thing )
             log( 'comparing musicbrainz %s: %s with local %s: %s' % (type, title, type, playing_title) )
-            if title.lower().startswith( playing_title.lower() ):
+            if title.lower().startswith( playing_title.lower() ) or playing_title.lower().startswith( title.lower() ):
                 log( 'found matching %s, this should be the right artist' % type )
                 return True
         return False
@@ -1014,6 +992,11 @@ class Main:
         if self._playback_stopped_or_changed():
             writeFile( '', filename )
             return ''
+        # this is here to account for songs or albums that have the artist 'Various Artists'
+        # because AS chokes when trying to find this artist on MusicBrainz
+        if theartist.lower() == 'various artists':
+            writeFile( self.VARIOUSARTISTSMBID, filename)
+            return self.VARIOUSARTISTSMBID
         log( 'querying musicbrainz.com for musicbrainz ID. This is about to get messy.' )
         badSubstrings = ["the ", "The ", "THE ", "a ", "A ", "an ", "An ", "AN "]
         searchartist = theartist
@@ -1083,7 +1066,7 @@ class Main:
                 log( 'trying to get artist bio from ' + self.url )
                 bio = self._get_data( 'theaudiodb', 'bio' )
         if bio == []:
-            self.url = self.LastfmURL + '&method=artist.getInfo&artist=' + urllib.quote_plus( smartUTF8(self.NAME) )
+            self.url = self.LastfmURL + '&lang=' + self.LANGUAGE + '&method=artist.getInfo&artist=' + urllib.quote_plus( smartUTF8(self.NAME) )
             log( 'trying to get artist bio from ' + self.url )
             bio = self._get_data('lastfm', 'bio')
         if bio == []:

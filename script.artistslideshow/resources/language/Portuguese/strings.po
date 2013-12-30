@@ -228,6 +228,14 @@ msgctxt "#32002"
 msgid "Download images from htbackdrops.com"
 msgstr "Transferir imagens de htbackdrops.com"
 
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "Largura mínima da imagem"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "Altura mínima da imagem"
+
 msgctxt "#32005"
 msgid "Download additional artist information"
 msgstr "Transferir informação adicional do artista"
@@ -235,6 +243,18 @@ msgstr "Transferir informação adicional do artista"
 msgctxt "#32006"
 msgid "  Preferred language for artist information"
 msgstr "Idioma preferido para informação do artista"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "Transferir apenas imagens 16:9"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "Transferir imagens de fanart.tv"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "Transferir imagens de theaudiodb.com"
 
 msgctxt "#32100"
 msgid "Slideshow"
