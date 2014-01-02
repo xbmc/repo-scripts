@@ -1,3 +1,7 @@
+[B]Version 2.4.0[/B]
+- New TMDB API key
+- Updated calls to TMDB so we only make one request per movie
+
 [B]Version 2.3.1[/B]
 - Fixed bug on getting tvshows from cache - returns None instead of letting exception pass
 - Re-added db initialization - stupid mistake
