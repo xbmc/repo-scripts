@@ -28,7 +28,7 @@ class TMDB(object):
     or if there is data missing on TMDB, another call is made to IMDB to fill in the missing information.       
     '''  
     
-    def __init__(self, api_key='b91e899ce561dd19695340c3b26e0a02', view='json', lang='en'):
+    def __init__(self, api_key='af95ef8a4fe1e697f86b8c194f2e5e11', view='json', lang='en'):
         #view = yaml json xml
         self.view = view
         self.lang = self.__get_language(lang)
@@ -275,9 +275,9 @@ class TMDB(object):
         return meta
 
 
-    def _get_info(self, tmdb_id, q = False):
+    def _get_info(self, tmdb_id, values='', q = False):
         ''' Helper method to start a TMDB getInfo request '''            
-        r = self._do_request('movie/'+str(tmdb_id), '')
+        r = self._do_request('movie/'+str(tmdb_id), values)
         if q: q.put(r)
         return r
 
@@ -385,22 +385,15 @@ class TMDB(object):
             tmdb_id = imdb_id
 
         if tmdb_id:
-            #metaQueue = queue.Queue()
-            castQueue = queue.Queue()
-            trailerQueue = queue.Queue()
-            #Thread(target=self._get_info, args=(tmdb_id,metaQueue)).start()
-            #meta = metaQueue.get()
 
-            #Only grab extra info if initial search returns results
-            meta = self._get_info(tmdb_id)
+            #Attempt to grab all info in one request
+            meta = self._get_info(tmdb_id, 'append_to_response=casts,trailers')
             if meta is None: # fall through to IMDB lookup
                 meta = {}
-            else:               
-                #Grab extra info on threads
-                Thread(target=self._get_cast, args=(tmdb_id,castQueue)).start()
-                Thread(target=self._get_trailer, args=(tmdb_id,trailerQueue)).start()
-                cast = castQueue.get()
-                trailers = trailerQueue.get()
+            else:
+                #Parse out extra info from request
+                cast = meta['casts']
+                trailers = meta['trailers']
                 
                 if meta.has_key('poster_path') and meta['poster_path']:
                     meta['cover_url'] = self.poster_prefix + meta['poster_path']
