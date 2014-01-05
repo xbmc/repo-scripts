@@ -180,11 +180,11 @@ def _media_listing(media_type):
     return Medialist
 
 def media_disctype(filename, streamdetails):
-    if (('dvd') in filename and not ('hddvd' or 'hd-dvd') in filename) or (filename.endswith('.vob' or '.ifo')):
+    if (('dvd') in filename and not any(x in filename for x in ['hddvd', 'hd-dvd']) or (filename.endswith('.vob') or filename.endswith('.ifo'))):
         disctype = 'dvd'
-    elif '3d' in filename:
+    elif ('3d' in filename and not 'ac3d' in filename):
         disctype = '3d'
-    elif (('bluray' or 'blu-ray' or 'brrip' or 'bdrip') in filename):
+    elif any(x in filename for x in ['bluray', 'blu-ray', 'brrip', 'bdrip']):
         disctype = 'bluray'
     elif streamdetails:
         videowidth = streamdetails[0]['width']
