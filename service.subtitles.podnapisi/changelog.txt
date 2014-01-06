@@ -1,3 +1,6 @@
+5.0.4
+- add notification that we dont support manual search 
+
 5.0.3
 - clean temp dir and use python zipfile for extraction
 

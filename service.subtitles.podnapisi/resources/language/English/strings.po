@@ -25,3 +25,7 @@ msgstr ""
 msgctxt "#32003"
 msgid "Login Details"
 msgstr ""
+
+msgctxt "#32004"
+msgid "Manual search not supported"
+msgstr ""
