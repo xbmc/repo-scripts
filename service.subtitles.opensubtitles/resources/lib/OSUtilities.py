@@ -24,7 +24,9 @@ class OSDBServer:
   def searchsubtitles( self, item):
     if ( self.osdb_token ) :
       searchlist  = []
-      if len(item['tvshow']) > 0:
+      if item['mansearch']:
+        OS_search_string = item['mansearchstr']
+      elif len(item['tvshow']) > 0:
         OS_search_string = ("%s S%.2dE%.2d" % (item['tvshow'],
                                                 int(item['season']),
                                                 int(item['episode']),)

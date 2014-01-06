@@ -143,11 +143,12 @@ def get_params(string=""):
 
 params = get_params()
 
-if params['action'] == 'search':
-  log( __name__, "action 'search' called")
+if params['action'] == 'search' or params['action'] == 'manualsearch':
+  log( __name__, "action '%s' called" % params['action'])
   item = {}
   item['temp']               = False
   item['rar']                = False
+  item['mansearch']          = False
   item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                         # Year
   item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                  # Season
   item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                 # Episode
@@ -155,6 +156,10 @@ if params['action'] == 'search':
   item['title']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))# try to get original title
   item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))# Full path of a playing file
   item['3let_language']      = [] #['scc','eng']
+  
+  if 'searchstring' in params:
+    item['mansearch'] = True
+    item['mansearchstr'] = params['searchstring']     
   
   for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
     if lang == "Portuguese (Brazil)":
