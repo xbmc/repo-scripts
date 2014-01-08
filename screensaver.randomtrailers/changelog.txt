@@ -1,20 +1,33 @@
-v.1.1.2 December 26, 2013
+v.1.1.6 (December 31,2013) :
+- added feature to select tyep fo traielrs form iTunes, Coming Soon, Just Added, Most Popular,  Exclusive and All
+
+v.1.1.5 (Decembeor 30,2013) :
+- added feature to filter iTunes trailers. you can filter by selected genre(s), and by rating limit. so only play family movies that are rated G for example.
+
+v.1.1.4 (December 29, 2013) :
+ - added ability to play random trailers from multiple sources
+ 
+v.1.1.3 (December 28, 2013) :
+ - added ability to play random trailers form apple itunes
+ - reworked options screens to reflect multiple trailer sources
+ 
+v.1.1.2 (December 26, 2013) :
  - added feature to adjust volume during trailer playback
  
-v.1.1.1 December 09, 2013
+v.1.1.1 (December 09, 2013) :
  - removed font changes
  
-v.1.1.0 (November 27, 2013)
+v.1.1.0 (November 27, 2013) :
  - updates for gothum compatibility
  - added ability to play trailers from a folder rather than the users library
  - fixed issue where number of trailers incorrect if hide watched movies selected.
  - trailers will now not repeat until all trailers have been played.
  - fixed issue where trailers would start playing while music is playing
  
-v.1.0.12 (November 25, 2013)
+v.1.0.12 (November 25, 2013) :
  - added feature if movie title hidden pressing m displays the title for 2 seconds
  
-v.1.0.11 (November 25, 2013)
+v.1.0.11 (November 25, 2013) :
  - added option to hide movie title when playing
  - removed malfunctioning password options
  

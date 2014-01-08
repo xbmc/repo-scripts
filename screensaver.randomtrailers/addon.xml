@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="screensaver.randomtrailers"
        name="Random Trailers"
-       version="1.1.2"
+       version="1.1.7"
        provider-name="kzeleny">
   <requires>
     <import addon="xbmc.python"					version="2.1.0"/>
     <import addon="xbmc.addon"					version="12.0.0"/>
     <import addon="script.module.simplejson"	version="2.0.10"/>
-    <import addon="script.module.elementtree"	version="1.2.7" />
+    <import addon="script.module.xbmcswift2" version="2.4.0"/>
   </requires>
   <extension point="xbmc.python.script"			library="default.py" />
   <extension point="xbmc.service"				library="service.py" start="login" />
@@ -16,11 +16,11 @@
   <extension point="xbmc.addon.metadata">
 	<language></language>
     <platform>all</platform>
-    <summary lang="en">Random Trailer Player and Screensaver</summary>
-    <description lang="en">
-	Plays random movie trailers from user's library or from a folder. Installs as a Screensaver and a Program. 
-	Options to filter by genre, select number of trailers, hide trailers of watched movies, and display opening / closing animations. 
-	When viewing trailers you can press UP or I to view movie information and DOWN or I to hide. RIGHT or X will display next trailer. LEFT or ESC will exit.
+    <summary lang="en">Plays Random Trailers from Multiple Sources</summary>
+    <description lang="en">Plays random movie trailers from a variety of sources:[CR]The Users Movie Library[CR]Apple iTunes[CR]A user specified folder[CR]
+Installs as a Screensaver and a Program. There are Options to filter by genre, and Rating, select number of trailers, hide trailers of watched movies, and display opening / closing animations. 
+When viewing trailers you can press UP or I to view movie information and DOWN or I to hide. RIGHT or X will display next trailer. LEFT or ESC will exit. If the current playing trailer is from
+the users movie library hitting enter or return will play the associated movie.
 	</description>
 	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 	<forum>http://forum.xbmc.org/showthread.php?tid=167276</forum>
@@ -29,3 +29,6 @@
     <source>https://github.com/kzeleny/screensaver.randomtrailers</source>
   </extension>
 </addon>
+
+
+

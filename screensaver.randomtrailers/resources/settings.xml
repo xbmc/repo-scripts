@@ -1,17 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
-  <setting id="number_trailers" type="number" label="32000" default="10" />
-  <setting id="do_animation" type="bool" label="32001" default="true" />
-  <setting id="do_path" type="bool" label="32009" default="false" />
-  <setting id="path" type="folder" enable = "eq(-1,true)" label="32010" default="" />
-  <setting id="do_genre" type="bool" enable = "!eq(-2,true)" label="32002" default="true" />
-  <setting id="hide_watched" type="bool" enable = "!eq(-3,true)" label="32004" default="false" />
-  <setting id="watched_days" type="number" enable="!eq(-4,true)" label="32005" default="365" />
-  <setting id="hide_info" type="bool" enable="!eq(-5,true)" label="32003" default="false" />
-  <setting id="hide_title" type="bool" label="32008" defalt="false"/>
-  <setting id="do_volume" type="bool" label="32006" default="false" />
-  <setting id="volume" label="32011" type="slider" enable = "eq(-1,true)" default="100" range="0,0,100" option="int" />
-  <setting id="do_fullscreen" type="bool" label="32007" default="false" />
+    <category label="32016">
+        <setting label="32026" type="lsep"/>
+        <setting id="number_trailers" type="number" label="32000" default="10" />
+        <setting id="do_animation" type="bool" label="32001" default="true" />
+        <setting id="hide_title" type="bool" label="32008" defalt="false"/>
+        <setting id="hide_info" type="bool" label="32003" default="false" />
+        <setting id="do_volume" type="bool" label="32006" default="false" />
+        <setting id="volume" label="32011" type="number" enable = "eq(-1,true)" default="100" />
+        <setting id="do_fullscreen" type="bool" label="32007" default="false" />
+        </category>
+    <category label="32015">
+        <setting label="32012" type="lsep"/>
+        <setting id="do_library" type="bool" label="32021" default="true" />
+        <setting id="do_genre" type="bool" enable = "eq(-1,true)" label="32002" default="false" />
+        <setting id="hide_watched" type="bool" enable = "eq(-2,true)" label="32004" default="false" />
+        <setting id="watched_days" type="number" enable="eq(-1,true)" label="32005" default="365" />
+    </category>
+    <category label="32025">
+        <setting label="32013" type="lsep"/>
+        <setting id="do_itunes" type="bool" label="32023" default="true" />
+        <setting id="quality" type="enum" enable ="eq(-1,true)" label="32014" values="480p|720p|1080p" default="0"/>
+        <setting id="trailer_type" type="enum" enable="eq(-2,true)" label="32043" values="Coming Soon|Just Added|Popular|Exclusive|All" default="4" />
+        <setting id="do_clips" type="bool" enable = "eq(-3,true)" label="32018" default="true" />
+        <setting id="do_featurettes" type="bool" enable = "eq(-4,true)" label="32019" default="true" />
+        <setting id="rating_limit" type="enum" enable = "eq(-5,true)" label="32040" default="0" values="None|G|PG|PG-13|R|NC-17" />
+        <setting id="do_notyetrated" type="bool" enable = "!eq(-1,0)" label="32041" default="false" />
+        <setting id="do_nr" type="bool" enable = "!eq(-2,0)" label="32042" default="false" />
+        <setting label="32102" type="lsep"/>
+        <setting id="g_action" type="bool" enable="eq(-9,true)" label="32028" default="true"/>
+        <setting id="g_comedy" type="bool" enable="eq(-10,true)" label="32029" default="true"/>
+        <setting id="g_docu" type="bool" enable="eq(-11,true)" label="32030" default="true"/>
+        <setting id="g_drama" type="bool" enable="eq(-12,true)" label="32031" default="true"/>
+        <setting id="g_family" type="bool" enable="eq(-13,true)" label="32032" default="true"/>
+        <setting id="g_fantasy" type="bool" enable="eq(-14,true)" label="32033" default="true"/>
+        <setting id="g_foreign" type="bool" enable="eq(-15,true)" label="32034" default="true"/>
+        <setting id="g_horror" type="bool" enable="eq(-16,true)" label="32035" default="true"/>
+        <setting id="g_musical" type="bool" enable="eq(-17,true)" label="32036" default="true"/>
+        <setting id="g_romance" type="bool" enable="eq(-18,true)" label="32037" default="true"/>
+        <setting id="g_scifi" type="bool" enable="eq(-19,true)" label="32038" default="true"/>
+        <setting id="g_thriller" type="bool" enable="eq(-20,true)" label="32039" default="true"/>
+    </category>
+    <category label="32024">
+        <setting label="32009" type="lsep"/>
+        <setting id="do_folder" type="bool" label="32022" default="false" />
+        <setting id="path" type="folder" enable="eq(-1,true)" label="32010" default="" />        
+    </category>
 </settings>
 
 

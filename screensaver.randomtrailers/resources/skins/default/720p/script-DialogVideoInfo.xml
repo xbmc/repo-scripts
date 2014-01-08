@@ -7,10 +7,8 @@
     </coordinates>
     <controls>	
         <control type="group">
-            <!--animation effect="slide" start="0,1280" end="0,0" time="450" delay="0" reversible="false">WindowOpen</animation-->
-            <!--animation effect="slide" start="0,0" end="0,1280" time="450" delay="0" reversible="false">WindowClose</animation-->
 			<animation effect="fade" start="100" end="0" time="2000">WindowClose</animation>
-            <animation effect="fade" start="0" end="100" time="1000">WindowOpen</animation>
+            <animation effect="fade" start="0" end="100" time="2000">WindowOpen</animation>
             <control type="image">
                 <posx>0</posx>
                 <posy>0</posy>
@@ -24,20 +22,11 @@
         <control type="group" id="30099">
             <posy>-30</posy>
             <animation effect="fade" start="100" end="0" time="2000">WindowClose</animation>			
-            <animation effect="fade" start="0" end="100" time="1000">WindowOpen</animation>			
+            <animation effect="fade" start="0" end="100" time="2000">WindowOpen</animation>			
 			<!-- separators -->
 			<control type="group">
 				<posx>100</posx>
 				<posy>10</posy>
-				<!--control type="image">
-					<posx>230</posx>
-					<posy>145</posy>
-					<width>548</width>
-					<height>240</height>
-					<aspectratio>stretch</aspectratio>
-					<texture>white.png</texture>
-					<colordiffuse>20FFFFFF</colordiffuse>
-				</control-->
 				<control type="image">
 					<posx>230</posx>
 					<posy>145</posy>
@@ -68,7 +57,8 @@
 					<posy>84</posy>
 					<width>400</width>
 					<height>600</height>
-					<aspectratio>scale</aspectratio>
+					<aspectratio>stretch</aspectratio>
+                    <fadetime>200</fadetime>
 					<texture background="true">noposter.png</texture>
 				</control>
 				<control type="image">
@@ -93,25 +83,12 @@
 			<control type="label" id="30002">
 				<description>Title</description>
 				<posx>20</posx>
-				<posy>50</posy>
+				<posy>70</posy>
 				<width>838</width>
-				<font>addon_font35_title</font>
-				<textcolor>fce7e7e7</textcolor>
-				<textcolor>itemdetail</textcolor>
+				<font>font13</font>
+				<textcolor>FFFFFFFF</textcolor>
+ 
 				<scroll>true</scroll>
-			</control>
-			<control type="label" id="30012">
-				<description>Tagline</description>
-				<posx>30</posx>
-				<posy>100</posy>
-				<width>840</width>
-				<scrollsuffix> </scrollsuffix>
-				<font>addon_font14</font>
-				<textcolor>fce7e7e7</textcolor>
-				<textcolor>itemdetail</textcolor>
-				<scrollout>false</scrollout>
-				<scrollspeed>50</scrollspeed>
-				<pauseatend>5000</pauseatend>
 			</control>
 			
 			<!-- FANART/TRAILER -->	
@@ -149,84 +126,69 @@
                     <width>427</width>
                     <height>240</height>
                     <aspectratio>stretch</aspectratio>
+                    <fadetime>200</fadetime>
 					<texture background="true">info/preview.jpg</texture>
                 </control>
             </control>
 
-			<!-- INFO MOVIES - DIRECTOR/WRITER ETC-->
+			<!-- INFO MOVIES -->
 			<control type="group">
 				<posx>108</posx>
 				<posy>8</posy>	
 				<control type="label">
-					<description>Original Title</description>
-					<posx>330</posx>
-					<posy>150</posy>
-					<width>368</width>
-					<font>addon_font15</font>
-					<label>Original Title</label>
-					<textcolor>fce7e7e7</textcolor>
-				</control>				
-				<control type="label" id="30004">
-					<description>Original Title</description>
-					<posx>330</posx>
-					<posy>175</posy>
-					<width>430</width>
-					<scrollsuffix> - </scrollsuffix>
-					<font>addon_font14</font>
-					<textcolor>white</textcolor>
-				</control>
-				<control type="label">
 					<description>Director</description>
 					<posx>330</posx>
-					<posy>210</posy>
+					<posy>160</posy>
 					<width>368</width>
-					<font>addon_font15</font>
+					<font>font13</font>
 					<label>Director</label>
-					<textcolor>fce7e7e7</textcolor>
-				</control>
+					<textcolor>FFFFFFFF</textcolor>
+				</control>				
 				<control type="label" id="30005">
 					<description>Director</description>
 					<posx>330</posx>
-					<posy>235</posy>
-					<width>368</width>
-					<font>addon_font14</font>
-					<textcolor>white</textcolor>
-				</control>			
-				<control type="label">
-					<description>Writer</description>
-					<posx>330</posx>
-					<posy>270</posy>
-					<width>368</width>
-					<label>Credits</label>
-					<font>addon_font15</font>
-					<textcolor>fce7e7e7</textcolor>
-				</control>
-				<control type="label" id="30006">
-					<description>Writer</description>
-					<posx>330</posx>
-					<posy>295</posy>
-					<width>368</width>
-					<font>addon_font14</font>
-					<textcolor>white</textcolor>
+					<posy>180</posy>
+					<width>430</width>
+					<scrollsuffix> - </scrollsuffix>
+					<font>font13</font>
+					<textcolor>FFb4b4b4</textcolor>
 				</control>
 				<control type="label">
-					<description>Rating</description>
+					<description>writer</description>
 					<posx>330</posx>
-					<posy>330</posy>
-					<label>Rating</label>
+					<posy>210</posy>
 					<width>368</width>
-					<scrollsuffix> / </scrollsuffix>
-					<font>addon_font15</font>
-					<textcolor>fce7e7e7</textcolor>
+					<font>font13</font>
+                    <scroll>true</scroll>
+					<label>Writer</label>
+					<textcolor>FFFFFFFF</textcolor>
 				</control>
 				<control type="label" id="30007">
-					<description>Rating</description>
+					<description>Writer</description>
 					<posx>330</posx>
-					<posy>355</posy>
-					<width min="0"  max="400">auto</width>
-					<scrollsuffix> / </scrollsuffix>
-					<font>addon_font14</font>
-					<textcolor>white</textcolor>
+					<posy>230</posy>
+					<width>368</width>
+					<scrollsuffix> - </scrollsuffix>
+					<font>font13</font>
+					<textcolor>FFb4b4b4</textcolor>
+				</control>			
+				<control type="label">
+					<description>Cast</description>
+					<posx>330</posx>
+					<posy>265</posy>
+					<width>368</width>
+					<label>Stars</label>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+				</control>
+				<control type="textbox" id="30006">
+					<description>Cast</description>
+					<posx>330</posx>
+					<posy>285</posy>
+					<width>368</width>
+                    <height>100</height>
+					<font>font13</font>
+					<textcolor>FFb4b4b4</textcolor>
 				</control>
 			</control>		
             <control type="group">
@@ -243,33 +205,33 @@
                     <spinposy>-30</spinposy>
                     <spinwidth>20</spinwidth>
                     <spinheight>11</spinheight>
-                    <font>addon_font14</font>
+                    <font>font13</font>
                     <align>justify</align>
-                    <textcolor>fce7e7e7</textcolor>
+                    <textcolor>FFb4b4b4</textcolor>
                     <textureup>-</textureup>
                     <texturedown flipy="true">-</texturedown>
                     <textureupfocus>-</textureupfocus>
                     <texturedownfocus flipy="true">-</texturedownfocus>
-                    <autoscroll delay="15000" time="2500" repeat="10000"></autoscroll>
+                    <autoscroll delay="15000" time="2500" repeat="5000"></autoscroll>
                 </control>
             </control>
 						
 			<control type="label" id="30010">
 				<description>Studio/Year</description>
 				<posx>16</posx>
-				<posy>65r</posy>
+				<posy>45r</posy>
 				<width>auto</width>
-				<font>addon_font15</font>
-				<textcolor>fce7e7e7</textcolor>
+				<font>font13</font>
+				<textcolor>FFb4b4b4</textcolor>
 				<scroll>false</scroll>
 			</control>
 			<control type="label" id="30011">
 				<description>Duration/Genre</description>
 				<posx>16</posx>
-				<posy>34r</posy>
+				<posy>20r</posy>
 				<width>auto</width>
-				<font>addon_font12</font>
-				<textcolor>fce7e7e7</textcolor>
+				<font>font13</font>
+				<textcolor>FFb4b4b4</textcolor>
 				<scroll>false</scroll>
 			</control>
 			<control type="image" id="30013">
