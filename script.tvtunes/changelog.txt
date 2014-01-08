@@ -1,3 +1,6 @@
+v4.3.0
+- Add support for scraping themes from goear.com
+
 v4.2.1
 - Handle invalid link to playlist in nfo better
 - Fix non-ascii names on non-windows platform

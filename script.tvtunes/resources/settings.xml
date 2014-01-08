@@ -18,6 +18,7 @@
 		<setting id="multiThemeDownload" type="bool" label="32014" default="false"/>
 		<setting id="searchMovieDownload" type="bool" label="32015" default="false"/>
 		<setting id="showVideoInfoButton" type="bool" label="32020" default="true"/>
+		<setting id="themeSearchSource" type="labelenum" label="32028" values="televisiontunes.com|goear.com" default="televisiontunes.com" />
 		<setting label="32022" type="lsep"/>
 		<setting label="32023" type="action" action="RunScript($CWD/resources/tvtunes_scraper.py)"/>
 	</category>
