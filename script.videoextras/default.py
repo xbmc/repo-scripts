@@ -108,6 +108,12 @@ class Settings():
         return __addon__.getSetting( settingsSelect ) == __addon__.getLocalizedString(32008)
 
     @staticmethod
+    def isMenuReturnExtras():
+        if Settings.isDetailedListScreen():
+            return False
+        return __addon__.getSetting( "extrasReturn" ) == __addon__.getLocalizedString(32001)
+
+    @staticmethod
     def isForceButtonDisplay():
         return __addon__.getSetting( "forceButtonDisplay" ) == "true"
 
@@ -969,7 +975,7 @@ class VideoExtras():
                     infoDialogId = 12003
                     # Put the information dialog back up
                     xbmc.executebuiltin("xbmc.ActivateWindow(movieinformation)")
-                    if not Settings.isMenuReturnInformation():
+                    if Settings.isMenuReturnExtras():
                         # Wait for the Info window to open, it can take a while
                         # this is to avoid the case where the exList dialog displays
                         # behind the info dialog
