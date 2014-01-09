@@ -1,5 +1,12 @@
+v.0.5.5
+- added ability to monitor multiple logs
+- script now sets focus on window so you can scroll through it without mouse control
+- added additional metadata to addon
+- updated module import to follow best practice
+- cleaned up code and moved some stuff into external modules
+
 v 0.5.4
-- changed display logic so percents will show even in the number of percent entries doesn't match number of speed entries
+- changed display logic so percents will show even if the number of percent entries doesn't match number of speed entries
 - added Galician language files
 - changed over to Frodo .po language files
 - added check to threading loop for XBMC quitting

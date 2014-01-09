@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
-    <setting id="show_compact" type="bool" label="30004" default="false" />
-    <setting id="transparency" type="slider" label="30005" default="70" range="10,10,100" visible="eq(-1,true)" enable="eq(-1,true)" option="int" />
-    <setting id="log_location" type="folder" label="30000" default="" />
-    <setting id="temp_scale" type="labelenum" label="30002" values="Celcius|Farenheit" default="0" />
-    <setting id="update_delay" type ="labelenum" label="30003" values="10|20|30|40|50|60|90|120|180|240" default="30" />
+    <category label="30000">
+        <setting id="log_location" type="folder" label="30006" default="" />
+        <setting id="show_compact" type="bool" label="30004" default="false" />
+        <setting id="transparency" type="slider" label="30005" default="70" range="10,10,100" visible="eq(-1,true)" enable="eq(-1,true)" option="int" />
+        <setting id="temp_scale" type="labelenum" label="30002" values="Celcius|Farenheit" default="0" />
+        <setting id="update_delay" type ="labelenum" label="30003" values="10|20|30|40|50|60|90|120|180|240" default="30" />
+    </category>
+    <category label=30010>
+        <setting id="log_title" type="text" label="30011" default="" />
+        <setting id="use_log2" type="bool" label="30012" default="false" />
+        <setting id="log_title2" type="text" label="30020" enable="eq(-1,true)" default="" />
+        <setting id="log_location2" type="folder" enable="eq(-2,true)" label="30021" default="" />
+        <setting id="use_log3" type="bool" label="30013" default="false" />
+        <setting id="log_title3" type="text" enable="eq(-1,true)" label="30020" default="" />
+        <setting id="log_location3" type="folder" enable="eq(-2,true)" label="30021" default="" />
+    </category>
 </settings>

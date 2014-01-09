@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#30000"
-msgid "SpeedFan Log Folder"
+msgid "General"
 msgstr ""
 
 msgctxt "#30001"
@@ -40,6 +40,34 @@ msgctxt "#30005"
 msgid "    Background Transparency"
 msgstr ""
 
+msgctxt "#30006"
+msgid "Log File Location"
+msgstr ""
+
+msgctxt "#30010"
+msgid " Additional Logs"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Primary Log File Title"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Use Log File 2"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Use Log File 3"
+msgstr ""
+
+msgctxt "#30020"
+msgid "    Log File Title"
+msgstr ""
+
+msgctxt "#30021"
+msgid "    Log File Location"
+msgstr ""
+
 #empty strings from id 30006 to 30099
 
 msgctxt "#30100"
@@ -52,4 +80,12 @@ msgstr ""
 
 msgctxt "#30102"
 msgid "Voltage Information"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Log File Error"
+msgstr ""
+
+msgctxt "#30104"
+msgid "No log file found."
 msgstr ""
