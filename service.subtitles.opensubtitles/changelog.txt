@@ -1,3 +1,8 @@
+5.0.5
+- [fix] ascii UNICODE.decode
+- [fix] manual search string unquoted
+- cosmetics and code simplification
+
 5.0.4
 - manual search button support
 

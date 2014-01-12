@@ -3,6 +3,7 @@
 import os
 import sys
 import xbmc
+import shutil
 import urllib
 import xbmcvfs
 import xbmcaddon
@@ -20,72 +21,42 @@ __profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode(
 __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
 __temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp') ).decode("utf-8")
 
-if not xbmcvfs.exists(__temp__):
-  xbmcvfs.mkdirs(__temp__)
+if xbmcvfs.exists(__temp__):
+  shutil.rmtree(__temp__)
+xbmcvfs.mkdirs(__temp__)
 
 sys.path.append (__resource__)
 
 from OSUtilities import OSDBServer, log, hashFile, normalizeString
 
 def Search( item ):
+  search_data = []
   try:
     search_data = OSDBServer().searchsubtitles(item)
   except:
     log( __name__, "failed to connect to service for subtitle search")
     xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32001))).encode('utf-8'))
     return
-  subtitles_list = []
 
   if search_data != None:
+    search_data.sort(key=lambda x: [not x['MatchedBy'] == 'moviehash',x['LanguageName']])
     for item_data in search_data:
-      if item_data["ISO639"]:
-        lang_index=0
-        for user_lang_id in item['3let_language']:
-          if user_lang_id == item_data["ISO639"]:
-            break
-          lang_index+=1
-      if str(item_data["MatchedBy"]) == "moviehash":
-        sync = True
-      else:                                
-        sync = False
-
-      subtitles_list.append({'lang_index'    : lang_index,
-                              'filename'      : item_data["SubFileName"],
-                              'link'          : item_data["ZipDownloadLink"],
-                              'language_name' : item_data["LanguageName"],
-                              'language_flag' : item_data["ISO639"],
-                              'language_id'   : item_data["SubLanguageID"],
-                              'ID'            : item_data["IDSubtitleFile"],
-                              'rating'        : str(int(round(float(item_data["SubRating"])/2))),
-                              'format'        : item_data["SubFormat"],
-                              'sync'          : sync,
-                              'hearing_imp'   : int(item_data["SubHearingImpaired"]) != 0
-                              })
-                              
-    subtitles_list.sort(key=lambda x: [not x['sync'],x['language_name']])
-
-  if subtitles_list:
-    for it in subtitles_list:
-      listitem = xbmcgui.ListItem(label=it["language_name"],
-                                  label2=it["filename"],
-                                  iconImage=it["rating"],
-                                  thumbnailImage=it["language_flag"]
+      listitem = xbmcgui.ListItem(label          = item_data["LanguageName"],
+                                  label2         = item_data["SubFileName"],
+                                  iconImage      = str(int(round(float(item_data["SubRating"])/2))),
+                                  thumbnailImage = item_data["ISO639"]
                                   )
-      if it["sync"]:
-        listitem.setProperty( "sync", "true" )
-      else:
-        listitem.setProperty( "sync", "false" )
-    
-      if it.get("hearing_imp", False):
-        listitem.setProperty( "hearing_imp", "true" )
-      else:
-        listitem.setProperty( "hearing_imp", "false" )
-      
-      url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s" % (__scriptid__, it["link"], 
-it["ID"],it["filename"])
-      
-      xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
+      listitem.setProperty( "sync", ("false", "true")[str(item_data["MatchedBy"]) == "moviehash"] )
+      listitem.setProperty( "hearing_imp", ("false", "true")[int(item_data["SubHearingImpaired"]) != 0] )
+      
+      url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s" % (__scriptid__,
+                                                                        item_data["ZipDownloadLink"],
+                                                                        item_data["IDSubtitleFile"],
+                                                                        item_data["SubFileName"]
+                                                                        )
+
+      xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
 def Download(id,url,filename, stack=False):
   subtitle_list = []
@@ -94,7 +65,7 @@ def Download(id,url,filename, stack=False):
                     ## you can only retreive multiple subs in zip
     result = False
   else:
-    subtitle = os.path.join(__temp__,filename)
+    subtitle = os.path.join(__temp__,filename.decode("utf-8"))
     try:
       result = OSDBServer().download(id, subtitle)
     except:
@@ -119,7 +90,6 @@ def Download(id,url,filename, stack=False):
   if xbmcvfs.exists(subtitle_list[0]):
     return subtitle_list
     
- 
 def get_params(string=""):
   param=[]
   if string == "":

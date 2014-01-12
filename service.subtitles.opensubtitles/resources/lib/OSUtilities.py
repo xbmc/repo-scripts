@@ -4,6 +4,7 @@ import os
 import sys
 import xbmc
 import struct
+import urllib
 import xbmcvfs
 import xmlrpclib
 import xbmcaddon
@@ -25,7 +26,7 @@ class OSDBServer:
     if ( self.osdb_token ) :
       searchlist  = []
       if item['mansearch']:
-        OS_search_string = item['mansearchstr']
+        OS_search_string = urllib.unquote(item['mansearchstr'])
       elif len(item['tvshow']) > 0:
         OS_search_string = ("%s S%.2dE%.2d" % (item['tvshow'],
                                                 int(item['season']),
@@ -45,7 +46,7 @@ class OSDBServer:
           searchlist.append({'sublanguageid' :",".join(item['3let_language']),
                               'moviehash'    :hash,
                               'moviebytesize':str(size)
-                              })
+                            })
         except:
           pass    
 
