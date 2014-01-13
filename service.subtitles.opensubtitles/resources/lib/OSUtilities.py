@@ -19,7 +19,7 @@ BASE_URL_XMLRPC = u"http://api.opensubtitles.org/xml-rpc"
 class OSDBServer:
   def __init__( self, *args, **kwargs ):
     self.server = xmlrpclib.Server( BASE_URL_XMLRPC, verbose=0 )
-    login = self.server.LogIn("", "", "en", "%s_v%s" %(__scriptname__.replace(" ","_"),__version__))
+    login = self.server.LogIn(__addon__.getSetting( "OSuser" ), __addon__.getSetting( "OSpass" ), "en", "%s_v%s" %(__scriptname__.replace(" ","_"),__version__))
     self.osdb_token  = login[ "token" ]
 
   def searchsubtitles( self, item):

@@ -17,3 +17,15 @@ msgstr ""
 msgctxt "#32001"
 msgid "Error searching for subtitles"
 msgstr ""
+
+msgctxt "#32002"
+msgid "Username"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Password"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Login Details"
+msgstr ""
