@@ -6,7 +6,7 @@ import xbmc
 import urllib
 import xbmcvfs
 import xbmcaddon
-import xbmcgui,xbmcplugin,shutil,zipfile
+import xbmcgui,xbmcplugin,shutil
 
 __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
@@ -68,18 +68,15 @@ def Search( item ):
                                   iconImage=it["rating"],
                                   thumbnailImage=it["language_flag"]
                                   )
-      if it["sync"]:
-        listitem.setProperty( "sync", "true" )
-      else:
-        listitem.setProperty( "sync", "false" )
-    
-      if it.get("hearing_imp", False):
-        listitem.setProperty( "hearing_imp", "true" )
-      else:
-        listitem.setProperty( "hearing_imp", "false" )
+
+      listitem.setProperty( "sync", ("false", "true")[it["sync"]] )
+      listitem.setProperty( "hearing_imp", ("false", "true")[it.get("hearing_imp", False)] )
       
-      url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s" % (__scriptid__, it["link"], 
-it["ID"],it["filename"])
+      url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s" % (__scriptid__,
+                                                                        it["link"],
+                                                                        it["ID"],
+                                                                        it["filename"]
+                                                                        )
       
       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
@@ -96,10 +93,12 @@ def Download(url,filename):
     subFile.write(f.read())
   subFile.close()
   xbmc.sleep(500)
-  zipf = zipfile.ZipFile(zip, mode='r')
-  for subfile in zipf.namelist():
-    zipf.extract(subfile, __temp__)
-    file = os.path.join(__temp__, subfile)
+#  zipf = zipfile.ZipFile(zip, mode='r')
+#  for subfile in zipf.namelist():
+#    zipf.extract(subfile, __temp__)
+  xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
+  for subfile in xbmcvfs.listdir(zip)[1]:
+    file = os.path.join(__temp__, subfile.decode('utf-8'))
     if (os.path.splitext( file )[1] in exts):
       subtitle_list.append(file)
     
