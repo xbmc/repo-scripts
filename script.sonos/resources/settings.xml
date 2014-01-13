@@ -1,0 +1,16 @@
+<settings>
+	<category label="32010">
+		<setting label="32013" type="action" action="RunScript($CWD/discovery.py)"/>
+		<setting id="ipAddress" type="ipaddress" label="32002" default="0.0.0.0"/>
+	</category>
+	<category label="32011">
+		<setting id="notifEnabled" type="bool" label="32003" default="true"/>
+		<setting id="notifDisplayDuration" enable="eq(-1,true)" label="32004" type="slider" default="3" range="0,1,60" option="int"/>
+		<setting id="notifCheckFrequency" enable="eq(-2,true)" label="32005" type="slider" default="10" range="0,1,60" option="int"/>
+		<setting id="notifNotIfVideoPlaying" enable="eq(-3,true)" type="bool" label="32006" default="true"/>
+		<setting id="xbmcNotifDialog" enable="eq(-4,true)" type="bool" label="32007" default="false"/>
+	</category>
+	<category label="32012">
+		<setting id="logEnabled" type="bool" label="32009" default="false"/>
+	</category>
+</settings>
