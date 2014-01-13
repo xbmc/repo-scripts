@@ -90,7 +90,34 @@ class settings():
     self.movie_interpolation        = int(__addon__.getSetting("movie_interpolation") == "true")
     self.movie_threshold            = float(__addon__.getSetting("movie_threshold"))
     self.movie_preset               = int(__addon__.getSetting("movie_preset"))
-    
+
+    # TV Shows settings
+    self.tvshow_saturation           = float(__addon__.getSetting("tvshow_saturation"))
+    self.tvshow_value                = float(__addon__.getSetting("tvshow_value"))
+    self.tvshow_speed                = float(__addon__.getSetting("tvshow_speed"))
+    self.tvshow_autospeed            = float(__addon__.getSetting("tvshow_autospeed"))
+    self.tvshow_interpolation        = int(__addon__.getSetting("tvshow_interpolation") == "true")
+    self.tvshow_threshold            = float(__addon__.getSetting("tvshow_threshold"))
+    self.tvshow_preset               = int(__addon__.getSetting("tvshow_preset"))
+
+    # LiveTV settings
+    self.livetv_saturation           = float(__addon__.getSetting("livetv_saturation"))
+    self.livetv_value                = float(__addon__.getSetting("livetv_value"))
+    self.livetv_speed                = float(__addon__.getSetting("livetv_speed"))
+    self.livetv_autospeed            = float(__addon__.getSetting("livetv_autospeed"))
+    self.livetv_interpolation        = int(__addon__.getSetting("livetv_interpolation") == "true")
+    self.livetv_threshold            = float(__addon__.getSetting("livetv_threshold"))
+    self.livetv_preset               = int(__addon__.getSetting("livetv_preset"))
+
+    # Files settings
+    self.files_saturation           = float(__addon__.getSetting("files_saturation"))
+    self.files_value                = float(__addon__.getSetting("files_value"))
+    self.files_speed                = float(__addon__.getSetting("files_speed"))
+    self.files_autospeed            = float(__addon__.getSetting("files_autospeed"))
+    self.files_interpolation        = int(__addon__.getSetting("files_interpolation") == "true")
+    self.files_threshold            = float(__addon__.getSetting("files_threshold"))
+    self.files_preset               = int(__addon__.getSetting("files_preset"))
+      
     # Music Video settings
     self.music_saturation           = float(__addon__.getSetting("musicvideo_saturation"))
     self.music_value                = float(__addon__.getSetting("musicvideo_value"))
@@ -119,6 +146,13 @@ class settings():
       autospeed     = 0.0  
       interpolation = 0
       threshold     = 0.0
+    elif self.movie_preset == 3:     #preset disabled
+      saturation    = 0.0
+      value         = 0.0
+      speed         = 0.0
+      autospeed     = 0.0  
+      interpolation = 0
+      threshold     = 0.0
     elif self.movie_preset == 0:     #custom
       saturation      =  self.movie_saturation
       value           =  self.movie_value
@@ -127,7 +161,112 @@ class settings():
       interpolation   =  self.movie_interpolation
       threshold       =  self.movie_threshold
     return (saturation,value,speed,autospeed,interpolation,threshold)
+
+  #handle boblight configuration from the "TVShows" category
+  #returns the new settings
+  def setupForTVShow(self):
+    log('settings() - setupForTVShow')
   
+    if self.tvshow_preset == 1:       #preset smooth
+      saturation    = 3.0
+      value         = 10.0
+      speed         = 20.0
+      autospeed     = 0.0 
+      interpolation = 0
+      threshold     = 0.0
+    elif self.tvshow_preset == 2:     #preset action
+      saturation    = 3.0
+      value         = 10.0
+      speed         = 80.0
+      autospeed     = 0.0  
+      interpolation = 0
+      threshold     = 0.0
+    elif self.tvshow_preset == 3:     #preset disabled
+      saturation    = 0.0
+      value         = 0.0
+      speed         = 0.0
+      autospeed     = 0.0  
+      interpolation = 0
+      threshold     = 0.0
+    elif self.tvshow_preset == 0:     #custom
+      saturation      =  self.movie_saturation
+      value           =  self.movie_value
+      speed           =  self.movie_speed
+      autospeed       =  self.movie_autospeed
+      interpolation   =  self.movie_interpolation
+      threshold       =  self.movie_threshold
+    return (saturation,value,speed,autospeed,interpolation,threshold)
+
+  #handle boblight configuration from the "LiveTV" category
+  #returns the new settings
+  def setupForLiveTV(self):
+    log('settings() - setupForLiveTV')
+  
+    if self.livetv_preset == 1:       #preset smooth
+      saturation    = 3.0
+      value         = 10.0
+      speed         = 20.0
+      autospeed     = 0.0 
+      interpolation = 0
+      threshold     = 0.0
+    elif self.livetv_preset == 2:     #preset action 
+      saturation    = 3.0
+      value         = 10.0
+      speed         = 80.0
+      autospeed     = 0.0  
+      interpolation = 0
+      threshold     = 0.0
+    elif self.livetv_preset == 3:     #preset disabled
+      saturation    = 0.0
+      value         = 0.0
+      speed         = 0.0
+      autospeed     = 0.0  
+      interpolation = 0
+      threshold     = 0.0
+    elif self.livetv_preset == 0:     #custom
+      saturation      =  self.livetv_saturation
+      value           =  self.livetv_value
+      speed           =  self.livetv_speed
+      autospeed       =  self.livetv_autospeed
+      interpolation   =  self.livetv_interpolation
+      threshold       =  self.livetv_threshold
+    return (saturation,value,speed,autospeed,interpolation,threshold)
+
+  #handle boblight configuration from the "files" category
+  #returns the new settings
+  def setupForFiles(self):
+    log('settings() - setupForFiles')
+  
+    if self.files_preset == 1:       #preset smooth
+      saturation    = 3.0
+      value         = 10.0
+      speed         = 20.0
+      autospeed     = 0.0 
+      interpolation = 0
+      threshold     = 0.0
+    elif self.files_preset == 2:     #preset action
+      saturation    = 3.0
+      value         = 10.0
+      speed         = 80.0
+      autospeed     = 0.0  
+      interpolation = 0
+      threshold     = 0.0
+    elif self.files_preset == 3:     #preset disabled
+      saturation    = 0.0
+      value         = 0.0
+      speed         = 0.0
+      autospeed     = 0.0  
+      interpolation = 0
+      threshold     = 0.0
+    elif self.files_preset == 0:     #custom
+      saturation      =  self.files_saturation
+      value           =  self.files_value
+      speed           =  self.files_speed
+      autospeed       =  self.files_autospeed
+      interpolation   =  self.files_interpolation
+      threshold       =  self.files_threshold
+    return (saturation,value,speed,autospeed,interpolation,threshold)
+    
   #handle boblight configuration from the "MusicVideo" category
   #returns the new settings
   def setupForMusicVideo(self):
@@ -144,6 +283,13 @@ class settings():
       saturation    = 3.0
       value         = 10.0
       speed         = 80.0
+      autospeed     = 0.0  
+      interpolation = 0
+      threshold     = 0.0
+    elif self.music_preset == 3:     #preset disabled
+      saturation    = 0.0
+      value         = 0.0
+      speed         = 0.0
       autospeed     = 0.0  
       interpolation = 0
       threshold     = 0.0
@@ -204,13 +350,16 @@ class settings():
 
   #handles the boblight configuration of all categorys
   #and applies changed settings to boblight
-  #"movie","musicvideo", "other and "static"
+  #"movie","musicvideo","files","livetv","tvshows","other and "static"
   def handleGlobalSettings(self):
     log('settings() - handleGlobalSettings')
     if (self.current_option != self.category) or self.force_update:
-      #call the right setup function according to categroy
+      #call the right setup function according to category
       #switch case in python - dictionary with function pointers
       option = { "movie"      : self.setupForMovie,
+                 "tvshow"     : self.setupForTVShow,
+                 "livetv"     : self.setupForLiveTV,
+                 "files"      : self.setupForFiles,
                  "musicvideo" : self.setupForMusicVideo,
                  "other"      : self.setupForOther,
                  "static"     : self.setupForStatic, 

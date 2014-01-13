@@ -98,7 +98,7 @@ class Main():
   
     if not ret:
       log("connection to boblightd failed: %s" % bob.bob_geterror())
-      text = __language__(500)
+      text = __language__(32500)
       if self.warning < 3 and settings.other_misc_notifications:
         xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,750,__icon__))
         self.warning += 1
@@ -109,7 +109,7 @@ class Main():
     else:
       self.warning = 0
       if settings.other_misc_notifications:
-        text = __language__(501)
+        text = __language__(32501)
         xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,750,__icon__))
       log("connected to boblightd")
       bob.bob_set_priority(128)  
@@ -122,22 +122,22 @@ class Main():
   
     if loaded == 1:                                #libboblight not found                                               
       if platform == 'linux':
-        t1 = __language__(504)
-        t2 = __language__(505)
-        t3 = __language__(506)
+        t1 = __language__(32504)
+        t2 = __language__(32505)
+        t3 = __language__(32506)
         xbmcgui.Dialog().ok(__scriptname__,t1,t2,t3)
       
       else:                                        # ask user if we should fetch the
-        t1 = __language__(504)                     # lib for osx, ios and windows
-        t2 = __language__(509)
+        t1 = __language__(32504)                     # lib for osx, ios and windows
+        t2 = __language__(32509)
         if xbmcgui.Dialog().yesno(__scriptname__,t1,t2):
           tools_downloadLibBoblight(platform,settings.other_misc_notifications)
           loaded = bob.bob_loadLibBoblight(libpath,platform)
       
         
     elif loaded == 2:         #no ctypes available
-      t1 = __language__(507)
-      t2 = __language__(508)
+      t1 = __language__(32507)
+      t2 = __language__(32508)
       xbmcgui.Dialog().ok(__scriptname__,t1,t2)
   
     return loaded  
@@ -155,8 +155,15 @@ def myPlayerChanged(state):
   if state == 'stop':
     ret = "static"
   else:
+    # Possible Videoplayer options: files, movies, episodes, musicvideos, livetv
     if xbmc.getCondVisibility("VideoPlayer.Content(musicvideos)"):
       ret = "musicvideo"
+    elif xbmc.getCondVisibility("VideoPlayer.Content(episodes)"):
+      ret = "tvshow"
+    elif xbmc.getCondVisibility("VideoPlayer.Content(livetv)"):
+      ret = "livetv"
+    elif xbmc.getCondVisibility("VideoPlayer.Content(files)"):
+      ret = "files"
     elif xbmc.getCondVisibility("Player.HasAudio()"):
       ret = "static"
     else:

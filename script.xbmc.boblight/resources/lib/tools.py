@@ -61,7 +61,7 @@ def tools_downloadLibBoblight(platform,allowNotify):
     os.remove(dest + ".zip")
   except:
     if allowNotify:
-      text = __language__(510)
+      text = __language__(32510)
       xbmc.executebuiltin("XBMC.Notification(%s,%s,%s,%s)" % (__scriptname__,text,750,__icon__))
 
 def log(msg):
