@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32100">
+        <setting id="mode" type="enum" label="32000" lvalues="32001|32002|32003|32004|32005|32006" default="5"/>
+        <setting id="tabledrop_wait" label="32300" visible="eq(-1,0)" type="slider" default="1500" range="500,500,5000" option="int"/>
+        <setting id="randomzoom_wait" label="32300" visible="eq(-2,2)" type="slider" default="2000" range="500,500,5000" option="int"/>
+        <setting id="randomzoom_effect" label="32301" visible="eq(-3,2)" type="slider" default="5000" range="500,500,7000" option="int"/>
+        <setting id="gridswitch_wait" label="32300" visible="eq(-4,4)" type="slider" default="1000" range="500,500,7000" option="int"/>
+        <setting id="gridswitch_rows_columns" label="32302" visible="eq(-5,4)" type="slider" default="4" range="2,1,5" option="int"/>
+        <setting id="gridswitch_random" type="bool" visible="eq(-6,4)"  label="32305" default="true"/>
+        <setting id="appletvlike_speed" label="32303" visible="eq(-7,3)" type="slider" default="1" range="0.5,0.5,8.0" option="float"/>
+        <setting id="appletvlike_concurrency" label="32304" visible="eq(-8,3)" type="slider" default="1" range="0.5,0.25,5.0" option="float"/>
+        <setting id="starwars_speed" label="32303" visible="eq(-9,1)" type="slider" default="1" range="0.25,0.25,3.0" option="float"/>
+    </category>
+    <category label="32200">
+        <setting id="random_order" type="bool" label="32007" default="true"/>
+        <setting id="source" type="enum" label="32010" lvalues="32011|32012|32014|32017" default="0"/>
+        <setting id="prop" type="enum" label="32013" visible="eq(-1,0)|eq(-1,2)|eq(-1,3)" lvalues="32015|32016" default="0"/>
+        <setting id="image_path" type="folder" source="pictures" label="32012" visible="eq(-2,1)" default=""/>
+        <setting id="recursive" type="bool" label="32008" visible="eq(-3,1)" default="true"/>
+    </category>
+</settings>
