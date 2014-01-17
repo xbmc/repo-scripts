@@ -1,3 +1,7 @@
+V0.6.8
+- Deal with blank radar codes in user settings
+- Better tidying up old radar images
+
 V0.6.7
 - Added sunrise/sunset, rain predictions to 7 day forecast
 

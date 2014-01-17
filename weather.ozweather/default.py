@@ -261,9 +261,7 @@ def forecast(url, radarCode):
 
         log("Build radar images")
         buildImages(radarCode)
-        radar = ""
-        radar = ADDON.getSetting('Radar%s' % sys.argv[1])
-        setProperty(WEATHER_WINDOW, 'Radar', radar)
+        setProperty(WEATHER_WINDOW, 'Radar', radarCode)
 
     #and now get and set all the temperatures etc.
     log("Get the forecast data from weatherzone.com.au: " + url)
@@ -296,7 +294,7 @@ def downloadBackground(radarCode, fileName):
 
     outFileName = fileName
 
-    #the legend file doesn't have the radar code int he filename
+    #the legend file doesn't have the radar code in the filename
     if fileName == "IDR.legend.0.png":
         outFileName = "legend.png"
     else:
@@ -366,40 +364,61 @@ def prepareBackgrounds(radarCode):
     log("Called prepareBackgrounds()")
 
     downloadBackground(radarCode, "IDR.legend.0.png")
-    downloadBackground(radarCode, "background.png")
-    downloadBackground(radarCode, "locations.png")
-    downloadBackground(radarCode, "range.png")
-    downloadBackground(radarCode, "topography.png")
-    downloadBackground(radarCode, "catchments.png")
+    if radarCode != "IDR00004":
+        downloadBackground(radarCode, "background.png")
+        downloadBackground(radarCode, "locations.png")
+        downloadBackground(radarCode, "range.png")
+        downloadBackground(radarCode, "topography.png")
+        downloadBackground(radarCode, "catchments.png")
 
 
 ################################################################################
 # Builds the radar images given a BOM radar code like IDR023
-# the background images are permanently cached (user can manually delete if
-# they need to)
 # the radar images are downloaded with each update (~60kb each time)
 
 def buildImages(radarCode):
 
-    log("Called buildImages with radarCode: " + radarCode)
+    log("Called buildImages with radarCode: " + radarCode + " and loop path " + LOOP_IMAGES_PATH)
 
     #remove the temporary files - we only want fresh radar files
     #this results in maybe ~60k used per update.
-    if xbmcvfs.exists( LOOP_IMAGES_PATH ):
+    if os.path.exists( LOOP_IMAGES_PATH ):
         log("Removing previous radar files")
         shutil.rmtree( LOOP_IMAGES_PATH , ignore_errors=True)
 
     #we need make the directories to store stuff if they don't exist
-    if not xbmcvfs.exists( RADAR_BACKGROUNDS_PATH ):
-        try:
-            os.makedirs( RADAR_BACKGROUNDS_PATH )
-        except:
-            log("xbmcvfs.exists was false, but couldn't make the directory?!")
-    if not xbmcvfs.exists( LOOP_IMAGES_PATH ):
-        try:
-            os.makedirs( LOOP_IMAGES_PATH )
-        except:
-            log("xbmcvfs.exists was false, but couldn't make the directory?!")
+    #delay hack is here to make sure OS has actaully released the handle
+    #from the rmtree call above before we try and make the directory
+
+    if not os.path.exists( RADAR_BACKGROUNDS_PATH ):
+        attempts = 0
+        success = False
+        while not success and (attempts < 20):
+            try:
+                os.makedirs( RADAR_BACKGROUNDS_PATH )
+                success = True
+                log("Successfully created " + RADAR_BACKGROUNDS_PATH)
+            except:
+                attempts += 1
+                time.sleep(0.1)
+        if not success:
+            log("ERROR: Failed to create directory for radar background images!")
+            return    
+
+    if not os.path.exists( LOOP_IMAGES_PATH ):
+        attempts = 0
+        success = False
+        while not success and (attempts < 20):
+            try:
+                os.makedirs( LOOP_IMAGES_PATH )
+                success = True
+                log("Successfully created " + LOOP_IMAGES_PATH)
+            except:
+                attempts += 1
+                time.sleep(0.1)
+        if not success:
+            log("ERROR: Failed to create directory for loop images!")
+            return
 
     log("Prepare the backgrounds if necessary...")
     prepareBackgrounds(radarCode)
@@ -711,6 +730,10 @@ else:
     location = ADDON.getSetting('Location%sid' % sys.argv[1])
     radar = ""
     radar = ADDON.getSetting('Radar%s' % sys.argv[1])
+    #make sure user has actually set a radar code
+    if radar == "":
+        log("Radar code empty for location " + location +" so using default radar code IDR00004 (national radar)")
+        radar = "IDR00004"
     #now get a forecast
     forecast(location, radar)
 
