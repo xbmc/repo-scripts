@@ -2,13 +2,19 @@
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
 # Addon Provider: Ppic,Frost,ronie,robwebset
+# Translators:
+# JoWa <JohnnieWalker-@gmx.de>, 2013
+# MartinB. <martin-boeh@outlook.com>, 2013
+# schmitto, 2013
+# yanniks <kontakt@yanniks.de>, 2013
+# bitboy <zeus557@gmx.de>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"PO-Revision-Date: 2014-01-14 14:23+0000\n"
+"Last-Translator: bitboy <zeus557@gmx.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,19 +24,26 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
-msgstr "Hole und spiele dein TV-Sendungs-Soundthema"
+msgstr "Hole und spiele dein TV-Sendungs-Titelsong"
 
 msgctxt "Addon Description"
-msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
-msgstr "Dieses Script wird dir helfen, die Themen deiner TV-Sendungs-Datenbank von www.televisiontunes.com zu holen und diese in der theme.mp3 deiner TV-Sendungs-Ordner zu speichern. Diese werden dann abgespielt, wenn du in deiner TV-Sendungs Datenbank oder dem TV-Sendungs-Ordner stöberst (benötigt ein kompatibeles Skin)"
+msgid ""
+"This script will help you to get themes for your movie and TV show library "
+"from www.televisiontunes.com It will save them in theme[0-9].mp3 file in "
+"each of your video folders then they will be played while browsing your "
+"video library when you enter the TV Show folder or Video Information screen "
+"(need your skin to be compatible for this feature)"
+msgstr "Dieses Skript wird dir helfen, die Titelsongs deiner Filme und TV-Sendungen von www.televisiontunes.com zu holen und diese in als theme[0-9].mp3 in deinen Video Ordnern zu speichern. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video Ordnern stöberst (benötigt einen kompatiblen Skin)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Skin-Ersteller, bitte seht die changelog.txt um zu wissen, wie ihr es in euer Skin integriert"
+msgid ""
+"Skinners, please see the wiki to know how to integrate it in your skin: "
+"http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "Skin-Ersteller, bitte schaut ins wiki um zu wissen, wie ihr es in euren Skin integriert: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
-msgstr "Spiele Thema in der Schleife"
+msgstr "Spiele Titelsong in einer Schleife"
 
 msgctxt "#32002"
 msgid "Lower sound value"
@@ -38,7 +51,7 @@ msgstr "Geringerer Lautstärke-Wert"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
-msgstr "Nutze geschützte SMB-Teilung"
+msgstr "Nutze geschützte SMB-Freigabe"
 
 msgctxt "#32004"
 msgid "Username:"
@@ -62,11 +75,11 @@ msgstr "Ton beim verlassen ausblenden"
 
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
-msgstr "Automatisch laden, alls ein exakter Treffer gefunden wurde"
+msgstr "Automatisch laden, falls ein exakter Treffer gefunden wurde"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
-msgstr "mehrere Spuren mischen"
+msgstr "mehrere Songs mischen"
 
 msgctxt "#32011"
 msgid "Random start time"
@@ -82,19 +95,19 @@ msgstr "Den Ton beim starten einblenden"
 
 msgctxt "#32014"
 msgid "Always add additional themes (no overwrite)"
-msgstr "Immer zusätzliche Themen hinzufügen (nicht überschreiben)"
+msgstr "Immer zusätzliche Titelsongs hinzufügen (nicht überschreiben)"
 
 msgctxt "#32015"
 msgid "Search for movie themes"
-msgstr "Suche nach Filmthemen"
+msgstr "Suche nach Titelsongs von Filmen"
 
 msgctxt "#32016"
 msgid "Play themes when browsing Movie list"
-msgstr "Spiele Thema beim Durchsuchen der Film Liste"
+msgstr "Spiele Titelsong beim Durchsuchen der Film Liste"
 
 msgctxt "#32017"
 msgid "Play themes when browsing TV Show list"
-msgstr "Spiele Thema beim Durchsuchen der TV-Sendungs Liste"
+msgstr "Spiele Titelsong beim Durchsuchen der TV-Sendungs Liste"
 
 msgctxt "#32018"
 msgid "Debugging"
@@ -124,6 +137,18 @@ msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "Verzögere Theme Start(Sekunden)"
 
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "Titelmelodie in Unterverzeichnissen abspielen"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Verzeichnisname"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Songlänge auf X (Sekunden) begrenzen wenn mehrere vorhanden sind"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "FEHLER"
@@ -138,7 +163,7 @@ msgstr "TVTune Downloader"
 
 msgctxt "#32104"
 msgid "Replace existing theme?"
-msgstr "Ersetze aktuelles Theme?"
+msgstr "Ersetze aktuelle Titelmelodie?"
 
 msgctxt "#32105"
 msgid "TVTunes"
@@ -182,7 +207,7 @@ msgstr "Lade diesen hier?"
 
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
-msgstr "Du kannst helfen, mehr Themen zu bekommen auf:"
+msgstr "Du kannst helfen, mehr Titelsongs zu bekommen auf:"
 
 msgctxt "#32117"
 msgid "http://www.televisiontunes.com/"

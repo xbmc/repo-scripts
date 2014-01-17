@@ -578,20 +578,30 @@ class GoearListing():
 
     # Searches for a given subset of themes, trying to reduce the list
     def themeSearch(self, name):
-        self.search(name + "-OST")
-        self.search(name + "-main-theme")
-        self.search(name + "-soundtrack")
-        self.search(name + "-tema-principal")  # Spanish for main theme
-        self.search(name + "-BSO ") # Spanish for OST (original soundtrack/banda sonora original)
-        self.search(name + "-banda-sonora") # Spanish for Soundtrack
-        self.search(name + "-tv")
-        self.search(name + "-movie")
-        self.search(name + "-pelicula") # Spanish for movie
-
+        # If performing the automated search, remove anything in brackets
+        # Remove anything in square brackets
+        searchName = re.sub(r'\[[^)]*\]', '', name)
+        # Remove anything in rounded brackets
+        searchName = re.sub(r'\([^)]*\)', '', searchName)
+        # Remove double space
+        searchName = searchName.replace("  ", " ")
+        
+        self.search(searchName + "-OST") # English acronym for original soundtrack
+        self.search(searchName + "-theme")
+        self.search(searchName + "-title")
+        self.search(searchName + "-soundtrack")
+        self.search(searchName + "-tv")
+        self.search(searchName + "-movie")
+        self.search(searchName + "-tema") # Spanish for theme
+        self.search(searchName + "-BSO") # Spanish acronym for OST (banda sonora original)
+        self.search(searchName + "-B.S.O.") # variation for Spanish acronym BSO
+        self.search(searchName + "-banda-sonora") # Spanish for Soundtrack
+        self.search(searchName + "-pelicula") # Spanish for movie
+        self.search(searchName + "-película") # Spanish for movie with accute i.
 
         # If no entries found doing the custom search then just search for the name only
         if len(self.themeDetailsList) < 1:
-            self.search(name)
+            self.search(searchName)
         else:
             # We only sort the returned data if it is a result of us doing multiple searches
             # The case where we just did a single "default" search we leave the list as
@@ -605,6 +615,9 @@ class GoearListing():
     def search(self, name):
         # User - instead of spaces
         searchName = name.replace(" ", "-")
+        # Remove double space
+        searchName = searchName.replace("--", "-")
+
         fullUrl = self.baseUrl + searchName
 
         # Load the output of the search request into Soup
@@ -699,9 +712,10 @@ class GoearListing():
                 trackQuality = " (" + trackQualityTag.contents[0] + "kbps)"
         
             themeScraperEntry = ThemeItemDetails(trackName, trackUrl, trackLength, trackQuality, True)
-            log("GoearListing: Theme Details = %s" % themeScraperEntry.getDisplayString())
-            log("GoearListing: Theme URL = %s" % themeScraperEntry.getMediaURL() )
-            self.themeDetailsList.append(themeScraperEntry)
+            if not (themeScraperEntry in self.themeDetailsList):
+                log("GoearListing: Theme Details = %s" % themeScraperEntry.getDisplayString())
+                log("GoearListing: Theme URL = %s" % themeScraperEntry.getMediaURL() )
+                self.themeDetailsList.append(themeScraperEntry)
 
 
 if ( __name__ == "__main__" ):

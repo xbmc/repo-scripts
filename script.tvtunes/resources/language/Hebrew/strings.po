@@ -2,13 +2,16 @@
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
 # Addon Provider: Ppic,Frost,ronie,robwebset
+# Translators:
+# dhead666 <myfoolishgames@gmail.com>, 2013-2014
+# Toamino <Benovadya2@walla.co.il>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"PO-Revision-Date: 2014-01-14 14:23+0000\n"
+"Last-Translator: dhead666 <myfoolishgames@gmail.com>\n"
 "Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,15 +21,30 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
-msgstr "קבל ונגן את שירי הנושא של תוכניות הטלוויזיה שלך"
+msgstr "הורד ונגן שירי נושא של סרטים ותכניות טלוויזיה שלך"
+
+msgctxt "Addon Description"
+msgid ""
+"This script will help you to get themes for your movie and TV show library "
+"from www.televisiontunes.com It will save them in theme[0-9].mp3 file in "
+"each of your video folders then they will be played while browsing your "
+"video library when you enter the TV Show folder or Video Information screen "
+"(need your skin to be compatible for this feature)"
+msgstr "סקריפט זה יעזור לך להשיג שירי נושא לספריות הסרטים והסדרות שלך מ-www.televisiontunes.com, ישמור אותם בקובץ בשם theme[0-9].mp3 בכל אחת מתיקיות הוידאו שלך והם ינוגנו בעת עיון בספריית הוידאו כאשר תיכנס לספריית סדרה או במסך מידע וידאו (נדרשת תאימות המעטפת עבור יכולת זו)"
+
+msgctxt "Addon Disclaimer"
+msgid ""
+"Skinners, please see the wiki to know how to integrate it in your skin: "
+"http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "מפתחי מעטפות, אנא פנו לוויקי ע\"מ לדעת כיצד לשלב זאת במעטפת שלכם: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
-msgstr "נגן שיר נושא בלולאה"
+msgstr "חזרה על נגינת שיר נושא"
 
 msgctxt "#32002"
 msgid "Lower sound value"
-msgstr "ערך צליל נמוך"
+msgstr "עוצמת אודיו נמוכה"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -42,15 +60,51 @@ msgstr "סיסמה:"
 
 msgctxt "#32006"
 msgid "Store tunes in a custom path"
-msgstr "אחסון נעימות בנתיב מותאם אישית"
+msgstr "אחסן שירי נושא בנתיב מותאם"
 
 msgctxt "#32007"
 msgid "Path:"
 msgstr "נתיב:"
 
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "דעיכה הדרגתית בעת יציאה"
+
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
 msgstr "הורד אוטומטית אם התוצאה תואמת במדוייק"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "ערבב רצועות מרובות"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "השהיית תחילת ניגון אקראית"
+
+msgctxt "#32012"
+msgid "File Types"
+msgstr "פורמט"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "הגברה הדרגתית בפתיחה"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "הוסף תמיד שירי נושא נוספים (ללא דריסה)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "חפש שירי נושא של סרטים"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "נגן שירי נושא בעת עיון ברשימת הסרטים"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "נגן שירי נושא בעת עיון ברשימת הסדרות"
 
 msgctxt "#32018"
 msgid "Debugging"
@@ -58,7 +112,39 @@ msgstr "ניפוי שגיאות"
 
 msgctxt "#32019"
 msgid "Enable debug logging"
-msgstr "הפעל לוג ניפוי שגיאות"
+msgstr "הפעל רישום שגיאות"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "הצג לחצן TvTunes במסך מידע וידאו"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "דעיכה הדרגתית לאחר (דקות)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "פעולות"
+
+msgctxt "#32023"
+msgid "Perform Complete Search Now"
+msgstr "בצע חיפוש מלא כעת"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "השהיית תחילת ניגון (שניות)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "תמיכה בשירי נושא בתת תיקיות"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "שם תיקיה"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "הגבלת ניגון רצועה כשיש מספר שירי נושא (שניות)"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -70,11 +156,11 @@ msgstr "אתר לא נגיש"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
-msgstr "TvTune downloader"
+msgstr "מנהל הורדה TvTune"
 
 msgctxt "#32104"
 msgid "Replace existing theme?"
-msgstr "החלף שיר נושא נוכחי?"
+msgstr "החלף שיר נושא קיים?"
 
 msgctxt "#32105"
 msgid "TVTunes"
@@ -114,7 +200,7 @@ msgstr "הזן חיפוש ידני"
 
 msgctxt "#32114"
 msgid "Download this one?"
-msgstr "הורד את זאת?"
+msgstr "להוריד את זה?"
 
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
@@ -124,13 +210,21 @@ msgctxt "#32117"
 msgid "http://www.televisiontunes.com/"
 msgstr "http://www.televisiontunes.com/"
 
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "חיפוש ידני..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "להמשיך בחיפוש שיר הנושא הבא?"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "ניגון"
 
 msgctxt "#32992"
 msgid "Download"
-msgstr "הורד"
+msgstr "הורדה"
 
 msgctxt "#32993"
 msgid "File system"
