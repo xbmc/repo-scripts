@@ -387,6 +387,7 @@ class FileManager:
         self.vfs = vfs
 
     def walkTree(self,directory):
+       
         if(self.vfs.exists(directory)):
             dirs,files = self.vfs.listdir(directory)
         
@@ -394,13 +395,21 @@ class FileManager:
             for aDir in dirs:
                 dirPath = xbmc.translatePath(directory + "/" + aDir)
                 file_ext = aDir.split('.')[-1]
-                self.addFile("-" + dirPath)  
+                self.addFile("-" + dirPath)
+
                 #catch for "non directory" type files
-                if (not any(file_ext in s for s in self.not_dir)):
+                shouldWalk = True
+
+                for s in file_ext:
+                    if(s in self.not_dir):
+                        shouldWalk = False
+                
+                if(shouldWalk):
                     self.walkTree(dirPath)  
             
             #copy all the files
             for aFile in files:
+                utils.log(aFile)
                 filePath = xbmc.translatePath(directory + "/" + aFile)
                 self.addFile(filePath)
                     
