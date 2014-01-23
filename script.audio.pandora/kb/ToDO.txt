@@ -1,0 +1,15 @@
+
+* refactor ratings code out from Panda.playNextSong()
+	- rating a song kicks the focus back to the station list ... should that be changed / fixed?
+
+* refactor the various dialog code into PandaGUI
+
+* ? change XML script name to "pandora-player.xml"
+
+* ? refactor to add all songs to PlayList for player, if possible to allow player to cache next few songs
+	- then, can getSongs on 1 or less left in the playlist
+
+* ? remove "Low" quality; currently, it looks like only "mediumQuality" and "highQuality" URLs are being sent for the song lists
+	- ! Pandora ONE == mediumQuality+ only -- missing 'lowQuality' in u'audioUrlMap'
+	- injected debug code into pithos/pandora/pandora.py @ Song.__init__()
+		log( "pithos.pandora: song = %s" % d )

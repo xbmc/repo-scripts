@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window>
+	<resolution>720p</resolution>
+	<useincludes>false</useincludes>
+	<defaultcontrol>20000</defaultcontrol>
+	<allowoverlay>false</allowoverlay>
+	<type>dialog</type>
+
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+
+	<controls>
+		<control type="image">
+			<description>Black background to hide menu flashes between songs</description>
+			<visible>!Window.IsVisible(Visualisation)</visible>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>pandora-1px-black.png</texture>
+		</control>
+		<control type="button" id="20000">
+			<description>dummy button to set initial view</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<texturenofocus>-</texturenofocus>
+			<texturefocus>-</texturefocus>
+			<onfocus>Skin.Reset(PandoraVis)</onfocus>
+			<onfocus>SetFocus(2000)</onfocus>
+			<ondown>200</ondown>
+			<onup>200</onup>
+			<onleft>200</onleft>
+			<onright>200</onright>
+		</control>
+		<control type="group" id="2000">
+			<control type="group">
+				<visible>Skin.HasSetting(PandoraVis)</visible>
+				<animation effect="fade" pulse="true" time="5000" start="0" end="75" tween="sine" condition="true">Conditional</animation>
+				<control type="image" id="100">
+					<posx>20</posx>
+					<posy>30</posy>
+					<width>25</width>
+					<height>25</height>
+					<aspectratio>keep</aspectratio>
+					<texture>pandora-p.png</texture>
+				</control>
+			</control>
+			<control type="group">
+				<visible>!Skin.HasSetting(PandoraVis)</visible>
+				<animation effect="fade" time="300">VisibleChange</animation>
+				<control type="image">
+					<description>panel</description>
+					<posx>00</posx>
+					<posy>00</posy>
+					<width>1280</width>
+					<height>720</height>
+					<texture border="20,10,10,30">pandora-panel.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="image">
+					<description>logo</description>
+					<posx>75</posx>
+					<posy>25</posy>
+					<width>1080</width>
+					<height>110</height>
+					<texture>pandora-logo.png</texture>
+					<aspectratio>keep</aspectratio>
+				</control>
+			<!--HTPC GUY Modifications-->
+					<!--Added Stations List Border-->
+				<control type="image">
+					<description>StationsListBorder</description>
+					<posx>44</posx>
+					<posy>158</posy>
+					<width>440</width>
+					<height>535</height>
+					<texture>pandora-stations-list.png</texture>
+					<aspectratio>keep</aspectratio>
+				</control>
+			<!--END HTPC GUY Modifications-->
+				<control type="group" id="3000">
+					<posx>75</posx>
+					<posy>190</posy>
+					<!--Station List-->
+					<control type="group">
+						<animation effect="fade" reversible="true" time="300">VisibleChange</animation>
+						<control type="list" id="200">
+							<width>390</width>
+							<height>470</height>
+							<onleft>200</onleft>
+							<onright>330</onright>
+							<onup>200</onup>
+							<ondown>200</ondown>
+							<viewtype label="535">list</viewtype>
+							<scrolltime>200</scrolltime>
+							<itemlayout height="30">
+								<control type="image">
+									<width>375</width>
+									<height>30</height>
+									<posx>0</posx>
+									<posy>0</posy>
+									<!--texture border="0">twc-input-nofocus-bg.png</texture-->
+								</control>
+								<control type="label">
+									<posx>10</posx>
+									<posy>0</posy>
+									<width>355</width>
+									<height>30</height>
+									<font>font12</font>
+									<aligny>center</aligny>
+									<textcolor>DDFFFFFF</textcolor>
+									<selectedcolor>FFe2ff43</selectedcolor>
+									<align>left</align>
+									<info>ListItem.Label</info>
+								</control>
+							</itemlayout>
+							<focusedlayout height="30">
+								<control type="image">
+									<width>375</width>
+									<height>30</height>
+									<posx>0</posx>
+									<posy>0</posy>
+									<visible>Control.HasFocus(200)</visible>
+									<texture border="0">twc-input-focus.png</texture>
+								</control>
+								<control type="image">
+									<width>375</width>
+									<height>30</height>
+									<posx>0</posx>
+									<posy>0</posy>
+									<visible>!Control.HasFocus(200)</visible>
+									<texture border="0">twc-input-nofocus.png</texture>
+								</control>
+								<control type="label">
+									<posx>10</posx>
+									<posy>0</posy>
+									<width>335</width>
+									<height>30</height>
+									<font>font12</font>
+									<aligny>center</aligny>
+									<textcolor>EEffffFF</textcolor>
+									<selectedcolor>FFe2ff43</selectedcolor>
+									<align>left</align>
+									<info>ListItem.Label</info>
+								</control>
+							</focusedlayout>
+						</control>
+					</control>
+
+					<!--Now Playing-->
+					<control type="group">
+						<posx>410</posx>
+						<posy>0</posy>
+						<control type="image" id="310">
+							<description>album art</description>
+							<posx>70</posx>
+							<posy>0</posy>
+							<width>217</width>
+							<height>217</height>
+							<aspectratio>keep</aspectratio>
+							<texture background="true">$INFO[MusicPlayer.cover]</texture>
+						</control>
+						<!--Added Button Background Border-->
+						<control type="image">
+							<description>ButtonBackground</description>
+							<posx>38</posx>
+							<posy>233</posy>
+							<width>550</width>
+							<height>255</height>
+							<texture>pandora-buttons-bg.png</texture>
+							<aspectratio>keep</aspectratio>
+						</control>
+						<!--END Button Background Border-->
+						<control type="label" id="320">
+							<description>song title</description>
+							<posx>320</posx>
+							<posy>15</posy>
+							<width>390</width>
+							<height>45</height>
+							<font>font13</font>
+							<textcolor>ffffffff</textcolor>
+							<align>left</align>
+							<info>MusicPlayer.Title</info>
+						</control>
+						<control type="label" id="321">
+							<description>artist</description>
+							<posx>320</posx>
+							<posy>60</posy>
+							<width>390</width>
+							<height>45</height>
+							<font>font13</font>
+							<textcolor>ffffffff</textcolor>
+							<align>left</align>
+							<info>MusicPlayer.Artist</info>
+						</control>
+						<control type="label" id="322">
+							<description>album</description>
+							<posx>320</posx>
+							<posy>105</posy>
+							<width>390</width>
+							<height>45</height>
+							<font>font13</font>
+							<textcolor>ffffffff</textcolor>
+							<align>left</align>
+							<info>MusicPlayer.Album</info>
+						</control>
+						<control type="label" id="324">
+							<description>rating</description>
+							<posx>320</posx>
+							<posy>150</posy>
+							<width>390</width>
+							<height>45</height>
+							<font>font13</font>
+							<textcolor>ffffffff</textcolor>
+							<align>left</align>
+							<info>MusicPlayer.Rating</info>
+						</control>
+						<control type="progress">
+							<posx>55</posx>
+							<posy>250</posy>
+							<width>533</width>
+							<height>20</height>
+							<info>Player.Progress</info>
+						</control>
+						<!--Control Buttons-->
+						<control type="button" id="330">
+							<description>thumbs down</description>
+							<visible>True</visible>
+							<posx>53</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
+							<onleft>200</onleft>
+							<onright>337</onright>
+							<ondown>335</ondown>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-thumb-down.png</texturefocus>
+							<texturenofocus>pandora-thumb-down-nofocus.png</texturenofocus>
+						</control>
+						<control type="button" id="337">
+							<description>thumbs down</description>
+							<visible>True</visible>
+							<posx>53</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
+							<onleft>330</onleft>
+							<onright>331</onright>
+							<ondown>335</ondown>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-thumb-down-dislike.png</texturefocus>
+							<texturenofocus>pandora-thumb-down-nofocus-dislike.png</texturenofocus>
+						</control>
+						<control type="button" id="331">
+							<description>thumbs up</description>
+							<visible>True</visible>
+							<posx>163</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
+							<onleft>337</onleft>
+							<onright>338</onright>
+							<ondown>335</ondown>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-thumb-up.png</texturefocus>
+							<texturenofocus>pandora-thumb-up-nofocus.png</texturenofocus>
+						</control>
+						<control type="button" id="338">
+							<description>thumbs up</description>
+							<visible>True</visible>
+							<posx>163</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
+							<onleft>331</onleft>
+							<onright>332</onright>
+							<ondown>335</ondown>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-thumb-up-like.png</texturefocus>
+							<texturenofocus>pandora-thumb-up-nofocus-like.png</texturenofocus>
+						</control>
+						<control type="togglebutton" id="332">
+							<description>play</description>
+							<posx>274</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
+							<label>-</label>
+							<onleft>338</onleft>
+							<onright>333</onright>
+							<ondown>335</ondown>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-play.png</texturefocus>
+							<texturenofocus>pandora-play-nofocus.png</texturenofocus>
+							<usealttexture>Player.Playing</usealttexture>
+							<alttexturefocus>pandora-pause.png</alttexturefocus>
+							<alttexturenofocus>pandora-pause-nofocus.png</alttexturenofocus>
+							<onclick>XBMC.PlayerControl(Play)</onclick>
+						</control>
+						<control type="button" id="333">
+							<description>skip</description>
+							<posx>384</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
+							<onleft>332</onleft>
+							<onright>336</onright>
+							<ondown>335</ondown>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-skip.png</texturefocus>
+							<texturenofocus>pandora-skip-nofocus.png</texturenofocus>
+						</control>
+						<control type="button" id="336">
+							<description>Tired</description>
+							<posx>494</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
+							<onleft>333</onleft>
+							<ondown>335</ondown>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-tired.png</texturefocus>
+							<texturenofocus>pandora-tired-nofocus.png</texturenofocus>
+						</control>
+						<control type="button" id="335">
+							<description>hide</description>
+							<posx>273</posx>
+							<posy>405</posy>
+							<height>37</height>
+							<width>75</width>
+							<onleft>330</onleft>
+							<onright>334</onright>
+							<onup>332</onup>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-hide.png</texturefocus>
+							<texturenofocus>pandora-hide-nofocus.png</texturenofocus>
+							<onclick>Skin.SetBool(PandoraVis)</onclick>
+						</control>
+					</control>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>
