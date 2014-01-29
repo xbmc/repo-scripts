@@ -1,3 +1,12 @@
+1.0.9 (28.01.2014)
+- fixed translations in gotham
+
+1.0.8 (unreleased)
+- increate timeout to 30
+- fixed potential exception while retrieving next shot
+- fixed explicit and blocked shot error
+- added experimental preloading of next/prev shots
+
 1.0.7 (28.08.2013)
 - update translations
 

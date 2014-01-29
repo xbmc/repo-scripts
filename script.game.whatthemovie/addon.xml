@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.game.whatthemovie" name="WhatTheMovie" version="1.0.7" provider-name="Tristan Fischer (sphere@dersphere.de)|tadi|skiller2k1">
+<addon id="script.game.whatthemovie" name="WhatTheMovie" version="1.0.9" provider-name="Tristan Fischer (sphere@dersphere.de)|tadi|skiller2k1">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.beautifulsoup" version="3.0.8"/>

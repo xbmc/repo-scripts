@@ -100,6 +100,7 @@ class GUI(xbmcgui.WindowXMLDialog):
     SID_ANSWER_RIGHT_POINT = 3126
     SID_DELETED = 3127
     SID_NO_SUCH_SHOT = 3128
+    SID_EXPLICIT = 3129
 
     # ACTION_IDs
     AID_EXIT_BACK = [9, 10, 13]
@@ -304,6 +305,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self._showShotSolvedStatus(shot['solved'])
         self._showShotAlreadySolved(shot['already_solved'])
         self._showShotSelfPosted(shot['self_posted'])
+        self._showShotExclicit(shot['is_explicit'])
         self._showShotID(shot['shot_id'])
         self._showShotDate(shot['date'])
         self._showShotFlags(shot['lang_list']['all'])
@@ -372,6 +374,13 @@ class GUI(xbmcgui.WindowXMLDialog):
         if self_posted:
             self.image_solution.setColorDiffuse('FFFFFFFF')
             label = self.getString(self.SID_SELF_POSTED)
+            self.label_message.setLabel(label)
+            self.setWTMProperty('solved_status', 'solved')
+
+    def _showShotExclicit(self, is_explicit):
+        if is_explicit:
+            self.image_solution.setColorDiffuse('FFFFFFFF')
+            label = self.getString(self.SID_EXPLICIT)
             self.label_message.setLabel(label)
             self.setWTMProperty('solved_status', 'solved')
 

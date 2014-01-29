@@ -71,7 +71,7 @@
                     <font>font12</font>
                     <focusedcolor>white</focusedcolor>
                     <textcolor>grey</textcolor>
-                    <label>$LOCALIZE[SCRIPT3002]</label>
+                    <label>$ADDON[script.game.whatthemovie 3002]</label>
                 </control>
                 <control type="button" id="3000">
                     <description>Guess Button</description>
@@ -90,7 +90,7 @@
                     <font>font12</font>
                     <focusedcolor>white</focusedcolor>
                     <textcolor>grey</textcolor>
-                    <label>$LOCALIZE[SCRIPT3000]</label>
+                    <label>$ADDON[script.game.whatthemovie 3000]</label>
                 </control>
                 <control type="button" id="3001">
                     <description>Random Button</description>
@@ -109,7 +109,7 @@
                     <font>font12</font>
                     <focusedcolor>white</focusedcolor>
                     <textcolor>grey</textcolor>
-                    <label>$LOCALIZE[SCRIPT3001]</label>
+                    <label>$ADDON[script.game.whatthemovie 3001]</label>
                 </control>
                 <control type="button" id="3006">
                     <description>Next Button</description>

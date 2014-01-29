@@ -70,8 +70,9 @@ class WhatTheMovie(object):
                       'title_year': (u'Pirates of the Caribbean: '
                                      u'At World\'s End (2007)')}
 
-    def __init__(self, user_agent):
+    def __init__(self, user_agent, http_timeout=30):
         # Get browser stuff
+        self.http_timeout = http_timeout
         self.cookies = cookielib.LWPCookieJar()
         processor = urllib2.HTTPCookieProcessor(self.cookies)
         self.opener = urllib2.build_opener(processor)
@@ -81,6 +82,12 @@ class WhatTheMovie(object):
         self.last_shots = list()
         self.image_download_path = None
         self.running = False
+
+    def _send_request(self, request):
+        return self.opener.open(request, timeout=self.http_timeout).read()
+
+    def _get_tree(self, url):
+        return BeautifulSoup(self._send_request(url))
 
     def login(self, user, password, cookie_path):
         logged_in = False
@@ -100,8 +107,8 @@ class WhatTheMovie(object):
             data_dict = dict()
             data_dict['name'] = user
             data_dict['upassword'] = password
-            data = urllib.urlencode(data_dict)
-            html = self.opener.open(login_url, data).read()
+            req = urllib2.Request(login_url, urllib.urlencode(data_dict))
+            html = self._send_request(req)
             logged_in_user = self._getUsername()
             if logged_in_user:
                 logged_in = 'auth'
@@ -115,7 +122,7 @@ class WhatTheMovie(object):
         self.callback = callback
         self.num_workers = num_workers
         self.num_init_jobs = num_init_jobs
-        self.workers = [self.Scraper(self.opener, self.image_download_path,
+        self.workers = [self.Scraper(self._send_request, self.image_download_path,
                         self.callback) for i in range(self.num_workers)]
         for worker in self.workers:
             worker.start()
@@ -134,7 +141,7 @@ class WhatTheMovie(object):
     def _getUsername(self, html=None):
         # only retrieve if there is no previous retrieve which we can use
         if not html:
-            html = self.opener.open(self.MAIN_URL).read()
+            html = self._send_request(self.MAIN_URL)
         tree = BeautifulSoup(html)
         section = tree.find('li', attrs={'class': 'secondary_nav',
                                          'style': 'margin-left: 0'})
@@ -160,7 +167,7 @@ class WhatTheMovie(object):
         req.add_header('Content-Type',
                        'application/x-www-form-urlencoded; charset=UTF-8')
         req.add_header('X-Requested-With', 'XMLHttpRequest')
-        response = self.opener.open(req).read()
+        response = self._send_request(req)
         response_c = response.replace('&amp;', '&').decode('unicode-escape')
         return response_c
 
@@ -186,6 +193,7 @@ class WhatTheMovie(object):
             if self.shot:  
                 self.last_shots.append(self.shot)
 
+            next_preload_request = None
             # We need a new shot via 'random'
             if shot_request == 'random':
                 # Check if there aren't enough 'random' shots in the preloads
@@ -198,8 +206,10 @@ class WhatTheMovie(object):
             elif shot_request.isdigit():
                 self.Scraper.jobs.put(shot_request)
 
-            # We need a new shot via navi_key
-            elif self.shot and shot_request in self.shot['nav'].keys():
+            # We need a new shot via navi_key, resolve it to ID
+            elif shot_request in self.shot['nav'].keys():
+                # but store the nav key (e.g. 'next_unsolved') for preloading
+                next_preload_request = shot_request
                 if not self.shot['nav'][shot_request]:
                     # check if it is a unsolved request and try without
                     if (shot_request[-9:] == '_unsolved'
@@ -208,8 +218,8 @@ class WhatTheMovie(object):
                         shot_request = self.shot['nav'][request]
                 else:
                     shot_request = self.shot['nav'][shot_request]
-                self.Scraper.jobs.put(shot_request)
-
+                if not shot_request in [s['requested_as'] for s in self.Scraper.next_shots]:
+                    self.Scraper.jobs.put(shot_request)
 
             # delete actual shot because we want a new one
             self.shot = None
@@ -224,6 +234,10 @@ class WhatTheMovie(object):
                     if shot['requested_as'] == shot_request:
                         # save the shot we want and delete from list
                         self.shot = self.Scraper.next_shots.pop(i)
+                        # if shot was requested from next/prev nav
+                        if next_preload_request:
+                            # preload shot of same type (next on next, etc)
+                            self.Scraper.jobs.put(self.shot['nav'][next_preload_request])
                         if self.callback:
                             self.callback(len(self.Scraper.next_shots))
                         # stop searching in the list of preloaded shots
@@ -314,9 +328,7 @@ class WhatTheMovie(object):
                  'all_score': 0}
         if self.OFFLINE_DEBUG:
             return score
-        profile_url = '%s/user/%s/' % (self.MAIN_URL, username)
-        html = self.opener.open(profile_url).read()
-        tree = BeautifulSoup(html)
+        tree = self._get_tree('%s/user/%s/' % (self.MAIN_URL, username))
         box = tree.find('div', attrs={'class': 'box_white'})
         r = ('>(?P<ff_score>[0-9]+) Feature Film.*'
              '>(?P<all_score>[0-9]+) Snapshot')
@@ -334,8 +346,8 @@ class WhatTheMovie(object):
         new_shot_condition = threading.Condition()
         exit_requested = False
 
-        def __init__(self, opener, image_download_path, callback=None):
-            self.opener = opener
+        def __init__(self, _send_request_func, image_download_path, callback=None):
+            self._send_request = _send_request_func
             self.callback = callback
             self.image_download_path = image_download_path
             threading.Thread.__init__(self)
@@ -350,9 +362,21 @@ class WhatTheMovie(object):
                 while not is_new:
                     try:
                         shot = self.scrapeShot(job)
-                    except (urllib2.HTTPError, socket.timeout):
+                    # handle python 2.7 timeout (socket.timeout)
+                    except socket.timeout, exception:
+                        print repr(exception)
                         print 'Timeout occured, trying again...'
                         continue
+                    # handle python 2.6 timeout (urllib2.URLError(socket.timeout))
+                    except urllib2.HTTPError:
+                        raise
+                    except urllib2.URLError, exception:
+                        if isinstance(exception.reason, socket.timeout):
+                            print repr(exception)
+                            print 'Timeout occured, trying again...'
+                            continue
+                        # re-raise non-timeout exception
+                        raise
                     WhatTheMovie.Scraper.next_shots_lock.acquire()
                     if shot['shot_id'] in [s['shot_id'] for s in WhatTheMovie.Scraper.next_shots]:
                         pass
@@ -376,15 +400,15 @@ class WhatTheMovie(object):
             req = urllib2.Request(url)
             if referer:
                 req.add_header('Referer', referer)
-            res = urllib2.urlopen(req)
+            res = self._send_request(req)
             f = open(local_file, 'wb')
-            f.write(res.read())
+            f.write(res)
             f.close()
 
         def scrapeShot(self, shot_request):
             self.shot = dict()
             shot_url = '%s/shot/%s' % (WhatTheMovie.MAIN_URL, shot_request)
-            html = self.opener.open(shot_url).read()
+            html = self._send_request(shot_url)
             tree = BeautifulSoup(html)
             # id
             shot_id = tree.find('li', attrs={'class': 'number'}).string.strip()
@@ -409,13 +433,15 @@ class WhatTheMovie(object):
                         image_url = WhatTheMovie.MAIN_URL + m_img.group(1)
                     else:
                         image_url = m_img.group(1)
-            subst_image_url = 'http://static.whatthemovie.com/images/subst'
             if self.image_download_path:
-                if not image_url.startswith(subst_image_url):
+                if not 'substitute' in image_url:
                     local_image_file = '%s%s.jpg' % (self.image_download_path,
                                                      shot_id)
                     self.download_file(image_url, local_image_file, referer=shot_url)
                     image_url = local_image_file
+                    is_explicit = False
+                else:
+                    is_explicit = True
             # languages
             lang_list = dict()
             lang_list['main'] = list()
@@ -570,6 +596,7 @@ class WhatTheMovie(object):
             self.shot['date'] = shot_date
             self.shot['already_solved'] = already_solved
             self.shot['self_posted'] = self_posted
+            self.shot['is_explicit'] = is_explicit
             self.shot['voting'] = voting
             self.shot['tags'] = tags
             self.shot['shot_type'] = shot_type
