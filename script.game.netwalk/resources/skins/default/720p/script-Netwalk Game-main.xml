@@ -27,7 +27,7 @@
             <visible>true</visible>
             <font>font12</font>
             <textcolor>FFFFFFFF</textcolor>
-            <label>$LOCALIZE[SCRIPT3010]</label>
+            <label>$ADDON[script.game.netwalk 32010]</label>
         </control>
         <control type="textbox">
             <description>Game Goal Help</description>
@@ -38,7 +38,7 @@
             <visible>true</visible>
             <font>font12</font>
             <textcolor>FFFFFFFF</textcolor>
-            <label>$LOCALIZE[SCRIPT3011]</label>
+            <label>$ADDON[script.game.netwalk 32011]</label>
         </control>
         <control type="label" id="3001">
             <description>The Grid placeholder. This label should not be shown but its space will be filled with the tiles.</description>
@@ -65,7 +65,7 @@
             <onright>3006</onright>
             <focusedcolor>white</focusedcolor>
             <textcolor>grey</textcolor>
-            <label>$LOCALIZE[SCRIPT3000]</label>
+            <label>$ADDON[script.game.netwalk 32000]</label>
         </control>
         <control type="button" id="3006">
             <description>Exit</description>
@@ -81,7 +81,7 @@
             <onleft>3002</onleft>
             <focusedcolor>white</focusedcolor>
             <textcolor>grey</textcolor>
-            <label>$LOCALIZE[SCRIPT3001]</label>
+            <label>$ADDON[script.game.netwalk 32001]</label>
         </control>
         <control type="label">
             <description>Game-ID label</description>
@@ -93,7 +93,7 @@
             <font>font12</font>
             <textcolor>white</textcolor>
             <visible>true</visible>
-            <label>$LOCALIZE[SCRIPT3006]</label>
+            <label>$ADDON[script.game.netwalk 32006]</label>
         </control>
         <control type="label" id="3007">
             <description>Game-ID value label</description>
@@ -105,7 +105,7 @@
             <font>font12</font>
             <textcolor>white</textcolor>
             <visible>true</visible>
-            <label>$LOCALIZE[SCRIPT3005]</label>
+            <label>$ADDON[script.game.netwalk 32005]</label>
         </control>
         <control type="label">
             <description>Moves label</description>
@@ -117,7 +117,7 @@
             <font>font12</font>
             <textcolor>white</textcolor>
             <visible>true</visible>
-            <label>$LOCALIZE[SCRIPT3002]</label>
+            <label>$ADDON[script.game.netwalk 32002]</label>
         </control>
         <control type="label" id="3003">
             <description>Moves count label</description>
@@ -129,7 +129,7 @@
             <font>font12</font>
             <textcolor>white</textcolor>
             <visible>true</visible>
-            <label>$LOCALIZE[SCRIPT3005]</label>
+            <label>$ADDON[script.game.netwalk 32005]</label>
         </control>
         <control type="label">
             <description>Target moves label</description>
@@ -141,7 +141,7 @@
             <font>font12</font>
             <textcolor>white</textcolor>
             <visible>true</visible>
-            <label>$LOCALIZE[SCRIPT3003]</label>
+            <label>$ADDON[script.game.netwalk 32003]</label>
         </control>
         <control type="label" id="3004">
             <description>Target moves count label</description>
@@ -153,7 +153,7 @@
             <font>font12</font>
             <textcolor>white</textcolor>
             <visible>true</visible>
-            <label>$LOCALIZE[SCRIPT3005]</label>
+            <label>$ADDON[script.game.netwalk 32005]</label>
         </control>
         <control type="label">
             <description>Time label</description>
@@ -165,7 +165,7 @@
             <font>font12</font>
             <textcolor>white</textcolor>
             <visible>true</visible>
-            <label>$LOCALIZE[SCRIPT3004]</label>
+            <label>$ADDON[script.game.netwalk 32004]</label>
         </control>
         <control type="label" id="3005">
             <description>Time value label</description>
@@ -177,7 +177,7 @@
             <font>font12</font>
             <textcolor>white</textcolor>
             <visible>true</visible>
-            <label>$LOCALIZE[SCRIPT3005]</label>
+            <label>$ADDON[script.game.netwalk 32005]</label>
         </control>
     </controls>
 </window>

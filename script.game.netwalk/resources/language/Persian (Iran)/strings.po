@@ -16,10 +16,10 @@ msgstr ""
 "Language: fa_IR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgctxt "#3004"
+msgctxt "#32004"
 msgid "Time:"
 msgstr "زمان:"
 
-msgctxt "#3005"
+msgctxt "#32005"
 msgid "0"
 msgstr "0"

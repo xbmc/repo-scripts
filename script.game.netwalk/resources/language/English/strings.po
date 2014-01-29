@@ -16,54 +16,54 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#3000"
+msgctxt "#32000"
 msgid "New Game"
 msgstr ""
 
-msgctxt "#3001"
+msgctxt "#32001"
 msgid "Exit Game"
 msgstr ""
 
-msgctxt "#3002"
+msgctxt "#32002"
 msgid "Moves:"
 msgstr ""
 
-msgctxt "#3003"
+msgctxt "#32003"
 msgid "Target Movies:"
 msgstr ""
 
-msgctxt "#3004"
+msgctxt "#32004"
 msgid "Time:"
 msgstr ""
 
-msgctxt "#3005"
+msgctxt "#32005"
 msgid "0"
 msgstr ""
 
-msgctxt "#3006"
+msgctxt "#32006"
 msgid "Game ID:"
 msgstr ""
 
-msgctxt "#3007"
+msgctxt "#32007"
 msgid "You won!"
 msgstr ""
 
-msgctxt "#3008"
+msgctxt "#32008"
 msgid "You won the game."
 msgstr ""
 
-msgctxt "#3009"
+msgctxt "#32009"
 msgid "Exit?"
 msgstr ""
 
-msgctxt "#3010"
+msgctxt "#32010"
 msgid "[B]Controls[/B][CR]- Focus tile: MOUSE-HOVER, UP, RIGHT, LEFT, DOWN[CR]- Turn focused tile clockwise: RIGHTCLICK, ESC, BACK[CR]- Turn focused tile counter-clockwise: LEFTCLICK, ENTER[CR]- Lock focused tile: MIDDLECLICK, INFO, SPACE[CR]- Exit Game: STOP, EXIT-BUTTON[CR]"
 msgstr ""
 
-msgctxt "#3011"
+msgctxt "#32011"
 msgid "[B]Goal[/B][CR]Your goal is to connect all terminals to the server by rotating the tiles[CR]Note, there is only ONE solution possible for each game!"
 msgstr ""
 
-msgctxt "#3012"
+msgctxt "#32012"
 msgid "Are you sure that you want to exit?"
 msgstr ""

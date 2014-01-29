@@ -16,10 +16,10 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgctxt "#3004"
+msgctxt "#32004"
 msgid "Time:"
 msgstr "時間："
 
-msgctxt "#3005"
+msgctxt "#32005"
 msgid "0"
 msgstr "0"

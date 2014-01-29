@@ -1,3 +1,6 @@
+0.0.5 (81.01.2014)
+ - fixed translations in gotham
+
 0.0.4 (28.08.2013)
  - added translations
 

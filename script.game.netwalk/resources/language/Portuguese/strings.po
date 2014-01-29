@@ -16,54 +16,54 @@ msgstr ""
 "Language: pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#3000"
+msgctxt "#32000"
 msgid "New Game"
 msgstr "Novo Jogo"
 
-msgctxt "#3001"
+msgctxt "#32001"
 msgid "Exit Game"
 msgstr "Sair do Jogo"
 
-msgctxt "#3002"
+msgctxt "#32002"
 msgid "Moves:"
 msgstr "Jogadas:"
 
-msgctxt "#3003"
+msgctxt "#32003"
 msgid "Target Movies:"
 msgstr "Filmes:"
 
-msgctxt "#3004"
+msgctxt "#32004"
 msgid "Time:"
 msgstr "Hora:"
 
-msgctxt "#3005"
+msgctxt "#32005"
 msgid "0"
 msgstr "0"
 
-msgctxt "#3006"
+msgctxt "#32006"
 msgid "Game ID:"
 msgstr "ID do Jogo:"
 
-msgctxt "#3007"
+msgctxt "#32007"
 msgid "You won!"
 msgstr "Ganhou!"
 
-msgctxt "#3008"
+msgctxt "#32008"
 msgid "You won the game."
 msgstr "Ganhou o jogo."
 
-msgctxt "#3009"
+msgctxt "#32009"
 msgid "Exit?"
 msgstr "Sair?"
 
-msgctxt "#3010"
+msgctxt "#32010"
 msgid "[B]Controls[/B][CR]- Focus tile: MOUSE-HOVER, UP, RIGHT, LEFT, DOWN[CR]- Turn focused tile clockwise: RIGHTCLICK, ESC, BACK[CR]- Turn focused tile counter-clockwise: LEFTCLICK, ENTER[CR]- Lock focused tile: MIDDLECLICK, INFO, SPACE[CR]- Exit Game: STOP, EXIT-BUTTON[CR]"
 msgstr "[B]Controlos[/B][CR]- Seleccionar bloco: PASSAR COM RATO SOBRE, CIMA, DIREITA, ESQUERDA, BAIXO[CR]- Rodar bloco seleccionado no sentido dos ponteiros: BOTÃO DIREITO DO RATO, ESC, RETROCEDER[CR]- Rodar bloco seleccionado no sentido contrário aos ponteiros: BOTÃO ESQUERDO DO RATO, ENTER[CR]- Trancar bloco seleccionado: BOTÃO DO MEIO DO RATO, INFO, BARRA DE ESPAÇO[CR]- Sair do Jogo: PARAR, BOTÃO EXIT[CR]"
 
-msgctxt "#3011"
+msgctxt "#32011"
 msgid "[B]Goal[/B][CR]Your goal is to connect all terminals to the server by rotating the tiles[CR]Note, there is only ONE solution possible for each game!"
 msgstr "[B]Objectivo[/B][CR]O objectivo é ligar todos os terminais ao servidor, rodando os blocos.[CR]Nota: há apenas UMA solução possível para cada jogo!"
 
-msgctxt "#3012"
+msgctxt "#32012"
 msgid "Are you sure that you want to exit?"
 msgstr "Tem a certeza que quer sair?"

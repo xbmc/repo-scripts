@@ -16,6 +16,6 @@ msgstr ""
 "Language: hi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#3004"
+msgctxt "#32004"
 msgid "Time:"
 msgstr "वक्त:"

@@ -41,10 +41,10 @@ MEDIA_PATH = os.path.join(
 )
 
 STRINGS = {
-    'you_won_head': 3007,
-    'you_won_text': 3008,
-    'exit_head': 3009,
-    'exit_text': 3012
+    'you_won_head': 32007,
+    'you_won_text': 32008,
+    'exit_head': 32009,
+    'exit_text': 32012
 }
 
 

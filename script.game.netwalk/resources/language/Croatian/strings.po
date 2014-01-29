@@ -16,54 +16,54 @@ msgstr ""
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-msgctxt "#3000"
+msgctxt "#32000"
 msgid "New Game"
 msgstr "Nova igra"
 
-msgctxt "#3001"
+msgctxt "#32001"
 msgid "Exit Game"
 msgstr "Zatvori igru"
 
-msgctxt "#3002"
+msgctxt "#32002"
 msgid "Moves:"
 msgstr "Potezi:"
 
-msgctxt "#3003"
+msgctxt "#32003"
 msgid "Target Movies:"
 msgstr "Ciljani potezi:"
 
-msgctxt "#3004"
+msgctxt "#32004"
 msgid "Time:"
 msgstr "Vrijeme:"
 
-msgctxt "#3005"
+msgctxt "#32005"
 msgid "0"
 msgstr "0"
 
-msgctxt "#3006"
+msgctxt "#32006"
 msgid "Game ID:"
 msgstr "ID igre:"
 
-msgctxt "#3007"
+msgctxt "#32007"
 msgid "You won!"
 msgstr "Pobijedili ste!"
 
-msgctxt "#3008"
+msgctxt "#32008"
 msgid "You won the game."
 msgstr "Pobijedili ste u igri."
 
-msgctxt "#3009"
+msgctxt "#32009"
 msgid "Exit?"
 msgstr "Izaz?"
 
-msgctxt "#3010"
+msgctxt "#32010"
 msgid "[B]Controls[/B][CR]- Focus tile: MOUSE-HOVER, UP, RIGHT, LEFT, DOWN[CR]- Turn focused tile clockwise: RIGHTCLICK, ESC, BACK[CR]- Turn focused tile counter-clockwise: LEFTCLICK, ENTER[CR]- Lock focused tile: MIDDLECLICK, INFO, SPACE[CR]- Exit Game: STOP, EXIT-BUTTON[CR]"
 msgstr "[B]Kontrole[/B][CR]- Fokusiraj pločicu: LEBDENJE-MIŠEM, GORE, DESNO, LIJEVO, DOLJE[CR]- Okreni fokusiranu pločicu u smjeru kazaljke sata: DESNI-KLIK, ESC, BACK[CR]- Okreni fokusiranu pločicu suprotno od smjera kazaljke sata: LIJEVI-KLIK, ENTER[CR]- Zaključaj fokusiranu pločicu: SREDNJI-KLIK, INFO, SPACE[CR]- Zatvori igru: STOP, TIPKA-IZLAZA[CR]"
 
-msgctxt "#3011"
+msgctxt "#32011"
 msgid "[B]Goal[/B][CR]Your goal is to connect all terminals to the server by rotating the tiles[CR]Note, there is only ONE solution possible for each game!"
 msgstr "[B]Cilj igre[/B][CR]Vaš cilj je povezivanje svih terminala na poslužitelj okretajući pločice[CR]Napomena, postoji samo JEDNO moguće riješenje za svaku igru!"
 
-msgctxt "#3012"
+msgctxt "#32012"
 msgid "Are you sure that you want to exit?"
 msgstr "Sigurno želite izaći?"

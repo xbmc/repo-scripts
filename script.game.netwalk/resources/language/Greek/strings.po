@@ -16,54 +16,54 @@ msgstr ""
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#3000"
+msgctxt "#32000"
 msgid "New Game"
 msgstr "Νέο Παιχνίδι"
 
-msgctxt "#3001"
+msgctxt "#32001"
 msgid "Exit Game"
 msgstr "Έξοδος από το Παιχνίδι"
 
-msgctxt "#3002"
+msgctxt "#32002"
 msgid "Moves:"
 msgstr "Κινήσεις:"
 
-msgctxt "#3003"
+msgctxt "#32003"
 msgid "Target Movies:"
 msgstr "Ταινίες-Στόχοι:"
 
-msgctxt "#3004"
+msgctxt "#32004"
 msgid "Time:"
 msgstr "Χρόνος:"
 
-msgctxt "#3005"
+msgctxt "#32005"
 msgid "0"
 msgstr "0"
 
-msgctxt "#3006"
+msgctxt "#32006"
 msgid "Game ID:"
 msgstr "ID Παιχνιδιού:"
 
-msgctxt "#3007"
+msgctxt "#32007"
 msgid "You won!"
 msgstr "Κέρδισες!"
 
-msgctxt "#3008"
+msgctxt "#32008"
 msgid "You won the game."
 msgstr "Κέρδισες το παιχνίδι."
 
-msgctxt "#3009"
+msgctxt "#32009"
 msgid "Exit?"
 msgstr "Έξοδος;"
 
-msgctxt "#3010"
+msgctxt "#32010"
 msgid "[B]Controls[/B][CR]- Focus tile: MOUSE-HOVER, UP, RIGHT, LEFT, DOWN[CR]- Turn focused tile clockwise: RIGHTCLICK, ESC, BACK[CR]- Turn focused tile counter-clockwise: LEFTCLICK, ENTER[CR]- Lock focused tile: MIDDLECLICK, INFO, SPACE[CR]- Exit Game: STOP, EXIT-BUTTON[CR]"
 msgstr "[B]Χειρισμός[/B][CR]- Εστίαση κομματιού: με το ΠΟΝΤΙΚΙ, ΠΑΝΩ, ΔΕΞΙΑ, ΑΡΙΣΤΕΡΑ, ΚΑΤΩ[CR]- Περιστροφή εστιασμένου κομματιού δεξιόστροφα: ΔΕΞΙ ΚΛΙΚ, ESC, ΠΙΣΩ[CR]- Περιστροφή εστιασμένου κομματιού αριστερόστροφα: ΑΡΙΣΤΕΡΟ ΚΛΙΚ, ENTER[CR]- Κλείδωμα εστιασμένου κομματιού: ΜΕΣΑΙΟ ΚΛΙΚ, INFO, ΚΕΝΟ[CR]- Έξοδος από το Παιχνίδι: ΣΤΟΠ, ΠΛΗΚΤΡΟ ΕΞΟΔΟΥ[CR]"
 
-msgctxt "#3011"
+msgctxt "#32011"
 msgid "[B]Goal[/B][CR]Your goal is to connect all terminals to the server by rotating the tiles[CR]Note, there is only ONE solution possible for each game!"
 msgstr "[B]Στόχος[/B][CR]Στόχος σας είναι να συνδέσετε όλα τα τερματικά με το διακομιστή περιστρέφοντας τα κομμάτια[CR]Να σημειωθεί ότι υπάρχει μόνο ΜΙΑ λύση για κάθε παιχνίδι!"
 
-msgctxt "#3012"
+msgctxt "#32012"
 msgid "Are you sure that you want to exit?"
 msgstr "Είσαι σίγουρος ότι θέλεις να φύγεις;"

@@ -16,54 +16,54 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#3000"
+msgctxt "#32000"
 msgid "New Game"
 msgstr "Nuevo Juego"
 
-msgctxt "#3001"
+msgctxt "#32001"
 msgid "Exit Game"
 msgstr "Salir del Juego"
 
-msgctxt "#3002"
+msgctxt "#32002"
 msgid "Moves:"
 msgstr "Movimientos:"
 
-msgctxt "#3003"
+msgctxt "#32003"
 msgid "Target Movies:"
 msgstr "Objetivo de movimientos:"
 
-msgctxt "#3004"
+msgctxt "#32004"
 msgid "Time:"
 msgstr "Tiempo:"
 
-msgctxt "#3005"
+msgctxt "#32005"
 msgid "0"
 msgstr "0"
 
-msgctxt "#3006"
+msgctxt "#32006"
 msgid "Game ID:"
 msgstr "Juego Nº:"
 
-msgctxt "#3007"
+msgctxt "#32007"
 msgid "You won!"
 msgstr "¡Has ganado!"
 
-msgctxt "#3008"
+msgctxt "#32008"
 msgid "You won the game."
 msgstr "Has ganado el juego."
 
-msgctxt "#3009"
+msgctxt "#32009"
 msgid "Exit?"
 msgstr "¿Salir?"
 
-msgctxt "#3010"
+msgctxt "#32010"
 msgid "[B]Controls[/B][CR]- Focus tile: MOUSE-HOVER, UP, RIGHT, LEFT, DOWN[CR]- Turn focused tile clockwise: RIGHTCLICK, ESC, BACK[CR]- Turn focused tile counter-clockwise: LEFTCLICK, ENTER[CR]- Lock focused tile: MIDDLECLICK, INFO, SPACE[CR]- Exit Game: STOP, EXIT-BUTTON[CR]"
 msgstr "[B]Controles[/B][CR]- Seleccionar una pieza: PASAR EL RATÓN, ARRIBA, DERECHA, IZQUIERDA, ABAJO[CR]- Girar la pieza seleccionada en el sentido de las agujas del reloj: CLICK DERECHO, ESC, ATRÁS[CR]- Girar la pieza seleccionada en el sentido contrario a las agujas del reloj: CLICK IZQUIERDO, INTRO[CR]- Bloquear la pieza seleccionada: CLICK CENTRAL, INFO, ESPACIO[CR]- Salir del Juego: DETENER, BOTÓN SALIR[CR]"
 
-msgctxt "#3011"
+msgctxt "#32011"
 msgid "[B]Goal[/B][CR]Your goal is to connect all terminals to the server by rotating the tiles[CR]Note, there is only ONE solution possible for each game!"
 msgstr "[B]Objetivo[/B][CR]Tu objetivo es conectar todos los terminales al servidor, rotando las piezas.[CR]Nota: ¡sólo hay UNA solución posible para cada juego!"
 
-msgctxt "#3012"
+msgctxt "#32012"
 msgid "Are you sure that you want to exit?"
 msgstr "¿Estás seguro de que deseas salir?"

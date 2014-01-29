@@ -16,6 +16,6 @@ msgstr ""
 "Language: fa\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgctxt "#3004"
+msgctxt "#32004"
 msgid "Time:"
 msgstr "زمان:"
