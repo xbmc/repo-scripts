@@ -2,21 +2,25 @@
 
 #===============================================================================
 # Subscenter.org subtitles service.
-# Version: 1.5.1
+# Version: 2.5
 #
-# TODO:
-#  Filter title (The Office (US) => The Office)
 # Change log:
 # 1.1 - Fixed downloading of non-Hebrew subtitles.
 # 1.2 - Added key field for download URL
 # 1.3 - Fixed null values in website dictionary (changed to None)
 # 1.4 - Fixed key field (Thanks ILRHAES)
 # 1.5 - Added User Agent to getURL, fixed string related bugs and patterns
-# 1.5.1 - Temp fix, TODO: Go over version 1.5 patterns.
+# 1.5.5 - Bug Fix for (1.5)
+# 2.0 - Added rating algorithem 
+#       Added supports downloading IDX\SUBS from sendspace.compile
+#       Added sync icon added to files with rating>8
+#       Added sorted subtitlelist by rating
+# 2.0.1 - Bug fix
+# 2.5 - support for Subscenter new website + workaround (10x to CaTz)
 #
 # Created by: Ori Varon
-# Changed by MeatHook (1.5)
-# Version 1.5.1 by BBLN
+# Changed by: MeatHook (1.5)
+# Changed by: Maor Tal 21/01/2014 (1.5.5, 2.0, 2.5)
 #===============================================================================
 import os, re, xbmc, xbmcgui, string, time, urllib2
 from utilities import languageTranslate, log
@@ -30,7 +34,9 @@ debug_pretext = ""
 #===============================================================================
 
 MULTI_RESULTS_PAGE_PATTERN = u"עמוד (?P<curr_page>\d*) \( סך הכל: (?P<total_pages>\d*) \)"
-SEARCH_RESULTS_PATTERN = "<div class=\"generalWindowRight\">.*?<a href=\"(?P<sid>.*?)\">"
+MOVIES_SEARCH_RESULTS_PATTERN = '<div class="generalWindowRight">.*?<a href="[^"]+(/he/subtitle/movie/.*?)">.*?<div class="generalWindowBottom">'
+TV_SEARCH_RESULTS_PATTERN = '<div class="generalWindowRight">.*?<a href="[^"]+(/he/subtitle/series/.*?)">.*?<div class="generalWindowBottom">'
+releases_types   = ['2011','2009','2012','2010','2013','2014','web-dl', 'webrip', '480p', '720p', '1080p', 'h264', 'x264', 'xvid', 'ac3', 'aac', 'hdtv', 'dvdscr' ,'dvdrip', 'ac3', 'brrip', 'bluray', 'dd51', 'divx', 'proper', 'repack', 'pdtv', 'rerip', 'dts']
 
 #===============================================================================
 # Private utility functions
@@ -71,15 +77,37 @@ def getURLfilename(url):
         log( __name__ ,"Failed to get url: %s" % (url))
     # Second parameter is the filename
     return filename
-
+    
+def getrating(subsfile, videofile):
+    x=0
+    rating = 0
+    log(__name__ ,"# Comparing Releases:\n %s [subtitle-rls] \n %s  [filename-rls]" % (subsfile,videofile))
+    videofile = "".join(videofile.split('.')[:-1]).lower()
+    subsfile = subsfile.lower().replace('.', '')
+    videofile = videofile.replace('.', '')
+    for release_type in releases_types:
+        if (release_type in videofile):
+            x+=1
+            if (release_type in subsfile): rating += 1
+    if(x): rating=(rating/float(x))*4
+    # Compare group name
+    if videofile.split('-')[-1] == subsfile.split('-')[-1] : rating += 1
+    # Group name didnt match 
+    # try to see if group name is in the beginning (less info on file less weight)
+    elif videofile.split('-')[0] == subsfile.split('-')[-1] : rating += 0.5
+    if rating > 0:
+        rating = rating * 2
+    log(__name__ ,"# Result is:  %f" % rating)
+    return round(rating)
+    
 # The function receives a subtitles page id number, a list of user selected
 # languages and the current subtitles list and adds all found subtitles matching
 # the language selection to the subtitles list.
-def getAllSubtitles(subtitlePageID,languageList,subtitlesList):
-    log( __name__ ,"Get all subtitles")
+def getAllSubtitles(subtitlePageID,languageList,fname):
     # Retrieve the subtitles page (html)
+    subs= []
     try:
-        subtitlePage = getURL(BASE_URL + str(subtitlePageID).lstrip())
+        subtitlePage = getURL(BASE_URL + subtitlePageID)
     except:
         # Didn't find the page - no such episode?
         return
@@ -87,27 +115,29 @@ def getAllSubtitles(subtitlePageID,languageList,subtitlesList):
     if (not subtitlePage):
         return
     # Find subtitles dictionary declaration on page
-    tempStart = subtitlePage.index("subtitles_groups = ")
-    # Look for the following line break
-    tempEnd = subtitlePage.index("\n",subtitlePage.index("subtitles_groups = "))
-    toExec = "foundSubtitles = "+subtitlePage[tempStart+len("subtitles_groups = "):tempEnd]
+    toExec = "foundSubtitles = " + subtitlePage
     # Remove junk at the end of the line
     toExec = toExec[:toExec.rfind("}")+1]
     # Replace "null" with "None"
     toExec = toExec.replace("null","None")
-    exec(toExec)
+    exec(toExec) in globals(), locals()
     log( __name__ ,"Built webpage dictionary")
     for language in foundSubtitles.keys():
         if (languageTranslate(language, 2, 0) in languageList): 
             for translator in foundSubtitles[language]:
                 for quality in foundSubtitles[language][translator]:
                     for rating in foundSubtitles[language][translator][quality]:
-                        subtitlesList.append({'rating': rating, 'sync': False,
-                            'filename': foundSubtitles[language][translator][quality][rating]["subtitle_version"],
+                        title=foundSubtitles[language][translator][quality][rating]["subtitle_version"]
+                        Srating=getrating(title,fname)
+                        subs.append({'rating': str(Srating), 'sync': Srating>=8,
+                            'filename': title,
                             'subtitle_id': foundSubtitles[language][translator][quality][rating]["id"],
                             'language_flag': 'flags/' + language + '.gif',
                             'language_name': languageTranslate(language, 2, 0),
-                            'key': foundSubtitles[language][translator][quality][rating]["key"]})
+                            'key': foundSubtitles[language][translator][quality][rating]["key"],
+                            'notes': re.search('http://www\.sendspace\.com/file/\w+$',foundSubtitles[language][translator][quality][rating]["notes"])})
+    # sort, to put syncs on top
+    return sorted(subs,key=lambda x: int(float(x['rating'])),reverse=True)
 
 # Extracts the downloaded file and find a new sub/srt file to return.
 # Note that Sratim.co.il currently isn't hosting subtitles in .txt format but
@@ -183,7 +213,7 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
 
     # Check if tvshow and replace spaces with + in either case
     if tvshow:
-        searchString = tvshow.replace(" ","+")
+        searchString = re.split(r'\s\(\w+\)$',tvshow)[0].replace(" ","+")
     else:
         searchString = title.replace(" ","+")
 
@@ -195,27 +225,48 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     if (not searchResults):
         return subtitlesList, "", "Search timed out, please try again later."
 
-    subtitleIDs = re.findall(SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
-    log( __name__ , "Looking for page links")
+    # Look for subtitles page links
+    if tvshow:
+        subtitleIDs = re.findall(TV_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+    else:
+        subtitleIDs = re.findall(MOVIES_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)    
+    
     # Look for more subtitle pages
     pages = re.search(MULTI_RESULTS_PAGE_PATTERN,unicode(searchResults,"utf-8"))
     # If we found them look inside for subtitles page links
     if (pages):
-        for pageId in xrange(int(pages.group("total_pages"))):
-            searchResults = getURL(BASE_URL + "/he/subtitle/search/?q=" + searchString.lower() + "&page=" + str(pageId))
-            tempSIDs = re.findall(SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+        while (not (int(pages.group("curr_page"))) == int(pages.group("total_pages"))):
+            searchResults = getURL(BASE_URL + "/he/subtitle/search/?q="+searchString.lower()+"&page="+str(int(pages.group("curr_page"))+1))
+
+            if tvshow:
+                tempSIDs = re.findall(TV_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+            else:
+                tempSIDs = re.findall(MOVIES_SEARCH_RESULTS_PATTERN,searchResults,re.DOTALL)
+
+
+
             for sid in tempSIDs:
                 subtitleIDs.append(sid)
+            pages = re.search(MULTI_RESULTS_PAGE_PATTERN,unicode(searchResults,"utf-8"))
     # Uniqify the list
     subtitleIDs=list(set(subtitleIDs))
-    # If looking for tvshows trying to append season and episode to url
-    if tvshow:
-        log( __name__ ,"%s Adding season and episode to urls" % (debug_pretext))
-        for id in xrange(len(subtitleIDs)):
-            subtitleIDs[id] += str("/"+season+"/"+episode+"/")
-    for id in subtitleIDs:
-        getAllSubtitles(id,languageList,subtitlesList)
-    # Standard output
+    # If looking for tvshos try to append season and episode to url
+
+    for i in range(len(subtitleIDs)):
+        subtitleIDs[i] = subtitleIDs[i].replace("/subtitle/","/cinemast/data/")
+        if (tvshow):
+            subtitleIDs[i]=subtitleIDs[i].replace("/series/","/series/sb/")
+            subtitleIDs[i] += season+"/"+episode+"/"
+        else:
+            subtitleIDs[i]=subtitleIDs[i].replace("/movie/","/movie/sb/")
+             
+
+    for sid in subtitleIDs:
+        tmp = getAllSubtitles(sid,languageList,os.path.basename(file_original_path))
+        subtitlesList=subtitlesList + ((tmp) if tmp else [])
+    
+    
+    # Standard output -
     # subtitles list (list of tuples built in getAllSubtitles),
     # session id (e.g a cookie string, passed on to download_subtitles),
     # message to print back to the user
@@ -234,13 +285,26 @@ def download_subtitles (subtitles_list, pos, zip_subs, tmp_sub_dir, sub_folder, 
     subtitle_id = subtitles_list[pos][ "subtitle_id" ]
     filename = subtitles_list[pos][ "filename" ]
     key = subtitles_list[pos][ "key" ]
-    url = BASE_URL + "/subtitle/download/"+languageTranslate(subtitles_list[pos][ "language_name" ], 0, 2)+"/"+str(subtitle_id)+"/?v="+filename+"&key="+key
-    log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))
-    # Get the intended filename (don't know if it's zip or rar)
-    archive_name = getURLfilename(url)
-    # Get the file content using geturl()
-    content = getURL(url)
-    subs_file = None
+    # check if need to download subtitle from sendspace
+    if(subtitles_list[pos]["notes"]):
+        # log to sendspace
+        content = getURL(subtitles_list[pos]["notes"].group())
+        # find download link
+        url = re.search(r'<a id="download_button" href?="(.+sendspace.+\.\w\w\w)" ', content)
+        content = None
+        if (url):
+            url = url.group(1)
+            log( __name__ ,"%s Fetching subtitles from sendspace.com using url %s" % (debug_pretext, url))
+            content = getURL(url)
+            archive_name = "rarsubs" + re.search(r'\.\w\w\w$',url).group(0)
+    else:
+        url = BASE_URL + "/" + languageTranslate(subtitles_list[pos][ "language_name" ], 0, 2)+"/subtitle/download/"+languageTranslate(subtitles_list[pos][ "language_name" ], 0, 2)+"/"+str(subtitle_id)+"/?v="+filename+"&key="+key
+        log( __name__ ,"%s Fetching subtitles using url %s" % (debug_pretext, url))
+        # Get the intended filename (don't know if it's zip or rar)
+        archive_name = getURLfilename(url)
+        # Get the file content using geturl()
+        content = getURL(url)
+    subs_file = ""
     if content:
         local_tmp_file = os.path.join(tmp_sub_dir, archive_name)
         log( __name__ ,"%s Saving subtitles to '%s'" % (debug_pretext, local_tmp_file))

@@ -193,9 +193,10 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     if len(tvshow) == 0:
         search_string = title
     if len(tvshow) > 0:
+        tvshow = string.strip(tvshow)
         search_string = tvshow + " - " + seasons[int(season)] + " Season"
     log( __name__ ,"%s Search string = %s" % (debug_pretext, search_string))
-    url = main_url + "/subtitles/title.aspx?q=" + urllib.quote_plus(search_string)
+    url = main_url + "/subtitles/title?q=" + urllib.quote_plus(search_string)
     content, response_url = geturl(url)
     if content is not None:
         if re.search("subtitles-\d{2,10}\.aspx", response_url, re.IGNORECASE):

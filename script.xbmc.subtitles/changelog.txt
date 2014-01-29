@@ -1,3 +1,8 @@
+3.9.18
+- [fix] fixed search URL for Subscene service, Marcel Anacker
+- [fix] big fix for Subscenter, Maor Tal
+- [fix] Fix for Napisy24.pl, mrto
+
 3.9.17
 - Remove Bierdopje.com as a service
 
