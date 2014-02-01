@@ -79,3 +79,16 @@ msgstr ""
 msgctxt "#32014"
 msgid "No speakers found, please enter your IP address manually"
 msgstr ""
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Refresh Interval (Seconds)"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr ""
+

@@ -3,6 +3,9 @@
 		<setting label="32013" type="action" action="RunScript($CWD/discovery.py)"/>
 		<setting id="ipAddress" type="ipaddress" label="32002" default="0.0.0.0"/>
 	</category>
+	<category label="32015">
+		<setting id="refreshInterval" label="32016" type="slider" default="2" range="0.5,0.5,5" option="float"/>
+	</category>
 	<category label="32011">
 		<setting id="notifEnabled" type="bool" label="32003" default="true"/>
 		<setting id="notifDisplayDuration" enable="eq(-1,true)" label="32004" type="slider" default="3" range="0,1,60" option="int"/>
@@ -12,5 +15,6 @@
 	</category>
 	<category label="32012">
 		<setting id="logEnabled" type="bool" label="32009" default="false"/>
+		<setting id="useTestData" type="bool" label="32017" default="false"/>
 	</category>
 </settings>

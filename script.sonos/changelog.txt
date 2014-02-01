@@ -1,2 +1,9 @@
+v1.0.2
+- Mini Sonos controller added with album art
+
+v1.0.1
+- Don't display notification on startup if Sonos is not playing
+- Initial version of controller
+
 v1.0.0:
 - Initial release

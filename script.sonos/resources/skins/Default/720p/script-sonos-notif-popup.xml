@@ -14,8 +14,15 @@
 				<posy>0</posy>
 				<width>420</width>
 				<height>90</height>
-				<colordiffuse>EEFFFFFF</colordiffuse>
-				<texture border="12">OverlayDialogBackground.png</texture>
+				<colordiffuse>CCFFFFFF</colordiffuse>
+				<texture border="12">npServiceRatingBg@2x.png</texture>
+			</control>
+			<control type="image">
+				<posx>5</posx>
+				<posy>5</posy>
+				<width>410</width>
+				<height>80</height>
+				<texture border="20">msNowPlayingBg_ipad.png</texture>
 			</control>
 			<control type="image" id="400">
 				<description>avatar</description>
