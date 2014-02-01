@@ -2,13 +2,15 @@
 # Addon Name: VideoExtras
 # Addon id: script.videoextras
 # Addon Provider: robwebset
+# Translators:
+# davidmuma <davidmumar@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"PO-Revision-Date: 2014-01-30 11:40+0000\n"
+"Last-Translator: davidmuma <davidmumar@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,9 +18,49 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Añadir extras de vídeo para sus películas y programas de televisión."
+
+msgctxt "Addon Description"
+msgid ""
+"Provides a way to add Video Extras to your Video library. Look at the wiki "
+"for setup instructions."
+msgstr "Proporciona una manera de añadir extras de vídeos a su biblioteca. Mira el wiki para instrucciones de instalación."
+
+msgctxt "Addon Disclaimer"
+msgid ""
+"Skinners, please see the wiki to know how to integrate it in your skin: "
+"http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgstr "Skinners, por favor ver el wiki para saber cómo integrarlo en tu piel: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+
 msgctxt "#32001"
 msgid "Extras"
 msgstr "Extras"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Nombre de carpeta para extras"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Buscar en carpetas anidadas"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Habilitar extras con la etiqueta del archivo"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Extras con el nombre de la etiqueta del archivo"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Mostra menú después de reproducir un extra"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Selección de vídeo"
 
 msgctxt "#32008"
 msgid "Information"
@@ -28,13 +70,41 @@ msgctxt "#32009"
 msgid "Home"
 msgstr "Inicio"
 
+msgctxt "#32010"
+msgid "File System"
+msgstr "Sistema de archivos"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Ubicación remota de extras"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Usar ubicación por defecto para extras "
+
 msgctxt "#32013"
 msgid "Path"
 msgstr "Ruta"
 
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Subcarpeta por defecto para películas"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Subcarpeta por defecto para series"
+
 msgctxt "#32016"
 msgid "Advanced"
 msgstr "Avanzado"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Forzar visualización del botón de extras"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Excluir archivos de expresiones regulares"
 
 msgctxt "#32019"
 msgid "Debugging"
@@ -48,9 +118,25 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "Base de Datos"
 
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Habilitar el soporte de base de datos"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Operaciones"
+
 msgctxt "#32024"
 msgid "Clean Database"
 msgstr "Limpiar base de datos"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Usar pantalla de lista detallada"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Mostar ventana después de salir de la lista detallada"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -59,6 +145,14 @@ msgstr "Reproducir todo"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Info"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Ningún extra encontrado"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Volver a empezar desde"
 
 msgctxt "#32105"
 msgid "Start from beginning"

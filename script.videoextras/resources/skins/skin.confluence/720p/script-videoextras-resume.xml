@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="buttonMenu">
+	<defaultcontrol>9001</defaultcontrol>
+	<include>dialogeffect</include>
+	<allowoverlay>yes</allowoverlay>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="button" id="9001">
+			<description>Make sure we hit the first button in the group list and not the close window button</description>
+			<posx>-16</posx>
+			<posy>-16</posy>
+			<width>4</width>
+			<height>4</height>
+			<label>-</label>
+			<font>-</font>
+			<onfocus>down</onfocus>
+			<texturefocus>-</texturefocus>
+			<texturenofocus>-</texturenofocus>
+			<onleft>9000</onleft>
+			<onright>9000</onright>
+			<onup>9000</onup>
+			<ondown>2</ondown>
+		</control>
+		<control type="grouplist" id="9000">
+			<posx>470</posx>
+			<posy>0</posy>
+			<width>340</width>
+			<height>720</height>
+			<onleft>9000</onleft>
+			<onright>9000</onright>
+			<onup>9000</onup>
+			<ondown>9000</ondown>
+			<itemgap>0</itemgap>
+			<align>center</align>
+			<control type="group" id="1">
+				<width>340</width>
+				<height>30</height>
+				<control type="image">
+					<description>background top image</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>340</width>
+					<height>30</height>
+					<texture border="20,19,20,0">DialogContextTop.png</texture>
+				</control>
+				<control type="button" id="20">
+					<description>Close Window button</description>
+					<posx>260</posx>
+					<posy>5</posy>
+					<width>64</width>
+					<height>32</height>
+					<label>-</label>
+					<font>-</font>
+					<onclick>PreviousMenu</onclick>
+					<texturefocus>DialogCloseButton-focus.png</texturefocus>
+					<texturenofocus>DialogCloseButton.png</texturenofocus>
+					<onleft>2</onleft>
+					<onright>13</onright>
+					<onup>13</onup>
+					<ondown>2</ondown>
+					<visible>system.getbool(input.enablemouse)</visible>
+				</control>
+			</control>
+			<control type="button" id="2">
+				<description>Resume button</description>
+				<width>340</width>
+				<height>40</height>
+				<textcolor>grey2</textcolor>
+				<focusedcolor>white</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<texturefocus border="25,5,25,5">ShutdownButtonFocus.png</texturefocus>
+				<texturenofocus border="25,5,25,5">ShutdownButtonNoFocus.png</texturenofocus>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32104] </label>
+			</control>
+			<control type="button" id="40">
+				<description>Start from beginning button</description>
+				<width>340</width>
+				<height>40</height>
+				<textcolor>grey2</textcolor>
+				<focusedcolor>white</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<texturefocus border="25,5,25,5">ShutdownButtonFocus.png</texturefocus>
+				<texturenofocus border="25,5,25,5">ShutdownButtonNoFocus.png</texturenofocus>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32105]</label>
+			</control>
+			<control type="image" id="14">
+				<description>background bottom image</description>
+				<posx>0</posx>
+				<width>340</width>
+				<height>25</height>
+				<texture border="20,0,19,20">DialogContextBottom.png</texture>
+			</control>
+		</control>
+	</controls>
+</window>

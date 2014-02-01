@@ -37,6 +37,15 @@ else:
 
 __addon__     = xbmcaddon.Addon(id='script.videoextras')
 __addonid__   = __addon__.getAddonInfo('id')
+__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
+__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+
+sys.path.append(__resource__)
+sys.path.append(__lib__)
+
+from VideoParser import VideoParser
+
 
 def log(txt):
     if __addon__.getSetting( "logEnabled" ) == "true":
@@ -203,6 +212,8 @@ class BaseExtrasItem():
         self.fanart = ""
         self._loadImages(filename)
 
+        self.duration = None
+
         # Record if the match was by filename rather than in Extras sub-directory
         self.isFileMatchingExtra = isFileMatchExtra
         # Check if there is an NFO file to process
@@ -267,6 +278,49 @@ class BaseExtrasItem():
         if self.fanart == "":
             self.fanart = SourceDetails.getFanArt()
         return self.fanart
+
+    # Returns the duration in seconds
+    def getDuration(self):
+        if self.duration == None:
+            try:
+                # Parse the video file for the duration
+                self.duration = VideoParser().getVideoLength(self.filename)
+                log("BaseExtrasItem: Duration retrieved is = %d" % self.duration)
+            except:
+                log("BaseExtrasItem: Failed to get duration from %s" % self.filename)
+                log("BaseExtrasItem: %s" % traceback.format_exc())
+                self.duration = 0
+        
+        return self.duration
+
+    def getDisplayDuration(self, forcedDuration=0):
+        durationInt = forcedDuration
+        if forcedDuration < 1:
+            durationInt = self.getDuration()
+
+        displayDuration = ""
+        seconds = 0
+        minutes = 0
+        hours = 0
+
+        # Convert the duration into a viewable format
+        if durationInt > 0:
+            seconds = durationInt % 60
+ 
+            if durationInt > 60:
+                minutes = ((durationInt - seconds) % 3600)/60
+
+            # Default the display to MM:SS
+            displayDuration = "%02d:%02d" % (minutes, seconds)
+
+            # Only add the hours is really needed
+            if durationInt > 3600:
+                hours = (durationInt - (minutes*60) - seconds)/3600
+                displayDuration = "%02d:%s" % (hours, displayDuration)
+
+        # Set the display duration to be the time in minutes
+        return displayDuration
+        
 
     # Load the Correct set of images for icons and thumbnails
     # Image options are
@@ -531,6 +585,9 @@ class ExtrasItem(BaseExtrasItem):
 
     def getTotalDuration(self):
         return self.totalDuration
+
+    def getDisplayDuration(self):
+        return BaseExtrasItem.getDisplayDuration(self, self.totalDuration)
 
     def setResumePoint(self, currentPoint):
         # Now set the flag to show if it has been watched
@@ -1018,10 +1075,14 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         for anExtra in self.files:
             log("VideoExtrasWindow: filename: %s" % anExtra.getFilename())
 
-            anItem = xbmcgui.ListItem(anExtra.getDisplayName(), path=SourceDetails.getFilenameAndPath())
+            # Label2 is used to store the duration in HH:MM:SS format
+            anItem = xbmcgui.ListItem(anExtra.getDisplayName(), anExtra.getDisplayDuration(), path=SourceDetails.getFilenameAndPath())
             anItem.setProperty("FileName", anExtra.getFilename())
             anItem.setInfo('video', { 'PlayCount': anExtra.getWatched() })
             anItem.setInfo('video', { 'Title': SourceDetails.getTitle() })
+            # We store the duration here, but it is only in minutes and does not
+            # look very good if displayed, so we also set Label2 to a viewable value
+            anItem.setInfo('video', { 'Duration': int(anExtra.getDuration()/60) })
             if SourceDetails.getTvShowTitle() != "":
                 anItem.setInfo('video', { 'TvShowTitle': SourceDetails.getTvShowTitle() })
 
