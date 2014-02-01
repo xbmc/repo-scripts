@@ -16,6 +16,22 @@ msgstr ""
 "Language: lv\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Atrašanās vietas iestatīšana"
+
 msgctxt "#32110"
 msgid "Enabled"
 msgstr "Ieslēgts"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Atrašanās vieta 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Atrašanās vieta 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Atrašanās vieta 3"

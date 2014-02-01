@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.wunderground" name="Weather Underground" version="3.0.1" provider-name="Team XBMC">
+<addon id="weather.wunderground" name="Weather Underground" version="3.0.2" provider-name="Team XBMC">
 	<requires>
 		<import addon="xbmc.python" version="2.12.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -33,6 +33,7 @@
 		<summary lang="is">Veðurspár frá wunderground.com</summary>
 		<summary lang="it">Meteo fornito da wunderground.com</summary>
 		<summary lang="ja">wunderground.com 天気予報</summary>
+		<summary lang="ka">ამინდის პროგნოზი wunderground.com-გან</summary>
 		<summary lang="ko">wunderground.com 날씨예보</summary>
 		<summary lang="lt">Orų prognozė nuo/iš wunderground.com</summary>
 		<summary lang="mk">Временска прогноза од wunderground.com</summary>
@@ -84,6 +85,7 @@
 		<description lang="is">Veðurspár frá Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="it">Meteo fornito da Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="ja">Weather Underground (http://www.wunderground.com/) 提供の天気予報</description>
+		<description lang="ka">ამინდის პროგნოზი მოწოდებულია Weather Underground-ის მიერ (http://www.wunderground.com/)</description>
 		<description lang="ko">Weather Underground (http://www.wunderground.com/)가 제공하는 날씨예보</description>
 		<description lang="lt">Orų prognozė teikiama (pateikiama) iš Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="mk">Временска прогноза обезбедена од Weather Underground (http://www.wunderground.com/)</description>
@@ -118,7 +120,7 @@
 		<disclaimer lang="cs">Používáním tohoto rozšíření schvalujete podmínky užívání umístěné na http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="cy">Mae defnyddio'r ategyn yma'n awgrymu eich bod yn cytuno i'r Amodau Gwasanaeth sydd yn http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="da">Brug af denne addon indebærer, at du har erklæret dig enig i vilkårene for tjenesten, der findes på http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
-		<disclaimer lang="de">Mit Benutzung dieses Addons bestätigen Sie, dass Sie den Nutzungsbedingungen auf http://www.wunderground.com/weather/api/d/terms.html zustimmen.</disclaimer>
+		<disclaimer lang="de">Mit Benutzung dieses Addons bestätigen Sie die Nutzungsbedingungen, zu finden unter http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="el">Χρήση αυτού του πρόσθετου συνεπάγεται την αποδοχή των Όρων Χρήσης της Υπηρεσίας (Terms of Service) οι οποίοι βρίσκονται στο http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="en">Use of this add-on implies that you have agreed to the Terms of Service located at http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="es">Al usar este complemento, aceptas los términos de uso de http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
@@ -136,6 +138,7 @@
 		<disclaimer lang="is">Notkun á þessari viðbót gefur til kynna að þú hafir samþykkt skilmálana sem finna má á http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="it">Usando questo add-on accetti i Termini di Servizio consultabili su http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="ja">このアドオンを使うと、http://www.wunderground.com/weather/api/d/terms.html にある規約に合意したものと見なされます</disclaimer>
+		<disclaimer lang="ka">ამ ჩადგმის გამოყენება ადასტურებს იმას, რომ თქვენ ეთანხმებით  მოხმარების წესებს, რომელიც განთავსებულია მისამართზე http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="ko">이 애드온을 사용하는 것은 http://www.wunderground.com/weather/api/d/terms.html 에 있는 서비스 약관에 동의함을 의미합니다</disclaimer>
 		<disclaimer lang="lt">Naudodami šį priedą jūs sutinate(-kote) su paslaugų teikimo sąlygomis esančiomis http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="mk">Користење на овој додаток имплицира дека се согласувате со условите за користење кои се наоѓаат на http://www.wunderground.com/weather/api/d/terms.html</disclaimer>

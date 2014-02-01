@@ -16,9 +16,25 @@ msgstr ""
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "إعدادات الموقع"
+
 msgctxt "#32110"
 msgid "Enabled"
 msgstr "ممكن"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "الموقع 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "الموقع 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "الموقع 3"
 
 msgctxt "#32121"
 msgid "Weekend"

@@ -1,3 +1,6 @@
+v3.0.2
+- fixed addon could disable itself when setting up locations
+
 v3.0.1
 - no reason
 

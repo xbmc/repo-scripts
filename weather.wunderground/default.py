@@ -613,6 +613,7 @@ if sys.argv[1].startswith('Location'):
         if locations != []:
             selected = dialog.select(xbmc.getLocalizedString(396), locations)
             if selected != -1:
+                __addon__.setSetting('Enabled', 'true')
                 __addon__.setSetting(sys.argv[1], locations[selected])
                 __addon__.setSetting(sys.argv[1] + 'id', locationids[selected])
                 log('selected location: %s' % locations[selected])
