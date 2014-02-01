@@ -55,7 +55,7 @@ class Viewer:
         self.window.getControl(self.CONTROL_LABEL).setLabel("%s : %s" % (__addonname__, heading, ))
         # set text
         self.window.getControl(self.CONTROL_TEXTBOX).setText(text)
-        xbmc.sleep(10000)
+        xbmc.sleep(2000)
 
     def getText(self):
         try:
