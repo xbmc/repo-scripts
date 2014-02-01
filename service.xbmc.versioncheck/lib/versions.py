@@ -31,7 +31,7 @@ def compare_version(version_installed, versionlist):
     msg = ''
     if version_installed['major'] < int(versionlist_stable[0]['major']):
         msg = 32003
-        oldversion = True
+        oldversion = "stable"
         log("Version available  %s" %versionlist_stable[0])
 
     # check on same major version installed and available
@@ -39,12 +39,12 @@ def compare_version(version_installed, versionlist):
         # check on smaller minor version
         if version_installed['minor'] < int(versionlist_stable[0]['minor']):
             msg = 32003
-            oldversion = True
+            oldversion = "stable"
             log("Version available  %s" %versionlist_stable[0])
         # check if not installed a stable so always notify
         elif version_installed['minor'] == int(versionlist_stable[0]['minor']) and version_installed['tag'] != "stable":
             msg = 32008
-            oldversion = True
+            oldversion = "stable"
             log("Version available  %s" %versionlist_stable[0])
         else:
             log("Last available stable installed")
@@ -82,6 +82,15 @@ def compare_version(version_installed, versionlist):
                     if  version_installed['revision'] < versionlist_prealpha[0]['revision']:
                         msg = 32007
                         oldversion = True
+                        log("Version available  %s" %versionlist_prealpha[0])
+
+            # exclude if installed RC, beta or alpha on checking for newer prealpha
+            # if no more monthlies are build enable this section
+            if not oldversion and versionlist_prealpha and version_installed['tag'] not in ["releasecandidate", "beta", "alpha"]:
+                if version_installed['major'] <= int(versionlist_prealpha[0]['major']):
+                    if  version_installed['revision'] <= versionlist_prealpha[0]['revision']:
+                        msg = 32007
+                        oldversion = "monthly"
                         log("Version available  %s" %versionlist_prealpha[0])
 
         log("Nothing to see here, move along. Running a latest non stable release")

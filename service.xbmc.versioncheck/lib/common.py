@@ -16,6 +16,7 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import os
 import xbmc
 import xbmcaddon
 import xbmcgui
@@ -25,6 +26,7 @@ __addon__        = xbmcaddon.Addon()
 __addonversion__ = __addon__.getAddonInfo('version')
 __addonname__    = __addon__.getAddonInfo('name')
 __addonpath__    = __addon__.getAddonInfo('path').decode('utf-8')
+__addonprofile__ = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode('utf-8')
 __icon__         = __addon__.getAddonInfo('icon')
 
 def localise(id):
@@ -59,7 +61,7 @@ def dialog_yesno(line1 = 0, line2 = 0):
                                   localise(line1),
                                   localise(line2))
 
-def upgrade_message(msg, upgrade):
+def upgrade_message(msg, oldversion, upgrade):
     # Don't show while watching a video
     while(xbmc.Player().isPlayingVideo() and not xbmc.abortRequested):
         xbmc.sleep(1000)
@@ -75,12 +77,13 @@ def upgrade_message(msg, upgrade):
                             localise(32001),
                             localise(32002))
         # sets check to false which is checked on startup
-        if dialog_yesno(32009, 32010):
+        if oldversion == "stable" and dialog_yesno(32009, 32010):
             __addon__.setSetting("versioncheck_enable", 'false')
         # set first run to false to only show a popup next startup / every two days
         __addon__.setSetting("versioncheck_firstrun", 'false')
+
     # Show notification after firstrun
-    elif not xbmc.abortRequested:
+    elif __addon__.getSetting("versioncheck_enable") == 'true':
         if upgrade:
             return dialog_yesno(msg)
         else:
@@ -90,3 +93,10 @@ def upgrade_message(msg, upgrade):
                                                                   __icon__))
     else:
         pass
+    # tells users to upgrade to nightlies as there are no more monthlies
+    if oldversion == "monthly":
+        upgrademessage = __addon__.getSetting("versioncheck_gotham_alpha_notice") != 'false'
+        if upgrademessage:
+            __addon__.setSetting("versioncheck_gotham_alpha_notice", 'false')
+            runcmd = os.path.join(__addonpath__, 'lib/viewer.py')
+            xbmc.executebuiltin('XBMC.RunScript (%s,%s) '%(runcmd, 'gotham-alpha_notice'))
