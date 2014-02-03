@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!-- Script Settings -->
+
+    <string id="30100">所在地设置</string>
+    <string id="30110">更改地点1</string>
+    <string id="30111">更改地点2</string>
+    <string id="30112">更改地点3</string>
+    <string id="30201">选择省/自治区/直辖市</string>
+    <string id="30202">选择%s的市</string>
+    <string id="30203">选择%s的区县</string>
+</strings>

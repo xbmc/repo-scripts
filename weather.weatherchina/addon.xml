@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="weather.weatherchina" name="Weather China" version="1.0.0" provider-name="Taxigps">
+	<requires>
+		<import addon="xbmc.python" version="2.12.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+	</requires>
+	<extension point="xbmc.python.weather" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Weather forecast from www.weather.com.cn</summary>
+		<summary lang="zh">来自www.weather.com.cn的天气预报</summary>
+		<description lang="en">Weather forecast provided by Weather China (http://www.weather.com.cn/)</description>
+		<description lang="zh">由中国天气网（http://www.weather.com.cn/）提供的天气预报信息。中国天气网是中国气象局面向社会和公众、以公益性为基础的气象服务门户网站。</description>
+		<language></language>
+		<platform>all</platform>
+		<forum>http://forum.xbmc.org/showthread.php?tid=185235</forum>
+		<source>https://github.com/taxigps/weather.weatherchina/</source>
+	</extension>
+</addon>
