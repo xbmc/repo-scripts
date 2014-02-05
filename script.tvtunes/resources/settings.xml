@@ -14,11 +14,11 @@
 		<setting id="trackLengthLimit" label="32027" type="slider" default="0" range="0,10,180" option="int" />
 	</category>
 	<category label="32992">
-		<setting id="exact_match" type="bool" label="32009" default="true"/>
+		<setting id="exact_match" type="bool" label="32009" default="false"/>
 		<setting id="multiThemeDownload" type="bool" label="32014" default="false"/>
 		<setting id="searchMovieDownload" type="bool" label="32015" default="false"/>
 		<setting id="showVideoInfoButton" type="bool" label="32020" default="true"/>
-		<setting id="themeSearchSource" type="labelenum" label="32028" values="televisiontunes.com|goear.com" default="televisiontunes.com" />
+		<setting id="themeSearchSource" type="labelenum" label="32028" values="televisiontunes.com|goear.com" default="goear.com" />
 		<setting label="32022" type="lsep"/>
 		<setting label="32023" type="action" action="RunScript($CWD/resources/tvtunes_scraper.py)"/>
 	</category>

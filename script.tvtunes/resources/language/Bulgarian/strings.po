@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2014-01-05 00:30+0000\n"
+"PO-Revision-Date: 2014-01-19 23:50+0000\n"
 "Last-Translator: Kiril <neohidra@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgstr "Автоматично сваляне при точно съвпаден
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
-msgstr "Възпроизвеждай различни мелодии (при повече налични)"
+msgstr "Възпроизвеждай различни мелодии (при няколко налични)"
 
 msgctxt "#32011"
 msgid "Random start time"
@@ -95,7 +95,7 @@ msgstr "Добавяне на повече от една мелодия (без 
 
 msgctxt "#32015"
 msgid "Search for movie themes"
-msgstr "Търси и мелодии за филми"
+msgstr "Търсене на мелодии и за филмите"
 
 msgctxt "#32016"
 msgid "Play themes when browsing Movie list"
@@ -143,7 +143,7 @@ msgstr "Име на директорията"
 
 msgctxt "#32027"
 msgid "Limit track duration when multiple themes (seconds)"
-msgstr "При няколко налични, ограничи продължителността на отделните мелодии (сек)"
+msgstr "При няколко налични мелодии просвирвай всяка по (сек)"
 
 msgctxt "#32101"
 msgid "ERROR"

@@ -1,3 +1,9 @@
+v4.3.2
+- Improve the way the current volume is retrieved
+- Support empty value on manual search entry
+- Change a couple of scraper defaults for new installs
+- Fix issues on some systems where themes downloaded to wrong location
+
 v4.3.1
 - Remove duplicates from goear search
 - Remove data in brackets from goear search
