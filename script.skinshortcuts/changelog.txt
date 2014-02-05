@@ -1,0 +1,15 @@
+v0.2.0
+- Removed check for settings shortcut (skins are now recommended to always provide alternative settings access)
+- Video library shortcuts are loaded from video library node files (test)
+- Video and music playlists are now grouped together
+- Option to use edit control for label and action in management dialog
+- Live TV renamed to PVR
+- Support for managing widgets, backgrounds
+- Support for custom menu lists in skinsettings.xml
+- Shortcuts with overriden images and override files are kept in memory to speed up listings
+- Submenu shortcuts are now all loaded at once, with visibility conditions for switching lists
+- Improved utf-8 support
+- Bug fixes
+
+v0.1.0
+- Initial release

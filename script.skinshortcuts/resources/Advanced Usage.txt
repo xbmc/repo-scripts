@@ -1,0 +1,224 @@
+This file details advanced usage options for the Skin Shortcuts script. It is of most use when using Skin Shortcuts to provide the whole the whole main menu system.
+
+Managing Custom Backgrounds
+---------------------------
+
+Many skin allow users to select custom backgrounds for various areas of the skin. If using Skin Shortcuts to provide the whole main menu, there are a few ways to extend these to the main menu items the user has selected, for example you could use the labelID or a custom settings menu.
+
+However, the recommended method is as follows:
+
+Continue to provide a method of setting the background for each area where you want the user to be able to specify a custom background.
+
+Tell Skin Shortcuts about each of these areas, including a custom ID for each one and the defaults for labelID's, in the overrides.xml file. (See "overrides.xml", section 6)
+
+Include a button with the id 310 in your script-skinshortcuts.xml file, which will let the user select from the backgrounds you have defined.
+
+When populating main menu items, Skin Shortcuts will then add a 'background' property to each item, containing the custom ID of the background chosen, which you can test against for visibility.
+
+Custom backgrounds are saved on a skin-by-skin basis.
+
+
+Managing Widgets
+----------------
+
+When using Skin Shortcuts to provide the whole main menu, you may wish to provide a series of widgets - such as PVR information, weather conditions, recently added movies, and so forth - that the user can choose from for each main menu item.
+
+To let the user select from these widgets, include a button with the id 309 in your script-skinshortcuts.xml file.
+	
+Then use the following in the visibility condition for each widget:
+
+	<visible>StringCompare(Container(9000).ListItem.Property(Widget),[WidgetID])</visible>
+	
+You can define your widgets - along with their WidgetID, and default labelID's they should appear against - in an overrides.xml file. See "overrides.xml" sections 3 and 4 for more details.
+
+Widgets are saved on a skin-by-skin basis.
+
+
+Multiple Sub-Menus
+------------------
+
+When using Skin Shortcuts to provide the whole main menu system, you may wish to provide more than one sub menu. For example, you could ape Confluence's favourites - which are displayed below the main and sub-menu's - with an additional sub menu.
+
+
+
+In the list where you want an additional sub-menu to appear, put the following in the <content> tag:
+ 
+	plugin://script.skinshortcuts?type=submenu&amp;level=1&amp;mainmenuID=9000
+   
+Remember to replace 9000 with the id of the list you are using for the main menu. To provide more sub-menus for a main menu item, increase the value of the 'level' parameter.
+
+The script can provide a list of controls for your overrides.xml to let the user manage the additional sub-menu items.
+  
+In the list where you want these controls to appear, put the following in the <content> tag:
+  
+	plugin://script.skinshortcuts?type=settings&amp;level=1&amp;property=$INFO[Window(10000).Property("skinshortcuts")]
+	
+You MUST provide a string for the settings list. See 'overrides.xml' (section 4) for details.
+
+
+Overrides.xml
+-------------
+
+Your skin can include an optional file called 'overrides.xml' in a sub-directory of your skin called 'shortcuts'. This file allows you to provide various defaults for Skin Shortcuts, as well as overriding various things including actions and icons, allowing you to create a customised experience for your skin.
+
+
+1. Overriding an action
+
+You may wish to override an action in order to provide additional functionality. For example, you could override the default action for Movies (to go to the Movie Title view) to run Cinema Experience instead.
+
+<override action="[command]">
+	<condition>[Boolean condition]</condition>
+	<action>[XBMC function]</action>
+<override>
+	
+[command] - Replace with the action you are overriding
+[Boolean condition] - [Optional] Replace with a string that must evaluate to True for the custom action to be run
+[XBMC function] - Replace with the action that should be run instead. You may include multiple <action> tags.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+	<override action="ActivateWindow(Videos,MovieTitles,return)">
+		<condition>Skin.HasSetting(CinemaExperience) + System.HasAddon(script.cinema.experience)</condition>
+		<action>RunScript(script.cinema.experience,movietitles)</action>
+	</override>
+</overrides>
+
+Users can also provide an overrides.xml file to override actions in special://profile/ - overrides in this file will take precedent over overrides provided by the skin.
+
+
+2. Overriding thumbnails
+
+The script tries to provide reasonable default images for all shortcuts, with a fallback on "DefaultShortcut.png", however you may wish to override images to specific ones provided by your skin.
+
+This can be done by providing an optional file called 'overrides.xml' in a sub-directory of your skin called 'shortcuts'. It provides two ways to override images - either overriding the image for a specific labelID, or overriding all instances of a particular image - as follows:
+
+<thumbnail labelID="[labelID]">[New image]</thumbnail>
+<thumbnail image="[Old image]">[New image]</thumbnail>
+
+[labelID] - The labelID whose thumbnail you want to override
+[Old image] - The image you are overriding
+[New image] - The replacement image
+
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+	<thumbnail labelID="movies">MyMovieImage.png</thumbnail>
+	<thumbnail image="DefaultShortcut.png">MyShortcutImage.png</thumbnail>
+</overrides>
+
+Note, any thumbnail image the user has set will take precedence over skin-provided overrides.
+
+A full list of labelID's and default thumbnail images can be found in the Resources folder.
+
+
+3. Custom background images
+
+If you are using Skin Shortcuts to manage background images for main menu items, provide a list of backgrounds and defaults for labelID's in the overrides.xml.
+
+<background label="[Label]">[backgroundID]</background>
+<backgrounddefault labelID="[LabelID]">[backgroundID]</backgrounddefault>
+
+[Label] - The display name of the background (can be a localised string)
+[backgroundID] - A string you use to identify the background
+[labelID] - The labelID you are providing a default for.
+	
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+	<background label="PVR">PVR</background>
+	<background label="30222">Movies</background>
+	<backgrounddefault labelID="movies">Movies</backgrounddefault>
+	<backgrounddefault labelID="livetv">PVR</backgrounddefault>
+</overrides>
+
+You can then choose which background to display based on the 'background' property of the main menu selected listitem.
+
+
+4. Widgets
+
+If you are using Skin Shortcuts to manage widgets, provide a list of the widgets your skin supports and defaults for labelID's in the overrides.xml.
+
+<widget label="[label]">[WidgetID]</widget>
+<widgetdefault labelID="[labelID]">[widgetID]</widgetdefault>
+
+[label] - The display name of the widget, to be shown when choosing widgets (can be a localised string)
+[widgetID] - A string you use to identify this widget
+[labelID] - The labelID you are setting the default for
+
+So, for example:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+	<widget label="PVR Status">PVR</widget>
+	<widget label="30222">RecentMovies</widget>
+	<widgetdefault labelID="movies">RecentMovies</widgetdefault>
+	<widgetdefault labelID="livetv">PVR</widgetdefault>
+</overrides>
+
+You can then use the following in the visibility for your widgets:
+
+	<visible>StringCompare(Container(9000).ListItem.Property("widget"),[widgetID])</visible>
+	
+Remember to replace 9000 with the ID of the list containing your main menu.
+
+
+5. Custom shortcut properties
+
+If you are using Skin Shortcuts to set custom properties for shortcuts, you can set defaults for these items:
+
+	<propertydefault labelID="[LabelID]" property="[Property]">[Property Value]</propertydefault>
+	
+[labelID] - The labelID you are providing a default for.
+[Property] - The string used to identify the property
+[Property Value] - The default value of the property
+
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+	<propertydefault labelID="movies" property="description">Browse your movies</propertydefault>
+</overrides>
+
+
+6. Overriding settings labels
+
+When using Skin Shortcuts to provide the whole main menu, it can provide a list of controls for your skinsettings.xml to launch the management dialog. You can override the default labels for these controls.
+
+<settingslabel type="[type]" level="[level]">[string]</settingslabel>
+	
+[type] - Either "main" (Main Menu), "submenu" (sub menu item) or "reset" (Reset all shortcuts)
+[string] - The label that should be displayed. Can be a localised string. For "submenu", you can include ::MENUNAME:: where you want the name of the menu to appear.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+	<settingslabel type="main">Choose what to display on the main menu</settingslabel>
+	<settingslabel type="submenu">Pick submenu items for ::MENUNAME::</settingslabel>
+	<settingslabel type="reset">Reset all shortcuts back to default</settingslabel>
+</overrides>
+
+
+Localisation
+------------
+
+If you are providing default shortcuts and want to localize your label, you can do it using the format
+
+  ::LOCAL::[id]
+  
+Where [id] is any string id provided by XBMC or your skin. However, you should generally avoid using strings provided by your skin as they won't carry over if the user switches to a different skin.
+
+In your overrides.xml file, you can just use the string id provided by XBMC or your skin directly. As the overrides.xml is specific to your skin, it is safe to use strings provided by your skin in it.
+
+In order to make things easier for skinners using this script to provide the main menu, listitems returned by the script have the property labelID. This is a non-localized string that can be tested against (for visibility, for example).
+
+For common main menu items, it will contain one of the following strings
+	videos
+	movies
+	tvshows
+	livetv
+	music
+	musicvideos
+	pictures
+	weather
+	programs
+	dvd
+	settings
+	
+For other localized strings, it will contain the id of the string. For non-localized strings, it will contain the string in lowercase and without any spaces.
+
+A full list of labelID's can be found in the Resources folder.
