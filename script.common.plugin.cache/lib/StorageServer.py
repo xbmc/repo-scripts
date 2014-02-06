@@ -34,7 +34,7 @@ except: pass
 
 class StorageServer():
     def __init__(self, table=None, timeout=24, instance=False):
-        self.version = u"2.5.3"
+        self.version = u"2.5.4"
         self.plugin = u"StorageClient-" + self.version
         self.instance = instance
         self.die = False
@@ -741,7 +741,7 @@ def checkInstanceMode():
     else:
         import xbmcaddon
 
-    settings = xbmcaddon.Addon(id='script.common.plugin.cache.beta')
+    settings = xbmcaddon.Addon(id='script.common.plugin.cache')
     if settings.getSetting("autostart") == "false":
         s = StorageServer(table=False, instance=True)
         print u" StorageServer Module loaded RUN(instance only)"
