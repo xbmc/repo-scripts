@@ -24,6 +24,7 @@ import time
 import hashlib
 import inspect
 import string
+import xbmc
 
 try: import sqlite
 except: pass
@@ -33,7 +34,7 @@ except: pass
 
 class StorageServer():
     def __init__(self, table=None, timeout=24, instance=False):
-        self.version = u"2.5.2"
+        self.version = u"2.5.3"
         self.plugin = u"StorageClient-" + self.version
         self.instance = instance
         self.die = False
@@ -70,7 +71,7 @@ class StorageServer():
         self.language = self.settings.getLocalizedString
 
         self.path = self.xbmc.translatePath('special://temp/')
-        if not self.xbmcvfs.exists(self.path):
+        if not self.xbmcvfs.exists(self.path.decode('utf8', 'ignore')):
             self._log(u"Making path structure: " + self.path)
             self.xbmcvfs.mkdir(self.path)
         self.path = os.path.join(self.path, 'commoncache.db')
@@ -131,8 +132,8 @@ class StorageServer():
         self._log("", 2)
         if not self.socket or check_stale:
             self._log("Checking", 4)
-            if self.platform == "win32":
-                self._log("Windows", 4)
+            if self.platform == "win32" or xbmc.getCondVisibility('system.platform.android'):
+                self._log("Windows/Android", 4)
                 port = self.settings.getSetting("port")
                 self.socket = ("127.0.0.1", int(port))
             else:
@@ -196,7 +197,7 @@ class StorageServer():
         if not self._startDB():
             self._startDB()
 
-        if self.platform == "win32":
+        if self.platform == "win32" or xbmc.getCondVisibility('system.platform.android'):
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         else:
             sock = socket.socket(socket.AF_UNIX)
@@ -251,7 +252,7 @@ class StorageServer():
         self._log("Closing down")
         sock.close()
         # self.conn.close()
-        if not self.platform == "win32":
+        if not self.platform == "win32" and not xbmc.getCondVisibility('system.platform.android'):
             if self.xbmcvfs.exists(self.socket):
                 self._log("Deleting socket file")
                 self.xbmcvfs.delete(self.socket)
@@ -358,11 +359,11 @@ class StorageServer():
         if not locked:
             self._sqlExecute("INSERT INTO " + table + " VALUES ( %s , %s )", (name, time.time()))
             self.conn.commit()
-            self._log(u"locked: " + name)
+            self._log(u"locked: " + name.decode('utf8', 'ignore'))
 
             return "true"
 
-        self._log(u"failed for : " + name, 1)
+        self._log(u"failed for : " + name.decode('utf8', 'ignore'), 1)
         return "false"
 
     def _unlock(self, table, name):
@@ -380,10 +381,10 @@ class StorageServer():
         self._checkTable(table)
         for name in inp_data:
             if self._sqlGet(table, pre + name).strip():
-                self._log(u"Update : " + pre + name, 3)
+                self._log(u"Update : " + pre + name.decode('utf8', 'ignore'), 3)
                 self._sqlExecute("UPDATE " + table + " SET data = %s WHERE name = %s", (inp_data[name], pre + name))
             else:
-                self._log(u"Insert : " + pre + name, 3)
+                self._log(u"Insert : " + pre + name.decode('utf8', 'ignore'), 3)
                 self._sqlExecute("INSERT INTO " + table + " VALUES ( %s , %s )", (pre + name, inp_data[name]))
 
         self.conn.commit()
@@ -413,10 +414,10 @@ class StorageServer():
 
         self._checkTable(table)
         if self._sqlGet(table, name).strip():
-            self._log(u"Update : " + data, 3)
+            self._log(u"Update : " + data.decode('utf8', 'ignore'), 3)
             self._sqlExecute("UPDATE " + table + " SET data = %s WHERE name = %s", (data, name))
         else:
-            self._log(u"Insert : " + data, 3)
+            self._log(u"Insert : " + data.decode('utf8', 'ignore'), 3)
             self._sqlExecute("INSERT INTO " + table + " VALUES ( %s , %s )", (name, data))
 
         self.conn.commit()
@@ -518,10 +519,10 @@ class StorageServer():
                 cache[name]["timeout"] = 3600
 
             if cache[name]["timestamp"] > time.time() - (cache[name]["timeout"]):
-                self._log(u"Done, found cache : " + name)
+                self._log(u"Done, found cache : " + name.decode('utf8', 'ignore'))
                 return cache[name]["res"]
             else:
-                self._log(u"Deleting old cache : " + name, 1)
+                self._log(u"Deleting old cache : " + name.decode('utf8', 'ignore'), 1)
                 del(cache[name])
 
         self._log(u"Done")
@@ -558,7 +559,7 @@ class StorageServer():
             ret_val = self._getCache(name, cache)
 
             if not ret_val:
-                self._log(u"Running: " + name)
+                self._log(u"Running: " + name.decode('utf8', 'ignore'))
                 ret_val = funct(*args)
                 self._setCache(cache, name, ret_val)
 
@@ -598,7 +599,7 @@ class StorageServer():
                     if (cache[item]["timestamp"] > time.time() - (3600)) and not empty:
                         new_cache[item] = cache[item]
                     else:
-                        self._log(u"Deleting: " + item)
+                        self._log(u"Deleting: " + item.decode('utf8', 'ignore'))
 
                 self.set("cache", repr(new_cache))
                 return True
@@ -643,7 +644,7 @@ class StorageServer():
     def _connect(self):
         self._log("", 3)
         self._sock_init()
-        if self.platform == "win32":
+        if self.platform == "win32" or xbmc.getCondVisibility('system.platform.android'):
             self.soccon = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         else:
             self.soccon = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -740,7 +741,7 @@ def checkInstanceMode():
     else:
         import xbmcaddon
 
-    settings = xbmcaddon.Addon(id='script.common.plugin.cache')
+    settings = xbmcaddon.Addon(id='script.common.plugin.cache.beta')
     if settings.getSetting("autostart") == "false":
         s = StorageServer(table=False, instance=True)
         print u" StorageServer Module loaded RUN(instance only)"
