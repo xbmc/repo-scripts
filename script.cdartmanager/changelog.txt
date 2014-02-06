@@ -1,0 +1,461 @@
+3.0.5/4.0.5
+- Frodo/Gotham Split
+- Change - Hide all artists option if disabled in settings
+
+3.0.4
+- Fix - Correct JSON module import logic
+- Fix - Fix testing of artist and album names that use an ampersand( & )
+- change - remove HTTPAPI
+- Fix - Only process data when XBMC provides expected data(error catching)
+
+3.0.3
+- Add - Remove all MBIDs that match "24f1766e-9635-4d58-a4d4-9413f9f98a4c" then download correct matching MBIDs - only runs on an old database version
+- Update - New Database version
+- Add - addon.xml cosmetics - Thanks Martijn
+- Fix - Fix errors with some disc matching
+- Update - Update language files
+
+3.0.2
+- Fix - Corrected MusicBrainz query
+
+3.0.1
+- Fix - Corrected import for download error
+- Fix - Use correct encoding in various parts of the script
+- Fix - Database creation errors
+- Add - fanart.tv Artwork refresh option
+
+2.8.0 - 3.0.0
+- Fix - Set counts to zero at the start of the building of database
+- Fix - MusicBrainz retrieval code
+- Add - Adjust socket timeout
+- Add - User edits now stored in database and restores on an update
+- Change - make script proper for repo
+
+2.7.9
+- Fix - change setting to float then integer
+- Fix - requesting too many values from first time database building.
+
+2.7.8 
+- Fix - Remove Extrafanart Limit for Eden version
+- Change - Use the JSON format of the Fanart.TV API
+- Change - remove the old 'get recognized artists' in favour of the new New Music from Fanart.TV
+- Add - make use of fanart.tv's new music option in API
+- Add - User can now set the MusicBrainz server
+- Fix - correct Frodo issue
+
+2.7.7
+- Fix - Add time delay to MusicBrainz Release MBID to Release Group MBID function
+- Fix - Build a new Database if one does not exist during an Update(mainly for The Scheduler)
+- Add - Extrafanart download limit
+
+2.7.6
+- Fix - Single artwork download
+- Fix - clean up recognized artist code
+- Change - skip artist if Distant MBID is missing, no point bugging fanart.tv for something it already reported that it does not have.
+- Add - Use internal XBMC Library MBID's if available
+- Fix - Frodo changes
+- Add - option to enable/disable replacing trailing period with illegal character replacement character
+
+2.7.5
+- Add - skin property for scheduler service script
+- Add - ability to update database from outside of script
+- Fix - errors when update runs in background
+- Add - cache fanart.tv data for when The Scheduler is used(adjustable, preset to 3 days, but adjustable from 1 to 7)
+- Fix - MusicBrainz xml changes
+- Add - illegal character replacement in artist name for saving
+- Fix - script was downloading the same artwork(clearLOGOs)
+- Change - change method to create dialogs and logging
+
+2.7.4
+- Add - Add support for the new Artwork available from fanart.tv(HD Music Logos, Music Banners)
+- Add - Add setting to enable/disable the New HD Music logos, enabled will overwrite older clearLOGO during an auto download
+- Add - Add autobanner to the auto download start mode
+- Update - Updated French strings - Thanks Hellnino18
+- Update - Updated German strings - Thanks solidsatras
+
+2.7.3
+- Fix - Change LF to CRLF in missing.txt file
+- Fix - keep script functioning with XBMC Development Master
+- Add - script can be started in artwork auto download modes, modes - autocdart, autocover, autofanart, autologo, autothumb, autoall. All these are done in the background
+        To use:
+                RunScript(script.cdartmanager,mode)
+                
+                Eg: RunScript(script.cdartmanager,autoall) <- starts the script downloading everything in the background
+
+2.7.2
+- Change - code cleanup
+- Fix - Update Database was not properly updating All Artist Id
+- Fix - Modify Database menu movement was not proper
+
+2.7.1
+- Fix - JSONRPC erros
+- Fix - Manual MBID entry did not work as intended
+- Fix - Corrected MusicBrainz access
+
+2.7.0
+- Add - 'Edit by Artist' and 'Edit by Album' functions on Modify Database tab
+- Add - Change MBIDs for both Artists and albums.  3 methods available - Manually Change the MBID, Manual Search MusicBrainz, Automatic Search using XBMC supplied info(the search provides upto 10 matches)
+- Add - 'Find Missing MBIDs' for Albums and Artists
+- Add - 'Refresh MBIDs - Automatic' For Albums and Artist, keeps database current with MusicBrainz
+- Add - Setting to enable 'Refresh MBIDs' during database update - This will cause the script to take a while to update the database since it checks all MBIDs
+- Add - Ability to Disable saving of missing.txt file
+- Change - Redo some of the menu animations, allowing for more levels to the Advanced menu
+- Fix - properly fix saving of missing.txt file to a VFS folder
+- Add - Change MBID for Albums and Artists
+- Change - moved matching of recognized artists to the start of the script, so it is only done once per run of program(also will run after a database update) 
+
+2.6.9
+- Fix - Properly handle VFS file paths for saving missing.txt
+- Fix - Properly display Progress Dialog when saving missing.txt
+- Add - Provide Progress Dialog for Updating Thumbnails and Fanart
+
+2.6.8
+- Fix - in missing.txt show albums missing all artwork
+- Fix - in missing.txt don't show albums that have all artwork
+- Fix - one to many periods
+
+2.6.7
+- Fix - make sure dialog during artist check is printable
+- Fix - provide proper saving of missing.txt to VFS path
+- Fix - correct artist query during database update to be Album Artist only
+- Fix - json code for artists
+- Add - added code for matching artists via Aliases, ie John Cougar, John Cougar Mellancamp and Johnny Cougar all match to John Mellancamp.
+
+2.6.6
+- Fix - Make all single downloads to act the same
+- Fix - Make sure not to close progress dialog when autodownloading fanarts
+- Add - File that shows the missing artwork(missing.txt)
+- Add - Selectable path for missing.txt file
+- remove - removed Unique cdart functions(pretty much useless)
+- Fix/Add - copy artwork to thumbnail folder
+
+2.6.5
+- Add required <language></language> in addon.xml
+- Fixed artist thumbnail check
+
+2.6.4
+- Fix - Changed artist thumb to be saved as folder.jpg <- which matches what XBMC looks for
+- Add - rename artist.jpg to folder.jpg during Update Fanarts/Thumbnails
+
+2.6.3
+- Add Overwrite thumbnail/fanart which path is supplied by XBMC during download
+- Add Overwrite thumbnail/fanart which path is supplied by XBMC via settings screen
+- Changed images to use preview images on fanart.tv
+
+2.6.2
+- Fixed MusicBrainz retrieval
+- fixed cdart image backup/restore
+
+2.6.1
+- fix artist tag not showing when on ClearLOGOs and Artist Thumbs
+- Add 'Artist' to Fanart and ClearLOGOs labels
+- Add 'Album' to cdART and Cover Art labels
+
+2.6.0
+- add 'Powered By' to logo for MusicBrainz and fanart.tv
+- add Artist Thumbs
+
+2.5.9
+- fix MusicBrainz Album matching(due to change with MusicBrainz)
+- fix fanart.tv API due to change
+- fix an bug in Cover Art View
+- remove unneeded progress dialogs
+
+2.5.8
+- removed import of BeautifulSoup
+
+2.5.7
+- fixed timing of Progress Dialog, fixed hang with XBMC using 12.1
+
+2.5.6
+- fixed script requiring the back up folder to be set(unless actually when trying to back up) - Thanks Martijn
+- fixed progress dialog 'flash' - Thanks Martijn
+- updated Portuguese (Brazil) strings - Thanks Wanilton
+
+2.5.5
+- added option to settings enable/disable "All Artists" when building Database
+- added ability to cancel local artist building
+- added more testing to insure that work folder has been created
+- added logging of script settings
+
+2.5.4
+- added addon database update
+- added local artist to be added to database - this allows clearLOGOs to be downloaded for compliation artists
+- removed some hard coded English strings
+- changed MusicBrainz Access - should work better and also notify me when being overloaded.
+- split album artist with ' / ' separating artists and use first artist(album artists should not have a separator)
+- added auto download for all artists fanart/clearLOGOs
+- added option to not add local artists at the start when moving from an older version of cdART Manager
+- added 'Use Release Name' to Musicbrainz query, should improve percentage of matched albums
+- added creation of 'fanart.jpg' during auto fanart download
+
+2.5.3
+- change layout of skin(for future additions)
+- added decoding of latin-1 strings(to fix some Windows created tags)
+- removed some repetative coding.
+
+2.5.2
+- added All Artists to search for logos and fanart
+- removed pysqlite dependancy
+
+2.5.1
+- fixed error when artist name or album title contains a double quote
+- fixed changes made in XBMC(json-rpc)
+
+2.5.0
+- clean up excess logging comments, cosmetics
+- Changed major version number for Pre-Eden Version
+- Request addition to Pre-Eden Repo
+
+1.4.9
+- correctly place count into testing
+
+1.4.8
+- properly handle the exception, turn it into a string, then rip it apart :)
+- fixed Local cdART list, show cdART in top left corner
+
+1.4.7
+- Opps...  Created another error trying to fix something...
+
+1.4.6
+- Added more delay to looking for unmatched albums on MusicBrainz - hope to reduce the chance of being blocked even more
+
+1.4.5
+- added better resize code
+- changed method of checking if background db is in progress
+
+1.4.4
+- Fixed error when checking image size and for some reason the image is corrupt - treat as wrong size
+- Fixed unicoded paths
+
+1.4.3
+- Added sorting of song paths(helps if multiple copies of albums)
+- Changed testing methods of rebuilding of the database
+- removed unused setting(Fanart Path)
+
+1.4.2
+- Updated Dutch Language - Thanks Machine-Sanctum
+- added Background Database Notification and script lock-out if background database building in progress - lock-out works on Windows systems, others stop end database building
+
+1.4.1
+- replaced smbclient method with the new xbmcvfs.mkdir()
+
+1.4.0
+- Major work done to allow making of directories on samba shares
+- dutch language updated
+
+1.3.9
+- Fixed Cover Art List - allowed improper downloading of local artwork
+
+1.3.8
+- Added Downloaded artwork view for after Auto Download
+
+1.3.7
+- Fix error with special Characters in Artist Names
+- Added New German Strings - Thanks solidsatras
+- Fixed Focus problem
+- Fixed database update when downloading artwork
+
+1.3.6
+- Fixed Dialog for Fanart and ClearLOGO autodownload
+- Added import of missing module
+
+1.3.5
+- Script now saves XML files that is retrieved from fanart.tv(reduces traffic to fanart.tv)
+- changed Artwork layout, larger images
+- Added Autodownload to Fanarts Option - saves fanart to 'Artist/extrafanart' skips if file already exists - based on Music Path in settings
+- Added Autodownload to ClearLOGOs Option - Only downloads the first available Logo, skips if one already exists
+- Cleaned up skin a bit more(slide out menus line up better)
+- Added artwork for Missing cdARTs and Cover Art.
+- Added singles to be searched if there is no other album matches(sometimes Musicbrainz reported a single if the album has the same title)
+
+1.3.2 - 1.3.4
+- Integrated MusicBrainz - to obtain better accuracy for album matching
+- Made skin full screen(1280x720)
+- Cleaned up code
+- Reduced Log spamming in normal mode(XBMC needs to be in Debug mode for full log)
+- Added fanart.tv as artwork source
+- Better Unicode handling(I hope)
+- Added Album Cover Art work to the mix
+- Added Artist FanArt to the mix
+- Added Artist ClearLOGOs to the mix
+- Removed non GUI code from gui.py(added modules)
+- Removed Artist/Album searching
+- Added option of building addon's database in the background(selectable from settings)
+- Added image size check(cdARTs and Cover Art), if under 1000x1000 and available from fanart.tv, download replacement
+
+1.3.1
+- Split Dharma and Eden code to different Git branches
+
+1.3.0
+- Fixed UnboundLocal error
+
+1.2.9
+- Added Spanish Translation - Thanks KiSUAN
+- Added Aspect Ratio Fix for cdART Image - Thanks KiSUAN 
+
+1.2.8
+- change how script works on start up.  Should help Windows 7 users
+- Windows 7 permissions still get in the way, but script will not run if they do.
+
+1.2.7
+- added some logging
+- changed how logging is sent to XBMC
+- fixed database version test
+
+1.2.6
+- keeping script valid against updates in git.
+
+1.2.5
+- Added Portuguese (Brazil) language strings and description - Thanks Jair!
+
+1.2.4
+- Organized Settings
+- Updated addon.xml with an Italian description of the script
+
+1.2.3
+- fixed hopefully the last unicode error...
+
+1.2.2
+- Moved Italian translation to the correct Folder
+- Added Back database removal, if Addon database does not match the proper version
+- Changed 'Refresh Local Database' to 'Refresh Addon Database'
+
+1.2.1
+- fixed some utf-8 vs. latin-1 coding
+- fixed Artist Search(seems to have been broken for a long time)
+
+1.2.0
+- some fixes for Windows machines.
+
+1.1.9
+- removed strings that are already available through XBMC
+
+1.1.8
+- programmed version testing(stored in addon's DB) to correct for changes if required
+- fixed 'add disc numbering if included in path' - allows multiple disc albums to download cdARTs for each disc(if path has CD #, Disc # or Part #)
+
+1.1.7
+- fixed another spot where HTTP API was needed
+- Corrected 'Settings' in German language string.xml
+
+1.1.6
+- added back some HTTP API functions until AudioLibrary.GetAlbumDetails is added to the JSON RPC(Dharma and beyond)
+
+1.1.5
+- fixed some hard coded labels(for language files)
+
+1.1.4
+- fixed JSONRPC parsing(for albums)
+- fixed some more unicode errors
+
+1.1.3
+- start adding uploading and downloading
+- re-arrange how things are processed
+- full json implementation
+- more unicode fixes
+
+1.1.1 - 1.1.2
+- rewrite xbmc database access, using json now instead of pysqlite and HTTP API
+- change os.getcwd() to getAddonInfo('path') to provide forward compatibility
+
+1.0.9 - 1.1.0
+- multi-Database stepping stones
+- fixed path name.
+
+1.0.8
+- Added HTTP API database calls to allow MySQL users to use script.
+
+1.0.7
+- Added Dutch translation - Thanks redje
+- Added ascii converstion to album names(may help scraping for the time being)
+
+1.0.6
+- Fixed saving of missing cdART file for systems using Windows which was causing a lockup
+
+1.0.5
+- Added German translation - Thanks Mad-Max
+
+1.0.4
+- fine tuned Album Name Stripping(now script removes items contained in round brackets only if preceded by a space)
+  example->  Greatest Hits (2005)     becomes->  Greatest Hits
+
+1.0.3
+- added feedback to user for single cdART copying
+- added missing.txt file - stores missing cdARTs
+- removed possible tabs in changelog.txt
+
+1.0.2
+- added logfile footprints
+
+1.0.1 
+- added script.module.pil use
+- Resizing of unique cdARTS for uploading to XBMCSTUFF.com
+- reduced internet access for finding matching cdARTs
+- Added Hungarian language - Thanks alanww1
+      
+1.0.0
+- Changed testing of Artists, Albums and Album paths are handled.  Improved Album Artist sorting
+
+0.9.9
+- Changed how special characters are handled
+- Automatically check to see if folder name has disc numbering(ie CD 1, Disc 1) and if the Album name is missing disc numbering, copy it to the end of album name(Album becomes Album - CD 1 or Album - Disc 1)
+- added duplicate cdART count(when copying cdARTS), shows duplicates if there are cdARTs in the save folders or if you have mistakes in you Music library
+- Added the ability to customize Label coloring
+
+0.9.8
+- fixed copy functions.
+- changed database to update instead of add when cdARTs are downloaded
+- added use of built-in module(pysqlite)
+
+0.9.7
+- added Local cdART popup
+- added single copy functions(to the unique and backup folders)
+- added the delete function
+
+0.9.6
+- Changed how cdARTs are matched 
+- improved number of matches, reduced the number of false-negatives
+
+0.9.5
+- Changed how the recognized artists are found, improved matches
+
+0.9.4
+- Fixed Local cdART List GUI errors
+
+0.9.3
+- fixed autodownload and database queries
+- Added Local cdART list in Advance menu - from here you will be able to delete unwanted cdARTs
+
+0.9.2
+- scraper fix
+- skin work
+
+0.9.1
+- Initial beta release
+
+0.9.0
+- cleaned up skin
+
+0.8.9
+- fixed path setting in unique_cdart_copy()
+
+0.8.8
+- fixed artist/album matching.  now more local artists/albums are matched to those on XBMCSTUFF.com
+- added cdart copy - copies to the addon_data folder using the artist - album.png naming
+
+0.8.7
+- fixed database building
+
+0.8.6
+- found problem with file names(double quotes)
+
+0.5.0 - 0.8.5
+- a lot of skin work, strings and list building
+
+0.2.0 - 0.5.0
+- gui created
+
+0.1.0
+- Lets get started
+- change over to script

@@ -1,0 +1,792 @@
+# XBMC Media Center language file
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# airplanez <airplanez@gmail.com>, 2012
+# Junghwan Oh <junghwan@gmail.com>, 2013
+# piodio <piodio@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: cdART Manager\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2012-07-03 05:24+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
+"Last-Translator: giftie <giftie61@hotmail.com>\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "Recognized Artists"
+msgstr "인식된 아티스트"
+
+msgctxt "#32001"
+msgid "Album cdARTs"
+msgstr "앨범 cdART"
+
+msgctxt "#32002"
+msgid "Select Artist"
+msgstr "아티스트 선택"
+
+msgctxt "#32003"
+msgid "Album Cover Arts"
+msgstr "앨범 커버 아트"
+
+msgctxt "#32004"
+msgid "Automatic Download"
+msgstr "자동 다운로드"
+
+msgctxt "#32005"
+msgid "Save Local cdART List"
+msgstr "로컬 cdART 목록 저장"
+
+msgctxt "#32006"
+msgid "Artist Fanarts"
+msgstr "아티스트 팬아트"
+
+msgctxt "#32007"
+msgid "Local Album Artists: %s"
+msgstr "로컬 앨범 아티스트: %s"
+
+msgctxt "#32008"
+msgid "Local cdARTs: %s"
+msgstr "로컬 cdART: %s"
+
+msgctxt "#32009"
+msgid "Artist ClearLOGOs"
+msgstr "아티스트 ClearLOGO"
+
+msgctxt "#32010"
+msgid "Local Discs: %s"
+msgstr "로컬 디스크: %s"
+
+msgctxt "#32011"
+msgid "Advanced"
+msgstr "고급"
+
+msgctxt "#32012"
+msgid "Refresh Addon Database"
+msgstr "추가기능 데이터베이스 새로 고침"
+
+msgctxt "#32013"
+msgid "Clean XBMC's Music Library"
+msgstr "XBMC 음악 라이브러리 정리"
+
+msgctxt "#32014"
+msgid "Update XBMC's Music Library"
+msgstr "XBMC 음악 라이브러리 업데이트"
+
+msgctxt "#32015"
+msgid "Delete Addon's Database?"
+msgstr "추가기능 데이터베이스 삭제?"
+
+msgctxt "#32016"
+msgid "Disc:"
+msgstr "디스크:"
+
+msgctxt "#32017"
+msgid "Local cdART List saving folder"
+msgstr "로컬 cdART 목록 저장 폴더"
+
+msgctxt "#32018"
+msgid "cdART  Backup folder"
+msgstr "cdART  백업 폴더"
+
+msgctxt "#32019"
+msgid "Backup saving format: "
+msgstr "백업 저장 형식: "
+
+msgctxt "#32020"
+msgid "Retrieving Music Database"
+msgstr "음악 데이터베이스 검색 중"
+
+msgctxt "#32021"
+msgid "Creating Addon Database"
+msgstr "추가기능 데이터베이스 생성 중"
+
+msgctxt "#32022"
+msgid "Choose Available cdART"
+msgstr "사용 가능한 cdART 선택"
+
+msgctxt "#32023"
+msgid "Download Successful!"
+msgstr "다운로드 성공!"
+
+msgctxt "#32024"
+msgid "Artwork Downloaded!"
+msgstr "아트워크 다운로드 됨!"
+
+msgctxt "#32025"
+msgid "Check file paths-Artwork Not Downloaded"
+msgstr "파일 경로를 확인하세요 - 아트워크가 다운로드되지 않았습니다"
+
+msgctxt "#32026"
+msgid "Download Error Occured!"
+msgstr "다운로드 오류 발생!"
+
+msgctxt "#32027"
+msgid "Artwork Not Download!"
+msgstr "아트워크 다운로드 안 됨!"
+
+msgctxt "#32028"
+msgid "Download aborted!"
+msgstr "다운로드 중지됨!"
+
+msgctxt "#32029"
+msgid "No Artwork found?"
+msgstr "아트워크 찾을 수 없음?"
+
+msgctxt "#32030"
+msgid "Please contribute! Upload your Artwork"
+msgstr "참여를 부탁합니다. 여러분의 아트워크를 업로드 해 주세요."
+
+msgctxt "#32031"
+msgid "On fanart.tv"
+msgstr "fanart.tv 에서"
+
+msgctxt "#32032"
+msgid "Choose an Artist"
+msgstr "아티스트 선택"
+
+msgctxt "#32033"
+msgid "Not Found on fanart.tv"
+msgstr "fanart.tv에서 찾지 못함"
+
+msgctxt "#32034"
+msgid "No Artwork found for"
+msgstr "아트워크 찾지 못함"
+
+msgctxt "#32035"
+msgid " *DOWNLOADING Artwork* "
+msgstr " *아트워크 다운로드 중* "
+
+msgctxt "#32036"
+msgid "Music folder path(for Artwork)"
+msgstr "음악 폴더 경로(아트웍에 사용)"
+
+msgctxt "#32037"
+msgid "Getting local artists"
+msgstr "로컬 아티스트 가져오기"
+
+msgctxt "#32038"
+msgid "Artist: "
+msgstr "아티스트: "
+
+msgctxt "#32039"
+msgid "Album: "
+msgstr "앨범: "
+
+msgctxt "#32040"
+msgid "Completed"
+msgstr "완료"
+
+msgctxt "#32041"
+msgid "New Artwork downloaded"
+msgstr "새 아트워크 다운로드 됨"
+
+msgctxt "#32042"
+msgid "cdART Manager"
+msgstr "cdART Manager"
+
+#. string insert for local artist
+msgctxt "#32043"
+msgid "Local Artists:"
+msgstr "로컬 아티스트:"
+
+#. string insert for local cdARTs
+msgctxt "#32044"
+msgid "Local cdARTs:"
+msgstr "로컬 cdART:"
+
+#. string insert for local albums
+msgctxt "#32045"
+msgid "Local Discs:"
+msgstr "로컬 디스크:"
+
+msgctxt "#32046"
+msgid "Automatic Downloading Artwork"
+msgstr "아트워크 자동 다운로드"
+
+msgctxt "#32047"
+msgid "Downloading..."
+msgstr "다운로드 중..."
+
+msgctxt "#32048"
+msgid "Retrieving Recognized Artist List...."
+msgstr "인식한 아티스트 목록 가져오는 중..."
+
+msgctxt "#32049"
+msgid "Artists Matched: %s"
+msgstr "일치하는 아티스트: %s"
+
+msgctxt "#32050"
+msgid "Database setup aborted..."
+msgstr "데이터베이스 설정 취소됨..."
+
+msgctxt "#32051"
+msgid "Addon Database is crucial to script!"
+msgstr "이 스크립트는 애드온 데이터베이스가 중요합니다!"
+
+msgctxt "#32052"
+msgid "Please go to the Advanced Menu and"
+msgstr "고급 메뉴에서"
+
+msgctxt "#32053"
+msgid "Refresh Addon Database"
+msgstr "추가기능 데이터베이스 새로고침"
+
+msgctxt "#32054"
+msgid "/Artist/Album.png"
+msgstr "/아티스트/앨범.png"
+
+msgctxt "#32055"
+msgid "/artist - album.png"
+msgstr "/아티스트 - 앨범.png"
+
+msgctxt "#32056"
+msgid "cdARTs Copied"
+msgstr "cdART 복사됨"
+
+msgctxt "#32057"
+msgid "Finished Copying cdARTs"
+msgstr "cdART 복사 완료"
+
+msgctxt "#32058"
+msgid "cdARTs Stored in"
+msgstr "cdART 보관 장소:"
+
+msgctxt "#32059"
+msgid " cdARTs Copied"
+msgstr "복사된 cdART"
+
+msgctxt "#32060"
+msgid "Copying cdARTs..."
+msgstr "cdART 복사중..."
+
+msgctxt "#32061"
+msgid "cdART Backup"
+msgstr "cdART 백업"
+
+msgctxt "#32062"
+msgid "Path for missing.txt file"
+msgstr "missing.txt 파일 경로"
+
+msgctxt "#32063"
+msgid "Copy Unique Local cdARTs"
+msgstr "로컬 개인 cdART 복사"
+
+msgctxt "#32064"
+msgid "Unique cdARTS folder: %s"
+msgstr "개인 cdART 폴더:%s"
+
+msgctxt "#32065"
+msgid "Comparing Local and Online cdARTs..."
+msgstr "로컬 cdART와 온라인 cdART 비교중..."
+
+msgctxt "#32066"
+msgid "Error connecting to fanart.tv, Socket Timed out"
+msgstr "fanart.tv 접속 오류, 소켓 타임 경과"
+
+msgctxt "#32067"
+msgid "Backup cdART Files"
+msgstr "cdART 파일 백업"
+
+msgctxt "#32068"
+msgid "Restore From Backup"
+msgstr "백업으로부터 복원"
+
+msgctxt "#32069"
+msgid "Restoring cdARTs from backup..."
+msgstr "백업으로부터 cdART 복원중..."
+
+msgctxt "#32070"
+msgid "cdARTs Restored from backup folder"
+msgstr "백업 폴더로부터 cdART가 복원되었습니다."
+
+msgctxt "#32071"
+msgid "Settings have not been setup!"
+msgstr "추가기능 설정 내용이 없습니다!"
+
+msgctxt "#32072"
+msgid "Please go to Settings menu..."
+msgstr "설정 메뉴로 이동하기 바랍니다..."
+
+msgctxt "#32073"
+msgid "Then Advanced: Refresh Addon Database"
+msgstr "고급: 추가기능 데이터베이스 새로고침"
+
+msgctxt "#32074"
+msgid "Copy cdART to Backup Folder"
+msgstr "cdART를 백업 폴더로 복사"
+
+msgctxt "#32075"
+msgid "Delete cdART"
+msgstr "cdART 삭제"
+
+msgctxt "#32076"
+msgid "Copy To Unique Folder For Upload"
+msgstr "업로드를 위해 개인 폴더에 복사"
+
+msgctxt "#32077"
+msgid "Custom Label Colors"
+msgstr "레이블 색상 사용자 지정"
+
+msgctxt "#32078"
+msgid "Green"
+msgstr "녹색"
+
+msgctxt "#32079"
+msgid "Blue"
+msgstr "파랑"
+
+msgctxt "#32080"
+msgid "Red"
+msgstr "빨강"
+
+msgctxt "#32081"
+msgid "Yellow"
+msgstr "노랑"
+
+msgctxt "#32082"
+msgid "Orange"
+msgstr "주황"
+
+msgctxt "#32083"
+msgid "White"
+msgstr "하양"
+
+msgctxt "#32084"
+msgid "Cyan"
+msgstr "밝은파랑"
+
+msgctxt "#32085"
+msgid "Violet"
+msgstr "보라"
+
+msgctxt "#32086"
+msgid "Pink"
+msgstr "분홍"
+
+msgctxt "#32087"
+msgid "   Recognized Artists Color"
+msgstr "   인식한 아티스트 색깔"
+
+msgctxt "#32088"
+msgid "   Unrecognized Artists Color"
+msgstr "   인식하지 못한 아티스트 색깔"
+
+msgctxt "#32089"
+msgid "   fanart.tv Albums Match Color"
+msgstr "   fanart.tv 일치 앨범 색깔"
+
+msgctxt "#32090"
+msgid "   Local Albums Match Color"
+msgstr "   로컬 일치 앨범 색깔"
+
+msgctxt "#32091"
+msgid "   Local and fanart.tv Match Color"
+msgstr "   로컬 및 fanart.tv 일치함 색깔"
+
+msgctxt "#32092"
+msgid "   Unmatched Album Color"
+msgstr "   일치하지 않는 앨범 색깔"
+
+msgctxt "#32093"
+msgid "   Local cdART List Color"
+msgstr "   로컬 cdART 목록 색깔"
+
+msgctxt "#32094"
+msgid "Enable custom colors for labels"
+msgstr "사용자 지정 레이블 색깔 사용"
+
+msgctxt "#32095"
+msgid "File Folders"
+msgstr "파일 폴더"
+
+msgctxt "#32096"
+msgid "Duplicates Found"
+msgstr "중복 항목 발견"
+
+msgctxt "#32097"
+msgid "    Resize Unique cdARTs?"
+msgstr "    개인 cdART 크기를 변경할까요?"
+
+msgctxt "#32098"
+msgid "Local cdART List"
+msgstr "로컬 cdART 목록"
+
+msgctxt "#32099"
+msgid "Build Addon Database in background"
+msgstr "백그라운드에서 추가기능 데이터베이스 생성"
+
+msgctxt "#32100"
+msgid "Local Album Count"
+msgstr "로컬 앨범 카운트"
+
+msgctxt "#32101"
+msgid "Sorting Album Artists"
+msgstr "앨범 아티스트 정렬"
+
+msgctxt "#32102"
+msgid "Retrieving Local Database"
+msgstr "로컬 데이터베이스 검색 중"
+
+msgctxt "#32103"
+msgid "Saving Missing Artwork List"
+msgstr "누락 아트워크 목록 저장"
+
+msgctxt "#32104"
+msgid "Uploading Missing cdART List to website"
+msgstr "cdART 누락 목록을 웹사이트에 업로드"
+
+msgctxt "#32105"
+msgid "Retrieving Album Details"
+msgstr "앨범 상세정보 검색 중"
+
+msgctxt "#32106"
+msgid "Overwrite low-res existing cdARTs"
+msgstr "기존 저해상도 cdART를 덮어 씀"
+
+msgctxt "#32108"
+msgid "Database too old"
+msgstr "오래된 데이터베이스"
+
+msgctxt "#32109"
+msgid "Do you want to Rebuild?"
+msgstr "다시 작성하겠습니까?"
+
+msgctxt "#32110"
+msgid "Problem Accessing Folder, Script Exiting"
+msgstr "폴더 접속에 문제 있음, 스크립트 종료"
+
+msgctxt "#32111"
+msgid "Downloaded Artwork"
+msgstr "다운로드한 아트워크"
+
+msgctxt "#32112"
+msgid "Updating Thumbnails and Fanarts"
+msgstr "미리보기와 팬아트 업데이트 중"
+
+msgctxt "#32113"
+msgid "Finished updating Thumbnails and Fanarts"
+msgstr "미리보기와 팬아트 업데이트 완료"
+
+msgctxt "#32114"
+msgid "Check Database MBID's to be current during an Update"
+msgstr "Check Database MBID's to be current during an Update"
+
+msgctxt "#32115"
+msgid "Notify while in Background mode"
+msgstr "백드라운드 모드 사용 중 알림"
+
+msgctxt "#32116"
+msgid "Notify At End of Background Database Build(displayed for 2 seconds)"
+msgstr "백그라운드 데이터베이스 작성이 끝나면 알림 (2초간 표시)"
+
+msgctxt "#32117"
+msgid "Database Building completed"
+msgstr "데이터베이스 작성 완료"
+
+msgctxt "#32118"
+msgid "Background Database building in progress...  Exiting Script..."
+msgstr "백그라운드 데이터베이스 작성 진행 중...  스크립트 종료..."
+
+msgctxt "#32119"
+msgid "Stopping Background Database Building"
+msgstr "백그라운드 데이터베이스 작성 중지"
+
+msgctxt "#32120"
+msgid "All Artists"
+msgstr "모든 아티스트"
+
+msgctxt "#32121"
+msgid "Album Artists"
+msgstr "앨범 아티스트"
+
+msgctxt "#32122"
+msgid "Edit Artist"
+msgstr "아티스트 수정"
+
+msgctxt "#32123"
+msgid "Backup Database"
+msgstr "데이터베이스 백업"
+
+msgctxt "#32124"
+msgid "Retrieving All Local Artists"
+msgstr "모든 로컬 아티스트 검색 중"
+
+msgctxt "#32125"
+msgid "Artist ID: "
+msgstr "아티스트 ID: "
+
+msgctxt "#32126"
+msgid "Modify Addon Database"
+msgstr "추가기능 데이터베이스 수정"
+
+msgctxt "#32127"
+msgid "Edit Album"
+msgstr "앨범 수정"
+
+msgctxt "#32128"
+msgid "MusicBrainz Search Limit"
+msgstr "MusicBrainz 검색 제한"
+
+msgctxt "#32129"
+msgid "Update Database"
+msgstr "데이터베이스 업데이트"
+
+msgctxt "#32130"
+msgid "XBMC Music Database missing..."
+msgstr "XBMC 음악 라이브러리 없음..."
+
+msgctxt "#32131"
+msgid "Please insure Music Library is built."
+msgstr "음악 라이브러리가 있는지 확인하십시오"
+
+msgctxt "#32132"
+msgid "Updating Missing MusicBrainz Artist's IDs"
+msgstr "누락된 MusicBrainz 아티스트 ID 업데이트"
+
+msgctxt "#32133"
+msgid "Updating Missing MusicBrainz Album/Artist ID's"
+msgstr "누락된 MusicBrainz 앨범/아티스트 ID 업데이트"
+
+msgctxt "#32134"
+msgid "Updating Addon Database"
+msgstr "추가기능 데이터베이스 업데이트"
+
+msgctxt "#32135"
+msgid "Updating Addon Database - Local Artists"
+msgstr "추가기능 데이터베이스 업데이트 - 로컬 아티스트"
+
+msgctxt "#32136"
+msgid ""
+"Enable MusicBrainz ID update during Addon Database update(for missing IDs)"
+msgstr "추가기능 데이터베이스를 업데이트할 때 MusicBrainz ID 업데이트 (누락된 ID)"
+
+msgctxt "#32137"
+msgid "Artist"
+msgstr "아티스트"
+
+msgctxt "#32138"
+msgid "Album"
+msgstr "앨범"
+
+msgctxt "#32139"
+msgid "Successfully backed up Addon Database"
+msgstr "추가기능 데이터베이스 백업 성공"
+
+msgctxt "#32140"
+msgid "Old Database version found..."
+msgstr "구버전 데이터베이스 발견..."
+
+msgctxt "#32141"
+msgid "Would you like to add Local Artists to Addon Database?"
+msgstr "로컬 아티스트를 추가기능 데이터베이스에 추가하겠습니까?"
+
+msgctxt "#32142"
+msgid "Add all artists to Database during Database build or update?"
+msgstr "데이터베이스를 작성하거나 업데이트할 때 모든 아티스트를 추가하겠습니까?"
+
+msgctxt "#32143"
+msgid "Extra Settings"
+msgstr "추가 설정"
+
+msgctxt "#32144"
+msgid "Artist Thumbs"
+msgstr "아티스트 미리보기"
+
+msgctxt "#32145"
+msgid "Update XBMC Thumbnails and Fanarts"
+msgstr "XBMC 미리보기 및 팬아트 업데이트"
+
+msgctxt "#32146"
+msgid "Settings"
+msgstr "설정"
+
+msgctxt "#32147"
+msgid "Exit"
+msgstr "나가기"
+
+msgctxt "#32148"
+msgid "(this can take a long time to complete)"
+msgstr "(시간이 오래 걸릴 수 있습니다)"
+
+msgctxt "#32149"
+msgid "Checking Artist MBIDs"
+msgstr "아티스트 MBID 검사"
+
+msgctxt "#32150"
+msgid "Checking Album MBIDs"
+msgstr "앨범 MBID 검사"
+
+msgctxt "#32151"
+msgid "Find Missing MBIDs"
+msgstr "누락된 MBID 검색"
+
+msgctxt "#32152"
+msgid "Refresh MBIDs"
+msgstr "MBID 새로고침"
+
+msgctxt "#32153"
+msgid "Change MBID"
+msgstr "MBID 변경"
+
+msgctxt "#32154"
+msgid "Check All MBIDs"
+msgstr "모든 MBID 검사"
+
+msgctxt "#32155"
+msgid "Enter MBID"
+msgstr "MBID 입력"
+
+msgctxt "#32156"
+msgid "Select from search(manual entry)"
+msgstr "찾기에서 선택(수동)"
+
+msgctxt "#32157"
+msgid "Select from search(automatic)"
+msgstr "찾기에서 선택(자동)"
+
+msgctxt "#32158"
+msgid "Enable saving of missing.txt file"
+msgstr "missing.txt 파일 저장"
+
+msgctxt "#32159"
+msgid "Enter Artist MBID - Including dashes(36 Characters)"
+msgstr "아티스트 MBID 입력 - 대시 포함(36 문자)"
+
+msgctxt "#32160"
+msgid "Please Enter 36 Characters including dashes"
+msgstr "대시를 포함해서 36 문자를 입력하세요"
+
+msgctxt "#32161"
+msgid "Do you want to re-enter?"
+msgstr "다시 입력 하시겠습니까?"
+
+msgctxt "#32162"
+msgid "Is this MBID Correct?"
+msgstr "이 MBID 가 정확합니까?"
+
+msgctxt "#32163"
+msgid "Are you sure you want to delete MBID?"
+msgstr "MBID를 정말 삭제하겠습니까?"
+
+msgctxt "#32164"
+msgid "Enter Artist name to search"
+msgstr "검색할 아티스트 이름 입력"
+
+msgctxt "#32165"
+msgid "Enter Album title to search"
+msgstr "검색할 앨범 제목 입력"
+
+msgctxt "#32166"
+msgid "Select Album"
+msgstr "앨범 선택"
+
+msgctxt "#32167"
+msgid "Enter Album MBID - Including dashes(36 Characters)"
+msgstr "앨범 MBID 입력 - 대시 포함(36 문자)"
+
+msgctxt "#32168"
+msgid "Artist Banners"
+msgstr "아티스트 배너"
+
+msgctxt "#32169"
+msgid "400px X 155px"
+msgstr "400px X 155px"
+
+msgctxt "#32170"
+msgid "800px X 310px"
+msgstr "800px X 310px"
+
+msgctxt "#32171"
+msgid "Enable HD Music LOGOs"
+msgstr "HD Music LOGO 사용"
+
+msgctxt "#32172"
+msgid "Backup addon database during update"
+msgstr "업데이트 동안 추가기능 데이터베이스 백업"
+
+msgctxt "#32173"
+msgid ""
+"Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared "
+"with manual use of cdART Manager"
+msgstr "fanart.tv 데이터 캐시 저장 기간(The Scheduler)[CR]Cache gets cleared with manual use of cdART Manager"
+
+msgctxt "#32174"
+msgid "Number of possible MBID matches:"
+msgstr "Number of possible MBID matches:"
+
+msgctxt "#32175"
+msgid "Enable replacement of illegal filename characters in artist names"
+msgstr "아티스트 이름에서 사용할 수 없는 문자 변경"
+
+msgctxt "#32176"
+msgid "   illegal characters to replace"
+msgstr "   사용할 수 없는 문자"
+
+msgctxt "#32177"
+msgid "   replacement character"
+msgstr "   다음 문자로 변경"
+
+msgctxt "#32178"
+msgid "Yes"
+msgstr "예"
+
+msgctxt "#32179"
+msgid "No"
+msgstr "아니오"
+
+msgctxt "#32180"
+msgid "    change trailing periods to replacement character"
+msgstr "    뒤의 점을 문자로 바꿈"
+
+msgctxt "#32181"
+msgid "There is an error in Settings."
+msgstr "설정에 오류가 있습니다."
+
+msgctxt "#32182"
+msgid "Please check your settings and save settings[CR](press OK in settings)"
+msgstr "설정을 확인하고 저장하세요[CR](설정에서 OK를 누르세요)"
+
+msgctxt "#32183"
+msgid "Limit number Extrafanarts"
+msgstr "추가팬아트 수 제한"
+
+msgctxt "#32184"
+msgid "    Extrafanart Limit:"
+msgstr "    추가팬아트 제한:"
+
+msgctxt "#32185"
+msgid "Checking fanart.tv for new artwork..."
+msgstr "fanart.tv에서 새 아트워크 확인 중..."
+
+msgctxt "#32186"
+msgid "Updating Database to new version..."
+msgstr "데이터베이스를 새 버전으로 업데이트 중..."
+
+msgctxt "#32187"
+msgid "Checking fanart.tv for artwork..."
+msgstr "fanart.tv에서 아트워크 확인 중..."
+
+msgctxt "#32188"
+msgid "Use http://musicbrainz.org as the MusicBrainz Server"
+msgstr "MusicBrainz 서버로 http://musicbrainz.org 사용"
+
+msgctxt "#32189"
+msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
+msgstr "     MusicBrainz 서버 URL (예 - http://192.168.1.20)"
+
+msgctxt "#32190"
+msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
+msgstr "     MusicBrainz 서버간 요청 지연시간 (100's of Milliseconds)"
+
+msgctxt "#32191"
+msgid "Refresh fanart.tv data"
+msgstr "fanart.tv 데이터 새로 고침"

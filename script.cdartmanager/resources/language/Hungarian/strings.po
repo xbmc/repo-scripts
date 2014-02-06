@@ -1,0 +1,790 @@
+# XBMC Media Center language file
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Attila Zsigus <>, 2012-2013
+msgid ""
+msgstr ""
+"Project-Id-Version: cdART Manager\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2012-07-03 05:24+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
+"Last-Translator: giftie <giftie61@hotmail.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Recognized Artists"
+msgstr "Felismert előadók"
+
+msgctxt "#32001"
+msgid "Album cdARTs"
+msgstr "Minden előadó"
+
+msgctxt "#32002"
+msgid "Select Artist"
+msgstr "Előadó Kiválasztása"
+
+msgctxt "#32003"
+msgid "Album Cover Arts"
+msgstr "Albumok keresése"
+
+msgctxt "#32004"
+msgid "Automatic Download"
+msgstr "Automata letöltés"
+
+msgctxt "#32005"
+msgid "Save Local cdART List"
+msgstr "Helyi cd-kép lista mentése"
+
+msgctxt "#32006"
+msgid "Artist Fanarts"
+msgstr "Fan Arts"
+
+msgctxt "#32007"
+msgid "Local Album Artists: %s"
+msgstr "Helyi előadók: %s"
+
+msgctxt "#32008"
+msgid "Local cdARTs: %s"
+msgstr "Helyi cd-képek: %s"
+
+msgctxt "#32009"
+msgid "Artist ClearLOGOs"
+msgstr "ClearLOGOs"
+
+msgctxt "#32010"
+msgid "Local Discs: %s"
+msgstr "Helyi albumok: %s"
+
+msgctxt "#32011"
+msgid "Advanced"
+msgstr "Haladó"
+
+msgctxt "#32012"
+msgid "Refresh Addon Database"
+msgstr "Helyi adatbázis frissítése"
+
+msgctxt "#32013"
+msgid "Clean XBMC's Music Library"
+msgstr "Zenei adatbázis tisztítása"
+
+msgctxt "#32014"
+msgid "Update XBMC's Music Library"
+msgstr "Zenei adatbázis frissítése"
+
+msgctxt "#32015"
+msgid "Delete Addon's Database?"
+msgstr "Helyi adatbázis törlése?"
+
+msgctxt "#32016"
+msgid "Disc:"
+msgstr "Disc:"
+
+msgctxt "#32017"
+msgid "Local cdART List saving folder"
+msgstr "Helyi cd-kép lista mentési helye"
+
+msgctxt "#32018"
+msgid "cdART  Backup folder"
+msgstr "cd-kép biztonsági-mentés helye"
+
+msgctxt "#32019"
+msgid "Backup saving format: "
+msgstr "Biztonsági mentés formátuma: "
+
+msgctxt "#32020"
+msgid "Retrieving Music Database"
+msgstr "Zenei adatbázis beolvasása"
+
+msgctxt "#32021"
+msgid "Creating Addon Database"
+msgstr "Kiegészítő adatbázis létrehozása"
+
+msgctxt "#32022"
+msgid "Choose Available cdART"
+msgstr "Elérhető cd-kép választása"
+
+msgctxt "#32023"
+msgid "Download Successful!"
+msgstr "Letöltés sikeres!"
+
+msgctxt "#32024"
+msgid "Artwork Downloaded!"
+msgstr "cd-kép letöltődött!"
+
+msgctxt "#32025"
+msgid "Check file paths-Artwork Not Downloaded"
+msgstr "Elérési utak ahova cd-kép nem töltődött le"
+
+msgctxt "#32026"
+msgid "Download Error Occured!"
+msgstr "Letöltési hiba!"
+
+msgctxt "#32027"
+msgid "Artwork Not Download!"
+msgstr "cd-kép nem töltődött le!"
+
+msgctxt "#32028"
+msgid "Download aborted!"
+msgstr "Letöltés Megszakítva!"
+
+msgctxt "#32029"
+msgid "No Artwork found?"
+msgstr "cd-kép nem található?"
+
+msgctxt "#32030"
+msgid "Please contribute! Upload your Artwork"
+msgstr "Kérlek járulj hozzá! Töltsd fel a cd-képeidet"
+
+msgctxt "#32031"
+msgid "On fanart.tv"
+msgstr "a www.xbmcstuff.com-on"
+
+msgctxt "#32032"
+msgid "Choose an Artist"
+msgstr "Előadó választása"
+
+msgctxt "#32033"
+msgid "Not Found on fanart.tv"
+msgstr "Nem található az XBMCSTUFF.com-on"
+
+msgctxt "#32034"
+msgid "No Artwork found for"
+msgstr "Nem található cd-kép ehhez"
+
+msgctxt "#32035"
+msgid " *DOWNLOADING Artwork* "
+msgstr " *CD-KÉP LETÖLTÉSE* "
+
+msgctxt "#32036"
+msgid "Music folder path(for Artwork)"
+msgstr "Zene mappa elérésének helye (a képekhez)"
+
+msgctxt "#32037"
+msgid "Getting local artists"
+msgstr "Helyi előadók beolvasása"
+
+msgctxt "#32038"
+msgid "Artist: "
+msgstr "Előadó: "
+
+msgctxt "#32039"
+msgid "Album: "
+msgstr "Album: "
+
+msgctxt "#32040"
+msgid "Completed"
+msgstr "Befejezve"
+
+msgctxt "#32041"
+msgid "New Artwork downloaded"
+msgstr "Új cd-kép letöltve"
+
+msgctxt "#32042"
+msgid "cdART Manager"
+msgstr "cd-kép kezelő"
+
+#. string insert for local artist
+msgctxt "#32043"
+msgid "Local Artists:"
+msgstr "Helyi előadók:"
+
+#. string insert for local cdARTs
+msgctxt "#32044"
+msgid "Local cdARTs:"
+msgstr "Helyi cd-képek:"
+
+#. string insert for local albums
+msgctxt "#32045"
+msgid "Local Discs:"
+msgstr "Helyi albumok:"
+
+msgctxt "#32046"
+msgid "Automatic Downloading Artwork"
+msgstr "cd-képek automatikus letöltése"
+
+msgctxt "#32047"
+msgid "Downloading..."
+msgstr "Letöltése..."
+
+msgctxt "#32048"
+msgid "Retrieving Recognized Artist List...."
+msgstr "Felismert előadók listájának beolvasása...."
+
+msgctxt "#32049"
+msgid "Artists Matched: %s"
+msgstr "Talált előadók: %s"
+
+msgctxt "#32050"
+msgid "Database setup aborted..."
+msgstr "Adatbázis felállítás megszakadt..."
+
+msgctxt "#32051"
+msgid "Addon Database is crucial to script!"
+msgstr "A kiegészítő adatbázis elengedhetetlen a programnak!"
+
+msgctxt "#32052"
+msgid "Please go to the Advanced Menu and"
+msgstr "Kérlek menj a haladó menübe és"
+
+msgctxt "#32053"
+msgid "Refresh Addon Database"
+msgstr "frissítsd a kiegészítő adatbázist"
+
+msgctxt "#32054"
+msgid "/Artist/Album.png"
+msgstr "/Előadó/Album.png"
+
+msgctxt "#32055"
+msgid "/artist - album.png"
+msgstr "/előadó - album.png"
+
+msgctxt "#32056"
+msgid "cdARTs Copied"
+msgstr "cd-kép másolva"
+
+msgctxt "#32057"
+msgid "Finished Copying cdARTs"
+msgstr "cd-képek másolása befejeződött"
+
+msgctxt "#32058"
+msgid "cdARTs Stored in"
+msgstr "cd-képek itt tárolva"
+
+msgctxt "#32059"
+msgid " cdARTs Copied"
+msgstr " cd-kép másolva"
+
+msgctxt "#32060"
+msgid "Copying cdARTs..."
+msgstr "cd-képek másolása..."
+
+msgctxt "#32061"
+msgid "cdART Backup"
+msgstr "Biztonsági másolat"
+
+msgctxt "#32062"
+msgid "Path for missing.txt file"
+msgstr "missing.txt fájl helye"
+
+msgctxt "#32063"
+msgid "Copy Unique Local cdARTs"
+msgstr "Helyi képek másolása"
+
+msgctxt "#32064"
+msgid "Unique cdARTS folder: %s"
+msgstr "Egyedi cd-képek helye: %s"
+
+msgctxt "#32065"
+msgid "Comparing Local and Online cdARTs..."
+msgstr "Helyi és online cd-képek összehasonlítása..."
+
+msgctxt "#32066"
+msgid "Error connecting to fanart.tv, Socket Timed out"
+msgstr "Hiba az XBMCSTUFF.COM-ra való kapcsolódáskor, időtúllépés"
+
+msgctxt "#32067"
+msgid "Backup cdART Files"
+msgstr "cd-kép fájlok mentése"
+
+msgctxt "#32068"
+msgid "Restore From Backup"
+msgstr "Helyreállítás mentésből"
+
+msgctxt "#32069"
+msgid "Restoring cdARTs from backup..."
+msgstr "cd-képek helyreállítása biztonsági mentésből..."
+
+msgctxt "#32070"
+msgid "cdARTs Restored from backup folder"
+msgstr "cd-kép helyreállítva biztonsági mappából"
+
+msgctxt "#32071"
+msgid "Settings have not been setup!"
+msgstr "Beállítások nem lettek megadva!"
+
+msgctxt "#32072"
+msgid "Please go to Settings menu..."
+msgstr "Kérlek menj a beállítások menübe..."
+
+msgctxt "#32073"
+msgid "Then Advanced: Refresh Addon Database"
+msgstr "Utána haladó: kiegészítő adatbázis frissítése"
+
+msgctxt "#32074"
+msgid "Copy cdART to Backup Folder"
+msgstr "Kép a biztonsági mentés mappába"
+
+msgctxt "#32075"
+msgid "Delete cdART"
+msgstr "cd-kép törlése"
+
+msgctxt "#32076"
+msgid "Copy To Unique Folder For Upload"
+msgstr "Egyedi mappába a feltöltéshez"
+
+msgctxt "#32077"
+msgid "Custom Label Colors"
+msgstr "Egyedi színek"
+
+msgctxt "#32078"
+msgid "Green"
+msgstr "Zöld"
+
+msgctxt "#32079"
+msgid "Blue"
+msgstr "Kék"
+
+msgctxt "#32080"
+msgid "Red"
+msgstr "Piros"
+
+msgctxt "#32081"
+msgid "Yellow"
+msgstr "Sárga"
+
+msgctxt "#32082"
+msgid "Orange"
+msgstr "Narancs"
+
+msgctxt "#32083"
+msgid "White"
+msgstr "Fehér"
+
+msgctxt "#32084"
+msgid "Cyan"
+msgstr "Türkiz"
+
+msgctxt "#32085"
+msgid "Violet"
+msgstr "Lila"
+
+msgctxt "#32086"
+msgid "Pink"
+msgstr "Rózsaszín"
+
+msgctxt "#32087"
+msgid "   Recognized Artists Color"
+msgstr "   Szín a felismert előadókhoz"
+
+msgctxt "#32088"
+msgid "   Unrecognized Artists Color"
+msgstr "   Szín a nem felismert előadókhoz"
+
+msgctxt "#32089"
+msgid "   fanart.tv Albums Match Color"
+msgstr "   Szín a csak XBMCSTUFF ablumokhoz"
+
+msgctxt "#32090"
+msgid "   Local Albums Match Color"
+msgstr "   Szín a csak a gépeden lévőkhöz"
+
+msgctxt "#32091"
+msgid "   Local and fanart.tv Match Color"
+msgstr "   Szín a mindkét helyen lévőkhöz"
+
+msgctxt "#32092"
+msgid "   Unmatched Album Color"
+msgstr "   Szín a nem párosított albumokhoz"
+
+msgctxt "#32093"
+msgid "   Local cdART List Color"
+msgstr "   Szín a helyi cd-kép listához"
+
+msgctxt "#32094"
+msgid "Enable custom colors for labels"
+msgstr "Címkék egyedi színeinek engedélyezése"
+
+msgctxt "#32095"
+msgid "File Folders"
+msgstr "Fájlmappák"
+
+msgctxt "#32096"
+msgid "Duplicates Found"
+msgstr "duplikált volt"
+
+msgctxt "#32097"
+msgid "    Resize Unique cdARTs?"
+msgstr "    Egyedi cd-képek átméretezése"
+
+msgctxt "#32098"
+msgid "Local cdART List"
+msgstr "Helyi cdART lista"
+
+msgctxt "#32099"
+msgid "Build Addon Database in background"
+msgstr "Adatbázis felépítése a háttérben"
+
+msgctxt "#32100"
+msgid "Local Album Count"
+msgstr "Helyi albumok"
+
+msgctxt "#32101"
+msgid "Sorting Album Artists"
+msgstr "Album előadók rendezése"
+
+msgctxt "#32102"
+msgid "Retrieving Local Database"
+msgstr "Helyi adatbázis lekérdezése"
+
+msgctxt "#32103"
+msgid "Saving Missing Artwork List"
+msgstr "Hiányzó artwork lista mentése"
+
+msgctxt "#32104"
+msgid "Uploading Missing cdART List to website"
+msgstr "Hiányzó cdART-ok listájának feltöltése a weboldalra"
+
+msgctxt "#32105"
+msgid "Retrieving Album Details"
+msgstr "Album információk lekérdezése"
+
+msgctxt "#32106"
+msgid "Overwrite low-res existing cdARTs"
+msgstr "Alacsony felbontású meglévő cdART-ok felülírása"
+
+msgctxt "#32108"
+msgid "Database too old"
+msgstr "Az adatbázis túl öreg"
+
+msgctxt "#32109"
+msgid "Do you want to Rebuild?"
+msgstr "Valóban újraépíti?"
+
+msgctxt "#32110"
+msgid "Problem Accessing Folder, Script Exiting"
+msgstr "Mappa elérési probléma, a szkript bezáródik..."
+
+msgctxt "#32111"
+msgid "Downloaded Artwork"
+msgstr "Letöltött Artwork"
+
+msgctxt "#32112"
+msgid "Updating Thumbnails and Fanarts"
+msgstr "Bélyegképek és Fanart-ok frissítése"
+
+msgctxt "#32113"
+msgid "Finished updating Thumbnails and Fanarts"
+msgstr "A bélyegképek és Fanartok frissítése befejeződött."
+
+msgctxt "#32114"
+msgid "Check Database MBID's to be current during an Update"
+msgstr "MBID adatbázis ellenőrzése és frissítése"
+
+msgctxt "#32115"
+msgid "Notify while in Background mode"
+msgstr "Értesítések a háttérben futás közben"
+
+msgctxt "#32116"
+msgid "Notify At End of Background Database Build(displayed for 2 seconds)"
+msgstr "Értesítés az adatbázis háttérben való felépítéséről (2 másodpercig látható)"
+
+msgctxt "#32117"
+msgid "Database Building completed"
+msgstr "Adatbázis építése kész"
+
+msgctxt "#32118"
+msgid "Background Database building in progress...  Exiting Script..."
+msgstr "Adatbázis felépítése folyamatban (a háttérben)... | | A szkript bezáródik"
+
+msgctxt "#32119"
+msgid "Stopping Background Database Building"
+msgstr "Az adatbázis felépítésének megállítása"
+
+msgctxt "#32120"
+msgid "All Artists"
+msgstr "Összes előadó"
+
+msgctxt "#32121"
+msgid "Album Artists"
+msgstr "Album előadók"
+
+msgctxt "#32122"
+msgid "Edit Artist"
+msgstr "Előadó Szerkesztése"
+
+msgctxt "#32123"
+msgid "Backup Database"
+msgstr "Biztonsági másolat az adatbázisról"
+
+msgctxt "#32124"
+msgid "Retrieving All Local Artists"
+msgstr "Minden helyi művész lekérdezése"
+
+msgctxt "#32125"
+msgid "Artist ID: "
+msgstr "Előadó azonosító:"
+
+msgctxt "#32126"
+msgid "Modify Addon Database"
+msgstr "Kiegészítő adatbázis módisítása"
+
+msgctxt "#32127"
+msgid "Edit Album"
+msgstr "Album Szerkesztése"
+
+msgctxt "#32128"
+msgid "MusicBrainz Search Limit"
+msgstr "MusicBrainz Keresési Limit"
+
+msgctxt "#32129"
+msgid "Update Database"
+msgstr "Adatbázis frissítése"
+
+msgctxt "#32130"
+msgid "XBMC Music Database missing..."
+msgstr "XBMC Zene adatbázis hiányzik..."
+
+msgctxt "#32131"
+msgid "Please insure Music Library is built."
+msgstr "Kérjük biztosítsa a használathoz a felépült Zene médiatárat."
+
+msgctxt "#32132"
+msgid "Updating Missing MusicBrainz Artist's IDs"
+msgstr "MusicBrainz hiányzó előadó ID-k frissítése"
+
+msgctxt "#32133"
+msgid "Updating Missing MusicBrainz Album/Artist ID's"
+msgstr "MusicBrainz hiányzó Album/Előadó ID-k frissítése"
+
+msgctxt "#32134"
+msgid "Updating Addon Database"
+msgstr "Kiegészítő adatbázis frissítése"
+
+msgctxt "#32135"
+msgid "Updating Addon Database - Local Artists"
+msgstr "Kiegészítő adatbázis frissítése - Helyi előadók"
+
+msgctxt "#32136"
+msgid ""
+"Enable MusicBrainz ID update during Addon Database update(for missing IDs)"
+msgstr "MusicBrainz ID kiegészítő adatbázis frissítés engedélyezése (a hiányzó azonosítókhoz)"
+
+msgctxt "#32137"
+msgid "Artist"
+msgstr "Előadó"
+
+msgctxt "#32138"
+msgid "Album"
+msgstr "Album"
+
+msgctxt "#32139"
+msgid "Successfully backed up Addon Database"
+msgstr "Biztonsági mentés sikeres."
+
+msgctxt "#32140"
+msgid "Old Database version found..."
+msgstr "Korábbi adatbázis verziót találtam..."
+
+msgctxt "#32141"
+msgid "Would you like to add Local Artists to Addon Database?"
+msgstr "Szeretné felvenni a helyi művészeket a kiegészítő adatbázisba?"
+
+msgctxt "#32142"
+msgid "Add all artists to Database during Database build or update?"
+msgstr "Minden előadó adatainak frissítése vagy az adatbázisba felvétele?"
+
+msgctxt "#32143"
+msgid "Extra Settings"
+msgstr "Extra beállítási lehetőségek"
+
+msgctxt "#32144"
+msgid "Artist Thumbs"
+msgstr "Előadó bélyegképek"
+
+msgctxt "#32145"
+msgid "Update XBMC Thumbnails and Fanarts"
+msgstr "XBMC Bélyegképek és Fanart-ok frissítése"
+
+msgctxt "#32146"
+msgid "Settings"
+msgstr "Beállítások"
+
+msgctxt "#32147"
+msgid "Exit"
+msgstr "Kilépés"
+
+msgctxt "#32148"
+msgid "(this can take a long time to complete)"
+msgstr "(ez eltarthat egy pár percig)"
+
+msgctxt "#32149"
+msgid "Checking Artist MBIDs"
+msgstr "Előadó MBID ellenőrzése"
+
+msgctxt "#32150"
+msgid "Checking Album MBIDs"
+msgstr "Album MBID ellenőrzése"
+
+msgctxt "#32151"
+msgid "Find Missing MBIDs"
+msgstr "Hiányzó MBID-k keresése"
+
+msgctxt "#32152"
+msgid "Refresh MBIDs"
+msgstr "MBID Frissítése"
+
+msgctxt "#32153"
+msgid "Change MBID"
+msgstr "MBID Váltása"
+
+msgctxt "#32154"
+msgid "Check All MBIDs"
+msgstr "Összes MBID ellenőrzése"
+
+msgctxt "#32155"
+msgid "Enter MBID"
+msgstr "MBID Bevitele"
+
+msgctxt "#32156"
+msgid "Select from search(manual entry)"
+msgstr "Kiválasztás kereséshez (manuális bevitel)"
+
+msgctxt "#32157"
+msgid "Select from search(automatic)"
+msgstr "Kiválasztás kereséshez (automatikus)"
+
+msgctxt "#32158"
+msgid "Enable saving of missing.txt file"
+msgstr "missing.txt mentésének engedélyezése"
+
+msgctxt "#32159"
+msgid "Enter Artist MBID - Including dashes(36 Characters)"
+msgstr "Előadó MBID bevitele (36 karakter)"
+
+msgctxt "#32160"
+msgid "Please Enter 36 Characters including dashes"
+msgstr "Bevitel (36 karakter)"
+
+msgctxt "#32161"
+msgid "Do you want to re-enter?"
+msgstr "Szeretné újra beírni?"
+
+msgctxt "#32162"
+msgid "Is this MBID Correct?"
+msgstr "Ez az MBID helyes?"
+
+msgctxt "#32163"
+msgid "Are you sure you want to delete MBID?"
+msgstr "Valóban törölni akarja az MBID-t?"
+
+msgctxt "#32164"
+msgid "Enter Artist name to search"
+msgstr "Előadó nevének megadása kereséshez"
+
+msgctxt "#32165"
+msgid "Enter Album title to search"
+msgstr "Album címének megadása kereséshez"
+
+msgctxt "#32166"
+msgid "Select Album"
+msgstr "Album Kiválasztása"
+
+msgctxt "#32167"
+msgid "Enter Album MBID - Including dashes(36 Characters)"
+msgstr "Album MBID bevitele (36 karakter)"
+
+msgctxt "#32168"
+msgid "Artist Banners"
+msgstr "Előadó banner"
+
+msgctxt "#32169"
+msgid "400px X 155px"
+msgstr "400px X 155px"
+
+msgctxt "#32170"
+msgid "800px X 310px"
+msgstr "800px X 310px"
+
+msgctxt "#32171"
+msgid "Enable HD Music LOGOs"
+msgstr "HD Zene logók engedélyezése"
+
+msgctxt "#32172"
+msgid "Backup addon database during update"
+msgstr "Kiegészítő adatbázis biztonsági mentése a frissítés során"
+
+msgctxt "#32173"
+msgid ""
+"Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared "
+"with manual use of cdART Manager"
+msgstr ""
+
+msgctxt "#32174"
+msgid "Number of possible MBID matches:"
+msgstr "A lehetséges MBID találatok száma:"
+
+msgctxt "#32175"
+msgid "Enable replacement of illegal filename characters in artist names"
+msgstr "Nem támogatott fájlnév-karakterek cseréje az előadók nevénél"
+
+msgctxt "#32176"
+msgid "   illegal characters to replace"
+msgstr "nem támogatott karakterek cseréje"
+
+msgctxt "#32177"
+msgid "   replacement character"
+msgstr "helyettesítő karakterek"
+
+msgctxt "#32178"
+msgid "Yes"
+msgstr "Igen"
+
+msgctxt "#32179"
+msgid "No"
+msgstr "Nem"
+
+msgctxt "#32180"
+msgid "    change trailing periods to replacement character"
+msgstr ""
+
+msgctxt "#32181"
+msgid "There is an error in Settings."
+msgstr "Hiba történt a beállításokban."
+
+msgctxt "#32182"
+msgid "Please check your settings and save settings[CR](press OK in settings)"
+msgstr "Kérjük ellenőrizze a beállításokat, majd mentse [CR](OK gomb a beállításokhoz)"
+
+msgctxt "#32183"
+msgid "Limit number Extrafanarts"
+msgstr "Extrafanartok számának limitálása"
+
+msgctxt "#32184"
+msgid "    Extrafanart Limit:"
+msgstr "Extrafanart Limit:"
+
+msgctxt "#32185"
+msgid "Checking fanart.tv for new artwork..."
+msgstr "Új képek keresése a fanart.tv-n..."
+
+msgctxt "#32186"
+msgid "Updating Database to new version..."
+msgstr "Adatbázis frissítése új verzióra..."
+
+msgctxt "#32187"
+msgid "Checking fanart.tv for artwork..."
+msgstr "Képek keresése a fanart.tv-n..."
+
+msgctxt "#32188"
+msgid "Use http://musicbrainz.org as the MusicBrainz Server"
+msgstr "MusicBrainz Szerver (http://musicbrainz.org) használata"
+
+msgctxt "#32189"
+msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
+msgstr "URL elérési út a MusicBrainz Szerverhez (példa: http://192.168.1.20)"
+
+msgctxt "#32190"
+msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
+msgstr "Késleltetés a MusicBrainz szerver-lekérésekhez (100 ezredmásodperc)"
+
+msgctxt "#32191"
+msgid "Refresh fanart.tv data"
+msgstr "fanart.tv adatok frissítése"

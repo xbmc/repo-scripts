@@ -1,0 +1,789 @@
+# XBMC Media Center language file
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# martkuper <martkuper@hotmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: cdART Manager\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2012-07-03 05:24+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
+"Last-Translator: giftie <giftie61@hotmail.com>\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Recognized Artists"
+msgstr "Herkende Artiesten"
+
+msgctxt "#32001"
+msgid "Album cdARTs"
+msgstr "Album cdARTs"
+
+msgctxt "#32002"
+msgid "Select Artist"
+msgstr "Selecteer Artiesten"
+
+msgctxt "#32003"
+msgid "Album Cover Arts"
+msgstr "Album Cover Arts"
+
+msgctxt "#32004"
+msgid "Automatic Download"
+msgstr "Automatisch Downloaden"
+
+msgctxt "#32005"
+msgid "Save Local cdART List"
+msgstr "Lokale cdART Lijst Opslaan"
+
+msgctxt "#32006"
+msgid "Artist Fanarts"
+msgstr "Artiest Fan Arts"
+
+msgctxt "#32007"
+msgid "Local Album Artists: %s"
+msgstr "Lokale Artiesten: %s"
+
+msgctxt "#32008"
+msgid "Local cdARTs: %s"
+msgstr "Lokale cdARTs: %s"
+
+msgctxt "#32009"
+msgid "Artist ClearLOGOs"
+msgstr "Schoon De Artiesten LOGOs Op"
+
+msgctxt "#32010"
+msgid "Local Discs: %s"
+msgstr "Lokale Albums: %s"
+
+msgctxt "#32011"
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+msgctxt "#32012"
+msgid "Refresh Addon Database"
+msgstr "Ververs Addon Database"
+
+msgctxt "#32013"
+msgid "Clean XBMC's Music Library"
+msgstr "XBMC's muziek bibliotheek opschonen"
+
+msgctxt "#32014"
+msgid "Update XBMC's Music Library"
+msgstr "Update XBMC's muziek bibliotheek"
+
+msgctxt "#32015"
+msgid "Delete Addon's Database?"
+msgstr "Wilt u De Lokale Database Verwijderen?"
+
+msgctxt "#32016"
+msgid "Disc:"
+msgstr "Schijf:"
+
+msgctxt "#32017"
+msgid "Local cdART List saving folder"
+msgstr "Map waar Lokale cdART Lijst wordt opgeslagen"
+
+msgctxt "#32018"
+msgid "cdART  Backup folder"
+msgstr "cdART Backup map"
+
+msgctxt "#32019"
+msgid "Backup saving format: "
+msgstr "Backup opslag formaat: "
+
+msgctxt "#32020"
+msgid "Retrieving Music Database"
+msgstr "Ophalen Muziek Database"
+
+msgctxt "#32021"
+msgid "Creating Addon Database"
+msgstr "Addon Database Maken"
+
+msgctxt "#32022"
+msgid "Choose Available cdART"
+msgstr "Kies beschikbare cdART"
+
+msgctxt "#32023"
+msgid "Download Successful!"
+msgstr "Download Succesvol!"
+
+msgctxt "#32024"
+msgid "Artwork Downloaded!"
+msgstr "cdART Gedownload!"
+
+msgctxt "#32025"
+msgid "Check file paths-Artwork Not Downloaded"
+msgstr "Controleer bestands-mappen cdART niet gedownload"
+
+msgctxt "#32026"
+msgid "Download Error Occured!"
+msgstr "Download Error"
+
+msgctxt "#32027"
+msgid "Artwork Not Download!"
+msgstr "cdART Niet gedownload!"
+
+msgctxt "#32028"
+msgid "Download aborted!"
+msgstr "Download afgebroken!"
+
+msgctxt "#32029"
+msgid "No Artwork found?"
+msgstr "Geen cdART gevonden?"
+
+msgctxt "#32030"
+msgid "Please contribute! Upload your Artwork"
+msgstr "Help aub mee! Upload je cdARTs"
+
+msgctxt "#32031"
+msgid "On fanart.tv"
+msgstr "Op www.fanart.tv"
+
+msgctxt "#32032"
+msgid "Choose an Artist"
+msgstr "Kies een Artiest"
+
+msgctxt "#32033"
+msgid "Not Found on fanart.tv"
+msgstr "Niet gevonden op fanart.tv"
+
+msgctxt "#32034"
+msgid "No Artwork found for"
+msgstr "Geen cdART gevonden voor"
+
+msgctxt "#32035"
+msgid " *DOWNLOADING Artwork* "
+msgstr " *DOWNLOADING Artwork* "
+
+msgctxt "#32036"
+msgid "Music folder path(for Artwork)"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Getting local artists"
+msgstr "Lokale artiesten ophalen"
+
+msgctxt "#32038"
+msgid "Artist: "
+msgstr "Artiest: "
+
+msgctxt "#32039"
+msgid "Album: "
+msgstr "Album: "
+
+msgctxt "#32040"
+msgid "Completed"
+msgstr "Klaar"
+
+msgctxt "#32041"
+msgid "New Artwork downloaded"
+msgstr "Nieuwe cdARTs gedownload"
+
+msgctxt "#32042"
+msgid "cdART Manager"
+msgstr "cdART Manager"
+
+#. string insert for local artist
+msgctxt "#32043"
+msgid "Local Artists:"
+msgstr "Lokale Artiesten:"
+
+#. string insert for local cdARTs
+msgctxt "#32044"
+msgid "Local cdARTs:"
+msgstr "Lokale cdARTs:"
+
+#. string insert for local albums
+msgctxt "#32045"
+msgid "Local Discs:"
+msgstr "Lokale Albums:"
+
+msgctxt "#32046"
+msgid "Automatic Downloading Artwork"
+msgstr "Automatisch Downloaden cdARTs"
+
+msgctxt "#32047"
+msgid "Downloading..."
+msgstr "Downloaden..."
+
+msgctxt "#32048"
+msgid "Retrieving Recognized Artist List...."
+msgstr "Ophalen Herkende Artiesten Lijst...."
+
+msgctxt "#32049"
+msgid "Artists Matched: %s"
+msgstr "Herkende Artiesten: %s"
+
+msgctxt "#32050"
+msgid "Database setup aborted..."
+msgstr "Database setup afgebroken..."
+
+msgctxt "#32051"
+msgid "Addon Database is crucial to script!"
+msgstr "Addon Database is cruciaal voor script!"
+
+msgctxt "#32052"
+msgid "Please go to the Advanced Menu and"
+msgstr "Ga aub naar Geavanceerd Menu en"
+
+msgctxt "#32053"
+msgid "Refresh Addon Database"
+msgstr "Ververs Addon Database"
+
+msgctxt "#32054"
+msgid "/Artist/Album.png"
+msgstr "/Artiest/Album.png"
+
+msgctxt "#32055"
+msgid "/artist - album.png"
+msgstr "/artiest - album.png"
+
+msgctxt "#32056"
+msgid "cdARTs Copied"
+msgstr "cdARTs Gekopieerd"
+
+msgctxt "#32057"
+msgid "Finished Copying cdARTs"
+msgstr "Klaar met kopieren cdARTs"
+
+msgctxt "#32058"
+msgid "cdARTs Stored in"
+msgstr "cdARTs Opgeslagen in"
+
+msgctxt "#32059"
+msgid " cdARTs Copied"
+msgstr " cdARTs Gekopieerd"
+
+msgctxt "#32060"
+msgid "Copying cdARTs..."
+msgstr "Kopieren cdARTs..."
+
+msgctxt "#32061"
+msgid "cdART Backup"
+msgstr "cdART Backup"
+
+msgctxt "#32062"
+msgid "Path for missing.txt file"
+msgstr "Pad voor missing.txt bestand"
+
+msgctxt "#32063"
+msgid "Copy Unique Local cdARTs"
+msgstr "Kopieer Unieke Lokale cdARTs"
+
+msgctxt "#32064"
+msgid "Unique cdARTS folder: %s"
+msgstr "Eigen cdARTS map: %s"
+
+msgctxt "#32065"
+msgid "Comparing Local and Online cdARTs..."
+msgstr "Vergelijken Lokale en Online cdARTs..."
+
+msgctxt "#32066"
+msgid "Error connecting to fanart.tv, Socket Timed out"
+msgstr "Fout tijdens het verbinden met fanart.tv, Socket Timed out"
+
+msgctxt "#32067"
+msgid "Backup cdART Files"
+msgstr "Backup cdART Bestanden"
+
+msgctxt "#32068"
+msgid "Restore From Backup"
+msgstr "Herstellen van Backup"
+
+msgctxt "#32069"
+msgid "Restoring cdARTs from backup..."
+msgstr "Herstellen cdARTs van backup..."
+
+msgctxt "#32070"
+msgid "cdARTs Restored from backup folder"
+msgstr "cdARTs Hersteld van backup map"
+
+msgctxt "#32071"
+msgid "Settings have not been setup!"
+msgstr "Instellingen zijn nog niet ingesteld!"
+
+msgctxt "#32072"
+msgid "Please go to Settings menu..."
+msgstr "Ga aub naar het instellingen menu..."
+
+msgctxt "#32073"
+msgid "Then Advanced: Refresh Addon Database"
+msgstr "dan Geavanceerd: Ververs Addon Database"
+
+msgctxt "#32074"
+msgid "Copy cdART to Backup Folder"
+msgstr "Kopieer cdART naar Backup Map"
+
+msgctxt "#32075"
+msgid "Delete cdART"
+msgstr "Verwijder cdART"
+
+msgctxt "#32076"
+msgid "Copy To Unique Folder For Upload"
+msgstr "Kopieer naar Eigen Map voor Upload"
+
+msgctxt "#32077"
+msgid "Custom Label Colors"
+msgstr "Eigen Kleuren Labels"
+
+msgctxt "#32078"
+msgid "Green"
+msgstr "Groen"
+
+msgctxt "#32079"
+msgid "Blue"
+msgstr "Blauw"
+
+msgctxt "#32080"
+msgid "Red"
+msgstr "Rood"
+
+msgctxt "#32081"
+msgid "Yellow"
+msgstr "Geel"
+
+msgctxt "#32082"
+msgid "Orange"
+msgstr "Oranje"
+
+msgctxt "#32083"
+msgid "White"
+msgstr "Wit"
+
+msgctxt "#32084"
+msgid "Cyan"
+msgstr "Cyaan"
+
+msgctxt "#32085"
+msgid "Violet"
+msgstr "Violet"
+
+msgctxt "#32086"
+msgid "Pink"
+msgstr "Roze"
+
+msgctxt "#32087"
+msgid "   Recognized Artists Color"
+msgstr "   Herkende Artiesten Kleur"
+
+msgctxt "#32088"
+msgid "   Unrecognized Artists Color"
+msgstr "   Niet-herkende Artisten Kleur"
+
+msgctxt "#32089"
+msgid "   fanart.tv Albums Match Color"
+msgstr "   fanart.tv Albums Match Kleur"
+
+msgctxt "#32090"
+msgid "   Local Albums Match Color"
+msgstr "   Lokale Albums Match Kleur"
+
+msgctxt "#32091"
+msgid "   Local and fanart.tv Match Color"
+msgstr "   Lokale en fanart.tv Match Kleur"
+
+msgctxt "#32092"
+msgid "   Unmatched Album Color"
+msgstr "   Niet gematchde Album Kleur"
+
+msgctxt "#32093"
+msgid "   Local cdART List Color"
+msgstr "   Lokale cdART Lijst Kleur"
+
+msgctxt "#32094"
+msgid "Enable custom colors for labels"
+msgstr "Gebruik Eigen kleuren voor labels"
+
+msgctxt "#32095"
+msgid "File Folders"
+msgstr "Bestand Mappen"
+
+msgctxt "#32096"
+msgid "Duplicates Found"
+msgstr "Dubbelen gevonden"
+
+msgctxt "#32097"
+msgid "    Resize Unique cdARTs?"
+msgstr "    Formaat aanpassen Eigen cdARTs?"
+
+msgctxt "#32098"
+msgid "Local cdART List"
+msgstr "Lokale cdART Lijst"
+
+msgctxt "#32099"
+msgid "Build Addon Database in background"
+msgstr "Bouw de addon database in de achtergrond"
+
+msgctxt "#32100"
+msgid "Local Album Count"
+msgstr "Aantal Lokale Albums"
+
+msgctxt "#32101"
+msgid "Sorting Album Artists"
+msgstr "Album Artiesten Sorteren"
+
+msgctxt "#32102"
+msgid "Retrieving Local Database"
+msgstr "Ophalen Lokale Database"
+
+msgctxt "#32103"
+msgid "Saving Missing Artwork List"
+msgstr "Sla missende artwork lijst op"
+
+msgctxt "#32104"
+msgid "Uploading Missing cdART List to website"
+msgstr "Ontbrekende cdART Lijst Uploaden naar website"
+
+msgctxt "#32105"
+msgid "Retrieving Album Details"
+msgstr "Album Details Ophalen"
+
+msgctxt "#32106"
+msgid "Overwrite low-res existing cdARTs"
+msgstr "Bestaande lage-resolutie cdARTs overschrijven"
+
+msgctxt "#32108"
+msgid "Database too old"
+msgstr "Database te oud"
+
+msgctxt "#32109"
+msgid "Do you want to Rebuild?"
+msgstr "Wil je opnieuw Bouwen?"
+
+msgctxt "#32110"
+msgid "Problem Accessing Folder, Script Exiting"
+msgstr "Probleem Toegang Folder, Script Sluit Af"
+
+msgctxt "#32111"
+msgid "Downloaded Artwork"
+msgstr "Gedownload Artwork"
+
+msgctxt "#32112"
+msgid "Updating Thumbnails and Fanarts"
+msgstr "Bijwerken van Thumbnails en Fanarts"
+
+msgctxt "#32113"
+msgid "Finished updating Thumbnails and Fanarts"
+msgstr "Klaar met bijwerken van Thumbnails en Fanarts"
+
+msgctxt "#32114"
+msgid "Check Database MBID's to be current during an Update"
+msgstr "Controlleer MBID's database of deze up to date is."
+
+msgctxt "#32115"
+msgid "Notify while in Background mode"
+msgstr "Waarschuw in achtergrond modus"
+
+msgctxt "#32116"
+msgid "Notify At End of Background Database Build(displayed for 2 seconds)"
+msgstr "Melding geven na Bouwen van database op de achtergrond (weergeven voor 2 seconden)"
+
+msgctxt "#32117"
+msgid "Database Building completed"
+msgstr "Database Bouwen Compleet"
+
+msgctxt "#32118"
+msgid "Background Database building in progress...  Exiting Script..."
+msgstr "Bezig met bouwen database op de achtergrond...  script beindingen..."
+
+msgctxt "#32119"
+msgid "Stopping Background Database Building"
+msgstr "Stoppen met bouwen van database op de achtergrond"
+
+msgctxt "#32120"
+msgid "All Artists"
+msgstr "Alle Artiesten"
+
+msgctxt "#32121"
+msgid "Album Artists"
+msgstr "Album Artiesten"
+
+msgctxt "#32122"
+msgid "Edit Artist"
+msgstr "Artiest Aanpassen"
+
+msgctxt "#32123"
+msgid "Backup Database"
+msgstr "Database Backuppen"
+
+msgctxt "#32124"
+msgid "Retrieving All Local Artists"
+msgstr "Alle Lokale Artiesten Ophalen"
+
+msgctxt "#32125"
+msgid "Artist ID: "
+msgstr "Artiest ID:"
+
+msgctxt "#32126"
+msgid "Modify Addon Database"
+msgstr "Bewerk de addon database"
+
+msgctxt "#32127"
+msgid "Edit Album"
+msgstr "Album Aanpassen"
+
+msgctxt "#32128"
+msgid "MusicBrainz Search Limit"
+msgstr "MusicBrainz Zoek Limiet"
+
+msgctxt "#32129"
+msgid "Update Database"
+msgstr "Database Updaten"
+
+msgctxt "#32130"
+msgid "XBMC Music Database missing..."
+msgstr "De XBMC Muziek Database Mist"
+
+msgctxt "#32131"
+msgid "Please insure Music Library is built."
+msgstr "Wees er zeker van dat de muziek bibliotheek gebouwd is"
+
+msgctxt "#32132"
+msgid "Updating Missing MusicBrainz Artist's IDs"
+msgstr "Bijwerken van missende MBAID's"
+
+msgctxt "#32133"
+msgid "Updating Missing MusicBrainz Album/Artist ID's"
+msgstr "Bijwerken van MB Album/Artits ID's"
+
+msgctxt "#32134"
+msgid "Updating Addon Database"
+msgstr "Addon Database Wordt Geüpdated"
+
+msgctxt "#32135"
+msgid "Updating Addon Database - Local Artists"
+msgstr "De Addon Database met Lokale Artiesten wordt geüpdated"
+
+msgctxt "#32136"
+msgid "Enable MusicBrainz ID update during Addon Database update(for missing IDs)"
+msgstr "Zet MBID's updaten aan tijdens de Addon database update (voor missende ID's)"
+
+msgctxt "#32137"
+msgid "Artist"
+msgstr "Artiest"
+
+msgctxt "#32138"
+msgid "Album"
+msgstr "Album"
+
+msgctxt "#32139"
+msgid "Successfully backed up Addon Database"
+msgstr "De Addon Database is succesvol gebackupped"
+
+msgctxt "#32140"
+msgid "Old Database version found..."
+msgstr "Er is een oude Database versie gevonden"
+
+msgctxt "#32141"
+msgid "Would you like to add Local Artists to Addon Database?"
+msgstr "Wilt u lokale artiesten aan de addon database toevoegen?"
+
+msgctxt "#32142"
+msgid "Add all artists to Database during Database build or update?"
+msgstr "Wilt u alle artiesten aan de database toevoegen tijdens het updaten of het creëren van de Database"
+
+msgctxt "#32143"
+msgid "Extra Settings"
+msgstr "Extra instellingen"
+
+msgctxt "#32144"
+msgid "Artist Thumbs"
+msgstr "Artiest Thumbs"
+
+msgctxt "#32145"
+msgid "Update XBMC Thumbnails and Fanarts"
+msgstr "Update XBMC Thumbnails en Fanarts"
+
+msgctxt "#32146"
+msgid "Settings"
+msgstr "Instellingen"
+
+msgctxt "#32147"
+msgid "Exit"
+msgstr "Afsluiten"
+
+msgctxt "#32148"
+msgid "(this can take a long time to complete)"
+msgstr "(dit kan een lange tijd duren om te voltooien)"
+
+msgctxt "#32149"
+msgid "Checking Artist MBIDs"
+msgstr "Controleren van artits MBID's"
+
+msgctxt "#32150"
+msgid "Checking Album MBIDs"
+msgstr "Controleren van album MBID's"
+
+msgctxt "#32151"
+msgid "Find Missing MBIDs"
+msgstr "Vind Missende MBIDs"
+
+msgctxt "#32152"
+msgid "Refresh MBIDs"
+msgstr "Ververs MBIDs"
+
+msgctxt "#32153"
+msgid "Change MBID"
+msgstr "Verander MBID"
+
+msgctxt "#32154"
+msgid "Check All MBIDs"
+msgstr "Controleer Alle MBIDs"
+
+msgctxt "#32155"
+msgid "Enter MBID"
+msgstr "Enter MBID"
+
+msgctxt "#32156"
+msgid "Select from search(manual entry)"
+msgstr "Selecteer "
+
+msgctxt "#32157"
+msgid "Select from search(automatic)"
+msgstr "Selecteer van de zoekopdracht (automatisch)"
+
+msgctxt "#32158"
+msgid "Enable saving of missing.txt file"
+msgstr "Sla missing.txt file op"
+
+msgctxt "#32159"
+msgid "Enter Artist MBID - Including dashes(36 Characters)"
+msgstr "Voer Artist MBID in - Inclusief streepjes (36 tekens)"
+
+msgctxt "#32160"
+msgid "Please Enter 36 Characters including dashes"
+msgstr "Gelieve Voer 36 tekens inclusief streepjes"
+
+msgctxt "#32161"
+msgid "Do you want to re-enter?"
+msgstr "Wilt u het opnieuw in te voeren?"
+
+msgctxt "#32162"
+msgid "Is this MBID Correct?"
+msgstr "Is deze MBID Correct?"
+
+msgctxt "#32163"
+msgid "Are you sure you want to delete MBID?"
+msgstr "Weet u zeker dat u de MBID wilt verwijderen?"
+
+msgctxt "#32164"
+msgid "Enter Artist name to search"
+msgstr "Voer naam van de artiest in om te zoeken"
+
+msgctxt "#32165"
+msgid "Enter Album title to search"
+msgstr "Voer naam van het album in om te zoeken"
+
+msgctxt "#32166"
+msgid "Select Album"
+msgstr "Selecteer Album"
+
+msgctxt "#32167"
+msgid "Enter Album MBID - Including dashes(36 Characters)"
+msgstr "Voer Album MBID in - Inclusief streepjes (36 tekens)"
+
+msgctxt "#32168"
+msgid "Artist Banners"
+msgstr "Artist Banners"
+
+msgctxt "#32169"
+msgid "400px X 155px"
+msgstr "400px X 155px"
+
+msgctxt "#32170"
+msgid "800px X 310px"
+msgstr "800px X 310px"
+
+msgctxt "#32171"
+msgid "Enable HD Music LOGOs"
+msgstr "Schakel HD-muziek LOGO's in"
+
+msgctxt "#32172"
+msgid "Backup addon database during update"
+msgstr "Backup de addon database tijdens de update"
+
+msgctxt "#32173"
+msgid "Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared "
+"with manual use of cdART Manager"
+msgstr "Aantal dagen tot cache fanart.tv gegevens (De Scheduler) wordt gewist "
+"met handmatige gebruik van cdART Manager"
+
+msgctxt "#32174"
+msgid "Number of possible MBID matches:"
+msgstr "Het aantal mogelijke MBID resultaten"
+
+msgctxt "#32175"
+msgid "Enable replacement of illegal filename characters in artist names"
+msgstr "Schakel vervanging van illegale bestandsnaam tekens in de namen van artiesten"
+
+msgctxt "#32176"
+msgid "   illegal characters to replace"
+msgstr "   ongeldige tekens te vervangen"
+
+msgctxt "#32177"
+msgid "   replacement character"
+msgstr "   vervangend teken"
+
+msgctxt "#32178"
+msgid "Yes"
+msgstr "Ja"
+
+msgctxt "#32179"
+msgid "No"
+msgstr "Nee"
+
+msgctxt "#32180"
+msgid "    change trailing periods to replacement character"
+msgstr "    veranderen achterstand tijdvakken vervangend teken"
+
+msgctxt "#32181"
+msgid "There is an error in Settings."
+msgstr "Er is een probleem in settings"
+
+msgctxt "#32182"
+msgid "Please check your settings and save settings[CR](press OK in settings)"
+msgstr "Controleer uw instellingen [CR] (druk op OK in de instellingen) op te slaan"
+
+msgctxt "#32183"
+msgid "Limit number Extrafanarts"
+msgstr "Beperk het aantal Extrafanarts"
+
+msgctxt "#32184"
+msgid "    Extrafanart Limit:"
+msgstr "    Extrafanart limiet"
+
+msgctxt "#32185"
+msgid "Checking fanart.tv for new artwork..."
+msgstr "Controleert fanart.tv voor nieuwe artworks"
+
+msgctxt "#32186"
+msgid "Updating Database to new version..."
+msgstr "Updaten Database naar nieuwe versie ..."
+
+msgctxt "#32187"
+msgid "Checking fanart.tv for artwork..."
+msgstr "Controleert fanart.tv voor nieuwe artworks"
+
+msgctxt "#32188"
+msgid "Use http://musicbrainz.org as the MusicBrainz Server"
+msgstr "Gebruik http://musicbrainz.org als MusicBrainz server"
+
+msgctxt "#32189"
+msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
+msgstr "     Url naar MusicBrainz server (bijvoorbeeld - http://192.168.1.20)"
+
+msgctxt "#32190"
+msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
+msgstr "     Vertraging tussen MusicBrainz Server verzoeken (100's van milliseconden)"
+
+msgctxt "#32191"
+msgid "Refresh fanart.tv data"
+msgstr "Vernieuw fanart.tv data"
