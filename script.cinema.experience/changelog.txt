@@ -1,3 +1,22 @@
+3.0.7
+- fix       - add missing module import
+- add       - SABnzbd control to home automation module
+- change    - convert all file access to use the xbmcvfs module.  Thanks h0tw1r3
+- fix       - fixed skipping trailers that use plug-ins to play
+- fix       - properly end script - clear all variables
+- change    - remove old trailer downloader module
+- change    - remove jsonrpc folder/file listing in favour of xbmcvfs.listdir()
+- change    - change all logging to use the utils.log() function
+- change    - change method of waiting for movie to play(override play button setting)
+- change    - general code clean up
+- add       - handle .pls playlist files for music and video
+- change    - new method of reloading settings after settings have been changed 
+- add       - Brazilian Movie Rating support
+- change    - Apple Trailers now pull trailers from Current
+
+3.0.6
+- fix       - version bump to fix Skin folder name on XBMC Addon Git
+
 3.0.5
 - fix       - Movie playing behind trivia
 - fix       - Stop trivia music from playing if it is not selected in settings

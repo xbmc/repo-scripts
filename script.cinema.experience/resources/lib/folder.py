@@ -1,67 +1,58 @@
 # -*- coding: utf-8 -*-
+import sys, os, re, traceback
+import xbmc, xbmcvfs
 
-import sys, os, re
-import xbmc
-from json_utils import retrieve_json_dict
+__script__               = sys.modules[ "__main__" ].__script__
+__scriptID__             = sys.modules[ "__main__" ].__scriptID__
+BASE_CACHE_PATH          = sys.modules[ "__main__" ].BASE_CACHE_PATH
+BASE_RESOURCE_PATH       = sys.modules[ "__main__" ].BASE_RESOURCE_PATH
+BASE_CURRENT_SOURCE_PATH = sys.modules[ "__main__" ].BASE_CURRENT_SOURCE_PATH
+sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-def dirEntries( dir_name, media_type="files", recursive="FALSE", contains="" ):
-    '''Returns a list of valid XBMC files from a given directory(folder)
+import utils
 
-       Method to call:
-       dirEntries( dir_name, media_type, recursive )
-            dir_name   - the name of the directory to be searched
-            media_type - valid types: video, music, pictures, files, programs
-            recursive  - Setting to "TRUE" searches Parent and subdirectories, Setting to "FALSE" only search Parent Directory
-    '''
-    xbmc.log( "[folder.py] - dirEntries Activated", level=xbmc.LOGDEBUG )
-    fileList = []
-    json_query = '{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "%s"}, "id": 1}' % ( escapeDirJSON( dir_name ), media_type )
-    json_folder_detail = retrieve_json_dict(json_query, items='files', force_log=True)
-    if json_folder_detail:
-        for f in json_folder_detail:
-            try:
-                if recursive == "TRUE" and f["filetype"] == "directory":
-                    fileList.extend( dirEntries( f["file"], media_type, recursive, contains ) )
-                elif not contains or ( contains and (contains in f["file"] ) ):
-                    fileList.append( f["file"] )
-                    #xbmc.log( "[folder.py] - File Path: %s" % f["file"], level=xbmc.LOGDEBUG ) 
-                else:
-                    continue
-            except:
-                continue
-    return fileList
+def absolute_listdir( path, media_type = "files", recursive = False, contains = "" ):
+    absolute_files = []
+    absolute_folders = []
+    path = utils.smart_unicode( path )
+    folders, files = xbmcvfs.listdir( path )
+    for f in files:
+        f = utils.smart_unicode( f )
+        if media_type == "files":
+            if not contains or ( contains and ( contains in f ) ):
+                try:
+                    absolute_files.append( os.path.join( path, f ) )
+                except UnicodeError:
+                    utils.log( "Problem with path, skipping" )
+                    utils.log( "Path: %s" % repr( path ) )
+                    utils.log( "Filename: %s" % repr( path ) )
+                except:
+                    utils.log( "Problem with path, skipping" )
+                    traceback.print_exc()
+        else:
+            if os.path.splitext( f )[ 1 ] in xbmc.getSupportedMedia( media_type ):
+                if not contains or ( contains and ( contains in f ) ):
+                    absolute_files.append( os.path.join( path, f ) )
+    if folders:
+        absolute_folders = absolute_folder_paths( folders, path )
+        if recursive:
+            for folder in absolute_folders:
+                absolute_files.extend( absolute_listdir( folder, recursive = recursive, contains = contains ) )
+    return absolute_files
 
-def getFolders( dir_name, recursive="FALSE" ):
-    '''Returns a list of valid XBMC files from a given directory(folder)
-
-       Method to call:
-       getFolders( dir_name, , recursive )
-            dir_name   - the name of the directory to be searched
-            recursive  - Setting to "TRUE" searches Parent and subdirectories, Setting to "FALSE" only search Parent Directory
-    '''
-    xbmc.log( "[folder.py] - getFolders Activated", level=xbmc.LOGDEBUG )
-    folderList = []
-    json_query = '{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "files"}, "id": 1}' % ( escapeDirJSON( dir_name ) )
-    json_folder_detail = retrieve_json_dict(json_query, items='files', force_log=True)
-    if json_folder_detail:
-        for f in json_folder_detail:
-            if f["filetype"] == "directory":
-                folderList.append( match.group(1) )
-                #xbmc.log( "[folder.py] - Folder Path: %s" % f["file"], level=xbmc.LOGDEBUG )
-                if recursive == "TRUE":
-                    fileList.extend( getFolders( f["file"], recursive ) ) 
-            else:
-                continue
-    return folderList
-
-def escapeDirJSON ( dir_name ):
-    ''' escapes characters in a directory path for use in JSON RPC calls
-
-        Method to call:
-        escapeDirJSON( dir_name )
-            dir_name    - the name of the directory
-    '''
-    xbmc.log( "[folder.py] - escapeDirJSON Activated", level=xbmc.LOGDEBUG )
-    if dir_name.find(":"):
-        dir_name = dir_name.replace("\\", "\\\\")
-    return dir_name
+def absolute_folder_paths( folders, root_path ):
+    actual_folders = []
+    root_path = utils.smart_unicode( root_path )
+    for folder in folders:
+        folder = utils.smart_unicode( folder )
+        try:
+            actual_folders.append( os.path.join( root_path, folder ).replace("\\\\","\\") )
+        except UnicodeError:
+            utils.log( "Problem with path, skipping" )
+            utils.log( "Path: %s" % repr( root_path ) )
+            utils.log( "Folder: %s" % repr( folder ) )
+        except:
+            utils.log( "Problem with path, skipping" )
+            traceback.print_exc()
+    return actual_folders
+        

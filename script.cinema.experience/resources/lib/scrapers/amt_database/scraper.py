@@ -15,18 +15,18 @@ try:
 except:
   from pysqlite2 import dbapi2 as sqlite
 
-_A_ = xbmcaddon.Addon('script.cinema.experience')
-_L_ = _A_.getLocalizedString
-
-sys.path.append( os.path.join( _A_.getAddonInfo('path'), "resources" ) )
-
 __useragent__ = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27"
 #__useragent__ = "QuickTime/7.2 (qtver=7.2;os=Windows NT 5.1Service Pack 3)"
-trailer_settings   = sys.modules[ "__main__" ].trailer_settings
+__script__               = sys.modules[ "__main__" ].__script__
+__scriptID__             = sys.modules[ "__main__" ].__scriptID__
+trailer_settings         = sys.modules[ "__main__" ].trailer_settings
+BASE_RESOURCE_PATH       = sys.modules[ "__main__" ].BASE_RESOURCE_PATH
 BASE_CURRENT_SOURCE_PATH = sys.modules[ "__main__" ].BASE_CURRENT_SOURCE_PATH
+sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
+import utils
 
 class Main:
-    print "Apple Movie Trailers script database scraper"
+    utils.log( "Apple Movie Trailers script database scraper", xbmc.LOGERROR )
     BASE_DATA_PATH = os.path.join( BASE_CURRENT_SOURCE_PATH, "script.apple.movie.trailers" )
 
     def __init__( self, equivalent_mpaa=None, mpaa=None, genre=None, settings=None, movie=None ):
@@ -108,7 +108,7 @@ class Main:
                 self._mark_watched( trailer[ 0 ] )
         except:
             # oops print error message
-            print "ERROR: %s::%s (%d) - %s" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
+            utils.log( "ERROR: %s::%s (%d) - %s" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], ), xbmc.LOGERROR )
         # return result
         return trailers
 
@@ -167,7 +167,7 @@ class Main:
             records.close()
         except:
             # oops print error message
-            print "ERROR: %s::%s (%d) - %s" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
+            util.log( "ERROR: %s::%s (%d) - %s" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], ), xbmc.LOGERROR )
 
 
 class Records:
@@ -206,5 +206,5 @@ class Records:
             return True
         except:
             # oops print error message
-            print "ERROR: %s::%s (%d) - %s" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], )
+            util.log( "ERROR: %s::%s (%d) - %s" % ( self.__class__.__name__, sys.exc_info()[ 2 ].tb_frame.f_code.co_name, sys.exc_info()[ 2 ].tb_lineno, sys.exc_info()[ 1 ], ), xbmc.LOGERROR )
             return False

@@ -5,7 +5,6 @@ try:
     import xbmcgui
 except:
     pass
-    
 
 socket.setdefaulttimeout(30)
 
