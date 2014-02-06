@@ -17,6 +17,11 @@
         <setting id="hide_watched" type="bool" enable = "eq(-2,true)" label="32004" default="false" />
         <setting id="watched_days" type="number" enable="eq(-1,true)" label="32005" default="365" />
     </category>
+    <category label="32045">
+        <setting label="32046" type ="sep" />
+        <setting id="do_tmdb" type="bool" label="32044" default="true" />
+        <setting id="tmdb_source" label="32043" type="enum" enable="eq(-1,true)" default="0" lvalues="32047|32048|32049|32050|32051" />
+    </category>
     <category label="32025">
         <setting label="32013" type="lsep"/>
         <setting id="do_itunes" type="bool" label="32023" default="true" />

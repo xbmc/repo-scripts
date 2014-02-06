@@ -1,3 +1,15 @@
+v.1.1.9 (February, 05,2014)
+- fixed issue causing crash for not standard ascii characters. Fix EOL
+
+v.1.1.8 (January, 11, 2014:
+- added ability to play trailers from You Tube. Trailers are located using themoviedb.org.
+- added CouchPotato integration, while watching trailer pressing Q puts current movie in you CouchPotato Queue.
+
+v.1.1.7 (January, 5, 2014) :
+- added feature to display trailer info for iTunes trailers.
+-cleaned up and optimized code
+-moved hide info option from library to general settings
+
 v.1.1.6 (December 31,2013) :
 - added feature to select tyep fo traielrs form iTunes, Coming Soon, Just Added, Most Popular,  Exclusive and All
 

@@ -45,6 +45,14 @@
     <string id="32041">Include Not Yet Rated</string>
     <string id="32042">Include Not Rated (NR)</string>
     <string id="32043">Type of Trailers to Include</string>
+    <string id="32044">Include Trailers from themoviedb.org (YouTube)</string>
+    <string id="32045">Themoviedb.org</string>
+    <string id="32046">Themoviedb.org Settings</string>
+    <string id="32047">Popular</string>
+    <string id="32048">Top Rated</string>
+    <string id="32049">Upcoming</string>
+    <string id="32050">Now Playing</string>
+    <string id="32051">All</string>
     <string id="32102">Genres</string>    
     <string id="32100">Select Genre</string>
     <string id="32101">Do you want to select a genre to watch?</string>
