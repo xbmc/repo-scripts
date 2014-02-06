@@ -69,15 +69,6 @@ class Thumbnails:
     def get_cached_program_thumb( self, strPath ):
         return self.get_cached_thumb( strPath, os.path.join( THUMBS_CACHE_PATH, "Programs" ) )
 
-    def get_cached_gamesave_thumb( self, strPath ):
-        if strPath.lower().endswith( ".xbe" ):
-            try:
-                return os.path.join( THUMBS_CACHE_PATH, "GameSaves",
-                    "%s.tbn" % str( xbmc.executehttpapi( "getXBEid(%s)" % strPath ) ).replace( "<li>", "" )[ 1: ] )
-            except:
-                pass
-        return ""
-
     def get_cached_script_thumb( self, strLabel ):
         return self.get_cached_program_thumb( "special://home/scripts/%s/default.py" % ( strLabel ) )
 

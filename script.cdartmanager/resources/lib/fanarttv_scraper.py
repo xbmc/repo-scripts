@@ -10,9 +10,9 @@ from datetime import datetime
 import calendar
 
 if sys.version_info < (2, 7):
-    import json as simplejson
-else:
     import simplejson
+else:
+    import json as simplejson
     
 __language__           = sys.modules[ "__main__" ].__language__
 __scriptname__         = sys.modules[ "__main__" ].__scriptname__

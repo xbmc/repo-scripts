@@ -101,14 +101,15 @@ def get_musicbrainz_album( album_title, artist, e_count, limit=1, with_singles=F
     album["title"] = ""
     album["artist"] = ""
     album["artist_id"] = ""
-    log( "Artist: %s" % smart_unicode( artist ), xbmc.LOGDEBUG )
     album_temp = smart_unicode( album_title )
     artist = smart_unicode( get_unicode( artist ) )
     album_title = smart_unicode( get_unicode( album_title ) )
     log( "Artist: %s" % artist, xbmc.LOGDEBUG )
     log( "Album: %s" % album_title, xbmc.LOGDEBUG )
-    artist = artist.replace('"','?')
-    album_title = album_title.replace('"','?')
+    artist = artist.replace( '"', '?' )
+    artist = artist.replace( '&', 'and' )
+    album_title = album_title.replace( '"', '?' )
+    album_title = album_title.replace( '&', 'and' )
     if limit == 1:
         if not use_alias:
             url = release_group_url_artist % ( server, quote_plus( album_title.encode("utf-8") ), match_within, quote_plus( artist.encode("utf-8") ) )
@@ -230,7 +231,7 @@ def get_musicbrainz_artists( artist_search, limit=1 ):
     id = ""
     sortname = ""
     artists = []
-    artist_name = smart_unicode( artist_search.replace( '"', '?' ) )
+    artist_name = smart_unicode( ( artist_search.replace( '"', '?' ).replace( '&', 'and' ) ) )
     url = artist_url % ( server, quote_plus( artist_name.encode("utf-8") ), limit )
     htmlsource = get_html_source( url, "", save_file = False, overwrite = False )
     match = re.findall( '''<artist(.*?)</artist>''', htmlsource )
@@ -265,11 +266,11 @@ def get_musicbrainz_artists( artist_search, limit=1 ):
     xbmc.sleep( mb_delay )
     return artists
 
-def get_musicbrainz_artist_id( artist, limit=1, alias = False ):
+def get_musicbrainz_artist_id( artist_search, limit=1, alias = False ):
     name = ""
     id = ""
     sortname = ""
-    artist_name = smart_unicode( artist.replace( '"', '?' ) )
+    artist_name = smart_unicode( ( artist_search.replace( '"', '?' ).replace( '&', 'and' ) ) )
     if not alias:
         url = artist_url % ( server, quote_plus( artist_name.encode("utf-8") ), limit )
     else:
@@ -298,10 +299,10 @@ def get_musicbrainz_artist_id( artist, limit=1, alias = False ):
         log( "Sort Name : %s" % sortname, xbmc.LOGDEBUG )
     else:
         if not alias:
-            log( "No Artist ID found trying aliases: %s" % artist, xbmc.LOGDEBUG )
-            name, id, sortname = get_musicbrainz_artist_id( artist, limit, True )
+            log( "No Artist ID found trying aliases: %s" % artist_search, xbmc.LOGDEBUG )
+            name, id, sortname = get_musicbrainz_artist_id( artist_search, limit, True )
         else:
-            log( "No Artist ID found for Artist: %s" % artist, xbmc.LOGDEBUG )
+            log( "No Artist ID found for Artist: %s" % artist_search, xbmc.LOGDEBUG )
     xbmc.sleep( mb_delay )
     return name, id, sortname
 

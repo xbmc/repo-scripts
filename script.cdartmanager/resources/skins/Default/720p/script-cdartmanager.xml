@@ -2284,11 +2284,18 @@ id      | description
                 <animation effect="fade" start="0" end="100" delay="300" time="200" condition="Control.HasFocus(193) | ControlGroup(9021).HasFocus">conditional</animation>
                 <animation effect="fade" start="100" end="0" time="0" condition="Control.HasFocus(193) | ControlGroup(9021).HasFocus">WindowClose</animation>
                 <animation effect="slide" end="570,0" time="600" tween="quadratic" easing="out" condition="Control.HasFocus(193) | ControlGroup(9021).HasFocus">conditional</animation>
-                <visible>true</visible>                
+                <visible>true</visible>
                 <control type="image"> <!-- Box image -->
                     <width>260</width>
                     <height>100</height>
                     <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
+                </control>
+                <control type="image"> <!-- Box image -->
+                    <width>260</width>
+                    <height>60</height>
+                    <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),False)</visible>
                 </control>
                 <control type="button" id="197"> <!-- Album Artists -->
                     <description>Album Artists</description>
@@ -2331,6 +2338,7 @@ id      | description
                     <onright>9021</onright>
                     <onup>197</onup>
                     <ondown>197</ondown>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
                 </control>
             </control>
             <control type="group" id="9022"> <!-- Artist Thumb Autodownload sub-Menu -->
@@ -2340,11 +2348,18 @@ id      | description
                 <animation effect="fade" start="0" end="100" delay="300" time="200" condition="Control.HasFocus(194) | ControlGroup(9022).HasFocus">conditional</animation>
                 <animation effect="fade" start="100" end="0" time="0" condition="Control.HasFocus(194) | ControlGroup(9022).HasFocus">WindowClose</animation>
                 <animation effect="slide" end="570,0" time="600" tween="quadratic" easing="out" condition="Control.HasFocus(194) | ControlGroup(9022).HasFocus">conditional</animation>
-                <visible>true</visible>                
+                <visible>true</visible>
                 <control type="image"> <!-- Box image -->
                     <width>260</width>
                     <height>100</height>
                     <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
+                </control>
+                <control type="image"> <!-- Box image -->
+                    <width>260</width>
+                    <height>60</height>
+                    <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),False)</visible>
                 </control>
                 <control type="button" id="195"> <!-- Album Artists -->
                     <description>Album Artists</description>
@@ -2387,6 +2402,7 @@ id      | description
                     <onright>9023</onright>
                     <onup>195</onup>
                     <ondown>195</ondown>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
                 </control>
             </control>
             <control type="group" id="9020"> <!-- Artist Thumb menu -->
@@ -2467,11 +2483,18 @@ id      | description
                 <animation effect="fade" start="0" end="100" delay="300" time="200" condition="Control.HasFocus(200) | ControlGroup(9035).HasFocus">conditional</animation>
                 <animation effect="fade" start="100" end="0" time="0" condition="Control.HasFocus(200) | ControlGroup(9035).HasFocus">WindowClose</animation>
                 <animation effect="slide" end="570,0" time="600" tween="quadratic" easing="out" condition="Control.HasFocus(200) | ControlGroup(9035).HasFocus">conditional</animation>
-                <visible>true</visible>                
+                <visible>true</visible>
                 <control type="image"> <!-- Box image -->
                     <width>260</width>
                     <height>100</height>
                     <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
+                </control>
+                <control type="image"> <!-- Box image -->
+                    <width>260</width>
+                    <height>60</height>
+                    <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),False)</visible>
                 </control>
                 <control type="button" id="205"> <!-- Album Artists -->
                     <description>Album Artists</description>
@@ -2514,6 +2537,7 @@ id      | description
                     <onright>9035</onright>
                     <onup>205</onup>
                     <ondown>205</ondown>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
                 </control>
             </control>
             <control type="group" id="9036"> <!-- Artist Banner Autodownload sub-Menu -->
@@ -2523,11 +2547,18 @@ id      | description
                 <animation effect="fade" start="0" end="100" delay="300" time="200" condition="Control.HasFocus(201) | ControlGroup(9036).HasFocus">conditional</animation>
                 <animation effect="fade" start="100" end="0" time="0" condition="Control.HasFocus(201) | ControlGroup(9036).HasFocus">WindowClose</animation>
                 <animation effect="slide" end="570,0" time="600" tween="quadratic" easing="out" condition="Control.HasFocus(201) | ControlGroup(9036).HasFocus">conditional</animation>
-                <visible>true</visible>                
+                <visible>true</visible>
                 <control type="image"> <!-- Box image -->
                     <width>260</width>
                     <height>100</height>
                     <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
+                </control>
+                <control type="image"> <!-- Box image -->
+                    <width>260</width>
+                    <height>60</height>
+                    <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),False)</visible>
                 </control>
                 <control type="button" id="207"> <!-- Album Artists -->
                     <description>Album Artists</description>
@@ -2570,6 +2601,7 @@ id      | description
                     <onright>9036</onright>
                     <onup>207</onup>
                     <ondown>207</ondown>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
                 </control>
             </control>            
             <control type="group" id="9034"> <!-- Artist Banner menu -->
@@ -2649,11 +2681,18 @@ id      | description
                 <animation effect="fade" start="0" end="100" delay="300" time="200" condition="Control.HasFocus(168) | ControlGroup(9017).HasFocus">conditional</animation>
                 <animation effect="fade" start="100" end="0" time="0" condition="Control.HasFocus(168) | ControlGroup(9017).HasFocus">WindowClose</animation>
                 <animation effect="slide" end="570,0" time="600" tween="quadratic" easing="out" condition="Control.HasFocus(168) | ControlGroup(9017).HasFocus">conditional</animation>
-                <visible>true</visible>                
+                <visible>true</visible>
                 <control type="image"> <!-- Box image -->
                     <width>260</width>
                     <height>100</height>
                     <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
+                </control>
+                <control type="image"> <!-- Box image -->
+                    <width>260</width>
+                    <height>60</height>
+                    <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),False)</visible>
                 </control>
                 <control type="button" id="184"> <!-- Album Artists -->
                     <description>Album Artists</description>
@@ -2696,6 +2735,7 @@ id      | description
                     <onright>9017</onright>
                     <onup>184</onup>
                     <ondown>184</ondown>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
                 </control>
             </control>
             <control type="group" id="9018"> <!-- Clearlogo Autodownload sub-Menu -->
@@ -2710,6 +2750,13 @@ id      | description
                     <width>260</width>
                     <height>100</height>
                     <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
+                </control>
+                <control type="image"> <!-- Box image -->
+                    <width>260</width>
+                    <height>60</height>
+                    <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),False)</visible>
                 </control>
                 <control type="button" id="186"> <!-- Album Artists -->
                     <description>Album Artists</description>
@@ -2752,6 +2799,7 @@ id      | description
                     <onright>9018</onright>
                     <onup>186</onup>
                     <ondown>186</ondown>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
                 </control>
             </control>
             <control type="group" id="9008"> <!-- Clearlogo menu -->
@@ -2837,6 +2885,13 @@ id      | description
                     <width>260</width>
                     <height>100</height>
                     <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
+                </control>
+                <control type="image"> <!-- Box image -->
+                    <width>260</width>
+                    <height>60</height>
+                    <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),False)</visible>
                 </control>
                 <control type="button" id="180"> <!-- Album Artists -->
                     <description>Album Artists</description>
@@ -2879,6 +2934,7 @@ id      | description
                     <onright>9015</onright>
                     <onup>180</onup>
                     <ondown>180</ondown>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
                 </control>
             </control>
             <control type="group" id="9016"> <!-- Fanart Autodownload sub-Menu -->
@@ -2893,6 +2949,13 @@ id      | description
                     <width>260</width>
                     <height>100</height>
                     <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
+                </control>
+                <control type="image"> <!-- Box image -->
+                    <width>260</width>
+                    <height>60</height>
+                    <texture>default-menu.png</texture>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),False)</visible>
                 </control>
                 <control type="button" id="182"> <!-- Album Artists -->
                     <description>Album Artists</description>
@@ -2935,6 +2998,7 @@ id      | description
                     <onright>9016</onright>
                     <onup>182</onup>
                     <ondown>182</ondown>
+                    <visible>SubString(Window(10000).Property(cdart_manager_allartist),True)</visible>
                 </control>
             </control>
             <control type="group" id="9009"> <!-- Fanart Menu -->

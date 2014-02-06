@@ -23,9 +23,14 @@ def retrieve_json_dict(json_query, items='items', force_log=False ):
     if response.startswith( "{" ):
         response = eval( response )
         try:
-            result = response['result']
-            json_dict = result[items]
-            return json_dict
+            if response.has_key( 'result' ):
+                result = response['result']
+                json_dict = result[items]
+                return json_dict
+            else:
+                xbmc.log( "[json_utils.py] - retrieve_json_dict - No response from XBMC", level=xbmc.LOGNOTICE )
+                xbmc.log( response, level=xbmc.LOGDEBUG )
+                return None
         except:
             traceback.print_exc()
             xbmc.log( "[json_utils.py] - retrieve_json_dict - JSONRPC -\n%s" % response, level=xbmc.LOGNOTICE )

@@ -1,3 +1,13 @@
+3.0.5/4.0.5
+- Frodo/Gotham Split
+- Change - Hide all artists option if disabled in settings
+
+3.0.4
+- Fix - Correct JSON module import logic
+- Fix - Fix testing of artist and album names that use an ampersand( & )
+- change - remove HTTPAPI
+- Fix - Only process data when XBMC provides expected data(error catching)
+
 3.0.3
 - Add - Remove all MBIDs that match "24f1766e-9635-4d58-a4d4-9413f9f98a4c" then download correct matching MBIDs - only runs on an old database version
 - Update - New Database version

@@ -25,10 +25,10 @@ __author__             = __addon__.getAddonInfo('author')
 __version__            = __addon__.getAddonInfo('version')
 __credits__            = "Ppic, Reaven, Imaginos, redje, Jair, "
 __credits2__           = "Chaos_666, Magnatism, Kode, Martijn"
-__version_date__       = "2-25-13"
-__dbversion__          = "2.7.8"
-__dbversionold__       = "1.5.3"
-__dbversionancient__   = "1.1.8"
+__version_date__       = "5-10-13"
+__dbversion__          = "3.0.3"
+__dbversionold__       = "2.7.8"
+__dbversionancient__   = "1.5.3"
 __addon_path__         = __addon__.getAddonInfo('path')
 __useragent__          = "%s\\%s (giftie61@hotmail.com)" % ( __scriptname__, __version__ )
 enable_hdlogos         = eval( __addon__.getSetting("enable_hdlogos") )
@@ -91,7 +91,7 @@ sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ))
 
 from utils import settings_to_log, get_unicode, change_characters, unescape, log, dialog_msg
 from file_item import Thumbnails
-from database import build_local_artist_table, store_counts, new_local_count, get_local_artists_db, get_local_albums_db, update_database, retrieve_album_details_full
+from database import build_local_artist_table, store_counts, new_local_count, get_local_artists_db, get_local_albums_db, update_database, retrieve_album_details_full, mbid_repair
 from jsonrpc_calls import retrieve_album_details, retrieve_artist_details, get_fanart_path, get_thumbnail_path
 from musicbrainz_utils import get_musicbrainz_artist_id, get_musicbrainz_album
 from fanarttv_scraper import check_fanart_new_artwork, first_check, remote_banner_list, remote_hdlogo_list, get_recognized, remote_cdart_list, remote_coverart_list, remote_fanart_list, remote_clearlogo_list, remote_artistthumb_list
@@ -101,6 +101,10 @@ try:
 except:
     from utils import _makedirs
     
+def clear_skin_properties():
+    xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "False" )
+    xbmcgui.Window( 10000 ).setProperty( "cdart_manager_update", "False" )
+    xbmcgui.Window( 10000 ).setProperty( "cdart_manager_allartist", "False" )
 
 def artist_musicbrainz_id( artist_id, artist_mbid ):
     artist_details = retrieve_artist_details( artist_id )
@@ -310,7 +314,7 @@ if ( __name__ == "__main__" ):
         soft_exit = True
     settings_to_log( addon_work_folder, "[script.cdartmanager]" )
     try:
-        int( __addon__.getSetting( "recognized" ) )
+        recognized_ = int( __addon__.getSetting( "recognized" ) )
         soft_exit = False
     except:
         dialog_msg( "okdialog", heading = __language__( 32181 ), line1 = __language__( 32182 ) )
@@ -324,6 +328,10 @@ if ( __name__ == "__main__" ):
         xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "True" )
     if not soft_exit:
         try:
+            if enable_all_artists:
+                xbmcgui.Window( 10000 ).setProperty( "cdart_manager_allartist", "True" )
+            else:
+                xbmcgui.Window( 10000 ).setProperty( "cdart_manager_allartist", "False" )
             xbmc.executebuiltin('Dialog.Close(all, true)') 
             if script_mode in ( "database" ):
                 log( "Start method - Build Database in background", xbmc.LOGNOTICE )
@@ -477,7 +485,10 @@ if ( __name__ == "__main__" ):
                         if version[0][0] == __dbversion__:
                             log( "Database matched", xbmc.LOGNOTICE )
                         elif version[0][0] == __dbversionold__:
-                            log( "Version 1.5.3 found, Adding new column to Local Album Artist and Local Artists" , xbmc.LOGNOTICE )
+                            log( "Version 2.7.8 found, Removing Bach MBID's from database", xbmc.LOGNOTICE )
+                            mbid_repair()
+                        elif version[0][0] == __dbversionancient__:
+                            log( "Version 1.5.3 found, Adding new column to Local Album Artist and Local Artists", xbmc.LOGNOTICE )
                             all_artists  = []
                             local_artists  = []
                             file_copy( addon_db,addon_db_update )
@@ -525,25 +536,19 @@ if ( __name__ == "__main__" ):
                             xbmc.sleep(2000)
                             ui.doModal()
                             del ui
-                            xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "False" )
-                            xbmcgui.Window( 10000 ).setProperty( "cdart_manager_update", "False" )
+                            clear_skin_properties()
                         except:
                             log( "Error in script occured", xbmc.LOGNOTICE )
                             traceback.print_exc()
                             dialog_msg( "close" )
-                            xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "False" )
-                            xbmcgui.Window( 10000 ).setProperty( "cdart_manager_update", "False" )
+                            clear_skin_properties()
                 elif not background_db and not soft_exit:
                     log( "Problem accessing folder, exiting script", xbmc.LOGNOTICE )
                     xbmc.executebuiltin("Notification( %s, %s, %d, %s)" % ( __language__(32042), __language__(32110), 500, image) )
-            xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "False" )
-            xbmcgui.Window( 10000 ).setProperty( "cdart_manager_update", "False" )
+            clear_skin_properties()
         except:
             print "Unexpected error:", sys.exc_info()[0]
             raise
-            xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "False" )
-            xbmcgui.Window( 10000 ).setProperty( "cdart_manager_update", "False" )
+            clear_skin_properties()
     else:
-        xbmcgui.Window( 10000 ).setProperty( "cdart_manager_running", "False" )
-        xbmcgui.Window( 10000 ).setProperty( "cdart_manager_update", "False" )
-            
+        clear_skin_properties()    
