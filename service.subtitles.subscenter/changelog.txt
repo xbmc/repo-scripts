@@ -1,9 +1,16 @@
+3.1.0
+- Redesign the code to work as OOP
+- Fix the rating stars (now shows num of downloads from the website)
+- Calculate the sync rating with folder name or file name (the longest is more valuable)
+- Sort the subtitle list by Language -> is sync -> rating
+- Filter search result with year (if exists)
+
 3.0
 - Migration to Gotham standards
-- Threshold of 2 pages in search result
+- Threshold of 2 pages in _search result
 - Using native JSON parser
 - Sort the subtitle list by rating in context of full list, (so if there was any movie that is not related, 
-	but still exists in the search results, the full list will have the most relevant subtitles at the top) 
+	but still exists in the _search results, the full list will have the most relevant subtitles at the top)
 
 2.5 
 - support for Subscenter new website + workaround (10x to CaTz)
