@@ -1,3 +1,6 @@
+1.0.12
++ Improve show name detection again. Show like Archer or Revolution
+should now work.
 1.0.11
 + Improve the match between a title and MyEpisode's ID.
 This should solve the issue where a show is not found and misfound when

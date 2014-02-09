@@ -24,6 +24,11 @@ REGEX_EXPRESSIONS = [
 
 MYEPISODE_URL = "http://www.myepisodes.com"
 
+def sanitize(title, replace):
+    for char in ['[', ']', '_', '(', ')', '.', '-']:
+        title = title.replace(char, replace)
+    return title
+
 class MyEpisodes(object):
 
     def __init__(self, userid, password):
@@ -76,7 +81,11 @@ class MyEpisodes(object):
             link = row.find('a', {'href': True})
             link_url = link.get('href')
             showid = urlparse.parse_qs(link_url)['showid'][0]
-            self.shows[link.text] = int(showid)
+            key = link.text.strip()
+            sanitized_key = sanitize(key, '')
+            if sanitized_key != key:
+                key = ";".join([key, sanitized_key])
+            self.shows[key.lower()] = int(showid)
         return True
 
     def find_show_link(self, data, show_name, strict=False):
@@ -102,17 +111,22 @@ class MyEpisodes(object):
         # Try to find the ID of the show in our account first
         # Create a slice with only the show that may match
         slice_show  = {}
-        for k, v in self.shows.iteritems():
-            if show_name in k or show_name.startswith(k):
-                slice_show[k] = v
-        if len(slice_show) > 1:
-            # We loop through a slice containings the possibilities and we
-            # search strictly for the show name.
-            for key, value in slice_show.iteritems():
-                if key == show_name:
-                    return value
-        elif len(slice_show) == 1:
+        show_name = show_name.lower()
+        for keys, v in self.shows.iteritems():
+            if ';' in keys:
+                keys = keys.split(';')
+            else:
+                keys = [keys,]
+            for k in keys:
+                if show_name in k or show_name.startswith(k):
+                    slice_show[k] = v
+        if len(slice_show) == 1:
             return slice_show.values()[0]
+        # We loop through a slice containings the possibilities and we
+        # search strictly for the show name.
+        for key, value in slice_show.iteritems():
+            if key == show_name:
+                return value
 
         # You should really never fall there, at this point, the show should be
         # in your account, except if you disabled the feature.
@@ -157,10 +171,9 @@ class MyEpisodes(object):
             else:
                 continue
             title = re.split(regex, file_name)[0]
-            for char in ['[', ']', '_', '(', ')', '.', '-']:
-                title = title.replace(char, ' ')
+            title = sanitize(title, ' ')
             title = title.strip()
-            return title, season, episode
+            return title.title(), season, episode
         return None, None, None
 
     def add_show(self, show_id):
