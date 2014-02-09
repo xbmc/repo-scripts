@@ -222,6 +222,9 @@ if __name__ == "__main__" :
         utils.log( "messy_exit: %s" % exit, xbmc.LOGNOTICE )
         if exit:
             prev_trigger = Launch_automation().launch_automation( "Script End", None ) # Script End
+            __addon__.setSetting( id='number_of_features', value='%d' % (number_of_features - 1) )
+            xbmcgui.Window( 10025 ).setProperty( "CinemaExperienceRunning", "False" )
+            xbmcgui.Window( 10025 ).setProperty( "CinemaExperienceTriggered", "False" )
         else:
             _clear_playlists()
         __addon__.setSetting( id='number_of_features', value='%d' % (number_of_features - 1) )

@@ -6,7 +6,7 @@ Apple Movie Trailers current trailers scraper
 
 import os, sys, time, re, urllib, traceback, time
 from random import shuffle, random
-from elementtree import ElementTree as ET
+import xml.etree.ElementTree as ET
 from datetime import datetime
 
 import xbmc, xbmcvfs

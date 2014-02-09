@@ -1,3 +1,6 @@
+3.0.10/4.0.10
+- fix       - correct Import.
+
 3.0.9/4.0.9
 - add       - do not play 2D videos if 3D equivalent is not enabled and movie is 3D
 - fix       - found cause of bluenotes problem
