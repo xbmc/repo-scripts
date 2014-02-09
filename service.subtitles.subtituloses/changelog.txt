@@ -1,0 +1,11 @@
+0.0.3
+- Fixed logo.png and icon.png to match XBMC'x addon guidelines
+- Removed language files
+
+0.0.2
+- Do intensive search for tv shows with names containing parentheses
+- Lang suffix for subtitles is now three words (ESP, ENG, CAT, etc.)
+- Better lang handling
+
+0.0.1
+- Initial port from Frodo's Subtitulos.es XBMC subtitles plugin by quillo86
