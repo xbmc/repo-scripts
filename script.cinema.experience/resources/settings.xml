@@ -5,23 +5,23 @@
     <category label="32801">
         <setting type="lsep" label="32801" />
         <setting id="trivia_mode" type="enum"  label="32211" lvalues="32281|32212|32213" default="0" /> <!-- None|Slide Show|Movie Quiz Script -->
-        <setting id="trivia_total_time" type="slider" visible="eq(-1,1)" enable="eq(-1,1)" range="0,60" label="32200" default="5" />        
+        <setting id="trivia_total_time" type="slider" visible="eq(-1,1)" enable="eq(-1,1)" range="0,1,60" label="32200" default="5" option="int" />        
         <setting id="trivia_folder" type="folder" visible="eq(-2,1)" source="files" label="32210" default="" />
-        <setting id="trivia_slide_time_q" type="slider" visible="eq(-3,1)" enable="!eq(-1,)" range="1,30" label="32221" default="8" />
-        <setting id="trivia_slide_time_a" type="slider" visible="eq(-4,1)" enable="!eq(-2,)" range="1,30" label="32222" default="4" />
-        <setting id="trivia_slide_time_c" type="slider" visible="eq(-5,1)" enable="!eq(-3,)" range="1,30" label="32223" default="4" />    
-        <setting id="trivia_slide_time_s" type="slider" visible="eq(-6,1)" enable="!eq(-4,)" range="1,30" label="32220" default="10" />
+        <setting id="trivia_slide_time_q" type="slider" visible="eq(-3,1)" enable="!eq(-1,)" range="1,1,30" label="32221" default="8" option="int" />
+        <setting id="trivia_slide_time_a" type="slider" visible="eq(-4,1)" enable="!eq(-2,)" range="1,1,30" label="32222" default="4" option="int" />
+        <setting id="trivia_slide_time_c" type="slider" visible="eq(-5,1)" enable="!eq(-3,)" range="1,1,30" label="32223" default="4" option="int" />    
+        <setting id="trivia_slide_time_s" type="slider" visible="eq(-6,1)" enable="!eq(-4,)" range="1,1,30" label="32220" default="10" option="int" />
         <setting id="trivia_music" type="enum" visible="eq(-7,1) + !eq(-7,0)" enable="!eq(-5,0)" lvalues="32281|32243|32244" label="32231" default="0" />
         <setting id="trivia_music_file" type="audio" visible="eq(-1,1) + eq(-8,1)" enable="!eq(-1,0)" label="32230" default="" />
         <setting id="trivia_music_folder" type="folder" visible="eq(-2,2) + eq(-9,1)" enable="!eq(-2,0)" label="32230" default="" />
         <setting id="trivia_adjust_volume" type="bool" visible="!eq(-3,0) + eq(-10,1)" enable="!eq(-3,0)" label="32232" default="true" />
-        <setting id="trivia_music_volume" type="slider" visible="!eq(-1,false) + gt(-4,0) + eq(-11,1)" enable="!eq(-1,false) + gt(-4,0)" range="0,100" label="32240" default="100" />
+        <setting id="trivia_music_volume" type="slider" visible="!eq(-1,false) + gt(-4,0) + eq(-11,1)" enable="!eq(-1,false) + gt(-4,0)" range="0,1,100" label="32240" default="100" option="int" />
         <setting id="trivia_fade_volume" type="bool" visible="!eq(-2,false) + gt(-5,0) + eq(-12,1)" enable="!eq(-2,false) + gt(-5,0)" label="32241" default="true" />
-        <setting id="trivia_fade_time" type="slider" visible="!eq(-3,false) + !eq(-1,false) + gt(-6,0) + eq(-13,1)" enable="!eq(-1,false) + gt(-6,0)" range="0,15" label="32242" default="2" />
+        <setting id="trivia_fade_time" type="slider" visible="!eq(-3,false) + !eq(-1,false) + gt(-6,0) + eq(-13,1)" enable="!eq(-1,false) + gt(-6,0)" range="0,1,15" label="32242" default="2" option="int" />
         <setting id="trivia_unwatched_only" type="bool" visible="eq(-14,1)" enable="!eq(-14,)" label="32270" default="false" />
         <setting type="action" label="32271" visible="eq(-15,1)" enable="!eq(-13,) + eq(-1,true)" action="RunScript($CWD/addon.py,ClearWatchedTrivia)" />
         <setting id="trivia_moviequiz_mode" type="enum" visible="eq(-16,2)" label="32217" lvalues="32214|32215" default="0" />
-        <setting id="trivia_moviequiz_qlimit" type="slider" visible="eq(-17,2)" label="32216" range="1,60" default="15" />
+        <setting id="trivia_moviequiz_qlimit" type="slider" visible="eq(-17,2)" label="32216" range="1,1,60" default="15" option="int" />
         <setting id="trivia_limit_query" type="bool" visible="!eq(-18,0)" label="32290" default="true" />
         <setting id="trivia_rating" type="labelenum"  visible="!eq(-19,0)"  enable="eq(-1,false)" values="G|PG|PG-13|R|NC-17|--" label="32291" default="--" />
         <setting id="trivia_intro" type="enum" visible="!eq(-20,0)" lvalues="32281|32282|32283|32284|32285|32286|32287" label="32280" default="0" />
@@ -80,14 +80,13 @@
         <setting id="trailer_hd_only" type="bool" visible="!eq(-16,0) + eq(-9,0)" enable="gt(-2,1)" label="32180" default="false" />
         <setting id="trailer_limit_mpaa" type="bool" visible="!eq(-17,0)" label="32140" default="true" />
         <setting id="trailer_limit_genre" type="bool" visible="!eq(-18,0)" label="32141" default="true" />
-        <setting id="trailer_rating" type="labelenum"  visible="!eq(-19,0) + !eq(-8,2)" enable="eq(-3,false)" values="G|PG|PG-13|R|NC-17|--" label="32150" default="--" />
+        <setting id="trailer_rating" type="labelenum"  visible="!eq(-19,0) + !eq(-8,2)" enable="eq(-2,false)" values="G|PG|PG-13|R|NC-17|--" label="32150" default="--" />
         <setting id="trailer_unwatched_movie_only" type="bool" visible="eq(-13,3)" label="Only use trailers from unwatched movies" default="true" />
         <setting id="trailer_unwatched_only" type="bool" visible="!eq(-21,0)" label="32190" default="false" />
         <setting type="action" label="32191" visible="!eq(-22,0)" enable="eq(-1,true)" action="RunScript($CWD/addon.py,ClearWatchedTrailers)" />
     </category>
-    
-<!-- Feature Presentations -->
 
+<!-- Feature Presentations -->
     <category label="32803">    
         <setting type="lsep" label="32803" />
         <setting id="enable_notification" type="bool" label="32445" default="true" />
@@ -98,9 +97,50 @@
         <setting id="intermission_audio" type="bool" label="32430" default="true" />
         <setting id="intermission_ratings" type="bool" label="32440" default="true" />
     </category>
+
+<!-- 3D Movie Settings -->
+    <category label="32108">
+        <setting type="lsep" label="32108" />
+        <setting id="enable_3d_intro" type="bool" label="32924" default="false" />
+        <setting type="lsep" visible="eq(-1,true)" label="32943" />
+        <setting type="lsep" visible="eq(-2,true)" label="32944" />
+        <setting type="lsep" visible="eq(-3,true)" label="32941" />
+        <setting id="3d_override" type="bool" visible="eq(-4,true)" label="32947" default="true"/>
+        <setting id="3d_intro" type="enum" visible="eq(-5,true)" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32940" default="0" />
+        <setting id="3d_intro_file" type="video" visible="eq(-6,true) + eq(-1,1)" label="32928" default="" />
+        <setting id="3d_intro_folder" type="folder" visible="eq(-7,true) + eq(-2,2)" source="video" label="32929" default="" />
+        <setting id="3d_outro" type="enum" visible="eq(-8,true)" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32936" default="0" />
+        <setting id="3d_outro_file" type="video" visible="eq(-9,true) + eq(-1,1)" label="32937" default="" />
+        <setting id="3d_outro_folder" type="folder" visible="eq(-10,true) + eq(-2,2)" source="video" label="32938" default="" />
+        <setting id="3d_trailers" type="bool" label="32930" visible="eq(-11,true)" default="true" />
+        <setting id="3d_trailer_count" type="enum" visible="eq(-12,true) + eq(-1,true)" lvalues="32101|32102|32103|32104|32105|32106|32107" label="32100" default="0" />
+        <setting id="3d_trailer_folder" type="folder" label="32931" visible="eq(-13,true) + eq(-2,true)" default="" />
+        <setting id="3d_trailer_limit_mpaa" type="bool" visible="eq(-14,true) + eq(-3,true)" label="32140" default="true" />
+        <setting id="3d_trailer_limit_genre" type="bool" visible="eq(-15,true) + eq(-4,true)" label="32141" default="true" />
+        <setting id="3d_trailer_rating" type="labelenum"  visible="eq(-16,true) + eq(-5,true)" enable="eq(-2,false)" values="G|PG|PG-13|R|NC-17|--" label="32150" default="--" />
+        <setting id="3d_trailer_unwatched_only" type="bool" visible="eq(-17,true) + eq(-6,true)" label="32190" default="false" />
+        <setting type="lsep" visible="eq(-18,true)" label="32942" />
+        <setting id="3d_fpv_intro" type="enum" visible="eq(-19,true)" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32320" default="0" />
+        <setting id="3d_fpv_intro_file" type="video" visible="eq(-20,true) + eq(-1,1)" label="32340" default="" />
+        <setting id="3d_fpv_intro_folder" type="folder" visible="eq(-21,true) + gt(-2,1)" source="video" label="32350" default="" />
+        <setting id="3d_fpv_outro" type="enum" visible="eq(-22,true)" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32330" default="0" />
+        <setting id="3d_fpv_outro_file" type="video" visible="eq(-23,true) + eq(-1,1)" label="32340" default="" />
+        <setting id="3d_fpv_outro_folder" type="folder" visible="eq(-24,true) + gt(-2,1)" source="video" label="32350" default="" />
+        <setting id="3d_countdown_video" type="enum" visible="eq(-25,true)" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32392" default="0" />
+        <setting id="3d_countdown_video_file" type="video" visible="eq(-26,true) + eq(-1,1)" label="32390" default="" />
+        <setting id="3d_countdown_video_folder" type="folder" visible="eq(-27,true) + gt(-2,1)" source="video" label="32391" default="" />
+        <setting id="3d_enable_audio" type="bool" visible="eq(-28,true)" label="32361" default="true" />
+        <setting id="3d_audio_videos_folder" type="folder" visible="eq(-29,true)" source="video" label="32360" default="" />
+        <setting id="3d_enable_ratings" type="bool" visible="eq(-30,true)" label="32301" default="true" />
+        <setting id="3d_rating_videos_folder" type="folder" visible="eq(-31,true)" source="video" label="32300" default="" />
+        <setting id="3d_intermission_video" type="enum" visible="eq(-32,true)" lvalues="32321|32322|32323|32324|32325|32326|32327" label="32418" default="0" />
+        <setting id="3d_intermission_video_file" type="video" visible="eq(-33,true) + eq(-1,1)" label="32419" default="" />
+        <setting id="3d_intermission_video_folder" type="folder" visible="eq(-34,true) + gt(-2,1)" source="video" label="32420" default="" />
+        <setting id="3d_movie_tags" type="text" label="32925" visible="eq(-35,true)" enable="!eq(-1,0)" default="3DSBS|3D.SBS|HSBS|H.SBS|H-SBS| SBS |FULL-SBS|FULL.SBS|FULLSBS|FSBS|HALF-SBS|3DTAB|3D.TAB|HTAB|H.TAB|3DOU|3D.OU|3D.HOU| HOU | OU |HALF-TAB" />
+        <setting type="lsep" visible="eq(-36,true)" label="32946" />
+    </category>
     
 <!-- Home Automation Settings -->
-
     <category label="32805">
         <setting type="lsep" label="32805" />
         <setting id="ha_enable" type="bool" label="32920" default="false" />
@@ -121,10 +161,13 @@
         <setting id="ha_intermission" type="bool" label="32914" visible="eq(-15,true)" default="false"/>
         <setting id="ha_fpv_outro" type="bool" label="32915" visible="eq(-16,true)" default="false"/>
         <setting id="ha_mte_outro" type="bool" label="32916" visible="eq(-17,true)" default="false"/>
-        <setting id="ha_script_end" type="bool" label="32917" visible="eq(-18,true)" default="false" />
+        <setting id="ha_3d_intro" type="bool" label="32933" visible="eq(-18,true)" default="false" />
+        <setting id="ha_3d_trailer" type="bool" label="32934" visible="eq(-19,true)" default="false" />
+        <setting id="ha_3d_outro" type="bool" label="32939" visible="eq(-20,true)" default="false" />
+        <setting id="ha_script_end" type="bool" label="32917" visible="eq(-21,true)" default="false" />
         <setting type="sep" />
-        <setting id="ha_paused" type="bool" label="32918" visible="eq(-20,true)" default="false" />
-        <setting id="ha_resumed" type="bool" label="32919" visible="eq(-21,true)" default="false" />
+        <setting id="ha_paused" type="bool" label="32918" visible="eq(-23,true)" default="false" />
+        <setting id="ha_resumed" type="bool" label="32919" visible="eq(-24,true)" default="false" />
     </category>
     
 <!-- Misc. Settings _-->

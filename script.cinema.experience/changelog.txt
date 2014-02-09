@@ -1,4 +1,20 @@
-3.0.7
+3.0.10/4.0.10
+- fix       - correct Import.
+
+3.0.9/4.0.9
+- add       - do not play 2D videos if 3D equivalent is not enabled and movie is 3D
+- fix       - found cause of bluenotes problem
+- update    - updated home_automation.py to match the development branch
+- Official pull
+
+3.0.8/4.0.8
+- change    - move position of 3D Trailer insert - follows more closely to an actual theatre
+- fix       - allow testing for trivia rating to be set to N/A
+- add       - add other playlist types, now .pls, .asf, .ram and .m3u 
+- fix       - fix skin property window
+- add       - add 'German:' testing for Ratings - thanks Larnixva
+
+3.0.7/4.0.7
 - fix       - add missing module import
 - add       - SABnzbd control to home automation module
 - change    - convert all file access to use the xbmcvfs module.  Thanks h0tw1r3
@@ -13,6 +29,11 @@
 - change    - new method of reloading settings after settings have been changed 
 - add       - Brazilian Movie Rating support
 - change    - Apple Trailers now pull trailers from Current
+- add       - Gotham - Add back Refresh control
+- add       - Gotham - Add back screensaver control
+- change    - Gotham - Change pause/resume method sensing
+- add       - 3D Intro/Outro/Trailers
+- change    - removed ancient httpapi code that still lingered
 
 3.0.6
 - fix       - version bump to fix Skin folder name on XBMC Addon Git

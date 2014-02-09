@@ -19,6 +19,7 @@ trailer_settings         = sys.modules[ "__main__" ].trailer_settings
 video_settings           = sys.modules[ "__main__" ].video_settings
 ha_settings              = sys.modules[ "__main__" ].ha_settings
 extra_settings           = sys.modules[ "__main__" ].extra_settings
+_3d_settings             = sys.modules[ "__main__" ]._3d_settings
 BASE_CACHE_PATH          = sys.modules[ "__main__" ].BASE_CACHE_PATH
 BASE_RESOURCE_PATH       = sys.modules[ "__main__" ].BASE_RESOURCE_PATH
 BASE_CURRENT_SOURCE_PATH = sys.modules[ "__main__" ].BASE_CURRENT_SOURCE_PATH
@@ -91,7 +92,7 @@ class Script():
                 xbmc.executebuiltin("Notification( %s, %s, %d, %s)" % (header, __language__( 32544 ), time_delay, image) )
             _clear_playlists()
         else:
-            mpaa, audio, genre, movie, equivalent_mpaa = _get_queued_video_info( feature = 0 )
+            mpaa, audio, genre, movie, equivalent_mpaa, is_3d_movie = _get_queued_video_info( feature = 0 )
             plist = _store_playlist() # need to store movie playlist
             self._play_trivia( mpaa, genre, plist, equivalent_mpaa )
             mplaylist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)

@@ -6,10 +6,10 @@ Apple Movie Trailers current trailers scraper
 
 import os, sys, time, re, urllib, traceback, time
 from random import shuffle, random
-from elementtree import ElementTree as ET
+import xml.etree.ElementTree as ET
 from datetime import datetime
 
-import xbmc
+import xbmc, xbmcvfs
 
 #__useragent__ = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27"
 __useragent__ = "QuickTime/7.6.5 (qtver=7.6.5;os=Windows NT 5.1Service Pack 3)"
@@ -98,7 +98,6 @@ class _Parser:
 
             agent = '|User-Agent=%s' % urllib.quote_plus( __useragent__ )
 
-            count = 0
             for movieinfo in root.findall('movieinfo'):
                 trailer = movieinfo.findtext( 'preview/*' )
                 if self.settings[ 'trailer_quality' ] == '1080p':
@@ -120,15 +119,8 @@ class _Parser:
                     movieinfo.findtext( 'info/director' )
                 )]
 
-                count += 1
-
-                # if we have enough exit
-                if ( count == int( self.settings[ "trailer_count" ] ) ):
-                    break
-
             utils.log( "scraper added %d trailers" % len( self.trailers ) )
-
-            root.clear()
+            
             tree = None
 
         except:
@@ -147,10 +139,11 @@ class Main:
         self.genre = genre
         self.settings = settings
         self.watched_path = os.path.join( BASE_CURRENT_SOURCE_PATH, self.settings[ "trailer_scraper" ] + "_watched.txt" )
-
+            
     def fetch_trailers( self ):
         # initialize trailers list
         trailers = []
+        selected_trailers = []
         # fetch source
         path = os.path.join( BASE_CURRENT_SOURCE_PATH, "current%s.xml" % self.settings[ "trailer_quality_url" ] )
         url = self.BASE_CURRENT_URL % ( self.settings[ "trailer_quality_url" ], )
@@ -158,9 +151,24 @@ class Main:
         # parse source and add our items
         if self._update_xml_source( path, url ):
             trailers = self._parse_xml_source( path )
-
+        shuffle( trailers  )
+        
+        # grab enough trailers
+        count = 0
+        for trailer in trailers:
+            selected_trailers.append( trailer )
+            self.watched.append( trailer[ 0 ] )
+            count += 1
+            if count == int( self.settings[ "trailer_count" ] ):
+                break
+            
+        if ( len( selected_trailers ) < self.settings[ "trailer_count" ] and self.settings[ "trailer_unwatched_only" ] ):
+            self._reset_watched()
+            #attempt to load our playlist again
+            self.fetch_trailers()
+        self._save_watched()
         # return results
-        return trailers
+        return selected_trailers
 
     def _update_xml_source( self, base_path, base_url=None ):
         try:

@@ -13,6 +13,7 @@ trivia_settings          = sys.modules[ "__main__" ].trivia_settings
 trailer_settings         = sys.modules[ "__main__" ].trailer_settings
 video_settings           = sys.modules[ "__main__" ].video_settings
 audio_formats            = sys.modules[ "__main__" ].audio_formats
+_3d_settings             = sys.modules[ "__main__" ]._3d_settings
 BASE_CACHE_PATH          = sys.modules[ "__main__" ].BASE_CACHE_PATH
 BASE_RESOURCE_PATH       = sys.modules[ "__main__" ].BASE_RESOURCE_PATH
 BASE_CURRENT_SOURCE_PATH = sys.modules[ "__main__" ].BASE_CURRENT_SOURCE_PATH
@@ -22,15 +23,26 @@ from json_utils import find_movie_details, retrieve_json_dict
 import utils, music
 from folder import absolute_listdir
 
+parser = music.parse()
+
 def _get_trailers( items, equivalent_mpaa, mpaa, genre, movie, mode = "download" ):
     utils.log( "[ce_playlist.py] - _get_trailers started" )
     # return if not user preference
-    settings = trailer_settings
+    settings = []
+    settings = trailer_settings.copy()
     if not items:
         return []
     if settings[ "trailer_play_mode" ] == 1 and mode == "playlist" and settings[ "trailer_scraper" ] in ( "amt_database", "amt_current" ):
         settings[ "trailer_scraper" ] = "local"
         settings[ "trailer_folder" ] = settings[ "trailer_download_folder" ]
+    if mode == "3D":
+        settings[ "trailer_scraper" ] = "local"
+        settings[ "trailer_folder" ] = _3d_settings[ "3d_trailer_folder" ]
+        settings[ "trailer_count" ] = _3d_settings[ "3d_trailer_count" ]
+        settings[ "trailer_limit_mpaa" ] = _3d_settings[ "3d_trailer_limit_mpaa" ]
+        settings[ "trailer_limit_genre" ] = _3d_settings[ "3d_trailer_limit_genre" ]
+        settings[ "trailer_trailer_rating" ] = _3d_settings[ "3d_trailer_rating" ]
+        settings[ "trailer_unwatched_only" ] = _3d_settings[ "3d_trailer_unwatched_only" ]
     # get the correct scraper
     sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib", "scrapers" ) )
     exec "from %s import scraper as scraper" % ( settings[ "trailer_scraper" ], )
@@ -40,6 +52,7 @@ def _get_trailers( items, equivalent_mpaa, mpaa, genre, movie, mode = "download"
     # return results
     return trailers
     
+
 def _getnfo( path ):
     
     '''
@@ -160,9 +173,17 @@ def _get_special_items( playlist, items, path, genre, title="", thumbnail="", pl
     if os.path.splitext( path )[ 1 ] and not path.startswith( "http://" ) and not xbmcvfs.exists( path ):
         utils.log( "_get_special_items() - File Does not Exist" )
         return
-    # parse .pls file
-    if path.endswith(".pls"):
-        video_list = music.parse_pls( path, xbmc.getSupportedMedia( media_type )  )
+    # parse playlist file
+    if ( os.path.splitext( path )[ 1 ] ).lower() in ( "m3u", "pls", "asf", "ram" ):
+        utils.log( "Video Playlist: %s" % path )
+        if ( os.path.splitext( path )[ 1 ] ).lower() == ".m3u":
+            video_list = parser.parse_m3u( path, xbmc.getSupportedMedia( media_type ) )
+        elif ( os.path.splitext( path )[ 1 ] ).lower() == ".pls":
+            video_list = parser.parse_pls( path, xbmc.getSupportedMedia( media_type ) )
+        elif ( os.path.splitext( path )[ 1 ] ).lower() == ".asf":
+            video_list = parser.parse_asf( path, xbmc.getSupportedMedia( media_type ) )
+        elif ( os.path.splitext( path )[ 1 ] ).lower() == ".ram":
+            video_list = parser.parse_ram( path, xbmc.getSupportedMedia( media_type ) )
         if not video_list:
             utils.log( "Playlist empty or has unsupported media files" )
             return
@@ -278,12 +299,16 @@ def build_music_playlist():
     track_location = []
     # check to see if playlist or music file is selected
     if trivia_settings[ "trivia_music" ] == 1:
-        if trivia_settings[ "trivia_music_file" ].endswith(".m3u") or trivia_settings[ "trivia_music_file" ].endswith(".pls"):
+        if ( os.path.splitext( trivia_settings[ "trivia_music_file" ] )[ 1 ] ).lower() in ( "m3u", "pls", "asf", "ram" ):
             utils.log( "Music Playlist: %s" % trivia_settings[ "trivia_music_file" ] )
             if trivia_settings[ "trivia_music_file" ].endswith(".m3u"):
-                track_info, track_location = music.parse_m3u( saved_playlist, xbmc.getSupportedMedia('music') )
+                track_location = parser.parse_m3u( trivia_settings[ "trivia_music_file" ], xbmc.getSupportedMedia('music') )
             elif trivia_settings[ "trivia_music_file" ].endswith(".pls"):
-                track_location = music.parse_pls( trivia_settings[ "trivia_music_file" ], xbmc.getSupportedMedia('music') )
+                track_location = parser.parse_pls( trivia_settings[ "trivia_music_file" ], xbmc.getSupportedMedia('music') )
+            elif trivia_settings[ "trivia_music_file" ].endswith(".asf"):
+                track_location = parser.parse_asf( trivia_settings[ "trivia_music_file" ], xbmc.getSupportedMedia('music') )
+            elif trivia_settings[ "trivia_music_file" ].endswith(".ram"):
+                track_location = parser.parse_ram( trivia_settings[ "trivia_music_file" ], xbmc.getSupportedMedia('music') )
         elif os.path.splitext( trivia_settings[ "trivia_music_file" ] )[1] in xbmc.getSupportedMedia('music'):
             for track in range(100):
                 track_location.append( trivia_settings[ "trivia_music_file" ] )
@@ -314,6 +339,12 @@ def get_equivalent_rating( rating ):
     #FSK
     elif rating.startswith("FSK"):
         if rating.startswith( "FSK:" ):
+            rating = rating.split( ":" )[ 1 - ( len( rating.split( ":" ) ) == 1 ) ]
+        else:
+            rating = rating.split( " " )[ 1 - ( len( rating.split( " " ) ) == 1 ) ]
+    #Germany [alternative FSK string]
+    elif rating.startswith("Germany"):
+        if rating.startswith( "Germany:" ):
             rating = rating.split( ":" )[ 1 - ( len( rating.split( ":" ) ) == 1 ) ]
         else:
             rating = rating.split( " " )[ 1 - ( len( rating.split( " " ) ) == 1 ) ]
@@ -388,6 +419,7 @@ def _get_queued_video_info( feature = 0 ):
     except:
         traceback.print_exc()
         movie_title = path = mpaa = audio = genre = movie = equivalent_mpaa, short_mpaa = ""
+    is_3d_movie = test_for_3d( path )
     # spew queued video info to log
     utils.log( "Queued Movie Information" )
     utils.log( "%s" % log_sep )
@@ -396,11 +428,22 @@ def _get_queued_video_info( feature = 0 ):
     utils.log( "Genre: %s" % genre )
     utils.log( "Rating: %s" % short_mpaa )
     utils.log( "Audio: %s" % audio )
+    utils.log( "3D Movie: %s" % ( "False", "True" )[ is_3d_movie ] )
     if video_settings[ "audio_videos_folder" ]:
-        utils.log( "Folder: %s" % ( video_settings[ "audio_videos_folder" ] + audio_formats.get( audio, "Other" ) + video_settings[ "audio_videos_folder" ][ -1 ], ) )
+        if is_3d_movie and _3d_settings[ "3d_audio_videos_folder" ]:
+            utils.log( "Folder: %s" % ( _3d_settings[ "3d_audio_videos_folder" ] + audio_formats.get( audio, "Other" ) + _3d_settings[ "3d_audio_videos_folder" ][ -1 ], ) )
+        else:
+            utils.log( "Folder: %s" % ( video_settings[ "audio_videos_folder" ] + audio_formats.get( audio, "Other" ) + video_settings[ "audio_videos_folder" ][ -1 ], ) )
     utils.log( "%s" % log_sep )
     # return results
-    return short_mpaa, audio, genre, path, equivalent_mpaa
+    return short_mpaa, audio, genre, path, equivalent_mpaa, is_3d_movie
+
+def test_for_3d( path ):
+    is_3d_movie = re.findall( _3d_settings[ "3d_movie_tags" ], path )
+    if is_3d_movie:
+        return True
+    else:
+        return False
 
 def _clear_playlists( mode="both" ):
     # clear playlists

@@ -124,6 +124,9 @@ class settings():
                                                    "ha_fpv_outro": eval( __addon__.getSetting( "ha_fpv_outro" ) ),
                                                    "ha_mte_outro": eval( __addon__.getSetting( "ha_mte_outro" ) ),
                                                 "ha_intermission": eval( __addon__.getSetting( "ha_intermission" ) ),
+                                                    "ha_3d_intro": eval( __addon__.getSetting( "ha_3d_intro" ) ),
+                                                  "ha_3d_trailer": eval( __addon__.getSetting( "ha_3d_trailer" ) ),
+                                                    "ha_3d_outro": eval( __addon__.getSetting( "ha_3d_outro" ) ),
                                                   "ha_script_end": eval( __addon__.getSetting( "ha_script_end" ) ),
                                                       "ha_paused": eval( __addon__.getSetting( "ha_paused" ) ),
                                                      "ha_resumed": eval( __addon__.getSetting( "ha_resumed" ) )
@@ -140,6 +143,46 @@ class settings():
                                                     "voxcommando": eval( __addon__.getSetting( "voxcommando" ) ),
                                                   "override_play": eval( __addon__.getSetting( "override_play" ) )
                                       }
+        
+        self._3d_settings           = {         "enable_3d_intro": eval( __addon__.getSetting( "enable_3d_intro" ) ),
+                                                  "3d_movie_tags": __addon__.getSetting( "3d_movie_tags" ),
+                                                    "3d_override": eval( __addon__.getSetting( "3d_override" ) ),
+                                                       "3d_intro": ( 0, 1, 1, 2, 3, 4, 5, )[ int( float( __addon__.getSetting( "3d_intro" ) ) ) ],
+                                                  "3d_intro_type": ( "file", "folder" )[ int( __addon__.getSetting( "3d_intro" ) ) > 1 ],
+                                                  "3d_intro_file": xbmc.translatePath( __addon__.getSetting( "3d_intro_file" ) ).decode('utf-8'),
+                                                "3d_intro_folder": xbmc.translatePath( __addon__.getSetting( "3d_intro_folder" ) ).decode('utf-8'),
+                                                   "3d_fpv_intro": ( 0, 1, 1, 2, 3, 4, 5, )[ int( float( __addon__.getSetting( "3d_fpv_intro" ) ) ) ],
+                                              "3d_fpv_intro_type": ( "file", "folder" )[ int( float( __addon__.getSetting( "3d_fpv_intro" ) ) ) > 1 ],
+                                              "3d_fpv_intro_file": xbmc.translatePath( __addon__.getSetting( "3d_fpv_intro_file" ) ).decode('utf-8'),
+                                            "3d_fpv_intro_folder": xbmc.translatePath( __addon__.getSetting( "3d_fpv_intro_folder" ) ).decode('utf-8'),
+                                                   "3d_fpv_outro": ( 0, 1, 1, 2, 3, 4, 5, )[ int( float( __addon__.getSetting( "3d_fpv_outro" ) ) ) ],
+                                              "3d_fpv_outro_type": ( "file", "folder" )[ int( float( __addon__.getSetting( "3d_fpv_outro" ) ) ) > 1 ],
+                                              "3d_fpv_outro_file": xbmc.translatePath( __addon__.getSetting( "3d_fpv_outro_file" ) ).decode('utf-8'),
+                                            "3d_fpv_outro_folder": xbmc.translatePath( __addon__.getSetting( "3d_fpv_outro_folder" ) ).decode('utf-8'),
+                                                       "3d_outro": ( 0, 1, 1, 2, 3, 4, 5, )[ int( float( __addon__.getSetting( "3d_outro" ) ) ) ],
+                                                  "3d_outro_type": ( "file", "folder" )[ int( __addon__.getSetting( "3d_outro" ) ) > 1 ],
+                                                  "3d_outro_file": xbmc.translatePath( __addon__.getSetting( "3d_outro_file" ) ).decode('utf-8'),
+                                                "3d_outro_folder": xbmc.translatePath( __addon__.getSetting( "3d_outro_folder" ) ).decode('utf-8'),
+                                             "3d_countdown_video": ( 0, 1, 1, 2, 3, 4, 5, )[ int( float( __addon__.getSetting( "3d_countdown_video" ) ) ) ],
+                                        "3d_countdown_video_type": ( "file", "folder" )[ int( float( __addon__.getSetting( "3d_countdown_video" ) ) ) > 1 ],
+                                        "3d_countdown_video_file": xbmc.translatePath( __addon__.getSetting( "3d_countdown_video_file" ) ).decode('utf-8'),
+                                      "3d_countdown_video_folder": xbmc.translatePath( __addon__.getSetting( "3d_countdown_video_folder" ) ).decode('utf-8'),
+                                              "3d_enable_ratings": eval( __addon__.getSetting( "3d_enable_ratings" ) ),
+                                        "3d_rating_videos_folder": xbmc.translatePath( __addon__.getSetting( "3d_rating_videos_folder" ) ).decode('utf-8'),
+                                                "3d_enable_audio": eval( __addon__.getSetting( "3d_enable_audio" ) ),
+                                         "3d_audio_videos_folder": xbmc.translatePath( __addon__.getSetting( "3d_audio_videos_folder" ) ).decode('utf-8'),
+                                                    "3d_trailers": eval( __addon__.getSetting( "3d_trailers" ) ),
+                                               "3d_trailer_count": ( 0, 1, 2, 3, 4, 5, 10, )[int( float( __addon__.getSetting( "3d_trailer_count" ) ) ) ],
+                                              "3d_trailer_folder": xbmc.translatePath( __addon__.getSetting( "3d_trailer_folder" ) ).decode('utf-8'),
+                                          "3d_trailer_limit_mpaa": eval( __addon__.getSetting( "3d_trailer_limit_mpaa" ) ),
+                                         "3d_trailer_limit_genre": eval( __addon__.getSetting( "3d_trailer_limit_genre" ) ),
+                                              "3d_trailer_rating": __addon__.getSetting( "3d_trailer_rating" ),
+                                      "3d_trailer_unwatched_only":  eval( __addon__.getSetting( "3d_trailer_unwatched_only" ) ),
+                                          "3d_intermission_video": ( 0, 1, 1, 2, 3, 4, 5, )[ int( float( __addon__.getSetting( "3d_intermission_video" ) ) ) ],
+                                     "3d_intermission_video_type": ( "file", "folder" )[ int( __addon__.getSetting( "3d_intermission_video" ) ) > 1 ],
+                                     "3d_intermission_video_file": xbmc.translatePath( __addon__.getSetting( "3d_intermission_video_file" ) ).decode('utf-8'),
+                                   "3d_intermission_video_folder": xbmc.translatePath( __addon__.getSetting( "3d_intermission_video_folder" ) ).decode('utf-8')
+                                      }
 
         self.audio_formats          = {                     "dts": "DTS",
                                                             "dca": "DTS",
@@ -152,7 +195,7 @@ class settings():
                                                          "truehd": "Dolby TrueHD"
                                        }
         self.triggers               = ( "Script Start", "Trivia Intro", "Trivia", "Trivia Outro", "Coming Attractions Intro", "Movie Trailer", 
-                                    "Coming Attractions Outro", "Movie Theater Intro", "Countdown", "Feature Presentation Intro", "Audio Format", 
+                                    "Coming Attractions Outro", "Movie Theater Intro", "Countdown", "3D Movie Trailer", "Feature Presentation Intro", "Audio Format", 
                                     "MPAA Rating", "Movie", "Feature Presentation Outro", "Movie Theatre Outro", "Intermission", "Script End", "Pause", "Resume" )
 
     def read_settings_xml( self ):

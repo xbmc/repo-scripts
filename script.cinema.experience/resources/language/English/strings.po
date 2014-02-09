@@ -61,7 +61,11 @@ msgctxt "#32107"
 msgid "10 Trailers"
 msgstr ""
 
-#empty strings from id 32108 to 32109
+msgctxt "#32108"
+msgid "3D Movie Options"
+msgstr ""
+
+#empty string id 32109
 
 msgctxt "#32110"
 msgid "- Trailer Scraper"
@@ -866,4 +870,100 @@ msgstr ""
 
 msgctxt "#32923"
 msgid "   - Skip trailers that use the YouTube Plug-in"
+msgstr ""
+
+msgctxt "#32924"
+msgid "Enable 3D Movie Integration"
+msgstr ""
+
+msgctxt "#32925"
+msgid "3D Movie filename tags"
+msgstr ""
+
+msgctxt "#32926"
+msgid "3D Movie Intro"
+msgstr ""
+
+msgctxt "#32927"
+msgid "3D Movie Intro Video(s)"
+msgstr ""
+
+msgctxt "#32928"
+msgid "3D Movie Intro Video File"
+msgstr ""
+
+msgctxt "#32929"
+msgid "3D Movie Intro Video Folder"
+msgstr ""
+
+msgctxt "#32930"
+msgid "Enable 3D Movie Trailers if 3D Movie is played"
+msgstr ""
+
+msgctxt "#32931"
+msgid "3D Movie Trailer Folder"
+msgstr ""
+
+msgctxt "#32932"
+msgid "3D Trailer"
+msgstr ""
+
+msgctxt "#32933"
+msgid "Trigger at start of the 3D Movie Intro(s)"
+msgstr ""
+
+msgctxt "#32934"
+msgid "Trigger at start of the 3D Trailer(s)"
+msgstr ""
+
+msgctxt "#32935"
+msgid "3D Movie Outro"
+msgstr ""
+
+msgctxt "#32936"
+msgid "3D Movie Outro Video(s)"
+msgstr ""
+
+msgctxt "#32937"
+msgid "3D Movie Outro Video File"
+msgstr ""
+
+msgctxt "#32938"
+msgid "3D Movie Outro Video Folder"
+msgstr ""
+
+msgctxt "#32939"
+msgid "Trigger at start of the 3D Outro(s)"
+msgstr ""
+
+msgctxt "#32940"
+msgid "3D Movie Intro Video(s)"
+msgstr ""
+
+msgctxt "#32941"
+msgid "3D Videos Intros/Outros"
+msgstr ""
+
+msgctxt "#32942"
+msgid "3D Replacement Videos - Play 3D equivalent Videos"
+msgstr ""
+
+msgctxt "#32943"
+msgid "With the above enabled, if a 3D Movie is played,"
+msgstr ""
+
+msgctxt "#32944"
+msgid "the following videos will play (based on your selections)"
+msgstr ""
+
+msgctxt "#32945"
+msgid "(based on your selections)"
+msgstr ""
+
+msgctxt "#32946"
+msgid "Separate tags with '|'(pipe) and include spaces if required"
+msgstr ""
+
+msgctxt "#32947"
+msgid "Disable 2D videos if 3D Equivalent are not enabled"
 msgstr ""

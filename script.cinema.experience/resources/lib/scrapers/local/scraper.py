@@ -4,7 +4,7 @@ Local trailer scraper
 """
 # TODO: add watched.xml to skip watched trailers
 
-import os, sys, time, re, urllib
+import os, sys, time, re, urllib, traceback
 from random import shuffle, random
 
 import xbmc, xbmcvfs
@@ -27,7 +27,30 @@ class Main:
     
     def __init__( self, equivalent_mpaa=None, mpaa=None, genre=None, settings=None, movie=None ):
         self.mpaa = self.mpaa_ratings.index( equivalent_mpaa )
-        self.genre = genre.replace( "Sci-Fi", "Science Fiction" ).replace( "Action", "Action and ADV" ).replace( "Adventure", "ACT and Adventure" ).replace( "ACT",  "Action" ).replace( "ADV",  "Adventure" ).split( " / " )
+        genre = genre.split( " / " )
+        self.genre = []
+        if isinstance( genre, list ):
+            self.genre = genre
+        else:
+            self.genre.append( genre )
+        for item in self.genre:
+            if item == "Action and Adventure":
+                self.genre.insert( self.genre.index( "Action and Adventure" ) + 1, "Adventure" )
+                self.genre[ self.genre.index( "Action and Adventure" ) ] = "Action"
+        genre_test = ["Sci-Fi", "Action", "Adventure", "Science Fiction" ]
+        genre_match = ["Science Fiction", "Action and Adventure", "Action and Adventure", "Sci-Fi" ]
+        # check to see if the movie genre has matching genres to those contained in genre_test, if there are, add equivalent genres
+        genre_append = []
+        if len( set( genre_test ).intersection( self.genre ) ) > 0:
+            for item in self.genre:
+                try:
+                    genre_append.append( genre_match[ genre_test.index( item ) ] )
+                except ValueError:
+                    pass
+                except:
+                    traceback.print_exc()
+                    pass
+        self.genre.extend( genre_append )
         self.settings = settings
         self.movie = movie
         self.trailers = []
@@ -81,7 +104,7 @@ class Main:
             # if we have enough exit
             if ( count == self.settings[ "trailer_count" ] ):
                 break
-        if ( len(self.trailers) == 0 and self.settings[ "trailer_unwatched_only" ] and len( self.watched ) > 0 ):
+        if ( len( self.trailers ) == 0 and self.settings[ "trailer_unwatched_only" ] and len( self.watched ) > 0 ):
             self._reset_watched()
             #attempt to load our playlist again
             self._shuffle_trailers()

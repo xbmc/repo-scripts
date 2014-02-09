@@ -5,7 +5,7 @@ import os, re, sys, socket, traceback, time, __builtin__
 from urllib import quote_plus
 from threading import Thread
 
-__addon__                = xbmcaddon.Addon()
+__addon__                = xbmcaddon.Addon( 'script.cinema.experience' )
 __version__              = __addon__.getAddonInfo('version')
 __scriptID__             = __addon__.getAddonInfo('id')
 __script__               = __addon__.getAddonInfo('name')
@@ -28,6 +28,7 @@ ha_settings      = settings.ha_settings
 video_settings   = settings.video_settings
 extra_settings   = settings.extra_settings
 audio_formats    = settings.audio_formats
+_3d_settings     = settings._3d_settings
 triggers         = settings.triggers
 
 playback = ""
@@ -108,7 +109,7 @@ if __name__ == "__main__" :
     prev_trigger = ""
     settings.settings_to_log()
     # check to see if an argv has been passed to script
-    xbmcgui.Window( 10001 ).setProperty( "CinemaExperienceRunning", "True" )
+    xbmcgui.Window( 10025 ).setProperty( "CinemaExperienceRunning", "True" )
     from ce_player import Script
     try:
         try:
@@ -192,19 +193,19 @@ if __name__ == "__main__" :
         #xbmc.executebuiltin("Notification( %s, %s, %d, %s)" % (header, __language__( 32545 ), time_delay, image) )
         utils.log( "messy_exit: %s" % exit, xbmc.LOGNOTICE )
         if exit:
-            prev_trigger = Launch_automation().launch_automation( triggers[16], None ) # Script End
+            prev_trigger = Launch_automation().launch_automation( "Script End", None ) # Script End
             __addon__.setSetting( id='number_of_features', value='%d' % (number_of_features - 1) )
-            xbmcgui.Window( 10001 ).setProperty( "CinemaExperienceRunning", "False" )
-            xbmcgui.Window( 10001 ).setProperty( "CinemaExperienceTriggered", "False" )
+            xbmcgui.Window( 10025 ).setProperty( "CinemaExperienceRunning", "False" )
+            xbmcgui.Window( 10025 ).setProperty( "CinemaExperienceTriggered", "False" )
         else:
             _clear_playlists()
             __addon__.setSetting( id='number_of_features', value='%d' % (number_of_features - 1) )
-            xbmcgui.Window( 10001 ).setProperty( "CinemaExperienceRunning", "False" )
-            xbmcgui.Window( 10001 ).setProperty( "CinemaExperienceTriggered", "False" )
+            xbmcgui.Window( 10025 ).setProperty( "CinemaExperienceRunning", "False" )
+            xbmcgui.Window( 10025 ).setProperty( "CinemaExperienceTriggered", "False" )
     except:
         traceback.print_exc()
         # if script fails, changes settings back
         __addon__.setSetting( id='number_of_features', value='%d' % (number_of_features - 1) )
-        prev_trigger = Launch_automation().launch_automation( triggers[16], None ) # Script End
-        xbmcgui.Window( 10001 ).setProperty( "CinemaExperienceRunning", "False" )
-        xbmcgui.Window( 10001 ).setProperty( "CinemaExperienceTriggered", "False" )
+        prev_trigger = Launch_automation().launch_automation( "Script End", None ) # Script End
+        xbmcgui.Window( 10025 ).setProperty( "CinemaExperienceRunning", "False" )
+        xbmcgui.Window( 10025 ).setProperty( "CinemaExperienceTriggered", "False" )

@@ -46,7 +46,7 @@ def _get_slides( paths, movie_mpaa ):
     # enumerate thru paths and fetch slides recursively
     for path in paths:
         # get the directory listing
-        folders, file_entries = xbmcvfs.listdir( path )
+        folders, file_entries = xbmcvfs.listdir( path.decode( "utf-8" ) )
         # sort in case
         file_entries.sort()
         # get a slides.xml if it exists
@@ -62,7 +62,7 @@ def _get_slides( paths, movie_mpaa ):
         # enumerate through our file_entries list and combine question, clue, answer
         for entry in file_entries:
             # slides.xml was included, so check it
-            file_entry = os.path.join( path, entry )
+            file_entry = os.path.join( path.decode( "utf-8" ), entry.decode( "utf-8" ) )
             if ( slidesxml_exists ):
                 # question
                 if ( question_format and re.search( question_format, os.path.basename( file_entry ), re.IGNORECASE ) ):
@@ -97,13 +97,13 @@ def _get_slides( paths, movie_mpaa ):
     return tmp_slides
 
 def _get_slides_xml( path ):
-    source = os.path.join( path, "slides.xml" ).replace("\\\\","\\")
+    source = os.path.join( path.decode( "utf-8" ), "slides.xml" ).replace("\\\\","\\")
     destination = os.path.join( BASE_CURRENT_SOURCE_PATH, "slides.xml" ).replace("\\\\","\\")
     slides_xml_copied = False
     # if no slides.xml exists return false
     if not xbmcvfs.exists( source ):
         # slides.xml not found, try Title case(Slides.xml)
-        source = os.path.join( path, "Slides.xml" ).replace("\\\\","\\")
+        source = os.path.join( path.decode( "utf-8" ), "Slides.xml" ).replace("\\\\","\\")
         if not xbmcvfs.exists( source ):
             return False, "", "", "", "", ""
     # fetch data
@@ -121,6 +121,8 @@ def _get_slides_xml( path ):
     mpaa_match = re.search( '''rating="([^\"]*)"''', xml, re.DOTALL )
     if mpaa_match:
         mpaa = mpaa_match.group(1)
+        if mpaa.lower() == "n/a":
+            mpaa = ""
     theme_match = re.search( '''theme="([^\"]*)"''', xml, re.DOTALL )
     if theme_match:
         theme = theme_match.group(1)
