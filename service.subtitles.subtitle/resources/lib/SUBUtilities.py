@@ -46,8 +46,11 @@ def log(module, msg):
 
 def get_cache_key(prefix="", str=""):
     str = re.sub('\W+', '_', str).lower()
-    return prefix + str
+    return prefix + ":" + str
 
+def clear_cache():
+    cache.delete("tv-show%")
+    xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(32007))).encode('utf-8'))
 
 # Returns the corresponding script language name for the Hebrew unicode language
 def heb_to_eng(language):
@@ -84,7 +87,7 @@ class SubtitleHelper:
     def _search_tvshow(self, item):
         search_string = re.split(r'\s\(\w+\)$', item["tvshow"])[0]
 
-        cache_key = get_cache_key("tv-show_", search_string)
+        cache_key = get_cache_key("tv-show", search_string)
         results = cache.get(cache_key)
 
         if not results:
@@ -99,7 +102,8 @@ class SubtitleHelper:
                 search_result)
 
             results = self._filter_urls(urls, search_string, item)
-            cache.set(cache_key, repr(results))
+            if results:
+                cache.set(cache_key, repr(results))
         else:
             results = eval(results)
 
@@ -163,43 +167,67 @@ class SubtitleHelper:
     def _build_tvshow_subtitle_list(self, search_results, item):
         ret = []
         total_downloads = 0
+
         for result in search_results:
-            cache_key = get_cache_key("tv-show_seasons_", "%s_%s" % (result["name"], result["id"]))
-            subtitle_page = cache.get(cache_key)
+            cache_key_season = get_cache_key("tv-show", "%s_%s" % (result["name"], "seasons"))
+            subtitle_page = cache.get(cache_key_season)
             if not subtitle_page:
+                used_cached_seasons = False
                 url = self.BASE_URL + "/viewseries.php?" + urllib.urlencode({"id": result["id"], "m": "subtitles"})
                 subtitle_page = self._is_logged_in(url)
                 if subtitle_page is not None:
                     # Retrieve the requested season
                     subtitle_page = re.findall("seasonlink_(\d+)[^>]+>(\d+)</a>", subtitle_page)
-                    cache.set(cache_key, repr(subtitle_page))
+                    if subtitle_page:
+                        cache.set(cache_key_season, repr(subtitle_page))
             else:
+                used_cached_seasons = True
                 subtitle_page = eval(subtitle_page)
 
             if subtitle_page:
+                season_found = False
                 for (season_id, season_num) in subtitle_page:
                     if season_num == item["season"]:
-                        cache_key = get_cache_key("tv-show_episodes_", "%s_%s" % (result["name"], season_id))
-                        found_episodes = cache.get(cache_key)
+                        season_found = True
+
+                        cache_key_episode = get_cache_key("tv-show",
+                                                          "%s_s%s_%s" % (result["name"], season_num, "episodes"))
+                        found_episodes = cache.get(cache_key_episode)
                         if not found_episodes:
+                            used_cached_episodes = False
                             # Retrieve the requested episode
                             url = self.BASE_URL + "/getajax.php?" + urllib.urlencode({"seasonid": season_id})
                             subtitle_page = self.urlHandler.request(url)
                             if subtitle_page is not None:
                                 found_episodes = re.findall("episodelink_(\d+)[^>]+>(\d+)</a>", subtitle_page)
-                                cache.set(cache_key, repr(found_episodes))
+
+                                if found_episodes:
+                                    cache.set(cache_key_episode, repr(found_episodes))
                         else:
+                            used_cached_episodes = True
                             found_episodes = eval(found_episodes)
 
                         if found_episodes:
+                            episode_found = False
                             for (episode_id, episode_num) in found_episodes:
                                 if episode_num == item["episode"]:
-                                    url = self.BASE_URL + "/getajax.php?" + urllib.urlencode({"episodedetails": episode_id})
+                                    episode_found = True
+
+                                    url = self.BASE_URL + "/getajax.php?" + urllib.urlencode(
+                                        {"episodedetails": episode_id})
                                     subtitle_page = self.urlHandler.request(url)
 
                                     x, i = self._retrive_subtitles(subtitle_page, item)
                                     total_downloads += i
                                     ret += x
+
+                            if not episode_found and used_cached_episodes:
+                                cache.delete(cache_key_episode)  # used cached episodes list and not found
+                                return self._build_tvshow_subtitle_list(search_results, item)  # try the search again
+
+                if not season_found and used_cached_seasons:
+                    cache.delete(cache_key_season)  # used cached season list and not found so delete the cache
+                    return self._build_tvshow_subtitle_list(search_results, item)  # try the search again
 
         # Fix the rating
         if total_downloads:

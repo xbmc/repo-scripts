@@ -3,5 +3,6 @@
     <category label="32004">
         <setting id="SUBemail" type="text" label="32002" default=""/>
         <setting id="SUBpassword" type="text" option = "hidden" label="32003" default=""/>
+        <setting type="action" label="32006" action="RunScript(service.subtitles.subtitle, 1,action=clear_cache)"/>
     </category>
 </settings>

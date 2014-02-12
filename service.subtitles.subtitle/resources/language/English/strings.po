@@ -33,3 +33,11 @@ msgstr ""
 msgctxt "#32005"
 msgid "Invalid email or password, please edit your credentials in the properties"
 msgstr ""
+
+msgctxt "#32006"
+msgid "Clear addon`s local cache"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Addon`s local cache was cleared successfully"
+msgstr ""

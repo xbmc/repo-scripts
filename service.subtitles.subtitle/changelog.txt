@@ -1,3 +1,10 @@
+4.1.1 - by CaTz 07/02/2014
+- Fix cache related bugs:
+  Prevent caching empty lists
+  If season doesnt appears in cached list, remove it and try again
+  If episode doesnt appears in cached list, remove it and try again
+- Ability to clear the addon`s local cache from the settings
+
 4.1.0 - by CaTz 07/02/2014
 - cache tv shows ids for future use. (make the lookup much faster)
 
