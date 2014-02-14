@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Catalan language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ca/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">Còpia de seguretat XBMC</string>
+    <string id="30011">General</string>
+    <string id="30012">Sel·lecció de fitxers</string>
+    <string id="30013">Planificació</string>
+    <string id="30016">Còpia de seguretat</string>
+    <string id="30017">Restauració</string>
+    <string id="30018">Navega per la ruta</string>
+    <string id="30019">Tipus de ruta</string>
+    <string id="30020">Navega per la ruta remota</string>
+    <string id="30021">Nom del directori de la còpia</string>
+    <string id="30022">Executa en silenci</string>
+    <string id="30023">Mode</string>
+    <string id="30024">Tipus de ruta remota</string>
+    <string id="30025">Tipus de ruta remota</string>
+    <string id="30026">Còpies de seguretat a mantenir (0 per totes)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Clau del Dropbox</string>
+    <string id="30029">Dropbox secret</string>
+    <string id="30030">Afegitons d'usuari</string>
+    <string id="30031">Dades d'afegitons</string>
+    <string id="30032">Base de dades</string>
+    <string id="30033">Llista de reproducció</string>
+    <string id="30034">Miniatures/Fanart</string>
+    <string id="30035">Fitxers de configuració</string>
+    <string id="30036">Directori Personalitzat 1</string>
+    <string id="30037">Directori Personalitzat 2</string>
+    <string id="30038">Detectada Configuració avançada</string>
+    <string id="30039">El fitxer de configuració avançada s'ha de restaurar primer</string>
+    <string id="30040">Selecciona SI per Restaurar aquest arxiu i reiniciar l'XBMC</string>
+    <string id="30041">Seleciona No per Continuar</string>
+    <string id="30042">Rependre la Restauració</string>
+    <string id="30043">Copia de seguretat d'XBMC ha detectat una restauració sense acabar</string>
+    <string id="30044">Vols continuar?</string>
+    <string id="30045">Error: La ruta remota no existeix</string>
+    <string id="30046">Inici</string>
+    <string id="30047">Directori local</string>
+    <string id="30048">Directori remot</string>
+    <string id="30049">Recollint llista de fitxers</string>
+    <string id="30050">La ruta remota existeix - hi pot haver fitxers antics!</string>
+    <string id="30051">Creant llista de fitxers</string>
+    <string id="30052">Escrivint fitxer</string>
+    <string id="30053">Iniciant còpia planificada</string>
+    <string id="30054">S'està eliminant la còpia de seguretat</string>
+    <string id="30056">Comproveu el registre per la URL d autorització de Dropbox</string>
+    <string id="30057">Clica OK quan hagi estat autoritzat</string>
+    <string id="30058">Es necessita codi de desembolupador de Dropbox</string>
+    <string id="30059">Visita https://www.dropbox.com/developers</string>
+    <string id="30060">Activa el planificador</string>
+    <string id="30061">Planificador</string>
+    <string id="30062">Hora del dia</string>
+    <string id="30063">Dia de la setmana</string>
+    <string id="30064">Planificador cron</string>
+    <string id="30065">Diumenge</string>
+    <string id="30066">Dilluns</string>
+    <string id="30067">Dimarts</string>
+    <string id="30068">Dimecres</string>
+    <string id="30069">Dijous</string>
+    <string id="30070">Divendres</string>
+    <string id="30071">Dissabte</string>
+    <string id="30072">Cada dia</string>
+    <string id="30073">Cada setmana</string>
+    <string id="30074">Primer dia del mes</string>
+    <string id="30075">Planificació personalitzada</string>
+    <string id="30076">Apagar despres de la copia de seguretat</string>
+    <string id="30077">Reiniciar XBMC</string>
+    <string id="30078">Cal que reinicieu XBMC per continuar</string>
+</strings>

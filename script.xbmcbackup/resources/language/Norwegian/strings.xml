@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Norwegian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/no/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Generelt</string>
+    <string id="30016">Sikkerhetskopiering</string>
+    <string id="30017">Gjenopprett</string>
+    <string id="30023">Modus</string>
+    <string id="30027">Dropbox</string>
+    <string id="30032">Database</string>
+    <string id="30033">Spilleliste</string>
+    <string id="30062">Time</string>
+    <string id="30063">Dag</string>
+    <string id="30065">Søndag</string>
+    <string id="30066">Mandag</string>
+    <string id="30067">Tirsdag</string>
+    <string id="30068">Onsdag</string>
+    <string id="30069">Torsdag</string>
+    <string id="30070">Fredag</string>
+    <string id="30071">Lørdag</string>
+    <string id="30073">Hver uke</string>
+    <string id="30074">Første dag i måneden</string>
+</strings>

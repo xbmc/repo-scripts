@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Bulgarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/bg/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">General</string>
+    <string id="30023">Режим</string>
+    <string id="30032">База от данни</string>
+    <string id="30033">Плейлист</string>
+    <string id="30065">неделя</string>
+    <string id="30066">понеделник</string>
+    <string id="30067">вторник</string>
+    <string id="30068">сряда</string>
+    <string id="30069">четвъртък</string>
+    <string id="30070">петък</string>
+    <string id="30071">събота</string>
+</strings>

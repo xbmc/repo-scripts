@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Korean language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ko/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC 백업</string>
+    <string id="30011">일반</string>
+    <string id="30012">파일 선택</string>
+    <string id="30013">스케쥴</string>
+    <string id="30016">백업</string>
+    <string id="30017">복구</string>
+    <string id="30018">경로 탐색</string>
+    <string id="30019">경로 입력</string>
+    <string id="30020">원격 경로 탐색</string>
+    <string id="30021">백업 폴더명</string>
+    <string id="30022">자동 실행</string>
+    <string id="30023">모드</string>
+    <string id="30024">원격 경로 입력</string>
+    <string id="30025">원격 경로 유형</string>
+    <string id="30026">유지할 백업 (0은 모두 유지)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30030">사용자 애드온</string>
+    <string id="30031">애드온 데이터</string>
+    <string id="30032">데이타베이스</string>
+    <string id="30033">재생목록</string>
+    <string id="30034">썸네일/팬아트</string>
+    <string id="30035">설정 파일</string>
+    <string id="30045">오류: 존재하지 않는 원격 경로</string>
+    <string id="30046">시작</string>
+    <string id="30047">로컬 디렉토리</string>
+    <string id="30048">원격 디렉토리</string>
+    <string id="30049">파일 목록을 가져오는 중</string>
+    <string id="30050">원격 경로 있음 - 오래된 파일이 있습니다!</string>
+    <string id="30051">파일 목록 작성 중</string>
+    <string id="30052">파일을 쓰는 중</string>
+    <string id="30053">예약된 백업 시작</string>
+    <string id="30054">백업 삭제</string>
+    <string id="30060">예약 사용</string>
+    <string id="30061">예약</string>
+    <string id="30062">시간</string>
+    <string id="30063">요일</string>
+    <string id="30064">Cron 예약</string>
+    <string id="30065">일요일</string>
+    <string id="30066">월요일</string>
+    <string id="30067">화요일</string>
+    <string id="30068">수요일</string>
+    <string id="30069">목요일</string>
+    <string id="30070">금요일</string>
+    <string id="30071">토요일</string>
+    <string id="30072">매일</string>
+    <string id="30073">매주</string>
+    <string id="30074">매월 첫 날</string>
+    <string id="30075">사용자 예약</string>
+    <string id="30077">XBMC 재시작</string>
+</strings>
