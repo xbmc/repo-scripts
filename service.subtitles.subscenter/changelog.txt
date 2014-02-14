@@ -1,4 +1,8 @@
-3.1.1 - by CaTz 01/02/2013
+3.1.2 - by CaTz 14/02/2014
+- Fix cache issues
+- Added feature, clean the cache from the settings
+
+3.1.1 - by CaTz 01/02/2014
 - Cache tv-show site`s slug to prevent future search of the same tv-show
 
 3.1.0 - by CaTz

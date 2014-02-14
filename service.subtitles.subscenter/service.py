@@ -24,7 +24,7 @@ __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
 
 sys.path.append(__resource__)
 
-from SUBUtilities import SubscenterHelper, log, normalizeString
+from SUBUtilities import SubscenterHelper, log, normalizeString, clear_cache
 
 
 
@@ -143,5 +143,7 @@ elif params['action'] == 'download':
     for sub in subs:
         listitem = xbmcgui.ListItem(label=sub)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
+elif params['action'] == 'clear_cache':
+    clear_cache()
 
 xbmcplugin.endOfDirectory(int(sys.argv[1])) ## send end of directory to XBMC

@@ -25,6 +25,7 @@ except ImportError:
 __addon__ = xbmcaddon.Addon()
 __version__ = __addon__.getAddonInfo('version') # Module version
 __scriptname__ = __addon__.getAddonInfo('name')
+__language__ = __addon__.getLocalizedString
 __profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
 __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
 
@@ -38,6 +39,9 @@ def normalizeString(str):
         'NFKD', unicode(unicode(str, 'utf-8'))
     ).encode('ascii', 'ignore')
 
+def clear_cache():
+    cache.delete("tv-show%")
+    xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(32004))).encode('utf-8'))
 
 def log(module, msg):
     xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
@@ -82,7 +86,7 @@ class SubscenterHelper:
                 urls[i] += (year,)
             results = self._filter_urls(urls, search_string, item)
             
-            if item["tvshow"]:
+            if item["tvshow"] and results:
                 cache.set(cache_key, repr(results))
             
         return results
