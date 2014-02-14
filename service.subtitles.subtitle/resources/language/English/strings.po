@@ -41,3 +41,7 @@ msgstr ""
 msgctxt "#32007"
 msgid "Addon`s local cache was cleared successfully"
 msgstr ""
+
+msgctxt "#32008"
+msgid "Cache settings"
+msgstr ""

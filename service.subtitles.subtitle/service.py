@@ -141,6 +141,6 @@ elif params['action'] == 'download':
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
 
 elif params['action'] == 'clear_cache':
-    clear_cache();
+    clear_cache()
 
 xbmcplugin.endOfDirectory(int(sys.argv[1])) ## send end of directory to XBMC

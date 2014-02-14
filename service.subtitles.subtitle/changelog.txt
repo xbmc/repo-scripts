@@ -1,3 +1,6 @@
+4.1.2 - by CaTz 14/02/2104
+- Organization of the settings
+
 4.1.1 - by CaTz 07/02/2014
 - Fix cache related bugs:
   Prevent caching empty lists
