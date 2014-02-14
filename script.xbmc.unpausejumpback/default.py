@@ -45,6 +45,7 @@ global g_jumpBackSecsAfterRwdX4
 global g_jumpBackSecsAfterRwdX8
 global g_jumpBackSecsAfterRwdX16
 global g_jumpBackSecsAfterRwdX32
+global g_jumpBackSecsAfterResume
 global g_lastPlaybackSpeed
 global g_pausedTime
 global g_waitForJumpback
@@ -115,6 +116,7 @@ def loadSettings():
   global g_jumpBackSecsAfterRwdX8
   global g_jumpBackSecsAfterRwdX16
   global g_jumpBackSecsAfterRwdX32
+  global g_jumpBackSecsAfterResume
 
   g_jumpBackSecsAfterFwdPause = int(float(__addon__.getSetting("jumpbacksecs")))
   g_jumpBackSecsAfterFwdX2 = int(float(__addon__.getSetting("jumpbacksecsfwdx2")))
@@ -127,6 +129,7 @@ def loadSettings():
   g_jumpBackSecsAfterRwdX8 = int(float(__addon__.getSetting("jumpbacksecsrwdx8")))
   g_jumpBackSecsAfterRwdX16 = int(float(__addon__.getSetting("jumpbacksecsrwdx16")))
   g_jumpBackSecsAfterRwdX32 = int(float(__addon__.getSetting("jumpbacksecsrwdx32")))
+  g_jumpBackSecsAfterResume = int(float(__addon__.getSetting("jumpbacksecsresume")))
   g_waitForJumpback = int(float(__addon__.getSetting("waitforjumpback")))
   log('Settings loaded! JumpBackSecs: %d, WaitSecs: %d' % (g_jumpBackSecsAfterFwdPause, g_waitForJumpback))
 
@@ -134,6 +137,23 @@ class MyPlayer( xbmc.Player ):
   def __init__( self, *args, **kwargs ):
     xbmc.Player.__init__( self )
     log('MyPlayer - init')
+
+  def onPlayBackStarted(self):
+    global g_jumpBackSecsAfterResume
+    currentTime = xbmc.Player().getTime()
+    log('Playback started at ' + str(currentTime))
+
+    # check for exclusion
+    _filename = self.getPlayingFile()
+    if isExcluded(_filename):
+      log("Ignored because '%s' is in exclusion settings." % _filename)
+      return
+    
+    else:
+      if currentTime > 0 and g_jumpBackSecsAfterResume > 0:
+        resumeTime = currentTime - g_jumpBackSecsAfterResume
+        log("Resuming playback from saved time: " + str(currentTime) + " with jumpback seconds: " + str(g_jumpBackSecsAfterResume) + " - resume time: " + str(resumeTime))
+        xbmc.Player().seekTime(resumeTime)
     
   def onPlayBackPaused( self ):
     global g_pausedTime
