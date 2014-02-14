@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """Beautiful Soup bonus library: Unicode, Dammit
 
-This class forces XML data into a standard format (usually to UTF-8 or
-Unicode).  It is heavily based on code from Mark Pilgrim's Universal
-Feed Parser. It does not rewrite the XML or HTML to reflect a new
-encoding; that's the tree builder's job.
+This library converts a bytestream to Unicode through any means
+necessary. It is heavily based on code from Mark Pilgrim's Universal
+Feed Parser. It works best on XML and XML, but it does not rewrite the
+XML or HTML to reflect a new encoding; that's the tree builder's job.
 """
 
 import codecs
@@ -339,12 +339,15 @@ class UnicodeDammit:
 
         self.detector = EncodingDetector(markup, override_encodings, is_html)
 
-        # Is the data in Unicode to begin with?
+        # Short-circuit if the data is in Unicode to begin with.
         if isinstance(markup, unicode) or markup == '':
             self.markup = markup
             self.unicode_markup = unicode(markup)
+            self.original_encoding = None
+            return
 
-        # As a first step, the encoding detector may strip a byte-order mark.
+        # The encoding detector may have stripped a byte-order mark.
+        # Use the stripped markup from this point on.
         self.markup = self.detector.markup
 
         u = None

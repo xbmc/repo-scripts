@@ -36,6 +36,19 @@ except ImportError, e:
 PYTHON_2_PRE_2_7 = (sys.version_info < (2,7))
 PYTHON_3_PRE_3_2 = (sys.version_info[0] == 3 and sys.version_info < (3,2))
 
+class TestConstructor(SoupTest):
+
+    def test_short_unicode_input(self):
+        data = u"<h1>éé</h1>"
+        soup = self.soup(data)
+        self.assertEqual(u"éé", soup.h1.string)
+
+    def test_embedded_null(self):
+        data = u"<h1>foo\0bar</h1>"
+        soup = self.soup(data)
+        self.assertEqual(u"foo\0bar", soup.h1.string)
+
+
 class TestDeprecatedConstructorArguments(SoupTest):
 
     def test_parseOnlyThese_renamed_to_parse_only(self):
@@ -58,15 +71,6 @@ class TestDeprecatedConstructorArguments(SoupTest):
     def test_unrecognized_keyword_argument(self):
         self.assertRaises(
             TypeError, self.soup, "<a>", no_such_argument=True)
-
-    @skipIf(
-        not LXML_PRESENT,
-        "lxml not present, not testing BeautifulStoneSoup.")
-    def test_beautifulstonesoup(self):
-        with warnings.catch_warnings(record=True) as w:
-            soup = BeautifulStoneSoup("<markup>")
-            self.assertTrue(isinstance(soup, BeautifulSoup))
-            self.assertTrue("BeautifulStoneSoup class is deprecated" in str(w[0].message))
 
 class TestWarnings(SoupTest):
 
@@ -236,6 +240,11 @@ class TestEncodingConversion(SoupTest):
 
 class TestUnicodeDammit(unittest.TestCase):
     """Standalone tests of UnicodeDammit."""
+
+    def test_unicode_input(self):
+        markup = u"I'm already Unicode! \N{SNOWMAN}"
+        dammit = UnicodeDammit(markup)
+        self.assertEqual(dammit.unicode_markup, markup)
 
     def test_smart_quotes_to_unicode(self):
         markup = b"<foo>\x91\x92\x93\x94</foo>"

@@ -45,7 +45,15 @@ HTMLPARSER = 'html.parser'
 class BeautifulSoupHTMLParser(HTMLParser):
     def handle_starttag(self, name, attrs):
         # XXX namespace
-        self.soup.handle_starttag(name, None, None, dict(attrs))
+        attr_dict = {}
+        for key, value in attrs:
+            # Change None attribute values to the empty string
+            # for consistency with the other tree builders.
+            if value is None:
+                value = ''
+            attr_dict[key] = value
+            attrvalue = '""'
+        self.soup.handle_starttag(name, None, None, attr_dict)
 
     def handle_endtag(self, name):
         self.soup.handle_endtag(name)

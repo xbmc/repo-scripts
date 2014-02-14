@@ -17,7 +17,7 @@ http://www.crummy.com/software/BeautifulSoup/bs4/doc/
 """
 
 __author__ = "Leonard Richardson (leonardr@segfault.org)"
-__version__ = "4.3.1"
+__version__ = "4.3.2"
 __copyright__ = "Copyright (c) 2004-2013 Leonard Richardson"
 __license__ = "MIT"
 
@@ -164,7 +164,20 @@ class BeautifulSoup(Tag):
             # involving passing non-markup to Beautiful Soup.
             # Beautiful Soup will still parse the input as markup,
             # just in case that's what the user really wants.
-            if os.path.exists(markup):
+            if (isinstance(markup, unicode)
+                and not os.path.supports_unicode_filenames):
+                possible_filename = markup.encode("utf8")
+            else:
+                possible_filename = markup
+            is_file = False
+            try:
+                is_file = os.path.exists(possible_filename)
+            except Exception, e:
+                # This is almost certainly a problem involving
+                # characters not valid in filenames on this
+                # system. Just let it go.
+                pass
+            if is_file:
                 warnings.warn(
                     '"%s" looks like a filename, not markup. You should probably open this file and pass the filehandle into Beautiful Soup.' % markup)
             if markup[:5] == "http:" or markup[:6] == "https:":
