@@ -226,16 +226,38 @@ def search_manual(searchstr, languages, filename):
         getallsubs(content, languages, filename)
 
 
+def search_filename(filename, languages):
+    title, year = xbmc.getCleanMovieTitle(filename)
+    log(__name__, "clean title: \"%s\" (%s)" % (title, year))
+    try:
+        yearval = int(year)
+    except ValueError:
+        yearval = 0
+    if title and yearval > 1900:
+        search_movie(title, year, item['3let_language'], filename)
+    else:
+        match = re.search(r'\WS(?P<season>\d\d)E(?P<episode>\d\d)', title, flags=re.IGNORECASE)
+        if match is not None:
+            tvshow = string.strip(title[:match.start('season')-1])
+            season = string.lstrip(match.group('season'), '0')
+            episode = string.lstrip(match.group('episode'), '0')
+            search_tvshow(tvshow, season, episode, item['3let_language'], filename)
+        else:
+            search_manual(filename, item['3let_language'], filename)
+
+
 def search(item):
     filename = os.path.splitext(os.path.basename(item['file_original_path']))[0]
-    log(__name__, "Search_subscene='%s', filename='%s'" % (item, filename))
+    log(__name__, "Search_subscene='%s', filename='%s', addon_version=%s" % (item, filename, __version__))
 
     if item['mansearch']:
         search_manual(item['mansearchstr'], item['3let_language'], filename)
-    elif len(item['tvshow']) == 0:
+    elif item['tvshow']:
+        search_tvshow(item['tvshow'], item['season'], item['episode'], item['3let_language'], filename)
+    elif item['title'] and item['year']:
         search_movie(item['title'], item['year'], item['3let_language'], filename)
     else:
-        search_tvshow(item['tvshow'], item['season'], item['episode'], item['3let_language'], filename)
+        search_filename(filename, item['3let_language'])
 
 
 def download(link, search_string=""):

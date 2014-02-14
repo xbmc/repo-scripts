@@ -1,3 +1,6 @@
+0.9.2
+- better handling of files without scraper data
+
 0.9.1
 - fixed an issue with tv shows with no exact title match
 
