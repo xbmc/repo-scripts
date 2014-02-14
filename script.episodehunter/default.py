@@ -1,32 +1,34 @@
+""" Default menu """
+
 import xbmcgui
 import xbmcaddon
 
-from helper import *
-from sync import *
+from resources.lib import helper
+import sync
 
-_settings = xbmcaddon.Addon("script.episodehunter")
-_language = _settings.getLocalizedString
-_name = "EpisodeHunter"
-
+__settings__ = xbmcaddon.Addon("script.episodehunter")
+__language__ = __settings__.getLocalizedString
+__title__ = "EpisodeHunter"
 
 def menu():
 
-    if not isSettingsOkey():
-        _settings.openSettings()
+    if not helper.is_settings_okey():
+        __settings__.openSettings()
         return
 
-    options = [_language(32009), _language(32010), _language(32011)]  # [Movie, TV, Settings]
+    # [Movie, TV, Settings]
+    options = [__language__(32009), __language__(32010), __language__(32011)]
 
     while True:
-        select = xbmcgui.Dialog().select(_name, options)
+        select = xbmcgui.Dialog().select(__title__, options)
         if select == -1:
             return
         else:
             if select == 0:  # Movie
-                syncSeenMovies(True)
+                sync.sync_watched_movies(True)
             elif select == 1:  # TV
-                syncSeenTVShows(True)
+                sync.sync_watched_series(True)
             elif select == 2:  # Settings
-                _settings.openSettings()
+                __settings__.openSettings()
 
 menu()

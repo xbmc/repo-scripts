@@ -1,30 +1,31 @@
+"""
+Sync watched Movies/TV shows to Episodehunter
+"""
+
+import time
 import xbmc
 import xbmcaddon
 import xbmcgui
-import time
-from connection import Connection
-from xbmc_helper import *
-from helper import *
+from resources.lib.connection import Connection
+from resources.lib import xbmc_helper
+from resources.lib import helper
 
-_settings = xbmcaddon.Addon("script.episodehunter")
-_language = _settings.getLocalizedString
-_name = "EpisodeHunter"
+__settings__ = xbmcaddon.Addon("script.episodehunter")
+__language__ = __settings__.getLocalizedString
+__title__ = "EpisodeHunter"
 
 
-def syncSeenMovies(gui=True):
-
-    Debug('syncSeenMovies')
-
+def sync_watched_movies(gui=True):
     if gui:
         progress = xbmcgui.DialogProgress()
-        progress.create(_name, _language(32021))  # "Checking XBMC Database for new watched Movies"
+        progress.create(__title__, __language__(32021))  # "Checking XBMC Database for new watched movies"
 
     connection = Connection()
 
-    EH_movies = connection.getMoviesFromEP()
-    xbmc_movies = getMoviesFromXBMC()
+    eh_movies = connection.get_watched_movies()
+    xbmc_movies = xbmc_helper.get_movies_from_xbmc()
 
-    if xbmc_movies is None or EH_movies is None:
+    if xbmc_movies is None or eh_movies is None:
         if gui:
             progress.close()
         return
@@ -40,15 +41,16 @@ def syncSeenMovies(gui=True):
         if gui:
             progress.update(100 / num_movies * i)
             if progress.iscanceled():
-                xbmcgui.Dialog().ok(_name, _language(32022))    # "Progress Aborted"
+                # "Progress Aborted"
+                xbmcgui.Dialog().ok(__title__, __language__(32022))
                 break
         try:
             imdb_id = movie['imdbnumber']
         except KeyError:
-            Debug("Skipping a movie - no IMDb ID was found")
+            helper.debug("Skipping a movie - no IMDb ID was found")
             continue
 
-        if notSeenMovie(imdb_id, EH_movies):                    # Is the movie listed at EpisodeHunter as watched?
+        if helper.not_seen_movie(imdb_id, eh_movies):           # Is the movie listed at EpisodeHunter as watched?
             try:
                 playcount = movie['playcount']
                 year = movie['year']
@@ -58,7 +60,7 @@ def syncSeenMovies(gui=True):
             if playcount > 0:                                   # Have the user watch it?
                 if year > 0:                                    # I guess that this movie is newer then Jesus?
                     if 'lastplayed' in movie:                   # Do we have a date?
-                        if 'originaltitle' in movie:            # It would be great if we have the orginal title
+                        if 'originaltitle' in movie:            # It would be great if we have the original title
                             set_as_seen.append({
                                 'imdb_id': imdb_id,
                                 'title': movie['originaltitle'],
@@ -66,7 +68,7 @@ def syncSeenMovies(gui=True):
                                 'plays': movie['playcount'],
                                 'last_played': int(time.mktime(time.strptime(movie['lastplayed'], '%Y-%m-%d %H:%M:%S')))
                             })
-                        else:                                   # No orginal title? Okey, send the 'ordinary' title
+                        else:                                   # No original title? Okey, send the 'ordinary' title
                             set_as_seen.append({
                                 'imdb_id': imdb_id,
                                 'title': movie['title'],
@@ -75,7 +77,7 @@ def syncSeenMovies(gui=True):
                                 'last_played': int(time.mktime(time.strptime(movie['lastplayed'], '%Y-%m-%d %H:%M:%S')))
                             })
                     else:                                       # No 'last-play'? :(
-                        if 'originaltitle' in movie:            # It would be great if we have the orginal title
+                        if 'originaltitle' in movie:            # It would be great if we have the original title
                             set_as_seen.append({
                                 'imdb_id': imdb_id,
                                 'title': movie['originaltitle'],
@@ -91,9 +93,9 @@ def syncSeenMovies(gui=True):
                                     'plays': movie['playcount']
                                 })
                             except KeyError:
-                                Debug('syncSeenMovies: What? It feels like movie is empty')
+                                pass
                 else:
-                    Debug("Skipping " + movie['title'] + " - The movie is to old")
+                    helper.debug("Skipping " + movie['title'] + " - The movie is to old")
 
     set_as_seen_title = ""
     for i in range(0, len(set_as_seen)):
@@ -110,63 +112,64 @@ def syncSeenMovies(gui=True):
 
     if num_seen_movies > 0:
         if gui:
-            choice = xbmcgui.Dialog().yesno(_name, str(num_seen_movies) + " " + _language(32023), set_as_seen_title)  # 'Movies will be added as watched on EpisodeHunter'
+            # 'Movies will be added as watched on EpisodeHunter'
+            choice = xbmcgui.Dialog().yesno(__title__, str(num_seen_movies) + " " + __language__(32023), set_as_seen_title)
         else:
             choice = 0
 
-        if choice == 1 or choice is True:                       # I belive this is OS bedending
-            progress.update(50, _language(32044))               # 'Uploading movies to episodehunter'
-            data = connection.setMoviesSeen(set_as_seen)
+        if choice == 1 or choice is True:                       # I believe this is OS depending
+            progress.update(50, __language__(32044))            # 'Uploading movies to episodehunter'
+            data = connection.set_movies_watched(set_as_seen)
 
             if data is None:
-                Debug("Error uploading seen movies: response is None")
+                helper.debug("Error uploading seen movies: response is None")
                 if gui:
-                    xbmcgui.Dialog().ok(_name, _language(32024), "")  # 'Error uploading watched movies'
+                    xbmcgui.Dialog().ok(__title__, __language__(32024), "")  # 'Error uploading watched movies'
             elif 'status' in data:
                 if data['status'] == 400:
-                    Debug("successfully uploaded seen movies")
+                    helper.debug("successfully uploaded seen movies")
                     if gui:
-                        xbmcgui.Dialog().ok(_name, _language(32040))    # 'Movie sucessfully updated to EpisodeHunter'
+                        xbmcgui.Dialog().ok(__title__, __language__(32040))  # 'Movie successfully updated to EpisodeHunter'
                 elif data['status'] == 300:
-                    Debug("Error uploading seen movies: " + str(data['data']))
+                    helper.debug("Error uploading seen movies: " + str(data['data']))
                     if gui:
-                        xbmcgui.Dialog().ok(_name, _language(32024), str(data['data']))  # 'Error uploading watched movies'
+                        xbmcgui.Dialog().ok(__title__, __language__(32024), str(data['data']))  # 'Error uploading watched movies'
     else:
         if gui:
-            xbmcgui.Dialog().ok(_name, _language(32025))  # 'No new watched movies to update for EpisodeHunter'
+            xbmcgui.Dialog().ok(__title__, __language__(32025))  # 'No new watched movies to update for EpisodeHunter'
 
     if gui:
         progress.close()
 
-
-def syncSeenTVShows(gui=True):
-
-    Debug('syncSeenTVShows')
+def sync_watched_series(gui=True):
     MAX_SEASON_NUMBER = 50
 
-    if gui:                                       # Are we syncing in a GUI?
-        progress = xbmcgui.DialogProgress()       # Create a dialog
-        progress.create(_name, _language(32030))  # And put a title on it (Checking XBMC Database for new watched Episodes)
+    if gui:                                             # Are we syncing in a GUI?
+        progress = xbmcgui.DialogProgress()             # Create a dialog
+        progress.create(__title__, __language__(32030))  # And put a title on it (Checking XBMC Database for new watched Episodes)
 
-    connection = Connection()                     # Create a connection
+    # Create a connection
+    connection = Connection()
 
-    EH_tvshows = connection.getWatchedTVShowsFromEH()   # Get a list of set wached episodes
-    xbmc_tvshows = getTVShowsFromXBMC()                 # Get all tv shows in XBMC
+    # Get a list of set watched episodes
+    eh_tvshows = connection.get_watched_shows()
+    xbmc_tvshows = xbmc_helper.get_tv_shows_from_xbmc()
 
-    if xbmc_tvshows is None or EH_tvshows is None:
-        Debug('xbmc_tvshows or EH_tvshows is None')
+    if xbmc_tvshows is None or eh_tvshows is None:
+        helper.debug('xbmc_tvshows or eh_tvshows is None')
         if gui:
             progress.close()
         return
 
-    if len(EH_tvshows) <= 0:
-        EH_tvshows = {}       # We will get a lot of errors. BUT we will catch them (with 'except')
+    if len(eh_tvshows) <= 0:
+        # We will get a lot of errors. BUT we will catch them all (with 'except')
+        eh_tvshows = {}
 
     if 'tvshows' in xbmc_tvshows:
         xbmc_tvshows = xbmc_tvshows['tvshows']
 
     set_as_seen = []    # List of shows to set as seen
-    tvshow = {}         # The current tvshow to add
+    tvshow = {}         # The current TV show to add
     i = -1              # Iterator index
     count = 0           # Number of episode to set as watched
 
@@ -179,13 +182,15 @@ def syncSeenTVShows(gui=True):
         if gui:
             progress.update(100 / number_tvshows * i)
             if progress.iscanceled():
-                xbmcgui.Dialog().ok(_name, _language(32022))    # "Progress Aborted"
+                # "Progress Aborted"
+                xbmcgui.Dialog().ok(__title__, __language__(32022))
                 break
 
         if 'tvshowid' in xbmc_tvshow:
-            seasons = getSeasonsFromXBMC(xbmc_tvshow)           # Get a list of seasons
+            # Get a list of seasons
+            seasons = xbmc_helper.get_seasons_from_xbmc(xbmc_tvshow)
         else:
-            Debug("Skipping tv show - no tvdb ID was found")
+            helper.debug("Skipping tv show - no tvdb ID was found")
             continue
 
         try:
@@ -194,7 +199,7 @@ def syncSeenTVShows(gui=True):
             tvshow['tvdb_id'] = xbmc_tvshow['imdbnumber']
             seasons = seasons['seasons']
         except KeyError:
-            Debug("Skipping tv show - key error")
+            helper.debug("Skipping TV show - key error")
             continue
 
         tvshow['episodes'] = []
@@ -202,10 +207,10 @@ def syncSeenTVShows(gui=True):
         number_seasons = len(seasons)
 
         seasonid = -1
-        for j in range(0, number_seasons):
+        for _ in range(0, number_seasons):
             seasonid += 1
             while True:
-                episodes = getEpisodesFromXBMC(xbmc_tvshow, seasonid)
+                episodes = xbmc_helper.get_episodes_from_xbmc(xbmc_tvshow, seasonid)
                 if 'limits' in episodes and 'total' in episodes['limits'] and episodes['limits']['total'] > 0:
                     break
                 if seasonid > MAX_SEASON_NUMBER:
@@ -216,19 +221,19 @@ def syncSeenTVShows(gui=True):
             if seasonid > MAX_SEASON_NUMBER:
                 continue
 
-            # Okey, lets stop for a moment
+            # Okay, lets stop for a moment
             # What do we have?
             # We have show title, show year, tvdb_id, season id(s) and a list of episodes
 
             try:
                 foundseason = False
-                for season in EH_tvshows[str(xbmc_tvshow['imdbnumber'])]['seasons']:
+                for season in eh_tvshows[str(xbmc_tvshow['imdbnumber'])]['seasons']:
                     foundseason = True
-                    # Okey, we have seen some season (no KeyError). But have we seen them all?
+                    # Okay, we have seen some season (no KeyError). But have we seen them all?
                     if season['season'] == str(seasonid):
-                        # Okey, we have seen some episode in the season, but have we seen them all?
+                        # Okay, we have seen some episode in the season, but have we seen them all?
                         for episode in episodes['episodes']:
-                            if seenEpisode(episode['episode'], season['episodes']):
+                            if helper.seen_episode(episode['episode'], season['episodes']):
                                 # We have seen the episode, lets continue
                                 continue
                             else:
@@ -275,17 +280,17 @@ def syncSeenTVShows(gui=True):
 
     if count > 0:
         if gui:
-            choice = xbmcgui.Dialog().yesno(_name, str(count) + " " + _language(32031), set_as_seen_title)  # String: Episodes will be added as watched
+            choice = xbmcgui.Dialog().yesno(__title__, str(count) + " " + __language__(32031), set_as_seen_title)  # String: Episodes will be added as watched
         else:
             choice = 0
 
         if choice == 1 or choice is True:   # I believe this is OS depending
             error = None
 
-            n = len(set_as_seen)
+            number_of_watched_shows = len(set_as_seen)
             i = -1
 
-            progress.update(0, _language(32043))  # Uploading shows to episodehunter
+            progress.update(0, __language__(32043))  # Uploading shows to episodehunter
 
             for show in set_as_seen:
                 i += 1
@@ -293,32 +298,30 @@ def syncSeenTVShows(gui=True):
                     raise SystemExit()
 
                 if gui:
-                    progress.update(100 / n * i)
+                    progress.update(100 / number_of_watched_shows * i)
 
-                data = connection.setTvSeen(show['tvdb_id'], show['title'], show['year'], show['episodes'])
+                data = connection.set_shows_watched(show['tvdb_id'], show['title'], show['year'], show['episodes'])
 
                 if data is None:
-                    Debug("Error uploading tvshow: response is None")
+                    helper.debug("Error uploading tvshow: response is None")
                     error = ""
                 elif data['status'] == 300:
-                    Debug("Error uploading tvshow: " + show['title'] + ": " + str(data['data']))
+                    helper.debug("Error uploading tvshow: " + show['title'] + ": " + str(data['data']))
                     error = data['data']
-                else:
-                    Debug("Successfully uploaded tvshow " + show['title'] + ": " + str(data['data']))
 
             if error is None:
                 if gui:
-                    xbmcgui.Dialog().ok(_name, _language(32032))            # Episodes sucessfully updated to EpisodeHunter
+                    xbmcgui.Dialog().ok(__title__, __language__(32032))            # Episodes successfully updated to EpisodeHunter
                 else:
-                    notification(_name, _language(32032))                   # Episodes sucessfully updated to EpisodeHunter
+                    helper.notification(__title__, __language__(32032))                   # Episodes successfully updated to EpisodeHunter
             else:
                 if gui:
-                    xbmcgui.Dialog().ok(_name, _language(32033), error)     # Error uploading watched TVShows
+                    xbmcgui.Dialog().ok(__title__, __language__(32033), error)     # Error uploading watched TVShows
                 else:
-                    notification(_name, _language(32033) + str(error))      # Error uploading watched TVShows
+                    helper.notification(__title__, __language__(32033) + str(error))      # Error uploading watched TVShows
     else:
         if gui:
-            xbmcgui.Dialog().ok(_name, _language(32034))                    # No new watched episodes in XBMC library to update
+            xbmcgui.Dialog().ok(__title__, __language__(32034))                    # No new watched episodes in XBMC library to update
 
     if gui:
         progress.close()

@@ -1,33 +1,41 @@
+"""
+Helper Functions
+"""
+
 import xbmc
 import xbmcaddon
 import xbmcgui
 
-_name = "EpisodeHunter"
+__name__ = "EpisodeHunter"
 
 
-def Debug(msg):
+def debug(msg):
+    """ Prints debug message if debugging is enable in the user settings """
     settings = xbmcaddon.Addon("script.episodehunter")
-    debug = settings.getSetting("debug")
-    if debug:
+    is_debuging = settings.getSetting("debug")
+    if is_debuging:
         try:
-            print _name + ": " + msg
+            xbmc.log(__name__ + ": " + msg)
         except Exception:
             try:
-                print _name + ": You are trying to print some bad string, " + msg.encode("utf-8", "ignore")
+                xbmc.log(__name__ + ": You are trying to print some bad string, " + msg.encode("utf-8", "ignore"))
             except Exception:
-                print _name + ": You are trying to print a bad string, I can not even print it"
-
+                xbmc.log(__name__ + ": You are trying to print a bad string, I can not even print it")
 
 
 def notification(header, message, level=0):
+    """
+    Create a notification and show it in 5 sec
+    If debugging is enable in the user settings or the level is 0
+    """
     settings = xbmcaddon.Addon("script.episodehunter")
-    debug = settings.getSetting("debug")
-    if debug or level == 0:
+    is_debuging = settings.getSetting("debug")
+    if is_debuging or level == 0:
         xbmc.executebuiltin("XBMC.Notification(%s,%s,%i,%s)" % (header, message, 5000, settings.getAddonInfo("icon")))
 
 
-# Do we have username and api key?
-def isSettingsOkey(daemon=False, silent=False):
+def is_settings_okey(daemon=False, silent=False):
+    """ Check if we have username and api key? """
     settings = xbmcaddon.Addon("script.episodehunter")
     language = settings.getLocalizedString
 
@@ -35,47 +43,47 @@ def isSettingsOkey(daemon=False, silent=False):
         if silent:
             return False
         elif daemon:
-            notification(_name, language(32014))
+            notification(__name__, language(32014))
         else:
-            xbmcgui.Dialog().ok(_name, language(32014))
+            xbmcgui.Dialog().ok(__name__, language(32014))
         return False
 
     elif settings.getSetting("username") == "":
         if silent:
             return False
         if daemon:
-            notification(_name, language(32012))
+            notification(__name__, language(32012))
         else:
-            xbmcgui.Dialog().ok(_name, language(32012))
+            xbmcgui.Dialog().ok(__name__, language(32012))
         return False
 
     elif settings.getSetting("api_key") == "":
         if silent:
             return False
         if daemon:
-            notification(_name, language(32013))
+            notification(__name__, language(32013))
         else:
-            xbmcgui.Dialog().ok(_name, language(32013))
+            xbmcgui.Dialog().ok(__name__, language(32013))
         return False
 
     return True
 
 
-def notSeenMovie(imdb, array):
+def not_seen_movie(imdb, array):
     for x in array:
         if imdb == x['imdb_id']:
             return False
     return True
 
 
-def seenEpisode(e, array):
+def seen_episode(e, array):
     for i in range(0, len(array)):
         if e == array[i]:
             return True
     return False
 
 
-def isnotin(test, array):
+def is_not_in(test, array):
     for x in array:
         if test in x:
             return False

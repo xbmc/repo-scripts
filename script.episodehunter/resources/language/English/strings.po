@@ -1,0 +1,212 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-01-28 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Oskar Karlsosn <kontakta@oskarkarlsson.nu>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#Settings Headline
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Scrobbling"
+msgstr ""
+
+#Settings sub-menu
+
+msgctxt "#32002"
+msgid "Username"
+msgstr ""
+
+msgctxt "#32003"
+msgid "API key"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Scrobble Movies"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Scrobble TV Episodes"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Percent watched to scrobble item"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Offline"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Debug"
+msgstr ""
+
+#Headline menu
+
+msgctxt "#32009"
+msgid "Sync watched Movies"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Sync watched TV episodes"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Settings"
+msgstr ""
+
+#Helper*.py
+
+msgctxt "#32012"
+msgid "No username found, please fill in your username"
+msgstr ""
+
+msgctxt "#32013"
+msgid "No api key found, please fill in your API key"
+msgstr ""
+
+msgctxt "#32014"
+msgid "No username or API key found, please fill in your user details"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Can not connect, timeout"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Can not connect, socket error"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Error: Bad response"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Error"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Bad JSON response"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Error response"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Checking XBMC Database for new watched Movies"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Progress Aborted"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Movies will be added as watched on EpisodeHunter"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Error uploading watched movies"
+msgstr ""
+
+msgctxt "#32025"
+msgid "No new watched movies to update for EpisodeHunter"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Checking EpisodeHunter Database for new watched Movies"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Movies will be added as watched"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Movies updated on XBMC"
+msgstr ""
+
+msgctxt "#32029"
+msgid "No new watched movies to update for XBMC"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Checking XBMC Database for new watched Episodes"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Episodes will be added as watched"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Episodes successfully updated at EpisodeHunter"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Error uploading watched TVShows"
+msgstr ""
+
+msgctxt "#32034"
+msgid "No new watched episodes in XBMC library to update"
+msgstr ""
+
+msgctxt "#32035"
+msgid "TVShow Episodes will be set as watched on XBMC"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Updating XBMC Database"
+msgstr ""
+
+msgctxt "#32037"
+msgid "No new watched episodes on EpisodeHunter to update"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Connection timeout"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Bad JSON response from episodehunter.tv"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Movie successfully updated at EpisodeHunter"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Unable to send data"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Unable to read response"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Uploading shows to episodehunter.tv"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Uploading movies to episodehunter.tv"
+msgstr ""
+
+#Service
+
+msgctxt "#32045"
+msgid "Socket error, unable to connect"
+msgstr ""
+
+msgctxt "#32046"
+msgid "Check username and password"
+msgstr ""
