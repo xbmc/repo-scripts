@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artistslideshow-helper" name="Artist Slideshow Helper" version="0.3.0" provider-name="pkscuot">
+<addon id="script.artistslideshow-helper" name="Artist Slideshow Helper" version="0.3.1" provider-name="pkscuot">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="xbmc.addon" version="12.0.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>

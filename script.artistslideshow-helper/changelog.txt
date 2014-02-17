@@ -1,3 +1,7 @@
+v.0.3.1
+- fixed crash when logging non-text objects
+- changed import process for json and OrderedDict
+
 v.0.3.0
 - first public release
 

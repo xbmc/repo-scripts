@@ -1,3 +1,5 @@
+#v.0.1.0
+
 try:
     from thread import get_ident as _get_ident
 except ImportError:

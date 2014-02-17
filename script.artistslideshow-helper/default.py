@@ -6,11 +6,11 @@
 import xbmc, xbmcaddon, xbmcvfs
 import os, sys
 if sys.version_info >= (2, 7):
-    import json
-    from collections import OrderedDict
+    import _json
+    from collections import OrderedDict as _ordereddict
 else:
-    import simplejson as json
-    from resources.common.ordereddict import OrderedDict
+    import simplejson as _json
+    from resources.common.ordereddict import OrderedDict as _ordereddict
 
 from resources.common.fix_utf8 import smartUTF8
 from resources.common.xlogger import Logger
@@ -25,7 +25,7 @@ __addonicon__    = xbmc.translatePath('%s/icon.png' % __addonpath__ )
 __language__     = __addon__.getLocalizedString
 
 #this initiates the logger object, which helps log arbitrary data to the log file
-lw = Logger('[Artist Slideshow Helper]')
+lw = Logger( '[Artist Slideshow Helper]' )
 
 
 class Main:
@@ -59,25 +59,24 @@ class Main:
         success, log_line = writeFile( hashmap_str, self.HASHLISTFILE )
         if success:
             message = __language__(30311)
-            lw.log( log_line, xbmc.LOGDEBUG )
+            lw.log( log_line )
         else:
             message = __language__(30312)
-            lw.log( 'unable to write has list file out to disk', xbmc.LOGDEBUG )
+            lw.log( ['unable to write has list file out to disk'] )
         command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30310)), smartUTF8(message), 5000, smartUTF8(__addonicon__))
         xbmc.executebuiltin(command)
 
 
     def _get_artists_hashmap( self ):
         #gets a list of all the artists from XBMC
-        hashmap = OrderedDict()
+        hashmap = _ordereddict()
         response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"AudioLibrary.GetArtists", "params":{"albumartistsonly":false, "sort":{"order":"ascending", "ignorearticle":true, "method":"artist"}},"id": 1}}' )
         try:
-            artists_info = json.loads(response)['result']['artists']
+            artists_info = _json.loads(response)['result']['artists']
         except (IndexError, KeyError, ValueError):
             artists_info = []
         except Exception, e:
-            lw.log( 'unexpected error getting JSON back from XBMC', xbmc.LOGDEBUG )
-            lw.log( e, xbmc.LOGDEBUG )
+            lw.log( ['unexpected error getting JSON back from XBMC', e] )
             artists_info = []
         if artists_info:
             for artist_info in artists_info:
@@ -91,7 +90,7 @@ class Main:
         self.HASHLIST = __addon__.getSetting( "hashlist" )
         if self.HASHLIST == 'true':
             self.HASHLISTFOLDER = __addon__.getSetting( "hashlist_path" ).decode('utf-8')
-            lw.log( 'set hash list path to %s' % self.HASHLISTFOLDER, xbmc.LOGDEBUG )
+            lw.log( ['set hash list path to %s' % self.HASHLISTFOLDER] )
             self.HASHLISTFILE = os.path.join( self.HASHLISTFOLDER, 'as_hashlist.txt' )
         self.MIGRATE = __addon__.getSetting( "migrate" )
         if self.MIGRATE == 'true':
@@ -102,13 +101,13 @@ class Main:
                 self.MIGRATETYPE = 'move'
             elif mtype == '0':
                 self.MIGRATETYPE = 'test'
-            lw.log( 'raw migrate type is %s, so migrate type is %s' % (mtype, self.MIGRATETYPE), xbmc.LOGDEBUG )
+            lw.log( ['raw migrate type is %s, so migrate type is %s' % (mtype, self.MIGRATETYPE)] )
             if __addon__.getSetting( "migrate_path" ):
                 self.MIGRATEFOLDER = __addon__.getSetting( "migrate_path" ).decode('utf-8')
-                lw.log( 'set migrate folder to %s' % self.MIGRATEFOLDER, xbmc.LOGDEBUG )
+                lw.log( ['set migrate folder to %s' % self.MIGRATEFOLDER] )
             else:
                 self.MIGRATEFOLDER = ''
-                lw.log( 'no migration folder set', xbmc.LOGDEBUG )
+                lw.log( ['no migration folder set'] )
             
 
     def _init_vars( self ):
@@ -130,7 +129,7 @@ class Main:
 
 
     def _migrate( self ):
-        lw.log( 'attempting to %s images from Artist Slideshow cache directory' % self.MIGRATETYPE, xbmc.LOGDEBUG )
+        lw.log( ['attempting to %s images from Artist Slideshow cache directory' % self.MIGRATETYPE] )
         test_str = ''
         checkDir(self.MIGRATEFOLDER)
         hashmap = self._get_artists_hashmap()
@@ -138,21 +137,19 @@ class Main:
             os.chdir( self.ASCACHEFOLDER )
             folders = os.listdir( self.ASCACHEFOLDER )
         except OSError:
-            lw.log( 'no directory found: ' + self.ASCACHEFOLDER, xbmc.LOGDEBUG )
+            lw.log( ['no directory found: ' + self.ASCACHEFOLDER] )
             return
         except Exception, e:
-            lw.log( 'unexpected error while getting directory list', xbmc.LOGDEBUG )
-            lw.log( e, xbmc.LOGDEBUG )
+            lw.log( ['unexpected error while getting directory list', e] )
             return
         for folder in folders:
             try:
                 artist_name = hashmap[folder]
             except KeyError:
-                lw.log( 'no matching artist folder for: ' + folder, xbmc.LOGDEBUG )
+                lw.log( ['no matching artist folder for: ' + folder] )
                 artist_name = ''
             except Exception, e:
-                lw.log( 'unexpected error while finding matching artist for ' + folder, xbmc.LOGDEBUG )
-                lw.log( e, xbmc.LOGDEBUG )
+                lw.log( ['unexpected error while finding matching artist for ' + folder, e] )
                 artist_name = ''
             if artist_name and not (artist_name.find('/') != -1):
                 old_folder = os.path.join( self.ASCACHEFOLDER, folder )
@@ -163,13 +160,12 @@ class Main:
                     os.chdir( old_folder )
                     files = os.listdir( old_folder )
                 except OSError:
-                    lw.log( 'no directory found: ' + old_folder, xbmc.LOGDEBUG )
+                    lw.log( ['no directory found: ' + old_folder] )
                     return
                 except Exception, e:
-                    lw.log( 'unexpected error while getting file list', xbmc.LOGDEBUG )
-                    lw.log( e, xbmc.LOGDEBUG )
+                    lw.log( ['unexpected error while getting file list', e] )
                     return
-                lw.log( '%s %s to %s' % (self.MIGRATETYPE, folder, new_folder), xbmc.LOGDEBUG )
+                lw.log( ['%s %s to %s' % (self.MIGRATETYPE, folder, new_folder)] )
                 for file in files:
                     old_file = os.path.join(old_folder, file)
                     new_file = os.path.join(new_folder, file)
@@ -182,14 +178,14 @@ class Main:
                 if self.MIGRATETYPE == 'move':
                     xbmcvfs.rmdir ( old_folder )
         if self.MIGRATETYPE == 'test':
-            success, logline = writeFile( test_str, os.path.join( self.MIGRATEFOLDER, '_migrationtest.txt' ) )
-            lw.log( logline, xbmc.LOGDEBUG )
+            success, loglines = writeFile( test_str, os.path.join( self.MIGRATEFOLDER, '_migrationtest.txt' ) )
+            lw.log( loglines )
         command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30330)), smartUTF8(__language__(30331)), 5000, smartUTF8(__addonicon__))
-        xbmc.executebuiltin(command)
+        xbmc.executebuiltin( command )
 
 
 if ( __name__ == "__main__" ):
-    lw.log('script version %s started' % __addonversion__)
+    lw.log( ['script version %s started' % __addonversion__] )
     slideshow = Main()
 
-lw.log('script stopped')
+lw.log( ['script stopped'] )
