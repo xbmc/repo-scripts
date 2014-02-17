@@ -13,11 +13,12 @@ REGEX_EXPRESSIONS = [
     '[\._ \-]([0-9]+)([0-9][0-9])([\._ \-][^\\/]*)',          # foo.109
     '([0-9]+)([0-9][0-9])([\._ \-][^\\/]*)',
     '[\\\\/\\._ -]([0-9]+)([0-9][0-9])[^\\/]*',
-    'Season ([0-9]+) - Episode ([0-9]+)[^\\/]*',
+    'Season ([0-9]+) - Episode ([0-9]+)[^\\/]*',              # Season 01 - Episode 02
+    'Season ([0-9]+) Episode ([0-9]+)[^\\/]*',                # Season 01 Episode 02
     '[\\\\/\\._ -][0]*([0-9]+)x[0]*([0-9]+)[^\\/]*',
-    '[[Ss]([0-9]+)\]_\[[Ee]([0-9]+)([^\\/]*)',                 #foo_[s01]_[e01]
-    '[\._ \-][Ss]([0-9]+)[\.\-]?[Ee]([0-9]+)([^\\/]*)',        #foo, s01e01, foo.s01.e01, foo.s01-e01
-    's([0-9]+)ep([0-9]+)[^\\/]*',                              #foo - s01ep03, foo - s1ep03
+    '[[Ss]([0-9]+)\]_\[[Ee]([0-9]+)([^\\/]*)',                #foo_[s01]_[e01]
+    '[\._ \-][Ss]([0-9]+)[\.\-]?[Ee]([0-9]+)([^\\/]*)',       #foo, s01e01, foo.s01.e01, foo.s01-e01
+    's([0-9]+)ep([0-9]+)[^\\/]*',                             #foo - s01ep03, foo - s1ep03
     '[Ss]([0-9]+)[][ ._-]*[Ee]([0-9]+)([^\\\\/]*)$',
     '[\\\\/\\._ \\[\\(-]([0-9]+)x([0-9]+)([^\\\\/]*)$'
     ]
@@ -47,14 +48,6 @@ class MyEpisodes(object):
             ('User-agent', 'Lynx/2.8.1pre.9 libwww-FM/2.14')
         ]
 
-    def send_req(self, url, data = None):
-        try:
-            response = self.opener.open(url, data)
-            return ''.join(response.readlines())
-        except:
-            return None
-
-    def login(self):
         login_data = urllib.urlencode({
             'username' : self.userid,
             'password' : self.password,
@@ -62,11 +55,17 @@ class MyEpisodes(object):
             })
         login_url = "%s/%s" % (MYEPISODE_URL, "login.php")
         data = self.send_req(login_url, login_data)
+        self.is_logged = True
         # Quickly check if it seems we are logged on.
         if (data is None) or (self.userid not in data):
-            return False
+            self.is_logged = False
 
-        return True
+    def send_req(self, url, data = None):
+        try:
+            response = self.opener.open(url, data)
+            return ''.join(response.readlines())
+        except:
+            return None
 
     def get_show_list(self):
         # Populate shows with the list of show_ids in our account

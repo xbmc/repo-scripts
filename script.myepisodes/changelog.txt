@@ -1,3 +1,6 @@
+1.0.13
++ Update Regex expression to support more schemes.
++ Fixes bug when authentication failed
 1.0.12
 + Improve show name detection again. Show like Archer or Revolution
 should now work.
