@@ -1,3 +1,12 @@
+v.1.6.0
+- image downloads now done in original format instead of .tbn files
+- one time migration routine run to rename all .tbn files to correct format
+- fixed crash when logging non-text objects
+- fixed attempts to copy temp file over existing file
+- fixed crash when attempting to migrate .nfo files
+- switched to using requests module and new method for URL handling
+- code refactoring
+
 v.1.5.9
 - fixed crash when merging images from multiple artists
 - fixed last.fm support so it requests results in the desired language

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artistslideshow" name="Artist Slideshow" version="1.5.9" provider-name="ronie|pkscuot">
+<addon id="script.artistslideshow" name="Artist Slideshow" version="1.6.0" provider-name="ronie|pkscuot">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="xbmc.addon" version="12.0.0"/>
+		<import addon="script.module.requests2" version="2.2.1"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>
