@@ -1,3 +1,6 @@
+v.0.5.6
+- fixed crash when logging non-text objects
+
 v.0.5.5
 - added ability to monitor multiple logs
 - script now sets focus on window so you can scroll through it without mouse control

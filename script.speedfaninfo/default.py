@@ -1,4 +1,4 @@
-import os, sys, time, datetime
+import os, time, datetime
 import xbmcaddon, xbmc, xbmcgui, xbmcvfs
 from threading import Thread
 from resources.common.xlogger import Logger
@@ -40,7 +40,7 @@ def updateWindow( name, w ):
             	break
         #as long as the window is open grab new data and refresh the window
         if __windowopen__:
-            lw.log( 'window is still open, updating the window with new data',xbmc.LOGDEBUG );
+            lw.log( ['window is still open, updating the window with new data'] );
             w._populate_from_all_logs()
 
 
@@ -56,16 +56,16 @@ class Main( xbmcgui.WindowXMLDialog ):
 
     def onAction( self, action ):
         #captures user input and acts as needed
-        lw.log( 'running onAction from SpeedFanInfoWindow class', xbmc.LOGDEBUG )
+        lw.log( ['running onAction from SpeedFanInfoWindow class'] )
         if action == ACTION_PREVIOUS_MENU or action == ACTION_BACK:
             #if the user hits back or exit, close the window
-            lw.log( 'user initiated previous menu or back', xbmc.LOGDEBUG )
+            lw.log( ['user initiated previous menu or back'] )
             global __windowopen__
             #set this to false so the worker thread knows the window is being closed
             __windowopen__ = False
-            lw.log( 'set windowopen to false', xbmc.LOGDEBUG )
+            lw.log( ['set windowopen to false'] )
             #tell the window to close
-            lw.log( 'tell the window to close', xbmc.LOGDEBUG )
+            lw.log( ['tell the window to close'] )
             self.close()
 
 
@@ -99,12 +99,12 @@ class Main( xbmcgui.WindowXMLDialog ):
 
     def _parse_log( self ):
         #parse the log for information, see readme for how to setup SpeedFan output so that the script
-        lw.log( 'started parsing log',xbmc.LOGDEBUG );
+        lw.log( ['started parsing log'] );
         if __addon__.getSetting( 'temp_scale' ) == 'Celcius':
             temp_scale = 'C'
         else:
             temp_scale = 'F'
-        lw.log( 'read the log file',xbmc.LOGDEBUG )
+        lw.log( ['read the log file'] )
         first, last = self._read_log_file()
         temps = []
         speeds = []
@@ -113,7 +113,7 @@ class Main( xbmcgui.WindowXMLDialog ):
         if first == '' or last == '':
             return temps, speeds, voltages, percents
         #pair up the heading with the value
-        lw.log( 'pair up the heading with the value',xbmc.LOGDEBUG );
+        lw.log( ['pair up the heading with the value'] );
         for s_item, s_value in map( None, first.split( '\t' ), last.split( '\t' ) ):
             item_type = s_item.split( '.' )[-1].rstrip().lower()
             item_text = os.path.splitext( s_item )[0].rstrip()
@@ -127,24 +127,23 @@ class Main( xbmcgui.WindowXMLDialog ):
                 except ValueError:
                     s_value = str( int( round( float( s_value.rstrip().replace(',', '.') ) ) ) )
             if item_type == "temp":
-                lw.log( 'put the information in the temperature array',xbmc.LOGDEBUG )
+                lw.log( ['put the information in the temperature array'] )
                 temps.append( [item_text + ':', s_value + temp_scale] )
             elif item_type == "speed":
-                lw.log( 'put the information in the speed array',xbmc.LOGDEBUG )
+                lw.log( ['put the information in the speed array'] )
                 speeds.append( [item_text + ':', s_value + 'rpm'] )
             elif item_type == "voltage":
-                lw.log( 'put the information in the voltage array',xbmc.LOGDEBUG )
+                lw.log( ['put the information in the voltage array'] )
                 voltages.append( [item_text + ':', s_value + 'v'] )
             elif item_type == "percent":
-                lw.log( 'put the information in the percent array',xbmc.LOGDEBUG );
+                lw.log( ['put the information in the percent array'] );
                 percents.append( [item_text, s_value + '%'] )
-        lw.log( temps, speeds, voltages, percents, xbmc.LOGDEBUG )
-        lw.log( 'ended parsing log, displaying results', xbmc.LOGDEBUG )
+        lw.log( [temps, speeds, voltages, percents, 'ended parsing log, displaying results'] )
         return temps, speeds, voltages, percents
 
 
     def _populate_from_all_logs( self ):
-        lw.log( 'reset the window to prep it for data', xbmc.LOGDEBUG )
+        lw.log( ['reset the window to prep it for data'] )
         self.LISTCONTROL.reset()
         displayed_log = False
         for title, logfile in self._get_log_files():
@@ -166,20 +165,20 @@ class Main( xbmcgui.WindowXMLDialog ):
     def _populate_from_log( self ):        
         #get all this stuff into list info items for the window
         temps, speeds, voltages, percents = self._parse_log()
-        lw.log( 'starting to convert output for window', xbmc.LOGDEBUG )
+        lw.log( ['starting to convert output for window'] )
         #add a fancy degree symbol to the temperatures
         for i in range(len(temps)):
               temps[i][1] = temps[i][1][:-1] + u'\N{DEGREE SIGN}' + temps[i][1][-1:]
         #now parse all the data and get it into ListIems for display on the page
         #this allows for a line space *after* the first one so the page looks pretty
         firstline_shown = False
-        lw.log( 'put in all the temperature information', xbmc.LOGDEBUG )
+        lw.log( ['put in all the temperature information'] )
         if temps:
             self._populate_list( __language__(30100), temps, firstline_shown )
             firstline_shown = True
-        lw.log( 'put in all the speed information (including percentages)', xbmc.LOGDEBUG )
+        lw.log( ['put in all the speed information (including percentages)'] )
         if speeds:
-            lw.log( 'adding the percentages to the end of the speeds', xbmc.LOGDEBUG )
+            lw.log( ['adding the percentages to the end of the speeds'] )
             en_speeds = []
             for i in range( len( speeds ) ):
                 #if there is a matching percentage, add it to the end of the speed
@@ -187,7 +186,7 @@ class Main( xbmcgui.WindowXMLDialog ):
                 percent_value = ''
                 for j in range( len( percents ) ):
                     if (speeds[i][0][:-1] == percents[j][0]):
-                        lw.log( 'matched speed ' + speeds[i][0][:-1] + ' with percent ' + percents[j][0], xbmc.LOGDEBUG )
+                        lw.log( ['matched speed ' + speeds[i][0][:-1] + ' with percent ' + percents[j][0]] )
                         percent_match = True
                         percent_value = percents[j][1]
                 if percent_match:
@@ -196,18 +195,18 @@ class Main( xbmcgui.WindowXMLDialog ):
                     en_speeds.append( (speeds[i][0], speeds [i][1]) )
             self._populate_list( __language__(30101), en_speeds, firstline_shown )
             firstline_shown = True
-        lw.log( 'put in all the voltage information', xbmc.LOGDEBUG )
+        lw.log( ['put in all the voltage information'] )
         if voltages:
             self._populate_list( __language__(30102), voltages, firstline_shown )
         #add empty line at end in case there's another log file
         item = xbmcgui.ListItem()
         self.LISTCONTROL.addItem( item ) #this adds an empty line
-        lw.log( 'completed putting information into lists, displaying window', xbmc.LOGDEBUG )
+        lw.log( ['completed putting information into lists, displaying window'] )
 
             
     def _populate_list( self, title, things, titlespace ):
         #this takes an arbitrating list of readings and gets them into the ListItems
-        lw.log( 'create the list item for the title of the section', xbmc.LOGDEBUG )        
+        lw.log( ['create the list item for the title of the section'] ) 
         if titlespace:
             item = xbmcgui.ListItem()
             self.LISTCONTROL.addItem( item ) #this adds an empty line
@@ -216,13 +215,13 @@ class Main( xbmcgui.WindowXMLDialog ):
         self.LISTCONTROL.addItem( item )
         #now add all the data (we want two columns in full mode and one column for compact)
         if self.SHOWCOMPACT == "true":
-            lw.log( 'add all the data to the one column format', xbmc.LOGDEBUG )
+            lw.log( ['add all the data to the one column format'] )
             for onething in things:
                     item = xbmcgui.ListItem( label=onething[0],label2='' )
                     item.setProperty( 'value',onething[1] )
                     self.LISTCONTROL.addItem( item )
         else:
-            lw.log( 'add all the data to the two column format', xbmc.LOGDEBUG )        
+            lw.log( ['add all the data to the two column format'] )
             nextside = 'left'
             for  onething in things:
                 if(nextside == 'left'):
@@ -243,14 +242,13 @@ class Main( xbmcgui.WindowXMLDialog ):
 
     def _read_log_file( self ):
         #try and open the log file
-        lw.log( 'trying to open logfile ' + self.LOGFILE, xbmc.LOGDEBUG )
+        lw.log( ['trying to open logfile ' + self.LOGFILE] )
         try:
             f = open(self.LOGFILE, 'rb')
         except e:
-            lw.log( 'unexpected error when reading log file', xbmc.LOGERROR )
-            lw.log( e, xbmc.LOGERROR )
+            lw.log( ['unexpected error when reading log file', e], xbmc.LOGERROR )
             return ('', '')
-        lw.log( 'opened logfile ' + self.LOGFILE, xbmc.LOGDEBUG )
+        lw.log( ['opened logfile ' + self.LOGFILE] )
         #get the first and last line of the log file
         #the first line has the header information, and the last line has the last log entry
         first = next( f ).decode()
@@ -275,17 +273,16 @@ class Main( xbmcgui.WindowXMLDialog ):
                 break
             offset += read_size
         f.close()
-        lw.log('first line: ' + first, xbmc.LOGDEBUG)
-        lw.log('last line: ' + last, xbmc.LOGDEBUG)
+        lw.log( ['first line: ' + first, 'last line: ' + last] )
         return first, last
 
 
 #run the script
 if ( __name__ == "__main__" ):
-    lw.log('script version %s started' % __addonversion__)
+    lw.log( ['script version %s started' % __addonversion__] )
     xbmcgui.Window( 10000 ).setProperty( "speedfan.running",  "false" )
     if xbmcgui.Window( 10000).getProperty( "speedfan.running" ) == "true":
-        lw.log( 'script already running, aborting subsequent run attempts', xbmc.LOGDEBUG )
+        lw.log( ['script already running, aborting subsequent run attempts'] )
     else:
         xbmcgui.Window( 10000 ).setProperty( "speedfan.running",  "true" )
         if (__addon__.getSetting('show_compact') == "true"):
@@ -306,4 +303,4 @@ if ( __name__ == "__main__" ):
         del t1
         del w
         xbmcgui.Window(10000).setProperty( "speedfan.running",  "false" )
-lw.log('script stopped')
+lw.log( ['script stopped'] )

@@ -1,3 +1,5 @@
+#v.0.1.0
+
 import imghdr, os, xbmc
 
 def itemHash(item):
