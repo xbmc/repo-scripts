@@ -1,3 +1,5 @@
+1.0.14
++ Fix dummy mistake, sorry for the inconvenience
 1.0.13
 + Update Regex expression to support more schemes.
 + Fixes bug when authentication failed

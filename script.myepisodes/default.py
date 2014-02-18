@@ -33,7 +33,7 @@ class Player(xbmc.Player):
         xbmc.Player.__init__(self)
         log('Player - init')
         self.mye = self._loginMyEpisodes()
-        if not mye.is_logged:
+        if not self.mye.is_logged:
             return
         self.showid = self.episode = self.title = self.season = None
         self._totalTime = 999999
