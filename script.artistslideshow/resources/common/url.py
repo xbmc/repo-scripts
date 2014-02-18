@@ -1,6 +1,6 @@
-#v.0.1.1
+#v.0.1.2
 
-import requests
+import requests2
     
 
 class URL():

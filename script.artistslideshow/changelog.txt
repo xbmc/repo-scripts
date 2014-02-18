@@ -1,3 +1,6 @@
+v.1.6.1
+- fixed crash when installing on clean install of XBMC
+
 v.1.6.0
 - image downloads now done in original format instead of .tbn files
 - one time migration routine run to rename all .tbn files to correct format
