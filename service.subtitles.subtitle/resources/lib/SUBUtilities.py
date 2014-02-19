@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import cookielib
+from distutils.msvc9compiler import query_vcvarsall
 import os
 import re
 import urllib
@@ -48,9 +49,11 @@ def get_cache_key(prefix="", str=""):
     str = re.sub('\W+', '_', str).lower()
     return prefix + ":" + str
 
+
 def clear_cache():
     cache.delete("tv-show%")
     xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(32007))).encode('utf-8'))
+
 
 # Returns the corresponding script language name for the Hebrew unicode language
 def heb_to_eng(language):
@@ -113,8 +116,10 @@ class SubtitleHelper:
     def _search_movie(self, item):
         results = []
         search_string = item["title"]
-        query = {"q": search_string.lower(), "cs": "movies", "fy": int(item["year"]) - 1,
-                 "uy": int(item["year"]) + 1}
+        query = {"q": search_string.lower(), "cs": "movies"}
+        if item["year"]:
+            query["fy"] = int(item["year"]) - 1
+            query["uy"] = int(item["year"]) + 1
 
         search_result = self.urlHandler.request(self.BASE_URL + "/browse.php?" + urllib.urlencode(query))
         if search_result is None:
