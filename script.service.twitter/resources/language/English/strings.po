@@ -1,0 +1,92 @@
+# XBMC Media Center language file
+# Addon Name: Twitter Feeds
+# Addon id: script.service.twitter
+# Addon version: 1.0.0
+# Addon Provider: Romans I XVI
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#English
+
+msgctxt "#30001"
+msgid "Enable Twitter Feed"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Search String"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Seconds To Display Tweet"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Seconds To Wait Before Fetching New Tweet"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Tweet Language"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Set Twitter Hotkey"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Instructions"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Twitter Settings"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Press the key you want to assign now"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Twitter"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Twitter Feeds"
+msgstr ""
+
+msgctxt "#30012"
+msgid "You can access your twitter settings at any time using"
+msgstr ""
+
+msgctxt "#30013"
+msgid "the Twitter Hotkey."
+msgstr ""
+
+msgctxt "#30014"
+msgid "Would you like to set your Twitter Hotkey now?"
+msgstr ""
+
+msgctxt "#30015"
+msgid "For your convenience it is recommended to set a hotkey."
+msgstr ""
+
+msgctxt "#30016"
+msgid "You may do this at any time in the Twitter Feeds settings."
+msgstr ""
+
+msgctxt "#30017"
+msgid "Search Error"
+msgstr ""
+
+msgctxt "#30018"
+msgid "No Results"
+msgstr ""
