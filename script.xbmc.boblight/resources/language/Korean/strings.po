@@ -1,0 +1,225 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "일반"
+
+msgctxt "#32101"
+msgid "Use remote boblightd"
+msgstr "원격 boblightd 사용"
+
+msgctxt "#32102"
+msgid "Boblightd IP"
+msgstr "Boblightd IP 주소"
+
+msgctxt "#32103"
+msgid "Boblightd Port"
+msgstr "Boblightd 포트"
+
+msgctxt "#32104"
+msgid "Disable boblight"
+msgstr "Boblight 사용하지 않음"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "카테고리"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "영화"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "사전설정"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "속도"
+
+msgctxt "#32203"
+msgid "Autospeed"
+msgstr "자동 속도"
+
+msgctxt "#32204"
+msgid "Interpolation"
+msgstr "보간"
+
+msgctxt "#32205"
+msgid "Saturation"
+msgstr "채도"
+
+msgctxt "#32206"
+msgid "Value"
+msgstr "값"
+
+msgctxt "#32207"
+msgid "Threshold"
+msgstr "임계값"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "사용자 지정"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "느림"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "빠름"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "사용 안 함"
+
+msgctxt "#32300"
+msgid "Musicvideo"
+msgstr "뮤직비디오"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "사용자 지정"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "느림"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "빠름"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "사용 안 함"
+
+msgctxt "#32400"
+msgid "Other"
+msgstr "기타"
+
+msgctxt "#32401"
+msgid "Static background light"
+msgstr "정적인 배경 조명"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "빨강"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "녹색"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "파랑"
+
+msgctxt "#32405"
+msgid "Disable when Screen Saver is on"
+msgstr "화면보호기가 켜져 있을 때 비활성화"
+
+msgctxt "#32406"
+msgid "Enable initial light flash"
+msgstr "시작시 라이트 깜빡임 사용"
+
+msgctxt "#32407"
+msgid "Enable status notifications"
+msgstr "상태 알림 사용"
+
+msgctxt "#32500"
+msgid "Failed to connect to boblightd!"
+msgstr "Boblightd 연결 실패!"
+
+msgctxt "#32501"
+msgid "Connected to boblightd!"
+msgstr "Boblightd에 연결됨!"
+
+msgctxt "#32502"
+msgid "Settings changed!"
+msgstr "설정 변경됨!"
+
+msgctxt "#32503"
+msgid "Boblight is disabled!"
+msgstr "Boblight 비활성화됨!"
+
+msgctxt "#32504"
+msgid "This addon needs a binary library."
+msgstr "이 애드온은 바이너리 라이브러리가 필요합니다."
+
+msgctxt "#32505"
+msgid "Please read the README file."
+msgstr "README 파일을 읽어보세요."
+
+msgctxt "#32506"
+msgid "for getting some more instructions."
+msgstr "자세한 지시사항을 얻을 수 있습니다."
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "TV 쇼"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "사용자 지정"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "느림"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "빠름"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "사용 안 함"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "사용자 지정"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "느림"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "빠름"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "사용 안 함"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "파일"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "사용자 지정"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "느림"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "빠름"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "사용 안 함"

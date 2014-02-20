@@ -1,17 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.boblight" name="XBMC Boblight" version="2.0.6" provider-name="bobo1on1, Memphiz">
+<addon id="script.xbmc.boblight" name="XBMC Boblight" version="2.0.7" provider-name="bobo1on1, Memphiz">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
   <extension point="xbmc.service" library="default.py" start="login"></extension>
   <extension point="xbmc.addon.metadata">
+    <summary lang="ca">Connecta la sortida del XBMC a boblight</summary>
+    <summary lang="de">Verbinde XBMC Ausgabe mit boblight</summary>
+    <summary lang="el">Σύνδεση της εξόδου XBMC στο boblight.</summary>
     <summary lang="en">Connect XBMC output to boblight.</summary>
+    <summary lang="es">Conecte la salida de boblight a XBMC</summary>
+    <summary lang="gl">Conectar a saída do XBMC a boblight.</summary>
+    <summary lang="he">חבר פלט XBMC ל-Boblight.</summary>
+    <summary lang="hr">Poveži XBMC izlaz s boblight.</summary>
+    <summary lang="hu">XBMC kimenetének boblight-hoz kapcsolása.</summary>
+    <summary lang="it">Connetti l'output di XBMC a boblight.</summary>
+    <summary lang="ko">XBMC 출력을 boblight에 연결</summary>
+    <summary lang="nl">verbind met XBMC output naar boblight.</summary>
+    <summary lang="pl">Podłącz wyjście XBMC do boblight.</summary>
+    <summary lang="pt">Ligar saída do XBMC a boblight.</summary>
+    <description lang="ca">Connecta la sortida del XBMC a un mòdul extern de boblight</description>
+    <description lang="de">Verbinde XBMC Ausgabe mit boblight Backend</description>
+    <description lang="el">Σύνδεση της εξόδου XBMC στο backend του boblight.</description>
     <description lang="en">Connect XBMC output to boblight backend.</description>
+    <description lang="gl">Conectar a saída do XBMC ao motor de boblight.</description>
+    <description lang="he">חבר פלט XBMC לשרת Boblight.</description>
+    <description lang="hr">Poveži XBMC izlaz s boblight pozadinski.</description>
+    <description lang="hu">XBMC kimenetének boblight háttérszolgáltatáshoz kapcsolása.</description>
+    <description lang="it">Connetti l'output di XBMC al backend di boblight.</description>
+    <description lang="ko">XBMC 출력을 boblight 백엔드에 연결</description>
+    <description lang="nl">Verbind XBMC output naar boblight backend.</description>
+    <description lang="pl">Podłącz wyjście XBMC do konsoli boblight.</description>
+    <description lang="pt">Ligar saída do XBMC à backend boblight.</description>
+    <disclaimer lang="ca">Necessites tindre el binari correcte perquè el complement funcioni</disclaimer>
+    <disclaimer lang="de">Du musst das korrekte Binary Addon installiert haben, damit diese Funktion unterstützt wird.</disclaimer>
+    <disclaimer lang="el">Χρειάζεται να έχετε εγκατεστημένο ένα κατάλληλο δυαδικό πρόσθετο για να δουλέψει.</disclaimer>
     <disclaimer lang="en">You need to have the correct binary addon installed for this to work.</disclaimer>
+    <disclaimer lang="gl">Precisa ter instalado o complemento binario correcto para que funcione.</disclaimer>
+    <disclaimer lang="he">ההרחבה הבינרית המתאימה צריכה להיות מותקנת ע"מ שזה יפעל.</disclaimer>
+    <disclaimer lang="hr">Morate imati ispravan binarni dodatak instaliran da bi ovo radilo.</disclaimer>
+    <disclaimer lang="hu">Telepítve kell legyen a megfelelő bináris könyvtár ehhez a kiegészítőhöz.</disclaimer>
+    <disclaimer lang="it">E' necessario avere l'addon binario giusto perchè questo funzioni.</disclaimer>
+    <disclaimer lang="ko">동작하려면 바이너리 애드온이 설치되어 있어야 합니다.</disclaimer>
+    <disclaimer lang="nl">Je moet de juiste binaire add-on hebben geïnstalleerd voor dit om te werken.</disclaimer>
+    <disclaimer lang="pl">W celu poprawnego działania musisz mieć zainstalowaną odpowiednią bibliotekę dodatku.</disclaimer>
+    <disclaimer lang="pt">É necessário instalar o addon binário correcto para que isto funcione.</disclaimer>
     <platform>all</platform>
-	<website>http://code.google.com/p/boblight/</website>
-	<source>https://github.com/bobo1on1/script.xbmc.boblight</source>
-	<forum>http://forum.xbmc.org/showthread.php?tid=116331</forum>
-	<email></email>    
+    <website>http://code.google.com/p/boblight/</website>
+    <source>https://github.com/bobo1on1/script.xbmc.boblight</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=116331</forum>
+    <email></email>
   </extension>
 </addon>

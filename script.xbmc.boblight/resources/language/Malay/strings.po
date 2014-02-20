@@ -1,0 +1,81 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Malay (http://www.transifex.com/projects/p/xbmc-addons/language/ms/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ms\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "Am"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Kategori"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Praset"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Kelajuan"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Suai"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Dilumpuhkan"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Suai"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Dilumpuhkan"
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "Rancangan TV"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Suai"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Dilumpuhkan"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Suai"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Dilumpuhkan"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Fail"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Suai"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Dilumpuhkan"

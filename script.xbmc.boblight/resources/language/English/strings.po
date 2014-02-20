@@ -1,0 +1,284 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#Common
+#Settings
+#General
+
+msgctxt "#32100"
+msgid "General"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Use remote boblightd"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Boblightd IP"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Boblightd Port"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Disable boblight"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Override used category"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Category"
+msgstr ""
+
+#empty strings from id 32107 to 32199
+#Movie/MusicVideo/Other
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Autospeed"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Interpolation"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Saturation"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Value"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Threshold"
+msgstr ""
+
+#empty strings from id 32208 to 32219
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr ""
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr ""
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr ""
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr ""
+
+#empty strings from id 32224 to 32299
+#MusicVideo
+
+msgctxt "#32300"
+msgid "Musicvideo"
+msgstr ""
+
+#empty strings from id 32301 to 32319
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr ""
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr ""
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr ""
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr ""
+
+#empty strings from id 32324 to 32399
+#Other
+
+msgctxt "#32400"
+msgid "Other"
+msgstr ""
+
+msgctxt "#32401"
+msgid "Static background light"
+msgstr ""
+
+msgctxt "#32402"
+msgid "Red"
+msgstr ""
+
+msgctxt "#32403"
+msgid "Green"
+msgstr ""
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr ""
+
+msgctxt "#32405"
+msgid "Disable when Screen Saver is on"
+msgstr ""
+
+msgctxt "#32406"
+msgid "Enable initial light flash"
+msgstr ""
+
+msgctxt "#32407"
+msgid "Enable status notifications"
+msgstr ""
+
+#empty strings from id 32408 to 32499
+#Notifications
+
+msgctxt "#32500"
+msgid "Failed to connect to boblightd!"
+msgstr ""
+
+msgctxt "#32501"
+msgid "Connected to boblightd!"
+msgstr ""
+
+msgctxt "#32502"
+msgid "Settings changed!"
+msgstr ""
+
+msgctxt "#32503"
+msgid "Boblight is disabled!"
+msgstr ""
+
+msgctxt "#32504"
+msgid "This addon needs a binary library."
+msgstr ""
+
+msgctxt "#32505"
+msgid "Please read the README file."
+msgstr ""
+
+msgctxt "#32506"
+msgid "for getting some more instructions."
+msgstr ""
+
+msgctxt "#32507"
+msgid "This addon can't be run on that"
+msgstr ""
+
+msgctxt "#32508"
+msgid "operating system! (missing ctypes module)"
+msgstr ""
+
+msgctxt "#32509"
+msgid "Should the addon try to download it for you?"
+msgstr ""
+
+msgctxt "#32510"
+msgid "Error downloading. Check filesystem permissions."
+msgstr ""
+
+#empty strings from id 32511 to 32599
+#TVShows
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr ""
+
+#empty strings from id 32601 to 32619
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr ""
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr ""
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr ""
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr ""
+
+#empty strings from id 32624 to 32699
+#LiveTV
+
+msgctxt "#32700"
+msgid "LiveTV"
+msgstr ""
+
+#empty strings from id 32701 to 32719
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr ""
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr ""
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr ""
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr ""
+
+#empty strings from id 32724 to 32799
+#Files
+
+msgctxt "#32800"
+msgid "Files"
+msgstr ""
+
+#empty strings from id 32801 to 32819
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr ""
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr ""
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr ""
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr ""

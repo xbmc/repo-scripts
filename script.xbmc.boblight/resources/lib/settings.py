@@ -57,7 +57,7 @@ class settings():
     self.networkaccess              = __addon__.getSetting("networkaccess") == "true"  
     self.overwrite_cat              = __addon__.getSetting("overwrite_cat") == "true"
     self.overwrite_cat_val          = int(__addon__.getSetting("overwrite_cat_val"))
-    self.screensaver                = xbmc.getCondVisibility("System.ScreenSaverActive")
+    self.bobdisableonscreensaver    = __addon__.getSetting("bobdisableonscreensaver") == "true"
     self.bobdisable                 = __addon__.getSetting("bobdisable") == "true"
     self.current_option             = ""
     
@@ -78,7 +78,6 @@ class settings():
     self.other_static_red           = int(float(__addon__.getSetting("other_static_red")))
     self.other_static_green         = int(float(__addon__.getSetting("other_static_green")))
     self.other_static_blue          = int(float(__addon__.getSetting("other_static_blue")))
-    self.other_static_onscreensaver = __addon__.getSetting("other_static_onscreensaver") == "true"
     self.other_misc_initialflash    = __addon__.getSetting("other_misc_initialflash") == "true"
     self.other_misc_notifications   = __addon__.getSetting("other_misc_notifications") == "true"
     
@@ -126,6 +125,18 @@ class settings():
     self.music_interpolation        = int(__addon__.getSetting("musicvideo_interpolation") == "true")
     self.music_threshold            = float(__addon__.getSetting("musicvideo_threshold"))
     self.music_preset               = int(__addon__.getSetting("musicvideo_preset"))
+
+  def setScreensaver(self, enabled):
+    if self.bobdisableonscreensaver and enabled:
+      self.bobdisable = True
+    else:
+      # reset the bobdisable setting from settings
+      self.bobdisable = __addon__.getSetting("bobdisable") == "true" 
+      if not self.bobdisable:#if we are not disabled in general
+        if self.category == "static":
+          self.handleStaticBgSettings()#turns on or off the lights based on static settings
+        else:#we are playing something - turn the lights on
+          bob.bob_set_priority(128) #lights on
 
   #handle boblight configuration from the "Movie" category
   #returns the new settings
@@ -334,10 +345,8 @@ class settings():
   def handleStaticBgSettings(self):
     log('settings() - handleStaticBgSettings')
     if (self.category == "static" and                 # only for 'static' category
-            self.other_static_bg and                  # only if we want it displayed on static
-            (not (self.screensaver and 
-                  self.other_static_onscreensaver))   # only if screen saver is off and we want it on
-            ):
+            self.other_static_bg):                    # only if we want it displayed on static
+
       bob.bob_set_priority(128)                       # allow lights to be turned on
       rgb = (c_int * 3)(self.other_static_red,
                         self.other_static_green,
