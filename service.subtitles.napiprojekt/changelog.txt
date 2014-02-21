@@ -1,0 +1,2 @@
+1.0.0 - by CaTz 14/02/2014
+- Redesign the code to support Gotham version
