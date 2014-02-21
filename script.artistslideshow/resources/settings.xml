@@ -5,11 +5,11 @@
         <setting id="theaudiodb" type="bool" label="32009" default="false" />
         <setting id="htbackdrops" type="bool" label="32002" default="false" />
         <setting id="artistinfo" type="bool" label="32005" default="false" />
-        <setting id="language" type="enum" label="32006" enable="eq(-1,true)" default="11" lvalues="30201|30202|30203|30204|30205|30206|30207|30208|30209|30210|30211|30212|30213|30247|30214|30215|30216|30217|30218|30219|30220|30221|30222|30224|30225|30226|30227|30228|30229|30230|30232|30233|30234|30235|30236|30237|30238|30239|30240|30242|30243|30244|30245|30246" />
+        <setting id="language" type="enum" label="32006" enable="eq(-1,true)" default="11" lvalues="32901|32902|32903|32904|32905|32906|32907|32908|32909|32910|32911|32912|32913|32947|32914|32915|32916|32917|32918|32919|32920|32921|32922|32924|32925|32926|32927|32928|32929|32930|32932|32933|32934|32935|32936|32937|32938|32939|32940|32942|32943|32944|32945|32946" />
     </category>
     <category label="32100">
         <setting id="local_artist_path" type="folder" label="32101" default="" />
-        <setting id="priority" type="enum" label="32102" lvalues="32901|32902|32903" default="0" />
+        <setting id="priority" type="enum" label="32102" lvalues="32110|32111|32112" default="0" />
         <setting id="fallback" type="bool" label="32105" default="false" />
         <setting id="fallback_path" type="folder" label="32103" default="" enable="eq(-1,true)" />
         <setting id="slideshow" type="bool" label="32106" default="false" />

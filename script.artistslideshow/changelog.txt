@@ -1,3 +1,8 @@
+v.1.6.2
+- fixed crash from undefined global error in url.py
+- fix for bug that causes crash on socket.timeout in url.py
+- corrected string numbers to fit in specified developer range
+
 v.1.6.1
 - fixed crash when installing on clean install of XBMC
 

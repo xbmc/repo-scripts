@@ -1,6 +1,7 @@
-#v.0.1.2
+#v.0.1.5
 
-import requests2
+import requests2 as _requests
+import socket
     
 
 class URL():
@@ -31,26 +32,29 @@ class URL():
         urldata = ''
         try:
             if urltype == "get":
-                urldata = requests.get( url, params=params, timeout=self.timeout )
+                urldata = _requests.get( url, params=params, timeout=self.timeout )
             elif urltype == "post":
-                urldata = requests.post( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
+                urldata = _requests.post( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
             elif urltype == "delete":
-                urldata = requests.delete( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
+                urldata = _requests.delete( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
             loglines.append( "the url is: " + urldata.url )
             loglines.append( 'the params are: ')
             loglines.append( params )
             loglines.append( 'the data are: ')
             loglines.append( data )
-        except requests.exceptions.ConnectionError, e:
+        except _requests.exceptions.ConnectionError, e:
             loglines.append( 'site unreachable at ' + url )
             loglines.append( e )
-        except requests.exceptions.Timeout, e:
+        except _requests.exceptions.Timeout, e:
             loglines.append( 'timeout error while downloading from ' + url )
             loglines.append( e )
-        except requests.exceptions.HTTPError, e:
+        except socket.timeout, e:
+            loglines.append( 'timeout error while downloading from ' + url )
+            loglines.append( e )
+        except _requests.exceptions.HTTPError, e:
             loglines.append( 'HTTP Error while downloading from ' + url )
             loglines.append( e )
-        except requests.exceptions.RequestException, e:
+        except _requests.exceptions.RequestException, e:
             loglines.append( 'unknown error while downloading from ' + url )
             loglines.append( e )
         if urldata:

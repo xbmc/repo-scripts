@@ -17,7 +17,6 @@
 # *  theaudiodb:   http://www.theaudiodb.com
 # *  htbackdrops:  http://www.htbackdrops.org
 
-
 import xbmc, xbmcaddon, xbmcgui, xbmcvfs
 import itertools, os, random, re, sys, time, urllib
 import xml.etree.ElementTree as _xmltree
