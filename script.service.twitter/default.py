@@ -1,9 +1,6 @@
 import urllib,urllib2,re,xbmc,xbmcaddon,xbmcgui,os,sys
 import word_resolver
-try:
-	from elementtree.SimpleXMLWriter import XMLWriter
-except:
-	from dummyelementtree.SimpleXMLWriter import XMLWriter
+from elementtree.SimpleXMLWriter import XMLWriter
 
 settings = xbmcaddon.Addon( id = 'script.service.twitter' )
 translation = settings.getLocalizedString
