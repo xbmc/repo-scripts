@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.six"
        name="six"
-       version="1.4.1"
+       version="1.5.2"
        provider-name="gutworth">
   <requires>
     <import addon="xbmc.python" 
@@ -14,7 +14,7 @@
     <description>Six is a Python 2 and 3 compatibility library. It provides utility functions for smoothing over the differences between the Python versions with the goal of writing Python code that is compatible on both Python versions. See the documentation for more information on what is provided.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <source>https://bitbucket.org/gutworth/six/src</source>
+    <source>https://pypi.python.org/pypi/six</source>
     <website>https://pypi.python.org/pypi/six</website>
   </extension>
 </addon>
