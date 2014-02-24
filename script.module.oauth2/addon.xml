@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id="script.module.oauth2" name="oAuth2" provider-name="Joe Stump" version="1.5.211">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.httplib2" version="0.8.0"/>
+  </requires>
+  <extension library="lib" point="xbmc.python.module" />
+  <extension point="xbmc.addon.metadata">
+        <summary lang="en">oAuth2 module</summary>
+        <description lang="en">oAuth2 module</description>
+        <disclaimer lang="en">Visit http://pypi.python.org/pypi/oauth2/</disclaimer>
+        <license>MIT</license>
+        <platform>all</platform>
+        <email></email>
+        <website>http://pypi.python.org/pypi/oauth2/</website>
+        <forum></forum>
+        <source>http://pypi.python.org/pypi/oauth2/</source>
+        <language></language>
+   </extension>
+</addon>
