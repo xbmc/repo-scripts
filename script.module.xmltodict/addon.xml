@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.xmltodict" name="xmltodict" version="0.7.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
+<addon id="script.module.xmltodict" name="xmltodict" version="0.8.6" provider-name="martinblech">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>

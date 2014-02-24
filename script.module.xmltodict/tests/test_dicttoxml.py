@@ -6,10 +6,14 @@ except ImportError:
     import unittest
 import re
 import collections
+from textwrap import dedent
 
 _HEADER_RE = re.compile(r'^[^\n]*\n')
+
+
 def _strip(fullxml):
     return _HEADER_RE.sub('', fullxml)
+
 
 class DictToXMLTestCase(unittest.TestCase):
     def test_root(self):
@@ -43,7 +47,7 @@ class DictToXMLTestCase(unittest.TestCase):
         self.assertEqual(unparse(obj), unparse(parse(unparse(obj))))
 
     def test_multiple_roots(self):
-        self.assertRaises(ValueError, unparse, {'a':'1', 'b':'2'})
+        self.assertRaises(ValueError, unparse, {'a': '1', 'b': '2'})
         self.assertRaises(ValueError, unparse, {'a': ['1', '2', '3']})
 
     def test_nested(self):
@@ -59,23 +63,28 @@ class DictToXMLTestCase(unittest.TestCase):
         self.assertEqual(_strip(unparse(parse(xml))),
                          '<a><d></d>abcefg</a>')
 
-    def test_preprocessor(self):
-        obj = {'a': OrderedDict((('b:int', [1, 2]), ('b', 'c')))}
-        def p(key, value):
-            try:
-                key, _ = key.split(':')
-            except ValueError:
-                pass
-            return key, value
-        self.assertEqual(_strip(unparse(obj, preprocessor=p)),
-                         '<a><b>1</b><b>2</b><b>c</b></a>')
+    if hasattr(collections, 'OrderedDict'):
+        def test_preprocessor(self):
+            obj = {'a': OrderedDict((('b:int', [1, 2]), ('b', 'c')))}
+
+            def p(key, value):
+                try:
+                    key, _ = key.split(':')
+                except ValueError:
+                    pass
+                return key, value
+
+            self.assertEqual(_strip(unparse(obj, preprocessor=p)),
+                             '<a><b>1</b><b>2</b><b>c</b></a>')
 
     def test_preprocessor_skipkey(self):
         obj = {'a': {'b': 1, 'c': 2}}
+
         def p(key, value):
             if key == 'b':
                 return None
             return key, value
+
         self.assertEqual(_strip(unparse(obj, preprocessor=p)),
                          '<a><c>2</c></a>')
 
@@ -84,13 +93,34 @@ class DictToXMLTestCase(unittest.TestCase):
             xml = '<root a="1" b="2" c="3"></root>'
             self.assertEqual(xml, _strip(unparse(parse(xml))))
 
-    def test_pretty_print(self):
-        obj = {'a': {'b': {'c': 1}}}
-        newl = '_newl_'
-        indent = '_indent_'
-        xml = ('<a>%(newl)s%(indent)s<b>%(newl)s%(indent)s%(indent)s<c>1</c>'
-               '%(newl)s%(indent)s</b>%(newl)s</a>') % {
-                   'newl': newl, 'indent': indent
-               }
-        self.assertEqual(xml, _strip(unparse(obj, pretty=True,
-                                             newl=newl, indent=indent)))
+    if hasattr(collections, 'OrderedDict'):
+        def test_pretty_print(self):
+            obj = {'a': OrderedDict((
+                ('b', [{'c': [1, 2]}, 3]),
+                ('x', 'y'),
+            ))}
+            newl = '\n'
+            indent = '....'
+            xml = dedent('''\
+            <?xml version="1.0" encoding="utf-8"?>
+            <a>
+            ....<b>
+            ........<c>1</c>
+            ........<c>2</c>
+            ....</b>
+            ....<b>3</b>
+            ....<x>y</x>
+            </a>''')
+            self.assertEqual(xml, unparse(obj, pretty=True,
+                                          newl=newl, indent=indent))
+
+    def test_encoding(self):
+        try:
+            value = unichr(39321)
+        except NameError:
+            value = chr(39321)
+        obj = {'a': value}
+        utf8doc = unparse(obj, encoding='utf-8')
+        latin1doc = unparse(obj, encoding='iso-8859-1')
+        self.assertEqual(parse(utf8doc), parse(latin1doc))
+        self.assertEqual(parse(utf8doc), obj)

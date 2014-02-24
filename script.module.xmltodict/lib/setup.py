@@ -1,6 +1,11 @@
 #!/usr/bin/env python
+try:
+    from setuptools import setup
+except ImportError:
+    from ez_setup import use_setuptools
+    use_setuptools()
+    from setuptools import setup
 
-from distutils.core import setup
 import xmltodict
 
 setup(name='xmltodict',
@@ -16,10 +21,17 @@ setup(name='xmltodict',
           'License :: OSI Approved :: MIT License',
           'Operating System :: OS Independent',
           'Programming Language :: Python',
+          'Programming Language :: Python :: 2',
           'Programming Language :: Python :: 2.5',
           'Programming Language :: Python :: 2.6',
           'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.2',
+          'Programming Language :: Python :: 3.3',
+          'Programming Language :: Python :: Implementation :: Jython',
+          'Programming Language :: Python :: Implementation :: PyPy',
+          'Topic :: Text Processing :: Markup :: XML',
       ],
       py_modules=['xmltodict'],
+      tests_require=['nose>=1.0', 'coverage'],
       )
