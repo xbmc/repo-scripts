@@ -57,12 +57,14 @@ validate_format_time = _generate_datetime_validator('time', '%H:%M:%S')
 
 def validate_format_utc_millisec(validator, fieldname, value, format_option):
     if not isinstance(value, _int_types + (float, Decimal)):
-        raise FieldValidationError("Value %(value)r of field '%(fieldname)s' is "
-                              "not a number" % locals(), fieldname, value)
+        raise FieldValidationError("Value %(value)r of field '%(fieldname)s' "
+                                   "is not a number" % locals(), fieldname,
+                                   value)
 
     if not value > 0:
-        raise FieldValidationError("Value %(value)r of field '%(fieldname)s' is "
-                              "not a positive number" % locals(), fieldname, value)
+        raise FieldValidationError("Value %(value)r of field '%(fieldname)s' "
+                                   " is not a positive number" % locals(),
+                                   fieldname, value)
 
 
 def validate_format_ip_address(validator, fieldname, value, format_option):
@@ -74,8 +76,9 @@ def validate_format_ip_address(validator, fieldname, value, format_option):
     except:
         ip = False
     if not ip:
-        raise FieldValidationError("Value %(value)r of field '%(fieldname)s' is "
-                              "not a ip-address" % locals(), fieldname, value)
+        raise FieldValidationError("Value %(value)r of field '%(fieldname)s'"
+                                   "is not a ip-address" % locals(), fieldname,
+                                   value)
 
 
 DEFAULT_FORMAT_VALIDATORS = {
@@ -99,17 +102,28 @@ class SchemaValidator(object):
         schema attribute True by default.
     :param disallow_unknown_properties: defaults to False, set to True to
         disallow properties not listed in the schema definition
+    :param apply_default_to_data: defaults to False, set to True to modify the
+        data in case the schema definition includes a "default" property
     '''
 
     def __init__(self, format_validators=None, required_by_default=True,
-                 blank_by_default=False, disallow_unknown_properties=False):
-        if format_validators is None:
-            format_validators = DEFAULT_FORMAT_VALIDATORS.copy()
+                 blank_by_default=False, disallow_unknown_properties=False,
+                 apply_default_to_data=False):
 
-        self._format_validators = format_validators
+        self._format_validators = {}
+
+        # add the default format validators
+        for key, value in DEFAULT_FORMAT_VALIDATORS.items():
+            self.register_format_validator(key, value)
+
+        # register any custom format validators if they were provided
+        if format_validators:
+            for key, value in format_validators.items():
+                self.register_format_validator(key, value)
         self.required_by_default = required_by_default
         self.blank_by_default = blank_by_default
         self.disallow_unknown_properties = disallow_unknown_properties
+        self.apply_default_to_data = apply_default_to_data
 
     def register_format_validator(self, format_name, format_validator_fun):
         self._format_validators[format_name] = format_validator_fun
@@ -127,7 +141,8 @@ class SchemaValidator(object):
         return type(val) == bool
 
     def validate_type_object(self, val):
-        return isinstance(val, Mapping)
+        return isinstance(val, Mapping) or (hasattr(val, 'keys')
+                                            and hasattr(val, 'items'))
 
     def validate_type_array(self, val):
         return isinstance(val, (list, tuple))
@@ -175,17 +190,21 @@ class SchemaValidator(object):
             if isinstance(fieldtype, (list, tuple)):
                 # Match if type matches any one of the types in the list
                 datavalid = False
+                errorlist = []
                 for eachtype in fieldtype:
                     try:
                         self.validate_type(x, fieldname, eachtype, eachtype)
                         datavalid = True
                         break
-                    except ValidationError:
-                        pass
+                    except ValidationError as err:
+                        errorlist.append(err)
                 if not datavalid:
-                    self._error("Value %(value)r for field '%(fieldname)s' is "
-                                "not of type %(fieldtype)s",
-                                value, fieldname, fieldtype=fieldtype)
+                    self._error("Value %(value)r for field '%(fieldname)s' "
+                                "doesn't match any of %(numsubtypes)d "
+                                "subtypes in %(fieldtype)s; "
+                                "errorlist = %(errorlist)r",
+                                value, fieldname, numsubtypes=len(fieldtype),
+                                fieldtype=fieldtype, errorlist=errorlist)
             elif isinstance(fieldtype, dict):
                 try:
                     self.__validate(fieldname, x, fieldtype)
@@ -247,12 +266,14 @@ class SchemaValidator(object):
                             except FieldValidationError as e:
                                 raise type(e)("Failed to validate field '%s' "
                                               "list schema: %s" %
-                                              (fieldname, e), fieldname, e.value)
+                                              (fieldname, e), fieldname,
+                                              e.value)
                 elif isinstance(items, dict):
                     for eachItem in value:
-                        if self.disallow_unknown_properties:
-                            self._validate_unknown_properties(items, eachItem,
-                                                              fieldname)
+                        if (self.disallow_unknown_properties and
+                                'properties' in items):
+                            self._validate_unknown_properties(
+                                items['properties'], eachItem, fieldname)
 
                         try:
                             self._validate(eachItem, items)
@@ -263,7 +284,8 @@ class SchemaValidator(object):
                                                        'list item')
                             raise type(e)("Failed to validate field '%s' list "
                                           "schema: %s" %
-                                          (fieldname, old_error), fieldname, e.value)
+                                          (fieldname, old_error), fieldname,
+                                          e.value)
                 else:
                     raise SchemaError("Properties definition of field '%s' is "
                                       "not a list or an object" % fieldname)
@@ -338,18 +360,21 @@ class SchemaValidator(object):
         value = x.get(fieldname)
         if isinstance(additionalProperties, (dict, bool)):
             properties = schema.get("properties")
+            patterns = schema["patternProperties"].keys() if 'patternProperties' in schema else []
             if properties is None:
                 properties = {}
             if value is None:
                 value = {}
             for eachProperty in value:
-                if eachProperty not in properties:
+                if eachProperty not in properties and not \
+                   any(re.match(p, eachProperty) for p in patterns):
                     # If additionalProperties is the boolean value False
                     # then we don't accept any additional properties.
                     if (isinstance(additionalProperties, bool) and not
                             additionalProperties):
                         self._error("additional property '%(prop)s' "
-                                    "not defined by 'properties' are not "
+                                    "not defined by 'properties' or "
+                                    "'patternProperties' are not "
                                     "allowed in field '%(fieldname)s'",
                                     None, fieldname, prop=eachProperty)
                     self.__validate(eachProperty, value,
@@ -591,6 +616,20 @@ class SchemaValidator(object):
                 if validator:
                     validator(data, fieldname, schema,
                               newschema.get(schemaprop))
+
+            if self.apply_default_to_data and 'default' in schema:
+                try:
+                    self.validate_type(
+                        x={'_ds': schema['default']},
+                        fieldname='_ds',
+                        schema=schema,
+                        fieldtype=schema['type'] if 'type' in schema else None
+                    )
+                except FieldValidationError as exc:
+                    raise SchemaError(exc)
+
+                if not fieldname in data:
+                    data[fieldname] = schema['default']
 
         return data
 
