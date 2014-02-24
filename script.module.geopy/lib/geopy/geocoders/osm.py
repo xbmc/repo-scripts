@@ -4,8 +4,9 @@ OpenStreetMaps geocoder, contributed by Alessandro Pasotti of ItOpen.
 
 from geopy.geocoders.base import Geocoder, DEFAULT_FORMAT_STRING, \
     DEFAULT_TIMEOUT
-from geopy.util import logger
 from geopy.compat import urlencode
+from geopy.location import Location
+from geopy.util import logger
 
 
 class Nominatim(Geocoder):
@@ -17,7 +18,7 @@ class Nominatim(Geocoder):
     """
 
     def __init__(self, format_string=DEFAULT_FORMAT_STRING, # pylint: disable=R0913
-                        view_box=(-180,-90,180,90), country_bias=None,
+                        view_box=(-180, -90, 180, 90), country_bias=None,
                         timeout=DEFAULT_TIMEOUT, proxies=None):
         """
         :param string format_string: String containing '%s' where the
@@ -74,7 +75,9 @@ class Nominatim(Geocoder):
 
         url = "?".join((self.api, urlencode(params)))
         logger.debug("%s.geocode: %s", self.__class__.__name__, url)
-        return self._parse_json(self._call_geocoder(url, timeout=timeout), exactly_one)
+        return self._parse_json(
+            self._call_geocoder(url, timeout=timeout), exactly_one
+        )
 
     def reverse(self, query, exactly_one=True, timeout=None):
         """
@@ -95,7 +98,10 @@ class Nominatim(Geocoder):
 
             .. versionadded:: 0.97
         """
-        lat, lon = [x.strip() for x in self._coerce_point_to_string(query).split(',')] # doh
+        lat, lon = [
+            x.strip() for x in
+            self._coerce_point_to_string(query).split(',')
+        ] # doh
         params = {
             'lat': lat,
             'lon' : lon,
@@ -103,29 +109,31 @@ class Nominatim(Geocoder):
         }
         url = "?".join((self.reverse_api, urlencode(params)))
         logger.debug("%s.reverse: %s", self.__class__.__name__, url)
-        return self._parse_json(self._call_geocoder(url, timeout=timeout), exactly_one)
+        return self._parse_json(
+            self._call_geocoder(url, timeout=timeout), exactly_one
+        )
+
+    @staticmethod
+    def parse_code(place):
+        """
+        Parse each resource.
+        """
+        latitude = place.get('lat', None)
+        longitude = place.get('lon', None)
+        placename = place.get('display_name', None)
+        if latitude and longitude:
+            latitude = float(latitude)
+            longitude = float(longitude)
+        return Location(placename, (latitude, longitude), place)
 
     def _parse_json(self, places, exactly_one):
-        if not isinstance (places, list):
+        if places is None:
+            return None
+        if not isinstance(places, list):
             places = [places]
         if not len(places):
             return None
-
-        def parse_code(place):
-            """
-            Parse each resource.
-            """
-            latitude = place.get('lat', None)
-            longitude = place.get('lon', None)
-            placename = place.get('display_name', None)
-            if latitude and longitude:
-                latitude = float(latitude)
-                longitude = float(longitude)
-            else:
-                return None
-            return (placename, (latitude, longitude))
-
-        if exactly_one:
-            return parse_code(places[0])
+        if exactly_one is True:
+            return self.parse_code(places[0])
         else:
-            return [parse_code(place) for place in places]
+            return [self.parse_code(place) for place in places]

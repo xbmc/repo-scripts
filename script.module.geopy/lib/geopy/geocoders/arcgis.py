@@ -10,6 +10,7 @@ from geopy.geocoders.base import Geocoder, DEFAULT_SCHEME, DEFAULT_TIMEOUT, \
     DEFAULT_WKID
 from geopy.exc import GeocoderServiceError, GeocoderAuthenticationFailure
 from geopy.exc import ConfigurationError
+from geopy.location import Location
 from geopy.util import logger
 
 
@@ -98,6 +99,19 @@ class ArcGIS(Geocoder): # pylint: disable=R0921,R0902
         return self._base_call_geocoder(request, timeout=timeout)
 
     def geocode(self, query, exactly_one=True, timeout=None):
+        """
+        Geocode a location query.
+
+        :param string query: The address or query you wish to geocode.
+
+        :param bool exactly_one: Return one result or a list of results, if
+            available.
+
+        :param int timeout: Time, in seconds, to wait for the geocoding service
+            to respond before raising a :class:`geopy.exc.GeocoderTimedOut`
+            exception. Set this only if you wish to override, on this call only,
+            the value set during the geocoder's initialization.
+        """
         # TODO: dict as query for parameterized query
         # TODO: SRID
         params = {'text': query, 'f': 'json'}
@@ -121,7 +135,11 @@ class ArcGIS(Geocoder): # pylint: disable=R0921,R0902
         geocoded = []
         for resource in response['locations']:
             geometry = resource['feature']['geometry']
-            geocoded.append((resource['name'], (geometry['y'], geometry['x'])))
+            geocoded.append(
+                Location(
+                    resource['name'], (geometry['y'], geometry['x']), resource
+                )
+            )
         if exactly_one is True:
             return geocoded[0]
         return geocoded
@@ -129,6 +147,8 @@ class ArcGIS(Geocoder): # pylint: disable=R0921,R0902
     def reverse(self, query, exactly_one=True, timeout=None, # pylint: disable=R0913,W0221
                         distance=None, wkid=DEFAULT_WKID):
         """
+        Given a point, find an address.
+
         :param query: The coordinates for which you wish to obtain the
             closest human-readable addresses.
         :type query: :class:`geopy.point.Point`, list or tuple of (latitude,
@@ -170,7 +190,11 @@ class ArcGIS(Geocoder): # pylint: disable=R0921,R0902
             raise GeocoderServiceError(str(response['error']))
         address = "%(Address)s, %(City)s, %(Region)s %(Postal)s, %(CountryCode)s" % \
             response['address']
-        return (address, (response['location']['y'], response['location']['x']))
+        return Location(
+            address,
+            (response['location']['y'], response['location']['x']),
+            response['address']
+        )
 
     def _refresh_authentication_token(self):
         """

@@ -9,8 +9,13 @@ import hashlib
 import hmac
 from geopy.compat import urlencode
 from geopy.geocoders.base import Geocoder, DEFAULT_TIMEOUT, DEFAULT_SCHEME
+from geopy.exc import (
+    GeocoderQueryError,
+    GeocoderQuotaExceeded,
+    ConfigurationError
+)
+from geopy.location import Location
 from geopy.util import logger
-from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded, ConfigurationError
 
 
 class GoogleV3(Geocoder):
@@ -56,7 +61,9 @@ class GoogleV3(Geocoder):
             warn('protocol argument is deprecated in favor of scheme, to be'
                 'removed in 0.98')
         scheme = protocol or scheme
-        super(GoogleV3, self).__init__(scheme=scheme, timeout=timeout, proxies=proxies)
+        super(GoogleV3, self).__init__(
+            scheme=scheme, timeout=timeout, proxies=proxies
+        )
         if client_id and not secret_key:
             raise ConfigurationError('Must provide secret_key with client_id.')
         if secret_key and not client_id:
@@ -90,9 +97,23 @@ class GoogleV3(Geocoder):
             hashlib.sha1
         )
         signature = base64.urlsafe_b64encode(signature.digest()).decode('utf-8')
-        return '%s://%s%s&signature=%s' % (self.scheme, self.domain, path, signature)
+        return '%s://%s%s&signature=%s' % (
+            self.scheme, self.domain, path, signature
+        )
+
+    @staticmethod
+    def _format_components_param(components):
+        """
+        Format the components dict to something Google understands.
+        """
+        return "|".join(
+            (":".join(item)
+             for item in components.items()
+            )
+        )
 
     def geocode(self, query, bounds=None, region=None, # pylint: disable=W0221,R0913
+                components=None,
                 language=None, sensor=False, exactly_one=True, timeout=None):
         """
         Geocode a location query.
@@ -105,6 +126,11 @@ class GoogleV3(Geocoder):
 
         :param string region: The region code, specified as a ccTLD
             ("top-level domain") two-character value.
+
+        :param dict components: Restricts to an area. Can use any combination
+            of: route, locality, administrative_area, postal_code, country.
+
+            .. versionadded:: 0.97.1
 
         :param string language: The language in which to return results.
 
@@ -129,6 +155,8 @@ class GoogleV3(Geocoder):
             params['bounds'] = bounds
         if region:
             params['region'] = region
+        if components:
+            params['components'] = self._format_components_param(components)
         if language:
             params['language'] = language
 
@@ -138,7 +166,9 @@ class GoogleV3(Geocoder):
             url = self._get_signed_url(params)
 
         logger.debug("%s.geocode: %s", self.__class__.__name__, url)
-        return self._parse_json(self._call_geocoder(url, timeout=timeout), exactly_one)
+        return self._parse_json(
+            self._call_geocoder(url, timeout=timeout), exactly_one
+        )
 
     def reverse(self, query, language=None, # pylint: disable=W0221,R0913
                     sensor=False, exactly_one=False, timeout=None):
@@ -177,7 +207,9 @@ class GoogleV3(Geocoder):
             url = self._get_signed_url(params)
 
         logger.debug("%s.reverse: %s", self.__class__.__name__, url)
-        return self._parse_json(self._call_geocoder(url, timeout=timeout), exactly_one)
+        return self._parse_json(
+            self._call_geocoder(url, timeout=timeout), exactly_one
+        )
 
     def _parse_json(self, page, exactly_one=True):
         '''Returns location, (latitude, longitude) from json feed.'''
@@ -192,7 +224,7 @@ class GoogleV3(Geocoder):
             location = place.get('formatted_address')
             latitude = place['geometry']['location']['lat']
             longitude = place['geometry']['location']['lng']
-            return (location, (latitude, longitude))
+            return Location(location, (latitude, longitude), place)
 
         if exactly_one:
             return parse_place(places[0])

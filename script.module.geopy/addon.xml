@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.geopy" name="geoPy" version="0.96.2" provider-name="geoPy">
+<addon id="script.module.geopy" name="geoPy" version="0.98.1" provider-name="geoPy">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 	</requires>

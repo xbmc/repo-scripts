@@ -7,7 +7,8 @@ from socket import timeout as SocketTimeout
 import json
 
 from geopy.compat import string_compare, HTTPError, py3k, \
-    urlopen as urllib_urlopen, build_opener, ProxyHandler, URLError
+    urlopen as urllib_urlopen, build_opener, ProxyHandler, URLError, \
+    install_opener
 from geopy.point import Point
 from geopy.exc import (GeocoderServiceError, ConfigurationError,
     GeocoderTimedOut, GeocoderAuthenticationFailure, GeocoderQuotaExceeded,
@@ -18,6 +19,20 @@ DEFAULT_FORMAT_STRING = '%s'
 DEFAULT_SCHEME = 'https'
 DEFAULT_TIMEOUT = 1
 DEFAULT_WKID = 4326
+
+ERROR_CODE_MAP = {
+    400: GeocoderQueryError,
+    401: GeocoderAuthenticationFailure,
+    402: GeocoderQuotaExceeded,
+    403: GeocoderInsufficientPrivileges,
+    407: GeocoderAuthenticationFailure,
+    412: GeocoderQueryError,
+    413: GeocoderQueryError,
+    414: GeocoderQueryError,
+    502: GeocoderServiceError,
+    503: GeocoderTimedOut,
+    504: GeocoderTimedOut
+}
 
 
 class Geocoder(object): # pylint: disable=R0921
@@ -34,20 +49,19 @@ class Geocoder(object): # pylint: disable=R0921
         self.format_string = format_string
         self.scheme = scheme
         if self.scheme not in ('http', 'https'): # pragma: no cover
-            raise ConfigurationError('Supported schemes are `http` and `https`.')
+            raise ConfigurationError(
+                'Supported schemes are `http` and `https`.'
+            )
         self.proxies = proxies
         self.timeout = timeout
 
-        # Add urllib proxy support using environment variables or
-        # built in OS proxy details
-        # See: http://docs.python.org/2/library/urllib2.html
-        # And: http://stackoverflow.com/questions/1450132/proxy-with-urllib2
-        if self.proxies is None:
-            self.urlopen = urllib_urlopen
-        else:
-            self.urlopen = build_opener(
-                ProxyHandler(self.proxies)
+        if self.proxies:
+            install_opener(
+                build_opener(
+                    ProxyHandler(self.proxies)
+                )
             )
+        self.urlopen = urllib_urlopen
 
     @staticmethod
     def _coerce_point_to_string(point):
@@ -77,27 +91,20 @@ class Geocoder(object): # pylint: disable=R0921
         try:
             page = self.urlopen(url, timeout=timeout or self.timeout)
         except Exception as error: # pylint: disable=W0703
-            message = str(error) if not py3k else \
-                        (str(error.args[0] if len(error.args) else str(error)))
+            message = (
+                str(error) if not py3k
+                else (
+                    str(error.args[0])
+                    if len(error.args)
+                    else str(error)
+                )
+            )
             if hasattr(self, '_geocoder_exception_handler'):
                 self._geocoder_exception_handler(error, message) # pylint: disable=E1101
             if isinstance(error, HTTPError):
                 code = error.getcode()
-                error_code_map = {
-                    400: GeocoderQueryError,
-                    401: GeocoderAuthenticationFailure,
-                    402: GeocoderQuotaExceeded,
-                    403: GeocoderInsufficientPrivileges,
-                    407: GeocoderAuthenticationFailure,
-                    412: GeocoderQueryError,
-                    413: GeocoderQueryError,
-                    414: GeocoderQueryError,
-                    502: GeocoderServiceError,
-                    503: GeocoderTimedOut,
-                    504: GeocoderTimedOut
-                }
                 try:
-                    raise error_code_map[code](message)
+                    raise ERROR_CODE_MAP[code](message)
                 except KeyError:
                     raise GeocoderServiceError(message)
             elif isinstance(error, URLError):
@@ -106,14 +113,9 @@ class Geocoder(object): # pylint: disable=R0921
             elif isinstance(error, SocketTimeout):
                 raise GeocoderTimedOut('Service timed out')
             elif isinstance(error, SSLError):
-                if "timed out in message":
+                if "timed out" in message:
                     raise GeocoderTimedOut('Service timed out')
-            if not py3k:
-                err = GeocoderServiceError(message)
-                err.__traceback__ = error
-                raise err
-            else:
-                raise GeocoderServiceError(message)
+            raise GeocoderServiceError(message)
         if raw:
             return page
         return json.loads(decode_page(page))
