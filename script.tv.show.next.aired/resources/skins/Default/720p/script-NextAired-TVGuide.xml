@@ -106,9 +106,6 @@
 				</control>
 			</control>
 		</control>
-		<!-- Confluence only -->
-		<include>CommonMediaPlayingBackground</include>
-		<!-- =============== -->
 		<control type="image">
 			<posx>0</posx>
 			<posy>100r</posy>
@@ -157,10 +154,6 @@
 				</control>
 			</control>
 		</control>
-		<!-- Confluence only -->
-		<include>CommonNowPlaying</include>
-		<include>BehindDialogFadeOut</include>
-		<!-- =============== -->
 		<control type="group">
 			<animation effect="fade" time="250">WindowOpen</animation>
 			<animation effect="fade" time="250">WindowClose</animation>

@@ -1,17 +1,27 @@
-v5.0.7
+v6.0.1 (2014-02-23):
+- The first wider release of 6.0.x (after limited-release testing of 6.0.0).
+
+v6.0.0 (2014-02-12):
+- This version of Next Aired grabs its data from TheTVDB.com.  This provides quicker updates and more upcoming-episode information.
+- The GUI now includes separate episode info for each show that appears multiple times in the upcoming week. If a show is broadcast multiple times on a particular day, it will be listed multiple times on that day.
+- The settings have changed to specify how often (in hours) background updates occur (the default is every 8 hours).  There is also a setting for how old the data can be before interacting with the TV Guide will cause an update (also set to 8 hours).
+- The data presented to the user and to the skins is mostly the same, with a few minor differences.  For instance, the Classification field is now always empty (no such data available), the Status field has a more limited sete of possible values, and the NextDate and LatestDate fields have a tweaked date format.
+- Lots of bug fixes, performance improvements, and improved error handling.
+
+v5.0.7 (2013-04-21):
 - added manual mode
 
-v5.0.6
+v5.0.6 (2013-03-19):
 - add seperate entries for canceled and ended
 - added script option to set properties for all tvshows, not only today´s ones.
 
-v5.0.5
+v5.0.5 (2013-01-28):
 - added characterart property
 
-v5.04
+v5.0.4 (2012-12-26):
 - silently try to delete the old databases
 
-v5.03
+v5.0.3 (2012-12-02):
 - delete old databases and start fresh
 - change thumb to poster in skin
 
@@ -91,7 +101,7 @@ v4.1.7
 
 v4.1.6
 - fix unicode issue
-- removed unnecessary closing of the dialog after click on a tv show 
+- removed unnecessary closing of the dialog after click on a tv show
 
 v4.1.5
 - make items in the gui clickable
@@ -183,7 +193,7 @@ for each episode informations:
 "NextAired.%d.NextNumber"  -- season/episode number (example: 04x01)
 "NextAired.%d.LatestDate"  -- same as next but for the latest
 "NextAired.%d.LatestTitle"  -- same as next but for the latest
-"NextAired.%d.LatestNumber"  -- same as next but for the latest         
+"NextAired.%d.LatestNumber"  -- same as next but for the latest
 "NextAired.%d.Airtime"  -- day and time the show is diffused
 "NextAired.%d.Showpath"  -- path parent tvshow folder, useful to use stuff like logo, cleareart ...
 "NextAired.%d.Status"  -- Show season/tvshow status (example: "Returning Serie" , "Final Season", "New Serie")
@@ -193,36 +203,34 @@ for each episode informations:
 "NextAired.%d.Classification"  -- don't know what it is ... can be "Scripted", don't know much, if someone can tell me ...
 "NextAired.%d.Genres"  -- Tvshow genre (TVrage classification, not library) (example: 'Drama | Family')
 "NextAired.%d.Premiered"  -- return the year (4digit) the show started
-"NextAired.%d.Country"  -- original country 
+"NextAired.%d.Country"  -- original country
 "NextAired.%d.Runtime"  -- duration in minutes
-
-
 
 v1.1.0:
 - speed up the process
+
 v1.0.6:
 - submit to xbmc official repo
 - correction of parsing date error
 - add LICENSE.txt
 - change icon.png
 
-v1.0.5:
-- 21-07-2010:correct linux platform urllib bug
+v1.0.5 (2010-07-21):
+- correct linux platform urllib bug
 
-v1.0.4:
-- 19-07-2010:change sql query, now use xbmchttp to get info.
+v1.0.4 (2010-07-19):
+- change sql query, now use xbmchttp to get info.
 
-v1.0.3:
-- 17-07-2010:
+v1.0.3: (2010-07-17):
 - fixed: windowxml resolution default to "720p"
 - changed: platform_libraries for addon script.module.pysqlite, only xbox include platform_libraries/win32
 - added: provides -> video to append in video mediatheque
 
-v1.0.2:
-- 11-07-2010: compatibility with pre-merge version
- 
-v1.0.0
-- 06-07-2010: Initial commit
+v1.0.2 (2010-07-11):
+- compatibility with pre-merge version
+
+v1.0.0 (2010-07-06):
+- Initial commit
 
 
 

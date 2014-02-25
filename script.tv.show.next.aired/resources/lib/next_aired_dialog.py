@@ -1,6 +1,6 @@
 from traceback import print_exc
 from time import mktime
-from datetime import date
+from datetime import date, timedelta
 import xbmc, xbmcgui, xbmcaddon, time
 
 __addon__   = xbmcaddon.Addon()
@@ -16,7 +16,7 @@ def log(txt):
 class Gui( xbmcgui.WindowXML ):
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXML.__init__( self )
-        self.nextlist  = kwargs['listing']
+        self.nextlist = sorted(kwargs['listing'], key=lambda item: item['RFC3339'][11:15])
         self.setLabels = kwargs['setLabels']
 
     def onInit(self):
@@ -39,37 +39,17 @@ class Gui( xbmcgui.WindowXML ):
         self.set_properties()
         self.fill_containers()
         self.set_focus()
-                    
+
     def set_properties(self):
+        day_limit = str(self.today + timedelta(days=6))
         for item in self.nextlist:
-            try:
-                airdays = item.get("Airtime").split(" at ")[0].split(', ')
-            except:
-                continue
-            for day in airdays:
-                if (day[0] == '0') or (day[0] == '1'):
-                    continue
-                listitem = self.setLabels('listitem', item, True)
-                nextdate = item.get("RFC3339" , "" )[:10]
-                if len(nextdate) == 10:
-                    if self.is_in_current_week(nextdate):
-                        self.listitems[day].append(listitem)
-                else:
-                    nextdate = listitem.getProperty('NextDate')
-                    if len(nextdate) == 11:
-                        if self.is_in_current_week(nextdate, True):
-                            self.listitems[day].append(listitem)
-                
-    def is_in_current_week(self, strdate, alt = False):
-        if alt:
-            showdate = date.fromtimestamp( mktime( time.strptime( strdate, '%b/%d/%Y' ) ) )
-        else:
-            showdate = date.fromtimestamp( mktime( time.strptime( strdate, '%Y-%m-%d' ) ) )
-        weekrange = int( ( showdate - self.today ).days )
-        if weekrange >= 0 and weekrange <= 6:
-            return True
-        else:
-            return False
+            ep_ndx = 1
+            for ep in item['episodes'][1:]:
+                if ep['aired'][:10] > day_limit:
+                    break
+                listitem = self.setLabels('listitem', item, ep_ndx)
+                self.listitems[ep['wday']].append(listitem)
+                ep_ndx += 1
 
     def fill_containers(self):
         for count, day in enumerate (self.days):
@@ -93,6 +73,7 @@ class Gui( xbmcgui.WindowXML ):
         if controlID == 8:
             self.settingsOpen = True
             __addon__.openSettings()
+            self.close()
         elif controlID in ( 200, 201, 202, 203, 204, 205, 206, ):
             listitem = self.getControl( controlID ).getSelectedItem()
             library = listitem.getProperty('Library')
@@ -102,9 +83,7 @@ class Gui( xbmcgui.WindowXML ):
         pass
 
     def onAction( self, action ):
-        if action.getId() in ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, ):
-            self.close()
-        if action.getId() in ( 7, 10, 92, ) and self.settingsOpen:
+        if self.settingsOpen and action.getId() in ( 7, 10, 92, ):
             num = int( __addon__.getSetting( "ThumbType" ) )
             xbmc.executebuiltin( "SetProperty(TVGuide.ThumbType,%i,Home)" % num )
             if __addon__.getSetting( "PreviewThumbs" ) == 'true':
@@ -116,8 +95,12 @@ class Gui( xbmcgui.WindowXML ):
             else:
                 xbmc.executebuiltin( "ClearProperty(TVGuide.BackgroundFanart,Home)" )
             self.settingsOpen = False
+        if action.getId() in ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, ):
+            self.close()
 
 def MyDialog(tv_list, setLabels):
     w = Gui( "script-NextAired-TVGuide.xml", __cwd__, "Default" , listing=tv_list, setLabels=setLabels)
     w.doModal()
     del w
+
+# vim: et
