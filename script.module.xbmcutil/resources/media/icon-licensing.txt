@@ -17,3 +17,8 @@ next.png
 Oliver Scholtz
 License: Free for non commercial use
 https://www.iconfinder.com/icons/23498/go_next_old_icon#size=128
+
+search.png
+Oliver Scholtz
+License: Free for non commercial use
+https://www.iconfinder.com/icons/25195/folder_search_icon#size=128

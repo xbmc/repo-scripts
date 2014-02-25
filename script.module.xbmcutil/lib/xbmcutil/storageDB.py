@@ -26,16 +26,9 @@ class _BaseStorage(object):
 		# Update Internal Dict with Arguments
 		if args or kwargs: self._update(*args, **kwargs)
 		
-		# Check Witch Serializer to Use
+		# Load and set serializer object
 		self._filename = filename
-		self._serializer = filename[filename.rfind(".")+1:]
-		if self._serializer == "pickle":
-			try: import cPickle as pickle
-			except ImportError: import pickle
-			self._serializerObj = pickle
-		elif self._serializer == "json":
-			import fastjson
-			self._serializerObj = fastjson
+		self._serializerObj = __import__("fastjson")
 		
 		# Load Store Dict from Disk if Available
 		if os.path.exists(filename):
@@ -54,21 +47,17 @@ class _BaseStorage(object):
 	
 	def _dump(self):
 		# Check if FileObj Needs Creating First
-		if len(self) >= 1:
-			if self._fileObj:
-				self._fileObj.seek(0)
-				self._fileObj.truncate(0)
-			else:
-				self._fileObj = open(self._filename, "wb+")
-			
-			# Dumb Data to Disk
-			if self._serializer == "pickle":
-				self._serializerObj.dump(self._serialize(), self._fileObj, self._serializerObj.HIGHEST_PROTOCOL)
-			elif self._serializer == "json":
-				self._serializerObj.dump(self._serialize(), self._fileObj, indent=4, separators=(",", ":"))
-			
-			# Flush Data out to Disk
-			self._fileObj.flush()
+		if self._fileObj:
+			self._fileObj.seek(0)
+			self._fileObj.truncate(0)
+		else:
+			self._fileObj = open(self._filename, "wb+")
+		
+		# Dumb Data to Disk
+		self._serializerObj.dump(self._serialize(), self._fileObj, indent=4, separators=(",", ":"))
+		
+		# Flush Data out to Disk
+		self._fileObj.flush()
 	
 	def _load(self):
 		# Load Data from Disk
@@ -104,11 +93,93 @@ class Metadata(dictStorage):
 	def __init__(self):
 		# Check if UserData Exists
 		from xbmcutil import plugin
-		systemMetaData = os.path.join(plugin.getPath(), "resources", "metadata.json")
-		userMetaData = os.path.join(plugin.getProfile(), "metadata.json")
+		systemMetaData = os.path.join(plugin.getPath(), u"resources", u"metadata.json")
+		userMetaData = os.path.join(plugin.getProfile(), u"metadata.json")
 		if os.path.isfile(systemMetaData) and not os.path.isfile(userMetaData):
 			import shutil
 			shutil.move(systemMetaData, userMetaData)
 			super(Metadata, self).__init__(userMetaData)
 		else:
 			super(Metadata, self).__init__(userMetaData)
+
+class SavedSearch(setStorage):
+	def __init__(self):
+		# Create and set saved searches data path
+		from xbmcutil import plugin
+		savedSearches = os.path.join(plugin.getProfile(), u"savedsearches.json")
+		super(SavedSearch, self).__init__(savedSearches)
+
+from xbmcutil import listitem, plugin
+class SavedSearches(listitem.VirtualFS):
+	@plugin.error_handler
+	def scraper(self):
+		# Fetch list of current saved searches
+		self.searches = SavedSearch()
+				
+		# Call Search Dialog if Required
+		if "remove" in plugin and plugin["remove"] in self.searches:
+			self.searches.remove(plugin.popitem("remove"))
+			self.searches.sync()
+		elif "search" in plugin:
+			self.search_dialog(plugin["url"])
+			del plugin["search"]
+		elif not self.searches:
+			self.search_dialog(plugin["url"])
+		
+		# Add Extra Items
+		params = plugin._Params.copy()
+		params["search"] = "true"
+		params["updatelisting"] = "true"
+		params["cachetodisc"] = "true"
+		self.add_item(label=u"-Search", url=params, isPlayable=False)
+		
+		# Set Content Properties
+		self.set_sort_methods(self.sort_method_video_title)
+		self.set_content("files")
+		
+		# Display list of searches if any
+		try:
+			if self.searches: return self.list_searches()
+			else: return True
+		finally:
+			self.searches.close()
+	
+	def search_dialog(self, urlString):
+		# Call Search Dialog
+		searchTerm = plugin.dialogSearch()
+		
+		# Add searchTerm to database
+		self.searches.add(searchTerm)
+		self.searches.sync()
+	
+	def list_searches(self):
+		# Create Speed vars
+		results = []
+		additem = results.append
+		localListitem = listitem.ListItem
+		
+		# Fetch Forwarding url string & action
+		baseUrl = plugin["url"]
+		baseAction = plugin["forwarding"]
+		
+		# Create Context Menu item Params
+		strRemove = plugin.getstr(1210)
+		params = plugin._Params.copy()
+		params["updatelisting"] = "true"
+		
+		# Loop earch Search item
+		for searchTerm in self.searches:
+			# Create listitem of Data
+			item = localListitem()
+			item.setLabel(searchTerm.title())
+			item.setParamDict(action=baseAction, url=baseUrl % searchTerm)
+			
+			# Creatre Context Menu item to remove search item
+			params["remove"] = searchTerm
+			item.addContextMenuItem(strRemove, "XBMC.Container.Update", **params)
+			
+			# Store Listitem data
+			additem(item.getListitemTuple(isPlayable=False))
+		
+		# Return list of listitems
+		return results

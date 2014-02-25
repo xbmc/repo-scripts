@@ -1,2 +1,7 @@
-[B]Version 1.0[/B]
+[B]Version 2.0.2[/B]
+- Added Full Unicode Support
+- Added Search with Save Searches Support
+- Replace all print steatment with xbmc.log
+
+[B]Version 2.0.1[/B]
 - Initial Version

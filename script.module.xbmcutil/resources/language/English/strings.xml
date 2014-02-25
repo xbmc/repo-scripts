@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <strings>
-	<!-- HTTP Error Codes: 30900 - 30919 -->
-	<string id="30904">Request Timed Out</string>
-	<string id="30909">Unexpected Error</string>
-	<string id="30910">Redirect Failed</string>
-	<string id="30911">Cache Failure</string>
-	<string id="30912">Decompression Error</string>
-	<string id="30913">Unicode Decoding Failed</string>
-	<string id="30914">Logon Failed</string>
-	<string id="30915">ScraperError</string>
-	<string id="30916">URLError</string>
-	<string id="30917">CacheError</string>
-	<string id="30918">ParserError</string>
-	<string id="30919">YoutubeAPI</string>
-	<string id="30920">videoResolver</string>
+	<!-- HTTP Error Codes: 32900 - 32919 -->
+	<string id="32904">Request Timed Out</string>
+	<string id="32909">Unexpected Error</string>
+	<string id="32910">Redirect Failed</string>
+	<string id="32911">Cache Failure</string>
+	<string id="32912">Decompression Error</string>
+	<string id="32913">Unicode Decoding Failed</string>
+	<string id="32914">Login Failed</string>
+	<string id="32915">ScraperError</string>
+	<string id="32916">URLError</string>
+	<string id="32917">Cache Error</string>
+	<string id="32918">Parser Error</string>
+	<string id="32919">YoutubeAPI</string>
+	<string id="32920">Video Resolver</string>
+	<string id="32921">Unicode Error</string>
 	
-	<!-- Download Error Codes: 30930 - 30939 -->
-	<string id="30933">Select Download Destination</string>
+	<!-- Download Error Codes: 32930 - 32939 -->
+	<string id="32933">Select Download Destination</string>
 	
-	<!-- PlayMedia Message Codes: 30950 - 30959 -->
-	<string id="30957">No Playable Video Found</string>
+	<!-- PlayMedia Message Codes: 32950 - 32959 -->
+	<string id="32957">No Playable Video Found</string>
 	
-	<!-- Context Menu Codes: 30960 - 30969 -->
-	<string id="30960">Audio information</string>
-	<string id="30961">Queue Video</string>
-	<string id="30962">View Queue</string>
-	<string id="30963">Youtube Channel</string>
-	<string id="30964">Youtube Playlist</string>
-	<string id="30965">Youtube Playlists</string>
-	<string id="30966">Related Videos</string>
-	<string id="30967">Vimeo User</string>
-	<string id="30968">Play All</string>
+	<!-- Context Menu Codes: 32960 - 32969 -->
+	<string id="32960">Audio information</string>
+	<string id="32962">View Queue</string>
+	<string id="32963">Youtube Channel</string>
+	<string id="32964">Youtube Playlist</string>
+	<string id="32965">Youtube Playlists</string>
+	<string id="32966">Related Videos</string>
+	<string id="32967">Vimeo User</string>
 	
-	<!-- Sources Codes: 30970 - 30979 -->
-	<string id="30970">No Supported Source Found</string>
-	<string id="30971">Video is Restricted</string>
-	<string id="30972">HTMLParser Failed</string>
-	<string id="30973">No Video Source Found</string>
-	<string id="30974">An Unexpected Error Occurred</string>
+	<!-- Sources Codes: 32970 - 32979 -->
+	<string id="32970">No Supported Source Found</string>
+	<string id="32971">Video is Restricted</string>
+	<string id="32972">HTMLParser Failed</string>
+	<string id="32973">No Video Source Found</string>
+	<string id="32974">An Unexpected Error Occurred</string>
 </strings>
 

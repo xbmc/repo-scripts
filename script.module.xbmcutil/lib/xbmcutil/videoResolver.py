@@ -43,21 +43,21 @@ class MainParser(HTMLParser.HTMLParser):
 		self.close()
 	
 	def handle_starttag(self, tag, attrs):
-		if tag == "iframe": self.handle_iframe(dict(attrs))
-		elif tag == "param": self.handle_param(dict(attrs))
-		elif tag == "embed": self.handle_embed(dict(attrs))
+		if tag == u"iframe": self.handle_iframe(dict(attrs))
+		elif tag == u"param": self.handle_param(dict(attrs))
+		elif tag == u"embed": self.handle_embed(dict(attrs))
 	
 	def handle_iframe(self, attrs):
-		if "src" in attrs and attrs["src"][:4] == "http":
-			self.sourceUrls.add(attrs["src"])
+		if u"src" in attrs and attrs[u"src"][:4] == u"http":
+			self.sourceUrls.add(attrs[u"src"])
 	
 	def handle_param(self, attrs):
-		if "name" in attrs and "value" in attrs and attrs["name"] == "movie" and attrs["value"][:4] == "http":
-			self.sourceUrls.add(attrs["value"])
+		if u"name" in attrs and u"value" in attrs and attrs[u"name"] == u"movie" and attrs[u"value"][:4] == u"http":
+			self.sourceUrls.add(attrs[u"value"])
 	
 	def handle_embed(self, attrs):
-		if "src" in attrs and attrs["src"][:4] == "http":
-			self.sourceUrls.add(attrs["src"])
+		if u"src" in attrs and attrs[u"src"][:4] == u"http":
+			self.sourceUrls.add(attrs[u"src"])
 
 class RegexParser:
 	'''
@@ -75,9 +75,9 @@ class RegexParser:
 	
 	def dict(self, attrs):
 		attrsDict = {}
-		for part in attrs.strip().replace('"','').replace("'","").replace('\\','').split(" "):
-			if "=" in part:
-				key, value = part.split("=",1)
+		for part in attrs.strip().replace(u'"','').replace(u"'","").replace(u'\\','').split(u" "):
+			if u"=" in part:
+				key, value = part.split(u"=",1)
 				attrsDict[key.lower()] = value
 		return attrsDict
 	
@@ -87,16 +87,16 @@ class RegexParser:
 		for attrs in re.findall('<embed(.*?)[/]*>', self.html, re.DOTALL | re.IGNORECASE): self.handle_embed(self.dict(attrs))
 	
 	def handle_iframe(self, attrs):
-		if "src" in attrs and attrs["src"][:4] == "http":
-			self.sourceUrls.add(attrs["src"])
+		if u"src" in attrs and attrs[u"src"][:4] == u"http":
+			self.sourceUrls.add(attrs[u"src"])
 	
 	def handle_param(self, attrs):
-		if "name" in attrs and "value" in attrs and attrs["name"] == "movie" and attrs["value"][:4] == "http":
-			self.sourceUrls.add(attrs["value"])
+		if u"name" in attrs and u"value" in attrs and attrs[u"name"] == u"movie" and attrs[u"value"][:4] == u"http":
+			self.sourceUrls.add(attrs[u"value"])
 	
 	def handle_embed(self, attrs):
-		if "src" in attrs and attrs["src"][:4] == "http":
-			self.sourceUrls.add(attrs["src"])
+		if u"src" in attrs and attrs[u"src"][:4] == u"http":
+			self.sourceUrls.add(attrs[u"src"])
 
 class SoupParser:
 	'''
@@ -115,18 +115,18 @@ class SoupParser:
 		self.search()
 	
 	def search(self):
-		for attrs in self.soup.findAll("iframe", {"src":self.httpCompile}): self.handle_iframe(attrs)
-		for attrs in self.soup.findAll("param", {"name":"movie","value":self.httpCompile}): self.handle_param(attrs)
-		for attrs in self.soup.findAll("embed", {"src":self.httpCompile}): self.handle_embed(attrs)
+		for attrs in self.soup.findAll(u"iframe", {u"src":self.httpCompile}): self.handle_iframe(attrs)
+		for attrs in self.soup.findAll(u"param", {u"name":u"movie",u"value":self.httpCompile}): self.handle_param(attrs)
+		for attrs in self.soup.findAll(u"embed", {u"src":self.httpCompile}): self.handle_embed(attrs)
 	
 	def handle_iframe(self, attrs):
-		self.sourceUrls.add(attrs["src"])
+		self.sourceUrls.add(attrs[u"src"])
 	
 	def handle_param(self, attrs):
-		self.sourceUrls.add(attrs["value"])
+		self.sourceUrls.add(attrs[u"value"])
 	
 	def handle_embed(self, attrs):
-		self.sourceUrls.add(attrs["src"])
+		self.sourceUrls.add(attrs[u"src"])
 
 #######################################################################################
 
@@ -151,16 +151,16 @@ class VideoParser:
 		Passes it into the Custom Parsers to Find Embeded Sources
 		'''
 		# Check if arg is a URL Then Fetch HTML Source
-		if arg.startswith("http://") or arg.startswith("https://"):
+		if arg.startswith(u"http://") or arg.startswith(u"https://"):
 			sourceObj = urlhandler.urlopen(arg, maxAge)
-			htmlSource = sourceObj.read()
+			htmlSource = sourceObj.read().decode("utf8")
 			sourceObj.close()
 		else:
 			htmlSource = arg
 		
 		# Feed the HTML into the HTMLParser and acquire the source urls
 		sourceUrls = self.htmlparser(htmlSource)
-		if not sourceUrls: raise plugin.ParserError(30973, "No Video Sources ware found")
+		if not sourceUrls: raise plugin.ParserError(32973, "No Video Sources ware found")
 		else: self.setUrls(sourceUrls)
 	
 	def setUrls(self, sourceUrls):
@@ -169,7 +169,7 @@ class VideoParser:
 		parsedUrls = self.processUrls(sourceUrls)
 		
 		# Check for Supported Sources
-		if not parsedUrls: raise plugin.ParserError(30970, "No Supported Video Sources ware found")
+		if not parsedUrls: raise plugin.ParserError(32970, "No Supported Video Sources ware found")
 		else: self.parsedUrls = parsedUrls
 	
 	def htmlparser(self, htmlSource):
@@ -183,24 +183,24 @@ class VideoParser:
 			customParser = MainParser()
 			customParser.parse(htmlSource)
 			return customParser.sourceUrls
-		except: plugin.log("HTML Parser Failed: Falling Back to Regex")
+		except: plugin.log("HTML Parser Failed: Falling Back to Regex", 0)
 		
 		try:
 			# Try Parse HTML Using Regex
 			customParser = RegexParser()
 			customParser.parse(htmlSource)
 			return customParser.sourceUrls
-		except: plugin.log("Regex Parser Failed: Falling Beautiful Soup")
+		except: plugin.log("Regex Parser Failed: Falling Beautiful Soup", 0)
 		
 		try:
 			# Try Parse HTML Using Beautiful Soup
 			customParser = SoupParser()
 			customParser.parse(htmlSource)
 			return customParser.sourceUrls
-		except: plugin.log("Beautiful Soup Parser Failed: All Out Total Failure")
+		except: plugin.log("Beautiful Soup Parser Failed: All Out Total Failure", 0)
 		
 		# Raise ParserError when all three parsers have failded
-		raise plugin.ParserError(30972, "HTML Parsing Failed")
+		raise plugin.ParserError(32972, "HTML Parsing Failed")
 	
 	def processUrls(self, sourceUrls):
 		'''
@@ -229,7 +229,7 @@ class VideoParser:
 				return pluginObject().strip(*urlObject)
 		
 		# Log The UnSupported Video Source for Future Identification
-		plugin.log("Video Source UnSupported\nDomain = %s\nurl    = %s" % (urlObject[1], urlObject.geturl()))
+		plugin.log(u"Video Source UnSupported\nDomain = %s\nurl    = %s" % (urlObject[1], urlObject.geturl()), 0)
 	
 	def get(self, sort=True):
 		'''
@@ -248,12 +248,13 @@ class Plugin(type):
 
 def check_arg(pluginName):
 	def decorator(function):
-		def wrapper(self, arg):
-			if arg[:4] == "http": arg = self.strip(*urlparse.urlsplit(arg), returnID=True)
-			if not arg: raise plugin.videoResolver(0, "Unable to Strip out videoID ==> %s ==> %s" % (pluginName, arg))
+		def wrapper(self, oarg):
+			arg = oarg
+			if arg[:4] == u"http": arg = self.strip(*urlparse.urlsplit(arg), returnID=True)
+			if not arg: raise plugin.videoResolver(32918, u"Unable to Strip out videoID ==> %s ==> %s" % (pluginName, oarg))
 			else:
 				# Call Function and return response
-				plugin.setDebugMsg("VideoResolver", "Select Source ==> %s ==> %s" % (pluginName, arg))
+				plugin.setDebugMsg("VideoResolver", u"Select Source ==> %s ==> %s" % (pluginName, arg))
 				return function(self, arg)
 		return wrapper
 	return decorator
@@ -315,57 +316,49 @@ class youtube_com(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		if path.lower() is "/embed/videoseries":
-			playlistID = parse_qs(query)["list"][0]
+		if path.lower() is u"/embed/videoseries":
+			playlistID = parse_qs(query)[u"list"][0]
 			if returnID: return playlistID
 			else: return {"domain":netloc, "vodepid":playlistID, "function":self.decode_playlist, "isplaylist":True, "priority":self.priority-1}
-		elif path.lower().startswith("/embed/") or path.lower().startswith("/v/"):
-			videoID = path[path.rfind("/")+1:]
+		elif path.lower().startswith(u"/embed/") or path.lower().startswith(u"/v/"):
+			videoID = path[path.rfind(u"/")+1:]
 			if returnID: return videoID
 			else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
-		elif path.lower().startswith("/watch"):
-			videoID = parse_qs(query)["v"][0]
+		elif path.lower().startswith(u"/watch"):
+			videoID = parse_qs(query)[u"v"][0]
 			if returnID: return videoID
 			else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 		else: 
 			plugin.log("Unable to Strip out video id from youtube source url")
 			return None
 	
-	@check_arg("Youtube")
+	@check_arg(u"Youtube")
 	def decode(self, arg):
 		# Fetch Video Processer Object and Return Decoded Url
-		if plugin.get("download","false") == "true": return {"url":"plugin://plugin.video.youtube/?action=download&videoid=%s" % arg}
-		else: return {"url":"plugin://plugin.video.youtube/?action=play_video&videoid=%s" % arg}
+		if plugin.get("download",u"false") == u"true": return {"url":u"plugin://plugin.video.youtube/?action=download&videoid=%s" % arg}
+		else: return {"url":u"plugin://plugin.video.youtube/?action=play_video&videoid=%s" % arg}
 	
-	@check_arg("Youtube Playlist")
+	@check_arg(u"Youtube Playlist")
 	def decode_playlist(self, arg):
 		# Initialize Gdata API
-		Gdata = self.api.YoutubeAPI("http://gdata.youtube.com/feeds/api/playlists/%s" % arg)
+		Gdata = self.api.YoutubeAPI(u"http://gdata.youtube.com/feeds/api/playlists/%s" % arg)
 		Gdata.ProcessUrl()
 		
-		urlData = {}
-		urlList = []
-		for url, listitem, isfolder in Gdata.VideoGenerator():
-			data = self.decode(url)
-			url = {"url":data.pop("url"), "item":listitem}
-			if data: urlData.update(data)
-			urlList.append(url)
-		
-		# Return playlist object
-		urlData["url"] = urlList
-		return urlData
+		# Fetch list of urls and listiems
+		markForDownload = plugin.get("download",u"false") == u"true"
+		return [{"url":url + "&download=true", "item":listitem} if markForDownload else {"url":url, "item":listitem} for url, listitem, isfolder in Gdata.VideoGenerator()]
 	
-	def checker(self, testcard="c64Aia4XE1Y"):
-		print "Checking Youtube Decoder"
+	def checker(self, testcard=u"c64Aia4XE1Y"):
+		plugin.log("Checking Youtube Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 class youtu_be(youtube_com): pass
 
@@ -388,27 +381,27 @@ class vimeo_com(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		videoID = path[path.rfind("/")+1:]
+		videoID = path[path.rfind(u"/")+1:]
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("Vimeo")
+	@check_arg(u"Vimeo")
 	def decode(self, arg):
 		# Fetch Video Processer Object and Return Decoded Url
-		if plugin.get("download","false") == "true": return {"url":"plugin://plugin.video.vimeo/?action=download&videoid=%s" % arg}
-		else: return {"url":"plugin://plugin.video.vimeo/?action=play_video&videoid=%s" % arg}
+		if plugin.get("download",u"false") == u"true": return {"url":u"plugin://plugin.video.vimeo/?action=download&videoid=%s" % arg}
+		else: return {"url":u"plugin://plugin.video.vimeo/?action=play_video&videoid=%s" % arg}
 	
-	def checker(self, testcard="34242816"):
-		print "Checking Vimeo Decoder"
+	def checker(self, testcard=u"34242816"):
+		plugin.log("Checking Vimeo Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
@@ -429,46 +422,46 @@ class dailymotion_com(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		videoID = path[path.rfind("/")+1:].split("_",1)[0]
+		videoID = path[path.rfind(u"/")+1:].split(u"_",1)[0]
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("DailyMotion")
+	@check_arg(u"DailyMotion")
 	def decode(self, arg):
 		# Fetch Redirected Url
-		url = "http://www.dailymotion.com/embed/video/%s" % arg
+		url = u"http://www.dailymotion.com/embed/video/%s" % arg
 		sourceCode = urlhandler.urlread(url)
 		
 		# Fetch list of Urls
 		sourceCode = re.findall('var info = (\{.+?\}),', sourceCode)[0]
 		Sources = dict([[part for part in match if part] for match in re.findall('"(stream_h264_url)":"(\S+?)",|"(stream_h264_ld_url)":"(\S+?)",|"(stream_h264_hq_url)":"(\S+?)",|"(stream_h264_hd_url)":"(\S+?)",|"(stream_h264_hd1080_url)":"(\S+?)",', sourceCode)])
-		if not Sources: plugin.videoResolver(33077, "Unable to Find Video Url")
+		if not Sources: raise plugin.videoResolver(33077, "Unable to Find Video Url")
 		
 		# Fetch Video Quality
 		Quality = plugin.getQuality()
-		if  Quality == "1080p": Quality = 5
-		elif Quality == "720p": Quality = 4
+		if  Quality == u"1080p": Quality = 5
+		elif Quality == u"720p": Quality = 4
 		else: Quality = 3
 		
 		# Return Available Format
-		for res in ("stream_h264_hd1080_url", "stream_h264_hd_url", "stream_h264_hq_url", "stream_h264_ld_url", "stream_h264_url")[-(Quality):]:
-			if res in Sources: return {"url":Sources[res].replace("\\/", "/")}
+		for res in (u"stream_h264_hd1080_url", u"stream_h264_hd_url", u"stream_h264_hq_url", u"stream_h264_ld_url", u"stream_h264_url")[-(Quality):]:
+			if res in Sources: return {"url":Sources[res].replace(u"\\/", u"/")}
 			else: continue
 		
 		# Fallback to any quality if unable to find format
 		return {"url":Sources[Sources.keys()[0]]}
 	
-	def checker(self, testcard="x162i8b"):
-		print "Checking DailyMotion Decoder"
+	def checker(self, testcard=u"x162i8b"):
+		plugin.log("Checking DailyMotion Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
@@ -489,16 +482,16 @@ class blip_tv(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		videoID = path[path.rfind("/")+1:].split(".")[0]
+		videoID = path[path.rfind(u"/")+1:].split(u".")[0]
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("BlipTV")
+	@check_arg(u"BlipTV")
 	def decode(self, arg):
 		# Check if arg is the embeded ID or VideoID
-		if arg.isdigit() is False:
+		if arg.isdigit():
 			# Fetch Redirected Url
-			url = "http://blip.tv/play/%s" % arg
+			url = u"http://blip.tv/play/%s" % arg
 			reUrl = urlhandler.redirect(url)
 			
 			# Filter out VideoCode
@@ -506,39 +499,39 @@ class blip_tv(object):
 			except: raise plugin.videoResolver(33077, "Unable to filter out Video Code")
 		
 		# Fetch XMLSource
-		url = "http://blip.tv/rss/flash/%s" % arg
+		url = u"http://blip.tv/rss/flash/%s" % arg
 		sourceObj = urlhandler.urlopen(url)
 		import xml.etree.ElementTree as ElementTree
-		media = "http://search.yahoo.com/mrss/"
+		media = u"http://search.yahoo.com/mrss/"
 		tree = ElementTree.parse(sourceObj)
 		sourceObj.close()
 		
 		# Fetch list of Media Content Found
-		filtered = ((int(node.get("height","0")), node.attrib) for node in tree.getiterator("{%s}content" % media) if not node.get("type") == "text/plain")
+		filtered = ((int(node.get(u"height",0)), node.attrib) for node in tree.getiterator(u"{%s}content" % media) if not node.get(u"type") == u"text/plain")
 		
 		# Fetch Video Quality and return video
-		quality = int(plugin.getQuality().replace("p",""))
-		qualitySorted = sorted(filtered, key=lambda videoInfo: videoInfo[0], reverse=True)
+		quality = int(plugin.getQuality().replace(u"p",u""))
+		qualitySorted = sorted(filtered, key=lambda x: x[0], reverse=True)
 		for content in qualitySorted:
 			if content[0] <= quality:
 				videoInfo = content[1]
-				return {"url":videoInfo["url"], "type":videoInfo["type"]}
+				return {"url":videoInfo[u"url"], "type":videoInfo[u"type"]}
 		
 		# Fallback to hightest available quality
 		videoInfo = qualitySorted[0][1]
-		return {"url":videoInfo["url"], "type":videoInfo["type"]}
+		return {"url":videoInfo[u"url"], "type":videoInfo[u"type"]}
 	
-	def checker(self, testcard="AYOW3REC"):
-		print "Checking BlipTV Decoder"
+	def checker(self, testcard=u"AYOW3REC"):
+		plugin.log("Checking BlipTV Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
@@ -559,8 +552,8 @@ class veehd_com(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		if path.lower().startswith("/embed"): videoID = parse_qs(query)["v"][0]
-		elif path.lower().startswith("/video/"): videoID = path.strip("/video/").split("_")[0]
+		if path.lower().startswith(u"/embed"): videoID = parse_qs(query)[u"v"][0]
+		elif path.lower().startswith(u"/video/"): videoID = path.strip(u"/video/").split(u"_")[0]
 		else: 
 			plugin.log("Unable to Strip out video id from veehd.com source url")
 			return None
@@ -568,18 +561,18 @@ class veehd_com(object):
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("Veehd")
+	@check_arg(u"Veehd")
 	def decode(self, arg):
 		# Create Url String and Download HTML Page
-		url = "http://veehd.com/video/%s" % arg
+		url = u"http://veehd.com/video/%s" % arg
 		handle = urlhandler.HttpHandler()
 		handle.add_response_handler()
-		htmlSource = handle.open(url).read()
+		htmlSource = handle.open(url).read().decode("utf8")
 		
 		# Fetch Video Info Page Url and Download HTML Page
-		try: url = "http://veehd.com" + re.findall('load_stream\(\)\{\s+\$\("#playeriframe"\).attr\(\{src : "(/vpi.+?)"\}\);\s+\}',htmlSource)[0]
+		try: url = u"http://veehd.com" + re.findall('load_stream\(\)\{\s+\$\("#playeriframe"\).attr\(\{src : "(/vpi.+?)"\}\);\s+\}',htmlSource)[0]
 		except: raise plugin.videoResolver(33077, "Was unable to Find Veehd Video Info Page Url")
-		else: htmlSource = handle.open(url).read()
+		else: htmlSource = handle.open(url).read().decode("utf8")
 		
 		# Search for Video Url Using Params Method
 		try: return {"url":re.findall('<param\s+name="src"\svalue="(http://\S+?)">',htmlSource)[0]}
@@ -591,20 +584,20 @@ class veehd_com(object):
 		
 		# Search for Video Url Javascript Method
 		import urllib
-		try: return {"url":urllib.unquote_plus(re.findall('"url":"(\S+?)"',htmlSource)[0])}
+		try: return {"url":urllib.unquote_plus(re.findall('"url":"(\S+?)"',htmlSource)[0].encode("ascii"))}
 		except: raise plugin.videoResolver(33077, "Was unable to Find Veehd Video Url or Decode It")
 	
-	def checker(self, testcard="4700076"):
-		print "Checking Veehd Decoder"
+	def checker(self, testcard=u"4700076"):
+		plugin.log("Checking Veehd Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
@@ -625,34 +618,34 @@ class www_4shared_com(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		videoID = path.strip("/embed/")
+		videoID = path.strip(u"/embed/")
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("4Shared")
+	@check_arg(u"4Shared")
 	def decode(self, arg):
 		# Fetch Redirected Url
-		url = "http://www.4shared.com/embed/%s" % arg
+		url = u"http://www.4shared.com/embed/%s" % arg
 		reUrl = urlhandler.redirect(url)
 		
 		# Parse Url String and Create Dict
 		urlDict = parse_qs(urlparse.urlsplit(reUrl)[3])
 		
 		# Check if the Required Keys Exist
-		if "file" in urlDict and "streamer" in urlDict: return {"url":"%s?file=%s&start=0" % (urlDict["streamer"][0], urlDict["file"][0])}
+		if u"file" in urlDict and u"streamer" in urlDict: return {"url":u"%s?file=%s&start=0" % (urlDict[u"streamer"][0], urlDict[u"file"][0])}
 		else: raise plugin.videoResolver(33077, "Required Key Not Found in Redirected Url")
 	
-	def checker(self, testcard="488295743/e62f15bd"):
-		print "Checking 4Shared Decoder"
+	def checker(self, testcard=u"488295743/e62f15bd"):
+		plugin.log("Checking 4Shared Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
@@ -673,14 +666,14 @@ class uploadc_com(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		videoID = path[path.find("embed-")+6:path.rfind(".")]
+		videoID = path[path.find(u"embed-")+6:path.rfind(u".")]
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("UploadC")
+	@check_arg(u"UploadC")
 	def decode(self, arg):
 		# Create Url String and Fetch HTML Page
-		url = "http://www.uploadc.com/embed-%s.html" % arg
+		url = u"http://www.uploadc.com/embed-%s.html" % arg
 		sourceObj = urlhandler.urlopen(url)
 		htmlSource = sourceObj.read()
 		sourceObj.close()
@@ -691,20 +684,20 @@ class uploadc_com(object):
 		
 		# Fetch Video ID From JavaScript Code
 		import urllib
-		try: return {"url":re.findall('<param name="src"0="(http://\S+?)"/>', jsCode)[0], "referer":url}
+		try: return {"url":re.findall('<param name="src"0="(http://\S+?)"/>', jsCode)[0], "referer":url.encode("ascii")}
 		except: raise plugin.videoResolver(33077, "Video Url Was Not Found in JavaScript Code")
 	
-	def checker(self, testcard="mcc8uenje34i"):
-		print "Checking Uploadc Decoder"
+	def checker(self, testcard=u"mcc8uenje34i"):
+		plugin.log("Checking Uploadc Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
@@ -725,27 +718,27 @@ class putlocker_com(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		videoID = path[path.rfind("/")+1:]
+		videoID = path[path.rfind(u"/")+1:]
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("PutLocker")
+	@check_arg(u"PutLocker")
 	def decode(self, arg):
 		# Construct Embedded Url and Fetch Server Response
-		url = "http://www.putlocker.com/embed/%s" % arg
+		url = u"http://www.putlocker.com/embed/%s" % arg
 		handle = urlhandler.HttpHandler()
 		handle.add_response_handler()
-		response = handle.open(url)
+		response = handle.open(url).read()
 		
 		# Fetch Cookie and Hash Values
-		try: hash = "fuck_you=%s&confirm=Close+Ad+and+Watch+as+Free+User" % (re.findall('<input type="hidden" value="(\S+?)" name="fuck_you">', response.read())[0])
+		try: hash = "fuck_you=%s&confirm=Close+Ad+and+Watch+as+Free+User" % (re.findall('<input type="hidden" value="(\S+?)" name="fuck_you">', response)[0])
 		except: raise plugin.videoResolver(33077, "Failed to Read Hash Value used for validating the Cookie")
 		
 		# Validate Cookie with the Hash Value
-		response = handle.open(url, hash, {"Referer":url})
+		response = handle.open(url, hash, {"Referer":url.encode("ascii")}).read()
 		
 		# Construct Embedded Url and Fetch Video Info
-		try: url = "http://www.putlocker.com/get_file.php?stream=%s" % (re.findall('/get_file.php\?stream=(\S+)', response.read())[0])
+		try: url = "http://www.putlocker.com/get_file.php?stream=%s" % (re.findall('/get_file.php\?stream=(\S+)', response)[0])
 		except: raise plugin.videoResolver(33077, "Failed to Validate Cookie and Fetch Embed Code")
 		
 		# Connect to Server to Download Video Source Data
@@ -753,31 +746,31 @@ class putlocker_com(object):
 		
 		# Fetch and Return Video Url
 		import xml.etree.ElementTree as ElementTree
-		media = "http://search.yahoo.com/mrss/"
+		media = u"http://search.yahoo.com/mrss/"
 		tree = ElementTree.parse(response)
 		response.close()
 		
 		# Loop each media content element and find video url
-		for node in tree.getiterator("{%s}content" % media):
-			url = node.get("url")
-			type = node.get("type")
-			if url is not None and type[:5] == "video":
+		for node in tree.getiterator(u"{%s}content" % media):
+			url = node.get(u"url")
+			type = node.get(u"type")
+			if url is not None and type[:5] == u"video":
 				return {"url":url, "type":type}
 		
 		# Raise Error if unable to return any video url
 		raise plugin.videoResolver(33077, "Failed to Read Video Url")
 	
-	def checker(self, testcard="21NRHEZN4Z17"):
-		print "Checking PutLocker Decoder"
+	def checker(self, testcard=u"21NRHEZN4Z17"):
+		plugin.log("Checking PutLocker Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
@@ -798,31 +791,31 @@ class kqed_org(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		videoID = path[path.rfind("/")+1:]
+		videoID = path[path.rfind(u"/")+1:]
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("kqed.org")
+	@check_arg(u"kqed.org")
 	def decode(self, arg):
 		# Create Url String and Fetch HTML Page
-		url = "http://www.kqed.org/quest/television/embed/%s" % arg
+		url = u"http://www.kqed.org/quest/television/embed/%s" % arg
 		htmlSource = urlhandler.urlread(url)
 		
 		# Fetch the Video Url And Return It
 		try: return {"url":re.findall("source=(http\S+?)&", htmlSource)[0]}
 		except: raise plugin.videoResolver(33077, "Was unable to Find kqed.org Video Url")
 	
-	def checker(self, testcard="502"):
-		print "Checking kqed Decoder"
+	def checker(self, testcard=u"502"):
+		plugin.log("Checking kqed Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
@@ -844,31 +837,31 @@ class stagevu_com(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		videoID = parse_qs(query)["uid"][0]
+		videoID = parse_qs(query)[u"uid"][0]
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("StageView")
+	@check_arg(u"StageView")
 	def decode(self, arg):
 		# Create Url String and Fetch HTML Page
-		url = "http://stagevu.com/embed?uid=%s" % arg
+		url = u"http://stagevu.com/embed?uid=%s" % arg
 		htmlSource = urlhandler.urlread(url)
 		
 		# Search for Video Url and Return
 		try: return {"url":re.findall("url\[\d+]\ = '(http://\S+?)';", htmlSource)[0]}
 		except: raise plugin.videoResolver(33077, "Was unable to Find StageView Video Url")
 	
-	def checker(self, testcard="srpfmbeqxlwe"):
-		print "Checking StageView Decoder"
+	def checker(self, testcard=u"srpfmbeqxlwe"):
+		plugin.log("Checking StageView Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
@@ -890,14 +883,14 @@ class rutube_ru(object):
 		self.priority = priority
 	
 	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		videoID = path[path.rfind("/")+1:]
+		videoID = path[path.rfind(u"/")+1:]
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "isplaylist":False, "priority":self.priority}
 	
-	@check_arg("rutube.ru")
+	@check_arg(u"rutube.ru")
 	def decode(self, arg):
 		# Fetch Video Information
-		url = "http://rutube.ru/api/play/options/%s/?format=json" % arg
+		url = u"http://rutube.ru/api/play/options/%s/?format=json" % arg
 		sourceObj = urlhandler.urlopen(url)
 		
 		# Load Json Object
@@ -906,51 +899,42 @@ class rutube_ru(object):
 		sourceObj.close()
 		
 		# Return Video Url
-		return {"url":jsonObject["video_balancer"]["m3u8"]}
+		return {"url":jsonObject[u"video_balancer"][u"m3u8"]}
 	
-	def checker(self, testcard="65110c1ab97f073835033d2b4a9c3bd2"):
-		print "Checking RuTube.ru Decoder"
+	def checker(self, testcard=u"65110c1ab97f073835033d2b4a9c3bd2"):
+		plugin.log("Checking RuTube.ru Decoder", 0)
 		try: 
 			videoUrl = self.decode(testcard)
-			print "#########################################"
-			print "PASS: Successfully Decoded %s" % testcard
-			print videoUrl
+			plugin.log("#########################################", 0)
+			plugin.log(u"PASS: Successfully Decoded %s" % testcard, 0)
+			plugin.log( videoUrl)
 			return videoUrl
 		except:
-			print "#######################################"
-			print "FAILED: Unable to Devode %s" % testcard
+			plugin.log("#######################################", 0)
+			plugin.log(u"FAILED: Unable to Devode %s" % testcard, 0)
 
 #######################################################################################
 
-class megavideo_com(object):
-	'''
-	Dummy Class to Stop Megavideo from Been Identified as UnSupported,
+'''
+	Dummy Class to Stop Shutdown Sources from Been Identified as UnSupported,
+	Google Video has been Shut Down and is no longer available.
 	Megavideo has been Shut Down and is no longer available.
-	'''
-	__metaclass__ = Plugin
-	def strip(self, *args, **kwargs):
-		plugin.log("megavideo.com: Megavideo has been Shut Down and is no longer available.")
-		return None
-
-#######################################################################################
+	Myspace has Totally Changed and is no longer serving videos
+'''
 
 class google_com(object):
-	'''
-	Dummy Class to Stop google Video from Been Identified as UnSupported,
-	Google Video has been Shut Down and is no longer available.
-	'''
 	__metaclass__ = Plugin
 	def strip(self, *args, **kwargs):
 		plugin.log("google.com: Google Video has been Shut Down and is no longer available.")
 		return None
 
-#######################################################################################
+class megavideo_com(object):
+	__metaclass__ = Plugin
+	def strip(self, *args, **kwargs):
+		plugin.log("megavideo.com: Megavideo has been Shut Down and is no longer available.")
+		return None
 
 class myspace_com(object):
-	'''
-	Dummy Class to Stop Myspace from Been Identified as UnSupported,
-	Myspace has Totally Changed and is no longer serving videos
-	'''
 	__metaclass__ = Plugin
 	def strip(self, *args, **kwargs):
 		plugin.log("myspace.com: Myspace has Totally Changed and is no longer serving videos.")
