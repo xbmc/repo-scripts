@@ -31,16 +31,16 @@ class Gui( xbmcgui.WindowXML ):
         else:
             xbmc.executebuiltin( "ClearProperty(TVGuide.BackgroundFanart,Home)" )
         self.settingsOpen = False
-        self.listitems = {'Monday':[],'Tuesday':[],'Wednesday':[],'Thursday':[],'Friday':[],'Saturday':[],'Sunday':[]}
-        self.days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
         self.today = date.today()
         self.weekday = self.today.weekday()
-        self.dayname = self.days[self.weekday]
         self.set_properties()
         self.fill_containers()
         self.set_focus()
 
     def set_properties(self):
+        self.listitems = []
+        for wday in range(0, 7):
+            self.listitems.append([])
         day_limit = str(self.today + timedelta(days=6))
         for item in self.nextlist:
             ep_ndx = 1
@@ -52,22 +52,18 @@ class Gui( xbmcgui.WindowXML ):
                 ep_ndx += 1
 
     def fill_containers(self):
-        for count, day in enumerate (self.days):
-            self.getControl( 200 + count ).reset()
-            self.getControl( 200 + count ).addItems( self.listitems[day] )
+        for wday in range(0, 7):
+            self.getControl(200 + wday).reset()
+            self.getControl(200 + wday).addItems(self.listitems[wday])
 
     def set_focus(self):
-        if self.listitems[self.dayname] == []:
-            dayFound = False
-            for count, day in enumerate (self.days):
-                if self.listitems[day] != []:
-                    self.setFocus ( self.getControl ( 200 + count ) )
-                    dayFound = True
-                    break
-            if dayFound == False:
-                self.setFocus( self.getControl( 8 ) )
-        else:
-            self.setFocus( self.getControl( 200 + self.weekday ) )
+        focus_to = 8
+        for ndx in range(0, 7):
+            wday = (self.weekday + ndx) % 7
+            if self.listitems[wday]:
+                focus_to = 200 + wday
+                break
+        self.setFocus(self.getControl(focus_to))
 
     def onClick(self, controlID):
         if controlID == 8:

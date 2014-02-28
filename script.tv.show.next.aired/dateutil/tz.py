@@ -28,6 +28,12 @@ except (ImportError, OSError):
 ZERO = datetime.timedelta(0)
 EPOCHORDINAL = datetime.datetime.utcfromtimestamp(0).toordinal()
 
+try:
+    x = time.localtime(-86400).tm_isdst
+    AVOID_NEGATIVE_TIMESTAMP = False
+except ValueError:
+    AVOID_NEGATIVE_TIMESTAMP = True
+
 class tzutc(datetime.tzinfo):
 
     def utcoffset(self, dt):
@@ -128,7 +134,10 @@ class tzlocal(datetime.tzinfo):
         #
         # Here is a more stable implementation:
         #
-        timestamp = ((dt.toordinal() - EPOCHORDINAL) * 86400
+        ord_diff = dt.toordinal() - EPOCHORDINAL
+        if AVOID_NEGATIVE_TIMESTAMP and ord_diff < 0:
+            ord_diff = 0
+        timestamp = (ord_diff * 86400
                      + dt.hour * 3600
                      + dt.minute * 60
                      + dt.second)
@@ -400,7 +409,10 @@ class tzfile(datetime.tzinfo):
         self._trans_list = tuple(self._trans_list)
 
     def _find_ttinfo(self, dt, laststd=0):
-        timestamp = ((dt.toordinal() - EPOCHORDINAL) * 86400
+        ord_diff = dt.toordinal() - EPOCHORDINAL
+        if AVOID_NEGATIVE_TIMESTAMP and ord_diff < 0:
+            ord_diff = 0
+        timestamp = (ord_diff * 86400
                      + dt.hour * 3600
                      + dt.minute * 60
                      + dt.second)

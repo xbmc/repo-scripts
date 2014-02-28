@@ -1,4 +1,11 @@
-v6.0.1 (2014-02-23):
+-6.0.2 (2014-02-28)
+- Fix timezone crash on systems that can't handle a date prior to the unix epoch in the tz computations.
+- Supply an image for a list-item entry in the Guide that would otherwise be a blank selection area.
+- Improve the auto-stopping of the background-update proc when the addon updates.
+- Localize the day names in AirTime and change " at " to a colon (": ").
+- Fix the day-name computation in AirTime for shows that have no episodes in the upcoming week.
+
+v6.0.1 (2014-02-25):
 - The first wider release of 6.0.x (after limited-release testing of 6.0.0).
 
 v6.0.0 (2014-02-12):

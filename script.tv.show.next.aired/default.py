@@ -23,7 +23,7 @@ __useragent__ = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/
 __datapath__ = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ )
 __resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
 
-sys.path.append(__resource__)
+sys.path = [__resource__] + sys.path
 
 from thetvdbapi import TheTVDB
 from country_lookup import CountryLookup
@@ -55,7 +55,7 @@ elif DATE_FORMAT[0] == 'm':
 elif DATE_FORMAT[0] == 'y':
     DATE_FORMAT = '%y-%m-%d'
 
-MAIN_DB_VER = 2
+MAIN_DB_VER = 3
 COUNTRY_DB_VER = 1
 
 FAILURE_PAUSE = 5*60
@@ -108,10 +108,12 @@ class NextAired:
     def __init__(self):
         self.WINDOW = xbmcgui.Window( 10000 )
         self.set_today()
-        self.days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-        self.local_days = []
+        self.weekdays = []
+        for j in range(11, 18):
+            self.weekdays.append(xbmc.getLocalizedString(j))
+        self.wdays = []
         for j in range(41, 48):
-            self.local_days.append(xbmc.getLocalizedString(j))
+            self.wdays.append(xbmc.getLocalizedString(j))
         self.local_months = []
         for j in range(51, 63):
             self.local_months.append(xbmc.getLocalizedString(j))
@@ -154,7 +156,6 @@ class NextAired:
         self.date = date.today()
         self.datestr = str(self.date)
         self.in_dst = localtime().tm_isdst
-        self.day_limit = str(self.date + timedelta(days=6))
 
     # Returns elapsed seconds since last update failure.
     def get_last_failure(self):
@@ -208,6 +209,9 @@ class NextAired:
                 continue
             if self.WINDOW.getProperty("NextAired.background_id") != my_unique_id:
                 self.close("another background script was started -- stopping older background proc")
+            latest_version = xbmcaddon.Addon().getAddonInfo('version')
+            if latest_version != __version__:
+                self.close("the NextAired version changed -- stopping this obsolete background proc")
             if xbmc.translatePath("special://profile/addon_data/") != profile_dir:
                 self.close("profile directory changed -- stopping background proc")
             try:
@@ -253,9 +257,9 @@ class NextAired:
         ep_list_len = len(ep_list)
         show_dict = (ep_list.pop(0) if ep_list else {})
         self.last_success = (ep_list.pop() if ep_list else None)
-        db_ver = (ep_list.pop(0) if ep_list else 999999)
+        db_ver = (ep_list.pop(0) if ep_list else None)
         self.last_update = (ep_list.pop() if ep_list else self.last_success)
-        if db_ver > MAIN_DB_VER or not self.last_success:
+        if not db_ver or not self.last_success:
             if self.RESET:
                 log("### starting without prior data (DB RESET requested)", level=1)
             elif ep_list_len:
@@ -679,6 +683,10 @@ class NextAired:
                     ep = episodes.pop(0)
             else: # If we have no prior episodes, prepend a "None" episode
                 episode_list.append({ 'id': None })
+                # If we lost prior-episode info, schedule a fix-up event for the next time to see if we can find it again.
+                if prior_data and earliest_id > 1 and prior_data['episodes'][-1]['id']:
+                    earliest_id = 1
+                    current_show['eps_changed'] = (earliest_id, eps_last_updated)
 
             for ep in episodes:
                 cur_ep = {
@@ -686,7 +694,7 @@ class NextAired:
                         'name': normalize(ep, 'EpisodeName'),
                         'number': '%02dx%02d' % (ep['SeasonNumber'], ep['EpisodeNumber']),
                         'aired': ep['FirstAired'].isoformat(),
-                        'wday': self.days[ep['FirstAired'].weekday()]
+                        'wday': ep['FirstAired'].weekday()
                         }
                 episode_list.append(cur_ep)
 
@@ -701,7 +709,7 @@ class NextAired:
                     aired = TheTVDB.convert_date(ep['aired'][:10])
                     aired = local_airtime + timedelta(days = (aired - self.date).days)
                     ep['aired'] = aired.isoformat()
-                    ep['wday'] = self.days[aired.weekday()]
+                    ep['wday'] = aired.weekday()
         else:
             max_eps_utime = 0
             current_show['episodes'] = [{ 'id': None }]
@@ -714,6 +722,8 @@ class NextAired:
             if 'eps_changed' in prior_data and max_eps_utime < eps_last_updated:
                 log("### didn't get latest episode info yet (%d < %d)" % (max_eps_utime, eps_last_updated), level=1)
                 current_show['eps_changed'] = (earliest_id, eps_last_updated)
+        else:
+            last_updated = 0
 
         current_show['last_updated'] = max(show_changed, last_updated)
         current_show['eps_last_updated'] = max(eps_last_updated, max_eps_utime)
@@ -721,7 +731,11 @@ class NextAired:
 
     @staticmethod
     def upgrade_data_format(show_dict, from_ver):
+        if from_ver > MAIN_DB_VER:
+            log("### ERROR: found DB version that is too new for this script to handle (%d > %d)" % (from_ver, MAIN_DB_VER), level=0)
+            sys.exit()
         log("### upgrading DB from version %d to %d" % (from_ver, MAIN_DB_VER), level=1)
+        daymap = {'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4, 'Saturday': 5, 'Sunday': 6}
         for tid, show in show_dict.iteritems():
             if from_ver < 2:
                 # Convert Started into isoformat date:
@@ -736,6 +750,10 @@ class NextAired:
                 # Convert airtime into HH:MM (never AM/PM):
                 airtime = TheTVDB.convert_time(show['Airtime'])
                 show['Airtime'] = airtime.strftime('%H:%M') if airtime is not None else ''
+            for ep in show['episodes']:
+                if from_ver < 3 and 'wday' in ep:
+                    # Convert wday from a string to an index:
+                    ep['wday'] = daymap[ep['wday']]
 
     def set_episode_info(self, label, prefix, when, ep):
         if ep and ep['id']:
@@ -774,7 +792,7 @@ class NextAired:
         if d is None:
             return ''
         tt = d.timetuple()
-        d = "%s, %s %d" % (self.local_days[tt[6]], self.local_months[tt[1]-1], tt[2])
+        d = "%s, %s %d" % (self.wdays[tt[6]], self.local_months[tt[1]-1], tt[2])
         if force_year or tt[0] != self.date.year:
             d += ", %d" % tt[0]
         return d
@@ -824,50 +842,22 @@ class NextAired:
             oldTotal = int(self.WINDOW.getProperty("NextAired.Total"))
         except:
             oldTotal = 1
-        self.WINDOW.setProperty("NextAired.Total" , str(len(self.nextlist)))
-        self.WINDOW.setProperty("NextAired.TodayTotal" , str(self.todayshow))
-        self.WINDOW.setProperty("NextAired.TodayShow" , str(self.todaylist).strip("[]"))
+        # Set the counts to 0 during the time that we're clearing and re-setting the data.
+        self.WINDOW.setProperty("NextAired.Total", "0")
+        self.WINDOW.setProperty("NextAired.TodayTotal", "0")
+        self.WINDOW.setProperty("NextAired.TodayShow", str(self.todaylist).strip("[]"))
         for count in range(oldTotal):
-            self.WINDOW.clearProperty("NextAired.%d.Label" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Thumb" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.AirTime" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Path" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Library" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Status" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.StatusID" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Network" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Started" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Classification" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Genre" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Premiered" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Country" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Runtime" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Fanart" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Art(fanart)" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Art(poster)" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Art(landscape)" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Art(banner)" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Art(clearlogo)" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Art(characterart)" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Art(clearart)" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Today" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.NextDate" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.NextTitle" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.NextNumber" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.NextEpisodeNumber" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.NextSeasonNumber" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.LatestDate" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.LatestTitle" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.LatestNumber" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.LatestEpisodeNumber" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.LatestSeasonNumber" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.Airday" % ( count + 1, ))
-            self.WINDOW.clearProperty("NextAired.%d.ShortTime" % ( count + 1, ))
+            prefix = "NextAired.%d." % (count+1)
+            for prop in ("AirTime", "Airday", "Art(banner)", "Art(characterart)", "Art(clearart)", "Art(clearlogo)", "Art(fanart)", "Art(landscape)", "Art(poster)", "Classification", "Country", "Fanart", "Genre", "Label", "LatestDate", "LatestEpisodeNumber", "LatestNumber", "LatestSeasonNumber", "LatestTitle", "Library", "Network", "NextDate", "NextEpisodeNumber", "NextNumber", "NextSeasonNumber", "NextTitle", "Path", "Premiered", "Runtime", "ShortTime", "Started", "Status", "StatusID", "Thumb", "Today"):
+                self.WINDOW.clearProperty(prefix + prop)
         self.count = 0
+        all_days = __addon__.getSetting("ShowAllTVShowsOnHome") == 'true'
         for current_show in self.nextlist:
-            if ((current_show.get("RFC3339" , "" )[:10] == self.datestr) or (__addon__.getSetting( "ShowAllTVShowsOnHome" ) == 'true')):
+            if all_days or current_show.get("RFC3339", "")[:10] == self.datestr:
                 self.count += 1
                 self.set_labels('windowpropertytoday', current_show)
+        self.WINDOW.setProperty("NextAired.Total", str(len(self.nextlist)))
+        self.WINDOW.setProperty("NextAired.TodayTotal", str(self.todayshow))
 
     def show_gui(self):
         try:
@@ -906,7 +896,7 @@ class NextAired:
                 self.WINDOW.clearProperty("NextAired.Label")
                 self._stop = True
 
-    def return_properties(self,tvshowtitle):
+    def return_properties(self, tvshowtitle):
         ep_list = self.get_list(NEXTAIRED_DB)
         show_dict = (ep_list.pop(0) if ep_list else {})
         log("### return_properties started", level=6)
@@ -915,42 +905,52 @@ class NextAired:
             for tid, item in show_dict.iteritems():
                 if tvshowtitle == item["localname"]:
                     self.set_labels('windowproperty', item)
+                    break
 
     def set_labels(self, infolabel, item, want_ep_ndx = None):
-        art = item.get("art", "")
-        if (infolabel == 'windowproperty') or (infolabel == 'windowpropertytoday'):
-            label = xbmcgui.Window( 10000 )
-            if infolabel == "windowproperty":
-                prefix = 'NextAired.'
-            else:
-                prefix = 'NextAired.' + str(self.count) + '.'
-                if __addon__.getSetting( "ShowAllTVShowsOnHome" ) == 'true':
-                    label.setProperty('NextAired.' + "ShowAllTVShows", "true")
-                else:
-                    label.setProperty('NextAired.' + "ShowAllTVShows", "false")
-            label.setProperty(prefix + "Label", item.get("localname", ""))
-            label.setProperty(prefix + "Thumb", item.get("thumbnail", ""))
-        else:
+        art = item["art"]
+        must_have = None
+        if infolabel == 'listitem':
             label = xbmcgui.ListItem()
             prefix = ''
-            label.setLabel(item.get("localname", ""))
+            label.setLabel(item["localname"])
             label.setThumbnailImage(item.get("thumbnail", ""))
+            tt_array = [ "poster", "banner", "clearlogo" ]
+            try:
+                must_have = tt_array[int(__addon__.getSetting("ThumbType"))]
+            except:
+                pass
+        else:
+            label = xbmcgui.Window(10000)
+            if infolabel == "windowproperty":
+                prefix = 'NextAired.'
+            elif infolabel == "windowpropertytoday":
+                prefix = 'NextAired.' + str(self.count) + '.'
+                label.setProperty("NextAired.ShowAllTVShows", __addon__.getSetting("ShowAllTVShowsOnHome"))
+            else:
+                return # Impossible...
+            label.setProperty(prefix + "Label", item["localname"])
+            label.setProperty(prefix + "Thumb", item.get("thumbnail", ""))
 
         if want_ep_ndx:
             next_ep = item['episodes'][want_ep_ndx]
             latest_ep = item['episodes'][want_ep_ndx-1]
-            airdays = next_ep['wday']
+            airdays = [ next_ep['wday'] ]
         else:
             ep_len = len(item['episodes'])
             next_ep = item['episodes'][1] if ep_len > 1 else None
             latest_ep = item['episodes'][0]
             airdays = []
             if ep_len > 1:
+                date_limit = (TheTVDB.convert_date(item['episodes'][1]['aired'][:10]) + timedelta(days=6)).isoformat()
                 for ep in item['episodes'][1:]:
-                    if ep['aired'][:10] > self.day_limit:
+                    if ep['aired'][:10] > date_limit:
                         break
                     airdays.append(ep['wday'])
-            airdays = ', '.join(airdays)
+        airdays.sort()
+        daynums = ', ' . join([str(wday) for wday in airdays])
+        airdays = ', ' . join([self.weekdays[wday] for wday in airdays])
+
         is_today = 'True' if next_ep and next_ep['aired'][:10] == self.datestr else 'False'
 
         started = TheTVDB.convert_date(item["Started"])
@@ -979,7 +979,7 @@ class NextAired:
         if status_id != '-1':
             status = STATUS[status_id]
 
-        label.setProperty(prefix + "AirTime", '%s at %s' % (airdays, airtime))
+        label.setProperty(prefix + "AirTime", airdays + ": " + airtime if airdays != "" else airtime)
         label.setProperty(prefix + "Path", item.get("path", ""))
         label.setProperty(prefix + "Library", item.get("dbid", ""))
         label.setProperty(prefix + "Status", status)
@@ -995,15 +995,18 @@ class NextAired:
         # Keep old fanart property for backwards compatibility
         label.setProperty(prefix + "Fanart", art.get("fanart", ""))
         # New art properties
-        label.setProperty(prefix + "Art(fanart)", art.get("fanart", ""))
-        label.setProperty(prefix + "Art(poster)", art.get("poster", ""))
-        label.setProperty(prefix + "Art(banner)", art.get("banner", ""))
-        label.setProperty(prefix + "Art(landscape)", art.get("landscape", ""))
-        label.setProperty(prefix + "Art(clearlogo)", art.get("clearlogo", ""))
-        label.setProperty(prefix + "Art(characterart)", art.get("characterart", ""))
-        label.setProperty(prefix + "Art(clearart)", art.get("clearart", ""))
+        for art_type in ('fanart', 'poster', 'banner', 'landscape', 'clearlogo', 'characterart', 'clearart'):
+            art_url = art.get(art_type, "")
+            if must_have and art_url == "" and art_type == must_have:
+                try:
+                    url = "http://opencoder.net/next-aired-missing/" + art_type + "/" + urllib.quote(item["localname"])
+                    art_url = "image://%s.png/" % urllib.quote(url, '')
+                except:
+                    pass
+            label.setProperty("%sArt(%s)" % (prefix, art_type), art_url)
         label.setProperty(prefix + "Today", is_today)
         label.setProperty(prefix + "AirDay", airdays)
+        label.setProperty(prefix + "AirDayNum", daynums)
         label.setProperty(prefix + "ShortTime", airtime)
 
         # This sets NextDate, NextTitle, etc.
@@ -1011,7 +1014,7 @@ class NextAired:
         # This sets LatestDate, LatestTitle, etc.
         self.set_episode_info(label, prefix, 'Latest', latest_ep)
 
-        if want_ep_ndx:
+        if infolabel == 'listitem':
             return label
 
     def close(self , msg ):
