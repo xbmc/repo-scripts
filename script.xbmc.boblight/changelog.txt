@@ -1,3 +1,6 @@
+2.0.8
+- [fix] work around UTF8 encoding problems for dialogs
+
 2.0.7
 - [updated] language files from Transifex
 - [fix] for the newly added categories livetv, tvshow and files the category override didn't work
