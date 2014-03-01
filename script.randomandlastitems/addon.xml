@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.randomandlastitems" name="Random and Last items script" version="2.1.6" provider-name="MikeBZH44|Martijn|`Black">
+<addon id="script.randomandlastitems" name="Random and Last items script" version="2.2.1" provider-name="MikeBZH44, Martijn, `Black">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="xbmc.json" version="6.0.0"/>
@@ -9,12 +9,12 @@
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Random And Last Items script</summary>
         <description lang="en">
-Script to get Random or Last added videos, episodes or albums from the database.
+Script to get Random or Last added movies, episodes, albums or music videos from the database.
 Can optionnaly handle playlist to filter results.
         </description>
         <summary lang="fr">Random And Last Items script</summary>
         <description lang="fr">
-Script qui retourne, soit de manière aléatoire, soit les derniers ajouts, les vidéos, les épisodes ou les albums de la base de données.
+Script qui retourne, soit de manière aléatoire, soit les derniers ajouts, les films, épisodes, albums ou clips de la base de données.
 Il peut optionnellement gerer les playlistes pour filtrer les resultats.
         </description>
         <platform>all</platform>

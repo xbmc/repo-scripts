@@ -28,6 +28,10 @@ Properties return to Home window (id 10000) :
 
 * type=Movie
 
+Script will look at smart playlist type to make the difference between Movies and Music videos
+
+1 - Properties for Movies
+
 %s = Playlist<method>Movie<menu>
 %d = Movie number
 
@@ -50,6 +54,48 @@ Properties return to Home window (id 10000) :
 %s.%d.Rating
 %s.%d.Trailer
 %s.%d.MPAA
+%s.%d.Director
+%s.%d.Art(thumb) (same value as Art(poster) but make skinner life easier ;)
+%s.%d.Art(poster)
+%s.%d.Art(fanart)
+%s.%d.Art(clearlogo)
+%s.%d.Art(clearart)
+%s.%d.Art(landscape)
+%s.%d.Art(banner)
+%s.%d.Art(discart)
+%s.%d.Resume
+%s.%d.PercentPlayed
+%s.%d.Watched
+%s.%d.File
+%s.%d.Path
+%s.%d.Play
+%s.%d.VideoCodec
+%s.%d.VideoResolution
+%s.%d.VideoAspect
+%s.%d.AudioCodec
+%s.%d.AudioChannels
+
+2 - Properties for Music videos
+
+%s = Playlist<method>MusicVideos<menu>
+%d = Movie number
+
+%s.Type = MusicVideo
+%s.Count = Number of movies in library or playlist
+%s.Unwatched = Number of unwatched movies in library or playlist
+%s.Watched = Number of watched movies in library or playlist
+%s.Name = Name of the playlist
+%s.%d.DBID
+%s.%d.Title
+%s.%d.Year
+%s.%d.Genre
+%s.%d.Studio
+%s.%d.Artist
+%s.%d.Album
+%s.%d.Track
+%s.%d.Plot
+%s.%d.Tag
+%s.%d.Runtime
 %s.%d.Director
 %s.%d.Art(thumb) (same value as Art(poster) but make skinner life easier ;)
 %s.%d.Art(poster)
@@ -106,6 +152,7 @@ Properties return to Home window (id 10000) :
 %s.%d.Art(landscape)
 %s.%d.Resume
 %s.%d.Watched
+%s.%d.Premiered
 %s.%d.Runtime
 %s.%d.PercentPlayed
 %s.%d.File

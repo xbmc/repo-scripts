@@ -3,14 +3,10 @@ import re, sys, os, time
 import random
 import urllib
 from operator import itemgetter
-try:
-    import json as simplejson
-    # test json has not loads, call error
-    if not hasattr( simplejson, "loads" ):
-        raise Exception( "Hmmm! Error with json %r" % dir( simplejson ) )
-except Exception, e:
-    print "[RandomAndLastItems] %s" % str( e )
-    import simplejson
+if sys.version_info >=  (2, 7):
+    import json
+else:
+    import simplejson as json
 from xbmcgui import Window
 from xml.dom.minidom import parse
 
@@ -47,6 +43,8 @@ def _getPlaylistType ():
     _type = _doc.getElementsByTagName('smartplaylist')[0].attributes.item(0).value
     if _type == 'movies':
        TYPE = 'Movie'
+    if _type == 'musicvideos':
+       TYPE = 'MusicVideo'
     if _type == 'episodes' or _type == 'tvshows':
        TYPE = 'Episode'
     if _type == 'songs' or _type == 'albums':
@@ -54,7 +52,10 @@ def _getPlaylistType ():
     # get playlist name
     _name = ""
     if _doc.getElementsByTagName('name'):
-        _name = _doc.getElementsByTagName('name')[0].firstChild.nodeValue.encode('utf-8')
+        try:
+            _name = _doc.getElementsByTagName('name')[0].firstChild.nodeValue.encode('utf-8')
+        except:
+            _name = ""
     _setProperty( "%s.Name" % PROPERTY, str( _name ) )
     # get playlist order
     if METHOD == 'Playlist':
@@ -103,10 +104,10 @@ def _getMovies ( ):
     _watched = 0
     # Request database using JSON
     if PLAYLIST == "":
-        PLAYLIST = "videodb://1/2/"
+        PLAYLIST = "videodb://movies/titles/"
     _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "originaltitle", "playcount", "year", "genre", "studio", "country", "tagline", "plot", "runtime", "file", "plotoutline", "lastplayed", "trailer", "rating", "resume", "art", "streamdetails", "mpaa", "director", "dateadded"]}, "id": 1}' %(PLAYLIST))
     _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-    _json_pl_response = simplejson.loads(_json_query)
+    _json_pl_response = json.loads(_json_query)
     # If request return some results
     _files = _json_pl_response.get( "result", {} ).get( "files" )
     if _files:
@@ -116,7 +117,7 @@ def _getMovies ( ):
             if _item['filetype'] == 'directory':
                 _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "originaltitle", "playcount", "year", "genre", "studio", "country", "tagline", "plot", "runtime", "file", "plotoutline", "lastplayed", "trailer", "rating", "resume", "art", "streamdetails", "mpaa", "director", "dateadded"]}, "id": 1}' %(_item['file']))
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-                _json_set_response = simplejson.loads(_json_query)
+                _json_set_response = json.loads(_json_query)
                 _movies = _json_set_response.get( "result", {} ).get( "files" ) or []
                 if not _movies:
                     log("[RandomAndLastItems] ## MOVIESET %s COULD NOT BE LOADED ##" %(_item['file']))
@@ -163,7 +164,7 @@ def _getMovies ( ):
             _count += 1
             _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": {"properties": ["streamdetails"], "movieid":%s }, "id": 1}' %(_movie['id']))
             _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-            _json_query = simplejson.loads(_json_query)
+            _json_query = json.loads(_json_query)
             if _json_query['result'].has_key('moviedetails'):
                 item = _json_query['result']['moviedetails']
                 _movie['streamdetails'] = item['streamdetails']
@@ -191,21 +192,21 @@ def _getMovies ( ):
                 else:
                     runtime = _movie['runtime']
             # Set window properties
-            _setProperty( "%s.%d.DBID"            % ( PROPERTY, _count ), str(_movie.get('id')))
-            _setProperty( "%s.%d.Title"           % ( PROPERTY, _count ), _movie['title'])
-            _setProperty( "%s.%d.OriginalTitle"   % ( PROPERTY, _count ), _movie['originaltitle'])
-            _setProperty( "%s.%d.Year"            % ( PROPERTY, _count ), str(_movie['year']))
-            _setProperty( "%s.%d.Genre"           % ( PROPERTY, _count ), " / ".join(_movie['genre']))
-            _setProperty( "%s.%d.Studio"          % ( PROPERTY, _count ), _movie['studio'][0])
-            _setProperty( "%s.%d.Country"         % ( PROPERTY, _count ), _movie['country'][0])
-            _setProperty( "%s.%d.Plot"            % ( PROPERTY, _count ), _movie['plot'])
-            _setProperty( "%s.%d.PlotOutline"     % ( PROPERTY, _count ), _movie['plotoutline'])
-            _setProperty( "%s.%d.Tagline"         % ( PROPERTY, _count ), _movie['tagline'])
+            _setProperty( "%s.%d.DBID"            % ( PROPERTY, _count ), str(_movie.get('id','')))
+            _setProperty( "%s.%d.Title"           % ( PROPERTY, _count ), _movie.get('title',''))
+            _setProperty( "%s.%d.OriginalTitle"   % ( PROPERTY, _count ), _movie.get('originaltitle',''))
+            _setProperty( "%s.%d.Year"            % ( PROPERTY, _count ), str(_movie.get('year','')))
+            _setProperty( "%s.%d.Genre"           % ( PROPERTY, _count ), " / ".join(_movie.get('genre','')))
+            _setProperty( "%s.%d.Studio"          % ( PROPERTY, _count ), " / ".join(_movie.get('studio','')))
+            _setProperty( "%s.%d.Country"         % ( PROPERTY, _count ), " / ".join(_movie.get('country','')))
+            _setProperty( "%s.%d.Plot"            % ( PROPERTY, _count ), _movie.get('plot',''))
+            _setProperty( "%s.%d.PlotOutline"     % ( PROPERTY, _count ), _movie.get('plotoutline',''))
+            _setProperty( "%s.%d.Tagline"         % ( PROPERTY, _count ), _movie.get('tagline',''))
             _setProperty( "%s.%d.Runtime"         % ( PROPERTY, _count ), runtime)
-            _setProperty( "%s.%d.Rating"          % ( PROPERTY, _count ), str(round(float(_movie['rating']),1)))
-            _setProperty( "%s.%d.Trailer"         % ( PROPERTY, _count ), _movie['trailer'])
-            _setProperty( "%s.%d.MPAA"            % ( PROPERTY, _count ), _movie['mpaa'])
-            _setProperty( "%s.%d.Director"        % ( PROPERTY, _count ), " / ".join(_movie['director']))
+            _setProperty( "%s.%d.Rating"          % ( PROPERTY, _count ), str(round(float(_movie.get('rating','0')),1)))
+            _setProperty( "%s.%d.Trailer"         % ( PROPERTY, _count ), _movie.get('trailer',''))
+            _setProperty( "%s.%d.MPAA"            % ( PROPERTY, _count ), _movie.get('mpaa',''))
+            _setProperty( "%s.%d.Director"        % ( PROPERTY, _count ), " / ".join(_movie.get('director','')))
             _setProperty( "%s.%d.Art(thumb)"      % ( PROPERTY, _count ), art.get('poster',''))
             _setProperty( "%s.%d.Art(poster)"     % ( PROPERTY, _count ), art.get('poster',''))
             _setProperty( "%s.%d.Art(fanart)"     % ( PROPERTY, _count ), art.get('fanart',''))
@@ -217,7 +218,124 @@ def _getMovies ( ):
             _setProperty( "%s.%d.Resume"          % ( PROPERTY, _count ), resume)
             _setProperty( "%s.%d.PercentPlayed"   % ( PROPERTY, _count ), played)
             _setProperty( "%s.%d.Watched"         % ( PROPERTY, _count ), watched)
-            _setProperty( "%s.%d.File"            % ( PROPERTY, _count ), _movie['file'])
+            _setProperty( "%s.%d.File"            % ( PROPERTY, _count ), _movie.get('file',''))
+            _setProperty( "%s.%d.Path"            % ( PROPERTY, _count ), path)
+            _setProperty( "%s.%d.Play"            % ( PROPERTY, _count ), play)
+            _setProperty( "%s.%d.VideoCodec"      % ( PROPERTY, _count ), streaminfo['videocodec'])
+            _setProperty( "%s.%d.VideoResolution" % ( PROPERTY, _count ), streaminfo['videoresolution'])
+            _setProperty( "%s.%d.VideoAspect"     % ( PROPERTY, _count ), streaminfo['videoaspect'])
+            _setProperty( "%s.%d.AudioCodec"      % ( PROPERTY, _count ), streaminfo['audiocodec'])
+            _setProperty( "%s.%d.AudioChannels"   % ( PROPERTY, _count ), str(streaminfo['audiochannels']))
+        if _count != LIMIT:
+            while _count < LIMIT:
+                _count += 1
+                _setProperty( "%s.%d.Title"       % ( PROPERTY, _count ), "" )
+    else:
+        log("[RandomAndLastItems] ## PLAYLIST %s COULD NOT BE LOADED ##" %(PLAYLIST))
+        log("[RandomAndLastItems] JSON RESULT %s" %_json_pl_response)
+
+def _getMusicVideosFromPlaylist ( ):
+    global LIMIT
+    global METHOD
+    global MENU
+    global PLAYLIST
+    global PROPERTY
+    global RESUME
+    global REVERSE
+    global SORTBY
+    global UNWATCHED
+    _result = []
+    _total = 0
+    _unwatched = 0
+    _watched = 0
+    # Request database using JSON
+    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "playcount", "year", "genre", "studio", "album", "artist", "track", "plot", "tag", "runtime", "file", "lastplayed", "resume", "art", "streamdetails", "director", "dateadded"]}, "id": 1}' %(PLAYLIST))
+    _json_query = unicode(_json_query, 'utf-8', errors='ignore')
+    _json_pl_response = json.loads(_json_query)
+    # If request return some results
+    _files = _json_pl_response.get( "result", {} ).get( "files" )
+    if _files:
+        for _item in _files:
+            if xbmc.abortRequested:
+                break
+            _playcount = _item['playcount']
+            if RESUME == 'True':
+                _resume = _item['resume']['position']
+            else:
+                _resume = 0
+            _total += 1
+            if _playcount == 0:
+                _unwatched += 1
+            else:
+                _watched += 1
+            if (UNWATCHED == 'False' and RESUME == 'False') or (UNWATCHED == 'True' and _playcount == 0) or (RESUME == 'True' and _resume != 0):
+                _result.append(_item)
+        _setVideoProperties ( _total, _watched, _unwatched )
+        _count = 0
+        if METHOD == 'Last':
+            _result = sorted(_result, key=itemgetter('dateadded'), reverse=True)
+        elif METHOD == 'Playlist':
+            _result = sorted(_result, key=itemgetter(SORTBY), reverse=REVERSE)
+        else:
+            random.shuffle(_result, random.random)
+        for _musicvid in _result:
+            if xbmc.abortRequested or _count == LIMIT:
+                break
+            _count += 1
+            _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideoDetails", "params": {"properties": ["streamdetails"], "musicvideoid":%s }, "id": 1}' %(_musicvid['id']))
+            _json_query = unicode(_json_query, 'utf-8', errors='ignore')
+            _json_query = json.loads(_json_query)
+            if _json_query['result'].has_key('musicvideodetails'):
+                item = _json_query['result']['musicvideodetails']
+                _musicvid['streamdetails'] = item['streamdetails']
+            if _musicvid['resume']['position'] > 0:
+                resume = "true"
+                played = '%s%%'%int((float(_musicvid['resume']['position']) / float(_musicvid['resume']['total'])) * 100)
+            else:
+                resume = "false"
+                played = '0%'
+            if _musicvid['playcount'] >= 1:
+                watched = "true"
+            else:
+                watched = "false"
+            path = media_path(_musicvid['file'])
+            play = 'XBMC.RunScript(' + __addonid__ + ',musicvideoid=' + str(_musicvid.get('id')) + ')'
+            art = _musicvid['art']
+            streaminfo = media_streamdetails(_musicvid['file'].encode('utf-8').lower(),
+                                             _musicvid['streamdetails'])
+            # Get runtime from streamdetails or from NFO
+            if streaminfo['duration'] != 0:
+                runtime = str(int((streaminfo['duration'] / 60) + 0.5))
+            else:
+                if isinstance(_musicvid['runtime'],int):
+                    runtime = str(int((_musicvid['runtime'] / 60) + 0.5))
+                else:
+                    runtime = _musicvid['runtime']
+            # Set window properties
+            _setProperty( "%s.%d.DBID"            % ( PROPERTY, _count ), str(_musicvid.get('id')))
+            _setProperty( "%s.%d.Title"           % ( PROPERTY, _count ), _musicvid.get('title',''))
+            _setProperty( "%s.%d.Year"            % ( PROPERTY, _count ), str(_musicvid.get('year','')))
+            _setProperty( "%s.%d.Genre"           % ( PROPERTY, _count ), " / ".join(_musicvid.get('genre','')))
+            _setProperty( "%s.%d.Studio"          % ( PROPERTY, _count ), " / ".join(_musicvid.get('studio','')))
+            _setProperty( "%s.%d.Artist"          % ( PROPERTY, _count ), " / ".join(_musicvid.get('artist','')))
+            _setProperty( "%s.%d.Album"           % ( PROPERTY, _count ), _musicvid.get('album',''))
+            _setProperty( "%s.%d.Track"           % ( PROPERTY, _count ), str(_musicvid.get('track','')))
+            _setProperty( "%s.%d.Plot"            % ( PROPERTY, _count ), _musicvid.get('plot',''))
+            _setProperty( "%s.%d.Tag"             % ( PROPERTY, _count ), " / ".join(_musicvid.get('tag','')))
+            _setProperty( "%s.%d.Runtime"         % ( PROPERTY, _count ), runtime)
+            _setProperty( "%s.%d.Director"        % ( PROPERTY, _count ), " / ".join(_musicvid.get('director','')))
+            _setProperty( "%s.%d.Art(thumb)"      % ( PROPERTY, _count ), art.get('poster',''))
+            _setProperty( "%s.%d.Art(poster)"     % ( PROPERTY, _count ), art.get('poster',''))
+            _setProperty( "%s.%d.Art(fanart)"     % ( PROPERTY, _count ), art.get('fanart',''))
+            _setProperty( "%s.%d.Art(clearlogo)"  % ( PROPERTY, _count ), art.get('clearlogo',''))
+            _setProperty( "%s.%d.Art(clearart)"   % ( PROPERTY, _count ), art.get('clearart',''))
+            _setProperty( "%s.%d.Art(landscape)"  % ( PROPERTY, _count ), art.get('landscape',''))
+            _setProperty( "%s.%d.Art(banner)"     % ( PROPERTY, _count ), art.get('banner',''))
+            _setProperty( "%s.%d.Art(discart)"    % ( PROPERTY, _count ), art.get('discart',''))                
+            _setProperty( "%s.%d.Resume"          % ( PROPERTY, _count ), resume)
+            _setProperty( "%s.%d.PercentPlayed"   % ( PROPERTY, _count ), played)
+            _setProperty( "%s.%d.Watched"         % ( PROPERTY, _count ), watched)
+            _setProperty( "%s.%d.File"            % ( PROPERTY, _count ), _musicvid.get('file',''))
             _setProperty( "%s.%d.Path"            % ( PROPERTY, _count ), path)
             _setProperty( "%s.%d.Play"            % ( PROPERTY, _count ), play)
             _setProperty( "%s.%d.VideoCodec"      % ( PROPERTY, _count ), streaminfo['videocodec'])
@@ -249,9 +367,9 @@ def _getEpisodesFromPlaylist ( ):
     _tvshows = 0
     _tvshowid = []
     # Request database using JSON
-    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "studio", "mpaa", "rating", "resume", "runtime", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(PLAYLIST))
+    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "studio", "mpaa", "rating", "resume", "runtime", "tvshowid", "art", "streamdetails", "firstaired", "dateadded"] }, "id": 1}' %(PLAYLIST))
     _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-    _json_pl_response = simplejson.loads(_json_query)
+    _json_pl_response = json.loads(_json_query)
     _files = _json_pl_response.get( "result", {} ).get( "files" )
     if _files:
         for _file in _files:
@@ -260,9 +378,9 @@ def _getEpisodesFromPlaylist ( ):
             if _file['type'] == 'tvshow':
                 _tvshows += 1
                 # Playlist return TV Shows - Need to get episodes
-                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %s, "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "runtime", "tvshowid", "art", "streamdetails", "dateadded"] }, "id": 1}' %(_file['id']))
+                _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %s, "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "runtime", "tvshowid", "art", "streamdetails", "firstaired", "dateadded"] }, "id": 1}' %(_file['id']))
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-                _json_response = simplejson.loads(_json_query)
+                _json_response = json.loads(_json_query)
                 _episodes = _json_response.get( "result", {} ).get( "episodes" )
                 if _episodes:
                     for _episode in _episodes:
@@ -305,7 +423,7 @@ def _getEpisodesFromPlaylist ( ):
             if _episode.get("tvshowid"):
                 _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails", "params": { "tvshowid": %s, "properties": ["title", "fanart", "thumbnail"] }, "id": 1}' %(_episode['tvshowid']))
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-                _json_pl_response = simplejson.loads(_json_query)
+                _json_pl_response = json.loads(_json_query)
                 _tvshow = _json_pl_response.get( "result", {} ).get( "tvshowdetails" )
             '''
             _setEpisodeProperties ( _episode, _count )
@@ -331,9 +449,9 @@ def _getEpisodes ( ):
     _tvshows = 0
     _tvshowid = []
     # Request database using JSON
-    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "studio", "mpaa", "rating", "resume", "runtime", "tvshowid", "art", "streamdetails", "dateadded"]}, "id": 1}')
+    _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "playcount", "season", "episode", "showtitle", "plot", "file", "studio", "mpaa", "rating", "resume", "runtime", "tvshowid", "art", "streamdetails", "firstaired", "dateadded"]}, "id": 1}')
     _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-    _json_pl_response = simplejson.loads(_json_query)
+    _json_pl_response = json.loads(_json_query)
     # If request return some results
     _episodes = _json_pl_response.get( "result", {} ).get( "episodes" )
     if _episodes:
@@ -383,7 +501,7 @@ def _getAlbumsFromPlaylist ( ):
     _songs = 0
     # Request database using JSON
     if PLAYLIST == "":
-        PLAYLIST = "musicdb://4/"
+        PLAYLIST = "musicdb://songs/"
     #_json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "music", "properties": ["title", "description", "albumlabel", "artist", "genre", "year", "thumbnail", "fanart", "rating", "playcount", "dateadded"]}, "id": 1}' %(PLAYLIST))
     if METHOD == 'Random':
         _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "music", "properties": ["dateadded"], "sort": {"method": "random"}}, "id": 1}' %(PLAYLIST))
@@ -397,7 +515,7 @@ def _getAlbumsFromPlaylist ( ):
     else:
         _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "music", "properties": ["dateadded"]}, "id": 1}' %(PLAYLIST))
     _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-    _json_pl_response = simplejson.loads(_json_query)
+    _json_pl_response = json.loads(_json_query)
     # If request return some results
     _files = _json_pl_response.get( "result", {} ).get( "files" )
     if _files:
@@ -410,7 +528,7 @@ def _getAlbumsFromPlaylist ( ):
                 # Album playlist so get path from songs
                 _json_query = xbmc.executeJSONRPC('{"id":1, "jsonrpc":"2.0", "method":"AudioLibrary.GetSongs", "params":{"filter":{"albumid": %s}, "properties":["artistid"]}}' %_albumid)
                 _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-                _json_pl_response = simplejson.loads(_json_query)
+                _json_pl_response = json.loads(_json_query)
                 _result = _json_pl_response.get( "result", {} ).get( "songs" )
                 if _result:
                     _songs += len(_result)
@@ -446,7 +564,7 @@ def _getAlbumsFromPlaylist ( ):
             _albumid = _album['id'];
             _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params":{"albumid": %s, "properties":["title", "description", "albumlabel", "theme", "mood", "style", "type", "artist", "genre", "year", "thumbnail", "fanart", "rating", "playcount"]}, "id": 1}' %_albumid )
             _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-            _json_pl_response = simplejson.loads(_json_query)
+            _json_pl_response = json.loads(_json_query)
             # If request return some results
             _album = _json_pl_response.get( "result", {} ).get( "albumdetails" )
             _setAlbumPROPERTIES ( _album, _count )
@@ -500,7 +618,7 @@ def _setEpisodeProperties ( _episode, _count ):
     if _episode:
         _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodeDetails", "params": {"properties": ["streamdetails"], "episodeid":%s }, "id": 1}' %(_episode['id']))
         _json_query = unicode(_json_query, 'utf-8', errors='ignore')
-        _json_query = simplejson.loads(_json_query)
+        _json_query = json.loads(_json_query)
         if _json_query['result'].has_key('episodedetails'):
             item = _json_query['result']['episodedetails']
             _episode['streamdetails'] = item['streamdetails']
@@ -521,12 +639,12 @@ def _setEpisodeProperties ( _episode, _count ):
         streaminfo = media_streamdetails(_episode['file'].encode('utf-8').lower(),
                                          _episode['streamdetails'])
         _setProperty("%s.%d.DBID"                  % ( PROPERTY, _count ), str(_episode.get('id')))
-        _setProperty("%s.%d.Title"                 % ( PROPERTY, _count ), _episode['title'])
+        _setProperty("%s.%d.Title"                 % ( PROPERTY, _count ), _episode.get('title',''))
         _setProperty("%s.%d.Episode"               % ( PROPERTY, _count ), episode)
         _setProperty("%s.%d.EpisodeNo"             % ( PROPERTY, _count ), episodeno)
         _setProperty("%s.%d.Season"                % ( PROPERTY, _count ), season)
-        _setProperty("%s.%d.Plot"                  % ( PROPERTY, _count ), _episode['plot'])
-        _setProperty("%s.%d.TVshowTitle"           % ( PROPERTY, _count ), _episode['showtitle'])
+        _setProperty("%s.%d.Plot"                  % ( PROPERTY, _count ), _episode.get('plot',''))
+        _setProperty("%s.%d.TVshowTitle"           % ( PROPERTY, _count ), _episode.get('showtitle',''))
         _setProperty("%s.%d.Rating"                % ( PROPERTY, _count ), rating)
         _setProperty("%s.%d.Art(thumb)"            % ( PROPERTY, _count ), art.get('thumb',''))
         _setProperty("%s.%d.Art(tvshow.fanart)"    % ( PROPERTY, _count ), art.get('tvshow.fanart',''))
@@ -542,12 +660,13 @@ def _setEpisodeProperties ( _episode, _count ):
         _setProperty("%s.%d.Art(clearart)"         % ( PROPERTY, _count ), art.get('tvshow.clearart',''))
         _setProperty("%s.%d.Art(landscape)"        % ( PROPERTY, _count ), art.get('tvshow.landscape',''))
         _setProperty("%s.%d.Resume"                % ( PROPERTY, _count ), resume)
-        _setProperty("%s.%d.Watched"               % ( PROPERTY, _count ), _episode['watched'])
+        _setProperty("%s.%d.Watched"               % ( PROPERTY, _count ), _episode.get('watched',''))
         _setProperty("%s.%d.Runtime"               % ( PROPERTY, _count ), runtime)
+        _setProperty("%s.%d.Premiered"             % ( PROPERTY, _count ), _episode.get('firstaired',''))
         _setProperty("%s.%d.PercentPlayed"         % ( PROPERTY, _count ), played)
-        _setProperty("%s.%d.File"                  % ( PROPERTY, _count ), _episode['file'])
-        _setProperty("%s.%d.MPAA"                  % ( PROPERTY, _count ), _episode['mpaa'])
-        _setProperty("%s.%d.Studio"                % ( PROPERTY, _count ), " / ".join(_episode['studio']))
+        _setProperty("%s.%d.File"                  % ( PROPERTY, _count ), _episode.get('file',''))
+        _setProperty("%s.%d.MPAA"                  % ( PROPERTY, _count ), _episode.get('mpaa',''))
+        _setProperty("%s.%d.Studio"                % ( PROPERTY, _count ), " / ".join(_episode.get('studio','')))
         _setProperty("%s.%d.Path"                  % ( PROPERTY, _count ), path)
         _setProperty("%s.%d.Play"                  % ( PROPERTY, _count ), play)
         _setProperty("%s.%d.VideoCodec"            % ( PROPERTY, _count ), streaminfo['videocodec'])
@@ -567,20 +686,20 @@ def _setAlbumPROPERTIES ( _album, _count ):
         if _rating == '48':
             _rating = ''
         play = 'XBMC.RunScript(' + __addonid__ + ',albumid=' + str(_album.get('albumid')) + ')'
-        path = 'musicdb://3/' + str(_album.get('albumid')) + '/'
-        _setProperty("%s.%d.Title"       % ( PROPERTY, _count ), _album['title'])
-        _setProperty("%s.%d.Artist"      % ( PROPERTY, _count ), " / ".join(_album['artist']))
-        _setProperty("%s.%d.Genre"       % ( PROPERTY, _count ), " / ".join(_album['genre']))
-        _setProperty("%s.%d.Theme"       % ( PROPERTY, _count ), " / ".join(_album['theme']))
-        _setProperty("%s.%d.Mood"        % ( PROPERTY, _count ), " / ".join(_album['mood']))
-        _setProperty("%s.%d.Style"       % ( PROPERTY, _count ), " / ".join(_album['style']))
-        _setProperty("%s.%d.Type"        % ( PROPERTY, _count ), _album['type'])
-        _setProperty("%s.%d.Year"        % ( PROPERTY, _count ), str(_album['year']))
-        _setProperty("%s.%d.RecordLabel" % ( PROPERTY, _count ), _album['albumlabel'])
-        _setProperty("%s.%d.Description" % ( PROPERTY, _count ), _album['description'])
+        path = 'musicdb://albums/' + str(_album.get('albumid')) + '/'
+        _setProperty("%s.%d.Title"       % ( PROPERTY, _count ), _album.get('title',''))
+        _setProperty("%s.%d.Artist"      % ( PROPERTY, _count ), " / ".join(_album.get('artist','')))
+        _setProperty("%s.%d.Genre"       % ( PROPERTY, _count ), " / ".join(_album.get('genre','')))
+        _setProperty("%s.%d.Theme"       % ( PROPERTY, _count ), " / ".join(_album.get('theme','')))
+        _setProperty("%s.%d.Mood"        % ( PROPERTY, _count ), " / ".join(_album.get('mood','')))
+        _setProperty("%s.%d.Style"       % ( PROPERTY, _count ), " / ".join(_album.get('style','')))
+        _setProperty("%s.%d.Type"        % ( PROPERTY, _count ), _album.get('type',''))
+        _setProperty("%s.%d.Year"        % ( PROPERTY, _count ), str(_album.get('year','')))
+        _setProperty("%s.%d.RecordLabel" % ( PROPERTY, _count ), _album.get('albumlabel',''))
+        _setProperty("%s.%d.Description" % ( PROPERTY, _count ), _album.get('description',''))
         _setProperty("%s.%d.Rating"      % ( PROPERTY, _count ), _rating)
-        _setProperty("%s.%d.Art(thumb)"  % ( PROPERTY, _count ), _album['thumbnail'])
-        _setProperty("%s.%d.Art(fanart)" % ( PROPERTY, _count ), _album['fanart'])
+        _setProperty("%s.%d.Art(thumb)"  % ( PROPERTY, _count ), _album.get('thumbnail',''))
+        _setProperty("%s.%d.Art(fanart)" % ( PROPERTY, _count ), _album.get('fanart',''))
         _setProperty("%s.%d.Play"        % ( PROPERTY, _count ), play)
         _setProperty("%s.%d.LibraryPath" % ( PROPERTY, _count ), path)
     else:
@@ -639,8 +758,8 @@ def _parse_argv ( ):
                     UNWATCHED = 'False'
             elif 'resume=' in param:
                 RESUME = param.replace('resume=', '')
-        # If playlist= parameter is set and not type= get type= from playlist
-        if TYPE == '' and PLAYLIST != '':
+        # If playlist= parameter is set then get type= from playlist
+        if PLAYLIST != '':
             _getPlaylistType ();
         if PROPERTY == "":
             PROPERTY = "Playlist%s%s%s" % ( METHOD, TYPE, MENU )
@@ -733,5 +852,7 @@ elif TYPE == 'Episode':
         _getEpisodesFromPlaylist()
 elif TYPE == 'Music':
     _getAlbumsFromPlaylist()
+elif TYPE == 'MusicVideo':
+    _getMusicVideosFromPlaylist()
 WINDOW.setProperty( "%s.Loaded" % PROPERTY, "true" )
 log( "Loading Playlist%s%s%s started at %s and take %s" %( METHOD, TYPE, MENU, time.strftime( "%Y-%m-%d %H:%M:%S", time.localtime( START_TIME ) ), _timeTook( START_TIME ) ) )

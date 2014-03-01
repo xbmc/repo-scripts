@@ -1,3 +1,19 @@
+v2.2.1
+- Fix when smart playlist name is not set
+- Fix when property is not defined (ie no studio for a movie)
+
+v2.2.0
+- Fix for Gotham special:// paths
+
+v2.1.9
+- Add %s.d.Premiered for episodes
+
+v2.1.8
+- Use json instead of simplejson for python 2.7 and up.
+
+v2.1.7
+- Add properties for Music Videos playlist, see README.txt
+
 v2.1.6
 - Add %s.Loaded property to indicate the script is done loading the playlist
 - Fix %s.Name property to get smart playlist name (crash when no name was set up or containing accented characters)
