@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sonos" name="Sonos" version="1.0.2" provider-name="robwebset">
+<addon id="script.sonos" name="Sonos" version="1.0.3" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="1.1.0"/>
@@ -10,19 +10,38 @@
 	<extension point="xbmc.service" library="service.py" start="login">
 		<provides>executable</provides>
 	</extension>
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>audio</provides>
+	</extension>
 	<extension point="xbmc.python.module" library="lib" />
 	<extension point="xbmc.addon.metadata">
 	
+		<summary lang="el">Χειριστήριο Sonos</summary>
+	
 		<summary lang="en">Sonos Controller</summary>
 	
+		<summary lang="nl">Sonos controller</summary>
+	
+		<summary lang="pl">Sonos Controller</summary>
+	
+		<summary lang="pt">Controlador Sonos</summary>
+	
+		<description lang="el">Υποστηρίζεται απλός χειρισμός Sonos, και ειδοποιήσεις από το XBMC. Ελέγξτε την ιστοσελίδα του wiki για περισσότερες πληροφορίες.</description>
+	
 		<description lang="en">Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details.</description>
-		
+	
+		<description lang="nl">Ondersteund simpele sonos controles en notificaties van XBMC. Kijk bij de wiki voor meer details.</description>
+	
+		<description lang="pl">Obsługuje proste sterowanie Sonos Controller i powiadomienia z XBMC.  Więcej szczegółów znajdziesz w wiki.</description>
+	
+		<description lang="pt">Suporta Controlo Sonos simples e notificações através do XBMC. Verifique o wiki para mais detalhes.</description>
+	
 		<platform>all</platform>
 	
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-
+	
 		<forum>http://forum.xbmc.org/showthread.php?tid=183020</forum>
-
+	
 		<source>http://robwebset.googlecode.com/svn/trunk/script.sonos/</source>
 	</extension>
 </addon>

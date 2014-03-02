@@ -92,3 +92,70 @@ msgctxt "#32017"
 msgid "Use Test Data"
 msgstr ""
 
+msgctxt "#32018"
+msgid "Plugin"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr ""
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr ""
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr ""
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr ""
+
+
+
+

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import xml.etree.cElementTree as XML
+# Need to use ElementTree, not cElementTree as it is a bit flakey in XBMC
+# import xml.etree.cElementTree as XML
+import xml.etree.ElementTree as XML
 
 import requests
 import select
@@ -877,7 +879,8 @@ class SoCo(object):
         out = self.get_music_library_information('playlists', start, max_items)
         return out
 
-    def get_music_library_information(self, search_type, start=0, max_items=100):
+    # NOTE: Added sub-category suport to version 0.6 of Soco
+    def get_music_library_information(self, search_type, start=0, max_items=100, sub_category=''):
         """ Retrieve information about the music library
 
         Arguments:
@@ -897,8 +900,8 @@ class SoCo(object):
         following exceptions all has the following keys 'title', 'res',
         'class', 'parent_id', 'restricted', 'id', 'protocol_info'. The
         exceptions are; that the playlists item in the folder search has no res
-        item; the album and track items has an extra 'creator' field and the
-        track items has additional 'album', 'album_art_uri' and
+        item; the album and track items has an extra 'creator' and 'album_art_uri'
+        field and the track items has additional 'album', and
         'original_track_number' fields.
         
         Raises SoCoException (or a subclass) upon errors.
@@ -914,7 +917,10 @@ class SoCo(object):
                               'composers': 'A:COMPOSER', 'tracks': 'A:TRACKS',
                               'playlists': 'A:PLAYLISTS'}
         search = search_translation[search_type]
-        body = GET_MUSIC_LIB_TEMPLATE.format(search=search, start=start,
+        # NOTE: Added sub-category suport to version 0.6 of Soco
+        if (sub_category != '') and (sub_category[0] != '/'):
+            sub_category = '/' + sub_category
+        body = GET_MUSIC_LIB_TEMPLATE.format(search=search, sub_category=sub_category, start=start,
                                              max_items=max_items)
         response = self.__send_command(CONTENT_DIRECTORY_ENDPOINT,
                                        BROWSE_ACTION, body)
@@ -929,11 +935,14 @@ class SoCo(object):
         result_xml = XML.fromstring(really_utf8(dom.findtext('.//Result')))
         # Information for the tags to parse, [name, ns]
         tag_info = [['title', 'dc'],['class', 'upnp']]
-        if search_type == 'tracks':
+        # If a sub-category is given, then get all the values
+        if (search_type == 'tracks') or (sub_category != ''):
             tag_info += [['albumArtURI', 'upnp'],['creator', 'dc'],
                          ['album','upnp'], ['originalTrackNumber', 'upnp']]
-        elif search_type == 'albums':
+        elif (search_type == 'albums') or (search_type == 'album_artists'):
             tag_info.append(['creator', 'dc'])
+            # Albums also have album art
+            tag_info.append(['albumArtURI', 'upnp'])
         for container in result_xml:
             item = self.__parse_container(container, tag_info)
             # Append the item to the list
@@ -953,7 +962,8 @@ class SoCo(object):
         for name, ns in tag_info:
             keyname = camel_to_underscore(name)
             item[keyname] = None  # Default value
-            found_text = container.findtext('.' + NS[ns] + name)
+            # NOTE: Changed as previous will not work with python 2.6 (previously missing //)
+            found_text = container.findtext('.//' + NS[ns] + name)
             if found_text is not None:
                 item[keyname] = really_utf8(found_text)                
 
@@ -962,7 +972,8 @@ class SoCo(object):
             item['original_track_number'] = int(item['original_track_number'])
 
         # The res tag is special and not there for folders searches
-        res = container.find('.' + NS[''] + 'res')
+        # NOTE: Changed as previous will not work with python 2.6 (previously missing //)
+        res = container.find('.//' + NS[''] + 'res')
         if res is not None:
             item['res'] = really_utf8(res.text)
             item['protocol_info'] = res.attrib['protocolInfo']
@@ -1281,7 +1292,7 @@ SET_PLAYER_NAME_BODY_TEMPLATE = '"<u:SetZoneAttributes xmlns:u="urn:schemas-upnp
 
 SET_PLAYER_NAME_RESPONSE ='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:SetZoneAttributesResponse xmlns:u="urn:schemas-upnp-org:service:DeviceProperties:1"></u:SetZoneAttributesResponse></s:Body></s:Envelope>'
 
-GET_MUSIC_LIB_TEMPLATE = '<u:Browse xmlns:u="urn:schemas-upnp-org:service:ContentDirectory:1"><ObjectID>{search}</ObjectID><BrowseFlag>BrowseDirectChildren</BrowseFlag><Filter>dc:title,res,dc:creator,upnp:artist,upnp:album,upnp:albumArtURI</Filter><StartingIndex>{start}</StartingIndex><RequestedCount>{max_items}</RequestedCount><SortCriteria></SortCriteria></u:Browse>'
+GET_MUSIC_LIB_TEMPLATE = '<u:Browse xmlns:u="urn:schemas-upnp-org:service:ContentDirectory:1"><ObjectID>{search}{sub_category}</ObjectID><BrowseFlag>BrowseDirectChildren</BrowseFlag><Filter>dc:title,res,dc:creator,upnp:artist,upnp:album,upnp:albumArtURI</Filter><StartingIndex>{start}</StartingIndex><RequestedCount>{max_items}</RequestedCount><SortCriteria></SortCriteria></u:Browse>'
 NS = {'dc': '{http://purl.org/dc/elements/1.1/}',
       'upnp': '{urn:schemas-upnp-org:metadata-1-0/upnp/}',
       '': '{urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/}'}

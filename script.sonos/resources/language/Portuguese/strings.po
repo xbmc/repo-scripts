@@ -1,0 +1,89 @@
+# XBMC Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Portuguese (http://www.transifex.com/projects/p/xbmc-addons/language/pt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
+msgstr "Suporta Controlo Sonos simples e notificações através do XBMC. Verifique o wiki para mais detalhes."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "Endereço IP"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Activar Notificações (requer reiniciação)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Exibir Notificação Durante (Segundos)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Frequência de Verificação de Notificação (Segundos)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Não Exibir Notificação Durante Reprodução de Vídeo"
+
+msgctxt "#32007"
+msgid "Use Default XBMC Notification Dialog"
+msgstr "Usar Janela de Notificação Padrão do XBMC"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Depuração"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Activar o registo de depuração"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Coluna"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Notificações"
+
+msgctxt "#32012"
+msgid "Advanced"
+msgstr "Avançado"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Procurar Colunas Sonos..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Não foram encontradas colunas, por favor introduza manualmente o seu endereço IP"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Controlador"
+
+msgctxt "#32016"
+msgid "Refresh Interval (Seconds)"
+msgstr "Intervalo de Actualização (Segundos)"
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr "Usar Dados de Teste"

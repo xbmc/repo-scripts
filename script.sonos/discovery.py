@@ -7,7 +7,6 @@ import xbmcaddon
 import xbmcgui
 
 __addon__     = xbmcaddon.Addon(id='script.sonos')
-__addonid__   = __addon__.getAddonInfo('id')
 __cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
 __version__   = __addon__.getAddonInfo('version')
 __resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
@@ -16,17 +15,11 @@ __lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8
 sys.path.append(__resource__)
 sys.path.append(__lib__)
 
-from soco import SoCo
-from soco import SonosDiscovery
-from soco import SoCoException
 
+# Import the common settings
+from settings import Settings
+from settings import log
 
-def log(txt):
-    if __addon__.getSetting( "logEnabled" ) == "true":
-        if isinstance (txt,str):
-            txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
-        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 log('script version %s started' % __version__)
 
@@ -42,13 +35,14 @@ if __name__ == '__main__':
     xbmc.executebuiltin( "ActivateWindow(busydialog)" )
     
     # Get all the devices and look at each one, logging it's IP address
-    sonos_devices = SonosDiscovery()
+    sonos_devices = Settings.getSonosDiscovery()
     
     try:
         ipAddresses = sonos_devices.get_speaker_ips()
         log("SonosDiscovery: IP Addresses = %s" % str(ipAddresses))
     except:
         log("SonosDiscovery: Exception when getting devices")
+        log("SonosDiscovery: %s" % traceback.format_exc())
         ipAddresses = []
 
     speakers = {}
@@ -56,7 +50,7 @@ if __name__ == '__main__':
     for ip in ipAddresses:
         log("SonosDiscovery: Getting info for IP address %s" % ip)
         # Pass in the IP address of the Sonos Speaker
-        device = SoCo(ip)
+        device = Settings.getSonosDevice(ip)
 
         playerInfo = None
 
@@ -66,6 +60,7 @@ if __name__ == '__main__':
             playerInfo = device.get_speaker_info()
         except:
             log("SonosDiscovery: IP address %s is not a valid player" % ip)
+            log("SonosDiscovery: %s" % traceback.format_exc())
             continue
 
         # If player  info was found, then print it out
@@ -95,5 +90,5 @@ if __name__ == '__main__':
             log("SonosDiscovery: Entry chosen = %s" % selectedDisplayName)
             chosenIPAddress = speakers.get(selectedDisplayName)
             # Set the selected item into the settings
-            __addon__.setSetting("ipAddress", chosenIPAddress)
+            Settings.setIPAddress(chosenIPAddress)
 

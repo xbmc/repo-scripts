@@ -1,0 +1,89 @@
+# XBMC Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
+msgstr "Ondersteund simpele sonos controles en notificaties van XBMC. Kijk bij de wiki voor meer details."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "IPadres"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Activeer notificaties (herstart vereist)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Notificatie weergeven voor (seconden)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Notificatie controle frequentie (seconden)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Geen notificatie tonen als een video wordt afgespeeld"
+
+msgctxt "#32007"
+msgid "Use Default XBMC Notification Dialog"
+msgstr "Gebruik standaard XBMC notificatie dialoog"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Fout registratie"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Foutregistratie inschakelen"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Luidspreker"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Meldingen"
+
+msgctxt "#32012"
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Zoek voor Sonos luidsprekers..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Geen luidsprekers gevonden, voer je IP adres manueel in"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "controller"
+
+msgctxt "#32016"
+msgid "Refresh Interval (Seconds)"
+msgstr "Verversingsinterval (seconden)"
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr "Gebruik testgegevens "

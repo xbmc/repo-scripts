@@ -13,6 +13,9 @@
 		<setting id="notifNotIfVideoPlaying" enable="eq(-3,true)" type="bool" label="32006" default="true"/>
 		<setting id="xbmcNotifDialog" enable="eq(-4,true)" type="bool" label="32007" default="false"/>
 	</category>
+	<category label="32018">
+		<setting id="batchSize" label="32019" type="slider" default="100" range="10,10,1000" option="int"/>
+	</category>
 	<category label="32012">
 		<setting id="logEnabled" type="bool" label="32009" default="false"/>
 		<setting id="useTestData" type="bool" label="32017" default="false"/>

@@ -18,40 +18,15 @@ __lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8
 sys.path.append(__resource__)
 sys.path.append(__lib__)
 
-from soco import SoCo
-from soco import SonosDiscovery
-from soco import SoCoException
+
+# Import the common settings
+from settings import Settings
+from settings import log
 
 # Import the Mock Sonos class for testing where there is no live Sonos system
-from mocksonos import TestMockSonos
-
-
-def log(txt):
-    if __addon__.getSetting( "logEnabled" ) == "true":
-        if isinstance (txt,str):
-            txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
-        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+#from mocksonos import TestMockSonos
 
 log('script version %s started' % __version__)
-
-##############################
-# Stores Addon Settings
-##############################
-class Settings():
-
-    @staticmethod
-    def getIPAddress():
-        return __addon__.getSetting("ipAddress")
-
-    @staticmethod
-    def getRefreshInterval():
-        # Convert to milliseconds before returning
-        return int(float(__addon__.getSetting("refreshInterval")) * 1000)
-
-    @staticmethod
-    def useTestData():
-        return __addon__.getSetting("useTestData") == 'true'
 
 
 #####################################################
@@ -99,11 +74,89 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
 
     # Handle the close action
     def onAction(self, action):
-        # ACTION_PREVIOUS_MENU        10
-        # ACTION_NAV_BACK             92
-        if (action == 10) or (action == 92):
+        # actioncodes from https://github.com/xbmc/xbmc/blob/master/xbmc/guilib/Key.h
+        ACTION_PREVIOUS_MENU = 10
+        ACTION_NAV_BACK      = 92
+        
+        # For remote control
+        ACTION_PAUSE          = 12
+        ACTION_STOP           = 13
+        ACTION_NEXT_ITEM      = 14
+        ACTION_PREV_ITEM      = 15
+        # The following 4 are active forward and back
+        ACTION_FORWARD        = 16
+        ACTION_REWIND         = 17
+        ACTION_PLAYER_FORWARD = 77
+        ACTION_PLAYER_REWIND  = 78
+
+        ACTION_PLAYER_PLAY    = 79
+        ACTION_VOLUME_UP      = 88
+        ACTION_VOLUME_DOWN    = 89
+        ACTION_MUTE           = 91
+
+
+        if (action == ACTION_PREVIOUS_MENU) or (action == ACTION_NAV_BACK):
             log("SonosControllerWindow: Close Action received: %s" % str(action))
             self.close()
+        else:
+            # Handle remote control commands
+            if( (action == ACTION_PLAYER_PLAY) or (action == ACTION_PAUSE) ):
+                # Get the initial state of the device
+                playStatus = sonosDevice.get_current_transport_info()
+                
+                # Play/pause is a toggle, so pause if playing
+                if playStatus != None:
+                    if playStatus['current_transport_state'] == 'PLAYING':
+                        self.onAction(SonosControllerWindow.BUTTON_PAUSE)
+                    else:
+                        self.onAction(SonosControllerWindow.BUTTON_PLAY)
+            elif( action == ACTION_STOP ):
+                self.onAction(SonosControllerWindow.BUTTON_STOP)
+            elif( action == ACTION_NEXT_ITEM ):
+                self.onAction(SonosControllerWindow.BUTTON_NEXT)
+            elif( action == ACTION_PREV_ITEM ):
+                self.onAction(SonosControllerWindow.BUTTON_PREVIOUS)
+            elif( action == ACTION_MUTE ):
+                # Check if currently muted
+                if sonosDevice.mute() == 0:
+                    self.onAction(SonosControllerWindow.BUTTON_MUTED)
+                else:
+                    self.onAction(SonosControllerWindow.BUTTON_NOT_MUTED)
+            elif( action == ACTION_VOLUME_UP ):
+                # Get the current slider position
+                volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
+                currentSliderPosition = int(volumeSlider.getPercent())
+                if currentSliderPosition < 100:
+                    # Bump the volume by one
+                    volumeSlider.setPercent(currentSliderPosition + 1)
+                    self.onAction(SonosControllerWindow.SLIDER_VOLUME)
+            elif( action == ACTION_VOLUME_DOWN ):
+                # Get the current slider position
+                volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
+                currentSliderPosition = int(volumeSlider.getPercent())
+                if currentSliderPosition > 0:
+                    # Bump the volume down by one
+                    volumeSlider.setPercent(currentSliderPosition - 1)
+                    self.onAction(SonosControllerWindow.SLIDER_VOLUME)
+            elif( (action == ACTION_FORWARD) or (action == ACTION_PLAYER_FORWARD) ):
+                # Get the current slider position
+                seekSlider = self.getControl(SonosControllerWindow.SLIDER_SEEK)
+                currentSliderPosition = int(seekSlider.getPercent())
+                if currentSliderPosition < 99:
+                    # Bump the slider by one
+                    seekSlider.setPercent(currentSliderPosition + 1)
+                    self.onAction(SonosControllerWindow.SLIDER_SEEK)
+            elif( (action == ACTION_REWIND) or (action == ACTION_PLAYER_REWIND) ):
+                # Get the current slider position
+                seekSlider = self.getControl(SonosControllerWindow.SLIDER_SEEK)
+                currentSliderPosition = int(seekSlider.getPercent())
+                if currentSliderPosition > 0:
+                    # Bump the slider down by one
+                    seekSlider.setPercent(currentSliderPosition - 1)
+                    self.onAction(SonosControllerWindow.SLIDER_SEEK)
+
+            
+
 
     # Handle the close event - make sure we set the flag so we know it's been closed
     def close(self):
@@ -220,7 +273,6 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
 
     # Handle the operations where the user clicks on a button
     def onClick(self, controlID):
-
         # Play button has been clicked
         if controlID == SonosControllerWindow.BUTTON_PLAY:
             log("SonosControllerWindow: Play Requested")
@@ -398,32 +450,26 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
 
 if __name__ == '__main__':    
     
-    ipAddress = Settings.getIPAddress()
-
-    log("Sonos: IP Address = %s" % ipAddress)
-
-    # Make sure the IP Address has been set
-    if ipAddress != "0.0.0.0":
-        sonosDevice = SoCo(ipAddress)
-
-        if Settings.useTestData():
-            sonosDevice = TestMockSonos()
-
+    sonosDevice = Settings.getSonosDevice()
+    
+    # Make sure a Sonos speaker was found
+    if sonosDevice != None:
 
         sonosCtrl = SonosControllerWindow.createSonosControllerWindow(sonosDevice)
-        sonosCtrl.show()
         
         # Record the fact that the Sonos controller window is displayed
         xbmcgui.Window(10000).setProperty( "SonosControllerShowing", "true" )
 
         try:
+            sonosCtrl.show()
+
             while (not sonosCtrl.isClose()) and (not xbmc.abortRequested):
                 sonosCtrl.updateDisplay()
                 # Wait a second or so before updating
                 xbmc.sleep(Settings.getRefreshInterval())
         except:
             # Failed to connect to the Sonos Speaker
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), ("Error from speaker %s" % ipAddress))
+            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), ("Error from speaker %s" % Settings.getIPAddress()))
             log("Sonos: Exception Details: %s" % traceback.format_exc())
 
         sonosCtrl.close()

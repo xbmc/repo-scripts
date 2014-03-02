@@ -17,54 +17,9 @@ __lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8
 sys.path.append(__resource__)
 sys.path.append(__lib__)
 
-from soco import SoCo
-from soco import SonosDiscovery
-from soco import SoCoException
-
-# Import the Mock Sonos class for testing where there is no live Sonos system
-from mocksonos import TestMockSonos
-
-def log(txt):
-    if __addon__.getSetting( "logEnabled" ) == "true":
-        if isinstance (txt,str):
-            txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
-        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
-
-##############################
-# Stores Addon Settings
-##############################
-class Settings():
-
-    @staticmethod
-    def getIPAddress():
-        return __addon__.getSetting("ipAddress")
-
-    @staticmethod
-    def isNotificationEnabled():
-        return __addon__.getSetting("notifEnabled") == 'true'
-
-    @staticmethod
-    def getNotificationDisplayDuration():
-        # Convert to milliseconds before returning
-        return int(float(__addon__.getSetting("notifDisplayDuration"))) * 1000
-
-    @staticmethod
-    def getNotificationCheckFrequency():
-        # Value set in seconds
-        return int(float(__addon__.getSetting("notifCheckFrequency")))
-
-    @staticmethod
-    def stopNotifIfVideoPlaying():
-        return __addon__.getSetting("notifNotIfVideoPlaying") == 'true'
-
-    @staticmethod
-    def useXbmcNotifDialog():
-        return __addon__.getSetting("xbmcNotifDialog") == 'true'
-
-    @staticmethod
-    def useTestData():
-        return __addon__.getSetting("useTestData") == 'true'
+# Import the common settings
+from settings import Settings
+from settings import log
 
 
 ##########################################################
@@ -150,65 +105,56 @@ if __name__ == '__main__':
                     # show the notification immediately
                     justStartedService = True
                 else:
-                    log("SonosService: Notification wait time expired")
-                    ipAddress = Settings.getIPAddress()
+                    log("SonosService: Notification wait time expired")        
+                    sonosDevice = Settings.getSonosDevice()
                     
-                    log("SonosService: IP Address = %s" % ipAddress)
+                    # Make sure a Sonos speaker was found
+                    if sonosDevice != None:                      
+                        try:
+                            # Get the current track that is being played at the moment
+                            track = sonosDevice.get_current_track_info()
+                            
+                            # Record if the sonos is currently playing
+                            isActive = True
+                            
+                            # Check to see if a new track is playing before displaying the popup
+                            if (track['uri'] == '') or (track['title'] == ''):
+                                track = None
+                                # Also make the last track value None as we don't want
+                                # this seen as a change
+                                lastDisplayedTrack = None
+                            elif justStartedService == True:
+                                # Check if the sonos is currently playing
+                                playStatus = sonosDevice.get_current_transport_info()
+                                if (playStatus == None) or (playStatus['current_transport_state'] != 'PLAYING'):
+                                    isActive = False
         
-                    # Make sure the IP Address has been set
-                    if ipAddress != "0.0.0.0":
-                        sonosDevice = SoCo(ipAddress)
+                            # Check to see if the playing track has changed
+                            if (track != None) and ((lastDisplayedTrack == None) or (track['uri'] != lastDisplayedTrack['uri'])):
+                                # Update the last displayed track to the current one
+                                lastDisplayedTrack = track
+                                # Only display the dialog if it is playing
+                                if isActive:
+                                    if Settings.useXbmcNotifDialog():
+                                        log("SonosService: Currently playing artist = %s, album = %s, track = %s" % (track['artist'], track['album'], track['title']))
+                             
+                                        # Get the album art if it is set (Default to the Sonos icon)
+                                        albumArt = __icon__
+                                        if track['album_art'] != "":
+                                            albumArt = track['album_art']
+                            
+                                        xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (track['artist'], track['title'], Settings.getNotificationDisplayDuration(), albumArt))
+                                    else:
+                                        sonosPopup = SonosPlayingPopup.createSonosPlayingPopup(track)
+                                        sonosPopup.showPopup()
+                                        del sonosPopup
+                        except:
+                            # Connection failure - may just be a network glitch - so don't exit
+                            log("SonosService: Error from speaker %s" % Settings.getIPAddress())
+                            log("SonosService: %s" % traceback.format_exc())
 
-                        if Settings.useTestData():
-                            sonosDevice = TestMockSonos()
-                      
-                        # Should now have a single speaker set to "device"
-                        if sonosDevice != None:
-                            try:
-                                # Get the current track that is being played at the moment
-                                track = sonosDevice.get_current_track_info()
-                                
-                                # Record if the sonos is currently playing
-                                isActive = True
-                                
-                                # Check to see if a new track is playing before displaying the popup
-                                if (track['uri'] == '') or (track['title'] == ''):
-                                    track = None
-                                    # Also make the last track value None as we don't want
-                                    # this seen as a change
-                                    lastDisplayedTrack = None
-                                elif justStartedService == True:
-                                    # Check if the sonos is currently playing
-                                    playStatus = sonosDevice.get_current_transport_info()
-                                    if (playStatus == None) or (playStatus['current_transport_state'] != 'PLAYING'):
-                                        isActive = False
-            
-                                # Check to see if the playing track has changed
-                                if (track != None) and ((lastDisplayedTrack == None) or (track['uri'] != lastDisplayedTrack['uri'])):
-                                    # Update the last displayed track to the current one
-                                    lastDisplayedTrack = track
-                                    # Only display the dialog if it is playing
-                                    if isActive:
-                                        if Settings.useXbmcNotifDialog():
-                                            log("SonosService: Currently playing artist = %s, album = %s, track = %s" % (track['artist'], track['album'], track['title']))
-                                 
-                                            # Get the album art if it is set (Default to the Sonos icon)
-                                            albumArt = __icon__
-                                            if track['album_art'] != "":
-                                                albumArt = track['album_art']
-                                
-                                            xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (track['artist'], track['title'], Settings.getNotificationDisplayDuration(), albumArt))
-                                        else:
-                                            sonosPopup = SonosPlayingPopup.createSonosPlayingPopup(track)
-                                            sonosPopup.showPopup()
-                                            del sonosPopup
-                            except:
-                                # Connection failure - may just be a network glitch - so don't exit
-                                log("SonosService: Error from speaker %s" % ipAddress)
-                                log("SonosService: %s" % traceback.format_exc())
-
-                            # No longer the first start
-                            justStartedService = False
+                        # No longer the first start
+                        justStartedService = False
     
                 # Reset the timer for the next check
                 timeUntilNextCheck = Settings.getNotificationCheckFrequency()

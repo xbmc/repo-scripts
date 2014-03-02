@@ -1,0 +1,89 @@
+# XBMC Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
+msgstr "Υποστηρίζεται απλός χειρισμός Sonos, και ειδοποιήσεις από το XBMC. Ελέγξτε την ιστοσελίδα του wiki για περισσότερες πληροφορίες."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "Διεύθυνση IP"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Ενεργοποίηση Ειδοποιήσεων (Απαιτείται Επανεκκίνηση)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Εμφάνιση Ειδοποίησης Για (Δευτ.)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Συχνότητα Ειδοποιήσεων Ελέγχου (Δευτ.)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Να Μην Εμφανίζονται Ειδοποιήσεις κατά την Αναπαραγωγή Βίντεο"
+
+msgctxt "#32007"
+msgid "Use Default XBMC Notification Dialog"
+msgstr "Χρήση Προεπιλεγμένων Ειδοποιήσεων του XBMC"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Καταγραφή σφαλμάτων"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Ενεργοποίηση καταγραφής σφαλμάτων"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Ηχείο"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Ειδοποιήσεις"
+
+msgctxt "#32012"
+msgid "Advanced"
+msgstr "Για προχωρημένους"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Αναζήτηση Για Ηχεία Sonos..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Δε βρέθηκαν ηχεία, εισαγάγετε τη διεύθυνση IP χειροκίνητα"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Χειριστήριο"
+
+msgctxt "#32016"
+msgid "Refresh Interval (Seconds)"
+msgstr "Χρονικό Διάστημα Ενημέρωσης (Δευτ.)"
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr "Χρήση ΔοκιμαστικώνΔεδομένων"

@@ -1,3 +1,9 @@
+v1.0.3
+- Fix issue with ElementTree on some systems
+- Add plugin support for browsing the music library
+- Add plugin support for view and edit the current play queue
+- Initial remote control support for mini controller - but not perfect
+
 v1.0.2
 - Mini Sonos controller added with album art
 
