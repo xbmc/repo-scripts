@@ -5,21 +5,21 @@ How to use this addon in your skin:
 I) Startup.xml:
 RunScript(script.tv.show.next.aired,silent=True)
 
-the script will scan your library and tries to fetch next aired info for every show.
-there's no need to specify an alarm, the script will set one internally, it runs every day at midnight.
+The script will scan your library and tries to fetch next aired info for every show.
+There is no need to specify an alarm -- the script will will run a background update at regular intervals.
 
-for shows that are airing today, the script will set the window properties listed below.
+For shows that are airing today, the script will set the window properties listed below.
 
 Window(Home).Property(NextAired.%d.*):
 Label               (tv show name)
 Thumb               (tv show icon)
-AirTime             (eg. 'Thursday at 09:00 PM')
+AirTime             (eg. 'Wednesday, Thursday: 09:00 PM')
 Path                (tv show path)
-Library             (eg. videodb://2/2/1/)
+Library             (eg. videodb://2/2/1/ or videodb://tvshows/titles/1/)
 Status              (eg. 'New Series'/'Returning Series'/'Cancelled/Ended')
 StatusID            (id of the status)
 Network             (name of the tv network that's airing the show)
-Started             (airdate of the first episode, eg. 'Sep/24/2007')
+Started             (airdate of the first episode, eg. 09/24/07, 'Mon, Sep 24, 2007', etc.)
 Classification      (type of show; N.B. not currently supported)
 Genre               (genre of the show)
 Premiered           (year the first episode was aired, eg. '1999')
@@ -37,7 +37,7 @@ LatestTitle         (name of the last episode)
 LatestNumber        (season/episode number of the last episode)
 LatestEpisodeNumber (episode number of the last episode)
 LatestSeasonNumber  (season number of the last episode)
-AirDay              (day of the week the show is aired, eg 'Tuesday')
+AirDay              (day(s) of the week the show is aired, eg 'Tuesday')
 ShortTime           (time the show is aired, eg. '08:00 PM')
 Art(poster)         (tv show poster)
 Art(banner)         (tv show banner)
@@ -131,6 +131,10 @@ Window(home).Property(TVGuide.PreviewThumbs)            (1=user selected to show
 all other id's and properties in the default script window are optional and not required by the script.
 
 
-IV) force an update of the nextaired database, this will rescan your tv shows and re-scrape all nextaired info:
+IV) To force an update of the nextaired database ahead of its next scheduled time:
 RunScript(script.tv.show.next.aired,force=True)
-the force update option is also available in the addon settings.
+
+To force an update as well as reset all the existing data (forcing a fresh scan of everything) use the reset option:
+RunScript(script.tv.show.next.aired,reset=True)
+
+The force update and reset options are also available in the addon settings.

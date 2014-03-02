@@ -1,3 +1,9 @@
+-6.0.3 (2014-03-02)
+- Fix a potential script crash with a background query not triggering a DB update (if it is needed).
+- Make the new date format a setting boolean.
+- Help the user find missing artwork for their list-item icons.
+- A few more minor improvements to the error-handling logic.
+
 -6.0.2 (2014-02-28)
 - Fix timezone crash on systems that can't handle a date prior to the unix epoch in the tz computations.
 - Supply an image for a list-item entry in the Guide that would otherwise be a blank selection area.

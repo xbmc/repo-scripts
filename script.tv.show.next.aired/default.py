@@ -6,9 +6,9 @@ from dateutil import tz
 from operator import attrgetter, itemgetter
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 if sys.version_info < (2, 7):
-    import simplejson
+    import simplejson as json
 else:
-    import json as simplejson
+    import json
 # http://mail.python.org/pipermail/python-list/2009-June/540579.html
 import _strptime
 
@@ -27,10 +27,13 @@ sys.path = [__resource__] + sys.path
 
 from thetvdbapi import TheTVDB
 from country_lookup import CountryLookup
+from fanarttv import FanartTV
 
 NEXTAIRED_DB = 'next.aired.db'
 COUNTRY_DB = 'country.db'
 OLD_FILES = [ 'nextaired.db', 'next_aired.db', 'canceled.db', 'cancelled.db' ]
+LISTITEM_ART = [ 'poster', 'banner', 'clearlogo' ] # This order MUST match the settings.xml list!!
+USEFUL_ART = LISTITEM_ART + [ 'characterart', 'clearart', 'fanart', 'landscape' ]
 
 STATUS = { '0' : __language__(32201),
            '1' : __language__(32202),
@@ -54,6 +57,12 @@ elif DATE_FORMAT[0] == 'm':
     DATE_FORMAT = '%m-%d-%y'
 elif DATE_FORMAT[0] == 'y':
     DATE_FORMAT = '%y-%m-%d'
+
+leftover_re = re.compile(r"%[a-z]")
+NICE_DATE_FORMAT = xbmc.getRegion('datelong').lower()
+for xx, yy in (('%a', '%(wday)s'), ('%b', '%(month)s'), ('%d', '%(day)s'), ('%y', '%(year)s'), ('%m', '%(mm)s')):
+    NICE_DATE_FORMAT = NICE_DATE_FORMAT.replace(xx, yy)
+NICE_DATE_FORMAT = leftover_re.sub('%(unk)s', NICE_DATE_FORMAT)
 
 MAIN_DB_VER = 3
 COUNTRY_DB_VER = 1
@@ -118,10 +127,12 @@ class NextAired:
         for j in range(51, 63):
             self.local_months.append(xbmc.getLocalizedString(j))
         self.ampm = xbmc.getCondVisibility('substring(System.Time,Am)') or xbmc.getCondVisibility('substring(System.Time,Pm)')
+        self.improve_dates = __addon__.getSetting("ImproveDates") == 'true'
         # "last_success" is when we last successfully made it through an update pass without fetch errors.
         # "last_update" is when we last successfully marked-up the shows to note which ones need an update.
         # "last_failure" is when we last failed to fetch data, with failure_cnt counting consecutive failures.
         self.last_success = self.last_update = self.last_failure = self.failure_cnt = 0
+        self.last_art_scan = 0
         self._parse_argv()
         footprints(self.SILENT != "", self.FORCEUPDATE, self.RESET)
         self.check_xbmc_version()
@@ -155,6 +166,7 @@ class NextAired:
         self.now = time()
         self.date = date.today()
         self.datestr = str(self.date)
+        self.this_year_regex = re.compile(r", %d\b" % self.date.year)
         self.in_dst = localtime().tm_isdst
 
     # Returns elapsed seconds since last update failure.
@@ -166,7 +178,6 @@ class NextAired:
 
     def set_last_failure(self):
         self.last_failure = self.now
-        self.failure_cnt += 1
         self.get_last_failure()
         self.WINDOW.setProperty("NextAired.last_failure", str(self.last_failure))
 
@@ -224,8 +235,10 @@ class NextAired:
             next_chk = self.now + 20
             if self.datestr != this_day or self.is_time_for_update(update_every):
                 if self.update_data(update_every):
+                    self.failure_cnt = 0
                     this_day = self.datestr
                 else:
+                    self.failure_cnt += 1
                     next_chk = self.now + FAILURE_PAUSE * min(self.failure_cnt, 24)
                 self.nextlist = [] # Discard the in-memory data until the next update
             else:
@@ -259,6 +272,7 @@ class NextAired:
         self.last_success = (ep_list.pop() if ep_list else None)
         db_ver = (ep_list.pop(0) if ep_list else None)
         self.last_update = (ep_list.pop() if ep_list else self.last_success)
+        self.last_art_scan = (ep_list.pop(0) if ep_list else 0)
         if not db_ver or not self.last_success:
             if self.RESET:
                 log("### starting without prior data (DB RESET requested)", level=1)
@@ -274,6 +288,9 @@ class NextAired:
         self.RESET = False # Make sure we don't honor this multiple times.
 
         return (show_dict, self.now - self.last_update)
+
+    def save_data(self, show_dict):
+        self.save_file([show_dict, MAIN_DB_VER, self.last_art_scan, self.last_update, self.last_success], NEXTAIRED_DB)
 
     def update_data(self, update_after_seconds):
         self.nextlist = []
@@ -350,6 +367,7 @@ class NextAired:
 
         if locked_for_update:
             log("### starting data update", level=1)
+            self.last_failure = 0
             tvdb = TheTVDB('1D62F2F90030C444', 'en', want_raw = True)
             # This typically asks TheTVDB for an update-zip file and tweaks the show_dict to note needed updates.
             tv_up = tvdb_updater(tvdb)
@@ -357,13 +375,20 @@ class NextAired:
             if need_full_scan or got_update:
                 self.last_update = self.now
             elif not got_update:
+                self.set_last_failure()
                 self.max_fetch_failures = 0
             tv_up = None
+            if self.SILENT != "" and self.now - self.last_art_scan >= 24*60*60 - 5*60:
+                art_rescan_type = LISTITEM_ART[int(__addon__.getSetting("ThumbType"))]
+                log("### Time to rescan for missing %s artwork" % art_rescan_type, level=2)
+            else:
+                art_rescan_type = None
         else:
             tvdb = None # We don't use this unless we're locked for the update.
             need_full_scan = False
             # A max-fetch of 0 disables all updating.
             self.max_fetch_failures = 0
+            art_rescan_type = None
 
         title_dict = {}
         for tid, show in show_dict.iteritems():
@@ -386,25 +411,28 @@ class NextAired:
         id_re = re.compile(r"http%3a%2f%2fthetvdb\.com%2f[^']+%2f([0-9]+)-")
         for show in TVlist:
             count += 1
+            name = show[0]
+            art = show[2]
             percent = int(float(count * 100) / total_show)
             if self.SILENT != "":
-                self.WINDOW.setProperty("NextAired.bgnd_status", "%f|%d|%s" % (time(), percent, show[0]))
+                self.WINDOW.setProperty("NextAired.bgnd_status", "%f|%d|%s" % (time(), percent, name))
             elif locked_for_update and self.max_fetch_failures > 0:
-                DIALOG_PROGRESS.update( percent , __language__(32102) , "%s" % show[0] )
+                DIALOG_PROGRESS.update(percent, __language__(32102), name)
                 if DIALOG_PROGRESS.iscanceled():
                     DIALOG_PROGRESS.close()
                     xbmcgui.Dialog().ok(__language__(32103),__language__(32104))
+                    self.set_last_failure()
                     self.max_fetch_failures = 0
-            log( "### %s" % show[0] )
+            log("### %s" % name)
             current_show = {
-                    "localname": show[0],
+                    "localname": name,
                     "path": show[1],
-                    "art": show[2],
+                    "art": {},
                     "dbid": show[3],
                     "thumbnail": show[4],
                     }
             # Try to figure out what the tvdb number is by using the art URLs and the imdbnumber value
-            m2 = id_re.search(str(show[2]))
+            m2 = id_re.search(str(art))
             m2_num = int(m2.group(1)) if m2 else 0
             m4 = id_re.search(show[4])
             m4_num = int(m4.group(1)) if m4 else 0
@@ -414,7 +442,7 @@ class NextAired:
                 # Most shows will be in agreement on the id when the scraper is using thetvdb.
                 tid = m5_num
             else:
-                old_id = title_dict.get(current_show["localname"], 0)
+                old_id = title_dict.get(name, 0)
                 if old_id and (m2_num == old_id or m4_num == old_id):
                     tid = old_id
                 elif m2_num and m2_num == m4_num:
@@ -423,24 +451,45 @@ class NextAired:
                 elif old_id:
                     tid = old_id
                 else:
-                    tid = 0 # We'll query it from thetvdb.com
+                    if self.max_fetch_failures <= 0:
+                        continue
+                    tid = self.find_show_id(tvdb, name)
+                    if tid == 0:
+                        continue
 
-            try:
-                prior_data = show_dict[tid]
+            prior_data = show_dict.get(tid, None)
+            if prior_data:
                 if 'unused' not in prior_data:
                     continue # How'd we get a duplicate?? Skip it...
                 del prior_data['unused']
                 while len(prior_data['episodes']) > 1 and prior_data['episodes'][1]['aired'][:10] < self.datestr:
                     prior_data['episodes'].pop(0)
-            except:
-                prior_data = None
+
+            for art_type in USEFUL_ART:
+                xart = art.get(art_type, None)
+                fudged_flag = 'fudged.' + art_type
+                if not xart:
+                    if prior_data and fudged_flag in prior_data['art']:
+                        xart = prior_data['art'][art_type]
+                    elif art_rescan_type and art_rescan_type == art_type:
+                        log("### grabbing %s for %s" % (art_type, name), level=2)
+                        try:
+                            xart = FanartTV.find_artwork(tid, art_type)
+                            if xart:
+                                log("### found missing %s for %s" % (art_type, name), level=1)
+                        except:
+                            pass
+                    if xart:
+                        current_show['art'][fudged_flag] = True
+                if xart:
+                    current_show['art'][art_type] = xart
 
             if self.max_fetch_failures > 0:
                 tid = self.check_show_info(tvdb, tid, current_show, prior_data)
             else:
                 tid = -tid
-            if tid <= 0:
-                if not prior_data or tid == 0:
+            if tid < 0:
+                if not prior_data:
                     continue
                 for item in prior_data:
                     if item not in current_show:
@@ -454,7 +503,7 @@ class NextAired:
         # If we did a lot of work, make sure we save it prior to doing anything else.
         # This ensures that a bug in the following code won't make us redo everything.
         if need_full_scan and locked_for_update:
-            self.save_file([show_dict, MAIN_DB_VER, self.last_update, self.last_success], NEXTAIRED_DB)
+            self.save_data(show_dict)
 
         if show_dict:
             log("### data available", level=5)
@@ -479,9 +528,11 @@ class NextAired:
             log("### no current show data...", level=5)
 
         if locked_for_update:
-            if self.max_fetch_failures > 0:
+            if not self.last_failure:
                 self.last_success = self.now
-            self.save_file([show_dict, MAIN_DB_VER, self.last_update, self.last_success], NEXTAIRED_DB)
+                if art_rescan_type:
+                    self.last_art_scan = self.now
+            self.save_data(show_dict)
             log("### data update finished", level=1)
 
             if self.SILENT != "":
@@ -491,19 +542,15 @@ class NextAired:
             else:
                 DIALOG_PROGRESS.close()
                 self.WINDOW.clearProperty("NextAired.user_lock")
-            if self.max_fetch_failures <= 0:
-                self.set_last_failure()
-            else:
-                self.failure_cnt = 0
 
         self.FORCEUPDATE = False
-        return True
+        return not self.last_failure
 
     def check_xbmc_version(self):
         # retrieve current installed version
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["version", "name"]}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         log("### %s" % json_response)
         try:
             self.xbmc_version = json_response['result']['version']['major']
@@ -518,7 +565,7 @@ class NextAired:
         while not xbmc.abortRequested:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "file", "thumbnail", "art", "imdbnumber"], "sort": { "method": "title" } }, "id": 1}')
             json_query = unicode(json_query, 'utf-8', errors='ignore')
-            json_response = simplejson.loads(json_query)
+            json_response = json.loads(json_query)
             log("### %s" % json_response)
             if 'result' in json_response:
                 break
@@ -541,24 +588,26 @@ class NextAired:
         log( "### list: %s" % TVlist )
         return TVlist
 
+    def find_show_id(self, tvdb, show_name):
+        log("### searching for thetvdb ID by name - %s" % show_name, level=2)
+        try:
+            show_list = tvdb.get_matching_shows(show_name)
+        except Exception, e:
+            log('### ERROR returned by get_matching_shows(): %s' % e, level=0)
+            show_list = None
+
+        if not show_list:
+            log("### no match found", level=2)
+            return 0
+
+        got_id, got_title, got_tt_id = show_list[0]
+        log("### found id of %s" % got_id, level=2)
+        return int(got_id)
+
     def check_show_info(self, tvdb, tid, current_show, prior_data):
         name = current_show['localname']
         log("### check if %s is up-to-date" % name, level=4)
-        if tid == 0:
-            log("### searching for thetvdb ID by name - %s" % name, level=2)
-            try:
-                show_list = tvdb.get_matching_shows(name)
-            except Exception, e:
-                log('### ERROR returned by get_matching_shows(): %s' % e, level=0)
-                show_list = None
-            if not show_list:
-                log("### no match found", level=2)
-                return 0
-            got_id, got_title, got_tt_id = show_list[0]
-            tid = int(got_id)
-            log("### found id of %d" % tid, level=2)
-        else:
-            log("### thetvdb id = %d" % tid, level=5)
+        log("### thetvdb id = %d" % tid, level=5)
         # If the prior_data isn't in need of an update, use it unchanged.
         if prior_data:
             earliest_id, eps_last_updated = prior_data.get('eps_changed', (None, 0))
@@ -588,6 +637,7 @@ class NextAired:
                     break
                 except Exception, e:
                     log('### ERROR returned by get_show_and_episodes(): %s' % e, level=0)
+                    self.set_last_failure()
                     self.max_fetch_failures -= 1
                     result = None
             if result:
@@ -603,6 +653,7 @@ class NextAired:
                     break
                 except Exception, e:
                     log('### ERROR returned by get_show(): %s' % e, level=0)
+                    self.set_last_failure()
                     self.max_fetch_failures -= 1
                     show = None
             episodes = None
@@ -791,10 +842,12 @@ class NextAired:
     def nice_date(self, d, force_year = False):
         if d is None:
             return ''
+        if not self.improve_dates:
+            return d.strftime(DATE_FORMAT)
         tt = d.timetuple()
-        d = "%s, %s %d" % (self.wdays[tt[6]], self.local_months[tt[1]-1], tt[2])
-        if force_year or tt[0] != self.date.year:
-            d += ", %d" % tt[0]
+        d = NICE_DATE_FORMAT % {'year': tt[0], 'mm': tt[1], 'month': self.local_months[tt[1]-1], 'day': tt[2], 'wday': self.wdays[tt[6]], 'unk': '??'}
+        if not force_year and tt[0] == self.date.year:
+            d = self.this_year_regex.sub('', d)
         return d
 
     @staticmethod
@@ -878,8 +931,7 @@ class NextAired:
     def run_backend(self):
         self._stop = False
         self.previousitem = ''
-        ep_list = self.get_list(NEXTAIRED_DB)
-        show_dict = (ep_list.pop(0) if ep_list else {})
+        show_dict, elapsed_secs = self.load_data()
         if not show_dict:
             self._stop = True
         while not self._stop:
@@ -897,8 +949,7 @@ class NextAired:
                 self._stop = True
 
     def return_properties(self, tvshowtitle):
-        ep_list = self.get_list(NEXTAIRED_DB)
-        show_dict = (ep_list.pop(0) if ep_list else {})
+        show_dict, elapsed_secs = self.load_data()
         log("### return_properties started", level=6)
         if show_dict:
             self.WINDOW.clearProperty("NextAired.Label")
@@ -915,9 +966,8 @@ class NextAired:
             prefix = ''
             label.setLabel(item["localname"])
             label.setThumbnailImage(item.get("thumbnail", ""))
-            tt_array = [ "poster", "banner", "clearlogo" ]
             try:
-                must_have = tt_array[int(__addon__.getSetting("ThumbType"))]
+                must_have = LISTITEM_ART[int(__addon__.getSetting("ThumbType"))]
             except:
                 pass
         else:

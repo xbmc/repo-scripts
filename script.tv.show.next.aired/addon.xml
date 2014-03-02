@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tv.show.next.aired" name="TV Show - Next Aired" version="6.0.2" provider-name="Ppic|Frost|ronie|`Black|phil65|WayneD">
+<addon id="script.tv.show.next.aired" name="TV Show - Next Aired" version="6.0.3" provider-name="Ppic|Frost|ronie|`Black|phil65|WayneD">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>

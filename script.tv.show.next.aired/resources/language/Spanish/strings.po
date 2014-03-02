@@ -84,6 +84,10 @@ msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Mostrar todos los Proximos episodios en inicio (Requiere soporte en Skin)"
 
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr ""
+
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
 msgstr "TV Show - Next Aired"
