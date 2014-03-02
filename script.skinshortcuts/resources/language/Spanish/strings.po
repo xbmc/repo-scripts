@@ -1,0 +1,141 @@
+# XBMC Media Center language file
+# Addon Name: Skin Shortcuts
+# Addon id: script.skinshortcuts
+# Addon Provider: Unfledged
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Añadir"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Eliminar"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Mover arriba"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Mover abajo"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Lista de reproducción de video"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Lista de reproducción de música"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Favorito"
+
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Complemento"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Lista de reproducción mixta"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Programa"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Complemento de video"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Complemento de música"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Complemento de imágenes"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<Nada>"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Videos"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Películas"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "Series TV"
+
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Videoclips"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Música"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Imágenes"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programas"
+
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Temporizadores"
+
+msgctxt "#32024"
+msgid "Custom shortcut"
+msgstr "Acceso directo personalizado"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Común"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Vídeoteca"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Fonoteca"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Reproducir DVD"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Lista de reproducción"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Acción"

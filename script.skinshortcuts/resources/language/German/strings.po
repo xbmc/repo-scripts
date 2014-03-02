@@ -1,0 +1,105 @@
+# XBMC Media Center language file
+# Addon Name: Skin Shortcuts
+# Addon id: script.skinshortcuts
+# Addon Provider: Unfledged
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Hinzufügen"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Löschen"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Nach oben"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Nach unten"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Video Playlist"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Musik Playlist"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Favorit"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Programm"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Videos"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Filme"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "Serien"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Musik Videos"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Musik"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Bilder"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programme"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Zeitmesser"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Üblich"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Video-Bibliothek"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Musik-Bibliothek"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "DVD abspielen"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Playlisten"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Aktion"

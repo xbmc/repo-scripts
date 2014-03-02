@@ -1,11 +1,22 @@
+v0.2.2
+- New optional method of listing shortcuts via includes file
+- Option to allow user to browse for image or use playlist as background
+- Option to allow user to choose playlist as widget
+- Overrides and defaults now limitable by groupname
+- Fix for custom video nodes
+- Bug fixes and stability improvements
+- Updated language files from Transifex
+
+v0.2.1
+- Development revision
+
 v0.2.0
 - Removed check for settings shortcut (skins are now recommended to always provide alternative settings access)
 - Video library shortcuts are loaded from video library node files (test)
 - Video and music playlists are now grouped together
 - Option to use edit control for label and action in management dialog
 - Live TV renamed to PVR
-- Support for managing widgets, backgrounds
-- Support for custom menu lists in skinsettings.xml
+- Support for managing widgets, backgrounds, custom properties
 - Shortcuts with overriden images and override files are kept in memory to speed up listings
 - Submenu shortcuts are now all loaded at once, with visibility conditions for switching lists
 - Improved utf-8 support

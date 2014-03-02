@@ -1,0 +1,86 @@
+Skinning the management dialog
+------------------------------
+
+1. List of controls
+
+To customize the look of the dialog displayed to allow the user to customize shortcuts, your skin needs to provide 'script-skinsettings.xml'. It supports the following controls:
+
+Primary controls:
+
+ID	Type	Description
+101	Label	Current type of shortcut being viewed
+102	Button	Change type of shortcut being viewed (down)
+103	Button	Change type of shortcut being viewed (up)
+111	List	Available shortcuts for the current type being viewed
+211	List	Shortcuts the user has chosen for the [groupname]
+301	Button	Add a new shortcut
+302	Button	Delete shortcut
+303	Button	Move shortcut up
+304	Button	Move shortcut down
+305	Button	Change shortcut label (if control 402 is not included)
+306	Button	Change shortcut thumbnail
+307	Button	Change shortcut action (if control 403 is not included)
+308	Button	Reset shortcuts
+
+Additional controls:
+
+309 Button  Change widget (See "Advanced Usage")
+310 Button  Change background (See "Advanced Usage")
+311 Label	Selected widget name
+312 Label	Selected background name
+
+401 Button	Alternative method to set a shortcut
+404 Button	Set a custom property
+405 Button	Launch management dialog for submenu / additional menus
+
+You can set a label on any of these controls EXCEPT 101, 311 and 312. If no label is set, Skin Shortcuts will provide a label.
+
+You MUST include a label if you include controls 404 and 405.
+
+Most of these controls are optional (though it is recommended to include them), but you MUST include control 211. Controls 101, 102, 103 and 111 all rely on the others being present.
+
+
+2. Alternative method to set a shortcut
+
+Rather than using list 111 to let the user select a shortcut, you can include button 401. When clicked it will show the user, via the standard Select dialog, first a list of the available categories of shortcuts, then the shortcuts within that category.
+
+You can also use the button to go straight to the list of shortcuts for a category by first setting the window property "category", then sending a click to the button. The available categories are:
+
+	common		(Items commonly found on a main menu)
+	video		(Video library)
+	music		(Music library)
+	playlists	(Users playlists)
+	favourites	(Users favourites)
+	addons		(Programs, video add-ons, music add-ons, picture add-ons)
+	
+Note, you must still include all controls in the 100 range in your xml file. However, they do not have to be visible to the user. After a click to 401 has been registered, the window property "category" will be cleared.
+
+
+3. Set a custom property
+
+If you want to attach a custom property to a menu item, you can include button 404.
+
+To set a property, first set the following window properties
+
+	customProperty	The name you are giving to the custom property
+	customValue		The value of the custom property (to clear a property, don't set this property)
+	
+Then send a click to control 404. The two properties will be cleared afterwards.
+
+You can set defaults for your custom property in your overrides.xml file. See resources/Advanced Usage.txt - "Overrides.xml".
+
+
+4. Launch management dialog for submenu / additional menus
+
+You can give the users a way to launch the management dialog for the submenu or an additional menu from the management dialog.
+
+To do this include the control 405. Clicking it will launch the management dialog for the submenu of the selected item.
+
+To launch the management dialog for an additional sub menu, first set the window property "level", then send a click to 405. The property will be cleared afterwards.
+
+You will likely only want to include this when editing the main menu. You can check the window property "groupname" for the value "mainmenu" to only display it when relevant.
+
+
+5. Limit controls to main menu only
+
+You may wish to only show some of these controls when the user is editing the main menu only, not a submenu. To do this, check the window property "groupname" for the value "mainmenu".

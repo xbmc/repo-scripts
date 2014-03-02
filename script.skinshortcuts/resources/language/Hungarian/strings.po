@@ -1,0 +1,101 @@
+# XBMC Media Center language file
+# Addon Name: Skin Shortcuts
+# Addon id: script.skinshortcuts
+# Addon Provider: Unfledged
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Hozzáadás"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Törlés"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Videó lejátszási lista"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Zene lejátszási lista"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Kedvenc"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Program"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Videók"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Filmek"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Videóklipek"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Zene"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Képek"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programok"
+
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Időzítések"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Videó könytár"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Zene könyvtár"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Lemez lejátszása"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Lejátszási lista"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Akció"

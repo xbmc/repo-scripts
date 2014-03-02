@@ -1,0 +1,85 @@
+# XBMC Media Center language file
+# Addon Name: Skin Shortcuts
+# Addon id: script.skinshortcuts
+# Addon Provider: Unfledged
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Norwegian (http://www.transifex.com/projects/p/xbmc-addons/language/no/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Legg til"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Slett"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Videospillelister"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Musikkspillelister"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Favoritt"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Videoer"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "TV Serier"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Musikk"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Bilder"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programmer"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Timers"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Videobibliotek"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Musikkbibliotek"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Spill av DVD"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Spilleliste"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Action"

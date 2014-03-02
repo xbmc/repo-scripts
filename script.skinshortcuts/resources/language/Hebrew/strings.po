@@ -1,0 +1,89 @@
+# XBMC Media Center language file
+# Addon Name: Skin Shortcuts
+# Addon id: script.skinshortcuts
+# Addon Provider: Unfledged
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "הוסף"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "מחיקה"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "הזז מעלה"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "הזז מטה"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "רשימות השמעה לוידאו"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "רשימות השמעה למוזיקה"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "מועדף"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "סרטונים"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "סדרות"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "קליפים"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "מוסיקה"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "תמונות"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "תוכנות"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "ספריית וידאו"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "ספריית מוזיקה "
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "רשימת השמעה"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "פעולה"

@@ -1,0 +1,89 @@
+# XBMC Media Center language file
+# Addon Name: Skin Shortcuts
+# Addon id: script.skinshortcuts
+# Addon Provider: Unfledged
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Russian (http://www.transifex.com/projects/p/xbmc-addons/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Добавить"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Удалить"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Видео плейлист"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Музыкальный плейлист"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Избранное"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Видео"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Фильмы"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "ТВ передачи"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Муз. видео"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Музыка"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Фото"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Программы"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Таймеры"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Библиотека видео"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Музыкальная медиатека"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Проиграть DVD"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Плейлист"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Боевик"

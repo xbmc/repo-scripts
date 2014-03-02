@@ -1,0 +1,101 @@
+# XBMC Media Center language file
+# Addon Name: Skin Shortcuts
+# Addon id: script.skinshortcuts
+# Addon Provider: Unfledged
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "添加"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "删除"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "视频播放列表 "
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "音乐播放列表"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "收藏"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "程序"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "视频"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "电影"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "剧集"
+
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "音乐电视"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "音乐"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "图片"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "程序"
+
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "定时器"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "视频资料库"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "音乐资料库"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "播放DVD"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "播放列表"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "动作"

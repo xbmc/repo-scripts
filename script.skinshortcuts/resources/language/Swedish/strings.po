@@ -1,0 +1,93 @@
+# XBMC Media Center language file
+# Addon Name: Skin Shortcuts
+# Addon id: script.skinshortcuts
+# Addon Provider: Unfledged
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "Lägg till"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Ta bort"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Spellista (Video)"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Spellista (Musik)"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Favorit"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "VIDEO"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Movies"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "TV Shows"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Musikvideor"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Musik"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "BILDER"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programs"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Timers"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Allmänna"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Videobibliotek"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Musikbibliotek"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Spela DVD"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Spellista"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Aktion"

@@ -1,0 +1,105 @@
+# XBMC Media Center language file
+# Addon Name: Skin Shortcuts
+# Addon id: script.skinshortcuts
+# Addon Provider: Unfledged
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "Add"
+msgstr "추가"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "삭제"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "비디오 재생목록"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "음악 재생목록"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "즐겨찾기"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "프로그램"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "비디오"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "영화"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "TV 쇼"
+
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "뮤직비디오"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "음악"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "사진"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "프로그램"
+
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "타이머"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "공통"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "비디오 라이브러리"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "음악 라이브러리"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "DVD 재생"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "재생목록"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "액션"
