@@ -1,3 +1,12 @@
+v.1.1.13 (March 03,2014)
+ - updated filter feature to filter by rating limit for all trailers (perviously only iTunes trailers were filtered)
+
+v.1.1.12 (February 12,2014)
+- added feature to play trailers in groups of n with x amount of delay between groups.
+
+v.1.1.11 (February 10,2014)
+- added feature to filter tmdb trailers by New DVD Releases
+
 v.1.10 (February, 07, 2014)
 - fixed issue playing library trailers
 
@@ -14,7 +23,7 @@ v.1.1.7 (January, 5, 2014) :
 -moved hide info option from library to general settings
 
 v.1.1.6 (December 31,2013) :
-- added feature to select tyep fo traielrs form iTunes, Coming Soon, Just Added, Most Popular,  Exclusive and All
+- added feature to select type of trailers form iTunes, Coming Soon, Just Added, Most Popular,  Exclusive and All
 
 v.1.1.5 (Decembeor 30,2013) :
 - added feature to filter iTunes trailers. you can filter by selected genre(s), and by rating limit. so only play family movies that are rated G for example.

@@ -128,15 +128,15 @@ def checkRating(rating):
     if do_nr == 'true':nr='NR'
     if rating_limit=='0':passed=True
     if rating_limit=='1':
-        rating_limit=['G',nr,nyr]
+        rating_limit=('G',nr,nyr)
     if rating_limit=='2':
-        rating_limit=['G','PG',nr,nyr]
+        rating_limit=('G','PG',nr,nyr)
     if rating_limit=='3':
-        rating_limit=['G','PG','PG-13',nr,nyr]
+        rating_limit=('G','PG','PG-13',nr,nyr)
     if rating_limit=='4':
-        rating_limit=['G','PG','PG-13','R',nr,nyr]
+        rating_limit=('G','PG','PG-13','R',nr,nyr)
     if rating_limit=='5':
-        rating_limit=['G','PG','PG-13','R','NC-17',nr,nyr]
+        rating_limit=('G','PG','PG-13','R','NC-17','NC17',nr,nyr)
     if rating in rating_limit:passed=True
     return passed
     
@@ -316,7 +316,9 @@ def getLibraryTrailers(genre):
         for trailer in tmp_trailers:
             trailer['source'] = 'library'
             trailer['type'] = 'Trailer'
-            lib_trailers.append(trailer)
+            mpaa=get_mpaa(trailer)
+            if checkRating(mpaa):
+                lib_trailers.append(trailer)
     return lib_trailers
 
 def getFolderTrailers(path):
@@ -348,7 +350,9 @@ def getTmdbTrailers():
     if addon.getSetting("tmdb_source") == '1':source='top_rated'
     if addon.getSetting("tmdb_source") == '2':source='upcoming'
     if addon.getSetting("tmdb_source") == '3':source='now_playing'
-    if addon.getSetting("tmdb_source") == '4':
+    if addon.getSetting("tmdb_source") == '4':source='dvd'
+    if addon.getSetting("tmdb_source") == '5':source='all'
+    if source=='all':
         data = {}
         data['api_key'] = '99e8b7beac187a857152f57d67495cf4'
         url_values = urllib.urlencode(data)
@@ -363,6 +367,31 @@ def getTmdbTrailers():
             id=id+1
             dict={'trailer':'tmdb','id': id}
             tmdbTrailers.append(dict)
+    elif source=='dvd':
+        data={}
+        data['apikey']='99dgtphe3c29y85m2g8dmdmt'
+        data['country'] = 'us'
+        url_values = urllib.urlencode(data)
+        url = 'http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json'
+        full_url = url + '?' + url_values
+        req = urllib2.Request(full_url)
+        response = urllib2.urlopen(req).read()
+        infostring = json.loads(response)
+        for movie in infostring['movies']:
+            data={}
+            data['api_key']='99e8b7beac187a857152f57d67495cf4'
+            data['query']=movie['title']
+            data['year']=movie['year']
+            url_values = urllib.urlencode(data)
+            url = 'https://api.themoviedb.org/3/search/movie'
+            full_url = url + '?' + url_values
+            req = urllib2.Request(full_url)
+            infostring = urllib2.urlopen(req).read()
+            infostring = json.loads(infostring)
+            for m in infostring['results']:
+                id=m['id']
+                dict={'trailer':'tmdb','id': id}
+                tmdbTrailers.append(dict)
     else:
         page=0
         for i in range(0,5):
@@ -382,6 +411,26 @@ def getTmdbTrailers():
                 dict={'trailer':'tmdb','id':id}
                 tmdbTrailers.append(dict)
     return tmdbTrailers
+
+def search_tmdb(title,year):
+    id=''
+    data = {}
+    data['api_key'] = '99e8b7beac187a857152f57d67495cf4'
+    data['page']='1'
+    data['query']=query
+    data['language']='en'
+    url_values = urllib.urlencode(data)
+    url = 'https://api.themoviedb.org/3/search/movie'
+    full_url = url + '?' + url_values
+    req = urllib2.Request(full_url)
+    infostring = urllib2.urlopen(req).read()
+    infostring = json.loads(infostring)
+    results=infostring['results']
+    for movie in results:
+        if movie['year']==year:
+            id=movie['id']
+            break
+    return id    
 
 def getTmdbTrailer(movieId):
     trailer_url=''
@@ -412,6 +461,7 @@ def getTmdbTrailer(movieId):
         for c in countries:
             if c['iso_3166_1'] =='US':
                 mpaa=c['certification']
+        if mpaa=='':mpaa='NR'
         year=movieString['release_date'][:-6]
         fanart=image_base_url + 'w300'+str(movieString['backdrop_path'])
         thumbnail=image_base_url + 'w342'+str(movieString['poster_path'])
@@ -442,7 +492,9 @@ def getTmdbTrailer(movieId):
         for s in movieString['spoken_languages']:
             if s['name']=='English':
                 addMovie=True
-        if movieString['adult']=='true':AddMovie = False
+        if movieString['adult']=='true':addMovie = False
+        xbmc.log('Rating=' + mpaa)
+        addMovie = checkRating(mpaa)
         if not addMovie:
             dictInfo = {'title':'','trailer': '','year':0,'studio':[],'mpaa':'','file':'','thumbnail':'','fanart':'','director':[],'writer':[],'plot':'','cast':'','runtime':0,'genre':[],'source': 'tmdb','type':''} 
         else:
@@ -474,14 +526,17 @@ class trailerWindow(xbmcgui.WindowXMLDialog):
                 played=[]
         played.append(trailer["number"])
         if trailer['trailer']=='tmdb':
-            if addon.getSetting('tmdb_source') == '4':
+            if addon.getSetting('tmdb_source') == '5':
                 dp=xbmcgui.DialogProgress()
                 dp.create('Random Trailers','Please wait while we get a random trailer from themoviedb...')
                 gotTrailer=False
                 searchCount=0
                 while not gotTrailer:
                     searchCount=searchCount+1
-                    trailer=getTmdbTrailer(trailer['id'])
+                    try:
+                        trailer=getTmdbTrailer(trailer['id'])
+                    except:
+                        trailer['trailer']=''
                     if trailer['trailer'] != '':
                         gotTrailer=True
                     else:
@@ -500,6 +555,11 @@ class trailerWindow(xbmcgui.WindowXMLDialog):
             else:
                 trailer=getTmdbTrailer(trailer['id'])
         source=trailer['source']
+        if source=='library':
+            if trailer['trailer']=='': #no trailer search tmdb for one
+                id=search_tmdb(trailer['title'],trailer['year'])
+                if id!='':
+                    trailer['trailer']=getTmdbTrailer(id)
         lastPlay = True
         if 'lastplayed' in trailer:
             if not trailer["lastplayed"] =='' and hide_watched == 'true':
@@ -513,10 +573,13 @@ class trailerWindow(xbmcgui.WindowXMLDialog):
                 else:
                     lastPlay = False
         if source == 'iTunes':
-            content = opener.open(trailer['trailer']).read()
-            match = re.compile('<a class="movieLink" href="(.+?)"', re.DOTALL).findall(content)
-            urlTemp = match[0]
-            url = urlTemp[:urlTemp.find("?")].replace("480p", "h"+quality)+"|User-Agent=iTunes/9.1.1"
+            try:
+                content = opener.open(trailer['trailer']).read()
+                match = re.compile('<a class="movieLink" href="(.+?)"', re.DOTALL).findall(content)
+                urlTemp = match[0]
+                url = urlTemp[:urlTemp.find("?")].replace("480p", "h"+quality)+"|User-Agent=iTunes/9.1.1"
+            except:
+                url=''
         else:
             url = trailer['trailer'].encode('ascii', 'ignore')
         if  trailer["trailer"] != '' and lastPlay:
@@ -566,7 +629,7 @@ class trailerWindow(xbmcgui.WindowXMLDialog):
         global source
         global trailer
         movie_file=''
-
+        xbmc.log(str(action.getId()))
         if action == ACTION_Q:
             strCouchPotato='plugin://plugin.video.couchpotato_manager/movies/add?title='+trailer['title']
             xbmc.executebuiltin('XBMC.RunPlugin('+strCouchPotato+')')
@@ -745,7 +808,7 @@ class infoWindow(xbmcgui.WindowXMLDialog):
             xbmc.Player().stop()
             exit_requested=True
             self.close()
-                    
+                            
 def playTrailers():
     global exit_requested
     global movie_file
@@ -756,6 +819,11 @@ def playTrailers():
     DO_CURTIANS = addon.getSetting('do_animation')
     DO_EXIT = addon.getSetting('do_exit')
     NUMBER_TRAILERS =  int(addon.getSetting('number_trailers'))
+    GROUP_TRAILERS = False
+    if addon.getSetting('group_trailers')=='true':GROUP_TRAILERS = True
+    GROUP_NUMBER = int(addon.getSetting('group_number'))
+    GROUP_COUNT=GROUP_NUMBER
+    GROUP_DELAY = (int(addon.getSetting('group_delay')) * 60) * 1000
     if DO_CURTIANS == 'true':
         xbmc.Player().play(open_curtain_path)
         while xbmc.Player().isPlaying():
@@ -764,14 +832,30 @@ def playTrailers():
     while not exit_requested:
         if NUMBER_TRAILERS == 0:
             while not exit_requested and not xbmc.abortRequested:
+                if GROUP_TRAILERS:
+                    GROUP_COUNT=GROUP_COUNT - 1
                 mytrailerWindow = trailerWindow('script-trailerwindow.xml', addon_path,'default',)
                 mytrailerWindow.doModal()
                 del mytrailerWindow
+                if GROUP_TRAILERS and GROUP_COUNT==0:
+                    GROUP_COUNT=GROUP_NUMBER
+                    i = GROUP_DELAY
+                    while i > 0 and not exit_requested and not xbmc.abortRequested:
+                        xbmc.sleep(500)
+                        i=i-500                      
         else:
             while NUMBER_TRAILERS > 0:
+                if GROUP_TRAILERS:
+                    GROUP_COUNT=GROUP_COUNT - 1
                 mytrailerWindow = trailerWindow('script-trailerwindow.xml', addon_path,'default',)
                 mytrailerWindow.doModal()
                 del mytrailerWindow
+                if GROUP_TRAILERS and GROUP_COUNT==0:
+                    GROUP_COUNT=GROUP_NUMBER
+                    i = GROUP_DELAY
+                    while i > 0 and not exit_requested and not xbmc.abortRequested:
+                        xbmc.sleep(500)
+                        i=i-500  
                 if exit_requested:
                     break
         if not exit_requested:
@@ -781,7 +865,32 @@ def playTrailers():
                     xbmc.sleep(250)
         exit_requested=True
 
-if not xbmc.Player().isPlaying():
+def check_for_xsqueeze():
+    KEYMAPDESTFILE = os.path.join(xbmc.translatePath('special://userdata/keymaps'), "xsqueeze.xml")
+    if os.path.isfile(KEYMAPDESTFILE):
+        return True
+    else:
+        return False
+
+def get_mpaa(trailer):
+    Rating='NR'
+    if trailer["mpaa"].startswith('G'): Rating='G'
+    if trailer["mpaa"] == ('G'): Rating='G'
+    if trailer["mpaa"].startswith('Rated G'): Rating='G'
+    if trailer["mpaa"].startswith('PG '): Rating='PG'
+    if trailer["mpaa"] == ('PG'): Rating='PG'
+    if trailer["mpaa"].startswith('Rated PG'): Rating='PG'
+    if trailer["mpaa"].startswith('PG-13 '): Rating='PG-13'
+    if trailer["mpaa"] == ('PG-13'): Rating='PG-13'
+    if trailer["mpaa"].startswith('Rated PG-13'): Rating='PG-13'
+    if trailer["mpaa"].startswith('R '): Rating='R'
+    if trailer["mpaa"] == ('R'): Rating='R'
+    if trailer["mpaa"].startswith('Rated R'): Rating='R'
+    if trailer["mpaa"].startswith('NC17'): Rating='NC17'
+    if trailer["mpaa"].startswith('Rated NC17'): 'NC17'
+    return Rating
+
+if not xbmc.Player().isPlaying() and not check_for_xsqueeze():
     bs = blankWindow('script-BlankWindow.xml', addon_path,'default',)
     bs.show()
     trailers = []
