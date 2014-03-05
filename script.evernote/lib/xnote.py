@@ -113,26 +113,22 @@ class EvernoteSession():
 	def authenticate(self):
 		LOG('Authenticating')
 		import urlparse, urllib
-		LOG('1')
 		oauth = self.getOAuth()
-		LOG('2')
 		client = self.getOAuthClient(oauth)
-		LOG('3')
 		resp, content = client.request(self.request_token_url + '?oauth_callback='+ urllib.quote(self.callback_url), "POST")
-		LOG('4')
-		LOG(resp['status'])
+		#LOG(resp['status'])
 		if resp['status'] != '200':
 			LOG(repr(content))
 			raise Exception("Invalid response %s." % resp['status'])
 		
 		request_token = dict(urlparse.parse_qsl(content))
 		
-		print "Request Token:"
-		print "    - oauth_token        = %s" % request_token['oauth_token']
-		print "    - oauth_token_secret = %s" % request_token['oauth_token_secret']
+		#print "Request Token:"
+		#print "    - oauth_token        = %s" % request_token['oauth_token']
+		#print "    - oauth_token_secret = %s" % request_token['oauth_token_secret']
 		auth_url = "%s?oauth_token=%s" % (self.authorize_url, request_token['oauth_token'])
 		token_url = self.webwiewer(auth_url)
-		LOG('AUTH RESPONSE URL: ' + str(token_url))
+		#LOG('AUTH RESPONSE URL: ' + str(token_url))
 		if not token_url: return None
 		self._tempToken = self.authPart2(oauth,token_url,request_token)
 		return self._tempToken
@@ -216,7 +212,7 @@ class EvernoteSession():
 		self.user = self.userStore.getUser(self.authToken)
 		
 		LOG("Authentication was successful for %s" % self.user.username)
-		LOG("Authentication token = %s" % self.authToken)
+		#LOG("Authentication token = %s" % self.authToken)
 		
 		#noteStoreUri =  self.noteStoreUriBase + self.user.shardId
 		noteStoreUri = self.userStore.getNoteStoreUrl(self.authToken)
@@ -1364,10 +1360,10 @@ class XNoteSession():
 		item = self.getFocusedItem(125)
 		content = item.getProperty('content')
 		if content:
-			LOG('Note Changed - Cached Content')
+			#LOG('Note Changed - Cached Content')
 			return
-		else:
-			LOG('Note Changed')
+#		else:
+#			LOG('Note Changed')
 		t = self.window.getThread(self.getNote,finishedCallback=self.updateNote,wait=True)
 		t.setArgs(callback=t.progressCallback,donecallback=t.finishedCallback)
 		t.start()
@@ -1381,10 +1377,10 @@ class XNoteSession():
 		self.updatingNote = guid
 		time.sleep(0.5)
 		if self.updatingNote and not self.updatingNote == guid:
-			LOG('getNote() interrupted by another call')
+			#LOG('getNote() interrupted by another call')
 			return
 		self.updatingNote = None
-		LOG('Updating Note: %s' % guid)
+		#LOG('Updating Note: %s' % guid)
 		note = None
 		try:
 			note = self.esession.getNoteByGuid(guid,nbguid)
@@ -1408,12 +1404,12 @@ class XNoteSession():
 		item = self.getFocusedItem(125)
 		guid = item.getProperty('guid')
 		if not note.guid == guid:
-			LOG('updateNote(): Wrong Note - finding correct item...')
+			#LOG('updateNote(): Wrong Note - finding correct item...')
 			item = self.findNoteItem(note.guid)
 			if not item:
 				LOG('updateNote(): item not found - abort')
 				return
-		LOG('Updated Changed Note: %s' % guid)
+		#LOG('Updated Changed Note: %s' % guid)
 		content = self.prepareContentForWebviewer(note.content)
 		content, title = self.htmlconverter.htmlToDisplay(content) #@UnusedVariable
 		item.setProperty('content',content or " ")
