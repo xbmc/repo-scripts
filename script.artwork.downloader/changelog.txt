@@ -1,3 +1,6 @@
+v12.0.24
+- Fix unicode error in season query
+
 v12.0.23
 - Fix multiple text search for disctype in filename and avoiding ac3 dubs to be recognized as 3d (ex. ac3d)
 

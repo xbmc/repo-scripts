@@ -1,11 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-#     Copyright (C) 2011-2013 Martijn Kaijser
+#     Copyright (C) 2011-2014 Martijn Kaijser
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    the Free Software Foundation, either version 2 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -45,6 +45,7 @@ def _media_unique(media_type, dbid):
             item = jsonobject['result']['tvshowdetails']
             # Search for season information
             json_query_season = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["season", "art"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' %item.get('tvshowid',''))
+            json_query_season = unicode(json_query_season, 'utf-8', errors='ignore')
             jsonobject_season = simplejson.loads(json_query_season)
             # Get start/end and total seasons
             if jsonobject_season['result'].has_key('limits'):
