@@ -4,29 +4,29 @@
 # Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC-Addons\n"
+"Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
-"POT-Creation-Date: 2014-02-22 22:03+0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "Addon Summary"
 msgid "Get info for TV Shows Next Aired."
-msgstr ""
+msgstr "Saiba sobre próximas exibições de séries de TV."
 
 msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
-msgstr ""
+msgstr "Saiba sobre próximas exibições de séries de TV. Você nunca perderá um episódio."
 
 msgctxt "#450"
 msgid "TV Guide"
-msgstr "TV Guide"
+msgstr "Guia de TV"
 
 msgctxt "#32000"
 msgid "Display"
@@ -34,15 +34,15 @@ msgstr "Exibir"
 
 msgctxt "#32001"
 msgid "Thumbnail type"
-msgstr "Tipo de Miniatura"
+msgstr "Tipo de miniatura"
 
 msgctxt "#32002"
 msgid "Download banners (Artwork Downloader required)"
-msgstr "Download baners (Requer Artwork Downloader)"
+msgstr "Baixar banners (Requer Artwork Downloader)"
 
 msgctxt "#32003"
 msgid "Download logos (Artwork Downloader required)"
-msgstr "Download logos (Requer Artwork Downloader)"
+msgstr "Baixar logos (Requer Artwork Downloader)"
 
 msgctxt "#32004"
 msgid "Enable background fanart"
@@ -50,79 +50,55 @@ msgstr "Ligar background fanart"
 
 msgctxt "#32005"
 msgid "Enable 16:9 preview thumbs"
-msgstr "Ligar visualização de miniaturas 16:9"
+msgstr "Habilitar miniaturas 16:9"
 
 msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
-msgstr "Download visualização de miniaturas 16:9 (Requer Artwork Downloader)"
-
-msgctxt "#32007"
-msgid "Update the TV information now"
-msgstr "Reescanear os dados do guia de TV"
-
-msgctxt "#32008"
-msgid "Download TV information:"
-msgstr ""
-
-msgctxt "#32009"
-msgid "In the background every [N] hours"
-msgstr ""
-
-msgctxt "#32010"
-msgid "On entering the guide if data is over [N] hours old"
-msgstr ""
+msgstr "Baixar miniaturas 16:9 (Requer Artwork Downloader)"
 
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
-msgstr "Download posters (Artwork Downloader requerido)"
-
-msgctxt "#32012"
-msgid "**Reset all data** and update the TV information now"
-msgstr ""
+msgstr "Baixar cartazes (requer Artwork Downloader)"
 
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
-msgstr ""
-
-msgctxt "#32014"
-msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
-msgstr ""
+msgstr "Mostrar Todas as Séries de TV na tela inicial (necessita de suporte pela skin)"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
-msgstr "TV Show - Next Aired"
+msgstr "TV Show - Próxima Exibição"
 
 msgctxt "#32102"
 msgid "Getting information..."
-msgstr "Pegando Informação..."
+msgstr "Obtendo informações..."
 
 msgctxt "#32103"
 msgid "CANCELLED"
-msgstr "CANCELADO"
+msgstr "CANCELADA"
 
 msgctxt "#32104"
 msgid "Operation cancelled by user."
-msgstr "Operação cancelada pelo Usuário."
+msgstr "Operação cancelada pelo usuário."
 
 msgctxt "#32201"
 msgid "Returning Series"
-msgstr ""
+msgstr "Série em retorno"
 
 msgctxt "#32202"
 msgid "Cancelled/Ended"
-msgstr ""
+msgstr "Cancelada/Finalizada"
 
 msgctxt "#32203"
 msgid "TBD/On The Bubble"
-msgstr ""
+msgstr "Não definido/Por um fio"
 
 msgctxt "#32204"
 msgid "In Development"
-msgstr ""
+msgstr "Em desenvolvimento"
 
 msgctxt "#32205"
 msgid "New Series"
-msgstr "Novos Seriados"
+msgstr "Série nova"
 
 msgctxt "#32206"
 msgid "Never Aired"
@@ -130,24 +106,24 @@ msgstr "Inédito"
 
 msgctxt "#32207"
 msgid "Final Season"
-msgstr "Temporada Final"
+msgstr "Temporada final"
 
 msgctxt "#32208"
 msgid "On Hiatus"
-msgstr "Em Hiato"
+msgstr "Em hiato"
 
 msgctxt "#32209"
 msgid "Pilot Ordered"
-msgstr "Piloto Encomendado"
+msgstr "Piloto encomendado"
 
 msgctxt "#32210"
 msgid "Pilot Rejected"
-msgstr "Piloto Rejeitado"
+msgstr "Piloto rejeitado"
 
 msgctxt "#32211"
 msgid "Cancelled"
-msgstr "Cancelado"
+msgstr "Cancelada"
 
 msgctxt "#32212"
 msgid "Ended"
-msgstr "Finalizado"
+msgstr "Finalizada"

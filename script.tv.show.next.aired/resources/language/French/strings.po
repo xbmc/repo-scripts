@@ -1,0 +1,121 @@
+# XBMC Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xbmc-addons/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "Récupère les dates de diffusions de vos séries"
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "Ce script interroge votre médiathèque puis vas récupérer les infos sur les prochaines diffusions de vos séries. vous n'en manquerez plus aucune."
+
+msgctxt "#450"
+msgid "TV Guide"
+msgstr "Guide TV"
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "Affichage"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "Type de vignette"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "Télécharger les bannières (Artwork Downloader requis)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "Télécharger les logos (Artwork Downloader requis)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "Activer le fanart d'arrière-plan"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "Activer les vignettes d'aperçus 16:9"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "Télécharger les vignettes d'aperçus 16:9 (Artwork Downloader requis)"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "Télécharger les posters (Artwork Downloader requis)"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "Montrer toutes les séries TV sur l'écran d'acceuil (thème compatible requis)"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "TV Show - Next Aired"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "Obtention d'informations..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "ANNULÉ"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "Opération annulée par l'utilisateur."
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "Annulé/terminé"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "TBD/On The Bubble"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "En développement"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "Nouvelle série"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "Jamais diffusée"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "Dernière saison"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "Pilote commandé"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "Pilote rejeté"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "Annulé"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "Terminé"

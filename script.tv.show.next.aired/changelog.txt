@@ -1,3 +1,8 @@
+-6.0.4 (2014-03-06)
+- Updated language files from Transifex.
+- A few more tweaks to the missing-artwork grabber.
+- Improve error handling when refreshing the country.db file.
+
 -6.0.3 (2014-03-02)
 - Fix a potential script crash with a background query not triggering a DB update (if it is needed).
 - Make the new date format a setting boolean.

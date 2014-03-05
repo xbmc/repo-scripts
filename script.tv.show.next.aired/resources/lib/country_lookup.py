@@ -282,6 +282,9 @@ class CountryLookup(object):
             elif sel_re.search(line):
                 in_select = True
 
+        if len(self.country_dict) < 500:
+            raise Exception("Country data was not parsed correctly.")
+
         self.country_dict[''] = 'Unknown'
 
     def get_country_dict(self):
