@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+<!--Settings-->
+  <!--Behaviour-->
+  <string id="32100">Verhalten</string>
+  <string id="32101">Geschwindigkeit für gescrollten Text</string>
+  <string id="32102">Scroll-Modus</string>
+  <string id="32103">Anzeigedauer der Navigationsansicht (s)</string>
+  <string id="32104">Display-Aktualisierungsrate (Hz)</string>
+  <string id="32105">Verwende alternativen Zeichensatz</string>
+  <string id="32106">Zeichensatz</string>
+  <string id="32107">Zusatzdisplayelemente (z.B. Icons) unterstützen</string>
+
+  <!--Backlight-->
+  <string id="32200">Beleuchtung</string>
+  <string id="32201">wenn Bildschirmschoner aktiv</string>
+  <string id="32202">Beim Herunterfahren abdunkeln/abschalten</string>
+  <string id="32203">während Video/LiveTV-Wiedergabe</string>
+  <string id="32204">während Musik/Radio-Wiedergabe</string>
+  <string id="32205">Verzögerung (s)</string>
+  <string id="32206">Abdunkeln/Abschalten...</string>
+
+  <!--Connection-->
+  <string id="32300">Verbindung</string>
+  <string id="32301">Entfernten LCDproc-Server benutzen</string>
+  <string id="32302">LCDd IP</string>
+  <string id="32303">LCDd Port</string>
+  <string id="32304">Heartbeatsymbol anzeigen</string>
+  <string id="32305">Verbindungsfehler-Benachrichtigung verstecken</string>
+
+  <!--Enum values: Scroll mode-->
+  <string id="32401">Durchlaufend</string>
+  <string id="32402">Links/Rechts</string>
+
+  <!--Enum values: Charsets-->
+  <string id="32411">ISO8859-1 (Standard)</string>
+  <string id="32412">ISO8859-15</string>
+  <string id="32413">KOI8-R</string>
+  <string id="32414">CP1251</string>
+  <string id="32415">ISO8859-5</string>
+  <string id="32416">HD44780-ROM A00</string>
+  <string id="32417">HD44780-ROM A02</string>
+
+  <!--Notifications-->
+  <string id="32500">Fehler beim Verbinden zu LCDproc!</string>
+  <string id="32501">Verbunden mit LCDproc!</string>
+  <string id="32502">Warnung! Fehlerhafte LCD.xml oder LCD.xml nicht gefunden!</string>
+
+</strings>

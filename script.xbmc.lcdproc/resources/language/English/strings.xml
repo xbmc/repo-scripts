@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+<!--Settings-->
+  <!--Behaviour-->
+  <string id="32100">Behaviour</string>
+  <string id="32101">Delay for scrolling text</string>
+  <string id="32102">Scroll mode</string>
+  <string id="32103">Navigation display duration (s)</string>
+  <string id="32104">Display refresh rate (Hz)</string>
+  <string id="32105">Use alternate charset</string>
+  <string id="32106">Charset</string>
+  <string id="32107">Support for extra display elements (e.g. icons)</string>
+
+  <!--Backlight-->
+  <string id="32200">Backlight</string>
+  <string id="32201">on screensaver</string>
+  <string id="32202">Dim on shutdown</string>
+  <string id="32203">on video/LiveTV playback</string>
+  <string id="32204">on music/radio playback</string>
+  <string id="32205">Delay (s)</string>
+  <string id="32206">Dim/turn off...</string>
+
+  <!--Connection-->
+  <string id="32300">Connection</string>
+  <string id="32301">Use remote LCDProc</string>
+  <string id="32302">LCDd IP</string>
+  <string id="32303">LCDd port</string>
+  <string id="32304">Show heartbeat symbol</string>
+  <string id="32305">Hide connection error notifications</string>
+
+  <!--Enum values: Scroll mode-->
+  <string id="32401">Marquee</string>
+  <string id="32402">Left/Right</string>
+
+  <!--Enum values: Charsets-->
+  <string id="32411">ISO8859-1 (default)</string>
+  <string id="32412">ISO8859-15</string>
+  <string id="32413">KOI8-R</string>
+  <string id="32414">CP1251</string>
+  <string id="32415">ISO8859-5</string>
+  <string id="32416">HD44780-ROM A00</string>
+  <string id="32417">HD44780-ROM A02</string>
+
+  <!--Notifications-->
+  <string id="32500">Failed to connect to LCDProc!</string>
+  <string id="32501">Connected to LCDProc!</string>
+  <string id="32502">Warning! Errors in LCD.xml or LCD.xml not found!</string>
+  
+</strings>

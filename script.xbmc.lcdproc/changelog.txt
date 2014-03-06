@@ -1,0 +1,41 @@
+2.5.0 (Gotham)
+- Initial version for XBMC Gotham with updated dependencies
+- BBcode tags are stripped before sending content to the display (reported to happen on e.g. OpenELEC)
+- Change in behaviour: BigDigit tag will show the system time instead of current playtime if playing media is paused and the screensaver kicks in
+- Missing german umlauts added to the HD44780-A00 character translation map
+1.3.3 / 2.3.3 (Eden / Frodo)
+- A02 char map enhanced to map czech characters
+1.3.2 / 2.3.2
+- Fix "dim display on video playback" functionality
+1.3.1 / 2.3.1
+- Recognize E-AC3 (Dolby Digital plus) as AC3 in extra stuff support (affect imonlcd support)
+- Fix BigDigits overdrawing text on addon start when things change too fast
+1.3.0 / 2.3.0
+- Alternate charmap selection, support for HD44780/iMON ROM (A00 and A02 variants) charsets
+- New "tvshow" mode, active when playing media from the TV-shows database
+- Refactored backlight dimming handling and configuration via GUI settings
+- Cleaned up and improved TCP/Telnet socket handling
+- Indicate internet stream on extraicon-supported displays
+- Use XBMC's time for daytime display on BigDigit-mode and thus properly display 12/24h clocks, improve bigdigit handling
+- Additional "finetuning"-options for extraicon/bar-support
+- Option to entirely disable extra stuff support
+- Always load defaults so LCD.xml in the masterprofile acts as user override, makes additions like new modes or wrong spelling in XML tags not result in empty displays
+- Bugfixes and friends, of course
+1.2.1 / 2.2.1
+- Bugfixes, Credits, slightly more convenient configuration option bools
+1.2.0 / 2.2.0
+- Maintain versions for Eden (1.x.x) and Frodo+ (2.x.x)
+- Support for extra stuff (icons, bars) on supporting displays
+- Extra stuff handling for SoundGraph iMON LCD and Futaba/Targa mdm166a VFD
+  devices (presence will be autodetected)
+- Align each line either left (default), centered or right
+- Fixed connection problem popup annoyance
+- GUI settings cleanup and some more LCD.xml configurables
+- Take care of providing a default LCD.xml in the master profile
+1.1.0
+- greatly improved client/server communication
+- native widgets for bars, icons and bignumbers
+- character conversion left to be done by LCDproc
+- additional configuration options
+1.0.0
+- initial addon release
