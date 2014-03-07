@@ -200,12 +200,12 @@ class settings():
       interpolation = 0
       threshold     = 0.0
     elif self.tvshow_preset == 0:     #custom
-      saturation      =  self.movie_saturation
-      value           =  self.movie_value
-      speed           =  self.movie_speed
-      autospeed       =  self.movie_autospeed
-      interpolation   =  self.movie_interpolation
-      threshold       =  self.movie_threshold
+      saturation      =  self.tvshow_saturation
+      value           =  self.tvshow_value
+      speed           =  self.tvshow_speed
+      autospeed       =  self.tvshow_autospeed
+      interpolation   =  self.tvshow_interpolation
+      threshold       =  self.tvshow_threshold
     return (saturation,value,speed,autospeed,interpolation,threshold)
 
   #handle boblight configuration from the "LiveTV" category

@@ -154,7 +154,7 @@ def check_state():
 
 def myPlayerChanged(state):
   log('PlayerChanged(%s)' % state)
-  xbmc.sleep(100)
+  xbmc.sleep(1000)
   if state == 'stop':
     ret = "static"
   else:
