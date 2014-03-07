@@ -378,12 +378,13 @@ def prepareBackgrounds(radarCode):
 
 def buildImages(radarCode):
 
-    log("Called buildImages with radarCode: " + radarCode + " and loop path " + LOOP_IMAGES_PATH)
+    log("Called buildImages with radarCode: " + radarCode + " and loop path " + LOOP_IMAGES_PATH + " and radar path " + RADAR_BACKGROUNDS_PATH)
 
     #remove the temporary files - we only want fresh radar files
     #this results in maybe ~60k used per update.
+
     if os.path.exists( LOOP_IMAGES_PATH ):
-        log("Removing previous radar files")
+        log("os.path Removing previous radar files")
         shutil.rmtree( LOOP_IMAGES_PATH , ignore_errors=True)
 
     #we need make the directories to store stuff if they don't exist
@@ -579,16 +580,25 @@ def propertiesPDOM(page, extendedFeatures):
     #END FORECAST DATA
 
     #ABC VIDEO URL
+    # note date and quality level variables...
+    # {'url': 'http://mpegmedia.abc.net.au/news/news24/weather/video/201403/WINs_Weather1_0703_1000k.mp4', 'contentType': 'video/mp4', 'codec': 'AVC', 'bitrate': '928', 'width': '1024', 'height': '576', 'filesize': '11657344'}
+    # {'url': 'http://mpegmedia.abc.net.au/news/news24/weather/video/201403/WINs_Weather1_0703_256k.mp4', 'contentType': 'video/mp4', 'codec': 'AVC', 'bitrate': '170', 'width': '320', 'height': '180', 'filesize': '2472086'}
+    # {'url': 'http://mpegmedia.abc.net.au/news/news24/weather/video/201403/WINs_Weather1_0703_512k.mp4', 'contentType': 'video/mp4', 'codec': 'AVC', 'bitrate': '400', 'width': '512', 'height': '288', 'filesize': '5328218'}
+    # {'url': 'http://mpegmedia.abc.net.au/news/news24/weather/video/201403/WINs_Weather1_0703_trw.mp4', 'contentType': 'video/mp4', 'codec': 'AVC', 'bitrate': '1780', 'width': '1280', 'height': '720', 'filesize': '21599356'}
+
     try:
         log("Trying to get ABC weather video URL")
         abcURL = "http://www.abc.net.au/news/abcnews24/weather-in-90-seconds/"
         req = urllib2.Request(abcURL)
         response = urllib2.urlopen(req)
         htmlSource = str(response.read())
-        pattern_video = "http://mpegmedia.abc.net.au/news/weather/video/(.+?)video3.flv"
+        pattern_video = "http://mpegmedia.abc.net.au/news/news24/weather/video/(.+?)/WINs_Weather1_(.+?)_512k.mp4"
         video = re.findall( pattern_video, htmlSource )
         try:
-            url = "http://mpegmedia.abc.net.au/news/weather/video/" + video[0] + "video3.flv"
+            qual = ADDON.getSetting("ABCQuality")
+            if qual=="Best":
+                qual="trw"
+            url = "http://mpegmedia.abc.net.au/news/news24/weather/video/"+ video[0][0] + "/WINs_Weather1_" + video[0][1] + "_" + qual + ".mp4"
             setProperty(WEATHER_WINDOW, 'Video.1',url)
         except Exception as inst:
             log("Couldn't get ABC video URL from page", inst)

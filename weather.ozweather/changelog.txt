@@ -1,3 +1,10 @@
+V0.7.0
+- Fixed ABC weather video link
+- Added setting for weather video qualtiy level
+
+V0.6.9
+- Unreleased, repo moved to github
+
 V0.6.8
 - Deal with blank radar codes in user settings
 - Better tidying up old radar images
