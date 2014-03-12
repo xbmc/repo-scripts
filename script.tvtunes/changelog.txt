@@ -1,3 +1,6 @@
+v4.3.3
+- Fix issue with custom download path not downloading themes
+
 v4.3.2
 - Improve the way the current volume is retrieved
 - Support empty value on manual search entry

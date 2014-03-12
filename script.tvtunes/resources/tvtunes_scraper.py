@@ -190,6 +190,9 @@ class TvTunesScraper:
         log("getSoloVideo: Video Path %s" % videoPath)
 
 
+        normVideoName = normalize_string( videoName )
+        log("getSoloVideo: videoName = %s" % normVideoName )
+
         if Settings.isCustomPathEnabled():
             videoPath = os.path.join(Settings.getCustomPath(), normVideoName)
         else:
@@ -205,8 +208,6 @@ class TvTunesScraper:
             if fileExt != None and fileExt != "":
                 videoPath = os.path.dirname( videoPath )
 
-        normVideoName = normalize_string( videoName )
-        log("getSoloVideo: videoName = %s" % normVideoName )
         log("getSoloVideo: videoPath = %s" % videoPath )
         return [[normVideoName,videoPath.decode("utf-8"),normVideoName]]
 

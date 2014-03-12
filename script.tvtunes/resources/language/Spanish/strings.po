@@ -2,17 +2,13 @@
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
 # Addon Provider: Ppic,Frost,ronie,robwebset
-# Translators:
-# D.A.R.Y.L., 2013
-# davidmuma <davidmumar@gmail.com>, 2014
-# xbmcero <xbmcspain@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2014-01-30 10:50+0000\n"
-"Last-Translator: davidmuma <davidmumar@gmail.com>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,19 +21,12 @@ msgid "Get and play your Movie and TV shows Themes"
 msgstr "Descarga y reproduce las bandas sonoras de las series de tu biblioteca"
 
 msgctxt "Addon Description"
-msgid ""
-"This script will help you to get themes for your movie and TV show library "
-"from www.televisiontunes.com It will save them in theme[0-9].mp3 file in "
-"each of your video folders then they will be played while browsing your "
-"video library when you enter the TV Show folder or Video Information screen "
-"(need your skin to be compatible for this feature)"
-msgstr "Este script te ayudará a buscar la banda sonora de tus series en www.televisiontunes.com se guardará un fichero theme.mp3 en el directorio de tu serie y será reproducido mientras navegas por dentro de la carpeta de la serie. (Necesitas una skin compatible para esta funcionalidad)"
+msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
+msgstr "Este script te ayudará a buscar las bandas sonoras de tus películas y series de www.televisiontunes.com y guardará un fichero theme.mp3 en el directorio de tu serie y será reproducido mientras navegas dentro de la carpeta de la serie. (Necesitas una skin compatible para esta funcionalidad)"
 
 msgctxt "Addon Disclaimer"
-msgid ""
-"Skinners, please see the wiki to know how to integrate it in your skin: "
-"http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Skinners, por favor, revisad changelog.txt para saber como integrarlo en vuestras skins"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "Skinners, por favor, revisad changelog.txt para saber cómo integrarlo en vuestras skins"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
@@ -61,7 +50,7 @@ msgstr "Contraseña:"
 
 msgctxt "#32006"
 msgid "Store tunes in a custom path"
-msgstr "Desacagar temas en carpeta personalizada"
+msgstr "Descargar temas en carpeta personalizada"
 
 msgctxt "#32007"
 msgid "Path:"
@@ -97,7 +86,7 @@ msgstr "Añadir siempre temas (no sobrescribir)"
 
 msgctxt "#32015"
 msgid "Search for movie themes"
-msgstr "Buscar bandas sonoras"
+msgstr "Buscar bandas sonoras de películas"
 
 msgctxt "#32016"
 msgid "Play themes when browsing Movie list"
@@ -121,7 +110,7 @@ msgstr "Mostrar el botón TvTunes en la pantalla de información de vídeo"
 
 msgctxt "#32021"
 msgid "Fade out after playing for (minutes)"
-msgstr "Bajar el volumen después de sonar por (minutos)"
+msgstr "Bajar el volumen después de sonar durante (minutos)"
 
 msgctxt "#32022"
 msgid "Operations"
@@ -146,6 +135,10 @@ msgstr "Nombre de carpeta"
 msgctxt "#32027"
 msgid "Limit track duration when multiple themes (seconds)"
 msgstr "Limitar la duración de pista cuando existan varios temas (segundos)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Tema predeterminado de búsqueda "
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -207,10 +200,6 @@ msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Usted puede ayudar a obtener más temas en:"
 
-msgctxt "#32117"
-msgid "http://www.televisiontunes.com/"
-msgstr "http://www.televisiontunes.com/"
-
 msgctxt "#32118"
 msgid "Manual Search..."
 msgstr "Búsqueda manual..."
@@ -218,6 +207,10 @@ msgstr "Búsqueda manual..."
 msgctxt "#32119"
 msgid "Continue with next theme search?"
 msgstr "Continuar con la siguiente búsqueda de tema?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Buscar utilizando %s..."
 
 msgctxt "#32991"
 msgid "Playback"

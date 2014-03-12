@@ -56,13 +56,33 @@ msgctxt "#32007"
 msgid "Path:"
 msgstr "Sökväg:"
 
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "Tona ut ljud vid avsluta"
+
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
 msgstr "Ladda ner automatisk om en exakt matching hittas"
 
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Blanda flera låtar"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Slumpad starttid"
+
 msgctxt "#32012"
 msgid "File Types"
 msgstr "Filtyper"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Tona in ljud vid start"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Addera alltid ytterligare titelmusik (inte ersätta)"
 
 msgctxt "#32015"
 msgid "Search for movie themes"
@@ -72,6 +92,10 @@ msgctxt "#32016"
 msgid "Play themes when browsing Movie list"
 msgstr "Spela teman vid bläddring av filmlistan"
 
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Spela titelmusik vid bläddring i TV-program"
+
 msgctxt "#32018"
 msgid "Debugging"
 msgstr "Debuggning"
@@ -79,6 +103,42 @@ msgstr "Debuggning"
 msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Aktivera debugloggning"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Visa TvTunes-knappen på skärmen videoinformation"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Tona ut efter ha spelat i (minuter)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Åtgärder"
+
+msgctxt "#32023"
+msgid "Perform Complete Search Now"
+msgstr "Utför komplett sökning nu"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Dröj titelmusikstart (sekunder)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "Stöd titelmusik i undermappar"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Mappnamn"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Begränsa spellängden vid flera titelspår (sekunder)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Standardsöktjänst för titelmusik"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -140,9 +200,17 @@ msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Du kan hjälpa till att få fler teman på:"
 
-msgctxt "#32117"
-msgid "http://www.televisiontunes.com/"
-msgstr "http://www.televisiontunes.com/"
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Manuell sökning..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Fortsätt med nästa titelmusiksökning?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Sök genom %s..."
 
 msgctxt "#32991"
 msgid "Playback"

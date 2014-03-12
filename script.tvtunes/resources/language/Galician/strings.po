@@ -2,15 +2,13 @@
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
 # Addon Provider: Ppic,Frost,ronie,robwebset
-# Translators:
-# xurxo <xguerrap@gmail.com>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2014-01-31 20:10+0000\n"
-"Last-Translator: xurxo <xguerrap@gmail.com>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
 "Language-Team: Galician (http://www.transifex.com/projects/p/xbmc-addons/language/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,18 +21,11 @@ msgid "Get and play your Movie and TV shows Themes"
 msgstr "Obter e reproducir a música das súas Series de TV"
 
 msgctxt "Addon Description"
-msgid ""
-"This script will help you to get themes for your movie and TV show library "
-"from www.televisiontunes.com It will save them in theme[0-9].mp3 file in "
-"each of your video folders then they will be played while browsing your "
-"video library when you enter the TV Show folder or Video Information screen "
-"(need your skin to be compatible for this feature)"
+msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
 msgstr "Este script axudaralle a obter dende www.televisiontunes.com o tema da súa biblioteca de series, gardándoo no ficheiro theme.mp3 por cada cartafol da biblioteca entón reproduciranse ao entrar nos diferentes cartafoles ao navegar pola biblioteca (precisa de que o seu tema sexa compatíbel con esta carácteristica)"
 
 msgctxt "Addon Disclaimer"
-msgid ""
-"Skinners, please see the wiki to know how to integrate it in your skin: "
-"http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Autores de temas, por favor vexan o changelog.txt para saber como integrar tvtunes no seu tema"
 
 msgctxt "#32001"
@@ -205,10 +196,6 @@ msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Pode axudar a obter máis temas en:"
 
-msgctxt "#32117"
-msgid "http://www.televisiontunes.com/"
-msgstr "http://www.televisiontunes.com/"
-
 msgctxt "#32118"
 msgid "Manual Search..."
 msgstr "Busca manual"
@@ -216,6 +203,10 @@ msgstr "Busca manual"
 msgctxt "#32119"
 msgid "Continue with next theme search?"
 msgstr "Continuar coa busca da próxima canción?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Buscar Usando %s..."
 
 msgctxt "#32991"
 msgid "Playback"

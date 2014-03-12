@@ -2,16 +2,13 @@
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
 # Addon Provider: Ppic,Frost,ronie,robwebset
-# Translators:
-# hex62 <didacchaves@me.com>, 2013
-# kirek <rbuldo@gmail.com>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2014-01-02 15:20+0000\n"
-"Last-Translator: kirek <rbuldo@gmail.com>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
 "Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,18 +21,11 @@ msgid "Get and play your Movie and TV shows Themes"
 msgstr "Obté i reproduieix els temes de les seves pel·lícules i sèries de televisió"
 
 msgctxt "Addon Description"
-msgid ""
-"This script will help you to get themes for your movie and TV show library "
-"from www.televisiontunes.com It will save them in theme[0-9].mp3 file in "
-"each of your video folders then they will be played while browsing your "
-"video library when you enter the TV Show folder or Video Information screen "
-"(need your skin to be compatible for this feature)"
+msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
 msgstr "Aquest script t'ajudarà a cercar la banda sonora de les teves pel·lícules i sèries de televisió en www.televisiontunes.com Les guardarà en un fitxer theme[0-9].mp3 a la carpeta dels vídeos i seran reproduïdes mentre navegues per la teva col·lecció de vídeos, quant entris a la carpeta d'una sèrie o a la pantalla d'informació de vídeo. (Necessites una pell compatible per a aquesta funcionalitat)"
 
 msgctxt "Addon Disclaimer"
-msgid ""
-"Skinners, please see the wiki to know how to integrate it in your skin: "
-"http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Creadors de pells, si us plau, visiteu el wiki per saber com integrar el complement a les vostres pells: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
@@ -205,10 +195,6 @@ msgstr "Descarregar aquesta?"
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Pots ajudar a obtenir mes temes a:"
-
-msgctxt "#32117"
-msgid "http://www.televisiontunes.com/"
-msgstr "http://www.televisiontunes.com/"
 
 msgctxt "#32118"
 msgid "Manual Search..."

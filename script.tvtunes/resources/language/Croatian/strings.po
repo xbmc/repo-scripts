@@ -168,10 +168,6 @@ msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Možete pomoći u nabavi više tema na:"
 
-msgctxt "#32117"
-msgid "http://www.televisiontunes.com/"
-msgstr "http://www.televisiontunes.com/"
-
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Reprodukcija"

@@ -2,15 +2,13 @@
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
 # Addon Provider: Ppic,Frost,ronie,robwebset
-# Translators:
-# Kiril <neohidra@gmail.com>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2014-01-19 23:50+0000\n"
-"Last-Translator: Kiril <neohidra@gmail.com>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,18 +21,11 @@ msgid "Get and play your Movie and TV shows Themes"
 msgstr "Сваля и възпроизвежда мелодиите от вашите филми и сериали"
 
 msgctxt "Addon Description"
-msgid ""
-"This script will help you to get themes for your movie and TV show library "
-"from www.televisiontunes.com It will save them in theme[0-9].mp3 file in "
-"each of your video folders then they will be played while browsing your "
-"video library when you enter the TV Show folder or Video Information screen "
-"(need your skin to be compatible for this feature)"
+msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
 msgstr "Скриптът ще Ви помогне да се сдобиете с мелодии от филми и сериали. Мелодиите се свалят от www.televisiontunes.com и се запаметява в папките на видео файловете като [0-9].mp3. Когато преглеждате инф. за даден филм или епизодите от даден сериал, съответната мелодия ще се възпроизвежда автоматично. За целта е необходимо да ползвате съвместим облик."
 
 msgctxt "Addon Disclaimer"
-msgid ""
-"Skinners, please see the wiki to know how to integrate it in your skin: "
-"http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
@@ -145,6 +136,10 @@ msgctxt "#32027"
 msgid "Limit track duration when multiple themes (seconds)"
 msgstr "При няколко налични мелодии просвирвай всяка по (сек)"
 
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Стандартна търсачка"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "ГРЕШКА"
@@ -205,10 +200,6 @@ msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Можете да помогнете в обогатяването на библиотеката с мелодии на адрес:"
 
-msgctxt "#32117"
-msgid "http://www.televisiontunes.com/"
-msgstr "http://www.televisiontunes.com/"
-
 msgctxt "#32118"
 msgid "Manual Search..."
 msgstr "Ръчно търсене"
@@ -216,6 +207,10 @@ msgstr "Ръчно търсене"
 msgctxt "#32119"
 msgid "Continue with next theme search?"
 msgstr "Да продължи ли търсенето за още мелодии?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Търсене с %s..."
 
 msgctxt "#32991"
 msgid "Playback"

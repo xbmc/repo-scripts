@@ -52,10 +52,6 @@ msgctxt "#32111"
 msgid "to:"
 msgstr "til:"
 
-msgctxt "#32117"
-msgid "http://www.televisiontunes.com/"
-msgstr "http://www.televisiontunes.com/"
-
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Spila"

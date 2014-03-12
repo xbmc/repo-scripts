@@ -2,18 +2,13 @@
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
 # Addon Provider: Ppic,Frost,ronie,robwebset
-# Translators:
-# Francesco Tili <francesco.tili@hotmail.it>, 2013
-# realtebo ., 2013
-# peppe_sr <peppe.calvo.cc@gmail.com>, 2013
-# realtebo ., 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2013-12-27 05:40+0000\n"
-"Last-Translator: Francesco Tili <francesco.tili@hotmail.it>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/xbmc-addons/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,18 +21,11 @@ msgid "Get and play your Movie and TV shows Themes"
 msgstr "Ottieni ed esegui i temi musicali delle tue Serie tV"
 
 msgctxt "Addon Description"
-msgid ""
-"This script will help you to get themes for your movie and TV show library "
-"from www.televisiontunes.com It will save them in theme[0-9].mp3 file in "
-"each of your video folders then they will be played while browsing your "
-"video library when you enter the TV Show folder or Video Information screen "
-"(need your skin to be compatible for this feature)"
+msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
 msgstr "Questo script ti aiuterà ad ottenere il tema delle serie tv presenti nella tua libreria da www.televisiontunes.com, li salverà nel file theme.mp3 in ogni cartella delle tue serie così quando sfoglierai la serie tv il tema sarà eseguito (il tuo skin deve essere compatibile)"
 
 msgctxt "Addon Disclaimer"
-msgid ""
-"Skinners, please see the wiki to know how to integrate it in your skin: "
-"http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Skinners, guardate il file changelog.txt per sapere come integrare lo script nello skin"
 
 msgctxt "#32001"
@@ -207,10 +195,6 @@ msgstr "Scarica questo?"
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Puoi aiutare ad ottenere più temi su:"
-
-msgctxt "#32117"
-msgid "http://www.televisiontunes.com/"
-msgstr "http://www.televisiontunes.com/"
 
 msgctxt "#32118"
 msgid "Manual Search..."
