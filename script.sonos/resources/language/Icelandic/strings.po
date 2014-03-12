@@ -27,3 +27,23 @@ msgstr "Virkja kembi úttak"
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "Tilkynningar"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Tónlistarsafn"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Tónlistarmenn"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Hljómplötur"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Flokkar"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Lög"

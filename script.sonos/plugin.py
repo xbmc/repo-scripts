@@ -10,10 +10,12 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 
-__addon__     = xbmcaddon.Addon(id='script.sonos')
-__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
-__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+__addon__    = xbmcaddon.Addon(id='script.sonos')
+__cwd__      = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__ = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
+__lib__      = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+__media__    = xbmc.translatePath( os.path.join( __resource__, 'media' ).encode("utf-8") ).decode("utf-8")
+
 
 sys.path.append(__resource__)
 sys.path.append(__lib__)
@@ -21,6 +23,15 @@ sys.path.append(__lib__)
 # Import the common settings
 from settings import Settings
 from settings import log
+
+
+###################################################################
+# Media files used by the plugin
+###################################################################
+class MediaFiles():
+    RadioIcon = os.path.join( __media__, 'Radio@2x.png' )
+    MusicLibraryIcon = os.path.join( __media__, 'shMusicLibrary@2x.png' )
+    QueueIcon = os.path.join( __media__, 'Playlist@2x.png' )
 
 
 ###################################################################
@@ -38,7 +49,9 @@ class MenuNavigator():
 
     # Menu items manually set at the root
     ROOT_MENU_MUSIC_LIBRARY = 'Music-Library'
-    ROOT_MENU_QUEUE = 'Queue'
+    ROOT_MENU_QUEUE = 'QueueIcon'
+    ROOT_MENU_RADIO_STATIONS = 'Radio-Stations'
+    ROOT_MENU_RADIO_SHOWS = 'Radio-Shows'
 
     def __init__(self, base_url, addon_handle):
         self.base_url = base_url
@@ -60,13 +73,21 @@ class MenuNavigator():
 
         # Music Library
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_MUSIC_LIBRARY})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32100), iconImage='DefaultAudio.png')
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32100), iconImage=MediaFiles.MusicLibraryIcon)
         li.addContextMenuItems([], replaceItems=True) # Clear the Context Menu
         self._addPlayerToContextMenu(li) # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
     
-#        url = self._build_url({'mode': 'folder', 'foldername': 'Radio'})
-#        li = xbmcgui.ListItem('Radio (Not Supported Yet)', iconImage='DefaultFolder.png')
+        url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_RADIO_STATIONS})
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32102), iconImage=MediaFiles.RadioIcon)
+        li.addContextMenuItems([], replaceItems=True) # Clear the Context Menu
+        self._addPlayerToContextMenu(li) # Add the Sonos player to the menu
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+
+# NOTE: Radio Shows disabled because additional requests need to be added
+#       to an external source to get what show episodes are available
+#        url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_RADIO_SHOWS})
+#        li = xbmcgui.ListItem('Radio Shows', iconImage=MediaFiles.RadioIcon)
 #        li.addContextMenuItems([], replaceItems=True) # Clear the Context Menu
 #        self._addPlayerToContextMenu(li) # Add the Sonos player to the menu
 #        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
@@ -83,9 +104,9 @@ class MenuNavigator():
 #        self._addPlayerToContextMenu(li) # Add the Sonos player to the menu
 #        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
-        # Queue
+        # QueueIcon
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_QUEUE})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32101), iconImage='DefaultMusicPlaylists.png')
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32101), iconImage=MediaFiles.QueueIcon)
         li.addContextMenuItems([], replaceItems=True) # Clear the Context Menu
         self._addPlayerToContextMenu(li) # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
@@ -142,7 +163,7 @@ class MenuNavigator():
             numberReturned = Settings.getBatchSize()
 
             # Need to get all the tracks in batches
-            # Only get the next batch if all the items requested were i the last batch
+            # Only get the next batch if all the items requested were in the last batch
             while numberReturned == Settings.getBatchSize():
                 # Get the items from the sonos system
                 list = None
@@ -224,6 +245,13 @@ class MenuNavigator():
                 numberReturned = list['number_returned']
                 log("SonosPlugin: Total %s in this batch %d" % (folderName, numberReturned))
 
+                # Makes sure some items are returned                
+                if numberReturned < 1:
+                    numberReturned = len(list['item_list'])
+                    if numberReturned < 1:
+                        log("SonosPlugin: Zero items returned from request")
+                        break
+
                 for item in list['item_list']:
                     # Check if this item is a track of a directory
                     if self._isTrack(item):
@@ -241,6 +269,104 @@ class MenuNavigator():
                         self._addDirectory(item, folderName, totalEntries, subCategory)
                     # No longer the first item
                     isFirstItem = False
+
+                # Add the number returned this time to the running total
+                totalCollected = totalCollected + numberReturned
+
+        xbmcplugin.endOfDirectory(self.addon_handle)
+
+    # Gets the Sonos favourite Radio Stations
+    def populateRadioStations(self):
+        sonosDevice = Settings.getSonosDevice()
+
+        # Make sure a Sonos speaker was found
+        if sonosDevice != None:
+            totalCollected = 0
+            totalEntries = 1
+
+            # Need to get all the tracks in batches            
+            while totalCollected < totalEntries:
+                # Get the items from the sonos system
+                list = None
+                try:
+                    list = sonosDevice.get_favorite_radio_stations(start=totalCollected, max_items=Settings.getBatchSize())
+                except:
+                    log("SonosPlugin: %s" % traceback.format_exc())
+                    xbmcgui.Dialog().ok("Error","Failed to perform radio station lookup")
+                    return
+
+                # Processes the list returned from Sonos, creating the list display on the screen
+                totalEntries = int(list['total'])
+                log("SonosPlugin: Total Radio Station Matches %d" % totalEntries)
+                numberReturned = list['returned']
+                log("SonosPlugin: Total Radio Stations in this batch %d" % numberReturned)
+
+                # Makes sure some items are returned                
+                if numberReturned < 1:
+                    numberReturned = len(list['favorites'])
+                    if numberReturned < 1:
+                        log("SonosPlugin: Zero items returned from request")
+                        break
+
+                for item in list['favorites']:
+                    # Add the radio station to the list
+                    url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_RADIO_PLAY, 'itemId': item['uri'], 'title': item['title']})
+
+                    li = xbmcgui.ListItem(item['title'], path=url, iconImage='DefaultMusicSongs.png')
+                    # Set the right click context menu for the ratio station
+                    li.addContextMenuItems([], replaceItems=True) # Clear the Context Menu
+                    self._addPlayerToContextMenu(li)
+            
+                    xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False, totalItems=totalEntries)
+
+                # Add the number returned this time to the running total
+                totalCollected = totalCollected + numberReturned
+
+        xbmcplugin.endOfDirectory(self.addon_handle)
+        
+    # Gets the Sonos favourite Radio Shows
+    def populateRadioShows(self):
+        sonosDevice = Settings.getSonosDevice()
+
+        # Make sure a Sonos speaker was found
+        if sonosDevice != None:
+            totalCollected = 0
+            totalEntries = 1
+
+            # Need to get all the tracks in batches            
+            while totalCollected < totalEntries:
+                # Get the items from the sonos system
+                list = None
+                try:
+                    list = sonosDevice.get_favorite_radio_shows(start=totalCollected, max_items=Settings.getBatchSize())
+                except:
+                    log("SonosPlugin: %s" % traceback.format_exc())
+                    xbmcgui.Dialog().ok("Error","Failed to perform radio shows lookup")
+                    return
+
+                # Processes the list returned from Sonos, creating the list display on the screen
+                totalEntries = int(list['total'])
+                log("SonosPlugin: Total Radio Shows Matches %d" % totalEntries)
+                numberReturned = list['returned']
+                log("SonosPlugin: Total Radio Shows in this batch %d" % numberReturned)
+
+                # Makes sure some items are returned                
+                if numberReturned < 1:
+                    numberReturned = len(list['favorites'])
+                    if numberReturned < 1:
+                        log("SonosPlugin: Zero items returned from request")
+                        break
+
+                for item in list['favorites']:
+                    # Add the radio station to the list
+                    url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_RADIO_PLAY, 'itemId': item['uri'], 'title': item['title']})
+
+                    li = xbmcgui.ListItem(item['title'], path=url, iconImage='DefaultMusicSongs.png')
+                    # Set the right click context menu for the ratio station
+                    li.addContextMenuItems([], replaceItems=True) # Clear the Context Menu
+                    self._addPlayerToContextMenu(li)
+            
+                    xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False, totalItems=totalEntries)
 
                 # Add the number returned this time to the running total
                 totalCollected = totalCollected + numberReturned
@@ -302,7 +428,7 @@ class MenuNavigator():
     # Adds a track to the listing
     def _addTrack(self, item, totalEntries=None, folderName=None):
         if item != None:
-            url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_PLAY, 'trackId': item['res']})
+            url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_PLAY, 'itemId': item['res']})
 
             # Get a suitable display title
             displayTitle = None
@@ -335,7 +461,6 @@ class MenuNavigator():
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False, totalItems=totalEntries)
             else:
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
-            # xbmcplugin.setResolvedUrl(handle=self.addon_handle, True, listitem=li)
 
     # Method to detect if one of the list items is a track
     def _isTrack(self, item):
@@ -357,10 +482,10 @@ class MenuNavigator():
 
 #        cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_PLAY_NEXT, 'itemId': itemId})
 #        ctxtMenu.append(('Play Next', 'XBMC.RunPlugin(%s)' % cmd))
-        # Add To Queue
+        # Add To QueueIcon
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_ADD_TO_QUEUE, 'itemId': itemId})
         ctxtMenu.append((__addon__.getLocalizedString(32155), 'XBMC.RunPlugin(%s)' % cmd))
-        # Replace Queue
+        # Replace QueueIcon
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_REPLACE_QUEUE, 'itemId': itemId})
         ctxtMenu.append((__addon__.getLocalizedString(32156), 'XBMC.RunPlugin(%s)' % cmd))
 
@@ -383,7 +508,7 @@ class MenuNavigator():
         # Remove Track
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_QUEUE_REMOVE_ITEM, 'itemId': itemId})
         ctxtMenu.append((__addon__.getLocalizedString(32152), 'XBMC.RunPlugin(%s)' % cmd))
-        # Clear Queue
+        # Clear QueueIcon
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_QUEUE_CLEAR, 'itemId': itemId})
         ctxtMenu.append((__addon__.getLocalizedString(32153), 'XBMC.RunPlugin(%s)' % cmd))
 
@@ -415,11 +540,13 @@ class ActionManager():
     ACTION_QUEUE_PLAY_ITEM = 'playQueueItem'
     ACTION_QUEUE_REMOVE_ITEM = 'removeQueueItem'
     ACTION_QUEUE_CLEAR = 'clearQueue'
-    
+
+    ACTION_RADIO_PLAY = 'playRadio'
+
     def __init__(self):
         self.sonosDevice = Settings.getSonosDevice()
 
-    def performAction(self, actionType, itemId):
+    def performAction(self, actionType, itemId, title):
         try:
             if (actionType == ActionManager.ACTION_PLAY) or (actionType == ActionManager.ACTION_PLAY_NOW):
                 self.performPlay(itemId)
@@ -427,13 +554,16 @@ class ActionManager():
                 self.performAddToQueue(itemId)
             elif actionType == ActionManager.ACTION_REPLACE_QUEUE:
                 self.performReplaceQueue(itemId)
-            # Operations for the Queue View
+            # Operations for the QueueIcon View
             elif actionType == ActionManager.ACTION_QUEUE_PLAY_ITEM:
                 self.playQueueItem(int(itemId))
             elif actionType == ActionManager.ACTION_QUEUE_REMOVE_ITEM:
                 self.removeQueueItem(int(itemId))
             elif actionType == ActionManager.ACTION_QUEUE_CLEAR:
                 self.clearQueueItem(int(itemId))
+            # Radio Operations
+            elif actionType == ActionManager.ACTION_RADIO_PLAY:
+                self.performPlayURI(itemId, title)
             else:
                 # Temp error message - should never be shown - will remove when all features complete
                 xbmcgui.Dialog().ok("Error","Operation %s not currently supported" % actionType)
@@ -451,10 +581,10 @@ class ActionManager():
                 positionInQueue = positionInQueue -1
             self.sonosDevice.play_from_queue(positionInQueue)
 
-    def performPlayURI(self, itemId):
+    def performPlayURI(self, itemId, title):
         # Make sure a Sonos speaker was found
         if self.sonosDevice != None:
-            self.sonosDevice.play_uri(itemId)
+            self.sonosDevice.play_uri(itemId, title)
 
     def performAddToQueue(self, itemId):
         positionInQueue = None
@@ -529,6 +659,12 @@ if __name__ == '__main__':
             elif foldername[0] == MenuNavigator.ROOT_MENU_QUEUE:
                 menuNav = MenuNavigator(base_url, addon_handle)
                 menuNav.populateQueueList()
+            elif foldername[0] == MenuNavigator.ROOT_MENU_RADIO_STATIONS:
+                menuNav = MenuNavigator(base_url, addon_handle)
+                menuNav.populateRadioStations()
+            elif foldername[0] == MenuNavigator.ROOT_MENU_RADIO_SHOWS:
+                menuNav = MenuNavigator(base_url, addon_handle)
+                menuNav.populateRadioShows()
             else:
                 subCategory = args.get('subCategory', '')
                 if subCategory != '':
@@ -547,10 +683,14 @@ if __name__ == '__main__':
         actionType = args.get('action', None)
         # Get the item that the action is to be performed on
         itemId = args.get('itemId', None)
+        # Get the title if it is supplied
+        title = args.get('title', None)
+        if title != None:
+            title = title[0]
         
         if (actionType != None) and (itemId != None):
             actionMgr = ActionManager()
-            actionMgr.performAction(actionType[0], itemId[0])
+            actionMgr.performAction(actionType[0], itemId[0], title)
 
 
 

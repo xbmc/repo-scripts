@@ -22,11 +22,11 @@ msgstr "IP адрес"
 
 msgctxt "#32008"
 msgid "Debugging"
-msgstr "Debugging"
+msgstr "Дебъгване"
 
 msgctxt "#32009"
 msgid "Enable debug logging"
-msgstr "Водене на debug дневник"
+msgstr "Включи дебъг дневника"
 
 msgctxt "#32011"
 msgid "Notifications"
@@ -35,3 +35,23 @@ msgstr "Известия"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Допълнителни"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Музикална библиотека"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Артисти"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Албуми"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Жанрове"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Аудио записи"

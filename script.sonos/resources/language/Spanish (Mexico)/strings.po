@@ -31,3 +31,23 @@ msgstr "Notificaciones"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Avanzado"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Biblioteca Música"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Intérpretes"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Álbumes"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Géneros"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Pistas"

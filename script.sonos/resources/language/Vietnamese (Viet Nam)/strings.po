@@ -19,3 +19,19 @@ msgstr ""
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Nâng ca"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Nghệ sĩ"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Bộ sưu tập"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Thể loại"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Bài"

@@ -35,3 +35,27 @@ msgstr "Ilmoitukset"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Lisäasetukset"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Musiikkikirjasto"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Jono"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Esittäjät"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albumit"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Lajityypit"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Kappaleet"

@@ -27,3 +27,19 @@ msgstr "Gaitu debug saioa"
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "Jakinarazpenak"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artistak"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albumak"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Generoak"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Pistak"

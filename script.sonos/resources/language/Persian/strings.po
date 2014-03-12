@@ -19,3 +19,7 @@ msgstr ""
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "پیشرفته"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "آلبوم"

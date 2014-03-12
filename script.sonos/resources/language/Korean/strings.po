@@ -35,3 +35,27 @@ msgstr "알림"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "고급"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "음악 라이브러리"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "대기열"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "아티스트"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "앨범"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "장르"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "트랙"

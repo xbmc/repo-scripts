@@ -87,3 +87,67 @@ msgstr "Interwał odświeżania (w sek.)"
 msgctxt "#32017"
 msgid "Use Test Data"
 msgstr "Użyj danych testowych"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Wtyczka"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Wielkość partii"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Biblioteka muzyki"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Kolejka"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Wykonawcy"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albumy"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Kompozytorzy"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Gatunki"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Ścieżki"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Otwórz Odtwarzacz Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Odtwarzaj utwór "
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Usuń utwór "
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Wyczyść kolejkę "
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Odtwarzaj teraz"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Dodaj do kolejki "
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Zmień kolejność "

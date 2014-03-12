@@ -31,3 +31,19 @@ msgstr "अधिसूचनाएं"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "उन्नत"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "कलाकार "
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "अल्बुम्स"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "तरीका "
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "रास्तें"

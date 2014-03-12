@@ -31,3 +31,19 @@ msgstr "Notificări"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Avansat"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artiști"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albume"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Gen"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Piste"

@@ -35,3 +35,23 @@ msgstr "התראות"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "מתקדם"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "ספריית מוזיקה "
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "אמנים"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "אלבומים"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "סגנונות"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "רצועות"

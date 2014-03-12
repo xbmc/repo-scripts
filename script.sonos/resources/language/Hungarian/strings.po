@@ -39,3 +39,27 @@ msgstr "Haladó"
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Vezérlő"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Zene könyvtár"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Sor"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Előadók"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albumok"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Műfajok"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Számok"

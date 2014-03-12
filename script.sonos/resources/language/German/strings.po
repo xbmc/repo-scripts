@@ -16,9 +16,37 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
+msgstr "Unterstützt einfache Sonos-Befehle und Benachrichtigungen aus XBMC heraus. Mehr Details finden sich im Wiki."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
 msgctxt "#32002"
 msgid "IP Address"
 msgstr "IP-Adresse"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Benachrichtigungen aktivieren (benötigt Neustart)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "zeige Benachrichtigungen für (Sekunden)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Prüfintervall für Benachrichtigungen (Sekunden)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Keine Benachrichtigungen bei der Videowiedergabe anzeigen"
+
+msgctxt "#32007"
+msgid "Use Default XBMC Notification Dialog"
+msgstr "Standard-XBMC-Benachrichtigungsfenster verwenden"
 
 msgctxt "#32008"
 msgid "Debugging"
@@ -28,6 +56,10 @@ msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "Debug-Logging aktivieren"
 
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Lautsprecher"
+
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "Benachrichtigungen"
@@ -36,6 +68,86 @@ msgctxt "#32012"
 msgid "Advanced"
 msgstr "Erweitert"
 
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Suche nach Sonos-Lautsprechern..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Keine Lautsprecher gefunden, bitte IP manuell eingeben"
+
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controller"
+
+msgctxt "#32016"
+msgid "Refresh Interval (Seconds)"
+msgstr "Aktualisierungsinvervall (Sekunden)"
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr "Testdaten verwenden"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Batch-Größe"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Musikbibliothek"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Abspielliste"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Interpreten"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Alben"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Komponist"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Genre"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Titel"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Sonos Player öffnen"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Stück abspielen"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Stück entfernen"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Wiedergabeliste leeren"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Jetzt abspielen"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Zur Wiedergabeliste hinzufügen"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Wiedergabeliste ersetzten "

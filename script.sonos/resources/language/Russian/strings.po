@@ -35,3 +35,27 @@ msgstr "Уведомления"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Дополнительно"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Музыкальная медиатека"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "В плейлист"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Исполнители"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Альбомы"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Жанры"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Треки"

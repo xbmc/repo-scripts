@@ -23,3 +23,19 @@ msgstr "Traženje grešaka"
 msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "Omogući beleženje grešaka"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Izvođači"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albumi"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Žanrovi"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Записи"

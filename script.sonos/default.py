@@ -107,21 +107,21 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
                 # Play/pause is a toggle, so pause if playing
                 if playStatus != None:
                     if playStatus['current_transport_state'] == 'PLAYING':
-                        self.onAction(SonosControllerWindow.BUTTON_PAUSE)
+                        self.onClick(SonosControllerWindow.BUTTON_PAUSE)
                     else:
-                        self.onAction(SonosControllerWindow.BUTTON_PLAY)
+                        self.onClick(SonosControllerWindow.BUTTON_PLAY)
             elif( action == ACTION_STOP ):
-                self.onAction(SonosControllerWindow.BUTTON_STOP)
+                self.onClick(SonosControllerWindow.BUTTON_STOP)
             elif( action == ACTION_NEXT_ITEM ):
-                self.onAction(SonosControllerWindow.BUTTON_NEXT)
+                self.onClick(SonosControllerWindow.BUTTON_NEXT)
             elif( action == ACTION_PREV_ITEM ):
-                self.onAction(SonosControllerWindow.BUTTON_PREVIOUS)
+                self.onClick(SonosControllerWindow.BUTTON_PREVIOUS)
             elif( action == ACTION_MUTE ):
                 # Check if currently muted
                 if sonosDevice.mute() == 0:
-                    self.onAction(SonosControllerWindow.BUTTON_MUTED)
+                    self.onClick(SonosControllerWindow.BUTTON_MUTED)
                 else:
-                    self.onAction(SonosControllerWindow.BUTTON_NOT_MUTED)
+                    self.onClick(SonosControllerWindow.BUTTON_NOT_MUTED)
             elif( action == ACTION_VOLUME_UP ):
                 # Get the current slider position
                 volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
@@ -129,7 +129,7 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
                 if currentSliderPosition < 100:
                     # Bump the volume by one
                     volumeSlider.setPercent(currentSliderPosition + 1)
-                    self.onAction(SonosControllerWindow.SLIDER_VOLUME)
+                    self.onClick(SonosControllerWindow.SLIDER_VOLUME)
             elif( action == ACTION_VOLUME_DOWN ):
                 # Get the current slider position
                 volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
@@ -137,7 +137,7 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
                 if currentSliderPosition > 0:
                     # Bump the volume down by one
                     volumeSlider.setPercent(currentSliderPosition - 1)
-                    self.onAction(SonosControllerWindow.SLIDER_VOLUME)
+                    self.onClick(SonosControllerWindow.SLIDER_VOLUME)
             elif( (action == ACTION_FORWARD) or (action == ACTION_PLAYER_FORWARD) ):
                 # Get the current slider position
                 seekSlider = self.getControl(SonosControllerWindow.SLIDER_SEEK)
@@ -145,7 +145,7 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
                 if currentSliderPosition < 99:
                     # Bump the slider by one
                     seekSlider.setPercent(currentSliderPosition + 1)
-                    self.onAction(SonosControllerWindow.SLIDER_SEEK)
+                    self.onClick(SonosControllerWindow.SLIDER_SEEK)
             elif( (action == ACTION_REWIND) or (action == ACTION_PLAYER_REWIND) ):
                 # Get the current slider position
                 seekSlider = self.getControl(SonosControllerWindow.SLIDER_SEEK)
@@ -153,7 +153,7 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
                 if currentSliderPosition > 0:
                     # Bump the slider down by one
                     seekSlider.setPercent(currentSliderPosition - 1)
-                    self.onAction(SonosControllerWindow.SLIDER_SEEK)
+                    self.onClick(SonosControllerWindow.SLIDER_SEEK)
 
             
 

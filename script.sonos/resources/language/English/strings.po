@@ -100,6 +100,8 @@ msgctxt "#32019"
 msgid "Batch Size"
 msgstr ""
 
+#empty strings from id 32020 to 32099
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr ""
@@ -107,6 +109,12 @@ msgstr ""
 msgctxt "#32101"
 msgid "Queue"
 msgstr ""
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr ""
+
+#empty strings from id 32103 to 32109
 
 msgctxt "#32110"
 msgid "Artists"
@@ -127,6 +135,8 @@ msgstr ""
 msgctxt "#32114"
 msgid "Tracks"
 msgstr ""
+
+#empty strings from id 32115 to 32149
 
 msgctxt "#32150"
 msgid "Open Sonos Player"
@@ -155,7 +165,3 @@ msgstr ""
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr ""
-
-
-
-

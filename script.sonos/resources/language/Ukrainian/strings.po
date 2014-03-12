@@ -31,3 +31,23 @@ msgstr "Сповіщення"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Більше"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Бібліотека музики"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Виконавці"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Альбоми"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Жанри"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Треки"

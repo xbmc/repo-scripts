@@ -1100,6 +1100,15 @@ class SoCo(object):
 
                 favorites.append(favorite)
 
+            # Favourite shows are stored in a container, not an item, so check that as well
+            for item in metadata.findall('.//{urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/}container'):
+                favorite = {}
+
+                favorite['title'] = really_utf8(item.findtext('.//{http://purl.org/dc/elements/1.1/}title'))
+                favorite['uri'] = item.findtext('.//{urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/}res')
+
+                favorites.append(favorite)
+
         result['total'] = dom.findtext('.//TotalMatches', 0)
         result['returned'] = len(favorites)
         result['favorites'] = favorites

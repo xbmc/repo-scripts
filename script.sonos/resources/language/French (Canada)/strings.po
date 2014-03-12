@@ -1,0 +1,153 @@
+# XBMC Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
+msgstr "Prend en charge des contrôles simples et des notifications Sonos depuis XBMC. Consultez le wiki pour plus de détails."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "Adresse IP"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Activer les notifications (redémarrage nécessaire)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Afficher les notifications pendant (secondes)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Fréquence de la vérification des notifications (secondes)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Ne pas afficher de notification si une vidéo est en cours de lecture"
+
+msgctxt "#32007"
+msgid "Use Default XBMC Notification Dialog"
+msgstr "Utiliser la notification par défaut de XBMC"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Débogage"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Activer la journalisation de débogage"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Haut-parleur"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#32012"
+msgid "Advanced"
+msgstr "Avancé"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Rechercher des haut-parleurs Sonos..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Aucun haut-parleur trouvé. Veuillez saisir votre adresse IP manuellement"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Contrôleur"
+
+msgctxt "#32016"
+msgid "Refresh Interval (Seconds)"
+msgstr "Intervalle de rafraîchissement (secondes)"
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr "Utiliser des données de test"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Module d'extension"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Taille du lot"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Bibliothèque de musique"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "File d'attente"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artistes"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albums"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Compositeurs"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Pistes"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Ouvrir le lecteur Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Jouer la piste"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Elever la piste"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Vider la file d'attente"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Jouer maintenant"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Ajouter à la file d'attente"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Remplacer la file d'attente"

@@ -27,3 +27,19 @@ msgstr "Các thông báo"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Nâng cao"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Nghệ sĩ"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Album"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Thể loại"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Bài"

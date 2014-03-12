@@ -31,3 +31,19 @@ msgstr "Notifikasi"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Tingkat Lanjut"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artis"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Album"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Aliran"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Trek"

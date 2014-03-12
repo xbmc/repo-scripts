@@ -19,3 +19,15 @@ msgstr ""
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Papildus"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Mākslinieki"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albūmi"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Žanri"

@@ -87,3 +87,67 @@ msgstr "Verversingsinterval (seconden)"
 msgctxt "#32017"
 msgid "Use Test Data"
 msgstr "Gebruik testgegevens "
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plug-in"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Batch Grootte"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Muziekbibliotheek"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Wachtrij"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artiesten"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albums"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Samenstellers"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Nummers"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Open Sonos speler"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Speel nummer"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Verwijder nummer"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Leeg wachtrij"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Nu afspelen"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Voeg toe aan wachtlijst"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Vervang wachtlijst"

@@ -87,3 +87,63 @@ msgstr "Intervalo de Actualização (Segundos)"
 msgctxt "#32017"
 msgid "Use Test Data"
 msgstr "Usar Dados de Teste"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Biblioteca de Música"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Em fila"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artistas"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Álbums"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Compositores"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Géneros"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Faixas"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Abrir Leitor Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Iniciar Faixa"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Remover Faixa"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Apagar Fila"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Reproduzir Agora"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Adicionar à Fila"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Substituir Fila"

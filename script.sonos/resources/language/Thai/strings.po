@@ -27,3 +27,23 @@ msgstr "Enable debug logging"
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "การแจ้งเตือน"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "คลังข้อมูล วิดีโอ"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "ศิลปิน"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "อัลบั้ม"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "ประเภท"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "ลำดับ"

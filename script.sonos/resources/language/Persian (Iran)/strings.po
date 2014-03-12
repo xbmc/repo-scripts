@@ -23,3 +23,23 @@ msgstr "دیباگ"
 msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "فعال‌کردن گزارش‌گیری اشکال‌زدایی"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "کتابخانه ی موسیقی"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "هنرمندان"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "آلبوم ها"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "نوع"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "تراک ها"

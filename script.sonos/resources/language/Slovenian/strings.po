@@ -31,3 +31,19 @@ msgstr "Obvestila"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Napredno"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Izvajalci"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albumi"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Žanri"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Skladbe"

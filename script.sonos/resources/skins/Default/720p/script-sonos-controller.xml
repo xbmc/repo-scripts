@@ -28,15 +28,15 @@
 		</control>
 
 		<!-- Music Info -->
-		<control type="group" id=300>
-			<control type="image" id=801>
+		<control type="group" id="300">
+			<control type="image" id="801">
 				<description>Cover image</description>
 				<posx>20</posx>
 				<posy>17</posy>
 				<width>130</width>
 				<height>130</height>
 			</control>
-			<control type="fadelabel" id=802>
+			<control type="fadelabel" id="802">
 				<description>Artist label</description>
 				<posx>160</posx>
 				<posy>20</posy>
@@ -50,7 +50,7 @@
 				<scrollout>false</scrollout>
 				<pauseatend>2000</pauseatend>
 			</control>
-			<control type="fadelabel" id=803>
+			<control type="fadelabel" id="803">
 				<description>Title label</description>
 				<posx>160</posx>
 				<posy>43</posy>
@@ -64,7 +64,7 @@
 				<scrollout>false</scrollout>
 				<pauseatend>2000</pauseatend>
 			</control>
-			<control type="fadelabel" id=804>
+			<control type="fadelabel" id="804">
 				<description>Album Label</description>
 				<posx>160</posx>
 				<posy>70</posy>
@@ -78,7 +78,7 @@
 				<scrollout>false</scrollout>
 				<pauseatend>2000</pauseatend>
 			</control>
-			<control type="fadelabel" id=805>
+			<control type="fadelabel" id="805">
 				<description>Next Label</description>
 				<posx>160</posx>
 				<posy>100</posy>
@@ -92,7 +92,7 @@
 				<scrollout>false</scrollout>
 				<pauseatend>2000</pauseatend>
 			</control>
-			<control type="label" id=810>
+			<control type="label" id="810">
 				<description>Current Time Position Label</description>
 				<posx>160</posx>
 				<posy>130</posy>
@@ -123,7 +123,7 @@
 				<!-- Only display the slider if there is a duration set -->
 				<visible>Control.IsVisible(812)</visible>
 			</control>
-			<control type="label" id=812>
+			<control type="label" id="812">
 				<description>Duration Label</description>
 				<posx>435</posx>
 				<posy>130</posy>

@@ -35,3 +35,27 @@ msgstr "Pranešimai"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Išplėstinė(-is)"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Muzikos biblioteka"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Eilė"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artistai"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albumai"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Žanrai"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Dainos"

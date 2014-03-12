@@ -35,3 +35,23 @@ msgstr "Påmindelser"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Udvidet"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Musikbibliotek"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Kunstnere"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albummer"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Genrer"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Spor"

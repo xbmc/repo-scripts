@@ -23,3 +23,11 @@ msgstr "ማስታወቂያዎች"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "የረቀቀ"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "ከያኒዎች "
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "አልበም "

@@ -31,3 +31,19 @@ msgstr "அறிவிப்புkal"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "மேம்பட்ட"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "கலைஞர்"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "ஆல்பங்கள்"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "பிரிவுகள்"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "தடங்கல்"

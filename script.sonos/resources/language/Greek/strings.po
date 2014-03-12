@@ -87,3 +87,67 @@ msgstr "Χρονικό Διάστημα Ενημέρωσης (Δευτ.)"
 msgctxt "#32017"
 msgid "Use Test Data"
 msgstr "Χρήση ΔοκιμαστικώνΔεδομένων"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Μέγεθος Δέσμης"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Μουσική Συλλογή"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Σε Αναμονή"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Καλλιτέχνες"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Άλμπουμ"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Συνθέτες"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Είδος"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Κομμάτια"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Άνοιγμα Αναπαραγωγέα Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Αναπαραγωγή Κομματιού"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Αφαίρεση Κομματιού"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Εκκαθάριση Αναμονής"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Αναπαραγωγή Τώρα"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Προσθήκη Στην Αναμονή"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Αντικατάσταση Αναμονής"

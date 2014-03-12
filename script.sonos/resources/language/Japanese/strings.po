@@ -35,3 +35,23 @@ msgstr "通知"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "高度な設定"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "ミュージックライブラリ"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "アーティスト"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "アルバム"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "ジャンル"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "トラック"

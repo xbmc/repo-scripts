@@ -39,3 +39,27 @@ msgstr "Avançado"
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controles"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Coleção de Músicas"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Listagem"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artistas"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Álbuns"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Gêneros"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Faixas"

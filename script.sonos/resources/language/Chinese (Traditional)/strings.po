@@ -31,3 +31,23 @@ msgstr "通知"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "進階"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "音樂資料庫"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "演出者"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "專輯"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "類別"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "音軌"

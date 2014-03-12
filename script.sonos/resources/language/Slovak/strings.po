@@ -35,3 +35,23 @@ msgstr "Notifikácie"
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Pokročilé"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Hudobná knižnica"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Interpreti"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albumy"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Žánre"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Skladby"
