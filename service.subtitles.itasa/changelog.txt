@@ -1,2 +1,12 @@
+0.0.4
+- added notification in case of failed login, attempt to search other language than italian and attempt to search movies
+- fixed check of WEB-DL quality with different namings
+
+0.0.3
+- fixed check for the normal (hdtv) version
+
+0.0.2
+- fixed a bug with a sync check and added the check for the normal (hdtv) version
+
 0.0.1
 - initial release

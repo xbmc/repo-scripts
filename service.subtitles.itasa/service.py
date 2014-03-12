@@ -267,10 +267,12 @@ def search(item):
 		elif item['tvshow']:
 			search_tvshow(item['tvshow'], item['season'], item['episode'], item['onlineid'], filename)
 		elif item['title'] and item['year']:
+			xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32006))).encode('utf-8'))
 			log(__name__, 'Itasa only works with tv shows. Skipped')
 		else:
 			search_filename(filename)
 	else:
+		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32005))).encode('utf-8'))
 		log(__name__, 'Itasa only works with italian. Skipped')
 	
 def search_tvshow(tvshow, season, episode, onlineid, filename):
@@ -311,14 +313,26 @@ def search_manual(searchstr, filename):
 def checksyncandadd(result, filename):
 	fl = filename.lower()
 	for (subtitleid, subtitlename, subtitleversion) in result:
-		if subtitleversion == '720p':						
-			if '720p' in fl and 'hdtv' in fl:
+		if subtitleversion == 'WEB-DL':						
+			if ('web-dl' in fl) or ('web.dl' in fl) or ('webdl' in fl) or ('web dl' in fl):
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+		elif subtitleversion == '720p':						
+			if ('720p' in fl) and ('hdtv' in fl):
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+		elif subtitleversion == 'Normale':
+			if ('hdtv' in fl) and ( not ('720p' in fl)):
 				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
 		elif subtitleversion.lower() in fl:
 			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
 	for (subtitleid, subtitlename, subtitleversion) in result:
-		if subtitleversion == '720p':
-			if not('720p' in fl and 'hdtv') in fl:
+		if subtitleversion == 'WEB-DL':						
+			if not (('web-dl' in fl) or ('web.dl' in fl) or ('webdl' in fl) or ('web dl' in fl)):
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+		elif subtitleversion == '720p':
+			if not (('720p' in fl) and ('hdtv' in fl)):
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
+		elif subtitleversion == 'Normale':
+			if not (('hdtv' in fl) and ( not ('720p' in fl))):
 				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
 		elif not (subtitleversion.lower() in fl):
 			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
@@ -420,12 +434,14 @@ def download (subid): #standard input
 			else:
 				match = re.search('logouticon.png', content, re.IGNORECASE | re.DOTALL)
 				if match:
+					xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32007))).encode('utf-8'))
 					log( __name__ ,'Can\'t find the download url. Probably you downloaded the file too many times (more than 10)')
 				else:
 					log( __name__ ,'Can\'t find the download url. Probably not logged in')
 		else:
 			log( __name__ ,'Download of subtitle page failed')
 	else:
+		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32004))).encode('utf-8'))
 		log( __name__ ,'Login to Itasa failed. Check your username/password at the addon configuration')
 	return []
 

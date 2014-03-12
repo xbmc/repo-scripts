@@ -6,4 +6,8 @@
     <string id="32001">Username</string>
     <string id="32002">Password</string>
     <string id="32003">Login Details</string>
+    <string id="32004">Login to ItaSA failed. Check your username and password in addon settings</string>
+    <string id="32005">ItaSA has only italian subtitles. Add italian to the subtitle settings</string>
+    <string id="32006">ItaSA only works with tv shows subtitles</string>
+	<string id="32007">Download link not found in ItaSA subtitle page. Downloaded too many times?</string>
 </strings>

@@ -6,4 +6,8 @@
     <string id="32001">Nome utente</string>
     <string id="32002">Password</string>
     <string id="32003">Dettagli login</string>
+    <string id="32004">Login a ItaSA fallito. Controlla il tuo username e la tua password nelle impostazioni dell'addon</string>
+	<string id="32005">ItaSA ha solo sottotitoli italiani. Aggiungete l'italiano nelle impostazioni sottotitoli..</string>
+	<string id="32006">ItaSA funziona solo con sottotitoli di serie tv</string>
+	<string id="32007">Download link non trovato nella pagina ItaSA del sottotitolo. Già scaricato più di 10 volte?</string>
 </strings>
