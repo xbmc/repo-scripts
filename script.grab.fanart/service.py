@@ -289,11 +289,11 @@ class GrabFanartService:
         json_response = xbmc.executeJSONRPC('{ "jsonrpc" : "2.0" , "method" : "' + method + '" , "params" : ' + params + ' , "id":1 }')
 
         jsonobject = json.loads(json_response)
-        
+       
         if(jsonobject.has_key('result')):
             return jsonobject['result']
         else:
-            utils.log("no result",xbmc.LOGDEBUG)
+            utils.log("no result " + str(jsonobject),xbmc.LOGDEBUG)
             return None
 
     def randomNum(self,size):

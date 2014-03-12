@@ -1,8 +1,19 @@
+Version 0.12.6
+
+added website tag
+removed settings visibility
+removed strings
+
+Version 0.12.5
+
+change startup type to "login" 
+
 Version 0.12.4
 
 only clear lists when we know there is new content
 added try/catch for index error
 changed some logging to debug only
+icon file updated
 
 Version 0.12.3
 
