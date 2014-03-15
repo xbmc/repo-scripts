@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import cookielib
-from distutils.msvc9compiler import query_vcvarsall
 import os
 import re
 import urllib
