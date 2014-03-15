@@ -1,3 +1,6 @@
+3.1.3 - by CaTz 15/03/2014
+- Change python version for Gotham
+
 3.1.2 - by CaTz 14/02/2014
 - Fix cache issues
 - Added feature, clean the cache from the settings
