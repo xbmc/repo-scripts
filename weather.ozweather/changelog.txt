@@ -1,3 +1,6 @@
+V0.7.1
+- Fixed ABC weather video link again - apparently they use multiple servers
+
 V0.7.0
 - Fixed ABC weather video link
 - Added setting for weather video qualtiy level

@@ -22,6 +22,7 @@ import ftplib
 import shutil
 import time
 import datetime
+from datetime import date
 
 # Minimal code to import bossanova808 common code
 ADDON           = xbmcaddon.Addon()
@@ -592,13 +593,18 @@ def propertiesPDOM(page, extendedFeatures):
         req = urllib2.Request(abcURL)
         response = urllib2.urlopen(req)
         htmlSource = str(response.read())
-        pattern_video = "http://mpegmedia.abc.net.au/news/news24/weather/video/(.+?)/WINs_Weather1_(.+?)_512k.mp4"
+        #log(htmlSource)
+        #yearmonth = str(date.today().year) + str(date.today().month).zfill(2)
+        #daymonth = str(date.today().day).zfill(2) + str(date.today().month).zfill(2)
+        pattern_video = "http://mpegmedia.abc.net.au/news/news24/weather/video/(.+?)/WINs_Weather(.*?)_(.+?)_512k.mp4"
         video = re.findall( pattern_video, htmlSource )
+        log("Video url parts: " + str(video))
         try:
             qual = ADDON.getSetting("ABCQuality")
             if qual=="Best":
                 qual="trw"
-            url = "http://mpegmedia.abc.net.au/news/news24/weather/video/"+ video[0][0] + "/WINs_Weather1_" + video[0][1] + "_" + qual + ".mp4"
+            url = "http://mpegmedia.abc.net.au/news/news24/weather/video/"+ video[0][0] + "/WINs_Weather" + video[0][1] + "_" + video[0][2] + "_" + qual + ".mp4"
+            log("Built url " + url)
             setProperty(WEATHER_WINDOW, 'Video.1',url)
         except Exception as inst:
             log("Couldn't get ABC video URL from page", inst)
