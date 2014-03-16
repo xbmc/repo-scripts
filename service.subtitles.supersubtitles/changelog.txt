@@ -1,0 +1,34 @@
+0.0.8
+- improvements from Xbmc addons mailing list
+
+0.0.7
+- remove duplications by subtitle id
+
+0.0.6
+- some refactor
+
+0.0.5
+- add missing requests2 dependency
+- fix original path issue
+
+0.0.4
+- filter languages
+- reformat by PyCharm
+
+0.0.3
+- use year for get tvshow id
+- archive file handling
+  - extract into a folder
+  - search subtitle extracted infolder
+    - working together with season pack archives
+- add some notification
+
+0.0.2
+- first working edition
+- fully rewrited
+  - drop html parsing
+  - json based solution
+- Special thanks to BlaiSeCT
+
+0.0.1
+- initial version
