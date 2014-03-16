@@ -9,345 +9,325 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#Dialog Text
 
 msgctxt "#30300"
 msgid "Downloading"
-msgstr ""
+msgstr "Laddar ned"
 
 msgctxt "#30301"
 msgid "Downloading artist images"
-msgstr ""
+msgstr "Laddar ner artistbilder"
 
 msgctxt "#30302"
 msgid "Nothing Downloaded"
-msgstr ""
+msgstr "Inget har laddats ner"
 
 msgctxt "#30303"
 msgid "No images found for artist"
-msgstr ""
+msgstr "Hittade inga bilder på artisten"
 
 msgctxt "#30304"
 msgid "Download Complete"
-msgstr ""
+msgstr "Nerladdningen klar"
 
 msgctxt "#30305"
 msgid "All artist images downloaded"
-msgstr ""
-
-#empty strings from id 30306 to 31999
-#Settings
+msgstr "Alla artistbilder har laddats ner"
 
 msgctxt "#32000"
 msgid "Download"
-msgstr ""
+msgstr "Ladda ned"
 
 msgctxt "#32001"
 msgid "Download images from last.fm"
-msgstr ""
+msgstr "Ladda ner bilder från last.fm"
 
 msgctxt "#32002"
 msgid "Download images from htbackdrops.com"
-msgstr ""
+msgstr "Ladda ner bilder från htbackdrops.com"
 
 msgctxt "#32003"
 msgid "  Minimal image width"
-msgstr ""
+msgstr "Minsta bildbredd"
 
 msgctxt "#32004"
 msgid "  Minimal image height"
-msgstr ""
+msgstr "Minsta bildhöjd"
 
 msgctxt "#32005"
 msgid "Download additional artist information"
-msgstr ""
+msgstr "Ladda ner ytterligare information"
 
 msgctxt "#32006"
 msgid "  Preferred language for artist information"
-msgstr ""
+msgstr "Föredraget språk för artistinformation"
 
 msgctxt "#32007"
 msgid "  Download only 16:9 images"
-msgstr ""
+msgstr "Ladda bara ner 16:9-bilder"
 
 msgctxt "#32008"
 msgid "Download images from fanart.tv"
-msgstr ""
+msgstr "Ladda ner bilder från fanart.tv"
 
 msgctxt "#32009"
 msgid "Download images from theaudiodb.com"
-msgstr ""
-
-#empty strings from id 32010 to 32099
+msgstr "Ladda ner bilder från theaudiodb.com"
 
 msgctxt "#32100"
 msgid "Slideshow"
-msgstr ""
+msgstr "Bildspel"
 
 msgctxt "#32101"
 msgid "Local artist folder"
-msgstr ""
+msgstr "Lokal mapp för artist"
 
 msgctxt "#32102"
 msgid "  Image Priority"
-msgstr ""
+msgstr "Bildprioritet"
 
 msgctxt "#32103"
 msgid "Fallback folder"
-msgstr ""
+msgstr "Alternativ bildmapp för bildspel"
 
 msgctxt "#32104"
 msgid "Override folder"
-msgstr ""
+msgstr "Egen bildspelsmapp"
 
 msgctxt "#32105"
 msgid "Use fallback slideshow"
-msgstr ""
+msgstr "Använd alternativt bildspel"
 
 msgctxt "#32106"
 msgid "Use override slideshow"
-msgstr ""
-
-#empty strings from id 32107 to 32109
+msgstr "Åsidosätt bildspel"
 
 msgctxt "#32110"
 msgid "Use remote images first"
-msgstr ""
+msgstr "Använd fjärrbilder först"
 
 msgctxt "#32111"
 msgid "Use local images first"
-msgstr ""
+msgstr "Använd lokala bilder först"
 
 msgctxt "#32112"
 msgid "Use both local and remote images"
-msgstr ""
-
-#empty strings from id 32113 to 32199
+msgstr "Använd både lokala och fjärrbilder"
 
 msgctxt "#32200"
 msgid "Advanced"
-msgstr ""
+msgstr "Avancerad"
 
 msgctxt "#32201"
 msgid "Limit size of download cache"
-msgstr ""
+msgstr "Begräns storlek på nerladdningscache"
 
 msgctxt "#32202"
 msgid "  Maximum cache size (in megabytes)"
-msgstr ""
+msgstr "Maximal cachestorlek (i megabytes)"
 
 msgctxt "#32203"
 msgid "Download notification type"
-msgstr ""
+msgstr "Nerladdningsnotifiering"
 
 msgctxt "#32204"
 msgid "  Custom notification images folder"
-msgstr ""
+msgstr "Egen mapp för notifieringsbilder"
 
 msgctxt "#32205"
 msgid "Alternate name for local fanart folder"
-msgstr ""
+msgstr "Alternativt namn för lokal fanartmapp"
 
 msgctxt "#32206"
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 msgctxt "#32207"
 msgid "Text notifications"
-msgstr ""
+msgstr "Textnotifieringar"
 
 msgctxt "#32208"
 msgid "Custom images"
-msgstr ""
-
-#empty strings from id 32209 to 32900
-#Languages
+msgstr "Egna bilder"
 
 msgctxt "#32901"
 msgid "Albanian"
-msgstr ""
+msgstr "Albanska"
 
 msgctxt "#32902"
 msgid "Arabic"
-msgstr ""
+msgstr "Arabiska"
 
 msgctxt "#32903"
 msgid "Belarusian"
-msgstr ""
+msgstr "Vitryska"
 
 msgctxt "#32904"
 msgid "Bosnian (Latin)"
-msgstr ""
+msgstr "Bosniska (Latin)"
 
 msgctxt "#32905"
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgariska"
 
 msgctxt "#32906"
 msgid "Catalan"
-msgstr ""
+msgstr "Katalanska"
 
 msgctxt "#32907"
 msgid "Chinese"
-msgstr ""
+msgstr "Kinesiska"
 
 msgctxt "#32908"
 msgid "Croatian"
-msgstr ""
+msgstr "Kroatiska"
 
 msgctxt "#32909"
 msgid "Czech"
-msgstr ""
+msgstr "Tjeckiska"
 
 msgctxt "#32910"
 msgid "Danish"
-msgstr ""
+msgstr "Danska"
 
 msgctxt "#32911"
 msgid "Dutch"
-msgstr ""
+msgstr "Holländska"
 
 msgctxt "#32912"
 msgid "English"
-msgstr ""
+msgstr "Engelska"
 
 msgctxt "#32913"
 msgid "Estonian"
-msgstr ""
+msgstr "Estniska"
 
 msgctxt "#32914"
 msgid "Finnish"
-msgstr ""
+msgstr "Finska"
 
 msgctxt "#32915"
 msgid "French"
-msgstr ""
+msgstr "Franska"
 
 msgctxt "#32916"
 msgid "German"
-msgstr ""
+msgstr "Tyska"
 
 msgctxt "#32917"
 msgid "Greek"
-msgstr ""
+msgstr "Grekiska"
 
 msgctxt "#32918"
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebreiska"
 
 msgctxt "#32919"
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 msgctxt "#32920"
 msgid "Hungarian"
-msgstr ""
+msgstr "Ungerska"
 
 msgctxt "#32921"
 msgid "Icelandic"
-msgstr ""
+msgstr "Isländska"
 
 msgctxt "#32922"
 msgid "Indonesian"
-msgstr ""
-
-#empty string with id 32923
+msgstr "Indonesiska"
 
 msgctxt "#32924"
 msgid "Italian"
-msgstr ""
+msgstr "Italienska"
 
 msgctxt "#32925"
 msgid "Japanese"
-msgstr ""
+msgstr "Japanska"
 
 msgctxt "#32926"
 msgid "Korean"
-msgstr ""
+msgstr "Koreanska"
 
 msgctxt "#32927"
 msgid "Latvian"
-msgstr ""
+msgstr "Lettiska"
 
 msgctxt "#32928"
 msgid "Lithuanian"
-msgstr ""
+msgstr "Litauiska"
 
 msgctxt "#32929"
 msgid "Macedonian"
-msgstr ""
+msgstr "Makedonska"
 
 msgctxt "#32930"
 msgid "Norwegian"
-msgstr ""
-
-#empty string with id 32931
+msgstr "Norska"
 
 msgctxt "#32932"
 msgid "Polish"
-msgstr ""
+msgstr "Polska"
 
 msgctxt "#32933"
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugisiska"
 
 msgctxt "#32934"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "Portugisiska (Brasilien)"
 
 msgctxt "#32935"
 msgid "Romanian"
-msgstr ""
+msgstr "Rumänska"
 
 msgctxt "#32936"
 msgid "Russian"
-msgstr ""
+msgstr "Ryska"
 
 msgctxt "#32937"
 msgid "SerbianLatin"
-msgstr ""
+msgstr "Serbiska (Latin)"
 
 msgctxt "#32938"
 msgid "Slovak"
-msgstr ""
+msgstr "Slovakiska"
 
 msgctxt "#32939"
 msgid "Slovenian"
-msgstr ""
+msgstr "Slovenska"
 
 msgctxt "#32940"
 msgid "Spanish"
-msgstr ""
-
-#empty string with id 32941
+msgstr "Spanska"
 
 msgctxt "#32942"
 msgid "Swedish"
-msgstr ""
+msgstr "Svenska"
 
 msgctxt "#32943"
 msgid "Thai"
-msgstr ""
+msgstr "Thailändska"
 
 msgctxt "#32944"
 msgid "Turkish"
-msgstr ""
+msgstr "Turkiska"
 
 msgctxt "#32945"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrainska"
 
 msgctxt "#32946"
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamesiska"
 
 msgctxt "#32947"
 msgid "Farsi"
-msgstr ""
+msgstr "Farsi"

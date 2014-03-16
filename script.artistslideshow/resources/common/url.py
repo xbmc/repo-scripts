@@ -1,4 +1,4 @@
-#v.0.1.5
+#v.0.1.6
 
 import requests2 as _requests
 import socket
@@ -68,7 +68,10 @@ class URL():
                 elif self.returntype == 'json':
                     data = urldata.json()
             except:
-                data = urldata
+                success = False
+                data = ''
+                loglines.append( 'unable to convert returned object to acceptable type' )
+                loglines.append( urldata )
         else:
             success = False
             data = ''

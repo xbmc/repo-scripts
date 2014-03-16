@@ -9,345 +9,325 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#Dialog Text
 
 msgctxt "#30300"
 msgid "Downloading"
-msgstr ""
+msgstr "Descarregant"
 
 msgctxt "#30301"
 msgid "Downloading artist images"
-msgstr ""
+msgstr "Descarregant les imatges de l'artista"
 
 msgctxt "#30302"
 msgid "Nothing Downloaded"
-msgstr ""
+msgstr "No s'ha descarregat res"
 
 msgctxt "#30303"
 msgid "No images found for artist"
-msgstr ""
+msgstr "No s'han trobat imatges de l'artista"
 
 msgctxt "#30304"
 msgid "Download Complete"
-msgstr ""
+msgstr "Descarrega completa"
 
 msgctxt "#30305"
 msgid "All artist images downloaded"
-msgstr ""
-
-#empty strings from id 30306 to 31999
-#Settings
+msgstr "S'han descarregat totes les imatges de l'artista"
 
 msgctxt "#32000"
 msgid "Download"
-msgstr ""
+msgstr "Descarrega"
 
 msgctxt "#32001"
 msgid "Download images from last.fm"
-msgstr ""
+msgstr "Descàrrega imatges de last.fm"
 
 msgctxt "#32002"
 msgid "Download images from htbackdrops.com"
-msgstr ""
+msgstr "Descàrrega imatges de htbackdrops.com"
 
 msgctxt "#32003"
 msgid "  Minimal image width"
-msgstr ""
+msgstr "Amplada mínima de la imatge"
 
 msgctxt "#32004"
 msgid "  Minimal image height"
-msgstr ""
+msgstr "Altura mínima de la imatge"
 
 msgctxt "#32005"
 msgid "Download additional artist information"
-msgstr ""
+msgstr "Descarrega informació addicional de l'artista"
 
 msgctxt "#32006"
 msgid "  Preferred language for artist information"
-msgstr ""
+msgstr "Idioma preferit per a la informació de l'artista"
 
 msgctxt "#32007"
 msgid "  Download only 16:9 images"
-msgstr ""
+msgstr "Descarregar només imatges panoràmiques (16:9)"
 
 msgctxt "#32008"
 msgid "Download images from fanart.tv"
-msgstr ""
+msgstr "Descàrrega imatges de fanart.tv"
 
 msgctxt "#32009"
 msgid "Download images from theaudiodb.com"
-msgstr ""
-
-#empty strings from id 32010 to 32099
+msgstr "Descàrrega imatges de theaudiodb.com"
 
 msgctxt "#32100"
 msgid "Slideshow"
-msgstr ""
+msgstr "Presentació de diapositives"
 
 msgctxt "#32101"
 msgid "Local artist folder"
-msgstr ""
+msgstr "Carpeta local de l'artista"
 
 msgctxt "#32102"
 msgid "  Image Priority"
-msgstr ""
+msgstr "Prioritat d'imatge"
 
 msgctxt "#32103"
 msgid "Fallback folder"
-msgstr ""
+msgstr "Carpeta alternativa"
 
 msgctxt "#32104"
 msgid "Override folder"
-msgstr ""
+msgstr "Carpeta primordial"
 
 msgctxt "#32105"
 msgid "Use fallback slideshow"
-msgstr ""
+msgstr "Utilitza la presentació de diapositives alternativa"
 
 msgctxt "#32106"
 msgid "Use override slideshow"
-msgstr ""
-
-#empty strings from id 32107 to 32109
+msgstr "Utilitza la carpeta primordial"
 
 msgctxt "#32110"
 msgid "Use remote images first"
-msgstr ""
+msgstr "Utilitza primer les imatges remotes"
 
 msgctxt "#32111"
 msgid "Use local images first"
-msgstr ""
+msgstr "Utilitza primer les imatges locals"
 
 msgctxt "#32112"
 msgid "Use both local and remote images"
-msgstr ""
-
-#empty strings from id 32113 to 32199
+msgstr "Utilitza les imatges locals i remotes"
 
 msgctxt "#32200"
 msgid "Advanced"
-msgstr ""
+msgstr "Avançat"
 
 msgctxt "#32201"
 msgid "Limit size of download cache"
-msgstr ""
+msgstr "Límit de la memòria cau de descàrrega"
 
 msgctxt "#32202"
 msgid "  Maximum cache size (in megabytes)"
-msgstr ""
+msgstr "Mida màxima de la memòria cau (en megabytes)"
 
 msgctxt "#32203"
 msgid "Download notification type"
-msgstr ""
+msgstr "Tipus de notificació de la descarrega"
 
 msgctxt "#32204"
 msgid "  Custom notification images folder"
-msgstr ""
+msgstr "Carpeta personalitzada de les notificacions de les imatges"
 
 msgctxt "#32205"
 msgid "Alternate name for local fanart folder"
-msgstr ""
+msgstr "Nom alternatiu per la carpeta local de fanart"
 
 msgctxt "#32206"
 msgid "None"
-msgstr ""
+msgstr "Cap"
 
 msgctxt "#32207"
 msgid "Text notifications"
-msgstr ""
+msgstr "Notificacions textuals"
 
 msgctxt "#32208"
 msgid "Custom images"
-msgstr ""
-
-#empty strings from id 32209 to 32900
-#Languages
+msgstr "Imatges personalitzades"
 
 msgctxt "#32901"
 msgid "Albanian"
-msgstr ""
+msgstr "Albanès"
 
 msgctxt "#32902"
 msgid "Arabic"
-msgstr ""
+msgstr "Àrab"
 
 msgctxt "#32903"
 msgid "Belarusian"
-msgstr ""
+msgstr "Bielorús"
 
 msgctxt "#32904"
 msgid "Bosnian (Latin)"
-msgstr ""
+msgstr "Bosnià (Llatí)"
 
 msgctxt "#32905"
 msgid "Bulgarian"
-msgstr ""
+msgstr "Búlgar"
 
 msgctxt "#32906"
 msgid "Catalan"
-msgstr ""
+msgstr "Català"
 
 msgctxt "#32907"
 msgid "Chinese"
-msgstr ""
+msgstr "Xinès"
 
 msgctxt "#32908"
 msgid "Croatian"
-msgstr ""
+msgstr "Croat"
 
 msgctxt "#32909"
 msgid "Czech"
-msgstr ""
+msgstr "Txec"
 
 msgctxt "#32910"
 msgid "Danish"
-msgstr ""
+msgstr "Danès"
 
 msgctxt "#32911"
 msgid "Dutch"
-msgstr ""
+msgstr "Holandès"
 
 msgctxt "#32912"
 msgid "English"
-msgstr ""
+msgstr "Anglès"
 
 msgctxt "#32913"
 msgid "Estonian"
-msgstr ""
+msgstr "Estonià"
 
 msgctxt "#32914"
 msgid "Finnish"
-msgstr ""
+msgstr "Finès"
 
 msgctxt "#32915"
 msgid "French"
-msgstr ""
+msgstr "Francès"
 
 msgctxt "#32916"
 msgid "German"
-msgstr ""
+msgstr "Alemany"
 
 msgctxt "#32917"
 msgid "Greek"
-msgstr ""
+msgstr "Grec"
 
 msgctxt "#32918"
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebreu"
 
 msgctxt "#32919"
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 msgctxt "#32920"
 msgid "Hungarian"
-msgstr ""
+msgstr "Hongarès"
 
 msgctxt "#32921"
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandès"
 
 msgctxt "#32922"
 msgid "Indonesian"
-msgstr ""
-
-#empty string with id 32923
+msgstr "Indonesi"
 
 msgctxt "#32924"
 msgid "Italian"
-msgstr ""
+msgstr "Italià"
 
 msgctxt "#32925"
 msgid "Japanese"
-msgstr ""
+msgstr "Japonès"
 
 msgctxt "#32926"
 msgid "Korean"
-msgstr ""
+msgstr "Coreà"
 
 msgctxt "#32927"
 msgid "Latvian"
-msgstr ""
+msgstr "Letó"
 
 msgctxt "#32928"
 msgid "Lithuanian"
-msgstr ""
+msgstr "Lituà"
 
 msgctxt "#32929"
 msgid "Macedonian"
-msgstr ""
+msgstr "Macedoni"
 
 msgctxt "#32930"
 msgid "Norwegian"
-msgstr ""
-
-#empty string with id 32931
+msgstr "Noruec"
 
 msgctxt "#32932"
 msgid "Polish"
-msgstr ""
+msgstr "Polonès"
 
 msgctxt "#32933"
 msgid "Portuguese"
-msgstr ""
+msgstr "Portuguès"
 
 msgctxt "#32934"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "Portuguès (Brasil)"
 
 msgctxt "#32935"
 msgid "Romanian"
-msgstr ""
+msgstr "Romanès"
 
 msgctxt "#32936"
 msgid "Russian"
-msgstr ""
+msgstr "Rus"
 
 msgctxt "#32937"
 msgid "SerbianLatin"
-msgstr ""
+msgstr "Serbi llatí"
 
 msgctxt "#32938"
 msgid "Slovak"
-msgstr ""
+msgstr "Eslovac"
 
 msgctxt "#32939"
 msgid "Slovenian"
-msgstr ""
+msgstr "Eslovè"
 
 msgctxt "#32940"
 msgid "Spanish"
-msgstr ""
-
-#empty string with id 32941
+msgstr "Espanyol"
 
 msgctxt "#32942"
 msgid "Swedish"
-msgstr ""
+msgstr "Suec"
 
 msgctxt "#32943"
 msgid "Thai"
-msgstr ""
+msgstr "Tailandès"
 
 msgctxt "#32944"
 msgid "Turkish"
-msgstr ""
+msgstr "Turc"
 
 msgctxt "#32945"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ucraïnès"
 
 msgctxt "#32946"
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamita"
 
 msgctxt "#32947"
 msgid "Farsi"
-msgstr ""
+msgstr "Persa"

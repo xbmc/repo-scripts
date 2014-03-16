@@ -9,345 +9,325 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#Dialog Text
 
 msgctxt "#30300"
 msgid "Downloading"
-msgstr ""
+msgstr "מוריד"
 
 msgctxt "#30301"
 msgid "Downloading artist images"
-msgstr ""
+msgstr "מוריד תמונות אמן"
 
 msgctxt "#30302"
 msgid "Nothing Downloaded"
-msgstr ""
+msgstr "לא הורד דבר"
 
 msgctxt "#30303"
 msgid "No images found for artist"
-msgstr ""
+msgstr "לא נמצאו תמונות לאמן"
 
 msgctxt "#30304"
 msgid "Download Complete"
-msgstr ""
+msgstr "הורדה הושלמה"
 
 msgctxt "#30305"
 msgid "All artist images downloaded"
-msgstr ""
-
-#empty strings from id 30306 to 31999
-#Settings
+msgstr "כל תמונות האמן הורדו"
 
 msgctxt "#32000"
 msgid "Download"
-msgstr ""
+msgstr "הורד"
 
 msgctxt "#32001"
 msgid "Download images from last.fm"
-msgstr ""
+msgstr " הורד תמונות מ-last.fm"
 
 msgctxt "#32002"
 msgid "Download images from htbackdrops.com"
-msgstr ""
+msgstr "הורד תמונות מ-htbackdrops.com"
 
 msgctxt "#32003"
 msgid "  Minimal image width"
-msgstr ""
+msgstr "רוחב תמונה מינימלי"
 
 msgctxt "#32004"
 msgid "  Minimal image height"
-msgstr ""
+msgstr "גובה תמונה מינימלי"
 
 msgctxt "#32005"
 msgid "Download additional artist information"
-msgstr ""
+msgstr "הורד מידע נוסף על האמן"
 
 msgctxt "#32006"
 msgid "  Preferred language for artist information"
-msgstr ""
+msgstr "שפה מועדפת למידע אמן"
 
 msgctxt "#32007"
 msgid "  Download only 16:9 images"
-msgstr ""
+msgstr "הורד תמונות ביחס 16:9 בלבד"
 
 msgctxt "#32008"
 msgid "Download images from fanart.tv"
-msgstr ""
+msgstr "הורד תמונות מ-fanart.tv"
 
 msgctxt "#32009"
 msgid "Download images from theaudiodb.com"
-msgstr ""
-
-#empty strings from id 32010 to 32099
+msgstr "הורד תמונות מ-theaudiodb.com"
 
 msgctxt "#32100"
 msgid "Slideshow"
-msgstr ""
+msgstr "מצגת"
 
 msgctxt "#32101"
 msgid "Local artist folder"
-msgstr ""
+msgstr "תיקיית אמן מקומית"
 
 msgctxt "#32102"
 msgid "  Image Priority"
-msgstr ""
+msgstr "קדימות תמונה"
 
 msgctxt "#32103"
 msgid "Fallback folder"
-msgstr ""
+msgstr "תיקיה חלופית"
 
 msgctxt "#32104"
 msgid "Override folder"
-msgstr ""
+msgstr "תיקיית מעקף"
 
 msgctxt "#32105"
 msgid "Use fallback slideshow"
-msgstr ""
+msgstr "השתמש במצגת חלופית"
 
 msgctxt "#32106"
 msgid "Use override slideshow"
-msgstr ""
-
-#empty strings from id 32107 to 32109
+msgstr "השתמש במצגת מעקף"
 
 msgctxt "#32110"
 msgid "Use remote images first"
-msgstr ""
+msgstr "השתמש תחילה בתמונות מרוחקות"
 
 msgctxt "#32111"
 msgid "Use local images first"
-msgstr ""
+msgstr "השתמש תחילה בתמונות מקומיות"
 
 msgctxt "#32112"
 msgid "Use both local and remote images"
-msgstr ""
-
-#empty strings from id 32113 to 32199
+msgstr "השתמש בתמונות מקומיות ומרוחקות"
 
 msgctxt "#32200"
 msgid "Advanced"
-msgstr ""
+msgstr "מתקדם"
 
 msgctxt "#32201"
 msgid "Limit size of download cache"
-msgstr ""
+msgstr "הגבלת נפח מטמון ההורדות"
 
 msgctxt "#32202"
 msgid "  Maximum cache size (in megabytes)"
-msgstr ""
+msgstr "נפח מטמון מירבי (MB)"
 
 msgctxt "#32203"
 msgid "Download notification type"
-msgstr ""
+msgstr "אופן התראת הורדה"
 
 msgctxt "#32204"
 msgid "  Custom notification images folder"
-msgstr ""
+msgstr "תיקיית תמונות התראה מותאמות"
 
 msgctxt "#32205"
 msgid "Alternate name for local fanart folder"
-msgstr ""
+msgstr "שם חלופי לתיקיית פאנארט מקומית"
 
 msgctxt "#32206"
 msgid "None"
-msgstr ""
+msgstr "ללא"
 
 msgctxt "#32207"
 msgid "Text notifications"
-msgstr ""
+msgstr "התראות טקסט"
 
 msgctxt "#32208"
 msgid "Custom images"
-msgstr ""
-
-#empty strings from id 32209 to 32900
-#Languages
+msgstr "תמונות מותאמות"
 
 msgctxt "#32901"
 msgid "Albanian"
-msgstr ""
+msgstr "אלבנית"
 
 msgctxt "#32902"
 msgid "Arabic"
-msgstr ""
+msgstr "ערבית"
 
 msgctxt "#32903"
 msgid "Belarusian"
-msgstr ""
+msgstr "בלרוסית"
 
 msgctxt "#32904"
 msgid "Bosnian (Latin)"
-msgstr ""
+msgstr "בוסנית (לטינית)"
 
 msgctxt "#32905"
 msgid "Bulgarian"
-msgstr ""
+msgstr "בולגרית"
 
 msgctxt "#32906"
 msgid "Catalan"
-msgstr ""
+msgstr "קטלאנית"
 
 msgctxt "#32907"
 msgid "Chinese"
-msgstr ""
+msgstr "סינית"
 
 msgctxt "#32908"
 msgid "Croatian"
-msgstr ""
+msgstr "קרואטית"
 
 msgctxt "#32909"
 msgid "Czech"
-msgstr ""
+msgstr "צ'כית"
 
 msgctxt "#32910"
 msgid "Danish"
-msgstr ""
+msgstr "דנית"
 
 msgctxt "#32911"
 msgid "Dutch"
-msgstr ""
+msgstr "הולנדית"
 
 msgctxt "#32912"
 msgid "English"
-msgstr ""
+msgstr "אנגלית"
 
 msgctxt "#32913"
 msgid "Estonian"
-msgstr ""
+msgstr "אסטונית"
 
 msgctxt "#32914"
 msgid "Finnish"
-msgstr ""
+msgstr "פינית"
 
 msgctxt "#32915"
 msgid "French"
-msgstr ""
+msgstr "צרפתית"
 
 msgctxt "#32916"
 msgid "German"
-msgstr ""
+msgstr "גרמנית"
 
 msgctxt "#32917"
 msgid "Greek"
-msgstr ""
+msgstr "יוונית"
 
 msgctxt "#32918"
 msgid "Hebrew"
-msgstr ""
+msgstr "עברית"
 
 msgctxt "#32919"
 msgid "Hindi"
-msgstr ""
+msgstr "הינדי"
 
 msgctxt "#32920"
 msgid "Hungarian"
-msgstr ""
+msgstr "הונגרית"
 
 msgctxt "#32921"
 msgid "Icelandic"
-msgstr ""
+msgstr "איסלנדית"
 
 msgctxt "#32922"
 msgid "Indonesian"
-msgstr ""
-
-#empty string with id 32923
+msgstr "אינדונזית"
 
 msgctxt "#32924"
 msgid "Italian"
-msgstr ""
+msgstr "איטלקית"
 
 msgctxt "#32925"
 msgid "Japanese"
-msgstr ""
+msgstr "יפנית"
 
 msgctxt "#32926"
 msgid "Korean"
-msgstr ""
+msgstr "קוריאנית"
 
 msgctxt "#32927"
 msgid "Latvian"
-msgstr ""
+msgstr "לטבית"
 
 msgctxt "#32928"
 msgid "Lithuanian"
-msgstr ""
+msgstr "ליטאית"
 
 msgctxt "#32929"
 msgid "Macedonian"
-msgstr ""
+msgstr "מקדונית"
 
 msgctxt "#32930"
 msgid "Norwegian"
-msgstr ""
-
-#empty string with id 32931
+msgstr "נורווגית"
 
 msgctxt "#32932"
 msgid "Polish"
-msgstr ""
+msgstr "פולנית"
 
 msgctxt "#32933"
 msgid "Portuguese"
-msgstr ""
+msgstr "פורטוגלית"
 
 msgctxt "#32934"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "פורטוגזית (ברזיל)"
 
 msgctxt "#32935"
 msgid "Romanian"
-msgstr ""
+msgstr "רומנית"
 
 msgctxt "#32936"
 msgid "Russian"
-msgstr ""
+msgstr "רוסית"
 
 msgctxt "#32937"
 msgid "SerbianLatin"
-msgstr ""
+msgstr "סרבית לטינית"
 
 msgctxt "#32938"
 msgid "Slovak"
-msgstr ""
+msgstr "סלובקית"
 
 msgctxt "#32939"
 msgid "Slovenian"
-msgstr ""
+msgstr "סלובנית"
 
 msgctxt "#32940"
 msgid "Spanish"
-msgstr ""
-
-#empty string with id 32941
+msgstr "ספרדית"
 
 msgctxt "#32942"
 msgid "Swedish"
-msgstr ""
+msgstr "שוודית"
 
 msgctxt "#32943"
 msgid "Thai"
-msgstr ""
+msgstr "תאית"
 
 msgctxt "#32944"
 msgid "Turkish"
-msgstr ""
+msgstr "תורכית"
 
 msgctxt "#32945"
 msgid "Ukrainian"
-msgstr ""
+msgstr "אוקראינית"
 
 msgctxt "#32946"
 msgid "Vietnamese"
-msgstr ""
+msgstr "וייאטנמית"
 
 msgctxt "#32947"
 msgid "Farsi"
-msgstr ""
+msgstr "פרסית"
