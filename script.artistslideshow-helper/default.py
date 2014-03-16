@@ -6,7 +6,7 @@
 import xbmc, xbmcaddon, xbmcvfs
 import os, sys
 if sys.version_info >= (2, 7):
-    import _json
+    import json as _json
     from collections import OrderedDict as _ordereddict
 else:
     import simplejson as _json

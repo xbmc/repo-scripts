@@ -9,108 +9,93 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/xbmc-addons/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#Dialogs
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgctxt "#30300"
 msgid "Starting"
-msgstr ""
+msgstr "Uruchamiam"
 
 msgctxt "#30301"
 msgid "beginning work"
-msgstr ""
-
-#empty strings from id 30302 to 30309
+msgstr "praca rozpoczęta "
 
 msgctxt "#30310"
 msgid "Result"
-msgstr ""
+msgstr "Wyniki"
 
 msgctxt "#30311"
 msgid "successfully wrote hash list file"
-msgstr ""
+msgstr "z powodzeniem zapisano listę hash "
 
 msgctxt "#30312"
 msgid "unable to create hash list file"
-msgstr ""
-
-#empty strings from id 30313 to 30319
+msgstr "nie można stworzyć listy hash "
 
 msgctxt "#30320"
 msgid "Error"
-msgstr ""
+msgstr "Błąd"
 
 msgctxt "#30321"
 msgid "no migration folder defined"
-msgstr ""
-
-#empty strings from id 30322 to 30329
+msgstr "nie zdefiniowano żadnego folderu migracji"
 
 msgctxt "#30330"
 msgid "Result"
-msgstr ""
+msgstr "Wyniki"
 
 msgctxt "#30331"
 msgid "migration of files complete"
-msgstr ""
-
-#empty strings from id 30332 to 30339
+msgstr "zakończono migrację plików"
 
 msgctxt "#30340"
 msgid "Error"
-msgstr ""
+msgstr "Błąd"
 
 msgctxt "#30341"
 msgid "no hash list folder defined"
-msgstr ""
-
-#empty strings from id 30342 to 30349
+msgstr "nie zdefiniowano folderu list hash"
 
 msgctxt "#30350"
 msgid "Error"
-msgstr ""
+msgstr "Błąd"
 
 msgctxt "#30351"
 msgid "no action specified in settings"
-msgstr ""
-
-#empty strings from id 30352 to 32000
-#Settings
+msgstr "brak określonego działania w ustawieniach"
 
 msgctxt "#32001"
 msgid "Create artist hash mapping file"
-msgstr ""
+msgstr "Stwórz hash mapowania pliku artysty"
 
 msgctxt "#32002"
 msgid "   Output directory"
-msgstr ""
+msgstr "Katalog wyjściowy"
 
 msgctxt "#32003"
 msgid "Migrate images"
-msgstr ""
+msgstr "Przenoszenie obrazów"
 
 msgctxt "#32004"
 msgid "   Output directory"
-msgstr ""
+msgstr "Katalog wyjściowy"
 
 msgctxt "#32005"
 msgid "    Migration type"
-msgstr ""
+msgstr "Typ migracji"
 
 msgctxt "#32006"
 msgid "test"
-msgstr ""
+msgstr "test"
 
 msgctxt "#32007"
 msgid "move"
-msgstr ""
+msgstr "przenieś"
 
 msgctxt "#32008"
 msgid "copy"
-msgstr ""
+msgstr "skopiuj"
