@@ -2,7 +2,7 @@
 ### By bossanova808 2013
 ### Free in all senses....
 
-### VERSION 0.1.4 Dec 2013
+### VERSION 0.1.5
 
 import xbmc
 import xbmcaddon
@@ -15,7 +15,7 @@ import os
 import platform
 import socket
 
-from traceback import print_exc
+from traceback import format_exc
 
 ################################################################################
 ################################################################################
@@ -33,8 +33,7 @@ def log(message, inst=None, level=xbmc.LOGDEBUG):
       xbmc.log("### " + ADDONNAME + "-" + VERSION +  " ### " + str(message), level )
     else:
       xbmc.log("### " + ADDONNAME + "-" + VERSION +  " ### " + str(message), level )
-      xbmc.log("### " + ADDONNAME + "-" + VERSION +  " ### Exception:", level )
-      print_exc(inst)
+      xbmc.log("### " + ADDONNAME + "-" + VERSION +  " ### Exception:" + format_exc(inst), level )
 
 #log something even if debug logging is off - for important stuff!
 

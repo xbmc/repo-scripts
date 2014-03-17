@@ -365,12 +365,11 @@ def prepareBackgrounds(radarCode):
     log("Called prepareBackgrounds()")
 
     downloadBackground(radarCode, "IDR.legend.0.png")
-    if radarCode != "IDR00004":
-        downloadBackground(radarCode, "background.png")
-        downloadBackground(radarCode, "locations.png")
-        downloadBackground(radarCode, "range.png")
-        downloadBackground(radarCode, "topography.png")
-        downloadBackground(radarCode, "catchments.png")
+    downloadBackground(radarCode, "background.png")
+    downloadBackground(radarCode, "locations.png")
+    downloadBackground(radarCode, "range.png")
+    downloadBackground(radarCode, "topography.png")
+    downloadBackground(radarCode, "catchments.png")
 
 
 ################################################################################
@@ -524,8 +523,6 @@ def propertiesPDOM(page, extendedFeatures):
         #get the 7 day max min forecasts
         maxMin = common.parseDOM(ret, "td")
         #log( "maxmin is " + str(maxMin))
-        #for count, element in enumerate(maxMin):
-        #   print "********" , count , "^^^" , str(element)
         maxList = stripList(maxMin[7:14],'&deg;C')
         minList = stripList(maxMin[14:21],'&deg;C')
         rainChanceList = stripList(maxMin[21:28],'')
@@ -675,7 +672,7 @@ socket.setdefaulttimeout(100)
 
 #the being called from the settings section where the user enters their postcodes
 if sys.argv[1].startswith('Location'):
-    keyboard = xbmc.Keyboard('', LANGUAGE(30195), False)
+    keyboard = xbmc.Keyboard('', LANGUAGE(32195), False)
     keyboard.doModal()
     if (keyboard.isConfirmed() and keyboard.getText() != ''):
         text = keyboard.getText()

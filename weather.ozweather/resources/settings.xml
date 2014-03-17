@@ -2,14 +2,14 @@
 <settings>
 	<category label="Enter Settings">
 		<!-- Best is mapped to trw in default.py -->
-		<setting id="ABCQuality" label ="30196" type ="labelenum" values="256k|512K|1000k|Best" default="1000k"/>
-		<setting id="Location1" label="30111" type="action" action="RunScript($ID,Location1)" default=""/>
-		<setting id="Location2" label="30112" type="action" action="RunScript($ID,Location2)" enable="!eq( -1,)" default=""/>
-		<setting id="Location3" label="30113" type="action" action="RunScript($ID,Location3)" enable="!eq( -1,)" default=""/>
-    <setting id="ExtendedFeaturesToggle" label="30194" type="bool" default="false"/>
-		<setting id="Radar1" label="30155" type="text" default="IDR00004"/>
-		<setting id="Radar2" label="30156" type="text" enable="!eq( -4,)" default=""/>
-		<setting id="Radar3" label="30157" type="text" enable="!eq( -4,)" default=""/>
+		<setting id="ABCQuality" label ="32196" type ="labelenum" values="256k|512K|1000k|Best" default="1000k"/>
+		<setting id="Location1" label="32111" type="action" action="RunScript($ID,Location1)" default=""/>
+		<setting id="Location2" label="32112" type="action" action="RunScript($ID,Location2)" enable="!eq( -1,)" default=""/>
+		<setting id="Location3" label="32113" type="action" action="RunScript($ID,Location3)" enable="!eq( -1,)" default=""/>
+    	<setting id="ExtendedFeaturesToggle" label="32194" type="bool" default="false"/>
+		<setting id="Radar1" label="32155" type="text" default="IDR00004"/>
+		<setting id="Radar2" label="32156" type="text" enable="!eq( -4,)" default=""/>
+		<setting id="Radar3" label="32157" type="text" enable="!eq( -4,)" default=""/>
 	    <setting id="Location1id" type="text" visible="false" default=""/>
 		<setting id="Location2id" type="text" visible="false" default=""/>
 		<setting id="Location3id" type="text" visible="false" default=""/>
