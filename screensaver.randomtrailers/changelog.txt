@@ -1,3 +1,12 @@
+v.1.1.15 (March 08,2014)
+ - fixed issues with rating limits with unrated movies.
+ - now pauses trailer when displaying info
+ - transparent background for info shows dimmed paused trailer.
+
+v.1.1.14 (March 06,2014)
+ - optimized trailer search on tmdb when rating limits applied
+ - fixed issue where search count not displaying correctly for tmdb searches
+ 
 v.1.1.13 (March 03,2014)
  - updated filter feature to filter by rating limit for all trailers (perviously only iTunes trailers were filtered)
 

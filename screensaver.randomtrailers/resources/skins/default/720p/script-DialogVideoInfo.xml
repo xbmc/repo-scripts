@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window>
+  <zorder>99999</zorder>
     <coordinates>
         <system>1</system>
         <posx>0</posx>
@@ -7,22 +8,22 @@
     </coordinates>
     <controls>	
         <control type="group">
-			<animation effect="fade" start="100" end="0" time="2000">WindowClose</animation>
-            <animation effect="fade" start="0" end="100" time="2000">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="1000">WindowClose</animation>
+            <animation effect="fade" start="0" end="100" time="1000">WindowOpen</animation>
             <control type="image">
                 <posx>0</posx>
                 <posy>0</posy>
                 <width>1280</width>
                 <height>720</height>
                 <aspectratio>stretch</aspectratio>
-                <texture>black.png</texture>
+                <texture>black-back.png</texture>
                 <colordiffuse>FFFFFFFF</colordiffuse>
             </control>
         </control>
         <control type="group" id="30099">
             <posy>-30</posy>
-            <animation effect="fade" start="100" end="0" time="2000">WindowClose</animation>			
-            <animation effect="fade" start="0" end="100" time="2000">WindowOpen</animation>			
+            <animation effect="fade" start="100" end="0" time="1000">WindowClose</animation>			
+            <animation effect="fade" start="0" end="100" time="1000">WindowOpen</animation>			
 			<!-- separators -->
 			<control type="group">
 				<posx>100</posx>
@@ -141,7 +142,7 @@
 					<posy>160</posy>
 					<width>368</width>
 					<font>font13</font>
-					<label>Director</label>
+					<label>[B]Director[/B]</label>
 					<textcolor>FFFFFFFF</textcolor>
 				</control>				
 				<control type="label" id="30005">
@@ -160,7 +161,7 @@
 					<width>368</width>
 					<font>font13</font>
                     <scroll>true</scroll>
-					<label>Writer</label>
+					<label>[B]Writer[/B]</label>
 					<textcolor>FFFFFFFF</textcolor>
 				</control>
 				<control type="label" id="30007">
@@ -177,15 +178,16 @@
 					<posx>330</posx>
 					<posy>265</posy>
 					<width>368</width>
-					<label>Stars</label>
+					<label>[B]Stars[/B]</label>
 					<font>font13</font>
 					<textcolor>FFFFFFFF</textcolor>
 				</control>
-				<control type="textbox" id="30006">
+				<control type="label" id="30006">
 					<description>Cast</description>
 					<posx>330</posx>
 					<posy>285</posy>
 					<width>368</width>
+          <wrapmultiline>true</wrapmultiline>
                     <height>100</height>
 					<font>font13</font>
 					<textcolor>FFb4b4b4</textcolor>
@@ -219,7 +221,8 @@
 			<control type="label" id="30010">
 				<description>Studio/Year</description>
 				<posx>16</posx>
-				<posy>45r</posy>
+				<posy>715</posy>
+        <height>20</height>
 				<width>auto</width>
 				<font>font13</font>
 				<textcolor>FFb4b4b4</textcolor>
@@ -228,8 +231,9 @@
 			<control type="label" id="30011">
 				<description>Duration/Genre</description>
 				<posx>16</posx>
-				<posy>20r</posy>
+				<posy>690</posy>
 				<width>auto</width>
+        <height>20</height>
 				<font>font13</font>
 				<textcolor>FFb4b4b4</textcolor>
 				<scroll>false</scroll>

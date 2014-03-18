@@ -8,6 +8,7 @@
 			<width>680</width>
 			<height>20</height>
 			<align>left</align>
+      <font>font13</font>
 			<aligny>center</aligny>
 			<textcolor>FFFFFFFF</textcolor>
 			<shadowcolor>black</shadowcolor>

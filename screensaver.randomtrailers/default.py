@@ -1,7 +1,7 @@
 # Random trailer player
 #
 # Author - kzeleny
-# Version - 1.1.10
+# Version - 1.1.15
 # Compatibility - Frodo/Gothum
 #
 
@@ -19,6 +19,8 @@ import random
 import json
 import time
 import xbmcaddon
+import xml.dom.minidom
+from xml.dom.minidom import Node
 
 addon = xbmcaddon.Addon()
 number_trailers =  addon.getSetting('number_trailers')
@@ -74,6 +76,39 @@ trailer=''
 info=''
 do_timeout = False
 played = []
+
+def getTitleFont():
+    title_font='font13'
+    base_size=20
+    multiplier=1
+    skin_dir = xbmc.translatePath("special://skin/")
+    list_dir = os.listdir( skin_dir )
+    fonts=[]
+    fontxml_path =''
+    font_xml=''
+    for item in list_dir:
+        item = os.path.join( skin_dir, item )
+        if os.path.isdir( item ):
+            font_xml = os.path.join( item, "Font.xml" )
+        if os.path.exists( font_xml ):
+            fontxml_path=font_xml
+            break
+    dom =  xml.dom.minidom.parse(fontxml_path)
+    fontlist=dom.getElementsByTagName('font')
+    for font in fontlist:
+        name = font.getElementsByTagName('name')[0].childNodes[0].nodeValue
+        size = font.getElementsByTagName('size')[0].childNodes[0].nodeValue
+        fonts.append({'name':name,'size':float(size)})
+    fonts =sorted(fonts, key=lambda k: k['size'])
+    for f in fonts:
+        if f['name']=='font13':
+            multiplier=f['size'] / 20
+            break
+    for f in fonts:
+        if f['size'] >= 38 * multiplier:
+            title_font=f['name']
+            break
+    return title_font
 
 def askGenres():
     addon = xbmcaddon.Addon()
@@ -352,21 +387,45 @@ def getTmdbTrailers():
     if addon.getSetting("tmdb_source") == '3':source='now_playing'
     if addon.getSetting("tmdb_source") == '4':source='dvd'
     if addon.getSetting("tmdb_source") == '5':source='all'
+    rating_limit=addon.getSetting('rating_limit')
+    if rating_limit=='0':rating_limit='NC-17'
+    if rating_limit=='1':rating_limit='G'
+    if rating_limit=='2':rating_limit='PG'
+    if rating_limit=='3':rating_limit='PG-13'
+    if rating_limit=='4':rating_limit='R'
+    if rating_limit=='5':rating_limit='NC-17'
     if source=='all':
         data = {}
         data['api_key'] = '99e8b7beac187a857152f57d67495cf4'
+        data['sort_by'] ='popularity.desc'
+        data['certification_country']='us'
+        data['certification.lte']=rating_limit
         url_values = urllib.urlencode(data)
-        url = 'https://api.themoviedb.org/3/movie/latest'
+        url = 'http://api.themoviedb.org/3/discover/movie'
         full_url = url + '?' + url_values
         req = urllib2.Request(full_url)
         infostring = urllib2.urlopen(req).read()
         infostring = json.loads(infostring)
-        maxID=infostring['id']
-        id=0
-        for i in range(1,maxID):
-            id=id+1
-            dict={'trailer':'tmdb','id': id}
-            tmdbTrailers.append(dict)
+        total_pages=infostring['total_pages']
+        if total_pages > 1000: total_pages=1000
+        for i in range(1,11):
+            data = {}
+            data['api_key'] = '99e8b7beac187a857152f57d67495cf4'
+            data['sort_by'] ='popularity.desc'
+            data['certification_country']='us'
+            data['certification.lte']=rating_limit
+            data['page']=random.randrange(1,total_pages+1)
+            url_values = urllib.urlencode(data)
+            url = 'http://api.themoviedb.org/3/discover/movie'
+            full_url = url + '?' + url_values
+            req = urllib2.Request(full_url)
+            infostring = urllib2.urlopen(req).read()
+            infostring = json.loads(infostring)
+            for movie in infostring['results']:
+                id=movie['id']
+                dict={'trailer':'tmdb','id': id,'source':'tmdb','title':movie['title']}
+                tmdbTrailers.append(dict)
+
     elif source=='dvd':
         data={}
         data['apikey']='99dgtphe3c29y85m2g8dmdmt'
@@ -390,11 +449,12 @@ def getTmdbTrailers():
             infostring = json.loads(infostring)
             for m in infostring['results']:
                 id=m['id']
-                dict={'trailer':'tmdb','id': id}
+                dict={'trailer':'tmdb','id': id,'source':'tmdb','title':movie['title']}
                 tmdbTrailers.append(dict)
+                break
     else:
         page=0
-        for i in range(0,5):
+        for i in range(0,11):
             page=page+1
             data = {}
             data['api_key'] = '99e8b7beac187a857152f57d67495cf4'
@@ -408,8 +468,10 @@ def getTmdbTrailers():
             infostring = json.loads(infostring)
             for result in infostring['results']:
                 id=result['id']
-                dict={'trailer':'tmdb','id':id}
+                dict={'trailer':'tmdb','id': id,'source':'tmdb','title':movie['title']}
                 tmdbTrailers.append(dict)
+            if infostring['total_pages']==page:
+                break
     return tmdbTrailers
 
 def search_tmdb(title,year):
@@ -493,8 +555,7 @@ def getTmdbTrailer(movieId):
             if s['name']=='English':
                 addMovie=True
         if movieString['adult']=='true':addMovie = False
-        xbmc.log('Rating=' + mpaa)
-        addMovie = checkRating(mpaa)
+        addMovie=checkRating(mpaa)
         if not addMovie:
             dictInfo = {'title':'','trailer': '','year':0,'studio':[],'mpaa':'','file':'','thumbnail':'','fanart':'','director':[],'writer':[],'plot':'','cast':'','runtime':0,'genre':[],'source': 'tmdb','type':''} 
         else:
@@ -508,52 +569,28 @@ class blankWindow(xbmcgui.WindowXML):
 class trailerWindow(xbmcgui.WindowXMLDialog):
 
     def onInit(self):
+        windowstring = xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"GUI.GetProperties","params":{"properties":["currentwindow"]},"id":1}')
+        windowstring=json.loads(windowstring)
+        xbmc.log('Trailer_Window_id = ' + str(windowstring['result']['currentwindow']['id']))
         global played
-        global SelectedGenre
+        global SelectedGene
         global trailer
         global info
         global do_timeout
         global NUMBER_TRAILERS
-        global trailercount
+        global trailercountF
         global source
         random.shuffle(trailers)
         trailercount=0
         trailer=random.choice(trailers)
-        while trailer["number"] in played:
+        while trailer['title'] in played:
             trailer=random.choice(trailers)
             trailercount=trailercount+1
             if trailercount == len(trailers):
                 played=[]
-        played.append(trailer["number"])
         if trailer['trailer']=='tmdb':
-            if addon.getSetting('tmdb_source') == '5':
-                dp=xbmcgui.DialogProgress()
-                dp.create('Random Trailers','Please wait while we get a random trailer from themoviedb...')
-                gotTrailer=False
-                searchCount=0
-                while not gotTrailer:
-                    searchCount=searchCount+1
-                    try:
-                        trailer=getTmdbTrailer(trailer['id'])
-                    except:
-                        trailer['trailer']=''
-                    if trailer['trailer'] != '':
-                        gotTrailer=True
-                    else:
-                        trailer=random.choice(trailers)
-                        while trailer["number"] in played:
-                            trailer=random.choice(trailers)
-                            trailercount=trailercount+1
-                            if trailercount == len(trailers):
-                                played=[]
-                            played.append(trailer["number"])
-                    dp.update(0,'Please wait while we get a random trailer from themoviedb...','Searched '+ str(searchCount) + ' movies with trailers...')
-                    if dp.iscanceled():
-                        break
-                dp.close()
-                del dp
-            else:
-                trailer=getTmdbTrailer(trailer['id'])
+            trailer=getTmdbTrailer(trailer['id'])
+        played.append(trailer['title'])
         source=trailer['source']
         if source=='library':
             if trailer['trailer']=='': #no trailer search tmdb for one
@@ -582,6 +619,7 @@ class trailerWindow(xbmcgui.WindowXMLDialog):
                 url=''
         else:
             url = trailer['trailer'].encode('ascii', 'ignore')
+        xbmc.log(str(trailer))
         if  trailer["trailer"] != '' and lastPlay:
             NUMBER_TRAILERS = NUMBER_TRAILERS -1
             if hide_info == 'false' and source !='folder':
@@ -600,9 +638,9 @@ class trailerWindow(xbmcgui.WindowXMLDialog):
                 xbmc.Player().play(url)
                 NUMBER_TRAILERS = NUMBER_TRAILERS -1
             if source == 'folder':
-                self.getControl(30011).setLabel(trailer["title"] + ' - ' + trailer['source']+ ' ' + trailer['type'])
+                self.getControl(30011).setLabel('[B]'+trailer["title"] + ' - ' + trailer['source']+ ' ' + trailer['type']+'[/B]')
             else:
-                self.getControl(30011).setLabel(trailer["title"] + ' - ' + trailer['source'] + ' ' + trailer['type'] + ' - ' + str(trailer["year"]))
+                self.getControl(30011).setLabel('[B]'+trailer["title"] + ' - ' + trailer['source'] + ' ' + trailer['type'] + ' - ' + str(trailer["year"])+'[/B]')
             if hide_title == 'false':
                 self.getControl(30011).setVisible(True)
             else:
@@ -658,7 +696,9 @@ class trailerWindow(xbmcgui.WindowXMLDialog):
             if source !='folder':
                 self.getControl(30011).setVisible(False)
                 w=infoWindow('script-DialogVideoInfo.xml',addon_path,'default')
+                xbmc.Player().pause()
                 w.doModal()
+                xbmc.Player().pause()
             if hide_title == 'false':
                 self.getControl(30011).setVisible(True)
             else:
@@ -667,11 +707,15 @@ class trailerWindow(xbmcgui.WindowXMLDialog):
 class infoWindow(xbmcgui.WindowXMLDialog):
     def onInit(self):
         source = trailer['source']
-        if source == 'iTunes':
-            info=getInfo(trailer['title'],trailer['year'])
+        info=getInfo(trailer['title'],trailer['year'])
         self.getControl(30001).setImage(trailer["thumbnail"])
         self.getControl(30003).setImage(trailer["fanart"])
-        self.getControl(30002).setLabel(trailer["title"] + ' - ' + trailer['source'] + ' ' + trailer['type'] + ' - ' + str(trailer["year"]))
+        title_font=getTitleFont()
+        title_string =trailer["title"] + ' - ' + trailer['source'] + ' ' + trailer['type'] + ' - ' + str(trailer["year"])
+        title=xbmcgui.ControlLabel(10,40,800,40,title_string,title_font)
+        title=self.addControl(title)
+        title=self.getControl(3001)
+        title.setAnimations([('windowclose', 'effect=fade end=0 time=1000')])          
         movieDirector=''
         movieWriter=''
         if source=='iTunes':
@@ -719,7 +763,7 @@ class infoWindow(xbmcgui.WindowXMLDialog):
         if not movieWriter =='':
             movieWriter = movieWriter[:-2]                
         self.getControl(30005).setLabel(movieDirector)
-        self.getControl(30006).setText(movieActor)
+        self.getControl(30006).setLabel(movieActor)
         self.getControl(30005).setLabel(movieDirector)
         self.getControl(30007).setLabel(movieWriter)
         self.getControl(30009).setText(plot)
@@ -824,10 +868,6 @@ def playTrailers():
     GROUP_NUMBER = int(addon.getSetting('group_number'))
     GROUP_COUNT=GROUP_NUMBER
     GROUP_DELAY = (int(addon.getSetting('group_delay')) * 60) * 1000
-    if DO_CURTIANS == 'true':
-        xbmc.Player().play(open_curtain_path)
-        while xbmc.Player().isPlaying():
-            xbmc.sleep(250)
     trailercount = 0
     while not exit_requested:
         if NUMBER_TRAILERS == 0:
@@ -891,11 +931,26 @@ def get_mpaa(trailer):
     return Rating
 
 if not xbmc.Player().isPlaying() and not check_for_xsqueeze():
+    DO_CURTIANS = addon.getSetting('do_animation')
     bs = blankWindow('script-BlankWindow.xml', addon_path,'default',)
     bs.show()
+    if do_volume == 'true':
+        muted = xbmc.getCondVisibility("Player.Muted")
+        if not muted and volume == 0:
+            xbmc.executebuiltin('xbmc.Mute()')
+        else:
+            xbmc.executebuiltin('XBMC.SetVolume('+str(volume)+')')
+    if DO_CURTIANS == 'true':
+        xbmc.Player().play(open_curtain_path)
+        while xbmc.Player().isPlaying():
+            xbmc.sleep(250)
     trailers = []
     filtergenre = False
     trailerNumber = 0
+    library_trailers=[]
+    iTunes_trailers=[]
+    folder_trailers=[]
+    tmdb_trailers=''
     if do_library == 'true':
         if do_genre == 'true':
             filtergenre = askGenres()
@@ -906,10 +961,10 @@ if not xbmc.Player().isPlaying() and not check_for_xsqueeze():
             library_trailers = getLibraryTrailers(selectedGenre)
         else:
             library_trailers = getLibraryTrailers("")
-        library_trailers = getLibraryTrailers("")
+    dp=xbmcgui.DialogProgress()
+    dp.create('Random Trailers','','','Loading Trailers')
+    if do_library == 'true':
         for trailer in library_trailers:
-            trailerNumber= trailerNumber+1
-            trailer['number']=trailerNumber
             trailers.append(trailer) 
     if do_folder == 'true' and path !='':
         folder_trailers = getFolderTrailers(path)
@@ -923,22 +978,15 @@ if not xbmc.Player().isPlaying() and not check_for_xsqueeze():
     if do_itunes == 'true':
         iTunes_trailers = getItunesTrailers()
         for trailer in iTunes_trailers:
-            trailerNumber=trailerNumber+1
-            trailer['number']=trailerNumber
-            trailers.append(trailer)
+            trailers.append(trailer)     
     if do_tmdb =='true':
         tmdbTrailers=getTmdbTrailers()
         for trailer in tmdbTrailers:
-            trailerNumber=trailerNumber+1
-            trailer['number']=trailerNumber 
-            trailers.append(trailer)
-    if do_volume == 'true':
-        muted = xbmc.getCondVisibility("Player.Muted")
-        if not muted and volume == 0:
-            xbmc.executebuiltin('xbmc.Mute()')
-        else:
-            xbmc.executebuiltin('XBMC.SetVolume('+str(volume)+')')
-    if len(trailers) > 0:
+            trailers.append(trailer)    
+    exit_requested=False
+    if dp.iscanceled():exit_requested=True 
+    dp.close()
+    if len(trailers) > 0 and not exit_requested:
        playTrailers()
     del bs
     if do_volume == 'true':
