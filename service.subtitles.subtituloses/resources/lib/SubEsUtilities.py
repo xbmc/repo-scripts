@@ -137,7 +137,7 @@ def clean_subtitles_list(subtitles_list):
     seen = set()
     subs = []
     for sub in subtitles_list:
-        filename = sub['filename']
+        filename = sub['link']
         #log(__name__, "Filename: %s" % filename)
         if filename not in seen:
             subs.append(sub)

@@ -1,3 +1,6 @@
+0.0.4
+- Fixed problem that prevented spanish subtitles to be shown when latino subs were present
+
 0.0.3
 - Fixed logo.png and icon.png to match XBMC'x addon guidelines
 - Removed language files
