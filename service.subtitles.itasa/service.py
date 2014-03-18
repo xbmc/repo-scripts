@@ -154,7 +154,7 @@ def getItaSATVShowList():
 	if content:
 		result = re.findall(r'<id>([\s\S]*?)</id>[\s\S]*?<name>([\s\S]*?)</name>', content, re.IGNORECASE | re.DOTALL)
 		if result:
-			return None
+			return result
 		else:
 			log(__name__,'Match of tv shows failed')
 			return None
@@ -265,17 +265,17 @@ def search(item):
 		if item['mansearch']:
 			search_manual(item['mansearchstr'], filename)
 		elif item['tvshow']:
-			search_tvshow(item['tvshow'], item['season'], item['episode'], item['onlineid'], filename)
+			search_tvshow(item['tvshow'], item['season'], item['episode'], item['onlineid'], filename, True)
 		elif item['title'] and item['year']:
 			xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32006))).encode('utf-8'))
 			log(__name__, 'Itasa only works with tv shows. Skipped')
 		else:
-			search_filename(filename)
+			search_filename(filename, False)
 	else:
 		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32005))).encode('utf-8'))
 		log(__name__, 'Itasa only works with italian. Skipped')
 	
-def search_tvshow(tvshow, season, episode, onlineid, filename):
+def search_tvshow(tvshow, season, episode, onlineid, filename, allowfallback):
 	log(__name__, "Search tv show '%s'" % tvshow)
 	itasaid = getItaSATVShowID(tvshow, onlineid)
 	if itasaid:
@@ -288,7 +288,11 @@ def search_tvshow(tvshow, season, episode, onlineid, filename):
 			else:
 				log(__name__, 'No subtitles found')
 	else:
-		log(__name__, 'TV Show not found')
+		if allowfallback:
+			log(__name__, 'TV Show not found, try with filename search')
+			search_filename(filename, False)
+		else:
+			log(__name__, 'TV Show not found')
 
 def search_manual(searchstr, filename):
 	searchstring = searchstr
@@ -337,23 +341,23 @@ def checksyncandadd(result, filename):
 		elif not (subtitleversion.lower() in fl):
 			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
 
-def search_filename(filename):
+def search_filename(filename, allowfallback):
 	log(__name__, 'Search tv show using the file name')
 	title, year = xbmc.getCleanMovieTitle(filename)
 	log(__name__, "clean title: \"%s\" (%s)" % (title, year))
 	match = re.search(r'\WS(?P<season>\d{1,3})[ ._-]*E(?P<episode>\d{1,3})', title, flags = re.IGNORECASE)
 	if match is not None:
-		tvshow = string.strip(title[:match.start('season')-1])
+		tvshow = string.strip(title[:match.start('season')-1]).lower()
 		season = string.lstrip(match.group('season'), '0')
 		episode = match.group('episode')
-		search_tvshow(tvshow, season, episode, -1, filename)
+		search_tvshow(tvshow, season, episode, -1, filename, allowfallback)
 	else:
 		match = re.search(r'\W(?P<season>\d{1,3})x(?P<episode>\d{1,3})', title, flags = re.IGNORECASE)
 		if match is not None:
 			tvshow = string.strip(title[:match.start('season')-1])
 			season = string.lstrip(match.group('season'), '0')
 			episode = string.lstrip(match.group('episode'), '0')
-			search_tvshow(tvshow, season, episode, -1, filename)
+			search_tvshow(tvshow, season, episode, -1, filename, allowfallback)
 		else:
 			log(__name__, 'Unable to retrieve a tv show name and episode from file name')
 

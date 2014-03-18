@@ -1,3 +1,7 @@
+0.0.5
+- fixed bug with the retrieve tv show list function
+- added fallback to filename search in case search by tv show name fails
+
 0.0.4
 - added notification in case of failed login, attempt to search other language than italian and attempt to search movies
 - fixed check of WEB-DL quality with different namings
