@@ -30,6 +30,9 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+
 #SET DEFAULT TIMEOUT FOR SLOW SERVERS:
 socket.setdefaulttimeout(30)
 
@@ -78,6 +81,8 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
         try:
             resp = self.net.http_GET(web_url)
             html = resp.content
+            if "No such file or the file has been removed due to copyright infringement issues." in html:
+                raise Exception ('File Not Found or removed')
             try: os.remove(img)
             except: pass
             filename=re.compile('<input name="fname" type="hidden" value="(.+?)">').findall(html)[0]

@@ -59,6 +59,8 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
             #print str(jsonresult)
             if 'generated_links' in jsonresult :
                 generated_links = jsonresult['generated_links']
+                if len(generated_links) == 1:
+                    return generated_links[0][2].encode('utf-8')
                 line            = []
                 for link in generated_links :
                     extension = link[0].split('.')[-1]
@@ -136,7 +138,8 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         if self.checkLogin():
             try:
                 common.addon.log_debug('Need to login since session is invalid')
-                login_data = urllib.urlencode({'user' : self.get_setting('username'), 'pass' : self.get_setting('password')})
+                import hashlib
+                login_data = urllib.urlencode({'user' : self.get_setting('username'), 'pass' : hashlib.md5(self.get_setting('password')).hexdigest()})
                 url = 'https://real-debrid.com/ajax/login.php?' + login_data
                 source = self.net.http_GET(url).content
                 if re.search('OK', source):

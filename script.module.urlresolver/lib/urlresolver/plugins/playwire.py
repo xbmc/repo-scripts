@@ -43,20 +43,27 @@ class PlaywireResolver(Plugin, UrlResolver, PluginSettings):
             web_url = self.get_url(host, media_id)
             link = self.net.http_GET(web_url).content
 
-            root = ET.fromstring(link)
-            stream = root.find('src')
-            if stream is not None:
-                return stream.text
-            else:
-                accessdenied = root.find('Message')
-                if accessdenied is not None:
-                    err_title = 'Access Denied'
-                    err_message = 'You do not have permission to view this content'
-                    common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
-                    xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+__name__+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
-                    return self.unresolvable(1, err_message)
+            if web_url.endswith('xml'): # xml source
+                root = ET.fromstring(link)
+                stream = root.find('src')
+                if stream is not None:
+                    return stream.text
+                else:
+                    accessdenied = root.find('Message')
+                    if accessdenied is not None:
+                        err_title = 'Access Denied'
+                        err_message = 'You do not have permission to view this content'
+                        common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
+                        xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+__name__+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
+                        return self.unresolvable(1, err_message)
 
-                return self.unresolvable(0, 'No playable video found.')
+                    return self.unresolvable(0, 'No playable video found.')
+            else: # json source
+                r = re.search('"src":"(.+?)"',link) 
+                if r:
+                    return r.group(1)
+                else:
+                    return self.unresolvable(0, 'No playable video found.')
         except urllib2.URLError, e:
             return self.unresolvable(3, str(e))
         except Exception, e:
@@ -64,15 +71,21 @@ class PlaywireResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_url(self, host, media_id):
-        return 'http://%s/embed/%s.xml' % (host, media_id)
+        if not 'v2' in host:
+            return 'http://%s/embed/%s.xml' % (host, media_id)
+        else:
+            return 'http://%s/config/%s.json' % (host, media_id)
 
     def get_host_and_id(self, url):
         r = re.search('//(.+?/\d+)/embed/(\d+)\.html', url)
+        if not r:
+            r = re.search('//(.+?/\d+)/config/(\d+)\.json', url)
         return r.groups()
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www\.)?cdn.playwire.com/\d+/embed/\d+\.html', url) or \
+               re.match('http://(www\.)?cdn.playwire.com/v2/\d+/config/\d+\.json', url) or \
                self.name in host
 
     #PluginSettings methods

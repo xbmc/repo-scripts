@@ -47,17 +47,29 @@ class SharesixResolver(Plugin, UrlResolver, PluginSettings):
             r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
             for name, value in r:
                 data[name] = value
-            data["method_free"] = "Free"
+            #data[u"method_premium"] = "Premium"; 
+            data[u"method_free"] = "Free"; 
+            data[u"op"] = "download1"; data[u"referer"] = ""; data[u"usr_login"] = "";  
             html = self.net.http_POST(web_url, data).content
+            
+            Key2 = re.compile('\|\|.+?video\|(.+?)\|file\|').findall(html)[0]
+            Key1 = re.compile('" target=_blank><img src="(http://\d+\.\d+\.\d+\.\d+/)i/.+?" class="pic"').findall(html)[0]
+            if (len(Key1) > 0) and (len(Key2) > 0):
+                stream_url=Key1+'d/'+Key2+'/video.flv'
+                return stream_url
+            if 'file you were looking for could not be found' in html:
+                raise Exception ('File Not Found or removed')
             
             # To build the streamable link, we need 
             # # the IPv4 addr (first 4 content below)
             # # the hash of the file
             metadata = re.compile('\|\|?(\d+)\|\|?(\d+)\|\|?(\d+)\|\|?(\d+)\|.+?video\|(.+?)\|\|?file').findall(html)
-
             if (len(metadata) > 0):
                 metadata = metadata[0]
                 stream_url="http://"+metadata[3]+"."+metadata[2]+"."+metadata[1]+"."+metadata[0]+"/d/"+ metadata[4]+"/video.flv"
+                ## 
+                ## 
+                ## http://[IP.IP.IP.IP]/d/[HASH]/video.flv?start=0
                 return stream_url
             
             if 'file you were looking for could not be found' in html:
