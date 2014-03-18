@@ -20,9 +20,11 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re, xbmcgui, os, urllib2
 from urlresolver import common
-from lib import jsunpack
+import re
+import urllib2
+import os
+import urllib
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
@@ -42,43 +44,49 @@ class SharerepoResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         try:
-            url = self.get_url(host, media_id)
-            html = self.net.http_GET(url).content
-            dialog = xbmcgui.DialogProgress()
-            dialog.create('Resolving', 'Resolving Sharerepo Link...')       
-            dialog.update(0)
-
-            data = {}
-            r = re.findall(r'type="(?:hidden|submit)?" name="(.+?)"\s* value="?(.+?)">', html)
-            for name, value in r:
-                data[name] = value
-                
-            html = net.http_POST(url, data).content
-    
-            dialog.update(50)
-    
-            sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
-            r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+            web_url = self.get_url(host, media_id)
+            headers = {
+                'Referer':web_url
+            }
             
-            if r:
-                sJavascript = r.group(1)
-                sUnpacked = jsunpack.unpack(sJavascript)
-                sPattern  = '''("video/divx"src="|addVariable\('file',')(.+?)video[.]'''
-                r = re.search(sPattern, sUnpacked)              
-                if r:
-                    link = r.group(2) + fname
-                    dialog.close()
-                    return link
-                raise Exception ('File Not Found or removed')
-            raise Exception ('File Not Found or removed')
+            # Get the landing page
+            html = self.net.http_GET(web_url).content
+            #print html.encode('ascii','ignore')
+            
+            data = {}
+            r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
+            for name, value in r: data[name] = value
+            data.update({'referer':web_url})
+            data.update({'method_free':'Free Download'})
+            #print data
+            
+            # get the video page
+            html = self.net.http_POST(web_url, data, headers=headers).content
+            
+            r = re.search(r'type="submit"\s*id="btn_download"',html)
+            if not r:
+                raise Exception("Video Not Found")
+            
+            data = {}
+            r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
+            for name, value in r: data[name] = value
+            data.update({'referer':web_url})
+            data.update({'method_free':'Free Download'})
+            data.update({'btn_download':'download'})
+            #print data
 
+            # click download button
+            # using standard urlopen because t0mm0's wrappers don't seem to return until content download is complete
+            request = urllib2.Request(web_url,urllib.urlencode(data),headers=headers)            
+            response = urllib2.urlopen(request)
+            return response.geturl()
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
-            common.addon.log('**** sharerepo Error occured: %s' % e)
+            common.addon.log('sharerepo: general error occured: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]SHAREREPO[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
             

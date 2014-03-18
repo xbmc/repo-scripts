@@ -56,7 +56,7 @@ class VimeoResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match('http://(.+)?vimeo.com/[0-9]+',
+        return re.match('http://(.+)?vimeo.com/(video\/)?[0-9]+',
                         url) or 'vimeo' in host
 
     def get_settings_xml(self):

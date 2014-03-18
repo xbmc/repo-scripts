@@ -55,6 +55,12 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
             html = net.http_GET(web_url).content
 
             dialog.update(50)
+
+            # Check for file not found
+            if re.search('File Not Found', html):
+                common.addon.log_error(self.name + ' - File Not Found')
+                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]180Upload[/COLOR][/B],[COLOR red]File has been deleted[/COLOR],8000,'+error_logo+')')
+                return self.unresolvable(code=1, msg='File Not Found') 
                 
             data = {}
             r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
@@ -63,12 +69,14 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
                 for name, value in r:
                     data[name] = value
             else:
-                raise Exception('Unable to resolve 180Upload Link')
+                raise Exception('Cannot find data values')
         
             #Check for SolveMedia Captcha image
             solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
+            recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
 
             if solvemedia:
+                common.addon.log_debug('SolveMedia Captcha')
                 dialog.close()
                 html = net.http_GET(solvemedia.group(1)).content
                 hugekey=re.search('id="adcopy_challenge" value="(.+?)">', html).group(1)
@@ -100,6 +108,35 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
                 if solution:
                     data.update({'adcopy_challenge': hugekey,'adcopy_response': solution})
 
+            #Google Recaptcha
+            elif recaptcha:
+                common.addon.log_debug('Google ReCaptcha')
+                dialog.close()
+                html = net.http_GET(recaptcha.group(1)).content
+                part = re.search("challenge \: \\'(.+?)\\'", html)
+                captchaimg = 'http://www.google.com/recaptcha/api/image?c='+part.group(1)
+                img = xbmcgui.ControlImage(450,15,400,130,captchaimg)
+                wdlg = xbmcgui.WindowDialog()
+                wdlg.addControl(img)
+                wdlg.show()
+        
+                xbmc.sleep(3000)
+        
+                kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+                kb.doModal()
+                capcode = kb.getText()
+        
+                if (kb.isConfirmed()):
+                    userInput = kb.getText()
+                    if userInput != '':
+                        solution = kb.getText()
+                    elif userInput == '':
+                        raise Exception ('You must enter text in the image to access video')
+                else:
+                    raise Exception ('Captcha Error')
+                wdlg.close()
+                data.update({'recaptcha_challenge_field':part.group(1),'recaptcha_response_field':solution})
+            
             common.addon.log('180Upload - Requesting POST URL: %s' % web_url)
             html = net.http_POST(web_url, data).content
             dialog.update(100)
@@ -123,13 +160,10 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
 
         
     def get_url(self, host, media_id):
-        common.addon.log('180upload: in get_url %s %s' % (host, media_id))
         return 'http://www.180upload.com/%s' % media_id 
         
         
     def get_host_and_id(self, url):
-        common.addon.log('180upload: in get_host_and_id %s' % (url))
-
         r = re.search('http://(.+?)/embed-([\w]+)-', url)
         if r:
             return r.groups()

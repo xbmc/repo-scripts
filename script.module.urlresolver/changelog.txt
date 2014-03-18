@@ -1,3 +1,26 @@
+[B]Version 2.2.0[/B]
+- Added CheeseStreams
+- Added Play44
+- Added Bestreams
+- Added FireDrive (renamed Putlocker)
+- Added UploadCrazy
+- Added VidCrazy
+- Added Video44
+- Added VideoFun
+- Added ViUp
+- Added VidZur
+- Added YourUpload
+- Fixed BillionUploads
+- Fixed Divxstage
+- Fixed Ecostream
+- Fixed HugeFiles
+- Fixed Movzap
+- Fixed NowVideo
+- Fixed ShareSix
+- Fixed YouWatch
+- Updated Real-Debrid login methods
+- Updated Vidhog for no wait time
+
 [B]Version 2.1.2[/B]
 - Vidxden bugfix
 

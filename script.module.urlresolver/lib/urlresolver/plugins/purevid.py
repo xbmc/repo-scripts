@@ -62,9 +62,9 @@ class purevid(Plugin, UrlResolver, SiteAuth, PluginSettings):
                 raise Exception ('got http error %d fetching %s' % (e.code, web_url))
             data = json.loads(html)                
             if self.get_setting('quality') == '0' :
-                url = data['clip']['bitrates'][-1]['url']
-            else :
                 url = data['clip']['bitrates'][0]['url']
+            else :
+                url = data['clip']['bitrates'][-1]['url']
             params = ''
             for val in data['plugins']['lighttpd']['params'] :
                 params += val['name'] + '=' + val['value'] + '&'

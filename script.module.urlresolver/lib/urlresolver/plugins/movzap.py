@@ -21,12 +21,18 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import urllib2
+import urllib
 from urlresolver import common
 from lib import jsunpack
 import xbmcgui
 import re
 import time
+from lib import jsunpack
+import xbmc
+import os
 
+#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class MovzapZuzVideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -44,9 +50,19 @@ class MovzapZuzVideoResolver(Plugin, UrlResolver, PluginSettings):
             resp = self.net.http_GET(web_url)
             html = resp.content
 
-            r = re.search('file: "(.+?)",', html)
+            # search for packed function
+            sPattern="<script type='text/javascript'>(eval\(function\(p,a,c,k,e,d\)\{while.+?movzap.+?)</script>"
+            r = re.search(sPattern, html, re.DOTALL)
             if r:
-                return r.group(1)
+                sUnpacked = jsunpack.unpack(r.group(1))
+                r = re.search('file:"(.+?)",', sUnpacked)
+                if r:
+                    return r.group(1)
+            else:
+                # search for file reference if present
+                r = re.search('file: "(.+?)",', html)
+                if r:
+                    return r.group(1)
 
             raise Exception ('movzap|zuzvideo: could not obtain video url')
         
@@ -63,19 +79,16 @@ class MovzapZuzVideoResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_url(self, host, media_id):
-            return host + media_id
+            return '%s/%s' % (host,media_id)
 
     def get_host_and_id(self, url):
-        #r = re.search('http://(?:www.)?(.+?)/([0-9A-Za-z]+)', url)
-        r = re.search('(http://(?:www.|)(?:.+?)/)([0-9A-Za-z]+)', url)
+        r = re.search('(http://(?:www.|)(?:.+?))/([0-9A-Za-z]+)', url)
         if r:
             return r.groups()
         else:
             return False
 
-
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         return re.match('http://(?:www.|)(?:movzap|zuzvideo).com/[0-9A-Za-z]+', url) or 'movzap' in host or 'zuzvideo' in host
-
 

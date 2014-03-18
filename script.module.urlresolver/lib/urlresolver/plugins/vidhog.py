@@ -20,8 +20,12 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re, time
+import re, time, urllib2
 from urlresolver import common
+import xbmcgui
+
+USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36'
+ACCEPT = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
 
 net = Net()
 
@@ -39,57 +43,45 @@ class VidhogResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         try:
             url = self.get_url(host, media_id)
-            html = self.net.http_GET(url).content
-            check = re.compile('fname').findall(html)
-            if check:
-                data = {}
-                r = re.findall(r'type="(?:hidden|submit)?" name="(.+?)"\s* value="?(.+?)">', html)
-                for name, value in r:
-                    data[name] = value
-                html = net.http_POST(url, data).content
+            
+            #Show dialog box so user knows something is happening
+            dialog = xbmcgui.DialogProgress()
+            dialog.create('Resolving', 'Resolving VidHog Link...')
+            dialog.update(0)
+            
+            print 'VidHog - Requesting GET URL: %s' % url
+            html = net.http_GET(url).content
     
-            else:
-                data = {}
-                r = re.findall(r'type="(?:hidden|submit)?" name="(.+?)"\s* value="?(.+?)">', html)
-                for name, value in r:
-                    data[name] = value
-                    
-                captchaimg = re.search('<img src="(http://www.vidhog.com/captchas/.+?)"', html)
-                if captchaimg:
-                    img = xbmcgui.ControlImage(550,15,240,100,captchaimg.group(1))
-                    wdlg = xbmcgui.WindowDialog()
-                    wdlg.addControl(img)
-                    wdlg.show()
-                    time.sleep(3)
-                    kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-                    kb.doModal()
-                    capcode = kb.getText()
-                    if (kb.isConfirmed()):
-                        userInput = kb.getText()
-                        if userInput != '':
-                                capcode = kb.getText()
-                        elif userInput == '':
-                                raise Exception ('You must enter text in the image to access video')
-                    wdlg.close()
-                    common.addon.show_countdown(10, title='Vidhog', text='Loading Video...')
-                    
-                    data.update({'code':capcode})
+            dialog.update(50)
+            
+            #Check page for any error msgs
+            if re.search('This server is in maintenance mode', html):
+                common.addon.log('***** VidHog - Site reported maintenance mode')
+                raise Exception('File is currently unavailable on the host')
+            if re.search('<b>File Not Found</b>', html):
+                common.addon.log('***** VidHog - File not found')
+                raise Exception('File has been deleted')
     
-                else:
-                    common.addon.show_countdown(20, title='Vidhog', text='Loading Video...')
-                    
-            html = net.http_POST(url, data).content
-            if re.findall('err', html):
-                raise Exception('Wrong Captcha')
+            filename = re.search('<strong>\(<font color="red">(.+?)</font>\)</strong><br><br>', html).group(1)
+            extension = re.search('(\.[^\.]*$)', filename).group(1)
+            guid = re.search('http://[www\.]*vidhog.com/(.+)$', url).group(1)
+            
+            vid_embed_url = 'http://vidhog.com/vidembed-%s%s' % (guid, extension)
+            
+            request = urllib2.Request(vid_embed_url)
+            request.add_header('User-Agent', USER_AGENT)
+            request.add_header('Accept', ACCEPT)
+            request.add_header('Referer', url)
+            response = urllib2.urlopen(request)
+            redirect_url = re.search('(http://.+?)video', response.geturl()).group(1)
+            download_link = redirect_url + filename
+            
+            dialog.update(100)
     
-            match = re.search("product_download_url=(.+?)'", html)
-    
-            if not match:
-                raise Exception('could not find video')
-            return match.group(1)
+            return download_link
         
         except Exception, e:
-            common.addon.log('**** Muchshare Error occured: %s' % e)
+            common.addon.log('**** VidHog Error occured: %s' % e)
             common.addon.show_small_popup('Error', str(e), 5000, '')
             return self.unresolvable(code=0, msg='Exception: %s' % e)
         
