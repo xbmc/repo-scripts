@@ -58,7 +58,7 @@ msgstr "Път:"
 
 msgctxt "#32008"
 msgid "Fade tune out when exiting"
-msgstr "Плавно затихване на мелодиите при приключване"
+msgstr "Плавно затихване при приключване на мелодиите "
 
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
@@ -78,7 +78,7 @@ msgstr "Тип файлове"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
-msgstr "Плавно увеличаване на мелодиите при стартиране"
+msgstr "Плавно увеличаване на звука в началото на мелодиите"
 
 msgctxt "#32014"
 msgid "Always add additional themes (no overwrite)"
@@ -98,11 +98,11 @@ msgstr "Възпроизвеждай мелодии при преглеждан�
 
 msgctxt "#32018"
 msgid "Debugging"
-msgstr "Debugging"
+msgstr "Дебъгване"
 
 msgctxt "#32019"
 msgid "Enable debug logging"
-msgstr "Водене на debug дневник"
+msgstr "Включи дебъг дневника"
 
 msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
@@ -134,7 +134,7 @@ msgstr "Име на директорията"
 
 msgctxt "#32027"
 msgid "Limit track duration when multiple themes (seconds)"
-msgstr "При няколко налични мелодии просвирвай всяка по (сек)"
+msgstr "Възпроизвеждай всяка от наличните мелодии за (сек)"
 
 msgctxt "#32028"
 msgid "Default Theme Search Source"

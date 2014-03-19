@@ -260,7 +260,20 @@ class TvTunesScraper:
         log("doesThemeExist: Checking directory: %s" % directory)
         # Check for custom theme directory
         if Settings.isThemeDirEnabled():
-            directory = os.path.join(directory, Settings.getThemeDirectory())
+            themeDir = os.path.join(directory, Settings.getThemeDirectory())
+            # Check if this directory exists
+            if not xbmcvfs.exists(themeDir):
+                workingPath = directory
+                # If the path currently ends in the directory separator
+                # then we need to clear an extra one
+                if (workingPath[-1] == os.sep) or (workingPath[-1] == os.altsep):
+                    workingPath = workingPath[:-1]
+                # If not check to see if we have a DVD VOB
+                if (os.path.split(workingPath)[1] == 'VIDEO_TS') or (os.path.split(workingPath)[1] == 'BDMV'):
+                    # Check the parent of the DVD Dir
+                    themeDir = os.path.split(workingPath)[0]
+                    themeDir = os.path.join(themeDir, Settings.getThemeDirectory())
+            directory = themeDir
 
         # check if the directory exists before searching
         if xbmcvfs.exists(directory):
@@ -319,7 +332,22 @@ class TvTunesScraper:
 
         # Check for custom theme directory
         if Settings.isThemeDirEnabled():
-            path = os.path.join(path, Settings.getThemeDirectory())
+            themeDir = os.path.join(path, Settings.getThemeDirectory())
+            if not xbmcvfs.exists(themeDir):
+                workingPath = path
+                # If the path currently ends in the directory separator
+                # then we need to clear an extra one
+                if (workingPath[-1] == os.sep) or (workingPath[-1] == os.altsep):
+                    workingPath = workingPath[:-1]
+                # If not check to see if we have a DVD VOB
+                if (os.path.split(workingPath)[1] == 'VIDEO_TS') or (os.path.split(workingPath)[1] == 'BDMV'):
+                    log("DVD image detected")
+                    # Check the parent of the DVD Dir
+                    themeDir = os.path.split(workingPath)[0]
+                    themeDir = os.path.join(themeDir, Settings.getThemeDirectory())
+            path = themeDir
+
+        log("target directory: %s" % path )
 
         theme_file = self.getNextThemeFileName(path)
         tmpdestination = xbmc.translatePath( 'special://profile/addon_data/%s/temp/%s' % ( __addonid__ , theme_file ) ).decode("utf-8")

@@ -587,7 +587,17 @@ class ThemeFiles():
             themeDir = self._getUsablePath(rawPath)
             themeDir = os_path_join( themeDir, Settings.getThemeDirectory() )
             themeFiles = self._generateThemeFilelist(themeDir)
-        
+
+        # Check for the case where there is a DVD directory and the themes
+        # directory is above it
+        if len(themeFiles) < 1:
+            if ('VIDEO_TS' in rawPath) or ('BDMV' in rawPath):
+                log( "ThemeFiles: Found VIDEO_TS in path: Correcting the path for DVDR tv shows" )
+                themeDir = self._getUsablePath(rawPath)
+                themeDir = self._updir( themeDir, 1 )
+                themeDir = os_path_join( themeDir, Settings.getThemeDirectory() )
+                themeFiles = self._generateThemeFilelist(themeDir)
+
         # If no themes were found in the directory then search the normal location
         if len(themeFiles) < 1:
             themeFiles = self._generateThemeFilelist(rawPath)
@@ -600,19 +610,21 @@ class ThemeFiles():
         # Get the full path with any network alterations
         workingPath = self._getUsablePath(rawPath)
 
-        #######hack for TV shows stored as ripped disc folders
-        if 'VIDEO_TS' in workingPath:
-            log( "### FOUND VIDEO_TS IN PATH: Correcting the path for DVDR tv shows" )
-            workingPath = self._updir( workingPath, 3 )
-            themeList = self._getThemeFiles(workingPath)
-            if len(themeList) < 1:
-                workingPath = self._updir(workingPath,1)
+        themeList = self._getThemeFiles(workingPath)
+
+        # If no themes have been found
+        if len(themeList) < 1:
+            #######hack for TV shows stored as ripped disc folders
+            if ('VIDEO_TS' in workingPath) or ('BDMV' in workingPath):
+                log( "ThemeFiles: Found VIDEO_TS or BDMV in path: Correcting the path for DVDR tv shows" )
+                workingPath = self._updir( workingPath, 1 )
                 themeList = self._getThemeFiles(workingPath)
-        #######end hack
-        else:
-            themeList = self._getThemeFiles(workingPath)
-            # If no theme files were found in this path, look at the parent directory
-            if len(themeList) < 1:
+                if len(themeList) < 1:
+                    workingPath = self._updir(workingPath,1)
+                    themeList = self._getThemeFiles(workingPath)
+            #######end hack
+            else:
+                # If no theme files were found in this path, look at the parent directory
                 workingPath = self._updir( workingPath, 1 )
                 themeList = self._getThemeFiles(workingPath)
 
@@ -915,7 +927,7 @@ class WindowShowing():
 
     @staticmethod
     def isVideoLibrary():
-        return xbmc.getCondVisibility("Window.IsVisible(videolibrary)") or WindowShowing.isTvTunesOverrideTvShows() or WindowShowing.isTvTunesOverrideMovie()
+        return xbmc.getCondVisibility("Window.IsVisible(videolibrary)") or WindowShowing.isTvTunesOverrideTvShows() or WindowShowing.isTvTunesOverrideMovie() or WindowShowing.isTvTunesOverrideContinuePlaying()
 
     @staticmethod
     def isMovieInformation():
@@ -955,10 +967,31 @@ class WindowShowing():
         win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
         return win.getProperty("TvTunesSupported").lower() == "movies"
 
+    @staticmethod
+    def isTvTunesOverrideContinuePlaying():
+        # Check the home screen for the forced continue playing flag
+        if xbmcgui.Window( 12000 ).getProperty( "TvTunesContinuePlaying" ).lower() == "true":
+            # Never allow continues playing on the Home Screen
+            if WindowShowing.isHome():
+                # An addon may have forgotten to undet the flag, or crashed
+                # force the unsetting of the flag
+                log("WindowShowing: Removing TvTunesContinuePlaying property when on Home screen")
+                xbmcgui.Window( 12000 ).clearProperty( "TvTunesContinuePlaying" )
+                return False
+            
+            # Only pay attention to the forced playing if there is actually audio playing
+            if xbmc.Player().isPlayingAudio():
+                return True
+        return False
+
     # Works out if the custom window option to play the TV Theme is set
     # and we have just opened a dialog over that
     @staticmethod
     def isTvTunesOverrideContinuePrevious():
+        # Check the master override that forces the existing playing theme
+        if WindowShowing.isTvTunesOverrideContinuePlaying():
+            return True
+
         if WindowShowing.isTvTunesOverrideTvShows() or WindowShowing.isTvTunesOverrideMovie():
             # Check if this is a dialog, in which case we just continue playing
             try: dialogid = xbmcgui.getCurrentWindowDialogId()
@@ -1116,6 +1149,12 @@ class TunesBackend( ):
                 return
 
             while (not self._stop):
+                # Check the forced TV Tunes status at the start of the loop, if this is True
+                # then we don't want to stop themes until the next iteration, this stops the case
+                # where some checks are done and the value changes part was through a single
+                # loop iteration
+                isForcedTvTunesContinue = WindowShowing.isTvTunesOverrideContinuePlaying()
+                
                 # If shutdown is in progress, stop quickly (no fade out)
                 if WindowShowing.isShutdownMenu() or xbmc.abortRequested:
                     self.stop()
@@ -1172,7 +1211,7 @@ class TunesBackend( ):
                 # to an area where the theme is no longer played, so it will trigger a stop and
                 # reset everything to highlight that nothing is playing
                 # Note: TvTunes is still running in this case, just not playing a theme
-                if not self.isPlayingZone():
+                if (not self.isPlayingZone()) and (not isForcedTvTunesContinue):
                     log( "TunesBackend: reinit condition" )
                     self.newThemeFiles.clear()
                     self.oldThemeFiles.clear()
@@ -1195,6 +1234,8 @@ class TunesBackend( ):
     # Works out if the currently displayed area on the screen is something
     # that is deemed a zone where themes should be played
     def isPlayingZone(self):
+        if WindowShowing.isTvTunesOverrideContinuePlaying():
+            return True
         if WindowShowing.isRecentEpisodesAdded():
             return False
         if WindowShowing.isPluginPath():

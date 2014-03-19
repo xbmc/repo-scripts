@@ -18,11 +18,11 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
-msgstr "Télécharger et jouer les thèmes de vos films et émissions télé"
+msgstr "Télécharger et jouer les thèmes de vos films et séries télé"
 
 msgctxt "Addon Description"
 msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
-msgstr "Ce script vous aidera à obtenir des thèmes pour votre vidéothèque de films et émissions télé à partir de www.televisiontunes.com. Il les enregistrera dans les fichiers theme[0-9].mp3 dans chacun de vos dossiers vidéo, et les jouera pendant la navigation de votre vidéothèque quand vous accédez au dossier des émissions télé ou l'écran d'informations sur les vidéo (votre habillage doit être compatible pour ce fonction)."
+msgstr "Ce script vous aidera à obtenir des thèmes pour votre vidéothèque de films et séries télé à partir de www.televisiontunes.com. Il les enregistrera dans les fichiers theme[0-9].mp3 dans chacun de vos dossiers vidéo, et les jouera pendant la navigation de votre vidéothèque quand vous accédez au dossier des séries télé ou l'écran d'informations sur les vidéo (votre habillage doit être compatible pour ce fonction)."
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -94,7 +94,7 @@ msgstr "Jouer les thèmes lors de la navigation de la liste des films"
 
 msgctxt "#32017"
 msgid "Play themes when browsing TV Show list"
-msgstr "Jouer les thèmes lors de la navigation de la liste des émissions télé"
+msgstr "Jouer les thèmes lors de la navigation de la liste des séries télé"
 
 msgctxt "#32018"
 msgid "Debugging"

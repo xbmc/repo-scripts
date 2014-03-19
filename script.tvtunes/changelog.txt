@@ -1,3 +1,7 @@
+v4.3.4
+- Option to allow addons to force continued playing of a theme
+- Support themes directories at same level as DVD/Blueray image directories
+
 v4.3.3
 - Fix issue with custom download path not downloading themes
 

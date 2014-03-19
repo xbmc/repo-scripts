@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvtunes" name="TvTunes" version="4.3.3" provider-name="Ppic,Frost,ronie,robwebset">
+<addon id="script.tvtunes" name="TvTunes" version="4.3.4" provider-name="Ppic,Frost,ronie,robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -26,7 +26,7 @@
 	
 		<summary lang="fr">Récupérez et écoutez les génériques des séries TV</summary>
 	
-		<summary lang="fr_CA">Télécharger et jouer les thèmes de vos films et émissions télé</summary>
+		<summary lang="fr_CA">Télécharger et jouer les thèmes de vos films et séries télé</summary>
 	
 		<summary lang="gl">Obter e reproducir a música das súas Series de TV</summary>
 	
@@ -64,7 +64,7 @@
 	
 		<description lang="fr">Ce script vous aidera à télécharger vos génériques de série depuis www.televisiontunes.com Il les enregistrera dans un fichier theme.mp3 dans vos répertoires de série, ils seront ensuite joué lorsque vous entrerez dans la série correspondante (cette fonctionalité requiert une skin compatible)</description>
 	
-		<description lang="fr_CA">Ce script vous aidera à obtenir des thèmes pour votre vidéothèque de films et émissions télé à partir de www.televisiontunes.com. Il les enregistrera dans les fichiers theme[0-9].mp3 dans chacun de vos dossiers vidéo, et les jouera pendant la navigation de votre vidéothèque quand vous accédez au dossier des émissions télé ou l'écran d'informations sur les vidéo (votre habillage doit être compatible pour ce fonction).</description>
+		<description lang="fr_CA">Ce script vous aidera à obtenir des thèmes pour votre vidéothèque de films et séries télé à partir de www.televisiontunes.com. Il les enregistrera dans les fichiers theme[0-9].mp3 dans chacun de vos dossiers vidéo, et les jouera pendant la navigation de votre vidéothèque quand vous accédez au dossier des séries télé ou l'écran d'informations sur les vidéo (votre habillage doit être compatible pour ce fonction).</description>
 	
 		<description lang="gl">Este script axudaralle a obter dende www.televisiontunes.com o tema da súa biblioteca de series, gardándoo no ficheiro theme.mp3 por cada cartafol da biblioteca entón reproduciranse ao entrar nos diferentes cartafoles ao navegar pola biblioteca (precisa de que o seu tema sexa compatíbel con esta carácteristica)</description>
 	
