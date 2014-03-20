@@ -2,15 +2,13 @@
 # Addon Name: VideoExtras
 # Addon id: script.videoextras
 # Addon Provider: robwebset
-# Translators:
-# piodio <piodio@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2013-12-31 06:50+0000\n"
-"Last-Translator: piodio <piodio@gmail.com>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,15 +21,11 @@ msgid "Add Video Extras to your Movies and TV shows."
 msgstr "영화와 TV 쇼에 부가영상 추가"
 
 msgctxt "Addon Description"
-msgid ""
-"Provides a way to add Video Extras to your Video library. Look at the wiki "
-"for setup instructions."
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
 msgstr "비디오 라이브러리에 부가영상(보너스 영상, 셔플, 다른 버전 등)을 추가할 수 있게 합니다. 설치 방법은 XBMC 위키를 참조하세요."
 
 msgctxt "Addon Disclaimer"
-msgid ""
-"Skinners, please see the wiki to know how to integrate it in your skin: "
-"http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
 msgstr "스킨 제작자 여러분, 스킨에 통합하는 방법은 위키를 참조하기 바랍니다: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"

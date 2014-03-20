@@ -9,53 +9,25 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: Estonian (http://www.transifex.com/projects/p/xbmc-addons/language/et/)\n"
+"Language-Team: English (Australia) (http://www.transifex.com/projects/p/xbmc-addons/language/en_AU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: et\n"
+"Language: en_AU\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgctxt "#32001"
-msgid "Extras"
-msgstr "Lisad"
-
-msgctxt "#32008"
-msgid "Information"
-msgstr "Informatsioon"
 
 msgctxt "#32009"
 msgid "Home"
-msgstr "Peamenüü"
+msgstr "Home"
 
 msgctxt "#32013"
 msgid "Path"
-msgstr "Asukoht"
+msgstr "Path"
 
 msgctxt "#32016"
 msgid "Advanced"
-msgstr "Põhjalikumad seaded"
-
-msgctxt "#32019"
-msgid "Debugging"
-msgstr "Silumine"
-
-msgctxt "#32020"
-msgid "Enable debug logging"
-msgstr "Lubati silumise logimine"
-
-msgctxt "#32021"
-msgid "Database"
-msgstr "Andmebaas"
-
-msgctxt "#32101"
-msgid "Play All"
-msgstr "Esita kõik"
+msgstr "Advanced"
 
 msgctxt "#32102"
 msgid "Info"
 msgstr "Info"
-
-msgctxt "#32105"
-msgid "Start from beginning"
-msgstr "Alusta algusest"

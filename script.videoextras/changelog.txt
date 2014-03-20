@@ -1,3 +1,9 @@
+v1.0.5
+- Add support for DVD images with VIDEO_TS directories
+- Ensure TV Tunes continue playing when navigating to extras list
+- Add extras context menu support
+- Add support for BluRay images with BDMV directories
+
 v1.0.4
 - Improved default window xml for detailed list to work with most skins
 - Add Video duration to the display listing

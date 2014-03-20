@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <settings>
 	<category label="32001">
 		<setting id="extrasDirName" type="text" label="32002" default="Extras"/>

@@ -36,6 +36,10 @@ msgctxt "#32002"
 msgid "Extras Directory Name"
 msgstr "Nome da Pasta de Extras"
 
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Pesquisar subdirectórios"
+
 msgctxt "#32004"
 msgid "Enable Extras with File Tag"
 msgstr "Activar Extras com Etiqueta de Ficheiro"

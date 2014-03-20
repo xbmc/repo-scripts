@@ -2,15 +2,13 @@
 # Addon Name: VideoExtras
 # Addon id: script.videoextras
 # Addon Provider: robwebset
-# Translators:
-# davidmuma <davidmumar@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2014-01-30 11:40+0000\n"
-"Last-Translator: davidmuma <davidmumar@gmail.com>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,15 +21,11 @@ msgid "Add Video Extras to your Movies and TV shows."
 msgstr "Añadir extras de vídeo para sus películas y programas de televisión."
 
 msgctxt "Addon Description"
-msgid ""
-"Provides a way to add Video Extras to your Video library. Look at the wiki "
-"for setup instructions."
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
 msgstr "Proporciona una manera de añadir extras de vídeos a su biblioteca. Mira el wiki para instrucciones de instalación."
 
 msgctxt "Addon Disclaimer"
-msgid ""
-"Skinners, please see the wiki to know how to integrate it in your skin: "
-"http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
 msgstr "Skinners, por favor ver el wiki para saber cómo integrarlo en tu piel: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"

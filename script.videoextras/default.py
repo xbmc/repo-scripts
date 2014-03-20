@@ -18,7 +18,6 @@ import sys
 import os
 import re
 import random
-import sqlite3
 import traceback
 import xml.etree.ElementTree as ET
 #Modules XBMC
@@ -44,120 +43,17 @@ __lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8
 sys.path.append(__resource__)
 sys.path.append(__lib__)
 
+# Import the common settings
+from settings import Settings
+from settings import log
+from settings import os_path_join
+
+# Load the database interface
+from database import ExtrasDB
+
 from VideoParser import VideoParser
 
 
-def log(txt):
-    if __addon__.getSetting( "logEnabled" ) == "true":
-        if isinstance (txt,str):
-            txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
-        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
-
-# There has been problems with calling join with non ascii characters,
-# so we have this method to try and do the conversion for us
-def os_path_join( dir, file ):
-    # Convert each argument - if an error, then it will use the default value
-    # that was passed in
-    try:
-        dir = dir.decode("utf-8")
-    except:
-        pass
-    try:
-        file = file.decode("utf-8")
-    except:
-        pass
-    return os.path.join(dir, file)
-
-##############################
-# Stores Various Settings
-##############################
-class Settings():
-    @staticmethod
-    def getExcludeFiles():
-        return __addon__.getSetting( "excludeFiles" )
-
-    @staticmethod
-    def getExtrasDirName():
-        return __addon__.getSetting( "extrasDirName" )
-
-    @staticmethod
-    def getExtrasFileTag():
-        if  __addon__.getSetting( "enableFileTag" ) != "true":
-            return ""
-        return __addon__.getSetting( "extrasFileTag" )
-
-    @staticmethod
-    def isSearchNested():
-        return __addon__.getSetting( "searchNested" ) == "true"
-
-    @staticmethod
-    def isDetailedListScreen():
-        return __addon__.getSetting( "detailedList" ) == "true"
-
-    @staticmethod
-    def isMenuReturnVideoSelection():
-        settingsSelect = "extrasReturn"
-        if Settings.isDetailedListScreen():
-            settingsSelect = "detailedReturn"
-        return __addon__.getSetting( settingsSelect ) == __addon__.getLocalizedString(32007)
-
-    @staticmethod
-    def isMenuReturnHome():
-        settingsSelect = "extrasReturn"
-        if Settings.isDetailedListScreen():
-            settingsSelect = "detailedReturn"
-        return __addon__.getSetting( settingsSelect ) == __addon__.getLocalizedString(32009)
-
-    @staticmethod
-    def isMenuReturnInformation():
-        settingsSelect = "extrasReturn"
-        if Settings.isDetailedListScreen():
-            settingsSelect = "detailedReturn"
-        return __addon__.getSetting( settingsSelect ) == __addon__.getLocalizedString(32008)
-
-    @staticmethod
-    def isMenuReturnExtras():
-        if Settings.isDetailedListScreen():
-            return False
-        return __addon__.getSetting( "extrasReturn" ) == __addon__.getLocalizedString(32001)
-
-    @staticmethod
-    def isForceButtonDisplay():
-        return __addon__.getSetting( "forceButtonDisplay" ) == "true"
-
-    @staticmethod
-    def getAddonVersion():
-        return __addon__.getAddonInfo('version')
-
-    @staticmethod
-    def isDatabaseEnabled():
-        return __addon__.getSetting( "enableDB" ) == "true"
-
-    @staticmethod
-    def isCustomPathEnabled():
-        return __addon__.getSetting("custom_path_enable") == 'true'
-    
-    @staticmethod
-    def getCustomPath():
-        if Settings.isCustomPathEnabled():
-            return __addon__.getSetting("custom_path")
-        else:
-            return None
-
-    @staticmethod
-    def getCustomPathMoviesDir():
-        if Settings.isCustomPathEnabled():
-            return __addon__.getSetting("custom_path_movies")
-        else:
-            return ""
-
-    @staticmethod
-    def getCustomPathTvShowsDir():
-        if Settings.isCustomPathEnabled():
-            return __addon__.getSetting("custom_path_tvshows")
-        else:
-            return ""
 
 ###############################################################
 # Class to make it easier to see which screen is being checked
@@ -242,6 +138,35 @@ class BaseExtrasItem():
     # Return the filename for the extra
     def getFilename(self):
         return self.filename
+
+    # Gets the file that needs to be passed to the player
+    def getMediaFilename(self):
+        # Check to see if the filename actually holds a directory
+        # If that is the case, we will only support it being a DVD Directory Image
+        # So check to see if the expected file is set
+        vobFile = self.getVOBFile()
+        if vobFile != None:
+            return vobFile
+        
+        return self.filename
+
+    # Gets the path to the VOB playable file, or None if not a VOB
+    def getVOBFile(self):
+        # Check to see if the filename actually holds a directory
+        # If that is the case, we will only support it being a DVD Directory Image
+        # So check to see if the expected file is set
+        videoTSDir = os_path_join( self.filename, 'VIDEO_TS' )
+        if xbmcvfs.exists(videoTSDir):
+            ifoFile = os_path_join( videoTSDir, 'VIDEO_TS.IFO' )
+            if xbmcvfs.exists( ifoFile ):
+                return ifoFile
+        # Also check for BluRay
+        videoBluRayDir = os_path_join( self.filename, 'BDMV' )
+        if xbmcvfs.exists(videoBluRayDir):
+            dbmvFile = os_path_join( videoBluRayDir, 'index.bdmv' )
+            if xbmcvfs.exists( dbmvFile ):
+                return dbmvFile
+        return None
 
     # Compare if a filename matches the existing one
     def isFilenameMatch(self, compareToFilename):
@@ -441,12 +366,17 @@ class BaseExtrasItem():
             # Need to first load the contents of the NFO file into
             # a string, this is because the XML File Parse option will
             # not handle formats like smb://
-            nfoFile = xbmcvfs.File(nfoFileName)
+            nfoFile = xbmcvfs.File(nfoFileName, 'r')
             nfoFileStr = nfoFile.read()
             nfoFile.close()
 
             # Create an XML parser
-            nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr))
+            try:
+                nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr))
+            except:
+                log("BaseExtrasItem: Trying encoding to UTF-8 with ignore")
+                nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr.decode("UTF-8", 'ignore')))
+
             rootElement = nfoXml.getroot()
             
             log("BaseExtrasItem: Root element is = %s" % rootElement.tag)
@@ -529,6 +459,91 @@ class BaseExtrasItem():
 
         return returnValue
 
+    # Sets the title for a given extras file
+    def setTitle(self, newTitle):
+        log("BaseExtrasItem: Setting title to %s" % newTitle)
+        self.displayName = newTitle
+
+        # Find out the name of the NFO file
+        nfoFileName = os.path.splitext( self.filename )[0] + ".nfo"
+        
+        log("BaseExtrasItem: Searching for NFO file: %s" % nfoFileName)
+                
+        try:
+            nfoFileStr = None
+            newNfoRequired = False
+            
+            if xbmcvfs.exists( nfoFileName ):
+                # Need to first load the contents of the NFO file into
+                # a string, this is because the XML File Parse option will
+                # not handle formats like smb://
+                nfoFile = xbmcvfs.File(nfoFileName, 'r')
+                nfoFileStr = nfoFile.read()
+                nfoFile.close()
+    
+            # Check to ensure we have some NFO data
+            if (nfoFileStr == None) or (nfoFileStr == ""):
+                # Create a default NFO File
+                # Need to create a new file if one does not exist
+                log("BaseExtrasItem: No NFO file found, creating new one: %s" % nfoFileName)
+                tagType = 'movie'
+                if SourceDetails.getTvShowTitle() != "":
+                    tagType = 'tvshow'
+
+                nfoFileStr = ("<%s>\n    <title> </title>\n</%s>\n" % (tagType, tagType))
+                newNfoRequired = True
+                
+                
+            # Create an XML parser
+            try:
+                nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr))
+            except:
+                log("BaseExtrasItem: Trying encoding to UTF-8 with ignore")
+                nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr.decode("UTF-8", 'ignore')))
+
+            # Get the title element
+            titleElement = nfoXml.find('title')
+
+            # Make sure the title exists in the file            
+            if titleElement == None:
+                log("BaseExtrasItem: title element not found")
+                return False
+
+            # Set the title to the new value
+            titleElement.text = newTitle
+
+            # Only set the sort title if already set
+            sorttitleElement = nfoXml.find('sorttitle')
+            if sorttitleElement != None:
+                sorttitleElement.text = newTitle
+            
+            # Save the file back to the filesystem
+            newNfoContent = ET.tostring(nfoXml.getroot(), encoding="UTF-8")
+            del nfoXml
+            
+            nfoFile = xbmcvfs.File(nfoFileName, 'w')
+            try:
+                nfoFile.write(newNfoContent)
+            except:
+                log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName)
+                log("BaseExtrasItem: %s" % traceback.format_exc())
+                # Make sure we close the file handle
+                nfoFile.close()
+                # If there was no file before, make sure we delete and partial file
+                if newNfoRequired:
+                    xbmcvfs.delete(nfoFileName)
+                return False
+            nfoFile.close()
+
+        except:
+            log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName)
+            log("BaseExtrasItem: %s" % traceback.format_exc())
+            return False
+        
+        return True
+
+        
+
     # Reads the thumbnail information from an NFO file
     def _getNfoThumb(self, nfoXml):
         # Get the thumbnail
@@ -579,17 +594,43 @@ class ExtrasItem(BaseExtrasItem):
     # http://forum.xbmc.org/showthread.php?tid=177368
     def getWatched(self):
         return self.watched
-    
+
+    # If the playing progress should be recorded for this file, things like
+    # ISO's and VOBs do not handle this well as the incorrect values are
+    # returned from the player
+    def shouldStoreProgress(self):
+        if self.getVOBFile() != None:
+            return False
+        # Get the extension of the file
+        fileExt = os.path.splitext( self.getFilename() )[1]
+        if (fileExt == None) or (fileExt == "") or (fileExt.lower() == '.iso') :
+            return False
+        # Default is true
+        return True
+
+
     def setTotalDuration(self, totalDuration):
+        # Do not set the total duration on DVD Images as
+        # this will be incorrect
+        if not self.shouldStoreProgress():
+            return
+
         self.totalDuration = totalDuration
 
     def getTotalDuration(self):
+        if self.totalDuration < 0:
+            self.totalDuration = self.getDuration()
         return self.totalDuration
 
     def getDisplayDuration(self):
         return BaseExtrasItem.getDisplayDuration(self, self.totalDuration)
 
     def setResumePoint(self, currentPoint):
+        # Do not set the resume point on DVD Images as
+        # this will be incorrect
+        if not self.shouldStoreProgress():
+            return
+
         # Now set the flag to show if it has been watched
         # Consider watched if within 15 seconds of the end
         if (currentPoint + 15 > self.totalDuration) and (self.totalDuration > 0):
@@ -607,62 +648,60 @@ class ExtrasItem(BaseExtrasItem):
     def getResumePoint(self):
         return self.resumePoint
 
+    # Get the string display version of the Resume time
+    def getDisplayResumePoint(self):
+        # Split the time up ready for display
+        minutes, seconds = divmod(self.resumePoint, 60)
+
+        hoursString = ""        
+        if minutes > 60:
+            # Need to collect hours if needed
+            hours, minutes = divmod(minutes, 60)
+            hoursString = "%02d:" % hours
+        
+        newLabel = "%s%02d:%02d" % (hoursString, minutes, seconds)
+        return newLabel
+
+
     def isResumable(self):
         if self.watched == 1 or self.resumePoint < 1:
             return False
         return True
 
     def saveState(self):
+        # Do not save the state on DVD Images as
+        # this will be incorrect
+        if not self.shouldStoreProgress():
+            return
+
         if self.extrasDb == None:
             log("ExtrasItem: Database not enabled")
             return
         
         log("ExtrasItem: Saving state for %s" % self.getFilename())
-        
-        # Get a connection to the DB
-        conn = self.extrasDb.getConnection()
-        c = conn.cursor()
-        
-        insertData = (self.getFilename(), self.resumePoint, self.totalDuration, self.getWatched())
-        c.execute('''INSERT OR REPLACE INTO ExtrasFile(filename, resumePoint, duration, watched) VALUES (?,?,?,?)''', insertData)
 
-        rowId = c.lastrowid
-        conn.commit()
-        conn.close()
-        
+        rowId = -1
+        # There are some cases where we want to remove the entries from the database
+        # This is the case where the resume point is 0, watched is 0
+        if (self.resumePoint == 0) and (self.watched == 0):
+            self.extrasDb.delete(self.getFilename())
+        else:
+            rowId = self.extrasDb.insertOrUpdate(self.getFilename(), self.resumePoint, self.totalDuration, self.getWatched())
         return rowId
 
     def _loadState(self):
         if self.extrasDb == None:
             log("ExtrasItem: Database not enabled")
             return
-        
+
         log("ExtrasItem: Loading state for %s" % self.getFilename())
-        
-        # Get a connection to the DB
-        conn = self.extrasDb.getConnection()
-        c = conn.cursor()
-        # Select any existing data from the database
-        c.execute('SELECT * FROM ExtrasFile where filename = ?', (self.getFilename(),))
-        row = c.fetchone()
-        
-        if row == None:
-            log("ExtrasItem: No entry found in the database")
-            return
 
-        log("ExtrasItem: Database info: %s" % str(row))
+        returnData = self.extrasDb.select(self.getFilename())
 
-        # Return will contain
-        # row[0] - Unique Index in the DB
-        # row[1] - Name of the file
-        # row[2] - Current point played to (or -1 is not saved)
-        # row[3] - Total Duration of the video 
-        # row[4] - 0 if not watched 1 if watched
-        self.resumePoint = row[2]
-        self.totalDuration = row[3]
-        self.watched = row[4]
-
-        conn.close()
+        if returnData != None:
+            self.resumePoint = returnData['resumePoint']
+            self.totalDuration = returnData['totalDuration']
+            self.watched = returnData['watched']
 
 
 ###################################
@@ -678,7 +717,7 @@ class ExtrasPlayer(xbmc.Player):
         play = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         listitem = self._getListItem(extrasItem)
         play.clear()
-        play.add(extrasItem.getFilename(), listitem)
+        play.add(extrasItem.getMediaFilename(), listitem)
         xbmc.Player.play(self, play)
 
     # Play a list of extras
@@ -688,7 +727,7 @@ class ExtrasPlayer(xbmc.Player):
 
         for exItem in extrasItems:
             listitem = self._getListItem(exItem)
-            play.add(exItem.getFilename(), listitem)
+            play.add(exItem.getMediaFilename(), listitem)
 
         xbmc.Player.play(self, play)
 
@@ -839,6 +878,13 @@ class VideoExtrasFinder():
         if Settings.isSearchNested():
             files.extend( self._getNestedExtrasFiles( path, filename, exitOnFirst ) )
         files.sort()
+        
+        # Check if we have found any extras at this point
+        if not files:
+            # Check if we have a DVD image directory or Bluray image directory
+            if (os.path.split(path)[1] == 'VIDEO_TS') or (os.path.split(path)[1] == 'BDMV'):
+                log("VideoExtrasFinder: DVD image directory detected, checking = %s" % os.path.split(path)[0])
+                files = self.findExtras(os.path.split(path)[0], filename, exitOnFirst)
         return files
 
     # Gets any extras files that are in the given extras directory
@@ -865,6 +911,26 @@ class VideoExtrasFinder():
                     # Check if we are only looking for the first entry
                     if exitOnFirst == True:
                         break
+            # Now check all the directories in the "Extras" directory
+            # Need to see if they contain a DVD image
+            for dirName in dirs:
+                log( "VideoExtrasFinder: found directory: %s" % dirName)
+                # Check each directory to see if it should be skipped
+                if not self._shouldSkipFile(dirName):
+                    extrasSubDir = os_path_join( extrasDir, dirName )
+                    # Check to see if this sub-directory is a DVD directory by checking
+                    # to see if there is VIDEO_TS directory
+                    videoTSDir = os_path_join( extrasSubDir, 'VIDEO_TS' )
+                    # Also check for Bluray
+                    videoBluRayDir = os_path_join( extrasSubDir, 'BDMV' )
+                    if xbmcvfs.exists( videoTSDir ) or xbmcvfs.exists( videoBluRayDir ):
+                        extraItem = ExtrasItem(extrasDir, extrasSubDir, extrasDb=self.extrasDb)
+                        extras.append(extraItem)
+                        
+                    # Check if we are only looking for the first entry
+                    if exitOnFirst == True:
+                        break
+
         return extras
 
     def _getNestedExtrasFiles(self, basepath, filename, exitOnFirst=False):
@@ -1013,42 +1079,61 @@ class VideoExtras():
             # "Info", "No extras found"
             xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32103))
         else:
+            isTvTunesAlreadySet = True
             needsWindowReset = True
             
-            # Check which listing format to use
-            if Settings.isDetailedListScreen():
-                extrasWindow = VideoExtrasWindow.createVideoExtrasWindow(files=files)
-                xbmc.executebuiltin( "Dialog.Close(movieinformation)", True )
-                extrasWindow.doModal()
-            else:
-                extrasWindow = VideoExtrasDialog()
-                needsWindowReset = extrasWindow.showList( files )
-            
-            # The video selection will be the default return location
-            if (not Settings.isMenuReturnVideoSelection()) and needsWindowReset:
-                if Settings.isMenuReturnHome():
-                    xbmc.executebuiltin("xbmc.ActivateWindow(home)", True)
+            # Make sure we don't leave global variables set
+            try:
+                # Check which listing format to use
+                if Settings.isDetailedListScreen():
+                    # Check if TV Tunes override is already set
+                    isTvTunesAlreadySet = (xbmcgui.Window( 12000 ).getProperty("TvTunesContinuePlaying").lower() == "true")
+                    # If TV Tunes is running we want to ensure that we still keep the theme going
+                    # so set this variable on the home screen
+                    if not isTvTunesAlreadySet:
+                        log("VideoExtras: Setting TV Tunes override")
+                        xbmcgui.Window( 12000 ).setProperty( "TvTunesContinuePlaying", "True" )
+                    else:
+                        log("VideoExtras: TV Tunes override already set")
+    
+                    extrasWindow = VideoExtrasWindow.createVideoExtrasWindow(files=files)
+                    xbmc.executebuiltin( "Dialog.Close(movieinformation)", True )
+                    extrasWindow.doModal()
                 else:
-                    infoDialogId = 12003
-                    # Put the information dialog back up
-                    xbmc.executebuiltin("xbmc.ActivateWindow(movieinformation)")
-                    if Settings.isMenuReturnExtras():
-                        # Wait for the Info window to open, it can take a while
-                        # this is to avoid the case where the exList dialog displays
-                        # behind the info dialog
-                        counter = 0
-                        while( xbmcgui.getCurrentWindowDialogId() != infoDialogId) and (counter <30):
-                            xbmc.sleep(100)
-                            counter = counter + 1
-                        # Allow time for the screen to load - this could result in an
-                        # action such as starting TvTunes
-                        xbmc.sleep(1000)
-                        # Before showing the list, check if someone has quickly
-                        # closed the info screen while it was opening and we were waiting
-                        if xbmcgui.getCurrentWindowDialogId() == infoDialogId:
-                            # Reshow the exList that was previously generated
-                            self.run(files)
+                    extrasWindow = VideoExtrasDialog()
+                    needsWindowReset = extrasWindow.showList( files )
+                
+                # The video selection will be the default return location
+                if (not Settings.isMenuReturnVideoSelection()) and needsWindowReset:
+                    if Settings.isMenuReturnHome():
+                        xbmc.executebuiltin("xbmc.ActivateWindow(home)", True)
+                    else:
+                        infoDialogId = 12003
+                        # Put the information dialog back up
+                        xbmc.executebuiltin("xbmc.ActivateWindow(movieinformation)")
+                        if Settings.isMenuReturnExtras():
+                            # Wait for the Info window to open, it can take a while
+                            # this is to avoid the case where the exList dialog displays
+                            # behind the info dialog
+                            counter = 0
+                            while( xbmcgui.getCurrentWindowDialogId() != infoDialogId) and (counter <30):
+                                xbmc.sleep(100)
+                                counter = counter + 1
+                            # Allow time for the screen to load - this could result in an
+                            # action such as starting TvTunes
+                            xbmc.sleep(1000)
+                            # Before showing the list, check if someone has quickly
+                            # closed the info screen while it was opening and we were waiting
+                            if xbmcgui.getCurrentWindowDialogId() == infoDialogId:
+                                # Reshow the exList that was previously generated
+                                self.run(files)
+            except:
+                log("ExtrasItem: %s" % traceback.format_exc())
 
+            # Tidy up the TV Tunes flag if we set it
+            if not isTvTunesAlreadySet:
+                log("VideoExtras: Clearing TV Tunes override")
+                xbmcgui.Window( 12000 ).clearProperty( "TvTunesContinuePlaying" )
 
 
 #####################################################################
@@ -1082,7 +1167,10 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
             anItem.setInfo('video', { 'Title': SourceDetails.getTitle() })
             # We store the duration here, but it is only in minutes and does not
             # look very good if displayed, so we also set Label2 to a viewable value
-            anItem.setInfo('video', { 'Duration': int(anExtra.getDuration()/60) })
+            intDuration = anExtra.getDuration()
+            # Only add the duration if there is one
+            if intDuration > 0:
+                anItem.setInfo('video', { 'Duration': int(anExtra.getDuration()/60) })
             if SourceDetails.getTvShowTitle() != "":
                 anItem.setInfo('video', { 'TvShowTitle': SourceDetails.getTvShowTitle() })
 
@@ -1109,7 +1197,77 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         
         xbmcgui.WindowXML.onInit(self)
 
+    # Handle the close action and the context menu request
+    def onAction(self, action):
+        # actioncodes from https://github.com/xbmc/xbmc/blob/master/xbmc/guilib/Key.h
+        ACTION_PREVIOUS_MENU = 10
+        ACTION_NAV_BACK      = 92
+        ACTION_CONTEXT_MENU = 117
+
+        if (action == ACTION_PREVIOUS_MENU) or (action == ACTION_NAV_BACK):
+            log("VideoExtrasWindow: Close Action received: %s" % str(action))
+            self.close()
+        elif action == ACTION_CONTEXT_MENU:
+            # Get the item that was clicked on
+            extraItem = self._getCurrentSelection()
+            # create the context window
+            contextWindow = VideoExtrasContextMenu.createVideoExtrasContextMenu(extraItem)
+            contextWindow.doModal()
+            
+            # Check the return value, if exit, then we play nothing
+            if contextWindow.isExit():
+                return
+            # If requested to restart from beginning, reset the resume point before playing
+            if contextWindow.isRestart():
+                extraItem.setResumePoint(0)
+                self._performPlayAction(extraItem)
+                
+            if contextWindow.isResume():
+                self._performPlayAction(extraItem)
+
+            if contextWindow.isMarkUnwatched():
+                # Need to remove the row from the database
+                if Settings.isDatabaseEnabled():
+                    # Refresh the screen now that we have change the flag
+                    extraItem.setResumePoint(0)
+                    extraItem.saveState()
+                    self.onInit()
+
+            if contextWindow.isMarkWatched():
+                # If marking as watched we need to set the resume time so it doesn't
+                # start in the middle the next time it starts
+                if Settings.isDatabaseEnabled():
+                    extraItem.setResumePoint(extraItem.getTotalDuration())
+                    extraItem.saveState()
+                    self.onInit()
+
+            if contextWindow.isEditTitle():
+                # Prompt the user for the new name
+                keyboard = xbmc.Keyboard()
+                keyboard.setDefault(extraItem.getDisplayName())
+                keyboard.doModal()
+                
+                if keyboard.isConfirmed():
+                    try:
+                        newtitle = keyboard.getText().decode("utf-8")
+                    except:
+                        newtitle = keyboard.getText()
+                        
+                    # Only set the title if it has changed
+                    if (newtitle != extraItem.getDisplayName()) and (len(newtitle) > 0):
+                        result = extraItem.setTitle(newtitle)
+                        if not result:
+                            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32109))
+                        else:
+                            self.onInit()
+
+
     def onClick(self, control):
+        WINDOW_LIST_ID = 51
+        # Check to make sure that this click was for the extras list
+        if control != WINDOW_LIST_ID:
+            return
+        
         # Get the item that was clicked on
         extraItem = self._getCurrentSelection()
         
@@ -1118,8 +1276,9 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
             log("VideoExtrasWindow: Unable to match item to current selection")
             return
         
+        # If part way viewed prompt the user for resume or play from beginning
         if extraItem.getResumePoint() > 0:
-            resumeWindow = VideoExtrasResumeWindow.createVideoExtrasResumeWindow(extraItem.getResumePoint())
+            resumeWindow = VideoExtrasResumeWindow.createVideoExtrasResumeWindow(extraItem.getDisplayResumePoint())
             resumeWindow.doModal()
             
             # Check the return value, if exit, then we play nothing
@@ -1129,7 +1288,12 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
             if resumeWindow.isRestart():
                 extraItem.setResumePoint(0)
             # Default is to actually resume
+            
+        self._performPlayAction(extraItem)
         
+
+    # Calls the media player to play the selected item
+    def _performPlayAction(self, extraItem):
         extrasPlayer = ExtrasPlayer()
         extrasPlayer.play( extraItem )
         
@@ -1170,6 +1334,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         return None
 
 
+
 ##################################################
 # Dialog window to find out is a video should be
 # resumes or started from the beginning
@@ -1194,17 +1359,7 @@ class VideoExtrasResumeWindow(xbmcgui.WindowXMLDialog):
         # Need to populate the resume point
         resumeButton = self.getControl(VideoExtrasResumeWindow.RESUME)
         currentLabel = resumeButton.getLabel()
-        
-        # Split the time up ready for display
-        minutes, seconds = divmod(self.resumetime, 60)
-
-        hoursString = ""        
-        if minutes > 60:
-            # Need to collect hours if needed
-            hours, minutes = divmod(minutes, 60)
-            hoursString = "%02d:" % hours
-        
-        newLabel = "%s %s%02d:%02d" % (currentLabel, hoursString, minutes, seconds)
+        newLabel = "%s %s" % (currentLabel, self.resumetime)
 
         # Reset the resume label with the addition of the time
         resumeButton.setLabel(newLabel)
@@ -1231,69 +1386,72 @@ class VideoExtrasResumeWindow(xbmcgui.WindowXMLDialog):
         return self.selectionMade == VideoExtrasResumeWindow.EXIT
        
 
-
-#################################
-# Class to handle database access
-#################################
-class ExtrasDB():
-    def __init__( self ):
-        # Start by getting the database location
-        self.configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-        self.databasefile = os_path_join(self.configPath, "extras_database.db")
-        log("ExtrasDB: Database file location = %s" % self.databasefile)
-
-    def cleanDatabase(self):
-        isYes = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32024) + "?")
-        if isYes:
-            # If the database file exists, delete it
-            if xbmcvfs.exists(self.databasefile):
-                xbmcvfs.delete(self.databasefile)
-                log("ExtrasDB: Removed database: %s" % self.databasefile)
-            else:
-                log("ExtrasDB: No database exists: %s" % self.databasefile)
+#######################################################
+# Context Menu
+#
+# - Resume From 00:00
+# - Play From Start
+# - Mark as watched (If not watched)
+# - Mark as unwatched (If watched)
+# - Set title (Write NFO file if directory writable)
+#######################################################
+class VideoExtrasContextMenu(xbmcgui.WindowXMLDialog):
+    EXIT = 1
+    RESUME = 2
+    RESTART = 40
+    MARK_WATCHED = 41
+    MARK_UNWATCHED = 42
+    EDIT_TITLE = 43
     
-    def createDatabase(self):
-        # Make sure the database does not already exist
-        if not xbmcvfs.exists(self.databasefile):
-            # Get a connection to the database, this will create the file
-            conn = sqlite3.connect(self.databasefile)
-            conn.text_factory = str
-            c = conn.cursor()
-            
-            # Create the version number table, this is a simple table
-            # that just holds the version details of what created it
-            # It should make upgrade later easier
-            c.execute('''CREATE TABLE version (version text primary key)''')
-            
-            # Insert a row for the version
-            versionNum = "1"
+    def __init__( self, *args, **kwargs ):
+        # Copy off the key-word arguments
+        # The non keyword arguments will be the ones passed to the main WindowXML
+        self.extraItem = kwargs.pop('extraItem')
+        self.selectionMade = VideoExtrasContextMenu.EXIT
 
-            # Run the statement passing in an array with one value
-            c.execute("INSERT INTO version VALUES (?)", (versionNum,))
+    # Static method to create the Window Dialog class
+    @staticmethod
+    def createVideoExtrasContextMenu(extraItem):
+        # Pull out the resume time as this will be processed by the base class
+        return VideoExtrasContextMenu("script-videoextras-context.xml", __addon__.getAddonInfo('path').decode("utf-8"), extraItem=extraItem)
 
-            # Create a table that will be used to store each extras file
-            # The "id" will be auto-generated as the primary key
-            c.execute('''CREATE TABLE ExtrasFile (id integer primary key, filename text unique, resumePoint integer, duration integer, watched integer)''')
+    def onInit(self):
+        # Need to populate the resume point
+        resumeButton = self.getControl(VideoExtrasContextMenu.RESUME)
+        currentLabel = resumeButton.getLabel()
+        newLabel = "%s %s" % (currentLabel, self.extraItem.getDisplayResumePoint())
 
-            # Save (commit) the changes
-            conn.commit()
+        # Reset the resume label with the addition of the time
+        resumeButton.setLabel(newLabel)
 
-            # We can also close the connection if we are done with it.
-            # Just be sure any changes have been committed or they will be lost.
-            conn.close()
-        else:
-            # Check if this is an upgrade
-            conn = sqlite3.connect(self.databasefile)
-            c = conn.cursor()
-            c.execute('SELECT * FROM version')
-            log("Current version number in DB is: %s" % c.fetchone()[0])
-            conn.close()
+        xbmcgui.WindowXMLDialog.onInit(self)
 
-    # Get a connection to the current database
-    def getConnection(self):
-        conn = sqlite3.connect(self.databasefile)
-        conn.text_factory = str
-        return conn
+    def onClick(self, control):
+        # Save the item that was clicked
+        self.selectionMade = control
+        # If not resume or restart - we just want to exit without playing
+        if not (self.isResume() or self.isRestart() or self.isMarkWatched() or self.isMarkUnwatched() or self.isEditTitle()):
+            self.selectionMade = VideoExtrasContextMenu.EXIT
+        # Close the dialog after the selection
+        self.close()
+
+    def isResume(self):
+        return self.selectionMade == VideoExtrasContextMenu.RESUME
+    
+    def isRestart(self):
+        return self.selectionMade == VideoExtrasContextMenu.RESTART
+    
+    def isExit(self):
+        return self.selectionMade == VideoExtrasContextMenu.EXIT
+
+    def isMarkWatched(self):
+        return self.selectionMade == VideoExtrasContextMenu.MARK_WATCHED
+
+    def isMarkUnwatched(self):
+        return self.selectionMade == VideoExtrasContextMenu.MARK_UNWATCHED
+
+    def isEditTitle(self):
+        return self.selectionMade == VideoExtrasContextMenu.EDIT_TITLE
 
 
 ##################################################
@@ -1415,3 +1573,4 @@ try:
                     videoExtras.run(files)
 except:
     log("ExtrasItem: %s" % traceback.format_exc())
+

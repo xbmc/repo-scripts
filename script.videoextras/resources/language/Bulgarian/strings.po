@@ -34,11 +34,11 @@ msgstr "Допълнителни"
 
 msgctxt "#32019"
 msgid "Debugging"
-msgstr "Debugging"
+msgstr "Дебъгване"
 
 msgctxt "#32020"
 msgid "Enable debug logging"
-msgstr "Водене на debug дневник"
+msgstr "Включи дебъг дневника"
 
 msgctxt "#32021"
 msgid "Database"
@@ -55,6 +55,10 @@ msgstr "Play All"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Инф."
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Възобнови от"
 
 msgctxt "#32105"
 msgid "Start from beginning"

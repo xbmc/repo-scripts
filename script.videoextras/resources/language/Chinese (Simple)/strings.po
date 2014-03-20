@@ -48,6 +48,10 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "数据库"
 
+msgctxt "#32024"
+msgid "Clean Database"
+msgstr "清理资料库"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "全部播放"

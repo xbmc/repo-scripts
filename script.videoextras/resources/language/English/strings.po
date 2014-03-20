@@ -153,3 +153,19 @@ msgstr ""
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr ""
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr ""

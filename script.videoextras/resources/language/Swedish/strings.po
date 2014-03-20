@@ -16,9 +16,45 @@ msgstr ""
 "Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Lägg till Video Extras till dina filmer och TV-program"
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Tillhandahåller ett sätt att lägga till Video Extras till ditt filmbibliotek. Se wiki för inställningsanvisningar."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgstr "Skinndesigners, se wiki för att se hur man integrerar detta i ditt skinn: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+
 msgctxt "#32001"
 msgid "Extras"
 msgstr "Extra"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Mappnamn för Extras"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Sök i mappar med flera nivåer"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Aktivera Extras med filtagg"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Filnamnstagg för Extras"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Meny som skall visas efter en Extras har spelats"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Filmval"
 
 msgctxt "#32008"
 msgid "Information"
@@ -28,13 +64,41 @@ msgctxt "#32009"
 msgid "Home"
 msgstr "Hem"
 
+msgctxt "#32010"
+msgid "File System"
+msgstr "Filsystem"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Fjärrmapp för Extras"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Använd egenvald mapp för Extras"
+
 msgctxt "#32013"
 msgid "Path"
 msgstr "Sökväg"
 
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Egenvald undermapp för film"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Egenvald undermapp för TV-program"
+
 msgctxt "#32016"
 msgid "Advanced"
 msgstr "Avancerad"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Tvinga visning av knapp för Extras"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Reguljärt uttryck för filexkludering"
 
 msgctxt "#32019"
 msgid "Debugging"
@@ -48,9 +112,25 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "Databas"
 
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Aktivera stöd för databas"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Åtgärder"
+
 msgctxt "#32024"
 msgid "Clean Database"
 msgstr "Rensa databas"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Använd detaljerad lista"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Fönster att visa efter man avslutat detaljerad lista"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -59,6 +139,14 @@ msgstr "Spela alla"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Info"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Inga Extras funna"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Återuppta från"
 
 msgctxt "#32105"
 msgid "Start from beginning"
