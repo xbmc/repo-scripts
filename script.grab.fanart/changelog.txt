@@ -1,3 +1,7 @@
+Version 0.12.7
+
+added a startup window property, per request from Jeroen
+
 Version 0.12.6
 
 added website tag

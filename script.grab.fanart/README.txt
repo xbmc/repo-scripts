@@ -17,7 +17,9 @@ An example of setting these parameters using the RunScript function would be Run
 
 Window Properties: 
 
-Currently the service part of this addon will update Home window properties that can be used by skinners. These properties are refreshed according to the "refresh" interval. 
+Currently the service part of this addon will update Home window properties that can be used by skinners. The fanart properties are refreshed according to the "refresh" interval. 
+
+script.grab.fanart.Ready - this property is empty until the service has initialized the array of fanart files. It then holds a value of "true". Useful if you skinners want to delay something until the service has started cycling images. Example of use would be: !IsEmpty(Window(Home).Property(script.grab.fanart.Ready))
 
 script.grab.fanart.Global.Title - the title of a random music or video file, 30% chance music, 30% TV, 40% movie
 script.grab.fanart.Global.FanArt - path to the fanart image for this media
