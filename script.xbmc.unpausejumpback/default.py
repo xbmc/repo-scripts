@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 '''
-Boblight for XBMC
-Copyright (C) 2012 Team XBMC
+Unpause jumpback  for XBMC
+Copyright (C) 2013-2014 Team XBMC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+the Free Software Foundation version 2 of the License.
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -116,7 +115,6 @@ def loadSettings():
   global g_jumpBackSecsAfterRwdX8
   global g_jumpBackSecsAfterRwdX16
   global g_jumpBackSecsAfterRwdX32
-  global g_jumpBackSecsAfterResume
 
   g_jumpBackSecsAfterFwdPause = int(float(__addon__.getSetting("jumpbacksecs")))
   g_jumpBackSecsAfterFwdX2 = int(float(__addon__.getSetting("jumpbacksecsfwdx2")))
@@ -129,7 +127,6 @@ def loadSettings():
   g_jumpBackSecsAfterRwdX8 = int(float(__addon__.getSetting("jumpbacksecsrwdx8")))
   g_jumpBackSecsAfterRwdX16 = int(float(__addon__.getSetting("jumpbacksecsrwdx16")))
   g_jumpBackSecsAfterRwdX32 = int(float(__addon__.getSetting("jumpbacksecsrwdx32")))
-  g_jumpBackSecsAfterResume = int(float(__addon__.getSetting("jumpbacksecsresume")))
   g_waitForJumpback = int(float(__addon__.getSetting("waitforjumpback")))
   log('Settings loaded! JumpBackSecs: %d, WaitSecs: %d' % (g_jumpBackSecsAfterFwdPause, g_waitForJumpback))
 
@@ -137,23 +134,6 @@ class MyPlayer( xbmc.Player ):
   def __init__( self, *args, **kwargs ):
     xbmc.Player.__init__( self )
     log('MyPlayer - init')
-
-  def onPlayBackStarted(self):
-    global g_jumpBackSecsAfterResume
-    currentTime = xbmc.Player().getTime()
-    log('Playback started at ' + str(currentTime))
-
-    # check for exclusion
-    _filename = self.getPlayingFile()
-    if isExcluded(_filename):
-      log("Ignored because '%s' is in exclusion settings." % _filename)
-      return
-    
-    else:
-      if currentTime > 0 and g_jumpBackSecsAfterResume > 0:
-        resumeTime = currentTime - g_jumpBackSecsAfterResume
-        log("Resuming playback from saved time: " + str(currentTime) + " with jumpback seconds: " + str(g_jumpBackSecsAfterResume) + " - resume time: " + str(resumeTime))
-        xbmc.Player().seekTime(resumeTime)
     
   def onPlayBackPaused( self ):
     global g_pausedTime

@@ -1,3 +1,6 @@
+V2.3.1
+- revert jumpback after playback started due to XBMC video timer bug - can not add this until xbmc properly reports the playback position immediately on playback start
+
 2.3.0
 - add jumpback after playback started from non zero starting time (needs gotham for working properly!)
 
