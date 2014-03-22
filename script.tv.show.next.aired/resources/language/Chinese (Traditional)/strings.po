@@ -16,13 +16,13 @@ msgstr ""
 "Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "電視節目指南"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "顯示器"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "電視節目指南"
 
 msgctxt "#32212"
 msgid "Ended"

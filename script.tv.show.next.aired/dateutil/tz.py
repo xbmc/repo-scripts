@@ -20,10 +20,7 @@ rrule = None
 __all__ = ["tzutc", "tzoffset", "tzlocal", "tzfile", "tzrange",
            "tzstr", "tzical", "tzwin", "tzwinlocal", "gettz"]
 
-try:
-    from dateutil.tzwin import tzwin, tzwinlocal
-except (ImportError, OSError):
-    tzwin, tzwinlocal = None, None
+tzwin, tzwinlocal = None, None
 
 ZERO = datetime.timedelta(0)
 EPOCHORDINAL = datetime.datetime.utcfromtimestamp(0).toordinal()

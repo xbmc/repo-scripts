@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Ce script interroge votre médiathèque puis vas récupérer les infos sur les prochaines diffusions de vos séries. vous n'en manquerez plus aucune."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "Guide TV"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Affichage"
@@ -63,6 +59,10 @@ msgstr "Télécharger les posters (Artwork Downloader requis)"
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Montrer toutes les séries TV sur l'écran d'acceuil (thème compatible requis)"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Guide TV"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

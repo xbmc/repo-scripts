@@ -1,4 +1,17 @@
--6.0.4 (2014-03-06)
+-6.0.5 (2014-03-22)
+- Added a new today-week TV Guide xml file and lots of new skinning values.  The new guide can also show yesterday's episodes, if desired.
+- Add a means for the user to request new info for a single show.
+- Restored the population of the Classification info.
+- Improved DST timezone support and computation of Airtime between timezones, including better handling of Airtime changes.
+- Improved the episode search when we're trying to find the show's website ID.  This includes multi-language searching and better handling of utf-8 characters.
+- Improve a month-period update: work around some (unexpectedly) missing episode-change data in the month-update file.
+- If the interactive update stops fetching data due to failures, mention it to the user in an "OK" dialog.
+- Added the "updateshow=TVShowTitle" option to re-grab the current data for a single show.
+- Make the background process auto-start a replacement if it notices a version change.
+- Don't put so much data into the debug log by default.  Lots of other logging tweaks.
+- Updated language files from Transifex.
+
+-6.0.4 (2014-03-05)
 - Updated language files from Transifex.
 - A few more tweaks to the missing-artwork grabber.
 - Improve error handling when refreshing the country.db file.

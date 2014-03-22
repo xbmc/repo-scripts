@@ -24,12 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr ""
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr ""
-
-#empty strings from id 451 to 31999
-
 msgctxt "#32000"
 msgid "Display"
 msgstr ""
@@ -90,7 +84,27 @@ msgctxt "#32014"
 msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
 msgstr ""
 
-#empty strings from id 32015 to 32100
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr ""
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr ""
+
+#empty strings from id 32020 to 32100
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
@@ -108,7 +122,15 @@ msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr ""
 
-#empty strings from id 32105 to 32200
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr ""
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr ""
+
+#empty strings from id 32107 to 32200
 
 msgctxt "#32201"
 msgid "Returning Series"

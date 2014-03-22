@@ -37,7 +37,7 @@ class TheTVDB(object):
         self.language = language
         self.want_raw = want_raw
 
-        # This is always returning thetvdb.com, so tell it to fudge the results for now.
+        # Mirror selection got deprecated a while back, so tell it to skip the actual fetch.
         self.select_mirrors(False)
 
 
@@ -127,11 +127,20 @@ class TheTVDB(object):
         return first_aired
 
 
-    def get_matching_shows(self, show_name):
+    # language can be "all", "en", "fr", etc.
+    def get_matching_shows(self, show_name, language=None, want_raw=False):
         """Get a list of shows matching show_name."""
-        get_args = urllib.urlencode({"seriesname": show_name}, doseq=True)
+        if type(show_name) == type(u''):
+            show_name = show_name.encode('utf-8')
+        get_args = {"seriesname": show_name}
+        if language is not None:
+            get_args['language'] = language
+        get_args = urllib.urlencode(get_args, doseq=True)
         url = "%s/GetSeries.php?%s" % (self.base_url, get_args)
-        filt_func = lambda name, attrs: (attrs.get("seriesid", ""), attrs.get("SeriesName", ""), attrs.get("IMDB_ID", "")) if name == "Series" else None
+        if want_raw:
+            filt_func = lambda name, attrs: attrs if name == "Series" else None
+        else:
+            filt_func = lambda name, attrs: (attrs.get("seriesid", ""), attrs.get("SeriesName", ""), attrs.get("IMDB_ID", "")) if name == "Series" else None
         xml = self._get_xml_data(url, filt_func)
         return xml.get('Series', [])
 

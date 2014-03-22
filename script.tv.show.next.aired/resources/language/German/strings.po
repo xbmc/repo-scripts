@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "TV Show Next Aired liefert Termin-Informationen über die anstehenden Episoden der Serien aus der Datenbank. Dazu gibt es eine Wochenansicht mit allen in der nächsten Woche laufenden Episoden sowie (bei vorhandenem Skin Support) die direkte Integration der Informationen in die Ansichten des jeweiligen Skins. Sie werden nie wieder eine Folge verpassen."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "TV Programm"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Anzeige"
@@ -68,6 +64,10 @@ msgctxt "#32009"
 msgid "In the background every [N] hours"
 msgstr "Im Hintergrund alle [N] Stunden"
 
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "Beim öffnen des Guides, wenn die Daten älter als [N] Stunden sind"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "Poster herunterladen (\"Artwork Downloader\"-Addon benötigt)"
@@ -79,6 +79,26 @@ msgstr "**Alle Daten zurücksetzten** und die TV Informationen jetzt aktualisier
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Alle Fernsehsendungen im Startbildschirm anzeigen (benötigt Skin-Unterstützung)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Verwende Wochentags- und Monatsnamen im Datum anstatt ausschließlich Zahlen (für ein Skin, dass Hilfe benötigt)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Anzahl an Next-Aired-Tagen im TV Guide"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Beginne die TV Guide Woche heute anstatt Montag"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Gestern"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV Programm"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

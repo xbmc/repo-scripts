@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Agafar informació de les sèries de TV que es retransmetran pròximament. No te'n perdràs cap mai més."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "Guia TV"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Pantalla"
@@ -63,6 +59,10 @@ msgstr "Descarregar cartells (es necessari el Artwork Downloader)"
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Mostra totes les sèries de TV a la pantalla d'inici (necessari una pell compatible)"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Guia TV"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

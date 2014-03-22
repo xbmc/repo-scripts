@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Saiba sobre próximas exibições de séries de TV. Você nunca perderá um episódio."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "Guia de TV"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Exibir"
@@ -56,13 +52,57 @@ msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
 msgstr "Baixar miniaturas 16:9 (Requer Artwork Downloader)"
 
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Atualizar informação de seriados de TV agora"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Transferir informação TV:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "No background a cada [N] horas"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "Entrar no guia se dados estiverem [N] horas defasados"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "Baixar cartazes (requer Artwork Downloader)"
 
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "** Resetar todos os dados ** e atualizar as informações de seriados TV agora"
+
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Mostrar Todas as Séries de TV na tela inicial (necessita de suporte pela skin)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Usar dias-da-semana e os nomes dos meses nas datas, ao invés de apenas números (para skins  que precisem deste tipo de ajuda)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Número de dias com Próximos Episódios a serem incluídos no Guia de TV"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Iniciar o guia de TV semanal baseado no dia de hoje ao invés de segunda-feira"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Incluir Ontem no Guia de TV Estilo-Hoje"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Ontem"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Guia de TV"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

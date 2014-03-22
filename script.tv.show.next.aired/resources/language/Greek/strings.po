@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Λήψη πληροφοριών για την Επόμενη Προβολή των Τηλ. Σειρών. Δε θα ξαναχάσετε επεισόδιο ποτέ."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "Οδηγός TV"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Απεικόνιση"
@@ -87,6 +83,26 @@ msgstr "Εμφάνιση Όλων των Τηλ. Σειρών στην Αρχ. �
 msgctxt "#32014"
 msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
 msgstr "Χρήση ημερομηνίας ολογράφως αντί αριθμητικά (για όποιο κέλυφος χρειάζεται βοήθεια)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Πλήθος ημερών επόμενων προβολών που συμπεριληφθούν στον Οδηγό TV"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Ο Οδηγός TV να αρχίζει από Σήμερα, όχι από Δευτέρα"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Συμπερίληψη του Χθες στο Σημερινό Οδηγό TV"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Χθες"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Οδηγός TV"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

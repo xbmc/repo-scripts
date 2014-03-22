@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Obtener información de las siguientes emisiones de series. Nunca te perderás una de nuevo."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "Guía de TV"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Pantalla"
@@ -87,6 +83,26 @@ msgstr "Ver todas las series en la pantalla principal (el skin debe soportarlo)"
 msgctxt "#32014"
 msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
 msgstr "Usar el dia de la semana y los nombres de mes en lugar de unicamente numeros (para las pieles que necesiten ayuda)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Número de días-siguientes para incluir en la Guía de TV"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Iniciar la Guia en Hoy en lugar de Lunes"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Incluya Ayer en la Guía de TV de estilo de Hoy"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Ayer"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Guía de TV"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

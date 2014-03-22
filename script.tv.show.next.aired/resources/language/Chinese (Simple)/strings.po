@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "获取即将播出的剧集的信息。你不会再错过好节目了。"
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "电视指南"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "显示"
@@ -63,6 +59,10 @@ msgstr "下载海报（需要Artwork Downloader）"
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "显示主界面屏幕所有剧集（需要皮肤支持）"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "电视指南"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

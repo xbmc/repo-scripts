@@ -16,10 +16,6 @@ msgstr ""
 "Language: en_AU\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "TV Guide"
-
 msgctxt "#32211"
 msgid "Cancelled"
 msgstr "Cancelled"

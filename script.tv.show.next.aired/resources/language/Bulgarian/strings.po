@@ -18,15 +18,11 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Get info for TV Shows Next Aired."
-msgstr "Информация за предстоящите ТВ предавания."
+msgstr "Информация за предстоящите ТВ сериали."
 
 msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
-msgstr "Получава информация за предстоящите ТВ предавания. Сега вие никога няма да пропуснете нито едно ТВ предаване."
-
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "ТВ гид"
+msgstr "Сваля информация за предстоящите ТВ сериали. Вече никога няма да пропускате епизод от ТВ сериали, които следите."
 
 msgctxt "#32000"
 msgid "Display"
@@ -34,39 +30,79 @@ msgstr "Екран"
 
 msgctxt "#32001"
 msgid "Thumbnail type"
-msgstr "Вид на миниатюри"
+msgstr "Тип на миниатюрите"
 
 msgctxt "#32002"
 msgid "Download banners (Artwork Downloader required)"
-msgstr "Сваляй банерите (изисква скрипт Artwork Downloader)"
+msgstr "Свали банерите сега (изисква добавката Artwork Downloader)"
 
 msgctxt "#32003"
 msgid "Download logos (Artwork Downloader required)"
-msgstr "Сваляй логата (изисква скрипт Artwork Downloader)"
+msgstr "Свали логата сега (изисква добавката Artwork Downloader)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "Ползвай за фон фанарт изображенията"
 
 msgctxt "#32005"
 msgid "Enable 16:9 preview thumbs"
-msgstr "Включи миниатюрите 16:09"
+msgstr "Включи миниатюрите във формат 16:09"
 
 msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
-msgstr "Сваляне на миниатюри 16:09 (изисква скрипт Artwork Downloader)"
+msgstr "Свали 16:09 миниатюрите сега (изисква добавкатаArtwork Downloader)"
+
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Обнови информацията сега"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Сваляне на информация:"
 
 msgctxt "#32009"
 msgid "In the background every [N] hours"
 msgstr "На заден фон всеки [N] часа"
 
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "При влизане в гида, ако информацията е по-тара от [N] часа"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
-msgstr "Сваляй постерите (изисква скрипт Artwork Downloader)"
+msgstr "Свали плакатите сега (изисква добавката Artwork Downloader)"
+
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Нулирай всичко** и обнови информацията сега"
 
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
-msgstr "Покажи всички ТВ предавания на главния екран (изисква поддръжка на скинове)"
+msgstr "Покажи всички ТВ сериали на главния екран (изисква поддръжка от облика)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Ползвай имената на месеците и дните от седмицата, вместо числа (за облици които се нуждаят)"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Започвай седмицата в ТВ гид с днешния ден, вместо от понеделник"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Включвай и вчера в ТВ гид"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Вчера"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "ТВ гид"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
-msgstr "ТВ шоу - следващи"
+msgstr "TV Show - Next Aired"
 
 msgctxt "#32102"
 msgid "Getting information..."
@@ -82,11 +118,11 @@ msgstr "Действието е прекъснато от потребитля."
 
 msgctxt "#32201"
 msgid "Returning Series"
-msgstr "Завръщане на сериите"
+msgstr "Завръщащ се сериал"
 
 msgctxt "#32202"
 msgid "Cancelled/Ended"
-msgstr "Отменено/Приключи"
+msgstr "Отменен/Приключен"
 
 msgctxt "#32203"
 msgid "TBD/On The Bubble"
@@ -102,7 +138,7 @@ msgstr "Нови серии"
 
 msgctxt "#32206"
 msgid "Never Aired"
-msgstr "Още не е било в ефир"
+msgstr "Неизлъчен"
 
 msgctxt "#32207"
 msgid "Final Season"
@@ -110,12 +146,12 @@ msgstr "Последен сезон"
 
 msgctxt "#32208"
 msgid "On Hiatus"
-msgstr "Пропуск"
+msgstr "Между сезони"
 
 msgctxt "#32211"
 msgid "Cancelled"
-msgstr "Отменено"
+msgstr "Отменен"
 
 msgctxt "#32212"
 msgid "Ended"
-msgstr "Край"
+msgstr "Приключен"

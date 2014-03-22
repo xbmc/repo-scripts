@@ -16,13 +16,13 @@ msgstr ""
 "Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "TV-Opas"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Näyttö"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV-Opas"
 
 msgctxt "#32212"
 msgid "Ended"

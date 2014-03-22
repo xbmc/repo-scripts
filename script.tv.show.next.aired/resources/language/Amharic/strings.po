@@ -16,10 +16,10 @@ msgstr ""
 "Language: am\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "የቲቪ - መመሪያ"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "ማሳያ"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "የቲቪ - መመሪያ"

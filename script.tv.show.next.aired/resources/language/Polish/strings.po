@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Otrzymaj informacje Następnie Granych Programach Telewizyjnych. Nigdy już żadnego nie przegapisz."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "Program TV"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Ekran"
@@ -56,13 +52,57 @@ msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
 msgstr "Włącz podgląd miniatur 16:9 (wymaga Artwork Downloader)"
 
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Zaktualizuj informacje TV"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Pobierz informacje TV:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "W tle, co [N] godzin"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "Po wejściu do programu, jeśli dane są starsze niż [N] godzin "
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "Ściągnij plakaty (wymaga Artwork Downloader)"
 
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Wyczyść wszystkie dane** i zaktualizuj informacje TV"
+
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Pokaż wszystkie programy telewizyjne dla małego ekranu (wymaga wsparcia dla skór)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Korzystaj z nazw dni tygodnia i nazw miesiąca,  a nie tylko liczb "
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Liczba kolejnych dni w TV Guide"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "'Dzisiaj' jako początek tygodnia TV Guide zamiast poniedziałku "
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "M.in. Wczoraj w stylu Dziś TV Guide"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Wczoraj"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Program TV"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

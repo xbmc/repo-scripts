@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Hämta info för nästa sändning av TV-Serie. Du kommer inte att missa en igen."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "TV-Guide"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Visa"
@@ -87,6 +83,14 @@ msgstr "Visa alla TV-serier på hemskärmen (kräver skalsupport)"
 msgctxt "#32014"
 msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
 msgstr "Använd dag-i-vecka och månadsnamn i datum istället för endast nummer (för skal som behöver hjälp)"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Igår"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV-Guide"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

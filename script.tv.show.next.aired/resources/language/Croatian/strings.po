@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Nabavite informacije za sljedeću emitiranu TV seriju. Nikada nećete propustiti nijednu."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "TV vodič"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Zaslon"
@@ -63,6 +59,10 @@ msgstr "Preuzmi poster (Potreban je preuzimatelj slika omota 'Artwork Downloader
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Prikaži sve TV serije za početni zaslon (potrebna je podrška presvlake)"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV vodič"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

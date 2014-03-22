@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Obter info para Próximas Exibições de Séries TV. Nunca mais vai perder uma."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "Guia TV"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Ecrã"
@@ -87,6 +83,10 @@ msgstr "Exibir Todas as Séries TV no ecrã principal (precisa de tema compatív
 msgctxt "#32014"
 msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
 msgstr "Usar nomes de dia-de-semana e meses nas datas, em vez de números (se o tema precisar)"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Guia TV"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

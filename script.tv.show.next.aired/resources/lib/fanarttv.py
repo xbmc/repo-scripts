@@ -1,7 +1,7 @@
 import sys, urllib
-if sys.version_info < (2, 7):
+try:
     import simplejson as json
-else:
+except ImportError:
     import json
 
 # This uses the artwork-downloader API key -- I assume that is OK for this XBMC script.
@@ -39,12 +39,10 @@ class FanartTV(object):
         return ret
 
 # Some helper code to check on the data to see how our queries are working.
-# NOTE: none of the following code is run when this file is included as a
-# library, so no "print" in the following will get run via xbmc.
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print FanartTV.find_artwork(83462, 'clearlogo')
+        sys.stdout.write("%s\n" % FanartTV.find_artwork(83462, 'clearlogo'))
     else:
-        print FanartTV.find_artwork(sys.argv[1], sys.argv[2])
+        sys.stdout.write("%s\n" % FanartTV.find_artwork(sys.argv[1], sys.argv[2]))
 
 # vim: sw=4 ts=8 et

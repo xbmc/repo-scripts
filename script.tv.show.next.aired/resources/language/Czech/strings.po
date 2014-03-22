@@ -16,13 +16,13 @@ msgstr ""
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "TV program"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Zobrazení"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV program"
 
 msgctxt "#32212"
 msgid "Ended"

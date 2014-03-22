@@ -69,7 +69,9 @@ def rebuild(filename, tag=None, format="gz"):
         for name in tf.getnames():
             if not (name.endswith(".sh") or
                     name.endswith(".tab") or
-                    name == "leapseconds"):
+                    name.endswith(".list") or
+                    name.endswith(".awk") or
+		    name in ("leapseconds", "README", "Makefile")):
                 tf.extract(name, tmpdir)
                 filepath = os.path.join(tmpdir, name)
                 os.system("zic -d %s %s" % (zonedir, filepath))

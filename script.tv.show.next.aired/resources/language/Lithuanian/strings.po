@@ -16,13 +16,13 @@ msgstr ""
 "Language: lt\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "TV gidas"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Ekranas"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV gidas"
 
 msgctxt "#32212"
 msgid "Ended"

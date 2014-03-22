@@ -17,10 +17,10 @@ AirTime             (eg. 'Wednesday, Thursday: 09:00 PM')
 Path                (tv show path)
 Library             (eg. videodb://2/2/1/ or videodb://tvshows/titles/1/)
 Status              (eg. 'New Series'/'Returning Series'/'Cancelled/Ended')
-StatusID            (id of the status)
+StatusID            (ID of the status)
 Network             (name of the tv network that's airing the show)
 Started             (airdate of the first episode, eg. 09/24/07, 'Mon, Sep 24, 2007', etc.)
-Classification      (type of show; N.B. not currently supported)
+Classification      (type of show, eg. Reality, Mini-Series, etc. Data is also in Genre.)
 Genre               (genre of the show)
 Premiered           (year the first episode was aired, eg. '1999')
 Country             (production country of the tv show, eg. 'USA')
@@ -28,17 +28,20 @@ Runtime             (duration of the episode in minutes)
 Fanart              (tv show fanart)
 Today               (will return 'True' if the show is aired today, otherwise 'False')
 NextDate            (date the next episode will be aired)
+NextDay             ("nice" localized format for NextDate, eg. "Fri, Jan 1" or "Mon, Sep 24, 2007"))
 NextTitle           (name of the next episode)
 NextNumber          (season/episode number of the next episode, eg. '04x01')
 NextEpisodeNumber   (episode number of the next episode, eg. '04')
 NextSeasonNumber    (season number of the next episode, eg. '01')
 LatestDate          (date the last episode was aired)
+LatestDay           ("nice" localized format for LatestDate, eg. "Fri, Jan 1" or "Mon, Sep 24, 2007")
 LatestTitle         (name of the last episode)
 LatestNumber        (season/episode number of the last episode)
 LatestEpisodeNumber (episode number of the last episode)
 LatestSeasonNumber  (season number of the last episode)
 AirDay              (day(s) of the week the show is aired, eg 'Tuesday')
 ShortTime           (time the show is aired, eg. '08:00 PM')
+SecondWeek          (1 == show is in the second week of the Monday-week Guide, otherwise 0)
 Art(poster)         (tv show poster)
 Art(banner)         (tv show banner)
 Art(fanart)         (tv show fanart)
@@ -47,7 +50,7 @@ Art(clearlogo)      (tv show logo - artwork downloader required)
 Art(clearart)       (tv show clearart - artwork downloader required)
 Art(characterart)   (tv show characterart - artwork downloader required)
 
-Status ids:
+Status IDs:
 0 - Returning Series
 1 - Cancelled/Ended
 2 - TBD/On The Bubble
@@ -96,39 +99,116 @@ example code:
 
 
 
-III) if you run the script without any options (or if it's started by the user),
-the script will provide a TV Guide window (script-NextAired-TVGuide.xml).
+III) If you run the script without any options (or if it's started by the user),
+the script will provide a TV Guide window.
 
-this window is fuly skinnable.
+This window is fully skinnable -- see script-NextAired-TVGuide.xml and
+script-NextAired-TVGuide2.xml (the latter is the today-week guide).
 
+A list of required IDs in script-NextAired-TVGuide.xml, which is selected if
+the user has selected the traditional, Monday-week guide:
 
-a list of required id's:
-200 - container / shows aired on monday
-201 - container / shows aired on tuesday
-202 - container / shows aired on wednesday
-203 - container / shows aired on thursday
-204 - container / shows aired on friday
-205 - container / shows aired on saturday
-206 - container / shows aired on sunday
-8 - in case all the containers above are empty, we set focus to this id
+200 - container / shows aired on Monday
+201 - container / shows aired on Tuesday
+202 - container / shows aired on Wednesday
+203 - container / shows aired on Thursday
+204 - container / shows aired on Friday
+205 - container / shows aired on Saturday
+206 - container / shows aired on Sunday
+8 - in case all the containers above are empty, we set focus to this ID
+(which is typically a settings-button of some kind).
 
-a list of available infolabels:
-ListItem.Label          (tv show name)
-ListItem.Thumb          (tv show thumb)
-ListItem.Property(*)    (see above)
+If the user chooses to include more than 7 upcoming days (including today), then
+episodes from the next week are included after this week's episodes for each
+day.
 
-totals are available using the window properties listed above.
+A list of required IDs in script-NextAired-TVGuide2.xml, which is selected if
+the user has selected the new, Today-week guide:
 
-Window(home).Property(NextAired.TodayDate)              (todays date)
-Window(home).Property(NextAired.%d.Date)                (date for the lists, eg NextAired.1.Date will show the date for monday)
+200 - container / shows aired Yesterday
+201 - container / shows aired Today
+202 - container / shows aired Today+1
+203 - container / shows aired Today+2
+204 - container / shows aired Today+3
+205 - container / shows aired Today+4
+206 - container / shows aired Today+5
+207 - container / shows aired Today+6
+208 - container / shows aired Today+7
+209 - container / shows aired Today+8
+210 - container / shows aired Today+9
+211 - container / shows aired Today+10
+212 - container / shows aired Today+11
+213 - container / shows aired Today+12
+214 - container / shows aired Today+13
+215 - container / shows aired Today+14
+8 - in case all the containers above are empty, we set focus to this ID.
 
-a list of available infolabels, related to the available add-on settings:
-Window(home).Property(TVGuide.ThumbType)                (thumb type selected by the user: 0=poster, 1=banner, 2=logo)
-Window(home).Property(TVGuide.BackgroundFanart)         (1=user selected to show fanart, empty if disabled)
-Window(home).Property(TVGuide.PreviewThumbs)            (1=user selected to show 16:9 showthumbs, empty if disabled)
+If the user chooses to include fewer than the full 15 upcoming days (including
+today) and/or to disable Yesterday, then the skin should be prepared to hide
+the days that aren't enabled (the *.Weekday, *.Wday, and *.Date values below
+will be unset for any disabled containers).
 
+Various Window(home) vars that we provide (some are more useful in just one of
+the 2 xml files, but all are always set):
 
-all other id's and properties in the default script window are optional and not required by the script.
+For the following date values, the user can choose between the traditional
+number values (e.g. 12/31/99) and a nicer format (e.g. "Sun, Dec 31").  The
+format is consistent across values, allowing you to (for example) string-
+compare a show's NextDate value against the TodayDate (or YesterdayDate) to
+substitute the string for "Today" (or Yesterday).
+
+Today's date and a localized word for "Today":
+    Window(home).Property(NextAired.TodayDate)
+    Window(home).Property(NextAired.Today)
+Yesterday's date and a localized word for "Tomorrow":
+    Window(home).Property(NextAired.TomorrowDate)
+    Window(home).Property(NextAired.Tomorrow)
+Yesterday's date and a localized word for "Yesterday":
+    Window(home).Property(NextAired.YesterdayDate)
+    Window(home).Property(NextAired.Yesterday)
+
+The date for the lists (Monday==1, Sunday==7):
+    Window(home).Property(NextAired.1.Date)
+    ...
+    Window(home).Property(NextAired.7.Date)
+
+For the following container values, only the ones that are enabled by the
+user will have a set value.  For instance, if the user has selected 7-days
+in a today-week grid w/o yesterday, only properties 201..207 would be set.
+
+The day-of-the-week name for each container (not abbreviated).
+    Window(home).Property(NextAired.200.Weekday)
+    ...
+    Window(home).Property(NextAired.215.Weekday)
+
+The abbreviated day-of-the-week name for each container:
+    Window(home).Property(NextAired.200.Wday)
+    ...
+    Window(home).Property(NextAired.215.Wday)
+
+The date for each container in a "nice" format, with just the month name and
+day num (e.g. "Feb 14" & "14 Feb" are 2 typical localized formats):
+    Window(home).Property(NextAired.200.Date)
+    ...
+    Window(home).Property(NextAired.215.Date)
+
+A list of available infolabels:
+    ListItem.Label          (tv show name)
+    ListItem.Thumb          (tv show thumb)
+    ListItem.Property(*)    (see above)
+
+Totals are available using the window properties listed above.
+
+Thumb type selected by the user (0=poster, 1=banner, 2=logo):
+    Window(home).Property(TVGuide.ThumbType)
+
+Indicator for background fanart setting (1=enabled, empty if disabled):
+    Window(home).Property(TVGuide.BackgroundFanart)
+
+Indicator for 16:9-thumbs setting (1=enabled, empty if disabled):
+    Window(home).Property(TVGuide.PreviewThumbs)
+
+All other IDs and properties in the default script window are optional and not required by the script.
 
 
 IV) To force an update of the nextaired database ahead of its next scheduled time:
@@ -138,3 +218,12 @@ To force an update as well as reset all the existing data (forcing a fresh scan 
 RunScript(script.tv.show.next.aired,reset=True)
 
 The force update and reset options are also available in the addon settings.
+
+V) To force the update of a single show (re-reading all its data), it can be added via a button like this one:
+
+<control type="button" id="550">
+<label>$LOCALIZE[24069] $LOCALIZE[4]</label>
+<include>DialogVideoInfoButton</include>
+<onclick>RunScript(script.tv.show.next.aired,updateshow=$INFO[ListItem.Label])</onclick>
+<visible>Container.Content(tvshows)</visible>
+</control>

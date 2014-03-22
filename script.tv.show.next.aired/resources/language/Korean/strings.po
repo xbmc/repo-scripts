@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "TV 쇼 방송 일정을 가져옵니다. 놓치는 일은 절대 없을 것입니다."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "TV 가이드"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "화면"
@@ -56,6 +52,14 @@ msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
 msgstr "16:9 썸네일 다운로드 (Artwork Downloader 추가기능 필요)"
 
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "지금 TV 정보 업데이트"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "TV 정보 다운로드:"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "포스터 다운로드 (Artwork Downloader 추가기능 필요)"
@@ -63,6 +67,10 @@ msgstr "포스터 다운로드 (Artwork Downloader 추가기능 필요)"
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "홈 화면에 모든 TV 쇼를 표시 (스킨 지원 필요)"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV 가이드"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

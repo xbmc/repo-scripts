@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Получает информацию о следующих ТВ передачах. Теперь Вы никогда не пропустите ни одну ТВ передачу."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "ТВ-гид"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Экран"
@@ -63,6 +59,10 @@ msgstr "Загружать постеры (требуется скрипт Artwo
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Показывать все ТВ шоу на главном экране (требуется поддержка скинов)"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "ТВ-гид"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

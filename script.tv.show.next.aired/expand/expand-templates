@@ -1,0 +1,110 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+foreach my $in_fn (glob '*-template.xml') {
+    print "Filtering $in_fn\n";
+
+    open IN, '<', $in_fn or die "Unable to open $in_fn: $!\n";
+    my $text = join '', <IN>;
+    close IN;
+
+    unless ($text =~ s/^<!--FILES(\s.+?)--> *\n//sm) {
+	die "Failed to find <!--FILES ... -> prefixed in $in_fn.\n";
+    }
+    my $files_str = $1;
+    my %files = $files_str =~ /\s\[(\d+)\]\s*=\s*(.+?)(?=\s+\[\d|\s*$)/gs;
+    unless (%files) {
+	die "Failed to parse files from $files_str\n";
+    }
+
+    foreach my $filenum (sort { $a <=> $b } keys %files) {
+	generate_file($filenum, $files{$filenum}, $text);
+    }
+}
+
+exit;
+
+sub generate_file
+{
+    my ($filenum, $out_fn, $text) = @_;
+    print "    Generating $out_fn\n";
+
+    # Turn the ONLY .. ONLY-END items into single-instance REPEAT blocks.
+    $text =~ s/^<!--ONLY(-END\s*-->)/<!--REPEAT$1/gm;
+    $text =~ s/^<!--ONLY(\s[^>]+)-->/ "<!--REPEAT\n".join('', map {"$_ ONE_REPEAT_FOR_ONLY=1\n"} split(' ', $1)).' -->'/gme;
+
+    # We allow nesting of REPEAT sections by making sure that we match inner repeats first.
+    1 while $text =~ s/<!--REPEAT(\s[^>]+)-->[ \t]*\n(((?!<!--REPEAT).*\n)*)<!--REPEAT-END\s*-->[ \t]*\n/ repeat_expand($filenum, $1, $2) /ge;
+
+    open OUT, '>', $out_fn or die "Unable to write $out_fn: $!\n";
+    print OUT $text;
+    close OUT;
+}
+
+sub repeat_expand
+{
+    my ($filenum, $vars, $text) = @_;
+
+    if ($vars =~ /^[ \t]*\[\d+\]\s/m) {
+	if ($vars =~ /^[ \t]*\[$filenum\]\s+(.+?)(\n[ \t]*\[\d+\]\s|\s*\z)/ms) {
+	    $vars = $1;
+	} else {
+	    return '';
+	}
+    }
+    $vars =~ s/\n/ /g;
+
+    my %vars = $vars =~ /(?:^|\s)([A-Z][A-Z0-9_]*)\s*=\s*(.+?)(?=\s+[A-Z][A-Z0-9_]*\s*=|\s*$)/gs;
+    unless (%vars) {
+	die "Failed to parse vars from $vars\n";
+    }
+
+    my $iters;
+    foreach my $var (keys %vars) {
+	my @vals = split /\s*\|\s*/, $vars{$var}, -1;
+	for (my $i = 0; $i < @vals; $i++) {
+	    my $val = $vals[$i];
+	    $val =~ s/\%!\%/|/g; # Support %!% for a literal "|" in a var list.
+	    my @subs;
+	    while ($val =~ s/(\d+)\.\.(\d+)/ '%' . (scalar @subs) . '%' /e) {
+		push @subs, [$1 .. $2];
+	    }
+	    if (@subs) {
+		my $subs_cnt = scalar @{$subs[0]};
+		my @new_vals = ($val) x $subs_cnt;
+		for (my $j = 0; $j < @subs; $j++) {
+		    my $ref = $subs[$j];
+		    if (@$ref != $subs_cnt) {
+			die "Mismatched X..Y sequences in $val\n";
+		    }
+		    for (my $k = 0; $k < @$ref; $k++) {
+			$new_vals[$k] =~ s/\%$j\%/$ref->[$k]/;
+		    }
+		}
+		splice @vals, $i, 1, @new_vals;
+	    } else {
+		$vals[$i] = $val;
+	    }
+	}
+	$vars{$var} = \@vals;
+	if (!defined $iters) {
+	    $iters = @vals;
+	} elsif ($iters != @vals) {
+	    my $cnt = @vals;
+	    die "Var $var doesn't have $iters values (has $cnt)\n";
+	}
+    }
+
+    my @text;
+    for (my $j = 0; $j < $iters; $j++) {
+	push @text, $text;
+	foreach my $var (keys %vars) {
+	    my @vars = @{$vars{$var}};
+	    $text[-1] =~ s/\%\Q$var\E\%/$vars[$j]/g;
+	}
+    }
+
+    return join '', @text;
+}

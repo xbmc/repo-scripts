@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
 msgstr "Információ a sorozatok következő vetítési idejéről. Soha nem marad le mégegyszer semmiről."
 
-msgctxt "#450"
-msgid "TV Guide"
-msgstr "GyorsMenü"
-
 msgctxt "#32000"
 msgid "Display"
 msgstr "Képernyő"
@@ -56,13 +52,57 @@ msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
 msgstr "Előnézeti 16:9 bélyegképek letöltése (Artwork letöltő szükséges)"
 
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "TV információ azonnali frissítése"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "TV információ letöltése:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "A háttérben minden [N] órában"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "Műsorfüzet belépéskor ha az adat [N] órás"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "Poszterek letöltése (Artwork letöltő szükséges)"
 
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Adatok törlése** és a TV információ azonnali frissítése"
+
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Minden sorozat megjelenítése a főképernyőn (Felület támogatás szükséges)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Napok és hónapok nevének használata számok helyett (felszíneknek ahol szükséges)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Következő rész vetítéséig a napok száma a Műsorfüzetben."
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Műsorfüzet hétkezdete a mai nap hétfő helyett."
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "A tegnapi nap megjelenítése a Ma stílusú műsorfüzetben."
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Tegnap"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "GyorsMenü"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
