@@ -62,6 +62,8 @@ class tzwinbase(datetime.tzinfo):
         return self._display
     
     def _isdst(self, dt):
+        if self._dstmonth == 0:
+            return False
         dston = picknthweekday(dt.year, self._dstmonth, self._dstdayofweek,
                                self._dsthour, self._dstminute,
                                self._dstweeknumber)

@@ -1,0 +1,2 @@
+dummy: *.template
+	./expand-templates

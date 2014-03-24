@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-foreach my $in_fn (glob '*-template.xml') {
+foreach my $in_fn (glob '*.template') {
     print "Filtering $in_fn\n";
 
     open IN, '<', $in_fn or die "Unable to open $in_fn: $!\n";

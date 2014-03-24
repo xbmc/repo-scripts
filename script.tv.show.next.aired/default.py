@@ -33,6 +33,7 @@ COUNTRY_DB = 'country.db'
 OLD_FILES = [ 'nextaired.db', 'next_aired.db', 'canceled.db', 'cancelled.db' ]
 LISTITEM_ART = [ 'poster', 'banner', 'clearlogo' ] # This order MUST match the settings.xml list!!
 USEFUL_ART = LISTITEM_ART + [ 'characterart', 'clearart', 'fanart', 'landscape' ]
+LEADING_ZERO_REGEX = re.compile(r"^0")
 CLASSIFICATION_REGEX = re.compile(r"(?:^| \| )(Scripted|Mini-Series|Documentary|Animation|Game Show|Reality|Talk Show|Variety)( \| |$)")
 
 STATUS = { '0' : __language__(32201),
@@ -407,7 +408,8 @@ class NextAired:
             # If the local timezone changed, we will need to recompute the Airtime values.
             if self.tznames != self.old_tznames:
                 for tid, show in show_dict.iteritems():
-                    show['show_changed'] = 1
+                    if 'show_changed' not in show:
+                        show['show_changed'] = 1
             # We want to recreate our country DB every week.
             if len(self.country_dict) < 500 or self.now - self.country_last_update >= 7*24*60*60:
                 try:
@@ -447,8 +449,10 @@ class NextAired:
 
         if force_show is not None and force_show in title_dict:
             show = show_dict[title_dict[force_show]]
-            show['show_changed'] = 1
-            show['eps_changed'] = (1, 0)
+            if 'show_changed' not in show:
+                show['show_changed'] = 1
+            if 'eps_changed' not in show:
+                show['eps_changed'] = (1, 0)
 
         TVlist = self.listing()
         total_show = len(TVlist)
@@ -777,7 +781,8 @@ class NextAired:
             show_changed = prior_data.get('show_changed', 0)
             if prior_data['Country'] == 'Unknown' and self.country_dict.get(prior_data['Network'], None):
                 log("### Forcing show-change for %s to fix unknown country" % name, level=2)
-                show_changed = 1
+                if not show_changed:
+                    show_changed = 1
             if show_changed:
                 if earliest_id is None:
                     earliest_id = 0
@@ -831,8 +836,19 @@ class NextAired:
             tzone = 'UTC'
         try:
             tzinfo = tz.gettz(tzone)
-        except:
-            tzinfo = tz.tzutc()
+        except Exception, e:
+            log('### tz.gettz() failed: %s' % e, level=2)
+            tzinfo = None
+        if tzinfo is None:
+            try:
+                import dateutil.zoneinfo
+                tzinfo = dateutil.zoneinfo.gettz(tzone)
+            except Exception, e:
+                log('### dateutil.zoneinfo.gettz() failed: %s' % e, level=2)
+                tzinfo = None
+            if tzinfo is None:
+                log("### didn't get tzinfo for %s" % tzone, level=1)
+                tzinfo = tz.tzutc()
         try:
             airtime = TheTVDB.convert_time(show.get('Airs_Time', ""))
         except:
@@ -953,7 +969,7 @@ class NextAired:
             if from_ver < 4:
                 if 'RFC3339' in show:
                     del show['RFC3339']
-                show['ep_ndx'] = (1 if len(show['episodes']) >= 1 else 0)
+                show['ep_ndx'] = (1 if len(show['episodes']) > 1 else 0)
                 ep0 = show['episodes'][0]
                 if ep0['id'] is None:
                     ep0['name'] = None
@@ -1121,30 +1137,37 @@ class NextAired:
         next_aired_dialog.MyDialog(self.nextlist, self.set_labels, self.nice_date, ScanDays, TodayStyle, WantYesterday)
 
     def run_backend(self):
-        self._stop = False
-        self.previousitem = ''
-        show_dict, elapsed_secs = self.load_data()
-        if not show_dict:
-            self._stop = True
-        while not self._stop:
-            self.selecteditem = normalize(xbmc.getInfoLabel("ListItem.TVShowTitle"))
-            if self.selecteditem != self.previousitem:
+        fetch_limit = 0
+        while True:
+            fetch_limit -= 1
+            if fetch_limit <= 0:
+                fetch_limit = 5*60*10 # Load fresh data every 5 minutes or so...
                 self.WINDOW.clearProperty("NextAired.Label")
-                self.previousitem = self.selecteditem
-                for tid, item in show_dict.iteritems():
-                    if self.selecteditem == item["localname"]:
-                        self.set_labels('windowproperty', item)
-                        break
+                show_dict, elapsed_secs = self.load_data()
+                if not show_dict:
+                    return
+                title_dict = {}
+                for tid, show in show_dict.iteritems():
+                    title_dict[show['localname']] = show
+                show_dict = None
+                current_show = ''
+            show_name = normalize(xbmc.getInfoLabel("ListItem.TVShowTitle"))
+            if show_name != current_show:
+                self.WINDOW.clearProperty("NextAired.Label")
+                current_show = show_name
+                show = title_dict.get(show_name, None)
+                if show:
+                    self.set_labels('windowproperty', show)
             xbmc.sleep(100)
             if not xbmc.getCondVisibility("Window.IsVisible(10025)"):
                 self.WINDOW.clearProperty("NextAired.Label")
-                self._stop = True
+                return
 
     def return_properties(self, tvshowtitle):
+        self.WINDOW.clearProperty("NextAired.Label")
         show_dict, elapsed_secs = self.load_data()
         log("### return_properties started", level=2)
         if show_dict:
-            self.WINDOW.clearProperty("NextAired.Label")
             for tid, item in show_dict.iteritems():
                 if tvshowtitle == item["localname"]:
                     self.set_labels('windowproperty', item)
@@ -1207,7 +1230,7 @@ class NextAired:
             ndx = item['ep_ndx'] if item['ep_ndx'] else -1
             airtime = item['episodes'][ndx]['aired'][11:16]
             if self.ampm:
-                airtime = TheTVDB.convert_time(airtime).strftime('%I:%M %p')
+                airtime = LEADING_ZERO_REGEX.sub('', TheTVDB.convert_time(airtime).strftime('%I:%M %p').lower())
 
         status = item.get("Status", "")
         if status == 'Continuing':
@@ -1292,8 +1315,10 @@ class tvdb_updater:
             # Flag all shows as needing new data.  We include canceled shows because
             # they sometimes have new info (or may have become non-canceled).
             for tid, show in show_dict.iteritems():
-                show['show_changed'] = 1
-                show['eps_changed'] = (1, 0)
+                if 'show_changed' not in show:
+                    show['show_changed'] = 1
+                if 'eps_changed' not in show:
+                    show['eps_changed'] = (1, 0)
             return (True, False) # Alert caller that a full-scan is in progress.
 
         log("### Update period: %s (%d mins)" % (period, int(elapsed_update_secs / 60)), level=2)
@@ -1331,7 +1356,8 @@ class tvdb_updater:
             log("### Found series change (series: %d, time: %d) for %s" % (series_id, when, show['localname']), level=2)
             show['show_changed'] = when
             if self.bad_episode_info:
-                show['eps_changed'] = (1, 0)
+                if 'eps_changed' not in show:
+                    show['eps_changed'] = (1, 0)
         else:
             if when <= show['eps_last_updated']:
                 return

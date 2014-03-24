@@ -131,14 +131,13 @@ class tzlocal(datetime.tzinfo):
         #
         # Here is a more stable implementation:
         #
-        ord_diff = dt.toordinal() - EPOCHORDINAL
-        if AVOID_NEGATIVE_TIMESTAMP and ord_diff < 0:
-            ord_diff = 0
-        timestamp = (ord_diff * 86400
+        timestamp = ((dt.toordinal() - EPOCHORDINAL) * 86400
                      + dt.hour * 3600
                      + dt.minute * 60
-                     + dt.second)
-        return time.localtime(timestamp+time.timezone).tm_isdst
+                     + dt.second) + time.timezone
+        if AVOID_NEGATIVE_TIMESTAMP and timestamp < 0:
+            return False
+        return time.localtime(timestamp).tm_isdst
 
     def __eq__(self, other):
         if not isinstance(other, tzlocal):
@@ -406,10 +405,7 @@ class tzfile(datetime.tzinfo):
         self._trans_list = tuple(self._trans_list)
 
     def _find_ttinfo(self, dt, laststd=0):
-        ord_diff = dt.toordinal() - EPOCHORDINAL
-        if AVOID_NEGATIVE_TIMESTAMP and ord_diff < 0:
-            ord_diff = 0
-        timestamp = (ord_diff * 86400
+        timestamp = ((dt.toordinal() - EPOCHORDINAL) * 86400
                      + dt.hour * 3600
                      + dt.minute * 60
                      + dt.second)
