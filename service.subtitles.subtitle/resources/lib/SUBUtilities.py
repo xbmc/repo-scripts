@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import HTMLParser
 import cookielib
 import os
 import re
@@ -135,8 +136,11 @@ class SubtitleHelper:
         filtered = []
         search_string = search_string.lower()
 
+        h = HTMLParser.HTMLParser()
+
         if not item["tvshow"]:
             for (id, eng_name, year) in urls:
+                eng_name = h.unescape(eng_name)
                 if search_string.startswith(eng_name.lower()) and \
                         (item["year"] == '' or
                                  year == '' or
@@ -145,6 +149,7 @@ class SubtitleHelper:
                     filtered.append({"name": eng_name, "id": id, "year": year})
         else:
             for (id, eng_name) in urls:
+                eng_name = h.unescape(eng_name)
                 if search_string.startswith(eng_name.lower()):
                     filtered.append({"name": eng_name, "id": id})
 
@@ -381,24 +386,3 @@ class URLHandler():
 
     def save_cookie(self):
         self.cookie_jar.save()
-
-        # item = {'episode': '11', 'temp': False, 'title': '', 'season': '11', 'year': '', 'rar': False,
-        #         'tvshow': 'Two and a Half Men',
-        #         'file_original_path': u'D:\\Videos\\Series\\Two.and.a.Half.Men\\Season 11\\Two.and.a.Half.Men.S11E13.480p.HDTV.X264-DIMENSION.mkv',
-        #         '3let_language': ['en', 'he']}
-        # item = {'episode': '', 'temp': False, 'title': 'Her', 'season': '', 'year': '2014', 'rar': False, 'tvshow': '',
-        #         'file_original_path': u'D:\\Videos\\Movies\\Her\\Her.2013.DVDScr.XviD-SaM.mp4',
-        #         '3let_language': ['en', 'he']}
-        # # {'episode': '4', 'temp': False, 'title': 'Killer Within', 'season': '3', 'year': '', 'rar': False, 'tvshow': 'The Walking Dead', 'file_original_path': u'D:\\Videos\\Series\\The.Walking.Dead\\Season 3\\The.Walking.Dead.S03E04.720p.HDTV.x264-IMMERSE.mkv', '3let_language': ['eng', 'heb']}
-        # item = {'episode': '', 'temp': False, 'title': 'Free Birds', 'season': '', 'year': '2013', 'rar': False, 'tvshow': '',
-        #         'file_original_path': u'D:\\Videos\\Movies\\Free.Birds.2013.1080p.BRRip.x264-YIFY\\FB13.1080p.BRRip.x264-YIFY.mp4',
-        #         '3let_language': ['en', 'he']}
-
-
-        # item = {'episode': '11', 'temp': False, 'title': 'Blind Spot', 'season': '2', 'year': '', 'rar': False,
-        #         'tvshow': 'Arrow',
-        #         'file_original_path': u'D:\\Videos\\Series\\Arrow\\Season  2\\Arrow.S02E11.720p.HDTV.X264-DIMENSION.mkv',
-        #         '3let_language': ['en', 'he']}
-        # helper = SubtitleHelper()
-        # print helper.get_subtitle_list(item)
-        # print helper.login()
