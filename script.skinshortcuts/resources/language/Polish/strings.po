@@ -211,3 +211,23 @@ msgstr "Aktualizuj bibliotekę audio"
 msgctxt "#32048"
 msgid "Choose shortcut"
 msgstr "Wybierz skrót "
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Tworzenie menu..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Domyślny"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Pojedyńczy obraz"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Wiele obrazów"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Brak"

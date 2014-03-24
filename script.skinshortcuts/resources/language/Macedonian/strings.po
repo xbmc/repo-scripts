@@ -47,3 +47,11 @@ msgstr "Програми"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Список за реп."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Подразбирачко"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Ништо"

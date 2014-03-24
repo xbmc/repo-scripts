@@ -75,3 +75,11 @@ msgstr "Reproducir DVD"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Lista de reproducción"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Por defecto"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Ninguno"

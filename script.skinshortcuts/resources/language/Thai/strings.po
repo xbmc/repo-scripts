@@ -79,3 +79,11 @@ msgstr "รายการเล่น"
 msgctxt "#32041"
 msgid "Action"
 msgstr "การกระทำ"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "ค่าเริ่มต้น"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "ไม่มี"

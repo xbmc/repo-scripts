@@ -71,3 +71,11 @@ msgstr "Müzik Kütüphanesi"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Çalma listesi"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Varsayılan"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Yok"

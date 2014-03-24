@@ -95,3 +95,11 @@ msgstr "Playlist"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Action"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Стандартны"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "None"

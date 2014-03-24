@@ -211,3 +211,23 @@ msgstr "Buziekbibliotheek bijwerken"
 msgctxt "#32048"
 msgid "Choose shortcut"
 msgstr "Kies snelkoppeling"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Opbouwen menu..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Standaard"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Enkele afbeelding"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Meerdere afbeeldingen"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Geen"

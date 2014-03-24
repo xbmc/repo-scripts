@@ -83,3 +83,15 @@ msgstr "Grojaraštis"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Veiksmas"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Numatytas"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Vienas paveikslėlis"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Nieko"

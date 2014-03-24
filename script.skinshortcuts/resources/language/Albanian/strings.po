@@ -47,3 +47,11 @@ msgstr "Programe"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Lista e Lojës"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Prëzgjedhur"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Asgjë"

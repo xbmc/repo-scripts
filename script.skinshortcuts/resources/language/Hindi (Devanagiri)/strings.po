@@ -43,3 +43,11 @@ msgstr "करिअक्रम"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "प्लेलिस्ट"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "डिफ़ॉल्ट"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "कोई नहीं"

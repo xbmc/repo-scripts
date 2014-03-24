@@ -235,3 +235,19 @@ msgstr ""
 msgctxt "#32053"
 msgid "None"
 msgstr ""
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr ""
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr ""
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr ""

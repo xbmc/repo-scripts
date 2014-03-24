@@ -47,3 +47,11 @@ msgstr "Ứng dụng"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Playlist"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Mặc định"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Không"

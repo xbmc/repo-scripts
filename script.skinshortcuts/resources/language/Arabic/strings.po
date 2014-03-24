@@ -47,3 +47,11 @@ msgstr "برامج"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "قائمة التشغيل"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "الافتراضية"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "بلا"

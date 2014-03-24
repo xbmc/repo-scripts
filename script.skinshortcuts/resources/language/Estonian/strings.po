@@ -71,3 +71,15 @@ msgstr "Esita DVD"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Mängukava"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Vaikimisi"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Üksikpilt"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Puudub"

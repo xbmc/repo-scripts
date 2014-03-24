@@ -91,3 +91,11 @@ msgstr "Llista de reproducció"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Acció"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Per defecte"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Cap"

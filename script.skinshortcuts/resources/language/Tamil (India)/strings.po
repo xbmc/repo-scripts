@@ -47,3 +47,11 @@ msgstr "நிரல்கள்"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "பட்டியல்"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "இயல்புநிலை"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "எதுவுமில்லை"

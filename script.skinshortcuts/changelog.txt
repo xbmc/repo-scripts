@@ -1,3 +1,12 @@
+v0.2.4
+- Fix listing individual groups with <include> method
+- Parse favourites.xml directly
+- Add XBMC Commands shortcut group
+- Updated language files from Transifex
+
+v0.2.3
+- Unpublished development revision
+
 v0.2.2
 - New optional method of listing shortcuts via includes file
 - Option to allow user to browse for image or use playlist as background
@@ -6,9 +15,6 @@ v0.2.2
 - Fix for custom video nodes
 - Bug fixes and stability improvements
 - Updated language files from Transifex
-
-v0.2.1
-- Development revision
 
 v0.2.0
 - Removed check for settings shortcut (skins are now recommended to always provide alternative settings access)

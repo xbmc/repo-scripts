@@ -24,6 +24,14 @@ msgctxt "#32001"
 msgid "Delete"
 msgstr "Изтрий"
 
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Премести нагоре"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Премести надолу"
+
 msgctxt "#32004"
 msgid "Video Playlist"
 msgstr "Видео плейлист"
@@ -36,6 +44,30 @@ msgctxt "#32006"
 msgid "Favourite"
 msgstr "Любими"
 
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Добавка"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Смесен плейлист"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Програма"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Видео добавка"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Музикална добавка"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Фото добавка"
+
 msgctxt "#32014"
 msgid "Videos"
 msgstr "Видеа"
@@ -47,6 +79,10 @@ msgstr "Филми"
 msgctxt "#32016"
 msgid "TV Shows"
 msgstr "ТВ Сериали"
+
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -64,14 +100,86 @@ msgctxt "#32021"
 msgid "Programs"
 msgstr "Програми"
 
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
 msgctxt "#32023"
 msgid "Timers"
 msgstr "Броячи"
+
+msgctxt "#32024"
+msgid "Custom shortcut"
+msgstr "Персонален пряк път"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Задай етикет"
+
+msgctxt "#32026"
+msgid "Set thumbail"
+msgstr "Задай миниатюра"
+
+msgctxt "#32027"
+msgid "Custom action"
+msgstr "Персонално действие"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Видео библиотека"
 
 msgctxt "#32031"
 msgid "Music Library"
 msgstr "Музикална библиотека"
 
+msgctxt "#32037"
+msgid "Reset all shortcuts"
+msgstr "Нулирай всички преки пътища"
+
 msgctxt "#32040"
 msgid "Playlist"
-msgstr "Плейлисти"
+msgstr "Плейлист"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Действие"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Неизвестна видео възлова точка"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Изберете категория за прекия път"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Изберете джаджа"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Изберете фон"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Обновете видео библиотека"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Обновете аудио библиотека"
+
+msgctxt "#32048"
+msgid "Choose shortcut"
+msgstr "Изберете пряк път"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Стандартна"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Една картина"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Без"

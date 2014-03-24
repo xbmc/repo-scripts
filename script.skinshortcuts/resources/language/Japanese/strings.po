@@ -59,3 +59,11 @@ msgstr "ミュージックライブラリ"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "プレイリスト"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "デフォルト"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "なし"

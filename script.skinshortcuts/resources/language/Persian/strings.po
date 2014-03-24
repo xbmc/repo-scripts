@@ -35,3 +35,11 @@ msgstr "تصاویر"
 msgctxt "#32021"
 msgid "Programs"
 msgstr "برنامه‌ها"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "پیش فرض"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "خالی"

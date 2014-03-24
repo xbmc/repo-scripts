@@ -63,3 +63,11 @@ msgstr "Lista izvedbi"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Akcija"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Zadano"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Nijedan"

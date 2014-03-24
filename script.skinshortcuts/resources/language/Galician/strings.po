@@ -87,3 +87,15 @@ msgstr "Lista de reprodución"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Acción"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Predefinido"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Imaxe única"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Ningún"

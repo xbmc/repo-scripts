@@ -72,6 +72,10 @@ msgctxt "#32021"
 msgid "Programs"
 msgstr "תוכנות"
 
+msgctxt "#32023"
+msgid "Timers"
+msgstr "שעוני עצר"
+
 msgctxt "#32030"
 msgid "Video Library"
 msgstr "ספריית וידאו"
@@ -87,3 +91,15 @@ msgstr "רשימת השמעה"
 msgctxt "#32041"
 msgid "Action"
 msgstr "פעולה"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "ברירת מחדל"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "תמונה בודדת"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "ללא"

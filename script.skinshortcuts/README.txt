@@ -1,14 +1,12 @@
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
-What's New for Skinners (version 0.2.2)
+What's New for Skinners (version 0.2.4)
 -----------------------
 
- - Alternative method of listing shortcuts via an includes file (see below)
- - Limit overrides and defaults by group (see "resource/Advanced Usage.txt" - "Overrides.xml")
- - Option to allow user to browse for background image (see "resources/Advanced Usage.txt" - "Managing Custom Backgrounds" & "Overrides.xml")
- - Option to allow user to use a playlist as a widget (see "resources/Advanced Usage.txt" - "Managing Widgets" & "Overrides.xml")
- - Full support for skin-provided localisations in default files (see "resources/Advanced Usage.txt" - "Localisation")
+This revision includes no new features for skinners, but does include the following important fix:
+
+ - Listing groups when using the <include>'s method, now separate [groupname]s with a pipe symbol. See "Using <includes> - sub-menu only" below.
  
  
 Where To Get Help
@@ -166,9 +164,9 @@ In home.xml, add the line:
 
 And in skinsettings.xml, the line:
 
-	<onunload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=[groupname],[groupname],[groupname])</onunload>
+	<onunload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=[groupname]|[groupname]|[groupname])</onunload>
 	
-Replace 9000 with the ID of the list you are using for the mainmenu. You should include all [groupname]'s that your skin supports, separated by a comma. The script will then load all of the submenus, and set visibility conditions on each one.
+Replace 9000 with the ID of the list you are using for the mainmenu. You should include all [groupname]'s that your skin supports, separated by a pipe. The script will then load all of the submenus, and set visibility conditions on each one.
 
 
 2. Let the user manage their shortcuts

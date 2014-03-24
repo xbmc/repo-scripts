@@ -36,6 +36,10 @@ msgctxt "#32006"
 msgid "Favourite"
 msgstr "Избранное"
 
+msgctxt "#32009"
+msgid "Program"
+msgstr "Программа"
+
 msgctxt "#32014"
 msgid "Videos"
 msgstr "Видео"
@@ -87,3 +91,15 @@ msgstr "Плейлист"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Боевик"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "По умолчанию"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Одно изображение"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Нет"

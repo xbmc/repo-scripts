@@ -47,3 +47,11 @@ msgstr "Programi"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Spisak za rep."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Podrazumjevano"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Ništa"

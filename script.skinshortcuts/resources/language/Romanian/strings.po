@@ -47,3 +47,11 @@ msgstr "Programe"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Listă de redare"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Standard"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Niciuna"

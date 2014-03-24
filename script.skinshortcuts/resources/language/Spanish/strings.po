@@ -116,6 +116,22 @@ msgctxt "#32024"
 msgid "Custom shortcut"
 msgstr "Acceso directo personalizado"
 
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Establecer Etiqueta"
+
+msgctxt "#32026"
+msgid "Set thumbail"
+msgstr "Establecer miniatura"
+
+msgctxt "#32027"
+msgid "Custom action"
+msgstr "Acción personalizada"
+
+msgctxt "#32028"
+msgid "Reset shortcuts"
+msgstr "Restablecer atajos"
+
 msgctxt "#32029"
 msgid "Common"
 msgstr "Común"
@@ -132,6 +148,34 @@ msgctxt "#32032"
 msgid "Play DVD"
 msgstr "Reproducir DVD"
 
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Abrir Bandeja"
+
+msgctxt "#32034"
+msgid "Common Shortcut"
+msgstr "Atajo común"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Elije elementos a mostrar en el menú principal"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for ::MENUNAME::"
+msgstr "Elegir atajo para ::MENUNAME::"
+
+msgctxt "#32037"
+msgid "Reset all shortcuts"
+msgstr "Restablecer todos los atajos"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all shortcuts back to default?"
+msgstr "¿Esta seguro que desea restablecer todos los atajos a su valor por defecto?"
+
+msgctxt "#32039"
+msgid "Pick widget for ::MENUNAME::"
+msgstr "Elejir widget para ::MENUNAME::"
+
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Lista de reproducción"
@@ -139,3 +183,51 @@ msgstr "Lista de reproducción"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Acción"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Nodo de video desconocido"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Elije categoria del atajo"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Elegir widget"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Elegir fondo"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Actualizar Libreria de Video"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Actualizar Libreria de Musica"
+
+msgctxt "#32048"
+msgid "Choose shortcut"
+msgstr "Elegir atajo"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Construyendo menu ..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Default"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Imagen única"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Multi-Imagen"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Ninguno"

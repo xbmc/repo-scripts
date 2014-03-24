@@ -211,3 +211,23 @@ msgstr "Ενημέρωση μουσικής συλλογής"
 msgctxt "#32048"
 msgid "Choose shortcut"
 msgstr "Επιλογή συντόμευσης"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Δημιουργείται το μενού..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Προεπιλογή"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Μία εικόνα"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Πολλαπλές εικόνες"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Κανένα"

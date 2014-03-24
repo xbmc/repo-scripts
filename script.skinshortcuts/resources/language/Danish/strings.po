@@ -87,3 +87,11 @@ msgstr "Afspilningsliste"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Handling"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Standard"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Intet"

@@ -75,3 +75,11 @@ msgstr "Playlist"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Akcia"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Predvolené"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Žiadne"

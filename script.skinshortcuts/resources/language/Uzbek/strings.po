@@ -47,3 +47,11 @@ msgstr "Dasturlar"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Ijro ro'yxati"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Andoza"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Yo'q"

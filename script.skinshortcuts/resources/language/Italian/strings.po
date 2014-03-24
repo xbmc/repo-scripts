@@ -91,3 +91,15 @@ msgstr "Playlist"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Azione"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Predefinito"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Singola immagine"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Nessuno"

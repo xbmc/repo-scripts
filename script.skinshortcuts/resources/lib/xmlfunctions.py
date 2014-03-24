@@ -211,7 +211,7 @@ class XMLFunctions():
         else:
             # We're building just for specific submenus, so pop these into the
             # submenu list
-            groups = groups.split( "," )
+            groups = groups.split( "|" )
             for group in groups:
                 submenus.append( group )
                 

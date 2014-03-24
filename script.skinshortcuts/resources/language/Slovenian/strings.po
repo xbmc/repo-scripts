@@ -47,3 +47,11 @@ msgstr "Programi"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Seznam predvajanja"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Privzeto"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Brez"

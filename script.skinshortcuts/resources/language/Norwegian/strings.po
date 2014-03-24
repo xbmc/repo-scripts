@@ -83,3 +83,11 @@ msgstr "Spilleliste"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Action"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Standard"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Ingen"

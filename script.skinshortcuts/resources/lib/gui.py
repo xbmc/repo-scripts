@@ -48,6 +48,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.arrayPlaylists = []
         self.arrayFavourites = []
         self.arrayAddOns = []
+        self.arrayMoreCommands = []
         
         self.has311 = True
         self.has312 = True
@@ -194,6 +195,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
             except:
                 log( "Failed to load add-ons" )
                 print_exc()
+                
+            try:
+                self._load_moreCommands()
+            except:
+                log( "Failed to load more XBMC commands" )
+                print_exc()
             
             try:
                 self._display_shortcuts()
@@ -229,9 +236,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems.append( self._create(["ActivateWindow(FileManager)", "::LOCAL::7", "::SCRIPT::32034", "DefaultFolder.png"]) )
         listitems.append( self._create(["ActivateWindow(Profiles)", "::LOCAL::13200", "::SCRIPT::32034", "UnknownUser.png"]) )
         listitems.append( self._create(["ActivateWindow(SystemInfo)", "::LOCAL::10007", "::SCRIPT::32034", ""]) )
-
-        listitems.append( self._create(["UpdateLibrary(video)", "::SCRIPT::32046", "::SCRIPT::32034", ""]) )
-        listitems.append( self._create(["UpdateLibrary(audio)", "::SCRIPT::32047", "::SCRIPT::32034", ""]) )
+        
+        listitems.append( self._create(["ActivateWindow(Favourites)", "::LOCAL::1036", "::SCRIPT::32034", ""]) )
         
         self.arrayXBMCCommon = listitems
         
@@ -522,39 +528,78 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _fetch_favourites( self ):
         log('Loading favourites...')
         
-        json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Favourites.GetFavourites", "params": { "properties": ["path", "thumbnail", "window", "windowparameter"] } }')
-        json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
-        
         listitems = []
+        listing = None
         
-        if json_response.has_key('result') and json_response['result'].has_key('favourites') and json_response['result']['favourites'] is not None:
-            for item in json_response['result']['favourites']:
-                listitem = xbmcgui.ListItem(label=item['title'], label2=__language__(32006), iconImage="DefaultShortcut.png", thumbnailImage=item['thumbnail'])
-                
-                # Build a path depending on the type of favourite returns
-                if item['type'] == "window":
-                    action = 'ActivateWindow(' + item['window'] + ', ' + item['windowparameter'] + ', return)'
-                elif item['type'] == "media":
-                    action = 'PlayMedia("' + item['path'] + '")'
-                elif item['type'] == "script":
-                    action = 'RunScript("' + item['path'] + '")'
-                else:
-                    action = item['path']
-                
-                log( action )
-                listitem.setProperty( "path", urllib.quote( action.encode( 'utf-8' ) ) )
-                
-                if not item['thumbnail'] == "":
-                    listitem.setProperty( "thumbnail", item['thumbnail'] )
-                else:
-                    listitem.setThumbnailImage( "DefaultShortcut.png" )
-                    listitem.setProperty( "thumbnail", "DefaultShortcut.png" )
-                
-                listitem.setProperty( "icon", "DefaultShortcut.png" )
-                listitem.setProperty( "shortcutType", "::SCRIPT::32006" )
-                listitems.append(listitem)
+        fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
+        if xbmcvfs.exists( fav_file ):
+            doc = parse( fav_file )
+            listing = doc.documentElement.getElementsByTagName( 'favourite' )
+        else:
+            self.arrayFavourites = listitems
+            return
+            
+        for count, favourite in enumerate(listing):
+            name = favourite.attributes[ 'name' ].nodeValue
+            path = favourite.childNodes [ 0 ].nodeValue
+            if ('RunScript' not in path) and ('StartAndroidActivity' not in path):
+                path = path.rstrip(')')
+                path = path + ',return)'
+            if 'playlists/music' in path or 'playlists/video' in path:
+                thumb = "DefaultPlaylist.png"
+                if self.PLAY:
+                    if 'playlists/music' in path:
+                        path = path.replace( 'ActivateWindow(10502,', 'PlayMedia(' )
+                    else:
+                        path = path.replace( 'ActivateWindow(10025,', 'PlayMedia(' )
+            else:
+                try:
+                    thumb = favourite.attributes[ 'thumb' ].nodeValue
+                except:
+                    thumb = "DefaultFolder.png"
+                    
+            log( "Favourite found " + name + " - " + path )
+            listitem = xbmcgui.ListItem(label=name, label2=__language__(32006), iconImage="DefaultShortcut.png", thumbnailImage=thumb)
+            listitem.setProperty( "path", urllib.quote( path.encode( 'utf-8' ) ) )
+            listitem.setProperty( "thumbnail", thumb )
+            listitem.setProperty( "shortcutType", "::SCRIPT::32006" )
+            listitems.append(listitem)
         
+        #json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Favourites.GetFavourites", "params": { "properties": ["window", "windowparameter", "thumbnail", "path"] } }')
+        #json_query = unicode(json_query, 'utf-8', errors='ignore')
+        #json_response = simplejson.loads(json_query)
+        #
+        #listitems = []
+        #
+        #if json_response.has_key('result') and json_response['result'].has_key('favourites') and json_response['result']['favourites'] is not None:
+        #    for item in json_response['result']['favourites']:
+        #        listitem = xbmcgui.ListItem(label=item['title'], label2=__language__(32006), iconImage="DefaultShortcut.png", thumbnailImage=item['thumbnail'])
+        #        
+        #        # Build a path depending on the type of favourite returns
+        #        if item['type'] == "window":
+        #            action = 'ActivateWindow(' + item['window'] + ', ' + item['windowparameter'] + ', return)'
+        #        elif item['type'] == "media":
+        #            action = 'PlayMedia("' + item['path'] + '")'
+        #        elif item['type'] == "script":
+        #            action = 'RunScript("' + item['path'] + '")'
+        #        else:
+        #            if not 'path' in item.keys():
+        #                break
+        #            action = item['path']
+        #        
+        #        log( action )
+        #        listitem.setProperty( "path", urllib.quote( action.encode( 'utf-8' ) ) )
+        #        
+        #        if not item['thumbnail'] == "":
+        #            listitem.setProperty( "thumbnail", item['thumbnail'] )
+        #        else:
+        #            listitem.setThumbnailImage( "DefaultShortcut.png" )
+        #            listitem.setProperty( "thumbnail", "DefaultShortcut.png" )
+        #        
+        #        listitem.setProperty( "icon", "DefaultShortcut.png" )
+        #        listitem.setProperty( "shortcutType", "::SCRIPT::32006" )
+        #        listitems.append(listitem)
+        #
         self.arrayFavourites = listitems
         
     def _fetch_addons( self ):
@@ -602,6 +647,29 @@ class GUI( xbmcgui.WindowXMLDialog ):
         
         self.arrayAddOns = listitems
         
+    def _load_moreCommands( self ):
+        listitems = []
+        log( 'Listing more XBMC commands...' )
+        
+        listitems.append( self._create(["Reboot", "::LOCAL::13013", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["ShutDown", "::LOCAL::13005", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["PowerDown", "::LOCAL::13016", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["Quit", "::LOCAL::13009", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["Hibernate", "::LOCAL::13010", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["Suspend", "::LOCAL::13011", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["ActivateScreensaver", "::LOCAL::360", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["Minimize", "::LOCAL::13014", "::SCRIPT::32054", ""]) )
+
+        listitems.append( self._create(["Mastermode", "::LOCAL::20045", "::SCRIPT::32054", ""]) )
+        
+        listitems.append( self._create(["RipCD", "::LOCAL::600", "::SCRIPT::32054", ""]) )
+        
+        listitems.append( self._create(["UpdateLibrary(video)", "::SCRIPT::32046", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["UpdateLibrary(audio)", "::SCRIPT::32047", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["CleanLibrary(video)", "::SCRIPT::32055", "::SCRIPT::32054", ""]) )
+        listitems.append( self._create(["CleanLibrary(audio)", "::SCRIPT::32056", "::SCRIPT::32054", ""]) )
+        
+        self.arrayMoreCommands = listitems
     
     def _load_widgetsbackgrounds( self ):
         self.widgets = {}
@@ -640,14 +708,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
             # Move to previous type of shortcuts
             self.shortcutgroup = self.shortcutgroup - 1
             if self.shortcutgroup == 0:
-                self.shortcutgroup = 6
+                self.shortcutgroup = 7
                 
             self._display_shortcuts()
 
         if controlID == 103:
             # Move to next type of shortcuts
             self.shortcutgroup = self.shortcutgroup + 1
-            if self.shortcutgroup == 7:
+            if self.shortcutgroup == 8:
                 self.shortcutgroup = 1
                 
             self._display_shortcuts()
@@ -1135,9 +1203,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     shortcutCategory = 4
                 elif skinCategory == "addons":
                     shortcutCategory = 5
+                elif skinCategory == "commands":
+                    shortcutCategory = 6
             else:
                 # No window property passed, ask the user what category they want
-                shortcutCategories = [__language__(32029), __language__(32030), __language__(32031), __language__(32040), __language__(32006), __language__(32007)]
+                shortcutCategories = [__language__(32029), __language__(32030), __language__(32031), __language__(32040), __language__(32006), __language__(32007), __language__(32057)]
                 shortcutCategory = xbmcgui.Dialog().select( __language__(32043), shortcutCategories )
                 
             # Clear the window property
@@ -1161,6 +1231,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
             elif shortcutCategory == 5: # Add-ons
                 availableShortcuts = self.arrayAddOns
                 displayLabel2 = True
+            elif shortcutCategory == 6: # XBMC Commands
+                availableShortcuts = self.arrayMoreCommands
                 
                 
             elif shortcutCategory != -1: # No category selected
@@ -1902,6 +1974,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 111 ).reset()
             self.getControl( 111 ).addItems(self.arrayAddOns)
             self.getControl( 101 ).setLabel( __language__(32007) + " (%s)" %self.getControl( 111 ).size() )
+        if self.shortcutgroup == 7:
+            self.getControl( 111 ).reset()
+            self.getControl( 111 ).addItems(self.arrayMoreCommands)
+            self.getControl( 101 ).setLabel( __language__(32057) + " (%s)" %self.getControl( 111 ).size() )
             
     def updateEditControls( self ):
         xbmc.sleep(50)
@@ -1936,7 +2012,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     else:
                         self.getControl( 311 ).setLabel( widgetLabel )
                 except:
-                    self.getControl( 311 ).setLabel( "" )
+                    try:
+                        self.getControl( 311 ).setLabel( "" )
+                    except:
+                        self.has311 = False
             except:
                 self.has311 = False
         
@@ -1950,7 +2029,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 else:
                     self.getControl( 312 ).setLabel( backgroundLabel )
             except KeyError:
-                self.getControl( 312 ).setLabel( "" )
+                try:
+                    self.getControl( 312 ).setLabel( "" )
+                except:
+                    self.has312 = False
             except:
                 self.has312 = False
                 

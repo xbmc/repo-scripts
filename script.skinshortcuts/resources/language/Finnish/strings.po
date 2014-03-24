@@ -83,3 +83,15 @@ msgstr "Toista DVD"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Toistolista"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Oletus"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Yksittäinen kuva"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Pois"

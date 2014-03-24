@@ -95,3 +95,15 @@ msgstr "Senarai Main"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Aksi"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Lalai"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Imej tunggal"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Tiada"

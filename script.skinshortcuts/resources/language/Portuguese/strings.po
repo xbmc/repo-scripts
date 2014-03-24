@@ -211,3 +211,23 @@ msgstr "Actualizar biblioteca de música"
 msgctxt "#32048"
 msgid "Choose shortcut"
 msgstr "Escolher atalho"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Construindo menu..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Padrão"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Imagem única"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Imagens múltiplas"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Nenhuma"

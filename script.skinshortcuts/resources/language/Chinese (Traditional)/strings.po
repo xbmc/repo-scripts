@@ -67,3 +67,11 @@ msgstr "播放列表"
 msgctxt "#32041"
 msgid "Action"
 msgstr "動作"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "預設"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "關閉"

@@ -63,3 +63,11 @@ msgstr "لیست پخش"
 msgctxt "#32041"
 msgid "Action"
 msgstr "عمل"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "پیش فرض"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "هیچ"

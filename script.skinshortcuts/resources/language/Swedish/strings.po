@@ -24,6 +24,14 @@ msgctxt "#32001"
 msgid "Delete"
 msgstr "Ta bort"
 
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Flytta upp"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Flytta ned"
+
 msgctxt "#32004"
 msgid "Video Playlist"
 msgstr "Spellista (Video)"
@@ -36,6 +44,34 @@ msgctxt "#32006"
 msgid "Favourite"
 msgstr "Favorit"
 
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Tillägg"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Blandad spellista"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Program"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Videotillägg"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Musiktillägg"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Bildtillägg"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<Ingen>"
+
 msgctxt "#32014"
 msgid "Videos"
 msgstr "VIDEO"
@@ -47,6 +83,10 @@ msgstr "Movies"
 msgctxt "#32016"
 msgid "TV Shows"
 msgstr "TV Shows"
+
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -64,9 +104,33 @@ msgctxt "#32021"
 msgid "Programs"
 msgstr "Programs"
 
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
 msgctxt "#32023"
 msgid "Timers"
 msgstr "Timers"
+
+msgctxt "#32024"
+msgid "Custom shortcut"
+msgstr "Egen genväg"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Ange etikett"
+
+msgctxt "#32026"
+msgid "Set thumbail"
+msgstr "Ange miniatyr"
+
+msgctxt "#32027"
+msgid "Custom action"
+msgstr "Egen åtgärd"
+
+msgctxt "#32028"
+msgid "Reset shortcuts"
+msgstr "Återställ genvägar"
 
 msgctxt "#32029"
 msgid "Common"
@@ -84,6 +148,34 @@ msgctxt "#32032"
 msgid "Play DVD"
 msgstr "Spela DVD"
 
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Mata ut"
+
+msgctxt "#32034"
+msgid "Common Shortcut"
+msgstr "Vanlig genväg"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Välj vilka objekt som skall visas på huvudmenyn"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for ::MENUNAME::"
+msgstr "Välj genvägar för ::MENUNAME::"
+
+msgctxt "#32037"
+msgid "Reset all shortcuts"
+msgstr "Återställ alla genvägar"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all shortcuts back to default?"
+msgstr "Är du säker på att återställa alla genvägar?"
+
+msgctxt "#32039"
+msgid "Pick widget for ::MENUNAME::"
+msgstr "Välj widget för ::MENUNAME::"
+
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Spellista"
@@ -91,3 +183,51 @@ msgstr "Spellista"
 msgctxt "#32041"
 msgid "Action"
 msgstr "Aktion"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Okänd videonod"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Välj genvägskategori"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Välj widget"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Välj bakgrund"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Uppdatera videobibliotek"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Uppdatera musikbibliotek"
+
+msgctxt "#32048"
+msgid "Choose shortcut"
+msgstr "Välj genväg"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Skapar meny..."
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Standard"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Enskild bild"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Multi-bild"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Ingen"

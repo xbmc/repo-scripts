@@ -47,3 +47,11 @@ msgstr "Program"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Daftar Main"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Standar"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Tidak Ada"

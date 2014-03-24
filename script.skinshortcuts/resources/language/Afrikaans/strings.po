@@ -51,3 +51,11 @@ msgstr "Programme"
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Speellys"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Verstek"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Geen"
