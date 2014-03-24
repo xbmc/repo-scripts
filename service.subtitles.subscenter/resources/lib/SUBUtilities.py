@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import HTMLParser
 import os
 import re
 import urllib
@@ -7,6 +8,7 @@ import unicodedata
 import json
 import zlib
 import shutil
+
 try:
     import StorageServer
 except ImportError:
@@ -21,9 +23,8 @@ except ImportError:
     from stubs import xbmcvfs
     from stubs import xbmcaddon
 
-
 __addon__ = xbmcaddon.Addon()
-__version__ = __addon__.getAddonInfo('version') # Module version
+__version__ = __addon__.getAddonInfo('version')  # Module version
 __scriptname__ = __addon__.getAddonInfo('name')
 __language__ = __addon__.getLocalizedString
 __profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
@@ -39,16 +40,20 @@ def normalizeString(str):
         'NFKD', unicode(unicode(str, 'utf-8'))
     ).encode('ascii', 'ignore')
 
+
 def clear_cache():
     cache.delete("tv-show%")
     xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(32004))).encode('utf-8'))
 
+
 def log(module, msg):
     xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
+
 
 def get_cache_key(prefix="", str=""):
     str = re.sub('\W+', '_', str).lower()
     return prefix + str
+
 
 class SubscenterHelper:
     BASE_URL = "http://www.subscenter.org"
@@ -59,6 +64,7 @@ class SubscenterHelper:
     def get_subtitle_list(self, item):
         search_results = self._search(item)
         results = self._build_subtitle_list(search_results, item)
+
         return results
 
     # return list of movies / tv-series from the site`s search
@@ -66,42 +72,44 @@ class SubscenterHelper:
         results = []
 
         search_string = re.split(r'\s\(\w+\)$', item["tvshow"])[0] if item["tvshow"] else item["title"]
-        
+
         if item["tvshow"]:
             cache_key = get_cache_key("tv-show_", search_string)
             results = cache.get(cache_key)
             if results:
                 results = eval(results)
-            
+
         if not results:
             query = {"q": search_string.lower()}
             search_result = self.urlHandler.request(self.BASE_URL + "/he/subtitle/search/?" + urllib.urlencode(query))
             if search_result is None:
-                return results # return empty set
+                return results  # return empty set
 
             urls = re.findall('<a href=".*/he/subtitle/(movie|series)/([^/]+)/">[^/]+ / ([^<]+)</a>', search_result)
             years = re.findall(u'<span class="special">[^:]+: </span>(\d{4}).<br />', search_result)
             for i, url in enumerate(urls):
-                year = years[i] if len(years)>i else ''
+                year = years[i] if len(years) > i else ''
                 urls[i] += (year,)
+
             results = self._filter_urls(urls, search_string, item)
-            
+
             if item["tvshow"] and results:
                 cache.set(cache_key, repr(results))
-            
+
         return results
 
 
     def _filter_urls(self, urls, search_string, item):
         filtered = []
         search_string = search_string.lower()
-
+        h = HTMLParser.HTMLParser()
         for i, (content_type, slug, eng_name, year) in enumerate(urls):
+            eng_name = h.unescape(eng_name)
             if ((content_type == "movie" and not item["tvshow"]) or
                     (content_type == "series" and item["tvshow"])) and \
                     search_string.startswith(eng_name.replace(' ...', '').lower()) and \
                     (item["year"] == '' or
-                    year == '' or
+                             year == '' or
                                  (int(year) - 1) <= int(item["year"]) <= (int(year) + 1) or
                                  (int(item["year"]) - 1) <= int(year) <= (int(item["year"]) + 1)):
                 filtered.append({"type": content_type, "name": eng_name, "slug": slug, "year": year})
@@ -139,7 +147,7 @@ class SubscenterHelper:
                                          'sync': subtitle_rate >= 4,
                                          'hearing_imp': current["hearing_impaired"] > 0
                                         })
-            # Fix the rating
+        # Fix the rating
         if total_downloads:
             for it in ret:
                 it["rating"] = str(int(round(it["rating"] / float(total_downloads), 1) * 5))
@@ -154,7 +162,7 @@ class SubscenterHelper:
         file_name = re.sub('\W+', '.', file_name).lower()
         folder_name = re.sub('\W+', '.', folder_name).lower()
         log(__scriptname__, "# Comparing Releases:\n [subtitle-rls] %s \n [filename-rls] %s \n [folder-rls] %s" % (
-        subsfile, file_name, folder_name))
+            subsfile, file_name, folder_name))
 
         subsfile = subsfile.split('.')
         file_name = file_name.split('.')[:-1]
@@ -229,18 +237,3 @@ class URLHandler():
             log(__scriptname__, "Failed to get url: %s\n%s" % (url, e))
             # Second parameter is the filename
         return content
-
-
-# item = {'episode': '11', 'temp': False, 'title': '', 'season': '11', 'year': '', 'rar': False,
-#        'tvshow': 'Two and a Half Men',
-#        'file_original_path': u'D:\\Videos\\Series\\Two.and.a.Half.Men\\Season 11\\Two.and.a.Half.Men.S11E13.480p.HDTV.X264-DIMENSION.mkv',
-#       '3let_language': ['en', 'he']}
-# # item = {'episode': '', 'temp': False, 'title': 'Broken Arrow', 'season': '', 'year': '1997', 'rar': False, 'tvshow': '',
-# #         'file_original_path': u'D:\\Videos\\Movies\\Broken Arrow (1996)\\Broken-Arrow_720p BluRay,,DTS.x264-CDDHD.mp4',
-# #         '3let_language': ['en', 'he']}
-# # {'episode': '4', 'temp': False, 'title': 'Killer Within', 'season': '3', 'year': '', 'rar': False, 'tvshow': 'The Walking Dead', 'file_original_path': u'D:\\Videos\\Series\\The.Walking.Dead\\Season 3\\The.Walking.Dead.S03E04.720p.HDTV.x264-IMMERSE.mkv', '3let_language': ['eng', 'heb']}
-# item = {'episode': '', 'temp': False, 'title': 'Free Birds', 'season': '', 'year': '2013', 'rar': False, 'tvshow': '',
-#         'file_original_path': u'D:\\Videos\\Movies\\Free.Birds.2013.1080p.BRRip.x264-YIFY\\FB13.1080p.BRRip.x264-YIFY.mp4',
-#         '3let_language': ['en', 'he']}
-# helper = SubscenterHelper()
-# helper.get_subtitle_list(item)
