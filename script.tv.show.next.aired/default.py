@@ -294,7 +294,7 @@ class NextAired:
         db_ver = (ep_list.pop(0) if ep_list else None)
         self.last_update = (ep_list.pop() if ep_list else self.last_success)
         self.old_tznames = (ep_list.pop(0) if ep_list else '')
-        if not db_ver or not self.last_success:
+        if db_ver is None or self.last_success is None:
             if self.RESET:
                 log("### starting without prior data (DB RESET requested)", level=1)
             elif ep_list_len:
@@ -361,7 +361,7 @@ class NextAired:
             # User updating: we will wait for a background update to finish, then see if we have recent data.
             DIALOG_PROGRESS = xbmcgui.DialogProgress()
             DIALOG_PROGRESS.create(__language__(32101), __language__(32102))
-            self.max_fetch_failures = 4
+            self.max_fetch_failures = 8 if self.FORCEUPDATE else 4
             # Create our user-lock file and check if the background updater is running.
             self.set_update_lock(DIALOG_PROGRESS)
             locked_for_update = True
@@ -464,7 +464,7 @@ class NextAired:
 
         count = 0
         user_canceled = False
-        id_re = re.compile(r"http%3a%2f%2fthetvdb\.com%2f[^']+%2f([0-9]+)-")
+        id_re = re.compile(r"http://thetvdb\.com/[^'" + '"' + r":]+/([0-9]+)-")
         for show in TVlist:
             count += 1
             name = show[0]
@@ -492,9 +492,9 @@ class NextAired:
                     "thumbnail": show[4],
                     }
             # Try to figure out what the tvdb number is by using the art URLs and the imdbnumber value
-            m2 = id_re.search(str(art))
+            m2 = id_re.search(str(art).replace('%3a', ':').replace('%2f', '/'))
             m2_num = int(m2.group(1)) if m2 else 0
-            m4 = id_re.search(show[4])
+            m4 = id_re.search(show[4].replace('%3a', ':').replace('%2f', '/'))
             m4_num = int(m4.group(1)) if m4 else 0
             m5 = INT_REGEX.match(show[5])
             m5_num = int(m5.group(1)) if m5 else 0
@@ -509,11 +509,6 @@ class NextAired:
                 elif old_data and current_show['path'] == old_data['path']:
                     # This handles a localname change where we knew what the ID was before -- keep that info.
                     tid = m5_num
-                elif old_id and (m2_num == old_id or m4_num == old_id):
-                    tid = old_id
-                elif m2_num and m2_num == m4_num:
-                    # This will override the old_id value if both artwork URLs change.
-                    tid = m2_num
                 elif old_id and force_show is None:
                     # This is an "iffy" ID.  We'll keep using it unless the user asked for a fresh start.
                     tid = old_id
@@ -762,10 +757,10 @@ class NextAired:
                         return int(attrs['id'])
 
         if len(show_list) == 0 and cntry_re.search(show_name):
-            return find_show_id(tvdb, cntry_re.sub('', show_name), maybe_id, want_year)
+            return NextAired.find_show_id(tvdb, cntry_re.sub('', show_name), maybe_id, want_year)
 
         if removed_year and len(show_list) >= 25:
-            return find_show_id(tvdb, "%s (%s)" % (show_name, want_year), maybe_id, want_year, False)
+            return NextAired.find_show_id(tvdb, "%s (%s)" % (show_name, want_year), maybe_id, want_year, False)
 
         log("### no match found", level=2)
         return 0

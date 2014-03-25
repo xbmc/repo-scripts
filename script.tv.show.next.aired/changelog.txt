@@ -1,3 +1,7 @@
+-6.0.7 (2014-03-25)
+- The zoneinfo tar file should now be back in the release zip (the new version in 6.0.5 apparently caused it to vanish from the release process).
+- A couple more update improvements (including improvements for really large collections).
+
 -6.0.6 (2014-03-24)
 - Fix a couple timezone issues that could cause the script to exit, including yet another bug in dateutil.
 - Fix an off-by-one error in the DB-upgrade code that could sometimes cause a failure.
