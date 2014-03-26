@@ -10,16 +10,12 @@
  <setting id="select_pl" label="32006" type="enum" visible="eq(-2,true) + eq(-1,1)" lvalues="32007|32008"/>
  <setting id="file" label="32009" type="action" visible="eq(-3,true) + eq(-2,1) + eq(-1,1)" option="close" action="RunScript($CWD/resources/playlists.py)"/>
  <setting id="selectshows" label="32016" type="action" visible="eq(-4,true) + eq(-3,0)" option="close" action="RunScript($CWD/resources/selector.py,'usersel')"/>
- <setting id="lsep2" label="32010" type="lsep" enable="false" />
- <setting id="selectrandos" label="32011" type="action" option="close" action="RunScript($CWD/resources/selector.py,'rando')"/>
  <!-- gap -->
  </category>
  <category label="32030">
  <setting id="length" label="32031" type="slider" default="5" range="1,1,50" option="int" />
  <setting id="multipleshows" type="bool" label="32032" default="false"/>
  <setting id="premieres" type="bool" label="32033" default="false"/>
- <setting id="resume_partials" type="bool" label="32034" default="false"/>
- <setting id="notify" type="bool" label="32035" default="true"/>
  <setting id="movies" type="bool" label="32036" default="false"/>
  <setting id="moviesw" type="bool" label="32037" default="false"/>
  <setting id="moviemid" type="bool" label="32038" enable="eq(-1,true)" subsetting="true" default="false"/>
@@ -39,19 +35,11 @@
  <!-- gap -->
  </category>
  <category label="32080">
- <setting id="nextprompt" type="bool" label="32081" default="true"/>
- <setting id="promptduration" label="32082" type="slider" enable="eq(-1,true)" subsetting="true" default="10" range="5,5,60" option="int" />
- <setting id="prevcheck" type="bool" label="32083" default="false"/>
  <setting type="lsep" label="32084" enable="false"/>
  <setting type="lsep" label=""/>
  <setting id="logging" type="bool" label="32085" default="true"/>
  <setting type="lsep" label="32086" enable="false"/>
  <setting type="action" label="32087" option="close" action="RunScript($CWD/resources/clone.py)"/>
-
-<setting type="lsep" label=""/>
- <setting id="shout" type="bool" visible="false" default="false"/>
- <setting type="lsep" label="32088" visible="eq(-1,false)" enable="false"/>
- <setting type="action" label="32089" visible="eq(-2,false)" option="close" action="RunScript($CWD/resources/shout.py)"/>
 
  <setting id="first_run" type="bool" default="true" visible="false"/>
  <setting id="users_spl" type="text" visible="false" default='none'/>
