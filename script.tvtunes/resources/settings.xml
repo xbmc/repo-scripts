@@ -7,6 +7,7 @@
 		<setting id="endafter" label="32021" type="slider" default="0" range="0,1,60" option="int" />
 		<setting id="movielist" type="bool" label="32016" default="false"/>
 		<setting id="tvlist" type="bool" label="32017" default="false"/>
+		<setting id="musicvideolist" type="bool" label="32029" default="false"/>
 		<setting id="fadeOut" type="bool" label="32008" default="true"/>
 		<setting id="fadeIn" type="bool" label="32013" default="false"/>
 		<setting id="shuffle" type="bool" label="32010" default="true"/>

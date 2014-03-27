@@ -236,6 +236,10 @@ class Settings():
         return __addon__.getSetting("tvlist") == 'true'
 
     @staticmethod
+    def isPlayMusicVideoList():
+        return __addon__.getSetting("musicvideolist") == 'true'
+
+    @staticmethod
     def getPlayDurationLimit():
         return int(float(__addon__.getSetting("endafter")))
 
@@ -1021,6 +1025,17 @@ class WindowShowing():
             return currentPath == folderPathId
 
     @staticmethod
+    def isMusicVideoTitles(currentPath=None):
+        folderPathId = "videodb://3/2/"
+        # The ID for the TV Show Title changed in Gotham
+        if Settings.getXbmcMajorVersion() > 12:
+            folderPathId = "videodb://musicvideos/"
+        if currentPath == None:
+            return xbmc.getInfoLabel( "container.folderpath" ) == folderPathId
+        else:
+            return currentPath == folderPathId
+
+    @staticmethod
     def isPluginPath():
         return "plugin://" in xbmc.getInfoLabel( "ListItem.Path" )
 
@@ -1110,7 +1125,7 @@ class DelayedStartTheme():
     # Method to support a small delay if running on the list screen
     def _checkListPlayingDelay(self, themes):
         # Check if we are playing themes on the list view, in which case we will want to delay them
-        if (Settings.isPlayMovieList() and WindowShowing.isMovies()) or (Settings.isPlayTvShowList() and WindowShowing.isTvShowTitles()):
+        if (Settings.isPlayMovieList() and WindowShowing.isMovies()) or (Settings.isPlayTvShowList() and WindowShowing.isTvShowTitles()) or (Settings.isPlayMusicVideoList() and WindowShowing.isMusicVideoTitles()):
             log("DelayedStartTheme: Movie List playing delay detected, anchorTime = %s" % str(self.anchorTime))
             if themes != self.themesToStart:
                 # Theme selection has changed
@@ -1246,11 +1261,14 @@ class TunesBackend( ):
             return True
         if WindowShowing.isEpisodes():
             return True
-        # Only valid is wanting theme on movie list
+        # Only valid if wanting theme on movie list
         if WindowShowing.isMovies() and Settings.isPlayMovieList():
             return True
-        # Only valid is wanting theme on TV list
+        # Only valid if wanting theme on TV list
         if WindowShowing.isTvShowTitles() and Settings.isPlayTvShowList():
+            return True
+        # Only valid if wanting theme on Music Video list
+        if WindowShowing.isMusicVideoTitles() and Settings.isPlayMusicVideoList():
             return True
         # Any other area is deemed to be a non play area
         return False

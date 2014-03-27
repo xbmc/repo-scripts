@@ -1,3 +1,6 @@
+v4.3.5
+- Add support for themes to play in the Music Video library
+
 v4.3.4
 - Option to allow addons to force continued playing of a theme
 - Support themes directories at same level as DVD/Blueray image directories

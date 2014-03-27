@@ -140,7 +140,11 @@ msgctxt "#32028"
 msgid "Default Theme Search Source"
 msgstr ""
 
-#empty strings from id 32029 to 32100
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr ""
+
+#empty strings from id 32030 to 32100
 
 msgctxt "#32101"
 msgid "ERROR"
