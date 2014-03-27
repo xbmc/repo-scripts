@@ -90,6 +90,10 @@ class Settings():
         return __addon__.getSetting( "forceButtonDisplay" ) == "true"
 
     @staticmethod
+    def isServiceEnabled():
+        return __addon__.getSetting( "serviceEnabled" ) == "true"
+
+    @staticmethod
     def getAddonVersion():
         return __addon__.getAddonInfo('version')
 

@@ -1,3 +1,7 @@
+v1.0.6
+- Add support for plot tag in NFO files
+- Add support for caching extras on startup for overlay support
+
 v1.0.5
 - Add support for DVD images with VIDEO_TS directories
 - Ensure TV Tunes continue playing when navigating to extras list

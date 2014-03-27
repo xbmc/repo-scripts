@@ -132,7 +132,11 @@ msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr ""
 
-#empty strings from id 32027 to 32100
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr ""
+
+#empty strings from id 32028 to 32100
 
 msgctxt "#32101"
 msgid "Play All"
