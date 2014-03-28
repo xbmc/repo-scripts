@@ -231,15 +231,19 @@ def search_subtitles(item):
         debuglog("No subtitle found for %s" % item['tvshow'])
         return None
 
+    # convert dict to list
+    if type(data) is dict:
+        data = data.values()
+
     searchlist = []
-    for st in data.values():
+    for st in data:
         converted = convert(st)
         if converted['language_eng'] in item['languages']:
             searchlist.append(converted)
 
     searchlist = remove_duplications(searchlist)
 
-    searchlist.sort(key=lambda k: k['rating'], reverse=True)
+    searchlist.sort(key=lambda k: (k['score'], k['language_eng']), reverse=True)
     return searchlist
 
 
@@ -248,7 +252,9 @@ def search(item):
     subtitles_list = search_subtitles(item)
 
     if subtitles_list:
+        index = 0
         for it in subtitles_list:
+            index += 1
             #label="%s | %s | %s"%(it['name'], it['filename'], it['uploader'])
             label = "%s [%s]" % (it['filename'], it['uploader'])
             listitem = xbmcgui.ListItem(label=it['language_eng'],
@@ -259,7 +265,7 @@ def search(item):
             listitem.setProperty('sync', ('false', 'true')[it['sync']])
             listitem.setProperty('hearing_imp', ('false', 'true')[it.get('hearing', False)])
 
-            qparams = {'action': 'download', 'id': it['id'], 'filename': it['filename']}
+            qparams = {'action': 'download', 'actionsortorder': str(index).zfill(2), 'id': it['id'], 'filename': it['filename']}
             url = "plugin://%s/?%s" % (__scriptid__, urllib.urlencode(qparams))
 
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)

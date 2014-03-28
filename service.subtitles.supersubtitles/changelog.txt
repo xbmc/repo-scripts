@@ -1,3 +1,7 @@
+0.0.9
+- fix sort order
+- fix type error
+
 0.0.8
 - improvements from Xbmc addons mailing list
 
