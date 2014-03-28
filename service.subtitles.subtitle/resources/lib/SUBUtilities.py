@@ -224,7 +224,7 @@ class SubtitleHelper:
 
                                     url = self.BASE_URL + "/getajax.php?" + urllib.urlencode(
                                         {"episodedetails": episode_id})
-                                    subtitle_page = self.urlHandler.request(url)
+                                    subtitle_page = self._is_logged_in(url)
 
                                     x, i = self._retrive_subtitles(subtitle_page, item)
                                     total_downloads += i
@@ -320,7 +320,7 @@ class SubtitleHelper:
 
     def _is_logged_in(self, url):
         content = self.urlHandler.request(url)
-        if content is not None and re.search(r'friends\.php', content):  #check if logged in
+        if content is not None and (re.search(r'friends\.php', content) or not re.search(r'login\.php', content)):  #check if logged in
             return content
         elif self.login():
             return self.urlHandler.request(url)

@@ -1,3 +1,6 @@
+4.1.6 - By CaTz 28/03/2014
+- Bug fix, refresh cookie on ajax call
+
 4.1.5 - By CaTz 23/03/2014
 - Bug fix, handle HTML entities in the content show of the website
 
