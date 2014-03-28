@@ -143,7 +143,7 @@ class SubscenterHelper:
                                          'language_name': xbmc.convertLanguage(language, xbmc.ENGLISH_NAME),
                                          'language_flag': language,
                                          'ID': current["id"],
-                                         'rating': current["downloaded"],
+                                         'rating': str(current["downloaded"]),
                                          'sync': subtitle_rate >= 4,
                                          'hearing_imp': current["hearing_impaired"] > 0
                                         })
