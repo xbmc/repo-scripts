@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- English language-Team URL: http://forum.xbmc.org/showthread.php?tid=188074 -->
+<!-- Report language file syntax bugs at: http://forum.xbmc.org/showthread.php?tid=188074 -->
+
+<strings>
+  <string id="32001">SubsFactory has only italian subtitles. Add italian to the subtitle settings</string>
+  <string id="32002">SubsFactory only works with tv shows subtitles</string>
+</strings>

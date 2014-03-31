@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.subtitles.subsfactoryit"
+       name="Subsfactory.it"
+       version="1.0.2"
+       provider-name="cotzadev">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+    <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Subsfactory subtitle addon</summary>
+    <description lang="en">Find and download subtitles from subsfactory.it</description>
+    <disclaimer lang="en">Feel free to use this script. For information visit the github page.</disclaimer>
+    <summary lang="it">Addon sottotitoli Subsfactory</summary>
+    <description lang="it">Trova e scarica sottotitoli da subsfactory.it</description>
+    <disclaimer lang="it">Sentitevi liberi di usare questo script. Per informazioni visitate la pagina github.</disclaimer>
+    <language>it</language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum></forum>
+    <website>http://subsfactory.it/</website>
+    <email></email>
+    <source>https://github.com/CotzaDev/service.subtitles.subsfactoryit</source> 
+  </extension>
+</addon>
