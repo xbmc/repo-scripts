@@ -1,0 +1,9 @@
+0.6
+- Added language on addon.xml
+
+0.5
+- Fixed encoding issue when doing a manual search with spaces
+- Fixed ordering issue when showing list of subtitles
+
+0.1
+- initial port from former XBMC subtitles plugin by amet and by CaTzil
