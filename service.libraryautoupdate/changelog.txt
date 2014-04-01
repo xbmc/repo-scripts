@@ -1,0 +1,186 @@
+Version 0.9.2
+
+version bump for merge of master changes
+
+Version 0.9.1
+
+updated for Gotham python changes
+
+Version 0.9.0
+
+New Version for Gotham
+
+Version 0.8.4
+
+Fix for a very odd timing bug causing multiple scans - thanks tknorris
+
+Version 0.8.3
+
+separated notifications and setting strings for translators - thanks NEOhidra
+
+Version 0.8.2
+
+added version info to logs
+
+Version 0.8.1
+
+added license tag
+
+Version 0.8.0
+
+clean up monitor on exit
+updated language files from Transifex
+
+Version 0.7.9
+
+updated language files from Transifex
+
+Version 0.7.8
+
+efficiencies to evalSchedules trigger - thanks Martijn
+
+Version 0.7.7
+
+updated language files from Transifex
+
+Version 0.7.6
+
+make sure cleaning is selected by the user
+
+check for playing media before cleaning library after db update
+
+Version 0.7.5
+
+Added network check before running a scan, if it fails it will try again in 10 seconds
+
+Version 0.7.4
+
+removed common plugin cache dependency - was causing CPU issues
+
+use xbmc.Monitor to check for settings updates
+
+use xbmc.Monitor to monitor db updates
+
+added custom cleaning timers, thanks Ghostdivision
+
+use settings.xml to store last_run data
+
+Version 0.7.3
+
+added support for multipathed sources in verify sources
+
+updated xbmc python version
+
+Version 0.7.2
+
+Fixed error with cleaning library
+
+Version 0.7.1
+
+Started using utils.py as common framework for logging/notifications
+
+fixed unicode error in showing notifications - thanks koying!
+
+added storage server (common plugin cache) as a dep
+
+Version 0.7.0
+
+increment version to keep Eden branch separate
+
+Version 0.6.5
+
+added setting to prompt user before doing scheduled clean. Defaults to False. 
+
+added ability to schedule cleaning separate
+
+additional translations
+
+Version 0.6.4
+
+- added strings from notifications and logging into the strings.xml files
+
+- strings reorganization (affected translations)
+
+- updated to french translation file
+
+Version 0.6.3
+
+- added French translation file, thanks to foX aCe
+
+Version 0.6.2
+
+- needed a catch in case the last_run.txt file is blank, or has non-integer data. thanks to mmounirou for catching this
+
+Version 0.6.1
+
+- added 2 more custom library path options
+
+Version 0.6.0
+
+- added "Cleaning" category to schedule a clean operation of the music/video databases. This operation can happen immediately after a scan or once per day/week/month. Verifying source paths before a clean is also supported
+
+Version 0.5.9
+
+- added a custom video path option to only scan a specific video path instead of the entire library
+
+Version 0.5.8
+
+- added a 1 minute delay timer before running a scan if XBMC has just exited playback. This should help in scenerios where ending media viewing results in an immediate scan that the user didn't want. 
+
+Version 0.5.7
+
+- merged 'standard' and 'advanced' usage to follow more of the same codebase. Now the standard timer uses a cron expression as well and will start at the top of every hour
+
+Version 0.5.6
+
+-updated the manual run interface to include information about when the updater will run again
+
+Version 0.5.5
+
+-changed cron expression library. Croniter will allow iterating through the cron expressions and show the next update time
+
+-added methods to display a "countdown" when the next update will occur, and settings to display notifications
+
+Version 0.5.4
+ 
+ -fixed issue with startup timer, thanks stevenD
+
+Version 0.5.2
+
+-fixed os import error
+
+Version 0.5.1
+
+-merged changes from pkscuot's branch. 
+-rounds last_run to top of the minute (timer executes at 00 not anywhere in minute)
+-creates addon data directory if it doesn't exist
+
+Version 0.5.0
+
+-major changes to settings, split them by General and Timer category
+-Advanced timer functions now add the ability to do cron-like scheduling of the update process, thanks to pkscuot for the timer ideas
+-option to skip during media playback or run the update anyway
+
+Version 0.4.1
+
+-added extra setting for a "startup delay" timer. This will only affect the addon when xbmc starts. 
+-the last running time is now set to a variable so that manual updates will reset the timer, and system resets will start the service where it left off
+
+Version 0.4.0
+
+- Had a user suggestion to allow for a manual launch of the process as well as the service. Since the service point will ALWAYS launch on startup the manual option will kick off the library update process. 
+
+Version 0.3.9
+ 
+- running video and music scans side by side never really worked. Now checks if scan is running and waits until complete before running the next scan. 
+
+Version 0.3.5
+
+- now runs as a service instead of needing the autoexec.py file
+- removed sample autoexec.py
+
+Version 0.3.1
+
+- fixed a really stupid indent error
+- added cancelalarm call in case run more than once
+
