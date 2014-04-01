@@ -150,7 +150,7 @@ class SubscenterHelper:
         # Fix the rating
         if total_downloads:
             for it in ret:
-                it["rating"] = str(int(round(it["rating"] / float(total_downloads), 1) * 5))
+                it["rating"] = str(int(round(float(it["rating"]) / float(total_downloads), 1) * 5))
 
         return sorted(ret, key=lambda x: (x['lang_index'], x['sync'], x['rating']), reverse=True)
 
