@@ -1,3 +1,11 @@
+Version 0.4.7
+
+fixed critical error in backup rotation
+
+Version 0.4.6
+
+modified backup folder names to include time, also modified display listing
+
 Version 0.4.5
 
 added version info to logs

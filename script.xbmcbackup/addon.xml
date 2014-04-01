@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmcbackup"
-    name="XBMC Backup" version="0.4.5" provider-name="robweber">
+    name="XBMC Backup" version="0.4.7" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -11,6 +11,7 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="ar">قم بنسخ احتياطي و استعد قاعدة بيانات XBMC الخاص بك و ملفات التكوين في حال وقوع حادث أو تلف الملفات.</summary>
     <summary lang="be">Backup and restore your XBMC database and configuration files in the event of a crash or file corruption.</summary>
+    <summary lang="bg">Добавката може да създава резервно копие на XBMC и възстановява (след това) Вашата база от данни и настройки, в случай на необходимост.</summary>
     <summary lang="ca">Copiau i restaurau la vostra base de dades d'XBMC i els fitxers de configuració en cas de caiguda o corrupció de fitxers.</summary>
     <summary lang="da">Sikkerhedskopiér og genskab din XBMC database og konfigurationsfiler i tilfælde af et nedbrud eller en ødelagt fil.</summary>
     <summary lang="de">Die XBMC Datenbank sichern und bei Dateiverlust oder Beschädigung wiederherstellen.</summary>
@@ -36,6 +37,7 @@
     <summary lang="sv">Ta backupp av eller återställ din XBMC-databas och konfigurationsfiler i händelse av en krash eller filkorruption.</summary>
     <summary lang="zh">备份和恢复XBMC数据库和配置文件，以防范系统崩溃或文件损坏问题。</summary>
     <description lang="be">Ever hosed your XBMC configuration and wished you'd had a backup? Now you can with one easy click. You can export your database, playlist, thumbnails, addons and other configuration details to any source writeable by XBMC or directly to Dropbox cloud storage. Backups can be run on demand or via a scheduler. </description>
+    <description lang="bg">Някога да сте губили всички настройки, които сте правили по XBMC? А разполагахте ли с резервно копие? Е сега можете да създавате резервни копия само с едно кликване. Можете да изнасяте базата от данни, плейлистите, миниатюрите, добавките и други, на всяко място до което XBMC има права за писане или директно в Dropbox. Можете да настроите и автоматично създаване на копия през определен интервал от време.</description>
     <description lang="ca">Sempre canvia la configuració XBMC i ha desitjat tinir una còpia de seguretat? Ara pot fer-ho amb un simple clic. Podeu exportar la seva base de dades, llista de reproducció, miniatures, complements i altres detalls de la configuració per a qualsevol complement de XBMC o directament emmagatzemar-ho al Dropbox  en el núvol. Les còpies de seguretat es poden executar a la demanda o per mitjà d'un planificador.</description>
     <description lang="da">Har du prøvet at slette din XBMC opsætning, og ønsket at du havde haft sikkerhedskopi? Nu kan du få det med et enkelt klik. Du kan eksportere din database, afspilninglister, miniaturebilleder, addons og andre opsætningsdetaljer til enhver kilde, som er skrivbar for XBMC eller direkt til Dropbox cloud lager. Sikkerhedskopier kan køres manuelt eller via en tidsplan.</description>
     <description lang="de">Jemals deine XBMC Konfiguration zerschossen und dir dann gewünscht, dass ein Backup existiert? Jetzt kannst du eine Sicherung mit nur einem Klick erzeugen. Du kannst deine Datenbanen, Playlisten, Thumbnails, Addons und andere Details zu einem Ort deiner Wahl sichern.</description>

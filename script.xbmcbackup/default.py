@@ -25,11 +25,15 @@ if(mode != -1):
         if(mode == backup.Restore):
             #allow user to select the backup to restore from
             restorePoints = backup.listBackups()
+            pointNames = []
 
-            selectedRestore = xbmcgui.Dialog().select(utils.getString(30010) + " - " + utils.getString(30021),restorePoints)
+            for aDir in restorePoints:
+                pointNames.append(aDir[1])
+                
+            selectedRestore = xbmcgui.Dialog().select(utils.getString(30010) + " - " + utils.getString(30021),pointNames)
 
             if(selectedRestore != -1):
-                backup.selectRestore(restorePoints[selectedRestore])
+                backup.selectRestore(restorePoints[selectedRestore][0])
                     
         backup.run(mode)
     else:

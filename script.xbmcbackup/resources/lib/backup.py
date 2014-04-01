@@ -6,6 +6,15 @@ import os.path
 import time
 from vfs import XBMCFileSystem,DropboxFileSystem
 
+def folderSort(aKey):
+    result = aKey[0]
+    
+    if(len(result) < 8):
+        result = result + "0000"
+
+    return result
+    
+
 class XbmcBackup:
     #constants for initiating a back or restore
     Backup = 0
@@ -60,8 +69,18 @@ class XbmcBackup:
         
         for aDir in dirs:
             if(self.remote_vfs.exists(self.remote_base_path + aDir + "/xbmcbackup.val")):
-                result.append(aDir)
 
+                #folder may or may not contain time, older versions didn't include this
+                folderName = ''
+                if(len(aDir) > 8):
+                    folderName = aDir[6:8] + '-' + aDir[4:6] + '-' + aDir[0:4] + " " + aDir[8:10] + ":" + aDir[10:12]
+                else:
+                    folderName = aDir[6:8] + '-' + aDir[4:6] + '-' + aDir[0:4]
+
+                result.append((aDir,folderName))
+
+        result.sort(key=folderSort)
+        
         return result
 
     def selectRestore(self,restore_point):
@@ -74,7 +93,7 @@ class XbmcBackup:
         #append backup folder name
         progressBarTitle = utils.getString(30010) + " - "
         if(mode == self.Backup and self.remote_vfs.root_path != ''):
-            self.remote_vfs.set_root(self.remote_vfs.root_path + time.strftime("%Y%m%d") + "/")
+            self.remote_vfs.set_root(self.remote_vfs.root_path + time.strftime("%Y%m%d%H%M") + "/")
             progressBarTitle = progressBarTitle + utils.getString(30016)
 	elif(mode == self.Restore and self.restore_point != None and self.remote_vfs.root_path != ''):
 	    self.remote_vfs.set_root(self.remote_vfs.root_path + self.restore_point + "/")
@@ -355,16 +374,15 @@ class XbmcBackup:
 
             if(len(dirs) > total_backups):
                 #remove backups to equal total wanted
-                dirs.sort()
-                remove_num = len(dirs) - total_backups - 1
+                remove_num = 0
                 self.filesTotal = self.filesTotal + remove_num + 1
 
                 #update the progress bar if it is available
-                while(remove_num >= 0 and not self._checkCancel()):
-                    self._updateProgress(utils.getString(30054) + " " + dirs[remove_num])
-                    utils.log("Removing backup " + dirs[remove_num])
-                    self.remote_vfs.rmdir(self.remote_base_path + dirs[remove_num] + "/")
-                    remove_num = remove_num - 1
+                while(remove_num < (len(dirs) - total_backups) and not self._checkCancel()):
+                    self._updateProgress(utils.getString(30054) + " " + dirs[remove_num][1])
+                    utils.log("Removing backup " + dirs[remove_num][0])
+                    self.remote_vfs.rmdir(self.remote_base_path + dirs[remove_num][0] + "/")
+                    remove_num = remove_num + 1
 
     def _createValidationFile(self):
         vFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "xbmcbackup.val"),'w')
