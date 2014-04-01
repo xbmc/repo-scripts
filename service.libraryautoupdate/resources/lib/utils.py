@@ -11,7 +11,7 @@ def addon_dir():
     return __Addon.getAddonInfo('path')
 
 def log(message,loglevel=xbmc.LOGNOTICE):
-    xbmc.log(encode(__addon_id__ + ": " + message),level=loglevel)
+    xbmc.log(encode(__addon_id__ + "-" + __Addon.getAddonInfo('version') + " : " + message),level=loglevel)
 
 def showNotification(title,message):
     xbmc.executebuiltin("Notification(" + encode(title) + "," + encode(message) + ",4000," + xbmc.translatePath(__Addon.getAddonInfo('path') + "/resources/images/clock.png") + ")")

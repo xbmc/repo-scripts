@@ -91,6 +91,10 @@ class AutoUpdater:
                                 #find the next run time
                                 cronJob.next_run = self.calcNextRun(cronJob.expression,now)
                                 self.schedules[count] = cronJob
+                                
+                            elif(self.scanRunning() == True):
+                                self.schedules[count].on_delay = True
+                                utils.log("Waiting for other scan to finish")
                         else:
                             utils.log("Network down, not running")
                     else:
@@ -100,7 +104,8 @@ class AutoUpdater:
                 count = count + 1
 
             #write last run time
-            self.last_run = time.time() - (time.time() % 60)
+            now = time.time()
+            self.last_run = now - (now % 60)
         
     def createSchedules(self,forceUpdate = False):
         utils.log("update timers")
@@ -141,9 +146,10 @@ class AutoUpdater:
                                                                                 
 
         if(utils.getSetting('update_video') == 'true'):
+            utils.log("Creating timer for Video Library");
             #create the video schedule
             aSchedule = CronSchedule()
-            aSchedule.name = utils.getString(30004)
+            aSchedule.name = utils.getString(30012)
             aSchedule.command = 'UpdateLibrary(video)'
             aSchedule.expression = self.checkTimer('video')
             aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
@@ -151,9 +157,10 @@ class AutoUpdater:
             self.schedules.append(aSchedule)
 
         if(utils.getSetting('update_music') == 'true'):
+            utils.log("Creating timer for Music Library");
             #create the music schedule
             aSchedule = CronSchedule()
-            aSchedule.name = utils.getString(30005)
+            aSchedule.name = utils.getString(30013)
             aSchedule.command = 'UpdateLibrary(music)'
             aSchedule.expression = self.checkTimer('music')
             aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
@@ -161,6 +168,7 @@ class AutoUpdater:
             self.schedules.append(aSchedule)
 
         if(utils.getSetting('use_custom_1_path') == 'true'):
+            utils.log("Creating timer for Custom Path 1");
             #create a custom video path schedule
             aSchedule = CronSchedule()
             aSchedule.name = utils.getString(30020)
@@ -171,6 +179,7 @@ class AutoUpdater:
             self.schedules.append(aSchedule)
 
         if(utils.getSetting('use_custom_2_path') == 'true'):
+            utils.log("Creating timer for Custom Path 2");
             #create a custom video path schedule
             aSchedule = CronSchedule()
             aSchedule.name = utils.getString(30021)
@@ -181,6 +190,7 @@ class AutoUpdater:
             self.schedules.append(aSchedule)
 
         if(utils.getSetting('use_custom_3_path') == 'true'):
+            utils.log("Creating timer for Custom Path 3");
             #create a custom video path schedule
             aSchedule = CronSchedule()
             aSchedule.name = utils.getString(30022)

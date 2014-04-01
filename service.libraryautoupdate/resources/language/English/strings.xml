@@ -16,7 +16,9 @@
     <string id="30009">Used Advanced Timer</string>
     <string id="30010">Amount of time between updates (hours)</string>
     <string id="30011">Cron Expression</string>
-
+	<string id="30012">Update Video Library</string>
+	<string id="30013">Update Music Library</string>
+	
     <!-- specific paths -->
     <string id="30020">Update Specific Path 1</string>
     <string id="30021">Update Specific Path 2</string>

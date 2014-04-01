@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.libraryautoupdate"
-    name="XBMC Library Auto Update" version="0.8.0" provider-name="robweber">
+    name="XBMC Library Auto Update" version="0.8.5" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -11,6 +11,7 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="be">Update your XBMC Video and Music Libraries on a timer. Timer runs as an XBMC service so you never miss an update.</summary>
+    <summary lang="bg">Обновява библиотеките в XBMC (за видео и музика) чрез брояч. Той се стартира като XBMC услуга, затова никога няма да изпуснете нито едно обновяване.</summary>
     <summary lang="da">Opdater dine XBMC video- og musikbiblioteker ved hjælp af en timer. Timeren kører som en XBMC service, så du aldrig glipper en opdatering</summary>
     <summary lang="de">Update deine XBMC Video- und Musiklibrariers mit einem Timer. Der Timer läuft als ein XBMC service, sodass Du niemals ein Update verpasst.</summary>
     <summary lang="el">Ενημερώστε τις συλλογές ταινιών και μουσικής σας με χρονοδιακόπτη. Ο χρονοδιακόπτης εκτελείται σαν υπηρεσία του XBMC ούτως ώστε να μη χάνετε ποτέ καμία ενημέρωση.</summary>
@@ -32,6 +33,7 @@
     <summary lang="sv">Uppdatera ditt XBMC video och musikbibliotek schemalagt. Schemaläggaren körs som en XBMC-service så du aldrig missar en uppdatering.</summary>
     <summary lang="zh">定时更新你的XBMC视频和音乐资料库。定时器以XBMC服务的方式运行以保证不会错过更新。</summary>
     <description lang="be">This is an XBMC Service that will update your music and video libraries on a timer. You can select a different interval to scan your media databases (Audio,Video,Both) or you can set a cron-style timer for greater control. If you are playing an audio or video file when the timer starts it can skip the library update process until it is completed so that you're media experience is not interrupted. Updating a specific Video Path, and Cleaning the Music/Video libraries is now supported.</description>
+    <description lang="bg">Услугата ще обновява видео и музикалната библиотека в XBMC през определен интервал от време. Можете да променяте интервала за сканиране (на източниците на видео, аудио или и за двата вида информация). Можете да зададете брояч в стил cron (за запознатите с Linux), който Ви осигурява по-голям контрол. Ако се случи, че гледате/слушате файл от библиотека за която се е задействал брояч сканирането ще се отложи до момента в който не приключите активността. Също така се поддържа и обновяване на определени папки и почистване на библиотеките.</description>
     <description lang="da">Dette er en XBMC service, der opdaterer dine musik- og videobiblioteker ved hjælp af en timer. Du kan vælge forskellige intervaller for skanningen af din mediedatabase (lyd, video, begge) eller du kan vælge en cron-baseret timer for øget kontrol. Hvis du afspiller en lyd- eller videofil, når timeren begynder, kan den springe over opdatering af biblioteket indtil emnet er færdigafspillet, så din medieoplevelse ikke afbrydes. Opdatering af specifikke videostier og oprydning i musik/videobibliotekerne er nu understøttet.</description>
     <description lang="de">Dies ist ein XBMC Service, der deine Musik und Video Bibliothek in bestimmten Abständen automatisch aktualisiert. Du kannst verschiedene Intervalle für das Scannen deiner Mediendatenbanken (Audio, Video oder beides) verwenden oder einen eigenen Cron Ausdruck für noch mehr Kontrolle benutzen. Wenn du gerade Musik oder ein Video abspielst kannst du den Timer des automatischen Updates überspringen, so dass dein Film Erlebnis nicht unterbrochen wird. Die Aktualisierung von konkreten Pfaden und Aufräumen der Musik/Video Bibliotheken wird nun unterstützt</description>
     <description lang="el">Αυτή είναι μία Υπηρεσία του XBMC που ενημερώνει τις συλλογές ταινιών και μουσικής σας με χρονοδιακόπτη. Μπορείτε να επιλέξετε διαφορετικό χρονικό διάστημα για σάρωση των πολυμέσων σας (Μουσική, Βίντεο, Και Τα Δυο) ή μπορείτε να ορίσετε ένα χρονοδιακόπτη τύπου cron για καλύτερο έλεγχο. Αν αναπαράγεται μία ταινία ή ένα τραγούδι όταν αρχίσει ο χρονοδιακόπτης μπορεί να αναβληθεί η διαδικασία της ενημέρωσης της συλλογής μέχρις ότου τελειώσει, προκειμένου να μην επηρεαστεί η αναπαραγωγή. Πλέον υποστηρίζεται η ενημέρωση συγκεκριμένης Διαδρομής Βίντεο, καθώς και Εκκαθάριση των συλλογών Ταινιών/Μουσικής.</description>
@@ -54,6 +56,7 @@
     <description lang="zh">这是一个定时更新你的音乐和视频资料库的XBMC服务程序。你可以设置不同的时间间隔来扫描媒体库（音频、视频或二者），或者设置一个cron类型的定时器来获得更好的控制。如果定时动作开始时你正在播放一个音频或视频文件，它会跳过此次更新直到播放完毕以避免影响你欣赏媒体。现在已支持更新指定的视频路径以及清理音视频资料库。</description>
     <forum>http://forum.xbmc.org/showthread.php?tid=119520</forum>
     <source>https://github.com/robweber/xbmclibraryautoupdate</source>
+    <license>The MIT License</license>
     <language></language>
   </extension>
 </addon>

@@ -1,3 +1,23 @@
+Version 0.8.5
+
+version bump for translation updates
+
+Version 0.8.4
+
+Fix for a very odd timing bug causing multiple scans - thanks tknorris
+
+Version 0.8.3
+
+separated notifications and setting strings for translators - thanks NEOhidra
+
+Version 0.8.2
+
+added version info to logs
+
+Version 0.8.1
+
+added license tag
+
 Version 0.8.0
 
 clean up monitor on exit
