@@ -91,6 +91,27 @@
         ],
         "beta": [
             {
+                "major": "13",
+                "minor": "0",
+                "tag": "beta",
+                "revision": "20140328-2dcc855",
+                "extrainfo": "beta3"
+            },
+            {
+                "major": "13",
+                "minor": "0",
+                "tag": "beta",
+                "revision": "20140315-a1cab7a",
+                "extrainfo": "beta2"
+            },
+            {
+                "major": "13",
+                "minor": "0",
+                "tag": "beta",
+                "revision": "20140303-128426f",
+                "extrainfo": "beta1"
+            },
+            {
                 "major": "12",
                 "minor": "0",
                 "tag": "beta",
