@@ -6,7 +6,7 @@ I've had to recover my database, thumbnails, and source configuration enough tim
 
 Remote Destination/File Selection: 
 
-In the addon settings you can define a remote path for the destination of your xbmc files. Each backup will create a folder named in a YYYYMMDD format so you can create multiple backups. You can keep a set number of backups by setting the integer value of the Backups to Keep setting greater than 0. 
+In the addon settings you can define a remote path for the destination of your xbmc files. Each backup will create a folder named in a YYYYMMDDHHmm format so you can create multiple backups. You can keep a set number of backups by setting the integer value of the Backups to Keep setting greater than 0. 
 
 On the Backup Selection page you can select which items from your user profile folder will be sent to the backup location. By default all are turned on except the Addon Data directory. 
 
@@ -37,11 +37,38 @@ Once you have your app key and secret add them to the settings. XBMC Backup now 
 
 Scripting XBMC Backup: 
 
-If you wish to script this addon using an outside scheduler or script it can be given parameters via the Xbmc.RunScript() or JsonRPC.Addons.ExecuteAddon() methods. Parameters given are either "backup" or "restore" to launch the correct program mode. An example would be: 
+If you wish to script this addon using an outside scheduler or script it can be given parameters via the Xbmc.RunScript() or JsonRPC.Addons.ExecuteAddon() methods. Parameters given are either "backup" or "restore" to launch the correct program mode. If mode is "restore", an additional "archive" parameter can be given to set the restore point to be used instead of prompting via the GUI. An example would be: 
 
-RunScript(script.xbmcbackup,backup)
+Python code: 
+-------------------------------------------
+RunScript(script.xbmcbackup,mode=backup)
+-------------------------------------------
 
+or
 
+JSON Request: 
+-------------------------------------------
+{ "jsonrpc": "2.0", "method": "Addons.ExecuteAddon","params":{"addonid":"script.xbmcbackup","params":{"mode":"restore","archive":"000000000000"}}, "id": 1 }
+-------------------------------------------
+
+There is also a windows parameter that can be used to check if XBMC Backup is running within a skin or from another program. It is attached to the home window, an example of using it would be the following: 
+
+Python code:
+-------------------------------------------
+#kick off the xbmc backup
+xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Addons.ExecuteAddon","params":{"addonid":"script.xbmcbackup","params":{"mode":"backup"}}, "id": 1 }')
+
+#sleep for a few seconds to give it time to kick off
+xbmc.sleep(10000)
+
+window = xbmcgui.Window(10000)
+
+while (window.getProperty('script.xbmcbackup.running') == 'true'):
+     #do something here, probably just sleep for a few seconds
+     xbmc.sleep(5000)
+
+#backup is now done, continue with script
+-------------------------------------------
 FAQ: 
 
 I can't see any restore points when choosing "Restore", what is the problem? 

@@ -25,7 +25,6 @@ class BackupScheduler:
         #scheduler was turned on, find next run time
         utils.log("scheduler enabled, finding next run time")
         self.findNextRun(time.time())
-        utils.log("scheduler will run again on " + datetime.datetime.fromtimestamp(self.next_run).strftime('%m-%d-%Y %H:%M'))
         
     def start(self):
 

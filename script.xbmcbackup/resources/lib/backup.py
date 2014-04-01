@@ -90,6 +90,10 @@ class XbmcBackup:
         self.skip_advanced = True
 
     def run(self,mode=-1,progressOverride=False):
+        #set windows setting to true
+        window = xbmcgui.Window(10000)
+        window.setProperty(utils.__addon_id__ + ".running","true")
+        
         #append backup folder name
         progressBarTitle = utils.getString(30010) + " - "
         if(mode == self.Backup and self.remote_vfs.root_path != ''):
@@ -106,15 +110,10 @@ class XbmcBackup:
         utils.log(utils.getString(30047) + ": " + self.xbmc_vfs.root_path)
         utils.log(utils.getString(30048) + ": " + self.remote_vfs.root_path)
 
-        #check if we should use the progress bar
-        if(int(utils.getSetting('progress_mode')) != 2):
-            #check if background or normal
-            if(int(utils.getSetting('progress_mode')) == 0 and not progressOverride):
-                self.progressBar = xbmcgui.DialogProgress()
-            else:
-                self.progressBar = xbmcgui.DialogProgressBG()
-                
-            self.progressBar.create(progressBarTitle,utils.getString(30049) + "......")
+        
+        #setup the progress bar
+        self.progressBar = BackupProgressBar(progressOverride)
+        self.progressBar.create(progressBarTitle,utils.getString(30049) + "......")
 
         if(mode == self.Backup):
             utils.log(utils.getString(30023) + " - " + utils.getString(30016))
@@ -320,19 +319,22 @@ class XbmcBackup:
             #call update addons to refresh everything
             xbmc.executebuiltin('UpdateLocalAddons')
 
-        if(self.progressBar != None):
-            self.progressBar.close()
+        self.progressBar.close()
+
+        #reset the window setting
+        window.setProperty(utils.__addon_id__ + ".running","")
 
     def backupFiles(self,fileList,source,dest):
         utils.log("Writing files to: " + dest.root_path)
         utils.log("Source: " + source.root_path)
         for aFile in fileList:
-            if(not self._checkCancel()):
+            if(not self.progressBar.checkCancel()):
                 utils.log('Writing file: ' + aFile,xbmc.LOGDEBUG)
-                self._updateProgress(aFile)
                 if(aFile.startswith("-")):
+                    self._updateProgress(aFile[len(source.root_path) + 1:])
                     dest.mkdir(dest.root_path + aFile[len(source.root_path) + 1:])
                 else:
+                    self._updateProgress()
                     if(isinstance(source,DropboxFileSystem)):
                         #if copying from dropbox we need the file handle, use get_file
                         source.get_file(aFile,dest.root_path + aFile[len(source.root_path):])
@@ -355,21 +357,10 @@ class XbmcBackup:
                     crc = crc & 0xFFFFFFFF
         
         return '%08x' % crc
-    
-    def _updateProgress(self,message=''):
+
+    def _updateProgress(self,message=None):
         self.filesLeft = self.filesLeft - 1
-
-        #update the progress bar
-        if(self.progressBar != None):
-            self.progressBar.update(int((float(self.filesTotal - self.filesLeft)/float(self.filesTotal)) * 100),message)
-            
-    def _checkCancel(self):
-        result = False
-
-        if(self.progressBar != None and type(self.progressBar) is xbmcgui.DialogProgress):
-            result = self.progressBar.iscanceled()
-
-        return result
+        self.progressBar.updateProgress(int((float(self.filesTotal - self.filesLeft)/float(self.filesTotal)) * 100),message)
 
     def _rotateBackups(self):
         total_backups = int(utils.getSetting('backup_rotation'))
@@ -383,7 +374,7 @@ class XbmcBackup:
                 self.filesTotal = self.filesTotal + remove_num + 1
 
                 #update the progress bar if it is available
-                while(remove_num < total_backups and not self._checkCancel()):
+                while(remove_num < (len(dirs) - total_backups) and not self.progressBar.checkCancel()):
                     self._updateProgress(utils.getString(30054) + " " + dirs[remove_num][1])
                     utils.log("Removing backup " + dirs[remove_num][0])
                     self.remote_vfs.rmdir(self.remote_base_path + dirs[remove_num][0] + "/")
@@ -453,3 +444,54 @@ class FileManager:
 
     def size(self):
         return len(self.fileArray)
+
+class BackupProgressBar:
+    NONE = 2
+    DIALOG = 0
+    BACKGROUND = 1
+
+    mode = 2
+    progressBar = None
+    override = False
+    
+    def __init__(self,progressOverride):
+        self.override = progressOverride
+        
+        #check if we should use the progress bar
+        if(int(utils.getSetting('progress_mode')) != 2):
+            #check if background or normal
+            if(int(utils.getSetting('progress_mode')) == 0 and not self.override):
+                self.mode = self.DIALOG
+                self.progressBar = xbmcgui.DialogProgress()
+            else:
+                self.mode = self.BACKGROUND
+                self.progressBar = xbmcgui.DialogProgressBG()
+
+    def create(self,heading,message):
+        if(self.mode != self.NONE):
+            self.progressBar.create(heading,message)
+
+    def updateProgress(self,percent,message=None):
+        
+        #update the progress bar
+        if(self.mode != self.NONE):
+            if(message != None):
+                #need different calls for dialog and background bars
+                if(self.mode == self.DIALOG):
+                    self.progressBar.update(percent,message)
+                else:
+                    self.progressBar.update(percent,message=message)
+            else:
+                 self.progressBar.update(percent)
+
+    def checkCancel(self):
+        result = False
+
+        if(self.mode == self.DIALOG):
+            result = self.progressBar.iscanceled()
+
+        return result
+
+    def close(self):
+        if(self.mode != self.NONE):
+            self.progressBar.close()
