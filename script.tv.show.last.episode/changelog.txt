@@ -1,0 +1,23 @@
+v1.1.0 (2014-03-19):
+- Added thumbnails for tv shows
+
+v1.0.8 (2014-03-18):
+- Replaced sqlite3 with JSON-RPC
+
+v1.0.5 (2014-03-17):
+- Added localization for english and german
+
+v1.0.3 (2014-03-13):
+- Icons and fanart
+
+v1.0.2 (2014-03-04):
+- Added sort by episode added to library
+
+v1.0.1 (2014-03-04):
+- Bugfixes database queries
+
+v1.0.0 (2014-03-03):
+- Use database instead of file system
+
+v0.0.1 (2014-02-27):
+- Initial commit
