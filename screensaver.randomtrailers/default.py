@@ -1,7 +1,7 @@
 # Random trailer player
 #
 # Author - kzeleny
-# Version - 1.1.15
+# Version - 1.1.16
 # Compatibility - Frodo/Gothum
 #
 
@@ -474,7 +474,7 @@ def getTmdbTrailers():
                 break
     return tmdbTrailers
 
-def search_tmdb(title,year):
+def search_tmdb(query,year):
     id=''
     data = {}
     data['api_key'] = '99e8b7beac187a857152f57d67495cf4'
