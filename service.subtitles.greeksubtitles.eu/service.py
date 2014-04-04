@@ -180,7 +180,7 @@ class subtitles:
     def get(self, query):
         try:
             query = ' '.join(urllib.unquote_plus(re.sub('%\w\w|\d{4}', ' ', urllib.quote_plus(query))).split())
-            url = 'http://www.greeksubtitles.eu/subtitles/search/%s' % urllib.quote_plus(query)
+            url = 'http://www.greeksubs.eu/subtitles/search/%s' % urllib.quote_plus(query)
 
             result = getUrl(url).result
             subtitles = common.parseDOM(result, "tr", attrs = { "class": "tipsyN" })
@@ -190,14 +190,14 @@ class subtitles:
 
         for subtitle in subtitles:
             try:
-                try: uploader = common.parseDOM(subtitle, "a", attrs = { "href": "http://www.greeksubtitles.eu/subtitles/user/.+?" })[0]
+                try: uploader = common.parseDOM(subtitle, "a", attrs = { "href": "http://www.greeksubs.eu/subtitles/user/.+?" })[0]
                 except: uploader = 'other'
 
-                try: downloads = common.parseDOM(subtitle, "a", attrs = { "href": "http://www.greeksubtitles.eu/subinfo/.+?" })[-1]
+                try: downloads = common.parseDOM(subtitle, "a", attrs = { "href": "http://www.greeksubs.eu/subinfo/.+?" })[-1]
                 except: downloads = '0'
                 downloads =re.sub('[^0-9]', '', downloads)
 
-                name = common.parseDOM(subtitle, "a", attrs = { "href": "http://www.greeksubtitles.eu/subinfo/.+?" })[0]
+                name = common.parseDOM(subtitle, "a", attrs = { "href": "http://www.greeksubs.eu/subinfo/.+?" })[0]
                 name = ' '.join(re.sub('<.+?>', '', name).split())
                 name = '[%s] %s [%s DLs]' % (uploader, name, downloads)
                 name = common.replaceHTMLCodes(name)

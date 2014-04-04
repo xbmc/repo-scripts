@@ -1,4 +1,11 @@
 ------------------------
+GreekSubtitles.eu v1.0.1 (3-Apr-14)
+------------------------
+
+- Domain changed to GreekSubs.eu.
+
+
+------------------------
 GreekSubtitles.eu v1.0.0 (12-Mar-14)
 ------------------------
 
