@@ -1,3 +1,6 @@
+v.1.1.17 (April 05,2014)
+ - fixed issue causing crash with tmdb selected, and layout error in tmdb settings
+
 v.1.1.16 (April 02,2014)
  - fixed issue with crashing on startup when library movie has no trailer and we try to find one from tmdb.
  

@@ -1,7 +1,7 @@
 # Random trailer player
 #
 # Author - kzeleny
-# Version - 1.1.16
+# Version - 1.1.17
 # Compatibility - Frodo/Gothum
 #
 
@@ -468,7 +468,7 @@ def getTmdbTrailers():
             infostring = json.loads(infostring)
             for result in infostring['results']:
                 id=result['id']
-                dict={'trailer':'tmdb','id': id,'source':'tmdb','title':movie['title']}
+                dict={'trailer':'tmdb','id': id,'source':'tmdb','title':result['title']}
                 tmdbTrailers.append(dict)
             if infostring['total_pages']==page:
                 break
