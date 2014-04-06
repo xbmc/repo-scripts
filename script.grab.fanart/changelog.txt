@@ -1,3 +1,7 @@
+Version 0.12.8
+
+removed constant logging of what is being displayed
+
 Version 0.12.7
 
 added a startup window property, per request from Jeroen

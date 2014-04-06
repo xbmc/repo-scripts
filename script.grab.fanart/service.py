@@ -56,7 +56,7 @@ class GrabFanartService:
                 if(len(self.xbmc_movies) > 0):
 
                     try:
-                        utils.log('Movie - ' + self.xbmc_movies[self.movie_index].title,xbmc.LOGDEBUG)
+
                         self.WINDOW.setProperty('script.grab.fanart.Movie.Title',self.xbmc_movies[self.movie_index].title)
                         self.WINDOW.setProperty('script.grab.fanart.Movie.FanArt',self.xbmc_movies[self.movie_index].fan_art)
                         self.WINDOW.setProperty('script.grab.fanart.Movie.Poster',self.xbmc_movies[self.movie_index].poster)
@@ -75,7 +75,7 @@ class GrabFanartService:
                 if(len(self.xbmc_tv) > 0):
 
                     try:
-                        utils.log('TV - ' + self.xbmc_tv[self.tv_index].title,xbmc.LOGDEBUG)
+                        
                         self.WINDOW.setProperty('script.grab.fanart.TV.Title',self.xbmc_tv[self.tv_index].title)
                         self.WINDOW.setProperty('script.grab.fanart.TV.FanArt',self.xbmc_tv[self.tv_index].fan_art)
                         self.WINDOW.setProperty('script.grab.fanart.TV.Poster',self.xbmc_tv[self.tv_index].poster)
@@ -102,7 +102,7 @@ class GrabFanartService:
                         self.tv_index = 0
 
                 if(aVideo != None):
-                    utils.log('Video - ' + aVideo.title,xbmc.LOGDEBUG)
+                    
                     self.WINDOW.setProperty('script.grab.fanart.Video.Title',aVideo.title)
                     self.WINDOW.setProperty('script.grab.fanart.Video.FanArt',aVideo.fan_art)
                     self.WINDOW.setProperty('script.grab.fanart.Video.Poster',aVideo.poster)
@@ -111,7 +111,7 @@ class GrabFanartService:
                 if(len(self.xbmc_music) > 0):
 
                     try:
-                        utils.log('Music - ' + self.xbmc_music[self.music_index].title,xbmc.LOGDEBUG)
+                        
                         self.WINDOW.setProperty('script.grab.fanart.Music.Artist',self.xbmc_music[self.music_index].title)
                         self.WINDOW.setProperty('script.grab.fanart.Music.FanArt',self.xbmc_music[self.music_index].fan_art)
                         self.WINDOW.setProperty('script.grab.fanart.Music.Description',self.xbmc_music[self.music_index].plot)
@@ -127,7 +127,7 @@ class GrabFanartService:
                         self.music_index = 0
 
                 if(globalArt != None):
-                    utils.log('Global - ' + globalArt.title,xbmc.LOGDEBUG)
+                    
                     self.WINDOW.setProperty('script.grab.fanart.Global.Title',globalArt.title)
                     self.WINDOW.setProperty('script.grab.fanart.Global.FanArt',globalArt.fan_art)
                     
