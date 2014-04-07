@@ -1,3 +1,6 @@
+0.0.10
+- improve tv show title, season and episode detection
+
 0.0.9
 - fix sort order
 - fix type error

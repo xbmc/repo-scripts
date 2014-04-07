@@ -214,6 +214,10 @@ def remove_duplications(items):
     return ret.values()
 
 def search_subtitles(item):
+    if not item['season'] and not item['episode']:
+        debuglog("No season or episode info found for %s" % item['tvshow'])
+        return None
+
     showid = get_showid(item)
     if not showid:
         debuglog("No id found for %s" % item['tvshow'])
@@ -343,12 +347,27 @@ def setup_tvshow_data(item):
         item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))
         item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
     else:
-        title = xbmc.getCleanMovieTitle(item['file_original_path'])[0]
-        pattern = r'^(?P<title>.+)S(?P<season>\d+)E(?P<episode>\d+)$'
-        match = re.search(pattern, title, re.I)
-        item['tvshow'] = match.group('title').strip()
-        item['season'] = match.group('season')
-        item['episode'] = match.group('episode')
+        infos = xbmc.getCleanMovieTitle(item['file_original_path'], True)
+
+        if not 'year' in item or not item['year']:
+            item['year'] = infos[1]
+
+        title_pattern = r'^(?P<title>.+)S(?P<season>\d+)E(?P<episode>\d+)$'
+        title_match = re.search(title_pattern, infos[0], re.IGNORECASE)
+
+        if title_match:
+            item['tvshow'] = title_match.group('title').strip()
+            item['season'] = title_match.group('season')
+            item['episode'] = title_match.group('episode')
+        else:
+            item['tvshow'] = infos[0]
+
+            filename_pattern = r'^(.*)S(?P<season>\d+)E(?P<episode>\d+)(.*)$'
+            filename_match = re.search(filename_pattern, item['filename'], re.IGNORECASE)
+
+            if filename_match:
+                item['season'] = filename_match.group('season')
+                item['episode'] = filename_match.group('episode')
 
     return item
 
