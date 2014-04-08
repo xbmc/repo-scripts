@@ -34,6 +34,8 @@ release_list = [
 ['720p', '720p'],
 ['web', 'WEB-DL'],
 ['bluray', 'BluRay'],
+['1080p', '1080p'],
+['1080i', '1080i'],
 ['dvdrip', 'DVDRip'],
 ['bdrip', 'BDRip']]
 # Revison list
@@ -79,6 +81,12 @@ def checkSync(fn, release):
       check = True
   elif release == 'Normale':
     if ('hdtv' in fn) and ( not ('720p' in fn)):
+      check = True
+  elif release == '1080p':           
+    if ('1080p' in fn) and ('hdtv' in fn):
+      check = True
+  elif release == '1080i':
+    if ('1080i' in fn):
       check = True
   elif release == 'BluRay':
     if ('bluray' in fn):

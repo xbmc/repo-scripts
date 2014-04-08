@@ -1,2 +1,8 @@
+1.0.3
+- added 1080i and 1080p releases
+
+1.0.2
+- use the BeautifulSoup4 xbmc module
+
 1.0.0
 - initial release
