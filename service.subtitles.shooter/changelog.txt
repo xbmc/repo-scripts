@@ -1,3 +1,8 @@
+1.0.2
+- added setting to save subtitles as UTF-8
+- added setting for Simplified and Traditional conversion
+- changed to use zlib to decompress incomplete zipped subtitle
+
 1.0.1
 - fixed to show language flag
 

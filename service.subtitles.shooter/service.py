@@ -10,12 +10,13 @@ import xbmcgui
 import xbmcplugin
 import shutil
 import unicodedata
+import chardet
 
 import hashlib
 from httplib import HTTPConnection, OK
 import struct
 from cStringIO import StringIO
-import gzip
+import zlib
 import random
 from urlparse import urlparse
 
@@ -32,6 +33,7 @@ __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' )
 __temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp') ).decode("utf-8")
 
 sys.path.append (__resource__)
+from langconv import *
 
 SVP_REV_NUMBER = 1543
 CLIENTKEY = "SP,aerSP,aer %d &e(\xd7\x02 %s %s"
@@ -115,6 +117,7 @@ def urlopen(url, svprev, formdata):
     h.putheader("Host", r.hostname)
     h.putheader("Accept", "*/*")
     h.putheader("Content-Length", cl)
+    h.putheader("Expect", "100-continue")
     h.putheader("Content-Type", "multipart/form-data; boundary=" + boundary)
     h.endheaders()
 
@@ -169,7 +172,10 @@ class Package(object):
         log(sys._getframe().f_code.co_name, "SubPackageCount: %d" % (self.SubPackageCount))
         self.SubPackages = []
         for i in range(self.SubPackageCount):
-            sub = SubPackage(s)
+            try:
+                sub = SubPackage(s)
+            except:
+                break
             self.SubPackages.append(sub)
 
 class SubPackage(object):
@@ -197,8 +203,8 @@ class SubFile(object):
         self.FileDataLength = struct.unpack("!I", c)[0]
         self.FileData = s.read(self.FileDataLength)
         if self.FileData.startswith("\x1f\x8b"):
-            gzipper = gzip.GzipFile(fileobj=StringIO(self.FileData))
-            self.FileData = gzipper.read()
+            d = zlib.decompressobj(16+zlib.MAX_WBITS)
+            self.FileData = d.decompress(self.FileData)
 
 def getSub(fpath, languagesearch, languageshort, languagelong):
     subdata = downloadSubs(fpath, languagesearch)
@@ -210,6 +216,15 @@ def getSub(fpath, languagesearch, languageshort, languagelong):
         for sub in package.SubPackages:
             id += 1
             for file in sub.Files:
+                if __addon__.getSetting("transUTF8") == "true" and (file.ExtName in ["srt", "txt", "ssa", "ass", "smi"]):
+                    enc = chardet.detect(file.FileData)['encoding']
+                    if enc:
+                        data = file.FileData.decode(enc, 'ignore')
+                        if __addon__.getSetting("transJianFan") == "1":   # translate to Simplified
+                            data = Converter('zh-hans').convert(data)
+                        elif __addon__.getSetting("transJianFan") == "2": # translate to Traditional
+                            data = Converter('zh-hant').convert(data)
+                        file.FileData = data.encode('utf-8', 'ignore')
                 local_tmp_file = os.path.join(__temp__, ".".join([barename, languageshort, str(id), file.ExtName]))
                 try:
                     local_file_handle = open(local_tmp_file, "wb")
