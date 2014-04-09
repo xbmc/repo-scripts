@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="Location Settings">
+		<setting id="ObservationLocation" label="32000" type="action"
+			action="RunScript(special://home/addons/$ID/src/metoffice/setlocation.py, ObservationLocation)" default="Heathrow"/>
+		<setting id="ObservationLocationID" type="text" visible="false" default="3772"/>
+		<setting id="ForecastLocation" label="32001" type="action"
+			action="RunScript(special://home/addons/$ID/src/metoffice/setlocation.py, ForecastLocation)" default="London"/>
+		<setting id="ForecastLocationID" type="text" visible="false" default="352409"/>
+		<setting id="RegionalLocation" label="32002" type="action"
+			action="RunScript(special://home/addons/$ID/src/metoffice/setlocation.py, RegionalLocation)" default="London and Southeast England"/>
+		<setting id="RegionalLocationID" type="text" visible="false" default="514"/>
+	</category>
+	<category label="Configuration">
+		<setting id="ApiKey" label="32003" type="text" default="4eeb196d-a473-4634-a9da-397974138bf5"/>
+		<setting id="GeoLocation" label="32004" type="bool" default="true"/>
+	    <setting id="GeoIPProvider"
+			label="32005"
+			type="enum"
+			values="www.ip-api.com|www.freegeoip.net|www.telize.com|www.hostip.info|www.geoiplookup.net"
+			enable="eq(-1,true)"
+			default="2"/>
+		<setting id="EraseCache" label="32006" type="bool" default="false"/>
+	</category>
+</settings>

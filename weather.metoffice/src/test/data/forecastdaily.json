@@ -1,0 +1,253 @@
+{
+  "SiteRep": {
+    "DV": {
+      "type": "Forecast", 
+      "dataDate": "2014-02-24T14:00:00Z", 
+      "Location": {
+        "elevation": "26.0", 
+        "name": "CAMBRIDGE  NIAB", 
+        "i": "99123", 
+        "country": "ENGLAND", 
+        "lon": "0.103", 
+        "Period": [
+          {
+            "Rep": [
+              {
+                "Dm": "13", 
+                "D": "SSW", 
+                "PPd": "85", 
+                "FDm": "10", 
+                "S": "13", 
+                "Hn": "70", 
+                "W": "12", 
+                "V": "VG", 
+                "Gn": "25", 
+                "U": "1", 
+                "$": "Day"
+              }, 
+              {
+                "D": "S", 
+                "Hm": "86", 
+                "PPn": "75", 
+                "$": "Night", 
+                "S": "16", 
+                "W": "12", 
+                "V": "GO", 
+                "Gm": "27", 
+                "FNm": "4", 
+                "Nm": "7"
+              }
+            ], 
+            "type": "Day", 
+            "value": "2014-02-24Z"
+          }, 
+          {
+            "Rep": [
+              {
+                "Dm": "12", 
+                "D": "SSW", 
+                "PPd": "6", 
+                "FDm": "8", 
+                "S": "18", 
+                "Hn": "71", 
+                "W": "1", 
+                "V": "VG", 
+                "Gn": "31", 
+                "U": "1", 
+                "$": "Day"
+              }, 
+              {
+                "D": "SSW", 
+                "Hm": "87", 
+                "PPn": "6", 
+                "$": "Night", 
+                "S": "9", 
+                "W": "2", 
+                "V": "GO", 
+                "Gm": "16", 
+                "FNm": "0", 
+                "Nm": "3"
+              }
+            ], 
+            "type": "Day", 
+            "value": "2014-02-25Z"
+          }, 
+          {
+            "Rep": [
+              {
+                "Dm": "11", 
+                "D": "WSW", 
+                "PPd": "40", 
+                "FDm": "6", 
+                "S": "13", 
+                "Hn": "64", 
+                "W": "1", 
+                "V": "VG", 
+                "Gn": "27", 
+                "U": "1", 
+                "$": "Day"
+              }, 
+              {
+                "D": "S", 
+                "Hm": "83", 
+                "PPn": "70", 
+                "$": "Night", 
+                "S": "11", 
+                "W": "12", 
+                "V": "VG", 
+                "Gm": "22", 
+                "FNm": "1", 
+                "Nm": "4"
+              }
+            ], 
+            "type": "Day", 
+            "value": "2014-02-26Z"
+          }, 
+          {
+            "Rep": [
+              {
+                "Dm": "11", 
+                "D": "WSW", 
+                "PPd": "84", 
+                "FDm": "6", 
+                "S": "16", 
+                "Hn": "69", 
+                "W": "14", 
+                "V": "GO", 
+                "Gn": "31", 
+                "U": "1", 
+                "$": "Day"
+              }, 
+              {
+                "D": "SSW", 
+                "Hm": "89", 
+                "PPn": "50", 
+                "$": "Night", 
+                "S": "9", 
+                "W": "7", 
+                "V": "GO", 
+                "Gm": "18", 
+                "FNm": "0", 
+                "Nm": "3"
+              }
+            ], 
+            "type": "Day", 
+            "value": "2014-02-27Z"
+          }, 
+          {
+            "Rep": [
+              {
+                "Dm": "9", 
+                "D": "SW", 
+                "PPd": "45", 
+                "FDm": "5", 
+                "S": "11", 
+                "Hn": "72", 
+                "W": "10", 
+                "V": "GO", 
+                "Gn": "22", 
+                "U": "1", 
+                "$": "Day"
+              }, 
+              {
+                "D": "SW", 
+                "Hm": "91", 
+                "PPn": "18", 
+                "$": "Night", 
+                "S": "7", 
+                "W": "7", 
+                "V": "GO", 
+                "Gm": "16", 
+                "FNm": "0", 
+                "Nm": "2"
+              }
+            ], 
+            "type": "Day", 
+            "value": "2014-02-28Z"
+          }
+        ], 
+        "lat": "52.245", 
+        "continent": "EUROPE"
+      }
+    }, 
+    "Wx": {
+      "Param": [
+        {
+          "units": "C", 
+          "name": "FDm", 
+          "$": "Feels Like Day Maximum Temperature"
+        }, 
+        {
+          "units": "C", 
+          "name": "FNm", 
+          "$": "Feels Like Night Minimum Temperature"
+        }, 
+        {
+          "units": "C", 
+          "name": "Dm", 
+          "$": "Day Maximum Temperature"
+        }, 
+        {
+          "units": "C", 
+          "name": "Nm", 
+          "$": "Night Minimum Temperature"
+        }, 
+        {
+          "units": "mph", 
+          "name": "Gn", 
+          "$": "Wind Gust Noon"
+        }, 
+        {
+          "units": "mph", 
+          "name": "Gm", 
+          "$": "Wind Gust Midnight"
+        }, 
+        {
+          "units": "%", 
+          "name": "Hn", 
+          "$": "Screen Relative Humidity Noon"
+        }, 
+        {
+          "units": "%", 
+          "name": "Hm", 
+          "$": "Screen Relative Humidity Midnight"
+        }, 
+        {
+          "units": "", 
+          "name": "V", 
+          "$": "Visibility"
+        }, 
+        {
+          "units": "compass", 
+          "name": "D", 
+          "$": "Wind Direction"
+        }, 
+        {
+          "units": "mph", 
+          "name": "S", 
+          "$": "Wind Speed"
+        }, 
+        {
+          "units": "", 
+          "name": "U", 
+          "$": "Max UV Index"
+        }, 
+        {
+          "units": "", 
+          "name": "W", 
+          "$": "Weather Type"
+        }, 
+        {
+          "units": "%", 
+          "name": "PPd", 
+          "$": "Precipitation Probability Day"
+        }, 
+        {
+          "units": "%", 
+          "name": "PPn", 
+          "$": "Precipitation Probability Night"
+        }
+      ]
+    }
+  }
+}

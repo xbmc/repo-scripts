@@ -1,0 +1,59 @@
+# XBMC Media Center language file
+# Addon Name: Weather MetOffice
+# Addon id: weather.metoffice
+# Addon Provider: Paul Backhouse
+msgid ""
+msgstr ""
+
+msgctxt "#32000"
+msgid "Observation Location"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Forecast Location"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Regional Location"
+msgstr ""
+
+msgctxt "#32003"
+msgid "API Key"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Use IP address to determine location"
+msgstr ""
+
+msgctxt "#32005"
+msgid "GeoIP Provider"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Erase Cache"
+msgstr ""
+
+#: default.py:44 setlocation.py:64
+msgctxt "#32007"
+msgid "No API Key."
+msgstr ""
+
+#: default.py:44 setlocation.py:64
+msgctxt "#32008"
+msgid "Enter your Met Office API Key under settings."
+msgstr ""
+
+#: setlocation.py:70
+msgctxt "#32009"
+msgid "No Matches"
+msgstr ""
+
+#: setlocation.py:70
+msgctxt "#32010"
+msgid "No locations found containing"
+msgstr ""
+
+#: setlocation.py:74
+msgctxt "#32011"
+msgid "Matching Sites"
+msgstr ""

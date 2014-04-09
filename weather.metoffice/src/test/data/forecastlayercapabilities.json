@@ -1,0 +1,71 @@
+{
+  "Layers": {
+    "Layer": [
+      {
+        "@displayName": "Rainfall", 
+        "Service": {
+          "Timesteps": {
+            "@defaultTime": "2014-03-19T09:00:00", 
+            "Timestep": [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]
+          }, 
+          "LayerName": "Precipitation_Rate", 
+          "@name": "UKPPBEST", 
+          "ImageFormat": "png"
+        }
+      }, 
+      {
+        "@displayName": "Cloud", 
+        "Service": {
+          "Timesteps": {
+            "@defaultTime": "2014-03-19T09:00:00", 
+            "Timestep": [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]
+          }, 
+          "LayerName": "Total_Cloud_Cover", 
+          "@name": "UKPPBEST", 
+          "ImageFormat": "png"
+        }
+      }, 
+      {
+        "@displayName": "CloudAndRain", 
+        "Service": {
+          "Timesteps": {
+            "@defaultTime": "2014-03-19T09:00:00", 
+            "Timestep": [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]
+          }, 
+          "LayerName": "Total_Cloud_Cover_Precip_Rate_Overlaid", 
+          "@name": "UKPPBEST", 
+          "ImageFormat": "png"
+        }
+      }, 
+      {
+        "@displayName": "Temperature", 
+        "Service": {
+          "Timesteps": {
+            "@defaultTime": "2014-03-19T09:00:00", 
+            "Timestep": [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]
+          }, 
+          "LayerName": "Temperature", 
+          "@name": "UKPPBEST", 
+          "ImageFormat": "png"
+        }
+      }, 
+      {
+        "@displayName": "Pressure", 
+        "Service": {
+          "Timesteps": {
+            "@defaultTime": "2014-03-19T00:00:00", 
+            "Timestep": [0, 12, 24, 36, 48, 60, 72, 84]
+          }, 
+          "LayerName": "Atlantic", 
+          "@name": "FRONTS", 
+          "ImageFormat": "png"
+        }
+      }
+    ], 
+    "@type": "Forecast", 
+    "BaseUrl": {
+      "@forServiceTimeFormat": "Timesteps", 
+      "$": "http://datapoint.metoffice.gov.uk/public/data/layer/wxfcs/{LayerName}/{ImageFormat}?RUN={DefaultTime}Z&FORECAST={Timestep}&key={key}"
+    }
+  }
+}

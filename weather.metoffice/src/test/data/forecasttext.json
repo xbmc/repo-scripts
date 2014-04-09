@@ -1,0 +1,49 @@
+{
+  "RegionalFcst": {
+    "issuedAt": "2014-02-24T16:00:00", 
+    "createdOn": "2014-02-24T15:27:12", 
+    "regionId": "wl", 
+    "FcstPeriods": {
+      "Period": [
+        {
+          "Paragraph": [
+            {
+              "$": "Rain clearing eastwards, showers following, with increasing winds.", 
+              "title": "Headline:"
+            }, 
+            {
+              "$": "Rain arriving in the far west around dusk will clear eastwards overnight, this heaviest in the west and over high ground, where winds will also become strong. Mild, with clear spells and scattered showers following. Minimum Temperature 5C.", 
+              "title": "This Evening and Tonight:"
+            }, 
+            {
+              "$": "Some dry and bright weather is likely at times but also scattered blustery, heavy showers. Remaining windy, especially around exposed coasts and hills where gales are likely. Maximum Temperature 9C.", 
+              "title": "Tuesday:"
+            }
+          ], 
+          "id": "day1to2"
+        }, 
+        {
+          "Paragraph": {
+            "$": "Sunny spells and lighter winds on Wednesday, some showers along the coast. Wet and windy overnight, turning showery on Thursday and Friday, becoming wintry over hills.", 
+            "title": "Outlook for Wednesday to Friday:"
+          }, 
+          "id": "day3to5"
+        }, 
+        {
+          "Paragraph": {
+            "$": "The weekend will start unsettled with showers or longer spells of rain, with some heavier bursts at first. This will be most persistent in the far southeast and far north, with a risk of hill snow in the north. There will be some drier slots too, especially on Sunday with a risk of local frost and icy surfaces. Temperatures near normal. Through the next week it will remain unsettled in northern parts, with further rain or showers, and some hill snow. It will be mainly dry but fairly cloudy towards the south with isolated patchy frost. During the middle part of the week rain may spread southwards for a time, before turning wet and windy in the northwest again later, with a risk of gales.", 
+            "title": "UK Outlook for Saturday 1 Mar 2014 to Monday 10 Mar 2014:"
+          }, 
+          "id": "day6to15"
+        }, 
+        {
+          "Paragraph": {
+            "$": "Current indications suggest a more typically unsettled pattern across the United Kingdom through much of March. Through this period we can expect to see fairly average conditions, which would mean spells of wet and windy weather, mostly in the north and west, but still some decent sunny spells in between. The best of the drier, brighter conditions is most likely in the south and east of the UK. Temperatures are likely to be around average, which may lead to more frequent incidences of frost compared to recent weeks.", 
+            "title": "UK Outlook for Tuesday 11 Mar 2014 to Tuesday 25 Mar 2014:"
+          }, 
+          "id": "day16to30"
+        }
+      ]
+    }
+  }
+}
