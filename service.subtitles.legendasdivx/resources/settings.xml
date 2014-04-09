@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32003">
+      <setting id="LDuser" type="text" label="32001" default=""/>
+      <setting id="LDpass" type="text" option = "hidden" label="32002" default=""/>
+      <setting id="PT" type="bool" label="32004" default="true"/>
+      <setting id="PTBR" type="bool" label="32005" default="true"/>
+      <setting id="ES" type="bool" label="32006" default="true"/>
+      <setting id="EN" type="bool" label="32007" default="true"/>
+    </category>   
+</settings>
