@@ -34,7 +34,7 @@ _actions = [
     "nextletter"        , "Next Letter",
     "prevletter"        , "Previous Letter",
   ]],
-  
+
   ["Playback", [
     "play"              , "Play",
     "pause"             , "Pause",
@@ -56,7 +56,7 @@ _actions = [
     "aspectratio"       , "Change Aspect Ratio",
     "showvideomenu"     , "Go to DVD Video Menu",
   ]],
-  
+
   ["Audio", [
     "mute"              , "Mute",
     "volumeup"          , "Volume Up",
@@ -67,7 +67,7 @@ _actions = [
     "audiodelayplus"    , "Delay Plus",
     "audiotoggledigital", "Toggle Digital/Analog",
   ]],
-  
+
   ["Pictures", [
     "nextpicture"       , "Next Picture",
     "previouspicture"   , "Previous Picture",
@@ -86,7 +86,7 @@ _actions = [
     "zoomlevel8"        , "Zoom level 8",
     "zoomlevel9"        , "Zoom level 9",
   ]],
-  
+
   ["Subtitle", [
     "showsubtitles"     , "Show Subtitles",
     "nextsubtitle"      , "Next Subtitle",
@@ -97,14 +97,14 @@ _actions = [
     #"subtitleshiftup"   , "SUBTITLE_VSHIFT_UP", #?
     #"subtitleshiftdown" , "SUBTITLE_VSHIFT_DOWN", #?
   ]],
-  
+
   ["PVR", [
     "channelup"             , "Channel Up",
     "channeldown"           , "Channel Down",
     "previouschannelgroup"  , "Previous channel group",
     "nextchannelgroup"      , "Next channel group",
   ]],
-  
+
   ["Item Actions", [
     "queue"             , "Queue item",
     "delete"            , "Delete item",
@@ -118,7 +118,7 @@ _actions = [
     #"increaserating"    , "INCREASE_RATING", #unused
     #"decreaserating"    , "DECREASE_RATING", #unused
   ]],
-  
+
   ["System", [
     "togglefullscreen"  , "Toggle Fullscreen",
     "minimize"          , "Minimize",
@@ -130,7 +130,7 @@ _actions = [
     "system.logoff"     , "Log off",
     "quit"              , "Quit XBMC",
   ]],
-  
+
   ["Virtual Keyboard", [
     "enter"             , "Enter",
     "shift"             , "Shift",
@@ -151,7 +151,7 @@ _actions = [
     "yellow"            , "Teletext Yellow",
     "blue"              , "Teletext Blue",
   ]],
-  
+
   ["Other", [
     "codecinfo"         , "Show codec info",
     "screenshot"        , "Take screenshot",
@@ -168,7 +168,7 @@ _actions = [
     "lockpreset"        , "Lock current visualisation preset ",
     "randompreset"      , "Switch to a new random preset",
   ]],
-  
+
   #["Analog", [
   #  "scrollup"          , "SCROLL_UP",
   #  "scrolldown"        , "SCROLL_DOWN",
@@ -188,7 +188,7 @@ _actions = [
   #  "mousedrag"         , "MOUSE_DRAG",
   #  "mousemove"         , "MOUSE_MOVE",
   #]]
-  
+
   #"verticalshiftup"   , "VSHIFT_UP",
   #"verticalshiftdown" , "VSHIFT_DOWN",
   #"increasevisrating" , "VIS_RATE_PRESET_PLUS",
@@ -333,23 +333,46 @@ _windows = [
 ]
 
 from collections_backport import OrderedDict
+from utils import rpc
+import xbmc
 
-def _get_actions():
-  ret = OrderedDict()
-  for elem in _actions:
-    category = elem[0]
-    actions = elem[1][0::2]
-    names = elem[1][1::2]
-    ret[category] = OrderedDict(zip(actions, names))
-  
-  all_windows = _activate_window + _windows[2:] #dont include "global"
-  actions = [ "activatewindow(%s)" % w_id for w_id in all_windows[0::2] ]
-  names = all_windows[1::2]
-  ret["Activate Window"] = OrderedDict(sorted(zip(actions, names), key=lambda t: t[1]))
-  return ret
 
-ACTIONS = _get_actions() # map the action list to a CategoryStr -> ActionKey -> ActionStr dict
+def action_dict(actions, action_names):
+    """Create dict of action->name sorted by name"""
+    return OrderedDict(sorted(zip(actions, action_names), key=lambda t: t[1]))
+
+
+def _get_run_addon_actions():
+    addons = []
+    addon_types = ['xbmc.python.pluginsource', 'xbmc.python.script']
+    for addon_type in addon_types:
+        response = rpc('Addons.GetAddons', type=addon_type, properties=['name', 'enabled'])
+        addons.extend([a for a in response['result']['addons'] if a['enabled']])
+    actions = ['runaddon(%s)' % a['addonid'] for a in addons]
+    names = ['Launch %s' % a['name'] for a in addons]
+    return action_dict(actions, names)
+
+
+def _get_activate_window_actions():
+    all_windows = _activate_window + _windows[2:] #don't include "global"
+    actions = ["activatewindow(%s)" % w_id for w_id in all_windows[0::2]]
+    names = ["Open %s" % w for w in all_windows[1::2]]
+    return action_dict(actions, names)
+
+
+def _get_action_dict():
+    """ Map actions to 'category name'->'action id'->'action name' dict"""
+    d = OrderedDict()
+    for elem in _actions:
+        category = elem[0]
+        actions = elem[1][0::2]
+        names = elem[1][1::2]
+        d[category] = OrderedDict(zip(actions, names))
+
+    d["Windows"] = _get_activate_window_actions()
+    d["Add-ons"] = _get_run_addon_actions()
+    return d
+
+
+ACTIONS = _get_action_dict()
 WINDOWS = OrderedDict(zip(_windows[0::2], _windows[1::2]))
-
-import xbmcaddon
-tr = xbmcaddon.Addon().getLocalizedString

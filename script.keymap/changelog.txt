@@ -1,5 +1,10 @@
+[B]v0.9.3[/B]
+- Added actions for launching Add-ons
+- Added timeout to dialog that abort if no key is pressed
+- "Delete" option changed to load defaults instead of deleting keymap file
+
 [B]v0.9.2[/B]
-- added System.LogOff action
+- Added System.LogOff action
 
 [B]v0.9.1[/B]
-- fixed: script not working on os x due to missing python libraries
+- Fixed: script not working on os x due to missing python libraries
