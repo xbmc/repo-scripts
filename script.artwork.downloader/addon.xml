@@ -2,7 +2,7 @@
 <addon
     id="script.artwork.downloader"
     name="Artwork Downloader"
-    version="12.0.24"
+    version="12.0.25"
     provider-name="Martijn"
     >
   <requires>
@@ -15,7 +15,6 @@
   <extension point="xbmc.python.script"         library="default.py">
     <provides>executable</provides>
   </extension>
-  <extension point="xbmc.service" library="service.py" start="login"/>
   <extension point="xbmc.addon.metadata">
     <summary lang="be">Downloads Artwork for TV shows, Movies and Musicvideos in your library</summary>
     <summary lang="da">Downloader grafik til TV-serier, Film og Musikvideoer i dit bibliotek</summary>

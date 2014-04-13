@@ -25,10 +25,10 @@
         <setting type="sep" />
         <setting label="32052" type="lsep" />
         <setting type="sep" />
+        <setting label="32055" type="select"    id="limit_preferred_language"    default="English" values="Chinese|Dutch|English|Finnish|French|German|Hungarian|Italian|Japanese|Polish|Portuguese|Russian|Spanish|Swedish" />
         <setting label="32051" type="bool"      id="limit_artwork"               default="true"/>
         <setting label="32053" type="slider"    id="limit_extrafanart_maximum"   subsetting="true" enable="eq(-1,true)" visible="eq(-1,true)" default="5"     range="5,5,20"  option="int" />
         <setting label="32054" type="slider"    id="limit_extrafanart_rating"    subsetting="true" enable="eq(-2,true)" visible="eq(-2,true)" default="5"      range="0,10"  option="int" />
-        <setting label="32055" type="select"    id="limit_preferred_language"    subsetting="true" enable="eq(-3,true)" visible="eq(-3,true)" default="English" values="Chinese|Dutch|English|Finnish|French|German|Hungarian|Italian|Japanese|Polish|Portuguese|Russian|Spanish|Swedish" />
         <setting label="32056" type="bool"      id="limit_notext"                subsetting="true" enable="eq(-4,true)" visible="eq(-4,true)" default="true" />
         <setting label="32057" type="select"    id="limit_size_moviefanart"      subsetting="true" enable="eq(-5,true)" visible="eq(-5,true)" default="720"    values="480|720|1080" />
         <setting label="32058" type="select"    id="limit_size_tvshowfanart"     subsetting="true" enable="eq(-6,true)" visible="eq(-6,true)" default="720"    values="480|720|1080" />
