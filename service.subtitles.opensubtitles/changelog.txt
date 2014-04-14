@@ -1,3 +1,6 @@
+5.0.7
+- fix: Do not use unsafe file names, thx Cesar Canassa
+
 5.0.6
 - clean temp folder
 - add login details to addon settings

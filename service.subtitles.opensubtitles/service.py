@@ -1,13 +1,14 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 import os
-import sys
-import xbmc
 import shutil
+import sys
 import urllib
-import xbmcvfs
+import xbmc
 import xbmcaddon
 import xbmcgui,xbmcplugin
+import xbmcvfs
+import uuid
 
 __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
@@ -49,7 +50,7 @@ def Search( item ):
 
       listitem.setProperty( "sync", ("false", "true")[str(item_data["MatchedBy"]) == "moviehash"] )
       listitem.setProperty( "hearing_imp", ("false", "true")[int(item_data["SubHearingImpaired"]) != 0] )
-      
+
       url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s" % (__scriptid__,
                                                                         item_data["ZipDownloadLink"],
                                                                         item_data["IDSubtitleFile"],
@@ -58,14 +59,15 @@ def Search( item ):
 
       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
-def Download(id,url,filename, stack=False):
+
+def Download(id,url, stack=False):
   subtitle_list = []
   exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
   if stack:         ## we only want XMLRPC download if movie is not in stack,
                     ## you can only retreive multiple subs in zip
     result = False
   else:
-    subtitle = os.path.join(__temp__,filename.decode("utf-8"))
+    subtitle = os.path.join(__temp__, str(uuid.uuid4()))
     try:
       result = OSDBServer().download(id, subtitle)
     except:
@@ -86,16 +88,16 @@ def Download(id,url,filename, stack=False):
         subtitle_list.append(file)
   else:
     subtitle_list.append(subtitle)
-    
+
   if xbmcvfs.exists(subtitle_list[0]):
     return subtitle_list
-    
+
 def get_params(string=""):
   param=[]
   if string == "":
     paramstring=sys.argv[2]
   else:
-    paramstring=string 
+    paramstring=string
   if len(paramstring)>=2:
     params=paramstring
     cleanedparams=params.replace('?','')
@@ -108,7 +110,7 @@ def get_params(string=""):
       splitparams=pairsofparams[i].split('=')
       if (len(splitparams))==2:
         param[splitparams[0]]=splitparams[1]
-                                
+
   return param
 
 params = get_params()
@@ -126,29 +128,29 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
   item['title']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))# try to get original title
   item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))# Full path of a playing file
   item['3let_language']      = [] #['scc','eng']
-  
+
   if 'searchstring' in params:
     item['mansearch'] = True
-    item['mansearchstr'] = params['searchstring']     
-  
+    item['mansearchstr'] = params['searchstring']
+
   for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
     if lang == "Portuguese (Brazil)":
       lan = "pob"
-    else:  
+    else:
       lan = xbmc.convertLanguage(lang,xbmc.ISO_639_2)
       if lan == "gre":
         lan = "ell"
 
     item['3let_language'].append(lan)
-  
+
   if item['title'] == "":
     log( __name__, "VideoPlayer.OriginalTitle not found")
     item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
-    
+
   if item['episode'].lower().find("s") > -1:                                      # Check if season is "Special"
     item['season'] = "0"                                                          #
     item['episode'] = item['episode'][-1:]
-  
+
   if ( item['file_original_path'].find("http") > -1 ):
     item['temp'] = True
 
@@ -159,24 +161,14 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
   elif ( item['file_original_path'].find("stack://") > -1 ):
     stackPath = item['file_original_path'].split(" , ")
     item['file_original_path'] = stackPath[0][8:]
-  
-  Search(item)  
+
+  Search(item)
 
 elif params['action'] == 'download':
-  subs = Download(params["ID"],params["link"],params["filename"])
+  subs = Download(params["ID"], params["link"])
   for sub in subs:
     listitem = xbmcgui.ListItem(label=sub)
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
-  
-  
+
+
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    
