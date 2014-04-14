@@ -50,24 +50,24 @@ def Search( item ):
 
       listitem.setProperty( "sync", ("false", "true")[str(item_data["MatchedBy"]) == "moviehash"] )
       listitem.setProperty( "hearing_imp", ("false", "true")[int(item_data["SubHearingImpaired"]) != 0] )
-
-      url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s" % (__scriptid__,
+      url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s&format=%s" % (__scriptid__,
                                                                         item_data["ZipDownloadLink"],
                                                                         item_data["IDSubtitleFile"],
-                                                                        item_data["SubFileName"]
+                                                                        item_data["SubFileName"],
+                                                                        item_data["SubFormat"]
                                                                         )
 
       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
 
-def Download(id,url, stack=False):
+def Download(id,url,format,stack=False):
   subtitle_list = []
   exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
   if stack:         ## we only want XMLRPC download if movie is not in stack,
                     ## you can only retreive multiple subs in zip
     result = False
   else:
-    subtitle = os.path.join(__temp__, str(uuid.uuid4()))
+    subtitle = os.path.join(__temp__, "%s.%s" %(str(uuid.uuid4()), format))
     try:
       result = OSDBServer().download(id, subtitle)
     except:
@@ -165,7 +165,7 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
   Search(item)
 
 elif params['action'] == 'download':
-  subs = Download(params["ID"], params["link"])
+  subs = Download(params["ID"], params["link"],params["format"])
   for sub in subs:
     listitem = xbmcgui.ListItem(label=sub)
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
