@@ -1,3 +1,9 @@
+1.0.0
+- replaced website download with api download and improved "download too many times" check
+- updated thetvdb ids
+- added trick to force sync versions on top of the list
+- bumped to first "official" version
+
 0.0.5
 - fixed bug with the retrieve tv show list function
 - added fallback to filename search in case search by tv show name fails

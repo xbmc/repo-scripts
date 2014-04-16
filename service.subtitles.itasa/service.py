@@ -174,8 +174,8 @@ def getItaSATVShowID(tvshow, onlineid):
 			else:
 				log(__name__,'Download tv show list and search for new tv shows')
 				missingseries = {}
-				content = getItaSATVShowList()
-				if content:
+				result = getItaSATVShowList()
+				if result:
 					for (tvshowid, tvshowname) in result:
 						if not (tvshowid in series.values()):
 							newid = getItaSATheTVDBID(tvshowid)
@@ -213,17 +213,38 @@ def getItaSATVShowID(tvshow, onlineid):
 	else:
 		return None
 
-def login(username, password):
-	log( __name__ , "Logging in with username '%s' ..." % (username))
+
+def getAuthID():
+	username = __addon__.getSetting( 'ITuser' )
+	password = __addon__.getSetting( 'ITpass' )
+	authid = ''
+	if (username == '' or password == ''):
+		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32004))).encode('utf-8'))
+		log( __name__ ,'Missing username or password. Login to Itasa failed.')
+		return ''
+	else:
+		log( __name__ , "Logging in with username '%s' ..." % (username))
+		oldusername = __addon__.getSetting( 'ITLoggeduser' )
+		authid = __addon__.getSetting( 'authid' )
+		if (authid =='' or oldusername != username):
+			content = geturl('https://api.italiansubs.net/api/rest/users/login?username=' + username + '&password=' + password + '&apikey=4ffc34b31af2bca207b7256483e24aac')
+			match = re.findall(r'<authcode>([\s\S]*?)</authcode>', content, re.IGNORECASE | re.DOTALL)
+			if match and match[0]!='':
+				authid=match[0]
+				__addon__.setSetting(id="ITLoggeduser", value=username)
+				__addon__.setSetting(id="authid", value=authid)
+			else:
+				xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32005))).encode('utf-8'))
+				log( __name__ ,'Login to Itasa api failed. Check your username/password at the addon configuration')
+				return ''
 	content= geturl(main_url + 'index.php')
 	if content is not None:
 		match = re.search('logouticon.png', content, re.IGNORECASE | re.DOTALL)
 		if match:
-			return 1
+			return authid
 		else:
 			match = re.search('<input type="hidden" name="return" value="([^\n\r\t ]+?)" /><input type="hidden" name="([^\n\r\t ]+?)" value="([^\n\r\t ]+?)" />', content, re.IGNORECASE | re.DOTALL)
 			if match:
-				
 				return_value = match.group(1)
 				unique_name = match.group(2)
 				unique_value = match.group(3)
@@ -236,13 +257,17 @@ def login(username, password):
 				response = urllib2.urlopen(request).read()
 				match = re.search('logouticon.png', response, re.IGNORECASE | re.DOTALL)
 				if match:
-					return 1
+					return authid
 				else:
-					return 0
+					xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32006))).encode('utf-8'))
+					log( __name__ ,'Login to Itasa failed. Check your username/password at the addon configuration')
+					return ''
 	else:
-		return 0
+		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32007))).encode('utf-8'))
+		log( __name__ ,'Error loading itasa page. Login to Itasa failed')
+		return ''
 
-def append_subtitle(subid, subtitlename, filename, sync):
+def append_subtitle(subid, subtitlename, filename, sync, count):
 	listitem = xbmcgui.ListItem(label='Italian',
 								label2=subtitlename,
 								thumbnailImage='it')
@@ -252,7 +277,7 @@ def append_subtitle(subid, subtitlename, filename, sync):
 
 	## below arguments are optional, it can be used to pass any info needed in download function
 	## anything after "action=download&" will be sent to addon once user clicks listed subtitle to downlaod
-	url = "plugin://%s/?action=download&subid=%s&filename=%s" % (__scriptid__, subid, filename)
+	url = "plugin://%s/?action=download&count=%s&subid=%s&filename=%s" % (__scriptid__, count, subid, filename)
 	## add it to list, this can be done as many times as needed for all subtitles found
 	log(__name__,"Adding subtitle '%s' to gui list" % subtitlename)
 	xbmcplugin.addDirectoryItem(handle = int(sys.argv[1]), url = url, listitem = listitem, isFolder = False)
@@ -267,12 +292,12 @@ def search(item):
 		elif item['tvshow']:
 			search_tvshow(item['tvshow'], item['season'], item['episode'], item['onlineid'], filename, True)
 		elif item['title'] and item['year']:
-			xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32006))).encode('utf-8'))
+			xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32009))).encode('utf-8'))
 			log(__name__, 'Itasa only works with tv shows. Skipped')
 		else:
 			search_filename(filename, False)
 	else:
-		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32005))).encode('utf-8'))
+		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32008))).encode('utf-8'))
 		log(__name__, 'Itasa only works with italian. Skipped')
 	
 def search_tvshow(tvshow, season, episode, onlineid, filename, allowfallback):
@@ -316,30 +341,33 @@ def search_manual(searchstr, filename):
 
 def checksyncandadd(result, filename):
 	fl = filename.lower()
+	count=0
 	for (subtitleid, subtitlename, subtitleversion) in result:
 		if subtitleversion == 'WEB-DL':						
 			if ('web-dl' in fl) or ('web.dl' in fl) or ('webdl' in fl) or ('web dl' in fl):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True, count)
 		elif subtitleversion == '720p':						
 			if ('720p' in fl) and ('hdtv' in fl):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True, count)
 		elif subtitleversion == 'Normale':
 			if ('hdtv' in fl) and ( not ('720p' in fl)):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True, count)
 		elif subtitleversion.lower() in fl:
-			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True, count)
+		count +=1
 	for (subtitleid, subtitlename, subtitleversion) in result:
 		if subtitleversion == 'WEB-DL':						
 			if not (('web-dl' in fl) or ('web.dl' in fl) or ('webdl' in fl) or ('web dl' in fl)):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, True)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False, count)
 		elif subtitleversion == '720p':
 			if not (('720p' in fl) and ('hdtv' in fl)):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False, count)
 		elif subtitleversion == 'Normale':
 			if not (('hdtv' in fl) and ( not ('720p' in fl))):
-				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
+				append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False, count)
 		elif not (subtitleversion.lower() in fl):
-			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False)
+			append_subtitle(subtitleid, subtitlename + ' ' + subtitleversion, filename, False, count)
+		count +=1
 
 def search_filename(filename, allowfallback):
 	log(__name__, 'Search tv show using the file name')
@@ -362,92 +390,80 @@ def search_filename(filename, allowfallback):
 			log(__name__, 'Unable to retrieve a tv show name and episode from file name')
 
 def download (subid): #standard input
-	username = __addon__.getSetting( 'ITuser' )
-	password = __addon__.getSetting( 'ITpass' )
-	if login(username, password):
-		log( __name__ , ' Login successful')
-		content= geturl(main_url + 'index.php?option=com_remository&Itemid=6&func=fileinfo&id='+subid)
+	authid = getAuthID()
+	if authid != '':
+		url = 'https://api.italiansubs.net/api/rest/subtitles/download?authcode=' + authid + '&subtitle_id=' + subid + '&apikey=4ffc34b31af2bca207b7256483e24aac'
+		log( __name__ ,"Fetching subtitles using url %s" % url)
+		content= geturl(url)
 		if content:
-			match = re.search('<a href="http://www\.italiansubs\.net/(index\.php\?option=com_remository&amp;Itemid=\d+?&amp;func=download&amp;id=%s&amp;chk=[^\n\r\t ]+?&amp;no_html=1")' % subid, content, re.IGNORECASE | re.DOTALL)
-			if match:
-				log( __name__ ,"Fetching subtitles using url %s" % (main_url + match.group(1)))
-				content= geturl(main_url + match.group(1))
-				if content:
-					log(__name__, 'Found download url')
-					try:
-						if xbmcvfs.exists(__temp__):
-							shutil.rmtree(__temp__)
-						xbmcvfs.mkdirs(__temp__)
-					except:
-						log(__name__, 'Failed to download the temp folder')
-					local_tmp_file = os.path.join(__temp__, 'itasa.xxx')
-					
-					try:
-						log(__name__, "Saving subtitles to '%s'" % local_tmp_file)
-						local_file_handle = open(local_tmp_file, 'wb')
-						local_file_handle.write(content)
-						local_file_handle.close()
-
-						#Check archive type (rar/zip/else) through the file header (rar=Rar!, zip=PK)
-						myfile = open(local_tmp_file, 'rb')
-						myfile.seek(0)
-						if myfile.read(1) == 'R':
-							typeid = 'rar'
-							packed = True
-							log(__name__, 'Discovered RAR Archive')
-						else:
-							myfile.seek(0)
-							if myfile.read(1) == 'P':
-								typeid = 'zip'
-								packed = True
-								log(__name__, 'Discovered ZIP Archive')
-							else:
-								typeid = 'srt'
-								packed = False
-								log(__name__, 'Discovered a non-archive file')
-						myfile.close()
-						local_tmp_file = os.path.join(__temp__, 'itasa.' + typeid)
-						os.rename(os.path.join(__temp__, 'itasa.xxx'), local_tmp_file)
-						log(__name__, "Saving to %s" % local_tmp_file)
-					except:
-						log(__name__, "Failed to save subtitle to %s" % local_tmp_file)
-					if packed:
-						xbmc.sleep(500)
-						xbmc.executebuiltin(('XBMC.Extract(' + local_tmp_file + ',' + __temp__ +')').encode('utf-8'), True)
-						files = []
-						exts = ['.srt', '.sub', '.txt', '.smi', '.ssa', '.ass']
-						tag = True
-						log(__name__, 'Check if file contains tags in srt and if not returns it')
-						for file in os.listdir(__temp__):
-							if '.tag.' not in file.lower() and os.path.splitext(file)[1] in exts:
-								files.append(os.path.join(__temp__, file))
-								if tag and '.notag.' in file.lower():
-									tag = False
-						if tag:
-							return files
-						else:
-							files2 = []
-							for file in files:
-								if not ('.notag.' not in file.lower() and os.path.splitext(file)[1]=='.srt'):
-									files2.append(file)
-							return files2
+			log(__name__, 'File downloaded')
+			try:
+				if xbmcvfs.exists(__temp__):
+					shutil.rmtree(__temp__)
+				xbmcvfs.mkdirs(__temp__)
+			except:
+				log(__name__, 'Failed to delete the temp folder')
+			local_tmp_file = os.path.join(__temp__, 'itasa.xxx')
+			
+			try:
+				log(__name__, "Saving subtitles to '%s'" % local_tmp_file)
+				local_file_handle = open(local_tmp_file, 'wb')
+				local_file_handle.write(content)
+				local_file_handle.close()
+				#Check archive type (rar/zip/else) through the file header (rar=Rar!, zip=PK)
+				myfile = open(local_tmp_file, 'rb')
+				myfile.seek(0)
+				if myfile.read(1) == 'R':
+					typeid = 'rar'
+					packed = True
+					log(__name__, 'Discovered RAR Archive')
+				else:
+					myfile.seek(0)
+					if myfile.read(1) == 'P':
+						typeid = 'zip'
+						packed = True
+						log(__name__, 'Discovered ZIP Archive')
 					else:
-						return [local_tmp_file]
+						myfile.seek(0)
+						if myfile.read(92) != '<br/>&nbsp;<br/> Spiacente il tuo limite di download per questo file &egrave stato raggiunto':
+							typeid = 'srt'
+							packed = False
+							log(__name__, 'Discovered a non-archive file')
+						else:
+							xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32010))).encode('utf-8'))
+							log( __name__ ,'Subtitle downloaded too many times.')
+							return []
+				myfile.close()
+				local_tmp_file = os.path.join(__temp__, 'itasa.' + typeid)
+				os.rename(os.path.join(__temp__, 'itasa.xxx'), local_tmp_file)
+				log(__name__, "Saving to %s" % local_tmp_file)
+			except:
+				log(__name__, "Failed to save subtitle to %s" % local_tmp_file)
+			if packed:
+				xbmc.sleep(500)
+				xbmc.executebuiltin(('XBMC.Extract(' + local_tmp_file + ',' + __temp__ +')').encode('utf-8'), True)
+				files = []
+				exts = ['.srt', '.sub', '.txt', '.smi', '.ssa', '.ass']
+				tag = True
+				log(__name__, 'Check if file contains tags in srt and if not returns it')
+				for file in os.listdir(__temp__):
+					if '.tag.' not in file.lower() and os.path.splitext(file)[1] in exts:
+						files.append(os.path.join(__temp__, file))
+						if tag and '.notag.' in file.lower():
+							tag = False
+				if tag:
+					return files
 				else:
-					log( __name__ ,'Failed to download the file')
+					files2 = []
+					for file in files:
+						if not ('.notag.' not in file.lower() and os.path.splitext(file)[1]=='.srt'):
+							files2.append(file)
+					return files2
 			else:
-				match = re.search('logouticon.png', content, re.IGNORECASE | re.DOTALL)
-				if match:
-					xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32007))).encode('utf-8'))
-					log( __name__ ,'Can\'t find the download url. Probably you downloaded the file too many times (more than 10)')
-				else:
-					log( __name__ ,'Can\'t find the download url. Probably not logged in')
+				return [local_tmp_file]
 		else:
-			log( __name__ ,'Download of subtitle page failed')
-	else:
-		xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32004))).encode('utf-8'))
-		log( __name__ ,'Login to Itasa failed. Check your username/password at the addon configuration')
-	return []
+			log( __name__ ,'Failed to download the file')
+			return []
 
 log(__name__, "Application version: %s" % __version__)
 if not xbmcvfs.exists(__profile__):
