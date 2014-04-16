@@ -3,10 +3,13 @@
 import os
 import sys
 import xbmc
-import urllib
+import urllib,urllib2
 import xbmcvfs
 import xbmcaddon
 import xbmcgui,xbmcplugin,shutil
+from zipfile import ZipFile
+from cStringIO import StringIO
+import uuid
 
 __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
@@ -86,22 +89,46 @@ def Download(url,filename):
     shutil.rmtree(__temp__)
   xbmcvfs.mkdirs(__temp__) 
   subtitle_list = []
-  exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
-  zip = os.path.join( __temp__, "PN.zip")
-  f = urllib.urlopen(url)
-  with open(zip, "wb") as subFile:
-    subFile.write(f.read())
-  subFile.close()
-  xbmc.sleep(500)
-#  zipf = zipfile.ZipFile(zip, mode='r')
-#  for subfile in zipf.namelist():
-#    zipf.extract(subfile, __temp__)
-  xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
-  for subfile in xbmcvfs.listdir(zip)[1]:
-    file = os.path.join(__temp__, subfile.decode('utf-8'))
-    if (os.path.splitext( file )[1] in exts):
-      subtitle_list.append(file)
+
+  try:
+    log( __name__ ,"Download using 'ZipFile' method")
+    response = urllib2.urlopen(url)
+    raw = response.read()      
+    archive = ZipFile(StringIO(raw), 'r')
+    files = archive.namelist()
+    files.sort()
+    index = 1
     
+    for file in files:
+      contents = archive.read(file)
+      extension = file[file.rfind('.') + 1:]
+
+      if len(files) == 1:
+        dest = os.path.join(__temp__, "%s.%s" %(str(uuid.uuid4()), extension))
+      else:
+        dest = os.path.join(__temp__, "%s.%d.%s" %(str(uuid.uuid4()), index, extension))
+      
+      f = open(dest, 'wb')
+      f.write(contents)
+      f.close()
+      subtitle_list.append(dest)
+      
+      index += 1
+  except:
+    log( __name__ ,"Download using 'old' method")
+    exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
+    zip = os.path.join( __temp__, "PN.zip")
+    f = urllib.urlopen(url)
+    with open(zip, "wb") as subFile:
+      subFile.write(f.read())
+    subFile.close()
+    xbmc.sleep(500)
+    xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
+    for subfile in xbmcvfs.listdir(zip)[1]:
+      file = os.path.join(__temp__, subfile.decode('utf-8'))
+      if (os.path.splitext( file )[1] in exts):
+        subtitle_list.append(file)
+
   return subtitle_list
     
  

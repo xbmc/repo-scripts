@@ -1,3 +1,6 @@
+5.0.6
+- add new extract method, should take care of accented characters
+
 5.0.5
 - cosmetics
 - Fix unzip issues with non-ascii in ziplib library
