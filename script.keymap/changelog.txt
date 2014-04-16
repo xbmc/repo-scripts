@@ -1,3 +1,6 @@
+[B]v0.9.4[/B]
+- Fixed: script failing to start when no audio/video add-ons is installed
+
 [B]v0.9.3[/B]
 - Added actions for launching Add-ons
 - Added timeout to dialog that abort if no key is pressed

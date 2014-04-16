@@ -347,7 +347,9 @@ def _get_run_addon_actions():
     addon_types = ['xbmc.python.pluginsource', 'xbmc.python.script']
     for addon_type in addon_types:
         response = rpc('Addons.GetAddons', type=addon_type, properties=['name', 'enabled'])
-        addons.extend([a for a in response['result']['addons'] if a['enabled']])
+        res = response['result']
+        if 'addons' in res:
+            addons.extend([a for a in res['addons'] if a['enabled']])
     actions = ['runaddon(%s)' % a['addonid'] for a in addons]
     names = ['Launch %s' % a['name'] for a in addons]
     return action_dict(actions, names)
