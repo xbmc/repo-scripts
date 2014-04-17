@@ -65,12 +65,15 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
 
     
-    def computeActiveLights(self, size, numberOfLights): 
+    def computeActiveLights(self, size, numberOfLights, randomized): 
         self.flatLightsArray = list()
         for number in range(0,size*size):
             self.flatLightsArray.append(0)
         for number in range(0,numberOfLights):
-            rand = random.randint(0,size*size-1)
+	    if (randomized):
+		rand = random.randint(0,size*size-1)
+	    else:
+  	        rand = number
             while self.flatLightsArray[rand] == 1:
                rand = (rand+1) % (size*size)
             self.flatLightsArray[rand] = 1
@@ -78,8 +81,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             #self.log(self.flatLightsArray)
         return self.flatLightsArray
       
-    def drawSinglePart(self, xOffset, yOffset, numberOfLights, blockSize, texture, imageOffset):
-        lightBlock = self.computeActiveLights(blockSize, numberOfLights)
+    def drawSinglePart(self, xOffset, yOffset, numberOfLights, blockSize, texture, imageOffset, randomized):
+        lightBlock = self.computeActiveLights(blockSize, numberOfLights, randomized)
         lightSize = self.lightSizeNormal
         lightPadding = self.lightPaddingNormal
         #autoscaling
@@ -142,16 +145,16 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             
             hour = now.hour
             #self.log(('hour ' + str(hour)))
-            self.drawSinglePart(0, 0, (hour/10), blockSizeNormal, 'red.png', 0)
-            self.drawSinglePart(3*(self.lightSizeNormal+self.lightPaddingNormal)+1*self.blockPaddingSmall, 0, (hour%10), blockSizeNormal, 'cyan.png', 9)
+            self.drawSinglePart(0, 0, (hour/10), blockSizeNormal, self.hour1Color, 0, self.randHourMin)
+            self.drawSinglePart(3*(self.lightSizeNormal+self.lightPaddingNormal)+1*self.blockPaddingSmall, 0, (hour%10), blockSizeNormal, self.hour2Color, 9, self.randHourMin)
        
             minute = now.minute
             #self.log(('minute ' + str(minute)))
-            self.drawSinglePart(6*(self.lightSizeNormal+self.lightPaddingNormal)+1*self.blockPaddingSmall+self.blockPaddingLarge, 0, (minute/10), blockSizeNormal, 'green.png', 18)
-            self.drawSinglePart(9*(self.lightSizeNormal+self.lightPaddingNormal)+2*self.blockPaddingSmall+self.blockPaddingLarge, 0, (minute%10), blockSizeNormal, 'purple.png', 27)
+            self.drawSinglePart(6*(self.lightSizeNormal+self.lightPaddingNormal)+1*self.blockPaddingSmall+self.blockPaddingLarge, 0, (minute/10), blockSizeNormal, self.min1Color, 18, self.randHourMin)
+            self.drawSinglePart(9*(self.lightSizeNormal+self.lightPaddingNormal)+2*self.blockPaddingSmall+self.blockPaddingLarge, 0, (minute%10), blockSizeNormal, self.min2Color, 27, self.randHourMin)
         if (self.showSeconds == True):
            second = now.second
-           self.drawSinglePart(12*(self.lightSizeNormal+self.lightPaddingNormal)+3*self.blockPaddingSmall+2*self.blockPaddingLarge, 0, second, blockSizeSeconds, 'blue.png', 36)
+           self.drawSinglePart(12*(self.lightSizeNormal+self.lightPaddingNormal)+3*self.blockPaddingSmall+2*self.blockPaddingLarge, 0, second, blockSizeSeconds, self.secondsColor, 36, self.randSec)
         
         if (onlySeconds == False):
             for b in self.allImages[:]:
@@ -166,7 +169,20 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             self.showSeconds = False
         else:
 	    self.showSeconds = True
+	if (self.addon.getSetting('setting_show_random_sec') in ['false', 'False']):
+	    self.randSec = False
+	else:
+	    self.randSec = True        
+        if (self.addon.getSetting('setting_show_random_hourmin') in ['false', 'False']):
+            self.randHourMin = False
+        else:
+            self.randHourMin = True
         self.redrawInterval = int(self.addon.getSetting('setting_redraw_interval'))
+	self.hour1Color = (self.addon.getSetting('setting_color_col_1')+".png").lower()
+	self.hour2Color = (self.addon.getSetting('setting_color_col_2')+".png").lower()
+	self.min1Color = (self.addon.getSetting('setting_color_col_3')+".png").lower()
+	self.min2Color = (self.addon.getSetting('setting_color_col_4')+".png").lower()
+	self.secondsColor = (self.addon.getSetting('setting_color_col_5')+".png").lower()	
 	self.monitor = self.ExitMonitor(self.exit, self.log)
 	self.allImages = list()
 	self.topX = 20
@@ -196,4 +212,5 @@ class Screensaver(xbmcgui.WindowXMLDialog):
     
     def log(self, msg):
         xbmc.log(u'Unary Clock Screensaver: %s' % msg)
+		
 

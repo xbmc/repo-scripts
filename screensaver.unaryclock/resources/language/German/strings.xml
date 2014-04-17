@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <strings>
 	<!-- Addon settings -->
-	<string id="33111">Zeige Sekunden</string>
-	<string id="33112">Zeichne die Uhr neu nach (Sekunden)</string>
+	<string id="32111">Zeige Sekunden</string>
+	<string id="32112">Zeichne die Uhr neu nach (Sekunden)</string>
+	<string id="32113">Zeichne Stunde und Minute zufällig</string>
+	<string id="32114">Zeige Sekunden zufällig</string>
+	<string id="32115">Farbe Stunden 1</string>
+	<string id="32116">Farbe Stunden 2</string>
+	<string id="32117">Farbe Minuten 1</string>
+	<string id="32118">Farbe Minuten 2</string>
+	<string id="32119">Farbe Sekunden</string>
 </strings>

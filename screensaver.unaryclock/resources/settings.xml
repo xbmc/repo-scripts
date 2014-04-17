@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <setting id="setting_show_seconds" type="bool" label="33111" default="true"/>
-    <setting id="setting_redraw_interval" type="labelenum" label="33112" values="15|30|60" default="30"/>
+    <setting id="setting_show_seconds" type="bool" label="32111" default="true"/>
+    <setting id="setting_redraw_interval" type="labelenum" label="32112" values="15|30|60" default="30"/>
+    <setting id="setting_show_random_hourmin" type="bool" label="32113" default="true"/>
+    <setting id="setting_show_random_sec" type="bool" label="32114" default="true"/>
+    <setting id="setting_color_col_1" type="labelenum" label="32115" values="Red|Orange|Yellow|Green|Cyan|Blue|Purple" default="Red"/>
+    <setting id="setting_color_col_2" type="labelenum" label="32116" values="Red|Orange|Yellow|Green|Cyan|Blue|Purple" default="Cyan"/>
+    <setting id="setting_color_col_3" type="labelenum" label="32117" values="Red|Orange|Yellow|Green|Cyan|Blue|Purple" default="Green"/>
+    <setting id="setting_color_col_4" type="labelenum" label="32118" values="Red|Orange|Yellow|Green|Cyan|Blue|Purple" default="Purple"/>
+    <setting id="setting_color_col_5" type="labelenum" label="32119" values="Red|Orange|Yellow|Green|Cyan|Blue|Purple" default="Blue"/>
 </settings>
