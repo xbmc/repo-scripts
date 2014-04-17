@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.grab.fanart"
-    name="Grab Fanart" version="0.12.8" provider-name="robweber">
+    name="Grab Fanart" version="0.12.9" provider-name="robweber">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>

@@ -60,7 +60,9 @@ class GrabFanartService:
                         self.WINDOW.setProperty('script.grab.fanart.Movie.Title',self.xbmc_movies[self.movie_index].title)
                         self.WINDOW.setProperty('script.grab.fanart.Movie.FanArt',self.xbmc_movies[self.movie_index].fan_art)
                         self.WINDOW.setProperty('script.grab.fanart.Movie.Poster',self.xbmc_movies[self.movie_index].poster)
+                        self.WINDOW.setProperty('script.grab.fanart.Movie.Logo',self.xbmc_movies[self.movie_index].logo)
                         self.WINDOW.setProperty('script.grab.fanart.Movie.Plot',self.xbmc_movies[self.movie_index].plot)
+                        self.WINDOW.setProperty('script.grab.fanart.Movie.Path',self.xbmc_movies[self.movie_index].path)
                     
                         aVideo = self.xbmc_movies[self.movie_index]
                         globalArt = aVideo
@@ -79,7 +81,9 @@ class GrabFanartService:
                         self.WINDOW.setProperty('script.grab.fanart.TV.Title',self.xbmc_tv[self.tv_index].title)
                         self.WINDOW.setProperty('script.grab.fanart.TV.FanArt',self.xbmc_tv[self.tv_index].fan_art)
                         self.WINDOW.setProperty('script.grab.fanart.TV.Poster',self.xbmc_tv[self.tv_index].poster)
+                        self.WINDOW.setProperty('script.grab.fanart.TV.Logo',self.xbmc_tv[self.tv_index].logo)
                         self.WINDOW.setProperty('script.grab.fanart.TV.Plot',self.xbmc_tv[self.tv_index].plot)
+                        self.WINDOW.setProperty('script.grab.fanart.TV.Path',self.xbmc_tv[self.tv_index].path)
 
                         #this will only have a value when "recent" is the type
                         self.WINDOW.setProperty('script.grab.fanart.TV.Season',str(self.xbmc_tv[self.tv_index].season))
@@ -106,7 +110,9 @@ class GrabFanartService:
                     self.WINDOW.setProperty('script.grab.fanart.Video.Title',aVideo.title)
                     self.WINDOW.setProperty('script.grab.fanart.Video.FanArt',aVideo.fan_art)
                     self.WINDOW.setProperty('script.grab.fanart.Video.Poster',aVideo.poster)
+                    self.WINDOW.setProperty('script.grab.fanart.Video.Logo',aVideo.logo)
                     self.WINDOW.setProperty('script.grab.fanart.Video.Plot',aVideo.plot)
+                    self.WINDOW.setProperty('script.grab.fanart.Video.Path',aVideo.path)
 
                 if(len(self.xbmc_music) > 0):
 
@@ -158,12 +164,16 @@ class GrabFanartService:
                 newMedia = XbmcMedia()
                 newMedia.title = aMovie['title']
                 newMedia.plot = aMovie['plot']
-
+                newMedia.path = aMovie['file']
+                
                 if(aMovie['art'].has_key('fanart')):
                     newMedia.fan_art = aMovie['art']['fanart']
 
                 if(aMovie['art'].has_key('poster')):
                     newMedia.poster = aMovie['art']['poster']
+
+                if(aMovie['art'].has_key('clearlogo')):
+                    newMedia.logo = aMovie['art']['clearlogo']
 
                 if(newMedia.verify()):
                     self.xbmc_movies.append(newMedia)
@@ -181,12 +191,16 @@ class GrabFanartService:
                 newMedia = XbmcMedia()
                 newMedia.title = aShow['title']
                 newMedia.plot = aShow['plot']
-
+                newMedia.path = aShow['file']
+                
                 if(aShow['art'].has_key('fanart')):
                     newMedia.fan_art = aShow['art']['fanart']
 
                 if(aShow['art'].has_key('poster')):
                     newMedia.poster = aShow['art']['poster']
+
+                if(aShow['art'].has_key('clearlogo')):
+                    newMedia.logo = aShow['art']['clearlogo']
 
                 if(newMedia.verify()):
                     self.xbmc_tv.append(newMedia)
@@ -228,12 +242,16 @@ class GrabFanartService:
                 newMedia = XbmcMedia()
                 newMedia.title = aMovie['title']
                 newMedia.plot = aMovie['plot']
-
+                newMedia.path = aMovie['file']
+                
                 if(aMovie['art'].has_key('fanart')):
                     newMedia.fan_art = aMovie['art']['fanart']
 
                 if(aMovie['art'].has_key('poster')):
                     newMedia.poster = aMovie['art']['poster']
+
+                if(aMovie['art'].has_key('clearlogo')):
+                    newMedia.logo = aMovie['art']['clearlogo']
 
                 if(newMedia.verify()):    
                     self.xbmc_movies.append(newMedia)
@@ -254,12 +272,16 @@ class GrabFanartService:
                 newMedia.plot = aShow['plot']
                 newMedia.season = aShow['season']
                 newMedia.episode = aShow['episode']
+                newMedia.path = aMovie['file']
                 
                 if(aShow['art'].has_key('tvshow.fanart')):
                     newMedia.fan_art = aShow['art']['tvshow.fanart']
 
                 if(aShow['art'].has_key('tvshow.poster')):
                     newMedia.poster = aShow['art']['tvshow.poster']
+
+                if(aShow['art'].has_key('tvshow.clearlogo')):
+                    newMedia.logo = aShow['art']['tvshow.clearlogo']
 
                 if(aShow['art'].has_key('thumb')):
                     newMedia.thumb = aShow['art']['thumb']
@@ -310,11 +332,13 @@ class XbmcMedia:
     title = ''
     fan_art = ''
     poster = ''
+    logo = ''
     plot = ''
     season = ''
     episode = ''
     thumb = ''
-
+    path = ''
+    
     def verify(self):
         result = True
 

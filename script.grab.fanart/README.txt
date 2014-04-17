@@ -27,17 +27,23 @@ script.grab.fanart.Global.FanArt - path to the fanart image for this media
 script.grab.fanart.Video.Title - the title of a random video (movie or tv show). There is a 10% chance of this being a TV show. 
 script.grab.fanart.Video.FanArt - the path to the fanart image for this video
 script.grab.fanart.Video.Poster - path to poster image for this video
+script.grab.fanart.Video.Logo - path to clear logo for this video - blank if it doesn't exist
 script.grab.fanart.Video.Plot - plot outline of this video
+script.grab.fanart.Video.Path - path to the video file
 
 script.grab.fanart.Movie.Title - title of the selected movie
 script.grab.fanart.Movie.FanArt - path to movie fanart
 script.grab.fanart.Movie.Poster - path to movie poster
+script.grab.fanart.Movie.Logo - path to clear logo for movie - blank if it doesn't exist
 script.grab.fanart.Movie.Plot - movie plot
+script.grab.fanart.Movie.Path - path to the movie file
 
 script.grab.fanart.TV.Title - title of selected tv show
 script.grab.fanart.TV.FanArt - path to tv show fanart
 script.grab.fanart.TV.Poster - path to tv show poster
+script.grab.fanart.TV.Logo - path to clear logo for tv show - blank if it doesn't exist
 script.grab.fanart.TV.Plot - tv show plot description 
+script.grab.fanart.TV.Path - path to the tv show show (will be the root folder if in "random" mode or the specific episode if in "recent" mode)
 
 These will only have values when the addon mode is "recent"
 script.grab.fanart.TV.Season - selected tv show season
