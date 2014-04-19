@@ -146,6 +146,7 @@ def getallsubs(content, allowed_languages, filename="", search_string=""):
                     subtitles.append({'rating': rating, 'filename': subtitle_name, 'sync': sync, 'link': link,
                                      'lang': language_info, 'hearing_imp': hearing_imp})
                 elif int(matches.group('numfiles')) > 2:
+                    subtitle_name = subtitle_name + ' ' + (__language__(32001) % int(matches.group('numfiles')))
                     subtitles.append({'rating': rating, 'filename': subtitle_name, 'sync': sync, 'link': link,
                                      'lang': language_info, 'hearing_imp': hearing_imp, 'find': search_string})
             else:
@@ -337,6 +338,12 @@ def download(link, search_string=""):
                     continue
                 log(__name__, "=== returning subtitle file %s" % file)
                 subtitle_list.append(file)
+
+        if len(subtitle_list) == 0:
+            if search_string:
+                xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32002))).encode('utf-8'))
+            else:
+                xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32003))).encode('utf-8'))
 
     return subtitle_list
 
