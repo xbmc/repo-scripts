@@ -240,38 +240,48 @@ class Main( xbmcgui.WindowXMLDialog ):
                 self.LISTCONTROL.addItem( item )
 
 
+    def _parse_line( self, f, s_pos ):
+        file_size = f.size()
+        read_size = 256
+        if s_pos == 2:
+            direction = -1
+            offset = read_size
+        else:
+            direction = 1
+            offset = 0
+        while True:
+            if file_size < read_size:
+                read_size = file_size
+            f.seek( direction*offset, s_pos )
+            read_str = f.read( read_size )
+            lw.log( [read_str] )
+            # Remove newline at the end
+            if read_str[offset - 1] == '\n':
+                read_str = read_str[0:-1]
+            lines = read_str.split('\n')
+            if len( lines ) > 1:  # Got a complete line
+                if s_pos == 2:
+                    return lines[-1]
+                else:
+                    return lines[0]
+            if offset == file_size:   # Reached the beginning
+                return ''
+            offset += read_size
+
+
     def _read_log_file( self ):
         #try and open the log file
         lw.log( ['trying to open logfile ' + self.LOGFILE] )
         try:
-            f = open(self.LOGFILE, 'rb')
-        except e:
+            f = xbmcvfs.File( self.LOGFILE )
+        except Exception, e:
             lw.log( ['unexpected error when reading log file', e], xbmc.LOGERROR )
             return ('', '')
         lw.log( ['opened logfile ' + self.LOGFILE] )
         #get the first and last line of the log file
         #the first line has the header information, and the last line has the last log entry
-        first = next( f ).decode()
-        read_size = 1024
-        offset = read_size
-        f.seek( 0, 2 )
-        file_size = f.tell()
-        while 1:
-            if file_size < offset:
-                offset = file_size
-            f.seek( -1*offset, 2 )
-            read_str = f.read( offset )
-            # Remove newline at the end
-            if read_str[offset - 1] == '\n':
-                read_str = read_str[0:-1]
-            lines = read_str.split('\n')
-            if len( lines ) > 1:  # Got a line
-                last = lines[len(lines) - 1]
-                break
-            if offset == file_size:   # Reached the beginning
-                last = read_str
-                break
-            offset += read_size
+        first = self._parse_line( f, 0 )
+        last = self._parse_line( f, 2 )
         f.close()
         lw.log( ['first line: ' + first, 'last line: ' + last] )
         return first, last

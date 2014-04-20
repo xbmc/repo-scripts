@@ -9,87 +9,81 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#30000"
 msgid "General"
-msgstr ""
+msgstr "Allmän"
 
 msgctxt "#30001"
 msgid "Enable Verbose Logging"
-msgstr ""
+msgstr "Aktivera utförlig loggning"
 
 msgctxt "#30002"
 msgid "Log Temperature Scale"
-msgstr ""
+msgstr "Logga temperaturskala"
 
 msgctxt "#30003"
 msgid "Window Update Interval (in seconds)"
-msgstr ""
+msgstr "Fönsteruppdateringsintervall (i sekunder)"
 
 msgctxt "#30004"
 msgid "Use Compact Display"
-msgstr ""
+msgstr "Använd Inforuta "
 
 msgctxt "#30005"
 msgid "    Background Transparency"
-msgstr ""
+msgstr "Transparent Bakgrund"
 
 msgctxt "#30006"
 msgid "Log File Location"
-msgstr ""
-
-#empty strings from id 30007 to 30009
+msgstr "Sökväg för loggfil"
 
 msgctxt "#30010"
 msgid " Additional Logs"
-msgstr ""
+msgstr "Ytterligare loggar"
 
 msgctxt "#30011"
 msgid "Primary Log File Title"
-msgstr ""
+msgstr "Namn för primär loggfil"
 
 msgctxt "#30012"
 msgid "Use Log File 2"
-msgstr ""
+msgstr "Använd Loggfil 2"
 
 msgctxt "#30013"
 msgid "Use Log File 3"
-msgstr ""
-
-#empty strings from id 30014 to 30019
+msgstr "Använd Loggfil 3"
 
 msgctxt "#30020"
 msgid "    Log File Title"
-msgstr ""
+msgstr "Namn på loggfil"
 
 msgctxt "#30021"
 msgid "    Log File Location"
-msgstr ""
-
-#empty strings from id 30022 to 30099
+msgstr "Sökväg för loggfil"
 
 msgctxt "#30100"
 msgid "Temperature Information"
-msgstr ""
+msgstr "Temperaturinformation"
 
 msgctxt "#30101"
 msgid "Fan Speed Information"
-msgstr ""
+msgstr "Fläktfartinformation"
 
 msgctxt "#30102"
 msgid "Voltage Information"
-msgstr ""
+msgstr "Voltinformation"
 
 msgctxt "#30103"
 msgid "Log File Error"
-msgstr ""
+msgstr "Loggfilsfel"
 
 msgctxt "#30104"
 msgid "No log file found."
-msgstr ""
+msgstr "Loggfilen hittades inte."

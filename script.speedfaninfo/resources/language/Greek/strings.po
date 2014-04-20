@@ -9,87 +9,81 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#30000"
 msgid "General"
-msgstr ""
+msgstr "Γενικά"
 
 msgctxt "#30001"
 msgid "Enable Verbose Logging"
-msgstr ""
+msgstr "Λεπτομερής Καταγραφή (Verbose Logging)"
 
 msgctxt "#30002"
 msgid "Log Temperature Scale"
-msgstr ""
+msgstr "Καταγραφή Κλίμακας Μέτρησης Θερμοκρασίας"
 
 msgctxt "#30003"
 msgid "Window Update Interval (in seconds)"
-msgstr ""
+msgstr "Χρονικό Διάστημα Ενημέρωσης Παραθύρου (δευτ.)"
 
 msgctxt "#30004"
 msgid "Use Compact Display"
-msgstr ""
+msgstr "Χρήση Μικρής Απεικόνισης"
 
 msgctxt "#30005"
 msgid "    Background Transparency"
-msgstr ""
+msgstr "Διαφάνεια Υποβάθρου"
 
 msgctxt "#30006"
 msgid "Log File Location"
-msgstr ""
-
-#empty strings from id 30007 to 30009
+msgstr "Τοποθεσία Αρχείου Καταγραφής"
 
 msgctxt "#30010"
 msgid " Additional Logs"
-msgstr ""
+msgstr "Επιπλέον Αρχεία Καταγραφής"
 
 msgctxt "#30011"
 msgid "Primary Log File Title"
-msgstr ""
+msgstr "Τίτλος Βασικού Αρχείου Καταγραφής"
 
 msgctxt "#30012"
 msgid "Use Log File 2"
-msgstr ""
+msgstr "Χρήση Αρχείου Καταγραφής 2"
 
 msgctxt "#30013"
 msgid "Use Log File 3"
-msgstr ""
-
-#empty strings from id 30014 to 30019
+msgstr "Χρήση Αρχείου Καταγραφής 3"
 
 msgctxt "#30020"
 msgid "    Log File Title"
-msgstr ""
+msgstr "Τίτλος Αρχείου Καταγραφής"
 
 msgctxt "#30021"
 msgid "    Log File Location"
-msgstr ""
-
-#empty strings from id 30022 to 30099
+msgstr "Τοποθεσία Αρχείου Καταγραφής"
 
 msgctxt "#30100"
 msgid "Temperature Information"
-msgstr ""
+msgstr "Πληροφορίες Θερμοκρασίας"
 
 msgctxt "#30101"
 msgid "Fan Speed Information"
-msgstr ""
+msgstr "Πληροφορίες Ταχύτητας Ανεμιστήρων"
 
 msgctxt "#30102"
 msgid "Voltage Information"
-msgstr ""
+msgstr "Πληροφορίες Ηλεκ. Τάσης"
 
 msgctxt "#30103"
 msgid "Log File Error"
-msgstr ""
+msgstr "Σφάλμα Αρχείου Καταγραφής"
 
 msgctxt "#30104"
 msgid "No log file found."
-msgstr ""
+msgstr "Δε βρέθηκε κανένα αρχείο καταγραφής."

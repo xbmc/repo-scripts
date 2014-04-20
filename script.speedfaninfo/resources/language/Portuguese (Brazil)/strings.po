@@ -9,87 +9,81 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "#30000"
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 msgctxt "#30001"
 msgid "Enable Verbose Logging"
-msgstr ""
+msgstr "Ativar o registro detalhado"
 
 msgctxt "#30002"
 msgid "Log Temperature Scale"
-msgstr ""
+msgstr "Registrar escala de temperatura"
 
 msgctxt "#30003"
 msgid "Window Update Interval (in seconds)"
-msgstr ""
+msgstr "Intervalo de atualização da janela (em segundos)"
 
 msgctxt "#30004"
 msgid "Use Compact Display"
-msgstr ""
+msgstr "Usar exibição compacta"
 
 msgctxt "#30005"
 msgid "    Background Transparency"
-msgstr ""
+msgstr "Transparência do plano de fundo"
 
 msgctxt "#30006"
 msgid "Log File Location"
-msgstr ""
-
-#empty strings from id 30007 to 30009
+msgstr "Local do Arquivo de Log"
 
 msgctxt "#30010"
 msgid " Additional Logs"
-msgstr ""
+msgstr "Logs Adicionais"
 
 msgctxt "#30011"
 msgid "Primary Log File Title"
-msgstr ""
+msgstr "Título do arquivo primário de log"
 
 msgctxt "#30012"
 msgid "Use Log File 2"
-msgstr ""
+msgstr "Usar Arquivo de Log 2 do Usuário"
 
 msgctxt "#30013"
 msgid "Use Log File 3"
-msgstr ""
-
-#empty strings from id 30014 to 30019
+msgstr "Usar arquivo de Log 3 do Usuário"
 
 msgctxt "#30020"
 msgid "    Log File Title"
-msgstr ""
+msgstr "Título do Arquivo de Log"
 
 msgctxt "#30021"
 msgid "    Log File Location"
-msgstr ""
-
-#empty strings from id 30022 to 30099
+msgstr "Local do Arquivo de Log"
 
 msgctxt "#30100"
 msgid "Temperature Information"
-msgstr ""
+msgstr "Informação de Temperatura"
 
 msgctxt "#30101"
 msgid "Fan Speed Information"
-msgstr ""
+msgstr "Informação de Velocidade da Ventoinha"
 
 msgctxt "#30102"
 msgid "Voltage Information"
-msgstr ""
+msgstr "Informação de Voltagem"
 
 msgctxt "#30103"
 msgid "Log File Error"
-msgstr ""
+msgstr "Erro no arquivo de log"
 
 msgctxt "#30104"
 msgid "No log file found."
-msgstr ""
+msgstr "Nenhum arquivo de log encontrado"

@@ -9,87 +9,81 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 msgctxt "#30000"
 msgid "General"
-msgstr ""
+msgstr "通用"
 
 msgctxt "#30001"
 msgid "Enable Verbose Logging"
-msgstr ""
+msgstr "启用详细日志记录"
 
 msgctxt "#30002"
 msgid "Log Temperature Scale"
-msgstr ""
+msgstr "记录温度单位"
 
 msgctxt "#30003"
 msgid "Window Update Interval (in seconds)"
-msgstr ""
+msgstr "窗口刷新间隔（秒）"
 
 msgctxt "#30004"
 msgid "Use Compact Display"
-msgstr ""
+msgstr "使用简洁显示模式"
 
 msgctxt "#30005"
 msgid "    Background Transparency"
-msgstr ""
+msgstr "背景透明度"
 
 msgctxt "#30006"
 msgid "Log File Location"
-msgstr ""
-
-#empty strings from id 30007 to 30009
+msgstr "日志文件位置"
 
 msgctxt "#30010"
 msgid " Additional Logs"
-msgstr ""
+msgstr "附加日志"
 
 msgctxt "#30011"
 msgid "Primary Log File Title"
-msgstr ""
+msgstr "主日志文件标题"
 
 msgctxt "#30012"
 msgid "Use Log File 2"
-msgstr ""
+msgstr "使用日志文件 2"
 
 msgctxt "#30013"
 msgid "Use Log File 3"
-msgstr ""
-
-#empty strings from id 30014 to 30019
+msgstr "使用日志文件 3"
 
 msgctxt "#30020"
 msgid "    Log File Title"
-msgstr ""
+msgstr "日志文件标题"
 
 msgctxt "#30021"
 msgid "    Log File Location"
-msgstr ""
-
-#empty strings from id 30022 to 30099
+msgstr "日志文件位置"
 
 msgctxt "#30100"
 msgid "Temperature Information"
-msgstr ""
+msgstr "温度信息"
 
 msgctxt "#30101"
 msgid "Fan Speed Information"
-msgstr ""
+msgstr "风扇转速信息"
 
 msgctxt "#30102"
 msgid "Voltage Information"
-msgstr ""
+msgstr "电压信息"
 
 msgctxt "#30103"
 msgid "Log File Error"
-msgstr ""
+msgstr "日志文件错误"
 
 msgctxt "#30104"
 msgid "No log file found."
-msgstr ""
+msgstr "没有找到日志文件。"
