@@ -121,17 +121,19 @@ class Main:
 
 
     def _make_dirs( self ):
-        checkDir( xbmc.translatePath('special://profile/addon_data/%s' % __addonname__ ).decode('utf-8') )
+        exists, loglines = checkDir( xbmc.translatePath('special://profile/addon_data/%s' % __addonname__ ).decode('utf-8') )
+        lw.log( loglines )
         if self.HASHLISTFOLDER:
-            checkDir( self.HASHLISTFOLDER )
+            exists, loglines = checkDir( self.HASHLISTFOLDER )
+            lw.log( loglines )
         if self.MIGRATEFOLDER:
-            checkDir( self.MIGRATEFOLDER )
+            exists, loglines = checkDir( self.MIGRATEFOLDER )
+            lw.log( loglines )
 
 
     def _migrate( self ):
         lw.log( ['attempting to %s images from Artist Slideshow cache directory' % self.MIGRATETYPE] )
         test_str = ''
-        checkDir(self.MIGRATEFOLDER)
         hashmap = self._get_artists_hashmap()
         try:
             os.chdir( self.ASCACHEFOLDER )
@@ -155,7 +157,8 @@ class Main:
                 old_folder = os.path.join( self.ASCACHEFOLDER, folder )
                 new_folder = os.path.join( self.MIGRATEFOLDER, artist_name, 'extrafanart' )
                 if self.MIGRATETYPE == 'copy' or self.MIGRATETYPE == 'move':
-                    checkDir(new_folder)
+                    exists, loglines = checkDir( new_folder )
+                    lw.log( loglines )
                 try:
                     os.chdir( old_folder )
                     files = os.listdir( old_folder )

@@ -1,3 +1,6 @@
+v.0.3.3
+- added support for remote file systems without mapping drive in OS
+
 v.0.3.2
 - fix for incorrect import of json module when python version >= 2.7
 - updated language files
