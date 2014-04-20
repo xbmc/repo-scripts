@@ -26,7 +26,7 @@ else:
     import simplejson as _json
 from resources.dicttoxml.dicttoxml import dicttoxml
 from resources.common.fix_utf8 import smartUTF8
-from resources.common.fileops import checkDir, pathLeaf, writeFile, readFile
+from resources.common.fileops import checkDir, pathLeaf, writeFile, readFile, deleteFile
 from resources.common.url import URL
 from resources.common.transforms import getImageType, itemHash, itemHashwithPath
 from resources.common.xlogger import Logger
@@ -104,12 +104,12 @@ class Main:
         self._init_vars()
         self._make_dirs()
         self._upgrade()
-        if xbmc.getInfoLabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
+        if self._get_infolabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
             lw.log( ['script already running'] )
         else:
             self.LastCacheTrim = 0
             self._set_property("ArtistSlideshowRunning", "True")
-            if( xbmc.Player().isPlayingAudio() == False and xbmc.getInfoLabel( self.EXTERNALCALL ) == '' ):
+            if( xbmc.Player().isPlayingAudio() == False and self._get_infolabel( self.EXTERNALCALL ) == '' ):
                 lw.log( ['no music playing'] )
                 if( self.DAEMON == "False" ):
                     self._set_property("ArtistSlideshowRunning")
@@ -120,8 +120,8 @@ class Main:
                 self._trim_cache()
             while (not xbmc.abortRequested):
                 time.sleep(1)
-                if xbmc.getInfoLabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
-                    if( xbmc.Player().isPlayingAudio() == True or xbmc.getInfoLabel( self.EXTERNALCALL ) != '' ):
+                if self._get_infolabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
+                    if( xbmc.Player().isPlayingAudio() == True or self._get_infolabel( self.EXTERNALCALL ) != '' ):
                         if set( self.ALLARTISTS ) <> set( self._get_current_artists() ):
                             self._clear_properties()
                             self.UsingFallback = False
@@ -133,7 +133,7 @@ class Main:
                                 self._use_correct_artwork()
                     else:
                         time.sleep(2) # doublecheck if playback really stopped
-                        if( xbmc.Player().isPlayingAudio() == False and xbmc.getInfoLabel( self.EXTERNALCALL ) == '' ):
+                        if( xbmc.Player().isPlayingAudio() == False and self._get_infolabel( self.EXTERNALCALL ) == '' ):
                             if ( self.DAEMON == "False" ):
                                 self._set_property( "ArtistSlideshowRunning" )
                 else:
@@ -143,14 +143,13 @@ class Main:
 
     def _clean_dir( self, dir_path ):
         try:
-            old_files = os.listdir( dir_path )
+            dirs, old_files = xbmcvfs.listdir( dir_path )
         except Exception, e:
             lw.log( ['unexpected error while getting directory list', e] )
             old_files = []
         for old_file in old_files:
             if not old_file.endswith( '.nfo' ):
-                xbmcvfs.delete( os.path.join(dir_path, old_file) )
-                lw.log( ['deleting file ' + old_file] )
+                success, loglines = deleteFile( os.path.join(dir_path, old_file) )
 
 
     def _clean_text( self, text ):
@@ -183,7 +182,8 @@ class Main:
             lw.log( ['the tmpname is ' + tmpname] )
             if not self._excluded( dst ):
                 if xbmcvfs.exists(tmpname):
-                    xbmcvfs.delete(tmpname)
+                    success, loglines = deleteFile( tmpname )
+                    lw.log( loglines )
                 success, loglines, urldata = imgURL.Get( src, params=self.params )
                 lw.log( loglines )
                 if success:
@@ -201,10 +201,12 @@ class Main:
                         return True
                     else:
                         lw.log( ['image already exists, deleting temporary file'] )
-                        xbmcvfs.delete( tmpname )
+                        success, loglines = deleteFile( tmpname )
+                        lw.log( loglines )
                         return False
                 else:
-                    xbmcvfs.delete( tmpname )
+                    success, loglines = deleteFile( tmpname )
+                    lw.log( loglines )
                     return False
             else:
                 return False 
@@ -215,14 +217,17 @@ class Main:
         exclusion_file = os.path.join(item_split['path'], '_exclusions.nfo')
         if xbmcvfs.exists( exclusion_file ):
             loglines, exclusions = readFile( exclusion_file )
+            loglines.append( 'checking %s against %s' % (item_split['filename'], exclusions) )
             lw.log( loglines )
             if item_split['filename'] in exclusions:
+                lw.log( ['exclusion found'] )
                 return True
             else:
                 return False
         else:
             success, loglines = writeFile( '', exclusion_file )
             lw.log( loglines )
+            return False
 
     
     def _get_artistinfo( self ):
@@ -282,7 +287,6 @@ class Main:
         mbids = []
         if( xbmc.Player().isPlayingAudio() == True ):
             try:
-                #playing_file = xbmc.Player().getPlayingFile()
                 playing_file = xbmc.Player().getPlayingFile() + ' - ' + xbmc.Player().getMusicInfoTag().getArtist() + ' - ' + xbmc.Player().getMusicInfoTag().getTitle()
                 lw.log( ['playing file is ' + playing_file] )
             except RuntimeError:
@@ -331,10 +335,10 @@ class Main:
                     playing_song = ''
                 artist_names = self._split_artists( playingartist )
             featured_artists = self._get_featured_artists( playing_song )
-        elif xbmc.getInfoLabel( self.SKININFO['artist'] ):
-            artist_names = self._split_artists( xbmc.getInfoLabel(self.SKININFO['artist']) )
-            mbids = xbmc.getInfoLabel( self.SKININFO['mbid'] ).split( ',' )
-            featured_artists = self._get_featured_artists( xbmc.getInfoLabel(self.SKININFO['title']) )
+        elif self._get_infolabel( self.SKININFO['artist'] ):
+            artist_names = self._split_artists( self._get_infolabel(self.SKININFO['artist']) )
+            mbids = self._get_infolabel( self.SKININFO['mbid'] ).split( ',' )
+            featured_artists = self._get_featured_artists( self._get_infolabel(self.SKININFO['title']) )
         if featured_artists:
             for one_artist in featured_artists:
                 artist_names.append( one_artist.strip(' ()') )            
@@ -412,7 +416,7 @@ class Main:
             xmldata = _xmltree.parse(filename).getroot()
         except Exception, e:
             lw.log( ['invalid or missing xml file', e] )
-            xbmcvfs.delete(filename)
+            deleteFile( filename )
             return data
         if item == "images":
             if site == "fanarttv":
@@ -536,6 +540,15 @@ class Main:
         return images
 
 
+    def _get_infolabel( self, item ):
+        try:
+            infolabel = xbmc.getInfoLabel( item )
+        except:
+            lw.log( ['problem reading information from %s, returning blank' % item] )
+            infolabel = ''
+        return infolabel
+
+
     def _get_local_data( self, item ):
         data = []
         filenames = []
@@ -590,7 +603,7 @@ class Main:
         self.CacheDir = os.path.join( self.LOCALARTISTPATH, smartUTF8(self.NAME).decode('utf-8'), self.FANARTFOLDER )
         lw.log( ['cachedir = %s' % self.CacheDir] )
         try:
-            files = os.listdir(self.CacheDir)
+            dirs, files = xbmcvfs.listdir(self.CacheDir)
         except OSError:
             files = []
         except Exception, e:
@@ -784,7 +797,7 @@ class Main:
                     break
         #if nothing is playing, assume the information was passed by another add-on
         if not playing_item:
-            playing_item = xbmc.getInfoLabel( self.SKININFO[item] )
+            playing_item = self._get_infolabel( self.SKININFO[item] )
         return playing_item
 
 
@@ -840,8 +853,8 @@ class Main:
         self.ARTISTSLIDESHOW = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow" )
         self.ARTISTSLIDESHOWRUNNING = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshowRunning" )
         self.EXTERNALCALL = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow.ExternalCall" )
-        self.EXTERNALCALLSTATUS = xbmc.getInfoLabel( self.EXTERNALCALL )
-        lw.log( ['external call is set to ' + xbmc.getInfoLabel( self.EXTERNALCALL )] )
+        self.EXTERNALCALLSTATUS = self._get_infolabel( self.EXTERNALCALL )
+        lw.log( ['external call is set to ' + self._get_infolabel( self.EXTERNALCALL )] )
         self.NAME = ''
         self.ALLARTISTS = []
         self.MBID = ''
@@ -876,16 +889,18 @@ class Main:
 
 
     def _make_dirs( self ):
-        checkDir( self.DATAROOT )
-        thedirs = ['temp', 'ArtistSlideShow', 'ArtistInformation', 'transition', 'merge']
+        exists, loglines = checkDir( self.DATAROOT )
+        lw.log( loglines )
+        thedirs = ['temp', 'ArtistSlideshow', 'ArtistInformation', 'transition', 'merge']
         for onedir in thedirs:
-            checkDir( os.path.join( self.DATAROOT, onedir ) )
+            exists, loglines = checkDir( os.path.join( self.DATAROOT, onedir ) )
+            lw.log( loglines )
 
 
     def _merge_images( self ):
         lw.log( ['merging files from primary directory %s into merge directory %s' % (self.CacheDir, self.MergeDir)] )
         self.MergedImagesFound = True
-        files = os.listdir(self.CacheDir)
+        dirs, files = xbmcvfs.listdir(self.CacheDir)
         for file in files:
             if(file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png')):
                 xbmcvfs.copy(os.path.join(self.CacheDir, file), os.path.join(self.MergeDir, file))
@@ -920,8 +935,7 @@ class Main:
     def _move_info_files( self, old_loc, new_loc, type ):
         lw.log( ['attempting to move from %s to %s' % (old_loc, new_loc)] )
         try:
-            os.chdir( old_loc )
-            folders = os.listdir( old_loc )
+            folders, fls = xbmcvfs.listdir( old_loc )
         except OSError:
             lw.log( ['no directory found: ' + old_loc] )
             return
@@ -936,7 +950,7 @@ class Main:
                 old_folder = os.path.join( old_loc, smartUTF8(folder).decode('utf-8'), self.FANARTFOLDER )
                 new_folder = os.path.join( new_loc, itemHash(folder) )
             try:
-                old_files = os.listdir( old_folder )
+                dirs, old_files = xbmcvfs.listdir( old_folder )
             except Exception, e:
                 lw.log( ['unexpected error while getting directory list', e] )
                 old_files = []
@@ -946,7 +960,8 @@ class Main:
                 lw.log( loglines )
             for old_file in old_files:
                 if old_file.endswith( '.nfo' ) and not old_file == '_exclusions.nfo':
-                    checkDir( new_folder )
+                    exists, loglines = checkDir( new_folder )
+                    lw.log( loglines )
                     new_file = old_file.strip('_')
                     if new_file == 'artistimagesfanarttv.nfo':
                         new_file = 'fanarttvartistimages.nfo'
@@ -1004,7 +1019,7 @@ class Main:
 
 
     def _playback_stopped_or_changed( self ):
-        if set( self.ALLARTISTS ) <> set( self._get_current_artists() ) or self.EXTERNALCALLSTATUS != xbmc.getInfoLabel( self.EXTERNALCALL ):
+        if set( self.ALLARTISTS ) <> set( self._get_current_artists() ) or self.EXTERNALCALLSTATUS != self._get_infolabel( self.EXTERNALCALL ):
             self._clear_properties()
             return True
         else:
@@ -1012,7 +1027,7 @@ class Main:
 
 
     def _refresh_image_directory( self ):
-        if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ).decode('utf-8') == self.TransitionDir):
+        if( self._get_infolabel( self.ARTISTSLIDESHOW ).decode('utf-8') == self.TransitionDir):
             self._set_property("ArtistSlideshow", self.CacheDir)
             lw.log( ['switching slideshow to ' + self.CacheDir] )
         else:
@@ -1025,8 +1040,7 @@ class Main:
     def _rename_tbn_files( self, loc, type ):
         lw.log( ['attempting to rename .tbn files with correct extension', 'from location: ' + loc] )
         try:
-            os.chdir( loc )
-            folders = os.listdir( loc )
+            folders, fls = xbmcvfs.listdir( loc )
         except OSError:
             lw.log( ['no directory found: ' + loc] )
             return
@@ -1040,15 +1054,13 @@ class Main:
             elif type == 'local':
                 thepath = os.path.join( loc, folder, self.FANARTFOLDER )
             try:
-                os.chdir( thepath )
-                files = os.listdir( thepath )
+                dirs, files = xbmcvfs.listdir( thepath )
             except Exception, e:
                 lw.log( ['unexpected error while getting file list', e] )
                 files = []
             for file in files:
                 if file.endswith( '.tbn' ):
                     old_path = os.path.join( thepath, file )
-                    #new_ext = '.' + imghdr.what( filename ).replace( 'jpeg', 'jpg' )
                     new_file = file.replace( '.tbn', getImageType( old_path ) )
                     new_path = os.path.join( thepath, new_file )
                     xbmcvfs.rename( old_path, new_path )
@@ -1086,7 +1098,8 @@ class Main:
     def _set_thedir(self, theartist, dirtype):
         CacheName = itemHash(theartist)
         thedir = xbmc.translatePath('special://profile/addon_data/%s/%s/%s/' % ( __addonname__ , dirtype, CacheName, )).decode('utf-8')
-        checkDir(thedir)
+        exists, loglines = checkDir( thedir )
+        lw.log( loglines )
         return thedir
 
 
@@ -1111,7 +1124,7 @@ class Main:
             self._set_cachedir( self.NAME )
         lw.log( ['cachedir = %s' % self.CacheDir] )
 
-        files = os.listdir(self.CacheDir)
+        dirs, files = xbmcvfs.listdir(self.CacheDir)
         for file in files:
             if (file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png')) or (self.PRIORITY == '2' and self.LocalImagesFound):
                 self.CachedImagesFound = True
@@ -1158,17 +1171,21 @@ class Main:
             if source[1] == "true":
                 imagelist.extend( self._get_images(source[0]) )
         lw.log( ['downloading images'] )
+        folders, cachelist = xbmcvfs.listdir( self.CacheDir )
+        cachelist_str = ''.join(str(e) for e in cachelist)
         for url in imagelist:
             if( self._playback_stopped_or_changed() ):
                 return
             path = itemHashwithPath( url, self.CacheDir )
             path2 = itemHashwithPath( url, self.TransitionDir )
-            if not xbmcvfs.exists(path):
+            if not (pathLeaf( path )['filename'] in cachelist_str):
                 if self._download(url, path, path2):
                     lw.log( ['downloaded %s to %s' % (url, path)]  )
                     self.ImageDownloaded = True
             elif self._excluded( path ):
-                xbmcvfs.delete( path )
+                indicies = [i for i, elem in enumerate(cachelist) if pathLeaf( path )['filename'] in elem]
+                success, loglines = deleteFile( os.path.join( pathLeaf( path )['path'], cachelist[indicies[0]] ) )
+                lw.log( loglines )
             if self.ImageDownloaded:
                 if( self._playback_stopped_or_changed() and self.ARTISTNUM == 1 ):
                     self._set_property("ArtistSlideshow", self.CacheDir)
@@ -1207,7 +1224,7 @@ class Main:
                         xbmc.executebuiltin(command)
                 if self.TOTALARTISTS > 1:
                     self._merge_images()
-            if( xbmc.getInfoLabel( self.ARTISTSLIDESHOW ).decode('utf-8') == self.TransitionDir and self.ARTISTNUM == 1):
+            if( self._get_infolabel( self.ARTISTSLIDESHOW ).decode('utf-8') == self.TransitionDir and self.ARTISTNUM == 1):
                 self._wait( self.MINREFRESH )
                 if( not self._playback_stopped_or_changed() ):
                     self._refresh_image_directory()
@@ -1236,8 +1253,7 @@ class Main:
             if( now - self.LastCacheTrim > cache_trim_delay ):
                 lw.log( ['trimming the cache down to %s bytes' % self.maxcachesize]  )
                 cache_root = xbmc.translatePath( 'special://profile/addon_data/%s/ArtistSlideshow/' % __addonname__ ).decode('utf-8')
-                os.chdir( cache_root )
-                folders = os.listdir( cache_root )
+                folders, fls = xbmcvfs.listdir( cache_root )
                 folders.sort( key=lambda x: os.path.getmtime(x), reverse=True )
                 cache_size = 0
                 first_folder = True

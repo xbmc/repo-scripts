@@ -1,3 +1,11 @@
+v.1.6.4
+- added full support for remote file systems without mapping drive in OS
+- fix for crash with access violation in random situations
+- fix for duplicate ArtistSlideshow folder showing up on Linux
+- fix for crash when attempting to delete temp file
+- fix for constant download of images
+- fix for exclusions file being ignored
+
 v.1.6.3
 - fixed AS not showing images when merging multiple artists' images
 - fixed AS not requesting correct language for bio from Last.FM
