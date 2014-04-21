@@ -1,23 +1,29 @@
 # -*- coding: utf-8 -*- 
 
+import time
+
+start = time.time()
+
 import os
 import sys
-import urllib
 import shutil
 import unicodedata
 import os.path
 import re
 
-import requests2 as _requests
 import xbmc
 import xbmcvfs
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
 
+import json
+
+import urllib
+import urllib2
 
 __addon__ = xbmcaddon.Addon()
-__author__ = __addon__.getAddonInfo('author')
+#__author__ = __addon__.getAddonInfo('author')
 __scriptid__ = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
@@ -32,22 +38,22 @@ __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
 
 BASE_URL = 'http://www.feliratok.info/index.php'
 
-TAGS = {
+TAGS = [
     'WEB\-DL',
     'PROPER',
     'REPACK'
-}
+]
 
-QUALITIES = {
+QUALITIES = [
     'HDTV',
     '720p',
     '1080p',
     'DVDRip',
     'BRRip',
     'BDRip'
-}
+]
 
-RELEASERS = {
+RELEASERS = [
     '2HD',
     'AFG',
     'ASAP',
@@ -62,15 +68,16 @@ RELEASERS = {
     'REMARKABLE',
     'ORENJI',
     'TLA'
-}
+]
+
 HEADERS = {'User-Agent': 'xbmc subtitle plugin'}
 
-ARCHIVE_EXTENSIONS = {
+ARCHIVE_EXTENSIONS = [
     '.zip',
     '.cbz',
     '.rar',
     '.cbr'
-}
+]
 
 LANGUAGES = {
     "albán": "Albanian",
@@ -141,14 +148,28 @@ def debuglog(msg):
     #log(msg, xbmc.LOGNOTICE)
 
 
-def query_data(params):
-    r = _requests.get(BASE_URL, params=params, headers=HEADERS)
-    debuglog(r.url)
+def send_request(params):
+    url = "%s?%s" % (BASE_URL, urllib.urlencode(params))
     try:
-        return r.json()
-    except ValueError as e:
-        errorlog(e.message)
+        debuglog(url)
+        request = urllib2.Request(url, headers=HEADERS)
+        return urllib2.urlopen(request)
+    except urllib2.HTTPError as e:
+        errorlog("HTTP Error: %s, %s" % (e.code, url))
         return None
+    except urllib2.URLError as e:
+        errorlog("URL Error %s, %s" % (e.reason, url))
+        return None
+
+
+def query_data(params):
+    response = send_request(params)
+    if response:
+        try:
+            return json.load(response, 'utf-8')
+        except json.JSONDecodeError as e:
+            errorlog(e.message)
+    return None
 
 
 def notification(id):
@@ -213,6 +234,7 @@ def remove_duplications(items):
         ret[item['id']] = new_item
     return ret.values()
 
+
 def search_subtitles(item):
     if not item['season'] and not item['episode']:
         debuglog("No season or episode info found for %s" % item['tvshow'])
@@ -269,7 +291,8 @@ def search(item):
             listitem.setProperty('sync', ('false', 'true')[it['sync']])
             listitem.setProperty('hearing_imp', ('false', 'true')[it.get('hearing', False)])
 
-            qparams = {'action': 'download', 'actionsortorder': str(index).zfill(2), 'id': it['id'], 'filename': it['filename']}
+            qparams = {'action': 'download', 'actionsortorder': str(index).zfill(2), 'id': it['id'],
+                       'filename': it['filename']}
             url = "plugin://%s/?%s" % (__scriptid__, urllib.urlencode(qparams))
 
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
@@ -293,15 +316,16 @@ def extract(archive):
 def download_file(item):
     localfile = os.path.join(__temp__, item['filename'].decode("utf-8"))
     qparams = {'action': 'letolt', 'felirat': item['id']}
-    r = _requests.get(BASE_URL, params=qparams, headers=HEADERS, stream=True)
-    debuglog(r.url)
 
-    with open(localfile, 'wb') as fd:
-        for chunk in r.iter_content(chunk_size=1024):
-            fd.write(chunk)
-        fd.flush()
+    response = send_request(qparams)
 
-    return localfile
+    if response:
+        with open(localfile, 'wb') as fd:
+            shutil.copyfileobj(response, fd)
+
+        return localfile
+
+    return None
 
 
 def is_match(item, filename):
@@ -411,12 +435,13 @@ def get_params(string=""):
     return param
 
 
+
+infolog("%s - %s" % (__scriptname__, __version__))
+debuglog("start time %s" % (time.time() - start))
+
 recreate_dir(__temp__)
 params = get_params()
-
-debuglog("%s - %s" % (__scriptname__ , __version__))
 debuglog(params)
-
 
 if params['action'] == 'search':
     debuglog("action 'search' called")
@@ -427,8 +452,7 @@ if params['action'] == 'search':
     for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
         item['languages'].append(lang)
 
-    if item['title'] == "":
-        debuglog("VideoPlayer.OriginalTitle not found")
+    if not item['title']:
         item['title'] = normalize_string(xbmc.getInfoLabel("VideoPlayer.Title"))
     setup_path(item)
     item['filename'] = os.path.basename(item['file_original_path'])
@@ -448,5 +472,7 @@ elif params['action'] == 'download':
 
 elif params['action'] == 'manualsearch':
     notification(32502)
+
+debuglog("full time %s" % (time.time() - start))
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

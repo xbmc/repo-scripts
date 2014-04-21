@@ -1,3 +1,7 @@
+0.0.11
+- improve load time
+- remove heavy dependency: requests
+
 0.0.10
 - improve tv show title, season and episode detection
 
