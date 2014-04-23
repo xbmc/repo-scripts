@@ -16,9 +16,17 @@ msgstr ""
 "Language: gl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
 msgctxt "#32002"
 msgid "IP Address"
 msgstr "Enderezo IP"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Activar Notificacións (Requírese Reiniciar)"
 
 msgctxt "#32008"
 msgid "Debugging"
@@ -40,6 +48,10 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "Controlador"
 
+msgctxt "#32016"
+msgid "Refresh Interval (Seconds)"
+msgstr "Intervalo de refresco (segundos)"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Biblioteca de Música"
@@ -47,6 +59,10 @@ msgstr "Biblioteca de Música"
 msgctxt "#32101"
 msgid "Queue"
 msgstr "Cola"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Emisoras de Radio"
 
 msgctxt "#32110"
 msgid "Artists"
@@ -56,6 +72,10 @@ msgctxt "#32111"
 msgid "Albums"
 msgstr "Álbums"
 
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Compositores"
+
 msgctxt "#32113"
 msgid "Genres"
 msgstr "Xéneros"
@@ -63,3 +83,31 @@ msgstr "Xéneros"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Pistas"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Reprodutor Open Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Reproducir Pista"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Eliminar Pista"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Limpar Cola"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Reproducir Agora"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Engadir á Cola"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Substituír Cola"

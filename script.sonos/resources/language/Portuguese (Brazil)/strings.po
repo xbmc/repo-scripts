@@ -16,9 +16,37 @@ msgstr ""
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
+msgstr "Suporta simples controles do Sonos e notificações via XBMC. Leia o wiki para maiores detalhes."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
 msgctxt "#32002"
 msgid "IP Address"
 msgstr "Endereço IP"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Ativar Notificações (Reiniciar é Requerido)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Mostrar Notificação Por (segundos)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Frequência para Verificar Notificação (Segundos)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Não Apresentar Notificação se o Vídeo estiver sendo reproduzido"
+
+msgctxt "#32007"
+msgid "Use Default XBMC Notification Dialog"
+msgstr "Usar o Diálogo de Notificação Padrão do XBMC"
 
 msgctxt "#32008"
 msgid "Debugging"
@@ -28,6 +56,10 @@ msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "Ativar log de depuração"
 
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Alto-Falante"
+
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificações"
@@ -36,9 +68,33 @@ msgctxt "#32012"
 msgid "Advanced"
 msgstr "Avançado"
 
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Procurar por Alto-Falantes Sonos..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Nenhum alto-falante localizado, por favor entre com o endereço de IP manualmente"
+
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controles"
+
+msgctxt "#32016"
+msgid "Refresh Interval (Seconds)"
+msgstr "Intervalo para Atualizações (Segundos)"
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr "Usar Dados  de Teste"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Tamanho do Lote"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -48,6 +104,10 @@ msgctxt "#32101"
 msgid "Queue"
 msgstr "Listagem"
 
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Estações de Rádio"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artistas"
@@ -56,6 +116,10 @@ msgctxt "#32111"
 msgid "Albums"
 msgstr "Álbuns"
 
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Compositores"
+
 msgctxt "#32113"
 msgid "Genres"
 msgstr "Gêneros"
@@ -63,3 +127,31 @@ msgstr "Gêneros"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Faixas"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Abrir o Player Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Reproduzir Faixa"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Remover Faixa"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Limpar a Fila"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Reproduzir Agora"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Adicionar para Fila"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Substituir Fila"

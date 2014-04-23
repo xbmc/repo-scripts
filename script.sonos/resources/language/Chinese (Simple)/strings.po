@@ -20,6 +20,10 @@ msgctxt "#32002"
 msgid "IP Address"
 msgstr "IP 地址"
 
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "显示通知(秒)"
+
 msgctxt "#32008"
 msgid "Debugging"
 msgstr "调试"

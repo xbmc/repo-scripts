@@ -36,6 +36,10 @@ msgctxt "#32012"
 msgid "Advanced"
 msgstr "Дополнительно"
 
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Контроллер"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Музыкальная медиатека"

@@ -104,6 +104,10 @@ msgctxt "#32101"
 msgid "Queue"
 msgstr "Köa"
 
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Radiostationer"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artister"
@@ -134,7 +138,7 @@ msgstr "Spela spår"
 
 msgctxt "#32152"
 msgid "Remove Track"
-msgstr "Ta bort spår"
+msgstr "Radera spår"
 
 msgctxt "#32153"
 msgid "Clear Queue"

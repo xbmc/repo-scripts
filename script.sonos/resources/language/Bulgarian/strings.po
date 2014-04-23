@@ -28,6 +28,10 @@ msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "Включи дебъг дневника"
 
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Говорител"
+
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "Известия"
@@ -36,9 +40,17 @@ msgctxt "#32012"
 msgid "Advanced"
 msgstr "Допълнителни"
 
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Приставка"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Музикална библиотека"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Радио станции"
 
 msgctxt "#32110"
 msgid "Artists"

@@ -16,6 +16,14 @@ msgstr ""
 "Language: en_NZ\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "IP Address"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Debugging"
+
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Advanced"
@@ -27,3 +35,15 @@ msgstr "Music Library"
 msgctxt "#32101"
 msgid "Queue"
 msgstr "Queue"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artists"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albums"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Genres"

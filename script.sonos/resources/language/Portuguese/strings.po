@@ -92,6 +92,10 @@ msgctxt "#32018"
 msgid "Plugin"
 msgstr "Plugin"
 
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Tamanho Batch"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Biblioteca de Música"
@@ -99,6 +103,10 @@ msgstr "Biblioteca de Música"
 msgctxt "#32101"
 msgid "Queue"
 msgstr "Em fila"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Estações de Rádio"
 
 msgctxt "#32110"
 msgid "Artists"

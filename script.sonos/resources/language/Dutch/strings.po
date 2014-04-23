@@ -104,6 +104,10 @@ msgctxt "#32101"
 msgid "Queue"
 msgstr "Wachtrij"
 
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Radiostations"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artiesten"

@@ -8,6 +8,9 @@ __addonid__   = __addon__.getAddonInfo('id')
 # Load the Sonos controller component
 from sonos import Sonos
 
+# Load the Soco classes
+from soco import SonosDiscovery
+
 # Import the Mock Sonos class for testing where there is no live Sonos system
 from mocksonos import TestMockSonos
 
