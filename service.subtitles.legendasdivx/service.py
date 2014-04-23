@@ -132,7 +132,7 @@ def geturl(url):
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, searchstring_notclean):
     subtitles_list = []
 
-    #searchstring_notclean = searchstring
+    #For DEBUG only uncomment next line
     log(u"_searchstring '%s' ..." % searchstring)
     log(u"_searchstring_notclean '%s' ..." % searchstring_notclean)
     page = 1
@@ -148,7 +148,6 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
         url = main_url + "index.php"
 
     content = geturl(url)
-    #log( __name__ ,"%s Getting '%s' subs ..." % (debug_pretext, languageshort))
     log(u"Getting '%s' subs ..." % languageshort)
     while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 6:
         for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
@@ -161,14 +160,21 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                 downloads=10
             filename = string.strip(matches.group(1))
             desc = string.strip(matches.group(7))
+            #log(u"_desc_dirty '%s' ..." % desc)
             #Remove new lines on the commentaries
             filename = re.sub('\n',' ',filename)
+            desc = re.sub('<br />','',desc)
             desc = re.sub('\n',' ',desc)
             desc = re.sub(':.','',desc)
-            desc = re.sub('br />','',desc)
             #Remove HTML tags on the commentaries
             filename = re.sub(r'<[^<]+?>','', filename)
             desc = re.sub(r'<[^<]+?>|[~]','', desc)
+            #desc = re.findall(r'(.*?)([\. _-].*?([^\s]+))', desc, re.IGNORECASE | re.MULTILINE | re.UNICODE | re.VERBOSE | re.DOTALL)
+            #log(u"_desc_halfdirty '%s' ..." % desc)
+            #desc = re.findall(r'([^\s]+.*?\..*?[\. _-].*?[^\s]+)', desc, re.IGNORECASE)
+            #for descs in desc:
+            #    log(u"_desc '%s' ..." % descs)
+            
             #Find filename on the comentaries to show sync label using filename or dirname (making it global for further usage)
             global filesearch
             filesearch = os.path.abspath(file_original_path)
@@ -185,7 +191,9 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             #log( __name__ ,"%s dirsearch_check: '%s'" % (debug_pretext, dirsearch_check))
             if (searchstring_notclean != ""):
                 sync = False
-                if re.search(searchstring_notclean, desc):
+                #log(u"inside the sync '%s' ..." % searchstring_notclean)
+                #log(u"inside the sync '%s' ..." % desc)
+                if re.search(searchstring_notclean, desc, re.IGNORECASE):
                     sync = True
             else:
                 if (string.lower(dirsearch_check[-1]) == "rar") or (string.lower(dirsearch_check[-1]) == "cd1") or (string.lower(dirsearch_check[-1]) == "cd2"):
@@ -229,23 +237,16 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                 subtitles_list[i] = subtitles_list[i-1]
                 subtitles_list[i-1] = temp
 
-    #log(u"Search sorted LISTA = %s" % (subtitles_list,))
     return subtitles_list
 
 def append_subtitle(item):
     
-  #  log(u"Search string = %s" % (subtitles_list,))
-    #log(u"Search sorted ITEM = %s" % (item,))
-#    subtitles_list = sorted(subtitles_list, key=itemgetter('language_name'))
     listitem = xbmcgui.ListItem(
                    label=item['language_name'],
                    label2=item['filename']+ '-' +item['desc'],
                    iconImage=item['rating'],
                    thumbnailImage=item['language_short']
                )
-    #listitem.sort(key=lambda x: x['language_short'], reverse=True)
-    #sorted(listitem.keys(), key=lambda x: x['language_short'])
-    log(u"Search sorted LISTITEM = %s" % (listitem,))
     listitem.setProperty("sync", 'true' if item["sync"] else 'false')
     listitem.setProperty("hearing_imp", 'true' if item.get("hearing_imp", False) else 'false')
 
@@ -254,8 +255,6 @@ def append_subtitle(item):
     args = dict(item)
     args['scriptid'] = __scriptid__
     url = INTERNAL_LINK_URL % args
-    #log(u"Search sorted string = %s" % (url,))
-    #log(u"Search sorted ARGS = %s" % (args,))
     ## add it to list, this can be done as many times as needed for all subtitles found
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
@@ -267,7 +266,7 @@ def Search(item):
     filename = os.path.splitext(os.path.basename(item['file_original_path']))[0]
     file_original_path = item['file_original_path']
     filename = xbmc.getCleanMovieTitle(filename)
-    searchstring_notclean = ""
+    searchstring_notclean = os.path.splitext(os.path.basename(item['file_original_path']))[0]
     searchstring = ""
     global israr
     israr = os.path.abspath(file_original_path)
@@ -280,54 +279,55 @@ def Search(item):
     tvshow = item['tvshow']
     season = item['season']
     episode = item['episode']
-    log(u"Tvshow string = %s" % (tvshow,))
-    log(u"Title string = %s" % (title,))
+    #log(u"Tvshow string = %s" % (tvshow,))
+    #log(u"Title string = %s" % (title,))
     subtitles_list = []
     
     if item['mansearch']:
         searchstring = item['mansearchstr']
-        log(u"Manual Searchstring string = %s" % (searchstring,))
-    if tvshow != '':
-        searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
-        log(u"TV Searchstring string = %s" % (searchstring,))
-    if tvshow == '':
-        if 'rar' in israr and searchstring is not None:
-            log(u"RAR Searchstring string = %s" % (searchstring,))
-            if 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
+        #log(u"Manual Searchstring string = %s" % (searchstring,))
+    else:
+        if tvshow != '':
+            searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
+            #log(u"TV Searchstring string = %s" % (searchstring,))
+        if tvshow == '':
+            if 'rar' in israr and searchstring is not None:
+                log(u"RAR Searchstring string = %s" % (searchstring,))
+                if 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
+                    dirsearch = os.path.abspath(file_original_path)
+                    dirsearch = os.path.split(dirsearch)
+                    dirsearch = dirsearch[0].split(os.sep)
+                    if len(dirsearch) > 1:
+                        searchstring_notclean = dirsearch[-3]
+                        searchstring = xbmc.getCleanMovieTitle(dirsearch[-3])
+                        searchstring = searchstring[0]
+                        #log(u"RAR MULTI1 CD Searchstring string = %s" % (searchstring,))
+                    else:
+                        searchstring = title
+                else:
+                    searchstring = title
+                    #log(u"RAR NO CD Searchstring string = %s" % (searchstring,))
+            elif 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
                 dirsearch = os.path.abspath(file_original_path)
                 dirsearch = os.path.split(dirsearch)
                 dirsearch = dirsearch[0].split(os.sep)
                 if len(dirsearch) > 1:
-                    searchstring_notclean = dirsearch[-3]
-                    searchstring = xbmc.getCleanMovieTitle(dirsearch[-3])
+                    searchstring_notclean = dirsearch[-2]
+                    searchstring = xbmc.getCleanMovieTitle(dirsearch[-2])
                     searchstring = searchstring[0]
-                    log(u"RAR MULTI1 CD Searchstring string = %s" % (searchstring,))
+                    #log(u"MULTI1 CD Searchstring string = %s" % (searchstring,))
+                else:
+                    #We are at the root of the drive!!! so there's no dir to lookup only file#
+                    title = os.path.split(file_original_path)
+                    searchstring = title[-1]
+            else:
+                if title == "":
+                    title = os.path.split(file_original_path)
+                    searchstring = title[-1]
+                    #log(u"TITLE NULL Searchstring string = %s" % (searchstring,))
                 else:
                     searchstring = title
-            else:
-                searchstring = title
-                log(u"RAR NO CD Searchstring string = %s" % (searchstring,))
-        elif 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
-            dirsearch = os.path.abspath(file_original_path)
-            dirsearch = os.path.split(dirsearch)
-            dirsearch = dirsearch[0].split(os.sep)
-            if len(dirsearch) > 1:
-                searchstring_notclean = dirsearch[-2]
-                searchstring = xbmc.getCleanMovieTitle(dirsearch[-2])
-                searchstring = searchstring[0]
-                log(u"MULTI1 CD Searchstring string = %s" % (searchstring,))
-            else:
-                #We are at the root of the drive!!! so there's no dir to lookup only file#
-                title = os.path.split(file_original_path)
-                searchstring = title[-1]
-        else:
-            if title == "":
-                title = os.path.split(file_original_path)
-                searchstring = title[-1]
-                log(u"TITLE NULL Searchstring string = %s" % (searchstring,))
-            else:
-                searchstring = title
-                log(u"TITLE Searchstring string = %s" % (searchstring,))
+                    #log(u"TITLE Searchstring string = %s" % (searchstring,))
 
     PT_ON = __addon__.getSetting( 'PT' )
     PTBR_ON = __addon__.getSetting( 'PTBR' )
