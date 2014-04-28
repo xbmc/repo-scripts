@@ -140,6 +140,10 @@ msgctxt "#32028"
 msgid "Default Theme Search Source"
 msgstr "Fonte Padrão para Procura"
 
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Reproduzir temas enquanto navegando na coleção de Concertos"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "ERRO"

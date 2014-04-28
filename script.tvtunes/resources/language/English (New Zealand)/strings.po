@@ -16,6 +16,14 @@ msgstr ""
 "Language: en_NZ\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Playback"
+
 msgctxt "#32992"
 msgid "Download"
 msgstr "Download"

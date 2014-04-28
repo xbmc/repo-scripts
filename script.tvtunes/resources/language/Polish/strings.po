@@ -18,27 +18,27 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
-msgstr "Pobierz i odtwórz tematy muzyczne z Filmów i Seriali"
+msgstr "Pobieraj i odtwarzaj motywy muzyczne filmów i seriali"
 
 msgctxt "Addon Description"
 msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
-msgstr "Skrypt ten pozwala pobierać motywy muzyczne dla Twoich Filmów i Seriali z strony www.televisiontunes.com. Pobrane motywy zostaną zapisane do pliku o nazwie theme[0-9].mp3 w folderze bazowego pliku wideo. Motywy będą odtwarzane podczas przeglądania biblioteki - kiedy wejdziesz do katalogu serialu lub ekranu informacji wideo (niezbędna jest skóra wspierająca tę funkcję)."
+msgstr "Skrypt ten pozwala pobierać motywy muzyczne dla Twoich filmów i seriali z serwisu www.televisiontunes.com. Pobrane motywy zostaną zapisane do pliku o nazwie theme[0-9].mp3 w folderze pliku wideo. Motywy będą odtwarzane podczas przeglądania biblioteki, kiedy wejdziesz do katalogu serialu lub ekranu informacji wideo (niezbędna jest skóra wspierająca tę funkcję)."
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Twórcy skórek, zapoznajcie się z wiki by wiedzieć w jaki sposób zintegrować swoje skóry: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "Twórcy skór, zapoznajcie się z wiki, by wiedzieć w jaki sposób zintegrować TvTunes ze swoją skórą: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
-msgstr "Potwarzaj odtwarzanie ścieżki"
+msgstr "Zapętlaj odtwarzanie motywu"
 
 msgctxt "#32002"
 msgid "Lower sound value"
-msgstr "Obniż głośność"
+msgstr "Obniżaj poziom głośności"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
-msgstr "Użyj zabezpieczonego katalogu SMB"
+msgstr "Używaj zabezpieczonego udziału SMB"
 
 msgctxt "#32004"
 msgid "Username:"
@@ -50,7 +50,7 @@ msgstr "Hasło:"
 
 msgctxt "#32006"
 msgid "Store tunes in a custom path"
-msgstr "Przechowuj melodie w wybranej ścieżce"
+msgstr "Przechowuj motywy w podanej lokacji"
 
 msgctxt "#32007"
 msgid "Path:"
@@ -58,15 +58,15 @@ msgstr "Ścieżka:"
 
 msgctxt "#32008"
 msgid "Fade tune out when exiting"
-msgstr "Łagodne wycisznaie motywu podczas wychodzenia"
+msgstr "Wyciszaj stopniowo motyw na końcu"
 
 msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
-msgstr "Ściągnij automatycznie gdy identyczny tytuł jest odnaleziony"
+msgstr "Pobieraj automatycznie, gdy znaleziono dokładne dopasowanie"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
-msgstr "Losowa kolejność listy odtwarzania"
+msgstr "Losowa kolejność motywów"
 
 msgctxt "#32011"
 msgid "Random start time"
@@ -78,7 +78,7 @@ msgstr "Typy plików"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
-msgstr "Łagodne rozpoczynanie się motywu podczas wchodzenia "
+msgstr "Wzmacniaj stopniowo motyw na początku"
 
 msgctxt "#32014"
 msgid "Always add additional themes (no overwrite)"
@@ -86,7 +86,7 @@ msgstr "Zawsze dodawaj dodatkowe motywy (bez nadpisywania) "
 
 msgctxt "#32015"
 msgid "Search for movie themes"
-msgstr "Szukaj muzycznych tematów filmowych"
+msgstr "Wyszukuj filmowe motywy muzyczne"
 
 msgctxt "#32016"
 msgid "Play themes when browsing Movie list"
@@ -98,19 +98,19 @@ msgstr "Odtwarzaj motywy podczas przeglądania listy seriali"
 
 msgctxt "#32018"
 msgid "Debugging"
-msgstr "Diagnozowanie błędów"
+msgstr "Wykrywanie błędów"
 
 msgctxt "#32019"
 msgid "Enable debug logging"
-msgstr "Włącz dziennik diagnozowania błędów"
+msgstr "Włącz rejestrowanie błędów"
 
 msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
-msgstr "Pokaż przycisk TvTunes na ekranie Informacji wideo "
+msgstr "Pokazuj przycisk TvTunes na ekranie Informacji wideo "
 
 msgctxt "#32021"
 msgid "Fade out after playing for (minutes)"
-msgstr "Wycisz po (minuty)"
+msgstr "Wyciszaj po (minuty)"
 
 msgctxt "#32022"
 msgid "Operations"
@@ -122,23 +122,27 @@ msgstr "Wykonaj kompletne wyszukiwanie"
 
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
-msgstr "Opóźnienie startu motywu (sekundy)"
+msgstr "Opóźniaj start motywu o (sekundy)"
 
 msgctxt "#32025"
 msgid "Support themes in sub directories"
-msgstr "Wsparcie tematów w katalogach podrzędnych"
+msgstr "Wspieraj motywy w podfolderach"
 
 msgctxt "#32026"
 msgid "Directory Name"
-msgstr "Nazwa Katalogu"
+msgstr "Nazwa folderu"
 
 msgctxt "#32027"
 msgid "Limit track duration when multiple themes (seconds)"
-msgstr "Ograniczenie czasu trwania utworu, przy wielu tematach (w sek.)"
+msgstr "Ograniczaj czas odtwarzania, przy wielu motywach (w sek.)"
 
 msgctxt "#32028"
 msgid "Default Theme Search Source"
 msgstr "Domyślne źródło motywów "
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Odtwarzaj motywy podczas przeglądania listy utworów"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -146,15 +150,15 @@ msgstr "BŁĄD"
 
 msgctxt "#32102"
 msgid "site unreacheable"
-msgstr "strona niedostępna"
+msgstr "serwis niedostępny"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
-msgstr "Pobieracz \"TVTunes\""
+msgstr "Menedżer pobierania TVTune"
 
 msgctxt "#32104"
 msgid "Replace existing theme?"
-msgstr "Nadpisać istniejącą melodię?"
+msgstr "Nadpisać istniejący motyw?"
 
 msgctxt "#32105"
 msgid "TVTunes"
@@ -174,7 +178,7 @@ msgstr "ANULOWANO"
 
 msgctxt "#32109"
 msgid "Operation canceled by user."
-msgstr "Operacja przerwana przez użytkownika."
+msgstr "Operacja anulowana przez użytkownika."
 
 msgctxt "#32110"
 msgid "Downloading:"
@@ -190,11 +194,11 @@ msgstr "Wybierz dla"
 
 msgctxt "#32113"
 msgid "ENTER MANUAL SEARCH"
-msgstr "PODAJ TREŚĆ WYSZUKIWANIA"
+msgstr "RĘCZNE WYSZUKIWANIE"
 
 msgctxt "#32114"
 msgid "Download this one?"
-msgstr "Pobrać ten? "
+msgstr "Pobrać wybrany? "
 
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
@@ -202,11 +206,11 @@ msgstr "Możesz wspomóc projekt na: "
 
 msgctxt "#32118"
 msgid "Manual Search..."
-msgstr "Wyszukiwanie ręczne..."
+msgstr "Wyszukiwanie manualne..."
 
 msgctxt "#32119"
 msgid "Continue with next theme search?"
-msgstr "Przejdź do następnego wyszukiwania motywu?"
+msgstr "Kontynuować wyszukiwanie następnego motywu?"
 
 msgctxt "#32120"
 msgid "Search Using %s..."
@@ -218,7 +222,7 @@ msgstr "Odtwarzanie"
 
 msgctxt "#32992"
 msgid "Download"
-msgstr "Pobierz"
+msgstr "Pobieranie"
 
 msgctxt "#32993"
 msgid "File system"

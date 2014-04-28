@@ -136,6 +136,14 @@ msgctxt "#32027"
 msgid "Limit track duration when multiple themes (seconds)"
 msgstr "Limita durata della traccia con i temi multipli (secondi)"
 
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Fonte predefinita di ricerca temi"
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Esegui temi mentre sfogli Musica o Video"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "Errore"
@@ -203,6 +211,10 @@ msgstr "Ricerca manuale.."
 msgctxt "#32119"
 msgid "Continue with next theme search?"
 msgstr "Continua con la successiva ricerca tema?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Ricerca usando %s..."
 
 msgctxt "#32991"
 msgid "Playback"

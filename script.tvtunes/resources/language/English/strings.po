@@ -117,7 +117,7 @@ msgid "Operations"
 msgstr ""
 
 msgctxt "#32023"
-msgid "Perform Complete Search Now"
+msgid "Browse Themes"
 msgstr ""
 
 msgctxt "#32024"
@@ -223,7 +223,22 @@ msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr ""
 
-#empty strings from id 32121 to 32990
+#empty strings from id 32121 to 32200
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr ""
+
+#empty strings from id 32204 to 32990
+
 
 msgctxt "#32991"
 msgid "Playback"
@@ -235,4 +250,8 @@ msgstr ""
 
 msgctxt "#32993"
 msgid "File system"
+msgstr ""
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
 msgstr ""

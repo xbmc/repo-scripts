@@ -25,263 +25,21 @@ else:
 
 __addon__     = xbmcaddon.Addon(id='script.tvtunes')
 __addonid__   = __addon__.getAddonInfo('id')
+__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
+__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
 
-#
-# Output logging method, if global logging is enabled
-#
-def log(txt):
-    if __addon__.getSetting( "logEnabled" ) == "true":
-        if isinstance (txt,str):
-            txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
-        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+sys.path.append(__resource__)
+sys.path.append(__lib__)
 
+# Import the common settings
+from settings import Settings
+from settings import log
+from settings import os_path_join
+from settings import os_path_split
+from settings import list_dir
+from settings import normalize_string
 
-def normalize_string( text ):
-    try:
-        text = text.replace(":","")
-        text = text.replace("/","-")
-        text = text.replace("\\","-")
-        text = unicodedata.normalize( 'NFKD', unicode( text, 'utf-8' ) ).encode( 'ascii', 'ignore' )
-    except:
-        pass
-    return text
-
-# There has been problems with calling join with non ascii characters,
-# so we have this method to try and do the conversion for us
-def os_path_join( dir, file ):
-    # Convert each argument - if an error, then it will use the default value
-    # that was passed in
-    try:
-        dir = dir.decode("utf-8")
-    except:
-        pass
-    try:
-        file = file.decode("utf-8")
-    except:
-        pass
-    return os.path.join(dir, file)
-
-
-##############################
-# Stores Various Settings
-##############################
-class Settings():
-    # Value to calculate which version of XBMC we are using
-    xbmcMajorVersion = 0
-    # The time the screensaver is set to (-1 for not set)
-    screensaverTime = 0
-
-
-    # Loads the Screensaver settings
-    # In Frodo there is no way to get the time before the screensaver
-    # is set to start, this means that the only way open to us is to
-    # load up the XML config file and read it from there.
-    # One of the many down sides of this is that the XML file will not
-    # be updated to reflect changes until the user exits XMBC
-    # This isn't a big problem as screensaver times are not changed
-    # too often
-    #
-    # Unfortunately the act of stopping the theme is seem as "activity"
-    # so it will reset the time, in Gotham, there will be a way to
-    # actually start the screensaver again, but until then there is
-    # not mush we can do
-    @staticmethod
-    def loadScreensaverSettings():
-        Settings.screensaverTime = -1
-        return -1
-
-#####################################################################
-## IMPORTANT NOTE
-## --------------
-## The method _loadScreensaverSettings has been commented out
-## because it breaks the rules for getting Add-ons accepted into
-## the official repository, the bug still exists but can be solved
-## in one of two ways:
-## 1) After installation of the addon, uncomment the following method
-## 2) Set the "Fade out after playing for (minutes)" to less than the
-##    screen saver value in TvTunes setting
-## Option 2 is recommended as will not need re-applying after updates
-#####################################################################
-
-#     def loadScreensaverSettings():
-#         if Settings.screensaverTime == 0:
-#             Settings.screenTimeOutSeconds = -1
-#             pguisettings = xbmc.translatePath('special://profile/guisettings.xml')
-#      
-#             log("Settings: guisettings.xml location = %s" % pguisettings)
-#      
-#             # Make sure we found the file and it exists
-#             if os.path.exists(pguisettings):
-#                 # Create an XML parser
-#                 elemTree = ET.ElementTree()
-#                 elemTree.parse(pguisettings)
-#                 
-#                 # First check to see if any screensaver is set
-#                 isEnabled = elemTree.findtext('screensaver/mode')
-#                 if (isEnabled == None) or (isEnabled == ""):
-#                     log("Settings: No Screensaver enabled")
-#                 else:
-#                     log("Settings: Screensaver set to %s" % isEnabled)
-#     
-#                     # Get the screensaver setting in minutes
-#                     result = elemTree.findtext('screensaver/time')
-#                     if result != None:
-#                         log("Settings: Screensaver timeout set to %s" % result)
-#                         # Convert from minutes to seconds, also reduce by 30 seconds
-#                         # as we want to ensure we have time to stop before the
-#                         # screensaver kicks in
-#                         Settings.screenTimeOutSeconds = (int(result) * 60) - 10
-#                     else:
-#                         log("Settings: No Screensaver timeout found")
-#                  
-#                 del elemTree
-#         return Settings.screenTimeOutSeconds
-
-    @staticmethod
-    def isCustomPathEnabled():
-        return __addon__.getSetting("custom_path_enable") == 'true'
-    
-    @staticmethod
-    def getCustomPath():
-        return __addon__.getSetting("custom_path")
-    
-    @staticmethod
-    def getDownVolume():
-        return int(float(__addon__.getSetting("downvolume")))
-
-    @staticmethod
-    def isLoop():
-        return __addon__.getSetting("loop") == 'true'
-    
-    @staticmethod
-    def isFadeOut():
-        return __addon__.getSetting("fadeOut") == 'true'
-
-    @staticmethod
-    def isFadeIn():
-        return __addon__.getSetting("fadeIn") == 'true'
-    
-    @staticmethod
-    def isSmbEnabled():
-        if __addon__.getSetting("smb_share"):
-            return True
-        else:
-            return False
-
-    @staticmethod
-    def getSmbUser():
-        if __addon__.getSetting("smb_login"):
-            return __addon__.getSetting("smb_login")
-        else:
-            return "guest"
-    
-    @staticmethod
-    def getSmbPassword():
-        if __addon__.getSetting("smb_psw"):
-            return __addon__.getSetting("smb_psw")
-        else:
-            return "guest"
-    
-    # Calculates the regular expression to use to search for theme files
-    @staticmethod
-    def getThemeFileRegEx(searchDir=None, extensionOnly=False):
-        fileTypes = "mp3" # mp3 is the default that is always supported
-        if(__addon__.getSetting("wma") == 'true'):
-            fileTypes = fileTypes + "|wma"
-        if(__addon__.getSetting("flac") == 'true'):
-            fileTypes = fileTypes + "|flac"
-        if(__addon__.getSetting("m4a") == 'true'):
-            fileTypes = fileTypes + "|m4a"
-        if(__addon__.getSetting("wav") == 'true'):
-            fileTypes = fileTypes + "|wav"
-        themeRegEx = '(theme[ _A-Za-z0-9.-]*.(' + fileTypes + ')$)'
-        # If using the directory method then remove the requirement to have "theme" in the name
-        if (searchDir != None) and Settings.isThemeDirEnabled():
-            # Make sure this is checking the theme directory, not it's parent
-            if searchDir.endswith(Settings.getThemeDirectory()):
-                extensionOnly = True
-        # See if we do not want the theme keyword
-        if extensionOnly:
-            themeRegEx = '(.(' + fileTypes + ')$)'
-        return themeRegEx
-    
-    @staticmethod
-    def isTimout():
-        screensaverTime = Settings.loadScreensaverSettings()
-        if screensaverTime == -1:
-            return False
-        # It is a timeout if the idle time is larger that the time stored
-        # for when the screensaver is due to kick in
-        if (xbmc.getGlobalIdleTime() > screensaverTime):
-            log("Settings: Stopping due to screensaver")
-            return True
-        else:
-            return False
-
-    @staticmethod
-    def isShuffleThemes():
-        return __addon__.getSetting("shuffle") == 'true'
-    
-    @staticmethod
-    def isRandomStart():
-        return __addon__.getSetting("random") == 'true'
-    
-    @staticmethod
-    def isPlayMovieList():
-        return __addon__.getSetting("movielist") == 'true'
-
-    @staticmethod
-    def isPlayTvShowList():
-        return __addon__.getSetting("tvlist") == 'true'
-
-    @staticmethod
-    def isPlayMusicVideoList():
-        return __addon__.getSetting("musicvideolist") == 'true'
-
-    @staticmethod
-    def getPlayDurationLimit():
-        return int(float(__addon__.getSetting("endafter")))
-
-    @staticmethod
-    def getTrackLengthLimit():
-        return int(float(__addon__.getSetting("trackLengthLimit")))
-
-    # Check if the video info button should be hidden
-    @staticmethod
-    def hideVideoInfoButton():
-        return __addon__.getSetting("showVideoInfoButton") != 'true'
-
-    # Check the delay start value
-    @staticmethod
-    def getStartDelaySeconds():
-        return int(float(__addon__.getSetting("delayStart")))
-
-    @staticmethod
-    def getXbmcMajorVersion():
-        if Settings.xbmcMajorVersion == 0:
-            xbmcVer = xbmc.getInfoLabel('system.buildversion')
-            log("Settings: XBMC Version = %s" % xbmcVer)
-            Settings.xbmcMajorVersion = 12
-            try:
-                # Get just the major version number
-                Settings.xbmcMajorVersion = int(xbmcVer.split(".", 1)[0])
-            except:
-                # Default to frodo as the default version if we fail to find it
-                log("Settings: Failed to get XBMC version")
-            log("Settings: XBMC Version %d (%s)" % (Settings.xbmcMajorVersion, xbmcVer))
-        return Settings.xbmcMajorVersion
-
-    @staticmethod
-    def isThemeDirEnabled():
-        # Theme sub directory only supported when not using a custom path
-        if Settings.isCustomPathEnabled():
-            return False
-        return __addon__.getSetting("searchSubDir") == 'true'
-
-    @staticmethod
-    def getThemeDirectory():
-        return __addon__.getSetting("subDirName")
 
 #############################################
 # Reads TvTunes information from an NFO file
@@ -319,7 +77,7 @@ class NfoReader():
             # Need to first load the contents of the NFO file into
             # a string, this is because the XML File Parse option will
             # not handle formats like smb://
-            nfoFile = xbmcvfs.File(nfoFileName)
+            nfoFile = xbmcvfs.File(nfoFileName, 'r')
             nfoFileStr = nfoFile.read()
             nfoFile.close()
 
@@ -345,7 +103,7 @@ class NfoReader():
                         file = fileElem.text
 
                     if (file != None) and (file != ""):
-                        if (not "/" in file) and (not "\\" in file):
+                        if file.startswith('..') or ((not "/" in file) and (not "\\" in file)):
                             # Make it a full path if it is not already
                             file = os_path_join(directory, file)
                         log("NfoReader: file = %s" % file)
@@ -358,7 +116,7 @@ class NfoReader():
                         dir = dirElem.text
 
                     if (dir != None) and (dir != ""):
-                        if (not "/" in dir) and (not "\\" in dir):
+                        if dir.startswith('..') or ((not "/" in dir) and (not "\\" in dir)):
                             # Make it a full path if it is not already
                             dir = os_path_join(directory, dir)
                         log("NfoReader: directory = %s" % dir)
@@ -558,12 +316,18 @@ class ThemeFiles():
         if workingPath.startswith("stack://"):
             workingPath = workingPath.replace("stack://", "").split(" , ", 1)[0]
         
-        if Settings.isSmbEnabled() and workingPath.startswith("smb://") : 
-            log( "### Try authentication share" )
-            workingPath = workingPath.replace("smb://", "smb://%s:%s@" % (Settings.getSmbUser(), Settings.getSmbPassword()) )
-            log( "### %s" % workingPath )
+        if Settings.isSmbEnabled():
+            if workingPath.startswith("smb://"):
+                log( "### Try authentication share" )
+                workingPath = workingPath.replace("smb://", "smb://%s:%s@" % (Settings.getSmbUser(), Settings.getSmbPassword()) )
+                log( "### %s" % workingPath )
+            # Also handle the apple format
+            elif workingPath.startswith("afp://"):
+                log( "### Try authentication share" )
+                workingPath = workingPath.replace("afp://", "afp://%s:%s@" % (Settings.getSmbUser(), Settings.getSmbPassword()) )
+                log( "### %s" % workingPath )
     
-        #######hack for episodes stored as rar files
+        # handle episodes stored as rar files
         if workingPath.startswith("rar://"):
             workingPath = workingPath.replace("rar://","")
         
@@ -598,7 +362,7 @@ class ThemeFiles():
             if ('VIDEO_TS' in rawPath) or ('BDMV' in rawPath):
                 log( "ThemeFiles: Found VIDEO_TS in path: Correcting the path for DVDR tv shows" )
                 themeDir = self._getUsablePath(rawPath)
-                themeDir = self._updir( themeDir, 1 )
+                themeDir = os_path_split( themeDir )[0]
                 themeDir = os_path_join( themeDir, Settings.getThemeDirectory() )
                 themeFiles = self._generateThemeFilelist(themeDir)
 
@@ -621,28 +385,21 @@ class ThemeFiles():
             #######hack for TV shows stored as ripped disc folders
             if ('VIDEO_TS' in workingPath) or ('BDMV' in workingPath):
                 log( "ThemeFiles: Found VIDEO_TS or BDMV in path: Correcting the path for DVDR tv shows" )
-                workingPath = self._updir( workingPath, 1 )
+                workingPath = os_path_split( workingPath )[0]
                 themeList = self._getThemeFiles(workingPath)
                 if len(themeList) < 1:
-                    workingPath = self._updir(workingPath,1)
+                    workingPath = os_path_split(workingPath)[0]
                     themeList = self._getThemeFiles(workingPath)
             #######end hack
             else:
                 # If no theme files were found in this path, look at the parent directory
-                workingPath = self._updir( workingPath, 1 )
+                workingPath = os_path_split( workingPath )[0]
                 themeList = self._getThemeFiles(workingPath)
 
         log("ThemeFiles: Playlist size = %d" % len(themeList))
         log("ThemeFiles: Working Path = %s" % workingPath)
         
         return themeList
-
-    def _updir(self, thepath, x):
-        # move up x directories on the path
-        while x > 0:
-            x -= 1
-            thepath = (os.path.split(thepath))[0]
-        return thepath
 
     # Search for theme files in the given directory
     def _getThemeFiles(self, directory, extensionOnly=False):
@@ -658,7 +415,7 @@ class ThemeFiles():
         log( "ThemeFiles: Searching %s for %s" % (directory, Settings.getThemeFileRegEx(directory,extensionOnly)) )
         # check if the directory exists before searching
         if xbmcvfs.exists(directory):
-            dirs, files = xbmcvfs.listdir( directory )
+            dirs, files = list_dir( directory )
             for aFile in files:
                 m = re.search(Settings.getThemeFileRegEx(directory,extensionOnly), aFile, re.IGNORECASE)
                 if m:
@@ -1155,7 +912,7 @@ class TunesBackend( ):
         self.oldThemeFiles = ThemeFiles("")
         self.prevThemeFiles = ThemeFiles("")
         self.delayedStart = DelayedStartTheme()
-        
+
     def run( self ):
         try:
             # Before we actually start playing something, make sure it is OK

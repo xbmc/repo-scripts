@@ -64,6 +64,10 @@ msgctxt "#32009"
 msgid "Automatically download if an exact match is found"
 msgstr "정확히 일치하면 자동으로 다운로드"
 
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "테마 음악이 여러개일 경우 섞어서 재생 (Shuffle)"
+
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "무작위 위치에서 재생"
@@ -75,6 +79,10 @@ msgstr "파일 종류"
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
 msgstr "시작할 때 음량을 점점 크게"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "테마 음악 추가 저장 (덮어쓰지 않음)"
 
 msgctxt "#32015"
 msgid "Search for movie themes"
@@ -116,9 +124,25 @@ msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "재생 시작 지연 (초)"
 
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "테마 음악용 하위 디렉터리 폴더 지원"
+
 msgctxt "#32026"
 msgid "Directory Name"
 msgstr "디렉터리 이름"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "테마 음악이 여러개일 경우 각 테마를 재생할 시간 (초)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "테마 음악을 검색할 기본 소스"
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "뮤직비디오 목록을 탐색할 때 테마 재생"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -187,6 +211,10 @@ msgstr "수동 찾기..."
 msgctxt "#32119"
 msgid "Continue with next theme search?"
 msgstr "계속하여 다음 테마 음악을 찾을까요?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "%s 에서 검색..."
 
 msgctxt "#32991"
 msgid "Playback"

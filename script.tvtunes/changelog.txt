@@ -1,3 +1,14 @@
+v4.4.1
+- Add support for soundcloud.com to the scraper
+- Add support for grooveshark.com to the scraper
+
+v4.4.0
+- Notify user if unable to contact goear.com when searching for themes
+- Support relative paths in NFO files
+- Work around bug in xbmcvfs.listdir and afp protocol
+- Add initial support for theme lists via plugin support
+- Remove goear.com as website changes have blocked XBMC
+
 v4.3.5
 - Add support for themes to play in the Music Video library
 

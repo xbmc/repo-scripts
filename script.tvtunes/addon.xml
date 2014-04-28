@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvtunes" name="TvTunes" version="4.3.5" provider-name="Ppic,Frost,ronie,robwebset">
+<addon id="script.tvtunes" name="TvTunes" version="4.4.1" provider-name="Ppic,Frost,ronie,robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
 		<import addon="script.module.beautifulsoup" version="3.2.1"/> 
+		<import addon="script.module.requests" version="1.1.0"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 	
@@ -40,7 +44,7 @@
 	
 		<summary lang="nl">Verkrijg en speel je TV shows themes</summary>
 	
-		<summary lang="pl">Pobierz i odtwórz tematy muzyczne z Filmów i Seriali</summary>
+		<summary lang="pl">Pobieraj i odtwarzaj motywy muzyczne filmów i seriali</summary>
 	
 		<summary lang="pt">Obtenha e reproduza as músicas dos seus filmes e séries de TV.</summary>
 	
@@ -78,7 +82,7 @@
 	
 		<description lang="nl">Dit script zoekt thema`s van TV series in jouw TV seriebibliotheek op www.televisiontunes.com en slaat ze op in thema[0-9].mp3 bestand in elke TV serie map. Ze worden afgespeeld wanneer je de  TV serie in bibliotheek modus bekijkt of Video-informatiescherm (Het gebruikte ontwerp moet wel compatibel zijn met dit script)</description>
 	
-		<description lang="pl">Skrypt ten pozwala pobierać motywy muzyczne dla Twoich Filmów i Seriali z strony www.televisiontunes.com. Pobrane motywy zostaną zapisane do pliku o nazwie theme[0-9].mp3 w folderze bazowego pliku wideo. Motywy będą odtwarzane podczas przeglądania biblioteki - kiedy wejdziesz do katalogu serialu lub ekranu informacji wideo (niezbędna jest skóra wspierająca tę funkcję).</description>
+		<description lang="pl">Skrypt ten pozwala pobierać motywy muzyczne dla Twoich filmów i seriali z serwisu www.televisiontunes.com. Pobrane motywy zostaną zapisane do pliku o nazwie theme[0-9].mp3 w folderze pliku wideo. Motywy będą odtwarzane podczas przeglądania biblioteki, kiedy wejdziesz do katalogu serialu lub ekranu informacji wideo (niezbędna jest skóra wspierająca tę funkcję).</description>
 	
 		<description lang="pt">Com este addon, poderá obter as músicas dos filmes e séries TV na sua biblioteca a partir de televisiontunes.com. Serão guardadas em ficheiros theme[0-9].mp3 dentro das pastas de vídeo e serão reproduzidas durante a navegação na biblioteca de vídeo, quando entrar dentro da pasta de Séries TV ou no ecrã de Informação de Vídeo (é necessário um tema compatível).</description>
 	
@@ -116,7 +120,7 @@
 	
 		<disclaimer lang="nl">Ontwerpers, bekijk de wiki om te zien hoe dit script in je ontwerp dient te integreren:http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="pl">Twórcy skórek, zapoznajcie się z wiki by wiedzieć w jaki sposób zintegrować swoje skóry: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="pl">Twórcy skór, zapoznajcie się z wiki, by wiedzieć w jaki sposób zintegrować TvTunes ze swoją skórą: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="pt">Autores dos temas, por favor vejam o changelog.txt para saber como integrar TVTunes nos vossos temas.</disclaimer>
 	

@@ -16,9 +16,21 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Имя пользователя:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Пароль:"
+
 msgctxt "#32007"
 msgid "Path:"
 msgstr "Путь:"
+
+msgctxt "#32012"
+msgid "File Types"
+msgstr "Типы файлов"
 
 msgctxt "#32018"
 msgid "Debugging"
@@ -28,9 +40,45 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Включить журнал отладки"
 
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Операции"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Имя каталога"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "ОШИБКА"
+
+msgctxt "#32102"
+msgid "site unreacheable"
+msgstr "сайт недоступен"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Заменить существующую тему?"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Получение информации..."
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Операция отменена пользователем."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Загрузка:"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Ручной поиск..."
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Искать с помощью %s..."
 
 msgctxt "#32991"
 msgid "Playback"
