@@ -17,7 +17,6 @@
 import sys
 import os
 import re
-import random
 import traceback
 import xml.etree.ElementTree as ET
 #Modules XBMC
@@ -26,6 +25,11 @@ import xbmc
 import xbmcgui
 import xbmcvfs
 import xbmcaddon
+
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
 
 
 __addon__     = xbmcaddon.Addon(id='script.videoextras')
@@ -45,61 +49,17 @@ from settings import os_path_join
 # Load the database interface
 from database import ExtrasDB
 
-from VideoParser import VideoParser
-
 # Load the core Video Extras classes
 from core import ExtrasItem
-from core import VideoExtrasFinder
 from core import SourceDetails
 from core import WindowShowing
 from core import VideoExtrasBase
 
-###################################
-# Custom Player to play the extras
-###################################
-class ExtrasPlayer(xbmc.Player):
-    def __init__(self, *args):
-        self.completed = False
-        xbmc.Player.__init__(self, *args)
+# Load the Video Extras Player that handles playing the extras files
+from ExtrasPlayer import ExtrasPlayer
 
-    # Play the given Extras File
-    def play(self, extrasItem):
-        play = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        listitem = self._getListItem(extrasItem)
-        play.clear()
-        play.add(extrasItem.getMediaFilename(), listitem)
-        xbmc.Player.play(self, play)
-
-    # Play a list of extras
-    def playAll(self, extrasItems):
-        play = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        play.clear()
-
-        for exItem in extrasItems:
-            listitem = self._getListItem(exItem)
-            play.add(exItem.getMediaFilename(), listitem)
-
-        xbmc.Player.play(self, play)
-
-    # Create a list item from an extras item
-    def _getListItem(self, extrasItem):
-        listitem = xbmcgui.ListItem()
-        # Set the display title on the video play overlay
-        listitem.setInfo('video', {'studio': __addon__.getLocalizedString(32001) + " - " + SourceDetails.getTitle()})
-        listitem.setInfo('video', {'Title': extrasItem.getDisplayName()})
-        
-        # If both the Icon and Thumbnail is set, the list screen will choose to show
-        # the thumbnail
-        if extrasItem.getIconImage() != "":
-            listitem.setIconImage(extrasItem.getIconImage())
-        if extrasItem.getThumbnailImage() != "":
-            listitem.setThumbnailImage(extrasItem.getThumbnailImage())
-        
-        # Record if the video should start playing part-way through
-        if extrasItem.isResumable():
-            if extrasItem.getResumePoint() > 1:
-                listitem.setProperty('StartOffset', str(extrasItem.getResumePoint()))
-        return listitem
+# Load any common dialogs
+from dialogs import VideoExtrasResumeWindow
 
 ####################################################
 # Class to control displaying and playing the extras
@@ -270,42 +230,8 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         for anExtra in self.files:
             log("VideoExtrasWindow: filename: %s" % anExtra.getFilename())
 
-            # Label2 is used to store the duration in HH:MM:SS format
-            anItem = xbmcgui.ListItem(anExtra.getDisplayName(), anExtra.getDisplayDuration(), path=SourceDetails.getFilenameAndPath())
-            anItem.setProperty("FileName", anExtra.getFilename())
-            anItem.setInfo('video', { 'PlayCount': anExtra.getWatched() })
-            anItem.setInfo('video', { 'Title': SourceDetails.getTitle() })
-            # We store the duration here, but it is only in minutes and does not
-            # look very good if displayed, so we also set Label2 to a viewable value
-            intDuration = anExtra.getDuration()
-            # Only add the duration if there is one
-            if intDuration > 0:
-                anItem.setInfo('video', { 'Duration': int(anExtra.getDuration()/60) })
-            if SourceDetails.getTvShowTitle() != "":
-                anItem.setInfo('video', { 'TvShowTitle': SourceDetails.getTvShowTitle() })
-
-            # If the plot is supplied, then set it
-            plot = anExtra.getPlot()
-            if (plot != None) and (plot != ""):
-                 anItem.setInfo('video', { 'Plot': plot })
-            # If the order sort title is supplied, then set it
-            orderKey = anExtra.getOrderKey()
-            if (orderKey != None) and (orderKey != ""):
-                 anItem.setInfo('video', { 'sorttitle': orderKey })
-
-            # If both the Icon and Thumbnail is set, the list screen will choose to show
-            # the thumbnail
-            if anExtra.getIconImage() != "":
-                anItem.setIconImage(anExtra.getIconImage())
-            if anExtra.getThumbnailImage() != "":
-                anItem.setThumbnailImage(anExtra.getThumbnailImage())
-
-            # The following two will give us the resume flag
-            anItem.setProperty("TotalTime", str(anExtra.getTotalDuration()))
-            anItem.setProperty("ResumeTime", str(anExtra.getResumePoint()))
-
-            # Set the background image
-            anItem.setProperty( "Fanart_Image", anExtra.getFanArt() )
+            # Create the list item
+            anItem = anExtra.createListItem()
 
             self.addItem(anItem)
         
@@ -324,7 +250,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         ACTION_CONTEXT_MENU = 117
 
         if (action == ACTION_PREVIOUS_MENU) or (action == ACTION_NAV_BACK):
-            log("VideoExtrasWindow: Close Action received: %s" % str(action))
+            log("VideoExtrasWindow: Close Action received: %s" % str(action.getId()))
             self.close()
         elif action == ACTION_CONTEXT_MENU:
             # Get the item that was clicked on
@@ -339,10 +265,10 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
             # If requested to restart from beginning, reset the resume point before playing
             if contextWindow.isRestart():
                 extraItem.setResumePoint(0)
-                self._performPlayAction(extraItem)
+                ExtrasPlayer.performPlayAction(extraItem)
                 
             if contextWindow.isResume():
-                self._performPlayAction(extraItem)
+                ExtrasPlayer.performPlayAction(extraItem)
 
             if contextWindow.isMarkUnwatched():
                 # Need to remove the row from the database
@@ -408,35 +334,8 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
                 extraItem.setResumePoint(0)
             # Default is to actually resume
             
-        self._performPlayAction(extraItem)
+        ExtrasPlayer.performPlayAction(extraItem)
         
-
-    # Calls the media player to play the selected item
-    def _performPlayAction(self, extraItem):
-        extrasPlayer = ExtrasPlayer()
-        extrasPlayer.play( extraItem )
-        
-        while not extrasPlayer.isPlayingVideo():
-            xbmc.sleep(1)
-        
-        # Get the total duration and round it down to the nearest second
-        videoDuration = int(extrasPlayer.getTotalTime())
-        log("VideoExtrasWindow: TotalTime of video = %d" % videoDuration)
-        extraItem.setTotalDuration(videoDuration)
-
-        currentTime = 0
-        # Wait for the player to stop
-        while extrasPlayer.isPlayingVideo():
-            # Keep track of where the current video is up to
-            currentTime = int(extrasPlayer.getTime())
-            xbmc.sleep(100)
-
-        # Record the time that the player actually stopped
-        log("VideoExtrasWindow: Played to time = %d" % currentTime)
-        extraItem.setResumePoint(currentTime)
-        
-        # Now update the database with the fact this has now been watched
-        extraItem.saveState()
 
     # Search the list of extras for a given filename
     def _getCurrentSelection(self):
@@ -452,58 +351,6 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
                 return anExtra
         return None
 
-
-
-##################################################
-# Dialog window to find out is a video should be
-# resumes or started from the beginning
-##################################################
-class VideoExtrasResumeWindow(xbmcgui.WindowXMLDialog):
-    EXIT = 1
-    RESUME = 2
-    RESTART = 40
-
-    def __init__( self, *args, **kwargs ):
-        # Copy off the key-word arguments
-        # The non keyword arguments will be the ones passed to the main WindowXML
-        self.resumetime = kwargs.pop('resumetime')
-        self.selectionMade = VideoExtrasResumeWindow.EXIT
-
-    # Static method to create the Window Dialog class
-    @staticmethod
-    def createVideoExtrasResumeWindow(resumetime=0):
-        return VideoExtrasResumeWindow("script-videoextras-resume.xml", __addon__.getAddonInfo('path').decode("utf-8"), resumetime=resumetime)
-
-    def onInit(self):
-        # Need to populate the resume point
-        resumeButton = self.getControl(VideoExtrasResumeWindow.RESUME)
-        currentLabel = resumeButton.getLabel()
-        newLabel = "%s %s" % (currentLabel, self.resumetime)
-
-        # Reset the resume label with the addition of the time
-        resumeButton.setLabel(newLabel)
-        xbmcgui.WindowXMLDialog.onInit(self)
-
-    def onClick(self, control):
-        # Save the item that was clicked
-        # Item ID 2 is resume
-        # Item ID 40 is start from beginning
-        self.selectionMade = control
-        # If not resume or restart - we just want to exit without playing
-        if not (self.isResume() or self.isRestart()):
-            self.selectionMade = VideoExtrasResumeWindow.EXIT
-        # Close the dialog after the selection
-        self.close()
-
-    def isResume(self):
-        return self.selectionMade == VideoExtrasResumeWindow.RESUME
-    
-    def isRestart(self):
-        return self.selectionMade == VideoExtrasResumeWindow.RESTART
-    
-    def isExit(self):
-        return self.selectionMade == VideoExtrasResumeWindow.EXIT
-       
 
 #######################################################
 # Context Menu
@@ -577,36 +424,69 @@ class VideoExtrasContextMenu(xbmcgui.WindowXMLDialog):
 #########################
 # Main
 #########################
-try:
-    if len(sys.argv) > 2:
-        # get the type of operation
-        log("Operation = %s" % sys.argv[1])
-
-        # Load the details of the current source of the extras        
-        SourceDetails.forceLoadDetails()
-            
-        # Make sure we are not passed a plugin path
-        if "plugin://" in sys.argv[2]:
-            if sys.argv[1] == "check":
-                xbmcgui.Window( 12003 ).setProperty( "HideVideoExtrasButton", "true" )
-        else:
-            # Create the extras class that deals with any extras request
-            videoExtras = VideoExtras(sys.argv[2])
+if __name__ == '__main__':
+    try:
+        if len(sys.argv) > 2:
+            # get the type of operation
+            log("Operation = %s" % sys.argv[1])
     
-            # We are either running the command or just checking for existence
-            if sys.argv[1] == "check":
-                videoExtras.checkButtonEnabled()
+            # Load the details of the current source of the extras        
+            SourceDetails.forceLoadDetails()
+                
+            # Make sure we are not passed a plugin path
+            if "plugin://" in sys.argv[2]:
+                if sys.argv[1] == "check":
+                    xbmcgui.Window( 12003 ).setProperty( "HideVideoExtrasButton", "true" )
             else:
-                # Check if the use database setting is enabled
-                extrasDb = None
-                if Settings.isDatabaseEnabled():
-                    extrasDb = ExtrasDB()
-                    # Make sure the database has been created
-                    extrasDb.createDatabase()
-                # Perform the search command
-                files = videoExtras.findExtras(extrasDb=extrasDb)
-                # need to display the extras
-                videoExtras.run(files)
-except:
-    log("VideoExtras: %s" % traceback.format_exc())
+                # Create the extras class that deals with any extras request
+                videoExtras = VideoExtras(sys.argv[2])
+        
+                # We are either running the command or just checking for existence
+                if sys.argv[1] == "check":
+                    videoExtras.checkButtonEnabled()
+                else:
+                    # Check if the use database setting is enabled
+                    extrasDb = None
+                    if Settings.isDatabaseEnabled():
+                        extrasDb = ExtrasDB()
+                        # Make sure the database has been created
+                        extrasDb.createDatabase()
+                    # Perform the search command
+                    files = videoExtras.findExtras(extrasDb=extrasDb)
+                    # need to display the extras
+                    videoExtras.run(files)
+        else:
+            # Close any open dialogs
+            xbmc.executebuiltin("Dialog.Close(all, true)", True)
+        
+            # Default to the plugin method
+            xbmc.executebuiltin("xbmc.ActivateWindow(Video, addons://sources/video/)", True)
+        
+            # It is a bit hacky, but the only way I can get it to work
+            # After loading the plugin screen, navigate to the VideoExtras entry and select it
+            maxChecks = 100
+            selectedTitle = None
+            while selectedTitle != 'VideoExtras' and maxChecks > 0:
+                maxChecks = maxChecks - 1
+                json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.Up", "params": { }, "id": 1}')
+                json_query = unicode(json_query, 'utf-8', errors='ignore')
+                json_response = simplejson.loads(json_query)
+                log( json_response )
+        
+                # Allow time for the command to be reflected on the screen      
+                xbmc.sleep(100)
+        
+                selectedTitle = xbmc.getInfoLabel('ListItem.Label')
+                log("VideoExtras: plugin screen selected Title=%s" % selectedTitle)
+        
+            # Now select the menu item if it is TvTunes
+            if selectedTitle == 'VideoExtras':
+                json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.Select", "params": { }, "id": 1}')
+                json_query = unicode(json_query, 'utf-8', errors='ignore')
+                json_response = simplejson.loads(json_query)
+                log( json_response )
+            
+
+    except:
+        log("VideoExtras: %s" % traceback.format_exc())
 

@@ -132,6 +132,10 @@ msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "Finestra da visualizzare all'uscita dalla lista dettagliata"
 
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Consenti caching degli extra all'avio"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Riproduci Tutti"
@@ -151,3 +155,19 @@ msgstr "Riprendi da"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Parti dall'inizio"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Segna come visto"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Segna come non visto"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Modifica titolo"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Aggiornamento titolo fallito"

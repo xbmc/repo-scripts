@@ -132,6 +132,10 @@ msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "Melyik ablak kerüljön használatra a részletes listából kilépve"
 
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Extrák gyorsítótárazásának engedélyezése indításkor"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Összes lejátszása"
@@ -151,3 +155,19 @@ msgstr "Folyatatás innen:"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Lejátszás az elejéről"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Megnézettként megjelöl"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Megnézettlenként megjelöl"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Cím szerkesztése"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Cím frissítése sikertelen"

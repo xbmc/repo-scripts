@@ -132,6 +132,10 @@ msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "Janela a ser mostrada após sair da lista detalhada"
 
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Permitir cacheamento de extras ao inicializar"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Reproduzir todos"
@@ -151,3 +155,19 @@ msgstr "Resumir de"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Iniciar/Reiniciar"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marcar como assistido"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marcar como por assistir"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Editar o título"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Falhou ao atualizar o título"

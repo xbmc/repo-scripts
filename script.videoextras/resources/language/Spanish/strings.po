@@ -151,3 +151,19 @@ msgstr "Volver a empezar desde"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Comenzar desde el principio"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marcar como visto"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marcar como No Visto"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Editar titulo"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Fallo al actualizar el titulo"

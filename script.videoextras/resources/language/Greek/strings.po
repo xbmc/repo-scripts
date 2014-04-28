@@ -132,6 +132,10 @@ msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "Παράθυρο που θα εμφανίζεται μετά την έξοδο από την αναλυτική λίστα"
 
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Προσωρινή αποθήκευση πρόσθετων κατά την εκκίνηση"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Αναπαραγωγή Όλων"
@@ -151,3 +155,19 @@ msgstr "Συνέχιση από"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Εκκίνηση από την αρχή"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Σήμανση ως Προβληθέν"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Σήμανση ως Μη Προβληθέν"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Επεξεργασία τίτλου"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Αποτυχία ενημέρωσης τίτλου"

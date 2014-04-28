@@ -20,6 +20,7 @@
 		<setting id="enableDB" type="bool" label="32022" default="true"/>
 		<setting label="32023" type="lsep"/>
 		<setting enable="eq(-2,true)" label="32024" type="action" action="RunScript($CWD/cleanup.py)"/>
+		<setting label="32028" type="action" action="RunScript($CWD/default.py)"/>
 	</category>
 	<category label="32016">
 		<setting id="forceButtonDisplay" type="bool" label="32017" default="false"/>

@@ -16,9 +16,25 @@ msgstr ""
 "Language: en_NZ\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32008"
+msgid "Information"
+msgstr "Information"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Home"
+
 msgctxt "#32016"
 msgid "Advanced"
 msgstr "Advanced"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Database"
 
 msgctxt "#32101"
 msgid "Play All"

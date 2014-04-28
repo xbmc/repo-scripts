@@ -132,6 +132,10 @@ msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "상세목록 화면 종료 후 표시할 창"
 
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "시작할 때 부가영상 캐시 허용"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "모두 재생"
@@ -151,3 +155,19 @@ msgstr "이어서 재생: "
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "처음부터 시작"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "시청으로 표시"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "미시청으로 표시"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "제목 수정"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "제목 업데이트 실패"

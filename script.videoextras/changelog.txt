@@ -1,3 +1,8 @@
+v1.1.0
+- Add support for videoextras.nfo file
+- Fix issue when having extras on different OS than XBMC is on
+- Support for new extras browse option
+
 v1.0.6
 - Add support for plot tag in NFO files
 - Add support for caching extras on startup for overlay support

@@ -151,3 +151,19 @@ msgstr "Fortsetzen bei"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Am Anfang starten"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Markiere als gesehen"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Markiere als ungesehen"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Titel bearbeiten"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Aktualisierung des Titels fehlgeschlagen"

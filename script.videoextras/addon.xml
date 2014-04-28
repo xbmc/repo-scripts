@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.videoextras" name="VideoExtras" version="1.0.6" provider-name="robwebset">
+<addon id="script.videoextras" name="VideoExtras" version="1.1.0" provider-name="robwebset">
 	<requires>
     	<import addon="xbmc.python" version="2.1.0"/>
   	</requires>
   	<extension point="xbmc.python.script" library="default.py" />
 	<extension point="xbmc.service" library="service.py" start="login">
 		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>video</provides>
 	</extension>
   	<extension point="xbmc.addon.metadata">
     	<summary lang="ca">Afegeix vídeos extres a les teves pel·lícules i sèries de televisió.</summary>
@@ -40,7 +43,7 @@
     	<description lang="pt">Permite adicionar extras de vídeo à sua Biblioteca de Vídeos. Leia o wiki para mais instruções de configuração.</description>
     	<description lang="pt_BR">Prove um caminho para vídeo extras via info de vídeo. Ver o wiki para instruções de configuração.</description>
     	<description lang="sv">Tillhandahåller ett sätt att lägga till Video Extras till ditt filmbibliotek. Se wiki för inställningsanvisningar.</description>
-		<language></language>
+    	<language></language>
     	<platform>all</platform>
     	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     	<forum>http://forum.xbmc.org/showthread.php?tid=178717</forum>

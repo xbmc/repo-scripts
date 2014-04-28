@@ -151,3 +151,19 @@ msgstr "Continuar dende"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Comezar dende o principio"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marcar como visto"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marcar como non visto"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Editar o título"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Produciuse un erro actualizando o título"

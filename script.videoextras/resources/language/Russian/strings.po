@@ -48,6 +48,10 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "База данных"
 
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Операции"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Воспроизвести всё"

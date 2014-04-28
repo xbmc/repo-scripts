@@ -136,7 +136,12 @@ msgctxt "#32027"
 msgid "Allow caching of extras on startup"
 msgstr ""
 
-#empty strings from id 32028 to 32100
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr ""
+
+
+#empty strings from id 32029 to 32100
 
 msgctxt "#32101"
 msgid "Play All"
@@ -172,4 +177,16 @@ msgstr ""
 
 msgctxt "#32109"
 msgid "Failed to update title"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Music Videos"
 msgstr ""

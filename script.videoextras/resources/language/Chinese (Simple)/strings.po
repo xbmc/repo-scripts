@@ -28,6 +28,10 @@ msgctxt "#32009"
 msgid "Home"
 msgstr "首页"
 
+msgctxt "#32010"
+msgid "File System"
+msgstr "文件系统"
+
 msgctxt "#32013"
 msgid "Path"
 msgstr "路径"
@@ -60,6 +64,14 @@ msgctxt "#32102"
 msgid "Info"
 msgstr "信息"
 
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "继续播放从"
+
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "从头开始播放"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "编辑标题"

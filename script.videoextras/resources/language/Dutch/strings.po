@@ -132,6 +132,10 @@ msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "Scherm te tonen na afsluiten van gedetailleerde lijst"
 
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Toestaan het bufferen van extra`s bij opstarten"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Speel alles af"
@@ -151,3 +155,19 @@ msgstr "Hervat vanaf"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Starten vanaf begin"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Markeer als bekeken"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "markeer als niet bekeken"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Wijzig titel"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Niet gelukt titel te updaten"
