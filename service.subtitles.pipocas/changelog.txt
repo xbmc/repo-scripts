@@ -1,2 +1,4 @@
+0.0.2
+- Changed description display and fixed rating score.
 0.0.1
 - Initial port to new Gotham structure.

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service Pipocas.tv version 0.0.1
+# Service Pipocas.tv version 0.0.2
 # Code based on Undertext (FRODO) service and the download function encode fix from legendastv (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -158,9 +158,9 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             #for descmatch in re.finditer(desc_pattern, content_details, re.IGNORECASE | re.DOTALL):
             #   desc = string.strip(descmatch.group(1))
             #   log( __name__ ,"%s DESC match: '%s' ..." % (debug_pretext, decmatch.group(1)))
-            downloads = int(hits) / 4
-            if (downloads > 10):
-                downloads=10
+            downloads = int(hits) / 150
+            if (downloads > 5):
+                downloads=5
             filename = re.sub('\n',' ',filename)
             desc = re.sub('\n',' ',desc)
             #Remove HTML tags on the commentaries
@@ -201,8 +201,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                     else:
                         if re.search(filesearch[1][:len(filesearch[1])-4], desc):
                             sync = True
-            #filename = filename + " " + "(" + movieyear + ")" + "  " + hits + "Hits" + " - " + desc
-            filename = filename + " " + "- Enviado por: " + uploader +  " - Hits: " + hits
+            filename = filename + "  " + "hits: " + hits + " uploader: " + uploader + " "
             #subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
             subtitles_list.append({'rating': str(downloads), 'filename': filename, 'hits': hits, 'desc': desc, 'sync': sync, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
         page = page + 1
@@ -232,7 +231,7 @@ def append_subtitle(item):
     
     listitem = xbmcgui.ListItem(
                    label=item['language_name'],
-                   label2=item['filename']+ '-' +item['desc'],
+                   label2=item['filename'],
                    iconImage=item['rating'],
                    thumbnailImage=item['language_short']
                )
