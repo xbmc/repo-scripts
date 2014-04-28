@@ -1,3 +1,6 @@
+0.0.3
+- Added Release pattern for better Description display. Now you can choose Full Description or Release only Description (Default) on addon settings!
+- Some fixes and changes on the code.
 0.0.2
 - Improved search code, we always depend on the site search...
 - Manual search fully working.

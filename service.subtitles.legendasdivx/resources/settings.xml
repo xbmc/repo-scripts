@@ -7,5 +7,6 @@
       <setting id="PTBR" type="bool" label="32005" default="true"/>
       <setting id="ES" type="bool" label="32006" default="true"/>
       <setting id="EN" type="bool" label="32007" default="true"/>
+      <setting id="DESC" type="bool" label="32008" default="false"/>
     </category>   
 </settings>

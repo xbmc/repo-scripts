@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.0.1
+# Service LegendasDivx.com version 0.0.3
 # Code based on Undertext (FRODO) service and the download function encode fix from legendastv (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -103,6 +103,7 @@ Release: The.Dark.Knight.2008.720p.BluRay.DTS.x264-ESiR</td>
 """
 
 subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>"
+release_pattern = "([^\W][\w{3,}\.|\-|\(\d\d\d\d)]{3,}\w{3,}[\-|\.]\w{2,})"
 # group(1) = Name, group(2) = Year, group(3) = Number Files, group(4) = ID, group(5) = Hits, group(6) = Requests, group(7) = Description
 #==========
 # Functions
@@ -163,18 +164,19 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             #log(u"_desc_dirty '%s' ..." % desc)
             #Remove new lines on the commentaries
             filename = re.sub('\n',' ',filename)
-            desc = re.sub('<br />','',desc)
+            desc = re.sub('<br />',' ',desc)
             desc = re.sub('\n',' ',desc)
             desc = re.sub(':.','',desc)
             #Remove HTML tags on the commentaries
             filename = re.sub(r'<[^<]+?>','', filename)
             desc = re.sub(r'<[^<]+?>|[~]','', desc)
-            #desc = re.findall(r'(.*?)([\. _-].*?([^\s]+))', desc, re.IGNORECASE | re.MULTILINE | re.UNICODE | re.VERBOSE | re.DOTALL)
-            #log(u"_desc_halfdirty '%s' ..." % desc)
-            #desc = re.findall(r'([^\s]+.*?\..*?[\. _-].*?[^\s]+)', desc, re.IGNORECASE)
-            #for descs in desc:
-            #    log(u"_desc '%s' ..." % descs)
-            
+            DESC_ON = __addon__.getSetting( 'DESC' )
+            if DESC_ON == "false":
+                desc = re.findall(release_pattern, desc, re.IGNORECASE | re.VERBOSE | re.DOTALL | re.UNICODE | re.MULTILINE)
+                desc = " / ".join(desc)
+                if desc == "":
+                    desc = "No Description!"
+            #log(u"_desc '%s' ..." % desc)
             #Find filename on the comentaries to show sync label using filename or dirname (making it global for further usage)
             global filesearch
             filesearch = os.path.abspath(file_original_path)
@@ -212,7 +214,8 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                     else:
                         if re.search(filesearch[1][:len(filesearch[1])-4], desc):
                             sync = True
-            filename = filename + " " + "(" + movieyear + ")" + "  " + hits + "Hits" + " - " + desc
+            filename = filename + " " + "(" + movieyear + ")" + "  " + "hits: " + hits + " - " + desc
+            #log(u"DN string = %s" % (downloads,))
             subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
         page = page + 1
         
@@ -243,7 +246,7 @@ def append_subtitle(item):
     
     listitem = xbmcgui.ListItem(
                    label=item['language_name'],
-                   label2=item['filename']+ '-' +item['desc'],
+                   label2=item['filename'],
                    iconImage=item['rating'],
                    thumbnailImage=item['language_short']
                )
