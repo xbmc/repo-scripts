@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<strings>
+    <string id="32001">Utilizador</string>
+    <string id="32002">Palavra-passe</string>
+    <string id="32003">Detalhes da conta</string>
+    <string id="32004">Português Activo</string>
+    <string id="32005">Português Brasileiro Activo</string>
+    <string id="32006">Espanhol Activo</string>
+    <string id="32007">Inglês Activo</string>
+</strings>
