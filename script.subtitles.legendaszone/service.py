@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service Legendas-Zone.org version 0.0.2
+# Service Legendas-Zone.org version 0.0.3
 # Code based on Undertext (FRODO) service and the download function encode fix from legendastv (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -48,7 +48,7 @@ debug_pretext = "LegendasZone"
 MAIN_SUBDIVX_URL = "http://www.legendas-zone.org/"
 SEARCH_PAGE_URL = MAIN_SUBDIVX_URL + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
 
-INTERNAL_LINK_URL = "plugin://%(scriptid)s/?action=download&%(id)s&filename=%(filename)s"
+INTERNAL_LINK_URL = "plugin://%(scriptid)s/?action=download&id=%(id)s&filename=%(filename)s"
 SUB_EXTS = ['srt', 'sub', 'txt', 'aas', 'ssa', 'smi']
 HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)"
 
@@ -62,7 +62,7 @@ password = __addon__.getSetting( "LZpass" )
 
 """
 """
-subtitle_pattern = "<b><a\shref=\"legendas.php\?modo=detalhes&amp;(.+?)\".+?[\r\n\t]+?.+?[\r\n\t]+?.+?onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
+subtitle_pattern = "<b><a\shref=\"legendas.php\?modo=detalhes&amp;id=(.+?)\".+?[\r\n\t]+?.+?[\r\n\t]+?.+?onmouseover=\"Tip\(\'<table><tr><td><b>(.+?)</b></td></tr></table>.+?<b>Hits:</b>\s(.+?)\s<br>.+?<b>CDs:</b>\s(.+?)<br>.+?Uploader:</b>\s(.+?)</td>"
 # group(1) = ID, group(2) = Name, group(3) = Hits, group(4) = Files, group(5) = Uploader
 multiple_results_pattern = "<td\salign=\"left\".+?<b><a\shref=\"legendas.php\?imdb=(.+?)\"\stitle=\".+?\">"
 # group(1) = IMDB
@@ -127,9 +127,9 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
         while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 3:
             for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
                 hits = matches.group(3)
-                downloads = int(matches.group(3)) / 5
-                if (downloads > 10):
-                    downloads=10
+                downloads = int(matches.group(3)) / 150
+                if (downloads > 5):
+                    downloads=5
                 id = matches.group(1)
                 filename = string.strip(matches.group(2))
                 desc = string.strip(matches.group(2))
@@ -180,7 +180,8 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                         else:
                             if re.search(filesearch[1][:len(filesearch[1])-4], desc):
                                 sync = True
-                #filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
+                filename = filename + "  " + "hits: " + hits + " uploader: " + uploader + " "
+                #log(u"DN string = %s" % (downloads,))
                 if languageshort == "br":
                     languageshort = "pb"
                 subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits': hits, 'language_short': languageshort, 'language_name': languagelong})
@@ -229,9 +230,9 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                         for matches in re.finditer(subtitle_pattern, content1, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
                             #log( __name__ ,"%s PAGE? '%s'" % (debug_pretext, page1))
                             hits = matches.group(3)
-                            downloads = int(matches.group(3)) / 5
-                            if (downloads > 10):
-                                downloads=10
+                            downloads = int(matches.group(3)) / 150
+                            if (downloads > 5):
+                                downloads=5
                             id = matches.group(1)
                             filename = string.strip(matches.group(2))
                             desc = string.strip(matches.group(2))
@@ -283,7 +284,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                                     else:
                                         if re.search(filesearch[1][:len(filesearch[1])-4], desc):
                                             sync = True
-                            filename = filename + "  " + hits + "Hits" + " - " + desc + " - uploader: " + uploader
+                            filename = filename + "  " + "hits: " + hits + " uploader: " + uploader + " "
                             if languageshort == "br":
                                 languageshort = "pb"
                             subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'id': id, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'language_short': languageshort, 'language_name': languagelong})
@@ -402,7 +403,7 @@ def append_subtitle(item):
     
     listitem = xbmcgui.ListItem(
                    label=item['language_name'],
-                   label2=item['filename']+ '-' +item['desc'],
+                   label2=item['filename'],
                    iconImage=item['rating'],
                    thumbnailImage=item['language_short']
                )
@@ -547,20 +548,20 @@ def Download(id, filename):
     subtitles_list = []
 
     content = get_download(main_url+'fazendologin.php', main_url+'downloadsub.php', id)
-
     content = content.read()
+
     if content is not None:
         header = content[:4]
         if header == 'Rar!':
-            local_tmp_file = pjoin(__temp__, "ldivx.rar")
+            local_tmp_file = pjoin(__temp__, "lzone.rar")
             packed = True
         elif header == 'PK':
-            local_tmp_file = pjoin(__temp__, "ldivx.zip")
+            local_tmp_file = pjoin(__temp__, "lzone.zip")
             packed = True
         else:
             # never found/downloaded an unpacked subtitles file, but just to be sure ...
             # assume unpacked sub file is an '.srt'
-            local_tmp_file = pjoin(__temp__, "ldivx.srt")
+            local_tmp_file = pjoin(__temp__, "lzone.srt")
             subs_file = local_tmp_file
             packed = False
         log(u"Saving subtitles to '%s'" % (local_tmp_file,))
@@ -573,7 +574,7 @@ def Download(id, filename):
         if packed:
             files = os.listdir(__temp__)
             init_filecount = len(files)
-            log(u"legendasdivx: número de init_filecount %s" % (init_filecount,)) #EGO
+            log(u"legendaszone: numero de init_filecount %s" % (init_filecount,)) #EGO
             filecount = init_filecount
             max_mtime = 0
             # Determine the newest file from __temp__

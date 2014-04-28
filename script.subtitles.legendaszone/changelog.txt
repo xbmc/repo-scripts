@@ -1,3 +1,5 @@
+0.0.3
+- Changed description display and fixed rating score.
 0.0.2
 - Fix for multiple movies hit.
 0.0.1
