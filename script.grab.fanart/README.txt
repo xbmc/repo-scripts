@@ -23,6 +23,7 @@ script.grab.fanart.Ready - this property is empty until the service has initiali
 
 script.grab.fanart.Global.Title - the title of a random music or video file, 30% chance music, 30% TV, 40% movie
 script.grab.fanart.Global.FanArt - path to the fanart image for this media
+script.grab.fanart.Global.Logo - path to logo for this media - blank if it doesn't exist
 
 script.grab.fanart.Video.Title - the title of a random video (movie or tv show). There is a 10% chance of this being a TV show. 
 script.grab.fanart.Video.FanArt - the path to the fanart image for this video

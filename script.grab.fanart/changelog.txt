@@ -1,3 +1,11 @@
+Version 0.13.0
+
+added logo to Global properties per Jeroen's request
+
+Version 0.12.9
+
+added path and logo properties for videos
+
 Version 0.12.8
 
 removed constant logging of what is being displayed

@@ -136,6 +136,7 @@ class GrabFanartService:
                     
                     self.WINDOW.setProperty('script.grab.fanart.Global.Title',globalArt.title)
                     self.WINDOW.setProperty('script.grab.fanart.Global.FanArt',globalArt.fan_art)
+                    self.WINDOW.setProperty('script.grab.fanart.Global.Logo',globalArt.logo)
                     
                 self.refresh_prop = time() + float(utils.getSetting("refresh"))
 
