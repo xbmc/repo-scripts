@@ -179,7 +179,7 @@ class YoutubeAPI:
 				item.setLabel(mediaGroup[u"media$title"][u"$t"])
 				
 				# Fetch Studio & Category
-				item.setInfoDict(studio=mediaGroup[u"media$credit"][0][u"$t"].title(), genre=mediaGroup[u"media$category"][0][u"label"])
+				item.setInfoDict(studio=mediaGroup[u"media$credit"][0][u"yt$display"], genre=mediaGroup[u"media$category"][0][u"label"])
 				
 				# Fetch Duration
 				if u"yt$duration" in node: item.setDurationInfo(mediaGroup[u"yt$duration"][u"seconds"])

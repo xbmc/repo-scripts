@@ -163,7 +163,7 @@ class SavedSearches(listitem.VirtualFS):
 		baseAction = plugin["forwarding"]
 		
 		# Create Context Menu item Params
-		strRemove = plugin.getstr(1210)
+		strRemove = plugin.getuni(1210)
 		params = plugin._Params.copy()
 		params["updatelisting"] = "true"
 		

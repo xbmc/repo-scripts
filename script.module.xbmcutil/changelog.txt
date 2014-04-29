@@ -1,3 +1,13 @@
+[B]Version 2.0.4[/B]
+- Changed the Video Context menu to not replace items
+- Fixed bug with XBMC unexpectedly returning unicode instead of a string
+- General unicode fixes
+
+[B]Version 2.0.3[/B]
+- Added getLabel method to custom listitem that returns unicode Label
+- Fixed very small bug with youtube channel video scraper sudio name
+- Fixed small bug where addons whould crash if profile path don't exist
+
 [B]Version 2.0.2[/B]
 - Added Full Unicode Support
 - Added Search with Save Searches Support

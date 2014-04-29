@@ -61,31 +61,31 @@ class Addon(object):
 		# Shortcuts
 		self.openSettings = self._addonData.openSettings
 		self.setSetting = self._addonData.setSetting
-		self.getstr = self.getLocalizedString
+		self.getuni = self.getLocalizedString
 	
 	def getLocalizedString(self, id):
-		""" Return localized string for selected id """
-		if   id >= 30000 and id <= 30899: return self._addonData.getLocalizedString(id).decode("utf8")
-		elif id >= 32900 and id <= 32999: return self._scriptData.getLocalizedString(id).decode("utf8")
+		""" Return localized unicode string for selected id """
+		if   id >= 30000 and id <= 30899: return self._addonData.getLocalizedString(id)
+		elif id >= 32900 and id <= 32999: return self._scriptData.getLocalizedString(id)
 		else: return self.xbmc.getLocalizedString(id)
 	
-	def getuni(self, id):
-		""" Return localized unicode string for selected id """
-		return self.getLocalizedString(id).decode("utf8")
+	def getstr(self, id):
+		""" Return localized string for selected id """
+		return self.getLocalizedString(id).encode("utf8")
 	
 	def getAddonSetting(self, id, key):
 		""" Return setting for selected addon """
 		try: addonData = self._addonObj(id)
 		except: return u""
-		else: return addonData.getSetting(key).decode("utf8")
+		else: return addonData.getSetting(key)
 	
 	def getQuality(self):
 		""" Return unicode for quality setting """
-		return self._addonData.getSetting("quality").decode("utf8")
+		return self._addonData.getSetting("quality")
 	
 	def getSetting(self, id):
 		""" Return unicode for setting """
-		return self._addonData.getSetting(id).decode("utf8")
+		return self._addonData.getSetting(id)
 	
 	def getSettingInt(self, id):
 		""" Return Integer for settings """
@@ -93,7 +93,7 @@ class Addon(object):
 	
 	def getSettingBool(self, id):
 		""" Return boolean for setting """
-		return self._addonData.getSetting(id) == "true"
+		return self._addonData.getSetting(id) == u"true"
 	
 	def translatePath(self, path):
 		""" Return translated special paths as unicode """
@@ -151,6 +151,7 @@ class Addon(object):
 		if self._profile: return self._profile
 		else:
 			self._profile = self.translatePath(self._addonData.getAddonInfo("profile"))
+			if not self.os.path.exists(self._profile): self.os.makedirs(self._profile)
 			return self._profile
 	
 	def getLibPath(self):

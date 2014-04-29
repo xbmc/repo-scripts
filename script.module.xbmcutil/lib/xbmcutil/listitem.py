@@ -40,9 +40,6 @@ class Playlist(plugin.xbmc.PlayList):
 		# Initiate Overriding, in obj Classs Method
 		super(Playlist, self).__init__()
 		self.clear()
-		
-		# Create Dummy Item to fix XBMC Playlist Bug
-		self.add("V V V V V V V V V V V V V")
 	
 	def add_iter(self, listitems):
 		""" Accepts a iterable of (url, listitem, isfolder) """
@@ -94,16 +91,13 @@ class ListItem(plugin.xbmcgui.ListItem):
 	_fanartImage = _plugin.getFanartImage()
 	_imageGlobal = _plugin.getImageLocation(local=False)
 	_imageLocal = _plugin.getImageLocation(local=True)
-	_stringDownload = _plugin.getstr(33003)
-	_strRelated = _plugin.getstr(32966)
-	_staticMenu = ([(_plugin.getstr(20159), "XBMC.Action(Info)"),
-					(_plugin.getstr(1045), "XBMC.RunPlugin(%s?action=system.opensettings)" % _handleZero),
-					(_plugin.getstr(13347), "XBMC.Action(Queue)"),
-					(_plugin.getstr(32962), "XBMC.ActivateWindow(videoplaylist)"),
-					(_plugin.getstr(22083), "XBMC.RunPlugin(%splayall=true)" % _handelThree),
-					(_plugin.getstr(184), "XBMC.Container.Update(%srefresh=true)" % _handelThree)],
-				   [(_plugin.getstr(1045), "XBMC.RunPlugin(%s?action=system.opensettings)" % _handleZero),
-					(_plugin.getstr(184), "XBMC.Container.Update(%srefresh=true)" % _handelThree)])
+	_stringDownload = _plugin.getuni(33003)
+	_strRelated = _plugin.getuni(32966)
+	_staticMenu = ([(_plugin.getuni(20159), "XBMC.Action(Info)"),
+					(_plugin.getuni(13347), "XBMC.Action(Queue)"),
+					(_plugin.getuni(184), "XBMC.Container.Update(%srefresh=true)" % _handelThree)],
+				   [(_plugin.getuni(1045), "XBMC.RunPlugin(%s?action=system.opensettings)" % _handleZero),
+					(_plugin.getuni(184), "XBMC.Container.Update(%srefresh=true)" % _handelThree)])
 	
 	def __init__(self):
 		""" Initialize XBMC ListItem Object """
@@ -129,6 +123,10 @@ class ListItem(plugin.xbmcgui.ListItem):
 		self.urlParams["title"] = label.encode("ascii", "ignore")
 		self.infoLabels["title"] = label
 		self._selfObject.setLabel(self, label)
+	
+	def getLabel(self):
+		""" Returns the listitem label as a unicode string"""
+		return self._selfObject.getLabel(self).decode("utf8")
 	
 	def setIconImage(self, icon=None):
 		""" Sets ListItem's Icon Image
@@ -249,8 +247,8 @@ class ListItem(plugin.xbmcgui.ListItem):
 	def addContextMenuItem(self, label, command, **params):
 		""" Adds context menu item to XBMC
 			
-			label: string - Name of contect item
-			command: string - XBMC build in function
+			label: string or unicode - Name of contect item
+			command: string or unicode - XBMC build in function
 			params: dict - Command options
 		"""
 		if params: command += "(%s?%s)" % (self._handleZero, self._urlencode(params))
@@ -288,7 +286,7 @@ class ListItem(plugin.xbmcgui.ListItem):
 			self.path = self.getPath()
 			# Add context menu items
 			if not self.isFolder and not "live" in self.urlParams: self.addContextMenuItem(self._stringDownload, "XBMC.RunPlugin(%s&download=true)" % (self.path))
-			self.addContextMenuItems(self.contextMenu + self._staticMenu[self.isFolder], replaceItems=True)
+			self.addContextMenuItems(self.contextMenu + self._staticMenu[self.isFolder], replaceItems=not isPlayable)
 			# Call Decorated Function ad return it response
 			return function(self)
 		return wrapped
@@ -442,14 +440,7 @@ class VirtualFS(object):
 	
 	def add_dir_items(self, listitems):
 		""" Add Directory List Items to XBMC """
-		if "playall" in self._plugin:
-			# Create a Playlist of all Items
-			playlist = Playlist(1)
-			playlist.add_iter(listitems)
-			self._plugin.xbmc.Player().play(playlist)
-		
-		# Else List all Items
-		else: self._plugin.xbmcplugin.addDirectoryItems(self._handleOne, listitems, len(listitems))
+		self._plugin.xbmcplugin.addDirectoryItems(self._handleOne, listitems, len(listitems))
 	
 	def set_sort_methods(self, *sortMethods):
 		""" Set XBMC Sort Methods """
@@ -517,8 +508,11 @@ class PlayMedia(object):
 		except:
 			# Resolve Video Url using Plugin Resolver
 			resolvedData = self.resolve()
-			if resolvedData and "url" in resolvedData:
+			if resolvedData and isinstance(resolvedData, dict):
 				self._videoData.update(resolvedData)
+				return True
+			elif resolvedData:
+				self._videoData["url"] = resolvedData
 				return True
 		else:
 			# Resolve Video Url using Video Hosts sources
@@ -526,8 +520,11 @@ class PlayMedia(object):
 				return True
 			elif subaction == u"source":
 				resolvedData = self._plugin.error_handler(self.sources)()
-				if resolvedData and "url" in resolvedData:
+				if resolvedData and isinstance(resolvedData, dict):
 					self._videoData.update(resolvedData)
+					return True
+				elif resolvedData:
+					self._videoData["url"] = resolvedData
 					return True
 	
 	def sources(self, url=None, urls=None):
@@ -584,17 +581,23 @@ class PlayMedia(object):
 					if listitem is None:
 						listitem = listitemObj()
 						listitem.setLabel(videoTitle % count)
-					prepappend((url, listitem))
+					
+					# Add Content Type and urlpath to listitem
+					if "type" in self._videoData: listitem.setMimeType(self._videoData["type"])
+					url = self.add_header_pips(url, self._videoData.get("useragent"), self._videoData.get("referer"))
+					listitem.setPath(url)
+					prepappend((url, listitem, False))
 			
 			if downloadRequested:
 				downloader = DownloadMGR(downloadPath)
 				downloader.add_batch_job(prepList)
 			else:
+				# Create Playlist and add items
 				playlist = Playlist(1)
-				for url, listitem in prepList:
-					# Add Content Type and listitem to Playlist
-					if "type" in self._videoData: listitem.setMimeType(self._videoData["type"])
-					playlist.add(self.add_header_pips(url, self._videoData.get("useragent"), self._videoData.get("referer")), listitem)
+				playlist.add_iter(prepList)
+				
+				# Resolve to first element of playlist
+				self.set_resolved_url(prepList[0][1])
 		
 		# Add Single Video to XBMC
 		else:
