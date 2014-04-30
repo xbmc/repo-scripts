@@ -1,3 +1,16 @@
+-6.0.8 (2014-04-29)
+- Fixed a bug where the Yesterday list would omit any shows that didn't also have upcoming episodes.
+- Added the ability to override a show's "runtime" (in minutes) on per-show basis by including a string like "(30 minutes)" in the episode's comments on TheTVDB (e.g. a music show's result-show is usually shorter than the default runtime).
+- Fixed a bug that could cause an erroneous tuple value in the saved data if a show's time changes w/o any episode changes.
+- Improved the show-searching logic a bit more.
+- Support new "backend=-N N" command-arg to allow a skin to request more ListItem querying ("backend=True" is the same as "backend=0 0").
+- Added an xbmc.service that starts on login.  This supersedes the call that we've asked skins to run to start up the background update process.
+- Use a single next.aired.db file to hold all the different profile's shows.  This reduces duplicate scanning and downloading of the same info when switching profiles.
+- Fix a crash issue with the "nice dates" when the long-date string contains unicode characters.
+- Due to a potential conflict in property names, the *-TVGuide2.xml day-name properties (NextAired.Today, NextAired.Yesterday, NextAired.Tomorrow) are now deprecated.  Use NextAired.TodayText, NextAired.YesterdayText, NextAired.TomorrowText instead.
+- To avoid any backend conflict with the property "NextAired.Today", there is now a property of "NextAired.AirsToday" that a skin should query going forward (the older value will still be supported for quite some time, but the newer value is safer).
+- Updated language files from Transifex.
+
 -6.0.7 (2014-03-25)
 - The zoneinfo tar file should now be back in the release zip (the new version in 6.0.5 apparently caused it to vanish from the release process).
 - A couple more update improvements (including improvements for really large collections).
@@ -22,9 +35,9 @@
 - Updated language files from Transifex.
 
 -6.0.4 (2014-03-05)
-- Updated language files from Transifex.
 - A few more tweaks to the missing-artwork grabber.
 - Improve error handling when refreshing the country.db file.
+- Updated language files from Transifex.
 
 -6.0.3 (2014-03-02)
 - Fix a potential script crash with a background query not triggering a DB update (if it is needed).

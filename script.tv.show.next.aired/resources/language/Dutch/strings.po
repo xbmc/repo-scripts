@@ -120,6 +120,14 @@ msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Actie afgebroken door de gebruiker."
 
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "Geannuleerd door verkregen fouten "
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "De update is mislukt (we proberen het later opnieuw)."
+
 msgctxt "#32201"
 msgid "Returning Series"
 msgstr "Terugkomende series"

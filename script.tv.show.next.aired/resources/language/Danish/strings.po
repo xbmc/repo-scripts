@@ -20,6 +20,10 @@ msgctxt "#32000"
 msgid "Display"
 msgstr "Skærm"
 
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV-guide"
+
 msgctxt "#32102"
 msgid "Getting information..."
 msgstr "Henter information.."

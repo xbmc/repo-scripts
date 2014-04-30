@@ -52,13 +52,53 @@ msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
 msgstr "Scarica anteprima miniature in 16:9 (Richiede Artwork Downloader)"
 
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Aggiornamento ora le informazioni TV "
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Scaricamento informazioni TV"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "Sullo sfondo ogni [N] ore"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "All'avvio della guida se i dati sono più vecchi di [N] ore"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "Scarica i poster (Richiesto Artwork Downloader)"
 
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Cancella tutti i dati** e aggiorna le informazioni TV ora"
+
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Mostra tutte le Serie TV per la schermata principale (serve il supporto dello Skin)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Usa giorno-della-settimana e i nomi dei mesi nelle date invece dei soli numeri (per uno skin che ha bisogno di aiuto)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Numero di giorni di prossima trasmissione da includere nella guida tv"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Avvia la guida TV della settimana da Oggi invece che da Lunedì"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Includi ieri nella guida tv in stile oggi"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Ieri"
 
 msgctxt "#32019"
 msgid "TV Guide"
@@ -79,6 +119,14 @@ msgstr "CANCELLATO"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Operazione cancellata dall'utente"
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "ERRORE dovuto ad un problema con il recupero dei dati"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "Aggiornamento fallito (riproveremo di nuovo piu tardi)"
 
 msgctxt "#32201"
 msgid "Returning Series"

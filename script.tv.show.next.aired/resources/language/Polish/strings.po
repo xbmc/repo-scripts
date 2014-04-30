@@ -102,7 +102,7 @@ msgstr "Wczoraj"
 
 msgctxt "#32019"
 msgid "TV Guide"
-msgstr "Program TV"
+msgstr "Przewodnik TV"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

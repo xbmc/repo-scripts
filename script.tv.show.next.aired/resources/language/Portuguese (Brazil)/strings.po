@@ -120,6 +120,14 @@ msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Operação cancelada pelo usuário."
 
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "INTERROMPIDO devido a falhas nas buscas"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "Atualização falhou (Irei Tentar novamente mais tarde)."
+
 msgctxt "#32201"
 msgid "Returning Series"
 msgstr "Série em retorno"

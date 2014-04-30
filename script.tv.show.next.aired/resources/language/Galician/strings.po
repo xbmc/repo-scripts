@@ -52,13 +52,37 @@ msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
 msgstr "Descargar as miniaturas da vista previa 16:9 (Requírese un Descargador de Ilustracións)"
 
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Actualizar agora a información de TV"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Descargar a información de TV:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "En segundo plano cada [N] horas"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "Descargar pósters (Requírese un Descargador de Ilustracións)"
 
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Restabelecer datos** e actualizar a información de TV agora"
+
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Amosar todas Series de TV na pantalla de inicio (precisa de tema compatíbel)"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Incluír Onte na Guía estilo Hoxe"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Onte"
 
 msgctxt "#32019"
 msgid "TV Guide"

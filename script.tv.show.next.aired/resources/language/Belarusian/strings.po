@@ -20,6 +20,10 @@ msgctxt "#32000"
 msgid "Display"
 msgstr "Дысплэй"
 
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV Guide"
+
 msgctxt "#32211"
 msgid "Cancelled"
 msgstr "Cancelled"

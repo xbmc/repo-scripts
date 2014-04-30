@@ -52,13 +52,53 @@ msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
 msgstr "Загружать миниатюры 16:9 (требуется скрипт Artwork Downloader)"
 
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Обновить информацию о ТВ передачах прямо сейчас"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Загрузка информации о ТВ передачах:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "В фоне каждые [N] часов"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "При входе в ТВ-Гид, если информация устарела  на [N] часов"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "Загружать постеры (требуется скрипт Artwork Downloader)"
 
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Очистить всё** и обновить информацию о ТВ передачах прямо сейчас"
+
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Показывать все ТВ шоу на главном экране (требуется поддержка скинов)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Использовать в датах дни недели и месяц прописью, а не цифровое обозначение (полезно для некоторых обложек)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Количество дней с будующими трансляциями, включенных в ТВ-гид"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Запускать ТВ-гид, начиная с Сегодня, а не с Понедельника"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Добавить 'Вчера' в ТВ-гид, когда используется вид 'Сегодня'"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Вчера"
 
 msgctxt "#32019"
 msgid "TV Guide"
@@ -79,6 +119,10 @@ msgstr "ОТМЕНЕНО"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Операция отменена пользователем."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "ПРЕРВАНО из-за неудачи"
 
 msgctxt "#32201"
 msgid "Returning Series"
