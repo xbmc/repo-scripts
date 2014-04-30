@@ -135,7 +135,7 @@ def getallsubs(content, allowed_languages, filename="", search_string=""):
             if matches.group('quality') == "bad-icon":
                 continue
             if matches.group('quality') == "positive-icon":
-                rating = '10'
+                rating = '5'
 
             sync = False
             if filename != "" and string.lower(filename) == string.lower(subtitle_name):

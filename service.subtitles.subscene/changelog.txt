@@ -1,3 +1,7 @@
+0.9.4
+- fixed ratings (5 stars = rated good, 0 stars = not rated)
+- fixed description
+
 0.9.3
 - added file number for season packs
 
