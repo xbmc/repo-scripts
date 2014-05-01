@@ -1,132 +1,110 @@
-#!/usr/bin/python
+#!/usr/bin/perl
 
-import getopt, glob, sys, re
+use strict;
+use warnings;
 
-def main(argv):
-    try:
-        opts, args = getopt.getopt(argv, "h", ["help"])
-    except getopt.GetoptError:
-        usage()
-    for opt, arg in opts:
-        if opt in ("-h", "--help"):
-            usage()
-        else:
-            sys.exit(42) # Impossible...
+foreach my $in_fn (glob '*.template') {
+    print "Filtering $in_fn\n";
 
-    files_re = re.compile(r"^<!--FILES(\s.+?)--> *\n", re.MULTILINE | re.DOTALL)
+    open IN, '<', $in_fn or die "Unable to open $in_fn: $!\n";
+    my $text = join '', <IN>;
+    close IN;
 
-    for in_fn in glob.glob('*.template'):
-        print "Filtering", in_fn
+    unless ($text =~ s/^<!--FILES(\s.+?)--> *\n//sm) {
+	die "Failed to find <!--FILES ... -> prefixed in $in_fn.\n";
+    }
+    my $files_str = $1;
+    my %files = $files_str =~ /\s\[(\d+)\]\s*=\s*(.+?)(?=\s+\[\d|\s*$)/gs;
+    unless (%files) {
+	die "Failed to parse files from $files_str\n";
+    }
 
-        with open(in_fn) as in_fp:
-            text = in_fp.read()
+    foreach my $filenum (sort { $a <=> $b } keys %files) {
+	generate_file($filenum, $files{$filenum}, $text);
+    }
+}
 
-        m = files_re.search(text)
-        if not m:
-            print "Failed to find <!--FILES ... -> prefixed in", in_fn
-            sys.exit(2)
-        text = files_re.sub('', text)
-        files_str = m.group(1)
+exit;
 
-        files = re.findall(r"\s\[(\d+)\]\s*=\s*(.+?)(?=\s+\[\d|\s*$)", files_str)
-        if not files:
-            print "Failed to parse files from", files_str
-            sys.exit(2)
-
-        for filenum, name in files:
-            generate_file(filenum, name, text)
-
-
-def generate_file(filenum, out_fn, text):
-    print "    Generating", out_fn
+sub generate_file
+{
+    my ($filenum, $out_fn, $text) = @_;
+    print "    Generating $out_fn\n";
 
     # Turn the ONLY .. ONLY-END items into single-instance REPEAT blocks.
-    only_re = re.compile(r"^<!--ONLY(-END\s*-->)", re.MULTILINE)
-    text = only_re.sub(r"<!--REPEAT\1", text)
-    only_re = re.compile(r"^<!--ONLY(\s[^>]+)-->", re.MULTILINE)
-    text = only_re.sub(lambda m: "<!--REPEAT\n" + (''.join(["%s ONE_REPEAT_FOR_ONLY=1\n" % x for x in m.group(1).split()])) + "-->", text)
+    $text =~ s/^<!--ONLY(-END\s*-->)/<!--REPEAT$1/gm;
+    $text =~ s/^<!--ONLY(\s[^>]+)-->/ "<!--REPEAT\n".join('', map {"$_ ONE_REPEAT_FOR_ONLY=1\n"} split(' ', $1)).' -->'/gme;
 
     # We allow nesting of REPEAT sections by making sure that we match inner repeats first.
-    repeat_re = re.compile(r"<!--REPEAT(\s[^>]+)-->[ \t]*\n(((?!<!--REPEAT).*\n)*)<!--REPEAT-END\s*-->[ \t]*\n")
-    global check_for_replace_blocks
-    check_for_replace_blocks = True
-    while check_for_replace_blocks:
-        check_for_replace_blocks = False
-        text = repeat_re.sub(lambda m: repeat_expand(filenum, m.group(1), m.group(2)), text)
+    1 while $text =~ s/<!--REPEAT(\s[^>]+)-->[ \t]*\n(((?!<!--REPEAT).*\n)*)<!--REPEAT-END\s*-->[ \t]*\n/ repeat_expand($filenum, $1, $2) /ge;
 
-    with open(out_fn, 'w') as out_fp:
-        out_fp.write(text)
+    open OUT, '>', $out_fn or die "Unable to write $out_fn: $!\n";
+    print OUT $text;
+    close OUT;
+}
 
+sub repeat_expand
+{
+    my ($filenum, $vars, $text) = @_;
 
-def repeat_expand(filenum, var_txt, text):
-    global check_for_replace_blocks
-    check_for_replace_blocks = True # Tell the caller we need to try again (to handle nested blocks).
+    if ($vars =~ /^[ \t]*\[\d+\]\s/m) {
+	if ($vars =~ /^[ \t]*\[$filenum\]\s+(.+?)(\n[ \t]*\[\d+\]\s|\s*\z)/ms) {
+	    $vars = $1;
+	} else {
+	    return '';
+	}
+    }
+    $vars =~ s/\n/ /g;
 
-    # If var_txt has a [1]-style limitation, we only continue if we find our filenum section.
-    if re.search(r"^[ \t]*\[\d+\]\s", var_txt, re.MULTILINE):
-        this_num_re = re.compile(r"^[ \t]*\[" + filenum + r"\]\s+(.+?)(\n[ \t]*\[\d+\]\s|\s*\Z)", re.MULTILINE | re.DOTALL)
-        m = this_num_re.search(var_txt)
-        if not m:
-            return ''
-        var_txt = m.group(1)
+    my %vars = $vars =~ /(?:^|\s)([A-Z][A-Z0-9_]*)\s*=\s*(.+?)(?=\s+[A-Z][A-Z0-9_]*\s*=|\s*$)/gs;
+    unless (%vars) {
+	die "Failed to parse vars from $vars\n";
+    }
 
-    var_txt = re.sub(r"\n", ' ', var_txt)
-    var_list = re.findall(r"(?:^|\s)([A-Z][A-Z0-9_]*)\s*=\s*(.+?)(?=\s+[A-Z][A-Z0-9_]*\s*=|\s*$)", var_txt, re.DOTALL)
-    if not var_list:
-        print "Failed to parse vars from", var_txt
-        sys.exit(2)
+    my $iters;
+    foreach my $var (keys %vars) {
+	my @vals = split /\s*\|\s*/, $vars{$var}, -1;
+	for (my $i = 0; $i < @vals; $i++) {
+	    my $val = $vals[$i];
+	    $val =~ s/\%!\%/|/g; # Support %!% for a literal "|" in a var list.
+	    my @subs;
+	    while ($val =~ s/(\d+)\.\.(\d+)/ '%' . (scalar @subs) . '%' /e) {
+		push @subs, [$1 .. $2];
+	    }
+	    if (@subs) {
+		my $subs_cnt = scalar @{$subs[0]};
+		my @new_vals = ($val) x $subs_cnt;
+		for (my $j = 0; $j < @subs; $j++) {
+		    my $ref = $subs[$j];
+		    if (@$ref != $subs_cnt) {
+			die "Mismatched X..Y sequences in $val\n";
+		    }
+		    for (my $k = 0; $k < @$ref; $k++) {
+			$new_vals[$k] =~ s/\%$j\%/$ref->[$k]/;
+		    }
+		}
+		splice @vals, $i, 1, @new_vals;
+	    } else {
+		$vals[$i] = $val;
+	    }
+	}
+	$vars{$var} = \@vals;
+	if (!defined $iters) {
+	    $iters = @vals;
+	} elsif ($iters != @vals) {
+	    my $cnt = @vals;
+	    die "Var $var doesn't have $iters values (has $cnt)\n";
+	}
+    }
 
-    dot_dot_re = re.compile(r"(\d+)\.\.(\d+)")
+    my @text;
+    for (my $j = 0; $j < $iters; $j++) {
+	push @text, $text;
+	foreach my $var (keys %vars) {
+	    my @vars = @{$vars{$var}};
+	    $text[-1] =~ s/\%\Q$var\E\%/$vars[$j]/g;
+	}
+    }
 
-    iters = None
-    for i in range(len(var_list)):
-        var, val_txt = var_list[i]
-        vals = []
-        for val in re.split(r"\s*\|\s*", val_txt):
-            val = re.sub(r"%!%", '|', val) # Support %!% for a literal "|" in a var list.
-            subs = []
-            while True:
-                m = dot_dot_re.search(val)
-                if not m:
-                    break
-                val = dot_dot_re.sub('%%%d%%' % len(subs), val, 1)
-                subs.append(range(int(m.group(1)), int(m.group(2))+1))
-
-            if subs:
-                subs_cnt = len(subs[0])
-                for j in range(1, len(subs)):
-                    if len(subs[j]) != subs_cnt:
-                        print "Mismatched X..Y sequences in", val
-                        sys.exit(2)
-                for j in range(subs_cnt):
-                    new_val = val
-                    for k in range(len(subs)):
-                        new_val = new_val.replace("%%%d%%" % k, str(subs[k][j]))
-                    vals.append(new_val)
-            else:
-                vals.append(val)
-
-        var_list[i] = (var, vals)
-        if iters is None:
-            iters = len(vals)
-        elif iters != len(vals):
-            print "Var %s doesn't have %d values (has %d)" % (var, iters, len(vals))
-            sys.exit(2)
-
-    text_list = []
-    for j in range(iters):
-        text_list.append(text)
-        for var, vals in var_list:
-            text_list[-1] = text_list[-1].replace("%%%s%%" % var, vals[j])
-
-    return ''.join(text_list)
-
-
-def usage():
-    print "expand-templates [--help]"
-    sys.exit(1)
-
-if __name__ == "__main__":
-    main(sys.argv[1:])
-
-# vim: sw=4 ts=8 et
+    return join '', @text;
+}

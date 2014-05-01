@@ -84,22 +84,6 @@ msgctxt "#32014"
 msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
 msgstr "Usar nomes de dia-de-semana e meses nas datas, em vez de números (se o tema precisar)"
 
-msgctxt "#32015"
-msgid "Number of next-aired days to include in the TV Guide"
-msgstr "Número de dias de próximas exibições a incluir no Guia TV"
-
-msgctxt "#32016"
-msgid "Start the TV Guide week based on Today instead of Monday"
-msgstr "Iniciar a semana do Guia TV com base em Hoje em vez de Segunda"
-
-msgctxt "#32017"
-msgid "Include Yesterday in the Today-style TV Guide"
-msgstr "Incluir Ontem na vista de Hoje do Guia TV"
-
-msgctxt "#32018"
-msgid "Yesterday"
-msgstr "Ontem"
-
 msgctxt "#32019"
 msgid "TV Guide"
 msgstr "Guia TV"
@@ -119,14 +103,6 @@ msgstr "CANCELADO"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Operação cancelada pelo utilizador."
-
-msgctxt "#32105"
-msgid "ABORTED due to fetch failures"
-msgstr "CANCELADO devido a falhas na obtenção de dados"
-
-msgctxt "#32106"
-msgid "The update failed (we'll retry again later)."
-msgstr "A actualização falhou (voltaremos a tentar mais tarde)."
 
 msgctxt "#32201"
 msgid "Returning Series"

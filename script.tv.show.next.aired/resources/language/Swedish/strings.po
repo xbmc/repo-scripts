@@ -84,18 +84,6 @@ msgctxt "#32014"
 msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
 msgstr "Använd dag-i-vecka och månadsnamn i datum istället för endast nummer (för skal som behöver hjälp)"
 
-msgctxt "#32015"
-msgid "Number of next-aired days to include in the TV Guide"
-msgstr "Antal dagar att inkludera för kommande visningar i TV-guiden"
-
-msgctxt "#32016"
-msgid "Start the TV Guide week based on Today instead of Monday"
-msgstr "Starta TV-guidens vecka baserad på \"Idag\" istället för Måndag"
-
-msgctxt "#32017"
-msgid "Include Yesterday in the Today-style TV Guide"
-msgstr "Inkludera gårdagen i \"Idag\"-stilen för TV-guiden"
-
 msgctxt "#32018"
 msgid "Yesterday"
 msgstr "Igår"
@@ -119,14 +107,6 @@ msgstr "AVBRUTEN"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Hämtning avbruten av användaren."
-
-msgctxt "#32105"
-msgid "ABORTED due to fetch failures"
-msgstr "AVBRUTEN pga hämtningsfel"
-
-msgctxt "#32106"
-msgid "The update failed (we'll retry again later)."
-msgstr "Uppdateringen misslyckades (vi försöker igen senare)."
 
 msgctxt "#32201"
 msgid "Returning Series"

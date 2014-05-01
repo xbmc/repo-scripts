@@ -1,2 +1,2 @@
 dummy: *.template
-	python expand-templates
+	./expand-templates
