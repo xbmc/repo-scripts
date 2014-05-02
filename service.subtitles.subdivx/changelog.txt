@@ -1,2 +1,7 @@
+0.0.2
+- Fixed accented characters mojibake.
+- Removed or replaced code of dubious utility/robustness.
+- More idiomatic Python code.
+
 0.0.1
 - Initial port to new Gotham structure.
