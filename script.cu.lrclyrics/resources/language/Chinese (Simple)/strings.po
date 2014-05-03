@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#0"
 msgid "XBMC Lyrics"
-msgstr "XBMC歌词"
+msgstr "XBMC 歌词"
 
 msgctxt "#30000"
 msgid "File"

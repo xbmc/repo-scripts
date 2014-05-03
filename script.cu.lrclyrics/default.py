@@ -25,8 +25,11 @@ def culrc_run(mode):
     if not WIN.getProperty('culrc.running') == 'true':
         import gui
         gui.MAIN(mode=mode)
+    elif not WIN.getProperty('culrc.guirunning') == 'TRUE':
+        # we're already running, user clicked button on osd
+        WIN.setProperty('culrc.force','TRUE')
     else:
-        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonname__ , __language__(30003), 2000)).encode('utf-8', 'ignore'))
+        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonname__ , __language__(32158), 2000)).encode('utf-8', 'ignore'))
         log('script already running')
 
 if ( __name__ == "__main__" ):

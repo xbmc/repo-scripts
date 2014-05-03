@@ -16,9 +16,69 @@ msgstr ""
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#0"
+msgid "XBMC Lyrics"
+msgstr "Lirik XBMC"
+
 msgctxt "#30000"
 msgid "File"
 msgstr "Berkas"
+
+msgctxt "#30001"
+msgid "No lyrics found!"
+msgstr "Lirik tidak ditemukan! "
+
+msgctxt "#30002"
+msgid "Embedded"
+msgstr "Tercantum"
+
+msgctxt "#30101"
+msgid "Save lyrics to lyrics folder"
+msgstr "Simpan lirik ke folder lirik"
+
+msgctxt "#30102"
+msgid "- Lyrics folder"
+msgstr "- Folder lirik"
+
+msgctxt "#30103"
+msgid "- Save format"
+msgstr "- Format penyimpanan"
+
+msgctxt "#30105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#30106"
+msgid "Use only filename for search"
+msgstr "Hanya gunakan nama berkas untuk pencarian"
+
+msgctxt "#30107"
+msgid "Filename format"
+msgstr "Format nama berkas"
+
+msgctxt "#30108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#30109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#30110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#30111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "Lirik bernama sama disimpan di sub folder"
+
+msgctxt "#30112"
+msgid "- Sub folder name"
+msgstr "- Nama sub folder"
+
+msgctxt "#30113"
+msgid "Save lyrics to song folder"
+msgstr "Simpan lirik ke folder lagu"
 
 msgctxt "#30150"
 msgid "Scrapers"
@@ -27,3 +87,19 @@ msgstr "Penyalin"
 msgctxt "#30151"
 msgid "Options"
 msgstr "Opsi"
+
+msgctxt "#30152"
+msgid "Search for embedded lyrics"
+msgstr "Cari lirik yang tercantum"
+
+msgctxt "#30153"
+msgid "Search for local lyrics files"
+msgstr "Cari berkas lirik lokal"
+
+msgctxt "#30154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Penyalin lirik tersingkronisasi"
+
+msgctxt "#30155"
+msgid "Regular lyrics scrapers"
+msgstr "Penyalin lirik regular"

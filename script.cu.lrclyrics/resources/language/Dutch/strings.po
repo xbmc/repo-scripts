@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#0"
 msgid "XBMC Lyrics"
-msgstr "XBMC Lyrics"
+msgstr "XBMC teksten"
 
 msgctxt "#30000"
 msgid "File"
@@ -28,13 +28,25 @@ msgctxt "#30001"
 msgid "No lyrics found!"
 msgstr "Geen lyrics gevonden!"
 
+msgctxt "#30002"
+msgid "Embedded"
+msgstr "Verweven"
+
 msgctxt "#30101"
 msgid "Save lyrics to lyrics folder"
-msgstr "Lyrics opslaan"
+msgstr "Lyrics opslaan in lyrics folder"
 
 msgctxt "#30102"
 msgid "- Lyrics folder"
 msgstr "Opslaan in"
+
+msgctxt "#30103"
+msgid "- Save format"
+msgstr "- Opslagformaat"
+
+msgctxt "#30105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
 
 msgctxt "#30106"
 msgid "Use only filename for search"
@@ -42,7 +54,7 @@ msgstr "Gebruik bestandsnaam voor zoeken"
 
 msgctxt "#30107"
 msgid "Filename format"
-msgstr "Bestandsnaam formaat"
+msgstr "Bestandsnaamformaat"
 
 msgctxt "#30108"
 msgid "%A - %T"
@@ -56,6 +68,18 @@ msgctxt "#30110"
 msgid "%A\\%B\\%N %T"
 msgstr "%A\\%B\\%N %T"
 
+msgctxt "#30111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "Zelfde lyricsnaam is opgeslagen in subfolder"
+
+msgctxt "#30112"
+msgid "- Sub folder name"
+msgstr "- Onderfoldernaam"
+
+msgctxt "#30113"
+msgid "Save lyrics to song folder"
+msgstr "Opslaan van songteksten in folder van liedje"
+
 msgctxt "#30150"
 msgid "Scrapers"
 msgstr "Scrapers"
@@ -63,3 +87,19 @@ msgstr "Scrapers"
 msgctxt "#30151"
 msgid "Options"
 msgstr "Opties"
+
+msgctxt "#30152"
+msgid "Search for embedded lyrics"
+msgstr "Zoek naar ingeplaatste lyrics"
+
+msgctxt "#30153"
+msgid "Search for local lyrics files"
+msgstr "Zoek naar lokale songtekstbestanden"
+
+msgctxt "#30154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Gesynchroniseerd tekstscrapers"
+
+msgctxt "#30155"
+msgid "Regular lyrics scrapers"
+msgstr "Gewone tekstscrapers"

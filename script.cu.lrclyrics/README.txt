@@ -36,3 +36,6 @@ Window(Home).Property(culrc.lyrics)  - shows the current lyrics, including timin
 Window(Home).Property(culrc.source)  - source or scraper that was used to find the current lyrics.
 Window(Home).Property(culrc.haslist) - will be 'true' if multiple lyrics are available, empty if not.
 Window(Home).Property(culrc.running) - returns 'true' when the lyrics script is running, empty if not.
+
+other addons may want to set the MusicPlayer.Property(do_not_analyze) to 'true'.
+this will tell cu lrc lyrics to skip searching for embedded lyrics.

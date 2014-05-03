@@ -1,3 +1,14 @@
+v2.0.9
+- additional addon tags
+
+v2.0.8
+- add support for flac tags
+- add do_not_analyze property for other addons
+
+v2.0.7
+- make music osd accesible
+- show gui when user clicks osd button
+
 v2.0.6
 - add xml header
 

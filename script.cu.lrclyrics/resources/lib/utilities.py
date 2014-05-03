@@ -15,6 +15,7 @@ __profile__   = sys.modules[ "__main__" ].__profile__
 __cwd__       = sys.modules[ "__main__" ].__cwd__
 
 CANCEL_DIALOG = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
+ACTION_OSD = ( 122, )
 LYRIC_SCRAPER_DIR = os.path.join(__cwd__, "resources", "lib", "culrcscrapers")
 WIN = xbmcgui.Window( 10000 )
 
@@ -79,6 +80,7 @@ class Song:
         self.artist = ""
         self.title = ""
         self.filepath = ""
+        self.analyze_safe = True
 
     def __str__(self):
         return "Artist: %s, Title: %s" % ( self.artist, self.title)
@@ -90,7 +92,7 @@ class Song:
             return cmp(deAccent(self.title), deAccent(song.title))
 
     def sanitize(self, str):
-        return str.replace( "\\", "_" ).replace( "/", "_" ).replace(":","_").replace("?","_").replace("!","_")
+        return str.replace( "\\", "_" ).replace( "/", "_" ).replace(":","_").replace("?","_").replace("!","_").strip('.')
 
     def path1(self, lrc):
         if lrc:
@@ -162,4 +164,10 @@ class Song:
             song.artist, song.title = get_artist_from_filename( song.filepath )
         if __addon__.getSetting( "clean_title" ) == "true":
             song.title = re.sub(r'\([^\)]*\)$', '', song.title)
+        
+        #Check if analyzing the stream is discouraged
+        do_not_analyze = xbmc.getInfoLabel('MusicPlayer.Property(do_not_analyze)')
+        if do_not_analyze == 'true':
+            song.analyze_safe = False
+        
         return song
