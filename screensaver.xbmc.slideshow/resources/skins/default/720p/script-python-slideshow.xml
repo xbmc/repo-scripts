@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<window type="window">
+<window>
+	<zorder>5</zorder>
 	<controls>
 		<control type="group">
 			<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Splash),hide)">

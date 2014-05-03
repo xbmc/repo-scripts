@@ -1,3 +1,9 @@
+v1.0.4
+- fixed: seekbar dialog would display on top of screensaver
+
+v1.0.3
+- update language files
+
 v1.0.2
 - fix album cover missing when playing music
 

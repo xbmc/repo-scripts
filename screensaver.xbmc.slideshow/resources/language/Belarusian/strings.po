@@ -4,12 +4,12 @@
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
-"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: Belarusian (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/be/)\n"
+"Language-Team: Belarusian (http://www.transifex.com/projects/p/xbmc-addons/language/be/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,13 +36,25 @@ msgctxt "#30004"
 msgid "Image Folder"
 msgstr "Каталог Выяў"
 
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Dim level"
+
 msgctxt "#30006"
 msgid "Effect"
 msgstr "Эфект"
 
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Slide"
+
 msgctxt "#30008"
 msgid "Crossfade"
 msgstr "Перакрыццё"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Pan and zoom"
 
 msgctxt "#30010"
 msgid "Amount of seconds to display each image"
@@ -96,9 +108,17 @@ msgctxt "#30023"
 msgid "Display music info during audio playback"
 msgstr "Паказваць звесткі музыкі падчас прайгравання"
 
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Basic"
+
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Дадатковы"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Advanced"
 
 msgctxt "#30027"
 msgid "Update cache"

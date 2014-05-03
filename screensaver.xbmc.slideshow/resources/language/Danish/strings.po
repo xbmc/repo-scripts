@@ -4,12 +4,12 @@
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
-"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: Danish (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/da/)\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/xbmc-addons/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -80,10 +80,50 @@ msgctxt "#30015"
 msgid "Use foldername"
 msgstr "Anvend mappenavn"
 
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Vis billederne i tilfældig orden"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Aktiver billedcache"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Etablerer cache"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Cache etableret"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Vis billeddato"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Vis yderligere billedetiketter "
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Vis information om musikken mens den bliver spillet"
+
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Simpel"
 
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Yderligere"
+
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Udvidet"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Opdatere cache"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "Caching er ikke mulig med fanart"

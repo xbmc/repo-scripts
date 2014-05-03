@@ -4,12 +4,12 @@
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
-"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: Slovenian (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/sl/)\n"
+"Language-Team: Slovenian (http://www.transifex.com/projects/p/xbmc-addons/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Vir slik za diaprojekcijo"
+msgstr "Vir slik za projekcijo"
 
 msgctxt "#30001"
 msgid "Folder"
@@ -26,11 +26,11 @@ msgstr "Mapa"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr "Ozadja videa"
+msgstr "Grafike filmov"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr "Ozadja glasbe"
+msgstr "Grafike glasbe"
 
 msgctxt "#30004"
 msgid "Image Folder"
@@ -60,14 +60,70 @@ msgctxt "#30010"
 msgid "Amount of seconds to display each image"
 msgstr "Čas prikaza posamezne slike"
 
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Spremeni velikost slik v celozaslonskem načinu"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Prikaži ime slike"
+
 msgctxt "#30013"
 msgid "Disabled"
-msgstr "Izključeno"
+msgstr "Onemogočeno"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Uporabi ime datoteke"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Uporabi ime mape"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Prikaži slike v naključnem zaporedju"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Omogoči predpomnilnik slik"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Ustvarjam predpomnilnik"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Predpomnilnik ustvarjen"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Prikaži datum slike"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Prikaži dodatne informacije o sliki"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Prikaži informacije o glasbi med njenim predvajanjem"
 
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Osnovno"
 
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Dodatno"
+
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Napredno"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Posodobi predpomnilnik"
+
+msgctxt "#30028"
+msgid "Caching is not supported with fanart"
+msgstr "Predpomnenje grafik ni podprto"
