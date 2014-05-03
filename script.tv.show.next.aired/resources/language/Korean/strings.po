@@ -60,13 +60,45 @@ msgctxt "#32008"
 msgid "Download TV information:"
 msgstr "TV 정보 다운로드:"
 
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "백그라운드에서 매 [N] 시간마다"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "데이터가 [N] 시간보다 오래된 경우에는 시작할 때"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "포스터 다운로드 (Artwork Downloader 추가기능 필요)"
 
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**모든 데이터를 초기화** 하고 지금 TV 정보를 업데이트"
+
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "홈 화면에 모든 TV 쇼를 표시 (스킨 지원 필요)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "날짜에 숫자 대신 요일과 월 이름을 사용 (스킨 지원 필요)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "TV 가이드에 포함할 일 수"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "주간 TV 가이드를 월요일 대신 오늘부터 표시"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "주간 TV 가이드에 어제 포함"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "어제"
 
 msgctxt "#32019"
 msgid "TV Guide"
@@ -87,6 +119,14 @@ msgstr "취소됨"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "사용자가 동작을 취소하였습니다."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "가져오기를 실패하여 취소 됨"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "업데이트 실패. (나중에 다시 시도합니다)."
 
 msgctxt "#32202"
 msgid "Cancelled/Ended"

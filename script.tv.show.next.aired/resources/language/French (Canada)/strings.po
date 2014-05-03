@@ -102,7 +102,7 @@ msgstr "Hier"
 
 msgctxt "#32019"
 msgid "TV Guide"
-msgstr "Guide TV"
+msgstr "Guide télé"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
@@ -119,6 +119,14 @@ msgstr "ANNULÉ"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Opération annulée par l'utilisateur."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "INTERROMPUE à cause de défaillances de récupération"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "La mise à jour a échoué (nous ressayerons plus tard)."
 
 msgctxt "#32201"
 msgid "Returning Series"

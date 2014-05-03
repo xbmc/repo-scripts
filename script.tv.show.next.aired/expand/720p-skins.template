@@ -108,9 +108,9 @@
     PC = 9000 | 200..214
     NC = 201..215 | 200
     DESC = Yesterday | Today | Today+1..14
-    LABEL = $INFO[Window(Home).Property(NextAired.Yesterday)]
-	  | $INFO[Window(Home).Property(NextAired.Today)]
-	  | $INFO[Window(Home).Property(NextAired.Tomorrow)]
+    LABEL = $INFO[Window(Home).Property(NextAired.YesterdayText)]
+	  | $INFO[Window(Home).Property(NextAired.TodayText)]
+	  | $INFO[Window(Home).Property(NextAired.TomorrowText)]
 	  | $INFO[Window(Home).Property(NextAired.203..207.Weekday)]
 	  | $INFO[Window(Home).Property(NextAired.208..215.Wday)], $INFO[Window(Home).Property(NextAired.208..215.Date)]
 -->

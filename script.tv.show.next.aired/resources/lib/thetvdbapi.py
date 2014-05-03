@@ -169,11 +169,11 @@ class TheTVDB(object):
         return xml['Episode'][0] if 'Episode' in xml else None
 
 
-    def get_show_and_episodes(self, show_id, atleast = 1):
+    def get_show_and_episodes(self, show_id):
         """Get the show object and all matching episode objects for this show_id."""
         url = "%s/series/%s/all/%s.zip" % (self.base_zip_url, show_id, self.language)
         zip_name = '%s.xml' % self.language
-        filt_func = lambda name, attrs: self._2episode(attrs) if name == "Episode" and int(attrs["id"]) >= atleast else self._2show(attrs) if name == "Series" else None
+        filt_func = lambda name, attrs: self._2episode(attrs) if name == "Episode" else self._2show(attrs) if name == "Series" else None
         xml = self._get_xml_data(url, filt_func, zip_name=zip_name)
         if 'Series' not in xml:
             return None

@@ -120,6 +120,14 @@ msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Művelet felhasználó által megszakítva."
 
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "MEGSZAKÍTVA legyűjtési hiba miatt"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "A frissítés sikertelen (később újra megpróbáljuk)"
+
 msgctxt "#32201"
 msgid "Returning Series"
 msgstr "Visszatérő Sorozat"

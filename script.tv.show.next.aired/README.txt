@@ -1,12 +1,10 @@
 
 How to use this addon in your skin:
 
-
 I) Startup.xml:
-RunScript(script.tv.show.next.aired,silent=True)
+Beginning with 6.0.8 there is no longer any need to run the next-aired script in the skin's Startup.xml.  Skins that have the old call should start to remove this soon (allowing 6.0.8 to propagate first).
 
-The script will scan your library and tries to fetch next aired info for every show.
-There is no need to specify an alarm -- the script will will run a background update at regular intervals.
+The script now uses an xbmc.service to start up the background updater that will scan your library and fetch next-aired info for your shows.
 
 For shows that are airing today, the script will set the window properties listed below.
 
@@ -26,7 +24,7 @@ Premiered           (year the first episode was aired, eg. '1999')
 Country             (production country of the tv show, eg. 'USA')
 Runtime             (duration of the episode in minutes)
 Fanart              (tv show fanart)
-Today               (will return 'True' if the show is aired today, otherwise 'False')
+AirsToday           (will return 'True' if the show is aired today, otherwise 'False'; deprecated alias: "Today")
 NextDate            (date the next episode will be aired)
 NextDay             ("nice" localized format for NextDate, eg. "Wed, Jun 11" or "Mon, Jan 26, 2015")
 NextTitle           (name of the next episode)
@@ -71,7 +69,7 @@ II) MyVideoNav.xml:
 Running one of these commands in your skin will provide you with per-show information:
     RunScript(script.tv.show.next.aired,backend=True)
 
-    RunScript(script.tv.show.next.aired,tvshowtitle=The TvShowTitle Show Name)
+    RunScript(script.tv.show.next.aired,tvshowtitle=The TVShowTitle Show Name)
 
 The first tells the script to run in the background and provide next aired info for the focussed listitem.
 The second should be run once for every show-name change.
@@ -100,6 +98,23 @@ example code:
 		<label>$INFO[Window(Home).Property(NextAired.NextDate)]</label>
 	</control>
 </control>
+
+Beginning with Next-Aired 6.0.8 the backend option can be specified as 2
+space-separated numbers to specify how many ListItems should be checked and
+turned into corresponding NextAired properties.  For example, if you specify
+"backend=-2 3" then the ListItem(-2).TVShowTitle, ListItem(-1).TVShowTitle,
+ListItem.TVShowTitle, ListItem(1).TVShowTitle, ListItem(2).TVShowTitle, and
+ListItem(3).TVShowTitle shows will all be turned into NextAired(-2).PROPERTY
+through NextAired(3).PROPERTY values.
+
+Note that if the list is shorter than the number of requested values, some
+of the items will be left unpopulated in a balanced manner (first forward
+then back).  For instance, if there are only 2 items in the list you'd get
+N & N(1), 3 items: N(-1) & N & N(1), 4 items N(-1) & N & N(1) & N(2), etc.
+(up until the lower and upper limits are reached).
+
+The default if no numbers are specified is the same as "backend=0 0" (no extra
+values would be provided beyond NextAired.PROPERTY).
 
 
 III) If you run the script without any options (or if it's started by the user),
@@ -162,13 +177,13 @@ substitute the string for "Today" (or Yesterday).
 
 Today's date and a localized word for "Today":
     Window(home).Property(NextAired.TodayDate)
-    Window(home).Property(NextAired.Today)
+    Window(home).Property(NextAired.TodayText)
 Yesterday's date and a localized word for "Tomorrow":
     Window(home).Property(NextAired.TomorrowDate)
-    Window(home).Property(NextAired.Tomorrow)
+    Window(home).Property(NextAired.TomorrowText)
 Yesterday's date and a localized word for "Yesterday":
     Window(home).Property(NextAired.YesterdayDate)
-    Window(home).Property(NextAired.Yesterday)
+    Window(home).Property(NextAired.YesterdayText)
 
 The date for the lists (Monday==1, Sunday==7):
     Window(home).Property(NextAired.1.Date)
