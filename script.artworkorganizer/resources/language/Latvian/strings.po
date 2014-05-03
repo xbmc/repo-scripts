@@ -19,3 +19,7 @@ msgstr ""
 msgctxt "#32101"
 msgid "General"
 msgstr "Vispārīgi"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Papildus"

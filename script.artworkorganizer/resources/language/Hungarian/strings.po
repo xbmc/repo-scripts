@@ -16,6 +16,62 @@ msgstr ""
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32001"
+msgid "Copy Movie Fanart"
+msgstr "Film Fanartok másolása"
+
+msgctxt "#32002"
+msgid "Copy TV Show Fanart"
+msgstr "Sorozat Fanartok másolása"
+
+msgctxt "#32003"
+msgid "Copy Music Video Fanart"
+msgstr "Klip Fanartok másolása"
+
+msgctxt "#32004"
+msgid "Copy Artist Fanart"
+msgstr "Előadó Fanartok másolása"
+
+msgctxt "#32005"
+msgid "Copy Movie Thumbs"
+msgstr "Film Bélyegképek másolása"
+
+msgctxt "#32007"
+msgid "Copy Season Thumbs"
+msgstr "Sorozat Bélyegképek másolása"
+
+msgctxt "#32008"
+msgid "Copy Episode Thumbs"
+msgstr "Epizód Bélyegképek másolása"
+
+msgctxt "#32009"
+msgid "Copy Music Video Thumbs"
+msgstr "Klip Bélyegképek másolása"
+
+msgctxt "#32010"
+msgid "Copy Artist Thumbs"
+msgstr "Előadó Bélyegképek másolása"
+
+msgctxt "#32011"
+msgid "Copy Album Thumbs"
+msgstr "Album Bélyegképek másolása"
+
+msgctxt "#32012"
+msgid "Destination directory"
+msgstr "Célkönyvtár"
+
+msgctxt "#32013"
+msgid "Copy TV Show Banners"
+msgstr "Sorozat Bannerek másolása"
+
+msgctxt "#32014"
+msgid "Copy TV Show Posters"
+msgstr "Sorozat Poszterek másolása"
+
+msgctxt "#32015"
+msgid "Custom source"
+msgstr "Egyedi forrás"
+
 msgctxt "#32016"
 msgid "Path"
 msgstr "Útvonal"
@@ -27,3 +83,27 @@ msgstr "Általános"
 msgctxt "#32102"
 msgid "Advanced"
 msgstr "Haladó"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Haladó"
+
+msgctxt "#32104"
+msgid "DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING"
+msgstr "NE HASZNÁLD HA NEM TUDOD BIZTOSAN MIT CSINÁLSZ"
+
+msgctxt "#32105"
+msgid "THIS CAN POTENTIALLY WIPE YOUR ENTIRE HARDDRIVE"
+msgstr "EZ AKÁR A TELJES MEREVLEMEZT TÖRÖLHETI"
+
+msgctxt "#32106"
+msgid "select which artwork should be copied"
+msgstr "Másolásra kerülő képek kiválasztása"
+
+msgctxt "#32107"
+msgid "search a custom folder for artwork"
+msgstr "egyedi könyvtárban való képkeresés"
+
+msgctxt "#32108"
+msgid "select a custom folder where the addon should store the artwork"
+msgstr "egyedi könyvtár kiválasztása ahol a kiegészítő tárolja a képeket"
