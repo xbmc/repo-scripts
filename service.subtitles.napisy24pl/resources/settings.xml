@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32004">
+        <setting id="username" type="text" label="32002" default=""/>
+        <setting id="password" type="text" option = "hidden" label="32003" default=""/>
+    </category>
+    <category label="32008">
+        <setting id="subs_format" type="enum" lvalues="32009|32010|32011|32012" label="32006" default="0"/>
+    </category>
+</settings>
