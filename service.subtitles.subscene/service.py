@@ -220,7 +220,7 @@ def search_tvshow(tvshow, season, episode, languages, filename):
 
 def search_manual(searchstr, languages, filename):
     search_string = prepare_search_string(searchstr)
-    url = main_url + "/subtitles/release?q=" + urllib.quote_plus(search_string) + '&r=true'
+    url = main_url + "/subtitles/release?q=" + search_string + '&r=true'
     content, response_url = geturl(url)
 
     if content is not None:

@@ -1,33 +1,8 @@
-0.9.4
-- fixed ratings (5 stars = rated good, 0 stars = not rated)
-- fixed description
+1.0.0
+New release for XBMC 13.0 Gotham.
 
-0.9.3
-- added file number for season packs
-
-0.9.2
-- better handling of files without scraper data
-
-0.9.1
-- fixed an issue with tv shows with no exact title match
-
-0.9.0
-- release candidate
-- "sync" flagged subtitles are now sorted first
-
-0.0.5
-- new feature: pick file from season pack for tv shows
-  - additionally to files with matching episode codes you can now also choose downloads, which contain more than 2 files
-  - from that archive only files with matching episode codes (SxxExx) for the current episode will be returned
-
-0.0.4
-- added ability to search for manually entered search string
-
-0.0.3
-- now shows sync flag, when subtitle name matches the video file name
-
-0.0.2
-- improved title matching for some special chars in titles
-
-0.0.1
-- initial port from former XBMC subtitles plugin by amet
+New features:
+- Improved title matching (works best with library titles)
+- Download file from season pack
+- Shows Sync flag when filename matches
+- Manual search
