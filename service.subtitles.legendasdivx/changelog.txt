@@ -1,3 +1,7 @@
+0.0.4
+- Added Parent Folder search and sync matching. Choose in addon settings AUTO or OFF. AUTO checks if parent folder is a release and if true it will be used for search and sync.
+- Reviewed Release pattern for better Description display.
+- Improved SYNC matching.
 0.0.3
 - Added Release pattern for better Description display. Now you can choose Full Description or Release only Description (Default) on addon settings!
 - Some fixes and changes on the code.

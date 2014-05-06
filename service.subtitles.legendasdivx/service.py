@@ -25,8 +25,6 @@ import xbmcplugin
 import xbmcvfs
 import cookielib
 import urllib2
-from operator import itemgetter, attrgetter
-#import operator
 
 __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
@@ -42,24 +40,15 @@ __temp__       = xbmc.translatePath(pjoin(__profile__, 'temp')).decode("utf-8")
 
 sys.path.append (__resource__)
 
+__descon__ = __addon__.getSetting( 'DESC' )
+
 main_url = "http://www.legendasdivx.com/"
 debug_pretext = "LegendasDivx"
-subext = ['srt', 'aas', 'ssa', 'sub', 'smi']
-sub_ext = "srt,aas,ssa,sub,smi"
-packext = ['rar', 'zip']
-
-
-MAIN_SUBDIVX_URL = "http://www.legendasdivx.com/"
-SEARCH_PAGE_URL = MAIN_SUBDIVX_URL + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
+SEARCH_PAGE_URL = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
 
 INTERNAL_LINK_URL = "plugin://%(scriptid)s/?action=download&id=%(id)s&filename=%(filename)s"
-SUB_EXTS = ['srt', 'sub', 'txt']
+SUB_EXTS = ['srt', 'sub', 'txt', 'aas', 'ssa', 'smi']
 HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)"
-
-#SUBTITLE_RE = re.compile(r'<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>',
-#                         re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE)
-#DOWNLOAD_LINK_RE = re.compile(r'bajar.php\?id=(.*?)&u=(.*?)\"', re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE)
-
 
 #====================================================================================================================
 # Regular expression patterns
@@ -103,7 +92,7 @@ Release: The.Dark.Knight.2008.720p.BluRay.DTS.x264-ESiR</td>
 """
 
 subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>"
-release_pattern = "([^\W][\w{3,}\.|\-|\(\d\d\d\d)]{3,}\w{3,}[\-|\.]\w{2,})"
+release_pattern = "([^\W]\w{1,}\.{1,1}[^\.][\w{1,}\.|\-|\(\d\d\d\d\)]{3,}[\w{3,}\-|\.{1,1}]\w{2,})"
 # group(1) = Name, group(2) = Year, group(3) = Number Files, group(4) = ID, group(5) = Hits, group(6) = Requests, group(7) = Description
 #==========
 # Functions
@@ -156,66 +145,83 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             id = matches.group(4)
             movieyear = matches.group(2)
             no_files = matches.group(3)
-            downloads = int(matches.group(5)) / 300
-            if (downloads > 10):
-                downloads=10
+            downloads = int(matches.group(5)) / 200
+            if (downloads > 5):
+                downloads=5
             filename = string.strip(matches.group(1))
             desc = string.strip(matches.group(7))
             #log(u"_desc_dirty '%s' ..." % desc)
             #Remove new lines on the commentaries
             filename = re.sub('\n',' ',filename)
+            if __descon__ == "false":
+                desc = re.findall(release_pattern, desc, re.IGNORECASE | re.VERBOSE | re.DOTALL | re.UNICODE | re.MULTILINE)
+                desc = " / ".join(desc)
+                if desc == "":
+                    desc = __language__(32009)
+            desc = desc.decode('latin1')
             desc = re.sub('<br />',' ',desc)
+            desc = re.sub('<br>',' ',desc)
             desc = re.sub('\n',' ',desc)
             desc = re.sub(':.','',desc)
             #Remove HTML tags on the commentaries
             filename = re.sub(r'<[^<]+?>','', filename)
             desc = re.sub(r'<[^<]+?>|[~]','', desc)
-            DESC_ON = __addon__.getSetting( 'DESC' )
-            if DESC_ON == "false":
-                desc = re.findall(release_pattern, desc, re.IGNORECASE | re.VERBOSE | re.DOTALL | re.UNICODE | re.MULTILINE)
-                desc = " / ".join(desc)
-                if desc == "":
-                    desc = "No Description!"
             #log(u"_desc '%s' ..." % desc)
             #Find filename on the comentaries to show sync label using filename or dirname (making it global for further usage)
             global filesearch
             filesearch = os.path.abspath(file_original_path)
             #For DEBUG only uncomment next line
             #log( __name__ ,"%s abspath: '%s'" % (debug_pretext, filesearch))
+            log(u"filesearch1: '%s'" % filesearch)
             filesearch = os.path.split(filesearch)
             #For DEBUG only uncomment next line
             #log( __name__ ,"%s path.split: '%s'" % (debug_pretext, filesearch))
             dirsearch = filesearch[0].split(os.sep)
             #For DEBUG only uncomment next line
             #log( __name__ ,"%s dirsearch: '%s'" % (debug_pretext, dirsearch))
+            log(u"dirsearch: '%s'" % dirsearch)
             dirsearch_check = string.split(dirsearch[-1], '.')
             #For DEBUG only uncomment next line
             #log( __name__ ,"%s dirsearch_check: '%s'" % (debug_pretext, dirsearch_check))
-            if (searchstring_notclean != ""):
-                sync = False
-                #log(u"inside the sync '%s' ..." % searchstring_notclean)
-                #log(u"inside the sync '%s' ..." % desc)
-                if re.search(searchstring_notclean, desc, re.IGNORECASE):
+            log(u"dirsearch_check: '%s'" % dirsearch_check)
+            #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
+            __parentfolder__ = __addon__.getSetting( 'PARENT' )
+            if __parentfolder__ == '0':
+                if re.search(release_pattern, dirsearch[-1], re.IGNORECASE):
+                    __parentfolder__ = '1'
+                else:
+                    __parentfolder__ = '2'
+            if __parentfolder__ == '1':
+                if re.search(dirsearch[-1], desc, re.IGNORECASE):
                     sync = True
-            else:
-                if (string.lower(dirsearch_check[-1]) == "rar") or (string.lower(dirsearch_check[-1]) == "cd1") or (string.lower(dirsearch_check[-1]) == "cd2"):
-                    sync = False
-                    if len(dirsearch) > 1 and dirsearch[1] != '':
-                        if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-2], desc):
-                            sync = True
-                    else:
-                        if re.search(filesearch[1][:len(filesearch[1])-4], desc):
-                            sync = True
                 else:
                     sync = False
-                    if len(dirsearch) > 1 and dirsearch[1] != '':
-                        if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-1], desc):
-                            sync = True
+            if __parentfolder__ == '2':
+                if (searchstring_notclean != ""):
+                    sync = False
+                    if string.lower(searchstring_notclean) in string.lower(desc):
+                        sync = True
+                else:
+                    if (string.lower(dirsearch_check[-1]) == "rar") or (string.lower(dirsearch_check[-1]) == "cd1") or (string.lower(dirsearch_check[-1]) == "cd2"):
+                        sync = False
+                        if len(dirsearch) > 1 and dirsearch[1] != '':
+                            if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE) or re.search(dirsearch[-2], desc, re.IGNORECASE):
+                                sync = True
+                        else:
+                            if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE):
+                                sync = True
                     else:
-                        if re.search(filesearch[1][:len(filesearch[1])-4], desc):
-                            sync = True
-            filename = filename + " " + "(" + movieyear + ")" + "  " + "hits: " + hits + " - " + desc
-            #log(u"DN string = %s" % (downloads,))
+                        sync = False
+                        if len(dirsearch) > 1 and dirsearch[1] != '':
+                            if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-1], desc, re.IGNORECASE):
+                                sync = True
+                        else:
+                            if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE):
+                                sync = True
+            if __descon__ == "false":
+                filename = desc + "  " + "hits: " + hits
+            else:
+                filename = filename + " " + "(" + movieyear + ")" + "  " + "hits: " + hits + " - " + desc
             subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
         page = page + 1
         
@@ -266,10 +272,29 @@ def Search(item):
     #### Do what's needed to get the list of subtitles from service site
     #### use item["some_property"] that was set earlier
     #### once done, set xbmcgui.ListItem() below and pass it to xbmcplugin.addDirectoryItem()
-    filename = os.path.splitext(os.path.basename(item['file_original_path']))[0]
+    #
+    #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
     file_original_path = item['file_original_path']
-    filename = xbmc.getCleanMovieTitle(filename)
-    searchstring_notclean = os.path.splitext(os.path.basename(item['file_original_path']))[0]
+    __parentfolder__ = __addon__.getSetting( 'PARENT' )
+    if __parentfolder__ == '0':
+        filename = os.path.abspath(file_original_path)
+        dirsearch = filename.split(os.sep)
+        log(u"dirsearch_search string = %s" % (dirsearch,))
+        if re.search(release_pattern, dirsearch[-2], re.IGNORECASE):
+            __parentfolder__ = '1'
+        else:
+            __parentfolder__ = '2'
+    if __parentfolder__ == '1':
+        filename = os.path.abspath(file_original_path)
+        dirsearch = filename.split(os.sep)
+        filename = dirsearch[-2]
+        log(u"__parentfolder1__ = %s" % (filename,))
+    if __parentfolder__ == '2':   
+        filename = os.path.splitext(os.path.basename(file_original_path))[0]
+        log(u"__parentfolder2__ = %s" % (filename,))
+ 
+    filename = xbmc.getCleanMovieTitle(filename)[0]
+    searchstring_notclean = os.path.splitext(os.path.basename(file_original_path))[0]
     searchstring = ""
     global israr
     israr = os.path.abspath(file_original_path)
@@ -282,8 +307,8 @@ def Search(item):
     tvshow = item['tvshow']
     season = item['season']
     episode = item['episode']
-    #log(u"Tvshow string = %s" % (tvshow,))
-    #log(u"Title string = %s" % (title,))
+    log(u"Tvshow string = %s" % (tvshow,))
+    log(u"Title string = %s" % (title,))
     subtitles_list = []
     
     if item['mansearch']:
@@ -292,7 +317,6 @@ def Search(item):
     else:
         if tvshow != '':
             searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
-            #log(u"TV Searchstring string = %s" % (searchstring,))
         if tvshow == '':
             if 'rar' in israr and searchstring is not None:
                 log(u"RAR Searchstring string = %s" % (searchstring,))
@@ -329,7 +353,7 @@ def Search(item):
                     searchstring = title[-1]
                     #log(u"TITLE NULL Searchstring string = %s" % (searchstring,))
                 else:
-                    searchstring = title
+                    searchstring = filename
                     #log(u"TITLE Searchstring string = %s" % (searchstring,))
 
     PT_ON = __addon__.getSetting( 'PT' )
@@ -341,20 +365,20 @@ def Search(item):
         subtitles_list = getallsubs(searchstring, "pt", "Portuguese", file_original_path, searchstring_notclean)
         for sub in subtitles_list:
             append_subtitle(sub)
-    if 'por' in item['languages'] and PTBR_ON == 'true':
+    elif 'por' in item['languages'] and PTBR_ON == 'true':
         subtitles_list = getallsubs(searchstring, "pb", "Brazilian", file_original_path, searchstring_notclean)
         for sub in subtitles_list:
             append_subtitle(sub)
-    if 'spa' in item['languages'] and ES_ON == 'true':
+    elif 'spa' in item['languages'] and ES_ON == 'true':
         subtitles_list = getallsubs(searchstring, "es", "Spanish", file_original_path, searchstring_notclean)
         for sub in subtitles_list:
             append_subtitle(sub)
-    if 'eng' in item['languages'] and EN_ON == 'true':
+    elif 'eng' in item['languages'] and EN_ON == 'true':
         subtitles_list = getallsubs(searchstring, "en", "English", file_original_path, searchstring_notclean)
         for sub in subtitles_list:
             append_subtitle(sub)
-    #else:
-        #xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , 'only works for Portuguese,Brazilian,English,Spanish')).encode('utf-8'))
+    else:
+        xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (__scriptname__ , 'Only Portuguese | Portuguese Brazilian | English | Spanish.',15000)))
 
 def recursive_glob(treeroot, pattern):
     results = []

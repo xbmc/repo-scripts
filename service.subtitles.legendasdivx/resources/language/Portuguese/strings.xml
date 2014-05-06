@@ -8,5 +8,10 @@
     <string id="32005">Português Brasileiro Activo</string>
     <string id="32006">Espanhol Activo</string>
     <string id="32007">Inglês Activo</string>
-    <string id="32007">Descrição Completa</string>
+    <string id="32008">Descrição Completa</string>
+    <string id="32009">Sem RELEASE na descrição!</string>
+    <string id="32010">Procura e sincronia pela pasta do filme</string>
+    <string id="32011">Auto</string>
+    <string id="32012">Sempre ligado</string>
+    <string id="32013">Desligado</string>
 </strings>
