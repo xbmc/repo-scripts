@@ -1050,9 +1050,9 @@ class Main:
         for folder in folders:
             lw.log( ['checking ' + folder] )
             if type == 'cache':
-                thepath = os.path.join( loc, folder )
+                thepath = os.path.join( loc, smartUTF8(folder).decode('utf-8') )
             elif type == 'local':
-                thepath = os.path.join( loc, folder, self.FANARTFOLDER )
+                thepath = os.path.join( loc, smartUTF8(folder).decode('utf-8'), self.FANARTFOLDER )
             try:
                 dirs, files = xbmcvfs.listdir( thepath )
             except Exception, e:
@@ -1254,13 +1254,13 @@ class Main:
                 lw.log( ['trimming the cache down to %s bytes' % self.maxcachesize]  )
                 cache_root = xbmc.translatePath( 'special://profile/addon_data/%s/ArtistSlideshow/' % __addonname__ ).decode('utf-8')
                 folders, fls = xbmcvfs.listdir( cache_root )
-                folders.sort( key=lambda x: os.path.getmtime(x), reverse=True )
+                folders.sort( key=lambda x: os.path.getmtime( os.path.join ( cache_root, x ) ), reverse=True )
                 cache_size = 0
                 first_folder = True
                 for folder in folders:
                     if( self._playback_stopped_or_changed() ):
                         break
-                    cache_size = cache_size + self._get_folder_size( cache_root + folder )
+                    cache_size = cache_size + self._get_folder_size( os.path.join (cache_root, folder ) )
                     lw.log( ['looking at folder %s cache size is now %s' % (folder, cache_size)] )
                     if( cache_size > self.maxcachesize and not first_folder ):
                         self._clean_dir( os.path.join(cache_root, folder) )

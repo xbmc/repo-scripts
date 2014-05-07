@@ -1,3 +1,7 @@
+v.1.6.5
+- fixed crash during version migration process related to UTF8 characters
+- fixed crash when using cache manager to trim size of image cache
+
 v.1.6.4
 - added full support for remote file systems without mapping drive in OS
 - fix for crash with access violation in random situations
