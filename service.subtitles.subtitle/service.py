@@ -24,7 +24,7 @@ __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
 
 sys.path.append(__resource__)
 
-from SUBUtilities import SubtitleHelper, log, normalizeString, clear_cache
+from SUBUtilities import SubtitleHelper, log, normalizeString, clear_cache, parse_tv_rls, parse_movie_rls
 
 
 def search(item):
@@ -47,8 +47,8 @@ def search(item):
             else:
                 listitem.setProperty("hearing_imp", "false")
 
-            url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s&language=%s" % (
-                __scriptid__, it["link"], it["ID"], it["filename"], it["language_flag"])
+            url = "plugin://%s/?action=download&link=%s&id=%s&filename=%s&language=%s" % (
+                __scriptid__, it["link"], it["id"], it["filename"], it["language_flag"])
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
 
@@ -90,19 +90,24 @@ def get_params(string=""):
 
     return param
 
+
 params = get_params()
 if params['action'] in ['search', 'manualsearch']:
     log(__scriptname__, "action '%s' called" % (params['action']))
+
+    if params['action'] == 'manualsearch':
+        params['searchstring'] = urllib.unquote(params['searchstring'])
+
     item = {}
     item['temp'] = False
     item['rar'] = False
-    item['year'] = xbmc.getInfoLabel("VideoPlayer.Year")                           # Year
-    item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))                    # Season
-    item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                   # Episode
+    item['year'] = xbmc.getInfoLabel("VideoPlayer.Year")  # Year
+    item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))  # Season
+    item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))  # Episode
     item['tvshow'] = params['searchstring'] if params['action'] == 'manualsearch' \
-        else normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))   # Show
+        else normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
     item['title'] = params['searchstring'] if params['action'] == 'manualsearch' \
-        else normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")) # try to get original title
+        else normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))  # try to get original title
     item['file_original_path'] = urllib.unquote(
         xbmc.Player().getPlayingFile().decode('utf-8'))  # Full path of a playing file
     item['3let_language'] = []
@@ -113,20 +118,26 @@ if params['action'] in ['search', 'manualsearch']:
     if item['title'] == "":
         log(__scriptname__, "VideoPlayer.OriginalTitle not found")
         item['title'] = params['searchstring'] if params['action'] == 'manualsearch' \
-            else normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
+            else normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
 
-    if item['episode'].lower().find("s") > -1:                                # Check if season is "Special"
+    if item['episode'].lower().find("s") > -1:  # Check if season is "Special"
         item['season'] = "0"
         item['episode'] = item['episode'][-1:]
 
-    if ( item['file_original_path'].find("http") > -1 ):
+    if item['file_original_path'].find("http") > -1:
         item['temp'] = True
 
-    elif ( item['file_original_path'].find("rar://") > -1 ):
+        # Parse release name
+        if item['tvshow']:
+            item['tvshow'] = parse_tv_rls(item['tvshow'])
+        else:
+            item['title'] = parse_movie_rls(item['title'])
+
+    elif item['file_original_path'].find("rar://") > -1:
         item['rar'] = True
         item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
 
-    elif ( item['file_original_path'].find("stack://") > -1 ):
+    elif item['file_original_path'].find("stack://") > -1:
         stackPath = item['file_original_path'].split(" , ")
         item['file_original_path'] = stackPath[0][8:]
     log(__scriptname__, "%s" % item)
@@ -134,7 +145,7 @@ if params['action'] in ['search', 'manualsearch']:
 
 elif params['action'] == 'download':
     ## we pickup all our arguments sent from def search()
-    subs = download(params["ID"], params["filename"])
+    subs = download(params["id"], params["filename"])
     ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
     for sub in subs:
         listitem = xbmcgui.ListItem(label=sub)
@@ -143,4 +154,4 @@ elif params['action'] == 'download':
 elif params['action'] == 'clear_cache':
     clear_cache()
 
-xbmcplugin.endOfDirectory(int(sys.argv[1])) ## send end of directory to XBMC
+xbmcplugin.endOfDirectory(int(sys.argv[1]))  ## send end of directory to XBMC

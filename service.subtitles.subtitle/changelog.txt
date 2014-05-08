@@ -1,3 +1,7 @@
+4.1.7 - by CaTz 07/05/2014
+- Bug fix, url decode the manual search string
+- Added feature, parse RLS names of the tv shows and movies
+
 4.1.6 - By CaTz 28/03/2014
 - Bug fix, refresh cookie on ajax call
 
