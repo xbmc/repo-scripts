@@ -1,3 +1,7 @@
+3.1.7 - by CaTz 07/05/2014
+- Bug fix, url decode the manual search string
+- Added feature, parse RLS names of the shows and movies
+
 3.1.6 - by sagiben 01/04/2014
 - Fix crash due to a division of a str, adding casting to float
 

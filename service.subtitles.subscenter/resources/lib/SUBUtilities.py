@@ -40,6 +40,21 @@ def normalizeString(str):
         'NFKD', unicode(unicode(str, 'utf-8'))
     ).encode('ascii', 'ignore')
 
+def parse_tv_rls(rls):
+    groups = re.findall(r"(.*)(?:s|season)(?:\d{2})(?:e|x|episode|\n)(?:\d{2})", rls, re.I)
+    if len(groups) > 0:
+        rls = groups[0].strip()
+
+    log(__scriptname__, "%s %s" % ("TV_RLS: ", rls))
+    return rls
+
+def parse_movie_rls(rls):
+    groups = re.findall(r"(.*)(?:\d{4})?", rls, re.I)
+    if len(groups) > 0:
+        rls = groups[0].strip()
+
+    log(__scriptname__, "%s %s" % ("MOVIE_RLS: ", rls))
+    return rls
 
 def clear_cache():
     cache.delete("tv-show%")
@@ -103,11 +118,15 @@ class SubscenterHelper:
         filtered = []
         search_string = search_string.lower()
         h = HTMLParser.HTMLParser()
+
+        log(__scriptname__, "urls: %s" % urls)
+
         for i, (content_type, slug, eng_name, year) in enumerate(urls):
-            eng_name = h.unescape(eng_name)
+            eng_name = h.unescape(eng_name).replace(' ...', '').lower()
+
             if ((content_type == "movie" and not item["tvshow"]) or
                     (content_type == "series" and item["tvshow"])) and \
-                    search_string.startswith(eng_name.replace(' ...', '').lower()) and \
+                    (search_string.startswith(eng_name) or eng_name.startswith(search_string)) and \
                     (item["year"] == '' or
                              year == '' or
                                  (int(year) - 1) <= int(item["year"]) <= (int(year) + 1) or
@@ -142,7 +161,7 @@ class SubscenterHelper:
                                          'link': current["key"],
                                          'language_name': xbmc.convertLanguage(language, xbmc.ENGLISH_NAME),
                                          'language_flag': language,
-                                         'ID': current["id"],
+                                         'id': current["id"],
                                          'rating': str(current["downloaded"]),
                                          'sync': subtitle_rate >= 4,
                                          'hearing_imp': current["hearing_impaired"] > 0
