@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.wunderground" name="Weather Underground" version="3.0.2" provider-name="Team XBMC">
+<addon id="weather.wunderground" name="Weather Underground" version="3.0.4" provider-name="Team XBMC">
 	<requires>
 		<import addon="xbmc.python" version="2.12.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -26,6 +26,7 @@
 		<summary lang="fi">Sääennusteet wunderground.com-sivustolta</summary>
 		<summary lang="fo">Veðurforsøgn frá wunderground.com</summary>
 		<summary lang="fr">Prévisions météo fournies par wunderground.com</summary>
+		<summary lang="fr_CA">Prévisions météo de wunderground.com</summary>
 		<summary lang="gl">Predición meteorolóxica de wunderground.com</summary>
 		<summary lang="he">תחזית מזג האויר מאת wunderground.com</summary>
 		<summary lang="hr">Prognoza vremena s wunderground.com</summary>
@@ -36,6 +37,7 @@
 		<summary lang="ka">ამინდის პროგნოზი wunderground.com-გან</summary>
 		<summary lang="ko">wunderground.com 날씨예보</summary>
 		<summary lang="lt">Orų prognozė nuo/iš wunderground.com</summary>
+		<summary lang="lv">Laika prognoze no wunderground.com</summary>
 		<summary lang="mk">Временска прогноза од wunderground.com</summary>
 		<summary lang="ms">Ramalan cuaca dari wunderground.com</summary>
 		<summary lang="my">wunderground.com မှ ရာသီဥတုခန့်မှန်းချက်</summary>
@@ -78,6 +80,7 @@
 		<description lang="fi">Sääennusteet Weather Underground -sivuston tarjoamina (http://www.wunderground.com/)</description>
 		<description lang="fo">Veðurforsøgnin er latin av Weather Underground (http://www.wunderground.com)</description>
 		<description lang="fr">Prévisions météo fournies par Weather Underground (http://www.wunderground.com/)</description>
+		<description lang="fr_CA">Prévisions météo fournies par Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="gl">Predición meteorolóxica provista por Weather Underground&#10;(http://www.wunderground.com/)</description>
 		<description lang="he">תחזית מזג האויר ניתנת ע"י Weather Underground (http://www.wunderground.com</description>
 		<description lang="hr">Prognozu vremena omogućava Weather Underground (http://www.wunderground.com/)</description>
@@ -88,6 +91,7 @@
 		<description lang="ka">ამინდის პროგნოზი მოწოდებულია Weather Underground-ის მიერ (http://www.wunderground.com/)</description>
 		<description lang="ko">Weather Underground (http://www.wunderground.com/)가 제공하는 날씨예보</description>
 		<description lang="lt">Orų prognozė teikiama (pateikiama) iš Weather Underground (http://www.wunderground.com/)</description>
+		<description lang="lv">Laika prognozi piedāvā Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="mk">Временска прогноза обезбедена од Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="ms">Ramalan cuaca disediakan oleh Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="my">ရာသီဥတုခန့်မှန်းချက်ကို Weather Underground (http://www.wunderground.com/) မှထောက်ပံ့ပေးထားပါသည်။</description>
@@ -131,6 +135,7 @@
 		<disclaimer lang="fi">Tämän lisäosan käyttäminen tarkoittaa, että olet hyväksynyt osoitteessa http://www.wunderground.com/weather/api/d/terms.html sijaitsevat käyttöehdot</disclaimer>
 		<disclaimer lang="fo">Nýtsla av hesi víðkan merkir at tú góðtekur treytirnar sum finnast á http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="fr">L'utilisation de cette extension implique votre acceptation des Conditions Générales d'Utilisation disponibles sur http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
+		<disclaimer lang="fr_CA">L'utilisation de cet addiciel implique que vous avez accepté les conditions générales d'utilisation situées à http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="gl">Empregar este Engadido implica que vostede aceptou os termos de servizo localizados en http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="he">שימוש בתוסף זה משתמע שאישרת את תנאי השימוש אשר ממוקמים בכתובת הבאה http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="hr">Upotreba ovog dodatka podrazumijeva da se slažete s Pravilima korištenja koja se nalaze na http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
@@ -141,6 +146,7 @@
 		<disclaimer lang="ka">ამ ჩადგმის გამოყენება ადასტურებს იმას, რომ თქვენ ეთანხმებით  მოხმარების წესებს, რომელიც განთავსებულია მისამართზე http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="ko">이 애드온을 사용하는 것은 http://www.wunderground.com/weather/api/d/terms.html 에 있는 서비스 약관에 동의함을 의미합니다</disclaimer>
 		<disclaimer lang="lt">Naudodami šį priedą jūs sutinate(-kote) su paslaugų teikimo sąlygomis esančiomis http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
+		<disclaimer lang="lv">Šī pielikuma izmantošana nozīmē, ka esat piekritis servisa noteikumiem, kas atrodas http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="mk">Користење на овој додаток имплицира дека се согласувате со условите за користење кои се наоѓаат на http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="ms">Guna tambahan ini menunjukkan anda setuju dengan Terma Perkhidmatan pada&#10;http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="my">ဒီ add-on ကိုသုံးခြင်းသည် http://www.wunderground.com/weather/api/d/terms.html တွင်ရှိသော Terms of Service ကိုသဘောတူညီဟု သတ်မှတ်သည်</disclaimer>
@@ -167,5 +173,8 @@
 		<platform>all</platform>
 		<forum>http://forum.xbmc.org/showthread.php?tid=116668</forum>
 		<source>https://github.com/XBMC-Addons/weather.wunderground/</source>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<website></website>
+		<email></email>
 	</extension>
 </addon>

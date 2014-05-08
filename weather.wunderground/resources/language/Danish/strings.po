@@ -4,12 +4,12 @@
 # Addon Provider: Team XBMC
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
-"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: XBMC Translation Team\n"
-"Language-Team: Danish (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/da/)\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/xbmc-addons/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -91,6 +91,30 @@ msgstr "Zoomniveau på kort"
 msgctxt "#32126"
 msgid "Animated map"
 msgstr "Animeret kort"
+
+msgctxt "#32127"
+msgid "Location 4"
+msgstr "Lokalitet 4"
+
+msgctxt "#32128"
+msgid "Location 5"
+msgstr "Lokalitet 5"
+
+msgctxt "#32129"
+msgid "Location 4 display name"
+msgstr "Lokalitet 4 visningsnavn"
+
+msgctxt "#32130"
+msgid "Location 5 display name"
+msgstr "Lokalitet 5 visningsnavn"
+
+msgctxt "#32131"
+msgid "Location 4 id"
+msgstr "Lokalitet 4 id"
+
+msgctxt "#32132"
+msgid "Location 5 id"
+msgstr "Lokalitet 5 id"
 
 msgctxt "#32501"
 msgid "New Moon"

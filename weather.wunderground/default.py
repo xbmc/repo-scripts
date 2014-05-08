@@ -406,6 +406,7 @@ def properties(data,loc,locid):
                     nfcast_e = data['forecast']['txt_forecast']['forecastday'][2*count+1]['fcttext'].split('.')
                     nfcast_m = data['forecast']['txt_forecast']['forecastday'][2*count+1]['fcttext_metric'].split('.')
                     for field in dfcast_e:
+                        wind = ''
                         if field.endswith('mph'): # find windspeed in mph
                             wind = field
                             break
@@ -414,6 +415,7 @@ def properties(data,loc,locid):
                             dfcast_m[dfcast_m.index(field)] = wind # replace windspeed in km/h with windspeed in mph
                             break
                     for field in nfcast_e:
+                        wind = ''
                         if field.endswith('mph'): # find windspeed in mph
                             wind = field
                             break

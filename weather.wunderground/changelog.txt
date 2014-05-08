@@ -1,3 +1,9 @@
+v3.0.4
+- fixed wind was undefined in some cases
+
+v3.0.3
+- update languege files
+
 v3.0.2
 - fixed addon could disable itself when setting up locations
 
