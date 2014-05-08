@@ -1,3 +1,6 @@
+v2.0.3
+- fixed wind was undefined in some cases
+
 v2.0.2
 - add weather provider logo property
 
