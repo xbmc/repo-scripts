@@ -1,3 +1,6 @@
+1.0.2 - by CaTz 07/05/2014
+- Added missing dependency in Addon.xml
+
 1.0.1 - by CaTz 04/05/2014
 - Bug fix, handle empty rows
 

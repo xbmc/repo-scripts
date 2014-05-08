@@ -1,4 +1,4 @@
-service.subtitles.napiprojekt
+service.subtitles.napisy24pl
 ======================
 
-service.subtitles.napiprojekt
+service.subtitles.napisy24pl
