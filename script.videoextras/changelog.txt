@@ -1,3 +1,8 @@
+v1.1.1
+- Fix bug with default name when accessing across file systems
+- Fix small chance where "play all" will display Info screen
+- Add Play All option to detailed list screen and plugin
+
 v1.1.0
 - Add support for videoextras.nfo file
 - Fix issue when having extras on different OS than XBMC is on

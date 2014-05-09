@@ -186,6 +186,13 @@ class MenuNavigator():
         # Perform the search command
         files = videoExtras.findExtras(extrasDb=extrasDb)
 
+        if len(files) > 0:
+            # Start by adding an option to Play All
+            anItem = xbmcgui.ListItem(__addon__.getLocalizedString(32101))
+            anItem.addContextMenuItems( [], replaceItems=True )
+            url = self._build_url({'mode': 'playallextras', 'foldername': target, 'path': path})
+            xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=anItem, isFolder=False)
+
         # Add each of the extras to the list to display
         for anExtra in files:
             # Create the list item
@@ -204,6 +211,22 @@ class MenuNavigator():
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
+
+    # Play all the extras for a given movie or TV Show
+    def playAllExtras(self, path, target):
+        # Check if the use database setting is enabled
+        extrasDb = None
+        if Settings.isDatabaseEnabled():
+            extrasDb = ExtrasDB()
+
+        # Create the extras class that will be used to process the extras
+        videoExtras = VideoExtrasBase(path)
+
+        # Perform the search command
+        files = videoExtras.findExtras(extrasDb=extrasDb)
+
+        extrasPlayer = ExtrasPlayer()
+        extrasPlayer.playAll( files )
 
 
     def playExtra(self, path, filename, forceResume=False, fromStart=False):
@@ -378,6 +401,19 @@ if __name__ == '__main__':
     
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.showExtras(path[0], foldername[0])
+
+    elif mode[0] == 'playallextras':
+        log("VideoExtrasPlugin: Mode is PLAY ALL EXTRAS")
+
+        # Get the actual path that was navigated to
+        path = args.get('path', None)
+        foldername = args.get('foldername', None)
+        
+        if (path != None) and (len(path) > 0) and (foldername != None) and (len(foldername) > 0):
+            log("VideoExtrasPlugin: Path to play all extras for %s" % path[0])
+    
+            menuNav = MenuNavigator(base_url, addon_handle)
+            menuNav.playAllExtras(path[0], foldername[0])
 
     elif mode[0] == 'playextra':
         log("VideoExtrasPlugin: Mode is PLAY EXTRA")

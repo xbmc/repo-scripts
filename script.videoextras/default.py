@@ -92,9 +92,7 @@ class VideoExtrasDialog(xbmcgui.Window):
             # Give anything that was already playing time to stop
             while extrasPlayer.isPlaying():
                 xbmc.sleep(100)
-            if select == 0 and addPlayAll == True:
-                playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-                playlist.clear()
+            if (select == 0) and (addPlayAll == True):
                 extrasPlayer.playAll( exList )
             else:
                 itemToPlay = select
@@ -106,6 +104,11 @@ class VideoExtrasDialog(xbmcgui.Window):
                 extrasPlayer.play( exList[itemToPlay] )
             while extrasPlayer.isPlayingVideo():
                 xbmc.sleep(100)
+                
+                # If the user selected the "Play All" option, then we do not want to
+                # stop between the two videos, so do an extra wait
+                if (select == 0) and (addPlayAll == True) and (not extrasPlayer.isPlayingVideo()):
+                    xbmc.sleep(3000)      
         else:
             return False
         return True
@@ -227,6 +230,10 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         # Need to clear the list of the default items
         self.clearList()
         
+        # Start by adding an option to Play All
+        anItem = xbmcgui.ListItem(__addon__.getLocalizedString(32101))
+        self.addItem(anItem)
+        
         for anExtra in self.files:
             log("VideoExtrasWindow: filename: %s" % anExtra.getFilename())
 
@@ -253,6 +260,10 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
             log("VideoExtrasWindow: Close Action received: %s" % str(action.getId()))
             self.close()
         elif action == ACTION_CONTEXT_MENU:
+            # Check for the Play All case
+            if self.getCurrentListPosition() == 0:
+                return
+            
             # Get the item that was clicked on
             extraItem = self._getCurrentSelection()
             # create the context window
@@ -311,6 +322,12 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         WINDOW_LIST_ID = 51
         # Check to make sure that this click was for the extras list
         if control != WINDOW_LIST_ID:
+            return
+        
+        # Check for the Play All case
+        if self.getCurrentListPosition() == 0:
+            extrasPlayer = ExtrasPlayer()
+            extrasPlayer.playAll( self.files )
             return
         
         # Get the item that was clicked on

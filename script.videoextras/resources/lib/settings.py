@@ -40,7 +40,18 @@ def os_path_split( fullpath ):
         # Remove the slash character
         fullpath = fullpath[:-1]
 
-    if "/" in fullpath:
+    try:
+        slash1 = fullpath.rindex("/")
+    except:
+        slash1 = -1
+    
+    try:
+        slash2 = fullpath.rindex("\\")
+    except:
+        slash2 = -1
+
+    # Parse based on the last type of slash in the string
+    if slash1 > slash2:
         return fullpath.rsplit("/", 1)
     
     return fullpath.rsplit("\\", 1)
