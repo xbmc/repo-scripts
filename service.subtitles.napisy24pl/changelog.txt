@@ -1,3 +1,6 @@
+1.0.3 - by CaTz 09/05/2014
+- Fix dependency import
+
 1.0.2 - by CaTz 07/05/2014
 - Added missing dependency in Addon.xml
 

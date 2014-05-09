@@ -7,9 +7,9 @@ import urllib
 import unicodedata
 import re
 import urllib2
-from BeautifulSoup import BeautifulSoup
 import struct
 import shutil
+from BeautifulSoup import BeautifulSoup
 
 try:
     import xbmc
