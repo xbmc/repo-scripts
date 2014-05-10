@@ -94,8 +94,8 @@ WEATHER_CODES = { '0' : '32',
 
 GEOIP_URL       = 'http://61.4.185.48:81/g/'
 LOCATION_URL    = 'http://m.weather.com.cn/data5/city%s.xml'
-WEATHER_URL     = 'http://www.weather.com.cn/data/sk/%s.html'
-WEATHER_DAY_URL = 'http://m.weather.com.cn/data/%s.html'
+WEATHER_URL     = 'http://www.weather.com.cn/data/ks/%s.html'
+WEATHER_DAY_URL = 'http://m.weather.com.cn/atad/%s.html'
 WEATHER_HOURLY_URL = 'http://flash.weather.com.cn/sk2/%s.xml'
 WEATHER_WINDOW  = xbmcgui.Window(12600)
 

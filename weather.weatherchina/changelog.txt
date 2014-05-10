@@ -1,3 +1,6 @@
+v1.0.1
+- api changed
+
 v1.0.0
 - bump version for gotham
 
