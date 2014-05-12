@@ -1,3 +1,7 @@
+0.0.3
+- Handle arbitrary casing in subs file extension, e.g. .SRT, .sRt, etc.
+- More code cleanup (PEP8, comment/docstring typos, logic of a helper function).
+
 0.0.2
 - Fixed accented characters mojibake.
 - Removed or replaced code of dubious utility/robustness.
