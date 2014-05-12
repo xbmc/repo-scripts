@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -35,6 +35,10 @@ msgstr "Approximativement %d secondes restantes..."
 msgctxt "#30004"
 msgid "Loading of data already in progress..."
 msgstr "Chargement des données déjà en cours..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Contrôle de la souris"
 
 msgctxt "#30006"
 msgid "Now"
@@ -116,9 +120,25 @@ msgctxt "#30116"
 msgid "Search for channel logos in"
 msgstr "Chercher les logos des chaines dans..."
 
-msgctxt "#30117"
-msgid "ONTV Pro URL"
-msgstr "ONTV Pro URL"
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "Activer le menu OSD"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "Désactiver le menu OSD peut résoudre les problèmes de scintillement vidéo."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Utiliser une méthode alternative de streaming (requis par certaines extensions)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "Le streaming alternatif n'est pas compatible avec le menu OSD"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "URL du fichier XMLTV"
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"
@@ -136,9 +156,37 @@ msgctxt "#30153"
 msgid "because the settings are invalid!"
 msgstr "parce que les paramètres sont invalides"
 
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "Il semble que votre thème actuel a un spécial"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "version du thème TV Guide n'est pas à jour."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Essayez avec un thème différent..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Il semble que la base de données de TV Guide soit corrompue."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "La base de données va être effacée et recréée."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "La configuration du canal, etc. est perdue."
+
 msgctxt "#30200"
 msgid "on [B]%s[/B] in 5 minutes..."
 msgstr "sur [B]%s[/B] dans 5 minutes..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "de [B]%s[/B] commence maintenant..."
 
 msgctxt "#30300"
 msgid "Watch %s"
@@ -176,6 +224,14 @@ msgctxt "#30308"
 msgid "Quit"
 msgstr "Quitter"
 
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]Éditer l'ordre et la visibilité de la chaîne[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "Appuyer sur haut et bas pour changer la position de[CR]la chaîne. Sélectionner ou appuyer sur gauche pour confirmer[CR]la position."
+
 msgctxt "#30502"
 msgid "Save"
 msgstr "Enregistrer"
@@ -183,6 +239,14 @@ msgstr "Enregistrer"
 msgctxt "#30503"
 msgid "Cancel"
 msgstr "Annuler"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]Configurer le flux[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr "fichier .strm"
 
 msgctxt "#30602"
 msgid "Favourites"
@@ -192,6 +256,10 @@ msgctxt "#30603"
 msgid "Addons"
 msgstr "Extensions"
 
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Prévisualiser le flux"
+
 msgctxt "#30605"
 msgid "Save"
 msgstr "Enregistrer"
@@ -200,6 +268,42 @@ msgctxt "#30606"
 msgid "Cancel"
 msgstr "Annuler"
 
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Arrêter la prévisualisation"
+
 msgctxt "#30610"
 msgid "Browse..."
 msgstr "Parcourir..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Cliquez sur Explorer... et ouvrez votre fichier de flux. Une fois que vous avez choisi votre fichier, vous pouvez prévisualiser le flux pour le tester avec XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Choisissez un favori. Seuls les favoris [I]PlayMedia[/I] sont supportés."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Plusieurs extensions fournissent ces chaînes.[CR]Choisissez-en une pour regarder le flux."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "URL JSON-EPG"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Voir les chaînes en utilisant l'extension Weeb.Tv"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "TV Guide est configuré pour diffuser avec Weeb.Tv"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "extension qui n'est pas installée."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Le streaming avec cette extension est désactivé."

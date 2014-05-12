@@ -1,3 +1,15 @@
+[B]Version 2.1.1 - 2014-03-25[/B]
+- Fixed python 2.6 compatibility
+
+[B]Version 2.1.0 - 2014-03-24[/B]
+- Fixed 'red tint' problem and other minor problems on Gotham
+- Update language files from Transifex
+
+[B]Version 2.0.6 - unreleased[/B]
+- Merged ONTV source into XMLTV
+  It's now possible to load XMLTV either from a local file or from a URL
+- Display a 'No program available' for channels without programs to be able to stream
+
 [B]Version 2.0.5 - 2013-06-04[/B]
 - Fixed encoding problem with XMLTV logo images
 - Fixed problem with invalid channels on last page

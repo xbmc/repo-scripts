@@ -34,10 +34,11 @@ import xbmcgui
 import xbmcvfs
 import sqlite3
 
-SETTINGS_TO_CHECK = ['source', 'youseetv.category', 'xmltv.file', 'xmltv.logo.folder', 'ontv.url']
+SETTINGS_TO_CHECK = ['source', 'youseetv.category', 'xmltv.type', 'xmltv.file', 'xmltv.url', 'xmltv.logo.folder']
+
 
 class Channel(object):
-    def __init__(self, id, title, logo = None, streamUrl = None, visible = True, weight = -1):
+    def __init__(self, id, title, logo=None, streamUrl=None, visible=True, weight=-1):
         self.id = id
         self.title = title
         self.logo = logo
@@ -57,7 +58,8 @@ class Channel(object):
 
 
 class Program(object):
-    def __init__(self, channel, title, startDate, endDate, description, imageLarge = None, imageSmall=None, notificationScheduled = None):
+    def __init__(self, channel, title, startDate, endDate, description, imageLarge=None, imageSmall=None,
+                 notificationScheduled=None):
         """
 
         @param channel:
@@ -80,7 +82,8 @@ class Program(object):
 
     def __repr__(self):
         return 'Program(channel=%s, title=%s, startDate=%s, endDate=%s, description=%s, imageLarge=%s, imageSmall=%s)' % \
-            (self.channel, self.title, self.startDate, self.endDate, self.description, self.imageLarge, self.imageSmall)
+               (self.channel, self.title, self.startDate, self.endDate, self.description, self.imageLarge,
+                self.imageSmall)
 
 
 class SourceException(Exception):
@@ -114,7 +117,7 @@ class Database(object):
         self.updateInProgress = False
         self.updateFailed = False
         self.settingsChanged = None
-
+        self.alreadyTriedUnlinking = False
         #buggalo.addExtraData('source', self.source.KEY)
         #for key in SETTINGS_TO_CHECK:
         #    buggalo.addExtraData('setting: %s' % key, ADDON.getSetting(key))
@@ -155,7 +158,6 @@ class Database(object):
                     del self.eventQueue[:]
                     break
 
-
             except Exception:
                 print 'Database.eventLoop() >>>>>>>>>> exception!'
                 buggalo.onExceptionRaised()
@@ -168,7 +170,7 @@ class Database(object):
         self.eventQueue.append(event)
         self.event.set()
 
-        while not self.eventResults.has_key(method.__name__):
+        while not method.__name__ in self.eventResults:
             time.sleep(0.1)
 
         result = self.eventResults.get(method.__name__)
@@ -299,8 +301,10 @@ class Database(object):
 
         return self.source.isUpdated(channelsLastUpdated, programsLastUpdated)
 
-    def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, clearExistingProgramList = True):
-        self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, clearExistingProgramList])
+    def updateChannelAndProgramListCaches(self, callback, date=datetime.datetime.now(), progress_callback=None,
+                                          clearExistingProgramList=True):
+        self.eventQueue.append(
+            [self._updateChannelAndProgramListCaches, callback, date, progress_callback, clearExistingProgramList])
         self.event.set()
 
     def _updateChannelAndProgramListCaches(self, date, progress_callback, clearExistingProgramList):
@@ -324,15 +328,18 @@ class Database(object):
                 c.execute('DELETE FROM channels WHERE source=?', [self.source.KEY])
                 c.execute('DELETE FROM programs WHERE source=?', [self.source.KEY])
                 c.execute("DELETE FROM updates WHERE source=?", [self.source.KEY])
-            self.settingsChanged = False # only want to update once due to changed settings
+            self.settingsChanged = False  # only want to update once due to changed settings
 
             if clearExistingProgramList:
-                c.execute("DELETE FROM updates WHERE source=?", [self.source.KEY])  # cascades and deletes associated programs records
+                c.execute("DELETE FROM updates WHERE source=?",
+                          [self.source.KEY])  # cascades and deletes associated programs records
             else:
-                c.execute("DELETE FROM updates WHERE source=? AND date=?", [self.source.KEY, dateStr])  # cascades and deletes associated programs records
+                c.execute("DELETE FROM updates WHERE source=? AND date=?",
+                          [self.source.KEY, dateStr])  # cascades and deletes associated programs records
 
             # programs updated
-            c.execute("INSERT INTO updates(source, date, programs_updated) VALUES(?, ?, ?)", [self.source.KEY, dateStr, datetime.datetime.now()])
+            c.execute("INSERT INTO updates(source, date, programs_updated) VALUES(?, ?, ?)",
+                      [self.source.KEY, dateStr, datetime.datetime.now()])
             updatesId = c.lastrowid
 
             imported = imported_channels = imported_programs = 0
@@ -345,10 +352,15 @@ class Database(object):
                 if isinstance(item, Channel):
                     imported_channels += 1
                     channel = item
-                    c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
+                    c.execute(
+                        'INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)',
+                        [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight,
+                         self.source.KEY, channel.weight, self.source.KEY])
                     if not c.rowcount:
-                        c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=(CASE ? WHEN -1 THEN visible ELSE ? END), weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?',
-                            [channel.title, channel.logo, channel.streamUrl, channel.weight, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
+                        c.execute(
+                            'UPDATE channels SET title=?, logo=?, stream_url=?, visible=(CASE ? WHEN -1 THEN visible ELSE ? END), weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?',
+                            [channel.title, channel.logo, channel.streamUrl, channel.weight, channel.visible,
+                             channel.weight, channel.weight, channel.id, self.source.KEY])
 
                 elif isinstance(item, Program):
                     imported_programs += 1
@@ -358,8 +370,10 @@ class Database(object):
                     else:
                         channel = program.channel
 
-                    c.execute('INSERT INTO programs(channel, title, start_date, end_date, description, image_large, image_small, source, updates_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        [channel, program.title, program.startDate, program.endDate, program.description, program.imageLarge, program.imageSmall, self.source.KEY, updatesId])
+                    c.execute(
+                        'INSERT INTO programs(channel, title, start_date, end_date, description, image_large, image_small, source, updates_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        [channel, program.title, program.startDate, program.endDate, program.description,
+                         program.imageLarge, program.imageSmall, self.source.KEY, updatesId])
 
             # channels updated
             c.execute("UPDATE sources SET channels_updated=? WHERE id=?", [datetime.datetime.now(), self.source.KEY])
@@ -371,34 +385,38 @@ class Database(object):
         except SourceUpdateCanceledException:
             # force source update on next load
             c.execute('UPDATE sources SET channels_updated=? WHERE id=?', [0, self.source.KEY])
-            c.execute("DELETE FROM updates WHERE source=?", [self.source.KEY]) # cascades and deletes associated programs records
+            c.execute("DELETE FROM updates WHERE source=?",
+                      [self.source.KEY])  # cascades and deletes associated programs records
             self.conn.commit()
 
         except Exception:
             import traceback as tb
             import sys
+
             (etype, value, traceback) = sys.exc_info()
             tb.print_exception(etype, value, traceback)
 
             try:
                 self.conn.rollback()
             except sqlite3.OperationalError:
-                pass # no transaction is active
+                pass  # no transaction is active
 
             try:
                 # invalidate cached data
                 c.execute('UPDATE sources SET channels_updated=? WHERE id=?', [0, self.source.KEY])
                 self.conn.commit()
             except sqlite3.OperationalError:
-                pass # database is locked
+                pass  # database is locked
 
             self.updateFailed = True
         finally:
             self.updateInProgress = False
             c.close()
 
-    def getEPGView(self, channelStart, date = datetime.datetime.now(), progress_callback = None, clearExistingProgramList = True):
-        result = self._invokeAndBlockForResult(self._getEPGView, channelStart, date, progress_callback, clearExistingProgramList)
+    def getEPGView(self, channelStart, date=datetime.datetime.now(), progress_callback=None,
+                   clearExistingProgramList=True):
+        result = self._invokeAndBlockForResult(self._getEPGView, channelStart, date, progress_callback,
+                                               clearExistingProgramList)
 
         if self.updateFailed:
             raise SourceException('No channels or programs imported')
@@ -408,19 +426,18 @@ class Database(object):
     def _getEPGView(self, channelStart, date, progress_callback, clearExistingProgramList):
         self._updateChannelAndProgramListCaches(date, progress_callback, clearExistingProgramList)
 
-        channels = self._getChannelList(onlyVisible = True)
+        channels = self._getChannelList(onlyVisible=True)
 
         if channelStart < 0:
             channelStart = len(channels) - 1
         elif channelStart > len(channels) - 1:
             channelStart = 0
         channelEnd = channelStart + Database.CHANNELS_PER_PAGE
-        channelsOnPage = channels[channelStart : channelEnd]
+        channelsOnPage = channels[channelStart: channelEnd]
 
         programs = self._getProgramList(channelsOnPage, date)
 
         return [channelStart, channelsOnPage, programs]
-
 
     def getNextChannel(self, currentChannel):
         channels = self.getChannelList()
@@ -445,15 +462,21 @@ class Database(object):
     def _saveChannelList(self, channelList):
         c = self.conn.cursor()
         for idx, channel in enumerate(channelList):
-            c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
+            c.execute(
+                'INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)',
+                [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight,
+                 self.source.KEY, channel.weight, self.source.KEY])
             if not c.rowcount:
-                c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
+                c.execute(
+                    'UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?',
+                    [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight,
+                     channel.id, self.source.KEY])
 
         c.execute("UPDATE sources SET channels_updated=? WHERE id=?", [datetime.datetime.now(), self.source.KEY])
         self.channelList = None
         self.conn.commit()
 
-    def getChannelList(self, onlyVisible = True):
+    def getChannelList(self, onlyVisible=True):
         if not self.channelList or not onlyVisible:
             result = self._invokeAndBlockForResult(self._getChannelList, onlyVisible)
 
@@ -463,7 +486,6 @@ class Database(object):
             self.channelList = result
         return self.channelList
 
-
     def _getChannelList(self, onlyVisible):
         c = self.conn.cursor()
         channelList = list()
@@ -472,7 +494,7 @@ class Database(object):
         else:
             c.execute('SELECT * FROM channels WHERE source=? ORDER BY weight', [self.source.KEY])
         for row in c:
-            channel = Channel(row['id'], row['title'],row['logo'], row['stream_url'], row['visible'], row['weight'])
+            channel = Channel(row['id'], row['title'], row['logo'], row['stream_url'], row['visible'], row['weight'])
             channelList.append(channel)
         c.close()
         return channelList
@@ -490,10 +512,12 @@ class Database(object):
         program = None
         now = datetime.datetime.now()
         c = self.conn.cursor()
-        c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date <= ? AND end_date >= ?', [channel.id, self.source.KEY, now, now])
+        c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date <= ? AND end_date >= ?',
+                  [channel.id, self.source.KEY, now, now])
         row = c.fetchone()
         if row:
-            program = Program(channel, row['title'], row['start_date'], row['end_date'], row['description'], row['image_large'], row['image_small'])
+            program = Program(channel, row['title'], row['start_date'], row['end_date'], row['description'],
+                              row['image_large'], row['image_small'])
         c.close()
 
         return program
@@ -504,10 +528,13 @@ class Database(object):
     def _getNextProgram(self, program):
         nextProgram = None
         c = self.conn.cursor()
-        c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date >= ? ORDER BY start_date ASC LIMIT 1', [program.channel.id, self.source.KEY, program.endDate])
+        c.execute(
+            'SELECT * FROM programs WHERE channel=? AND source=? AND start_date >= ? ORDER BY start_date ASC LIMIT 1',
+            [program.channel.id, self.source.KEY, program.endDate])
         row = c.fetchone()
         if row:
-            nextProgram = Program(program.channel, row['title'], row['start_date'], row['end_date'], row['description'], row['image_large'], row['image_small'])
+            nextProgram = Program(program.channel, row['title'], row['start_date'], row['end_date'], row['description'],
+                                  row['image_large'], row['image_small'])
         c.close()
 
         return nextProgram
@@ -518,10 +545,13 @@ class Database(object):
     def _getPreviousProgram(self, program):
         previousProgram = None
         c = self.conn.cursor()
-        c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND end_date <= ? ORDER BY start_date DESC LIMIT 1', [program.channel.id, self.source.KEY, program.startDate])
+        c.execute(
+            'SELECT * FROM programs WHERE channel=? AND source=? AND end_date <= ? ORDER BY start_date DESC LIMIT 1',
+            [program.channel.id, self.source.KEY, program.startDate])
         row = c.fetchone()
         if row:
-            previousProgram = Program(program.channel, row['title'], row['start_date'], row['end_date'], row['description'], row['image_large'], row['image_small'])
+            previousProgram = Program(program.channel, row['title'], row['start_date'], row['end_date'],
+                                      row['description'], row['image_large'], row['image_small'])
         c.close()
 
         return previousProgram
@@ -535,7 +565,7 @@ class Database(object):
         @type startTime: datetime.datetime
         @return:
         """
-        endTime = startTime + datetime.timedelta(hours = 2)
+        endTime = startTime + datetime.timedelta(hours=2)
         programList = list()
 
         channelMap = dict()
@@ -554,7 +584,7 @@ class Database(object):
 
         return programList
 
-    def _isProgramListCacheExpired(self, date = datetime.datetime.now()):
+    def _isProgramListCacheExpired(self, date=datetime.datetime.now()):
         # check if data is up-to-date in database
         dateStr = date.strftime('%Y-%m-%d')
         c = self.conn.cursor()
@@ -568,13 +598,14 @@ class Database(object):
     def setCustomStreamUrl(self, channel, stream_url):
         if stream_url is not None:
             self._invokeAndBlockForResult(self._setCustomStreamUrl, channel, stream_url)
-        # no result, but block until operation is done
+            # no result, but block until operation is done
 
     def _setCustomStreamUrl(self, channel, stream_url):
         if stream_url is not None:
             c = self.conn.cursor()
             c.execute("DELETE FROM custom_stream_url WHERE channel=?", [channel.id])
-            c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channel.id, stream_url.decode('utf-8', 'ignore')])
+            c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)",
+                      [channel.id, stream_url.decode('utf-8', 'ignore')])
             self.conn.commit()
             c.close()
 
@@ -614,11 +645,13 @@ class Database(object):
 
         return None
 
-    def adapt_datetime(self, ts):
+    @staticmethod
+    def adapt_datetime(ts):
         # http://docs.python.org/2/library/sqlite3.html#registering-an-adapter-callable
         return time.mktime(ts.timetuple())
 
-    def convert_datetime(self, ts):
+    @staticmethod
+    def convert_datetime(ts):
         try:
             return datetime.datetime.fromtimestamp(float(ts))
         except ValueError:
@@ -642,9 +675,12 @@ class Database(object):
 
                 # For caching data
                 c.execute('CREATE TABLE sources(id TEXT PRIMARY KEY, channels_updated TIMESTAMP)')
-                c.execute('CREATE TABLE updates(id INTEGER PRIMARY KEY, source TEXT, date TEXT, programs_updated TIMESTAMP)')
-                c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, stream_url TEXT, source TEXT, visible BOOLEAN, weight INTEGER, PRIMARY KEY (id, source), FOREIGN KEY(source) REFERENCES sources(id) ON DELETE CASCADE)')
-                c.execute('CREATE TABLE programs(channel TEXT, title TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, image_large TEXT, image_small TEXT, source TEXT, updates_id INTEGER, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE)')
+                c.execute(
+                    'CREATE TABLE updates(id INTEGER PRIMARY KEY, source TEXT, date TEXT, programs_updated TIMESTAMP)')
+                c.execute(
+                    'CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, stream_url TEXT, source TEXT, visible BOOLEAN, weight INTEGER, PRIMARY KEY (id, source), FOREIGN KEY(source) REFERENCES sources(id) ON DELETE CASCADE)')
+                c.execute(
+                    'CREATE TABLE programs(channel TEXT, title TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, image_large TEXT, image_small TEXT, source TEXT, updates_id INTEGER, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE)')
                 c.execute('CREATE INDEX program_list_idx ON programs(source, channel, start_date, end_date)')
                 c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
                 c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
@@ -653,15 +689,18 @@ class Database(object):
                 c.execute('CREATE TABLE settings(key TEXT PRIMARY KEY, value TEXT)')
 
                 # For notifications
-                c.execute("CREATE TABLE notifications(channel TEXT, program_title TEXT, source TEXT, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE)")
+                c.execute(
+                    "CREATE TABLE notifications(channel TEXT, program_title TEXT, source TEXT, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE)")
 
             if version < [1, 3, 1]:
                 # Recreate tables with FOREIGN KEYS as DEFERRABLE INITIALLY DEFERRED
                 c.execute('UPDATE version SET major=1, minor=3, patch=1')
                 c.execute('DROP TABLE channels')
                 c.execute('DROP TABLE programs')
-                c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, stream_url TEXT, source TEXT, visible BOOLEAN, weight INTEGER, PRIMARY KEY (id, source), FOREIGN KEY(source) REFERENCES sources(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
-                c.execute('CREATE TABLE programs(channel TEXT, title TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, image_large TEXT, image_small TEXT, source TEXT, updates_id INTEGER, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+                c.execute(
+                    'CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, stream_url TEXT, source TEXT, visible BOOLEAN, weight INTEGER, PRIMARY KEY (id, source), FOREIGN KEY(source) REFERENCES sources(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+                c.execute(
+                    'CREATE TABLE programs(channel TEXT, title TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, image_large TEXT, image_small TEXT, source TEXT, updates_id INTEGER, FOREIGN KEY(channel, source) REFERENCES channels(id, source) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
                 c.execute('CREATE INDEX program_list_idx ON programs(source, channel, start_date, end_date)')
                 c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
                 c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
@@ -675,7 +714,6 @@ class Database(object):
         except sqlite3.OperationalError, ex:
             raise DatabaseSchemaException(ex)
 
-
     def addNotification(self, program):
         self._invokeAndBlockForResult(self._addNotification, program)
         # no result, but block until operation is done
@@ -685,7 +723,8 @@ class Database(object):
         @type program: source.program
         """
         c = self.conn.cursor()
-        c.execute("INSERT INTO notifications(channel, program_title, source) VALUES(?, ?, ?)", [program.channel.id, program.title, self.source.KEY])
+        c.execute("INSERT INTO notifications(channel, program_title, source) VALUES(?, ?, ?)",
+                  [program.channel.id, program.title, self.source.KEY])
         self.conn.commit()
         c.close()
 
@@ -698,19 +737,21 @@ class Database(object):
         @type program: source.program
         """
         c = self.conn.cursor()
-        c.execute("DELETE FROM notifications WHERE channel=? AND program_title=? AND source=?", [program.channel.id, program.title, self.source.KEY])
+        c.execute("DELETE FROM notifications WHERE channel=? AND program_title=? AND source=?",
+                  [program.channel.id, program.title, self.source.KEY])
         self.conn.commit()
         c.close()
 
-
-    def getNotifications(self, daysLimit = 2):
+    def getNotifications(self, daysLimit=2):
         return self._invokeAndBlockForResult(self._getNotifications, daysLimit)
 
     def _getNotifications(self, daysLimit):
         start = datetime.datetime.now()
-        end = start + datetime.timedelta(days = daysLimit)
+        end = start + datetime.timedelta(days=daysLimit)
         c = self.conn.cursor()
-        c.execute("SELECT DISTINCT c.title, p.title, p.start_date FROM notifications n, channels c, programs p WHERE n.channel = c.id AND p.channel = c.id AND n.program_title = p.title AND n.source=? AND p.start_date >= ? AND p.end_date <= ?", [self.source.KEY, start, end])
+        c.execute(
+            "SELECT DISTINCT c.title, p.title, p.start_date FROM notifications n, channels c, programs p WHERE n.channel = c.id AND p.channel = c.id AND n.program_title = p.title AND n.source=? AND p.start_date >= ? AND p.end_date <= ?",
+            [self.source.KEY, start, end])
         programs = c.fetchall()
         c.close()
 
@@ -724,7 +765,8 @@ class Database(object):
         @type program: source.program
         """
         c = self.conn.cursor()
-        c.execute("SELECT 1 FROM notifications WHERE channel=? AND program_title=? AND source=?", [program.channel.id, program.title, self.source.KEY])
+        c.execute("SELECT 1 FROM notifications WHERE channel=? AND program_title=? AND source=?",
+                  [program.channel.id, program.title, self.source.KEY])
         result = c.fetchone()
         c.close()
 
@@ -741,9 +783,8 @@ class Database(object):
         c.close()
 
 
-
 class Source(object):
-    def getDataFromExternal(self, date, progress_callback = None):
+    def getDataFromExternal(self, date, progress_callback=None):
         """
         Retrieve data from external as a list or iterable. Data may contain both Channel and Program objects.
         The source may choose to ignore the date parameter and return all data available.
@@ -763,13 +804,6 @@ class Source(object):
             return True
         return False
 
-    def _downloadUrl(self, url):
-        u = urllib2.urlopen(url, timeout=30)
-        content = u.read()
-        u.close()
-
-        return content
-
 
 class YouSeeTvSource(Source):
     KEY = 'youseetv'
@@ -779,13 +813,13 @@ class YouSeeTvSource(Source):
         self.channelCategory = addon.getSetting('youseetv.category')
         self.ysApi = ysapi.YouSeeTVGuideApi()
 
-    def getDataFromExternal(self, date, progress_callback = None):
+    def getDataFromExternal(self, date, progress_callback=None):
         channels = self.ysApi.channelsInCategory(self.channelCategory)
         for idx, channel in enumerate(channels):
-            c = Channel(id = channel['id'], title = channel['name'], logo = channel['logo'])
+            c = Channel(id=channel['id'], title=channel['name'], logo=channel['logo'])
             yield c
 
-            for program in self.ysApi.programs(c.id, tvdate = date):
+            for program in self.ysApi.programs(c.id, tvdate=date):
                 description = program['description']
                 if description is None:
                     description = strings(NO_DESCRIPTION)
@@ -795,37 +829,48 @@ class YouSeeTvSource(Source):
                 p = Program(
                     c,
                     program['title'],
-                    self._parseDate(program['begin']),
-                    self._parseDate(program['end']),
+                    datetime.datetime.fromtimestamp(program['begin']),
+                    datetime.datetime.fromtimestamp(program['end']),
                     description,
                     imagePrefix + program['images_sixteenbynine']['large'],
                     imagePrefix + program['images_sixteenbynine']['small'],
                 )
                 yield p
 
-
             if progress_callback:
                 if not progress_callback(100.0 / len(channels) * idx):
                     raise SourceUpdateCanceledException()
 
-    def _parseDate(self, dateString):
-        return datetime.datetime.fromtimestamp(dateString)
-
 
 class XMLTVSource(Source):
     KEY = 'xmltv'
+    TYPE_LOCAL_FILE = 0
+    TYPE_URL = 1
 
     def __init__(self, addon):
         self.logoFolder = addon.getSetting('xmltv.logo.folder')
+        self.xmltvType = int(addon.getSetting('xmltv.type'))
         self.xmltvFile = addon.getSetting('xmltv.file')
+        self.xmltvUrl = addon.getSetting('xmltv.url')
 
         if not self.xmltvFile or not xbmcvfs.exists(self.xmltvFile):
             raise SourceNotConfiguredException()
 
-    def getDataFromExternal(self, date, progress_callback = None):
-        f = FileWrapper(self.xmltvFile)
-        context = ElementTree.iterparse(f, events=("start", "end"))
-        return parseXMLTV(context, f, f.size, self.logoFolder, progress_callback)
+    def getDataFromExternal(self, date, progress_callback=None):
+        if self.xmltvType == XMLTVSource.TYPE_LOCAL_FILE:
+            f = FileWrapper(self.xmltvFile)
+            context = ElementTree.iterparse(f, events=("start", "end"))
+            size = f.size
+        else:
+            u = urllib2.urlopen(self.xmltvUrl, timeout=30)
+            xml = u.read()
+            u.close()
+
+            f = StringIO.StringIO(xml)
+            context = ElementTree.iterparse(f)
+            size = len(xml)
+
+        return self.parseXMLTV(context, f, size, self.logoFolder, progress_callback)
 
     def isUpdated(self, channelsLastUpdated, programLastUpdate):
         if channelsLastUpdated is None or not xbmcvfs.exists(self.xmltvFile):
@@ -835,71 +880,67 @@ class XMLTVSource(Source):
         fileUpdated = datetime.datetime.fromtimestamp(stat.st_mtime())
         return fileUpdated > channelsLastUpdated
 
+    def parseXMLTVDate(self, dateString):
+        if dateString is not None:
+            if dateString.find(' ') != -1:
+                # remove timezone information
+                dateString = dateString[:dateString.find(' ')]
+            t = time.strptime(dateString, '%Y%m%d%H%M%S')
+            return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
+        else:
+            return None
 
-class ONTVSource(Source):
-    KEY = 'ontv'
+    def parseXMLTV(self, context, f, size, logoFolder, progress_callback):
+        event, root = context.next()
+        elements_parsed = 0
 
-    def __init__(self, addon):
-        self.ontvUrl = addon.getSetting('ontv.url')
-
-    def getDataFromExternal(self, date, progress_callback = None):
-        xml = self._downloadUrl(self.ontvUrl)
-        io = StringIO.StringIO(xml)
-        context = ElementTree.iterparse(io)
-        return parseXMLTV(context, io, len(xml), None, progress_callback)
-
-
-def parseXMLTVDate(dateString):
-    if dateString is not None:
-        if dateString.find(' ') != -1:
-            # remove timezone information
-            dateString = dateString[:dateString.find(' ')]
-        t = time.strptime(dateString, '%Y%m%d%H%M%S')
-        return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
-    else:
-        return None
-
-def parseXMLTV(context, f, size, logoFolder, progress_callback):
-    event, root = context.next()
-    elements_parsed = 0
-
-    for event, elem in context:
-        if event == "end":
-            result = None
-            if elem.tag == "programme":
-                channel = elem.get("channel")
-                description = elem.findtext("desc")
-                iconElement = elem.find("icon")
-                icon = None
-                if iconElement is not None:
-                    icon = iconElement.get("src")
-                if not description:
-                    description = strings(NO_DESCRIPTION)
-                result = Program(channel, elem.findtext('title'), parseXMLTVDate(elem.get('start')), parseXMLTVDate(elem.get('stop')), description, imageSmall=icon)
-
-            elif elem.tag == "channel":
-                id = elem.get("id")
-                title = elem.findtext("display-name")
-                logo = None
-                if logoFolder:
-                    logoFile = os.path.join(logoFolder, title + '.png')
-                    if xbmcvfs.exists(logoFile):
-                        logo = logoFile
-                if not logo:
+        for event, elem in context:
+            if event == "end":
+                result = None
+                if elem.tag == "programme":
+                    channel = elem.get("channel")
+                    description = elem.findtext("desc")
                     iconElement = elem.find("icon")
+                    icon = None
                     if iconElement is not None:
-                        logo = iconElement.get("src")
-                result = Channel(id, title, logo)
+                        icon = iconElement.get("src")
+                    if not description:
+                        description = strings(NO_DESCRIPTION)
+                    result = Program(channel, elem.findtext('title'), self.parseXMLTVDate(elem.get('start')),
+                                     self.parseXMLTVDate(elem.get('stop')), description, imageSmall=icon)
 
-            if result:
-                elements_parsed += 1
-                if progress_callback and elements_parsed % 500 == 0:
-                    if not progress_callback(100.0 / size * f.tell()):
-                        raise SourceUpdateCanceledException()
-                yield result
+                elif elem.tag == "channel":
+                    id = elem.get("id")
+                    title = elem.findtext("display-name")
+                    logo = None
+                    if logoFolder:
+                        logoFile = os.path.join(logoFolder, title + '.png')
+                        if xbmcvfs.exists(logoFile):
+                            logo = logoFile
+                    if not logo:
+                        iconElement = elem.find("icon")
+                        if iconElement is not None:
+                            logo = iconElement.get("src")
+                    streamElement = elem.find("stream")
+                    streamUrl = None
+                    if streamElement is not None:
+                        streamUrl = streamElement.text
+                    visible = elem.get("visible")
+                    if visible == "0":
+                        visible = False
+                    else:
+                        visible = True
+                    result = Channel(id, title, logo, streamUrl, visible)
 
-        root.clear()
-    f.close()
+                if result:
+                    elements_parsed += 1
+                    if progress_callback and elements_parsed % 500 == 0:
+                        if not progress_callback(100.0 / size * f.tell()):
+                            raise SourceUpdateCanceledException()
+                    yield result
+
+            root.clear()
+        f.close()
 
 
 class FileWrapper(object):
@@ -911,9 +952,9 @@ class FileWrapper(object):
     def close(self):
         self.vfsfile.close()
 
-    def read(self, bytes):
-        self.bytesRead += bytes
-        return self.vfsfile.read(bytes)
+    def read(self, byteCount):
+        self.bytesRead += byteCount
+        return self.vfsfile.read(byteCount)
 
     def tell(self):
         return self.bytesRead
@@ -921,9 +962,8 @@ class FileWrapper(object):
 
 def instantiateSource():
     SOURCES = {
-        'YouSee.tv' : YouSeeTvSource,
-        'XMLTV' : XMLTVSource,
-        'ONTV.dk' : ONTVSource
+        'YouSee.tv': YouSeeTvSource,
+        'XMLTV': XMLTVSource
     }
 
     try:
@@ -932,5 +972,3 @@ def instantiateSource():
         activeSource = SOURCES['YouSee.tv']
 
     return activeSource(ADDON)
-
-

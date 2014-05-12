@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#30006"
+msgid "Now"
+msgstr "Ngay bây giờ"
+
 msgctxt "#30008"
 msgid "Cancel"
 msgstr "Hủy"
@@ -23,6 +27,10 @@ msgstr "Hủy"
 msgctxt "#30100"
 msgid "General"
 msgstr "Tổng Quan"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Các thông báo"
 
 msgctxt "#30303"
 msgid "Cancel"
@@ -55,3 +63,7 @@ msgstr "Lưu"
 msgctxt "#30606"
 msgid "Cancel"
 msgstr "Hủy"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Duyệt..."

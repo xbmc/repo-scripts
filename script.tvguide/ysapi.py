@@ -22,7 +22,10 @@
 #
 import cookielib
 import urllib2
-import simplejson
+try:
+    import json
+except:
+    import simplejson as json
 
 API_URL = 'http://api.yousee.tv/rest'
 API_KEY = 'HCN2BMuByjWnrBF4rUncEfFBMXDumku7nfT3CMnn'
@@ -45,11 +48,10 @@ class YouSeeApi(object):
 
         r = urllib2.Request(url, headers = {'X-API-KEY' : API_KEY})
         u = urllib2.urlopen(r)
-        json = u.read()
+        data = u.read()
         u.close()
 
-        return simplejson.loads(json)
-
+        return json.loads(data)
 
 
 class YouSeeTVGuideApi(YouSeeApi):
@@ -100,11 +102,11 @@ class YouSeeTVGuideApi(YouSeeApi):
 
 if __name__ == '__main__':
     api = YouSeeTVGuideApi()
-    json = api.channels()
+    data = api.channels()
 
     entries = dict()
 
-    for channels in json:
+    for channels in data:
         for channel in channels['channels']:
             if not entries.has_key(channel['name']):
                 entries[channel['name']] = 'plugin://plugin.video.yousee.tv/?channel=%s' % channel['id']

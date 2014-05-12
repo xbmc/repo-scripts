@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -120,10 +120,6 @@ msgctxt "#30116"
 msgid "Search for channel logos in"
 msgstr "Logá kanálov hľadávať v"
 
-msgctxt "#30117"
-msgid "ONTV Pro URL"
-msgstr "ONTV Pro URL"
-
 msgctxt "#30118"
 msgid "Enable OSD menu"
 msgstr "Povoliť OSD menu"
@@ -139,6 +135,10 @@ msgstr "Použiť alternatívnu metódu streamovania (potrebné pre niektoré Dop
 msgctxt "#30121"
 msgid "Alternative streaming is not compatible with OSD menu"
 msgstr "Alternatívne streamovanie nie je kompatibilné s OSD menu"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "Adresa URL pre XMLTV"
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"

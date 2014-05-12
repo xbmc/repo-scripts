@@ -25,6 +25,7 @@ import source as src
 
 from strings import *
 
+
 class Notification(object):
     def __init__(self, database, addonPath):
         """

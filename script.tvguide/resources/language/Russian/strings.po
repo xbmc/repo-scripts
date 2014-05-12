@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -15,6 +15,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "Нет описания"
 
 msgctxt "#30006"
 msgid "Now"
@@ -32,6 +36,14 @@ msgctxt "#30101"
 msgid "Source"
 msgstr "Источник"
 
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "Файл XMLTV"
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Готово!"
+
 msgctxt "#30112"
 msgid "Notifications"
 msgstr "Уведомления"
@@ -39,6 +51,10 @@ msgstr "Уведомления"
 msgctxt "#30114"
 msgid "Startup"
 msgstr "Использовать скролбар"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "Ссылка на XMLTV"
 
 msgctxt "#30303"
 msgid "Cancel"
@@ -63,6 +79,10 @@ msgstr "Отмена"
 msgctxt "#30602"
 msgid "Favourites"
 msgstr "Избранное"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Дополнения"
 
 msgctxt "#30605"
 msgid "Save"

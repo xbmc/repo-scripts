@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -32,13 +32,37 @@ msgctxt "#30101"
 msgid "Source"
 msgstr "Uppruni"
 
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV skrá"
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Búin !"
+
 msgctxt "#30112"
 msgid "Notifications"
 msgstr "Tilkynningar"
 
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "Horfa á %s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Minna á"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Ekki minna á"
+
 msgctxt "#30303"
 msgid "Cancel"
 msgstr "Hætta við"
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Fjarlægja straum skrá"
 
 msgctxt "#30307"
 msgid "Channels"
@@ -56,9 +80,21 @@ msgctxt "#30503"
 msgid "Cancel"
 msgstr "Hætta við"
 
+msgctxt "#30601"
+msgid ".strm file"
+msgstr ".strm skrá"
+
 msgctxt "#30602"
 msgid "Favourites"
 msgstr "Uppáhalds"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Viðbætur"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Forsýna straum"
 
 msgctxt "#30605"
 msgid "Save"
@@ -67,6 +103,10 @@ msgstr "Vista"
 msgctxt "#30606"
 msgid "Cancel"
 msgstr "Hætta við"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Stoppa forsýningu"
 
 msgctxt "#30610"
 msgid "Browse..."

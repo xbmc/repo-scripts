@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -51,6 +51,10 @@ msgstr "[B]Tips![/B]Du kan också använda skrollhjulet"
 msgctxt "#30008"
 msgid "Cancel"
 msgstr "Avbryt"
+
+msgctxt "#30009"
+msgid "No program available"
+msgstr "Inga program tillgängliga"
 
 msgctxt "#30100"
 msgid "General"
@@ -120,10 +124,6 @@ msgctxt "#30116"
 msgid "Search for channel logos in"
 msgstr "Sök efter kanallogotyper i"
 
-msgctxt "#30117"
-msgid "ONTV Pro URL"
-msgstr "ONTV Pro URL"
-
 msgctxt "#30118"
 msgid "Enable OSD menu"
 msgstr "Aktivera OSD-meny"
@@ -139,6 +139,22 @@ msgstr "Använd alternativ strömningsmetod (krävs för några tillägg)"
 msgctxt "#30121"
 msgid "Alternative streaming is not compatible with OSD menu"
 msgstr "Alternativ strömning är inte kompatibel med OSD-menyn"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "XMLTV-URL"
+
+msgctxt "#30123"
+msgid "XMLTV type"
+msgstr "XMLTV-typ"
+
+msgctxt "#30124"
+msgid "Local file"
+msgstr "Lokal fil"
+
+msgctxt "#30125"
+msgid "URL"
+msgstr "URL"
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"

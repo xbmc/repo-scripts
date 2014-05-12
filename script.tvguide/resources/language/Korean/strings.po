@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -119,10 +119,6 @@ msgstr "- 먼저 캐시 지우기"
 msgctxt "#30116"
 msgid "Search for channel logos in"
 msgstr "채널로고 찾기"
-
-msgctxt "#30117"
-msgid "ONTV Pro URL"
-msgstr "ONTV Pro URL"
 
 msgctxt "#30118"
 msgid "Enable OSD menu"

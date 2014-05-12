@@ -1,5 +1,5 @@
 #
-#      Copyright (C) 2012 Tommy Winther
+#      Copyright (C) 2014 Tommy Winther
 #      http://tommy.winther.nu
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -19,7 +19,6 @@
 #
 import xbmc
 from xml.etree import ElementTree
-from xml.parsers.expat import ExpatError
 import ConfigParser
 import os
 import xbmcaddon
@@ -55,7 +54,7 @@ class StreamsService(object):
                         continue
 
                     entries.append((node.get('name'), value))
-            except ExpatError:
+            except:
                 pass
 
         return entries

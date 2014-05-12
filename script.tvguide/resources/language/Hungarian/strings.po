@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -40,6 +40,10 @@ msgctxt "#30114"
 msgid "Startup"
 msgstr "Indítás"
 
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "XMLTV URL"
+
 msgctxt "#30303"
 msgid "Cancel"
 msgstr "Mégsem"
@@ -63,6 +67,10 @@ msgstr "Mégsem"
 msgctxt "#30602"
 msgid "Favourites"
 msgstr "Kedvencek"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Kiegészítők"
 
 msgctxt "#30605"
 msgid "Save"

@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Language: am\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "#30006"
+msgid "Now"
+msgstr "አሁን"
+
 msgctxt "#30008"
 msgid "Cancel"
 msgstr "መሰረዣ"
@@ -24,9 +28,21 @@ msgctxt "#30100"
 msgid "General"
 msgstr "ባጠቃላይ"
 
+msgctxt "#30101"
+msgid "Source"
+msgstr "ምንጭ "
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "ማስታወቂያዎች"
+
 msgctxt "#30303"
 msgid "Cancel"
 msgstr "መሰረዣ"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "ጣቢያዎች"
 
 msgctxt "#30308"
 msgid "Quit"
@@ -51,3 +67,7 @@ msgstr "ማስቀመጫ"
 msgctxt "#30606"
 msgid "Cancel"
 msgstr "መሰረዣ"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "መቃኛ..."

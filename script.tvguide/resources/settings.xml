@@ -2,17 +2,18 @@
 <settings>
 	<category label="30101">
 		<setting id="source" label="30101" type="labelenum" default="YouSee.tv"
-                 values="YouSee.tv|XMLTV|ONTV.dk" />
+                 values="YouSee.tv|XMLTV" />
 
         <setting id="youseetv.category" label="30102" type="labelenum" default="Danske"
                  values="Danske|Filmkanaler|Grundpakken|Mellempakken|Fuldpakken|Nordiske|Engelske|Tyske|Latinske|Slaviske|Tyrkiske|Kurdiske|Arabiske|Asiatiske"
                  visible="eq(-1,0)" />
         <setting id="program.background.enabled" label="30107" type="bool" default="true" visible="eq(-2,0)"/>
 
-        <setting id="xmltv.file" label="30103" type="file" visible="eq(-3,1)" />
-        <setting id="xmltv.logo.folder" label="30116" type="folder" visible="eq(-4,1)"/>
+        <setting id="xmltv.type" label="30123" type="enum" default="0" lvalues="30124|30125" visible="eq(-3,1)"/>
+        <setting id="xmltv.file" label="30103" type="file" visible="eq(-1,0) + eq(-4,1)" />
+        <setting id="xmltv.url" label="30122" type="text" visible="eq(-2,1) + eq(-5,1)"/>
+        <setting id="xmltv.logo.folder" label="30116" type="folder" visible="eq(-6,1)"/>
 
-        <setting id="ontv.url" label="30117" type="text" visible="eq(-5,2)" default="http://ontv.dk/xmltv/c81e728d9d4c2f636f067f89cc14862c"/>
     </category>
 
     <category label="30114">

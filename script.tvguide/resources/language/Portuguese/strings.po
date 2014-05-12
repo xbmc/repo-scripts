@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -51,6 +51,10 @@ msgstr "[B]Tip![/B] Pode também usar a roda de deslocamento"
 msgctxt "#30008"
 msgid "Cancel"
 msgstr "Cancelar"
+
+msgctxt "#30009"
+msgid "No program available"
+msgstr "Nenhum programa disponível"
 
 msgctxt "#30100"
 msgid "General"
@@ -120,25 +124,37 @@ msgctxt "#30116"
 msgid "Search for channel logos in"
 msgstr "Procurar logotipos de canais em"
 
-msgctxt "#30117"
-msgid "ONTV Pro URL"
-msgstr "URL ONTV Pro"
-
 msgctxt "#30118"
 msgid "Enable OSD menu"
 msgstr "Activar menu de visor"
 
 msgctxt "#30119"
 msgid "Disabling the OSD menu may fix video stuttering."
-msgstr "Desactivar o menu de visor pode corrigir estremecimento de vídeo."
+msgstr "Desactivar o menu de visor pode corrigir interrupções no vídeo."
 
 msgctxt "#30120"
 msgid "Use alternate streaming method (required for some addons)"
-msgstr "Usar método alternativo de transmissão (necessário para alguns addons)"
+msgstr "Usar método alternativo de emissão (necessário para alguns addons)"
 
 msgctxt "#30121"
 msgid "Alternative streaming is not compatible with OSD menu"
-msgstr "Método alternativo de transmissão não é compatível com o menu no visor"
+msgstr "Método alternativo de emissão não é compatível com o menu no visor"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "Endereço XMLTV"
+
+msgctxt "#30123"
+msgid "XMLTV type"
+msgstr "Tipo de XMLTV"
+
+msgctxt "#30124"
+msgid "Local file"
+msgstr "Ficheiro local"
+
+msgctxt "#30125"
+msgid "URL"
+msgstr "Endereço"
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"
@@ -206,7 +222,7 @@ msgstr "Cancelar"
 
 msgctxt "#30304"
 msgid "Choose stream"
-msgstr "Escolher transmissão"
+msgstr "Escolher emissão"
 
 msgctxt "#30305"
 msgid "You can choose your own .strm file to play, when you want to watch this channel."
@@ -214,7 +230,7 @@ msgstr "Pode escolher o seu próprio ficheiro .strm para reproduzir, quando quis
 
 msgctxt "#30306"
 msgid "Remove stream file"
-msgstr "Remover ficheiro de transmissão"
+msgstr "Remover ficheiro de emissão"
 
 msgctxt "#30307"
 msgid "Channels"
@@ -242,7 +258,7 @@ msgstr "Cancelar"
 
 msgctxt "#30600"
 msgid "[B]Setup stream[/B]"
-msgstr "[B]Definições de transmissão[/B]"
+msgstr "[B]Definir emissão[/B]"
 
 msgctxt "#30601"
 msgid ".strm file"
@@ -258,7 +274,7 @@ msgstr "Addons"
 
 msgctxt "#30604"
 msgid "Preview stream"
-msgstr "Prever transmissão"
+msgstr "Pré-visualizar"
 
 msgctxt "#30605"
 msgid "Save"
@@ -278,7 +294,7 @@ msgstr "Procurar..."
 
 msgctxt "#30611"
 msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
-msgstr "Prima Navegar... em baixo e navegue para o seu ficheiro de transmissão. Quando tiver escolhido o ficheiro, pode prever a transmissão, para verificar se funciona no XBMC."
+msgstr "Prima Navegar... em baixo e navegue para o seu ficheiro de emissão. Quando tiver escolhido o ficheiro, pode pré-visualizar a emissão, para verificar se funciona no XBMC."
 
 msgctxt "#30620"
 msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
@@ -286,7 +302,7 @@ msgstr "Escolha um favorito em baixo.. Apenas favoritos [I]PlayMedia[/I] são su
 
 msgctxt "#30700"
 msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
-msgstr "Há vários addons que oferecem estes canais.[CR]Escolha um para ver a transmissão."
+msgstr "Há vários addons que oferecem estes canais.[CR]Escolha um para ver a emissão."
 
 msgctxt "#30800"
 msgid "JSON-EPG URL"

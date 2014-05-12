@@ -10,11 +10,17 @@
         <control type="image">
             <description>workaround for texture not being loaded</description>
             <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
             <texture>tvguide-program-red.png</texture>
         </control>
         <control type="image">
             <description>workaround for texture not being loaded</description>
             <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
             <texture>tvguide-program-red-focus.png</texture>
         </control>
 

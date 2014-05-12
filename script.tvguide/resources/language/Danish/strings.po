@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
-# Addon Provider: twinther [tommy@winther.nu]
+# Addon Provider: twinther
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -51,6 +51,10 @@ msgstr "[B]Tip![/B] Du kan også bruge scrollhjulet"
 msgctxt "#30008"
 msgid "Cancel"
 msgstr "Annuller"
+
+msgctxt "#30009"
+msgid "No program available"
+msgstr "Intet program tilgængeligt."
 
 msgctxt "#30100"
 msgid "General"
@@ -120,10 +124,6 @@ msgctxt "#30116"
 msgid "Search for channel logos in"
 msgstr "Søg efter kanal logoer i"
 
-msgctxt "#30117"
-msgid "ONTV Pro URL"
-msgstr "ONTV Pro URL"
-
 msgctxt "#30118"
 msgid "Enable OSD menu"
 msgstr "Aktiver OSD menu"
@@ -131,6 +131,30 @@ msgstr "Aktiver OSD menu"
 msgctxt "#30119"
 msgid "Disabling the OSD menu may fix video stuttering."
 msgstr "Deaktivering af menuen kan hjælpe på hakkende video."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Brug alternativ streamingmetode (nødvendig for nogle add-ons)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "Alternativ streaming er ikke kompatibel med OSD menu."
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "XMLTV URL"
+
+msgctxt "#30123"
+msgid "XMLTV type"
+msgstr "XMLTV type"
+
+msgctxt "#30124"
+msgid "Local file"
+msgstr "Lokal fil"
+
+msgctxt "#30125"
+msgid "URL"
+msgstr "URL"
 
 msgctxt "#30150"
 msgid "Oops, sorry about that!"
