@@ -49,6 +49,8 @@ class TvTunesFetcher:
     SOUNDCLOUD = 'soundcloud.com'
     GROOVESHARK = 'grooveshark.com'
     GOEAR = 'goear.com'
+    PROMPT = 'Prompt User'
+    ALL_ENGINES= 'ALL'
     
     
     def __init__(self, videoList):
@@ -57,46 +59,74 @@ class TvTunesFetcher:
             xbmcvfs.mkdir( xbmc.translatePath( 'special://profile/addon_data/%s' % __addonid__ ).decode("utf-8") )
         if not xbmcvfs.exists( xbmc.translatePath( 'special://profile/addon_data/%s/temp' % __addonid__ ).decode("utf-8") ):
             xbmcvfs.mkdir( xbmc.translatePath( 'special://profile/addon_data/%s/temp' % __addonid__ ).decode("utf-8") )
-        
-        self.DIALOG_PROGRESS = xbmcgui.DialogProgress()
-        self.DIALOG_PROGRESS.create( __language__(32105) , __language__(32106) )
-
-        # The video list is in the format [videoName, Path, DisplayName]
-        self.Videolist = videoList
 
         # Get the currently selected search engine
         self.searchEngine = Settings.getSearchEngine()
+        
+        if self.searchEngine == TvTunesFetcher.PROMPT:
+            isManualSearch, engineSelected = self.promptForSearchEngine(False)
+            # Exit if no engine was selected
+            if engineSelected == None:
+                return
 
         # Now we have the list of programs to search for, perform the scan
-        self.scan()
-        self.DIALOG_PROGRESS.close()
-        
+        # The video list is in the format [videoName, Path, DisplayName]
+        self.scan(videoList)
+
 
     # Search for themes
-    def scan(self):
-        count = 0
-        total = len(self.Videolist)
-        for show in self.Videolist:
-            count = count + 1
-            self.DIALOG_PROGRESS.update( (count*100)/total, ("%s %s" % (__language__(32107), show[0].decode("utf-8"))), ' ')
-            if self.DIALOG_PROGRESS.iscanceled():
-                self.DIALOG_PROGRESS.close()
-                xbmcgui.Dialog().ok(__language__(32108),__language__(32109))
-                break
-            theme_list = self.searchThemeList( show[0] )
-            if (len(theme_list) == 1) and Settings.isExactMatchEnabled(): 
-                theme_url = theme_list[0].getMediaURL()
-            else:
-                theme_url = self.getUserChoice( theme_list , show[2] )
-            if theme_url:
-                self.download(theme_url , show[1])
-            else:
-                # Give the user an option to stop searching the remaining themes
-                # as they did not select one for this show, but only prompt
-                # if there are more to be processed
-                if count < total:
-                    if not xbmcgui.Dialog().yesno(__language__(32105), __language__(32119)):
-                        break
+    def scan(self, videoList):
+        total = len(videoList)
+        
+        if total > 1:
+            multiVideoProgressDialog = xbmcgui.DialogProgress()
+            multiVideoProgressDialog.create( __language__(32105) , __language__(32106) )
+
+            # For the show
+            # show[0] = Title
+            # show[1] = Path where the theme is to be stored
+            # show[2] = Original Title (If set)
+            count = 0
+            for show in videoList:
+                count = count + 1
+                multiVideoProgressDialog.update( (count*100)/total, ("%s %s" % (__language__(32107), show[0].decode("utf-8"))), ' ')
+                if multiVideoProgressDialog.iscanceled():
+                    multiVideoProgressDialog.close()
+                    xbmcgui.Dialog().ok(__language__(32108),__language__(32109))
+                    break
+    
+                if not self.scanSingleItem(show, showProgressDialog=False):
+                    # Give the user an option to stop searching the remaining themes
+                    # as they did not select one for this show, but only prompt
+                    # if there are more to be processed
+                    if count < total:
+                        if not xbmcgui.Dialog().yesno(__language__(32105), __language__(32119)):
+                            break
+                        
+            multiVideoProgressDialog.close()
+        elif total == 1:
+            # Just a single item - it will use it's own progress dialog
+            self.scanSingleItem(videoList[0])
+
+
+    # Search for a single theme
+    def scanSingleItem(self, show, showProgressDialog=True):
+        # For the show
+        # show[0] = Title
+        # show[1] = Path where the theme is to be stored
+        # show[2] = Original Title (If set)
+        theme_list = self.searchThemeList( show[0], show[2], manual=False, showProgressDialog=showProgressDialog )
+        if (len(theme_list) == 1) and Settings.isExactMatchEnabled(): 
+            theme_url = theme_list[0].getMediaURL()
+        else:
+            theme_url = self.getUserChoice( theme_list , show[0], show[2] )
+
+        retVal = False
+        if theme_url:
+            retVal = True
+            self.download(theme_url , show[1])
+
+        return retVal
 
     # Download the theme
     def download(self , theme_url , path):
@@ -124,11 +154,16 @@ class TvTunesFetcher:
         theme_file = self.getNextThemeFileName(path)
         tmpdestination = xbmc.translatePath( 'special://profile/addon_data/%s/temp/%s' % ( __addonid__ , theme_file ) ).decode("utf-8")
         destination = os_path_join( path , theme_file )
+
+        # Create a progress dialog for the  download
+        downloadProgressDialog = xbmcgui.DialogProgress()
+        downloadProgressDialog.create( __language__(32105) , __language__(32106) )
+
         try:
             def _report_hook( count, blocksize, totalsize ):
                 percent = int( float( count * blocksize * 100 ) / totalsize )
                 strProgressBar = str( percent )
-                self.DIALOG_PROGRESS.update( percent , __language__(32110) + ' ' + theme_url , __language__(32111) + ' ' + destination )
+                downloadProgressDialog.update( percent , __language__(32110) + ' ' + theme_url , __language__(32111) + ' ' + destination )
             if not xbmcvfs.exists(path):
                 try:
                     xbmcvfs.mkdir(path)
@@ -142,23 +177,23 @@ class TvTunesFetcher:
             else:
                 log("download: copy failed")
             xbmcvfs.delete(tmpdestination)
-            return True
-        except :
+        except:
             log("download: Theme download Failed!!!")
-            print_exc()
-            return False 
+            log("download: %s" % traceback.format_exc())
+
+        # Make sure the progress dialog has been closed
+        downloadProgressDialog.close()
 
 
     # Retrieve the theme that the user has selected
-    def getUserChoice(self , theme_list , showname):
+    def getUserChoice(self , theme_list, showname, alternativeTitle=None):
         theme_url = False
         searchname = showname
         while theme_url == False:
             # Get the selection list to display to the user
             displayList = []
             # start with the custom option to manual search
-            displayList.insert(0, __language__(32118))
-            displayList.insert(1, __language__(32120) % "")
+            displayList.insert(0, __language__(32120) % "")
 
             # Now add all the other entries
             for theme in theme_list:
@@ -171,23 +206,30 @@ class TvTunesFetcher:
                 return False
             else:
                 if select == 0:
-                    # Manual search selected
-                    kb = xbmc.Keyboard(showname, __language__(32113), False)
-                    kb.doModal()
-                    result = kb.getText()
-                    if (result == None) or (result == ""):
-                        log("getUserChoice: No text entered by user")
-                        return False
-                    theme_list = self.searchThemeList(result, True)
-                    searchname = result
-                elif select == 1:
                     # Search using the alternative engine 
-                    self.promptForSearchEngine()
-                    theme_list = self.searchThemeList(searchname)
+                    isManualSearch, engineSelected = self.promptForSearchEngine()
+                    
+                    # If no engine was selected, show the same list
+                    if engineSelected == None:
+                        continue
+
+                    if isManualSearch:
+                        # Manual search selected, prompt the user
+                        kb = xbmc.Keyboard(showname, __language__(32113), False)
+                        kb.doModal()
+                        result = kb.getText()
+                        if (result == None) or (result == ""):
+                            log("getUserChoice: No text entered by user")
+                            return False
+                        # Set what was searched for
+                        theme_list = self.searchThemeList(result, manual=True)
+                        searchname = result
+                    else:
+                        theme_list = self.searchThemeList(searchname, alternativeTitle)
                 else:
                     # Not the first entry selected, so change the select option
                     # so the index value matches the theme list
-                    select = select - 2
+                    select = select - 1
                     theme_url = theme_list[select].getMediaURL()
                     log( "getUserChoice: Theme URL = %s" % theme_url )
                     
@@ -212,34 +254,53 @@ class TvTunesFetcher:
         return theme_url
 
     # Perform the actual search on the configured web site
-    def searchThemeList(self, showname, manual=False):
-        log("searchThemeList: Search for %s" % showname )
+    def searchThemeList(self, showname, alternativeTitle=None, manual=False, showProgressDialog=True):
+        if (alternativeTitle == None) or (alternativeTitle == ""):
+            log("searchThemeList: Search for %s" % showname )
+        else:
+            log("searchThemeList: Search for %s (%s)" % (showname, alternativeTitle) )
 
         theme_list = []
+        searchListing = None
 
         # Check if the search engine being used is GoEar
         if self.searchEngine == TvTunesFetcher.GOEAR:
             # Goeear is selected
             searchListing = GoearListing()
-            if manual:
-                theme_list = searchListing.search(showname)
-            else:
-                theme_list = searchListing.themeSearch(showname)
         elif self.searchEngine == TvTunesFetcher.SOUNDCLOUD:
             # Soundcloud is selected
             searchListing = SoundcloudListing()
-            theme_list = searchListing.search(showname)
         elif self.searchEngine == TvTunesFetcher.GROOVESHARK:
             # grooveshark is selected
             searchListing = GroovesharkListing()
-            theme_list = searchListing.search(showname)
-        else:
+        elif self.searchEngine == TvTunesFetcher.TELEVISION_TUNES:
             # Default to Television Tunes
             searchListing = TelevisionTunesListing()
-            theme_list = searchListing.search(showname)
+
+        # Check the special case where we use all the engines
+        if self.searchEngine == TvTunesFetcher.ALL_ENGINES:
+            # As part of this, we reset the search engine back to the default in settings
+            # We do not want them doing this search all the time!
+            self.searchEngine = Settings.getSearchEngine()
+            
+            tvtunesList = TelevisionTunesListing().themeSearch(showname, alternativeTitle, showProgressDialog)
+            groovesharkList = GroovesharkListing().themeSearch(showname, alternativeTitle, showProgressDialog)
+            goearList = GoearListing().themeSearch(showname, alternativeTitle, showProgressDialog)
+            soundcloudList = SoundcloudListing().themeSearch(showname, alternativeTitle, showProgressDialog)
+            
+            # Join all the entries into one list
+            theme_list = tvtunesList + groovesharkList + goearList + soundcloudList
+            # Now sort the list
+            theme_list.sort()
+
+        else:
+            # Call the correct search option, depends if a manual search or not
+            if manual:
+                theme_list = searchListing.search(showname, showProgressDialog)
+            else:
+                theme_list = searchListing.themeSearch(showname, alternativeTitle, showProgressDialog)
 
         return theme_list
-
 
     # Calculates the next filename to use when downloading multiple themes
     def getNextThemeFileName(self, path):
@@ -253,86 +314,533 @@ class TvTunesFetcher:
         return themeFileName
 
     # Prompt the user to select a different search option
-    def promptForSearchEngine(self):
+    def promptForSearchEngine(self, showManualOptions=True):
         displayList = []
         displayList.insert(0, TvTunesFetcher.TELEVISION_TUNES)
         displayList.insert(1, TvTunesFetcher.SOUNDCLOUD)
         displayList.insert(2, TvTunesFetcher.GROOVESHARK)
-        displayList.insert(3, TvTunesFetcher.GOEAR + " (Broken)")
+        displayList.insert(3, TvTunesFetcher.GOEAR)
+
+        displayList.insert(4, "** %s **" % __language__(32121))
+
+        if showManualOptions:
+            displayList.insert(5, "%s %s" % (TvTunesFetcher.TELEVISION_TUNES, __language__(32118)))
+            displayList.insert(6, "%s %s" % (TvTunesFetcher.SOUNDCLOUD, __language__(32118)))
+            displayList.insert(7, "%s %s" % (TvTunesFetcher.GROOVESHARK, __language__(32118)))
+            displayList.insert(8, "%s %s" % (TvTunesFetcher.GOEAR, __language__(32118)))
+
+        isManualSearch = False
 
         # Show the list to the user
         select = xbmcgui.Dialog().select((__language__(32120) % ""), displayList)
         if select == -1: 
             log("promptForSearchEngine: Cancelled by user")
-            return False
+            return False, None
         else:
-            if select == 0:
+            if (select == 0) or (select == 5):
                 self.searchEngine = TvTunesFetcher.TELEVISION_TUNES
-            elif select == 1:
+            elif (select == 1) or (select == 6):
                 self.searchEngine = TvTunesFetcher.SOUNDCLOUD
-            elif select == 2:
+            elif (select == 2) or (select == 7):
                 self.searchEngine = TvTunesFetcher.GROOVESHARK
-            elif select == 3:
+            elif (select == 3) or (select == 8):
                 self.searchEngine = TvTunesFetcher.GOEAR
-            else:
-                return False
-        
+            elif (select == 4):
+                self.searchEngine = TvTunesFetcher.ALL_ENGINES
+
+            # Record if this is a manual search
+            if select > 4:
+                isManualSearch = True
+
         log("promptForSearchEngine: New search engine is %s" % self.searchEngine)
-        return True
+        return isManualSearch, self.searchEngine
 
 ###########################################################
 # Holds the details of each theme retrieved from a search
 ###########################################################
 class ThemeItemDetails():
-    def __init__(self, trackName, trackUrl, trackLength="", trackQuality=""):
+    def __init__(self, trackName, trackUrl, trackLength="", trackQuality="", albumname=""):
         # Remove any HTML characters from the name
         h = HTMLParser.HTMLParser()
         self.trackName = h.unescape(trackName)
         self.trackUrl = trackUrl
         self.trackLength = trackLength
         self.trackQuality = trackQuality
+        self.albumname = albumname
+
+        # Start with a very low priority
+        self.priority = 100
 
     # Checks if the theme this points to is the same
     def __eq__(self, other):
         if other == None:
             return False
         # Check if the URL is the same as that will make it unique
-        return self.trackUrlTag == other.trackUrlTag
+        return self.trackUrl == other.trackUrl
 
     # lt defined for sorting order only
     def __lt__(self, other):
+        # Sort by priority first
+        if self.priority != other.priority:
+            return self.priority < other.priority
+
         # Order just on the name of the file
         return self.trackName < other.trackName
 
     # Get the raw track name
     def getName(self):
-        return self.trackName
+        # If there is an album name, prepend that
+        fullTrackName = self.trackName
+        if (self.albumname != None) and (self.albumname != ""):
+            fullTrackName = "%s / %s" % (self.trackName, self.albumname)
+
+        return fullTrackName
+
+    def getAlbumName(self):
+        return self.albumname
 
     # Get the display name that could include extra information
     def getDisplayString(self):
-        return "%s%s%s" % (self.trackName, self.trackLength, self.trackQuality)
+        displayRating = ""
+        if self.priority == 1: # Top Priority
+            displayRating = '* '
+        elif self.priority == 2:
+            displayRating = '~ '
+        elif self.priority == 3:
+            displayRating = '+ '
+        elif self.priority == 4:
+            displayRating = '- '
+
+        return "%s%s%s%s" % (displayRating, self.getName(), self.trackLength, self.trackQuality)
 
     # Get the URL used to download the theme
     def getMediaURL(self):
         return self.trackUrl
 
+    def setPriority(self, rating):
+        self.priority = rating
+
+
+###########################################################
+# Class to control the progress bar dialog
+###########################################################
+class DummyProgressDialog():
+    def __init__(self, showTitle="", percetageProgressDivisor=1):
+        pass
+
+    def updateProgress(self, percentageProgress=50):
+        pass
+
+    def isUserCancelled(self):
+        return False
+
+    def closeProgress(self):
+        pass
+
+class ProgressDialog(DummyProgressDialog):
+    def __init__(self, showTitle="", percetageProgressDivisor=1):
+        self.showTitle = showTitle.decode("utf-8")
+        self.progressDialog = xbmcgui.DialogProgress()
+        self.progressDialog.create( __language__(32105) , __language__(32106) )
+        
+        # The percetageProgressDivisor is a value that allows us to pass a single progress
+        # bar around and let lots of different areas think they are going 100% of the
+        # progress bar, but they are actually only doing part of it
+        self.percetageProgressDivisor = percetageProgressDivisor
+        self.divisorProgress = 0
+
+    # Update how far through the progress this operation is        
+    def updateProgress(self, percentageProgress=50):
+        # percentageProgress can be done by
+        # (count*100)/total
+        
+        # Offset based on the percentage divisor
+        alignedProgress = percentageProgress/self.percetageProgressDivisor
+        alignedProgress = ((self.divisorProgress*100)/self.percetageProgressDivisor) + alignedProgress
+        
+        if percentageProgress == 100:
+            self.divisorProgress = self.divisorProgress + 1
+        
+        self.progressDialog.update( int(percentageProgress), ("%s %s" % (__language__(32107), self.showTitle)), ' ')
+
+    # Check if the user has cancelled the operation
+    def isUserCancelled(self, displayNotice=True):
+        userCancelled = False
+
+        if self.progressDialog.iscanceled():
+            self.closeProgress()
+            if displayNotice:
+                xbmcgui.Dialog().ok(__language__(32108),__language__(32109),__language__(32115))
+            userCancelled = True
+        
+        return userCancelled
+        
+    # Close the progress dialog
+    def closeProgress(self):
+        self.progressDialog.close()
+
+
+###########################################################
+# Class to define the interface for listings from websites
+###########################################################
+class DefaultListing():
+
+    # Perform the search for the theme (Manual search)
+    def search(self, showname, showProgressDialog=True):
+        progressDialog = DummyProgressDialog(showname)
+        if showProgressDialog:
+            progressDialog = ProgressDialog(showname)
+
+        # Perform the search
+        searchResults = self._search(showname, progressDialog)
+        
+        # If there is a progress dialog, make sure it is closed
+        progressDialog.closeProgress()
+            
+        return searchResults
+
+    def _search(self, showname, progressDialog):
+        # Always has a custom implementation
+        return []
+
+    # Searches for a given subset of themes, trying to reduce the list
+    def themeSearch(self, name, alternativeTitle=None, showProgressDialog=True):
+        log("DefaultListing: ThemeSearch for %s" % name)
+
+        progressDialog = DummyProgressDialog(name)
+        if showProgressDialog:
+            percetageProgressDivisor = 1
+            if alternativeTitle:
+                percetageProgressDivisor = 2
+            progressDialog = ProgressDialog(name, percetageProgressDivisor)
+
+        # Default is to just do a normal search
+        cleanTitle = self.commonTitleCleanup(name)
+
+        # Start by getting the tracks, we can just do this once, and then run
+        # different filters on them
+        tracks = self._search(cleanTitle, progressDialog)
+
+        # Create the default regex that will be used to filter
+        regex = self.getFilterRegex(cleanTitle, True)
+        cleanRegex = self.getFilterRegex(cleanTitle)
+
+        # Now check the entries against the regex
+        themeDetailsList, lowPriorityTracks = self.getRegExMatchList(tracks, regex, priority=1)
+
+        alternativeCleanRegex = None
+        alternativeTracks = None
+        lowPriorityAlternateTracks = []
+        # If there is an alternative title for this movie or show then
+        # search for that as well and merge the results
+        if (alternativeTitle != None) and (alternativeTitle != "") and not progressDialog.isUserCancelled(False):
+            # Note: No need to clean the title of things like brackets when comparing
+            # the alternative title
+            alternativeTracks = self._search(alternativeTitle, progressDialog)
+            alternativeRegex = self.getFilterRegex(alternativeTitle, True)
+            alternativeCleanRegex = self.getFilterRegex(alternativeTitle)
+
+            # Now check the entries against the regex
+            filteredAlternativeTracks, lowPriorityAlternateTracks = self.getRegExMatchList(alternativeTracks, alternativeRegex, priority=1)
+            themeDetailsList = self.mergeThemeLists(themeDetailsList, filteredAlternativeTracks)
+
+        # Special filter here that does not include the album name, and does not have the appendices set
+        if len(lowPriorityTracks) > 0:
+            log("DefaultListing: Processing low priority album name tracks")
+            nextThemeList, lowPriorityTracks = self.getRegExMatchList(lowPriorityTracks, cleanRegex, priority=2, checkAlbumOnly=True) 
+            # Now append the next set of themes to the list
+            themeDetailsList = self.mergeThemeLists(themeDetailsList, nextThemeList)
+        
+        if len(lowPriorityAlternateTracks) > 0:
+            log("DefaultListing: Processing low priority alternate album tracks")
+            filteredAlternativeTracks, lowPriorityAlternateTracks = self.getRegExMatchList(lowPriorityAlternateTracks, alternativeCleanRegex, priority=2, checkAlbumOnly=True)
+            themeDetailsList = self.mergeThemeLists(themeDetailsList, filteredAlternativeTracks)
+
+        # If no entries found doing the custom search then just search for the name only
+        if len(lowPriorityTracks) > 0:
+            log("DefaultListing: Processing low priority tracks, regex filtering on title")
+
+            nextThemeList, lowPriorityTracks = self.getRegExMatchList(lowPriorityTracks, cleanRegex, priority=3) 
+            # Now append the next set of themes to the list
+            themeDetailsList = self.mergeThemeLists(themeDetailsList, nextThemeList)
+
+        if len(lowPriorityAlternateTracks) > 0:
+            log("DefaultListing: Processing low priority alternate tracks, regex filtering on title")
+            filteredAlternativeTracks, lowPriorityAlternateTracks = self.getRegExMatchList(lowPriorityAlternateTracks, alternativeCleanRegex, priority=3)
+            themeDetailsList = self.mergeThemeLists(themeDetailsList, filteredAlternativeTracks)
+
+        log("DefaultListing: Processing remaining themes found")
+        themeDetailsList = self.mergeThemeLists(themeDetailsList, lowPriorityTracks)
+        themeDetailsList = self.mergeThemeLists(themeDetailsList, lowPriorityAlternateTracks)
+
+        # If there is a progress dialog, make sure it is closed
+        progressDialog.closeProgress()
+
+        return themeDetailsList
+
+    # Common cleanup to do to automatic searches
+    def commonTitleCleanup(self, name):
+        # If performing the automated search, remove anything in brackets
+        # Remove anything in square brackets
+        cleanedName = re.sub(r'\[[^)]*\]', '', name)
+        # Remove anything in rounded brackets
+        cleanedName = re.sub(r'\([^)]*\)', '', cleanedName)
+        # Remove double space
+        cleanedName = cleanedName.replace("  ", " ")
+        # Remove -'s from the name
+        cleanedName = cleanedName.replace("-", " ")
+        
+        cleanedName = self.removePrepositions(cleanedName)
+        # Remove white space from the start and end of the string
+        cleanedName = cleanedName.strip()
+
+        return cleanedName
+
+    # Default set of appendices to use for searches
+    def getSearchAppendices(self):
+        return ["OST",          # English acronym for original soundtrack
+                "theme",
+                "title",
+                "soundtrack",
+                "score",
+                "tv",
+                "t\\.v",
+                "movie",
+                "tema",         # Spanish for theme
+                "BSO",          # Spanish acronym for OST (banda sonora original)
+                "B\\.S\\.O",    # variation for Spanish acronym BSO
+                "banda sonora", # Spanish for Soundtrack
+                "pelicula",     # Spanish for movie
+                "music",
+                "overture",
+                "finale",
+                "prelude",
+                "opening",
+                "closing",
+                "collection"]
+
+    # Filters the list of tracks by a regular expression
+    def getRegExMatchList(self, tracks, regex=None, priority=None, checkAlbumOnly=False):
+        if (regex == None) or (regex == ""):
+            return tracks
+        
+        filteredTrackList = []
+        lowPriorityTracks = []
+        
+        for track in tracks:
+            themeName = track.getName()
+
+            if checkAlbumOnly:
+                # Check the album name against the clean regex without the appended key words            
+                albumName = track.getAlbumName()
+                if (albumName != None) and (albumName != ""):
+                    themeName = albumName
+                else:
+                    # No album name, skip this one
+                    lowPriorityTracks.append(track)
+                    continue
+
+            themeNameMatch = self.isRegExMatch(regex, themeName)
+
+            # Skip this one if the title does not have the regex in it
+            if not themeNameMatch:
+                lowPriorityTracks.append(track)
+            else:
+                # Flag this track with the supplied priority
+                track.setPriority(priority)
+                filteredTrackList.append(track)
+
+        return filteredTrackList, lowPriorityTracks
+
+    # Checks a name against a group of regular expressions
+    def isRegExMatch(self, regex, nameToCheck):
+        # We add a dot either side of the name we check, as it seems the regex is
+        # having problems with start and end on line characters
+        nameToCheck = ".%s." % nameToCheck
+        
+        # This is a bit strange, but the name we want to search we want filtered
+        # to be without non-ascii characters as well as with, and with replacements
+        try:
+            asciiNameToCheck = re.sub(r'[^\x00-\x7F]',' ', nameToCheck)
+            asciiNameToCheck = asciiNameToCheck.replace('\ ', '')
+            
+            if asciiNameToCheck == nameToCheck:
+                asciiNameToCheck = ""
+        except:
+            asciiNameToCheck = ""
+        try:
+            unicodeNameToCheck = unicodedata.normalize('NFD', nameToCheck).encode('ascii', 'ignore')
+            
+            if unicodeNameToCheck == nameToCheck:
+                unicodeNameToCheck = ""
+        except:
+            unicodeNameToCheck = ""
+
+        regexThemeName = "%s %s %s" % (nameToCheck, asciiNameToCheck, unicodeNameToCheck)
+
+        # Check to see if the title contains the value that is being searched for
+        titleMatch = regex.search(regexThemeName)
+        # Skip this one if the title does not have the regex in it
+        if not titleMatch:
+            log("DefaultListing: Title %s not in regex %s" % (nameToCheck, regex.pattern))
+            return False
+        
+        log("DefaultListing: Title matched %s to regex %s" % (nameToCheck, regex.pattern))
+        return True
+
+    # Remove anything like "the" "of" "a"
+    def removePrepositions(self, showname):
+        regexShowname = showname
+
+        English = ['a', 'an', 'and', 'the', 'of', 'or', 'to']
+        Spanish = ['el', 'los', 'las', 'de', 'del', 'y', 'u', 'o']
+        French = ['à', 'la', 'le', 'les', 'du', 'des', 'et']
+        Italian = ['ne', 'il', 'di', 'gli', 'lo', 'e'] 
+        German = [ 'von', 'der', 'und', 'aus', 'zu']
+        Swedish = [ 'av', 'i']
+
+        prepositions = English + Spanish + French + Italian + German + Swedish
+        
+        for w in prepositions:
+            removeWord = "(?i) %s " % w
+            regexShowname = re.sub(removeWord, ' ', regexShowname)
+            removeWord = "(?i)^%s " % w
+            regexShowname = re.sub(removeWord, '', regexShowname)
+        
+        return regexShowname
+        
+
+    # Generates the regular expression that is used to filter results
+    def getFilterRegex(self, showname, useAppendices=False):
+        searchAppend = ""
+        # If there are appendices to apply, then create the regex part
+        if useAppendices:
+            # Get all the appendices that we want to match
+            searchAppendices = '|'.join(self.getSearchAppendices())
+            searchAppend = "%s%s%s" % ('(?=.*[ ()\[\]"\'\.](', searchAppendices, ')[ ()\[\]"\'\.])')
+
+        regexShowname = showname.decode("utf-8", 'ignore')
+
+        regexShowname = self.removePrepositions(regexShowname)
+        
+        # Remove white space from the start and end of the string
+        regexShowname = regexShowname.strip()
+        regexShowname = regexShowname.replace('  ', ' ')
+
+        log("DefaultListing: Before regex escape: %s" % regexShowname)
+
+        # Need to escape any values in the show name that are used as
+        # part of the regex formatting
+        # Note: Thiswill also escape spaced, so if we replace
+        # spaces later, we need it to be escaped
+        beforeRegexEscape = regexShowname
+        regexShowname = re.escape(regexShowname)
+
+        log("DefaultListing: After regex escape: %s" % regexShowname)
+
+        # Generate the regular expression that will be used to match the title
+        regexCheck = "%s%s%s%s" % ('(?=.*', regexShowname.replace('\\ ', ')(?=.*'), ')', searchAppend)
+
+        # Get the regex without and non-ascii characters
+        asciiRegexCheck = None
+        try:
+            asciiRegexCheck = re.sub(r'[^\x00-\x7F]',' ', regexCheck)
+            asciiRegexCheck = asciiRegexCheck.replace('\ ', '')
+            # Only want it if it is different from theone we have already
+            if asciiRegexCheck == regexCheck:
+                asciiRegexCheck = None
+        except:
+            log("DefaultListing: Failed to process asciiRegexCheck")
+            asciiRegexCheck = None
+ 
+        # Also get the string where we remove the non ascii characters and
+        # replace them with the closest match
+        unicodeRegex = None
+        try:
+            unicodeRegex = unicodedata.normalize('NFD', beforeRegexEscape).encode('ascii', 'ignore')
+            unicodeRegex = re.escape(unicodeRegex)
+            unicodeRegex = "%s%s%s%s" % ('(?=.*', unicodeRegex.replace('\\ ', ')(?=.*'), ')', searchAppend)
+            # Only want it if it is different from theone we have already
+            if unicodeRegex == regexCheck:
+                unicodeRegex = None
+        except:
+            log("DefaultListing: Failed to process unicodeRegex")
+            unicodeRegex = None
+
+        if (asciiRegexCheck != None) and (unicodeRegex != None):
+            regexCheck ="(%s)|(%s)|(%s)" % (regexCheck, asciiRegexCheck, unicodeRegex)
+        elif (asciiRegexCheck != None):
+            regexCheck ="(%s)|(%s)" % (regexCheck, asciiRegexCheck)
+        elif (unicodeRegex != None):
+            regexCheck ="(%s)|(%s)" % (regexCheck, unicodeRegex)
+        # Default is just the one regex
+ 
+        log("DefaultListing: Using regex: %s" % regexCheck)
+
+        # Compile for case insensitive search
+        regex = re.compile(regexCheck, re.IGNORECASE | re.UNICODE)
+        
+        return regex
+
+    # Appends unique values from list 2 to list 1
+    def mergeThemeLists(self, list1, list2):
+        for item2 in list2:
+            if not (item2 in list1):
+                log("DefaultListing: Adding Theme = %s" % item2.getDisplayString())
+                list1.append(item2)
+            else:
+                log("DefaultListing: Not Adding Theme = %s" % item2.getDisplayString())
+        return list1
+
 
 #################################################
 # Searches www.televisiontunes.com for themes
 #################################################
-class TelevisionTunesListing():
-    def __init__(self):
-        # Links required for televisiontunes.com
-        self.search_url = "http://www.televisiontunes.com/search.php?searWords=%s&Send=Search"
+class TelevisionTunesListing(DefaultListing):
+    # Television tunes just uses the default search
+    def themeSearch(self, name, alternativeTitle=None, showProgressDialog=True):
+        progressDialog = DummyProgressDialog(name)
+        if showProgressDialog:
+            percetageProgressDivisor = 1
+            if alternativeTitle:
+                percetageProgressDivisor = 2
+            progressDialog = ProgressDialog(name, percetageProgressDivisor)
+
+        # Default is to just do a normal search
+        cleanTitle = self.commonTitleCleanup(name)
+        themeDetailsList = self._search(cleanTitle, progressDialog)
+
+        # If there is an alternative title for this movie or show then
+        # search for that as well and merge the results
+        if (alternativeTitle != None) and (alternativeTitle != ""):
+            alternativeThemeDetailsList = self.search(alternativeTitle, progressDialog)
+            themeDetailsList = self.mergeThemeLists(themeDetailsList, alternativeThemeDetailsList)
+
+        # If there is a progress dialog, make sure it is closed
+        progressDialog.closeProgress()
+
+        return themeDetailsList
 
     # Perform the search for the theme
-    def search(self, showname):
+    def _search(self, showname, progressDialog):
+        search_url = "http://www.televisiontunes.com/search.php?searWords=%s&Send=Search"
+
         log("TelevisionTunesListing: Search for %s" % showname )
         theme_list = []
         next = True
-        url = self.search_url % urllib.quote_plus(showname)
+        url = search_url % urllib.quote_plus(showname)
         urlpage = ""
+        
+        progressSteps = 1
         while next == True:
+            # Check if the user has cancelled it
+            if progressDialog.isUserCancelled():
+                break
+
+            # We do not know the number of calls we will do, so assume 5
+            if progressSteps < 4:
+                progressDialog.updateProgress(20 * progressSteps)
+
             # Get the HTMl at the given URL
             data = self._getHtmlSource( url + urlpage )
             log("TelevisionTunesListing: Search url = %s" % ( url + urlpage ) )
@@ -345,6 +853,7 @@ class TelevisionTunesListing():
             for i in data2:
                 themeURL = i[0] or ""
                 themeName = i[1] or ""
+                log("TelevisionTunesListing: found %s (%s)" % (themeName, themeURL) )
                 downloadUrl = self._getMediaURL(themeURL)
                 theme = ThemeItemDetails(themeName, downloadUrl)
                 # in case of an exact match (when enabled) only return this theme
@@ -360,7 +869,15 @@ class TelevisionTunesListing():
             else:
                 next = False
             log("TelevisionTunesListing: next page = %s" % next )
+        
+        # We will only have progressed to at most 80%, so mark as completed at this point
+        progressDialog.updateProgress(100)
+        
         return theme_list
+
+    # We don't add any appendices for Television Tunes search
+    def getSearchAppendices(self):
+        return []
 
     def _getHtmlSource(self, url, save=False):
         # fetch the html source
@@ -381,8 +898,8 @@ class TelevisionTunesListing():
             sock.close()
             return htmlsource
         except:
-            print_exc()
-            log( "getHtmlSource: ERROR opening page %s" % url )
+            log("getHtmlSource: ERROR opening page %s" % url )
+            log("getHtmlSource: %s" % traceback.format_exc())
             xbmcgui.Dialog().ok(__language__(32101) , __language__(32102))
             return False
 
@@ -401,77 +918,82 @@ class TelevisionTunesListing():
 #################################################
 # Searches www.goear.com for themes
 #################################################
-class GoearListing():
-    def __init__(self):
-        self.baseUrl = "http://www.goear.com/search/"
-        self.themeDetailsList = []
-
-    # Searches for a given subset of themes, trying to reduce the list
-    def themeSearch(self, name):
-        # If performing the automated search, remove anything in brackets
-        # Remove anything in square brackets
-        searchName = re.sub(r'\[[^)]*\]', '', name)
-        # Remove anything in rounded brackets
-        searchName = re.sub(r'\([^)]*\)', '', searchName)
-        # Remove double space
-        searchName = searchName.replace("  ", " ")
-        
-        self.search("%s%s" % (searchName, "-OST")) # English acronym for original soundtrack
-        self.search("%s%s" % (searchName, "-theme"))
-        self.search("%s%s" % (searchName, "-title"))
-        self.search("%s%s" % (searchName, "-soundtrack"))
-        self.search("%s%s" % (searchName, "-tv"))
-        self.search("%s%s" % (searchName, "-movie"))
-        self.search("%s%s" % (searchName, "-tema")) # Spanish for theme
-        self.search("%s%s" % (searchName, "-BSO")) # Spanish acronym for OST (banda sonora original)
-        self.search("%s%s" % (searchName, "-B.S.O.")) # variation for Spanish acronym BSO
-        self.search("%s%s" % (searchName, "-banda-sonora")) # Spanish for Soundtrack
-        self.search("%s%s" % (searchName, "-pelicula")) # Spanish for movie
-
-        # If no entries found doing the custom search then just search for the name only
-        if len(self.themeDetailsList) < 1:
-            self.search(searchName)
-        else:
-            # We only sort the returned data if it is a result of us doing multiple searches
-            # The case where we just did a single "default" search we leave the list as
-            # it was returned to us, this is because it will be returned in "relevance" order
-            # already, so we want the best matches at the top
-            self.themeDetailsList.sort()
-        
-        return self.themeDetailsList
-
+class GoearListing(DefaultListing):
     # Perform the search for the theme
-    def search(self, name):
+    def _search(self, name, progressDialog):
+        baseUrl = "http://www.goear.com/search/"
         # User - instead of spaces
         searchName = name.replace(" ", "-")
         # Remove double space
         searchName = searchName.replace("--", "-")
 
-        fullUrl = self.baseUrl + searchName
+        fullUrl = "%s%s" % (baseUrl, urllib.quote_plus(searchName))
 
-        # Load the output of the search request into Soup
-        soup = self._getPageContents(fullUrl)
-
-        if soup != None:
-            # Get all the pages for this set of search results
-            urlPageList = self._getSearchPages(soup)
-    
-            # The first page is always /0 on the URL, so we should check this
-            self._getEntries(soup)
+        # Now check if any non ascii characters exist in the name, if so
+        # try the search with them converted
+        unicodeFullUrl = None
+        progressDivisor = 1
+        try:
+            unicodeSearchName = unicodedata.normalize('NFD', searchName.decode("utf-8", 'ignore')).encode('ascii', 'ignore')
             
-            for page in urlPageList:
-                # Already processed the first page, no need to retrieve it again
-                if page.endswith("/0"):
-                    continue
-                # Get the next page and read the tracks from it
-                soup = self._getPageContents(page)
-                if soup != None:
-                    self._getEntries(soup)
+            if unicodeSearchName != searchName:
+                unicodeFullUrl = "%s%s" % (baseUrl, unicodeSearchName)
+                progressDivisor = progressDivisor + 1
+        except:
+            log("GoearListing: Exception when converting to ascii %s" % traceback.format_exc())
+
+        # Perform the search using the supplied URL
+        themeDetailsList = self._doSearch(fullUrl, progressDialog, progressDivisor)
+
+        if unicodeFullUrl and not progressDialog.isUserCancelled(False):
+            unicodeThemeList = self._doSearch(unicodeFullUrl, progressDialog, progressDivisor, startpercentage=50)
+            themeDetailsList = self.mergeThemeLists(themeDetailsList, unicodeThemeList)
+
+        return themeDetailsList
+
+    # Perform the search for the theme
+    def _doSearch(self, searchURL, progressDialog, progressDivisor=1, startpercentage=0):
+        log("GoearListing: Performing doSearch for %s" % searchURL)
         
-        return self.themeDetailsList
+        themeList = [ ]
+        lastThemeBatch = ['dummy']
+        nextPageIndex = 0
+
+        # Loop until we do not get any entries for the given page        
+        while (len(lastThemeBatch) > 0) and (nextPageIndex < 40):
+            # Check if the user has reqested the operation to be cancelled
+            if progressDialog.isUserCancelled():
+                break
+
+            progressDialog.updateProgress(((nextPageIndex*2)/progressDivisor) + startpercentage)
+            
+            # Reset the themes to none
+            lastThemeBatch = []
+
+            thisSearchURL = searchURL
+            if nextPageIndex > 0:
+                thisSearchURL = "%s/%d" % (searchURL, nextPageIndex)
+
+            # First search is page /0 anyway
+            soup = self._getPageContents(thisSearchURL)
+
+            if soup != None:
+                # Get the tracks for this page
+                lastThemeBatch = self._getEntries(soup)
+                # Now merge this batch with the existing entries
+                themeList = self.mergeThemeLists(themeList, lastThemeBatch)
+
+            nextPageIndex = nextPageIndex + 1
+
+        # Make sure this searches progress is at 100%
+        progressDialog.updateProgress((100/progressDivisor) + startpercentage)
+
+        return themeList
+
 
     # Reads a web page
     def _getPageContents(self, fullUrl):
+        log("GoearListing: Loading page %s" % fullUrl)
         # Start by calling the search URL
         req = urllib2.Request(fullUrl)
         req.add_header('User-Agent', ' Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -486,8 +1008,10 @@ class GoearListing():
                 # Holds the webpage that was read via the response.read() command
                 doc = response.read()
                 # Closes the connection after we have read the webpage.
-                response.close()
-                
+                try:
+                    response.close()
+                except:
+                    log("GoearListing: Failed to close connection for %s" % fullUrl)
                 requestFailed = False
             except:
                 # If we get an exception we have failed to perform the http request
@@ -531,47 +1055,100 @@ class GoearListing():
         # Get all the items in the search results
         searchResults = soup.find('ol', { "id" : "search_results"})
         
+        themeList = []
+        
+        # Make sure the list is set to something
+        if (searchResults == None) or (searchResults.contents == None):
+            log("GoearListing: Unexpected return results of None")
+            return themeList
+        
         # Check out each item in the search results list
         for item in searchResults.contents:
-            # Skip the blank lines, just want the <li> elements
-            if item == '\n':
-                continue
-        
-            # Get the name of the track
-            trackNameTag = item.find('span', { "class" : "song" })
-            if trackNameTag == None:
-                continue
-            trackName = trackNameTag.string
+            # Just in case there is a problem reading the page, or a single entry
+            # make sure we don't fail everything
+            try:
+                # Skip the blank lines, just want the <li> elements
+                if item == '\n':
+                    continue
             
-            # Get the URL for the track
-            trackUrlTag = item.find('a')
-            if trackUrlTag == None:
-                continue
-            trackUrl = trackUrlTag['href']
+                # Get the name of the track
+                trackNameTag = item.find('span', { "class" : "song" })
+                if trackNameTag == None:
+                    continue
+                trackName = trackNameTag.string
 
-            # Get the length of the track
-            # e.g. <li class="length radius_3">3:36</li>
-            trackLength = ""
-            trackLengthTag = item.find('li', { "class" : "length radius_3" })
-            if trackUrlTag != None:
-                trackLength = " [" + trackLengthTag.string + "]"
-        
-            # Get the quality of the track
-            # e.g. <li class="kbps radius_3">128<abbr title="Kilobit por segundo">kbps</abbr></li>
-            trackQuality = ""
-            trackQualityTag = item.find('li', { "class" : "kbps radius_3" })
-            if trackQualityTag != None:
-                trackQuality = " (" + trackQualityTag.contents[0] + "kbps)"
-        
-            downloadURL = self._getMediaURL(trackUrl)
-            themeScraperEntry = ThemeItemDetails(trackName, downloadURL, trackLength, trackQuality)
-            if not (themeScraperEntry in self.themeDetailsList):
+                # Get the name of the group, artist or album
+                trackGroupNameTag = item.find('span', { "class" : "group" })
+                if trackGroupNameTag != None:
+                    groupName = trackGroupNameTag.string
+                else:
+                    groupName = None 
+
+                # Get the URL for the track
+                trackUrlTag = item.find('a')
+                if trackUrlTag == None:
+                    continue
+                
+                # Make sure there is a valid link
+                if not trackUrlTag.has_key('href'):
+                    continue
+
+                trackUrl = trackUrlTag['href']
+    
+                # Get the length of the track
+                # e.g. <li class="length radius_3">3:36</li>
+                trackLength = ""
+                trackLengthTag = item.find('li', { "class" : "length radius_3" })
+                if trackLengthTag != None:
+                    trackLength = " [" + trackLengthTag.string + "]"
+
+                # Get the quality of the track
+                # e.g. <li class="kbps radius_3">128<abbr title="Kilobit por segundo">kbps</abbr></li>
+                trackQuality = ""
+                trackQualityTag = item.find('li', { "class" : "kbps radius_3" })
+                if trackQualityTag != None:
+                    trackQuality = " (" + trackQualityTag.contents[0] + "kbps)"
+    
+                themeScraperEntry = GoearThemeItemDetails(trackName, trackUrl, trackLength, trackQuality, groupName)
+                themeList.append(themeScraperEntry)
                 log("GoearListing: Theme Details = %s" % themeScraperEntry.getDisplayString())
                 log("GoearListing: Theme URL = %s" % themeScraperEntry.getMediaURL() )
-                self.themeDetailsList.append(themeScraperEntry)
+            except:
+                log("GoearListing: Failed when processing page %s" % traceback.format_exc())
+
+        return themeList
+
+
+################################
+# Custom Goear,com Item Details
+################################
+class GoearThemeItemDetails(ThemeItemDetails):
+    # Get the URL used to download the theme
+    def getMediaURL(self):
+        # Before returning the Media URL, we want to call the listen URL
+        # This is because if we do not call this first, then we only get a warning
+        # message recording in the MP3
+        try:
+            req = urllib2.Request(ThemeItemDetails.getMediaURL(self))
+            req.add_header('User-Agent', ' Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+            response = urllib2.urlopen(req)
+            # Holds the webpage that was read via the response.read() command
+            doc = response.read()
+            # Closes the connection after we have read the webpage.
+            response.close()
+        except:
+            # If we get an exception we have failed to perform the http request
+            log("GoearThemeItemDetails: Request failed for %s" % ThemeItemDetails.getMediaURL(self))
+            log("GoearThemeItemDetails: %s" % traceback.format_exc())
+
+        downloadURL = self._getDownloadURL(ThemeItemDetails.getMediaURL(self))
+
+        log("GoearThemeItemDetails: Download URL: %s" % downloadURL)
+
+        return downloadURL
 
     # Gets the URL to stream and download from
-    def _getMediaURL(self, themeURL):
+    def _getDownloadURL(self, themeURL):
         # The URL will be of the format:
         #  http://www.goear.com/listen/1ed51e2/together-the-firm
         # We want the ID out of the middle
@@ -587,50 +1164,70 @@ class GoearListing():
 #################################################
 # Searches www.soundcloud.com for themes
 #################################################
-class SoundcloudListing():
-    def __init__(self):
-        # Links required for televisiontunes.com
-        self.search_url = ""
-
+class SoundcloudListing(DefaultListing):
     # Perform the search for the theme
-    def search(self, showname):
+    def _search(self, showname, progressDialog):
         log("SoundcloudListing: Search for %s" % showname )
  
-        tracks = None
-        client = soundcloud.Client(client_id='b45b1aa10f1ac2941910a7f0d10f8e28')
-        try:
-            # Max value for limit is 200 entries
-            # TODO need to page all the results
-            tracks = client.get('/tracks', q=showname, filter="streamable", limit=200)
-        except:
-            log("SoundcloudListing: Request failed for %s" % showname)
-            log("SoundcloudListing: %s" % traceback.format_exc())
-
-        # Loop over the tracks produced assigning it to the list
         theme_list = []
-        for track in tracks:
-            #another dictionary for holding all the results for a specific song
-            themeName = track.title
-            duration = self._convertTime(track.duration)
-            # The file size makes no difference as the stream is always limited to 128kbps
-            filesize = "" # self._convertSize(track.original_content_size)
-            themeURL = ""
+
+        numTracksInBatch = 200   # set it to a value to start the loop for the first time
+        offset = 0
+        while (numTracksInBatch == 200) and (offset < 1000):
+            # Check if the user has reqested the operation to be cancelled
+            if progressDialog.isUserCancelled():
+                break
+
+            # At most there will be 20 requests, so go up in batches of 20
+            progressDialog.updateProgress(offset/10)
+ 
+            tracks = []
+            client = soundcloud.Client(client_id='b45b1aa10f1ac2941910a7f0d10f8e28')
             try:
-                # Only allow the theme if it is streamable
-                if track.streamable:
-                    id = track.id
-    #                themeURL = track.download_url or track.permalink_url
-                    themeURL = self._getDownloadLinkFromWaveform(track.waveform_url)
-                    log("SoundcloudListing: Found %s%s (%s) %s (%s)" % (themeName, duration, themeURL, str(id), track.waveform_url))
-        
-                    theme = ThemeItemDetails(themeName, themeURL, duration, filesize)
-                    theme_list.append(theme)
-                else:
-                    # As we filter for only streamable, this should never happen
-                    log("SoundcloudListing: %s is not streamable" % themeName)
+                # Max value for limit is 200 entries
+                # That is more than enough - tried some cases to get more back - but the
+                # ones later down the list really have very little similarity to what was
+                # being searched for, will do a couple of loops but will not get everything
+                normtitle = showname.decode("utf-8", 'ignore')
+                tracks = client.get('/tracks', q=normtitle, filter="streamable", limit=200, offset=offset)
+                numTracksInBatch = len(tracks)
+                log("SoundcloudListing: Number of entries returned = %d, offset = %d" % (numTracksInBatch, offset))
+                offset = offset + numTracksInBatch
             except:
-                pass
+                log("SoundcloudListing: Request failed for %s" % showname)
+                log("SoundcloudListing: %s" % traceback.format_exc())
+                numTracksInBatch = 0
+
+            # Loop over the tracks produced assigning it to the list
+            for track in tracks:
+                #another dictionary for holding all the results for a specific song
+                themeName = track.title
+                duration = self._convertTime(track.duration)
+                try:
+                    # Only allow the theme if it is streamable
+                    if track.streamable:
+                        id = track.id
+                        # The file size makes no difference as the stream is always limited to 128kbps
+                        filesize = "" # self._convertSize(track.original_content_size)
+                        # themeURL = track.download_url or track.permalink_url
+                        themeURL = self._getDownloadLinkFromWaveform(track.waveform_url)
+                        log("SoundcloudListing: Found %s%s (%s) %s (%s)" % (themeName, duration, themeURL, str(id), track.waveform_url))
+            
+                        theme = ThemeItemDetails(themeName, themeURL, duration, filesize)
+                        theme_list.append(theme)
+                    else:
+                        # As we filter for only streamable, this should never happen
+                        log("SoundcloudListing: %s is not streamable" % themeName)
+                except:
+                    continue
+        log("SoundcloudListing: Total entries returned from search = %d" % len(theme_list))
+
+        # make sure the progress dialog has been set to 100%
+        if offset != 1000:
+            progressDialog.updateProgress(100)
+
         return theme_list
+
 
     # Generate the stream link from the waveform_url 
     def _getDownloadLinkFromWaveform(self, waveform_url):
@@ -666,16 +1263,15 @@ class SoundcloudListing():
 #################################################
 # Searches www.grooveshark.com for themes
 #################################################
-class GroovesharkListing():
-    def __init__(self):
-        # Links required for televisiontunes.com
-        self.search_url = ""
-
+class GroovesharkListing(DefaultListing):
     # Perform the search for the theme
-    def search(self, showname):
+    def _search(self, showname, progressDialog):
         log("GroovesharkListing: Search for %s" % showname )
  
         tracks = None
+        
+        # There is only a single api call for grooveshark, so start at 25%
+        progressDialog.updateProgress(25)
         
         try:
             client = Client()
@@ -685,6 +1281,9 @@ class GroovesharkListing():
             log("GroovesharkListing: Request failed for %s" % showname)
             log("GroovesharkListing: %s" % traceback.format_exc())
 
+        # Once the search has been done, go to 75%
+        progressDialog.updateProgress(75)
+
         # Loop over the tracks produced assigning it to the list
         theme_list = []
         for track in tracks:
@@ -692,6 +1291,10 @@ class GroovesharkListing():
             # Construct the custom holder for the theme
             theme = GroovesharkThemeItemDetails(track)
             theme_list.append(theme)
+
+        # Make sure we are at 100% when we are finished processing the results
+        progressDialog.updateProgress(100)
+        
         return theme_list
 
 ###########################################################
@@ -705,7 +1308,16 @@ class GroovesharkListing():
 class GroovesharkThemeItemDetails(ThemeItemDetails):
     def __init__(self, track):
         self.grooveshark_track = track
-        ThemeItemDetails.__init__(self, track.name, "")
+        duration = self._convertTime(track.duration)        
+        ThemeItemDetails.__init__(self, track.name, "", duration, albumname=track.album)
+
+    # Checks if the theme this points to is the same
+    def __eq__(self, other):
+        if other == None:
+            return False
+        # Check if the URL is the same as that will make it unique
+        return self.grooveshark_track.id == other.grooveshark_track.id
+
 
     # Get the URL used to download the theme
     def getMediaURL(self):
@@ -721,4 +1333,21 @@ class GroovesharkThemeItemDetails(ThemeItemDetails):
             log("GroovesharkThemeItemDetails: %s" % traceback.format_exc())
         
         return self.trackUrl
+
+    # this method converts the time in milliseconds to human readable format.
+    def _convertTime(self, totalSeconds):
+        # Several tracks do not include a duration, so only create on if it is valid
+        if (totalSeconds == None) or (totalSeconds == "") or (int(float(totalSeconds)) < 1):
+            log("GroovesharkThemeItemDetails: Duration of %s is None or less than 1" % self.grooveshark_track.name)
+            return ""
+        
+        x = int(float(totalSeconds))
+        seconds = x % 60
+        x /= 60
+        minutes = x % 60
+        x /= 60
+        hours = x % 24
+        x /= 24
+        days = x
+        return " [%02d:%02d:%02d]" % (hours, minutes, seconds)
 

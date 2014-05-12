@@ -107,9 +107,20 @@ class TvTunesScraper:
             videoPath = xbmc.getInfoLabel( "ListItem.Path" )
         log("getSoloVideo: Video Path %s" % videoPath)
 
+        # Check if there is an "Original Title Defines
+        originalTitle = xbmc.getInfoLabel( "ListItem.OriginalTitle" )
+        if (originalTitle != None) and (originalTitle != ""):
+            originalTitle = normalize_string( originalTitle )
+        else:
+            originalTitle = None
 
         normVideoName = normalize_string( videoName )
         log("getSoloVideo: videoName = %s" % normVideoName )
+
+        # If the main title and the original title are the same
+        # Then no need to use the original title
+        if (originalTitle == normVideoName):
+            originalTitle = None
 
         if Settings.isCustomPathEnabled():
             videoPath = os_path_join(Settings.getCustomPath(), normVideoName)
@@ -127,7 +138,14 @@ class TvTunesScraper:
                 videoPath = os.path.dirname( videoPath )
 
         log("getSoloVideo: videoPath = %s" % videoPath )
-        return [normVideoName,videoPath.decode("utf-8"),normVideoName]
+        
+#         try:
+#             decodedPath = videoPath.decode("utf-8")
+#             videoPath = decodedPath
+#         except:
+#             pass
+        
+        return [normVideoName,videoPath,originalTitle]
 
 
     # Checks if a theme exists in a directory

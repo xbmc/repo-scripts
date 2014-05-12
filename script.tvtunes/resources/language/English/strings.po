@@ -21,7 +21,7 @@ msgid "Get and play your Movie and TV shows Themes"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
+msgid "This script will help you to get themes for your Movie and TV Show library from the Internet. It will save them and then they will be played while browsing your video library when you enter the Video screen"
 msgstr ""
 
 msgctxt "Addon Disclaimer"
@@ -202,8 +202,9 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr ""
 
-#empty string with id 32115
-#Previously set to TvTunes
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr ""
 
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
@@ -223,7 +224,11 @@ msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr ""
 
-#empty strings from id 32121 to 32200
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr ""
+
+#empty strings from id 32122 to 32200
 
 msgctxt "#32201"
 msgid "Movies"
@@ -237,7 +242,23 @@ msgctxt "#32203"
 msgid "Music Videos"
 msgstr ""
 
-#empty strings from id 32204 to 32990
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr ""
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr ""
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr ""
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr ""
+
+#empty strings from id 32208 to 32990
 
 
 msgctxt "#32991"
