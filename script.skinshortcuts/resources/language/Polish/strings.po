@@ -34,11 +34,11 @@ msgstr "Przesuń w dół"
 
 msgctxt "#32004"
 msgid "Video Playlist"
-msgstr "Playlista Wideo"
+msgstr "Lista odtwarzania wideo"
 
 msgctxt "#32005"
 msgid "Music Playlist"
-msgstr "Playlista Audio"
+msgstr "Lista odtwarzania muzyki"
 
 msgctxt "#32006"
 msgid "Favourite"
@@ -46,7 +46,7 @@ msgstr "Ulubione"
 
 msgctxt "#32007"
 msgid "Add-On"
-msgstr "Dodatek"
+msgstr "Wtyczka"
 
 msgctxt "#32008"
 msgid "Mixed Playlist"
@@ -58,15 +58,15 @@ msgstr "Programy"
 
 msgctxt "#32010"
 msgid "Video Add-On"
-msgstr "Dodatek Wideo"
+msgstr "Wtyczki wideo"
 
 msgctxt "#32011"
 msgid "Music Add-On"
-msgstr "Dodatek Audio"
+msgstr "Wtyczki muzyki"
 
 msgctxt "#32012"
 msgid "Picture Add-On"
-msgstr "Dodatek Obrazów"
+msgstr "Wtyczki obrazów"
 
 msgctxt "#32013"
 msgid "<None>"
@@ -86,7 +86,7 @@ msgstr "Seriale"
 
 msgctxt "#32017"
 msgid "PVR"
-msgstr "PVR"
+msgstr "Telewizja"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -106,7 +106,7 @@ msgstr "Programy"
 
 msgctxt "#32022"
 msgid "PVR"
-msgstr "PVR"
+msgstr "Telewizja"
 
 msgctxt "#32023"
 msgid "Timers"
@@ -122,7 +122,7 @@ msgstr "Ustaw etykietę"
 
 msgctxt "#32026"
 msgid "Set thumbail"
-msgstr "Ustaw grafikę "
+msgstr "Ustaw miniaturę"
 
 msgctxt "#32027"
 msgid "Custom action"
@@ -130,11 +130,11 @@ msgstr "Wybrana akcja"
 
 msgctxt "#32028"
 msgid "Reset shortcuts"
-msgstr "Resetuj skrót"
+msgstr "Resetuj skróty"
 
 msgctxt "#32029"
 msgid "Common"
-msgstr "Wspólny"
+msgstr "Ogólny"
 
 msgctxt "#32030"
 msgid "Video Library"
@@ -154,11 +154,11 @@ msgstr "Wysuń tackę"
 
 msgctxt "#32034"
 msgid "Common Shortcut"
-msgstr "Wspólny skrót "
+msgstr "Ogólny skrót "
 
 msgctxt "#32035"
 msgid "Choose which items to display on the Main Menu"
-msgstr "Wybierz, elementy do wyświetlania w menu głównym"
+msgstr "Wybierz pozycje do wyświetlania w menu startowym"
 
 msgctxt "#32036"
 msgid "Choose shortcuts for ::MENUNAME::"
@@ -170,7 +170,7 @@ msgstr "Resetuj wszystkie skróty"
 
 msgctxt "#32038"
 msgid "Are you sure you want to reset all shortcuts back to default?"
-msgstr "Czy na pewno chcesz przywrócić wszystkie skróty z powrotem do ustawień fabrycznych?"
+msgstr "Czy na pewno chcesz przywrócić wszystkie skróty z powrotem do domyślnych ustawień?"
 
 msgctxt "#32039"
 msgid "Pick widget for ::MENUNAME::"
@@ -190,11 +190,11 @@ msgstr "Nieznany węzeł wideo"
 
 msgctxt "#32043"
 msgid "Choose shortcut category"
-msgstr "Wybierz kategorię skrótów "
+msgstr "Wybierz kategorię skrótu"
 
 msgctxt "#32044"
 msgid "Select widget"
-msgstr "Wybierz widget"
+msgstr "Wybierz widżet"
 
 msgctxt "#32045"
 msgid "Select background"
@@ -206,7 +206,7 @@ msgstr "Aktualizuj bibliotekę wideo"
 
 msgctxt "#32047"
 msgid "Update audio library"
-msgstr "Aktualizuj bibliotekę audio"
+msgstr "Aktualizuj bibliotekę muzyki"
 
 msgctxt "#32048"
 msgid "Choose shortcut"
@@ -222,7 +222,7 @@ msgstr "Domyślny"
 
 msgctxt "#32051"
 msgid "Single image"
-msgstr "Pojedyńczy obraz"
+msgstr "Pojedynczy obraz"
 
 msgctxt "#32052"
 msgid "Multi-image"
@@ -231,3 +231,27 @@ msgstr "Wiele obrazów"
 msgctxt "#32053"
 msgid "None"
 msgstr "Brak"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "Polecenie XBMC"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Wyczyść bibliotekę wideo"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Wyczyść bibliotekę muzyki"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "Polecenia XBMC"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Utwórz skrót do aktualnej pozycji"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Lista odtwarzania skóry"

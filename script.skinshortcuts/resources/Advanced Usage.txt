@@ -72,6 +72,32 @@ In the list where you want these controls to appear, put the following in the <c
 You MUST provide a string for the settings list. See 'overrides.xml' (section 4) for details.
 
 
+Alternative Listing Methods
+---------------------------
+
+As a test of alternative methods of listing shortcuts, skin shortcuts can now generate a single list containing all main and sub-menu items (includes method only) by calling buildxml with the optional paramater mode set to buildsingle.
+
+This is intended only to demonstrate the possibility of including build methods that would be specific to a skin.
+
+
+Just Select Shortcuts
+---------------------
+
+If you don't want to take advantage of the scripts menu management functions, you can still use the script to display available shortcuts to the user. The shortcut the user selects is then passed back to the skin for you to manage.
+
+When using this method, you specify which skin strings you want the script to set - you can then access these as normal via Skin.String.
+
+To use the script in this way, put the following in an onclick:
+
+RunScript(script.skinshortcuts,type=shortcuts&amp;custom=[True/False]&amp;skinLabel=[skinLabel]&amp;skinAction=[skinAction]&amp;skinType=[skinType]&amp;skinThumbnail=[skinThumbnail])
+
+[True/False] - Whether you wish to allow the user to type their own custom command. If ommitted this will default to false. [OPTIONAL]
+[skinLabel] - The skin string the script will write the label of the selected shortcut to. [OPTIONAL]
+[skinAction] - the skin string the script will write the action of the selected shortcut to. [OPTIONAL]
+[skinType] - The skin string the script will write the type of the selected shortcut to. [OPTIONAL]
+[skinThumbnail] - The skin string the script will write the thumbnail of the selected shortcut to. [OPTIONAL]
+
+
 Overrides.xml
 -------------
 
@@ -194,6 +220,17 @@ So, for example:
 </overrides>
 
 You can then choose which widget to display based on the 'widget' property of the selected listitem.
+
+
+5. Skin-Recommended Shortcuts
+
+If there are particular shortcuts to skin-specific features you would like to give the user the option of choosing from, you can specify these in the overrides.xml.
+
+<shortcut label="[label]" type="[type]">[action]</shortcut>
+
+[label] - The display name of the shortcut (can be a localised string)
+[type] - The type of shortcut, e.g. "Movie" if this leads to an area of the movie library (can be a localised string)
+[action] - The action associated with this shortcut
 
 
 5. Custom shortcut properties

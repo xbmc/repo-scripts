@@ -2,13 +2,15 @@
 import os, sys, datetime, unicodedata
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon, urllib
 import xml.etree.ElementTree as xmltree
-from xml.dom.minidom import parse
+#from xml.dom.minidom import parse
 from xml.sax.saxutils import escape as escapeXML
 from traceback import print_exc
 
 __addon__        = xbmcaddon.Addon()
 __addonid__      = sys.modules[ "__main__" ].__addonid__
+__addonversion__ = __addon__.getAddonInfo('version')
 __datapath__     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ ).encode('utf-8')
+__masterpath__     = os.path.join( xbmc.translatePath( "special://masterprofile/addon_data/" ).decode('utf-8'), __addonid__ ).encode('utf-8')
 __language__     = __addon__.getLocalizedString
 
 import datafunctions
@@ -23,16 +25,39 @@ def log(txt):
     
 class XMLFunctions():
     def __init__(self):
-        log( "Loaded xml functions" )
+        pass
         
-    def buildMenu( self, mainmenuID, groups, numLevels ):
+    def buildMenu( self, mainmenuID, groups, numLevels, buildMode ):
         # Entry point for building includes.xml files
         if xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-isrunning" ) == "True":
             return
         
         xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-isrunning", "True" )
+ 
+        # Get a list of profiles
+        fav_file = xbmc.translatePath( 'special://userdata/profiles.xml' ).decode("utf-8")
+        if xbmcvfs.exists( fav_file ):
+            tree = xmltree.parse( fav_file )
         
-        if self.shouldwerun() == False:
+        profilelist = []
+        if tree is not None:
+            profiles = tree.findall( "profile" )
+            for profile in profiles:
+                name = profile.find( "name" ).text.encode( "utf-8" )
+                dir = profile.find( "directory" ).text.encode( "utf-8" )
+                log( "Profile found: " + name + " (" + dir + ")" )
+                # Localise the directory
+                if "://" in dir:
+                    dir = xbmc.translatePath( dir ).decode( "utf-8" )
+                else:
+                    # Base if off of the master profile
+                    dir = xbmc.translatePath( os.path.join( "special://masterprofile", dir ) ).decode( "utf-8" )
+                profilelist.append( [dir, "StringCompare(System.ProfileName," + name.decode( "utf-8" ) + ")"] )
+                
+        else:
+            profileList = [["special://masterprofile", None]]
+ 
+        if self.shouldwerun( profilelist ) == False:
             log( "Menu is up to date" )
             xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-isrunning" )
             return
@@ -42,11 +67,10 @@ class XMLFunctions():
         progress = xbmcgui.DialogProgressBG()
         progress.create(__addon__.getAddonInfo( "name" ), __language__( 32049 ) )
         progress.update( 0 )
-
-            
+        
         # Write the menus
         try:
-            self.writexml( mainmenuID, groups, numLevels, progress )
+            self.writexml( profilelist, mainmenuID, groups, numLevels, buildMode, progress )
             complete = True
         except:
             log( "Failed to write menu" )
@@ -59,9 +83,7 @@ class XMLFunctions():
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-skin-data" )
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-user" )
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-user-data" )
-        xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsWidgets" )
-        xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsCustomProperties" )
-        xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsBackgrounds" )
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsAdditionalProperties" )
         
         # Mark that we're no longer running, clear the progress dialog
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-isrunning" )
@@ -73,8 +95,8 @@ class XMLFunctions():
         else:
             xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), "Unable to build menu" )
         
-    def shouldwerun( self ):
-        log( "Checking is user has updated menu" )
+    def shouldwerun( self, profilelist ):
+        log( "Checking if user has updated menu" )
         try:
             property = xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-reloadmainmenu" )
             xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-reloadmainmenu" )
@@ -91,6 +113,11 @@ class XMLFunctions():
         extensionpoints = addon.findall( "extension" )
         paths = []
         skinpaths = []
+        
+        # Get the skin version
+        skinVersion = addon.getroot().attrib.get( "version" )
+        
+        # Get the directories for resolutions this skin supports
         for extensionpoint in extensionpoints:
             if extensionpoint.attrib.get( "point" ) == "xbmc.gui.skin":
                 resolutions = extensionpoint.findall( "res" )
@@ -106,228 +133,182 @@ class XMLFunctions():
                 return True
             else:
                 log( " - Yes" )
+                
 
-        
-        log( "Checking hashes..." )
 
         try:
-            hashes = eval( xbmcvfs.File( os.path.join( __datapath__ , xbmc.getSkinDir() + ".hash" ) ).read() )
+            hashes = eval( xbmcvfs.File( os.path.join( __masterpath__ , xbmc.getSkinDir() + ".hash" ) ).read() )
         except:
             # There is no hash list, return True
+            log( "No hash list" )
             print_exc()
             return True
+        
+        log( "Checking hashes..." )
+        checkedSkinVer = False
+        checkedScriptVer = False
+        checkedProfileList = False
             
         for hash in hashes:
             if hash[1] is not None:
-                hasher = hashlib.md5()
-                hasher.update( xbmcvfs.File( hash[0] ).read() )
-                if hasher.hexdigest() != hash[1]:
-                    log( "  - Hash does not match on file " + hash[0] )
-                    return True
+                if hash[0] == "::SKINVER::":
+                    # Check the skin version is still the same as hash[1]
+                    checkedSkinVer = True
+                    if skinVersion != hash[1]:
+                        log( "  - Skin version does not match" )
+                        return True
+                elif hash[0] == "::SCRIPTVER::":
+                    # Check the script version is still the same as hash[1]
+                    checkedScriptVer = True
+                    if __addonversion__ != hash[1]:
+                        log( "  - Script version does not match" )
+                        return True
+                elif hash[0] == "::PROFILELIST::":
+                    # Check the profilelist is still the same as hash[1]
+                    checkedProfileList = True
+                    if profilelist != hash[1]:
+                        log( "  - Profile list does not match" )
+                        return True
+                else:
+                    hasher = hashlib.md5()
+                    hasher.update( xbmcvfs.File( hash[0] ).read() )
+                    if hasher.hexdigest() != hash[1]:
+                        log( "  - Hash does not match on file " + hash[0] )
+                        return True
             else:
                 if xbmcvfs.exists( hash[0] ):
                     log( "  - File now exists " + hash[0] )
                     return True
                 
-        return False
+        # If the skin or script version, or profile list, haven't been checked, we need to rebuild the menu 
+        # (most likely we're running an old version of the script)
+        if checkedSkinVer == False or checkedScriptVer == False or checkedProfileList == False:
+            return True
         
-    def writexml( self, mainmenuID, groups, numLevels, progress ):        
-        # Clear the hashlist
-        hashlist.list = []
+            
+        # If we get here, the menu does not need to be rebuilt.
+        return False
 
-        # Create a new tree
+
+    def writexml( self, profilelist, mainmenuID, groups, numLevels, buildMode, progress ):        
+        # Reset the hashlist, add the profile list and script version
+        hashlist.list = []
+        hashlist.list.append( ["::PROFILELIST::", profilelist] )
+        hashlist.list.append( ["::SCRIPTVER::", __addonversion__] )
+        
+        # Create a new tree and includes for the various groups
         tree = xmltree.ElementTree( xmltree.Element( "includes" ) )
         root = tree.getroot()
         
-        submenus = []
+        mainmenuTree = xmltree.SubElement( root, "include" )
+        mainmenuTree.set( "name", "skinshortcuts-mainmenu" )
         
-        if groups == "":
-            # We're building the mainmenu and submenu's
-            menuitems = DATA._get_shortcuts( "mainmenu", True )
+        submenuTrees = []
+        for level in range( 0,  int( numLevels) + 1 ):
             subelement = xmltree.SubElement(root, "include")
-            subelement.set( "name", "skinshortcuts-mainmenu" )
+            subtree = xmltree.SubElement( root, "include" )
+            if level == 0:
+                subtree.set( "name", "skinshortcuts-submenu" )
+            else:
+                subtree.set( "name", "skinshortcuts-submenu-" + str( level ) )
+            submenuTrees.append( subtree )
+        
+        if buildMode == "single":
+            allmenuTree = xmltree.SubElement( root, "include" )
+            allmenuTree.set( "name", "skinshortcuts-allmenus" )
+        
+        profilePercent = 100 / len( profilelist )
+        profileCount = -1
+        
+        
+        for profile in profilelist:
+            # Load profile details
+            profileDir = profile[0]
+            profileVis = profile[1]
+            profileCount += 1
             
+            # Get groups OR main menu shortcuts
+            if not groups == "":
+                menuitems = groups.split( "|" )
+            else:
+                menuitems = DATA._get_shortcuts( "mainmenu", True, profile[0] )
+                
+            if len( menuitems ) == 0:
+                break
+            
+        
+            # Work out percentages for dialog
+            percent = profilePercent / len( menuitems )
+                
             i = 0
             for item in menuitems:
                 i += 1
-                newelement = xmltree.SubElement( subelement, "item" )
+                progress.update( ( profilePercent * profileCount) + percent * i )
+                log( str( ( profilePercent * profileCount) + percent * i ) + "%" )
                 
-                # Onclick
-                action = urllib.unquote( item[4] )
-                if action.find("::MULTIPLE::") == -1:
-                    # Single action, run it
-                    onclick = xmltree.SubElement( newelement, "onclick" )
-                    onclick.text = escapeXML( action )
+                # Build the main menu item
+                if groups == "":
+                    mainmenuItemA = self.buildElement( item, mainmenuTree, "mainmenu", None, profile[1] )
+                    if buildMode == "single":
+                        mainmenuItemB = self.buildElement( item, allmenuTree, "mainmenu", None, profile[1] )
+                    submenu = item[5]
                 else:
-                    # Multiple actions, separated by |
-                    actions = action.split( "|" )
-                    for singleAction in actions:
-                        if singleAction != "::MULTIPLE::":
-                            onclick = xmltree.SubElement( newelement, "onclick" )
-                            onclick.text = escapeXML( singleAction )
+                    submenu = item
                 
-                # Label
-                label = xmltree.SubElement( newelement, "label" )
-                label.text = escapeXML( item[0] )
+                # Build the sub-menu items
+                count = 0
                 
-                # Label 2
-                label2 = xmltree.SubElement( newelement, "label2" )
-                if not item[1].find( "::SCRIPT::" ) == -1:
-                    label2.text = escapeXML( __language__( int( item[1][10:] ) ) )
-                else:
-                    label2.text = escapeXML( item[1] )
-
-                # Icon
-                icon = xmltree.SubElement( newelement, "icon" )
-                icon.text = escapeXML( item[2] )
-                
-                # Thumb
-                thumb = xmltree.SubElement( newelement, "thumb" )
-                thumb.text = escapeXML( item[3] )
-                
-                # LabelID
-                labelID = xmltree.SubElement( newelement, "property" )
-                labelID.set( "name", "labelID" )
-                labelID.text = escapeXML( item[5] )
-                submenus.append( item[5] )
-                
-                # Submenu visibility
-                submenuVisibility = xmltree.SubElement( newelement, "property" )
-                submenuVisibility.set( "name", "submenuVisibility" )
-                submenuVisibility.text = escapeXML( DATA.slugify( item[5] ) )
-                
-                # Additional properties
-                if len( item[6] ) != 0:
-                    repr( item[6] )
-                    for property in item[6]:
-                        if property[0] == "node.visible":
-                            visibleProperty = xmltree.SubElement( newelement, "visible" )
-                            visibleProperty.text = escapeXML( property[1] )
-                        else:
-                            additionalproperty = xmltree.SubElement( newelement, "property" )
-                            additionalproperty.set( "name", property[0] )
-                            additionalproperty.text = escapeXML( property[1] )
-        
-        else:
-            # We're building just for specific submenus, so pop these into the
-            # submenu list
-            groups = groups.split( "|" )
-            for group in groups:
-                submenus.append( group )
-                
-        log( repr( submenus) )
-                
-        # Now build the submenus
-        if len(submenus) == 0:
-            log( "No submenus found. Last error:" )
-            try:
-                print_exc()
-            except:
-                pass
-                
-        else:
-            percent = 100 / ( len(submenus) * ( int( numLevels) + 1 ) )
-            for level in range( 0,  int( numLevels) + 1 ):
-                subelement = xmltree.SubElement(root, "include")
-                if level == 0:
-                    subelement.set( "name", "skinshortcuts-submenu" )
-                else:
-                    subelement.set( "name", "skinshortcuts-submenu-" + str( level ) )
-
-                i = 0
-                for submenu in submenus:
-                    i += 1
-                    progress.update( percent * i )
-                    individualelement = xmltree.SubElement( root, "include" )
-                    if level == 0:
-                        individualelement.set( "name", "skinshortcuts-group-" + escapeXML( DATA.slugify( submenu ) ) )
-                        menuitems = DATA._get_shortcuts( submenu, True )
+                for submenuTree in submenuTrees:
+                    # Create trees for individual submenu's
+                    justmenuTreeA = xmltree.SubElement( root, "include" )
+                    justmenuTreeB = xmltree.SubElement( root, "include" )
+                    
+                    # Get the submenu items
+                    if count == 0:
+                        justmenuTreeA.set( "name", "skinshortcuts-group-" + DATA.slugify( submenu ) )
+                        justmenuTreeB.set( "name", "skinshortcuts-group-alt-" + DATA.slugify( submenu ) )
+                        submenuitems = DATA._get_shortcuts( submenu, True, profile[0] )
+                        
+                        # Set whether there are any submenu items for the main menu
+                        if groups == "":
+                            if not len( submenuitems ) == 0:
+                                hasSubMenu = xmltree.SubElement( mainmenuItemA, "property" )
+                                hasSubMenu.set( "name", "hasSubmenu" )
+                                hasSubMenu.text = "True"
+                                if buildMode == "single":
+                                    hasSubMenu = xmltree.SubElement( mainmenuItemB, "property" )
+                                    hasSubMenu.set( "name", "hasSubmenu" )
+                                    hasSubMenu.text = "True"
+                                
                     else:
-                        individualelement.set( "name", "skinshortcuts-group-" + escapeXML( DATA.slugify( submenu ) ) + "-" + str( level ) )
-                        menuitems = DATA._get_shortcuts( submenu + "." + str( level ), True )
+                        justmenuTreeA.set( "name", "skinshortcuts-group-" + DATA.slugify( submenu ) ) + "-" + str( count )
+                        justmenuTreeB.set( "name", "skinshortcuts-group-alt-" + DATA.slugify( submenu ) ) + "-" + str( count )
+                        submenuitems = DATA._get_shortcuts( submenu + "." + str( count ), True, profile[0] )
+                        
+                    log( "Number of submenu items: " + str( len( submenuitems ) ) )
+                    log( repr( submenuitems ) )
                     
-                    
-                    
-                    for item in menuitems:
-                        newelementA = xmltree.SubElement( subelement, "item" )
-                        newelementB = xmltree.SubElement( individualelement, "item" )
+                    # If there is a submenu, and we're building a single menu list, replace the onclick of mainmenuItemB AND recreate it as the first
+                    # submenu item
+                    if buildMode == "single" and not len( submenuitems ) == 0:
+                        onClickElement = mainmenuItemB.find( "onclick" )
+                        altOnClick = xmltree.SubElement( mainmenuItemB, "onclick" )
+                        altOnClick.text = onClickElement.text
+                        altOnClick.set( "condition", "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")" )
+                        onClickElement.text = "SetProperty(submenuVisibility," + DATA.slugify( submenu ) + ",10000)"
+                        onClickElement.set( "condition", "!StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")" )
                         
-                        # Onclick
-                        action = urllib.unquote( item[4] )
-                        if action.find("::MULTIPLE::") == -1:
-                            # Single action, run it
-                            onclickA = xmltree.SubElement( newelementA, "onclick" )
-                            onclickA.text = action
-                            onclickB = xmltree.SubElement( newelementB, "onclick" )
-                            onclickB.text = action
-                        else:
-                            # Multiple actions, separated by |
-                            actions = action.split( "|" )
-                            for singleAction in actions:
-                                if singleAction != "::MULTIPLE::":
-                                    onclickA = xmltree.SubElement( newelementA, "onclick" )
-                                    onclickA.text = singleAction
-                                    onclickB = xmltree.SubElement( newelementB, "onclick" )
-                                    onclickB.text = singleAction
-                        
-                        # Label
-                        labelA = xmltree.SubElement( newelementA, "label" )
-                        labelA.text = item[0]
-                        labelB = xmltree.SubElement( newelementB, "label" )
-                        labelB.text = item[0]
-                        
-                        # Label 2
-                        label2A = xmltree.SubElement( newelementA, "label2" )
-                        label2B = xmltree.SubElement( newelementB, "label2" )
-                        if not item[1].find( "::SCRIPT::" ) == -1:
-                            label2A.text = __language__( int( item[1][10:] ) )
-                            label2B.text = __language__( int( item[1][10:] ) )
-                        else:
-                            label2A.text = item[1]
-                            label2B.text = item[1]
-
-                        # Icon
-                        iconA = xmltree.SubElement( newelementA, "icon" )
-                        iconA.text = item[2]
-                        iconB = xmltree.SubElement( newelementB, "icon" )
-                        iconB.text = item[2]
-                        
-                        # Thumb
-                        thumbA = xmltree.SubElement( newelementA, "thumb" )
-                        thumbA.text = item[3]
-                        thumbB = xmltree.SubElement( newelementB, "thumb" )
-                        thumbB.text = item[3]
-                        
-                        # LabelID
-                        labelIDA = xmltree.SubElement( newelementA, "property" )
-                        labelIDA.set( "name", "labelID" )
-                        labelIDA.text = item[5]
-                        labelIDB = xmltree.SubElement( newelementB, "property" )
-                        labelIDB.set( "name", "labelID" )
-                        labelIDB.text = item[5]
-                        
-                        # Submenu visibility
-                        submenuVisibility = xmltree.SubElement( newelementA, "visible" )
-                        submenuVisibility.text = "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + escapeXML( DATA.slugify( submenu ) ) + ")"
-                        
-                        # Additional properties
-                        if len( item[6] ) != 0:
-                            repr( item[6] )
-                            for property in item[6]:
-                                if property[0] == "node.visible":
-                                    visiblePropertyA = xmltree.SubElement( newelementA, "visible" )
-                                    visiblePropertyA.text = property[1]
-                                    visiblePropertyB = xmltree.SubElement( newelementB, "visible" )
-                                    visiblePropertyB.text = property[1]
-                                else:
-                                    additionalpropertyA = xmltree.SubElement( newelementA, "property" )
-                                    additionalpropertyA.set( "name", property[0] )
-                                    additionalpropertyA.text = property[1]
-                                    additionalpropertyB = xmltree.SubElement( newelementB, "property" )
-                                    additionalpropertyB.set( "name", property[0] )
-                                    additionalpropertyB.text = property[1]
-
-            progress.update( 100 )
+                    for subitem in submenuitems:
+                        self.buildElement( subitem, submenuTree, submenu, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + escapeXML( DATA.slugify( submenu ) ) + ")", profile[1] )
+                        self.buildElement( subitem, justmenuTreeA, submenu, None, profile[1] )
+                        self.buildElement( subitem, justmenuTreeB, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")", profile[1] )
+                        if buildMode == "single":
+                            self.buildElement( subitem, allmenuTree, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")", profile[1] )
+                
+                    # Increase the counter
+                    count += 1
+            
+        progress.update( 100 )
             
         # Get the skins addon.xml file
         addonpath = xbmc.translatePath( os.path.join( "special://skin/", 'addon.xml').encode("utf-8") ).decode("utf-8")
@@ -340,18 +321,102 @@ class XMLFunctions():
                 for resolution in resolutions:
                     path = xbmc.translatePath( os.path.join( "special://skin/", resolution.attrib.get( "folder" ), "script-skinshortcuts-includes.xml").encode("utf-8") ).decode("utf-8")
                     paths.append( path )
+        skinVersion = addon.getroot().attrib.get( "version" )
+                    
+        # Append the skin version to the hashlist
+        hashlist.list.append( ["::SKINVER::", skinVersion] )
         
         # Save the tree
         for path in paths:
             tree.write( path, encoding="UTF-8" )
-            #tree.write( "C://temp//temp.xml", encoding="UTF-8" )
         
         # Save the hashes
-        file = xbmcvfs.File( os.path.join( __datapath__ , xbmc.getSkinDir() + ".hash" ), "w" )
+        file = xbmcvfs.File( os.path.join( __masterpath__ , xbmc.getSkinDir() + ".hash" ), "w" )
         file.write( repr( hashlist.list ) )
         file.close
         
+    def buildElement( self, item, Tree, groupName, visibilityCondition, profileVisibility ):
+        # This function will build an element for the passed Item in
+        # the passed Tree
+        newelement = xmltree.SubElement( Tree, "item" )
+        
+        # Onclick
+        action = urllib.unquote( item[4] )
+        if action.find("::MULTIPLE::") == -1:
+            # Single action, run it
+            onclick = xmltree.SubElement( newelement, "onclick" )
+            onclick.text = action
+        else:
+            # Multiple actions, separated by |
+            actions = action.split( "|" )
+            for singleAction in actions:
+                if singleAction != "::MULTIPLE::":
+                    onclick = xmltree.SubElement( newelement, "onclick" )
+                    onclick.text = singleAction
+        
+        # Label
+        label = xmltree.SubElement( newelement, "label" )
+        label.text = item[0]
+        
+        # Label 2
+        label2 = xmltree.SubElement( newelement, "label2" )
+        if not item[1].find( "::SCRIPT::" ) == -1:
+            label2.text = __language__( int( item[1][10:] ) )
+        else:
+            label2.text = item[1]
 
+
+        # Icon
+        icon = xmltree.SubElement( newelement, "icon" )
+        icon.text = item[2]
+        
+        # Thumb
+        thumb = xmltree.SubElement( newelement, "thumb" )
+        thumb.text = item[3]
+        
+        # LabelID
+        labelID = xmltree.SubElement( newelement, "property" )
+        labelID.set( "name", "labelID" )
+        labelID.text = item[5]
+        
+        # Group name
+        group = xmltree.SubElement( newelement, "property" )
+        group.set( "name", "group" )
+        group.text = groupName
+        
+        # Submenu visibility
+        if groupName == "mainmenu":
+            submenuVisibility = xmltree.SubElement( newelement, "property" )
+            submenuVisibility.set( "name", "submenuVisibility" )
+            submenuVisibility.text = DATA.slugify( item[5] )
+            
+        # Visibility
+        if visibilityCondition is not None:
+            visibilityElement = xmltree.SubElement( newelement, "visible" )
+            if profileVisibility is not None:
+                visibilityElement.text = profileVisibility + " + [" + visibilityCondition + "]"
+            else:
+                visibilityElement.text = visibilityCondition
+            issubmenuElement = xmltree.SubElement( newelement, "property" )
+            issubmenuElement.set( "name", "isSubmenu" )
+            issubmenuElement.text = "True"
+        elif profileVisibility is not None:
+            visibilityElement = xmltree.SubElement( newelement, "visible" )
+            visibilityElement.text = profileVisibility
+        
+        # Additional properties
+        if len( item[6] ) != 0:
+            repr( item[6] )
+            for property in item[6]:
+                if property[0] == "node.visible":
+                    visibleProperty = xmltree.SubElement( newelement, "visible" )
+                    visibleProperty.text = property[1]
+                else:
+                    additionalproperty = xmltree.SubElement( newelement, "property" )
+                    additionalproperty.set( "name", property[0] )
+                    additionalproperty.text = property[1]
+                    
+        return newelement
         
     def findIncludePosition( self, list, item ):
         try:

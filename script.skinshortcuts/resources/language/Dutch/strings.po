@@ -231,3 +231,27 @@ msgstr "Meerdere afbeeldingen"
 msgctxt "#32053"
 msgid "None"
 msgstr "Geen"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "XBMC opdracht"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Leeg videobibliotheek"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Leeg audiobibliotheek"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "XBMC opdrachten"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Creëer snelkoppeling naar hier"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Skin afspeellijst"

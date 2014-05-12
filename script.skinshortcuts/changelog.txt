@@ -1,11 +1,23 @@
+v0.3.0
+- Fix escaping of main menu items (includes method)
+- Fix for custom nodes when using profiles
+- Fix for includes method when using multiple profiles
+- Load skin-provided playlists and playlists from sub-folders
+- Ability to browse a plugin from the management dialog
+- Ability to provide recommended shortcuts in management dialog
+- Ability to choose to play or display a playlist
+- Improved method of managing additional properties
+- Method to list menu and submenus in a single include
+- Ability to allow a user to select a shortcut, then pass this to the skin to manage
+- Library/playlists/addon/favourites loading code moved to separate module, loaded threaded
+- Menu now be rebuilt on skin or script version and profile changes (includes method)
+- Updated language files from Transifex
+
 v0.2.4
 - Fix listing individual groups with <include> method
 - Parse favourites.xml directly
 - Add XBMC Commands shortcut group
 - Updated language files from Transifex
-
-v0.2.3
-- Unpublished development revision
 
 v0.2.2
 - New optional method of listing shortcuts via includes file
@@ -20,7 +32,6 @@ v0.2.0
 - Removed check for settings shortcut (skins are now recommended to always provide alternative settings access)
 - Video library shortcuts are loaded from video library node files (test)
 - Video and music playlists are now grouped together
-- Option to use edit control for label and action in management dialog
 - Live TV renamed to PVR
 - Support for managing widgets, backgrounds, custom properties
 - Shortcuts with overriden images and override files are kept in memory to speed up listings

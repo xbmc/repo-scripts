@@ -107,3 +107,7 @@ msgstr "Imej tunggal"
 msgctxt "#32053"
 msgid "None"
 msgstr "Tiada"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "Perintah XBMC"

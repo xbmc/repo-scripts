@@ -22,8 +22,9 @@ __addonversion__ = __addon__.getAddonInfo('version')
 __language__     = __addon__.getLocalizedString
 __cwd__          = __addon__.getAddonInfo('path').decode("utf-8")
 __addonname__    = __addon__.getAddonInfo('name').decode("utf-8")
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__datapath__     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode( 'utf-8' ), __addonid__ )
+__resource__     = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
+__datapath__     = os.path.join( xbmc.translatePath( "special://profile/" ).decode( 'utf-8' ), "addon_data", __addonid__ )
+__masterpath__   = os.path.join( xbmc.translatePath( "special://masterprofile/" ).decode( 'utf-8' ), "addon_data", __addonid__ )
 __profilepath__  = xbmc.translatePath( "special://profile/" ).decode('utf-8')
 __skinpath__     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
 __defaultpath__  = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'shortcuts').encode("utf-8") ).decode("utf-8")
@@ -34,6 +35,8 @@ import xmlfunctions
 XML = xmlfunctions.XMLFunctions()
 import datafunctions
 DATA = datafunctions.DataFunctions()
+import library
+LIBRARY = library.LibraryFunctions()
 
 hashlist = []
 
@@ -49,9 +52,11 @@ class Main:
         self._parse_argv()
         self.WINDOW = xbmcgui.Window(10000)         
         
-        # Create datapath if not exists
+        # Create data and master paths if not exists
         if not xbmcvfs.exists(__datapath__):
             xbmcvfs.mkdir(__datapath__)
+        if not xbmcvfs.exists(__masterpath__):
+            xbmcvfs.mkdir(__masterpath__)
         
         # Perform action specified by user
         if not self.TYPE:
@@ -59,8 +64,7 @@ class Main:
             xbmcgui.Dialog().ok(__addonname__, line1)
             
         if self.TYPE=="buildxml":
-            #if not xbmcvfs.exists( os.path.join( __datapath__, "test.txt" ) ):
-            XML.buildMenu( self.MENUID, self.GROUP, self.LEVELS )
+            XML.buildMenu( self.MENUID, self.GROUP, self.LEVELS, self.MODE )
             
         if self.TYPE=="launch":
             # Tell XBMC not to try playing any media
@@ -77,6 +81,8 @@ class Main:
         if self.TYPE=="settings":
             self._check_Window_Properties()
             self._manage_shortcut_links() 
+        if self.TYPE=="shortcuts":
+            LIBRARY._displayShortcuts( self.LABEL, self.ACTION, self.SHORTCUTTYPE, self.THUMBNAIL, self.GROUPING, self.CUSTOM )
         if self.TYPE=="resetall":
             # Tell XBMC not to try playing any media
             try:
@@ -104,6 +110,15 @@ class Main:
         self.LEVEL = params.get( "level", "" )
         self.LEVELS = params.get( "levels", "0" )
         self.CUSTOMID = params.get( "customid", "" )
+        self.MODE = params.get( "mode", None )
+        
+        # Properties when using LIBRARY._displayShortcuts
+        self.LABEL = params.get( "skinLabel", None )
+        self.ACTION = params.get( "skinAction", None )
+        self.SHORTCUTTYPE = params.get( "skinType", None )
+        self.THUMBNAIL = params.get( "skinThumnbail", None )
+        self.GROUPING = params.get( "grouping", None )
+        self.CUSTOM = params.get( "custom", "False" )
         
         
     def _check_Window_Properties( self ):
@@ -413,8 +428,7 @@ class Main:
     
     def reset_window_properties( self ):
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-skin" )
-        xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsWidgets" )
-        xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsBackgrounds" )
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsAdditionalProperties" )
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-mainmenu" )
         listitems = DATA._get_shortcuts( "mainmenu" )
         for item in listitems:

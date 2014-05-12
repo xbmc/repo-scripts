@@ -144,8 +144,8 @@
 			<left>540</left>
 			<top>300</top>
 			<width>200</width>
-			<!-- id's 301 to 304 - add, delete, move up, move down -->
 			<control type="button" id="301">
+				<description>Add a new shortcut</description>
 				<left>0</left>
 				<top>0</top>
 				<width>200</width>
@@ -155,32 +155,42 @@
 				<ondown>302</ondown>
 				<onleft>260</onleft>
 				<onright>111</onright>
+				<onclick>noop</onclick>
+				<label>$ADDON[script.skinshortcuts 32000]</label>
 			</control>
 			<control type="button" id="302">
+				<description>Delete shortcut</description>
 				<left>0</left>
 				<top>30</top>
 				<width>200</width>
 				<height>30</height>
+				<font>font18</font>
 				<align>center</align>
 				<onup>301</onup>
 				<ondown>303</ondown>
 				<onleft>260</onleft>
 				<onright>111</onright>
+				<onclick>noop</onclick>
+				<label>$ADDON[script.skinshortcuts 32001]</label>
 			</control>
 
 			<control type="button" id="303">
+				<description>Move shortcut up</description>
 				<left>0</left>
 				<top>80</top>
 				<width>200</width>
 				<height>30</height>
+				<font>font18</font>
 				<align>center</align>
 				<onup>302</onup>
 				<ondown>304</ondown>
 				<onleft>260</onleft>
 				<onright>111</onright>
+				<onclick>noop</onclick>
+				<label>$ADDON[script.skinshortcuts 32002]</label>
 			</control>
-
 			<control type="button" id="304">
+				<description>Move shortcut down</description>
 				<left>0</left>
 				<top>110</top>
 				<width>200</width>
@@ -191,9 +201,12 @@
 				<ondown>305</ondown>
 				<onleft>260</onleft>
 				<onright>111</onright>
+				<onclick>noop</onclick>
+				<label>$ADDON[script.skinshortcuts 32003]</label>
 			</control>
 
 			<control type="button" id="305">
+				<description>Change shortcut label</description>
 				<left>0</left>
 				<top>140</top>
 				<width>200</width>
@@ -204,9 +217,11 @@
 				<ondown>306</ondown>
 				<onleft>260</onleft>
 				<onright>111</onright>
+				<onclick>noop</onclick>
+				<label>$ADDON[script.skinshortcuts 32025]</label>
 			</control>
-
 			<control type="button" id="306">
+				<description>Change shortcut thumbnail</description>
 				<left>0</left>
 				<top>170</top>
 				<width>200</width>
@@ -217,9 +232,11 @@
 				<ondown>307</ondown>
 				<onleft>260</onleft>
 				<onright>111</onright>
+				<onclick>noop</onclick>
+				<label>$ADDON[script.skinshortcuts 32026]</label>
 			</control>
-
 			<control type="button" id="307">
+				<description>Change shortcut action</description>
 				<left>0</left>
 				<top>200</top>
 				<width>200</width>
@@ -230,9 +247,12 @@
 				<ondown>308</ondown>
 				<onleft>260</onleft>
 				<onright>111</onright>
+				<onclick>noop</onclick>
+				<label>$ADDON[script.skinshortcuts 32027]</label>
 			</control>
 
 			<control type="button" id="308">
+				<description>Reset shortcuts</description>
 				<left>0</left>
 				<top>230</top>
 				<width>200</width>
@@ -242,6 +262,8 @@
 				<onup>307</onup>
 				<onleft>260</onleft>
 				<onright>111</onright>
+				<onclick>noop</onclick>
+				<label>$ADDON[script.skinshortcuts 32028]</label>
 			</control>
 		</control>
 

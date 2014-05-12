@@ -90,7 +90,7 @@ msgstr "PVR"
 
 msgctxt "#32018"
 msgid "Music Videos"
-msgstr "Vídeoclipes"
+msgstr "Videoclipes"
 
 msgctxt "#32019"
 msgid "Music"
@@ -231,3 +231,27 @@ msgstr "Imagens múltiplas"
 msgctxt "#32053"
 msgid "None"
 msgstr "Nenhuma"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "Comando XBMC"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Limpar biblioteca de vídeo"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Limpar biblioteca de áudio"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "Comandos XBMC"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Criar Atalho para Aqui"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Lista Reprodução"

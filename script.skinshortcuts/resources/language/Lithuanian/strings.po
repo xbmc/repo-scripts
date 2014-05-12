@@ -95,3 +95,7 @@ msgstr "Vienas paveikslėlis"
 msgctxt "#32053"
 msgid "None"
 msgstr "Nieko"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "XBMC komanda"

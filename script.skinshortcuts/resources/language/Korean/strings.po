@@ -46,7 +46,7 @@ msgstr "즐겨찾기"
 
 msgctxt "#32007"
 msgid "Add-On"
-msgstr "추가기능"
+msgstr "애드온"
 
 msgctxt "#32008"
 msgid "Mixed Playlist"
@@ -58,15 +58,15 @@ msgstr "프로그램"
 
 msgctxt "#32010"
 msgid "Video Add-On"
-msgstr "비디오 추가기능"
+msgstr "비디오 애드온"
 
 msgctxt "#32011"
 msgid "Music Add-On"
-msgstr "음악 추가기능"
+msgstr "음악 애드온"
 
 msgctxt "#32012"
 msgid "Picture Add-On"
-msgstr "사진 추가기능"
+msgstr "사진 애드온"
 
 msgctxt "#32014"
 msgid "Videos"
@@ -148,6 +148,10 @@ msgctxt "#32033"
 msgid "Eject tray"
 msgstr "트레이 꺼내기"
 
+msgctxt "#32034"
+msgid "Common Shortcut"
+msgstr "사용자 정의 바로가기"
+
 msgctxt "#32035"
 msgid "Choose which items to display on the Main Menu"
 msgstr "메인 메뉴에 표시할 항목 선택"
@@ -196,6 +200,10 @@ msgctxt "#32048"
 msgid "Choose shortcut"
 msgstr "바로가기 선택"
 
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "메뉴 작성 중..."
+
 msgctxt "#32050"
 msgid "Default"
 msgstr "기본"
@@ -211,3 +219,27 @@ msgstr "복수 이미지"
 msgctxt "#32053"
 msgid "None"
 msgstr "없음"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "XBMC 명령"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "비디오 라이브러리 정리"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "음악 라이브러리 정리"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "XBMC 명령"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "여기에 바로가기 만들기"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "스킨 재생목록"

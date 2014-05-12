@@ -231,3 +231,27 @@ msgstr "Πολλαπλές εικόνες"
 msgctxt "#32053"
 msgid "None"
 msgstr "Κανένα"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "Εντολή XBMC"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Εκκαθάριση συλλογής βίντεο"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Εκκαθάριση μουσικής συλλογής"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "Εντολές XBMC"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Δημιουργία συντόμευσης για εδώ"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Λίστα Αναπ/γής Κελύφους"

@@ -44,6 +44,14 @@ msgctxt "#32015"
 msgid "Movies"
 msgstr "Filmler"
 
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "TV Programları"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Müzik Videoları"
+
 msgctxt "#32019"
 msgid "Music"
 msgstr "Müzik"

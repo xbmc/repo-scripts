@@ -231,3 +231,27 @@ msgstr "Több-képnyi"
 msgctxt "#32053"
 msgid "None"
 msgstr "Nincs"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "XBMC Parancs"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Videó könyvtár tisztítása"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Audió könyvtár tisztítása"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "XBMC Parancsok"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Parancsikon létrehozása itt"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Felszín Lejátszási lista"

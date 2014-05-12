@@ -7,37 +7,40 @@ To customize the look of the dialog displayed to allow the user to customize sho
 
 Primary controls:
 
-ID	Type	Description
-101	Label	Current type of shortcut being viewed
-102	Button	Change type of shortcut being viewed (down)
-103	Button	Change type of shortcut being viewed (up)
-111	List	Available shortcuts for the current type being viewed
-211	List	Shortcuts the user has chosen for the [groupname]
-301	Button	Add a new shortcut
-302	Button	Delete shortcut
-303	Button	Move shortcut up
-304	Button	Move shortcut down
-305	Button	Change shortcut label (if control 402 is not included)
-306	Button	Change shortcut thumbnail
-307	Button	Change shortcut action (if control 403 is not included)
-308	Button	Reset shortcuts
+ID	Type	Label	Description
+101	Label			Current type of shortcut being viewed
+102	Button			Change type of shortcut being viewed (down)
+103	Button			Change type of shortcut being viewed (up)
+111	List			Available shortcuts for the current type being viewed
+211	List			Shortcuts the user has chosen for the [groupname]
+301	Button	32000	Add a new shortcut
+302	Button	32001	Delete shortcut
+303	Button	32002	Move shortcut up
+304	Button	32003	Move shortcut down
+305	Button	32025	Change shortcut label (if control 402 is not included)
+306	Button	32026	Change shortcut thumbnail
+307	Button	32027	Change shortcut action (if control 403 is not included)
+308	Button	32028	Reset shortcuts
 
-Additional controls:
+309 Button  32044	Change widget (See "Advanced Usage")
+310 Button  32045	Change background (See "Advanced Usage")
 
-309 Button  Change widget (See "Advanced Usage")
-310 Button  Change background (See "Advanced Usage")
-311 Label	Selected widget name
-312 Label	Selected background name
+401 Button	32048	Alternative method to set a shortcut
+404 Button			Set a custom property
+405 Button			Launch management dialog for submenu / additional menus
 
-401 Button	Alternative method to set a shortcut
-404 Button	Set a custom property
-405 Button	Launch management dialog for submenu / additional menus
-
-You can set a label on any of these controls EXCEPT 101, 311 and 312. If no label is set, Skin Shortcuts will provide a label.
-
-You MUST include a label if you include controls 404 and 405.
+It is recommended you set the label for all of these controls, however if no label is provided the script will fill the label (except 404/405). A button's label2 will NOT work if the script fills the label.
 
 Most of these controls are optional (though it is recommended to include them), but you MUST include control 211. Controls 101, 102, 103 and 111 all rely on the others being present.
+
+
+3. Using label2 on buttons to provide more information
+
+You can set the label2 value of buttons to provide details of current selected - for example, the current label or action of the user selected shortcut.
+
+User-selected shortcuts have the same properties they will have when displayed in a menu, with the addition of displaypath which shows the current selected action in a displayable format.
+
+NOTE: You MUST provide a label (even one set to a script-provided string) for label2's to operate.
 
 
 2. Alternative method to set a shortcut

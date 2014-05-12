@@ -22,11 +22,55 @@ msgstr "Dodaj"
 
 msgctxt "#32001"
 msgid "Delete"
-msgstr "Izbriši"
+msgstr "Obriši"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Pomakni gore"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Pomakni dolje"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Video popis izvođenja"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Glazbeni popis izvođenja"
 
 msgctxt "#32006"
 msgid "Favourite"
-msgstr "Favorit"
+msgstr "Omiljeno"
+
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Dodatak"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Mješoviti popis izvođenja"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Program"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Video dodatak"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Glazbeni dodatak"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Slikovni dodatak"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<Nepoznato>"
 
 msgctxt "#32014"
 msgid "Videos"
@@ -38,7 +82,11 @@ msgstr "Filmovi"
 
 msgctxt "#32016"
 msgid "TV Shows"
-msgstr "TV Emisija"
+msgstr "TV emisije"
+
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -56,13 +104,85 @@ msgctxt "#32021"
 msgid "Programs"
 msgstr "Programi"
 
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32024"
+msgid "Custom shortcut"
+msgstr "Prilagođeni prečac"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Postavi naslov"
+
+msgctxt "#32026"
+msgid "Set thumbail"
+msgstr "Postavi minijaturu"
+
+msgctxt "#32027"
+msgid "Custom action"
+msgstr "Prilagođena radnja"
+
+msgctxt "#32028"
+msgid "Reset shortcuts"
+msgstr "Vrati na zadano prečace"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Uobičajeno"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Videoteka"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Fonoteka"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Reproduciraj DVD"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Izbaci optički pogon"
+
+msgctxt "#32034"
+msgid "Common Shortcut"
+msgstr "Uobičajeni prečaci"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Odaberi koja će se stavka prikazati na glavnom zaslonu"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for ::MENUNAME::"
+msgstr "Odaberi prečac za ::MENUNAME::"
+
+msgctxt "#32037"
+msgid "Reset all shortcuts"
+msgstr "Vrati na početno sve prečace"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all shortcuts back to default?"
+msgstr "Sigurno želite vratit sve prečace na početno?"
+
+msgctxt "#32039"
+msgid "Pick widget for ::MENUNAME::"
+msgstr "Odaberi Widget za ::MENUNAME::"
+
 msgctxt "#32040"
 msgid "Playlist"
-msgstr "Lista izvedbi"
+msgstr "Popis izvođenja"
 
 msgctxt "#32041"
 msgid "Action"
-msgstr "Akcija"
+msgstr "Radnja"
+
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Nepoznato video čvorište"
 
 msgctxt "#32050"
 msgid "Default"

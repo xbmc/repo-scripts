@@ -251,3 +251,27 @@ msgstr ""
 msgctxt "#32057"
 msgid "XBMC Commands"
 msgstr ""
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr ""
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr ""
+
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr ""
+
+msgctxt "#32061"
+msgid "Display"
+msgstr ""
+
+msgctxt "#32062"
+msgid "Play"
+msgstr ""
+
+msgctxt "#32063"
+msgid "Getting plugin directory listing..."
+msgstr ""

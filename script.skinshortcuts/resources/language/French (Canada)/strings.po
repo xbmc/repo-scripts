@@ -231,3 +231,27 @@ msgstr "Multi-images"
 msgctxt "#32053"
 msgid "None"
 msgstr "Aucun"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "Commande XBMC"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Nettoyer la vidéothèque"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Nettoyer l'audiothèque"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "Commandes XBMC"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Créer un lien"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Liste de lecture de l'habillage"

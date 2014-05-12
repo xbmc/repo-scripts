@@ -1,12 +1,19 @@
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
-What's New for Skinners (version 0.2.4)
+What's New for Skinners (version 0.3.0)
 -----------------------
 
-This revision includes no new features for skinners, but does include the following important fix:
-
- - Listing groups when using the <include>'s method, now separate [groupname]s with a pipe symbol. See "Using <includes> - sub-menu only" below.
+ - (Includes method) Menu items now only have the "hasSubmenu" property if there is a submenu
+ - Test of an alternative includes method for including whole menu in a single list, see "Alternative Listings Method" in Advanced Usage.txt
+ - Numerous management dialog changes - see resources/Management Dialog.txt for full details - including
+	> Advice change - skins should now provide labels for all controls
+	> Labels 311 and 312 (background and widget name) replaced with listitem properties
+ - Management dialog will now list skin-provided playlists - this affects defaults, see "Providing Default Shortcuts" below
+ - Management dialog can now list skin-recommended shortcuts - see "Skin-Recommended Shortcuts" in Advanced Usage.txt
+ - If you prefer to manage menus yourself, the script can now be used to select a shortcut, then pass this to the skin to manage - see "Just select shortcuts" in Advanced Usage.txt
+ 
+Note: The code to manage additional properties including backgrounds and widgets has been re-written in this revision. The new method is not backwards compatible, so any backgrounds/widgets/additional properties will need to be re-set.
  
  
 Where To Get Help
@@ -54,6 +61,8 @@ If the script is just providing sub-menus, I recommend Gotham's method of fillin
 			- There is no need for the script to reload the skin
 			
 Whichever combination of methods and menu systems you choose, details of how to implement are below. Below that, there is information common to all methods which you should also read.
+
+You may also choose to manage menu's yourself, and just make use of the scripts list of available shortcuts. For more details see "Just Select Shortcuts" in Advanced Usage.txt
 
 
 Using the 'Gotham' method of filling a list - Sub-menus only
@@ -134,13 +143,6 @@ Remember to replace 9000 with the id of the list you are using for the main menu
 If your skin provides widgets or has custom backgrounds, you can use Skin Shortcuts to manage these. You can also use Skin Shortcuts to manage any additional properties you wish. See "Advanced Usage".
 
 Otherwise, you can set visibility of any additional controls based on the labelID of the main menu listitems property 'labelID'. For information on what labelID may contain, see section "Advanced Usage". A full list of labelID's can be found in the Resources folder.
-
-
-4. Providing alternative access to settings
-
-One of the side effects of using skinshortcuts to provide the whole main menu is that users have the ability to delete any shortcut, including those that they will later turn out to actually want. Generally, this isn't a problem as they can add them back at any time. However if they delete all links to settings, they will have no way to add it back unless your skin offers an alternative access.
-
-Therefore, it is recommended to have an alternative link to settings. One possible location is in your shutdown menu.
 
 
 Using <includes> - sub-menu only
@@ -288,6 +290,8 @@ To provide this optional file, create a new sub-directory in your skin called 's
 The easiest way to create this file is to use the script to build a list of shortcuts, then copy it from your userdata folder. See "Recommended [groupname]'s" for ideas of some of the default files you may wish to provide, along with mainmenu.shortcuts if you are using the script to manage the main menu.
 
 The script provides defaults equivalent to Confluence's main menu and sub-menus.
+
+If you want to provide a default which links to a playlist you include with your skin, then make sure the .shortcuts file uses the special protocol (e.g. special://skin/) as the URI to it. The script will replace this with a localised version, so that the playlist link will continue to work even if the user switches to another skin supporting skin shortcuts.
 	
 	
 Properties returned
@@ -303,7 +307,9 @@ Regardless of which method you use, the script will always return a list with a 
 	Property(action)	The action that will be run when the shortcut is selected
 	Property(group)		The [groupname] that this shortcut is listed from
 	Property(widget)	If your skin uses Skin Shortcuts to manage widgets, the [widgetID] will appear here (mainmenu only)
+	Property(widgetName)        - The display name of the widget will appear here
 	Property(background)If your skin uses Skin Shortcuts to manage background, the [backgroundID] will appear here (mainmenu only)
+	Property(backgroundName)    - The display name of the widget will appear here
 
 You can also use the script to manage any additional properties you would like. See "resources/Management Dialog.txt" and "resources/Advanced Usage.txt" - "Overrides.xml" - section 5 (Custom shortcut properties)
 	

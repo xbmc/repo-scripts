@@ -231,3 +231,27 @@ msgstr "Multi-bild"
 msgctxt "#32053"
 msgid "None"
 msgstr "Ingen"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "XBMC-kommando"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Rensa videobibliotek"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Rensa ljudbibliotek"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "XBMC-kommandon"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Skapa genväg hit"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Skalspellista"

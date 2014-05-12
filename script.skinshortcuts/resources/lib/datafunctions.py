@@ -42,9 +42,9 @@ def log(txt):
     
 class DataFunctions():
     def __init__(self):
-        log( "Loaded data functions" )
+        pass
 
-    def _get_shortcuts( self, group, isXML = False ):
+    def _get_shortcuts( self, group, isXML = False, profileDir = None ):
         # This will load the shortcut file, and save it as a window property
         # Additionally, if the override files haven't been loaded, we'll load them too
         log( "### Loading shortcuts for group " + group )
@@ -54,9 +54,12 @@ class DataFunctions():
                 returnVal = xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-" + group )
                 return pickle.loads( returnVal )
             except:
-                i = 1
+                pass
                 
-        userShortcuts = os.path.join( __datapath__ , self.slugify( group ) + ".shortcuts" ).encode('utf-8')
+        if profileDir is None:
+            profileDir = xbmc.translatePath( "special://profile/" ).decode( "utf-8" )
+            
+        userShortcuts = os.path.join( profileDir, "addon_data", __addonid__, self.slugify( group ) + ".shortcuts" ).encode('utf-8')
         skinShortcuts = os.path.join( __skinpath__ , self.slugify( group ) + ".shortcuts").encode('utf-8')
         defaultShortcuts = os.path.join( __defaultpath__ , self.slugify( group ) + ".shortcuts" ).encode('utf-8')
 
@@ -65,15 +68,22 @@ class DataFunctions():
         for path in paths:
             try:
                 # Try loading shortcuts
-                #unprocessedList = eval( xbmcvfs.File( path ).read() ) 
                 list = xbmcvfs.File( path ).read()
                 unprocessedList = eval( list )
                 self._save_hash( path, list )
                 
-                processedList = self._process_shortcuts( unprocessedList, group )
-                
+                # If this is a user-selected list of shortcuts...
                 if path == userShortcuts:
+                    # Process shortcuts, marked as user-selected
+                    processedList = self._process_shortcuts( unprocessedList, group, profileDir, True )
+                    
+                    # Update any localised strings
                     self._process_localised( path, unprocessedList )
+                    
+                else:
+                    # Otherwise, just process them normally
+                    processedList = self._process_shortcuts( unprocessedList, group, profileDir )
+                    
                     
                 if isXML == False:
                     xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-" + group, pickle.dumps( processedList ) )
@@ -91,12 +101,13 @@ class DataFunctions():
         return [] 
                 
             
-    def _process_shortcuts( self, listitems, group, isXML = False ):
+    def _process_shortcuts( self, listitems, group, profileDir = "special:\\profile", isUserShortcuts = False ):
         # This function will process any overrides, and return a set of listitems ready to be stored
         #  - We will process graphics overrides, action overrides and any visibility conditions set
+        log( "### Processing shortcuts..." )
         
-        tree = self._get_overrides_skin( isXML )
-        usertree = self._get_overrides_user( isXML )
+        tree = self._get_overrides_skin()
+        usertree = self._get_overrides_user( profileDir )
         returnitems = []
         
         for item in listitems:
@@ -141,25 +152,18 @@ class DataFunctions():
                                     item[3] = elem.text
                                 if elem.attrib.get( 'image' ) == item[2]:
                                     item[2] = elem.text
-                            
-            # Get additional mainmenu properties
-            additionalProperties = []
-                   
-            widgetCheck = self.checkWidget( labelID, group )
-            if widgetCheck != "":
-                additionalProperties.append( ["widget", widgetCheck] )
-                
-            backgroundCheck = self.checkBackground( labelID, group )
-            if backgroundCheck != "":
-                additionalProperties.append( ["background", backgroundCheck] )
-                    
-            customProperties = self.checkCustomProperties( labelID, group )
-            if len( customProperties ) != 0:
-                for customProperty in customProperties:
-                    additionalProperties.append( [customProperty[0], customProperty[1]] )
-                    
+
+            # Get any additional properties, including widget and background
+            additionalProperties = self.checkAdditionalProperties( group, labelID, isUserShortcuts )
+                                
             # Get action
             action = urllib.unquote( item[4] )
+            
+            # If the action uses the special://skin protocol, translate it
+            if "special://skin/" in action:
+                translate = xbmc.translatePath( "special://skin/" ).decode( 'utf-8' )
+                action = action.replace( "special://skin/", translate )
+                log( "### Translated action to " + action )
             
             # Check visibility
             visibilityCondition = self.checkVisibility( action )
@@ -265,7 +269,7 @@ class DataFunctions():
                 log( "### ERROR could not save file %s" % path )                          
                     
 
-    def _get_overrides_skin( self, isXML = False ):
+    def _get_overrides_skin( self ):
         # If we haven't already loaded skin overrides, or if the skin has changed, load the overrides file
         if not xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-overrides-skin-data" ) or not xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-overrides-skin" ) == __skinpath__:
             xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-overrides-skin", __skinpath__ )
@@ -288,150 +292,85 @@ class DataFunctions():
             return pickle.loads( returnData )
 
 
-    def _get_overrides_user( self, isXML = False ):
+    def _get_overrides_user( self, profileDir = "special://profile" ):
         # If we haven't already loaded user overrides
-        if not xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-overrides-user-data" ) or not xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-overrides-user" ) == __profilepath__:
-            xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-overrides-user", __profilepath__ )
-            overridepath = os.path.join( __profilepath__ , "overrides.xml" )
+        profileDir = profileDir.encode( "utf-8" )
+        if not xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-overrides-user-data" + profileDir ) or not xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-overrides-user" + profileDir ) == __profilepath__:
+            xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-overrides-user" + profileDir, profileDir )
+            overridepath = os.path.join( profileDir , "overrides.xml" )
             try:
                 tree = xmltree.parse( overridepath )
                 self._save_hash( overridepath, xbmcvfs.File( overridepath ).read() )
-                xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-overrides-user-data", pickle.dumps( tree ) )
+                xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-overrides-user-data" + profileDir, pickle.dumps( tree ) )
                 return tree
             except:
                 self._save_hash( overridepath, None )
-                xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-overrides-user-data", "No overrides" )
+                xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-overrides-user-data" + profileDir, "No overrides" )
                 return None
                 
         # Return the overrides
-        returnData = xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-overrides-user-data" )
+        returnData = xbmcgui.Window( 10000 ).getProperty( "skinshortcuts-overrides-user-data" + profileDir )
         if returnData == "No overrides":
             return None
         else:
             return pickle.loads( returnData )
 
-    def _get_widgets( self, isXML = False ):
-        # This will load the shortcut file, and save it as a window property
-        # Additionally, if the override files haven't been loaded, we'll load them too
+
+    def _get_additionalproperties( self ):
+        # Load all saved properties (widgets, backgrounds, custom properties)
         
+        # Try loading from window property
         try:
-            returnVal = xbmcgui.Window( 10000 ).getProperty( "skinshortcutsWidgets" )
+            returnVal = xbmcgui.Window( 10000 ).getProperty( "skinshortcutsAdditionalProperties" )
             return pickle.loads( returnVal )
         except:
-            # Try to load user-defined widgets
-            if xbmcvfs.exists( os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".widgets" ) ):
-                path = os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".widgets" )
-                try:
-                    # Try loading widgets
-                    file = xbmcvfs.File( path ).read()
-                    contents = eval( file )
-                    self._save_hash( path, file )
-                    xbmcgui.Window( 10000 ).setProperty( "skinshortcutsWidgets", pickle.dumps( contents ) )
-                    return contents
-                except:
-                    self._save_hash( path, None )
-                    xbmcgui.Window( 10000 ).setProperty( "skinshortcutsWidgets", pickle.dumps( [] ) )
-                    return []
-
-            else:
-                # User hasn't set any widgets, so we'll load them from the
-                # skins overrides.xml instead
-                tree = self._get_overrides_skin( isXML )
-                widgets = []
-                
-                if tree is not None:
-                    elems = tree.findall('widgetdefault')
-                    for elem in elems:
-                        if "group" not in elem.attrib:
-                            widgets.append( [ elem.attrib.get( 'labelID' ), elem.text, "mainmenu" ] )
-                        else:
-                            widgets.append( [ elem.attrib.get( 'labelID' ), elem.text, elem.attrib.get( "group" ) ] )
-                
-                # Save the widgets to a window property               
-                xbmcgui.Window( 10000 ).setProperty( "skinshortcutsWidgets", pickle.dumps( widgets ) )
-                return widgets
-
-
-    def _get_customproperties( self, isXML = False ):
-        # This will load the shortcut file, and save it as a window property
-        # Additionally, if the override files haven't been loaded, we'll load them too
+            pass
+            
+        # Couldn't load from window property, load manually
+        currentProperties = []
+        defaultProperties = []
         
-        try:
-            returnVal = xbmcgui.Window( 10000 ).getProperty( "skinshortcutsCustomProperties" )
-            return pickle.loads( returnVal )
-        except:
-            # Try to load user-defined custom properties
-            if xbmcvfs.exists( os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".customproperties" ) ):
-                path = os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".customproperties" )
-                try:
-                    # Try loading custom properties
-                    file = xbmcvfs.File( path ).read()
-                    contents = eval( file )
-                    self._save_hash( path, file )
-                    xbmcgui.Window( 10000 ).setProperty( "skinshortcutsCustomProperties", pickle.dumps( contents ) )
-                    return contents
-                except:
-                    self._save_hash( path, None )
-                    xbmcgui.Window( 10000 ).setProperty( "skinshortcutsCustomProperties", pickle.dumps( [] ) )
-                    return []
-
-            else:
-                # User hasn't set any custom properties, so we'll load them from the
-                # skins overrides.xml instead
-                tree = self._get_overrides_skin( isXML )
-                properties = []
+        path = os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".properties" )
+        if xbmcvfs.exists( path ):
+            # The properties file exists, load from it
+            try:
+                file = xbmcvfs.File( path ).read()
+                listProperties = eval( file )
+                self._save_hash( path, file )
                 
-                if tree is not None:
-                    elems = tree.findall('propertydefault')
-                    for elem in elems:
+                for listProperty in listProperties:
+                    # listProperty[0] = groupname
+                    # listProperty[1] = labelID
+                    # listProperty[2] = property name
+                    # listProperty[3] = property value
+                    currentProperties.append( [listProperty[0], listProperty[1], listProperty[2], listProperty[3]] )
+            except:
+                pass
+            
+        # Load skin defaults (in case we need them...)
+        tree = self._get_overrides_skin()
+        if tree is not None:
+            for elemSearch in [["widget", tree.findall( "widgetdefault" )], ["background", tree.findall( "backgrounddefault" )], ["custom", tree.findall( "propertydefault" )] ]:
+                for elem in elemSearch[1]:
+                    
+                    if elemSearch[0] == "custom":
+                        # Custom property
                         if "group" not in elem.attrib:
-                            properties.append( [ elem.attrib.get( 'labelID' ), elem.attrib.get( 'property' ), elem.text, "mainmenu" ] )
+                            defaultProperties.append( ["mainmenu", elem.attrib.get( 'labelID' ), elem.attrib.get( 'property' ), elem.text ] )
                         else:
-                            properties.append( [ elem.attrib.get( 'labelID' ), elem.attrib.get( 'property' ), elem.text, elem.attrib.get( "group" ) ] )
-                
-                # Save the custom properties to a window property               
-                xbmcgui.Window( 10000 ).setProperty( "skinshortcutsCustomProperties", pickle.dumps( properties ) )
-                return properties
-
-    def _get_backgrounds( self, isXML = False ):
-        # This function will load users backgrounds settings
-        try:
-            returnVal = xbmcgui.Window( 10000 ).getProperty( "skinshortcutsBackgrounds" )
-            return pickle.loads( returnVal )
-        except:
-            # Try to load user-defined widgets
-            if xbmcvfs.exists( os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".backgrounds" ) ):
-                path = os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".backgrounds" )
-                try:
-                    # Try loading widgets
-                    file = xbmcvfs.File( path ).read()
-                    contents = eval( file )
-                    self._save_hash( path, file )
-                    xbmcgui.Window( 10000 ).setProperty( "skinshortcutsBackgrounds", pickle.dumps( contents ) )
-                    return contents
-                except:
-                    self._save_hash( path, None )
-                    xbmcgui.Window( 10000 ).setProperty( "skinshortcutsBackgrounds", pickle.dumps( [] ) )
-                    return []
-
-            else:
-                # User hasn't set any backgrounds, so we'll load them from the
-                # skins overrides.xml instead
-                tree = self._get_overrides_skin( isXML )
-                backgrounds = []
-                
-                if tree is not None:
-                    elems = tree.findall('backgrounddefault')
-                    for elem in elems:
+                            defaultProperties.append( [elem.attrib.get( "group" ), elem.attrib.get( 'labelID' ), elem.attrib.get( 'property' ), elem.text ] )
+                    else:
+                        # Widget or background
                         if "group" not in elem.attrib:
-                            backgrounds.append( [ elem.attrib.get( 'labelID' ), elem.text, "mainmenu" ] )
+                            defaultProperties.append( [ "mainmenu", elem.attrib.get( 'labelID' ), elemSearch[0], elem.text ] )
                         else:
-                            backgrounds.append( [ elem.attrib.get( 'labelID' ), elem.text, elem.attrib.get( "group" ) ] )
+                            defaultProperties.append( [ elem.attrib.get( "group" ), elem.attrib.get( 'labelID' ), elemSearch[0], elem.text ] )
                 
-                # Save the widgets to a window property               
-                xbmcgui.Window( 10000 ).setProperty( "skinshortcutsBackgrounds", pickle.dumps( backgrounds ) )
-                return backgrounds
-                
+        returnVal = [currentProperties, defaultProperties]
+        xbmcgui.Window( 10000 ).setProperty( "skinshortcutsAdditionalProperties", pickle.dumps( returnVal ) )
+        return returnVal
+
+        
     def createNiceName ( self, item ):
         # Translate certain localized strings into non-localized form for labelID
         if item == "10006":
@@ -482,57 +421,32 @@ class DataFunctions():
             
         return ""
         
+        
+    def checkAdditionalProperties( self, group, labelID, isUserShortcuts ):
+        # Return any additional properties, including widgets and backgrounds
+        allProperties = self._get_additionalproperties()
+        currentProperties = allProperties[1]
+        
+        returnProperties = []
+        
+        # This returns two lists...
+        #  allProperties[0] = Saved properties
+        #  allProperties[1] = Default properties
+        
+        if isUserShortcuts:
+            currentProperties = allProperties[0]
             
-    def checkWidget( self, item, group, isXML = False ):
-        # Return any widget for mainmenu items
-        currentWidgets = ( self._get_widgets( isXML ) )
-        
-        # Loop through current widgets, looking for the current item
-        for currentWidget in currentWidgets:
-            if currentWidget[0].encode('utf-8') == item:
-                try:
-                    if currentWidget[2] == group:
-                        return currentWidget[1]
-                except:
-                    if group == "mainmenu":
-                        return currentWidget[1]
-                
-        return ""
-        
-    
-    def checkBackground( self, item, group, isXML = False ):
-        # Return any widget for mainmenu items
-        currentBackgrounds = ( self._get_backgrounds( isXML ) )
-        
-        # Loop through current widgets, looking for the current item
-        for currentBackground in currentBackgrounds:
-            if currentBackground[0].encode('utf-8') == item:
-                try:
-                    if currentBackground[2] == group:
-                        return currentBackground[1]
-                except:
-                    if group == "mainmenu":
-                        return currentBackground[1]
-                
-        return ""
-        
-    
-    def checkCustomProperties( self, item, group, isXML = False ):
-        # Return any custom properties for mainmenu items
-        currentProperties = ( self._get_customproperties( isXML ) )
-        
-        # Loop through current properties, looking for the current item
-        returnVals = []
+        # Loop through the current properties, looking for the current item
         for currentProperty in currentProperties:
-            if currentProperty[0].encode('utf-8') == item:
-                try:
-                    if currentProperty[3] == group:
-                        returnVals.append( [currentProperty[1], currentProperty[2]] )
-                except:
-                    if group == "mainmenu":
-                        returnVals.append( [currentProperty[1], currentProperty[2]] )
+            # currentProperty[0] = Group name
+            # currentProperty[1] = labelID
+            # currentProperty[2] = Property name
+            # currentProperty[3] = Property value
+            if currentProperty[0] == group and currentProperty[1] == labelID:
+                returnProperties.append( [ currentProperty[2], currentProperty[3] ] )
                 
-        return returnVals
+        return returnProperties
+            
         
         
     def _save_hash( self, filename, file ):
