@@ -38,22 +38,23 @@ cache = StorageServer.StorageServer(__scriptname__, int(24 * 364 / 2))  # 6 mont
 def normalizeString(str):
     return unicodedata.normalize(
         'NFKD', unicode(unicode(str, 'utf-8'))
-    ).encode('ascii', 'ignore')
+    ).encode('utf-8', 'ignore')
 
 def parse_tv_rls(rls):
     groups = re.findall(r"(.*)(?:s|season)(?:\d{2})(?:e|x|episode|\n)(?:\d{2})", rls, re.I)
     if len(groups) > 0:
         rls = groups[0].strip()
 
-    log(__scriptname__, "%s %s" % ("TV_RLS: ", rls))
+    log(__scriptname__, "TV_RLS: %s" % (rls.decode("utf-8"),))
     return rls
+
 
 def parse_movie_rls(rls):
     groups = re.findall(r"(.*)(?:\d{4})?", rls, re.I)
     if len(groups) > 0:
         rls = groups[0].strip()
 
-    log(__scriptname__, "%s %s" % ("MOVIE_RLS: ", rls))
+    log(__scriptname__, "MOVIE_RLS: %s" % (rls.decode("utf-8"),))
     return rls
 
 def log(module, msg):
@@ -61,8 +62,8 @@ def log(module, msg):
 
 
 def get_cache_key(prefix="", str=""):
-    str = re.sub('\W+', '_', str).lower()
-    return prefix + ":" + str
+    str = re.sub('\W+', '_', str.decode("utf-8"), 0, re.UNICODE).lower()
+    return prefix + '_' + str
 
 
 def clear_cache():
@@ -104,6 +105,7 @@ class SubtitleHelper:
     # return list of tv-series from the site`s search
     def _search_tvshow(self, item):
         search_string = re.split(r'\s\(\w+\)$', item["tvshow"])[0]
+        search_string = re.sub('\W+', ' ', search_string.decode("utf-8"), 0, re.UNICODE).lower().encode("utf-8")
 
         cache_key = get_cache_key("tv-show", search_string)
         results = cache.get(cache_key)
@@ -116,7 +118,7 @@ class SubtitleHelper:
                 return results  # return empty set
 
             urls = re.findall(
-                u'<a href="viewseries\.php\?id=(\d+)[^"]+" itemprop="url">[^<]+</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div>',
+                u'<a href="viewseries\.php\?id=(\d+)[^"]+" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div>',
                 search_result)
 
             results = self._filter_urls(urls, search_string, item)
@@ -141,7 +143,7 @@ class SubtitleHelper:
             return results  # return empty set
 
         urls = re.findall(
-            u'<a href="view\.php\?id=(\d+)[^"]+" itemprop="url">[^<]+</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div><span class="smtext">(\d{4})</span>',
+            u'<a href="view\.php\?id=(\d+)[^"]+" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div><span class="smtext">(\d{4})</span>',
             search_result)
 
         results = self._filter_urls(urls, search_string, item)
@@ -149,25 +151,44 @@ class SubtitleHelper:
 
     def _filter_urls(self, urls, search_string, item):
         filtered = []
-        search_string = search_string.lower()
+        search_string = search_string.decode("utf-8").lower()
+        search_string = re.sub('\W+', ' ', search_string, 0, re.UNICODE)
 
         h = HTMLParser.HTMLParser()
 
         log(__scriptname__, "urls: %s" % urls)
 
         if not item["tvshow"]:
-            for (id, eng_name, year) in urls:
+            for (id, heb_name, eng_name, year) in urls:
+                eng_name = eng_name.decode("utf-8")
+                heb_name = heb_name.decode("utf-8")
+
                 eng_name = h.unescape(eng_name).replace(' ...', '').lower()
-                if (search_string.startswith(eng_name) or eng_name.startswith(search_string)) and \
+                heb_name = h.unescape(heb_name).replace(' ...', '')
+
+                eng_name = re.sub('\W+', ' ', eng_name, 0, re.UNICODE)
+                heb_name = re.sub('\W+', ' ', heb_name, 0, re.UNICODE)
+
+                if (search_string.startswith(eng_name) or eng_name.startswith(search_string) or
+                        search_string.startswith(heb_name) or heb_name.startswith(search_string)) and \
                         (item["year"] == '' or
                                  year == '' or
                                      (int(year) - 1) <= int(item["year"]) <= (int(year) + 1) or
                                      (int(item["year"]) - 1) <= int(year) <= (int(item["year"]) + 1)):
                     filtered.append({"name": eng_name, "id": id, "year": year})
         else:
-            for (id, eng_name) in urls:
-                eng_name = h.unescape(eng_name)
-                if search_string.startswith(eng_name.lower()):
+            for (id, heb_name, eng_name) in urls:
+                eng_name = eng_name.decode("utf-8")
+                heb_name = heb_name.decode("utf-8")
+
+                eng_name = h.unescape(eng_name).replace(' ...', '').lower()
+                heb_name = h.unescape(heb_name).replace(' ...', '')
+
+                eng_name = re.sub('\W+', ' ', eng_name, 0, re.UNICODE)
+                heb_name = re.sub('\W+', ' ', heb_name, 0, re.UNICODE)
+
+                if (search_string.startswith(eng_name) or eng_name.startswith(search_string) or
+                        search_string.startswith(heb_name) or heb_name.startswith(search_string)):
                     filtered.append({"name": eng_name, "id": id})
 
         log(__scriptname__, "filtered: %s" % filtered)
