@@ -76,6 +76,7 @@ def get_params(string=""):
         paramstring = sys.argv[2]
     else:
         paramstring = string
+
     if len(paramstring) >= 2:
         params = paramstring
         cleanedparams = params.replace('?', '')

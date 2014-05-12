@@ -1,3 +1,6 @@
+3.1.8 - by CaTz 09/05/2014
+- Support hebrew search
+
 3.1.7 - by CaTz 07/05/2014
 - Bug fix, url decode the manual search string
 - Added feature, parse RLS names of the shows and movies

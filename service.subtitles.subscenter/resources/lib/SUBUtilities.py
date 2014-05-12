@@ -38,23 +38,26 @@ cache = StorageServer.StorageServer(__scriptname__, int(24 * 364 / 2))  # 6 mont
 def normalizeString(str):
     return unicodedata.normalize(
         'NFKD', unicode(unicode(str, 'utf-8'))
-    ).encode('ascii', 'ignore')
+    ).encode('utf-8', 'ignore')
+
 
 def parse_tv_rls(rls):
     groups = re.findall(r"(.*)(?:s|season)(?:\d{2})(?:e|x|episode|\n)(?:\d{2})", rls, re.I)
     if len(groups) > 0:
         rls = groups[0].strip()
 
-    log(__scriptname__, "%s %s" % ("TV_RLS: ", rls))
+    log(__scriptname__, "TV_RLS: %s" % (rls.decode("utf-8"),))
     return rls
+
 
 def parse_movie_rls(rls):
     groups = re.findall(r"(.*)(?:\d{4})?", rls, re.I)
     if len(groups) > 0:
         rls = groups[0].strip()
 
-    log(__scriptname__, "%s %s" % ("MOVIE_RLS: ", rls))
+    log(__scriptname__, "MOVIE_RLS: %s" % (rls.decode("utf-8"),))
     return rls
+
 
 def clear_cache():
     cache.delete("tv-show%")
@@ -66,7 +69,7 @@ def log(module, msg):
 
 
 def get_cache_key(prefix="", str=""):
-    str = re.sub('\W+', '_', str).lower()
+    str = re.sub('\W+', '_', str.decode("utf-8"), 0, re.UNICODE).lower()
     return prefix + str
 
 
@@ -95,12 +98,12 @@ class SubscenterHelper:
                 results = eval(results)
 
         if not results:
-            query = {"q": search_string.lower()}
+            query = {"q": search_string.lower() + "'"}  # hack to prevent redirection in hebrew search
             search_result = self.urlHandler.request(self.BASE_URL + "/he/subtitle/search/?" + urllib.urlencode(query))
             if search_result is None:
                 return results  # return empty set
 
-            urls = re.findall('<a href=".*/he/subtitle/(movie|series)/([^/]+)/">[^/]+ / ([^<]+)</a>', search_result)
+            urls = re.findall(u'<a href=".*/he/subtitle/(movie|series)/([^/]+)/">([^/]+) / ([^<]+)</a>', search_result)
             years = re.findall(u'<span class="special">[^:]+: </span>(\d{4}).<br />', search_result)
             for i, url in enumerate(urls):
                 year = years[i] if len(years) > i else ''
@@ -116,17 +119,26 @@ class SubscenterHelper:
 
     def _filter_urls(self, urls, search_string, item):
         filtered = []
-        search_string = search_string.lower()
+        search_string = search_string.decode("utf-8").lower()
+        search_string = re.sub('\W+', ' ', search_string, 0, re.UNICODE)
         h = HTMLParser.HTMLParser()
 
         log(__scriptname__, "urls: %s" % urls)
 
-        for i, (content_type, slug, eng_name, year) in enumerate(urls):
+        for i, (content_type, slug, heb_name, eng_name, year) in enumerate(urls):
+            eng_name = eng_name.decode("utf-8")
+            heb_name = heb_name.decode("utf-8")
+
             eng_name = h.unescape(eng_name).replace(' ...', '').lower()
+            heb_name = h.unescape(heb_name).replace(' ...', '')
+
+            eng_name = re.sub('\W+', ' ', eng_name, 0, re.UNICODE)
+            heb_name = re.sub('\W+', ' ', heb_name, 0, re.UNICODE)
 
             if ((content_type == "movie" and not item["tvshow"]) or
                     (content_type == "series" and item["tvshow"])) and \
-                    (search_string.startswith(eng_name) or eng_name.startswith(search_string)) and \
+                    (search_string.startswith(eng_name) or eng_name.startswith(search_string) or
+                         search_string.startswith(heb_name) or heb_name.startswith(search_string)) and \
                     (item["year"] == '' or
                              year == '' or
                                  (int(year) - 1) <= int(item["year"]) <= (int(year) + 1) or
