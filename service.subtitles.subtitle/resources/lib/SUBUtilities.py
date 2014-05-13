@@ -40,22 +40,34 @@ def normalizeString(str):
         'NFKD', unicode(unicode(str, 'utf-8'))
     ).encode('utf-8', 'ignore')
 
-def parse_tv_rls(rls):
-    groups = re.findall(r"(.*)(?:s|season)(?:\d{2})(?:e|x|episode|\n)(?:\d{2})", rls, re.I)
-    if len(groups) > 0:
-        rls = groups[0].strip()
 
-    log(__scriptname__, "TV_RLS: %s" % (rls.decode("utf-8"),))
-    return rls
+def clean_title(item):
+    item["title"] = os.path.splitext(item["title"])[0]
+    item["tvshow"] = os.path.splitext(item["tvshow"])[0]
 
 
-def parse_movie_rls(rls):
-    groups = re.findall(r"(.*)(?:\d{4})?", rls, re.I)
-    if len(groups) > 0:
-        rls = groups[0].strip()
+def parse_rls_title(item):
+    groups = re.findall(r"(.*)(?:s|season)(\d{2})(?:e|x|episode|\n)(\d{2})", item["title"], re.I)
 
-    log(__scriptname__, "MOVIE_RLS: %s" % (rls.decode("utf-8"),))
-    return rls
+    if len(groups) == 0:
+        groups = re.findall(r"(.*)(?:s|season)(\d{2})(?:e|x|episode|\n)(\d{2})", item["tvshow"], re.I)
+
+    if len(groups) > 0 and len(groups[0]) == 3:
+        title, season, episode = groups[0]
+        item["tvshow"] = re.sub('\W+', ' ', title, 0, re.UNICODE).strip()
+        item["season"] = str(int(season))
+        item["episode"] = str(int(episode))
+        log(__scriptname__, "TV Parsed Item: %s" % (item,))
+
+    else:
+        groups = re.findall(r"(.*)(\d{4})", item["title"], re.I)
+        if len(groups) > 0 and len(groups[0]) >= 1:
+            title = groups[0][0]
+            item["title"] = re.sub('\W+', ' ', title, 0, re.UNICODE).strip()
+            item["year"] = groups[0][1] if len(groups[0]) == 2 else item["year"]
+
+            log(__scriptname__, "MOVIE Parsed Item: %s" % (item,))
+
 
 def log(module, msg):
     xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
@@ -306,7 +318,7 @@ class SubtitleHelper:
                                                                xbmc.ISO_639_1),
                          'id': subtitle_id,
                          'rating': int(downloads.replace(",", "")),
-                         'sync': subtitle_rate >= 4,
+                         'sync': subtitle_rate >= 3.8,
                          'hearing_imp': 0
                         })
         return ret, total_downloads
