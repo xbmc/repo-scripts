@@ -1,3 +1,6 @@
+3.1.9 - by CaTz 11/05/2014
+- Advanced Movie Title / TV-show parsing (includes release)
+
 3.1.8 - by CaTz 09/05/2014
 - Support hebrew search
 

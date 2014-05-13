@@ -24,7 +24,7 @@ __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
 
 sys.path.append(__resource__)
 
-from SUBUtilities import SubscenterHelper, log, normalizeString, clear_cache, parse_tv_rls, parse_movie_rls
+from SUBUtilities import SubscenterHelper, log, normalizeString, clear_cache, parse_rls_title, clean_title
 
 
 
@@ -123,17 +123,16 @@ if params['action'] in ['search', 'manualsearch']:
         item['title'] = params['searchstring'] if params['action'] == 'manualsearch' \
             else normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
 
+    # clean title + tvshow params
+    clean_title(item)
+    parse_rls_title(item)
+
     if item['episode'].lower().find("s") > -1:                                # Check if season is "Special"
         item['season'] = "0"
         item['episode'] = item['episode'][-1:]
 
     if item['file_original_path'].find("http") > -1:
         item['temp'] = True
-        # Parse release name
-        if item['tvshow']:
-            item['tvshow'] = parse_tv_rls(item['tvshow'])
-        else:
-            item['title'] = parse_movie_rls(item['title'])
 
 
     elif item['file_original_path'].find("rar://") > -1:
